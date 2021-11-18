@@ -385,8 +385,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var assessmentDetails = _mapper.Map<AssessmentDetails>(tqRegistration);
 
-            var assessmentSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, Constants.CoreAssessmentStartInYears);
-            assessmentDetails.IsCoreEntryEligible = assessmentSeries?.FirstOrDefault(a => a.ComponentType == ComponentType.Core) != null;
+            //var assessmentSeriesOld = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, Constants.CoreAssessmentStartInYears);
+
+            var allAssessmentSeries = await GetAllAssessmentSeriesAsync();
+            var coreAssessmentSeries = GetValidAssessmentSeries(allAssessmentSeries, tqRegistration, ComponentType.Core);
+            assessmentDetails.IsCoreEntryEligible = tqRegistration.Status == RegistrationPathwayStatus.Active && coreAssessmentSeries != null && coreAssessmentSeries.Any();
+            assessmentDetails.NextAvailableCoreSeries = GetNextAvailableAssessmentSeries(allAssessmentSeries, tqRegistration, ComponentType.Core)?.Name;
+
+            var specialismAssessmentSeries = GetValidAssessmentSeries(allAssessmentSeries, tqRegistration, ComponentType.Specialism);
+            assessmentDetails.IsSpecialismEntryEligible = tqRegistration.Status == RegistrationPathwayStatus.Active && specialismAssessmentSeries != null && specialismAssessmentSeries.Any();
+            assessmentDetails.NextAvailableSpecialismSeries = GetNextAvailableAssessmentSeries(allAssessmentSeries, tqRegistration, ComponentType.Specialism)?.Name;
             return assessmentDetails;
         }
 
@@ -501,6 +509,31 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 s.Year > regAcademicYear + startYearOffset && s.Year <= regAcademicYear + Constants.AssessmentEndInYears);
 
             return isValidNextAssessmentSeries;
+        }
+
+        public async Task<IList<AssessmentSeries>> GetAllAssessmentSeriesAsync()
+        {
+            return await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
+        }
+
+        public IList<AssessmentSeries> GetValidAssessmentSeries(IList<AssessmentSeries> assessmentSeries, TqRegistrationPathway tqRegistrationPathway, ComponentType componentType)
+        {
+            var currentDate = DateTime.UtcNow.Date;
+            var startInYear = componentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
+
+            var series = assessmentSeries?.Where(s => s.ComponentType == componentType && s.Year > tqRegistrationPathway.AcademicYear + startInYear &&
+                                        s.Year <= tqRegistrationPathway.AcademicYear + Constants.AssessmentEndInYears &&
+                                        currentDate >= s.StartDate && currentDate <= s.EndDate)?.OrderBy(a => a.Id)?.ToList();
+
+            return series;
+        }
+
+        public AssessmentSeries GetNextAvailableAssessmentSeries(IList<AssessmentSeries> assessmentSeries, TqRegistrationPathway tqRegistrationPathway, ComponentType componentType)
+        {
+            var startInYear = componentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
+            var series = assessmentSeries?.OrderBy(a => a.Id)?.FirstOrDefault(s => s.ComponentType == componentType && s.Year > tqRegistrationPathway.AcademicYear + startInYear &&
+                                        s.Year <= tqRegistrationPathway.AcademicYear + Constants.AssessmentEndInYears && DateTime.UtcNow.Date <= s.EndDate);
+            return series;
         }
     }
 }

@@ -70,38 +70,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Available to add after Autumn 2021 series has passed.
-        /// </summary>
-        public static string Available_After_Autumn2021 {
-            get {
-                return ResourceManager.GetString("Available_After_Autumn2021", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Available to add after the current assessment series has passed.
-        /// </summary>
-        public static string Available_After_Current_Assessment_Series {
-            get {
-                return ResourceManager.GetString("Available_After_Current_Assessment_Series", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  for core.
-        /// </summary>
-        public static string Core_Assessment_Entry_Hidden_Text {
-            get {
-                return ResourceManager.GetString("Core_Assessment_Entry_Hidden_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Core: {0}.
+        ///   Looks up a localized string similar to Core (code): {0}.
         /// </summary>
         public static string Core_Heading_Text {
             get {
                 return ResourceManager.GetString("Core_Heading_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learner&apos;s details.
+        /// </summary>
+        public static string Learner_Details {
+            get {
+                return ResourceManager.GetString("Learner_Details", resourceCulture);
             }
         }
         
@@ -115,38 +97,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name: {0}.
+        ///   Looks up a localized string similar to Learners details.
         /// </summary>
-        public static string Name_Heading_Text {
+        public static string Learners_Details_Aria_Label {
             get {
-                return ResourceManager.GetString("Name_Heading_Text", resourceCulture);
+                return ResourceManager.GetString("Learners_Details_Aria_Label", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Not specified.
+        ///   Looks up a localized string similar to Add an occupational specialism to this learner&apos;s record.
         /// </summary>
-        public static string Not_Specified_Text {
+        public static string Link_Add_An_Occupational_Specialism {
             get {
-                return ResourceManager.GetString("Not_Specified_Text", resourceCulture);
+                return ResourceManager.GetString("Link_Add_An_Occupational_Specialism", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner’s assessment entries page.
+        ///   Looks up a localized string similar to Occupational specialism :.
+        /// </summary>
+        public static string Occupational_Specialism_Heading {
+            get {
+                return ResourceManager.GetString("Occupational_Specialism_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learner details - Assessment entries.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Provider: {0}.
-        /// </summary>
-        public static string Provider_Heading_Text {
-            get {
-                return ResourceManager.GetString("Provider_Heading_Text", resourceCulture);
             }
         }
         
@@ -169,16 +151,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  for specialism.
-        /// </summary>
-        public static string Specialism_Assessment_Entry_Hidden_Text {
-            get {
-                return ResourceManager.GetString("Specialism_Assessment_Entry_Hidden_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Specialism: {0}.
+        ///   Looks up a localized string similar to Specialism (code): {0}.
         /// </summary>
         public static string Specialism_Heading_Text {
             get {
@@ -187,11 +160,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to First assessment entry.
+        ///   Looks up a localized string similar to This learner does not have an occupational specialism recorded on this service.
         /// </summary>
-        public static string Title_Assessment_Entry_Text {
+        public static string This_Learner_Does_Not_Have_Occuational_Specialisms_Recorded {
             get {
-                return ResourceManager.GetString("Title_Assessment_Entry_Text", resourceCulture);
+                return ResourceManager.GetString("This_Learner_Does_Not_Have_Occuational_Specialisms_Recorded", resourceCulture);
             }
         }
         
@@ -241,29 +214,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ULN: {0}.
+        ///   Looks up a localized string similar to You cannot register this learner for a core component assessment until the {0} window opens..
         /// </summary>
-        public static string Uln_Heading_Text {
+        public static string You_Cannot_Register_Learner_For_Core_Assessment_Until {
             get {
-                return ResourceManager.GetString("Uln_Heading_Text", resourceCulture);
+                return ResourceManager.GetString("You_Cannot_Register_Learner_For_Core_Assessment_Until", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View and amend this learner&apos;s registration details.
+        ///   Looks up a localized string similar to You cannot register this learner for an occupational specialism assessment until the {0} window opens..
         /// </summary>
-        public static string View_And_Amend_This_Learners_Registration_Details_Text {
+        public static string You_Cannot_Register_Learner_For_Occupational_Specialism_Until {
             get {
-                return ResourceManager.GetString("View_And_Amend_This_Learners_Registration_Details_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to View this learner&apos;s registration details.
-        /// </summary>
-        public static string View_This_Learners_Registration_Details_Text {
-            get {
-                return ResourceManager.GetString("View_This_Learners_Registration_Details_Text", resourceCulture);
+                return ResourceManager.GetString("You_Cannot_Register_Learner_For_Occupational_Specialism_Until", resourceCulture);
             }
         }
     }

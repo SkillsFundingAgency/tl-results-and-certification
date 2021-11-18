@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
@@ -7,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 {
@@ -48,9 +50,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
                 .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayLarId})"))
                 .ForMember(d => d.IsCoreEntryEligible, opts => opts.MapFrom(s => s.IsCoreEntryEligible))
+                .ForMember(d => d.NextAvailableCoreSeries, opts => opts.MapFrom(s => s.NextAvailableCoreSeries))
                 .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.IsCoreEntryEligible ? s.PathwayAssessmentSeries : null))
                 .ForMember(d => d.PathwayAssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
-                .ForMember(d => d.SpecialismDisplayName, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.SpecialismLarId) ? $"{s.SpecialismName} ({s.SpecialismLarId})" : null))
+                .ForMember(d => d.IsSpecialismEntryEligible, opts => opts.MapFrom(s => s.IsSpecialismEntryEligible))
+                .ForMember(d => d.NextAvailableSpecialismSeries, opts => opts.MapFrom(s => s.NextAvailableSpecialismSeries))
+                .ForMember(d => d.SpecialismDisplayName, opts => opts.MapFrom(s => string.Join(Constants.AndSeperator, s.Specialisms.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.Code})"))))
+                //.ForMember(d => d.SpecialismDisplayName, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.SpecialismLarId) ? $"{s.SpecialismName} ({s.SpecialismLarId})" : null))
                 .ForMember(d => d.SpecialismAssessmentSeries, opts => opts.MapFrom(s => s.SpecialismAssessmentSeries))
                 .ForMember(d => d.IsResultExist, opts => opts.MapFrom(s => s.PathwayResultId > 0))
                 .ForMember(d => d.HasAnyOutstandingPathwayPrsActivities, opts => opts.MapFrom(s => s.HasAnyOutstandingPathwayPrsActivities))

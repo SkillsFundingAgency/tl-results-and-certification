@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using System;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 {
@@ -19,11 +20,17 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public string PathwayAssessmentSeries { get; set; }
         public int? PathwayAssessmentId { get; set; }
         public bool IsCoreEntryEligible { get; set; }
+        public string NextAvailableCoreSeries { get; set; }
 
         public string SpecialismLarId { get; set; }
         public string SpecialismName { get; set; }
         public string SpecialismAssessmentSeries { get; set; }
         public int? SpecialismAssessmentId { get; set; }
+
+        public IEnumerable<SpecialismDetails> Specialisms { get; set; }
+
+        public bool IsSpecialismEntryEligible { get; set; }
+        public string NextAvailableSpecialismSeries { get; set; }
 
         public int? PathwayResultId { get; set; }
         public bool HasAnyOutstandingPathwayPrsActivities  { get; set; }
