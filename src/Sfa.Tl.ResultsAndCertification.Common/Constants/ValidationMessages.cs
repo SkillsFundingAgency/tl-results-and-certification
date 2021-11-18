@@ -60,6 +60,8 @@
         public const string InvalidNextCoreAssessmentEntry = "Available to add after the current assessment series has passed";
         public const string InvalidSpecialismAssessmentEntry = "Specialism assessment entry must be in the format detailed in the 'format rules' and 'example' columns in the technical specification. They can only be for the next available series.";
         public const string InvalidNextSpecialismAssessmentEntry = "Specialism assessment entry is beyond the next available series - only the next available series is allowed";
+        public const string InvalidSpecialismCodeCombination = "Specialism codes are not a valid combination";
+        public const string SpecialismCodeMustBePair = "Specialism code can only be entered or removed as part of a pair";
 
         // Assessments - Bulk stage 4 validations
         public const string AssessmentEntryCannotBeRemovedHasResult = "This assessment has a result so the assessment entry cannot be removed. Either remove the record from the bulk upload or enter the current assessment series to indicate a resit";

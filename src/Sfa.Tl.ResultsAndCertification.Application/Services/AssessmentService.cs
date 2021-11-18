@@ -76,11 +76,32 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 // 4. Specialism Code is incorrect
-                if (!string.IsNullOrWhiteSpace(assessment.SpecialismCode))
+                if (assessment.SpecialismCodes.Any())
                 {
-                    var isValidSpecialismCode = dbRegistration.TqRegistrationSpecialisms.Any(x => x.TlSpecialism.LarId.Equals(assessment.SpecialismCode, StringComparison.InvariantCultureIgnoreCase));
-                    if (!isValidSpecialismCode)
+                    var registeredSpecialismCodes = dbRegistration.TqRegistrationSpecialisms.Select(x => x.TlSpecialism.LarId);
+                    var invalidSpecialismCodes = assessment.SpecialismCodes.Except(registeredSpecialismCodes, StringComparer.InvariantCultureIgnoreCase);
+
+                    if (invalidSpecialismCodes.Any())
+                    {
+                        //var validationMessage = assessment.SpecialismCodes.Count > 1 ? ValidationMessages.InvalidSpecialismCodeCombination : ValidationMessages.InvalidSpecialismCode;
                         validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidSpecialismCode));
+                    }
+                    else
+                    {
+                        var existingRegisteredAssessments = dbRegistration.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments).Select(x => x.AssessmentSeriesId);
+                        var availableAssessmentSeries = await GetAvailableAssessmentSeriesAsync(aoUkprn, dbRegistration.TqRegistrationProfileId, ComponentType.Specialism); // TODO: user latest method. 
+                        
+                        if (availableAssessmentSeries != null)
+                        {
+                            var isResit = existingRegisteredAssessments.Where(x => x != availableAssessmentSeries.AssessmentSeriesId).Any();
+                            //&& string.IsNullOrWhiteSpace(assessment.SpecialismAssessmentEntry);
+
+                            if (!isResit && assessment.SpecialismCodes.Count < registeredSpecialismCodes.Count())
+                            {
+                                validationErrors.Add(BuildValidationError(assessment, ValidationMessages.SpecialismCodeMustBePair));
+                            }
+                        }
+                    }
                 }
 
                 // 5. Core assessment entry must be no more than 4 years after the starting academic year
@@ -115,9 +136,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     response.Add(new AssessmentRecordResponse { ValidationErrors = validationErrors });
                 else
                 {
-                    var registrationSpecialism = dbRegistration.TqRegistrationSpecialisms
-                                                    .FirstOrDefault(x => x.TlSpecialism.LarId.Equals(assessment.SpecialismCode, StringComparison.InvariantCultureIgnoreCase));
-                    
+                    var registrationSpecialism = dbRegistration.TqRegistrationSpecialisms.Where(x => assessment.SpecialismCodes.Any(sc => sc.Equals(x.TlSpecialism.LarId, StringComparison.InvariantCultureIgnoreCase)));
+
                     var csvCoreSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.CoreAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
                     var csvSpecialismSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.SpecialismAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
 
@@ -126,7 +146,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         TqRegistrationPathwayId = !string.IsNullOrWhiteSpace(assessment.CoreCode) ? dbRegistration?.Id : (int?)null,
                         PathwayAssessmentSeriesId = !string.IsNullOrWhiteSpace(assessment.CoreAssessmentEntry) ? csvCoreSeries?.Id : (int?)null,
 
-                        TqRegistrationSpecialismId = !string.IsNullOrWhiteSpace(assessment.SpecialismCode) ? registrationSpecialism?.Id : (int?)null,
+                        TqRegistrationSpecialismIds = registrationSpecialism.Select(x => x.TlSpecialismId),
                         SpecialismAssessmentSeriesId = !string.IsNullOrWhiteSpace(assessment.SpecialismAssessmentEntry) ? csvSpecialismSeries?.Id : (int?)null,
                     });
                 }
@@ -157,19 +177,22 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     });
                 }
 
-                if (assessment.TqRegistrationSpecialismId.HasValue && assessment.TqRegistrationSpecialismId.Value > 0)
+                foreach (var specialismId in assessment.TqRegistrationSpecialismIds)
                 {
-                    specialismAssessments.Add(new TqSpecialismAssessment
+                    if (specialismId > 0)
                     {
-                        Id = index - Constants.SpecialismAssessmentsStartIndex,
-                        TqRegistrationSpecialismId = assessment.TqRegistrationSpecialismId.Value,
-                        AssessmentSeriesId = assessment.SpecialismAssessmentSeriesId ?? 0,
-                        StartDate = DateTime.UtcNow,
-                        IsOptedin = true,
-                        IsBulkUpload = true,
-                        CreatedBy = performedBy,
-                        CreatedOn = DateTime.UtcNow
-                    });
+                        specialismAssessments.Add(new TqSpecialismAssessment
+                        {
+                            Id = index - Constants.SpecialismAssessmentsStartIndex,
+                            TqRegistrationSpecialismId = specialismId,
+                            AssessmentSeriesId = assessment.SpecialismAssessmentSeriesId ?? 0,
+                            StartDate = DateTime.UtcNow,
+                            IsOptedin = true,
+                            IsBulkUpload = true,
+                            CreatedBy = performedBy,
+                            CreatedOn = DateTime.UtcNow
+                        });
+                    }
                 }
             }
             return (pathwayAssessments, specialismAssessments);

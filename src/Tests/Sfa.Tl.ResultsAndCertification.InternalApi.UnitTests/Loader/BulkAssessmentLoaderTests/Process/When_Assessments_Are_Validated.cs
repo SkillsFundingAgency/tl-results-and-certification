@@ -22,15 +22,15 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkAssess
             var expectedStage2Response = new List<AssessmentCsvRecordResponse>
             {
                 new AssessmentCsvRecordResponse { RowNum = 1, Uln = 1111111111, CoreCode = "12345678", CoreAssessmentEntry = "Summer 2022" },
-                new AssessmentCsvRecordResponse { RowNum = 2, Uln = 1111111112, SpecialismCode = "LAR12345", SpecialismAssessmentEntry = "Autumn 2023" },
-                new AssessmentCsvRecordResponse { RowNum = 3, Uln = 1111111113, CoreCode = "12345678", CoreAssessmentEntry = "Summer 2022", SpecialismCode = "LAR12345", SpecialismAssessmentEntry = "Autumn 2023" }
+                new AssessmentCsvRecordResponse { RowNum = 2, Uln = 1111111112, SpecialismCodes = "LAR12345", SpecialismAssessmentEntry = "Autumn 2023" },
+                new AssessmentCsvRecordResponse { RowNum = 3, Uln = 1111111113, CoreCode = "12345678", CoreAssessmentEntry = "Summer 2022", SpecialismCodes = "LAR12345", SpecialismAssessmentEntry = "Autumn 2023" }
             };
 
             expectedStage3Response = new List<AssessmentRecordResponse>
             {
                 new AssessmentRecordResponse { TqRegistrationPathwayId = 1, PathwayAssessmentSeriesId = 11 },
-                new AssessmentRecordResponse { TqRegistrationSpecialismId = 2, SpecialismAssessmentSeriesId = 22 },
-                new AssessmentRecordResponse { TqRegistrationPathwayId = 3, PathwayAssessmentSeriesId = 33, TqRegistrationSpecialismId = 333, SpecialismAssessmentSeriesId = 3333 }
+                new AssessmentRecordResponse { TqRegistrationSpecialismIds = 2, SpecialismAssessmentSeriesId = 22 },
+                new AssessmentRecordResponse { TqRegistrationPathwayId = 3, PathwayAssessmentSeriesId = 33, TqRegistrationSpecialismIds = 333, SpecialismAssessmentSeriesId = 3333 }
             };
 
             var csvResponse = new CsvResponseModel<AssessmentCsvRecordResponse> { Rows = expectedStage2Response };

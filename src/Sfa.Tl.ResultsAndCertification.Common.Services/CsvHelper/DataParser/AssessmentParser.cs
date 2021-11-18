@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interf
 using System.Collections.Generic;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
 {
@@ -18,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
             {
                 Uln = assessment.Uln.Trim().ToLong(),
                 CoreCode = assessment.CoreCode.Trim(),
-                SpecialismCode = assessment.SpecialismCodes.Trim(),
+                SpecialismCodes = assessment.SpecialismCodes.Trim().Split(',').Where(x => !string.IsNullOrWhiteSpace(x.Trim()))?.Select(sp => sp.Trim()).ToList(),
                 CoreAssessmentEntry = assessment.CoreAssessmentEntry.Trim(),
                 SpecialismAssessmentEntry = assessment.SpecialismAssessmentEntry.Trim(),
                 RowNum = rownum,

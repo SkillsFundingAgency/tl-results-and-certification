@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             var specialismAssessments = _result.Item2;
 
             var expectedPathwayAssessmentsCount = _assessmentRecords.Count(a => a.TqRegistrationPathwayId != null);
-            var expectedSpecialismAssessmentsCount = _assessmentRecords.Count(a => a.TqRegistrationSpecialismId != null);
+            var expectedSpecialismAssessmentsCount = _assessmentRecords.Count(a => a.TqRegistrationSpecialismIds != null);
 
             pathwayAssessments.Should().NotBeNull();
             specialismAssessments.Should().NotBeNull();
@@ -73,16 +73,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 }
 
                 // Specialism Assessments
-                var actualSpecialismAssessment = specialismAssessments.FirstOrDefault(x => x.TqRegistrationSpecialismId == expectedAssessment.TqRegistrationSpecialismId);
+                var actualSpecialismAssessment = specialismAssessments.FirstOrDefault(x => x.TqRegistrationSpecialismId == expectedAssessment.TqRegistrationSpecialismIds);
 
-                if (expectedAssessment.TqRegistrationSpecialismId == null)
+                if (expectedAssessment.TqRegistrationSpecialismIds == null)
                 {
                     actualSpecialismAssessment.Should().BeNull();
                 }
                 else
                 {
                     actualSpecialismAssessment.Should().NotBeNull();
-                    actualSpecialismAssessment.TqRegistrationSpecialismId.Should().Be(expectedAssessment.TqRegistrationSpecialismId);
+                    actualSpecialismAssessment.TqRegistrationSpecialismId.Should().Be(expectedAssessment.TqRegistrationSpecialismIds);
                     actualSpecialismAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.SpecialismAssessmentSeriesId);
                 }
             }
