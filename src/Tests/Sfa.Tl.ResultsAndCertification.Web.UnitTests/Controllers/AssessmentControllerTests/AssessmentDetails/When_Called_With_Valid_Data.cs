@@ -31,7 +31,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 IsResultExist = false,
                 SpecialismDisplayName = "Specialism1 (2345678)",
                 //SpecialismAssessmentSeries = AssessmentDetailsContent.Available_After_Autumn2021, //TODO: Rajesh
-                PathwayStatus = RegistrationPathwayStatus.Active
+                PathwayStatus = RegistrationPathwayStatus.Active,
+                IsCoreEntryEligible = true,
+                NextAvailableCoreSeries = "Autumn 2021",
+                IsSpecialismEntryEligible = false,
+                NextAvailableSpecialismSeries = "Summer 2022"
             };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.AssessmentId, mockresult.PathwayAssessmentId.ToString() } };
@@ -59,6 +63,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             model.SpecialismAssessmentSeries.Should().Be(mockresult.SpecialismAssessmentSeries);
             model.PathwayStatus.Should().Be(mockresult.PathwayStatus);
             model.IsResultExist.Should().BeFalse();
+            model.IsCoreEntryEligible.Should().Be(mockresult.IsCoreEntryEligible);
+            model.NextAvailableCoreSeries.Should().Be(mockresult.NextAvailableCoreSeries);
+            model.IsSpecialismEntryEligible.Should().Be(mockresult.IsSpecialismEntryEligible);
+            model.NextAvailableSpecialismSeries.Should().Be(mockresult.NextAvailableSpecialismSeries);
 
             //TODO: Rajesh
 

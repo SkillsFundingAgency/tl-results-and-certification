@@ -28,7 +28,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 PathwayAssessmentSeries = null,
                 SpecialismAssessmentSeries = null,
                 PathwayStatus = RegistrationPathwayStatus.Active,
-                IsCoreEntryEligible = true
+                IsCoreEntryEligible = true,
+                NextAvailableCoreSeries = "Summer 2021",
+                IsSpecialismEntryEligible = true,
+                NextAvailableSpecialismSeries = "Summer 2022"
             };
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() } };
             AssessmentLoader.GetAssessmentDetailsAsync<AssessmentDetailsViewModel>(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(mockresult);
@@ -54,6 +57,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             model.SpecialismDisplayName.Should().Be(mockresult.SpecialismDisplayName);
             model.SpecialismAssessmentSeries.Should().Be(mockresult.SpecialismAssessmentSeries);
             model.PathwayStatus.Should().Be(mockresult.PathwayStatus);
+            model.IsCoreEntryEligible.Should().Be(mockresult.IsCoreEntryEligible);
+            model.NextAvailableCoreSeries.Should().Be(mockresult.NextAvailableCoreSeries);
+            model.IsSpecialismEntryEligible.Should().Be(mockresult.IsSpecialismEntryEligible);
+            model.NextAvailableSpecialismSeries.Should().Be(mockresult.NextAvailableSpecialismSeries);
 
             //TODO: Rajesh
 

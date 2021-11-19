@@ -36,7 +36,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 Specialisms = new List<SpecialismDetails> { new SpecialismDetails { Id = 1, Code = "2345678", Name = "Specialism1" } },
                 Status = RegistrationPathwayStatus.Active,
                 IsIndustryPlacementExist = true,
-                IsCoreEntryEligible = true
+                IsCoreEntryEligible = true,
+                NextAvailableCoreSeries = "Summer 2021",
+                IsSpecialismEntryEligible = true,
+                NextAvailableSpecialismSeries = "Summer 2022"
             };
 
             InternalApiClient.GetAssessmentDetailsAsync(AoUkprn, ProfileId).Returns(expectedApiResult);
@@ -71,7 +74,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.SpecialismAssessmentSeries.Should().Be(expectedApiResult.SpecialismAssessmentSeries);
             ActualResult.PathwayStatus.Should().Be(expectedApiResult.Status);
             ActualResult.IsIndustryPlacementExist.Should().BeTrue();
-            ActualResult.IsCoreEntryEligible.Should().BeTrue();
+            ActualResult.IsCoreEntryEligible.Should().Be(expectedApiResult.IsCoreEntryEligible);
+            ActualResult.NextAvailableCoreSeries.Should().Be(expectedApiResult.NextAvailableCoreSeries);
+            ActualResult.IsSpecialismEntryEligible.Should().Be(expectedApiResult.IsSpecialismEntryEligible);
+            ActualResult.NextAvailableSpecialismSeries.Should().Be(expectedApiResult.NextAvailableSpecialismSeries);
         }
     }
 }
