@@ -31,10 +31,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                            .ThenInclude(x => x.TlPathway)
                     .Include(x => x.TqRegistrationSpecialisms)
                        .ThenInclude(x => x.TlSpecialism)
+                    .Include(x => x.TqRegistrationSpecialisms)
+                        .ThenInclude(x => x.TqSpecialismAssessments)
                     .Where(p => uniqueLearnerNumbers.Contains(p.TqRegistrationProfile.UniqueLearnerNumber) &&
-                          p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
-                          (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))
-                    .ToListAsync();
+                        p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
+                        (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))
+                .ToListAsync();
 
             if (registrations == null) return null;
 

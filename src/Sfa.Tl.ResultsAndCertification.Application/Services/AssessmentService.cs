@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var response = new List<AssessmentRecordResponse>();
             var dbRegistrations = await _assessmentRepository.GetBulkAssessmentsAsync(aoUkprn, csvAssessments.Select(x => x.Uln));
             var dbAssessmentSeries = await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
-            
+
             foreach (var assessment in csvAssessments)
             {
                 // 1. ULN not recognised with AO
@@ -83,18 +83,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                     if (invalidSpecialismCodes.Any())
                     {
-                        //var validationMessage = assessment.SpecialismCodes.Count > 1 ? ValidationMessages.InvalidSpecialismCodeCombination : ValidationMessages.InvalidSpecialismCode;
                         validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidSpecialismCode));
                     }
                     else
                     {
-                        var existingRegisteredAssessments = dbRegistration.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments).Select(x => x.AssessmentSeriesId);
-                        var availableAssessmentSeries = await GetAvailableAssessmentSeriesAsync(aoUkprn, dbRegistration.TqRegistrationProfileId, ComponentType.Specialism); // TODO: user latest method. 
-                        
+                        var registeredAssessments = dbRegistration.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments.Where(x => x.EndDate == null && x.IsOptedin)).Select(x => x.AssessmentSeriesId);
+                        var availableAssessmentSeries = GetValidAssessmentSeries(dbAssessmentSeries, dbRegistration, ComponentType.Specialism);
+
                         if (availableAssessmentSeries != null)
                         {
-                            var isResit = existingRegisteredAssessments.Where(x => x != availableAssessmentSeries.AssessmentSeriesId).Any();
-                            //&& string.IsNullOrWhiteSpace(assessment.SpecialismAssessmentEntry);
+                            var isResit = registeredAssessments.Except(availableAssessmentSeries.Select(x => x.Id)).Any();
 
                             if (!isResit && assessment.SpecialismCodes.Count < registeredSpecialismCodes.Count())
                             {
@@ -136,7 +134,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     response.Add(new AssessmentRecordResponse { ValidationErrors = validationErrors });
                 else
                 {
-                    var registrationSpecialism = dbRegistration.TqRegistrationSpecialisms.Where(x => assessment.SpecialismCodes.Any(sc => sc.Equals(x.TlSpecialism.LarId, StringComparison.InvariantCultureIgnoreCase)));
+                    var registrationSpecialisms = dbRegistration.TqRegistrationSpecialisms.Where(x => assessment.SpecialismCodes.Any(sc => sc.Equals(x.TlSpecialism.LarId, StringComparison.InvariantCultureIgnoreCase)));
 
                     var csvCoreSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.CoreAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
                     var csvSpecialismSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.SpecialismAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
@@ -146,7 +144,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         TqRegistrationPathwayId = !string.IsNullOrWhiteSpace(assessment.CoreCode) ? dbRegistration?.Id : (int?)null,
                         PathwayAssessmentSeriesId = !string.IsNullOrWhiteSpace(assessment.CoreAssessmentEntry) ? csvCoreSeries?.Id : (int?)null,
 
-                        TqRegistrationSpecialismIds = registrationSpecialism.Select(x => x.TlSpecialismId),
+                        TqRegistrationSpecialismIds = registrationSpecialisms.Select(x => x.TlSpecialismId),
                         SpecialismAssessmentSeriesId = !string.IsNullOrWhiteSpace(assessment.SpecialismAssessmentEntry) ? csvSpecialismSeries?.Id : (int?)null,
                     });
                 }
@@ -179,20 +177,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 foreach (var specialismId in assessment.TqRegistrationSpecialismIds)
                 {
-                    if (specialismId > 0)
+                    specialismAssessments.Add(new TqSpecialismAssessment
                     {
-                        specialismAssessments.Add(new TqSpecialismAssessment
-                        {
-                            Id = index - Constants.SpecialismAssessmentsStartIndex,
-                            TqRegistrationSpecialismId = specialismId,
-                            AssessmentSeriesId = assessment.SpecialismAssessmentSeriesId ?? 0,
-                            StartDate = DateTime.UtcNow,
-                            IsOptedin = true,
-                            IsBulkUpload = true,
-                            CreatedBy = performedBy,
-                            CreatedOn = DateTime.UtcNow
-                        });
-                    }
+                        Id = index - Constants.SpecialismAssessmentsStartIndex,
+                        TqRegistrationSpecialismId = specialismId,
+                        AssessmentSeriesId = assessment.SpecialismAssessmentSeriesId ?? 0,
+                        StartDate = DateTime.UtcNow,
+                        IsOptedin = true,
+                        IsBulkUpload = true,
+                        CreatedBy = performedBy,
+                        CreatedOn = DateTime.UtcNow
+                    });
                 }
             }
             return (pathwayAssessments, specialismAssessments);
