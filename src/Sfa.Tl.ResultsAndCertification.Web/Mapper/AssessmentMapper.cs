@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.SpecialismDisplayName, opts => opts.MapFrom(s => string.Join(Constants.AndSeperator, s.Specialisms.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.Code})"))))
                 //.ForMember(d => d.SpecialismDisplayName, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.SpecialismLarId) ? $"{s.SpecialismName} ({s.SpecialismLarId})" : null))
                 .ForMember(d => d.SpecialismAssessmentSeries, opts => opts.MapFrom(s => s.SpecialismAssessmentSeries))
-                .ForMember(d => d.IsResultExist, opts => opts.MapFrom(s => s.PathwayResultId > 0))
+                .ForMember(d => d.IsCoreResultExist, opts => opts.MapFrom(s => s.PathwayResultId > 0))
                 .ForMember(d => d.HasAnyOutstandingPathwayPrsActivities, opts => opts.MapFrom(s => s.HasAnyOutstandingPathwayPrsActivities))
                 .ForMember(d => d.IsIndustryPlacementExist, opts => opts.MapFrom(s => s.IsIndustryPlacementExist))
                 .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.Status));

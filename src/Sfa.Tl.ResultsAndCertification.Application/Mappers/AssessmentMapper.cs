@@ -20,16 +20,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.PathwayLarId, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.LarId))
                 .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.Name))
                 .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle))
-                .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.TqPathwayAssessments.Any() ? s.TqPathwayAssessments.FirstOrDefault().AssessmentSeries.Name : null))
-                .ForMember(d => d.PathwayAssessmentId, opts => opts.MapFrom(s => s.TqPathwayAssessments.Any() ? s.TqPathwayAssessments.FirstOrDefault().Id : (int?)null))
+                .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.TqPathwayAssessments.Any() ? s.TqPathwayAssessments.OrderByDescending(a => a.AssessmentSeriesId).FirstOrDefault().AssessmentSeries.Name : null))
+                .ForMember(d => d.PathwayAssessmentId, opts => opts.MapFrom(s => s.TqPathwayAssessments.Any() ? s.TqPathwayAssessments.OrderByDescending(a => a.AssessmentSeriesId).FirstOrDefault().Id : (int?)null))
                 .ForMember(d => d.SpecialismLarId, opts => opts.MapFrom(s => s.TqRegistrationSpecialisms.Any() ? s.TqRegistrationSpecialisms.FirstOrDefault().TlSpecialism.LarId : null))
                 .ForMember(d => d.SpecialismName, opts => opts.MapFrom(s => s.TqRegistrationSpecialisms.Any() ? s.TqRegistrationSpecialisms.FirstOrDefault().TlSpecialism.Name : null))
                 .ForMember(d => d.SpecialismAssessmentSeries, opts => opts.MapFrom(s => s.TqRegistrationSpecialisms.Any() ? s.TqRegistrationSpecialisms.FirstOrDefault().TqSpecialismAssessments.Any() ? s.TqRegistrationSpecialisms.FirstOrDefault().TqSpecialismAssessments.FirstOrDefault().AssessmentSeries.Name : null : null))
                 .ForMember(d => d.SpecialismAssessmentId, opts => opts.MapFrom(s => s.TqRegistrationSpecialisms.Any() ? s.TqRegistrationSpecialisms.FirstOrDefault().TqSpecialismAssessments.Any() ? s.TqRegistrationSpecialisms.FirstOrDefault().TqSpecialismAssessments.FirstOrDefault().Id : (int?)null : null))
                 .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.TqRegistrationSpecialisms.Select(x => new SpecialismDetails { Id = x.Id, Code = x.TlSpecialism.LarId, Name = x.TlSpecialism.Name })))
                 .ForMember(d => d.PathwayResultId, opts =>
-                                opts.MapFrom(s => s.TqPathwayAssessments.Any() && s.TqPathwayAssessments.FirstOrDefault().TqPathwayResults.Any() ?
-                                s.TqPathwayAssessments.FirstOrDefault().TqPathwayResults.FirstOrDefault().Id : (int?)null))
+                                opts.MapFrom(s => s.TqPathwayAssessments.Any() && s.TqPathwayAssessments.OrderByDescending(a => a.AssessmentSeriesId).FirstOrDefault().TqPathwayResults.Any() ?
+                                s.TqPathwayAssessments.OrderByDescending(a => a.AssessmentSeriesId).FirstOrDefault().TqPathwayResults.FirstOrDefault().Id : (int?)null))
                 .ForMember(d => d.HasAnyOutstandingPathwayPrsActivities, opts => opts.MapFrom(s => s.TqPathwayAssessments.Any() ? s.TqPathwayAssessments.Any(a => a.TqPathwayResults.Any(r => r.IsOptedin && r.EndDate == null && r.PrsStatus == Common.Enum.PrsStatus.BeingAppealed)) : false))
                 .ForMember(d => d.IsIndustryPlacementExist, opts => opts.MapFrom(s => s.IndustryPlacements.Any()))
                 .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status));

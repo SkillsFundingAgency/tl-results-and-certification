@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             {
                 ProfileId = 1,
                 PathwayAssessmentSeries = "Summer 2021",
-                IsResultExist = true,
+                IsCoreResultExist = true,
             };
 
             AssessmentLoader.GetAssessmentDetailsAsync<AssessmentDetailsViewModel>(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(mockresult);
@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             var model = viewResult.Model as AssessmentDetailsViewModel;
             
             model.Should().NotBeNull();
-            model.IsResultExist.Should().BeTrue();
+            model.IsCoreResultExist.Should().BeTrue();
             
             //TODO: Rajesh
 

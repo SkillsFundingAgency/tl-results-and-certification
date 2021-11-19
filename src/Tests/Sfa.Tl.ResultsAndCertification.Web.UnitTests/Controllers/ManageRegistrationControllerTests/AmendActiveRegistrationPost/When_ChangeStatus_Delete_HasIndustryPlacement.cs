@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             ViewModel.ChangeStatus = RegistrationChangeStatus.Delete;
             ViewModel.ProfileId = ProfileId;
 
-            mockresult = new AssessmentDetailsViewModel { ProfileId = ProfileId, IsResultExist = false, IsIndustryPlacementExist = true };
+            mockresult = new AssessmentDetailsViewModel { ProfileId = ProfileId, IsCoreResultExist = false, IsIndustryPlacementExist = true };
             RegistrationLoader.GetRegistrationAssessmentAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active)
                 .Returns(mockresult);
         }
