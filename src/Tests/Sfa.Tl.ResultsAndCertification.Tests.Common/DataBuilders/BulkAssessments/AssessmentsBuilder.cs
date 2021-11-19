@@ -11,44 +11,42 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkAssessmen
             {
                 TqRegistrationPathwayId = 1,
                 PathwayAssessmentSeriesId = 1,
-                TqRegistrationSpecialismIds = 2,
+                TqRegistrationSpecialismIds = new List<int>{ 2 },
                 SpecialismAssessmentSeriesId = 2
             },
             new AssessmentRecordResponse
             {
                 TqRegistrationPathwayId = 2,
                 PathwayAssessmentSeriesId = 2,
-                TqRegistrationSpecialismIds = 3,
+                TqRegistrationSpecialismIds = new List<int>{ 3 },
                 SpecialismAssessmentSeriesId = 2
             },
             new AssessmentRecordResponse
             {
                 TqRegistrationPathwayId = 3,
                 PathwayAssessmentSeriesId = 4,
-                TqRegistrationSpecialismIds = 5,
+                TqRegistrationSpecialismIds = new List<int>{ 5 },
                 SpecialismAssessmentSeriesId = 1
             },
             new AssessmentRecordResponse
             {
                 TqRegistrationPathwayId = null,
                 PathwayAssessmentSeriesId = 1,
-                TqRegistrationSpecialismIds = 7,
+                TqRegistrationSpecialismIds = new List<int>{ 7 },
                 SpecialismAssessmentSeriesId = 1
             },
             new AssessmentRecordResponse
             {
                 TqRegistrationPathwayId = 4,
                 PathwayAssessmentSeriesId = 4,
-                TqRegistrationSpecialismIds = null,
                 SpecialismAssessmentSeriesId = 1
             },
             new AssessmentRecordResponse
             {
                 TqRegistrationPathwayId = null,
                 PathwayAssessmentSeriesId = 4,
-                TqRegistrationSpecialismIds = null,
                 SpecialismAssessmentSeriesId = 1
             }
-        };      
+        };
     }
 }

@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Xunit;
-using System;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkAssessmentLoaderTests.Process
@@ -22,15 +21,15 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkAssess
             var expectedStage2Response = new List<AssessmentCsvRecordResponse>
             {
                 new AssessmentCsvRecordResponse { RowNum = 1, Uln = 1111111111, CoreCode = "12345678", CoreAssessmentEntry = "Summer 2022" },
-                new AssessmentCsvRecordResponse { RowNum = 2, Uln = 1111111112, SpecialismCodes = "LAR12345", SpecialismAssessmentEntry = "Autumn 2023" },
-                new AssessmentCsvRecordResponse { RowNum = 3, Uln = 1111111113, CoreCode = "12345678", CoreAssessmentEntry = "Summer 2022", SpecialismCodes = "LAR12345", SpecialismAssessmentEntry = "Autumn 2023" }
+                new AssessmentCsvRecordResponse { RowNum = 2, Uln = 1111111112, SpecialismCodes = new List<string> {"LAR12345" }, SpecialismAssessmentEntry = "Autumn 2023" },
+                new AssessmentCsvRecordResponse { RowNum = 3, Uln = 1111111113, CoreCode = "12345678", CoreAssessmentEntry = "Summer 2022", SpecialismCodes = new List<string> {"LAR12345" }, SpecialismAssessmentEntry = "Autumn 2023" }
             };
 
             expectedStage3Response = new List<AssessmentRecordResponse>
             {
                 new AssessmentRecordResponse { TqRegistrationPathwayId = 1, PathwayAssessmentSeriesId = 11 },
-                new AssessmentRecordResponse { TqRegistrationSpecialismIds = 2, SpecialismAssessmentSeriesId = 22 },
-                new AssessmentRecordResponse { TqRegistrationPathwayId = 3, PathwayAssessmentSeriesId = 33, TqRegistrationSpecialismIds = 333, SpecialismAssessmentSeriesId = 3333 }
+                new AssessmentRecordResponse { TqRegistrationSpecialismIds = new List<int> { 2 }, SpecialismAssessmentSeriesId = 22 },
+                new AssessmentRecordResponse { TqRegistrationPathwayId = 3, PathwayAssessmentSeriesId = 33, TqRegistrationSpecialismIds = new List<int> {333 }, SpecialismAssessmentSeriesId = 3333 }
             };
 
             var csvResponse = new CsvResponseModel<AssessmentCsvRecordResponse> { Rows = expectedStage2Response };
@@ -49,14 +48,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkAssess
                 Returns(assessmentsProcessResult);
 
         }
-        
+
         [Fact]
         public void Then_Returns_Expected_Results()
         {
             BlobService.Received(1).DownloadFileAsync(Arg.Any<BlobStorageData>());
             CsvService.Received(1).ReadAndParseFileAsync(Arg.Any<AssessmentCsvRecordRequest>());
             AssessmentService.Received(1).ValidateAssessmentsAsync(AoUkprn, Arg.Any<IEnumerable<AssessmentCsvRecordResponse>>());
-            
+
             BlobService.Received(1).MoveFileAsync(Arg.Any<BlobStorageData>());
             DocumentUploadHistoryService.Received(1).CreateDocumentUploadHistory(Arg.Any<DocumentUploadHistoryDetails>());
 

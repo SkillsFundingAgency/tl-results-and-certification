@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
         public override void Given()
         {
             CreateMapper();
-            
+
             // Data seed
             SeedTestData(EnumAwardingOrganisation.Pearson);
             SeedRegistrationsData(_ulns, TqProvider);
@@ -78,8 +78,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             actualResult = _stage3Result.Result[rowIndex];
             actualResult.IsValid.Should().BeFalse();
             actualResult.ValidationErrors.Count.Should().Be(4);
-            expectedErrors = new List<string> 
-            { 
+            expectedErrors = new List<string>
+            {
                 ValidationMessages.InvalidCoreCode,
                 ValidationMessages.InvalidSpecialismCode,
                 ValidationMessages.InvalidCoreAssessmentEntry,
@@ -107,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             actualResult.TqRegistrationPathwayId.Should().Be(3);
             actualResult.PathwayAssessmentSeriesId.Should().Be(1);
 
-            actualResult.TqRegistrationSpecialismIds.Should().BeNull();
+            actualResult.TqRegistrationSpecialismIds.Should().BeEmpty();
             actualResult.SpecialismAssessmentSeriesId.Should().BeNull();
         }
 
@@ -138,16 +138,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 new AssessmentCsvRecordResponse { RowNum = 2, Uln = 1111111111 },
 
                 // 3. Invalid - Core Code, Specialism Code, Core assessment entry and Specialism assessment entry
-                new AssessmentCsvRecordResponse { RowNum = 3, Uln = 1111111112, CoreCode = "Invalid", CoreAssessmentEntry = "Invalid", SpecialismCodes = "Invalid", SpecialismAssessmentEntry = "Invalid" },
+                new AssessmentCsvRecordResponse { RowNum = 3, Uln = 1111111112, CoreCode = "Invalid", CoreAssessmentEntry = "Invalid", SpecialismCodes = new List<string> { "Invalid" }, SpecialismAssessmentEntry = "Invalid" },
 
                 // 4. Core and Specialism assessment series are not open. 
-                new AssessmentCsvRecordResponse { RowNum = 4, Uln = 1111111113, CoreCode = "10123456", CoreAssessmentEntry = "Summer 2022", SpecialismCodes = "10123456", SpecialismAssessmentEntry = "Summer 2023" },
+                new AssessmentCsvRecordResponse { RowNum = 4, Uln = 1111111113, CoreCode = "10123456", CoreAssessmentEntry = "Summer 2022", SpecialismCodes = new List<string> { "10123456" }, SpecialismAssessmentEntry = "Summer 2023" },
 
                  // 5. Valid Row
                 new AssessmentCsvRecordResponse { RowNum = 5, Uln = 1111111113, CoreCode = "10123456", CoreAssessmentEntry = "Summer 2021" },
                 new AssessmentCsvRecordResponse { RowNum = 6, Uln = 1111111114, CoreCode = "10123456", CoreAssessmentEntry = "SUMMER 2021" },
-                new AssessmentCsvRecordResponse { RowNum = 7, Uln = 1111111115, SpecialismCodes = "10123456", SpecialismAssessmentEntry = "Summer 2022" },
-                new AssessmentCsvRecordResponse { RowNum = 8, Uln = 1111111115, SpecialismCodes = "10123456", SpecialismAssessmentEntry = "SUMMER 2022" }
+                new AssessmentCsvRecordResponse { RowNum = 7, Uln = 1111111115, SpecialismCodes = new List<string> {"10123456" }, SpecialismAssessmentEntry = "Summer 2022" },
+                new AssessmentCsvRecordResponse { RowNum = 8, Uln = 1111111115, SpecialismCodes = new List<string> {"10123456" }, SpecialismAssessmentEntry = "SUMMER 2022" }
             };
         }
     }

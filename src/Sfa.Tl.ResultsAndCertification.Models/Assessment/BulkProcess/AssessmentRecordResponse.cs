@@ -5,6 +5,11 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess
 {
     public class AssessmentRecordResponse : ValidationState<BulkProcessValidationError>
     {
+        public AssessmentRecordResponse()
+        {
+            TqRegistrationSpecialismIds = new List<int>();
+        }
+
         public int? TqRegistrationPathwayId { get; set; }
         public int? PathwayAssessmentSeriesId { get; set; }
         public IEnumerable<int> TqRegistrationSpecialismIds { get; set; }
