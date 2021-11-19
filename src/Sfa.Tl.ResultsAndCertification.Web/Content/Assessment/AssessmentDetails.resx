@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add_An_Assessment_Entry_For" xml:space="preserve">
+    <value>Add an assessment entry for {0}</value>
+  </data>
   <data name="Add_Entry_Action_Link_Text" xml:space="preserve">
     <value>Add entry</value>
+  </data>
+  <data name="Add_Result_To_Learners_Previous_Assessment" xml:space="preserve">
+    <value>add a result to this learner's previous assessment</value>
+  </data>
+  <data name="Before_Entering_New_Assessment_Details" xml:space="preserve">
+    <value>before entering new assessment details.</value>
   </data>
   <data name="Core_Heading_Text" xml:space="preserve">
     <value>Core (code): {0}</value>
@@ -134,6 +143,9 @@
   </data>
   <data name="Link_Add_An_Occupational_Specialism" xml:space="preserve">
     <value>Add an occupational specialism to this learner's record</value>
+  </data>
+  <data name="No_Assessment_Entries_Have_Been_Recored_For" xml:space="preserve">
+    <value>No assessment entries have yet been recorded for {0}</value>
   </data>
   <data name="Occupational_Specialism_Heading" xml:space="preserve">
     <value>Occupational specialism :</value>
@@ -173,5 +185,8 @@
   </data>
   <data name="You_Cannot_Register_Learner_For_Occupational_Specialism_Until" xml:space="preserve">
     <value>You cannot register this learner for an occupational specialism assessment until the {0} window opens.</value>
+  </data>
+  <data name="You_Must" xml:space="preserve">
+    <value>You must</value>
   </data>
 </root>

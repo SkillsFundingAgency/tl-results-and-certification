@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.ProviderDisplayName.Should().Be($"{expectedApiResult.ProviderName}<br/>({expectedApiResult.ProviderUkprn})");
             ActualResult.PathwayDisplayName.Should().Be($"{expectedApiResult.PathwayName} ({expectedApiResult.PathwayLarId})");
             ActualResult.PathwayAssessmentSeries.Should().Be(expectedApiResult.PathwayAssessmentSeries);
-            ActualResult.IsResultExist.Should().BeFalse();
+            ActualResult.IsCoreResultExist.Should().BeFalse();
 
             var expectedSpecialismDisplayName = string.Join(Constants.AndSeperator, expectedApiResult.Specialisms.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.Code})"));
             ActualResult.SpecialismDisplayName.Should().Be(expectedSpecialismDisplayName);

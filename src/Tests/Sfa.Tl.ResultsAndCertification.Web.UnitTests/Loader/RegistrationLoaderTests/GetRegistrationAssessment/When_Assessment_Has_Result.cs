@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         [Fact]
         public void Then_IsResultExist_IsTrue()
         {
-            ActualResult.IsResultExist.Should().BeTrue();
+            ActualResult.IsCoreResultExist.Should().BeTrue();
         }
     }
 }

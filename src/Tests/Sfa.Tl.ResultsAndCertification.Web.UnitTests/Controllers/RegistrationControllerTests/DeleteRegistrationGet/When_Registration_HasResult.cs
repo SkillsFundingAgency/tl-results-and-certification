@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
     {
         public override void Given()
         {
-            var mockresult = new AssessmentDetailsViewModel { ProfileId = 99, IsResultExist = true };
+            var mockresult = new AssessmentDetailsViewModel { ProfileId = 99, IsCoreResultExist = true };
             RegistrationLoader.GetRegistrationAssessmentAsync(Ukprn, ProfileId, RegistrationPathwayStatus.Active).Returns(mockresult);
         }
 

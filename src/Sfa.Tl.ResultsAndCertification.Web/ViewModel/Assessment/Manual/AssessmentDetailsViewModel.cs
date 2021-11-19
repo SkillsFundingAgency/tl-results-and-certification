@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
             get 
             {
                 if (!string.IsNullOrWhiteSpace(PathwayAssessmentSeries))
-                    return IsResultExist ? string.Empty : AssessmentDetailsContent.Remove_Entry_Action_Link_Text;
+                    return IsCoreResultExist ? string.Empty : AssessmentDetailsContent.Remove_Entry_Action_Link_Text;
                 else
                     return IsCoreEntryEligible ? AssessmentDetailsContent.Add_Entry_Action_Link_Text : null;
             } 
@@ -54,11 +54,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public bool IsSpecialismEntryEligible { get; set; }
         public string NextAvailableSpecialismSeries { get; set; }
 
-        public bool IsResultExist { get; set; }
+        public bool IsCoreResultExist { get; set; }
         public bool HasAnyOutstandingPathwayPrsActivities { get; set; }
         public bool IsIndustryPlacementExist { get; set; }
 
         public RegistrationPathwayStatus PathwayStatus { get; set; }
+
+        public bool NeedCoreResultForPreviousAssessmentEntry => false; //IsCoreResultExist == false && PathwayAssessmentId > 0;
+        public bool HasCoreCurrentAssessmentEntry => false;
 
         //public SummaryItemModel SummaryCoreAssessmentEntry => new SummaryItemModel { Id = "coreassessmententry", Title = AssessmentDetailsContent.Title_Assessment_Entry_Text, Value = PathwayAssessmentSeriesText, ActionText = PathwayAssessmentActionText, HiddenActionText = AssessmentDetailsContent.Core_Assessment_Entry_Hidden_Text, RouteName = PathwayAddAssessmentRoute, RouteAttributes = PathwayAssessmentRouteAttributes };
         //public SummaryItemModel SummarySpecialismAssessmentEntry => new SummaryItemModel { Id = "specialismassessmententry", Title = AssessmentDetailsContent.Title_Assessment_Entry_Text, Value = SpecialismAssessmentSeriesText, ActionText = SpecialismAssessmentActionText, HiddenActionText = AssessmentDetailsContent.Specialism_Assessment_Entry_Hidden_Text };

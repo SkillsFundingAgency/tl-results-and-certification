@@ -61,11 +61,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add an assessment entry for {0}.
+        /// </summary>
+        public static string Add_An_Assessment_Entry_For {
+            get {
+                return ResourceManager.GetString("Add_An_Assessment_Entry_For", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add entry.
         /// </summary>
         public static string Add_Entry_Action_Link_Text {
             get {
                 return ResourceManager.GetString("Add_Entry_Action_Link_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to add a result to this learner&apos;s previous assessment.
+        /// </summary>
+        public static string Add_Result_To_Learners_Previous_Assessment {
+            get {
+                return ResourceManager.GetString("Add_Result_To_Learners_Previous_Assessment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to before entering new assessment details..
+        /// </summary>
+        public static string Before_Entering_New_Assessment_Details {
+            get {
+                return ResourceManager.GetString("Before_Entering_New_Assessment_Details", resourceCulture);
             }
         }
         
@@ -111,6 +138,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         public static string Link_Add_An_Occupational_Specialism {
             get {
                 return ResourceManager.GetString("Link_Add_An_Occupational_Specialism", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No assessment entries have yet been recorded for {0}.
+        /// </summary>
+        public static string No_Assessment_Entries_Have_Been_Recored_For {
+            get {
+                return ResourceManager.GetString("No_Assessment_Entries_Have_Been_Recored_For", resourceCulture);
             }
         }
         
@@ -228,6 +264,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         public static string You_Cannot_Register_Learner_For_Occupational_Specialism_Until {
             get {
                 return ResourceManager.GetString("You_Cannot_Register_Learner_For_Occupational_Specialism_Until", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must.
+        /// </summary>
+        public static string You_Must {
+            get {
+                return ResourceManager.GetString("You_Must", resourceCulture);
             }
         }
     }
