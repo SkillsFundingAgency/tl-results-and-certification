@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Functions
 {
-    public class LearnerRecordDetails
+    public class LrsLearnerRecordDetails
     {
-        public LearnerRecordDetails()
+        public LrsLearnerRecordDetails()
         {
-            LearningEventDetails = new List<LearningEventDetails>();
+            LearningEventDetails = new List<LrsLearningEventDetails>();
         }
 
         public int ProfileId { get; set; }
@@ -19,6 +19,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Functions
         public bool IsLearnerVerified { get; set; }
         public string PerformedBy { get; set; }
 
-        public List<LearningEventDetails> LearningEventDetails { get; set; }
+        public List<LrsLearningEventDetails> LearningEventDetails { get; set; }
     }
 }

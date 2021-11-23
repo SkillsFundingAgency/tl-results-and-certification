@@ -17,8 +17,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerRecord
     public class When_ProcessLearnerGender_IsCalled : LearnerRecordServiceBaseTest
     {
         private IList<TqRegistrationProfile> _profilesData;
-        private LearnerGenderResponse _result;
-        private List<LearnerRecordDetails> _learnerRecords;
+        private LrsLearnerGenderResponse _result;
+        private List<LrsLearnerRecordDetails> _learnerRecords;
         private List<(long uln, bool seedGender)> _testCriteriaData;
 
         public override void Given()
@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerRecord
             SeedData();
 
             _profilesData = SeedRegistrationProfilesData(false);
-            _learnerRecords = new List<LearnerRecordDetails>();
+            _learnerRecords = new List<LrsLearnerRecordDetails>();
             _testCriteriaData = new List<(long uln, bool seedGender)>
             {
                 (1111111111, false),
@@ -43,14 +43,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerRecord
                 _learnerRecords.Add(BuildLearnerRecordDetails(profile, false, false, false, seedGender));
             }
 
-            LearnerRecordServiceLogger = new Logger<LearnerRecordService>(new NullLoggerFactory());
+            LearnerRecordServiceLogger = new Logger<LrsService>(new NullLoggerFactory());
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
 
             QualificationRepositoryLogger = new Logger<GenericRepository<Qualification>>(new NullLoggerFactory());
             QualificationRepository = new GenericRepository<Qualification>(QualificationRepositoryLogger, DbContext);
 
-            LrsService = new LearnerRecordService(Mapper, LearnerRecordServiceLogger, RegistrationRepository, QualificationRepository);
+            LrsService = new LrsService(Mapper, LearnerRecordServiceLogger, RegistrationRepository, QualificationRepository);
         }
 
         public override Task When()

@@ -14,18 +14,18 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.LearnerGender
     public abstract class TestSetup : BaseTest<Functions.LearnerGender>
     {
         protected IMapper Mapper;
-        protected ILogger<ILearnerService> Logger;
+        protected ILogger<ILrsLearnerService> Logger;
         protected TimerSchedule TimerSchedule;
         protected ICommonService CommonService;
-        protected ILearnerService LearnerService;
+        protected ILrsLearnerService LearnerService;
         protected Functions.LearnerGender LearnerGenderFunction;
 
         public override void Setup()
         {
             TimerSchedule = Substitute.For<TimerSchedule>();
             CommonService = Substitute.For<ICommonService>();
-            Logger = Substitute.For<ILogger<ILearnerService>>();
-            LearnerService = Substitute.For<ILearnerService>();
+            Logger = Substitute.For<ILogger<ILrsLearnerService>>();
+            LearnerService = Substitute.For<ILrsLearnerService>();
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly));
             Mapper = new AutoMapper.Mapper(mapperConfig);

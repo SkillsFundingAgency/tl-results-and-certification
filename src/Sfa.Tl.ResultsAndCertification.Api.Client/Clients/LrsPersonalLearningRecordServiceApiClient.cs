@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 {
-    public class PersonalLearningRecordServiceApiClient : IPersonalLearningRecordServiceApiClient
+    public class LrsPersonalLearningRecordServiceApiClient : ILrsPersonalLearningRecordServiceApiClient
     {
-        private readonly ILogger<IPersonalLearningRecordServiceApiClient> _logger;
+        private readonly ILogger<ILrsPersonalLearningRecordServiceApiClient> _logger;
         private readonly ILearnerServiceR9Client _learnerServiceR9Client;
         private readonly ResultsAndCertificationConfiguration _configuration;
 
-        public PersonalLearningRecordServiceApiClient(ILogger<IPersonalLearningRecordServiceApiClient> logger,
+        public LrsPersonalLearningRecordServiceApiClient(ILogger<ILrsPersonalLearningRecordServiceApiClient> logger,
             ILearnerServiceR9Client learnerServiceR9Client,
             ResultsAndCertificationConfiguration configuration)
         {

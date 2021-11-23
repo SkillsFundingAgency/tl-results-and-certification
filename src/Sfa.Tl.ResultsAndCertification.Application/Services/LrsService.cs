@@ -13,14 +13,14 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
-    public class LearnerRecordService : ILearnerRecordService
+    public class LrsService : ILrsService
     {
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         private readonly IRegistrationRepository _tqRegistrationRepository;
         private readonly IRepository<Qualification> _qualificationRepository;
 
-        public LearnerRecordService(IMapper mapper, ILogger<ILearnerRecordService> logger,
+        public LrsService(IMapper mapper, ILogger<ILrsService> logger,
             IRegistrationRepository tqRegistrationRepository,
             IRepository<Qualification> qualificationRepository)
         {
@@ -50,13 +50,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<IList<RegisteredLearnerDetails>>(registrationLearners);
         }
 
-        public async Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerRecordsAsync(List<LearnerRecordDetails> learnerRecords)
+        public async Task<LrsLearnerVerificationAndLearningEventsResponse> ProcessLearnerRecordsAsync(List<LrsLearnerRecordDetails> learnerRecords)
         {
             if (learnerRecords == null || !learnerRecords.Any())
             {
                 var message = $"No learners data retrieved from LRS to process learner and learning events. Method: ProcessLearnerRecordsAsync()";
                 _logger.LogWarning(LogEvent.NoDataFound, message);
-                return new LearnerVerificationAndLearningEventsResponse { IsSuccess = true, Message = message };
+                return new LrsLearnerVerificationAndLearningEventsResponse { IsSuccess = true, Message = message };
             }
 
             var profilesAndQualsToUpdate = new List<TqRegistrationProfile>();
@@ -81,21 +81,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (profilesAndQualsToUpdate.Any())
             {
                 var isSuccess = await _tqRegistrationRepository.UpdateManyAsync(profilesAndQualsToUpdate) > 0;
-                return new LearnerVerificationAndLearningEventsResponse { IsSuccess = isSuccess, LrsCount = learnerRecords.Count(), ModifiedCount = profilesAndQualsToUpdate.Count(), SavedCount = isSuccess ? profilesAndQualsToUpdate.Count() : 0 };
+                return new LrsLearnerVerificationAndLearningEventsResponse { IsSuccess = isSuccess, LrsCount = learnerRecords.Count(), ModifiedCount = profilesAndQualsToUpdate.Count(), SavedCount = isSuccess ? profilesAndQualsToUpdate.Count() : 0 };
             }
             else
             {
-                return new LearnerVerificationAndLearningEventsResponse { IsSuccess = true, LrsCount = learnerRecords.Count(), ModifiedCount = 0, SavedCount = 0 };
+                return new LrsLearnerVerificationAndLearningEventsResponse { IsSuccess = true, LrsCount = learnerRecords.Count(), ModifiedCount = 0, SavedCount = 0 };
             }
         }
 
-        public async Task<LearnerGenderResponse> ProcessLearnerGenderAsync(List<LearnerRecordDetails> learnerRecords)
+        public async Task<LrsLearnerGenderResponse> ProcessLearnerGenderAsync(List<LrsLearnerRecordDetails> learnerRecords)
         {
             if (learnerRecords == null || !learnerRecords.Any())
             {
                 var message = $"No learners data retrieved from LRS to process gender information. Method: ProcessLearnerGenderAsync()";
                 _logger.LogWarning(LogEvent.NoDataFound, message);
-                return new LearnerGenderResponse { IsSuccess = true, Message = message };
+                return new LrsLearnerGenderResponse { IsSuccess = true, Message = message };
             }
 
             var profilesToUpdate = new List<TqRegistrationProfile>();
@@ -117,15 +117,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (profilesToUpdate.Any())
             {
                 var response = await _tqRegistrationRepository.UpdateManyAsync(profilesToUpdate);
-                return new LearnerGenderResponse { IsSuccess = response > 0, LrsCount = learnerRecords.Count(), ModifiedCount = profilesToUpdate.Count(), SavedCount = response };
+                return new LrsLearnerGenderResponse { IsSuccess = response > 0, LrsCount = learnerRecords.Count(), ModifiedCount = profilesToUpdate.Count(), SavedCount = response };
             }
             else
             {
-                return new LearnerGenderResponse { IsSuccess = true, LrsCount = learnerRecords.Count(), ModifiedCount = profilesToUpdate.Count(), SavedCount = 0 };
+                return new LrsLearnerGenderResponse { IsSuccess = true, LrsCount = learnerRecords.Count(), ModifiedCount = profilesToUpdate.Count(), SavedCount = 0 };
             }
         }
 
-        private static void ProcessLearningEvents(List<Qualification> qualifications, LearnerRecordDetails learnerRecord)
+        private static void ProcessLearningEvents(List<Qualification> qualifications, LrsLearnerRecordDetails learnerRecord)
         {
             if (learnerRecord.IsLearnerVerified == false) return;
 
@@ -147,7 +147,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
         }        
 
-        private static TqRegistrationProfile ProcessProfileAndQualificationsAchieved(List<Qualification> qualifications, LearnerRecordDetails learnerRecord, TqRegistrationProfile profile)
+        private static TqRegistrationProfile ProcessProfileAndQualificationsAchieved(List<Qualification> qualifications, LrsLearnerRecordDetails learnerRecord, TqRegistrationProfile profile)
         {
             if (learnerRecord.IsLearnerVerified == false && learnerRecord.IsLearnerVerified == profile.IsLearnerVerified)
                 return null;

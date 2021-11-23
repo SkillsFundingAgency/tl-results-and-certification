@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.LearnerGender
         public override void Given()
         {
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
-            LearnerService.FetchLearnerGenderAsync().Returns(new LearnerGenderResponse { IsSuccess = true });
+            LearnerService.FetchLearnerGenderAsync().Returns(new LrsLearnerGenderResponse { IsSuccess = true });
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }
 

@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLe
     public class When_Called_With_Empty_Data : TestSetup
     {
         private List<RegisteredLearnerDetails> _registrationLearnerDetails;
-        private LearnerVerificationAndLearningEventsResponse _expectedResult;
+        private LrsLearnerVerificationAndLearningEventsResponse _expectedResult;
         private GetLearnerLearningEventsResponse _apiResponse;
 
         public override void Given()
@@ -21,8 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLe
 
             PersonalLearningRecordApiClient.GetLearnerEventsAsync(Arg.Any<RegisteredLearnerDetails>()).Returns(_apiResponse);
 
-            _expectedResult = new LearnerVerificationAndLearningEventsResponse { IsSuccess = true, TotalCount = 0, LrsCount = 0, ModifiedCount = 0, SavedCount = 0 };
-            LearnerRecordService.ProcessLearnerRecordsAsync(Arg.Any<List<LearnerRecordDetails>>()).Returns(_expectedResult);
+            _expectedResult = new LrsLearnerVerificationAndLearningEventsResponse { IsSuccess = true, TotalCount = 0, LrsCount = 0, ModifiedCount = 0, SavedCount = 0 };
+            LearnerRecordService.ProcessLearnerRecordsAsync(Arg.Any<List<LrsLearnerRecordDetails>>()).Returns(_expectedResult);
         }
 
         [Fact]
@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLe
         {
             LearnerRecordService.Received(1).GetPendingVerificationAndLearningEventsLearnersAsync();
             PersonalLearningRecordApiClient.DidNotReceive().GetLearnerEventsAsync(Arg.Any<RegisteredLearnerDetails>());
-            LearnerRecordService.DidNotReceive().ProcessLearnerRecordsAsync(Arg.Any<List<LearnerRecordDetails>>());
+            LearnerRecordService.DidNotReceive().ProcessLearnerRecordsAsync(Arg.Any<List<LrsLearnerRecordDetails>>());
         }
 
         [Fact]

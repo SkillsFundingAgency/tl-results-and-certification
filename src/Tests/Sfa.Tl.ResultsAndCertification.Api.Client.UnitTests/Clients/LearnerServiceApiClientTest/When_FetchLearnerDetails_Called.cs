@@ -16,19 +16,19 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.LearnerServiceApiClientTest
 {
-    public class When_FetchLearnerDetails_Called : BaseTest<LearnerServiceApiClient>
+    public class When_FetchLearnerDetails_Called : BaseTest<LrsLearnerServiceApiClient>
     {
         private findLearnerByULNResponse _result;
         private findLearnerByULNResponse _mockHttpResult;
         private RegisteredLearnerDetails _registrationLearnerDetails;
-        private ILogger<ILearnerServiceApiClient> _logger;
+        private ILogger<ILrsLearnerServiceApiClient> _logger;
         private ILearnerPortTypeClient _learnerPortTypeClient;
         private ResultsAndCertificationConfiguration _configuration;
-        private LearnerServiceApiClient _apiClient;
+        private LrsLearnerServiceApiClient _apiClient;
 
         public override void Setup()
         {
-            _logger = Substitute.For<ILogger<ILearnerServiceApiClient>>();
+            _logger = Substitute.For<ILogger<ILrsLearnerServiceApiClient>>();
             _learnerPortTypeClient = Substitute.For<ILearnerPortTypeClient>();
 
             _registrationLearnerDetails = new RegisteredLearnerDetails
@@ -65,7 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.LearnerSer
 
         public override void Given()
         {
-            _apiClient = new LearnerServiceApiClient(_logger, _learnerPortTypeClient, _configuration);
+            _apiClient = new LrsLearnerServiceApiClient(_logger, _learnerPortTypeClient, _configuration);
             _learnerPortTypeClient.learnerByULNAsync(Arg.Any<learnerByULNRequest>()).Returns(_mockHttpResult);
         }
 

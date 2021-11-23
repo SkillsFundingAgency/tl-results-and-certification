@@ -23,14 +23,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerRecord
 
             _profilesData = SeedRegistrationProfilesData();
 
-            LearnerRecordServiceLogger = new Logger<LearnerRecordService>(new NullLoggerFactory());
+            LearnerRecordServiceLogger = new Logger<LrsService>(new NullLoggerFactory());
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
 
             QualificationRepositoryLogger = new Logger<GenericRepository<Qualification>>(new NullLoggerFactory());
             QualificationRepository = new GenericRepository<Qualification>(QualificationRepositoryLogger, DbContext);
 
-            LrsService = new LearnerRecordService(Mapper, LearnerRecordServiceLogger, RegistrationRepository, QualificationRepository);
+            LrsService = new LrsService(Mapper, LearnerRecordServiceLogger, RegistrationRepository, QualificationRepository);
         }
 
         public override Task When()

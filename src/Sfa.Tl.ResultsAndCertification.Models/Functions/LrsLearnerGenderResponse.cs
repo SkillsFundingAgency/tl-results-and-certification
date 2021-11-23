@@ -1,6 +1,6 @@
 ﻿namespace Sfa.Tl.ResultsAndCertification.Models.Functions
 {
-    public class LearnerVerificationAndLearningEventsResponse
+    public class LrsLearnerGenderResponse
     {
         public bool IsSuccess { get; set; }
         public string Message { get; set; }

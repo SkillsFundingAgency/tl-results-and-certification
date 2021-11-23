@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 {
-    public class PersonalLearningRecordService : IPersonalLearningRecordService
+    public class LrsPersonalLearningRecordService : ILrsPersonalLearningRecordService
     {
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
-        private readonly IPersonalLearningRecordServiceApiClient _personalLearningRecordApiClient;
-        private readonly ILearnerRecordService _learnerRecordService;
+        private readonly ILrsPersonalLearningRecordServiceApiClient _personalLearningRecordApiClient;
+        private readonly ILrsService _learnerRecordService;
 
-        public PersonalLearningRecordService(IMapper mapper, ILogger<IPersonalLearningRecordService> logger,
-            IPersonalLearningRecordServiceApiClient personalLearningRecordApiClient,
-            ILearnerRecordService learnerRecordService)
+        public LrsPersonalLearningRecordService(IMapper mapper, ILogger<ILrsPersonalLearningRecordService> logger,
+            ILrsPersonalLearningRecordServiceApiClient personalLearningRecordApiClient,
+            ILrsService learnerRecordService)
         {
             _mapper = mapper;
             _logger = logger;
@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             _learnerRecordService = learnerRecordService;
         }
 
-        public async Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerVerificationAndLearningEventsAsync()
+        public async Task<LrsLearnerVerificationAndLearningEventsResponse> ProcessLearnerVerificationAndLearningEventsAsync()
         {
             var pendingLearners = await _learnerRecordService.GetPendingVerificationAndLearningEventsLearnersAsync();
 
@@ -36,17 +36,17 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             {
                 var message = $"No pending learners found to process learner verification and learning events. Method: ProcessLearnerVerificationAndLearningEventsAsync()";
                 _logger.LogWarning(LogEvent.NoDataFound, message);
-                return new LearnerVerificationAndLearningEventsResponse { IsSuccess = true, Message = message };
+                return new LrsLearnerVerificationAndLearningEventsResponse { IsSuccess = true, Message = message };
             }
 
-            var learnerRecordDetailsList = new List<LearnerRecordDetails>();
+            var learnerRecordDetailsList = new List<LrsLearnerRecordDetails>();
 
             foreach (var pendingLearner in pendingLearners)
             {
                 var plrResult = await _personalLearningRecordApiClient.GetLearnerEventsAsync(pendingLearner);
 
                 if (plrResult != null)
-                    learnerRecordDetailsList.Add(_mapper.Map<LearnerRecordDetails>(plrResult, opt => opt.Items[Constants.LrsProfileId] = pendingLearner.ProfileId));
+                    learnerRecordDetailsList.Add(_mapper.Map<LrsLearnerRecordDetails>(plrResult, opt => opt.Items[Constants.LrsProfileId] = pendingLearner.ProfileId));
             }
 
             // process learner records

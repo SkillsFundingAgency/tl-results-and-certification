@@ -4,9 +4,9 @@ using Sfa.Tl.ResultsAndCertification.Models.Functions;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 {
-    public class LearningRecordServiceMapper : Profile
+    public class LrsServiceMapper : Profile
     {
-        public LearningRecordServiceMapper()
+        public LrsServiceMapper()
         {
             CreateMap<TqRegistrationProfile, RegisteredLearnerDetails>();
 

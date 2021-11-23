@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLe
     public class When_Called_With_Valid_Data : TestSetup
     {
         private List<RegisteredLearnerDetails> _registrationLearnerDetails;
-        private LearnerVerificationAndLearningEventsResponse _expectedResult;
+        private LrsLearnerVerificationAndLearningEventsResponse _expectedResult;
 
         public override void Given()
         {
@@ -30,8 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLe
             var apiResponse = new GetLearnerLearningEventsResponse { IncomingULN = registrationLearnerDetails.Uln.ToString(), FoundULN = registrationLearnerDetails.Uln.ToString() };
             PersonalLearningRecordApiClient.GetLearnerEventsAsync(Arg.Any<RegisteredLearnerDetails>()).Returns(apiResponse);
 
-            _expectedResult = new LearnerVerificationAndLearningEventsResponse { IsSuccess = true, TotalCount = 1, LrsCount = 1, ModifiedCount = 1, SavedCount = 1  };
-            LearnerRecordService.ProcessLearnerRecordsAsync(Arg.Any<List<LearnerRecordDetails>>()).Returns(_expectedResult);
+            _expectedResult = new LrsLearnerVerificationAndLearningEventsResponse { IsSuccess = true, TotalCount = 1, LrsCount = 1, ModifiedCount = 1, SavedCount = 1  };
+            LearnerRecordService.ProcessLearnerRecordsAsync(Arg.Any<List<LrsLearnerRecordDetails>>()).Returns(_expectedResult);
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLe
         {
             LearnerRecordService.Received(1).GetPendingVerificationAndLearningEventsLearnersAsync();
             PersonalLearningRecordApiClient.Received(1).GetLearnerEventsAsync(Arg.Any<RegisteredLearnerDetails>());
-            LearnerRecordService.Received(1).ProcessLearnerRecordsAsync(Arg.Any<List<LearnerRecordDetails>>());
+            LearnerRecordService.Received(1).ProcessLearnerRecordsAsync(Arg.Any<List<LrsLearnerRecordDetails>>());
         }
 
         [Fact]

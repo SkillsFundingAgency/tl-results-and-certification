@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.LearnerSer
     public class When_Called_With_Valid_Data : TestSetup
     {
         private List<RegisteredLearnerDetails> _registrationLearnerDetails;
-        private LearnerGenderResponse _expectedResult;
+        private LrsLearnerGenderResponse _expectedResult;
         private findLearnerByULNResponse _apiResponse;
 
         public override void Given()
@@ -31,8 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.LearnerSer
             _apiResponse = new findLearnerByULNResponse { FindLearnerResponse = new FindLearnerResp { ULN = registrationLearnerDetails.Uln.ToString()  } };
             LearnerServiceApiClient.FetchLearnerDetailsAsync(Arg.Any<RegisteredLearnerDetails>()).Returns(_apiResponse);
 
-            _expectedResult = new LearnerGenderResponse { IsSuccess = true, TotalCount = 1, LrsCount = 1, ModifiedCount = 1, SavedCount = 1 };
-            LearnerRecordService.ProcessLearnerGenderAsync(Arg.Any<List<LearnerRecordDetails>>()).Returns(_expectedResult);
+            _expectedResult = new LrsLearnerGenderResponse { IsSuccess = true, TotalCount = 1, LrsCount = 1, ModifiedCount = 1, SavedCount = 1 };
+            LearnerRecordService.ProcessLearnerGenderAsync(Arg.Any<List<LrsLearnerRecordDetails>>()).Returns(_expectedResult);
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.LearnerSer
         {
             LearnerRecordService.Received(1).GetPendingGenderLearnersAsync();
             LearnerServiceApiClient.Received(1).FetchLearnerDetailsAsync(Arg.Any<RegisteredLearnerDetails>());
-            LearnerRecordService.Received(1).ProcessLearnerGenderAsync(Arg.Any<List<LearnerRecordDetails>>());
+            LearnerRecordService.Received(1).ProcessLearnerGenderAsync(Arg.Any<List<LrsLearnerRecordDetails>>());
         }
 
         [Fact]

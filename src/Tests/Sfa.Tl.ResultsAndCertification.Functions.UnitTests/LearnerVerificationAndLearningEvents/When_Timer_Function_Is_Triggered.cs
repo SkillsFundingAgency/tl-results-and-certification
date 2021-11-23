@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.LearnerVerification
         public override void Given()
         {
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
-            PersonalLearningRecordService.ProcessLearnerVerificationAndLearningEventsAsync().Returns(new LearnerVerificationAndLearningEventsResponse { IsSuccess = true });
+            PersonalLearningRecordService.ProcessLearnerVerificationAndLearningEventsAsync().Returns(new LrsLearnerVerificationAndLearningEventsResponse { IsSuccess = true });
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }        
 

@@ -12,10 +12,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 {
     public class LearnerGender
     {
-        private readonly ILearnerService _learnerService;
+        private readonly ILrsLearnerService _learnerService;
         private readonly ICommonService _commonService;
 
-        public LearnerGender(ICommonService commonService, ILearnerService learnerService)
+        public LearnerGender(ICommonService commonService, ILrsLearnerService learnerService)
         {
             _commonService = commonService;
             _learnerService = learnerService;

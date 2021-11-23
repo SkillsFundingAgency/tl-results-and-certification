@@ -14,18 +14,18 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.LearnerVerification
     public abstract class TestSetup : BaseTest<Functions.LearnerVerificationAndLearningEvents>
     {
         protected IMapper Mapper;
-        protected ILogger<IPersonalLearningRecordService> Logger;
+        protected ILogger<ILrsPersonalLearningRecordService> Logger;
         protected TimerSchedule TimerSchedule;
         protected ICommonService CommonService;
-        protected IPersonalLearningRecordService PersonalLearningRecordService;
+        protected ILrsPersonalLearningRecordService PersonalLearningRecordService;
         protected Functions.LearnerVerificationAndLearningEvents LearningEventsFunction;
 
         public override void Setup()
         {
             TimerSchedule = Substitute.For<TimerSchedule>();
             CommonService = Substitute.For<ICommonService>();
-            Logger = Substitute.For<ILogger<IPersonalLearningRecordService>>();
-            PersonalLearningRecordService = Substitute.For<IPersonalLearningRecordService>();
+            Logger = Substitute.For<ILogger<ILrsPersonalLearningRecordService>>();
+            PersonalLearningRecordService = Substitute.For<ILrsPersonalLearningRecordService>();
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly));
             Mapper = new AutoMapper.Mapper(mapperConfig);

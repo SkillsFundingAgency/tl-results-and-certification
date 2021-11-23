@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.LearnerSer
     public class When_Called_With_Empty_Data : TestSetup
     {
         private List<RegisteredLearnerDetails> _registrationLearnerDetails;
-        private LearnerGenderResponse _expectedResult;
+        private LrsLearnerGenderResponse _expectedResult;
         private findLearnerByULNResponse _apiResponse;
 
         public override void Given()
@@ -21,8 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.LearnerSer
 
             LearnerServiceApiClient.FetchLearnerDetailsAsync(Arg.Any<RegisteredLearnerDetails>()).Returns(_apiResponse);
 
-            _expectedResult = new LearnerGenderResponse { IsSuccess = true, TotalCount = 0, LrsCount = 0, ModifiedCount = 0, SavedCount = 0 };
-            LearnerRecordService.ProcessLearnerGenderAsync(Arg.Any<List<LearnerRecordDetails>>()).Returns(_expectedResult);
+            _expectedResult = new LrsLearnerGenderResponse { IsSuccess = true, TotalCount = 0, LrsCount = 0, ModifiedCount = 0, SavedCount = 0 };
+            LearnerRecordService.ProcessLearnerGenderAsync(Arg.Any<List<LrsLearnerRecordDetails>>()).Returns(_expectedResult);
         }
 
         [Fact]
@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.LearnerSer
         {
             LearnerRecordService.Received(1).GetPendingGenderLearnersAsync();
             LearnerServiceApiClient.DidNotReceive().FetchLearnerDetailsAsync(Arg.Any<RegisteredLearnerDetails>());
-            LearnerRecordService.DidNotReceive().ProcessLearnerGenderAsync(Arg.Any<List<LearnerRecordDetails>>());
+            LearnerRecordService.DidNotReceive().ProcessLearnerGenderAsync(Arg.Any<List<LrsLearnerRecordDetails>>());
         }
 
         [Fact]

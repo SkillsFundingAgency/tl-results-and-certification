@@ -22,18 +22,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerRecord
 
         protected ILogger<RegistrationRepository> RegistrationRepositoryLogger;
         protected IRegistrationRepository RegistrationRepository;
-        protected ILogger<ILearnerRecordService> LearnerRecordServiceLogger;
+        protected ILogger<ILrsService> LearnerRecordServiceLogger;
 
         protected ILogger<GenericRepository<Qualification>> QualificationRepositoryLogger;
         protected IRepository<Qualification> QualificationRepository;
-        protected LearnerRecordService LrsService;
+        protected LrsService LrsService;
 
         protected IList<TlLookup> TlLookup;
         protected IList<Qualification> Qualifications;
 
         protected virtual void CreateMapper()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(LearningRecordServiceMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(LrsServiceMapper).Assembly));
             Mapper = new Mapper(mapperConfig);
         }
 
@@ -77,9 +77,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerRecord
             return qualifications;
         }
 
-        public LearnerRecordDetails BuildLearnerRecordDetails(TqRegistrationProfile profile, bool seedLearningEvents = true, bool isEnglishAchieved = true, bool isMathsAchieved = true, bool seedGender = true)
+        public LrsLearnerRecordDetails BuildLearnerRecordDetails(TqRegistrationProfile profile, bool seedLearningEvents = true, bool isEnglishAchieved = true, bool isMathsAchieved = true, bool seedGender = true)
         {
-            var learnerRecord = new LearnerRecordDetails
+            var learnerRecord = new LrsLearnerRecordDetails
             {
                 ProfileId = profile.Id,
                 Uln = profile.UniqueLearnerNumber,
@@ -99,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerRecord
                 var engQualifcationGrades = engQual.QualificationType.QualificationGrades;
                 var mathsQualifcationGrades = mathQual.QualificationType.QualificationGrades;
 
-                learnerRecord.LearningEventDetails.Add(new LearningEventDetails
+                learnerRecord.LearningEventDetails.Add(new LrsLearningEventDetails
                 {
                     QualificationGradeId = engQualifcationGrades.FirstOrDefault(g => g.IsAllowable == isEnglishAchieved).Id,
                     Grade = engQualifcationGrades.FirstOrDefault(g => g.IsAllowable == isEnglishAchieved).Grade,
@@ -109,7 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerRecord
                     IsEnglishSubject = engQual.TlLookup?.Code.Equals("Eng", StringComparison.InvariantCultureIgnoreCase) ?? false
                 });
 
-                learnerRecord.LearningEventDetails.Add(new LearningEventDetails
+                learnerRecord.LearningEventDetails.Add(new LrsLearningEventDetails
                 {
                     QualificationGradeId = mathsQualifcationGrades.FirstOrDefault(g => g.IsAllowable == isMathsAchieved).Id,
                     Grade = mathsQualifcationGrades.FirstOrDefault(g => g.IsAllowable == isMathsAchieved).Grade,

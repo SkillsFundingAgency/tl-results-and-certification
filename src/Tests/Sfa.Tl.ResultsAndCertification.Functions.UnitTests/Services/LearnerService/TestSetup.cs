@@ -10,25 +10,25 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.LearnerService
 {
-    public abstract class TestSetup : BaseTest<Functions.Services.LearnerService>
+    public abstract class TestSetup : BaseTest<Functions.Services.LrsLearnerService>
     {
         protected IMapper Mapper;
-        protected ILogger<ILearnerService> Logger;
-        protected ILearnerRecordService LearnerRecordService;
-        protected ILearnerServiceApiClient LearnerServiceApiClient;
-        protected Functions.Services.LearnerService Service;
-        protected LearnerGenderResponse ActualResult;
+        protected ILogger<ILrsLearnerService> Logger;
+        protected ILrsService LearnerRecordService;
+        protected ILrsLearnerServiceApiClient LearnerServiceApiClient;
+        protected Functions.Services.LrsLearnerService Service;
+        protected LrsLearnerGenderResponse ActualResult;
 
         public override void Setup()
         {
-            Logger = Substitute.For<ILogger<ILearnerService>>();
-            LearnerRecordService = Substitute.For<ILearnerRecordService>();
-            LearnerServiceApiClient = Substitute.For<ILearnerServiceApiClient>();
+            Logger = Substitute.For<ILogger<ILrsLearnerService>>();
+            LearnerRecordService = Substitute.For<ILrsService>();
+            LearnerServiceApiClient = Substitute.For<ILrsLearnerServiceApiClient>();
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly));
             Mapper = new AutoMapper.Mapper(mapperConfig);
 
-            Service = new Functions.Services.LearnerService(Mapper, Logger, LearnerServiceApiClient, LearnerRecordService);
+            Service = new Functions.Services.LrsLearnerService(Mapper, Logger, LearnerServiceApiClient, LearnerRecordService);
         }
 
         public async override Task When()

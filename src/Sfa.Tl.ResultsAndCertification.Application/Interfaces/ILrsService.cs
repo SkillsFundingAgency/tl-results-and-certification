@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 {
-    public interface ILearnerRecordService
+    public interface ILrsService
     {
         Task<IList<RegisteredLearnerDetails>> GetPendingGenderLearnersAsync();
         Task<IList<RegisteredLearnerDetails>> GetPendingVerificationAndLearningEventsLearnersAsync();
-        Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerRecordsAsync(List<LearnerRecordDetails> learnerRecords);
-        Task<LearnerGenderResponse> ProcessLearnerGenderAsync(List<LearnerRecordDetails> learnerRecords);
+        Task<LrsLearnerVerificationAndLearningEventsResponse> ProcessLearnerRecordsAsync(List<LrsLearnerRecordDetails> learnerRecords);
+        Task<LrsLearnerGenderResponse> ProcessLearnerGenderAsync(List<LrsLearnerRecordDetails> learnerRecords);
     }
 }

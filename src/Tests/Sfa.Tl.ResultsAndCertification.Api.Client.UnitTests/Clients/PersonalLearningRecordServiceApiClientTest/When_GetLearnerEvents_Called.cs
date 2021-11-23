@@ -13,19 +13,19 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.PersonalLearningRecordServiceApiClientTest
 {
-    public class When_GetLearnerEvents_Called : BaseTest<PersonalLearningRecordServiceApiClient>
+    public class When_GetLearnerEvents_Called : BaseTest<LrsPersonalLearningRecordServiceApiClient>
     {
         private GetLearnerLearningEventsResponse _result;
         private GetLearnerLearningEventsResponse _mockHttpResult;
         private RegisteredLearnerDetails _registrationLearnerDetails;        
-        private ILogger<IPersonalLearningRecordServiceApiClient> _logger;
+        private ILogger<ILrsPersonalLearningRecordServiceApiClient> _logger;
         private ILearnerServiceR9Client _learnerServiceR9Client;
         private ResultsAndCertificationConfiguration _configuration;
-        private PersonalLearningRecordServiceApiClient _apiClient;
+        private LrsPersonalLearningRecordServiceApiClient _apiClient;
 
         public override void Setup()
         {
-            _logger = Substitute.For<ILogger<IPersonalLearningRecordServiceApiClient>>();
+            _logger = Substitute.For<ILogger<ILrsPersonalLearningRecordServiceApiClient>>();
             _learnerServiceR9Client = Substitute.For<ILearnerServiceR9Client>();
 
             _registrationLearnerDetails = new RegisteredLearnerDetails
@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.PersonalLe
 
         public override void Given()
         {
-            _apiClient = new PersonalLearningRecordServiceApiClient(_logger, _learnerServiceR9Client, _configuration);
+            _apiClient = new LrsPersonalLearningRecordServiceApiClient(_logger, _learnerServiceR9Client, _configuration);
             _learnerServiceR9Client.GetLearnerLearningEventsAsync(Arg.Any<InvokingOrganisationR10>(), "LNR", _configuration.LearningRecordServiceSettings.VendorId, "ENG",
                                                                     _registrationLearnerDetails.Uln.ToString(), _registrationLearnerDetails.Firstname, _registrationLearnerDetails.Lastname,
                                                                     _registrationLearnerDetails.DateofBirth.ToString("yyyy-MM-dd"), null, "FULL").Returns(_mockHttpResult);            

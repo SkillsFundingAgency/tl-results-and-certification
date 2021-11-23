@@ -10,25 +10,25 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLearningRecordService
 {
-    public abstract class TestSetup : BaseTest<Functions.Services.PersonalLearningRecordService>
+    public abstract class TestSetup : BaseTest<Functions.Services.LrsPersonalLearningRecordService>
     {
         protected IMapper Mapper;
-        protected ILogger<IPersonalLearningRecordService> Logger;
-        protected ILearnerRecordService LearnerRecordService;
-        protected IPersonalLearningRecordServiceApiClient PersonalLearningRecordApiClient;
-        protected Functions.Services.PersonalLearningRecordService Service;
-        protected LearnerVerificationAndLearningEventsResponse ActualResult;
+        protected ILogger<ILrsPersonalLearningRecordService> Logger;
+        protected ILrsService LearnerRecordService;
+        protected ILrsPersonalLearningRecordServiceApiClient PersonalLearningRecordApiClient;
+        protected Functions.Services.LrsPersonalLearningRecordService Service;
+        protected LrsLearnerVerificationAndLearningEventsResponse ActualResult;
 
         public override void Setup()
         {
-            Logger = Substitute.For<ILogger<IPersonalLearningRecordService>>();
-            LearnerRecordService = Substitute.For<ILearnerRecordService>();
-            PersonalLearningRecordApiClient = Substitute.For<IPersonalLearningRecordServiceApiClient>();
+            Logger = Substitute.For<ILogger<ILrsPersonalLearningRecordService>>();
+            LearnerRecordService = Substitute.For<ILrsService>();
+            PersonalLearningRecordApiClient = Substitute.For<ILrsPersonalLearningRecordServiceApiClient>();
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly));
             Mapper = new AutoMapper.Mapper(mapperConfig);
 
-            Service = new Functions.Services.PersonalLearningRecordService(Mapper, Logger, PersonalLearningRecordApiClient, LearnerRecordService);
+            Service = new Functions.Services.LrsPersonalLearningRecordService(Mapper, Logger, PersonalLearningRecordApiClient, LearnerRecordService);
         }
 
         public async override Task When()

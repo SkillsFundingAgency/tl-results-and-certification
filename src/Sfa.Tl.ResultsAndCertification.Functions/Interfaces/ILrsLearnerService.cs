@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.Interfaces
 {
-    public interface IPersonalLearningRecordService
+    public interface ILrsLearnerService
     {
-        Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerVerificationAndLearningEventsAsync();
+        Task<LrsLearnerGenderResponse> FetchLearnerGenderAsync();
     }
 }

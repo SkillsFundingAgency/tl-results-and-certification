@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 {
-    public class LearnerService : ILearnerService
+    public class LrsLearnerService : ILrsLearnerService
     {
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
-        private readonly ILearnerServiceApiClient _learnerServiceApiClient;
-        private readonly ILearnerRecordService _learnerRecordService;
+        private readonly ILrsLearnerServiceApiClient _learnerServiceApiClient;
+        private readonly ILrsService _learnerRecordService;
 
-        public LearnerService(IMapper mapper, ILogger<ILearnerService> logger, ILearnerServiceApiClient learnerServiceApiClient, ILearnerRecordService learnerRecordService)
+        public LrsLearnerService(IMapper mapper, ILogger<ILrsLearnerService> logger, ILrsLearnerServiceApiClient learnerServiceApiClient, ILrsService learnerRecordService)
         {
             _mapper = mapper;
             _logger = logger;
@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             _learnerRecordService = learnerRecordService;
         }
 
-        public async Task<LearnerGenderResponse> FetchLearnerGenderAsync()
+        public async Task<LrsLearnerGenderResponse> FetchLearnerGenderAsync()
         {
             var pendingGenderLearners = await _learnerRecordService.GetPendingGenderLearnersAsync();
 
@@ -34,17 +34,17 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             {
                 var message = $"No pending learners found to process gender. Method: FetchLearnerGenderAsync()";
                 _logger.LogWarning(LogEvent.NoDataFound, message);
-                return new LearnerGenderResponse { IsSuccess = true, Message = message };
+                return new LrsLearnerGenderResponse { IsSuccess = true, Message = message };
             }
 
-            var learnerRecordDetailsList = new List<LearnerRecordDetails>();
+            var learnerRecordDetailsList = new List<LrsLearnerRecordDetails>();
 
             foreach (var learner in pendingGenderLearners)
             {
                 var lrsResponse = await _learnerServiceApiClient.FetchLearnerDetailsAsync(learner);
 
                 if (lrsResponse != null && lrsResponse.FindLearnerResponse?.Learner?.Length > 0)
-                    learnerRecordDetailsList.Add(_mapper.Map<LearnerRecordDetails>(lrsResponse.FindLearnerResponse.Learner[0], opt => { opt.Items[Constants.LrsProfileId] = learner.ProfileId; opt.Items[Constants.LrsResponseCode] = lrsResponse.FindLearnerResponse.ResponseCode; }));
+                    learnerRecordDetailsList.Add(_mapper.Map<LrsLearnerRecordDetails>(lrsResponse.FindLearnerResponse.Learner[0], opt => { opt.Items[Constants.LrsProfileId] = learner.ProfileId; opt.Items[Constants.LrsResponseCode] = lrsResponse.FindLearnerResponse.ResponseCode; }));
             }
 
             // process learner gender

@@ -1,6 +1,6 @@
 ﻿namespace Sfa.Tl.ResultsAndCertification.Models.Functions
 {
-    public class LearningEventDetails
+    public class LrsLearningEventDetails
     {
         public string QualificationCode { get; set; }
         public string QualificationTitle { get; set; }
