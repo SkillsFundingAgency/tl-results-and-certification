@@ -464,6 +464,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _pathwayAssessmentRepository.UpdateAsync(pathwayAssessment) > 0;
         }
 
+        public async Task<IList<AssessmentSeriesDetails>> GetAssessmentSeriesAsync()
+        {
+            var assessmentSeries =  await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
+            return _mapper.Map<IList<AssessmentSeriesDetails>>(assessmentSeries);
+        }
+
         private bool IsValidActivePathwayAssessment(TqPathwayAssessment pathwayAssessment)
         {
             // 1. Must be an active registration.
@@ -506,7 +512,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return isValidNextAssessmentSeries;
         }
 
-        public async Task<IList<AssessmentSeries>> GetAllAssessmentSeriesAsync()
+        private async Task<IList<AssessmentSeries>> GetAllAssessmentSeriesAsync()
         {
             return await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
         }

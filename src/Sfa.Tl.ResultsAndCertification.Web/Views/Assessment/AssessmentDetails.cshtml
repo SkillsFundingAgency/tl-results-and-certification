@@ -41,7 +41,7 @@
                         @AssessmentDetails.You_Must <a class="govuk-link" asp-route="@RouteConstants.ResultDetails" asp-route-profileId="@Model.ProfileId">@AssessmentDetails.Add_Result_To_Learners_Previous_Assessment</a> @AssessmentDetails.Before_Entering_New_Assessment_Details
                     </p>
                 }
-                else if (Model.HasCoreCurrentAssessmentEntry)
+                else if (Model.HasCurrentCoreAssessmentEntry)
                 {
                     // TODO: Display current assessment entry details
                 }
@@ -57,7 +57,7 @@
             }
 
 
-            @if (string.IsNullOrWhiteSpace(Model.SpecialismDisplayName))
+            @if (!Model.IsSpecialismRegistered)
             {
                 <h2 class="govuk-heading-m">@AssessmentDetails.Occupational_Specialism_Heading</h2>
                 <p class="govuk-body">
@@ -70,22 +70,37 @@
             }
             else
             {
-                <h2 class="govuk-heading-m">@string.Format(AssessmentDetails.Specialism_Heading_Text, Model.SpecialismDisplayName)</h2>
 
                 @if (Model.IsSpecialismEntryEligible == false)
                 {
-                    <p class="govuk-body govuk-!-margin-bottom-9">
-                        @string.Format(AssessmentDetails.You_Cannot_Register_Learner_For_Occupational_Specialism_Until, Model.NextAvailableSpecialismSeries?.ToLowerInvariant())
-                    </p>
+                    @foreach (var specialism in Model.DisplaySpecialisms)
+                    {
+                        <h2 class="govuk-heading-m">@string.Format(AssessmentDetails.Specialism_Heading_Text, Model.DisplayMultipleSpecialismsCombined ? Model.SpecialismDisplayName : specialism.DisplayName)</h2>
+                        <p class="govuk-body govuk-!-margin-bottom-9">
+                            @string.Format(AssessmentDetails.You_Cannot_Register_Learner_For_Occupational_Specialism_Until, Model.NextAvailableSpecialismSeries?.ToLowerInvariant())
+                        </p>
+                    }
                 }
-                else if (Model.IsSpecialismEntryEligible)
+                else
                 {
-                    <p class="govuk-body">
-                        @string.Format(AssessmentDetails.No_Assessment_Entries_Have_Been_Recored_For, Model.NextAvailableSpecialismSeries?.ToLowerInvariant())
-                    </p>
-                    <p class="govuk-body govuk-!-margin-bottom-9">
-                        <a class="govuk-link" href="add-entry-core.html">@string.Format(AssessmentDetails.Add_An_Assessment_Entry_For, Model.SpecialismDisplayName)</a>
-                    </p>
+                    @if (Model.HasCurrentSpecialismAssessmentEntry)
+                    {
+                        // TODO: Display current assessmet record
+                    }
+                    else
+                    {
+                        @foreach (var specialism in Model.DisplaySpecialisms)
+                        {
+                            var specialismDisplayName = Model.DisplayMultipleSpecialismsCombined ? Model.SpecialismDisplayName : specialism.DisplayName;
+                            <h2 class="govuk-heading-m">@string.Format(AssessmentDetails.Specialism_Heading_Text, specialismDisplayName)</h2>
+                            <p class="govuk-body">
+                                @string.Format(AssessmentDetails.No_Assessment_Entries_Have_Been_Recored_For, Model.NextAvailableSpecialismSeries?.ToLowerInvariant())
+                            </p>
+                            <p class="govuk-body govuk-!-margin-bottom-9">
+                                <a class="govuk-link" href="add-entry-core.html">@string.Format(AssessmentDetails.Add_An_Assessment_Entry_For, specialismDisplayName)</a>
+                            </p>
+                        }
+                    }
                 }
             }
         </section>

@@ -215,7 +215,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AssessmentDetailsAsync(int profileId)
         {
             var viewModel = await _assessmentLoader.GetAssessmentDetailsAsync<AssessmentDetailsViewModel>(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
-
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No assessment details found. Method: GetAssessmentDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Active}), User: {User.GetUserEmail()}");

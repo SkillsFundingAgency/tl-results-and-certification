@@ -16,7 +16,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             mockresult = new AssessmentDetailsViewModel
             {
                 ProfileId = 1,
-                PathwayAssessmentSeries = "Summer 2021",
+                //TODO: Rajesh
+                //PathwayAssessmentSeries = "Summer 2021",
                 IsCoreResultExist = true,
             };
 

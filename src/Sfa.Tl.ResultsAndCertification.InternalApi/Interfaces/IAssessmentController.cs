@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
@@ -12,5 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
         Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request);
         Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, ComponentType componentType);
         Task<bool> RemoveAssessmentEntryAsync(RemoveAssessmentEntryRequest model);
+        Task<IList<AssessmentSeriesDetails>> GetAssessmentSeriesAsync();
     }
 }

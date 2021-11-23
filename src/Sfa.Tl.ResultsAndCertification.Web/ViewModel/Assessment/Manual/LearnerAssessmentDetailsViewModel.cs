@@ -8,9 +8,9 @@ using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewCompone
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 {
-    public class AssessmentDetailsViewModel : AssessmentBaseViewModel
+    public class LearnerAssessmentDetailsViewModel : AssessmentBaseViewModel
     {
-        public AssessmentDetailsViewModel()
+        public LearnerAssessmentDetailsViewModel()
         {
             UlnLabel = AssessmentDetailsContent.Title_Uln_Text;
             LearnerNameLabel = AssessmentDetailsContent.Title_Name_Text;
@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public bool IsCoreResultExist { get; set; }
         public bool HasAnyOutstandingPathwayPrsActivities { get; set; }
         public bool IsIndustryPlacementExist { get; set; }
-
+        
         public List<SpecialismViewModel> SpecialismDetails { get; set; }
         public bool IsSpecialismEntryEligible { get; set; }
         public string NextAvailableSpecialismSeries { get; set; }
@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public bool HasResultForCurrentCoreAssessment => HasCurrentCoreAssessmentEntry && PathwayAssessment.Results.Any();
         public bool HasPreviousCoreAssessment => PreviousPathwayAssessment != null;
         public bool HasResultForPreviousCoreAssessment => HasPreviousCoreAssessment && PreviousPathwayAssessment.Results.Any();
-        public bool NeedCoreResultForPreviousAssessmentEntry => !HasCurrentCoreAssessmentEntry && HasPreviousCoreAssessment && !HasResultForPreviousCoreAssessment;
+        public bool NeedCoreResultForPreviousAssessmentEntry => !HasCurrentCoreAssessmentEntry && HasPreviousCoreAssessment && !HasResultForPreviousCoreAssessment;                
         public bool DisplayMultipleSpecialismsCombined => SpecialismDetails.Count > 1 && !IsResitForSpecialism;
 
         public bool IsSpecialismRegistered => SpecialismDetails.Any();

@@ -39,6 +39,7 @@
         public const string AddAssessmentEntryUri = "/api/assessment/AddAssessmentEntry";
         public const string GetActiveAssessmentEntryDetailsUri = "/api/assessment/GetActiveAssessmentEntryDetails/{0}/{1}/{2}";
         public const string RemoveAssessmentEntryUri = "/api/assessment/RemoveAssessmentEntry";
+        public const string GetAssessmentSeriesDetailsUri = "/api/assessment/GetAssessmentSeries";
 
         // Results Related Uri's
         public const string ProcessBulkResultsUri = "/api/result/ProcessBulkResults";
@@ -103,5 +104,7 @@
         public const string GetLoggedInUserTypeInfoUri = "/api/common/GetLoggedInUserTypeInfo/{0}";
         public const string GetCurrentAcademicYears = "/api/common/CurrentAcademicYears";
         public const string GetAcademicYears = "/api/common/AcademicYears";
+
+        public const string GetLearnerRecordUri = "/api/learner/GetLearnerRecord/{0}/{1}/{2}";
     }
 }
