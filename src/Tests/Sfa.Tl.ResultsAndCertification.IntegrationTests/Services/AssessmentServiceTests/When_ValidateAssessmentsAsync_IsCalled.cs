@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
         private Task<IList<AssessmentRecordResponse>> _stage3Result;
         private long _aoUkprn;
 
-        private readonly Dictionary<long, RegistrationPathwayStatus> _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Withdrawn }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Active } };
+        private readonly Dictionary<long, RegistrationPathwayStatus> _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Withdrawn }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Active }, { 1111111114, RegistrationPathwayStatus.Active }, { 1111111115, RegistrationPathwayStatus.Active } };
 
         public override void Given()
         {
@@ -30,7 +31,26 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
             // Data seed
             SeedTestData(EnumAwardingOrganisation.Pearson);
-            SeedRegistrationsData(_ulns, TqProvider);
+
+
+            var registrations = SeedRegistrationsData(_ulns, TqProvider);
+            var coupletRegistrations = new List<long> { 1111111114, 1111111115 };
+            var coupletAssessments = new List<long> { 1111111115 };
+
+            var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
+            foreach (var coupletReg in coupletRegistrations)
+            {
+                var tqRegistrationPathway =  registrations.FirstOrDefault(x => x.UniqueLearnerNumber == coupletReg).TqRegistrationPathways.FirstOrDefault();
+                tqRegistrationPathway.TqRegistrationSpecialisms = null;
+                RegistrationsDataProvider.CreateTqRegistrationSpecialisms(DbContext, tqRegistrationPathway);
+
+                // Add Previous Specialism assessment
+                if (coupletAssessments.Contains(tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber))
+                {
+                    tqSpecialismAssessmentsSeedData.AddRange(GetSpecialismAssessmentsDataToProcess(tqRegistrationPathway.TqRegistrationSpecialisms.ToList(), isHistorical: true));
+                }
+            }
+            SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData);
 
             // Dependencies 
             AssessmentRepositoryLogger = new Logger<AssessmentRepository>(new NullLoggerFactory());
@@ -99,16 +119,36 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             };
             TestValidatonErrors(actualResult.ValidationErrors, expectedErrors, rowIndex);
 
-            // 5. Valid Row.
+            // 6. Couplets registered - first entry, both entries are expected but has only one.   
             rowIndex++;
             actualResult = _stage3Result.Result[rowIndex];
-            actualResult.IsValid.Should().BeTrue();
-            actualResult.ValidationErrors.Count.Should().Be(0);
-            actualResult.TqRegistrationPathwayId.Should().Be(3);
-            actualResult.PathwayAssessmentSeriesId.Should().Be(1);
+            actualResult.IsValid.Should().BeFalse();
+            actualResult.ValidationErrors.Count.Should().Be(1);
+            expectedErrors = new List<string>
+            {
+                ValidationMessages.SpecialismCodeMustBePair
+            };
+            TestValidatonErrors(actualResult.ValidationErrors, expectedErrors, rowIndex);
 
-            actualResult.TqRegistrationSpecialismIds.Should().BeEmpty();
-            actualResult.SpecialismAssessmentSeriesId.Should().BeNull();
+            // 7. Couplets registered - Contains invalid code   
+            rowIndex++;
+            actualResult = _stage3Result.Result[rowIndex];
+            actualResult.IsValid.Should().BeFalse();
+            actualResult.ValidationErrors.Count.Should().Be(1);
+            expectedErrors = new List<string>
+            {
+                ValidationMessages.InvalidSpecialismCode
+            };
+            TestValidatonErrors(actualResult.ValidationErrors, expectedErrors, rowIndex);
+
+
+            // 5. Valid Rows.
+            for (int i = ++rowIndex; i < _stage2Response.ToList().Count; i++)
+            {
+                actualResult = _stage3Result.Result[i];
+                actualResult.IsValid.Should().BeTrue();
+                actualResult.ValidationErrors.Count.Should().Be(0);
+            }
         }
 
         private void TestValidatonErrors(IList<BulkProcessValidationError> actualErrors, List<string> expectedErrors, int rowIndex)
@@ -143,11 +183,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 // 4. Core and Specialism assessment series are not open. 
                 new AssessmentCsvRecordResponse { RowNum = 4, Uln = 1111111113, CoreCode = "10123456", CoreAssessmentEntry = "Summer 2022", SpecialismCodes = new List<string> { "10123456" }, SpecialismAssessmentEntry = "Summer 2023" },
 
-                 // 5. Valid Row
-                new AssessmentCsvRecordResponse { RowNum = 5, Uln = 1111111113, CoreCode = "10123456", CoreAssessmentEntry = "Summer 2021" },
-                new AssessmentCsvRecordResponse { RowNum = 6, Uln = 1111111114, CoreCode = "10123456", CoreAssessmentEntry = "SUMMER 2021" },
-                new AssessmentCsvRecordResponse { RowNum = 7, Uln = 1111111115, SpecialismCodes = new List<string> {"10123456" }, SpecialismAssessmentEntry = "Summer 2022" },
-                new AssessmentCsvRecordResponse { RowNum = 8, Uln = 1111111115, SpecialismCodes = new List<string> {"10123456" }, SpecialismAssessmentEntry = "SUMMER 2022" }
+                // 5. Couplets registered - first entry, both codes must present.   
+                new AssessmentCsvRecordResponse { RowNum = 5, Uln = 1111111114, SpecialismCodes = new List<string> {"10123456" }, SpecialismAssessmentEntry = "SUMMER 2022" },
+                
+                // 6. Couplets registered - Contains invalid code   
+                new AssessmentCsvRecordResponse { RowNum = 6, Uln = 1111111114, SpecialismCodes = new List<string> {"10123456,99999999" }, SpecialismAssessmentEntry = "SUMMER 2022" },
+                
+                // 7. All below are VALID Rows
+                new AssessmentCsvRecordResponse { RowNum = 7, Uln = 1111111113, CoreCode = "10123456", CoreAssessmentEntry = "Summer 2021" },
+                new AssessmentCsvRecordResponse { RowNum = 8, Uln = 1111111113, CoreCode = "10123456", CoreAssessmentEntry = "SUMMER 2021" },
+                new AssessmentCsvRecordResponse { RowNum = 9, Uln = 1111111113, SpecialismCodes = new List<string> {"10123456" }, SpecialismAssessmentEntry = "Summer 2022" },
+                new AssessmentCsvRecordResponse { RowNum = 10, Uln = 1111111113, SpecialismCodes = new List<string> {"10123456" }, SpecialismAssessmentEntry = "SUMMER 2022" },
+                new AssessmentCsvRecordResponse { RowNum = 11, Uln = 1111111114, SpecialismCodes = new List<string> {"10123456", "10123457" }, SpecialismAssessmentEntry = "SUMMER 2022" }, // New entry for Couplet
+                new AssessmentCsvRecordResponse { RowNum = 12, Uln = 1111111115, SpecialismCodes = new List<string> {"10123456" }, SpecialismAssessmentEntry = "SUMMER 2022" }, // Resit from Couplet
             };
         }
     }

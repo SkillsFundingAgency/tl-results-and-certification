@@ -22,7 +22,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
         protected AssessmentService AssessmentService;
         protected TlRoute Route;
         protected TlPathway Pathway;
-        protected TlSpecialism Specialism;
         protected IList<TlSpecialism> Specialisms;
         protected TlProvider TlProvider;
         protected TlAwardingOrganisation TlAwardingOrganisation;
@@ -56,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             TlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, awardingOrganisation);
             Route = TlevelDataProvider.CreateTlRoute(DbContext, awardingOrganisation);
             Pathway = TlevelDataProvider.CreateTlPathway(DbContext, awardingOrganisation, Route);
-            Specialism = TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, Pathway).First();
+            Specialisms = TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, Pathway);
             TqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, Pathway, TlAwardingOrganisation);
             TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
@@ -67,30 +66,34 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             DbContext.SaveChangesAsync();
         }
 
-        public List<TqRegistrationProfile> SeedRegistrationsData(Dictionary<long, RegistrationPathwayStatus> ulns, TqProvider tqProvider = null)
+        public List<TqRegistrationProfile> SeedRegistrationsData(Dictionary<long, RegistrationPathwayStatus> ulns, TqProvider tqProvider = null, bool isCouplet = false)
         {
             var profiles = new List<TqRegistrationProfile>();
 
             foreach (var uln in ulns)
             {
-                profiles.Add(SeedRegistrationData(uln.Key, uln.Value, tqProvider));
+                profiles.Add(SeedRegistrationData(uln.Key, uln.Value, tqProvider, isCouplet));
             }
             return profiles;
         }
 
-        public TqRegistrationProfile SeedRegistrationData(long uln, RegistrationPathwayStatus status = RegistrationPathwayStatus.Active, TqProvider tqProvider = null)
+        public TqRegistrationProfile SeedRegistrationData(long uln, RegistrationPathwayStatus status = RegistrationPathwayStatus.Active, TqProvider tqProvider = null, bool isCouplet = false)
         {
             var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProvider);
-            var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialism);
+            var tqRegistrationSpecialisms = isCouplet ? RegistrationsDataProvider.CreateTqRegistrationSpecialisms(DbContext, tqRegistrationPathway) 
+                : new List<TqRegistrationSpecialism> { RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialisms.First()) };
 
             if (status == RegistrationPathwayStatus.Withdrawn)
             {
                 tqRegistrationPathway.Status = status;
                 tqRegistrationPathway.EndDate = DateTime.UtcNow.AddDays(-1);
-                tqRegistrationSpecialism.IsOptedin = true;
-                tqRegistrationSpecialism.EndDate = DateTime.UtcNow.AddDays(-1);
+                foreach (var tqRegistrationSpecialism in tqRegistrationSpecialisms)
+                {
+                    tqRegistrationSpecialism.IsOptedin = true;
+                    tqRegistrationSpecialism.EndDate = DateTime.UtcNow.AddDays(-1);
+                }
             }
 
             DbContext.SaveChanges();
