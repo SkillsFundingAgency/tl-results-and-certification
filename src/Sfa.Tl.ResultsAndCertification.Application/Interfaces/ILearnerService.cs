@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 {
-    public interface IStudentService
+    public interface ILearnerService
     {
         Task<LearnerRecord> GetLearnerRecordAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
     }

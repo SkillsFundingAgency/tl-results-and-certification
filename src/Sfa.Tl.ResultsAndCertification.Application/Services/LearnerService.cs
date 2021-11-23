@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
-    public class StudentService : IStudentService
+    public class LearnerService : ILearnerService
     {
         private readonly ILearnerRepository _learnerRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<ILearnerRepository> _logger;
 
-        public StudentService(ILearnerRepository learnerRepository, IMapper mapper, ILogger<ILearnerRepository> logger)
+        public LearnerService(ILearnerRepository learnerRepository, IMapper mapper, ILogger<ILearnerRepository> logger)
         {
             _learnerRepository = learnerRepository;
             _mapper = mapper;

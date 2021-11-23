@@ -87,8 +87,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<T> GetAssessmentDetailsAsync<T>(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            //var response = await _internalApiClient.GetAssessmentDetailsAsync(aoUkprn, profileId, status);
-            //return _mapper.Map<T>(response);
             var learnerDetails = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId, status);
             var assessmentSeries = await _internalApiClient.GetAssessmentSeriesAsync();
 
@@ -97,26 +95,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             var learnerAssessmentDetails = _mapper.Map<T>(learnerDetails, opt =>
             {
-                opt.Items["currentCoreAssessmentSeriesId"] = GetValidAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Core)?.FirstOrDefault()?.Id ?? 0;
-                opt.Items["currentSpecialismAssessmentSeriesId"] = GetValidAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Specialism)?.FirstOrDefault()?.Id ?? 0;
-                opt.Items["coreSeriesName"] = GetNextAvailableAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Core)?.Name;
-                opt.Items["specialismSeriesName"] = GetNextAvailableAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Specialism)?.Name;
-            });
-            return learnerAssessmentDetails;
-        }
-
-        public async Task<LearnerAssessmentDetailsViewModel> GetLearnerAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
-        {
-            var learnerDetails = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId, status);
-
-            if (learnerDetails == null) return null;
-
-            var assessmentSeries = await _internalApiClient.GetAssessmentSeriesAsync();
-
-            if (assessmentSeries == null || !assessmentSeries.Any()) return null;
-
-            var learnerAssessmentDetails = _mapper.Map<LearnerAssessmentDetailsViewModel>(learnerDetails, opt => 
-            { 
                 opt.Items["currentCoreAssessmentSeriesId"] = GetValidAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Core)?.FirstOrDefault()?.Id ?? 0;
                 opt.Items["currentSpecialismAssessmentSeriesId"] = GetValidAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Specialism)?.FirstOrDefault()?.Id ?? 0;
                 opt.Items["coreSeriesName"] = GetNextAvailableAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Core)?.Name;

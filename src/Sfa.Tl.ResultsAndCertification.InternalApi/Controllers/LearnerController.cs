@@ -11,18 +11,18 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
     [ApiController]
     public class LearnerController : ControllerBase, ILearnerController
     {
-        protected IStudentService _studentService;
+        protected ILearnerService _learnerService;
 
-        public LearnerController(IStudentService studentService)
+        public LearnerController(ILearnerService learnerService)
         {
-            _studentService = studentService;
+            _learnerService = learnerService;
         }
 
         [HttpGet]
         [Route("GetLearnerRecord/{aoUkprn}/{profileId}/{status:int?}")]
         public async Task<LearnerRecord> GetLearnerRecordAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            return await _studentService.GetLearnerRecordAsync(aoUkprn, profileId, status);
+            return await _learnerService.GetLearnerRecordAsync(aoUkprn, profileId, status);
         }
     }
 }
