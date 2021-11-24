@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No, do not add to {0}.
+        ///   Looks up a localized string similar to No, do not add entry to {0}.
         /// </summary>
         public static string Add_Series_Option_No {
             get {
@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes, add to {0}.
+        ///   Looks up a localized string similar to Yes, add entry to {0}.
         /// </summary>
         public static string Add_Series_Option_Yes {
             get {
@@ -79,7 +79,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do you want to add a core assessment entry to the next available series?.
+        ///   Looks up a localized string similar to Is this learner entering an assessment for their core component in {0}?.
+        /// </summary>
+        public static string Heading_Is_This_Learner_Entering_Assessment {
+            get {
+                return ResourceManager.GetString("Heading_Is_This_Learner_Entering_Assessment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add core component assessment entry to {0}.
         /// </summary>
         public static string Page_Heading {
             get {
@@ -88,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do you want to add a core assessment entry to the next available series page.
+        ///   Looks up a localized string similar to Add core - Assessment entries.
         /// </summary>
         public static string Page_Title {
             get {
@@ -97,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select yes to add to {0}.
+        ///   Looks up a localized string similar to Select whether the learner is entering an assessment.
         /// </summary>
         public static string Select_Option_To_Add_Validation_Text {
             get {
@@ -120,6 +129,51 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         public static string Submit_Button_Text {
             get {
                 return ResourceManager.GetString("Submit_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of birth.
+        /// </summary>
+        public static string Title_DateofBirth_Text {
+            get {
+                return ResourceManager.GetString("Title_DateofBirth_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Title_Name_Text {
+            get {
+                return ResourceManager.GetString("Title_Name_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provider &lt;br/&gt; (UKPRN).
+        /// </summary>
+        public static string Title_Provider_Text {
+            get {
+                return ResourceManager.GetString("Title_Provider_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Level.
+        /// </summary>
+        public static string Title_TLevel_Text {
+            get {
+                return ResourceManager.GetString("Title_TLevel_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ULN.
+        /// </summary>
+        public static string Title_Uln_Text {
+            get {
+                return ResourceManager.GetString("Title_Uln_Text", resourceCulture);
             }
         }
     }

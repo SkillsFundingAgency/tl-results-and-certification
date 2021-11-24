@@ -224,26 +224,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+
         [HttpGet]
-        [Route("add-core-assessment-entry-next-available-series/{profileId}", Name = RouteConstants.AddCoreAssessmentEntry)]
+        [Route("assessment-entry-add-core/{profileId}", Name = RouteConstants.AddCoreAssessmentEntry)]
         public async Task<IActionResult> AddCoreAssessmentEntryAsync(int profileId)
         {
-            var viewModel = await _assessmentLoader.GetAvailableAssessmentSeriesAsync(User.GetUkPrn(), profileId, ComponentType.Core);
+            var viewModel = await _assessmentLoader.GetAddAssessmentViewModelAsync(User.GetUkPrn(), profileId, ComponentType.Core);
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment series available. Method: GetAvailableAssessmentSeriesAsync({User.GetUkPrn()}, {profileId}, {ComponentType.Core}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment series available or Learner not found. Method: GetAddAssessmentViewModelAsync({User.GetUkPrn()}, {profileId}, {ComponentType.Core}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
             return View(viewModel);
         }
 
+
         [HttpPost]
-        [Route("add-core-assessment-entry-next-available-series/{profileId}", Name = RouteConstants.EntrySeries)]
+        [Route("assessment-entry-add-core/{profileId}", Name = RouteConstants.EntrySeries)]
         public async Task<IActionResult> AddCoreAssessmentEntryAsync(AddAssessmentEntryViewModel model)
         {
             if (!ModelState.IsValid)
-                return View(model);
+            {
+                var viewModel = await _assessmentLoader.GetAddAssessmentViewModelAsync(User.GetUkPrn(), model.ProfileId, ComponentType.Core);
+                return View(viewModel);
+            }
 
             if (!model.IsOpted.Value)
                 return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
