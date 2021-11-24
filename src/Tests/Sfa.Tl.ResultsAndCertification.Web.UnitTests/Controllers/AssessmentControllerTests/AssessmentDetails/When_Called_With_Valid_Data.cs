@@ -2,44 +2,41 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Xunit;
-using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using AssessmentDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.AssessmentDetails;
-using System.Collections.Generic;
+using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.AssessmentDetails
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
-        private AssessmentDetailsViewModel mockresult = null;
-        private Dictionary<string, string> _routeAttributes;
+        private AssessmentDetailsViewModel _mockresult = null;
 
         public override void Given()
         {
-            mockresult = new AssessmentDetailsViewModel
+            _mockresult = new AssessmentDetailsViewModel
             {
                 ProfileId = 1,
                 Uln = 1234567890,
-                Name = "Test",
+                Firstname = "First",
+                Lastname = "Last",
+                DateofBirth = System.DateTime.UtcNow.AddYears(-30),
                 ProviderName = "Test Provider",
                 ProviderUkprn = 1234567,
-                PathwayDisplayName = "Pathway (7654321)",
-                PathwayAssessmentSeries = "Summer 2021",
-                PathwayAssessmentId = 5,
-                IsCoreResultExist = false,
-                SpecialismDisplayName = "Specialism1 (2345678)",
-                //SpecialismAssessmentSeries = AssessmentDetailsContent.Available_After_Autumn2021, //TODO: Rajesh
-                PathwayStatus = RegistrationPathwayStatus.Active,
-                IsCoreEntryEligible = true,
-                NextAvailableCoreSeries = "Autumn 2021",
-                IsSpecialismEntryEligible = false,
-                NextAvailableSpecialismSeries = "Summer 2022"
+                TlevelTitle = "Tlevel Title",
+                PathwayStatus = RegistrationPathwayStatus.Active
             };
 
-            _routeAttributes = new Dictionary<string, string> { { Constants.AssessmentId, mockresult.PathwayAssessmentId.ToString() } };
-            AssessmentLoader.GetAssessmentDetailsAsync<AssessmentDetailsViewModel>(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(mockresult);
+            AssessmentLoader.GetAssessmentDetailsAsync<AssessmentDetailsViewModel>(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(_mockresult);
+        }
+
+        [Fact]
+        public void Then_Expected_Methods_Called()
+        {
+            AssessmentLoader.Received(1).GetAssessmentDetailsAsync<AssessmentDetailsViewModel>(AoUkprn, ProfileId, RegistrationPathwayStatus.Active);
         }
 
         [Fact]
@@ -54,40 +51,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             var model = viewResult.Model as AssessmentDetailsViewModel;
             model.Should().NotBeNull();
 
-            model.Uln.Should().Be(mockresult.Uln);
-            model.Name.Should().Be(mockresult.Name);
-            model.ProviderDisplayName.Should().Be($"{mockresult.ProviderName}<br/>({mockresult.ProviderUkprn})");
-            model.PathwayDisplayName.Should().Be(mockresult.PathwayDisplayName);
-            model.PathwayAssessmentSeries.Should().Be(mockresult.PathwayAssessmentSeries);
-            model.SpecialismDisplayName.Should().Be(mockresult.SpecialismDisplayName);
-            model.SpecialismAssessmentSeries.Should().Be(mockresult.SpecialismAssessmentSeries);
-            model.PathwayStatus.Should().Be(mockresult.PathwayStatus);
-            model.IsCoreResultExist.Should().BeFalse();
-            model.IsCoreEntryEligible.Should().Be(mockresult.IsCoreEntryEligible);
-            model.NextAvailableCoreSeries.Should().Be(mockresult.NextAvailableCoreSeries);
-            model.IsSpecialismEntryEligible.Should().Be(mockresult.IsSpecialismEntryEligible);
-            model.NextAvailableSpecialismSeries.Should().Be(mockresult.NextAvailableSpecialismSeries);
+            // Uln            
+            model.SummaryUln.Title.Should().NotBeNull(AssessmentDetailsContent.Title_Uln_Text);
+            model.SummaryUln.Value.Should().Be(_mockresult.Uln.ToString());
 
-            //TODO: Rajesh
+            // LearnerName
+            model.SummaryLearnerName.Title.Should().Be(AssessmentDetailsContent.Title_Name_Text);
+            model.SummaryLearnerName.Value.Should().Be($"{_mockresult.Firstname} {_mockresult.Lastname}");
 
-            //// Summary CoreAssessment Entry            
-            //model.SummaryCoreAssessmentEntry.Should().NotBeNull();
-            //model.SummaryCoreAssessmentEntry.Title.Should().Be(AssessmentDetailsContent.Title_Assessment_Entry_Text);
-            //model.SummaryCoreAssessmentEntry.Value.Should().Be(mockresult.PathwayAssessmentSeries);
-            //model.SummaryCoreAssessmentEntry.ActionText.Should().Be(AssessmentDetailsContent.Remove_Entry_Action_Link_Text);
-            //model.SummaryCoreAssessmentEntry.RenderHiddenActionText.Should().Be(true);
-            //model.SummaryCoreAssessmentEntry.HiddenActionText.Should().Be(AssessmentDetailsContent.Core_Assessment_Entry_Hidden_Text);
-            //model.SummaryCoreAssessmentEntry.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
+            // DateofBirth
+            model.SummaryDateofBirth.Title.Should().Be(AssessmentDetailsContent.Title_DateofBirth_Text);
+            model.SummaryDateofBirth.Value.Should().Be(_mockresult.DateofBirth.ToDobFormat());
 
-            //// Summary SpecialismAssessment Entry
-            //model.SummarySpecialismAssessmentEntry.Should().NotBeNull();
-            //model.SummarySpecialismAssessmentEntry.Title.Should().Be(AssessmentDetailsContent.Title_Assessment_Entry_Text);
-            //model.SummarySpecialismAssessmentEntry.Value.Should().Be(AssessmentDetailsContent.Available_After_Autumn2021);
-            //model.SummarySpecialismAssessmentEntry.ActionText.Should().BeNull();
-            //model.SummarySpecialismAssessmentEntry.RenderHiddenActionText.Should().Be(true);
-            //model.SummarySpecialismAssessmentEntry.HiddenActionText.Should().Be(AssessmentDetailsContent.Specialism_Assessment_Entry_Hidden_Text);
+            // Provider
+            model.SummaryProvider.Title.Should().Be(AssessmentDetailsContent.Title_Provider_Text);
+            model.SummaryProvider.Value.Should().Be($"{_mockresult.ProviderName}<br/>({_mockresult.ProviderUkprn})");
 
-            // Breadcrum
+            // TlevelTitle
+            model.SummaryTlevelTitle.Title.Should().Be(AssessmentDetailsContent.Title_TLevel_Text);
+            model.SummaryTlevelTitle.Value.Should().Be(_mockresult.TlevelTitle);
+
+            // Breadcrumb
             model.Breadcrumb.Should().NotBeNull();
             model.Breadcrumb.BreadcrumbItems.Should().NotBeNull();
             model.Breadcrumb.BreadcrumbItems.Count.Should().Be(4);

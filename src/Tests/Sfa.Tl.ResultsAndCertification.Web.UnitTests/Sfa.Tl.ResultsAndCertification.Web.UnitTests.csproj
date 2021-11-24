@@ -7,15 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\AssessmentControllerTests\AssessmentDetails\**" />
-    <Compile Remove="Controllers\AssessmentControllerTests\AssessmentWithdrawnDetails\**" />
-    <EmbeddedResource Remove="Controllers\AssessmentControllerTests\AssessmentDetails\**" />
-    <EmbeddedResource Remove="Controllers\AssessmentControllerTests\AssessmentWithdrawnDetails\**" />
-    <None Remove="Controllers\AssessmentControllerTests\AssessmentDetails\**" />
-    <None Remove="Controllers\AssessmentControllerTests\AssessmentWithdrawnDetails\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Called_With_Invalid_Data.cs" />
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Called_With_Valid_Data.cs" />
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Registration_HasResult.cs" />

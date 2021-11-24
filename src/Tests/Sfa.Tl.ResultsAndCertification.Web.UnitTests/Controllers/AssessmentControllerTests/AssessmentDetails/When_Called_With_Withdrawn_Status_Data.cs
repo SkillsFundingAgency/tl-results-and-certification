@@ -10,24 +10,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 {
     public class When_Called_With_Withdrawn_Status_Data : TestSetup
     {
-        private AssessmentDetailsViewModel mockresult = null;
+        private AssessmentDetailsViewModel _mockresult = null;
+
         public override void Given()
         {
-            mockresult = new AssessmentDetailsViewModel
-            {
-                ProfileId = 1,
-                Uln = 1234567890,
-                Name = "Test",
-                ProviderName = "Test Provider",
-                ProviderUkprn = 1234567,                
-                PathwayDisplayName = "Pathway (7654321)",
-                PathwayAssessmentSeries = "Summer 2021",
-                SpecialismDisplayName = "Specialism1 (2345678)",
-                SpecialismAssessmentSeries = "Autumn 2022",
+            _mockresult = new AssessmentDetailsViewModel
+            {                
                 PathwayStatus = RegistrationPathwayStatus.Withdrawn
             };
 
-            AssessmentLoader.GetAssessmentDetailsAsync<AssessmentDetailsViewModel>(AoUkprn, ProfileId, RegistrationPathwayStatus.Withdrawn).Returns(mockresult);
+            AssessmentLoader.GetAssessmentDetailsAsync<AssessmentDetailsViewModel>(AoUkprn, ProfileId, RegistrationPathwayStatus.Withdrawn).Returns(_mockresult);
         }
 
         [Fact]
