@@ -8,12 +8,12 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.AddCoreAssessmentSeriesGet
 {
-    public class When_AssessmentSeries_NotFound : TestSetup
+    public class When_Called_With_Invalid_Data : TestSetup
     {
         private AddAssessmentEntryViewModel mockresult = null;
         public override void Given()
         {
-            AssessmentLoader.GetAvailableAssessmentSeriesAsync(AoUkprn, ProfileId, Arg.Any<ComponentType>()).Returns(mockresult);
+            AssessmentLoader.GetAddAssessmentEntryViewModelAsync(AoUkprn, ProfileId, Arg.Any<ComponentType>()).Returns(mockresult);
         }
 
         [Fact]

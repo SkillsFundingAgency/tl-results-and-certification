@@ -11,7 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Mapper;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTests.GetAvailableAssessmentSeries
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTests.GetAddAssessmentEntryViewModel
 {
     public abstract class TestSetup : BaseTest<AssessmentLoader>
     {
@@ -27,7 +27,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
         public IBlobStorageService BlobStorageService { get; private set; }
 
         protected AssessmentLoader Loader;
-        protected AvailableAssessmentSeries expectedApiResult;
         protected AddAssessmentEntryViewModel ActualResult;
 
         public override void Setup()
@@ -44,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetAvailableAssessmentSeriesAsync(AoUkprn, ProfileId, componentType);
+            ActualResult = await Loader.GetAddAssessmentEntryViewModelAsync(AoUkprn, ProfileId, componentType);
         }
     }
 }
