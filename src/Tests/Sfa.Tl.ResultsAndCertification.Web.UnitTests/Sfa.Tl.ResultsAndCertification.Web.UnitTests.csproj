@@ -9,16 +9,10 @@
   <ItemGroup>
     <Compile Remove="Controllers\AssessmentControllerTests\AssessmentDetails\**" />
     <Compile Remove="Controllers\AssessmentControllerTests\AssessmentWithdrawnDetails\**" />
-    <Compile Remove="Loader\AssessmentLoaderTests\GetAssessmentDetails\**" />
-    <Compile Remove="Loader\RegistrationLoaderTests\GetRegistrationAssessment\**" />
     <EmbeddedResource Remove="Controllers\AssessmentControllerTests\AssessmentDetails\**" />
     <EmbeddedResource Remove="Controllers\AssessmentControllerTests\AssessmentWithdrawnDetails\**" />
-    <EmbeddedResource Remove="Loader\AssessmentLoaderTests\GetAssessmentDetails\**" />
-    <EmbeddedResource Remove="Loader\RegistrationLoaderTests\GetRegistrationAssessment\**" />
     <None Remove="Controllers\AssessmentControllerTests\AssessmentDetails\**" />
     <None Remove="Controllers\AssessmentControllerTests\AssessmentWithdrawnDetails\**" />
-    <None Remove="Loader\AssessmentLoaderTests\GetAssessmentDetails\**" />
-    <None Remove="Loader\RegistrationLoaderTests\GetRegistrationAssessment\**" />
   </ItemGroup>
 
   <ItemGroup>

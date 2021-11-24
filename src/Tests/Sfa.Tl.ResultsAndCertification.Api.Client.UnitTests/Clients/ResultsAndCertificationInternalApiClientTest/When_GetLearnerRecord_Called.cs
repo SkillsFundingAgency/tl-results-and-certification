@@ -1,20 +1,42 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
+using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.GetRegistrationAssessment
+namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_Assessment_Has_Result : TestSetup
+    public class When_GetLearnerRecord_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
-        private IList<AssessmentSeriesDetails> _assessmentSeriesDetails;
+        private readonly long _ukprn = 12345678;
+        private readonly int _profileId = 1;
+        private readonly RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Active;
+        protected LearnerRecord _mockHttpResult;
 
-        public override void Given()
+        private ITokenServiceClient _tokenServiceClient;
+        private ResultsAndCertificationConfiguration _configuration;
+        private ResultsAndCertificationInternalApiClient _apiClient;
+        private LearnerRecord _result;
+
+        public override void Setup()
         {
-            expectedApiResult = new LearnerRecord
+            _tokenServiceClient = Substitute.For<ITokenServiceClient>();
+
+            _configuration = new ResultsAndCertificationConfiguration
+            {
+                ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { Uri = "http://tlevel.api.com" }
+            };
+
+            _mockHttpResult = new LearnerRecord
             {
                 ProfileId = 1,
                 Uln = 1234567890,
@@ -28,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                     LarId = "89564123",
                     Name = "Test Pathway",
                     Title = "Test Pathwya title",
-                    AcademicYear = 2020,
+                    AcademicYear = 2021,
                     Status = RegistrationPathwayStatus.Active,
                     Provider = new Provider
                     {
@@ -59,7 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                                 }
                             }
                         }
-                    },
+                    } ,
                     Specialisms = new List<Specialism>
                     {
                         new Specialism
@@ -91,15 +113,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                         }
                     }
                 }
-            };          
+            };
+        }
 
-            InternalApiClient.GetLearnerRecordAsync(AoUkprn, ProfileId).Returns(expectedApiResult);
+        public override void Given()
+        {
+            HttpClient = new HttpClient(new MockHttpMessageHandler<LearnerRecord>(_mockHttpResult, string.Format(ApiConstants.GetLearnerRecordUri, _ukprn, _profileId, (int)_registrationPathwayStatus), HttpStatusCode.OK));
+            _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
+        }
+
+        public async override Task When()
+        {
+            _result = await _apiClient.GetLearnerRecordAsync(_ukprn, _profileId, _registrationPathwayStatus);
         }
 
         [Fact]
-        public void Then_IsResultExist_IsTrue()
+        public void Then_Returns_Expected_Results()
         {
-            ActualResult.IsCoreResultExist.Should().BeTrue();
+            _result.Should().NotBeNull();
+            _result.Uln.Should().Be(_mockHttpResult.Uln);
+            _result.Firstname.Should().Be(_mockHttpResult.Firstname);
+            _result.Lastname.Should().Be(_mockHttpResult.Lastname);
+            _result.DateofBirth.Should().Be(_mockHttpResult.DateofBirth);
+            _result.Gender.Should().Be(_mockHttpResult.Gender);
+            _result.Pathway.Should().BeEquivalentTo(_mockHttpResult.Pathway);
         }
     }
 }

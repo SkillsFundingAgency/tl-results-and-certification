@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.WithdrawRegistrationGet
 {
     public class When_ProfileId_Invalid : TestSetup
     {
-        private AssessmentDetailsViewModel _mockresult = null;
+        private RegistrationAssessmentDetails _mockresult = null;
         private readonly RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Active;
 
         public override void Given()

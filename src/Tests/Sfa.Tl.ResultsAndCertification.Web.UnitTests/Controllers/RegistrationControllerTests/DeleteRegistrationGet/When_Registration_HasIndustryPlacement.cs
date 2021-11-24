@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.DeleteRegistrationGet
@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
     {
         public override void Given()
         {
-            var mockresult = new AssessmentDetailsViewModel { ProfileId = 99, IsCoreResultExist = false, IsIndustryPlacementExist = true };
+            var mockresult = new RegistrationAssessmentDetails { ProfileId = 99, IsCoreResultExist = false, IsIndustryPlacementExist = true };
             RegistrationLoader.GetRegistrationAssessmentAsync(Ukprn, ProfileId, RegistrationPathwayStatus.Active).Returns(mockresult);
         }
 
