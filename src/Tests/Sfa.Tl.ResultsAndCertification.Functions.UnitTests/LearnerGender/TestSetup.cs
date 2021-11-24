@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.LearnerGender
         protected ILogger<ILrsLearnerService> Logger;
         protected TimerSchedule TimerSchedule;
         protected ICommonService CommonService;
-        protected ILrsLearnerService LearnerService;
+        protected ILrsLearnerService LrsLearnerService;
         protected Functions.LearnerGender LearnerGenderFunction;
 
         public override void Setup()
@@ -25,11 +25,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.LearnerGender
             TimerSchedule = Substitute.For<TimerSchedule>();
             CommonService = Substitute.For<ICommonService>();
             Logger = Substitute.For<ILogger<ILrsLearnerService>>();
-            LearnerService = Substitute.For<ILrsLearnerService>();
+            LrsLearnerService = Substitute.For<ILrsLearnerService>();
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly));
             Mapper = new AutoMapper.Mapper(mapperConfig);
-            LearnerGenderFunction = new Functions.LearnerGender(CommonService, LearnerService);
+            LearnerGenderFunction = new Functions.LearnerGender(CommonService, LrsLearnerService);
         }
 
         public async override Task When()

@@ -12,9 +12,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerRecordServiceTests
+namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LrsServiceTests
 {
-    public class When_ProcessLearnerRecords_IsCalled : LearnerRecordServiceBaseTest
+    public class When_ProcessLearnerRecords_IsCalled : LrsServiceBaseTest
     {
         private IList<TqRegistrationProfile> _profilesData;
         private LrsLearnerVerificationAndLearningEventsResponse _result;
@@ -43,14 +43,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerRecord
                 _learnerRecords.Add(BuildLearnerRecordDetails(profile, seedLearnignEvents, isEnglishAchieved, isMathsAchieved));
             }
 
-            LearnerRecordServiceLogger = new Logger<LrsService>(new NullLoggerFactory());
+            LrsServiceLogger = new Logger<LrsService>(new NullLoggerFactory());
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
 
             QualificationRepositoryLogger = new Logger<GenericRepository<Qualification>>(new NullLoggerFactory());
             QualificationRepository = new GenericRepository<Qualification>(QualificationRepositoryLogger, DbContext);
 
-            LrsService = new LrsService(Mapper, LearnerRecordServiceLogger, RegistrationRepository, QualificationRepository);
+            LrsService = new LrsService(Mapper, LrsServiceLogger, RegistrationRepository, QualificationRepository);
         }
 
         public override Task When()

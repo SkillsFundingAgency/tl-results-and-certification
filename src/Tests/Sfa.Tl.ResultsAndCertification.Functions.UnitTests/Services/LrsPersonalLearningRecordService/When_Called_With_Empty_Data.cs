@@ -5,9 +5,9 @@ using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLearningRecordService
+namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.LrsPersonalLearningRecordService
 {
-    public class When_Called_With_No_Data : TestSetup
+    public class When_Called_With_Empty_Data : TestSetup
     {
         private List<RegisteredLearnerDetails> _registrationLearnerDetails;
         private LrsLearnerVerificationAndLearningEventsResponse _expectedResult;
@@ -16,21 +16,21 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLe
         public override void Given()
         {
             _apiResponse = null;
-            _registrationLearnerDetails = null;
-            LearnerRecordService.GetPendingVerificationAndLearningEventsLearnersAsync().Returns(_registrationLearnerDetails);
-                        
-            PersonalLearningRecordApiClient.GetLearnerEventsAsync(Arg.Any<RegisteredLearnerDetails>()).Returns(_apiResponse);
+            _registrationLearnerDetails = new List<RegisteredLearnerDetails>();
+            LrsService.GetPendingVerificationAndLearningEventsLearnersAsync().Returns(_registrationLearnerDetails);
+
+            LrsPersonalLearningRecordApiClient.GetLearnerEventsAsync(Arg.Any<RegisteredLearnerDetails>()).Returns(_apiResponse);
 
             _expectedResult = new LrsLearnerVerificationAndLearningEventsResponse { IsSuccess = true, TotalCount = 0, LrsCount = 0, ModifiedCount = 0, SavedCount = 0 };
-            LearnerRecordService.ProcessLearnerRecordsAsync(Arg.Any<List<LrsLearnerRecordDetails>>()).Returns(_expectedResult);
+            LrsService.ProcessLearnerRecordsAsync(Arg.Any<List<LrsLearnerRecordDetails>>()).Returns(_expectedResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            LearnerRecordService.Received(1).GetPendingVerificationAndLearningEventsLearnersAsync();
-            PersonalLearningRecordApiClient.DidNotReceive().GetLearnerEventsAsync(Arg.Any<RegisteredLearnerDetails>());
-            LearnerRecordService.DidNotReceive().ProcessLearnerRecordsAsync(Arg.Any<List<LrsLearnerRecordDetails>>());
+            LrsService.Received(1).GetPendingVerificationAndLearningEventsLearnersAsync();
+            LrsPersonalLearningRecordApiClient.DidNotReceive().GetLearnerEventsAsync(Arg.Any<RegisteredLearnerDetails>());
+            LrsService.DidNotReceive().ProcessLearnerRecordsAsync(Arg.Any<List<LrsLearnerRecordDetails>>());
         }
 
         [Fact]

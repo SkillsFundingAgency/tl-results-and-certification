@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.LearnerVerification
         protected ILogger<ILrsPersonalLearningRecordService> Logger;
         protected TimerSchedule TimerSchedule;
         protected ICommonService CommonService;
-        protected ILrsPersonalLearningRecordService PersonalLearningRecordService;
+        protected ILrsPersonalLearningRecordService LrsPersonalLearningRecordService;
         protected Functions.LearnerVerificationAndLearningEvents LearningEventsFunction;
 
         public override void Setup()
@@ -25,11 +25,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.LearnerVerification
             TimerSchedule = Substitute.For<TimerSchedule>();
             CommonService = Substitute.For<ICommonService>();
             Logger = Substitute.For<ILogger<ILrsPersonalLearningRecordService>>();
-            PersonalLearningRecordService = Substitute.For<ILrsPersonalLearningRecordService>();
+            LrsPersonalLearningRecordService = Substitute.For<ILrsPersonalLearningRecordService>();
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly));
             Mapper = new AutoMapper.Mapper(mapperConfig);
-            LearningEventsFunction = new Functions.LearnerVerificationAndLearningEvents(CommonService, PersonalLearningRecordService);
+            LearningEventsFunction = new Functions.LearnerVerificationAndLearningEvents(CommonService, LrsPersonalLearningRecordService);
         }
 
         public async override Task When()
