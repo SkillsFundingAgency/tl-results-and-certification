@@ -2,20 +2,21 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Xunit;
-using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
+using AssessmentWithdrawnDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.AssessmentWithdrawnDetails;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.AssessmentWithdrawnDetails
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
-        private AssessmentUlnWithdrawnViewModel mockresult = null;
+        private AssessmentUlnWithdrawnViewModel _mockresult = null;
 
         public override void Given()
         {
-            mockresult = new AssessmentUlnWithdrawnViewModel
+            _mockresult = new AssessmentUlnWithdrawnViewModel
             {
                 ProfileId = 1,
                 Uln = 1234567890,
@@ -27,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 ProviderUkprn = 1234567
             };
 
-            AssessmentLoader.GetAssessmentDetailsAsync<AssessmentUlnWithdrawnViewModel>(AoUkprn, ProfileId, RegistrationPathwayStatus.Withdrawn).Returns(mockresult);         
+            AssessmentLoader.GetAssessmentDetailsAsync<AssessmentUlnWithdrawnViewModel>(AoUkprn, ProfileId, RegistrationPathwayStatus.Withdrawn).Returns(_mockresult);         
         }        
 
         [Fact]
@@ -42,11 +43,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             var model = viewResult.Model as AssessmentUlnWithdrawnViewModel;
             model.Should().NotBeNull();
 
-            model.Uln.Should().Be(mockresult.Uln);
-            model.LearnerName.Should().Be($"{mockresult.Firstname} {mockresult.Lastname}");
-            model.DateofBirth.Should().Be(mockresult.DateofBirth);
-            model.ProviderDisplayName.Should().Be($"{mockresult.ProviderName}<br/>({mockresult.ProviderUkprn})");
-            model.TlevelTitle.Should().Be(mockresult.TlevelTitle);
+            // Uln            
+            model.SummaryUln.Title.Should().NotBeNull(AssessmentWithdrawnDetailsContent.Title_Uln_Text);
+            model.SummaryUln.Value.Should().Be(_mockresult.Uln.ToString());
+
+            // LearnerName
+            model.SummaryLearnerName.Title.Should().Be(AssessmentWithdrawnDetailsContent.Title_Name_Text);
+            model.SummaryLearnerName.Value.Should().Be($"{_mockresult.Firstname} {_mockresult.Lastname}");
+
+            // DateofBirth
+            model.SummaryDateofBirth.Title.Should().Be(AssessmentWithdrawnDetailsContent.Title_DateofBirth_Text);
+            model.SummaryDateofBirth.Value.Should().Be(_mockresult.DateofBirth.ToDobFormat());
+
+            // Provider
+            model.SummaryProvider.Title.Should().Be(AssessmentWithdrawnDetailsContent.Title_Provider_Text);
+            model.SummaryProvider.Value.Should().Be($"{_mockresult.ProviderName}<br/>({_mockresult.ProviderUkprn})");
+
+            // TlevelTitle
+            model.SummaryTlevelTitle.Title.Should().Be(AssessmentWithdrawnDetailsContent.Title_TLevel_Text);
+            model.SummaryTlevelTitle.Value.Should().Be(_mockresult.TlevelTitle);
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.SearchAssessments);
