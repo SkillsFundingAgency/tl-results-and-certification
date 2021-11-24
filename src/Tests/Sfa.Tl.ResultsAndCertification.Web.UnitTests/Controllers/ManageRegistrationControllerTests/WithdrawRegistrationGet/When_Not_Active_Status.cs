@@ -3,19 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.WithdrawRegistrationGet
 {
     public class When_Not_Active_Status : TestSetup
     {
-        private AssessmentDetailsViewModel _mockresult = null;
+        private RegistrationAssessmentDetails _mockresult = null;
         private readonly RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Active;
 
         public override void Given()
         {
-            _mockresult = new AssessmentDetailsViewModel { Uln = 1234567890, ProfileId = ProfileId, PathwayStatus = RegistrationPathwayStatus.Withdrawn };
+            _mockresult = new RegistrationAssessmentDetails { Uln = 1234567890, ProfileId = ProfileId, PathwayStatus = RegistrationPathwayStatus.Withdrawn };
             RegistrationLoader.GetRegistrationAssessmentAsync(AoUkprn, ProfileId, _registrationPathwayStatus).Returns(_mockresult);
         }
 
