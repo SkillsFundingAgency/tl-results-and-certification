@@ -40,13 +40,13 @@
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="canremoveassessmententry" asp-for="CanRemoveAssessmentEntry" type="radio" value="true">
                             <label class="govuk-label govuk-radios__label" for="canremoveassessmententry">
-                                @RemoveCoreAssessmentEntry.Remove_Series_Option_Yes
+                                @string.Format(@RemoveCoreAssessmentEntry.Remove_Series_Option_Yes, Model?.AssessmentSeriesName)
                             </label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="assessment-entry-remove-no" asp-for="CanRemoveAssessmentEntry" type="radio" value="false">
                             <label class="govuk-label govuk-radios__label" for="assessment-entry-remove-no">
-                                @RemoveCoreAssessmentEntry.Remove_Series_Option_No
+                                @string.Format(@RemoveCoreAssessmentEntry.Remove_Series_Option_No, Model?.AssessmentSeriesName)
                             </label>
                         </div>
                     </div>
