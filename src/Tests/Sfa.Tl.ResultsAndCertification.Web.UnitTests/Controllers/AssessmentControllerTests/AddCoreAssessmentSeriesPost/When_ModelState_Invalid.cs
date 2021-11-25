@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 {
     public class When_ModelState_Invalid : TestSetup
     {
-        private AddAssessmentEntryViewModel mockresult = null;
+        private AddAssessmentEntryViewModel _mockresult = null;
 
         public override void Given()
         {
@@ -23,14 +23,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 IsOpted = null
             };
 
-            mockresult = new AddAssessmentEntryViewModel
+            _mockresult = new AddAssessmentEntryViewModel
             {
                 ProfileId = 1,
                 AssessmentSeriesId = 11,
                 AssessmentSeriesName = "Summer 2021",
             };
 
-            AssessmentLoader.GetAddAssessmentEntryViewModelAsync(AoUkprn, ProfileId, ComponentType.Core).Returns(mockresult);
+            AssessmentLoader.GetAddAssessmentEntryViewModelAsync(AoUkprn, ProfileId, ComponentType.Core).Returns(_mockresult);
             Controller.ModelState.AddModelError(nameof(AddAssessmentEntryViewModel.IsOpted), AssessmentContent.AddCoreAssessmentEntry.Select_Option_To_Add_Validation_Text);
         }
 

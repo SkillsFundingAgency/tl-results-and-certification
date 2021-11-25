@@ -61,7 +61,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to remove this core assessment entry from {0}?.
+        ///   Looks up a localized string similar to Would you like to remove the core component assessment entry for {0} from this learner&apos;s record?.
+        /// </summary>
+        public static string Heading_Would_You_Like_To_Remove_Assessment_Entry {
+            get {
+                return ResourceManager.GetString("Heading_Would_You_Like_To_Remove_Assessment_Entry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove core component assessment entry from {0}.
         /// </summary>
         public static string Page_Heading {
             get {
@@ -70,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to remove this core assessment entry page.
+        ///   Looks up a localized string similar to Remove core - Assessment entries.
         /// </summary>
         public static string Page_Title {
             get {
@@ -79,29 +88,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No, do not remove the core entry.
+        ///   Looks up a localized string similar to No, do not remove the entry from {0}.
         /// </summary>
-        public static string Section_No_Remove_Core_Entry_Text {
+        public static string Remove_Series_Option_No {
             get {
-                return ResourceManager.GetString("Section_No_Remove_Core_Entry_Text", resourceCulture);
+                return ResourceManager.GetString("Remove_Series_Option_No", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes, remove the core entry.
+        ///   Looks up a localized string similar to Yes, remove the entry from {0}.
         /// </summary>
-        public static string Section_Yes_Remove_Core_Entry_Text {
+        public static string Remove_Series_Option_Yes {
             get {
-                return ResourceManager.GetString("Section_Yes_Remove_Core_Entry_Text", resourceCulture);
+                return ResourceManager.GetString("Remove_Series_Option_Yes", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select yes to remove the core entry.
+        ///   Looks up a localized string similar to Select whether the assessment entry is being removed.
         /// </summary>
-        public static string Select_RemoveCoreAssessment_Validation_Message {
+        public static string Select_Option_To_Remove_Validation_Text {
             get {
-                return ResourceManager.GetString("Select_RemoveCoreAssessment_Validation_Message", resourceCulture);
+                return ResourceManager.GetString("Select_Option_To_Remove_Validation_Text", resourceCulture);
             }
         }
         
@@ -111,6 +120,51 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         public static string Submit_Button_Text {
             get {
                 return ResourceManager.GetString("Submit_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of birth.
+        /// </summary>
+        public static string Title_DateofBirth_Text {
+            get {
+                return ResourceManager.GetString("Title_DateofBirth_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Title_Name_Text {
+            get {
+                return ResourceManager.GetString("Title_Name_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provider &lt;br/&gt; (UKPRN).
+        /// </summary>
+        public static string Title_Provider_Text {
+            get {
+                return ResourceManager.GetString("Title_Provider_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Level.
+        /// </summary>
+        public static string Title_TLevel_Text {
+            get {
+                return ResourceManager.GetString("Title_TLevel_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ULN.
+        /// </summary>
+        public static string Title_Uln_Text {
+            get {
+                return ResourceManager.GetString("Title_Uln_Text", resourceCulture);
             }
         }
     }
