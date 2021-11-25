@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
@@ -35,18 +34,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AssessmentLoader.Received(1).AddAssessmentEntryAsync(AoUkprn, ViewModel);
-            CacheService.Received(1).SetAsync(string.Concat(CacheKey, Constants.AddAssessmentEntryConfirmationViewModel), 
-                Arg.Is<AddAssessmentEntryConfirmationViewModel>
-                (x => x.ProfileId == ViewModel.ProfileId &&
-                      x.Uln == AddAssessmentEntryResponse.Uln),
-                 CacheExpiryTime.XSmall);
+            AssessmentLoader.Received(1).AddAssessmentEntryAsync(AoUkprn, ViewModel);            
         }
 
         [Fact]
-        public void Then_Redirected_To_AssessmentEntryAddedConfirmation()
+        public void Then_Redirected_To_AssessmentDetails()
         {
-            var route = (Result as RedirectToRouteResult);
+            var route = Result as RedirectToRouteResult;
             route.RouteName.Should().Be(RouteConstants.AssessmentDetails);
             route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
         }

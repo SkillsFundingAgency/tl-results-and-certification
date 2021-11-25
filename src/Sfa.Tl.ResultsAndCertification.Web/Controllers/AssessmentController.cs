@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
@@ -260,29 +261,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
 
-            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddAssessmentEntryConfirmationViewModel),
-                new AddAssessmentEntryConfirmationViewModel { ProfileId = model.ProfileId, Uln = response.Uln },
-                CacheExpiryTime.XSmall);
+            var notificationBanner = new NotificationBannerModel { Message = "Success message" };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
             return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
-        }
-
-
-        // TODO: Ravi Remove following method
-        [HttpGet]
-        [Route("assessment-entry-added-confirmation", Name = RouteConstants.AssessmentEntryAddedConfirmation)]
-        public async Task<IActionResult> AddAssessmentEntryConfirmationAsync()
-        {
-            var viewModel = await _cacheService.GetAndRemoveAsync<AddAssessmentEntryConfirmationViewModel>(string.Concat(CacheKey, Constants.AddAssessmentEntryConfirmationViewModel));
-
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read AddAssessmentEntryConfirmationViewModel from redis cache in add assessment confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-            
-            return View(viewModel);
-        }
+        }        
 
         [HttpGet]
         [Route("assessment-entry-remove-core/{assessmentId}", Name = RouteConstants.RemoveCoreAssessmentEntry)]
@@ -320,25 +303,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
 
-            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.RemoveAssessmentEntryConfirmationViewModel),
-                new RemoveAssessmentEntryConfirmationViewModel { ProfileId = model.ProfileId, Uln = model.Uln }, CacheExpiryTime.XSmall);
+            var notificationBanner = new NotificationBannerModel { Message = "Success message" };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
-            return RedirectToRoute(RouteConstants.AssessmentEntryRemovedConfirmation);                       
-        }
-
-        [HttpGet]
-        [Route("assessment-entry-removed-confirmation", Name = RouteConstants.AssessmentEntryRemovedConfirmation)]
-        public async Task<IActionResult> RemoveAssessmentEntryConfirmationAsync()
-        {
-            var viewModel = await _cacheService.GetAndRemoveAsync<RemoveAssessmentEntryConfirmationViewModel>(string.Concat(CacheKey, Constants.RemoveAssessmentEntryConfirmationViewModel));
-
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read RemoveAssessmentEntryConfirmationViewModel from redis cache in remove assessment confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(viewModel);
-        }
+            return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
+        }        
     }
 }
