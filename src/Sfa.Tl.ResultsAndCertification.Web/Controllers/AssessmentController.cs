@@ -224,21 +224,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
-
         [HttpGet]
         [Route("assessment-entry-add-core/{profileId}", Name = RouteConstants.AddCoreAssessmentEntry)]
         public async Task<IActionResult> AddCoreAssessmentEntryAsync(int profileId)
         {
-            var viewModel = await _assessmentLoader.GetAddAssessmentEntryViewModelAsync(User.GetUkPrn(), profileId, ComponentType.Core);
+            var viewModel = await _assessmentLoader.GetAddAssessmentEntryAsync(User.GetUkPrn(), profileId, ComponentType.Core);
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment series available or Learner not found. Method: GetAddAssessmentViewModelAsync({User.GetUkPrn()}, {profileId}, {ComponentType.Core}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment series available or Learner not found. Method: GetAddAssessmentEntryAsync({User.GetUkPrn()}, {profileId}, {ComponentType.Core}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
             return View(viewModel);
         }
-
 
         [HttpPost]
         [Route("assessment-entry-add-core/{profileId}", Name = RouteConstants.EntrySeries)]
@@ -246,7 +244,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var viewModel = await _assessmentLoader.GetAddAssessmentEntryViewModelAsync(User.GetUkPrn(), model.ProfileId, ComponentType.Core);
+                var viewModel = await _assessmentLoader.GetAddAssessmentEntryAsync(User.GetUkPrn(), model.ProfileId, ComponentType.Core);
                 return View(viewModel);
             }
 
@@ -266,9 +264,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 new AddAssessmentEntryConfirmationViewModel { ProfileId = model.ProfileId, Uln = response.Uln },
                 CacheExpiryTime.XSmall);
 
-            return RedirectToRoute(RouteConstants.AssessmentEntryAddedConfirmation);
+            return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
         }
 
+
+        // TODO: Ravi Remove following method
         [HttpGet]
         [Route("assessment-entry-added-confirmation", Name = RouteConstants.AssessmentEntryAddedConfirmation)]
         public async Task<IActionResult> AddAssessmentEntryConfirmationAsync()

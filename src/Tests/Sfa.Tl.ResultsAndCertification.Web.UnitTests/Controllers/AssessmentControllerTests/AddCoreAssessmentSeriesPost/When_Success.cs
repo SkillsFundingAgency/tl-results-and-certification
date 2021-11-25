@@ -46,8 +46,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         [Fact]
         public void Then_Redirected_To_AssessmentEntryAddedConfirmation()
         {
-            var routeName = (Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.AssessmentEntryAddedConfirmation);
+            var route = (Result as RedirectToRouteResult);
+            route.RouteName.Should().Be(RouteConstants.AssessmentDetails);
+            route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
         }
     }
 }

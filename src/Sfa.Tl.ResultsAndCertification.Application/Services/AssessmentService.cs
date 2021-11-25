@@ -395,15 +395,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)
         {
-            // Validate
-            var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(aoUkprn, profileId);
-            var isValid = IsValidAddAssessmentRequestAsync(tqRegistration, componentType);
-            if (!isValid) return null;
-
-            var startInYear = componentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
-            var assessmentSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, startInYear);
-
-            var series = assessmentSeries?.FirstOrDefault(a => a.ComponentType == componentType);
+            var series = await GetOpenAssessmentSeriesAsync(aoUkprn, profileId, componentType);
             if (series == null)
                 return null;
 
@@ -414,12 +406,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             // Validate
             var tqRegistrationPathway = await _assessmentRepository.GetAssessmentsAsync(request.AoUkprn, request.ProfileId);
-            var isValid = IsValidAddAssessmentRequestAsync(tqRegistrationPathway, request.ComponentType);
 
-            var assessmentSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(request.AoUkprn, request.ProfileId, Constants.CoreAssessmentStartInYears);
-            var hasValidSeries = assessmentSeries?.FirstOrDefault(a => a.ComponentType == request.ComponentType) != null;
-
-            if (!isValid || !hasValidSeries)
+            var openAssessmentSeries = await GetOpenAssessmentSeriesAsync(request.AoUkprn, request.ProfileId, request.ComponentType);
+            if (openAssessmentSeries == null)
                 return new AddAssessmentEntryResponse { IsSuccess = false };
 
             int status = 0;
@@ -486,18 +475,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return !hasActiveResult;
         }
 
-        private bool IsValidAddAssessmentRequestAsync(TqRegistrationPathway registrationPathway, ComponentType componentType)
+        private async Task<AssessmentSeries> GetOpenAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)
         {
-            // 1. Must be an active registration.
-            if (registrationPathway == null || registrationPathway.Status != RegistrationPathwayStatus.Active)
-                return false;
+            var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(aoUkprn, profileId);
+            if (tqRegistration == null || tqRegistration.Status != RegistrationPathwayStatus.Active)
+                return null;
 
-            // 2. Must not have an active assessment.
-            var anyActiveAssessment = componentType == ComponentType.Core ?
-                        registrationPathway.TqPathwayAssessments.Any(x => x.IsOptedin && x.EndDate == null) :
-                        registrationPathway.TqRegistrationSpecialisms.Any(x => x.TqSpecialismAssessments.Any(x => x.IsOptedin && x.EndDate == null));
+            var startInYear = componentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
+            var assessmentSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, startInYear);
 
-            return !anyActiveAssessment;
+            return assessmentSeries?.FirstOrDefault(a => a.ComponentType == componentType);
         }
 
         private static bool IsValidNextAssessmentSeries(IList<AssessmentSeries> dbAssessmentSeries, int regAcademicYear, string assessmentEntryName, int startYearOffset, ComponentType componentType)

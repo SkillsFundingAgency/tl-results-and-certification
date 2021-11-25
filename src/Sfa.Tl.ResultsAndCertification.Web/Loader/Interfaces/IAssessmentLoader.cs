@@ -18,6 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<AssessmentEntryDetailsViewModel> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, ComponentType componentType);
         Task<bool> RemoveAssessmentEntryAsync(long aoUkprn, AssessmentEntryDetailsViewModel viewModel);
         
-        Task<AddAssessmentEntryViewModel> GetAddAssessmentEntryViewModelAsync(long aoUkprn, int profileId, ComponentType componentType);
+        Task<AddAssessmentEntryViewModel> GetAddAssessmentEntryAsync(long aoUkprn, int profileId, ComponentType componentType);
     }
 }
