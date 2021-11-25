@@ -115,15 +115,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} is the only series available..
-        /// </summary>
-        public static string Series_Available_Text {
-            get {
-                return ResourceManager.GetString("Series_Available_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
         public static string Submit_Button_Text {

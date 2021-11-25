@@ -3,11 +3,9 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
-using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTests.GetAddAssessmentEntryViewModel;
-using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTests.GetAddAssessmentViewModel
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTests.GetAddAssessmentEntry
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
@@ -50,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             };
 
             InternalApiClient.GetLearnerRecordAsync(AoUkprn, ProfileId).Returns(_expectedApiLearnerResult);
-            InternalApiClient.GetAvailableAssessmentSeriesAsync(AoUkprn, ProfileId, Arg.Any<ComponentType>()).Returns(_expectedApiAvailableAssessmentSeries);
+            InternalApiClient.GetAvailableAssessmentSeriesAsync(AoUkprn, ProfileId, ComponentType.Core).Returns(_expectedApiAvailableAssessmentSeries);
         }
 
         [Fact]

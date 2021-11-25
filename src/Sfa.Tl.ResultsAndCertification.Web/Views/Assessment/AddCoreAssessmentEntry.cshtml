@@ -25,12 +25,11 @@
             </dl>
 
             <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
-            <input type="hidden" asp-for="AssessmentSeriesName" value="@Model.AssessmentSeriesName" />
             <input type="hidden" asp-for="AssessmentSeriesId" value="@Model.AssessmentSeriesId" />
 
             <div class="govuk-form-group" sfa-validation-for="IsOpted" sfa-validation-class="govuk-form-group--error">
                 <fieldset class="govuk-fieldset">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m" for="add-core-entry">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                         <h2 class="govuk-fieldset__heading">
                             @string.Format(@AddCoreAssessmentEntry.Heading_Is_This_Learner_Entering_Assessment, Model.AssessmentSeriesName)
                         </h2>

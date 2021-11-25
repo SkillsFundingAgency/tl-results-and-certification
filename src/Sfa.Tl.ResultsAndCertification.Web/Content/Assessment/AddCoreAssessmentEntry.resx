@@ -135,9 +135,6 @@
   <data name="Select_Option_To_Add_Validation_Text" xml:space="preserve">
     <value>Select whether the learner is entering an assessment</value>
   </data>
-  <data name="Series_Available_Text" xml:space="preserve">
-    <value>{0} is the only series available.</value>
-  </data>
   <data name="Submit_Button_Text" xml:space="preserve">
     <value>Submit</value>
   </data>
