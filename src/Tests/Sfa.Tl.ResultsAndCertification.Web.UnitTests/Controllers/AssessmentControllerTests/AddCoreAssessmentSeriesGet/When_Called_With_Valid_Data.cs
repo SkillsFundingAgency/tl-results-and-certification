@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 AssessmentSeriesName = "Summer 2022"
             };
 
-            AssessmentLoader.GetAddAssessmentEntryViewModelAsync(AoUkprn, ProfileId, ComponentType.Core).Returns(_mockresult);
+            AssessmentLoader.GetAddAssessmentEntryAsync(AoUkprn, ProfileId, ComponentType.Core).Returns(_mockresult);
         }
 
         [Fact]
