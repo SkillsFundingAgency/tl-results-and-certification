@@ -285,7 +285,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("remove-core-assessment-entry/{assessmentId}", Name = RouteConstants.RemoveCoreAssessmentEntry)]
+        [Route("assessment-entry-remove-core/{assessmentId}", Name = RouteConstants.RemoveCoreAssessmentEntry)]
         public async Task<IActionResult> RemoveCoreAssessmentEntryAsync(int assessmentId)
         {
             var viewModel = await _assessmentLoader.GetActiveAssessmentEntryDetailsAsync(User.GetUkPrn(), assessmentId, ComponentType.Core);
@@ -299,11 +299,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("remove-core-assessment-entry/{assessmentId}", Name = RouteConstants.SubmitRemoveCoreAssessmentEntry)]
+        [Route("assessment-entry-remove-core/{assessmentId}", Name = RouteConstants.SubmitRemoveCoreAssessmentEntry)]
         public async Task<IActionResult> RemoveCoreAssessmentEntryAsync(AssessmentEntryDetailsViewModel model)
         {
             if (!ModelState.IsValid)
-                return View(model);
+            {
+                var viewModel = await _assessmentLoader.GetActiveAssessmentEntryDetailsAsync(User.GetUkPrn(), model.AssessmentId, ComponentType.Core);
+                return View(viewModel);
+            }
 
             if (!model.CanRemoveAssessmentEntry.Value)
                 return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });

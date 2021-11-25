@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Xunit;
@@ -9,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 {
     public class When_ModelState_Invalid : TestSetup
     {
+        private AssessmentEntryDetailsViewModel _mockresult = null;
         public override void Given()
         {
             ViewModel = new AssessmentEntryDetailsViewModel
@@ -18,7 +21,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 AssessmentSeriesName = "Summer 2021",
                 CanRemoveAssessmentEntry = null
             };
-            Controller.ModelState.AddModelError(nameof(AssessmentEntryDetailsViewModel.CanRemoveAssessmentEntry), AssessmentContent.RemoveCoreAssessmentEntry.Select_RemoveCoreAssessment_Validation_Message);
+
+            _mockresult = new AssessmentEntryDetailsViewModel
+            {
+                ProfileId = 1,
+                AssessmentId = 5,
+                AssessmentSeriesName = "Summer 2021"
+            };
+
+            AssessmentLoader.GetActiveAssessmentEntryDetailsAsync(AoUkprn, ViewModel.AssessmentId, ComponentType.Core).Returns(_mockresult);
+            Controller.ModelState.AddModelError(nameof(AssessmentEntryDetailsViewModel.CanRemoveAssessmentEntry), AssessmentContent.RemoveCoreAssessmentEntry.Select_Option_To_Remove_Validation_Text);
         }
 
         [Fact]
@@ -40,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 
             Controller.ViewData.ModelState.ContainsKey(nameof(AssessmentEntryDetailsViewModel.CanRemoveAssessmentEntry)).Should().BeTrue();
             var modelState = Controller.ViewData.ModelState[nameof(AssessmentEntryDetailsViewModel.CanRemoveAssessmentEntry)];
-            modelState.Errors[0].ErrorMessage.Should().Be(AssessmentContent.RemoveCoreAssessmentEntry.Select_RemoveCoreAssessment_Validation_Message);
+            modelState.Errors[0].ErrorMessage.Should().Be(AssessmentContent.RemoveCoreAssessmentEntry.Select_Option_To_Remove_Validation_Text);
 
             // Backlink
             var backLink = model.BackLink;
