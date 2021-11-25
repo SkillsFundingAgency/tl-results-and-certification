@@ -1,6 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using System.Collections.Generic;
 using System.Linq;
 using AssessmentDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.AssessmentDetails;
@@ -18,6 +19,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
             ProviderNameLabel = AssessmentDetailsContent.Title_Provider_Text;
             TlevelTitleLabel = AssessmentDetailsContent.Title_TLevel_Text;
         }
+
+        public NotificationBannerModel SuccessBanner { get; set; }
 
         public RegistrationPathwayStatus PathwayStatus { get; set; }
 

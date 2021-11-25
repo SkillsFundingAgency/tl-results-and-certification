@@ -221,7 +221,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.NoDataFound, $"No assessment details found. Method: GetAssessmentDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Active}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-
+            viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
             return View(viewModel);
         }
 
@@ -285,11 +285,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("assessment-entry-remove-core/{assessmentId}", Name = RouteConstants.SubmitRemoveCoreAssessmentEntry)]
         public async Task<IActionResult> RemoveCoreAssessmentEntryAsync(AssessmentEntryDetailsViewModel model)
         {
+            var assessmentEntryDetails = await _assessmentLoader.GetActiveAssessmentEntryDetailsAsync(User.GetUkPrn(), model.AssessmentId, ComponentType.Core);
             if (!ModelState.IsValid)
-            {
-                var viewModel = await _assessmentLoader.GetActiveAssessmentEntryDetailsAsync(User.GetUkPrn(), model.AssessmentId, ComponentType.Core);
-                return View(viewModel);
-            }
+                return View(assessmentEntryDetails);
 
             if (!model.CanRemoveAssessmentEntry.Value)
                 return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
@@ -303,7 +301,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
 
-            var notificationBanner = new NotificationBannerModel { Message = "Success message" };
+            var notificationBanner = new NotificationBannerModel { Message = assessmentEntryDetails.SuccessBannerMessage };
             await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
             return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });

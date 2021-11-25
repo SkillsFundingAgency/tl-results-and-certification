@@ -11,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
     public class When_Success : TestSetup
     {
         private bool _response;
+        private AssessmentEntryDetailsViewModel _mockresult = null;
 
         public override void Given()
         {
@@ -23,7 +24,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 CanRemoveAssessmentEntry = true
             };
 
+            _mockresult = new AssessmentEntryDetailsViewModel
+            {
+                ProfileId = 1,
+                AssessmentId = 5,
+                AssessmentSeriesName = "Summer 2021"
+            };
+
             _response = true;
+
+            AssessmentLoader.GetActiveAssessmentEntryDetailsAsync(AoUkprn, ViewModel.AssessmentId, ComponentType.Core).Returns(_mockresult);
             AssessmentLoader.RemoveAssessmentEntryAsync(AoUkprn, ViewModel).Returns(_response);
         }
 

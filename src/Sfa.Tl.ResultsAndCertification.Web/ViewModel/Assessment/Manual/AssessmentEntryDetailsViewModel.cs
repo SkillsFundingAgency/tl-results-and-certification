@@ -27,6 +27,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 
         public ComponentType ComponentType { get; set; }
 
+        public string PathwayDisplayName { get; set; }
+        public string SuccessBannerMessage { get { return string.Format(RemoveCoreAssessmentEntryContent.Banner_Message, PathwayDisplayName, AssessmentSeriesName); } }
+
         public override BackLinkModel BackLink
         {
             get

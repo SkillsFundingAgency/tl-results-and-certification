@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have removed the {0} assessment for {1} from this learner&apos;s record.
+        /// </summary>
+        public static string Banner_Message {
+            get {
+                return ResourceManager.GetString("Banner_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Would you like to remove the core component assessment entry for {0} from this learner&apos;s record?.
         /// </summary>
         public static string Heading_Would_You_Like_To_Remove_Assessment_Entry {

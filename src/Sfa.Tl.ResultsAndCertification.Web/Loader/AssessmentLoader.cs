@@ -123,6 +123,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         }
 
         public async Task<AssessmentEntryDetailsViewModel> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, ComponentType componentType)
+        
         {            
             var assessmentEntryDetails = await _internalApiClient.GetActiveAssessmentEntryDetailsAsync(aoUkprn, assessmentId, componentType);
             if (assessmentEntryDetails == null) return null;
