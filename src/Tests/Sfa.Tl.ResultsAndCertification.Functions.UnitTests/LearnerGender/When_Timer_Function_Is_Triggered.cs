@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.LearnerGender
         public override void Given()
         {
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
-            LearnerService.FetchLearnerGenderAsync().Returns(new LrsLearnerGenderResponse { IsSuccess = true });
+            LrsLearnerService.FetchLearnerGenderAsync().Returns(new LrsLearnerGenderResponse { IsSuccess = true });
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }
 
@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.LearnerGender
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.Received(1).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            LearnerService.Received(1).FetchLearnerGenderAsync();
+            LrsLearnerService.Received(1).FetchLearnerGenderAsync();
             CommonService.Received(1).UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
         }
     }

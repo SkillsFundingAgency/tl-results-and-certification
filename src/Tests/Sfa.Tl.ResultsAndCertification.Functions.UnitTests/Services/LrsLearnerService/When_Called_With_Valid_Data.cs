@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.LearnerService
+namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.LrsLearnerService
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
@@ -26,21 +26,21 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.LearnerSer
             };
 
             _registrationLearnerDetails = new List<RegisteredLearnerDetails> { registrationLearnerDetails };
-            LearnerRecordService.GetPendingGenderLearnersAsync().Returns(_registrationLearnerDetails);
+            LrsService.GetPendingGenderLearnersAsync().Returns(_registrationLearnerDetails);
 
             _apiResponse = new findLearnerByULNResponse { FindLearnerResponse = new FindLearnerResp { ULN = registrationLearnerDetails.Uln.ToString()  } };
-            LearnerServiceApiClient.FetchLearnerDetailsAsync(Arg.Any<RegisteredLearnerDetails>()).Returns(_apiResponse);
+            LrsLearnerServiceApiClient.FetchLearnerDetailsAsync(Arg.Any<RegisteredLearnerDetails>()).Returns(_apiResponse);
 
             _expectedResult = new LrsLearnerGenderResponse { IsSuccess = true, TotalCount = 1, LrsCount = 1, ModifiedCount = 1, SavedCount = 1 };
-            LearnerRecordService.ProcessLearnerGenderAsync(Arg.Any<List<LrsLearnerRecordDetails>>()).Returns(_expectedResult);
+            LrsService.ProcessLearnerGenderAsync(Arg.Any<List<LrsLearnerRecordDetails>>()).Returns(_expectedResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            LearnerRecordService.Received(1).GetPendingGenderLearnersAsync();
-            LearnerServiceApiClient.Received(1).FetchLearnerDetailsAsync(Arg.Any<RegisteredLearnerDetails>());
-            LearnerRecordService.Received(1).ProcessLearnerGenderAsync(Arg.Any<List<LrsLearnerRecordDetails>>());
+            LrsService.Received(1).GetPendingGenderLearnersAsync();
+            LrsLearnerServiceApiClient.Received(1).FetchLearnerDetailsAsync(Arg.Any<RegisteredLearnerDetails>());
+            LrsService.Received(1).ProcessLearnerGenderAsync(Arg.Any<List<LrsLearnerRecordDetails>>());
         }
 
         [Fact]

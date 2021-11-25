@@ -14,15 +14,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerRecordServiceTests
+namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LrsServiceTests
 {
-    public abstract class LearnerRecordServiceBaseTest : BaseTest<TqRegistrationProfile>
+    public abstract class LrsServiceBaseTest : BaseTest<TqRegistrationProfile>
     {
         protected IMapper Mapper;
 
         protected ILogger<RegistrationRepository> RegistrationRepositoryLogger;
         protected IRegistrationRepository RegistrationRepository;
-        protected ILogger<ILrsService> LearnerRecordServiceLogger;
+        protected ILogger<ILrsService> LrsServiceLogger;
 
         protected ILogger<GenericRepository<Qualification>> QualificationRepositoryLogger;
         protected IRepository<Qualification> QualificationRepository;

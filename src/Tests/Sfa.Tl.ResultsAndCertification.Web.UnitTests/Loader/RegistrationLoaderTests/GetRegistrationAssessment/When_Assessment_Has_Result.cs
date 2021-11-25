@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using System.Collections.Generic;
 using Xunit;
@@ -10,8 +9,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 {
     public class When_Assessment_Has_Result : TestSetup
     {
-        private IList<AssessmentSeriesDetails> _assessmentSeriesDetails;
-
         public override void Given()
         {
             expectedApiResult = new LearnerRecord

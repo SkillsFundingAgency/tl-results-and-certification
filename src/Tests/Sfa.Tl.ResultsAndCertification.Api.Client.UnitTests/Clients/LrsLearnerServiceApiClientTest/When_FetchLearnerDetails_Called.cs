@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.LearnerServiceApiClientTest
+namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.LrsLearnerServiceApiClientTest
 {
     public class When_FetchLearnerDetails_Called : BaseTest<LrsLearnerServiceApiClient>
     {

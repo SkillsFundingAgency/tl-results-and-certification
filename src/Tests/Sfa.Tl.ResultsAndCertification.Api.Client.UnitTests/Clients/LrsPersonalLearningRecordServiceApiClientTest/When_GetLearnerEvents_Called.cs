@@ -11,7 +11,7 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.PersonalLearningRecordServiceApiClientTest
+namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.LrsPersonalLearningRecordServiceApiClientTest
 {
     public class When_GetLearnerEvents_Called : BaseTest<LrsPersonalLearningRecordServiceApiClient>
     {

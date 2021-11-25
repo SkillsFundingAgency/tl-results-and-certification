@@ -5,7 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.LearnerService
+namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.LrsLearnerService
 {
     public class When_Called_With_No_Data : TestSetup
     {
@@ -17,20 +17,20 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.LearnerSer
         {
             _apiResponse = null;
             _registrationLearnerDetails = null;
-            LearnerRecordService.GetPendingGenderLearnersAsync().Returns(_registrationLearnerDetails);
+            LrsService.GetPendingGenderLearnersAsync().Returns(_registrationLearnerDetails);
 
-            LearnerServiceApiClient.FetchLearnerDetailsAsync(Arg.Any<RegisteredLearnerDetails>()).Returns(_apiResponse);
+            LrsLearnerServiceApiClient.FetchLearnerDetailsAsync(Arg.Any<RegisteredLearnerDetails>()).Returns(_apiResponse);
 
             _expectedResult = new LrsLearnerGenderResponse { IsSuccess = true, TotalCount = 0, LrsCount = 0, ModifiedCount = 0, SavedCount = 0 };
-            LearnerRecordService.ProcessLearnerGenderAsync(Arg.Any<List<LrsLearnerRecordDetails>>()).Returns(_expectedResult);
+            LrsService.ProcessLearnerGenderAsync(Arg.Any<List<LrsLearnerRecordDetails>>()).Returns(_expectedResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            LearnerRecordService.Received(1).GetPendingGenderLearnersAsync();
-            LearnerServiceApiClient.DidNotReceive().FetchLearnerDetailsAsync(Arg.Any<RegisteredLearnerDetails>());
-            LearnerRecordService.DidNotReceive().ProcessLearnerGenderAsync(Arg.Any<List<LrsLearnerRecordDetails>>());
+            LrsService.Received(1).GetPendingGenderLearnersAsync();
+            LrsLearnerServiceApiClient.DidNotReceive().FetchLearnerDetailsAsync(Arg.Any<RegisteredLearnerDetails>());
+            LrsService.DidNotReceive().ProcessLearnerGenderAsync(Arg.Any<List<LrsLearnerRecordDetails>>());
         }
 
         [Fact]

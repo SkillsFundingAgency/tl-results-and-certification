@@ -10,8 +10,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
-        private IList<AssessmentSeriesDetails> _assessmentSeriesDetails;
-
         public override void Given()
         {
             expectedApiResult = new LearnerRecord
