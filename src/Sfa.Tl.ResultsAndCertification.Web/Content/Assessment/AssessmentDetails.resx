@@ -153,11 +153,11 @@
   <data name="Page_Title" xml:space="preserve">
     <value>Learner details - Assessment entries</value>
   </data>
+  <data name="Remove_Action_Link_Hidden_Text" xml:space="preserve">
+    <value> assessment entry</value>
+  </data>
   <data name="Remove_Action_Link_Text" xml:space="preserve">
     <value>Remove</value>
-  </data>
-  <data name="Remove_Entry_Action_Link_Text" xml:space="preserve">
-    <value>Remove entry</value>
   </data>
   <data name="Search_Again_Text" xml:space="preserve">
     <value>Search again</value>

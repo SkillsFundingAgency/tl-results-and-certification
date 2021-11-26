@@ -62,6 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             model.SummaryExamPeriod.Title.Should().Be(AssessmentDetailsContent.Title_Exam_Period);
             model.SummaryExamPeriod.Value.Should().Be(_mockresult.PathwayAssessment.SeriesName);
             model.SummaryExamPeriod.ActionText.Should().Be(AssessmentDetailsContent.Remove_Action_Link_Text);
+            model.SummaryExamPeriod.HiddenActionText.Should().Be(AssessmentDetailsContent.Remove_Action_Link_Hidden_Text);
             model.SummaryExamPeriod.RouteName.Should().Be(RouteConstants.RemoveCoreAssessmentEntry);
             model.SummaryExamPeriod.RouteAttributes.Count.Should().Be(1);
             model.SummaryExamPeriod.RouteAttributes[Constants.AssessmentId].Should().Be(_mockresult.PathwayAssessment.AssessmentId.ToString());

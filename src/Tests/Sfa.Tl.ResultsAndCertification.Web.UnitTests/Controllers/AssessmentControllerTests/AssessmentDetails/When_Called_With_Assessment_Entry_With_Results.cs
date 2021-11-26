@@ -11,7 +11,7 @@ using AssessmentDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Asse
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.AssessmentDetails
 {
-    public class When_Called_With_Assessment_Entry_With_Results1 : TestSetup
+    public class When_Called_With_Assessment_Entry_With_Results : TestSetup
     {
         private AssessmentDetailsViewModel _mockresult = null;
 
@@ -65,6 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             model.SummaryExamPeriod.Title.Should().Be(AssessmentDetailsContent.Title_Exam_Period);
             model.SummaryExamPeriod.Value.Should().Be(_mockresult.PathwayAssessment.SeriesName);
             model.SummaryExamPeriod.ActionText.Should().BeNull();
+            model.SummaryExamPeriod.HiddenActionText.Should().BeNull();
 
             // Last updated on 
             model.SummaryLastUpdatedOn.Title.Should().Be(AssessmentDetailsContent.Title_Last_Updated_On);

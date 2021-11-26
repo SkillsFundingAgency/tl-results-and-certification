@@ -27,7 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 ProviderUkprn = 1234567,
                 TlevelTitle = "Tlevel Title",
                 AssessmentSeriesId = 11,
-                AssessmentSeriesName = "Summer 2022"
+                AssessmentSeriesName = "Summer 2022",
+                PathwayDisplayName = "Test Pathway (987456123)"
             };
 
             AssessmentLoader.GetAddAssessmentEntryAsync(AoUkprn, ProfileId, ComponentType.Core).Returns(_mockresult);
@@ -48,6 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             model.ProfileId.Should().Be(_mockresult.ProfileId);
             model.AssessmentSeriesId.Should().Be(_mockresult.AssessmentSeriesId);
             model.AssessmentSeriesName.Should().Be(_mockresult.AssessmentSeriesName);
+            model.PathwayDisplayName.Should().Be(_mockresult.PathwayDisplayName);            
             model.IsOpted.Should().BeNull();
 
             // Uln            

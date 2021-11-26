@@ -169,20 +169,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  assessment entry.
+        /// </summary>
+        public static string Remove_Action_Link_Hidden_Text {
+            get {
+                return ResourceManager.GetString("Remove_Action_Link_Hidden_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
         public static string Remove_Action_Link_Text {
             get {
                 return ResourceManager.GetString("Remove_Action_Link_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove entry.
-        /// </summary>
-        public static string Remove_Entry_Action_Link_Text {
-            get {
-                return ResourceManager.GetString("Remove_Entry_Action_Link_Text", resourceCulture);
             }
         }
         
