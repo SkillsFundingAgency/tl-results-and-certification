@@ -4,8 +4,10 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Xunit;
+using AddCoreAssessmentEntryContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.AddCoreAssessmentEntry;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.AddCoreAssessmentSeriesPost
 {
@@ -13,6 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
     {
         private AddAssessmentEntryResponse _addAssessmentEntryResponse;
         private AddAssessmentEntryViewModel _mockresult = null;
+        private string _expectedSuccessBannerMsg;
 
         public override void Given()
         {
@@ -36,7 +39,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 ProfileId = 1,
                 AssessmentSeriesId = 11,
                 AssessmentSeriesName = "Summer 2021",
+                PathwayDisplayName = "Childcare (1234566789)"
             };
+
+            _expectedSuccessBannerMsg = string.Format(AddCoreAssessmentEntryContent.Banner_Message, _mockresult.AssessmentSeriesName, _mockresult.PathwayDisplayName);
 
             AssessmentLoader.AddAssessmentEntryAsync(AoUkprn, ViewModel).Returns(_addAssessmentEntryResponse);
             AssessmentLoader.GetAddAssessmentEntryAsync(AoUkprn, ProfileId, ComponentType.Core).Returns(_mockresult);
@@ -45,7 +51,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AssessmentLoader.Received(1).AddAssessmentEntryAsync(AoUkprn, ViewModel);            
+            AssessmentLoader.Received(1).GetAddAssessmentEntryAsync(AoUkprn, ProfileId, ComponentType.Core);
+            AssessmentLoader.Received(1).AddAssessmentEntryAsync(AoUkprn, ViewModel);
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(x => x.Message.Equals(_expectedSuccessBannerMsg)), CacheExpiryTime.XSmall);
         }
 
         [Fact]

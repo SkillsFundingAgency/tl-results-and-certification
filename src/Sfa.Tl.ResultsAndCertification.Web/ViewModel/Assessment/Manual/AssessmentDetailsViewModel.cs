@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                     {
                         Id = "examperiod",
                         Title = AssessmentDetailsContent.Title_Exam_Period,
-                        Value = PathwayAssessment?.SeriesName,
+                        Value = PathwayAssessment?.SeriesName
                     }
                     :
                     new SummaryItemModel
@@ -82,14 +82,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         {
             Id = "lastupdatdon",
             Title = AssessmentDetailsContent.Title_Last_Updated_On,
-            Value = PathwayAssessment?.LastUpdatedOn.ToDobFormat(),
+            Value = PathwayAssessment?.LastUpdatedOn.ToDobFormat()
         };
 
         public SummaryItemModel SummaryLastUpdatedBy => new SummaryItemModel
         {
             Id = "lastupdatedby",
             Title = AssessmentDetailsContent.Title_Last_Updated_By,
-            Value = PathwayAssessment?.LastUpdatedBy,
+            Value = PathwayAssessment?.LastUpdatedBy
         };
 
         public BreadcrumbModel Breadcrumb
