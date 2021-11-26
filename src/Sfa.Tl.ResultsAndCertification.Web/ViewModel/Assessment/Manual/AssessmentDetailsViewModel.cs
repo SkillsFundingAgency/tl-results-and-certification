@@ -1,7 +1,9 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System.Collections.Generic;
 using System.Linq;
 using AssessmentDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.AssessmentDetails;
@@ -50,6 +52,45 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public bool IsSpecialismRegistered => SpecialismDetails.Any();
         public string SpecialismDisplayName => DisplayMultipleSpecialismsCombined ? string.Join(Constants.AndSeperator, SpecialismDetails.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.LarId})")) : null;
         public List<SpecialismViewModel> DisplaySpecialisms => DisplayMultipleSpecialismsCombined ? SpecialismDetails.Take(1).ToList() : SpecialismDetails;
+
+        public SummaryItemModel SummaryExamPeriod
+        {
+            get
+            {
+                return HasResultForCurrentCoreAssessment ?
+                    new SummaryItemModel
+                    {
+                        Id = "examperiod",
+                        Title = AssessmentDetailsContent.Title_Exam_Period,
+                        Value = PathwayAssessment?.SeriesName,
+                    }
+                    :
+                    new SummaryItemModel
+                    {
+                        Id = "examperiod",
+                        Title = AssessmentDetailsContent.Title_Exam_Period,
+                        Value = PathwayAssessment?.SeriesName,
+
+                        ActionText = AssessmentDetailsContent.Remove_Action_Link_Text,
+                        RouteName = RouteConstants.RemoveCoreAssessmentEntry,
+                        RouteAttributes = new Dictionary<string, string> { { Constants.AssessmentId, PathwayAssessment?.AssessmentId.ToString() } }
+                    };
+            }
+        }
+
+        public SummaryItemModel SummaryLastUpdatedOn => new SummaryItemModel
+        {
+            Id = "lastupdatdon",
+            Title = AssessmentDetailsContent.Title_Last_Updated_On,
+            Value = PathwayAssessment?.LastUpdatedOn.ToDobFormat(),
+        };
+
+        public SummaryItemModel SummaryLastUpdatedBy => new SummaryItemModel
+        {
+            Id = "lastupdatedby",
+            Title = AssessmentDetailsContent.Title_Last_Updated_By,
+            Value = PathwayAssessment?.LastUpdatedBy,
+        };
 
         public BreadcrumbModel Breadcrumb
         {

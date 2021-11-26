@@ -123,6 +123,9 @@
   <data name="Add_Series_Option_Yes" xml:space="preserve">
     <value>Yes, add entry to {0}</value>
   </data>
+  <data name="Banner_Message" xml:space="preserve">
+    <value>This learner is now registered for the {0} {1} assessment</value>
+  </data>
   <data name="Heading_Is_This_Learner_Entering_Assessment" xml:space="preserve">
     <value>Is this learner entering an assessment for their core component in {0}?</value>
   </data>

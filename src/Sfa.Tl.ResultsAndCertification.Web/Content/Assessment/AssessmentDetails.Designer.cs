@@ -169,6 +169,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string Remove_Action_Link_Text {
+            get {
+                return ResourceManager.GetString("Remove_Action_Link_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove entry.
         /// </summary>
         public static string Remove_Entry_Action_Link_Text {
@@ -210,6 +219,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         public static string Title_DateofBirth_Text {
             get {
                 return ResourceManager.GetString("Title_DateofBirth_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exam period.
+        /// </summary>
+        public static string Title_Exam_Period {
+            get {
+                return ResourceManager.GetString("Title_Exam_Period", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated by.
+        /// </summary>
+        public static string Title_Last_Updated_By {
+            get {
+                return ResourceManager.GetString("Title_Last_Updated_By", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last updated.
+        /// </summary>
+        public static string Title_Last_Updated_On {
+            get {
+                return ResourceManager.GetString("Title_Last_Updated_On", resourceCulture);
             }
         }
         

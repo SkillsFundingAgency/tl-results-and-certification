@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
@@ -10,7 +11,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 {
     public class When_Success : TestSetup
     {
-        private AddAssessmentEntryResponse AddAssessmentEntryResponse;
+        private AddAssessmentEntryResponse _addAssessmentEntryResponse;
+        private AddAssessmentEntryViewModel _mockresult = null;
 
         public override void Given()
         {
@@ -19,16 +21,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 ProfileId = 1,
                 AssessmentSeriesId = 11,
                 AssessmentSeriesName = "Summer 2021",
-                IsOpted = true
+                IsOpted = true,
+                PathwayDisplayName = "Childcare"
             };
 
-            AddAssessmentEntryResponse = new AddAssessmentEntryResponse 
+            _addAssessmentEntryResponse = new AddAssessmentEntryResponse 
             {
                 IsSuccess = true,
                 Uln = 1234567890
             };
 
-            AssessmentLoader.AddAssessmentEntryAsync(AoUkprn, ViewModel).Returns(AddAssessmentEntryResponse);
+            _mockresult = new AddAssessmentEntryViewModel
+            {
+                ProfileId = 1,
+                AssessmentSeriesId = 11,
+                AssessmentSeriesName = "Summer 2021",
+            };
+
+            AssessmentLoader.AddAssessmentEntryAsync(AoUkprn, ViewModel).Returns(_addAssessmentEntryResponse);
+            AssessmentLoader.GetAddAssessmentEntryAsync(AoUkprn, ProfileId, ComponentType.Core).Returns(_mockresult);
         }
 
         [Fact]

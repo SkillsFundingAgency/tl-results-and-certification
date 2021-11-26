@@ -44,7 +44,11 @@
                 }
                 else if (Model.HasCurrentCoreAssessmentEntry)
                 {
-                    // TODO: Display current assessment entry details
+                    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                        <vc:summary-item model=Model.SummaryExamPeriod></vc:summary-item>
+                        <vc:summary-item model=Model.SummaryLastUpdatedOn></vc:summary-item>
+                        <vc:summary-item model=Model.SummaryLastUpdatedBy></vc:summary-item>
+                    </dl>   
                 }
                 else
                 {

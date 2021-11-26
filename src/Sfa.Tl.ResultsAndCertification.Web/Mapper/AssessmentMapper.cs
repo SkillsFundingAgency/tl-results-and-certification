@@ -56,7 +56,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.Pathway.Provider.Name))
                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.Pathway.Provider.Ukprn))
-               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.Pathway.Title));
+               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.Pathway.Title))
+               .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.Pathway.Name} ({s.Pathway.LarId})"));
 
             CreateMap<AvailableAssessmentSeries, AddAssessmentEntryViewModel>()
                 .ForMember(d => d.AssessmentSeriesId, opts => opts.MapFrom(s => s.AssessmentSeriesId))

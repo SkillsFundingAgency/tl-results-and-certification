@@ -79,6 +79,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This learner is now registered for the {0} {1} assessment.
+        /// </summary>
+        public static string Banner_Message {
+            get {
+                return ResourceManager.GetString("Banner_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is this learner entering an assessment for their core component in {0}?.
         /// </summary>
         public static string Heading_Is_This_Learner_Entering_Assessment {

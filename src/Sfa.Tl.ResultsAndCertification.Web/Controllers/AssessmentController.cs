@@ -243,11 +243,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("assessment-entry-add-core/{profileId}", Name = RouteConstants.EntrySeries)]
         public async Task<IActionResult> AddCoreAssessmentEntryAsync(AddAssessmentEntryViewModel model)
         {
+            var assessmentEntryDetails = await _assessmentLoader.GetAddAssessmentEntryAsync(User.GetUkPrn(), model.ProfileId, ComponentType.Core);
             if (!ModelState.IsValid)
-            {
-                var viewModel = await _assessmentLoader.GetAddAssessmentEntryAsync(User.GetUkPrn(), model.ProfileId, ComponentType.Core);
-                return View(viewModel);
-            }
+                return View(assessmentEntryDetails);
 
             if (!model.IsOpted.Value)
                 return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
@@ -261,7 +259,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
 
-            var notificationBanner = new NotificationBannerModel { Message = "Success message" };
+            var notificationBanner = new NotificationBannerModel { Message = assessmentEntryDetails.SuccessBannerMessage };
             await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
             return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
