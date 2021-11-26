@@ -64,11 +64,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.DateofBirth.Should().Be(_expectedApiLearnerResult.DateofBirth);
             ActualResult.ProviderName.Should().Be(_expectedApiLearnerResult.Pathway.Provider.Name);
             ActualResult.ProviderUkprn.Should().Be(_expectedApiLearnerResult.Pathway.Provider.Ukprn);
-            ActualResult.TlevelTitle.Should().Be(_expectedApiLearnerResult.Pathway.Title);
+            ActualResult.TlevelTitle.Should().Be(_expectedApiLearnerResult.Pathway.Title);            
 
             // Assessment details info
             ActualResult.AssessmentId.Should().Be(ExpectedApiResult.AssessmentId);
             ActualResult.AssessmentSeriesName.Should().Be(ExpectedApiResult.AssessmentSeriesName.ToLowerInvariant());
+            ActualResult.PathwayDisplayName.Should().Be($"{_expectedApiLearnerResult.Pathway.Name} ({_expectedApiLearnerResult.Pathway.LarId})");
         }
     }
 }
