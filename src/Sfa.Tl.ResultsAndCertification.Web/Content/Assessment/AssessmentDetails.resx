@@ -148,7 +148,7 @@
     <value>No assessment entries have yet been recorded for {0}</value>
   </data>
   <data name="Occupational_Specialism_Heading" xml:space="preserve">
-    <value>Occupational specialism :</value>
+    <value>Occupational specialism</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Learner details - Assessment entries</value>

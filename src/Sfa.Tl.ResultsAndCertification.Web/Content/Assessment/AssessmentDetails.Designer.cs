@@ -151,7 +151,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Occupational specialism :.
+        ///   Looks up a localized string similar to Occupational specialism.
         /// </summary>
         public static string Occupational_Specialism_Heading {
             get {
