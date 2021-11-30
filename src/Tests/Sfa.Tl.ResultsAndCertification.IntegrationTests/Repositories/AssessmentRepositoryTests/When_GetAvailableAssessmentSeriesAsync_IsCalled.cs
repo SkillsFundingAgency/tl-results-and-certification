@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
     public class When_GetAvailableAssessmentSeriesAsync_IsCalled : AssessmentRepositoryBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
-        private AssessmentSeries _actualResult;
+        private IList<AssessmentSeries> _actualResult;
         private List<TqRegistrationProfile> _registrations;
 
         public override void Given()
@@ -49,16 +50,26 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
         {
             await WhenAsync(request.AoUkprn, request.ProfileId, request.StartInYear);
 
-            if (_actualResult == null)
+            if (_actualResult == null || !_actualResult.Any())
             {
                 expectedResult.Should().BeNull();
                 return;
             }
 
-            // Assert
-            _actualResult.Id.Should().Be(expectedResult.Id);
-            _actualResult.Name.Should().Be(expectedResult.Name);
-            _actualResult.Year.Should().Be(expectedResult.Year);
+            var actualAssessmentSeries = _actualResult.FirstOrDefault(a => a.ComponentType == request.ComponentType);
+
+            if (expectedResult == null)
+            {
+                actualAssessmentSeries.Should().BeNull();
+            }
+            else
+            {
+                // Assert
+                actualAssessmentSeries.Should().NotBeNull();
+                actualAssessmentSeries.Id.Should().Be(expectedResult.Id);
+                actualAssessmentSeries.Name.Should().Be(expectedResult.Name);
+                actualAssessmentSeries.Year.Should().Be(expectedResult.Year);
+            }
         }
 
         public static IEnumerable<object[]> Data
@@ -68,22 +79,22 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
                 return new[]
                 {
                     new object[]
-                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 1, StartInYear = 0 },
-                      new AssessmentSeries { Id = 1, Name = "Summer 2021", Description = "Summer 2021", Year = 2021 } },
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 1, StartInYear = 0, ComponentType = ComponentType.Core },
+                      new AssessmentSeries { Id = 1, ComponentType = ComponentType.Core, Name = "Summer 2021", Description = "Summer 2021", Year = 2021 } },
 
                     // Start in +1 yr - assessment window not opened.
                     new object[]
-                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 1, StartInYear = 1 },
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 1, StartInYear = 1, ComponentType = ComponentType.Core },
                       null },
 
                     // Invlaid AoUkprn
                     new object[]
-                    { new RequestParameter { AoUkprn = 99999999, ProfileId = 1, StartInYear = 0 },
+                    { new RequestParameter { AoUkprn = 99999999, ProfileId = 1, StartInYear = 0, ComponentType = ComponentType.Core  },
                       null },
 
                     // Invalid ProfileId
                     new object[]
-                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 99, StartInYear = 0 },
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 99, StartInYear = 0, ComponentType = ComponentType.Core },
                       null },
                 };
             }
@@ -95,5 +106,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
         public long AoUkprn { get; set; }
         public int ProfileId { get; set; }
         public int StartInYear { get; set; }
+        public ComponentType ComponentType { get; set; }
     }
 }

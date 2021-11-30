@@ -11,8 +11,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
     {
         public override void Given()
         {
-            CacheService.GetAndRemoveAsync<UlnAssessmentsNotFoundViewModel>(Arg.Any<string>())
-                .Returns(new UlnAssessmentsNotFoundViewModel { Uln = Uln });
+            CacheService.GetAndRemoveAsync<UlnAssessmentsNotFoundViewModel>(Arg.Any<string>()).Returns(new UlnAssessmentsNotFoundViewModel { Uln = Uln });
+            CacheService.GetAndRemoveAsync<string>(Constants.AssessmentsSearchCriteria).Returns(Uln.ToString());
+        }
+
+        [Fact]
+        public void Then_Expected_Methods_AreCalled()
+        {
+            CacheService.Received(1).GetAndRemoveAsync<UlnAssessmentsNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchAssessmentsUlnNotFound));
         }
 
         [Fact]
@@ -26,7 +32,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.SearchAssessments);
-            model.BackLink.RouteAttributes.Should().BeEmpty();
+            model.BackLink.RouteAttributes.Count.Should().Be(1);
+            model.BackLink.RouteAttributes.TryGetValue(Constants.PopulateUln, out string routeValue);
+            routeValue.Should().Be(true.ToString());
         }
     }
 }

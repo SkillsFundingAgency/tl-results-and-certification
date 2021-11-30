@@ -15,10 +15,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         public override void Given() 
         {
             PopulateUln = false;
-            cacheSearchPrsViewModel = new PrsSearchLearnerViewModel { SearchUln = "123465790" };
-            
-            CacheService.GetAsync<PrsSearchLearnerViewModel>(CacheKey)
-                .Returns(cacheSearchPrsViewModel);
+            cacheSearchPrsViewModel = new PrsSearchLearnerViewModel { SearchUln = "123465790" };            
+            CacheService.GetAsync<PrsSearchLearnerViewModel>(CacheKey).Returns(cacheSearchPrsViewModel);
         }
 
         [Fact]

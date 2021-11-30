@@ -117,22 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Banner_Message" xml:space="preserve">
+    <value>You have removed the {0} assessment for {1} from this learner's record</value>
+  </data>
+  <data name="Heading_Would_You_Like_To_Remove_Assessment_Entry" xml:space="preserve">
+    <value>Would you like to remove the core component assessment entry for {0} from this learner's record?</value>
+  </data>
   <data name="Page_Heading" xml:space="preserve">
-    <value>Are you sure you want to remove this core assessment entry from {0}?</value>
+    <value>Remove core component assessment entry from {0}</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Are you sure you want to remove this core assessment entry page</value>
+    <value>Remove core - Assessment entries</value>
   </data>
-  <data name="Section_No_Remove_Core_Entry_Text" xml:space="preserve">
-    <value>No, do not remove the core entry</value>
+  <data name="Remove_Series_Option_No" xml:space="preserve">
+    <value>No, do not remove the entry from {0}</value>
   </data>
-  <data name="Section_Yes_Remove_Core_Entry_Text" xml:space="preserve">
-    <value>Yes, remove the core entry</value>
+  <data name="Remove_Series_Option_Yes" xml:space="preserve">
+    <value>Yes, remove the entry from {0}</value>
   </data>
-  <data name="Select_RemoveCoreAssessment_Validation_Message" xml:space="preserve">
-    <value>Select yes to remove the core entry</value>
+  <data name="Select_Option_To_Remove_Validation_Text" xml:space="preserve">
+    <value>Select whether the assessment entry is being removed</value>
   </data>
   <data name="Submit_Button_Text" xml:space="preserve">
     <value>Submit</value>
+  </data>
+  <data name="Title_DateofBirth_Text" xml:space="preserve">
+    <value>Date of birth</value>
+  </data>
+  <data name="Title_Name_Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Title_Provider_Text" xml:space="preserve">
+    <value>Provider &lt;br/&gt; (UKPRN)</value>
+  </data>
+  <data name="Title_TLevel_Text" xml:space="preserve">
+    <value>T Level</value>
+  </data>
+  <data name="Title_Uln_Text" xml:space="preserve">
+    <value>ULN</value>
   </data>
 </root>

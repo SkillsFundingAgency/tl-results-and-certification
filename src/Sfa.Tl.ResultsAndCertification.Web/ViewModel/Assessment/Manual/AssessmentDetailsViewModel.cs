@@ -1,57 +1,96 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System.Collections.Generic;
-using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
+using System.Linq;
 using AssessmentDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.AssessmentDetails;
+using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 {
-    public class AssessmentDetailsViewModel
+    public class AssessmentDetailsViewModel : AssessmentBaseViewModel
     {
-        private string PathwayAssessmentActionText 
-        { 
-            get 
-            {
-                if (!string.IsNullOrWhiteSpace(PathwayAssessmentSeries))
-                    return IsResultExist ? string.Empty : AssessmentDetailsContent.Remove_Entry_Action_Link_Text;
-                else
-                    return IsCoreEntryEligible ? AssessmentDetailsContent.Add_Entry_Action_Link_Text : null;
-            } 
+        public AssessmentDetailsViewModel()
+        {
+            UlnLabel = AssessmentDetailsContent.Title_Uln_Text;
+            LearnerNameLabel = AssessmentDetailsContent.Title_Name_Text;
+            DateofBirthLabel = AssessmentDetailsContent.Title_DateofBirth_Text;
+            ProviderNameLabel = AssessmentDetailsContent.Title_Provider_Text;
+            TlevelTitleLabel = AssessmentDetailsContent.Title_TLevel_Text;
         }
 
-        private string SpecialismAssessmentActionText { get { return null; } }
-
-        private string PathwayAssessmentSeriesText { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? PathwayAssessmentSeries :
-                                                        IsCoreEntryEligible ? AssessmentDetailsContent.Not_Specified_Text : AssessmentDetailsContent.Available_After_Current_Assessment_Series; } }
-        private string SpecialismAssessmentSeriesText { get { return AssessmentDetailsContent.Available_After_Autumn2021; } }
-
-        private string PathwayAddAssessmentRoute { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? RouteConstants.RemoveCoreAssessmentEntry : RouteConstants.AddCoreAssessmentEntry; } }
-
-        private Dictionary<string, string> PathwayAssessmentRouteAttributes { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? new Dictionary<string, string> { { Constants.AssessmentId, PathwayAssessmentId.ToString() } } : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } ; } }
-
-        public int ProfileId { get; set; }
-        public long Uln { get; set; }
-        public string Name { get; set; }
-
-        public string ProviderDisplayName { get; set; }
-        public string PathwayDisplayName { get; set; }
-        public string PathwayAssessmentSeries { get; set; }
-        public int PathwayAssessmentId { get; set; }
-        public bool IsCoreEntryEligible { get; set; }
-
-        public string SpecialismDisplayName { get; set; }
-        public string SpecialismAssessmentSeries { get; set; }
-
-        public bool IsResultExist { get; set; }
-        public bool HasAnyOutstandingPathwayPrsActivities { get; set; }
-        public bool IsIndustryPlacementExist { get; set; }
+        public NotificationBannerModel SuccessBanner { get; set; }
 
         public RegistrationPathwayStatus PathwayStatus { get; set; }
 
-        public SummaryItemModel SummaryCoreAssessmentEntry => new SummaryItemModel { Id = "coreassessmententry", Title = AssessmentDetailsContent.Title_Assessment_Entry_Text, Value = PathwayAssessmentSeriesText, ActionText = PathwayAssessmentActionText, HiddenActionText = AssessmentDetailsContent.Core_Assessment_Entry_Hidden_Text, RouteName = PathwayAddAssessmentRoute, RouteAttributes = PathwayAssessmentRouteAttributes };
-        public SummaryItemModel SummarySpecialismAssessmentEntry => new SummaryItemModel { Id = "specialismassessmententry", Title = AssessmentDetailsContent.Title_Assessment_Entry_Text, Value = SpecialismAssessmentSeriesText, ActionText = SpecialismAssessmentActionText, HiddenActionText = AssessmentDetailsContent.Specialism_Assessment_Entry_Hidden_Text };
+        public int PathwayId { get; set; }
+        public string PathwayDisplayName { get; set; }
+        public PathwayAssessmentViewModel PathwayAssessment { get; set; }
+        public PathwayAssessmentViewModel PreviousPathwayAssessment { get; set; }
+        public bool IsCoreEntryEligible { get; set; }
+        public string NextAvailableCoreSeries { get; set; }
+        public bool IsCoreResultExist { get; set; }
+        public bool HasAnyOutstandingPathwayPrsActivities { get; set; }
+        public bool IsIndustryPlacementExist { get; set; }
+
+        public List<SpecialismViewModel> SpecialismDetails { get; set; }
+        public bool IsSpecialismEntryEligible { get; set; }
+        public string NextAvailableSpecialismSeries { get; set; }
+        public bool HasCurrentSpecialismAssessmentEntry { get; set; }
+        public bool IsResitForSpecialism { get; set; }
+
+        public bool HasCurrentCoreAssessmentEntry => PathwayAssessment != null;
+        public bool HasResultForCurrentCoreAssessment => HasCurrentCoreAssessmentEntry && PathwayAssessment.Results.Any();
+        public bool HasPreviousCoreAssessment => PreviousPathwayAssessment != null;
+        public bool HasResultForPreviousCoreAssessment => HasPreviousCoreAssessment && PreviousPathwayAssessment.Results.Any();
+        public bool NeedCoreResultForPreviousAssessmentEntry => !HasCurrentCoreAssessmentEntry && HasPreviousCoreAssessment && !HasResultForPreviousCoreAssessment;
+        public bool DisplayMultipleSpecialismsCombined => SpecialismDetails.Count > 1 && !IsResitForSpecialism;
+
+        public bool IsSpecialismRegistered => SpecialismDetails.Any();
+        public string SpecialismDisplayName => DisplayMultipleSpecialismsCombined ? string.Join(Constants.AndSeperator, SpecialismDetails.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.LarId})")) : null;
+        public List<SpecialismViewModel> DisplaySpecialisms => DisplayMultipleSpecialismsCombined ? SpecialismDetails.Take(1).ToList() : SpecialismDetails;
+
+        public SummaryItemModel SummaryExamPeriod
+        {
+            get
+            {
+                return HasResultForCurrentCoreAssessment ?
+                    new SummaryItemModel
+                    {
+                        Id = "examperiod",
+                        Title = AssessmentDetailsContent.Title_Exam_Period,
+                        Value = PathwayAssessment?.SeriesName
+                    }
+                    :
+                    new SummaryItemModel
+                    {
+                        Id = "examperiod",
+                        Title = AssessmentDetailsContent.Title_Exam_Period,
+                        Value = PathwayAssessment?.SeriesName,
+                        ActionText = AssessmentDetailsContent.Remove_Action_Link_Text,
+                        HiddenActionText = AssessmentDetailsContent.Remove_Action_Link_Hidden_Text,
+                        RouteName = RouteConstants.RemoveCoreAssessmentEntry,
+                        RouteAttributes = new Dictionary<string, string> { { Constants.AssessmentId, PathwayAssessment?.AssessmentId.ToString() } }
+                    };
+            }
+        }
+
+        public SummaryItemModel SummaryLastUpdatedOn => new SummaryItemModel
+        {
+            Id = "lastupdatedon",
+            Title = AssessmentDetailsContent.Title_Last_Updated_On,
+            Value = PathwayAssessment?.LastUpdatedOn.ToDobFormat()
+        };
+
+        public SummaryItemModel SummaryLastUpdatedBy => new SummaryItemModel
+        {
+            Id = "lastupdatedby",
+            Title = AssessmentDetailsContent.Title_Last_Updated_By,
+            Value = PathwayAssessment?.LastUpdatedBy
+        };
 
         public BreadcrumbModel Breadcrumb
         {

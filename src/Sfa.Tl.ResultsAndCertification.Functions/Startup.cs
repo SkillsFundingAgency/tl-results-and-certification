@@ -73,9 +73,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IUcasRepository, UcasRepository>();
 
             services.AddTransient<ICommonService, CommonService>();
-            services.AddTransient<ILearnerService, LearnerService>();
-            services.AddTransient<IPersonalLearningRecordService, PersonalLearningRecordService>();
-            services.AddTransient<ILearnerRecordService, LearnerRecordService>();
+            services.AddTransient<ILrsLearnerService, LrsLearnerService>();
+            services.AddTransient<ILrsPersonalLearningRecordService, LrsPersonalLearningRecordService>();
+            services.AddTransient<ILrsService, LrsService>();
             services.AddTransient<IPrintingService, PrintingService>();
             services.AddTransient<ICertificatePrintingService, CertificatePrintingService>();
             services.AddTransient<IUcasDataService, UcasDataService>();
@@ -96,7 +96,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 client.ClientCredentials.ClientCertificate.Certificate = lrsCertificate;
                 return client;
             });
-            services.AddTransient<IPersonalLearningRecordServiceApiClient, PersonalLearningRecordServiceApiClient>();
+            services.AddTransient<ILrsPersonalLearningRecordServiceApiClient, LrsPersonalLearningRecordServiceApiClient>();
 
             services.AddTransient<ILearnerPortTypeClient>(learnerClient =>
             {
@@ -105,7 +105,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 client.ClientCredentials.ClientCertificate.Certificate = lrsCertificate;
                 return client;
             });
-            services.AddTransient<ILearnerServiceApiClient, LearnerServiceApiClient>();
+            services.AddTransient<ILrsLearnerServiceApiClient, LrsLearnerServiceApiClient>();
             services.AddHttpClient<IPrintingApiClient, PrintingApiClient>();
             services.AddHttpClient<IUcasApiClient, UcasApiClient>();
         }

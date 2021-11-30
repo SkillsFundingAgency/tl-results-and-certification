@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -73,6 +74,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
                 ComponentType.NotSpecified => false,
                 _ => false
             };
+        }
+
+        [HttpGet]
+        [Route("GetAssessmentSeries")]
+        public async Task<IList<AssessmentSeriesDetails>> GetAssessmentSeriesAsync()
+        {
+            return await _assessmentService.GetAssessmentSeriesAsync();
         }
     }
 }

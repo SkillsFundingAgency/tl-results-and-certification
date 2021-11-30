@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
@@ -221,6 +222,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PutAsync<RemoveAssessmentEntryRequest, bool>(requestUri, model);
         }
 
+        public async Task<IList<AssessmentSeriesDetails>> GetAssessmentSeriesAsync()
+        {
+            var requestUri = ApiConstants.GetAssessmentSeriesDetailsUri;
+            return await GetAsync<IList<AssessmentSeriesDetails>>(requestUri);
+        }
+
         // Results endpoints
         public async Task<BulkResultResponse> ProcessBulkResultsAsync(BulkProcessRequest model)
         {
@@ -366,6 +373,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         }
 
         #endregion 
+
+        public async Task<LearnerRecord> GetLearnerRecordAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
+        {
+            var requestUri = string.Format(ApiConstants.GetLearnerRecordUri, aoUkprn, profileId, (int?)status);
+            return await GetAsync<LearnerRecord>(requestUri);
+        }
 
         #region Private Methods
 

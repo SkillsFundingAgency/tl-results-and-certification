@@ -10,23 +10,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 {
     public class When_Called_With_Active_Status_Data : TestSetup
     {
-        private AssessmentDetailsViewModel mockresult = null;
+        private AssessmentUlnWithdrawnViewModel _mockresult = null;
         public override void Given()
         {
-            mockresult = new AssessmentDetailsViewModel
+            _mockresult = new AssessmentUlnWithdrawnViewModel
             {
                 ProfileId = 1,
                 Uln = 1234567890,
-                Name = "Test",
-                ProviderDisplayName = "Test Provider (1234567)",
-                PathwayDisplayName = "Pathway (7654321)",
-                PathwayAssessmentSeries = "Summer 2021",
-                SpecialismDisplayName = "Specialism1 (2345678)",
-                SpecialismAssessmentSeries = "Autumn 2022",
-                PathwayStatus = RegistrationPathwayStatus.Active
+                Firstname = "First",
+                Lastname = "Last",
+                DateofBirth = System.DateTime.UtcNow.AddYears(-30),
+                TlevelTitle = "TLevel in Test",
+                ProviderName = "Test Provider",
+                ProviderUkprn = 1234567
             };
 
-            AssessmentLoader.GetAssessmentDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(mockresult);
+            AssessmentLoader.GetAssessmentDetailsAsync<AssessmentUlnWithdrawnViewModel>(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(_mockresult);
         }
 
         [Fact]

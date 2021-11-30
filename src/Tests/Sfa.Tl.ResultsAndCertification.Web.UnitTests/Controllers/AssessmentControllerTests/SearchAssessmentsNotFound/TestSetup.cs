@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
@@ -23,8 +25,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         protected ICacheService CacheService;
         protected ILogger<AssessmentController> Logger;
         protected AssessmentController Controller;
-        protected IHttpContextAccessor HttpContextAccessor;
-        
+        protected IHttpContextAccessor HttpContextAccessor;        
+
+
         public IActionResult Result { get; private set; }
 
         public override void Setup()
@@ -44,6 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                .HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
+            CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.AssessmentCacheKey);
         }
 
         public async override Task When()

@@ -61,25 +61,43 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner&apos;s assessment entries.
+        ///   Looks up a localized string similar to Back to home.
         /// </summary>
-        public static string Learners_Assessment_Entries_Heading_Text {
+        public static string Button_Back_To_Home {
             get {
-                return ResourceManager.GetString("Learners_Assessment_Entries_Heading_Text", resourceCulture);
+                return ResourceManager.GetString("Button_Back_To_Home", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name: {0}.
+        ///   Looks up a localized string similar to Search again.
         /// </summary>
-        public static string Name_Heading_Text {
+        public static string Button_Search_Again {
             get {
-                return ResourceManager.GetString("Name_Heading_Text", resourceCulture);
+                return ResourceManager.GetString("Button_Search_Again", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner&apos;s assessment entries - Withdrawn learner page.
+        ///   Looks up a localized string similar to Learner has been withdrawn.
+        /// </summary>
+        public static string Learner_Has_Been_Withdrawn_Heading {
+            get {
+                return ResourceManager.GetString("Learner_Has_Been_Withdrawn_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This learner&apos;s registration has been withdrawn. You cannot add or change an assessment entry. Please speak to your organisation&apos;s registrations editor to change this learner&apos;s status..
+        /// </summary>
+        public static string Learner_Registration_Withdrawn_Info {
+            get {
+                return ResourceManager.GetString("Learner_Registration_Withdrawn_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learner withdrawn - Assessment entries.
         /// </summary>
         public static string Page_Title {
             get {
@@ -88,47 +106,47 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Provider: {0}.
+        ///   Looks up a localized string similar to Date of birth.
         /// </summary>
-        public static string Provider_Heading_Text {
+        public static string Title_DateofBirth_Text {
             get {
-                return ResourceManager.GetString("Provider_Heading_Text", resourceCulture);
+                return ResourceManager.GetString("Title_DateofBirth_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search again.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
-        public static string Search_Again_Text {
+        public static string Title_Name_Text {
             get {
-                return ResourceManager.GetString("Search_Again_Text", resourceCulture);
+                return ResourceManager.GetString("Title_Name_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This learner&apos;s registration has been withdrawn.
+        ///   Looks up a localized string similar to Provider &lt;br/&gt; (UKPRN).
         /// </summary>
-        public static string This_Learners_Registration_Has_Been_Withdrawn_Text {
+        public static string Title_Provider_Text {
             get {
-                return ResourceManager.GetString("This_Learners_Registration_Has_Been_Withdrawn_Text", resourceCulture);
+                return ResourceManager.GetString("Title_Provider_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ULN: {0}.
+        ///   Looks up a localized string similar to T Level.
         /// </summary>
-        public static string Uln_Heading_Text {
+        public static string Title_TLevel_Text {
             get {
-                return ResourceManager.GetString("Uln_Heading_Text", resourceCulture);
+                return ResourceManager.GetString("Title_TLevel_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View this learner&apos;s registration details.
+        ///   Looks up a localized string similar to ULN.
         /// </summary>
-        public static string View_This_Learners_Registration_Details_Text {
+        public static string Title_Uln_Text {
             get {
-                return ResourceManager.GetString("View_This_Learners_Registration_Details_Text", resourceCulture);
+                return ResourceManager.GetString("Title_Uln_Text", resourceCulture);
             }
         }
     }

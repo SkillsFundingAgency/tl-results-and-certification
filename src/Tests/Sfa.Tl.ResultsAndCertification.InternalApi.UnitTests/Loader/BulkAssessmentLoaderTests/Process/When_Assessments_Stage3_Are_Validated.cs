@@ -20,17 +20,17 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkAssess
         {
             expectedStage2Response = new List<AssessmentCsvRecordResponse>
             {
-                new AssessmentCsvRecordResponse { RowNum = 1, Uln = 1111111111, CoreCode = "12345678", CoreAssessmentEntry = "Summer 2022", SpecialismCode = "LAR12345", SpecialismAssessmentEntry = "Autumn 2023", ValidationErrors = new List<BulkProcessValidationError>
+                new AssessmentCsvRecordResponse { RowNum = 1, Uln = 1111111111, CoreCode = "12345678", CoreAssessmentEntry = "Summer 2022", SpecialismCodes = new List<string> {"LAR12345" }, SpecialismAssessmentEntry = "Autumn 2023", ValidationErrors = new List<BulkProcessValidationError>
                 {
                     new BulkProcessValidationError { RowNum = "1", Uln = "1111111111", ErrorMessage = "Core code must have 8 digits only" }
                 } },
-                new AssessmentCsvRecordResponse { RowNum = 2, Uln = 1111111112, CoreCode = "12345678", CoreAssessmentEntry = "Summer 2022", SpecialismCode = "LAR12345", SpecialismAssessmentEntry = "Autumn 2023", ValidationErrors = new List<BulkProcessValidationError>
+                new AssessmentCsvRecordResponse { RowNum = 2, Uln = 1111111112, CoreCode = "12345678", CoreAssessmentEntry = "Summer 2022", SpecialismCodes = new List<string> {"LAR12345" }, SpecialismAssessmentEntry = "Autumn 2023", ValidationErrors = new List<BulkProcessValidationError>
                 {
                     new BulkProcessValidationError { RowNum = "2", Uln = "1111111112", ErrorMessage = "Last name required" }
                 } },
-                new AssessmentCsvRecordResponse { RowNum = 3, Uln = 1111111113, CoreCode = "12345678", CoreAssessmentEntry = "Summer 2022", SpecialismCode = "LAR12345", SpecialismAssessmentEntry = "Autumn 2023" },
-                new AssessmentCsvRecordResponse { RowNum = 4, Uln = 1111111114, CoreCode = "12345678", CoreAssessmentEntry = "Summer 2022", SpecialismCode = "LAR12345", SpecialismAssessmentEntry = "Autumn 2023" },
-                new AssessmentCsvRecordResponse { RowNum = 5, Uln = 1111111115, CoreCode = "12345678", CoreAssessmentEntry = "Summer 2022", SpecialismCode = "LAR12345", SpecialismAssessmentEntry = "Autumn 2023" }
+                new AssessmentCsvRecordResponse { RowNum = 3, Uln = 1111111113, CoreCode = "12345678", CoreAssessmentEntry = "Summer 2022", SpecialismCodes = new List<string> {"LAR12345" }, SpecialismAssessmentEntry = "Autumn 2023" },
+                new AssessmentCsvRecordResponse { RowNum = 4, Uln = 1111111114, CoreCode = "12345678", CoreAssessmentEntry = "Summer 2022", SpecialismCodes = new List<string> {"LAR12345" }, SpecialismAssessmentEntry = "Autumn 2023" },
+                new AssessmentCsvRecordResponse { RowNum = 5, Uln = 1111111115, CoreCode = "12345678", CoreAssessmentEntry = "Summer 2022", SpecialismCodes = new List<string> {"LAR12345" }, SpecialismAssessmentEntry = "Autumn 2023" }
             };
 
             var expectedStage3Response = new List<AssessmentRecordResponse>

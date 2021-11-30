@@ -11,20 +11,28 @@
 }
 
 <form asp-route="SubmitRemoveCoreAssessmentEntry">
-    <input type="hidden" asp-for="ProfileId" />
-    <input type="hidden" asp-for="Uln" />
-    <input type="hidden" asp-for="AssessmentId" />
-    <input type="hidden" asp-for="AssessmentSeriesName" />
-
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-three-quarters">
+        <div class="govuk-grid-column-two-thirds">
             <partial name="_ValidationSummary" />
+            <h1 class="govuk-heading-l">@string.Format(RemoveCoreAssessmentEntry.Page_Heading, Model.AssessmentSeriesName)</h1>
+
+            <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-9 govuk-!-margin-top-7">
+                <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+                <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+                <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+            </dl>
+
+            <input type="hidden" asp-for="ProfileId" />
+            <input type="hidden" asp-for="AssessmentId" />
+
             <div class="govuk-form-group govuk-!-margin-bottom-7">
                 <fieldset class="govuk-fieldset">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-                        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
-                            @string.Format(@RemoveCoreAssessmentEntry.Page_Heading, Model?.AssessmentSeriesName)
-                        </h1>
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h2 class="govuk-fieldset__heading">
+                            @string.Format(@RemoveCoreAssessmentEntry.Heading_Would_You_Like_To_Remove_Assessment_Entry, Model?.AssessmentSeriesName)
+                        </h2>
                     </legend>
 
                     <div class="govuk-radios" sfa-validation-for="CanRemoveAssessmentEntry" sfa-validation-class="govuk-form-group--error">
@@ -32,13 +40,13 @@
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="canremoveassessmententry" asp-for="CanRemoveAssessmentEntry" type="radio" value="true">
                             <label class="govuk-label govuk-radios__label" for="canremoveassessmententry">
-                                @RemoveCoreAssessmentEntry.Section_Yes_Remove_Core_Entry_Text
+                                @string.Format(@RemoveCoreAssessmentEntry.Remove_Series_Option_Yes, Model?.AssessmentSeriesName)
                             </label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="assessment-entry-remove-no" asp-for="CanRemoveAssessmentEntry" type="radio" value="false">
                             <label class="govuk-label govuk-radios__label" for="assessment-entry-remove-no">
-                                @RemoveCoreAssessmentEntry.Section_No_Remove_Core_Entry_Text
+                                @string.Format(@RemoveCoreAssessmentEntry.Remove_Series_Option_No, Model?.AssessmentSeriesName)
                             </label>
                         </div>
                     </div>

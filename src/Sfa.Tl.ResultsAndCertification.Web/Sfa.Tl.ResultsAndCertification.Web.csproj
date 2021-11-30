@@ -58,11 +58,6 @@
 
 
   <ItemGroup>
-    <Compile Update="Content\Assessment\AddAssessmentEntryConfirmation.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AddAssessmentEntryConfirmation.resx</DependentUpon>
-    </Compile>
     <Compile Update="Content\Assessment\AddCoreAssessmentEntry.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -87,11 +82,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ProblemWithAssessmentsUpload.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\Assessment\RemoveAssessmentEntryConfirmation.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>RemoveAssessmentEntryConfirmation.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Assessment\RemoveCoreAssessmentEntry.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -912,10 +902,6 @@
 
 
   <ItemGroup>
-    <EmbeddedResource Update="Content\Assessment\AddAssessmentEntryConfirmation.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>AddAssessmentEntryConfirmation.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="Content\Assessment\AddCoreAssessmentEntry.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AddCoreAssessmentEntry.Designer.cs</LastGenOutput>
@@ -935,10 +921,6 @@
     <EmbeddedResource Update="Content\Assessment\ProblemWithAssessmentsUpload.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProblemWithAssessmentsUpload.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\Assessment\RemoveAssessmentEntryConfirmation.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>RemoveAssessmentEntryConfirmation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Assessment\RemoveCoreAssessmentEntry.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

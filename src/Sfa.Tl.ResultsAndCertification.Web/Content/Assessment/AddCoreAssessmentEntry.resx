@@ -118,24 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Add_Series_Option_No" xml:space="preserve">
-    <value>No, do not add to {0}</value>
+    <value>No, do not add entry to {0}</value>
   </data>
   <data name="Add_Series_Option_Yes" xml:space="preserve">
-    <value>Yes, add to {0}</value>
+    <value>Yes, add entry to {0}</value>
+  </data>
+  <data name="Banner_Message" xml:space="preserve">
+    <value>This learner is now registered for the {0} {1} assessment</value>
+  </data>
+  <data name="Heading_Is_This_Learner_Entering_Assessment" xml:space="preserve">
+    <value>Is this learner entering an assessment for their core component in {0}?</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
-    <value>Do you want to add a core assessment entry to the next available series?</value>
+    <value>Add core component assessment entry to {0}</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Do you want to add a core assessment entry to the next available series page</value>
+    <value>Add core - Assessment entries</value>
   </data>
   <data name="Select_Option_To_Add_Validation_Text" xml:space="preserve">
-    <value>Select yes to add to {0}</value>
-  </data>
-  <data name="Series_Available_Text" xml:space="preserve">
-    <value>{0} is the only series available.</value>
+    <value>Select whether the learner is entering an assessment</value>
   </data>
   <data name="Submit_Button_Text" xml:space="preserve">
     <value>Submit</value>
+  </data>
+  <data name="Title_DateofBirth_Text" xml:space="preserve">
+    <value>Date of birth</value>
+  </data>
+  <data name="Title_Name_Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Title_Provider_Text" xml:space="preserve">
+    <value>Provider &lt;br/&gt; (UKPRN)</value>
+  </data>
+  <data name="Title_TLevel_Text" xml:space="preserve">
+    <value>T Level</value>
+  </data>
+  <data name="Title_Uln_Text" xml:space="preserve">
+    <value>ULN</value>
   </data>
 </root>

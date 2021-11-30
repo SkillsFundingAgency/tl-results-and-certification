@@ -19,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         public void Then_Expected_Methods_Called()
         {
             AssessmentLoader.Received(1).FindUlnAssessmentsAsync(AoUkprn, SearchUln.ToLong());
+            CacheService.Received(1).SetAsync(Constants.AssessmentsSearchCriteria, SearchUln);
         }
 
         [Fact]

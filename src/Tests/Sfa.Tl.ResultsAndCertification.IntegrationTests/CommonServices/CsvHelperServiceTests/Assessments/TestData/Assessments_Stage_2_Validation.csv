@@ -1,12 +1,13 @@
-﻿ULN,Core code,Core assessment entry,Specialism code,Specialism assessment entry
+﻿ULN,Core code,Core assessment entry,Specialism code(s),Specialism assessment entry
 ,12345678,Summer 2021,Test1234,Summer 2021
 123,12345678,Summer 2021,Test1234,Summer 2021
 1234567890,123456789,Summer 2021,Test1234,Summer 2021
 1234567891,,Summer 2021,Test1234,Summer 2021
 1234567892,12345678,Summer 2021,,Summer 2021
-1234567893,12345678,Summer 2021,HelloWorld1234,Summer 2021
+1234567893,12345678,Summer 2021,"HelloWorld1234, 12456789",Summer 2021
 1234567894,12345678,HelloWorld,Test1234,Summer 2021
 1234567895,12345678,Summer 2021,Test1234,Invalid
 1234567897,12345678,Summer 2021,Test1234,Summer 2021,AdditionalData
 1234567898,,,,
 1234567100,12345678,testteststtesttesttesttsetssetst 2020,Test1234,Summer 2021
+1234567101,12345678,Summer 2021,"ZT102356,ZT102356",Summer 2021

@@ -10,7 +10,6 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
@@ -124,10 +123,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<RegistrationDetailsViewModel>(response);
         }
         
-        public async Task<AssessmentDetailsViewModel> GetRegistrationAssessmentAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
+        public async Task<RegistrationAssessmentDetails> GetRegistrationAssessmentAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            var response = await _internalApiClient.GetAssessmentDetailsAsync(aoUkprn, profileId, status);
-            return _mapper.Map<AssessmentDetailsViewModel>(response);
+            var response = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId, status);
+            return _mapper.Map<RegistrationAssessmentDetails>(response);
         }
 
         public async Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId)

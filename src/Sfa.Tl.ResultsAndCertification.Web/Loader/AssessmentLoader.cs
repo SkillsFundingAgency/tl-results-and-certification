@@ -10,7 +10,9 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -83,16 +85,35 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<UlnAssessmentsNotFoundViewModel>(response);
         }
 
-        public async Task<AssessmentDetailsViewModel> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
+        public async Task<T> GetAssessmentDetailsAsync<T>(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            var response = await _internalApiClient.GetAssessmentDetailsAsync(aoUkprn, profileId, status);
-            return _mapper.Map<AssessmentDetailsViewModel>(response);
+            var learnerDetails = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId, status);
+            var assessmentSeries = await _internalApiClient.GetAssessmentSeriesAsync();
+
+            if (learnerDetails == null || assessmentSeries == null || !assessmentSeries.Any())
+                return _mapper.Map<T>(null);
+
+            var learnerAssessmentDetails = _mapper.Map<T>(learnerDetails, opt =>
+            {
+                opt.Items["currentCoreAssessmentSeriesId"] = GetValidAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Core)?.FirstOrDefault()?.Id ?? 0;
+                opt.Items["currentSpecialismAssessmentSeriesId"] = GetValidAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Specialism)?.FirstOrDefault()?.Id ?? 0;
+                opt.Items["coreSeriesName"] = GetNextAvailableAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Core)?.Name;
+                opt.Items["specialismSeriesName"] = GetNextAvailableAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Specialism)?.Name;
+            });
+            return learnerAssessmentDetails;
         }
 
-        public async Task<AddAssessmentEntryViewModel> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)
+        public async Task<AddAssessmentEntryViewModel> GetAddAssessmentEntryAsync(long aoUkprn, int profileId, ComponentType componentType)
         {
-            var response = await _internalApiClient.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, componentType);
-            return _mapper.Map<AddAssessmentEntryViewModel>(response);
+            var learnerDetails = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId);
+            var availableSeries = await _internalApiClient.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, componentType);
+            if (learnerDetails == null || availableSeries == null)
+                return null;
+
+            var result = _mapper.Map<AddAssessmentEntryViewModel>(learnerDetails);
+            _mapper.Map(availableSeries, result);
+
+            return result;
         }
 
         public async Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(long aoUkprn, AddAssessmentEntryViewModel viewModel)
@@ -102,9 +123,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         }
 
         public async Task<AssessmentEntryDetailsViewModel> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, ComponentType componentType)
-        {
-            var response = await _internalApiClient.GetActiveAssessmentEntryDetailsAsync(aoUkprn, assessmentId, componentType);
-            return _mapper.Map<AssessmentEntryDetailsViewModel>(response);
+        
+        {            
+            var assessmentEntryDetails = await _internalApiClient.GetActiveAssessmentEntryDetailsAsync(aoUkprn, assessmentId, componentType);
+            if (assessmentEntryDetails == null) return null;
+
+            var learnerDetails = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, assessmentEntryDetails.ProfileId);
+            if (learnerDetails == null) return null;
+
+            var result = _mapper.Map<AssessmentEntryDetailsViewModel>(learnerDetails);
+            return _mapper.Map(assessmentEntryDetails, result);
         }
 
         public async Task<bool> RemoveAssessmentEntryAsync(long aoUkprn, AssessmentEntryDetailsViewModel viewModel)
@@ -112,5 +140,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var request = _mapper.Map<RemoveAssessmentEntryRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
             return await _internalApiClient.RemoveAssessmentEntryAsync(request);
         }
+
+        #region Private methods
+
+        private IList<AssessmentSeriesDetails> GetValidAssessmentSeries(IList<AssessmentSeriesDetails> assessmentSeries, int academicYear, ComponentType componentType)
+        {
+            var currentDate = DateTime.UtcNow.Date;
+            var startInYear = componentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
+
+            var series = assessmentSeries?.Where(s => s.ComponentType == componentType && s.Year > academicYear + startInYear &&
+                                        s.Year <= academicYear + Constants.AssessmentEndInYears &&
+                                        currentDate >= s.StartDate && currentDate <= s.EndDate)?.OrderBy(a => a.Id)?.ToList();
+
+            return series;
+        }
+
+        private AssessmentSeriesDetails GetNextAvailableAssessmentSeries(IList<AssessmentSeriesDetails> assessmentSeries, int academicYear, ComponentType componentType)
+        {
+            var startInYear = componentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
+            var series = assessmentSeries?.OrderBy(a => a.Id)?.FirstOrDefault(s => s.ComponentType == componentType && s.Year > academicYear + startInYear &&
+                                        s.Year <= academicYear + Constants.AssessmentEndInYears && DateTime.UtcNow.Date <= s.EndDate);
+            return series;
+        }
+
+        #endregion
     }
 }

@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
@@ -141,6 +142,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(m => m.Text, o => o.MapFrom(s => s.Name))
                 .ForMember(m => m.Value, o => o.MapFrom(s => s.Id.ToString()))
                 .ForAllOtherMembers(s => s.Ignore());
+
+            CreateMap<LearnerRecord, RegistrationAssessmentDetails>()
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.Pathway.Status))
+                .ForMember(d => d.IsCoreResultExist, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments.Any() && s.Pathway.PathwayAssessments.Any(a => a.Results.Any())))
+                .ForMember(d => d.HasAnyOutstandingPathwayPrsActivities, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments.Any() && s.Pathway.PathwayAssessments.Any(a => a.Results.Any(r => r.PrsStatus == PrsStatus.BeingAppealed))))
+                .ForMember(d => d.IsIndustryPlacementExist, opts => opts.MapFrom(s => s.Pathway.IndustryPlacements.Any()));
         }
     }
 }
