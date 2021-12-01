@@ -24,5 +24,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public IEnumerable<SpecialismDetails> Specialisms { get; set; }
         public int AcademicYear { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
+        public bool IsActiveWithOtherAo { get; set; }
     }
 }
