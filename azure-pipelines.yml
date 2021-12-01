@@ -31,7 +31,10 @@ steps:
   displayName: 'preparing for npm-install'
   inputs:
     script: |
-      call npm install –no-optional
+      call npm install -–no-optional
+      call npm install node-gyp
+      call npm install -g node-sass
+      call node-sass -v
     failOnStderr: false  
 
 # - task: Npm@1
