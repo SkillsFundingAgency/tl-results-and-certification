@@ -27,21 +27,21 @@ steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@5
   displayName: GitVersion
 
-- task: CmdLine@2
-  displayName: 'preparing for npm-install'
-  inputs:
-    script: |
-      python
-      call npm-windows-upgrade
-      call npm install --global node-gyp
-      call npm install --global --production windows-build-tools 
-    failOnStderr: false  
+# - task: CmdLine@2
+#   displayName: 'preparing for npm-install'
+#   inputs:
+#     script: |
+#       python
+#       call npm-windows-upgrade
+#       call npm install --global node-gyp
+#       call npm install --global --production windows-build-tools 
+#     failOnStderr: false  
 
-- task: Npm@1
-  displayName: 'npm install'
-  inputs: 
-    workingDir: src/Sfa.Tl.ResultsAndCertification.Web
-    verbose: false
+# - task: Npm@1
+#   displayName: 'npm install'
+#   inputs: 
+#     workingDir: src/Sfa.Tl.ResultsAndCertification.Web
+#     verbose: false
 
 - task: Gulp@0
   displayName: 'gulp'
