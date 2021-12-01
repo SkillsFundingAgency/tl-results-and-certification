@@ -378,17 +378,32 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (validateStage3Response.IsValid)
             {
-                var toAddRegistration = TransformManualRegistrationModel(model, validateStage3Response);
-                var hasRegistrationAlreadyExists = await _tqRegistrationRepository.GetFirstOrDefaultAsync(p => p.UniqueLearnerNumber == model.Uln) != null;
+                var transformedRegistration = TransformManualRegistrationModel(model, validateStage3Response);
 
-                if (hasRegistrationAlreadyExists)
+                var existingRegistrationPathway = await _tqRegistrationPathwayRepository.GetManyAsync(p => p.TqRegistrationProfile.UniqueLearnerNumber == model.Uln, p => p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton).OrderByDescending(p => p.CreatedOn).FirstOrDefaultAsync();
+
+                var isRegisteredWithAnotherAOAndWithdrawn = existingRegistrationPathway != null && existingRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn && existingRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != model.AoUkprn;
+
+                var hasRegistrationAlreadyExists = existingRegistrationPathway != null;
+
+                if (isRegisteredWithAnotherAOAndWithdrawn)
+                {
+                    transformedRegistration.Id = existingRegistrationPathway.TqRegistrationProfileId;
+                    transformedRegistration.CreatedBy = existingRegistrationPathway.CreatedBy;
+                    transformedRegistration.CreatedOn = existingRegistrationPathway.CreatedOn;
+                    transformedRegistration.ModifiedOn = DateTime.UtcNow;
+                    transformedRegistration.ModifiedBy = model.PerformedBy;
+                    transformedRegistration.ModifiedOn = DateTime.UtcNow;
+                    return await _tqRegistrationRepository.UpdateAsync(transformedRegistration) > 0;
+                }
+                else if (hasRegistrationAlreadyExists)
                 {
                     _logger.LogWarning(LogEvent.RecordExists, $"Registration already exists for UniqueLearnerNumber = {model.Uln}. Method: AddRegistrationAsync()");
                     return false;
                 }
                 else
                 {
-                    return await _tqRegistrationRepository.CreateAsync(toAddRegistration) > 0;
+                    return await _tqRegistrationRepository.CreateAsync(transformedRegistration) > 0;
                 }
             }
             else
@@ -396,7 +411,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var errorMessage = string.Join(",", validateStage3Response.ValidationErrors.Select(e => e.ErrorMessage));
                 _logger.LogWarning(LogEvent.ManualRegistrationProcessFailed, $"Manual Registration failed to process due to validation errors = {errorMessage}. Method: AddRegistrationAsync()");
                 return false;
-            }
+            }            
         }
 
         public async Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln)
