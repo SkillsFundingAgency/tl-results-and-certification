@@ -271,7 +271,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         var latestRegPathway = existingRegistration.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
                         if (latestRegPathway != null && latestRegPathway.Status == RegistrationPathwayStatus.Withdrawn)
                         {
-                            response.ValidationErrors.Add(GetRegistrationValidationError(existingRegistration.UniqueLearnerNumber, ValidationMessages.RegistrationCannotBeInWithdrawnStatus));
+                            var hasAoChanged = amendedRegistration.TqRegistrationPathways.All(rp => rp.TqProvider.TqAwardingOrganisation.TlAwardingOrganisatonId != latestRegPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisatonId);
+                            response.ValidationErrors.Add(GetRegistrationValidationError(existingRegistration.UniqueLearnerNumber, hasAoChanged ? ValidationMessages.LearnerPreviouslyRegisteredWithAnotherAo : ValidationMessages.RegistrationCannotBeInWithdrawnStatus));
                             return;
                         }
 

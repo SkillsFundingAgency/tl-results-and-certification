@@ -31,6 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             // Seed Tlevel data for pearson
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             SeedRegistrationData(1111111111);
+            SeedRegistrationData(1111111115, RegistrationPathwayStatus.Withdrawn);
 
             // Seed Tlevel data for ncfe
             SeedTestData(EnumAwardingOrganisation.Ncfe, true);
@@ -48,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             CreateCommonService();
             RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, CommonService, RegistrationMapper, RegistrationRepositoryLogger);
 
-            _tqRegistrationProfilesData = GetRegistrationsDataToProcess(new List<long> { 1111111111, 1111111112, 1111111113, 1111111114 });
+            _tqRegistrationProfilesData = GetRegistrationsDataToProcess(new List<long> { 1111111111, 1111111112, 1111111113, 1111111114, 1111111115 });
             _expectedValidationErrors = new BulkRegistrationValidationErrorsBuilder().BuildStage4ValidationErrorsList();
         }
 
@@ -111,7 +112,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             foreach (var (uln, index) in ulns.Select((value, i) => (value, i)))
             {
-                var tqProvider = TqProviders.Count < index ? TqProviders[index] : TqProviders[TqProviders.Count - 1];
+                var tqProvider = index < TqProviders.Count ? TqProviders[index] : TqProviders[TqProviders.Count - 1];
                 var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
                 var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
                 var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider);

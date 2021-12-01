@@ -40,6 +40,7 @@
         public const string CoreForUlnCannotBeChangedYet = "Core for ULN cannot be changed yet";
         public const string RegistrationCannotBeInWithdrawnStatus = "Cannot upload data for a withdrawn registration or make it active - these can only be done manually";
         public const string AcademicYearCannotBeChanged = "Year of registration cannot be changed - the learner must be withdrawn and re-registered";
+        public const string LearnerPreviouslyRegisteredWithAnotherAo = "This learner was previously registered with another AO. You must add it as an individual record before you can include it in a bulk upload";
 
         // Assessments - Bulk stage 2 validations
         public const string CorecodeMustBeDigitsOnly = "Core code must have 8 digits only";
