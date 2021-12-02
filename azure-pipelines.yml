@@ -37,11 +37,11 @@ steps:
       call node-sass -v
     failOnStderr: false  
 
-# - task: Npm@1
-#   displayName: 'npm install'
-#   inputs: 
-#     workingDir: src/Sfa.Tl.ResultsAndCertification.Web
-#     verbose: false
+- task: Npm@1
+  displayName: 'npm install'
+  inputs: 
+    workingDir: src/Sfa.Tl.ResultsAndCertification.Web
+    verbose: false
 
 - task: Gulp@0
   displayName: 'gulp'
