@@ -123,6 +123,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.AddAssessmentEntryAsync(request);
         }
 
+        public async Task<AddAssessmentEntryResponse> AddSpecialismAssessmentEntryAsync(long aoUkprn, AddSpecialismAssessmentEntryViewModel viewModel)
+        {
+            var request = _mapper.Map<AddAssessmentEntryRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.AddAssessmentEntryAsync(request);
+        }
+
         public async Task<AssessmentEntryDetailsViewModel> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, ComponentType componentType)
         
         {            

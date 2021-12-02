@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Xunit;
@@ -8,6 +10,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 {
     public class When_IsOpted_IsFalse : TestSetup
     {
+        private AddSpecialismAssessmentEntryViewModel _mockresult = null;
+
         public override void Given()
         {
             ViewModel = new AddSpecialismAssessmentEntryViewModel
@@ -17,6 +21,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 AssessmentSeriesName = "Summer 2021",
                 IsOpted = false
             };
+
+            _mockresult = new AddSpecialismAssessmentEntryViewModel
+            {
+                ProfileId = 1,
+                AssessmentSeriesId = 11,
+                AssessmentSeriesName = "Summer 2021",
+            };
+
+            AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism).Returns(_mockresult);
         }
 
         [Fact]

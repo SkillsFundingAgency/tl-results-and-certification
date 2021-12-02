@@ -325,14 +325,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AddSpecialismAssessmentEntryAsync(AddSpecialismAssessmentEntryViewModel model)
         {
             var assessmentEntryDetails = await _assessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(User.GetUkPrn(), model.ProfileId, ComponentType.Specialism);
+            assessmentEntryDetails.SpecialismId = model.SpecialismId;
+
             if (!ModelState.IsValid)
-            {
-                assessmentEntryDetails.SpecialismId = model.SpecialismId;
                 return View(assessmentEntryDetails);
-            }
 
             if (!model.IsOpted.Value)
                 return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
+
+            if (!assessmentEntryDetails.IsValidSpecialismToAdd)
+            {
+                _logger.LogWarning(LogEvent.NotValidData, $"No valid specialism found to add. Method: GetAddAssessmentEntryAsync({User.GetUkPrn()}, {model.ProfileId}, {ComponentType.Specialism}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var response = await _assessmentLoader.AddSpecialismAssessmentEntryAsync(User.GetUkPrn(), assessmentEntryDetails);
+
+            if (!response.IsSuccess)
+            {
+                _logger.LogWarning(LogEvent.AddSpecialismAssessmentEntryFailed, $"Unable to add specialism assessment entry for ProfileId: {model.ProfileId}. Method: AddSpecialismAssessmentEntryAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
+
+            var notificationBanner = new NotificationBannerModel { Message = assessmentEntryDetails.SuccessBannerMessage };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
             return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
         }

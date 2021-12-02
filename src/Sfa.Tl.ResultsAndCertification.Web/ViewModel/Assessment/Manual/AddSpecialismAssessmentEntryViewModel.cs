@@ -32,6 +32,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                                                ? string.Join(Constants.AndSeperator, SpecialismDetails.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.LarId})")) 
                                                : SpecialismDetails?.Where(x => x.Id == SpecialismId)?.Select(x => $"{x.Name} ({x.LarId})")?.FirstOrDefault();
 
+        public bool IsValidSpecialismToAdd => DisplayMultipleSpecialismsCombined ? true : SpecialismDetails != null && SpecialismDetails.Any(x => x.Id == SpecialismId);
+
         public string SuccessBannerMessage { get { return string.Format(AddSpecialismAssessmentEntryContent.Banner_Message, AssessmentSeriesName, SpecialismDisplayName); } }
 
         public override BackLinkModel BackLink
