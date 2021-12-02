@@ -230,7 +230,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.NeedCoreResultForPreviousAssessmentEntry.Should().Be(false);
             ActualResult.DisplayMultipleSpecialismsCombined.Should().Be(false);
             ActualResult.IsSpecialismRegistered.Should().Be(true);
-            ActualResult.SpecialismDisplayName.Should().BeNull();
+            ActualResult.CombinedSpecialismDisplayName.Should().BeNull();
 
             var expectedDisplaySpecialisms = new List<SpecialismViewModel>();
             foreach (var specialism in expectedApiResult.Pathway.Specialisms)

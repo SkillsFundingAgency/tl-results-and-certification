@@ -155,7 +155,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.DisplayMultipleSpecialismsCombined.Should().BeTrue();
 
             var expectedSpecialismDisplayName = string.Join(Constants.AndSeperator, ActualResult.SpecialismDetails.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.LarId})"));
-            ActualResult.SpecialismDisplayName.Should().Be(expectedSpecialismDisplayName);
+            ActualResult.CombinedSpecialismDisplayName.Should().Be(expectedSpecialismDisplayName);
 
             var expectedDisplaySpecialisms = new List<SpecialismViewModel>();
             foreach (var specialism in expectedApiResult.Pathway.Specialisms)
