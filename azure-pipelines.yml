@@ -29,14 +29,7 @@ steps:
 
 - task: NodeTool@0
   inputs:
-    versionSpec: '14.x' 
-
-# - task: CmdLine@2
-#   displayName: 'preparing for npm-install'
-#   inputs:
-#     script: |
-#       call npm install -g npm@6.14.15
-#     failOnStderr: false  
+    versionSpec: '14.x'  
 
 - task: Npm@1
   displayName: 'npm install'
