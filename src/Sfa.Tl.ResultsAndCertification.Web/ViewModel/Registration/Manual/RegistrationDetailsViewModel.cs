@@ -26,15 +26,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public int AcademicYear { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
         public IEnumerable<AcademicYear> AcademicYears { get; set; }
+        public bool IsActiveWithOtherAo { get; set; }
 
         public bool ShowAssessmentEntriesLink { get { return Status == RegistrationPathwayStatus.Active;  } }
-
+        
         private string ChangeStatusRouteName => Status == RegistrationPathwayStatus.Active ? RouteConstants.AmendActiveRegistration : RouteConstants.AmendWithdrawRegistration;
         private string TagCssClassName => Status == RegistrationPathwayStatus.Active ? "govuk-tag--green" : "govuk-tag--blue";
         private string ActionText { get { return Status == RegistrationPathwayStatus.Active ? RegistrationDetailsContent.Change_Action_Link_Text : null; } }
         public Dictionary<string, string> ChangeLinkRouteAttributes => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } };
 
-        public SummaryItemModel SummaryStatus => new SummaryItemModel { Id = "learnerstatus", Title = RegistrationDetailsContent.Title_Status, Value = Status.ToString(), HasTag = true, TagCssClass = TagCssClassName, RenderHiddenActionText = false, ActionText = RegistrationDetailsContent.Change_Status_Action_Link_Text, RouteName = ChangeStatusRouteName, RouteAttributes = ChangeLinkRouteAttributes };
+        public SummaryItemModel SummaryStatus { get { return (IsActiveWithOtherAo) ? new SummaryItemModel { Id = "learnerstatus", Title = RegistrationDetailsContent.Title_Status, Value = Status.ToString(), HasTag = true, TagCssClass = TagCssClassName } : new SummaryItemModel { Id = "learnerstatus", Title = RegistrationDetailsContent.Title_Status, Value = Status.ToString(), HasTag = true, TagCssClass = TagCssClassName, RenderHiddenActionText = false, ActionText = RegistrationDetailsContent.Change_Status_Action_Link_Text, RouteName = ChangeStatusRouteName, RouteAttributes = ChangeLinkRouteAttributes }; } }
         public SummaryItemModel SummaryLearnerName => new SummaryItemModel { Id = "learnername", Title = RegistrationDetailsContent.Title_Name_Text, Value = Name, ActionText = ActionText, RouteName = RouteConstants.ChangeRegistrationLearnersName, RouteAttributes = ChangeLinkRouteAttributes };
         public SummaryItemModel SummaryDateofBirth => new SummaryItemModel { Id = "dateofbirth", Title = RegistrationDetailsContent.Title_DateofBirth_Text, Value = DateofBirth.ToShortDateString(), ActionText = ActionText, RouteName = RouteConstants.ChangeRegistrationDateofBirth, RouteAttributes = ChangeLinkRouteAttributes };
         public SummaryItemModel SummaryProvider => new SummaryItemModel { Id = "provider", Title = RegistrationDetailsContent.Title_Provider_Text, Value = ProviderDisplayName, ActionText = ActionText, RouteName = RouteConstants.ChangeRegistrationProvider, RouteAttributes = ChangeLinkRouteAttributes };

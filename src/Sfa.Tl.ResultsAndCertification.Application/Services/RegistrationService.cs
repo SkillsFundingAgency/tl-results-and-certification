@@ -437,7 +437,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (tqRegistration == null || (status != null && tqRegistration.Status != status)) return null;
 
-            return _mapper.Map<RegistrationDetails>(tqRegistration);
+            var isRegisteredWithOtherAo = false;
+            if (tqRegistration.Status == RegistrationPathwayStatus.Withdrawn)
+                isRegisteredWithOtherAo = await IsActiveWithOtherAoAsync(aoUkprn, tqRegistration.TqRegistrationProfile.UniqueLearnerNumber, tqRegistration.CreatedOn);
+
+            return _mapper.Map<RegistrationDetails>(tqRegistration, opt => opt.Items["IsActiveWithOtherAo"] = isRegisteredWithOtherAo);
         }
 
         public async Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId)
@@ -1003,6 +1007,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var hasValidSpecialismCodes = coupletSpecialismCodes.Any(cs => specialismCodesToRegister.Except(cs.Split(Constants.PipeSeperator), StringComparer.InvariantCultureIgnoreCase).Count() == 0 );
             var hasValidCoupletSpecialismCodes = coupletSpecialismCodes.Any(cs => cs.Split(Constants.PipeSeperator).Except(specialismCodesToRegister, StringComparer.InvariantCultureIgnoreCase).Count() == 0);
             return hasValidSpecialismCodes && hasValidCoupletSpecialismCodes;
+        }
+
+        private async Task<bool> IsActiveWithOtherAoAsync(long aoUkprn, long uln, DateTime currentAoRegistrationDate)
+        {
+            var isWithOtherAo = await _tqRegistrationPathwayRepository
+                    .GetFirstOrDefaultAsync(OtherAo => OtherAo.TqRegistrationProfile.UniqueLearnerNumber == uln &&
+                    OtherAo.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != aoUkprn &&
+                    OtherAo.Status == RegistrationPathwayStatus.Active &&
+                    OtherAo.CreatedOn > currentAoRegistrationDate) != null;
+
+            return isWithOtherAo;
         }
 
         #endregion
