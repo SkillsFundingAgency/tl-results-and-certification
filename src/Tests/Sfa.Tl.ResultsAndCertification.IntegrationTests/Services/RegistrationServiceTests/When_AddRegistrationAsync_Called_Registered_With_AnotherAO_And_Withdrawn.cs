@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
@@ -60,6 +61,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         public void Then_Returns_Expected_Results()
         {
             _result.Should().BeTrue();
+                        
+            var actualRegistrationProfile = DbContext.TqRegistrationProfile.AsNoTracking().Where(x => x.UniqueLearnerNumber == _registrationRequest.Uln).FirstOrDefault();
+
+            actualRegistrationProfile.Should().NotBeNull();
+
+            // assert registration profile data
+            actualRegistrationProfile.Should().NotBeNull();
+            actualRegistrationProfile.UniqueLearnerNumber.Should().Be(_registrationRequest.Uln);
+            actualRegistrationProfile.Firstname.Should().Be(_registrationRequest.FirstName);
+            actualRegistrationProfile.Lastname.Should().Be(_registrationRequest.LastName);
+            actualRegistrationProfile.DateofBirth.Should().Be(_registrationRequest.DateOfBirth);
         }
     }
 }
