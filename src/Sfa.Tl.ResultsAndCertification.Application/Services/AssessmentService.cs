@@ -416,8 +416,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             // Validate
             var tqRegistrationPathway = await _assessmentRepository.GetAssessmentsAsync(request.AoUkprn, request.ProfileId);
 
-            var assessmentSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(request.AoUkprn, request.ProfileId, Constants.CoreAssessmentStartInYears);
+            var startInYear = request.ComponentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
+            var assessmentSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(request.AoUkprn, request.ProfileId, startInYear);
             var currrentOpenSeries = assessmentSeries?.FirstOrDefault(a => a.ComponentType == request.ComponentType);
+
             if (currrentOpenSeries == null)
                 return new AddAssessmentEntryResponse { IsSuccess = false };
 
@@ -427,6 +429,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             int status = 0;
             if (request.ComponentType == ComponentType.Core)
+            {
                 status = await _pathwayAssessmentRepository.CreateAsync(new TqPathwayAssessment
                 {
                     TqRegistrationPathwayId = tqRegistrationPathway.Id,
@@ -437,6 +440,28 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     IsBulkUpload = false,
                     CreatedBy = request.PerformedBy
                 });
+            }
+            else if (request.ComponentType == ComponentType.Specialism)
+            {
+                var specialismAssessmentsToAdd = new List<TqSpecialismAssessment>();
+
+                foreach(var specialismId in request.SpecialismIds)
+                {
+                    specialismAssessmentsToAdd.Add(new TqSpecialismAssessment
+                    {
+                        TqRegistrationSpecialismId = specialismId.Value,
+                        AssessmentSeriesId = request.AssessmentSeriesId,
+                        IsOptedin = true,
+                        StartDate = DateTime.UtcNow,
+                        EndDate = null,
+                        IsBulkUpload = false,
+                        CreatedBy = request.PerformedBy
+                    });
+                }
+
+                if(specialismAssessmentsToAdd.Any())
+                status = await _specialismAssessmentRepository.CreateManyAsync(specialismAssessmentsToAdd);
+            }
 
             return new AddAssessmentEntryResponse { Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, IsSuccess = status > 0 };
         }
@@ -498,7 +523,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             // 2. Must not have an active assessment.
             var anyActiveAssessment = componentType == ComponentType.Core ?
                         registrationPathway.TqPathwayAssessments.Any(x => x.IsOptedin && x.EndDate == null && x.AssessmentSeriesId == currentOpenSeriesId) :
-                        registrationPathway.TqRegistrationSpecialisms.Any(x => x.TqSpecialismAssessments.Any(x => x.IsOptedin && x.EndDate == null));
+                        registrationPathway.TqRegistrationSpecialisms.Any(x => x.TqSpecialismAssessments.Any(x => x.IsOptedin && x.EndDate == null && x.AssessmentSeriesId == currentOpenSeriesId));
 
             return !anyActiveAssessment;
         }

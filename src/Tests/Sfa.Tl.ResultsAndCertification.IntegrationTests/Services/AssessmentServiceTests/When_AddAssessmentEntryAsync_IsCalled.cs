@@ -112,10 +112,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                     { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 2  },
                       new AddAssessmentEntryResponse { IsSuccess = false } },
 
-                    // When specialism entry type - returns false
-                    new object[]
-                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Specialism },
-                      new AddAssessmentEntryResponse { IsSuccess = false } },
+                    // TODO: Rajesh for Specialism
+                    //// When specialism entry type - returns false
+                    //new object[]
+                    //{ new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Specialism },
+                    //  new AddAssessmentEntryResponse { IsSuccess = false } },
 
                     // valid request - returns true
                     new object[]

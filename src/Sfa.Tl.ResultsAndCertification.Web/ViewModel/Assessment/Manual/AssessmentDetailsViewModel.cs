@@ -36,6 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public bool HasAnyOutstandingPathwayPrsActivities { get; set; }
         public bool IsIndustryPlacementExist { get; set; }
 
+        public int? CurrentSpecialismAssessmentSeriesId { get; set; }
         public List<SpecialismViewModel> SpecialismDetails { get; set; }
         public bool IsSpecialismEntryEligible { get; set; }
         public string NextAvailableSpecialismSeries { get; set; }
@@ -91,6 +92,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
             Title = AssessmentDetailsContent.Title_Last_Updated_By,
             Value = PathwayAssessment?.LastUpdatedBy
         };
+
+        public SummaryItemModel GetSummaryExamPeriod(SpecialismViewModel specialismViewModel)
+        {
+            return new SummaryItemModel
+            {
+                Id = $"examperiod_{specialismViewModel.Id}",
+                Title = AssessmentDetailsContent.Title_Exam_Period,
+                Value = specialismViewModel.Assessments.FirstOrDefault(a => a.SeriesId == CurrentSpecialismAssessmentSeriesId).SeriesName,
+                ActionText = AssessmentDetailsContent.Remove_Action_Link_Text,
+                HiddenActionText = AssessmentDetailsContent.Remove_Action_Link_Hidden_Text
+            };
+        }
+
+        public SummaryItemModel GetSummaryLastUpdatedOn(SpecialismViewModel specialismViewModel)
+        {
+            return new SummaryItemModel
+            {
+                Id = $"lastupdatedon_{specialismViewModel.Id}",
+                Title = AssessmentDetailsContent.Title_Last_Updated_On,
+                Value = specialismViewModel.Assessments.FirstOrDefault(a => a.SeriesId == CurrentSpecialismAssessmentSeriesId).LastUpdatedOn.ToDobFormat()
+            };
+        }
+
+        public SummaryItemModel GetSummaryLastUpdatedBy(SpecialismViewModel specialismViewModel)
+        {
+            return new SummaryItemModel
+            {
+                Id = $"lastupdatedby_{specialismViewModel.Id}",
+                Title = AssessmentDetailsContent.Title_Last_Updated_By,
+                Value = specialismViewModel.Assessments.FirstOrDefault(a => a.SeriesId == CurrentSpecialismAssessmentSeriesId).LastUpdatedBy
+            };
+        }
 
         public BreadcrumbModel Breadcrumb
         {
