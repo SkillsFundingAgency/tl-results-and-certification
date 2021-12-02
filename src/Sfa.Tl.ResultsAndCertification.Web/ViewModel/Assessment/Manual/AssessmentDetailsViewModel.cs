@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public bool DisplayMultipleSpecialismsCombined => SpecialismDetails.Count > 1 && !IsResitForSpecialism;
 
         public bool IsSpecialismRegistered => SpecialismDetails.Any();
-        public string SpecialismDisplayName => DisplayMultipleSpecialismsCombined ? string.Join(Constants.AndSeperator, SpecialismDetails.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.LarId})")) : null;
+        public string CombinedSpecialismDisplayName => DisplayMultipleSpecialismsCombined ? string.Join(Constants.AndSeperator, SpecialismDetails.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.LarId})")) : null;
         public List<SpecialismViewModel> DisplaySpecialisms => DisplayMultipleSpecialismsCombined ? SpecialismDetails.Take(1).ToList() : SpecialismDetails;
 
         public SummaryItemModel SummaryExamPeriod

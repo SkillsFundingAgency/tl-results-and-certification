@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.NeedCoreResultForPreviousAssessmentEntry.Should().BeFalse();
             ActualResult.DisplayMultipleSpecialismsCombined.Should().BeFalse();
             ActualResult.IsSpecialismRegistered.Should().BeFalse();
-            ActualResult.SpecialismDisplayName.Should().BeNull();            
+            ActualResult.CombinedSpecialismDisplayName.Should().BeNull();            
             ActualResult.DisplaySpecialisms.Should().BeNullOrEmpty();
         }
     }

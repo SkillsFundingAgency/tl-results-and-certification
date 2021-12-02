@@ -187,7 +187,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.DisplaySpecialisms.Should().NotBeNullOrEmpty();
 
             ActualResult.DisplayMultipleSpecialismsCombined.Should().BeFalse();
-            ActualResult.SpecialismDisplayName.Should().BeNull();
+            ActualResult.CombinedSpecialismDisplayName.Should().BeNull();
 
             var expectedDisplaySpecialisms = new List<SpecialismViewModel>();
             foreach (var specialism in expectedApiResult.Pathway.Specialisms)

@@ -80,7 +80,7 @@
                 {
                     @foreach (var specialism in Model.DisplaySpecialisms)
                     {
-                        <h2 class="govuk-heading-m">@string.Format(AssessmentDetails.Specialism_Heading_Text, Model.DisplayMultipleSpecialismsCombined ? Model.SpecialismDisplayName : specialism.DisplayName)</h2>
+                        <h2 class="govuk-heading-m">@string.Format(AssessmentDetails.Specialism_Heading_Text, Model.DisplayMultipleSpecialismsCombined ? Model.CombinedSpecialismDisplayName : specialism.DisplayName)</h2>
                         <p class="govuk-body govuk-!-margin-bottom-9">
                             @string.Format(AssessmentDetails.You_Cannot_Register_Learner_For_Occupational_Specialism_Until, Model.NextAvailableSpecialismSeries?.ToLowerInvariant())
                         </p>
@@ -90,7 +90,7 @@
                 {
                     @foreach (var specialism in Model.DisplaySpecialisms)
                     {
-                        var specialismDisplayName = Model.DisplayMultipleSpecialismsCombined ? Model.SpecialismDisplayName : specialism.DisplayName;
+                        var specialismDisplayName = Model.DisplayMultipleSpecialismsCombined ? Model.CombinedSpecialismDisplayName : specialism.DisplayName;
                         var specialismId = Model.DisplayMultipleSpecialismsCombined ? null : (int?)specialism.Id;
                         <h2 class="govuk-heading-m">@string.Format(AssessmentDetails.Specialism_Heading_Text, specialismDisplayName)</h2>
 
