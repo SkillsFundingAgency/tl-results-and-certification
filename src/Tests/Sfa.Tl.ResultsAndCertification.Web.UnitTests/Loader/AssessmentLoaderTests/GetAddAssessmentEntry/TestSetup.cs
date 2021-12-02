@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetAddAssessmentEntryAsync(AoUkprn, ProfileId, componentType);
+            ActualResult = await Loader.GetAddAssessmentEntryAsync<AddAssessmentEntryViewModel>(AoUkprn, ProfileId, componentType);
         }
     }
 }

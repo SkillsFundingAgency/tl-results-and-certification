@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 AssessmentSeriesName = "Summer 2021",
             };
 
-            AssessmentLoader.GetAddAssessmentEntryAsync(AoUkprn, ProfileId, ComponentType.Core).Returns(_mockresult);
+            AssessmentLoader.GetAddAssessmentEntryAsync<AddAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Core).Returns(_mockresult);
             Controller.ModelState.AddModelError(nameof(AddAssessmentEntryViewModel.IsOpted), AssessmentContent.AddCoreAssessmentEntry.Select_Option_To_Add_Validation_Text);
         }
 

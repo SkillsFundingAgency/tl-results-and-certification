@@ -57,12 +57,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.Pathway.Provider.Name))
                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.Pathway.Provider.Ukprn))
                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.Pathway.Title))
-               .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.Pathway.Name} ({s.Pathway.LarId})"));
+               .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.Pathway.Name} ({s.Pathway.LarId})"))
+               .ForMember(d => d.SpecialismDetails, opts => opts.MapFrom((src, dest, destMember, context) => src.Pathway.Specialisms));
 
             CreateMap<AvailableAssessmentSeries, AddAssessmentEntryViewModel>()
                 .ForMember(d => d.AssessmentSeriesId, opts => opts.MapFrom(s => s.AssessmentSeriesId))
                 .ForMember(d => d.AssessmentSeriesName, opts => opts.MapFrom(s => s.AssessmentSeriesName.ToLower()))
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId));
+
             CreateMap<AddAssessmentEntryViewModel, AddAssessmentEntryRequest>()
                 .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
                 .ForMember(d => d.AssessmentSeriesId, opts => opts.MapFrom(s => s.AssessmentSeriesId))
@@ -91,6 +93,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.AssessmentId))
                 .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => s.ComponentType))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AssessmentEntryDetailsViewModel, RemoveAssessmentEntryRequest>>());
+
+            CreateMap<LearnerRecord, AddSpecialismAssessmentEntryViewModel>()
+              .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+              .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+              .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))
+              .ForMember(d => d.Lastname, opts => opts.MapFrom(s => s.Lastname))
+              .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
+              .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.Pathway.Provider.Name))
+              .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.Pathway.Provider.Ukprn))
+              .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.Pathway.Title))
+              .ForMember(d => d.SpecialismDetails, opts => opts.MapFrom((src, dest, destMember, context) => src.Pathway.Specialisms));
+
+            CreateMap<AvailableAssessmentSeries, AddSpecialismAssessmentEntryViewModel>()
+                .ForMember(d => d.AssessmentSeriesId, opts => opts.MapFrom(s => s.AssessmentSeriesId))
+                .ForMember(d => d.AssessmentSeriesName, opts => opts.MapFrom(s => s.AssessmentSeriesName.ToLower()))
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId));
 
             CreateMap<LearnerRecord, AssessmentDetailsViewModel>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))

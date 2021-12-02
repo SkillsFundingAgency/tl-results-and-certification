@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using System.Collections.Generic;
+using System.Linq;
 using AddCoreAssessmentEntryContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.AddCoreAssessmentEntry;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
@@ -26,6 +27,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 
         public ComponentType ComponentType { get; set; }
         public string PathwayDisplayName { get; set; }
+
+        public List<SpecialismViewModel> SpecialismDetails { get; set; }
+
+        public int? SpecialismId { get; set; }
+        public bool IsResitForSpecialism => SpecialismDetails != null && SpecialismDetails.Any() && SpecialismDetails.SelectMany(sa => sa.Assessments).Any(a => a.SeriesId != AssessmentSeriesId);
+        public bool DisplayMultipleSpecialismsCombined => SpecialismDetails?.Count > 1 && !IsResitForSpecialism;
+        public string SpecialismDisplayName => DisplayMultipleSpecialismsCombined ? string.Join(Constants.AndSeperator, SpecialismDetails.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.LarId})")) : SpecialismDetails?.Where(x => x.Id == SpecialismId)?.Select(x => $"{x.Name} ({x.LarId})")?.FirstOrDefault();
 
         public string SuccessBannerMessage { get { return string.Format(AddCoreAssessmentEntryContent.Banner_Message, AssessmentSeriesName, PathwayDisplayName); } }
 

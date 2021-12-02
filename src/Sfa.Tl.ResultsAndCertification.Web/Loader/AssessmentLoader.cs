@@ -103,14 +103,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return learnerAssessmentDetails;
         }
 
-        public async Task<AddAssessmentEntryViewModel> GetAddAssessmentEntryAsync(long aoUkprn, int profileId, ComponentType componentType)
+        public async Task<T> GetAddAssessmentEntryAsync<T>(long aoUkprn, int profileId, ComponentType componentType)
         {
             var learnerDetails = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId);
             var availableSeries = await _internalApiClient.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, componentType);
-            if (learnerDetails == null || availableSeries == null)
-                return null;
 
-            var result = _mapper.Map<AddAssessmentEntryViewModel>(learnerDetails);
+            if (learnerDetails == null || availableSeries == null)
+                return _mapper.Map<T>(null);
+
+            var result = _mapper.Map<T>(learnerDetails);
             _mapper.Map(availableSeries, result);
 
             return result;
