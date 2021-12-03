@@ -492,6 +492,24 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _pathwayAssessmentRepository.UpdateAsync(pathwayAssessment) > 0;
         }
 
+        public async Task<bool> RemoveSpecialismAssessmentEntryAsync(RemoveAssessmentEntryRequest model)
+        {
+            var specialismAssessments = await _specialismAssessmentRepository.GetManyAsync(sa => model.SpecialismAssessmentIds.Contains(sa.Id) && sa.IsOptedin
+                                                                                    && sa.EndDate == null 
+                                                                                    && sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
+                                                                                    && sa.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == model.AoUkprn).ToListAsync();
+            if (specialismAssessments == null || !specialismAssessments.Any()) return false;
+
+            foreach (var specialismAssessment in specialismAssessments)
+            {
+                specialismAssessment.IsOptedin = false;
+                specialismAssessment.EndDate = DateTime.UtcNow;
+                specialismAssessment.ModifiedOn = DateTime.UtcNow;
+                specialismAssessment.ModifiedBy = model.PerformedBy;
+            }
+            return await _specialismAssessmentRepository.UpdateManyAsync(specialismAssessments) > 0;
+        }
+
         public async Task<IList<AssessmentSeriesDetails>> GetAssessmentSeriesAsync()
         {
             var assessmentSeries =  await _assessmentSeriesRepository.GetManyAsync().ToListAsync();

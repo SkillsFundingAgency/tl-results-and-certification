@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             return model.ComponentType switch
             {
                 ComponentType.Core => await _assessmentService.RemovePathwayAssessmentEntryAsync(model),
-                ComponentType.Specialism => false,
+                ComponentType.Specialism => await _assessmentService.RemoveSpecialismAssessmentEntryAsync(model),
                 ComponentType.NotSpecified => false,
                 _ => false
             };
