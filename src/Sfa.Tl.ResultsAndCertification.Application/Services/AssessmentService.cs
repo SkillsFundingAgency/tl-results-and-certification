@@ -420,7 +420,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var assessmentSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(request.AoUkprn, request.ProfileId, startInYear);
             var currrentOpenSeries = assessmentSeries?.FirstOrDefault(a => a.ComponentType == request.ComponentType);
 
-            if (currrentOpenSeries == null)
+            if (currrentOpenSeries == null || currrentOpenSeries.Id != request.AssessmentSeriesId)
                 return new AddAssessmentEntryResponse { IsSuccess = false };
 
             var isValid = IsValidAddAssessmentRequestAsync(tqRegistrationPathway, currrentOpenSeries.Id, request.ComponentType);
@@ -433,7 +433,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 status = await _pathwayAssessmentRepository.CreateAsync(new TqPathwayAssessment
                 {
                     TqRegistrationPathwayId = tqRegistrationPathway.Id,
-                    AssessmentSeriesId = request.AssessmentSeriesId,
+                    AssessmentSeriesId = currrentOpenSeries.Id,
                     IsOptedin = true,
                     StartDate = DateTime.UtcNow,
                     EndDate = null,
@@ -441,7 +441,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     CreatedBy = request.PerformedBy
                 });
             }
-            else if (request.ComponentType == ComponentType.Specialism)
+            else if (request.ComponentType == ComponentType.Specialism && request.SpecialismIds != null)
             {
                 var specialismAssessmentsToAdd = new List<TqSpecialismAssessment>();
 
@@ -450,7 +450,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     specialismAssessmentsToAdd.Add(new TqSpecialismAssessment
                     {
                         TqRegistrationSpecialismId = specialismId.Value,
-                        AssessmentSeriesId = request.AssessmentSeriesId,
+                        AssessmentSeriesId = currrentOpenSeries.Id,
                         IsOptedin = true,
                         StartDate = DateTime.UtcNow,
                         EndDate = null,
