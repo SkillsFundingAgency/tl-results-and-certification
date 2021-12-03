@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 {
@@ -7,6 +8,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public int AssessmentId { get; set; }
 
         public long AoUkprn { get; set; }
+
+        public IList<int?> SpecialismAssessmentIds { get; set; }
 
         public ComponentType ComponentType { get; set; }
 

@@ -94,6 +94,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => s.ComponentType))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AssessmentEntryDetailsViewModel, RemoveAssessmentEntryRequest>>());
 
+            CreateMap<RemoveSpecialismAssessmentEntryViewModel, RemoveAssessmentEntryRequest>()
+                .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
+                .ForMember(d => d.SpecialismAssessmentIds, opts => opts.MapFrom(s => s.DisplayMultipleSpecialismsCombined ? s.SpecialismDetails.Select(x => x.Id) : new List<int> { s.SpecialismId.Value }))
+                .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Specialism))
+                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<RemoveSpecialismAssessmentEntryViewModel, RemoveAssessmentEntryRequest>>());
+            
             CreateMap<LearnerRecord, AddSpecialismAssessmentEntryViewModel>()
               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
               .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
