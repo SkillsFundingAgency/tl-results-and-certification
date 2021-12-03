@@ -132,7 +132,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             if (saveChanges)
                 DbContext.SaveChanges();
             
-            return profile;
+            return tqRegistrationProfile;
         }
 
         public List<TqPathwayAssessment> SeedPathwayAssessmentsData(List<TqPathwayAssessment> pathwayAssessments, bool saveChanges = true)

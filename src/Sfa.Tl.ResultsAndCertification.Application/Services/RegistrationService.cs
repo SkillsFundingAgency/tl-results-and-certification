@@ -1015,7 +1015,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     .GetFirstOrDefaultAsync(OtherAo => OtherAo.TqRegistrationProfile.UniqueLearnerNumber == uln &&
                     OtherAo.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != aoUkprn &&
                     OtherAo.Status == RegistrationPathwayStatus.Active &&
-                    OtherAo.CreatedOn > currentAoRegistrationDate) != null;
+                    OtherAo.CreatedOn >= currentAoRegistrationDate) != null;
 
             return isWithOtherAo;
         }
