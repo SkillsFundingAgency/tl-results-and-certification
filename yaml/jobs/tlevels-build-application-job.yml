@@ -35,6 +35,10 @@ jobs:
         # feedsToUse: config
         # nugetConfigPath: src/NuGet.config
     
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '14.x'  
+
     - task: Npm@1
       displayName: 'npm install'
       inputs:
