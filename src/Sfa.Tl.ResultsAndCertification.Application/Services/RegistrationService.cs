@@ -434,7 +434,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
             var tqRegistration = await _tqRegistrationRepository.GetRegistrationAsync(aoUkprn, profileId);
-
+            
             if (tqRegistration == null || (status != null && tqRegistration.Status != status)) return null;
 
             var isRegisteredWithOtherAo = false;
@@ -531,6 +531,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
             }
 
+            var isRegisteredWithOtherAo = await IsActiveWithOtherAoAsync(model.AoUkprn, tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, tqRegistrationPathway.CreatedOn);
+            if (isRegisteredWithOtherAo)
+            {
+                _logger.LogWarning(LogEvent.ManualReregistrationProcessFailed, $"Manual Reregistration failed to process due to validation error = Uln: {tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber} is already active with other Ao. Method: RejoinRegistrationAsync({model.AoUkprn}, {model.ProfileId})");
+                return false;
+            }
+
             var tqPathway = new TqRegistrationPathway
             {
                 TqRegistrationProfileId = tqRegistrationPathway.TqRegistrationProfileId,
@@ -553,11 +560,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var tqRegistrationPathway = await _tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == model.ProfileId
                                                                                         && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == model.AoUkprn, p => p, p => p.CreatedOn, false,
-                                                                                        p => p.TqProvider, p => p.TqProvider.TqAwardingOrganisation, p => p.TqProvider.TqAwardingOrganisation.TlPathway);
+                                                                                        p => p.TqProvider, p => p.TqProvider.TqAwardingOrganisation, p => p.TqProvider.TqAwardingOrganisation.TlPathway, p => p.TqRegistrationProfile);
 
             if (tqRegistrationPathway == null || tqRegistrationPathway.Status != RegistrationPathwayStatus.Withdrawn)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: ReregisterRegistrationAsync({model.AoUkprn}, {model.ProfileId})");
+                return false;
+            }
+
+            var isRegisteredWithOtherAo = await IsActiveWithOtherAoAsync(model.AoUkprn, tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, tqRegistrationPathway.CreatedOn);
+            if (isRegisteredWithOtherAo)
+            {
+                _logger.LogWarning(LogEvent.ManualReregistrationProcessFailed, $"Manual Reregistration failed to process due to validation error = Uln: {tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber} is already active with other Ao. Method: ReregisterRegistrationAsync({model.AoUkprn}, {model.ProfileId})");
                 return false;
             }
 
