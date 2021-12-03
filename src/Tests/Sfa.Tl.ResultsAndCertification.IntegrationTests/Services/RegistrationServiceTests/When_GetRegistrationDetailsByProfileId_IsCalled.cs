@@ -20,9 +20,24 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
     {
         public override void Given()
         {
-            // Seed Tlevel data for pearson
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             SeedRegistrationData(1111111111);
+
+            // TODO: below
+            //SeedTestData(EnumAwardingOrganisation.Pearson, true);
+            //var pearsonRegistrationProfile = SeedRegistrationData(1111111111, RegistrationPathwayStatus.Withdrawn);
+
+            //DetachAll();
+
+            //SeedTestData(EnumAwardingOrganisation.Ncfe, true);
+            //var ncfeRegistrationProfile = SeedRegistrationDataByStatus(1111111111, RegistrationPathwayStatus.Active, null, false);
+
+            //pearsonRegistrationProfile.TqRegistrationPathways.ToList().AddRange(ncfeRegistrationProfile.TqRegistrationPathways);
+            //ncfeRegistrationProfile.Id = pearsonRegistrationProfile.Id;
+            //ncfeRegistrationProfile.TqRegistrationPathways.ToList().ForEach(x => { x.TqRegistrationProfileId = pearsonRegistrationProfile.Id; });
+
+            //DbContext.SaveChanges();
+            //DetachAll();
 
             CreateMapper();
 
@@ -72,6 +87,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             actualResult.AcademicYear.Should().Be(expectedResponse.AcademicYear);
             actualResult.Status.Should().Be(expectedResponse.Status);
+            actualResult.IsActiveWithOtherAo.Should().Be(expectedResponse.IsActiveWithOtherAo);
         }
 
         public static IEnumerable<object[]> Data
@@ -85,7 +101,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 var tqRegistrationPathway = new TqRegistrationPathwayBuilder().Build();
                 return new[]
                 {
-                    // // Uln not found
+                     // Uln not found
                     new object[] { 10011881, 100, null },
                     
                     // IsActive
@@ -104,36 +120,61 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                             PathwayName = tlPathway.Name,
                             Specialisms = tlSpecialisms.Select(x => new SpecialismDetails { Name = x.Name , Code = x.LarId}),
                             AcademicYear = tqRegistrationPathway.AcademicYear,
-                            Status = RegistrationPathwayStatus.Active
+                            Status = RegistrationPathwayStatus.Active,
+                            IsActiveWithOtherAo = false
                         }
-                    }                    
+                    },
+
+                    //// TODO: IsActive with Other Ao
+                    //new object[] { 10011881, 1,  // TODO: adjust correct AO
+                    //    new RegistrationDetails
+                    //    {
+                    //        Uln = profile.UniqueLearnerNumber,
+                    //        Firstname = profile.Firstname,
+                    //        Lastname = profile.Lastname,
+                    //        DateofBirth = profile.DateofBirth,
+                    //        AoUkprn = 10011881,
+                    //        ProfileId = 1,
+                    //        PathwayLarId = tlPathway.LarId,
+                    //        ProviderUkprn = tlProvider.UkPrn,
+                    //        ProviderName = tlProvider.Name,
+                    //        PathwayName = tlPathway.Name,
+                    //        Specialisms = tlSpecialisms.Select(x => new SpecialismDetails { Name = x.Name , Code = x.LarId}),
+                    //        AcademicYear = tqRegistrationPathway.AcademicYear,
+                    //        Status = RegistrationPathwayStatus.Active,
+                    //        IsActiveWithOtherAo = true
+                    //    }
+                    //}
                 };
             }
         }
 
-        protected override void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
-        {
-            TlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, awardingOrganisation);
-            Route = TlevelDataProvider.CreateTlRoute(DbContext, awardingOrganisation);
-            Pathway = TlevelDataProvider.CreateTlPathway(DbContext, awardingOrganisation, Route);
-            Specialisms = TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, Pathway);
-            var tqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, Pathway, TlAwardingOrganisation);
-            TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
-            TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, tqAwardingOrganisation, TlProvider);
-            DbContext.SaveChangesAsync();
-        }
+        //protected override void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
+        //{
+        //    TlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, awardingOrganisation);
+        //    Route = TlevelDataProvider.CreateTlRoute(DbContext, awardingOrganisation);
+        //    Pathway = TlevelDataProvider.CreateTlPathway(DbContext, awardingOrganisation, Route);
+        //    Specialisms = TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, Pathway);
+        //    var tqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, Pathway, TlAwardingOrganisation);
+        //    TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
+        //    TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, tqAwardingOrganisation, TlProvider);
+        //    DbContext.SaveChangesAsync();
+        //}
 
-        private void SeedRegistrationData(long uln)
+        private TqRegistrationProfile SeedRegistrationData(long uln, RegistrationPathwayStatus status = RegistrationPathwayStatus.Active)
         {
             var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, TqProvider);
-            
+            tqRegistrationPathway.Status = status;
+
             foreach (var specialism in Specialisms)
             {
                 tqRegistrationPathway.TqRegistrationSpecialisms.Add(RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, specialism));
             }
+            
             DbContext.SaveChangesAsync();
+            return profile;
         }
     }
 }
