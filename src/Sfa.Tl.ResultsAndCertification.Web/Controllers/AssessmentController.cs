@@ -306,26 +306,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("assessment-entry-add-specialisms/{profileId}/{specialismId:int?}", Name = RouteConstants.AddSpecialismAssessmentEntry)]
-        public async Task<IActionResult> AddSpecialismAssessmentEntryAsync(int profileId, int? specialismId)
+        [Route("assessment-entry-add-specialisms/{profileId}/{specialismLarId}", Name = RouteConstants.AddSpecialismAssessmentEntry)]
+        public async Task<IActionResult> AddSpecialismAssessmentEntryAsync(int profileId, string specialismLarId)
         {
             var viewModel = await _assessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(User.GetUkPrn(), profileId, ComponentType.Specialism);
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment series available for specialisms or Learner not found. Method: GetAddAssessmentEntryAsync({User.GetUkPrn()}, {profileId}, {ComponentType.Core}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment series available for specialisms or Learner not found. Method: GetAddAssessmentEntryAsync({User.GetUkPrn()}, {profileId}, {ComponentType.Specialism}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            viewModel.SpecialismId = specialismId;
+            viewModel.SpecialismLarId = specialismLarId;
+
+            if (!viewModel.IsValidToAdd)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Not a valid specialism to add assessment entry. Method: GetAddAssessmentEntryAsync({User.GetUkPrn()}, {profileId}, {ComponentType.Specialism}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("assessment-entry-add-specialisms/{profileId}/{specialismId:int?}", Name = RouteConstants.SubmitAddSpecialismAssessmentEntry)]
+        [Route("assessment-entry-add-specialisms/{profileId}/{specialismId}", Name = RouteConstants.SubmitAddSpecialismAssessmentEntry)]
         public async Task<IActionResult> AddSpecialismAssessmentEntryAsync(AddSpecialismAssessmentEntryViewModel model)
         {
             var assessmentEntryDetails = await _assessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(User.GetUkPrn(), model.ProfileId, ComponentType.Specialism);
-            assessmentEntryDetails.SpecialismId = model.SpecialismId;
+            assessmentEntryDetails.SpecialismLarId = model.SpecialismLarId;
 
             if (!ModelState.IsValid)
                 return View(assessmentEntryDetails);
@@ -333,9 +340,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!model.IsOpted.Value)
                 return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
 
-            if (!assessmentEntryDetails.IsValidSpecialismToAdd)
+            if (!assessmentEntryDetails.IsValidToAdd)
             {
-                _logger.LogWarning(LogEvent.NotValidData, $"No valid specialism found to add. Method: GetAddAssessmentEntryAsync({User.GetUkPrn()}, {model.ProfileId}, {ComponentType.Specialism}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NotValidData, $"Not a valid specialism to add assessment entry. Method: AddSpecialismAssessmentEntryAsync({User.GetUkPrn()}, {model.ProfileId}, {ComponentType.Specialism}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 

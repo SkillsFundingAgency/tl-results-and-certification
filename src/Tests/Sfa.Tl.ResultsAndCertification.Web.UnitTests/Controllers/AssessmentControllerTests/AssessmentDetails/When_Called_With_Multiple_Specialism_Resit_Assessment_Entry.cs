@@ -29,9 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 ProviderName = "Test Provider",
                 ProviderUkprn = 1234567,
                 TlevelTitle = "Tlevel Title",
-                PathwayStatus = RegistrationPathwayStatus.Active,
-                IsResitForSpecialism = true,
-                CurrentSpecialismAssessmentSeriesId = 2,
+                PathwayStatus = RegistrationPathwayStatus.Active,                                
                 SpecialismDetails = new List<SpecialismViewModel>
                 {
                     new SpecialismViewModel
@@ -40,6 +38,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                         LarId = "ZT2158963",
                         Name = "Specialism Name1",
                         DisplayName = "Specialism Name1 (ZT2158963)",
+                        CurrentSpecialismAssessmentSeriesId = 3,
+                        TlSpecialismCombinations = new List<KeyValuePair<int,string>> { new KeyValuePair<int, string>(1, "ZT2158963|ZT2158999") },
                         Assessments = new List<SpecialismAssessmentViewModel>
                         {
                             new SpecialismAssessmentViewModel
@@ -58,6 +58,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                         LarId = "ZT2158999",
                         Name = "Specialism Name2",
                         DisplayName = "Specialism Name2 (ZT2158999)",
+                        CurrentSpecialismAssessmentSeriesId = 3,
+                        TlSpecialismCombinations = new List<KeyValuePair<int,string>> { new KeyValuePair<int, string>(1, "ZT2158963|ZT2158999") },
                         Assessments = new List<SpecialismAssessmentViewModel>
                         {
                             new SpecialismAssessmentViewModel
@@ -94,32 +96,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             var model = viewResult.Model as AssessmentDetailsViewModel;
             model.Should().NotBeNull();
 
-            // Specialism DisplayName
-            model.CombinedSpecialismDisplayName.Should().BeNullOrWhiteSpace();
-
             foreach (var specialism in _mockresult.SpecialismDetails)
             {
-                // Exam Period
-                var expectedSpecialism = specialism;
-                var expectedAssessments = specialism.Assessments.ToList();
-
-                var examPeriodModel = model.GetSummaryExamPeriod(expectedSpecialism);
-
-                examPeriodModel.Title.Should().Be(AssessmentDetailsContent.Title_Exam_Period);
-                examPeriodModel.Value.Should().Be(expectedAssessments[0].SeriesName);
-                examPeriodModel.ActionText.Should().Be(AssessmentDetailsContent.Remove_Action_Link_Text);
-                examPeriodModel.HiddenActionText.Should().Be(AssessmentDetailsContent.Remove_Action_Link_Hidden_Text);
-
-                // Last updated on 
-                var summaryLastUpdatedOnModel = model.GetSummaryLastUpdatedOn(expectedSpecialism);
-
-                summaryLastUpdatedOnModel.Title.Should().Be(AssessmentDetailsContent.Title_Last_Updated_On);
-                summaryLastUpdatedOnModel.Value.Should().Be(expectedAssessments[0].LastUpdatedOn.ToDobFormat());
-
-                // Last updated by 
-                var summaryLastUpdatedByModel = model.GetSummaryLastUpdatedBy(expectedSpecialism);
-                summaryLastUpdatedByModel.Title.Should().Be(AssessmentDetailsContent.Title_Last_Updated_By);
-                summaryLastUpdatedByModel.Value.Should().Be(expectedAssessments[0].LastUpdatedBy);
+                // Specialism DisplayName
+                var actualSpecialism = model.SpecialismDetails.FirstOrDefault(s => s.Id == specialism.Id);
+                actualSpecialism.Should().NotBeNull();
+                actualSpecialism.DisplayName.Should().Be(specialism.DisplayName);                
             }
         }
     }

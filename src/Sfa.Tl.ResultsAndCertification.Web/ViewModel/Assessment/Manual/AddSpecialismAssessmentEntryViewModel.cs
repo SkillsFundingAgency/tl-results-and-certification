@@ -1,6 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AddSpecialismAssessmentEntryContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.AddSpecialismAssessmentEntry;
@@ -18,21 +19,48 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
             TlevelTitleLabel = AddSpecialismAssessmentEntryContent.Title_TLevel_Text;
         }
 
-        public int? SpecialismId { get; set; }
+        public string SpecialismLarId { get; set; }
         public int AssessmentSeriesId { get; set; }
         public string AssessmentSeriesName { get; set; }
         public List<SpecialismViewModel> SpecialismDetails { get; set; }
 
         [RequiredWithMessage(Property = nameof(AssessmentSeriesName), ErrorResourceType = typeof(AddSpecialismAssessmentEntryContent), ErrorResourceName = "Select_Option_To_Add_Validation_Text")]
         public bool? IsOpted { get; set; }
-        
-        public bool IsResitForSpecialism => SpecialismDetails != null && SpecialismDetails.Any() && SpecialismDetails.SelectMany(sa => sa.Assessments).Any(a => a.SeriesId != AssessmentSeriesId);
-        public bool DisplayMultipleSpecialismsCombined => SpecialismDetails?.Count > 1 && !IsResitForSpecialism;
-        public string SpecialismDisplayName => DisplayMultipleSpecialismsCombined 
-                                               ? string.Join(Constants.AndSeperator, SpecialismDetails.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.LarId})")) 
-                                               : SpecialismDetails?.Where(x => x.Id == SpecialismId)?.Select(x => $"{x.Name} ({x.LarId})")?.FirstOrDefault();
 
-        public bool IsValidSpecialismToAdd => DisplayMultipleSpecialismsCombined ? true : SpecialismDetails != null && SpecialismDetails.Any(x => x.Id == SpecialismId);
+        public List<string> SpecialismLarIds => !string.IsNullOrWhiteSpace(SpecialismLarId) ? SpecialismLarId.Split(Constants.PipeSeperator).ToList() : new List<string>();
+        public bool IsValidToAdd => SpecialismLarIds.Any() ? IsValidSpecialismCombination : false;
+        
+        public string SpecialismDisplayName => SpecialismDetails != null && SpecialismDetails.Any() ? string.Join(Constants.AndSeperator, SpecialismDetails.Where(x => SpecialismLarIds.Contains(x.LarId, StringComparer.InvariantCultureIgnoreCase)).OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.LarId})")) : null;
+        private bool IsValidSpecialismCombination
+        {
+            get
+            {
+                if (SpecialismDetails == null) return false;
+                                
+                if(SpecialismLarIds.Count == 1)
+                {
+                    var validSpecialism = SpecialismDetails.FirstOrDefault(s => s.LarId.Equals(SpecialismLarIds[0], StringComparison.InvariantCultureIgnoreCase));
+
+                    if (validSpecialism == null) return false;
+
+                    return !validSpecialism.IsCouplet || (validSpecialism.IsCouplet && validSpecialism.IsResit);
+                }
+                else
+                {
+                    var validSpecialisms = SpecialismDetails.Where(s => SpecialismLarIds.Contains(s.LarId, StringComparer.InvariantCultureIgnoreCase));
+
+                    if (!validSpecialisms.Any() || validSpecialisms.Count() != SpecialismLarIds.Count()) return false;
+
+                    var coupletSpecialismCodes = validSpecialisms.SelectMany(v => v.TlSpecialismCombinations.Select(c => c.Value)).ToList();
+                    
+                    //var specialismCodes = SpecialismDetails.Select(s => s.LarId);
+
+                    var hasValidCoupletSpecialismCodes = coupletSpecialismCodes.Any(cs => cs.Split(Constants.PipeSeperator).Except(SpecialismLarIds, StringComparer.InvariantCultureIgnoreCase).Count() == 0);
+
+                    return validSpecialisms.All(v => v.IsCouplet && !v.IsResit) && hasValidCoupletSpecialismCodes;
+                }
+            }
+        }
 
         public string SuccessBannerMessage { get { return string.Format(AddSpecialismAssessmentEntryContent.Banner_Message, AssessmentSeriesName, SpecialismDisplayName); } }
 

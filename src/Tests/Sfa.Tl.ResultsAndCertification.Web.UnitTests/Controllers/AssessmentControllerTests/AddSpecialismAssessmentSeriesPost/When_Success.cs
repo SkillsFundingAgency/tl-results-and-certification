@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 AssessmentSeriesId = 11,
                 AssessmentSeriesName = "Summer 2022",
                 IsOpted = true,
-                SpecialismId = 5,
+                SpecialismLarId = "ZT2158963",
                 SpecialismDetails = new List<SpecialismViewModel>
                 {
                     new SpecialismViewModel

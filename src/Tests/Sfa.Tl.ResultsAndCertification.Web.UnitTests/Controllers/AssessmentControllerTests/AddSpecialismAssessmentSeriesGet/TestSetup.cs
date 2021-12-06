@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         protected int ProfileId;
         protected Guid UserId;
         protected string CacheKey;
-        protected int? SpecialismId;
+        protected string SpecialismLarId;
         protected IAssessmentLoader AssessmentLoader;
         protected ICacheService CacheService;
         protected ILogger<AssessmentController> Logger;
@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 
         public async override Task When()
         {
-            Result = await Controller.AddSpecialismAssessmentEntryAsync(ProfileId, SpecialismId);
+            Result = await Controller.AddSpecialismAssessmentEntryAsync(ProfileId, SpecialismLarId);
         }
     }
 }

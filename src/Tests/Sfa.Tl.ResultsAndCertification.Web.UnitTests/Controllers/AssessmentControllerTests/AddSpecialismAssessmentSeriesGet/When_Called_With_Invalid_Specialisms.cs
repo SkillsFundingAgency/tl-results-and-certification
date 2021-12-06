@@ -7,21 +7,26 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.AddSpecialismAssessmentSeriesPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.AddSpecialismAssessmentSeriesGet
 {
-    public class When_Not_Valid_Specialisms_To_Add : TestSetup
+    public class When_Called_With_Invalid_Specialisms : TestSetup
     {
         private AddSpecialismAssessmentEntryViewModel _mockresult = null;
 
         public override void Given()
         {
-            ViewModel = new AddSpecialismAssessmentEntryViewModel
+            _mockresult = new AddSpecialismAssessmentEntryViewModel
             {
                 ProfileId = 1,
+                Uln = 1234567890,
+                Firstname = "First",
+                Lastname = "Last",
+                DateofBirth = System.DateTime.UtcNow.AddYears(-30),
+                ProviderName = "Test Provider",
+                ProviderUkprn = 1234567,
+                TlevelTitle = "Tlevel Title",
                 AssessmentSeriesId = 11,
                 AssessmentSeriesName = "Summer 2022",
-                IsOpted = true,
-                SpecialismLarId = "5",
                 SpecialismDetails = new List<SpecialismViewModel>
                 {
                     new SpecialismViewModel
@@ -29,30 +34,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                         Id = 5,
                         LarId = "ZT2158963",
                         Name = "Specialism Name1",
-                        DisplayName = "Specialism Name1 (ZT2158963)",
+                        TlSpecialismCombinations = new List<KeyValuePair<int,string>> { new KeyValuePair<int, string>(1, "ZT2158963|ZT2158999") },
                         Assessments = new List<SpecialismAssessmentViewModel>()
-                    }
-                }
-            };
-
-            _mockresult = new AddSpecialismAssessmentEntryViewModel
-            {
-                ProfileId = 1,
-                AssessmentSeriesId = 11,
-                AssessmentSeriesName = "Summer 2022",
-                SpecialismDetails = new List<SpecialismViewModel>
-                {
+                    },
                     new SpecialismViewModel
                     {
-                        Id = 1,
-                        LarId = "ZT2158777",
-                        Name = "Specialism Name",
-                        DisplayName = "Specialism Name (ZT2158777)",
+                        Id = 6,
+                        LarId = "ZT2158999",
+                        Name = "Specialism Name2",
+                        TlSpecialismCombinations = new List<KeyValuePair<int,string>> { new KeyValuePair<int, string>(1, "ZT2158963|ZT2158999") },
                         Assessments = new List<SpecialismAssessmentViewModel>()
                     }
                 }
             };
-
+            SpecialismLarId = string.Join(Constants.PipeSeperator, new List<string> { "ZT2158963", "Test" });
             AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism).Returns(_mockresult);
         }
 

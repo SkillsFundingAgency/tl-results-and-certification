@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             {
                 ProfileId = ProfileId,
                 AssessmentSeriesId = 1,
-                SpecialismId = 5,
+                SpecialismLarId = "5",
                 SpecialismDetails = new List<SpecialismViewModel>
                 {
                     new SpecialismViewModel
@@ -39,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                     x.AoUkprn == AoUkprn &&
                     x.ComponentType == Common.Enum.ComponentType.Specialism &&
                     x.AssessmentSeriesId == ViewModel.AssessmentSeriesId &&
-                    x.SpecialismIds.All(s => new List<int?> { ViewModel.SpecialismId }.Contains(s)) &&
+                    x.SpecialismIds.All(s => new List<int?> { ViewModel.SpecialismLarId.ToInt() }.Contains(s)) &&
                     x.PerformedBy == $"{Givenname} {Surname}"))
                 .Returns(ExpectedApiResult);
         }

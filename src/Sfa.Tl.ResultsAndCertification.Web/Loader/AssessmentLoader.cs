@@ -111,7 +111,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (learnerDetails == null || availableSeries == null)
                 return _mapper.Map<T>(null);
 
-            var result = _mapper.Map<T>(learnerDetails);
+            var result = _mapper.Map<T>(learnerDetails, opt => {
+                opt.Items["currentSpecialismAssessmentSeriesId"] = availableSeries.AssessmentSeriesId;
+            });
             _mapper.Map(availableSeries, result);
 
             return result;
