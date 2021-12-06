@@ -106,9 +106,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task<T> GetAddAssessmentEntryAsync<T>(long aoUkprn, int profileId, ComponentType componentType)
         {
             var learnerDetails = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId);
-            var availableSeries = await _internalApiClient.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, componentType);
+            if (learnerDetails == null)
+                return _mapper.Map<T>(null);
 
-            if (learnerDetails == null || availableSeries == null)
+            var componentIds = componentType == ComponentType.Core ? learnerDetails.Pathway.Id.ToString() : String.Join("|", learnerDetails.Pathway.Specialisms.Select(x => x.Id));
+            var availableSeries = await _internalApiClient.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, componentType, componentIds);
+
+            if (availableSeries == null)
                 return _mapper.Map<T>(null);
 
             var result = _mapper.Map<T>(learnerDetails);

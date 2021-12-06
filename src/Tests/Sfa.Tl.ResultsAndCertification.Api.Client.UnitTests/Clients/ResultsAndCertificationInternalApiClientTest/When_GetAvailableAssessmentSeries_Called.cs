@@ -19,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         private readonly long _ukprn = 12345678;
         private readonly int _profileId = 1;
         private readonly ComponentType componentType = ComponentType.Core;
+        private readonly string componentIds;
         protected AvailableAssessmentSeries _mockHttpResult;
 
         private ITokenServiceClient _tokenServiceClient;
@@ -45,13 +46,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<AvailableAssessmentSeries>(_mockHttpResult, string.Format(ApiConstants.GetAvailableAssessmentSeriesUri, _ukprn, _profileId, (int)componentType), HttpStatusCode.OK));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<AvailableAssessmentSeries>(_mockHttpResult, string.Format(ApiConstants.GetAvailableAssessmentSeriesUri, _ukprn, _profileId, (int)componentType, componentIds), HttpStatusCode.OK));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public async override Task When()
         {
-            _result = await _apiClient.GetAvailableAssessmentSeriesAsync(_ukprn, _profileId, componentType);
+            _result = await _apiClient.GetAvailableAssessmentSeriesAsync(_ukprn, _profileId, componentType, componentIds);
         }
 
         [Fact]

@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -37,10 +40,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetAvailableAssessmentSeries/{aoUkprn}/{profileId}/{componentType}")]
-        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)
+        [Route("GetAvailableAssessmentSeries/{aoUkprn}/{profileId}/{componentType}/{componentIds}")]
+        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType, string componentIds)
         {
-            return await _assessmentService.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, componentType);
+            var componentIdsData = componentIds?.Split(Constants.PipeSeperator)?.Select(s => s.ToInt())?.ToList();
+            return await _assessmentService.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, componentType, componentIdsData);
         }
 
         [HttpPost]

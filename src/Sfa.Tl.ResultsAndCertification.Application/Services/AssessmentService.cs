@@ -393,9 +393,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return assessmentDetails;
         }
 
-        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)
+        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType, IList<int> componentIds)
         {
             // Validate
+            if (componentIds == null || !componentIds.Any())
+                return null;
+
             var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(aoUkprn, profileId);
             
             var startInYear = componentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
@@ -405,7 +408,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (currentOpenSeries == null)
                 return null;
 
-            var isValid = IsValidAddAssessmentRequestAsync(tqRegistration, currentOpenSeries.Id, componentType);
+            var isValid = IsValidAddAssessmentRequestAsync(tqRegistration, currentOpenSeries.Id, componentType, componentIds);
             if (!isValid) return null;
 
             return _mapper.Map<AvailableAssessmentSeries>(currentOpenSeries, opt => opt.Items["profileId"] = profileId);
@@ -423,7 +426,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (currrentOpenSeries == null || currrentOpenSeries.Id != request.AssessmentSeriesId)
                 return new AddAssessmentEntryResponse { IsSuccess = false };
 
-            var isValid = IsValidAddAssessmentRequestAsync(tqRegistrationPathway, currrentOpenSeries.Id, request.ComponentType);
+            List<int> componentIds = request.ComponentType == ComponentType.Core ? new List<int> { tqRegistrationPathway.Id } : request.SpecialismIds.Where(x => x != null).Select(x => x.Value).ToList();
+            var isValid = IsValidAddAssessmentRequestAsync(tqRegistrationPathway, currrentOpenSeries.Id, request.ComponentType, componentIds);
             if (!isValid)
                 return new AddAssessmentEntryResponse { IsSuccess = false };
 
@@ -532,16 +536,24 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return !hasActiveResult;
         }
 
-        private bool IsValidAddAssessmentRequestAsync(TqRegistrationPathway registrationPathway, int currentOpenSeriesId, ComponentType componentType)
+        private bool IsValidAddAssessmentRequestAsync(TqRegistrationPathway registrationPathway, int currentOpenSeriesId, ComponentType componentType, IList<int> componentIds)
         {
             // 1. Must be an active registration.
             if (registrationPathway == null || registrationPathway.Status != RegistrationPathwayStatus.Active)
                 return false;
 
-            // 2. Must not have an active assessment.
+            // 2. Must be registered componentIds
+            var isValidComponentIds = componentType == ComponentType.Core ?
+                        componentIds.Count == 1 && componentIds.FirstOrDefault() == registrationPathway.Id :
+                        componentIds.All(compId => registrationPathway.TqRegistrationSpecialisms.Select(p => p.Id).Contains(compId));
+
+            if (!isValidComponentIds)
+                return false;
+
+            // 3. Must not have an active assessment.
             var anyActiveAssessment = componentType == ComponentType.Core ?
-                        registrationPathway.TqPathwayAssessments.Any(x => x.IsOptedin && x.EndDate == null && x.AssessmentSeriesId == currentOpenSeriesId) :
-                        registrationPathway.TqRegistrationSpecialisms.Any(x => x.TqSpecialismAssessments.Any(x => x.IsOptedin && x.EndDate == null && x.AssessmentSeriesId == currentOpenSeriesId));
+                        registrationPathway.TqPathwayAssessments.Where(p => componentIds.Contains(p.TqRegistrationPathwayId)).Any(x => x.IsOptedin && x.EndDate == null && x.AssessmentSeriesId == currentOpenSeriesId) :
+                        registrationPathway.TqRegistrationSpecialisms.Where(s => componentIds.Contains(s.Id)).All(x => x.TqSpecialismAssessments.Any(x => x.IsOptedin && x.EndDate == null && x.AssessmentSeriesId == currentOpenSeriesId));
 
             return !anyActiveAssessment;
         }

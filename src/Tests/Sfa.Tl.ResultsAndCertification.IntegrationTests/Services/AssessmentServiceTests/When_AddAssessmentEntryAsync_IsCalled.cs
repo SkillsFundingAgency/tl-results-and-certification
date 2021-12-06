@@ -107,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             {
                 return new[]
                 {
-                     //Profile not-found - returns false
+                    // Profile not-found - returns false
                     new object[]
                     { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 999, ComponentType = ComponentType.Core  },
                       new AddAssessmentEntryResponse { IsSuccess = false } },
@@ -121,10 +121,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                     new object[]
                     { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 2, ComponentType = ComponentType.Core  },
                       new AddAssessmentEntryResponse { IsSuccess = false } },
-                                         
+
                     // When specialism entry type - returns false
                     new object[]
-                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Specialism },
+                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Specialism, SpecialismIds = new List<int?> { 1 } },
                       new AddAssessmentEntryResponse { IsSuccess = false } },
 
                     // valid request - returns true
@@ -132,15 +132,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                     { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core },
                       new AddAssessmentEntryResponse { IsSuccess = true, Uln = 1111111113 } },
 
-                     // There is no assessment entry window open.
+                    // There is no assessment entry window open.
                     new object[]
                     { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core },
                       new AddAssessmentEntryResponse { IsSuccess = false, Uln = 1111111114} },
 
                     // When specialism entry type couplet - returns true
                     new object[]
-                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 5, ComponentType = ComponentType.Specialism, SpecialismIds = new List<int?> { 1, 2 } },
-                      new AddAssessmentEntryResponse { IsSuccess = true,Uln = 1111111115 } },
+                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 5, ComponentType = ComponentType.Specialism, SpecialismIds = new List<int?> { 5, 6 } },
+                      new AddAssessmentEntryResponse { IsSuccess = true, Uln = 1111111115 } },
 
                     // Component type not specified
                     new object[]

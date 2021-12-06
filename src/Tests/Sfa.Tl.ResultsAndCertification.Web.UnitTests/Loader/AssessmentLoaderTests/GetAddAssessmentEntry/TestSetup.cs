@@ -19,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
         protected readonly ComponentType componentType = ComponentType.Core;
         protected readonly long Uln = 1234567890;
         protected readonly int ProviderId = 1;
+        protected string ComponentIds;
 
         protected IResultsAndCertificationInternalApiClient InternalApiClient;
         protected IMapper Mapper;

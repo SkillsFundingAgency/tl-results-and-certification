@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             _expectedApiAvailableAssessmentSeries = null;
 
             InternalApiClient.GetLearnerRecordAsync(AoUkprn, ProfileId).Returns(_expectedApiLearnerResult);
-            InternalApiClient.GetAvailableAssessmentSeriesAsync(AoUkprn, ProfileId, ComponentType.Core).Returns(_expectedApiAvailableAssessmentSeries);
+            InternalApiClient.GetAvailableAssessmentSeriesAsync(AoUkprn, ProfileId, ComponentType.Core, ComponentIds).Returns(_expectedApiAvailableAssessmentSeries);
         }
 
         [Fact]
