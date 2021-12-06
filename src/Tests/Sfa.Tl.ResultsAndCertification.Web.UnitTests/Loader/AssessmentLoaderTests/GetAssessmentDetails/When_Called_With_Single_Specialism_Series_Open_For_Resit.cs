@@ -147,12 +147,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 actualSpecialism.LarId.Should().Be(expectedSpecialism.LarId);
                 actualSpecialism.Name.Should().Be(expectedSpecialism.Name);
                 actualSpecialism.DisplayName.Should().Be($"{expectedSpecialism.Name} ({expectedSpecialism.LarId})");
-                actualSpecialism.Assessments.Should().BeNullOrEmpty();
+
+                foreach (var expectedSpecialismAssessment in expectedSpecialism.Assessments)
+                {
+                    var actualSpecialismAssessment = actualSpecialism.Assessments.FirstOrDefault(r => r.AssessmentId == expectedSpecialismAssessment.Id);
+                    actualSpecialismAssessment.Should().NotBeNull();
+
+                    actualSpecialismAssessment.AssessmentId.Should().Be(expectedSpecialismAssessment.Id);
+                    actualSpecialismAssessment.SeriesId.Should().Be(expectedSpecialismAssessment.SeriesId);
+                    actualSpecialismAssessment.SeriesName.Should().Be(expectedSpecialismAssessment.SeriesName);
+                    actualSpecialismAssessment.LastUpdatedOn.Should().Be(expectedSpecialismAssessment.LastUpdatedOn);
+                    actualSpecialismAssessment.LastUpdatedBy.Should().Be(expectedSpecialismAssessment.LastUpdatedBy);
+                }
             }
 
             ActualResult.IsSpecialismEntryEligible.Should().BeTrue();
-            ActualResult.HasCurrentSpecialismAssessmentEntry.Should().BeFalse();
-            ActualResult.IsResitForSpecialism.Should().BeTrue();
             ActualResult.NextAvailableSpecialismSeries.Should().Be(specialismAssessmentSeriesName);
             ActualResult.IsCoreResultExist.Should().BeFalse();
             ActualResult.HasAnyOutstandingPathwayPrsActivities.Should().BeFalse();
@@ -163,11 +172,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.HasPreviousCoreAssessment.Should().BeFalse();
             ActualResult.HasResultForPreviousCoreAssessment.Should().BeFalse();
             ActualResult.NeedCoreResultForPreviousAssessmentEntry.Should().BeFalse();
-            ActualResult.DisplayMultipleSpecialismsCombined.Should().BeFalse();
             ActualResult.IsSpecialismRegistered.Should().BeTrue();
-            ActualResult.CombinedSpecialismDisplayName.Should().BeNull();
             ActualResult.DisplaySpecialisms.Should().NotBeNullOrEmpty();
-            ActualResult.DisplayMultipleSpecialismsCombined.Should().BeFalse();
 
             var expectedDisplaySpecialisms = new List<SpecialismViewModel>();
             foreach (var specialism in expectedApiResult.Pathway.Specialisms)
@@ -192,6 +198,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 actualDisplaySpecialism.LarId.Should().Be(expectedDisplaySpecialism.LarId);
                 actualDisplaySpecialism.Name.Should().Be(expectedDisplaySpecialism.Name);
                 actualDisplaySpecialism.DisplayName.Should().Be($"{expectedDisplaySpecialism.Name} ({expectedDisplaySpecialism.LarId})");
+                actualDisplaySpecialism.IsCouplet.Should().BeFalse();
+                actualDisplaySpecialism.IsResit.Should().BeTrue();
+                actualDisplaySpecialism.HasCurrentAssessmentEntry.Should().BeFalse();
             }
         }
     }

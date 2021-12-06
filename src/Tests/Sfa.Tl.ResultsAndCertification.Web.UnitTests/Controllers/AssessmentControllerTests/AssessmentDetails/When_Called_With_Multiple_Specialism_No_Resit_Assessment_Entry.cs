@@ -29,8 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 ProviderName = "Test Provider",
                 ProviderUkprn = 1234567,
                 TlevelTitle = "Tlevel Title",
-                PathwayStatus = RegistrationPathwayStatus.Active,
-                CurrentSpecialismAssessmentSeriesId = 1,
+                PathwayStatus = RegistrationPathwayStatus.Active,                
                 SpecialismDetails = new List<SpecialismViewModel>
                 {
                     new SpecialismViewModel
@@ -39,6 +38,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                         LarId = "ZT2158963",
                         Name = "Specialism Name1",
                         DisplayName = "Specialism Name1 (ZT2158963)",
+                        CurrentSpecialismAssessmentSeriesId = 1,
+                        TlSpecialismCombinations = new List<KeyValuePair<int,string>> { new KeyValuePair<int, string>(1, "ZT2158963|ZT2158999") },
                         Assessments = new List<SpecialismAssessmentViewModel>
                         {
                             new SpecialismAssessmentViewModel
@@ -57,6 +58,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                         LarId = "ZT2158999",
                         Name = "Specialism Name2",
                         DisplayName = "Specialism Name2 (ZT2158999)",
+                        CurrentSpecialismAssessmentSeriesId = 1,
+                        TlSpecialismCombinations = new List<KeyValuePair<int,string>> { new KeyValuePair<int, string>(1, "ZT2158963|ZT2158999") },
                         Assessments = new List<SpecialismAssessmentViewModel>
                         {
                             new SpecialismAssessmentViewModel
@@ -94,9 +97,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             model.Should().NotBeNull();
 
             // Specialism DisplayName
-            model.CombinedSpecialismDisplayName.Should().NotBeNullOrWhiteSpace();
+            model.DisplaySpecialisms.Should().NotBeNullOrEmpty();
+            model.DisplaySpecialisms.Count().Should().Be(1);
+            
             var expectedSpecialismDisplayName = string.Join(Constants.AndSeperator, _mockresult.SpecialismDetails.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.LarId})"));
-            model.CombinedSpecialismDisplayName.Should().Be(expectedSpecialismDisplayName);
+            model.DisplaySpecialisms[0].DisplayName.Should().Be(expectedSpecialismDisplayName);
 
             // Exam Period
             var expectedSpecialism = _mockresult.SpecialismDetails[0];

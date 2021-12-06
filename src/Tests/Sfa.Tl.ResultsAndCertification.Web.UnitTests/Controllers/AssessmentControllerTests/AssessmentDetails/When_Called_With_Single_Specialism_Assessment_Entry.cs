@@ -28,8 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 ProviderName = "Test Provider",
                 ProviderUkprn = 1234567,
                 TlevelTitle = "Tlevel Title",
-                PathwayStatus = RegistrationPathwayStatus.Active,
-                CurrentSpecialismAssessmentSeriesId = 1,
+                PathwayStatus = RegistrationPathwayStatus.Active,                
                 SpecialismDetails = new List<SpecialismViewModel>
                 {
                     new SpecialismViewModel
@@ -38,6 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                         LarId = "ZT2158963",
                         Name = "Specialism Name1",
                         DisplayName = "Specialism Name1 (ZT2158963)",
+                        CurrentSpecialismAssessmentSeriesId = 1,
                         Assessments = new List<SpecialismAssessmentViewModel>
                         {
                             new SpecialismAssessmentViewModel
@@ -74,13 +74,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             var model = viewResult.Model as AssessmentDetailsViewModel;
             model.Should().NotBeNull();
 
-            // Specialism DisplayName
-            model.CombinedSpecialismDisplayName.Should().BeNullOrWhiteSpace();
-
-            // Exam Period
             var expectedSpecialism = _mockresult.SpecialismDetails[0];
             var expectedAssessments = expectedSpecialism.Assessments.ToList();
 
+            // Specialism DisplayName
+            var actualSpecialism = model.DisplaySpecialisms.FirstOrDefault(s => s.Id == expectedSpecialism.Id);
+            actualSpecialism.Should().NotBeNull();
+            actualSpecialism.DisplayName.Should().Be(actualSpecialism.DisplayName);            
+            
+
+            // Exam Period
             var examPeriodModel = model.GetSummaryExamPeriod(expectedSpecialism);
 
             examPeriodModel.Title.Should().Be(AssessmentDetailsContent.Title_Exam_Period);

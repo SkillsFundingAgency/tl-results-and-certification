@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                     }
                 }
             };
-            SpecialismId = _mockresult.SpecialismDetails[0].Id;
+            SpecialismLarId = _mockresult.SpecialismDetails[0].LarId;
             AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism).Returns(_mockresult);
         }
 
@@ -60,8 +60,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             model.AssessmentSeriesId.Should().Be(_mockresult.AssessmentSeriesId);
             model.AssessmentSeriesName.Should().Be(_mockresult.AssessmentSeriesName);
             model.SpecialismDetails.Should().BeEquivalentTo(_mockresult.SpecialismDetails);
-            model.IsResitForSpecialism.Should().BeFalse();
-            model.DisplayMultipleSpecialismsCombined.Should().BeFalse();
             model.SpecialismDisplayName.Should().Be($"{_mockresult.SpecialismDetails[0].Name} ({_mockresult.SpecialismDetails[0].LarId})");
             model.IsOpted.Should().BeNull();
 

@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         private AddSpecialismAssessmentEntryViewModel _mockresult = null;
 
         public override void Given()
-        {
+        {            
             _mockresult = new AddSpecialismAssessmentEntryViewModel
             {
                 ProfileId = 1,
@@ -37,6 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                         Id = 5,
                         LarId = "ZT2158963",
                         Name = "Specialism Name1",
+                        TlSpecialismCombinations = new List<KeyValuePair<int,string>> { new KeyValuePair<int, string>(1, "ZT2158963|ZT2158999") },
                         Assessments = new List<SpecialismAssessmentViewModel>()                        
                     },
                     new SpecialismViewModel
@@ -44,11 +45,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                         Id = 6,
                         LarId = "ZT2158999",
                         Name = "Specialism Name2",
+                        TlSpecialismCombinations = new List<KeyValuePair<int,string>> { new KeyValuePair<int, string>(1, "ZT2158963|ZT2158999") },
                         Assessments = new List<SpecialismAssessmentViewModel>()
                     }
                 }
             };
-
+            SpecialismLarId = string.Join(Constants.PipeSeperator, _mockresult.SpecialismDetails.Select(s => s.LarId));
             AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism).Returns(_mockresult);
         }
 
@@ -68,8 +70,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             model.AssessmentSeriesId.Should().Be(_mockresult.AssessmentSeriesId);
             model.AssessmentSeriesName.Should().Be(_mockresult.AssessmentSeriesName);
             model.SpecialismDetails.Should().BeEquivalentTo(_mockresult.SpecialismDetails);
-            model.IsResitForSpecialism.Should().BeFalse();
-            model.DisplayMultipleSpecialismsCombined.Should().BeTrue();
 
             var specialismDisplayName = string.Join(Constants.AndSeperator, _mockresult.SpecialismDetails.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.LarId})"));
             model.SpecialismDisplayName.Should().Be(specialismDisplayName);

@@ -91,8 +91,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.PreviousPathwayAssessment.Should().BeNull();
             ActualResult.SpecialismDetails.Should().BeNullOrEmpty();
             ActualResult.IsSpecialismEntryEligible.Should().BeFalse();
-            ActualResult.HasCurrentSpecialismAssessmentEntry.Should().BeFalse();
-            ActualResult.IsResitForSpecialism.Should().BeFalse();
             ActualResult.NextAvailableSpecialismSeries.Should().BeNullOrEmpty();
             ActualResult.IsCoreResultExist.Should().BeFalse();
             ActualResult.HasAnyOutstandingPathwayPrsActivities.Should().BeFalse();
@@ -103,9 +101,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.HasPreviousCoreAssessment.Should().BeFalse();
             ActualResult.HasResultForPreviousCoreAssessment.Should().BeFalse();
             ActualResult.NeedCoreResultForPreviousAssessmentEntry.Should().BeFalse();
-            ActualResult.DisplayMultipleSpecialismsCombined.Should().BeFalse();
             ActualResult.IsSpecialismRegistered.Should().BeFalse();
-            ActualResult.CombinedSpecialismDisplayName.Should().BeNull();
             ActualResult.DisplaySpecialisms.Should().BeNullOrEmpty();
         }
     }

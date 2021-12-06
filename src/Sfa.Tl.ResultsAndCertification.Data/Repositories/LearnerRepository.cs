@@ -32,6 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                        .ThenInclude(x => x.TlProvider)
                    .Include(x => x.TqRegistrationSpecialisms)
                        .ThenInclude(x => x.TlSpecialism)
+                            .ThenInclude(x => x.TlPathwaySpecialismCombinations)
                    .Include(x => x.TqRegistrationSpecialisms)
                        .ThenInclude(x => x.TqSpecialismAssessments)
                             .ThenInclude(x => x.AssessmentSeries)
