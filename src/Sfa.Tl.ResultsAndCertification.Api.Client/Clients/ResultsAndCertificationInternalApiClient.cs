@@ -216,6 +216,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<AssessmentEntryDetails>(requestUri);
         }
 
+        public async Task<IEnumerable<AssessmentEntryDetails>> GetActiveSpecialismEntriesAsync(long aoUkprn, string specialismIds)
+        {
+            var requestUri = string.Format(ApiConstants.GetActiveSpecialismEntriesUri, aoUkprn, specialismIds);
+            return await GetAsync<IEnumerable<AssessmentEntryDetails>>(requestUri);
+        }
+
         public async Task<bool> RemoveAssessmentEntryAsync(RemoveAssessmentEntryRequest model)
         {
             var requestUri = ApiConstants.RemoveAssessmentEntryUri;

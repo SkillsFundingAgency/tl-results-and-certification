@@ -53,8 +53,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 
                     var coupletSpecialismCodes = validSpecialisms.SelectMany(v => v.TlSpecialismCombinations.Select(c => c.Value)).ToList();
                     
-                    //var specialismCodes = SpecialismDetails.Select(s => s.LarId);
-
                     var hasValidCoupletSpecialismCodes = coupletSpecialismCodes.Any(cs => cs.Split(Constants.PipeSeperator).Except(SpecialismLarIds, StringComparer.InvariantCultureIgnoreCase).Count() == 0);
 
                     return validSpecialisms.All(v => v.IsCouplet && !v.IsResit) && hasValidCoupletSpecialismCodes;

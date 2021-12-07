@@ -359,5 +359,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
         }
+
+        [HttpGet]
+        [Route("assessment-entry-remove-specialisms/{profileId}/{specialismLarId}", Name = RouteConstants.RemoveSpecialismEntry)]
+        public async Task<IActionResult> RemoveSpecialismEntryAsync(int profileId, string specialismLarId)
+        {
+            var viewModel = await _assessmentLoader.GetRemoveSpecialismEntryAsync(User.GetUkPrn(), profileId, specialismLarId);
+            if (!viewModel.IsValidToRemove)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Not a valid specialism to remove assessment entry. Method: GetRemoveSpecialismAssessmentEntryAsync({User.GetUkPrn()}, {profileId}, {specialismLarId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
     }
 }

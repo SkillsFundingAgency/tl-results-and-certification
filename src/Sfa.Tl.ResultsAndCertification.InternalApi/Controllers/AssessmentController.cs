@@ -67,6 +67,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             };
         }
 
+        [HttpGet]
+        [Route("GetActiveSpecialismEntries/{aoUkprn}/{specialismIds}")]
+        public async Task<IEnumerable<AssessmentEntryDetails>> GetActiveSpecialismEntriesAsync(long aoUkprn, string specialismIds)
+        {
+            var specialismIdValues = specialismIds?.Split(Constants.PipeSeperator)?.Select(s => s.ToInt())?.ToList();
+            return await _assessmentService.GetActiveSpecialismEntriesAsync(aoUkprn, specialismIdValues);
+        }
+
         [HttpPut]
         [Route("RemoveAssessmentEntry")]
         public async Task<bool> RemoveAssessmentEntryAsync(RemoveAssessmentEntryRequest model)

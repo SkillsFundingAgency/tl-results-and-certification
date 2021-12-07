@@ -38,6 +38,7 @@
         public const string GetAvailableAssessmentSeriesUri = "/api/assessment/GetAvailableAssessmentSeries/{0}/{1}/{2}/{3}";
         public const string AddAssessmentEntryUri = "/api/assessment/AddAssessmentEntry";
         public const string GetActiveAssessmentEntryDetailsUri = "/api/assessment/GetActiveAssessmentEntryDetails/{0}/{1}/{2}";
+        public const string GetActiveSpecialismEntriesUri = "/api/assessment/GetActiveSpecialismEntries/{0}/{1}";
         public const string RemoveAssessmentEntryUri = "/api/assessment/RemoveAssessmentEntry";
         public const string GetAssessmentSeriesDetailsUri = "/api/assessment/GetAssessmentSeries";
 

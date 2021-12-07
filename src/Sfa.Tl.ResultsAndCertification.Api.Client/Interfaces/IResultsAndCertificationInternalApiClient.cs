@@ -51,6 +51,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<AssessmentDetails> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
         Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType, string componentIds);
         Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, ComponentType componentType);
+        Task<IEnumerable<AssessmentEntryDetails>> GetActiveSpecialismEntriesAsync(long aoUkprn, string specialismIds);
+
         Task<bool> RemoveAssessmentEntryAsync(RemoveAssessmentEntryRequest model);
         Task<IList<AssessmentSeriesDetails>> GetAssessmentSeriesAsync();
 
@@ -86,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<bool> AppealGradeAsync(AppealGradeRequest request);
         Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request);
         Task<bool> AppealGradeAfterDeadlineRequestAsync(AppealGradeAfterDeadlineRequest request);
-        
+
         // Common
         Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade);
         Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn);
