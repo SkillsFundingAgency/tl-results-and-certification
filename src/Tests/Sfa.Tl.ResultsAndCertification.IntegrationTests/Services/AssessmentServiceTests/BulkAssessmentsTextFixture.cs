@@ -121,17 +121,26 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
         public TqPathwayAssessment SeedPathwayAssessmentData(TqRegistrationProfile registrationProfile)
         {
-            var pathwayAssessment = new TqPathwayAssessmentBuilder().Build(registrationProfile.TqRegistrationPathways.First());
+            var pathwayAssessment = new TqPathwayAssessmentBuilder().Build(registrationProfile.TqRegistrationPathways.First(), AssessmentSeries[0]);
             var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, pathwayAssessment);
 
             DbContext.SaveChanges();
             return tqPathwayAssessment;
         }
 
+        public TqSpecialismAssessment SeedSpecialismAssessmentData(TqRegistrationSpecialism registrationSpecialism)
+        {
+            var specialismAssessment = new TqSpecialismAssessmentBuilder().Build(registrationSpecialism, AssessmentSeries[0]);
+            var tqSpecialismAssessment = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, specialismAssessment);
+
+            DbContext.SaveChanges();
+            return tqSpecialismAssessment;
+        }
+
         public TqSpecialismAssessment SeedSpecialismAssessmentData(TqRegistrationProfile registrationProfile)
         {
             var specialism = registrationProfile.TqRegistrationPathways.First().TqRegistrationSpecialisms.First();
-            var specialsimAssessment = new TqSpecialismAssessmentBuilder().Build(specialism);
+            var specialsimAssessment = new TqSpecialismAssessmentBuilder().Build(specialism, AssessmentSeries[0]);
             var tqSpecialismAssessment = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, specialsimAssessment);
             DbContext.SaveChanges();
             return tqSpecialismAssessment;
