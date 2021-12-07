@@ -486,6 +486,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<AssessmentEntryDetails>(pathwayAssessment);
         }
 
+        public async Task<IEnumerable<AssessmentEntryDetails>> GetActiveSpecialismEntriesAsync(long aoUkprn, IEnumerable<int> specialismIds)
+        {
+            await Task.CompletedTask;
+            return new List<AssessmentEntryDetails> { };
+            
+            // TODO: 
+            //var pathwayAssessment = await _assessmentRepository.GetPathwayAssessmentDetailsAsync(aoUkprn, pathwayAssessmentId);
+
+            //if (!IsValidActivePathwayAssessment(pathwayAssessment))
+            //    return null;
+
+            //return _mapper.Map<AssessmentEntryDetails>(pathwayAssessment);
+        }
+
         public async Task<bool> RemovePathwayAssessmentEntryAsync(RemoveAssessmentEntryRequest model)
         {
             var pathwayAssessment = await _pathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin

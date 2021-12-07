@@ -152,7 +152,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                 Title = AssessmentDetailsContent.Title_Exam_Period,
                 Value = specialismViewModel.Assessments.FirstOrDefault(a => a.SeriesId == specialismViewModel.CurrentSpecialismAssessmentSeriesId).SeriesName,
                 ActionText = AssessmentDetailsContent.Remove_Action_Link_Text,
-                HiddenActionText = AssessmentDetailsContent.Remove_Action_Link_Hidden_Text
+                HiddenActionText = AssessmentDetailsContent.Remove_Action_Link_Hidden_Text,
+                // TODO: ravi below to be integrated.
+                RouteName = RouteConstants.RemoveSpecialismEntry,
+                RouteAttributes = new Dictionary<string, string> { { Constants.PathwayId, ProfileId.ToString() }, { Constants.SpecialismLarId, string.Join(Constants.PipeSeperator, SpecialismDetails.Select(x => x.LarId).ToList())  } }
             };
         }
 

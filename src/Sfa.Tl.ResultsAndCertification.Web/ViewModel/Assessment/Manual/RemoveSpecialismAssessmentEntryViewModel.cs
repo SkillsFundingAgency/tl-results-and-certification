@@ -7,6 +7,8 @@ using AddSpecialismAssessmentEntryContent = Sfa.Tl.ResultsAndCertification.Web.C
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 {
+
+    // TODO: Remove
     public class RemoveSpecialismAssessmentEntryViewModel : AssessmentBaseViewModel
     {
         public RemoveSpecialismAssessmentEntryViewModel()

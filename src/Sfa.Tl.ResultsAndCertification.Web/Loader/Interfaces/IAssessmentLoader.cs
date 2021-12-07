@@ -19,5 +19,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<bool> RemoveAssessmentEntryAsync(long aoUkprn, AssessmentEntryDetailsViewModel viewModel);        
         Task<T> GetAddAssessmentEntryAsync<T>(long aoUkprn, int profileId, ComponentType componentType, string componentLarIds);
         Task<AddAssessmentEntryResponse> AddSpecialismAssessmentEntryAsync(long aoUkprn, AddSpecialismAssessmentEntryViewModel viewModel);
+        Task<RemoveSpecialismEntryViewModel> GetRemoveSpecialismEntryAsync(long aoUkprn, int profileId, string specialismLarId);
     }
 }
