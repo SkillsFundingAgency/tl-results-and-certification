@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
             {
                 var retVal = x.TqRegistrationPathwayId == y.TqRegistrationPathwayId
                     && x.AssessmentSeriesId == y.AssessmentSeriesId
-                    && x.IsOptedin == y.IsOptedin;                    
+                    && x.IsOptedin == y.IsOptedin;
                 return retVal;
             }
         }

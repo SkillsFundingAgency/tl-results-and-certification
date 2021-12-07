@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
                 var actualPathwayAssessment = _bulkAssessmentsTestFixture.DbContext.TqPathwayAssessment.FirstOrDefault(x => x.TqRegistrationPathwayId == registrationPathway.Id && x.IsOptedin && x.EndDate == null);
 
-                // assert registration profile data
+                // assert pathway assessment data
                 actualPathwayAssessment.Should().NotBeNull();
                 actualPathwayAssessment.TqRegistrationPathwayId.Should().Be(expectedPathwayAssessment.TqRegistrationPathwayId);
                 actualPathwayAssessment.AssessmentSeriesId.Should().Be(expectedPathwayAssessment.AssessmentSeriesId);
@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 var expectedSpecialismAssessment = _bulkAssessmentsTestFixture.TqSpecialismAssessmentsData.FirstOrDefault(p => p.TqRegistrationSpecialismId == registrationSpecialism.Id);
                 var actualSpecialismAssessment = _bulkAssessmentsTestFixture.DbContext.TqSpecialismAssessment.FirstOrDefault(x => x.TqRegistrationSpecialismId == registrationSpecialism.Id && x.IsOptedin && x.EndDate == null);
 
-                // assert registration profile data
+                // assert specialism assessment data
                 actualSpecialismAssessment.Should().NotBeNull();
                 actualSpecialismAssessment.TqRegistrationSpecialismId.Should().Be(expectedSpecialismAssessment.TqRegistrationSpecialismId);
                 actualSpecialismAssessment.AssessmentSeriesId.Should().Be(expectedSpecialismAssessment.AssessmentSeriesId);
