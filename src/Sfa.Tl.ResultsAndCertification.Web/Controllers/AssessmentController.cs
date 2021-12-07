@@ -229,7 +229,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("assessment-entry-add-core/{profileId}", Name = RouteConstants.AddCoreAssessmentEntry)]
         public async Task<IActionResult> AddCoreAssessmentEntryAsync(int profileId)
         {
-            var viewModel = await _assessmentLoader.GetAddAssessmentEntryAsync<AddAssessmentEntryViewModel>(User.GetUkPrn(), profileId, ComponentType.Core);
+            var viewModel = await _assessmentLoader.GetAddAssessmentEntryAsync<AddAssessmentEntryViewModel>(User.GetUkPrn(), profileId, ComponentType.Core, string.Empty);
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No assessment series available or Learner not found. Method: GetAddAssessmentEntryAsync({User.GetUkPrn()}, {profileId}, {ComponentType.Core}), User: {User.GetUserEmail()}");
@@ -243,7 +243,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("assessment-entry-add-core/{profileId}", Name = RouteConstants.EntrySeries)]
         public async Task<IActionResult> AddCoreAssessmentEntryAsync(AddAssessmentEntryViewModel model)
         {
-            var assessmentEntryDetails = await _assessmentLoader.GetAddAssessmentEntryAsync<AddAssessmentEntryViewModel>(User.GetUkPrn(), model.ProfileId, ComponentType.Core);
+            var assessmentEntryDetails = await _assessmentLoader.GetAddAssessmentEntryAsync<AddAssessmentEntryViewModel>(User.GetUkPrn(), model.ProfileId, ComponentType.Core, string.Empty);
             if (!ModelState.IsValid)
                 return View(assessmentEntryDetails);
 
@@ -309,7 +309,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("assessment-entry-add-specialisms/{profileId}/{specialismLarId}", Name = RouteConstants.AddSpecialismAssessmentEntry)]
         public async Task<IActionResult> AddSpecialismAssessmentEntryAsync(int profileId, string specialismLarId)
         {
-            var viewModel = await _assessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(User.GetUkPrn(), profileId, ComponentType.Specialism);
+            var viewModel = await _assessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(User.GetUkPrn(), profileId, ComponentType.Specialism, specialismLarId);
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No assessment series available for specialisms or Learner not found. Method: GetAddAssessmentEntryAsync({User.GetUkPrn()}, {profileId}, {ComponentType.Specialism}), User: {User.GetUserEmail()}");
@@ -331,7 +331,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("assessment-entry-add-specialisms/{profileId}/{specialismId}", Name = RouteConstants.SubmitAddSpecialismAssessmentEntry)]
         public async Task<IActionResult> AddSpecialismAssessmentEntryAsync(AddSpecialismAssessmentEntryViewModel model)
         {
-            var assessmentEntryDetails = await _assessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(User.GetUkPrn(), model.ProfileId, ComponentType.Specialism);
+            var assessmentEntryDetails = await _assessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(User.GetUkPrn(), model.ProfileId, ComponentType.Specialism, model.SpecialismLarId);
             assessmentEntryDetails.SpecialismLarId = model.SpecialismLarId;
 
             if (!ModelState.IsValid)
