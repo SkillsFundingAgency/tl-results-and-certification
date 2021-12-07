@@ -105,7 +105,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 // 5. Core assessment entry must be no more than 4 years after the starting academic year
                 if (!string.IsNullOrWhiteSpace(assessment.CoreAssessmentEntry))
                 {
-                    var isSeriesFound = dbAssessmentSeries.Any(x => x.Name.Equals(assessment.CoreAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
+                    var isSeriesFound = dbAssessmentSeries.Any(x => x.ComponentType == ComponentType.Core && x.Name.Equals(assessment.CoreAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
                     if (!isSeriesFound)
                         validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidCoreAssessmentEntry));
                     else
@@ -119,7 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 // 6. Specialism assessment entry must be between one and 4 years after the starting academic year
                 if (!string.IsNullOrWhiteSpace(assessment.SpecialismAssessmentEntry))
                 {
-                    var isSeriesFound = dbAssessmentSeries.Any(x => x.Name.Equals(assessment.SpecialismAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
+                    var isSeriesFound = dbAssessmentSeries.Any(x => x.ComponentType == ComponentType.Specialism && x.Name.Equals(assessment.SpecialismAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
                     if (!isSeriesFound)
                         validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidSpecialismAssessmentEntry));
                     else
@@ -136,16 +136,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     var registrationSpecialisms = dbRegistration.TqRegistrationSpecialisms.Where(x => assessment.SpecialismCodes.Any(sc => sc.Equals(x.TlSpecialism.LarId, StringComparison.InvariantCultureIgnoreCase)));
 
-                    var csvCoreSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.CoreAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
-                    var csvSpecialismSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.SpecialismAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
+                    var csvCoreSeries = dbAssessmentSeries.FirstOrDefault(x => x.ComponentType == ComponentType.Core && x.Name.Equals(assessment.CoreAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
+                    var csvSpecialismSeries = dbAssessmentSeries.FirstOrDefault(x => x.ComponentType == ComponentType.Specialism && x.Name.Equals(assessment.SpecialismAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
 
                     response.Add(new AssessmentRecordResponse
                     {
-                        TqRegistrationPathwayId = !string.IsNullOrWhiteSpace(assessment.CoreCode) ? dbRegistration?.Id : (int?)null,
-                        PathwayAssessmentSeriesId = !string.IsNullOrWhiteSpace(assessment.CoreAssessmentEntry) ? csvCoreSeries?.Id : (int?)null,
+                        TqRegistrationPathwayId = !string.IsNullOrWhiteSpace(assessment.CoreCode) ? dbRegistration?.Id : null,
+                        PathwayAssessmentSeriesId = !string.IsNullOrWhiteSpace(assessment.CoreAssessmentEntry) ? csvCoreSeries?.Id : null,
 
-                        TqRegistrationSpecialismIds = registrationSpecialisms.Select(x => x.TlSpecialismId),
-                        SpecialismAssessmentSeriesId = !string.IsNullOrWhiteSpace(assessment.SpecialismAssessmentEntry) ? csvSpecialismSeries?.Id : (int?)null,
+                        TqRegistrationSpecialismIds = registrationSpecialisms.Select(x => x.Id),
+                        SpecialismAssessmentSeriesId = !string.IsNullOrWhiteSpace(assessment.SpecialismAssessmentEntry) ? csvSpecialismSeries?.Id : null,
                     });
                 }
             }
@@ -322,7 +322,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 amendedSpecialismAssessments.ForEach(amendedSpecialismAssessment =>
                 {
-                    var existingSpecialismAssessment = existingSpecialismAssessmentsFromDb.FirstOrDefault(existingSpecialismAssessment => existingSpecialismAssessment.TqRegistrationSpecialismId == amendedSpecialismAssessment.TqRegistrationSpecialismId);
+                    var existingSpecialismAssessment = GetExistingSpecialismAssessment(existingSpecialismAssessmentsFromDb, amendedSpecialismAssessment);
 
                     if (existingSpecialismAssessment != null)
                     {
@@ -348,6 +348,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 newOrAmendedSpecialismAssessmentRecords.AddRange(newSpecialismAssessments.Where(p => p.TqRegistrationSpecialismId > 0 && p.AssessmentSeriesId > 0));
 
             return newOrAmendedSpecialismAssessmentRecords;
+        }
+
+        private static TqSpecialismAssessment GetExistingSpecialismAssessment(IList<TqSpecialismAssessment> existingSpecialismAssessmentsFromDb, TqSpecialismAssessment amendedOrNewSpecialismAssessment)
+        {
+            return existingSpecialismAssessmentsFromDb.OrderByDescending(x => x.AssessmentSeries.StartDate)
+                                                   .FirstOrDefault(existingSpecialismAssessment => existingSpecialismAssessment.TqRegistrationSpecialismId == amendedOrNewSpecialismAssessment.TqRegistrationSpecialismId);
         }
 
         private AssessmentRecordResponse AddStage3ValidationError(int rowNum, long uln, string errorMessage)
