@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_RemoveAssessmentEntry_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_RemoveAssessmentEntry_With_Specialisms_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         protected ITokenServiceClient _tokenServiceClient;
         protected ResultsAndCertificationConfiguration _configuration;
@@ -38,8 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _model = new RemoveAssessmentEntryRequest
             {
                 AoUkprn = 1,
-                AssessmentId = 5,
-                ComponentType = Common.Enum.ComponentType.Core,
+                SpecialismAssessmentIds = new List<int?> { 1, 2 },
+                ComponentType = Common.Enum.ComponentType.Specialism,
                 PerformedBy = "Test User"
             };
         }
