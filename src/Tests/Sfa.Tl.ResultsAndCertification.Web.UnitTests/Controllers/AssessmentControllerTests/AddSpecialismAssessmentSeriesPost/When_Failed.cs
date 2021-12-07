@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.AddSpecialismAssessmentSeriesPost
@@ -54,8 +55,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 }
             };
 
+            ComponentLarIds = string.Join(Constants.PipeSeperator, _mockresult.SpecialismDetails.Select(s => s.LarId));
             AddAssessmentEntryResponse = new AddAssessmentEntryResponse { IsSuccess = false };
-            AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism).Returns(_mockresult);
+            AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism, ComponentLarIds).Returns(_mockresult);
             AssessmentLoader.AddSpecialismAssessmentEntryAsync(AoUkprn, _mockresult).Returns(AddAssessmentEntryResponse);
         }
 

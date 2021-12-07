@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 
         public override void Given()
         {
-            AssessmentLoader.GetAddAssessmentEntryAsync<AddAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Core).Returns(_mockresult);
+            AssessmentLoader.GetAddAssessmentEntryAsync<AddAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Core, ComponentLarIds).Returns(_mockresult);
         }
 
         [Fact]

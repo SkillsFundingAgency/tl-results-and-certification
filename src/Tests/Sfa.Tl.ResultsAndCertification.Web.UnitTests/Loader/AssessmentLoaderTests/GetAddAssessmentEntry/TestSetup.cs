@@ -16,6 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
     {
         protected readonly long AoUkprn = 12345678;
         protected readonly int ProfileId = 1;
+        protected readonly string ComponentLarIds;
         protected readonly ComponentType componentType = ComponentType.Core;
         protected readonly long Uln = 1234567890;
         protected readonly int ProviderId = 1;
@@ -43,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetAddAssessmentEntryAsync<AddAssessmentEntryViewModel>(AoUkprn, ProfileId, componentType);
+            ActualResult = await Loader.GetAddAssessmentEntryAsync<AddAssessmentEntryViewModel>(AoUkprn, ProfileId, componentType, ComponentLarIds);
         }
     }
 }

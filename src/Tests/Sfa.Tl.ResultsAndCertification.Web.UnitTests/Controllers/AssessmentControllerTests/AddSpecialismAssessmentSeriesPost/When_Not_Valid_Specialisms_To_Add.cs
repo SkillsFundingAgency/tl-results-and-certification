@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.AddSpecialismAssessmentSeriesPost
@@ -15,24 +16,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 
         public override void Given()
         {
+            var viewModelSpecialismDetails = new List<SpecialismViewModel>
+            {
+                new SpecialismViewModel
+                {
+                    Id = 5,
+                    LarId = "ZT2158963",
+                    Name = "Specialism Name1",
+                    DisplayName = "Specialism Name1 (ZT2158963)",
+                    Assessments = new List<SpecialismAssessmentViewModel>()
+                }
+            };
+
             ViewModel = new AddSpecialismAssessmentEntryViewModel
             {
                 ProfileId = 1,
                 AssessmentSeriesId = 11,
                 AssessmentSeriesName = "Summer 2022",
                 IsOpted = true,
-                SpecialismLarId = "5",
-                SpecialismDetails = new List<SpecialismViewModel>
-                {
-                    new SpecialismViewModel
-                    {
-                        Id = 5,
-                        LarId = "ZT2158963",
-                        Name = "Specialism Name1",
-                        DisplayName = "Specialism Name1 (ZT2158963)",
-                        Assessments = new List<SpecialismAssessmentViewModel>()
-                    }
-                }
+                SpecialismLarId = string.Join(Constants.PipeSeperator, viewModelSpecialismDetails.Select(s => s.LarId)),
+                SpecialismDetails = viewModelSpecialismDetails
             };
 
             _mockresult = new AddSpecialismAssessmentEntryViewModel
@@ -53,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 }
             };
 
-            AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism).Returns(_mockresult);
+            AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism, ViewModel.SpecialismLarId).Returns(_mockresult);
         }
 
         [Fact]

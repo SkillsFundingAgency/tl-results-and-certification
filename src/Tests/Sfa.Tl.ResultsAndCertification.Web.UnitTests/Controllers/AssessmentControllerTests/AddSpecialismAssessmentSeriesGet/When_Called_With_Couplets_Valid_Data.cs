@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 }
             };
             SpecialismLarId = string.Join(Constants.PipeSeperator, _mockresult.SpecialismDetails.Select(s => s.LarId));
-            AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism).Returns(_mockresult);
+            AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism, SpecialismLarId).Returns(_mockresult);
         }
 
         [Fact]

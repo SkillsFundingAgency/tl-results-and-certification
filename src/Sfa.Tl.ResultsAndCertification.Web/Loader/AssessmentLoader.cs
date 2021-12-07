@@ -103,21 +103,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return learnerAssessmentDetails;
         }
 
-        public async Task<T> GetAddAssessmentEntryAsync<T>(long aoUkprn, int profileId, ComponentType componentType, string componentLarIds)
+        public async Task<T> GetAddAssessmentEntryAsync<T>(long aoUkprn, int profileId, ComponentType componentType, string componentLarIds = null)
         {
             var learnerDetails = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId);
-            if (learnerDetails == null)
+            if (learnerDetails == null || (componentType == ComponentType.Specialism && componentLarIds == null))
                 return _mapper.Map<T>(null);
 
-            var componentLarIdValues = componentLarIds.Split(Constants.PipeSeperator).ToList();
-
+            var componentLarIdValues = componentLarIds?.Split(Constants.PipeSeperator).ToList();
             var componentIds = componentType == ComponentType.Core ? learnerDetails.Pathway.Id.ToString() :
-                String.Join(Constants.PipeSeperator, learnerDetails.Pathway.Specialisms
-                .Where(x => componentLarIdValues.Contains(x.LarId, StringComparer.OrdinalIgnoreCase))
-                .Select(x => x.Id)) ;
+                String.Join(Constants.PipeSeperator, learnerDetails.Pathway.Specialisms.Where(x => componentLarIdValues.Contains(x.LarId, StringComparer.InvariantCultureIgnoreCase)).Select(x => x.Id)) ;
 
             var availableSeries = await _internalApiClient.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, componentType, componentIds);
-
             if (availableSeries == null)
                 return _mapper.Map<T>(null);
 

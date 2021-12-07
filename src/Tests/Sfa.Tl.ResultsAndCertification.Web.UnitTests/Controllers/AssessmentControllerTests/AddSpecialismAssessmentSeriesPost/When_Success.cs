@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 using AddCoreAssessmentEntryContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.AddCoreAssessmentEntry;
 
@@ -20,13 +21,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 
         public override void Given()
         {
+            var viewModelSpecialismDetails = new List<SpecialismViewModel>
+            {
+                new SpecialismViewModel
+                {
+                    Id = 5,
+                    LarId = "ZT2158963",
+                    Name = "Specialism Name1",
+                    DisplayName = "Specialism Name1 (ZT2158963)",
+                    Assessments = new List<SpecialismAssessmentViewModel>()
+                }
+            }; 
+            
             ViewModel = new AddSpecialismAssessmentEntryViewModel
             {
                 ProfileId = 1,
                 AssessmentSeriesId = 11,
                 AssessmentSeriesName = "Summer 2022",
                 IsOpted = true,
-                SpecialismLarId = "ZT2158963",
+                SpecialismLarId = string.Join(Constants.PipeSeperator, viewModelSpecialismDetails.Select(s => s.LarId)),
                 SpecialismDetails = new List<SpecialismViewModel>
                 {
                     new SpecialismViewModel
@@ -67,13 +80,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             _expectedSuccessBannerMsg = string.Format(AddCoreAssessmentEntryContent.Banner_Message, _mockresult.AssessmentSeriesName, _mockresult.SpecialismDetails[0].DisplayName);
 
             AssessmentLoader.AddSpecialismAssessmentEntryAsync(AoUkprn, _mockresult).Returns(_addAssessmentEntryResponse);
-            AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism).Returns(_mockresult);
+            AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism, ViewModel.SpecialismLarId).Returns(_mockresult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AssessmentLoader.Received(1).GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism);
+            AssessmentLoader.Received(1).GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism, ViewModel.SpecialismLarId);
             AssessmentLoader.Received(1).AddSpecialismAssessmentEntryAsync(AoUkprn, _mockresult);
             CacheService.Received(1).SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(x => x.Message.Equals(_expectedSuccessBannerMsg)), CacheExpiryTime.XSmall);
         }

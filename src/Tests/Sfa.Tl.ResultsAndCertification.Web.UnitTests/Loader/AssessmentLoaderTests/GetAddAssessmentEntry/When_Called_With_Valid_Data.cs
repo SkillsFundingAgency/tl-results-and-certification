@@ -47,9 +47,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 AssessmentSeriesName = "Summer 2021"
             };
 
-            ComponentIds = _expectedApiLearnerResult.Pathway.Id.ToString();
             InternalApiClient.GetLearnerRecordAsync(AoUkprn, ProfileId).Returns(_expectedApiLearnerResult);
-            InternalApiClient.GetAvailableAssessmentSeriesAsync(AoUkprn, ProfileId, ComponentType.Core, ComponentIds).Returns(_expectedApiAvailableAssessmentSeries);
+            InternalApiClient.GetAvailableAssessmentSeriesAsync(AoUkprn, ProfileId, ComponentType.Core, _expectedApiLearnerResult.Pathway.Id.ToString()).Returns(_expectedApiAvailableAssessmentSeries);
         }
 
         [Fact]
