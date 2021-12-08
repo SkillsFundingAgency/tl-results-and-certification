@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Would you like to remove the {0} from {1) for this learner?.
+        ///   Looks up a localized string similar to Would you like to remove the {0} from {1} for this learner?.
         /// </summary>
         public static string Heading_Would_You_Like_To_Remove_Assessment_Entry {
             get {

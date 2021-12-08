@@ -100,7 +100,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Specialism))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<RemoveSpecialismAssessmentEntryViewModel, RemoveAssessmentEntryRequest>>());
 
-            CreateMap<LearnerRecord, RemoveSpecialismAssessmentEntryViewModel>(); // TODO: In detail. 
+            CreateMap<LearnerRecord, RemoveSpecialismAssessmentEntryViewModel>()
+              .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+              .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+              .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))
+              .ForMember(d => d.Lastname, opts => opts.MapFrom(s => s.Lastname))
+              .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
+              .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.Pathway.Provider.Name))
+              .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.Pathway.Provider.Ukprn))
+              .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.Pathway.Title));
 
             CreateMap<LearnerRecord, AddSpecialismAssessmentEntryViewModel>()
               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
