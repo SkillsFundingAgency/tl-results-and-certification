@@ -157,7 +157,7 @@
         public const string SubmitRemoveCoreAssessmentEntry = "SubmitRemoveCoreAssessmentEntry";
         public const string AddSpecialismAssessmentEntry = "AddSpecialismAssessmentEntry";
         public const string SubmitAddSpecialismAssessmentEntry = "SubmitAddSpecialismAssessmentEntry";
-        public const string RemoveSpecialismEntry = "RemoveSpecialismEntry";
+        public const string RemoveSpecialismAssessmentEntry = "RemoveSpecialismAssessmentEntry";
 
         // Search Assessment Entries
         public const string SearchAssessments = "SearchAssessments";

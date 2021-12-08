@@ -486,7 +486,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<AssessmentEntryDetails>(pathwayAssessment);
         }
 
-        public async Task<IEnumerable<AssessmentEntryDetails>> GetActiveSpecialismEntriesAsync(long aoUkprn, IEnumerable<int> specialismIds)
+        public async Task<IEnumerable<AssessmentEntryDetails>> GetActiveSpecialismAssessmentEntriesAsync(long aoUkprn, IEnumerable<int> specialismIds)
         {
             await Task.CompletedTask;
             return new List<AssessmentEntryDetails> { };

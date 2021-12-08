@@ -156,28 +156,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.RemoveAssessmentEntryAsync(request);
         }
 
-        public async Task<RemoveSpecialismEntryViewModel> GetRemoveSpecialismEntryAsync(long aoUkprn, int profileId, string specialismLarId)
+        public async Task<RemoveSpecialismEntryViewModel> GetRemoveSpecialismAssessmentEntriesAsync(long aoUkprn, int profileId, string specialismLarId)
         {
             // Ensure learner details are found
             var learnerDetails = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId);
-            if (learnerDetails == null || learnerDetails.Pathway == null || !learnerDetails.Pathway.Specialisms.Any()) 
+            if (learnerDetails == null || learnerDetails.Pathway == null || !learnerDetails.Pathway.Specialisms.Any())
                 return null;
 
             // Ensure all requested specialisms LarIds are valid
             var requestedLarIds = specialismLarId?.Split(Constants.PipeSeperator).ToList();
-            var foundSpecialismIds = learnerDetails.Pathway.Specialisms.Where(x => requestedLarIds.Contains(x.LarId, StringComparer.InvariantCultureIgnoreCase)).Select(x => x.Id);
-            if (requestedLarIds.Count() != foundSpecialismIds.Count())
+            var specialismIdsFoundInRegistration = learnerDetails.Pathway.Specialisms.Where(x => requestedLarIds.Contains(x.LarId, StringComparer.InvariantCultureIgnoreCase)).Select(x => x.Id);
+            if (requestedLarIds.Count() != specialismIdsFoundInRegistration.Count())
                 return null;
 
             // Ensure all requested entries are currently active
-            var assessmentEntryDetails = await _internalApiClient.GetActiveSpecialismEntriesAsync(aoUkprn, string.Join(Constants.PipeSeperator, foundSpecialismIds));
-            if (assessmentEntryDetails == null || requestedLarIds.Count() != assessmentEntryDetails.Count()) 
+            var assessmentEntryDetails = await _internalApiClient.GetActiveSpecialismAssessmentEntriesAsync(aoUkprn, string.Join(Constants.PipeSeperator, specialismIdsFoundInRegistration));
+            if (assessmentEntryDetails == null || requestedLarIds.Count() != assessmentEntryDetails.Count())
                 return null;
 
             // TODO: 
             //return _mapper.Map<RemoveSpecialismAssessmentEntryViewModel>(learnerDetails);
 
-            return new RemoveSpecialismEntryViewModel { }; 
+            return new RemoveSpecialismEntryViewModel { };
         }
 
         #region Private methods

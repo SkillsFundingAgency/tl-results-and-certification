@@ -74,11 +74,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (response.ShowProblemWithServicePage)
                 return RedirectToRoute(RouteConstants.ProblemWithAssessmentsUpload);
 
-            var unsuccessfulViewModel = new UploadUnsuccessfulViewModel 
-            { 
-                BlobUniqueReference = response.BlobUniqueReference, 
-                FileSize = response.ErrorFileSize, 
-                FileType = FileType.Csv.ToString().ToUpperInvariant() 
+            var unsuccessfulViewModel = new UploadUnsuccessfulViewModel
+            {
+                BlobUniqueReference = response.BlobUniqueReference,
+                FileSize = response.ErrorFileSize,
+                FileType = FileType.Csv.ToString().ToUpperInvariant()
             };
 
             await _cacheService.SetAsync(string.Concat(CacheKey, Constants.UploadUnsuccessfulViewModel), unsuccessfulViewModel, CacheExpiryTime.XSmall);
@@ -166,7 +166,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (searchResult?.IsAllowed == true)
             {
-                if(searchResult.IsWithdrawn)
+                if (searchResult.IsWithdrawn)
                     await _cacheService.SetAsync(Constants.AssessmentsSearchCriteria, model.SearchUln);
 
                 return RedirectToRoute(searchResult.IsWithdrawn ? RouteConstants.AssessmentWithdrawnDetails : RouteConstants.AssessmentDetails, new { profileId = searchResult.RegistrationProfileId });
@@ -263,7 +263,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
             return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
-        }        
+        }
 
         [HttpGet]
         [Route("assessment-entry-remove-core/{assessmentId}", Name = RouteConstants.RemoveCoreAssessmentEntry)]
@@ -328,7 +328,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("assessment-entry-add-specialisms/{profileId}/{specialismId}", Name = RouteConstants.SubmitAddSpecialismAssessmentEntry)]
+        [Route("assessment-entry-add-specialisms/{profileId}/{specialismLarId}", Name = RouteConstants.SubmitAddSpecialismAssessmentEntry)]
         public async Task<IActionResult> AddSpecialismAssessmentEntryAsync(AddSpecialismAssessmentEntryViewModel model)
         {
             var assessmentEntryDetails = await _assessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(User.GetUkPrn(), model.ProfileId, ComponentType.Specialism, model.SpecialismLarId);
@@ -361,15 +361,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("assessment-entry-remove-specialisms/{profileId}/{specialismLarId}", Name = RouteConstants.RemoveSpecialismEntry)]
-        public async Task<IActionResult> RemoveSpecialismEntryAsync(int profileId, string specialismLarId)
+        [Route("assessment-entry-remove-specialisms/{profileId}/{specialismLarId}", Name = RouteConstants.RemoveSpecialismAssessmentEntry)]
+        public async Task<IActionResult> RemoveSpecialismAssessmentEntriesAsync(int profileId, string specialismLarId)
         {
-            var viewModel = await _assessmentLoader.GetRemoveSpecialismEntryAsync(User.GetUkPrn(), profileId, specialismLarId);
-            if (!viewModel.IsValidToRemove)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Not a valid specialism to remove assessment entry. Method: GetRemoveSpecialismAssessmentEntryAsync({User.GetUkPrn()}, {profileId}, {specialismLarId}), User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
+            var viewModel = await _assessmentLoader.GetRemoveSpecialismAssessmentEntriesAsync(User.GetUkPrn(), profileId, specialismLarId);
+            //if (!viewModel.IsValidToRemove)
+            //{
+            //    _logger.LogWarning(LogEvent.NoDataFound, $"Not a valid specialism to remove assessment entry. Method: GetRemoveSpecialismAssessmentEntryAsync({User.GetUkPrn()}, {profileId}, {specialismLarId}), User: {User.GetUserEmail()}");
+            //    return RedirectToRoute(RouteConstants.PageNotFound);
+            //}
 
             return View(viewModel);
         }

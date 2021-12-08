@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
         Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType, string componentIds);
         Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request);
         Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, ComponentType componentType);
-        Task<IEnumerable<AssessmentEntryDetails>> GetActiveSpecialismEntriesAsync(long aoUkprn, string specialismIds);
+        Task<IEnumerable<AssessmentEntryDetails>> GetActiveSpecialismAssessmentEntriesAsync(long aoUkprn, string specialismIds);
         Task<bool> RemoveAssessmentEntryAsync(RemoveAssessmentEntryRequest model);
         Task<IList<AssessmentSeriesDetails>> GetAssessmentSeriesAsync();
     }
