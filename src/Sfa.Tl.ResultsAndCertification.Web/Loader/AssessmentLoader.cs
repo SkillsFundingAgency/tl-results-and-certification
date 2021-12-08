@@ -156,7 +156,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.RemoveAssessmentEntryAsync(request);
         }
 
-        public async Task<RemoveSpecialismEntryViewModel> GetRemoveSpecialismAssessmentEntriesAsync(long aoUkprn, int profileId, string specialismLarId)
+        public async Task<RemoveSpecialismAssessmentEntryViewModel> GetRemoveSpecialismAssessmentEntriesAsync(long aoUkprn, int profileId, string specialismLarId)
         {
             // Ensure learner details are found
             var learnerDetails = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId);
@@ -171,13 +171,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             // Ensure all requested entries are currently active
             var assessmentEntryDetails = await _internalApiClient.GetActiveSpecialismAssessmentEntriesAsync(aoUkprn, string.Join(Constants.PipeSeperator, specialismIdsFoundInRegistration));
-            if (assessmentEntryDetails == null || requestedLarIds.Count() != assessmentEntryDetails.Count())
-                return null;
+            //if (assessmentEntryDetails == null || requestedLarIds.Count() != assessmentEntryDetails.Count())
+            //    return null;
 
-            // TODO: 
-            //return _mapper.Map<RemoveSpecialismAssessmentEntryViewModel>(learnerDetails);
-
-            return new RemoveSpecialismEntryViewModel { };
+            return _mapper.Map<RemoveSpecialismAssessmentEntryViewModel>(learnerDetails);
         }
 
         #region Private methods

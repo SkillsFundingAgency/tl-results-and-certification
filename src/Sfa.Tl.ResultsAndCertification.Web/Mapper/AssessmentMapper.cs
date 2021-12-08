@@ -96,10 +96,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<RemoveSpecialismAssessmentEntryViewModel, RemoveAssessmentEntryRequest>()
                 .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
-                .ForMember(d => d.SpecialismAssessmentIds, opts => opts.MapFrom(s => s.DisplayMultipleSpecialismsCombined ? s.SpecialismDetails.Select(x => x.Id) : new List<int> { s.SpecialismId.Value }))
+                //.ForMember(d => d.SpecialismAssessmentIds, opts => opts.MapFrom(s => s.DisplayMultipleSpecialismsCombined ? s.SpecialismDetails.Select(x => x.Id) : new List<int> { s.SpecialismId.Value }))
                 .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Specialism))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<RemoveSpecialismAssessmentEntryViewModel, RemoveAssessmentEntryRequest>>());
-            
+
+            CreateMap<LearnerRecord, RemoveSpecialismAssessmentEntryViewModel>(); // TODO: In detail. 
+
             CreateMap<LearnerRecord, AddSpecialismAssessmentEntryViewModel>()
               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
               .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
@@ -176,6 +178,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.SeriesName, opts => opts.MapFrom(s => s.SeriesName))
                 .ForMember(d => d.LastUpdatedOn, opts => opts.MapFrom(s => s.LastUpdatedOn))
                 .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.LastUpdatedBy));
+
         }
     }
 }

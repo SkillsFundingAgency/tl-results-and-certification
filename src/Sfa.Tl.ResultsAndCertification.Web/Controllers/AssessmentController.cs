@@ -371,7 +371,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             //    return RedirectToRoute(RouteConstants.PageNotFound);
             //}
 
+            viewModel.AssessmentSeriesName = "Snowing 2020";
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("assessment-entry-remove-specialisms/{profileId}/{specialismLarId}", Name = RouteConstants.RemoveSpecialismAssessmentEntry)]
+        public async Task<IActionResult> RemoveSpecialismAssessmentEntriesAsync(RemoveSpecialismAssessmentEntryViewModel model)
+        {
+            await Task.CompletedTask;
+            return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
         }
     }
 }
