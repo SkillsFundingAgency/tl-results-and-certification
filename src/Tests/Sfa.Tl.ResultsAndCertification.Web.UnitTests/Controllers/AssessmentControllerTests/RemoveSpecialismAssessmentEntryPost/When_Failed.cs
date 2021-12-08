@@ -1,36 +1,33 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.RemoveCoreAssessmentEntryPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.RemoveSpecialismAssessmentEntryPost
 {
     public class When_Failed : TestSetup
     {
-        private AssessmentEntryDetailsViewModel _mockresult = null;
+        private RemoveSpecialismAssessmentEntryViewModel _mockresult = null;
 
         public override void Given()
         {
-            ViewModel = new AssessmentEntryDetailsViewModel
+            ViewModel = new RemoveSpecialismAssessmentEntryViewModel
             {
                 ProfileId = ProfileId,
-                AssessmentId = 5,
-                ComponentType = ComponentType.Core,
+                SpecialismLarId = "ZT1234567|ZO565745",
                 CanRemoveAssessmentEntry = true
             };
 
-            _mockresult = new AssessmentEntryDetailsViewModel
+            _mockresult = new RemoveSpecialismAssessmentEntryViewModel
             {
                 ProfileId = 1,
-                AssessmentId = 5,
-                AssessmentSeriesName = "Summer 2021"
+                SpecialismLarId = "ZT1234567|ZO565745"
             };
 
-            AssessmentLoader.GetActiveAssessmentEntryDetailsAsync(AoUkprn, ViewModel.AssessmentId, ComponentType.Core).Returns(_mockresult);
-            AssessmentLoader.RemoveAssessmentEntryAsync(AoUkprn, ViewModel).Returns(false);
+            AssessmentLoader.GetRemoveSpecialismAssessmentEntriesAsync(AoUkprn, ViewModel.ProfileId, ViewModel.SpecialismLarId).Returns(_mockresult);
+            AssessmentLoader.RemoveSpecialismAssessmentEntryAsync(AoUkprn, ViewModel).Returns(false);
         }
 
         [Fact]
