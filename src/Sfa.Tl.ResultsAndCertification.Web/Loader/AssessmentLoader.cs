@@ -177,6 +177,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<RemoveSpecialismAssessmentEntryViewModel>(learnerDetails);
         }
 
+        public async Task<bool> RemoveSpecialismAssessmentEntryAsync(long aoUkprn, RemoveSpecialismAssessmentEntryViewModel viewModel)
+        {
+            var request = _mapper.Map<RemoveAssessmentEntryRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.RemoveAssessmentEntryAsync(request);
+        }
+
         #region Private methods
 
         private IList<AssessmentSeriesDetails> GetValidAssessmentSeries(IList<AssessmentSeriesDetails> assessmentSeries, int academicYear, ComponentType componentType)

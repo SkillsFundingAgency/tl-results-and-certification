@@ -41,6 +41,7 @@
         public const int DownloadAssesssmentErrorsFailed = 5002;
         public const int AddCoreAssessmentEntryFailed = 5501;
         public const int AddSpecialismAssessmentEntryFailed = 5502;
+        public const int RemoveSpecialismAssessmentEntryFailed = 5503;
 
         // Results events
         public const int BulkResultProcessFailed = 6001;

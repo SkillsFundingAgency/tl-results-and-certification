@@ -379,7 +379,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("assessment-entry-remove-specialisms/{profileId}/{specialismLarId}", Name = RouteConstants.RemoveSpecialismAssessmentEntry)]
         public async Task<IActionResult> RemoveSpecialismAssessmentEntriesAsync(RemoveSpecialismAssessmentEntryViewModel model)
         {
-            await Task.CompletedTask;
+            var assessmentEntryDetails = await _assessmentLoader.GetRemoveSpecialismAssessmentEntriesAsync(User.GetUkPrn(), model.ProfileId, model.SpecialismLarId);
+            assessmentEntryDetails.SpecialismLarId = model.SpecialismLarId;
+
+            var isSuccess = await _assessmentLoader.RemoveSpecialismAssessmentEntryAsync(User.GetUkPrn(), assessmentEntryDetails);
+
+            if (!isSuccess)
+            {
+                _logger.LogWarning(LogEvent.RemoveSpecialismAssessmentEntryFailed, $"Unable to remove specialism assessment for ProfileId: {model.ProfileId} and Specialism Lard Ids: {model.SpecialismLarIds}. Method: RemoveSpecialismAssessmentEntryAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
+
+            var notificationBanner = new NotificationBannerModel { Message = assessmentEntryDetails.SuccessBannerMessage };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
             return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
         }
     }
