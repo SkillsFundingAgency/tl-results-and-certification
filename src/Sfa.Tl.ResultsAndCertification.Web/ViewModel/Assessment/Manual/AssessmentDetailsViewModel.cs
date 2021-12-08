@@ -64,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                         {
                             var pairedSpecialismCodes = spCombination.Value.Split(Constants.PipeSeperator).Except(new List<string> { specialism.LarId }, StringComparer.InvariantCultureIgnoreCase);
 
-                            var combinedLarId = specialism.LarId;
+                            var combinedSpecialismId = specialism.Id.ToString();
                             var combinedDisplayName = specialism.DisplayName;
                             var hasValidEntry = false;
 
@@ -75,18 +75,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                                 if(validSpecialism != null)
                                 {
                                     hasValidEntry = true;
-                                    combinedLarId = $"{combinedLarId}{Constants.PipeSeperator}{validSpecialism.LarId}";
+                                    combinedSpecialismId = $"{combinedSpecialismId}{Constants.PipeSeperator}{validSpecialism.Id}";
                                     combinedDisplayName = $"{combinedDisplayName}{Constants.AndSeperator}{validSpecialism.DisplayName}";
                                 }
                             }
                             
-                            var canAdd = hasValidEntry && !specialismToDisplay.Any(s => combinedLarId.Split(Constants.PipeSeperator).Except(s.LarId.Split(Constants.PipeSeperator), StringComparer.InvariantCulture).Count() == 0);
+                            var canAdd = hasValidEntry && !specialismToDisplay.Any(s => combinedSpecialismId.Split(Constants.PipeSeperator).Except(s.CombinedSpecialismId.Split(Constants.PipeSeperator), StringComparer.InvariantCulture).Count() == 0);
 
                             if (canAdd)
                             {
                                 specialismToDisplay.Add(new SpecialismViewModel
                                 {
-                                    LarId = combinedLarId,
+                                    CombinedSpecialismId = combinedSpecialismId,
                                     DisplayName = combinedDisplayName,
                                     CurrentSpecialismAssessmentSeriesId = specialism.CurrentSpecialismAssessmentSeriesId,
                                     TlSpecialismCombinations = specialism.TlSpecialismCombinations,

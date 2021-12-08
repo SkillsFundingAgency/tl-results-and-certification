@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 AssessmentSeriesName = "Summer 2021",
             };
 
-            AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism, ComponentLarIds).Returns(_mockresult);
+            AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism, ComponentIds).Returns(_mockresult);
         }
 
         [Fact]

@@ -91,7 +91,7 @@
                     @foreach (var specialism in Model.DisplaySpecialisms)
                     {
                         <h2 class="govuk-heading-m">@string.Format(AssessmentDetails.Specialism_Heading_Text, specialism.DisplayName)</h2>
-
+                        var specialismId = !string.IsNullOrWhiteSpace(specialism.CombinedSpecialismId) ? specialism.CombinedSpecialismId : specialism.Id.ToString();
                         @if (specialism.HasCurrentAssessmentEntry)
                         {
                             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
@@ -106,7 +106,7 @@
                                 @string.Format(AssessmentDetails.No_Assessment_Entries_Have_Been_Recored_For, Model.NextAvailableSpecialismSeries?.ToLowerInvariant())
                             </p>
                             <p class="govuk-body govuk-!-margin-bottom-9">
-                                <a class="govuk-link" asp-route="@RouteConstants.AddSpecialismAssessmentEntry" asp-route-profileId="@Model.ProfileId" asp-route-specialismLarId="@specialism.LarId">@string.Format(AssessmentDetails.Add_An_Assessment_Entry_For, specialism.DisplayName)</a>
+                                <a class="govuk-link" asp-route="@RouteConstants.AddSpecialismAssessmentEntry" asp-route-profileId="@Model.ProfileId" asp-route-specialismsId="@specialismId">@string.Format(AssessmentDetails.Add_An_Assessment_Entry_For, specialism.DisplayName)</a>
                             </p>
                         }
                     }

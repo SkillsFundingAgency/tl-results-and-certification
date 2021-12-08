@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 AssessmentSeriesId = 11,
                 AssessmentSeriesName = "Summer 2022",
                 IsOpted = true,
-                SpecialismLarId = string.Join(Constants.PipeSeperator, viewModelSpecialismDetails.Select(s => s.LarId)),
+                SpecialismsId = string.Join(Constants.PipeSeperator, viewModelSpecialismDetails.Select(s => s.LarId)),
                 SpecialismDetails = viewModelSpecialismDetails
             };
 
@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 }
             };
 
-            AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism, ViewModel.SpecialismLarId).Returns(_mockresult);
+            AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism, ViewModel.SpecialismsId).Returns(_mockresult);
         }
 
         [Fact]

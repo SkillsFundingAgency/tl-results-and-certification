@@ -123,7 +123,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AssessmentSeriesId, opts => opts.MapFrom(s => s.AssessmentSeriesId))
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                 .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Specialism))
-                .ForMember(d => d.SpecialismIds, opts => opts.MapFrom(s => s.SpecialismDetails.Where(sd => s.SpecialismLarIds.Contains(sd.LarId, StringComparer.InvariantCultureIgnoreCase)).Select(x => x.Id)))
+                .ForMember(d => d.SpecialismIds, opts => opts.MapFrom(s => s.SpecialismIds))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AddSpecialismAssessmentEntryViewModel, AddAssessmentEntryRequest>>());
 
             CreateMap<LearnerRecord, AssessmentDetailsViewModel>()

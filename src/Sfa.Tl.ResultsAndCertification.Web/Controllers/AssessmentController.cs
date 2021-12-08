@@ -306,17 +306,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("assessment-entry-add-specialisms/{profileId}/{specialismLarId}", Name = RouteConstants.AddSpecialismAssessmentEntry)]
-        public async Task<IActionResult> AddSpecialismAssessmentEntryAsync(int profileId, string specialismLarId)
+        [Route("assessment-entry-add-specialisms/{profileId}/{specialismsId}", Name = RouteConstants.AddSpecialismAssessmentEntry)]
+        public async Task<IActionResult> AddSpecialismAssessmentEntryAsync(int profileId, string specialismsId)
         {
-            var viewModel = await _assessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(User.GetUkPrn(), profileId, ComponentType.Specialism, specialismLarId);
+            var viewModel = await _assessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(User.GetUkPrn(), profileId, ComponentType.Specialism, specialismsId);
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No assessment series available for specialisms or Learner not found. Method: GetAddAssessmentEntryAsync({User.GetUkPrn()}, {profileId}, {ComponentType.Specialism}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            viewModel.SpecialismLarId = specialismLarId;
+            viewModel.SpecialismsId = specialismsId;
 
             if (!viewModel.IsValidToAdd)
             {
@@ -328,11 +328,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("assessment-entry-add-specialisms/{profileId}/{specialismLarId}", Name = RouteConstants.SubmitAddSpecialismAssessmentEntry)]
+        [Route("assessment-entry-add-specialisms/{profileId}/{specialismsId}", Name = RouteConstants.SubmitAddSpecialismAssessmentEntry)]
         public async Task<IActionResult> AddSpecialismAssessmentEntryAsync(AddSpecialismAssessmentEntryViewModel model)
         {
-            var assessmentEntryDetails = await _assessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(User.GetUkPrn(), model.ProfileId, ComponentType.Specialism, model.SpecialismLarId);
-            assessmentEntryDetails.SpecialismLarId = model.SpecialismLarId;
+            var assessmentEntryDetails = await _assessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(User.GetUkPrn(), model.ProfileId, ComponentType.Specialism, model.SpecialismsId);
+            assessmentEntryDetails.SpecialismsId = model.SpecialismsId;
 
             if (!ModelState.IsValid)
                 return View(assessmentEntryDetails);

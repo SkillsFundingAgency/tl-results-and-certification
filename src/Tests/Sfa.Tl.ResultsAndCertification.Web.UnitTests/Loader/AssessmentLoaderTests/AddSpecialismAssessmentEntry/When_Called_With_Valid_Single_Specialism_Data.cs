@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             {
                 ProfileId = ProfileId,
                 AssessmentSeriesId = 1,
-                SpecialismLarId = "5",
+                SpecialismsId = "5",
                 SpecialismDetails = new List<SpecialismViewModel>
                 {
                     new SpecialismViewModel
@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                     x.AoUkprn == AoUkprn &&
                     x.ComponentType == Common.Enum.ComponentType.Specialism &&
                     x.AssessmentSeriesId == ViewModel.AssessmentSeriesId &&
-                    x.SpecialismIds.All(s => new List<int?> { ViewModel.SpecialismLarId.ToInt() }.Contains(s)) &&
+                    x.SpecialismIds.All(s => new List<int?> { ViewModel.SpecialismsId.ToInt() }.Contains(s)) &&
                     x.PerformedBy == $"{Givenname} {Surname}"))
                 .Returns(ExpectedApiResult);
         }

@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
     {
         protected int AoUkprn;
         protected int ProfileId;
-        protected string ComponentLarIds;
+        protected string ComponentIds;
         protected Guid UserId;
         protected string CacheKey;
         protected IAssessmentLoader AssessmentLoader;

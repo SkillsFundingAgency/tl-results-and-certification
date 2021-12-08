@@ -5,6 +5,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 {
     public class SpecialismViewModel
     {
+        public string CombinedSpecialismId { get; set; }
         public int Id { get; set; }
         public string LarId { get; set; }
         public string Name { get; set; }

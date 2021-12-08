@@ -152,12 +152,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.DisplaySpecialisms.Should().NotBeNullOrEmpty();
 
             var expectedSpecialismDisplayName = string.Join(Constants.AndSeperator, ActualResult.SpecialismDetails.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.LarId})"));
-            var expectedLarId = string.Join(Constants.PipeSeperator, ActualResult.SpecialismDetails.Select(x => x.LarId));
-            var actualDisplaySpecialism = ActualResult.DisplaySpecialisms.FirstOrDefault(s => s.LarId.Equals(expectedLarId, System.StringComparison.InvariantCultureIgnoreCase));
+            var expectedId = string.Join(Constants.PipeSeperator, ActualResult.SpecialismDetails.Select(x => x.Id));
+            var actualDisplaySpecialism = ActualResult.DisplaySpecialisms.FirstOrDefault(s => s.CombinedSpecialismId.Equals(expectedId, System.StringComparison.InvariantCultureIgnoreCase));
 
             actualDisplaySpecialism.Should().NotBeNull();
             actualDisplaySpecialism.Id.Should().Be(0);
-            actualDisplaySpecialism.LarId.Should().Be(expectedLarId);            
+            actualDisplaySpecialism.CombinedSpecialismId.Should().Be(expectedId);            
             actualDisplaySpecialism.DisplayName.Should().Be(expectedSpecialismDisplayName);
             actualDisplaySpecialism.IsCouplet.Should().BeTrue();
             actualDisplaySpecialism.IsResit.Should().BeFalse();

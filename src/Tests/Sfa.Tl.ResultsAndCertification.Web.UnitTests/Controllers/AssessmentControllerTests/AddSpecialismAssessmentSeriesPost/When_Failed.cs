@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 AssessmentSeriesId = 11,
                 AssessmentSeriesName = "Summer 2022",
                 IsOpted = true,
-                SpecialismLarId = "ZT2158963",
+                SpecialismsId = "5",
                 SpecialismDetails = new List<SpecialismViewModel>
                 {
                     new SpecialismViewModel
@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 ProfileId = 1,
                 AssessmentSeriesId = 11,
                 AssessmentSeriesName = "Summer 2022",
-                SpecialismLarId = "ZT2158963",
+                SpecialismsId = "5",
                 SpecialismDetails = new List<SpecialismViewModel>
                 {
                     new SpecialismViewModel
@@ -55,9 +55,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 }
             };
 
-            ComponentLarIds = string.Join(Constants.PipeSeperator, _mockresult.SpecialismDetails.Select(s => s.LarId));
+            ComponentIds = string.Join(Constants.PipeSeperator, _mockresult.SpecialismDetails.Select(s => s.Id));
             AddAssessmentEntryResponse = new AddAssessmentEntryResponse { IsSuccess = false };
-            AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism, ComponentLarIds).Returns(_mockresult);
+            AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism, ComponentIds).Returns(_mockresult);
             AssessmentLoader.AddSpecialismAssessmentEntryAsync(AoUkprn, _mockresult).Returns(AddAssessmentEntryResponse);
         }
 

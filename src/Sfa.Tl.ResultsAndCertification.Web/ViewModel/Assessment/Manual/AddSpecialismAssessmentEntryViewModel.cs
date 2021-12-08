@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
             TlevelTitleLabel = AddSpecialismAssessmentEntryContent.Title_TLevel_Text;
         }
 
-        public string SpecialismLarId { get; set; }
+        public string SpecialismsId { get; set; }
         public int AssessmentSeriesId { get; set; }
         public string AssessmentSeriesName { get; set; }
         public List<SpecialismViewModel> SpecialismDetails { get; set; }
@@ -27,19 +27,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         [RequiredWithMessage(Property = nameof(AssessmentSeriesName), ErrorResourceType = typeof(AddSpecialismAssessmentEntryContent), ErrorResourceName = "Select_Option_To_Add_Validation_Text")]
         public bool? IsOpted { get; set; }
 
-        public List<string> SpecialismLarIds => !string.IsNullOrWhiteSpace(SpecialismLarId) ? SpecialismLarId.Split(Constants.PipeSeperator).ToList() : new List<string>();
-        public bool IsValidToAdd => SpecialismLarIds.Any() ? IsValidSpecialismCombination : false;
+        public List<string> SpecialismIds => !string.IsNullOrWhiteSpace(SpecialismsId) ? SpecialismsId.Split(Constants.PipeSeperator).ToList() : new List<string>();
+        public bool IsValidToAdd => SpecialismIds.Any() && IsValidSpecialismCombination;
         
-        public string SpecialismDisplayName => SpecialismDetails != null && SpecialismDetails.Any() ? string.Join(Constants.AndSeperator, SpecialismDetails.Where(x => SpecialismLarIds.Contains(x.LarId, StringComparer.InvariantCultureIgnoreCase)).OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.LarId})")) : null;
+        public string SpecialismDisplayName => SpecialismDetails != null && SpecialismDetails.Any() ? string.Join(Constants.AndSeperator, SpecialismDetails.Where(x => SpecialismIds.Contains(x.Id.ToString(), StringComparer.InvariantCultureIgnoreCase)).OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.LarId})")) : null;
         private bool IsValidSpecialismCombination
         {
             get
             {
                 if (SpecialismDetails == null) return false;
                                 
-                if(SpecialismLarIds.Count == 1)
+                if(SpecialismIds.Count == 1)
                 {
-                    var validSpecialism = SpecialismDetails.FirstOrDefault(s => s.LarId.Equals(SpecialismLarIds[0], StringComparison.InvariantCultureIgnoreCase));
+                    var validSpecialism = SpecialismDetails.FirstOrDefault(s => SpecialismIds[0].Equals(s.Id.ToString(), StringComparison.InvariantCultureIgnoreCase));
 
                     if (validSpecialism == null) return false;
 
@@ -47,13 +47,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                 }
                 else
                 {
-                    var validSpecialisms = SpecialismDetails.Where(s => SpecialismLarIds.Contains(s.LarId, StringComparer.InvariantCultureIgnoreCase));
+                    var validSpecialisms = SpecialismDetails.Where(s => SpecialismIds.Contains(s.Id.ToString(), StringComparer.InvariantCultureIgnoreCase));
 
-                    if (!validSpecialisms.Any() || validSpecialisms.Count() != SpecialismLarIds.Count()) return false;
+                    if (!validSpecialisms.Any() || validSpecialisms.Count() != SpecialismIds.Count()) return false;
 
                     var coupletSpecialismCodes = validSpecialisms.SelectMany(v => v.TlSpecialismCombinations.Select(c => c.Value)).ToList();
-                    
-                    var hasValidCoupletSpecialismCodes = coupletSpecialismCodes.Any(cs => cs.Split(Constants.PipeSeperator).Except(SpecialismLarIds, StringComparer.InvariantCultureIgnoreCase).Count() == 0);
+
+                    var requestedSpecialismCodes = validSpecialisms.Select(s => s.LarId);
+
+                    var hasValidCoupletSpecialismCodes = coupletSpecialismCodes.Any(cs => cs.Split(Constants.PipeSeperator).Except(requestedSpecialismCodes, StringComparer.InvariantCultureIgnoreCase).Count() == 0);
 
                     return validSpecialisms.All(v => v.IsCouplet && !v.IsResit) && hasValidCoupletSpecialismCodes;
                 }
