@@ -486,18 +486,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<AssessmentEntryDetails>(pathwayAssessment);
         }
 
-        public async Task<IEnumerable<AssessmentEntryDetails>> GetActiveSpecialismAssessmentEntriesAsync(long aoUkprn, IEnumerable<int> specialismIds)
+        public async Task<IEnumerable<AssessmentEntryDetails>> GetActiveSpecialismAssessmentEntriesAsync(long aoUkprn, IList<int> specialismIds)
         {
-            await Task.CompletedTask;
-            return new List<AssessmentEntryDetails> { };
-            
-            // TODO: 
-            //var pathwayAssessment = await _assessmentRepository.GetPathwayAssessmentDetailsAsync(aoUkprn, pathwayAssessmentId);
+            var specialismAssessments = await _assessmentRepository.GetSpecialismAssessmentDetailsAsync(aoUkprn, specialismIds);
 
-            //if (!IsValidActivePathwayAssessment(pathwayAssessment))
-            //    return null;
+            if (!IsValidActiveSpecialismAssessment(specialismAssessments))
+                return null;
 
-            //return _mapper.Map<AssessmentEntryDetails>(pathwayAssessment);
+            return _mapper.Map<IEnumerable<AssessmentEntryDetails>>(specialismAssessments);
         }
 
         public async Task<bool> RemovePathwayAssessmentEntryAsync(RemoveAssessmentEntryRequest model)
@@ -578,6 +574,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         registrationPathway.TqRegistrationSpecialisms.Where(s => componentIds.Contains(s.Id)).All(x => x.TqSpecialismAssessments.Any(x => x.IsOptedin && x.EndDate == null && x.AssessmentSeriesId == currentOpenSeriesId));
 
             return !anyActiveAssessment;
+        }
+
+        private bool IsValidActiveSpecialismAssessment(IList<TqSpecialismAssessment> specialismAssessments)
+        {
+            foreach (var splAssessment in specialismAssessments)
+            {
+                // 1. Must be an active registration.
+                if (splAssessment == null || splAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status != RegistrationPathwayStatus.Active)
+                    return false;
+
+                // 2. Must have be an active assessment.
+                var isActiveAssessment = splAssessment.IsOptedin && splAssessment.EndDate == null;
+                if (!isActiveAssessment)
+                    return false;
+            }
+
+            return true;
         }
 
         private static bool IsValidNextAssessmentSeries(IList<AssessmentSeries> dbAssessmentSeries, int regAcademicYear, string assessmentEntryName, int startYearOffset, ComponentType componentType)

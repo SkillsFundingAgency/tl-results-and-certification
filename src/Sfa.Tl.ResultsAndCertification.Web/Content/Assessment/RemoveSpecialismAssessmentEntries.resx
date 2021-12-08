@@ -121,7 +121,7 @@
     <value>You have removed the {0} assessment for {1} from this learner's record</value>
   </data>
   <data name="Heading_Would_You_Like_To_Remove_Assessment_Entry" xml:space="preserve">
-    <value>Would you like to remove the {0} from {1) for this learner?</value>
+    <value>Would you like to remove the {0} from {1} for this learner?</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
     <value>Remove occupational specialism(s) assessment entry from {0}</value>

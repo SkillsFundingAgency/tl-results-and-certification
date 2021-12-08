@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using RemoveEntryContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.RemoveSpecialismAssessmentEntries;
 
@@ -20,27 +21,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
             TlevelTitleLabel = RemoveEntryContent.Title_TLevel_Text;
         }
 
-        public string SpecialismLarId { get; set; }
-
-        //public int AssessmentId { get; set; }  // TODO: required?
-
-        //public int? SpecialismId { get; set; }
-        //public int AssessmentSeriesId { get; set; }
-        public List<SpecialismViewModel> SpecialismDetails { get; set; }
-        
-        public List<string> SpecialismLarIds => !string.IsNullOrWhiteSpace(SpecialismLarId) ? SpecialismLarId.Split(Constants.PipeSeperator).ToList() : new List<string>();
-        public string AssessmentSeriesName { get; set; }
-        [RequiredWithMessage(Property = nameof(AssessmentSeriesName), ErrorResourceType = typeof(RemoveEntryContent), ErrorResourceName = "Select_Option_To_Add_Validation_Text")]
+        [Required(ErrorMessageResourceType = typeof(RemoveEntryContent), ErrorMessageResourceName = "Select_Option_To_Remove_Validation_Text")]
         public bool? CanRemoveAssessmentEntry { get; set; }
+        public string AssessmentSeriesName { get; set; }
 
-        //public bool IsResitForSpecialism => SpecialismDetails != null && SpecialismDetails.Any() && SpecialismDetails.SelectMany(sa => sa.Assessments).Any(a => a.SeriesId != AssessmentSeriesId);
-        //public bool DisplayMultipleSpecialismsCombined => SpecialismDetails?.Count > 1 && !IsResitForSpecialism;
-        //public string SpecialismDisplayName => DisplayMultipleSpecialismsCombined
-        //                                       ? string.Join(Constants.AndSeperator, SpecialismDetails.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.LarId})"))
-        //                                       : SpecialismDetails?.Where(x => x.Id == SpecialismId)?.Select(x => $"{x.Name} ({x.LarId})")?.FirstOrDefault();
-        //public bool IsValidSpecialismToRemove => DisplayMultipleSpecialismsCombined ? true : SpecialismDetails != null && SpecialismDetails.Any(x => x.Id == SpecialismId);
-
+        public string SpecialismLarId { get; set; }
+        public List<string> SpecialismLarIds => !string.IsNullOrWhiteSpace(SpecialismLarId) ? SpecialismLarId.Split(Constants.PipeSeperator).ToList() : new List<string>();
+        
+        public List<SpecialismViewModel> SpecialismDetails { get; set; }
         public string SpecialismDisplayName => SpecialismDetails != null && SpecialismDetails.Any() ? string.Join(Constants.AndSeperator, SpecialismDetails.Where(x => SpecialismLarIds.Contains(x.LarId, StringComparer.InvariantCultureIgnoreCase)).OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.LarId})")) : null;
+        
         public string SuccessBannerMessage { get { return string.Format(RemoveEntryContent.Banner_Message, SpecialismDisplayName, AssessmentSeriesName); } }
 
         public override BackLinkModel BackLink
