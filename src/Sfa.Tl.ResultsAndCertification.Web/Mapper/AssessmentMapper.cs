@@ -108,7 +108,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
               .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
               .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.Pathway.Provider.Name))
               .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.Pathway.Provider.Ukprn))
-              .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.Pathway.Title));
+              .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.Pathway.Title))
+              .ForMember(d => d.SpecialismDetails, opts => opts.MapFrom(s => s.Pathway.Specialisms));
+
+            CreateMap<AssessmentEntryDetails, RemoveSpecialismAssessmentEntryViewModel>()
+                .ForMember(d => d.AssessmentSeriesName, opts => opts.MapFrom(s => s.AssessmentSeriesName.ToLower()));
 
             CreateMap<LearnerRecord, AddSpecialismAssessmentEntryViewModel>()
               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
@@ -176,7 +180,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.LarId, opts => opts.MapFrom(s => s.LarId))
                .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name))
                .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => $"{s.Name} ({s.LarId})"))
-               .ForMember(d => d.CurrentSpecialismAssessmentSeriesId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items["currentSpecialismAssessmentSeriesId"] != null ? (int?)context.Items["currentSpecialismAssessmentSeriesId"] : null))              
+               .ForMember(d => d.CurrentSpecialismAssessmentSeriesId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items != null && context.Items["currentSpecialismAssessmentSeriesId"] != null ? (int?)context.Items["currentSpecialismAssessmentSeriesId"] : null))              
                .ForMember(d => d.TlSpecialismCombinations, opts => opts.MapFrom(s => s.TlSpecialismCombinations))
                .ForMember(d => d.Assessments, opts => opts.MapFrom(s => s.Assessments));
 

@@ -18,5 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
         Task<TqRegistrationPathway> GetAssessmentsAsync(long aoUkprn, int profileId);
         Task<IList<AssessmentSeries>> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, int startInYear);
         Task<TqPathwayAssessment> GetPathwayAssessmentDetailsAsync(long aoUkprn, int pathwayAssessmentId);
+        Task<IList<TqSpecialismAssessment>> GetSpecialismAssessmentDetailsAsync(long aoUkprn, IList<int> specialismIds);
     }
 }

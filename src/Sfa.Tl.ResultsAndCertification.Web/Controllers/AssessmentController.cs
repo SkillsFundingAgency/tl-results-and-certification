@@ -371,17 +371,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             //    return RedirectToRoute(RouteConstants.PageNotFound);
             //}
 
-            viewModel.AssessmentSeriesName = "Snowing 2020";
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("assessment-entry-remove-specialisms/{profileId}/{specialismLarId}", Name = RouteConstants.RemoveSpecialismAssessmentEntry)]
+        [Route("assessment-entry-remove-specialisms/{profileId}/{specialismLarId}", Name = RouteConstants.SubmitRemoveSpecialismAssessmentEntry)]
         public async Task<IActionResult> RemoveSpecialismAssessmentEntriesAsync(RemoveSpecialismAssessmentEntryViewModel model)
         {
             var assessmentEntryDetails = await _assessmentLoader.GetRemoveSpecialismAssessmentEntriesAsync(User.GetUkPrn(), model.ProfileId, model.SpecialismLarId);
-            assessmentEntryDetails.SpecialismLarId = model.SpecialismLarId;
+            if (!ModelState.IsValid)
+                return View(assessmentEntryDetails);
 
+            if (!model.CanRemoveAssessmentEntry.Value)
+                return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
+
+            assessmentEntryDetails.SpecialismLarId = model.SpecialismLarId;
             var isSuccess = await _assessmentLoader.RemoveSpecialismAssessmentEntryAsync(User.GetUkPrn(), assessmentEntryDetails);
 
             if (!isSuccess)

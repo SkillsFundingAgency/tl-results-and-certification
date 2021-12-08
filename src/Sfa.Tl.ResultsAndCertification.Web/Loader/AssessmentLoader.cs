@@ -171,10 +171,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             // Ensure all requested entries are currently active
             var assessmentEntryDetails = await _internalApiClient.GetActiveSpecialismAssessmentEntriesAsync(aoUkprn, string.Join(Constants.PipeSeperator, specialismIdsFoundInRegistration));
-            //if (assessmentEntryDetails == null || requestedLarIds.Count() != assessmentEntryDetails.Count())
-            //    return null;
+            if (assessmentEntryDetails == null || requestedLarIds.Count() != assessmentEntryDetails.Count() || assessmentEntryDetails.GroupBy(x => x.AssessmentSeriesName).Count() != 1)
+                return null;
 
-            return _mapper.Map<RemoveSpecialismAssessmentEntryViewModel>(learnerDetails);
+            var removeAsessmentEntryViewModel = _mapper.Map<RemoveSpecialismAssessmentEntryViewModel>(learnerDetails, opt => { opt.Items["currentSpecialismAssessmentSeriesId"] = 0; });
+            removeAsessmentEntryViewModel.AssessmentSeriesName = assessmentEntryDetails.FirstOrDefault().AssessmentSeriesName;
+            removeAsessmentEntryViewModel.SpecialismLarId = specialismLarId;
+            return removeAsessmentEntryViewModel;
         }
 
         public async Task<bool> RemoveSpecialismAssessmentEntryAsync(long aoUkprn, RemoveSpecialismAssessmentEntryViewModel viewModel)
