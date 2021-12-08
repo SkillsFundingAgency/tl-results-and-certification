@@ -518,6 +518,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> RemoveSpecialismAssessmentEntryAsync(RemoveAssessmentEntryRequest model)
         {
+            if (model.SpecialismAssessmentIds == null) return false;
+
             var specialismAssessments = await _specialismAssessmentRepository.GetManyAsync(sa => model.SpecialismAssessmentIds.Contains(sa.Id) && sa.IsOptedin
                                                                                     && sa.EndDate == null 
                                                                                     && sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active

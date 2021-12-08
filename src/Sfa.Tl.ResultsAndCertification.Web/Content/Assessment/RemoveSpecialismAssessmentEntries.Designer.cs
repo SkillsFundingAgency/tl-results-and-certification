@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TODO: Success.
+        ///   Looks up a localized string similar to You have removed the {0} assessment for {1} from this learner&apos;s record.
         /// </summary>
         public static string Banner_Message {
             get {

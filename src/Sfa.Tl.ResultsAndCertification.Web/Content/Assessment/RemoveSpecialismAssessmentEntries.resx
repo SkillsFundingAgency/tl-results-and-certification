@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Banner_Message" xml:space="preserve">
-    <value>TODO: Success</value>
+    <value>You have removed the {0} assessment for {1} from this learner's record</value>
   </data>
   <data name="Heading_Would_You_Like_To_Remove_Assessment_Entry" xml:space="preserve">
     <value>Would you like to remove the {0} from {1} for this learner?</value>
