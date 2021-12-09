@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                     return null;
 
                 return string.Join(Constants.AndSeperator,
-                                    SpecialismDetails.Where(x => x.Assessments.Any(a => SpecialismAssessmentIdList.Contains(a.AssessmentId)))
+                                    SpecialismDetails.Where(x => x.Assessments != null && x.Assessments.Any(a => SpecialismAssessmentIdList.Contains(a.AssessmentId)))
                                     .OrderBy(x => x.Name)
                                     .Select(x => $"{x.Name} ({x.LarId})"));
             }

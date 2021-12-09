@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ViewModel = new RemoveSpecialismAssessmentEntryViewModel
             {
                 ProfileId = ProfileId,
-                SpecialismLarId = "ZT1234567|ZO565745",
+                SpecialismAssessmentIds = "1|2",
                 SpecialismDetails = new List<SpecialismViewModel>
                 {
                     new SpecialismViewModel
