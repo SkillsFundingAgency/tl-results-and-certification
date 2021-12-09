@@ -23,14 +23,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             {
                 ProfileId = 1,
                 Uln = 12345678,
-                SpecialismLarId = "ZT1234567|ZO565745",
+                SpecialismAssessmentIds = "1|2",
                 CanRemoveAssessmentEntry = true,
             };
 
             _mockresult = new RemoveSpecialismAssessmentEntryViewModel
             {
                 ProfileId = 1,
-                SpecialismLarId = "ZT1234567|ZO565745",
+                SpecialismAssessmentIds = "1|2",
                 SpecialismDetails = new List<SpecialismViewModel>
                 {
                     new SpecialismViewModel
@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             _response = true;
             _expectedSuccessBannerMsg = string.Format(RemoveSpecialismAssessmentEntriesContent.Banner_Message, _mockresult.SpecialismDisplayName, _mockresult.AssessmentSeriesName);
 
-            AssessmentLoader.GetRemoveSpecialismAssessmentEntriesAsync(AoUkprn, ViewModel.ProfileId, ViewModel.SpecialismLarId).Returns(_mockresult);
+            AssessmentLoader.GetRemoveSpecialismAssessmentEntriesAsync(AoUkprn, ViewModel.ProfileId, _mockresult.SpecialismAssessmentIds).Returns(_mockresult);
             AssessmentLoader.RemoveSpecialismAssessmentEntryAsync(AoUkprn, _mockresult).Returns(_response);
         }
 
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         public void Then_Expected_Methods_AreCalled()
         {
             AssessmentLoader.Received(1).RemoveSpecialismAssessmentEntryAsync(AoUkprn, _mockresult);
-            AssessmentLoader.Received(1).GetRemoveSpecialismAssessmentEntriesAsync(AoUkprn, ViewModel.ProfileId, ViewModel.SpecialismLarId);
+            AssessmentLoader.Received(1).GetRemoveSpecialismAssessmentEntriesAsync(AoUkprn, ViewModel.ProfileId, _mockresult.SpecialismAssessmentIds);
             CacheService.Received(1).SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(x => x.Message.Equals(_expectedSuccessBannerMsg)), CacheExpiryTime.XSmall);
         }
 

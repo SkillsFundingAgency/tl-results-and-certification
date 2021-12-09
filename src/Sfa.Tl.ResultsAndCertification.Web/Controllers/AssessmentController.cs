@@ -385,7 +385,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!model.CanRemoveAssessmentEntry.Value)
                 return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
 
-            //assessmentEntryDetails.SpecialismLarId = model.SpecialismLarId; // TODO: RG
             var isSuccess = await _assessmentLoader.RemoveSpecialismAssessmentEntryAsync(User.GetUkPrn(), assessmentEntryDetails);
 
             if (!isSuccess)
