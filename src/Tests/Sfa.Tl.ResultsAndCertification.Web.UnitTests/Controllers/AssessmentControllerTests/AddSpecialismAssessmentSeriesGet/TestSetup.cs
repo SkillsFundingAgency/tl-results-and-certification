@@ -19,8 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
     public abstract class TestSetup : BaseTest<AssessmentController>
     {
         protected int AoUkprn;
-        protected int ProfileId;
-        protected string ComponentLarIds;
+        protected int ProfileId;        
         protected Guid UserId;
         protected string CacheKey;
         protected string SpecialismsId;

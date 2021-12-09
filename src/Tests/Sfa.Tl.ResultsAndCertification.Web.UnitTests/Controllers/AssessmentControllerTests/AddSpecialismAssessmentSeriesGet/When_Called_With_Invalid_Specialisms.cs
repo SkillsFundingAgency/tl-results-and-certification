@@ -47,8 +47,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                     }
                 }
             };
-            SpecialismsId = string.Join(Constants.PipeSeperator, new List<string> { "ZT2158963", "Test" });
-            AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism, ComponentLarIds).Returns(_mockresult);
+
+            SpecialismsId = string.Join(Constants.PipeSeperator, new List<string> { "5", "0" });
+            AssessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Specialism, SpecialismsId).Returns(_mockresult);
         }
 
         [Fact]

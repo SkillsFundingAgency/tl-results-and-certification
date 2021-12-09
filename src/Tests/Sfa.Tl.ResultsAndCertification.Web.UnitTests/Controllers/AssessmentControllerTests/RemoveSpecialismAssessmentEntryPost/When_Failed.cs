@@ -16,14 +16,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             ViewModel = new RemoveSpecialismAssessmentEntryViewModel
             {
                 ProfileId = ProfileId,
-                SpecialismLarId = "ZT1234567|ZO565745",
+                SpecialismLarId = "1|2",
                 CanRemoveAssessmentEntry = true
             };
 
             _mockresult = new RemoveSpecialismAssessmentEntryViewModel
             {
                 ProfileId = 1,
-                SpecialismLarId = "ZT1234567|ZO565745"
+                SpecialismLarId = "1|2"
             };
 
             AssessmentLoader.GetRemoveSpecialismAssessmentEntriesAsync(AoUkprn, ViewModel.ProfileId, ViewModel.SpecialismLarId).Returns(_mockresult);
