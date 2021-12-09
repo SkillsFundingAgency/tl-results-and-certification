@@ -365,11 +365,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> RemoveSpecialismAssessmentEntriesAsync(int profileId, string specialismAssessmentIds)
         {
             var viewModel = await _assessmentLoader.GetRemoveSpecialismAssessmentEntriesAsync(User.GetUkPrn(), profileId, specialismAssessmentIds);
-            //if (!viewModel.IsValidToRemove)
-            //{
-            //    _logger.LogWarning(LogEvent.NoDataFound, $"Not a valid specialism to remove assessment entry. Method: GetRemoveSpecialismAssessmentEntryAsync({User.GetUkPrn()}, {profileId}, {specialismLarId}), User: {User.GetUserEmail()}");
-            //    return RedirectToRoute(RouteConstants.PageNotFound);
-            //}
+            if (viewModel == null || !viewModel.IsValidToRemove)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Not a valid specialism to remove assessment entry. Method: GetRemoveSpecialismAssessmentEntriesAsync({User.GetUkPrn()}, {profileId}, {specialismAssessmentIds}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
 
             return View(viewModel);
         }
@@ -384,6 +384,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (!model.CanRemoveAssessmentEntry.Value)
                 return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
+
+            //if (assessmentEntryDetails == null || !assessmentEntryDetails.IsValidToRemove)
+            //{
+            //    _logger.LogWarning(LogEvent.NoDataFound, $"Not a valid specialism to remove assessment entry. Method: GetRemoveSpecialismAssessmentEntriesAsync({User.GetUkPrn()}, {model.ProfileId}, {model.SpecialismAssessmentIds}), User: {User.GetUserEmail()}");
+            //    return RedirectToRoute(RouteConstants.PageNotFound);
+            //}
 
             var isSuccess = await _assessmentLoader.RemoveSpecialismAssessmentEntryAsync(User.GetUkPrn(), assessmentEntryDetails);
 

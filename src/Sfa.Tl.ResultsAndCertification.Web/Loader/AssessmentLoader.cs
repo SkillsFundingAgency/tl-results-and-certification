@@ -157,14 +157,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<RemoveSpecialismAssessmentEntryViewModel> GetRemoveSpecialismAssessmentEntriesAsync(long aoUkprn, int profileId, string specialismAssessmentIds)
         {
+            // Ensure the input specialismAssessmentIds contains numbers. 
+            var requestedAssessmentIds = specialismAssessmentIds?.Split(Constants.PipeSeperator)?.ToList();
+            if (!requestedAssessmentIds.All(x => int.TryParse(x, out int data)))
+                return null;
+
             // Ensure learner details are found
             var learnerDetails = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId);
             if (learnerDetails == null || learnerDetails.Pathway == null || !learnerDetails.Pathway.Specialisms.Any())
                 return null;
 
             // Ensure all requested specialisms LarIds are valid
-            var requestedAssessmentIds = specialismAssessmentIds?.Split(Constants.PipeSeperator)?.Select(x => x.ToInt())?.ToList();
-            var splAssessmentsFoundInRegistration = learnerDetails.Pathway.Specialisms.Where(x => x.Assessments.Any(a => requestedAssessmentIds.Contains(a.Id)));
+            var splAssessmentsFoundInRegistration = learnerDetails.Pathway.Specialisms.Where(x => x.Assessments.Any(a => requestedAssessmentIds.Contains(a.Id.ToString()))); // comparision not required. 
             if (requestedAssessmentIds.Count() != splAssessmentsFoundInRegistration.Count())
                 return null;
 

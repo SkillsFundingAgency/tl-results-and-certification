@@ -6,7 +6,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using RemoveEntryContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.RemoveSpecialismAssessmentEntries;
 
-
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 {
     public class RemoveSpecialismAssessmentEntryViewModel : AssessmentBaseViewModel
@@ -43,6 +42,35 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         }
 
         public string SuccessBannerMessage { get { return string.Format(RemoveEntryContent.Banner_Message, SpecialismDisplayName, AssessmentSeriesName); } }
+
+        public bool IsValidToRemove
+        {
+            get
+            {
+                // Specialism and assessment must exist
+                if (SpecialismDetails == null || !SpecialismDetails.Any() || !SpecialismDetails.SelectMany(x => x.Assessments).Any())
+                    return false;
+
+                // FirstEntry(not a resit) - Then request should include all Ids to remove.
+                var requestContainCombinationIds = SpecialismDetails.Any(x =>
+                                    x.Assessments.Any(a => SpecialismAssessmentIdList.Contains(a.AssessmentId)
+                                    && x.IsCouplet && !x.IsResit));
+
+                if (requestContainCombinationIds)
+                {
+                    // request should have all combination group.
+                    var validSpecialisms = SpecialismDetails.Where(x => x.Assessments.Any(a => SpecialismAssessmentIdList.Contains(a.AssessmentId)));
+                    
+                    var requestedSpecialismLarIds = validSpecialisms.Select(x => x.LarId);
+                    var expectedSpecialismLarIds = validSpecialisms.SelectMany(x => x.TlSpecialismCombinations).SelectMany(x => x.Value.Split(Constants.PipeSeperator)).Distinct().ToList();
+
+                    return requestedSpecialismLarIds.Count() == expectedSpecialismLarIds.Count();
+                }
+
+                return true;
+            }
+        }
+
 
         public override BackLinkModel BackLink
         {
