@@ -154,7 +154,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                 ActionText = AssessmentDetailsContent.Remove_Action_Link_Text,
                 HiddenActionText = AssessmentDetailsContent.Remove_Action_Link_Hidden_Text,
                 RouteName = RouteConstants.RemoveSpecialismAssessmentEntry,
-                RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.SpecialismLarId, string.Join(Constants.PipeSeperator, SpecialismDetails.Select(x => x.LarId).ToList())  } }
+                RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.SpecialismAssessmentIds, string.Join(Constants.PipeSeperator, SpecialismDetails.SelectMany(x => x.Assessments).Select(x => x.AssessmentId)) } }
             };
         }
 

@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\AssessmentControllerTests\RemoveSpecialismAssessmentEntryPost\**" />
+    <Compile Remove="Loader\AssessmentLoaderTests\RemoveSpecialismAssessmentEntry\**" />
+    <EmbeddedResource Remove="Controllers\AssessmentControllerTests\RemoveSpecialismAssessmentEntryPost\**" />
+    <EmbeddedResource Remove="Loader\AssessmentLoaderTests\RemoveSpecialismAssessmentEntry\**" />
+    <None Remove="Controllers\AssessmentControllerTests\RemoveSpecialismAssessmentEntryPost\**" />
+    <None Remove="Loader\AssessmentLoaderTests\RemoveSpecialismAssessmentEntry\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Called_With_Invalid_Data.cs" />
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Called_With_Valid_Data.cs" />
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Registration_HasResult.cs" />

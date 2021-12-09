@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
@@ -162,8 +163,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 return null;
 
             // Ensure all requested specialisms LarIds are valid
-            var requestedAssessmentIds = specialismAssessmentIds?.Split(Constants.PipeSeperator).ToList();
-            var splAssessmentsFoundInRegistration = learnerDetails.Pathway.Specialisms.SelectMany(x => x.Assessments.Select(a => a.Id));
+            var requestedAssessmentIds = specialismAssessmentIds?.Split(Constants.PipeSeperator)?.Select(x => x.ToInt())?.ToList();
+            var splAssessmentsFoundInRegistration = learnerDetails.Pathway.Specialisms.Where(x => x.Assessments.Any(a => requestedAssessmentIds.Contains(a.Id)));
             if (requestedAssessmentIds.Count() != splAssessmentsFoundInRegistration.Count())
                 return null;
 
@@ -172,7 +173,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (assessmentEntryDetails == null || requestedAssessmentIds.Count() != assessmentEntryDetails.Count() || assessmentEntryDetails.GroupBy(x => x.AssessmentSeriesName).Count() != 1)
                 return null;
 
-            var removeAsessmentEntryViewModel = _mapper.Map<RemoveSpecialismAssessmentEntryViewModel>(learnerDetails, opt => { opt.Items["currentSpecialismAssessmentSeriesId"] = 0; });
+            var removeAsessmentEntryViewModel = _mapper.Map<RemoveSpecialismAssessmentEntryViewModel>(learnerDetails, opt => { opt.Items["currentSpecialismAssessmentSeriesId"] = 0; }); // TODO: RG inputs pls. 
             removeAsessmentEntryViewModel.AssessmentSeriesName = assessmentEntryDetails.FirstOrDefault().AssessmentSeriesName;
             removeAsessmentEntryViewModel.SpecialismAssessmentIds = specialismAssessmentIds; 
             return removeAsessmentEntryViewModel;
