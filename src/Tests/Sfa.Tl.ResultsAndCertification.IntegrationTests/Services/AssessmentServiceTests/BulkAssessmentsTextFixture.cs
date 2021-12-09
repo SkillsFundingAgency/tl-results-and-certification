@@ -108,12 +108,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             return profiles;
         }
 
-        public TqRegistrationProfile SeedRegistrationData(long uln, TqProvider tqProvider = null)
+        public TqRegistrationProfile SeedRegistrationData(long uln, TqProvider tqProvider = null, bool isCouplet = false)
         {
             var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProviders.First());
-            var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, TlSpecialisms.First());
+
+            var specialismsToRegister = isCouplet ? TlSpecialisms.Take(2) : TlSpecialisms.Take(1);
+
+            foreach (var specialism in specialismsToRegister)
+                RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, specialism);
 
             DbContext.SaveChanges();
             return profile;
