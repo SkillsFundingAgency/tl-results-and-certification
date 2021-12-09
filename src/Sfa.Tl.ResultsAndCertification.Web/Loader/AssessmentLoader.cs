@@ -154,7 +154,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.RemoveAssessmentEntryAsync(request);
         }
 
-        public async Task<RemoveSpecialismAssessmentEntryViewModel> GetRemoveSpecialismAssessmentEntriesAsync(long aoUkprn, int profileId, string specialismLarId)
+        public async Task<RemoveSpecialismAssessmentEntryViewModel> GetRemoveSpecialismAssessmentEntriesAsync(long aoUkprn, int profileId, string specialismAssessmentIds)
         {
             // Ensure learner details are found
             var learnerDetails = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId);
@@ -162,19 +162,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 return null;
 
             // Ensure all requested specialisms LarIds are valid
-            var requestedLarIds = specialismLarId?.Split(Constants.PipeSeperator).ToList();
-            var specialismIdsFoundInRegistration = learnerDetails.Pathway.Specialisms.Where(x => requestedLarIds.Contains(x.LarId, StringComparer.InvariantCultureIgnoreCase)).Select(x => x.Id);
-            if (requestedLarIds.Count() != specialismIdsFoundInRegistration.Count())
+            var requestedAssessmentIds = specialismAssessmentIds?.Split(Constants.PipeSeperator).ToList();
+            var splAssessmentsFoundInRegistration = learnerDetails.Pathway.Specialisms.SelectMany(x => x.Assessments.Select(a => a.Id));
+            if (requestedAssessmentIds.Count() != splAssessmentsFoundInRegistration.Count())
                 return null;
 
             // Ensure all requested entries are currently active
-            var assessmentEntryDetails = await _internalApiClient.GetActiveSpecialismAssessmentEntriesAsync(aoUkprn, string.Join(Constants.PipeSeperator, specialismIdsFoundInRegistration));
-            if (assessmentEntryDetails == null || requestedLarIds.Count() != assessmentEntryDetails.Count() || assessmentEntryDetails.GroupBy(x => x.AssessmentSeriesName).Count() != 1)
+            var assessmentEntryDetails = await _internalApiClient.GetActiveSpecialismAssessmentEntriesAsync(aoUkprn, string.Join(Constants.PipeSeperator, requestedAssessmentIds));
+            if (assessmentEntryDetails == null || requestedAssessmentIds.Count() != assessmentEntryDetails.Count() || assessmentEntryDetails.GroupBy(x => x.AssessmentSeriesName).Count() != 1)
                 return null;
 
             var removeAsessmentEntryViewModel = _mapper.Map<RemoveSpecialismAssessmentEntryViewModel>(learnerDetails, opt => { opt.Items["currentSpecialismAssessmentSeriesId"] = 0; });
             removeAsessmentEntryViewModel.AssessmentSeriesName = assessmentEntryDetails.FirstOrDefault().AssessmentSeriesName;
-            removeAsessmentEntryViewModel.SpecialismLarId = specialismLarId;
+            removeAsessmentEntryViewModel.SpecialismAssessmentIds = specialismAssessmentIds; 
             return removeAsessmentEntryViewModel;
         }
 

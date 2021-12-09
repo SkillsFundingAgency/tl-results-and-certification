@@ -68,11 +68,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetActiveSpecialismAssessmentEntries/{aoUkprn}/{specialismIds}")]
-        public async Task<IEnumerable<AssessmentEntryDetails>> GetActiveSpecialismAssessmentEntriesAsync(long aoUkprn, string specialismIds)
+        [Route("GetActiveSpecialismAssessmentEntries/{aoUkprn}/{specialismAssessmentIds}")]
+        public async Task<IEnumerable<AssessmentEntryDetails>> GetActiveSpecialismAssessmentEntriesAsync(long aoUkprn, string specialismAssessmentIds)
         {
-            var specialismIdValues = specialismIds?.Split(Constants.PipeSeperator)?.Select(s => s.ToInt())?.ToList();
-            return await _assessmentService.GetActiveSpecialismAssessmentEntriesAsync(aoUkprn, specialismIdValues);
+            var assessmentIds = specialismAssessmentIds?.Split(Constants.PipeSeperator)?.Select(s => s.ToInt())?.ToList();
+            return await _assessmentService.GetActiveSpecialismAssessmentEntriesAsync(aoUkprn, assessmentIds);
         }
 
         [HttpPut]

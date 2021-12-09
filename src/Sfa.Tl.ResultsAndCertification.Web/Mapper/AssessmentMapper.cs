@@ -96,7 +96,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<RemoveSpecialismAssessmentEntryViewModel, RemoveAssessmentEntryRequest>()
                 .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
-                .ForMember(d => d.SpecialismAssessmentIds, opts => opts.MapFrom(s => s.SpecialismDetails.Where(sd => s.SpecialismLarIds.Contains(sd.LarId, StringComparer.InvariantCultureIgnoreCase)).Select(x => x.Id)))
+// TODO: RG                .ForMember(d => d.SpecialismAssessmentIds, opts => opts.MapFrom(s => s.SpecialismDetails.Where(sd => s.SpecialismAssessmentIdList.Contains(sd.LarId, StringComparer.InvariantCultureIgnoreCase)).Select(x => x.Id)))
                 .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Specialism))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<RemoveSpecialismAssessmentEntryViewModel, RemoveAssessmentEntryRequest>>());
 

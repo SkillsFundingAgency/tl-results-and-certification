@@ -361,10 +361,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("assessment-entry-remove-specialisms/{profileId}/{specialismLarId}", Name = RouteConstants.RemoveSpecialismAssessmentEntry)]
-        public async Task<IActionResult> RemoveSpecialismAssessmentEntriesAsync(int profileId, string specialismLarId)
+        [Route("assessment-entry-remove-specialisms/{profileId}/{specialismAssessmentIds}", Name = RouteConstants.RemoveSpecialismAssessmentEntry)]
+        public async Task<IActionResult> RemoveSpecialismAssessmentEntriesAsync(int profileId, string specialismAssessmentIds)
         {
-            var viewModel = await _assessmentLoader.GetRemoveSpecialismAssessmentEntriesAsync(User.GetUkPrn(), profileId, specialismLarId);
+            var viewModel = await _assessmentLoader.GetRemoveSpecialismAssessmentEntriesAsync(User.GetUkPrn(), profileId, specialismAssessmentIds);
             //if (!viewModel.IsValidToRemove)
             //{
             //    _logger.LogWarning(LogEvent.NoDataFound, $"Not a valid specialism to remove assessment entry. Method: GetRemoveSpecialismAssessmentEntryAsync({User.GetUkPrn()}, {profileId}, {specialismLarId}), User: {User.GetUserEmail()}");
@@ -375,22 +375,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("assessment-entry-remove-specialisms/{profileId}/{specialismLarId}", Name = RouteConstants.SubmitRemoveSpecialismAssessmentEntry)]
+        [Route("assessment-entry-remove-specialisms/{profileId}/{specialismAssessmentIds}", Name = RouteConstants.SubmitRemoveSpecialismAssessmentEntry)]
         public async Task<IActionResult> RemoveSpecialismAssessmentEntriesAsync(RemoveSpecialismAssessmentEntryViewModel model)
         {
-            var assessmentEntryDetails = await _assessmentLoader.GetRemoveSpecialismAssessmentEntriesAsync(User.GetUkPrn(), model.ProfileId, model.SpecialismLarId);
+            var assessmentEntryDetails = await _assessmentLoader.GetRemoveSpecialismAssessmentEntriesAsync(User.GetUkPrn(), model.ProfileId, model.SpecialismAssessmentIds);
             if (!ModelState.IsValid)
                 return View(assessmentEntryDetails);
 
             if (!model.CanRemoveAssessmentEntry.Value)
                 return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
 
-            assessmentEntryDetails.SpecialismLarId = model.SpecialismLarId;
+            //assessmentEntryDetails.SpecialismLarId = model.SpecialismLarId; // TODO: RG
             var isSuccess = await _assessmentLoader.RemoveSpecialismAssessmentEntryAsync(User.GetUkPrn(), assessmentEntryDetails);
 
             if (!isSuccess)
             {
-                _logger.LogWarning(LogEvent.RemoveSpecialismAssessmentEntryFailed, $"Unable to remove specialism assessment for ProfileId: {model.ProfileId} and Specialism Lard Ids: {model.SpecialismLarIds}. Method: RemoveSpecialismAssessmentEntryAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.RemoveSpecialismAssessmentEntryFailed, $"Unable to remove specialism assessment for ProfileId: {model.ProfileId} and Specialism Lard Ids: {model.SpecialismAssessmentIdList}. Method: RemoveSpecialismAssessmentEntryAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
 

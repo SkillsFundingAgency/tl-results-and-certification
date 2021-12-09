@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType, IList<int> componentIds);
         Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request);
         Task<AssessmentEntryDetails> GetActivePathwayAssessmentEntryDetailsAsync(long aoUkprn, int pathwayAssessmentId);
-        Task<IEnumerable<AssessmentEntryDetails>> GetActiveSpecialismAssessmentEntriesAsync(long aoUkprn, IList<int> specialismIds);
+        Task<IEnumerable<AssessmentEntryDetails>> GetActiveSpecialismAssessmentEntriesAsync(long aoUkprn, IList<int> assessmentIds);
         Task<bool> RemovePathwayAssessmentEntryAsync(RemoveAssessmentEntryRequest model);
         Task<bool> RemoveSpecialismAssessmentEntryAsync(RemoveAssessmentEntryRequest model);
         Task<IList<AssessmentSeriesDetails>> GetAssessmentSeriesAsync();

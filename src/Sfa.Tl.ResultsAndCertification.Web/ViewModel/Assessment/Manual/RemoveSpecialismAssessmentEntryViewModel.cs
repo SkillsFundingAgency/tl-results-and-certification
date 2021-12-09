@@ -1,7 +1,6 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -25,12 +24,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public bool? CanRemoveAssessmentEntry { get; set; }
         public string AssessmentSeriesName { get; set; }
 
-        public string SpecialismLarId { get; set; }
-        public List<string> SpecialismLarIds => !string.IsNullOrWhiteSpace(SpecialismLarId) ? SpecialismLarId.Split(Constants.PipeSeperator).ToList() : new List<string>();
+        public string SpecialismAssessmentIds { get; set; }
+        public List<int> SpecialismAssessmentIdList => !string.IsNullOrWhiteSpace(SpecialismAssessmentIds) ? SpecialismAssessmentIds.Split(Constants.PipeSeperator)?.Select(x => x.ToInt())?.ToList() : new List<int>();
         
         public List<SpecialismViewModel> SpecialismDetails { get; set; }
-        public string SpecialismDisplayName => SpecialismDetails != null && SpecialismDetails.Any() ? string.Join(Constants.AndSeperator, SpecialismDetails.Where(x => SpecialismLarIds.Contains(x.LarId, StringComparer.InvariantCultureIgnoreCase)).OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.LarId})")) : null;
-        
+        public string SpecialismDisplayName
+        {
+            get
+            {
+                if (SpecialismDetails == null || !SpecialismDetails.Any())
+                    return null;
+
+                return string.Join(Constants.AndSeperator,
+                                    SpecialismDetails.Where(x => x.Assessments.Any(a => SpecialismAssessmentIdList.Contains(a.AssessmentId)))
+                                    .OrderBy(x => x.Name)
+                                    .Select(x => $"{x.Name} ({x.LarId})"));
+            }
+        }
+
         public string SuccessBannerMessage { get { return string.Format(RemoveEntryContent.Banner_Message, SpecialismDisplayName, AssessmentSeriesName); } }
 
         public override BackLinkModel BackLink

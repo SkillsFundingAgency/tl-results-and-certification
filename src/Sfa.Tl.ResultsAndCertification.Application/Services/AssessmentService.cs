@@ -486,14 +486,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<AssessmentEntryDetails>(pathwayAssessment);
         }
 
-        public async Task<IEnumerable<AssessmentEntryDetails>> GetActiveSpecialismAssessmentEntriesAsync(long aoUkprn, IList<int> specialismIds)
+        public async Task<IEnumerable<AssessmentEntryDetails>> GetActiveSpecialismAssessmentEntriesAsync(long aoUkprn, IList<int> assessmentIds)
         {
-            var specialismAssessments = await _assessmentRepository.GetSpecialismAssessmentDetailsAsync(aoUkprn, specialismIds);
+            var assessments = await _assessmentRepository.GetSpecialismAssessmentDetailsAsync(aoUkprn, assessmentIds);
 
-            if (!IsValidActiveSpecialismAssessment(specialismAssessments))
+            if (!IsValidActiveSpecialismAssessment(assessments))
                 return null;
 
-            return _mapper.Map<IEnumerable<AssessmentEntryDetails>>(specialismAssessments);
+            return _mapper.Map<IEnumerable<AssessmentEntryDetails>>(assessments);
         }
 
         public async Task<bool> RemovePathwayAssessmentEntryAsync(RemoveAssessmentEntryRequest model)
