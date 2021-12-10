@@ -1,6 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -60,11 +61,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                 {
                     // request should have all combination group.
                     var validSpecialisms = SpecialismDetails.Where(x => x.Assessments.Any(a => SpecialismAssessmentIdList.Contains(a.AssessmentId)));
-                    
-                    var requestedSpecialismLarIds = validSpecialisms.Select(x => x.LarId);
-                    var expectedSpecialismLarIds = validSpecialisms.SelectMany(x => x.TlSpecialismCombinations).SelectMany(x => x.Value.Split(Constants.PipeSeperator)).Distinct().ToList();
 
-                    return requestedSpecialismLarIds.Count() == expectedSpecialismLarIds.Count();
+                    var coupletSpecialismCodes = validSpecialisms.SelectMany(v => v.TlSpecialismCombinations.Select(c => c.Value)).ToList();
+                    var requestedSpecialismLarIds = validSpecialisms.Select(x => x.LarId);
+                    var hasValidCoupletSpecialismCodes = coupletSpecialismCodes.Any(cs => cs.Split(Constants.PipeSeperator).Except(requestedSpecialismLarIds, StringComparer.InvariantCultureIgnoreCase).Count() == 0);
+
+                    return hasValidCoupletSpecialismCodes;
                 }
 
                 return true;

@@ -247,14 +247,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return pathwayAssessment;
         }
 
-        public async Task<IList<TqSpecialismAssessment>> GetSpecialismAssessmentDetailsAsync(long aoUkprn, IList<int> specialismIds)
+        public async Task<IList<TqSpecialismAssessment>> GetSpecialismAssessmentDetailsAsync(long aoUkprn, IList<int> specialismAssessmentIds)
         {
             var specialismAssessments = await _dbContext.TqSpecialismAssessment
                                 .Include(s => s.AssessmentSeries)
                                 .Include(s => s.TqRegistrationSpecialism)
                                     .ThenInclude(s => s.TqRegistrationPathway)
                                         .ThenInclude(s => s.TqRegistrationProfile)
-                 .Where(s => specialismIds.Contains(s.Id) && s.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn).ToListAsync();
+                 .Where(s => specialismAssessmentIds.Contains(s.Id) && s.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn).ToListAsync();
 
             return specialismAssessments;
         }
