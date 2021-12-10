@@ -852,6 +852,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 response.ValidationErrors.Add(GetRegistrationValidationError(amendedRegistration.UniqueLearnerNumber, hasAoChanged ? ValidationMessages.ActiveUlnWithDifferentAo : ValidationMessages.CoreForUlnCannotBeChangedYet));
             }
+
+            // check if specialism has any assessments registered
+
+            var existingSpecialismsInDb = pathwaysToUpdate.SelectMany(p => p.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null));
+            var incomingSpecialisms = amendedRegistration.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList();
+
+            foreach (var existingSpecialism in existingSpecialismsInDb)
+            {
+                var isRequestToRemoveSpecialism = !incomingSpecialisms.Any(s => s.TlSpecialismId == existingSpecialism.TlSpecialismId);
+                var hasActiveAssessmentEntriesForExistingSpecialism = existingSpecialism.TqSpecialismAssessments.Any(a => a.IsOptedin && a.EndDate == null);
+
+                if (isRequestToRemoveSpecialism && hasActiveAssessmentEntriesForExistingSpecialism)
+                {
+                    response.ValidationErrors.Add(GetRegistrationValidationError(amendedRegistration.UniqueLearnerNumber, ValidationMessages.SpecialismCannotBeRemovedWhenActiveAssessmentEntryExist));
+                    break;
+                }
+            }
             return response;
         }
 

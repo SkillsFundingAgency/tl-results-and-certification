@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Assessments_Published_On" xml:space="preserve">
-    <value>published 17 November 2021</value>
+    <value>published 21 December 2021</value>
   </data>
   <data name="Assessments_Version" xml:space="preserve">
-    <value>version 1.3</value>
+    <value>version 1.4</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>Download</value>
@@ -133,7 +133,7 @@
     <value>File name must have no more than {0} characters</value>
   </data>
   <data name="File_Size_Kb_Text" xml:space="preserve">
-    <value>283KB</value>
+    <value>285KB</value>
   </data>
   <data name="File_Size_Too_Large_Validation_Message" xml:space="preserve">
     <value>File size too large – must be no more than {0}MB</value>

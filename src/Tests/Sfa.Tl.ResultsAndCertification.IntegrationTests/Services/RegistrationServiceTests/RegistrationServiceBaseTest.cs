@@ -223,6 +223,45 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             return tqPathwayResults;
         }
 
+        public List<TqSpecialismAssessment> GetSpecialismAssessmentsDataToProcess(List<TqRegistrationSpecialism> specialismRegistrations, bool seedSpecialismAssessmentsAsActive = true, bool isHistorical = false)
+        {
+            var tqSpecialismAssessments = new List<TqSpecialismAssessment>();
+
+            foreach (var (specialismRegistration, index) in specialismRegistrations.Select((value, i) => (value, i)))
+            {
+                if (isHistorical)
+                {
+                    // Historical record
+                    var specialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, AssessmentSeries[index]);
+                    specialismAssessment.IsOptedin = false;
+                    specialismAssessment.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                    var tqSpecialismAssessmentHistorical = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, specialismAssessment);
+                    tqSpecialismAssessments.Add(tqSpecialismAssessmentHistorical);
+                }
+
+                var activeSpecialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, AssessmentSeries[index]);
+                var tqSpecialismAssessment = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, activeSpecialismAssessment);
+                if (!seedSpecialismAssessmentsAsActive)
+                {
+                    tqSpecialismAssessment.IsOptedin = specialismRegistration.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn;
+                    tqSpecialismAssessment.EndDate = DateTime.UtcNow;
+                }
+                tqSpecialismAssessments.Add(tqSpecialismAssessment);
+
+            }
+            return tqSpecialismAssessments;
+        }
+
+        public List<TqSpecialismAssessment> SeedSpecialismAssessmentsData(List<TqSpecialismAssessment> specialismAssessments, bool saveChanges = true)
+        {
+            var tqSpecialismAssessments = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessments(DbContext, specialismAssessments);
+            if (saveChanges)
+                DbContext.SaveChanges();
+
+            return tqSpecialismAssessments;
+        }
+
         public void SeedQualificationAchievedData(TqRegistrationProfile profile)
         {
             var engQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Eng");

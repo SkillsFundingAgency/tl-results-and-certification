@@ -121,16 +121,16 @@
     <value>assessment entries data format and rules</value>
   </data>
   <data name="Assessment_Entries_FileSize_Text" xml:space="preserve">
-    <value>283</value>
+    <value>285</value>
   </data>
   <data name="Assessment_Entries_Heading_Text" xml:space="preserve">
     <value>Assessment entries</value>
   </data>
   <data name="Assessment_Entries_PublishedDate_Text" xml:space="preserve">
-    <value>17 November 2021</value>
+    <value>21 December 2021</value>
   </data>
   <data name="Assessment_Entries_Version_Text" xml:space="preserve">
-    <value>version 1.3</value>
+    <value>version 1.4</value>
   </data>
   <data name="Choose_The_Right_Core_And_Specialism_Codes_Text" xml:space="preserve">
     <value>choose the right core and specialism codes</value>
