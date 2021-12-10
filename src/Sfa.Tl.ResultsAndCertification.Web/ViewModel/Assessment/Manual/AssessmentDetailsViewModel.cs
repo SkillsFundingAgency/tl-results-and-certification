@@ -154,8 +154,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                 ActionText = AssessmentDetailsContent.Remove_Action_Link_Text,
                 HiddenActionText = AssessmentDetailsContent.Remove_Action_Link_Hidden_Text,
                 RouteName = RouteConstants.RemoveSpecialismAssessmentEntry,
-                RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.SpecialismAssessmentIds, string.Join(Constants.PipeSeperator, SpecialismDetails.SelectMany(x => x.Assessments).Select(x => x.AssessmentId)) } }
+                RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() },
+                                                                    { Constants.SpecialismAssessmentIds, GetCurrentSeriesAssessmentId(specialismViewModel) } }
             };
+        }
+
+        private string GetCurrentSeriesAssessmentId(SpecialismViewModel specialismViewModel)
+        {
+            var specialismIds = specialismViewModel.Id == 0 ? specialismViewModel.CombinedSpecialismId.Split(Constants.PipeSeperator).Select(x => x.ToInt()).ToList() : new List<int> { specialismViewModel.Id };
+
+            //Func<SpecialismViewModel, bool> predicate = e => e.Id == specialismViewModel.Id;
+            //if (specialismViewModel.Id == 0) // Is a Couplet & Not a resit
+            //    predicate = e => specialismIds.Contains(e.Id);
+
+            return string.Join(Constants.PipeSeperator, SpecialismDetails?.Where(s => specialismIds.Contains(s.Id))?
+                                                                                .SelectMany(x => x.Assessments?.Where(a => a.SeriesId == specialismViewModel.CurrentSpecialismAssessmentSeriesId))?.Select(x => x.AssessmentId));
         }
 
         public SummaryItemModel GetSummaryLastUpdatedOn(SpecialismViewModel specialismViewModel)

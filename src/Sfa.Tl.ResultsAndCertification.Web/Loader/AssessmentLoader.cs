@@ -159,7 +159,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             // Ensure the input specialismAssessmentIds contains numbers. 
             var requestedAssessmentIds = specialismAssessmentIds?.Split(Constants.PipeSeperator)?.ToList();
-            if (!requestedAssessmentIds.All(x => int.TryParse(x, out int data)))
+            if (requestedAssessmentIds == null || !requestedAssessmentIds.All(x => x.IsInt()))
                 return null;
 
             // Ensure learner details are found
@@ -167,17 +167,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (learnerDetails == null || learnerDetails.Pathway == null || !learnerDetails.Pathway.Specialisms.Any())
                 return null;
 
-            // Ensure all requested specialisms LarIds are valid
-            var splAssessmentsFoundInRegistration = learnerDetails.Pathway.Specialisms.Where(x => x.Assessments.Any(a => requestedAssessmentIds.Contains(a.Id.ToString()))); // comparision not required. 
+            // Ensure all requested specialisms assessmentId's are valid
+            var splAssessmentsFoundInRegistration = learnerDetails.Pathway.Specialisms.Where(x => x.Assessments.Any(a => requestedAssessmentIds.Contains(a.Id.ToString())));
             if (requestedAssessmentIds.Count() != splAssessmentsFoundInRegistration.Count())
                 return null;
 
             // Ensure all requested entries are currently active
-            var assessmentEntryDetails = await _internalApiClient.GetActiveSpecialismAssessmentEntriesAsync(aoUkprn, string.Join(Constants.PipeSeperator, requestedAssessmentIds));
+            var assessmentEntryDetails = await _internalApiClient.GetActiveSpecialismAssessmentEntriesAsync(aoUkprn, specialismAssessmentIds);
             if (assessmentEntryDetails == null || requestedAssessmentIds.Count() != assessmentEntryDetails.Count() || assessmentEntryDetails.GroupBy(x => x.AssessmentSeriesName).Count() != 1)
                 return null;
 
-            var removeAsessmentEntryViewModel = _mapper.Map<RemoveSpecialismAssessmentEntryViewModel>(learnerDetails, opt => { opt.Items["currentSpecialismAssessmentSeriesId"] = 0; }); // TODO: RG inputs pls. 
+            var removeAsessmentEntryViewModel = _mapper.Map<RemoveSpecialismAssessmentEntryViewModel>(learnerDetails, opt => { opt.Items["currentSpecialismAssessmentSeriesId"] = assessmentEntryDetails.FirstOrDefault().AssessmentSeriesId; }); 
             removeAsessmentEntryViewModel.AssessmentSeriesName = assessmentEntryDetails.FirstOrDefault().AssessmentSeriesName;
             removeAsessmentEntryViewModel.SpecialismAssessmentIds = specialismAssessmentIds; 
             return removeAsessmentEntryViewModel;
