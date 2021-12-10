@@ -111,9 +111,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.Pathway.Title))
               .ForMember(d => d.SpecialismDetails, opts => opts.MapFrom(s => s.Pathway.Specialisms));
 
-            CreateMap<AssessmentEntryDetails, RemoveSpecialismAssessmentEntryViewModel>()
-                .ForMember(d => d.AssessmentSeriesName, opts => opts.MapFrom(s => s.AssessmentSeriesName.ToLower()));
-
             CreateMap<LearnerRecord, AddSpecialismAssessmentEntryViewModel>()
               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
               .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))

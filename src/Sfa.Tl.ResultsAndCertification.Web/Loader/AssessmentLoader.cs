@@ -178,7 +178,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 return null;
 
             var removeAsessmentEntryViewModel = _mapper.Map<RemoveSpecialismAssessmentEntryViewModel>(learnerDetails, opt => { opt.Items["currentSpecialismAssessmentSeriesId"] = assessmentEntryDetails.FirstOrDefault().AssessmentSeriesId; }); 
-            removeAsessmentEntryViewModel.AssessmentSeriesName = assessmentEntryDetails.FirstOrDefault().AssessmentSeriesName;
+            removeAsessmentEntryViewModel.AssessmentSeriesName = assessmentEntryDetails.FirstOrDefault().AssessmentSeriesName.ToLower();
             removeAsessmentEntryViewModel.SpecialismAssessmentIds = specialismAssessmentIds; 
             return removeAsessmentEntryViewModel;
         }
