@@ -104,15 +104,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             model.DisplaySpecialisms[0].DisplayName.Should().Be(expectedSpecialismDisplayName);
 
             // Exam Period
-            var expectedSpecialism = _mockresult.SpecialismDetails[0];
+            var expectedSpecialism = model.DisplaySpecialisms[0];
             var expectedAssessments = expectedSpecialism.Assessments.ToList();
             
             var examPeriodModel = model.GetSummaryExamPeriod(expectedSpecialism);
-
             examPeriodModel.Title.Should().Be(AssessmentDetailsContent.Title_Exam_Period);
             examPeriodModel.Value.Should().Be(expectedAssessments[0].SeriesName);
             examPeriodModel.ActionText.Should().Be(AssessmentDetailsContent.Remove_Action_Link_Text);
             examPeriodModel.HiddenActionText.Should().Be(AssessmentDetailsContent.Remove_Action_Link_Hidden_Text);
+            examPeriodModel.ActionText.Should().Be(AssessmentDetailsContent.Remove_Action_Link_Text);
+            examPeriodModel.RouteName.Should().Be(RouteConstants.RemoveSpecialismAssessmentEntry);
+            examPeriodModel.RouteAttributes.Should().NotBeNull();
+            examPeriodModel.RouteAttributes.Count.Should().Be(2);
+            examPeriodModel.RouteAttributes[Constants.ProfileId].Should().Be(_mockresult.ProfileId.ToString());
+            examPeriodModel.RouteAttributes[Constants.SpecialismAssessmentIds].Should().Be(string.Join(Constants.PipeSeperator, _mockresult.SpecialismDetails.SelectMany(x => x.Assessments).Select(a => a.AssessmentId)));
 
             // Last updated on 
             var summaryLastUpdatedOnModel = model.GetSummaryLastUpdatedOn(expectedSpecialism);

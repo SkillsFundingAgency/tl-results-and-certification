@@ -2,14 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using AssessmentDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.AssessmentDetails;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.AssessmentDetails
 {

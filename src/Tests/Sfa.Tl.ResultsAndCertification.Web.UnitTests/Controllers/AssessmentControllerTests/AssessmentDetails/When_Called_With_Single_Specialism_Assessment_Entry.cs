@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System;
 using System.Collections.Generic;
@@ -90,6 +91,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             examPeriodModel.Value.Should().Be(expectedAssessments[0].SeriesName);
             examPeriodModel.ActionText.Should().Be(AssessmentDetailsContent.Remove_Action_Link_Text);
             examPeriodModel.HiddenActionText.Should().Be(AssessmentDetailsContent.Remove_Action_Link_Hidden_Text);
+            examPeriodModel.ActionText.Should().Be(AssessmentDetailsContent.Remove_Action_Link_Text);
+            examPeriodModel.RouteName.Should().Be(RouteConstants.RemoveSpecialismAssessmentEntry);
+            examPeriodModel.RouteAttributes.Should().NotBeNull();
+            examPeriodModel.RouteAttributes.Count.Should().Be(2);
+            examPeriodModel.RouteAttributes[Constants.ProfileId].Should().Be(_mockresult.ProfileId.ToString());
+            examPeriodModel.RouteAttributes[Constants.SpecialismAssessmentIds].Should().Be(string.Join(Constants.PipeSeperator, _mockresult.SpecialismDetails.SelectMany(x => x.Assessments).Select(a => a.AssessmentId)));
 
             // Last updated on 
             var summaryLastUpdatedOnModel = model.GetSummaryLastUpdatedOn(expectedSpecialism);
