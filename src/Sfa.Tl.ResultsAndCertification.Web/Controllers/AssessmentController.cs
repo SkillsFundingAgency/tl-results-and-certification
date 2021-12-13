@@ -361,7 +361,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("assessment-entry-remove-specialisms/{profileId}/{specialismAssessmentIds}", Name = RouteConstants.RemoveSpecialismAssessmentEntry)]
+        [Route("assessment-entry-remove-specialisms/{profileId}/{specialismAssessmentIds}", Name = RouteConstants.RemoveSpecialismAssessmentEntries)]
         public async Task<IActionResult> RemoveSpecialismAssessmentEntriesAsync(int profileId, string specialismAssessmentIds)
         {
             var viewModel = await _assessmentLoader.GetRemoveSpecialismAssessmentEntriesAsync(User.GetUkPrn(), profileId, specialismAssessmentIds);
@@ -375,7 +375,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("assessment-entry-remove-specialisms/{profileId}/{specialismAssessmentIds}", Name = RouteConstants.SubmitRemoveSpecialismAssessmentEntry)]
+        [Route("assessment-entry-remove-specialisms/{profileId}/{specialismAssessmentIds}", Name = RouteConstants.SubmitRemoveSpecialismAssessmentEntries)]
         public async Task<IActionResult> RemoveSpecialismAssessmentEntriesAsync(RemoveSpecialismAssessmentEntryViewModel model)
         {
             var assessmentEntryDetails = await _assessmentLoader.GetRemoveSpecialismAssessmentEntriesAsync(User.GetUkPrn(), model.ProfileId, model.SpecialismAssessmentIds);

@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTests.GetRemoveSpecialismAssessmentEntries
 {
-    public class When_Called_With_Invalid_SpecialismIds : TestSetup
+    public class When_Called_With_Invalid_SpecialismAssessmentIds : TestSetup
     {
         public override void Given()
         {

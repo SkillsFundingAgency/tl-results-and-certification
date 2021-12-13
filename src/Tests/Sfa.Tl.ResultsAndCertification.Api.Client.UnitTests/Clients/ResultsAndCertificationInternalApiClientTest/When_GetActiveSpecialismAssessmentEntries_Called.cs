@@ -41,6 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 {
                     ProfileId = 1,
                     AssessmentId = 11,
+                    AssessmentSeriesId = 111,
                     AssessmentSeriesName = "Summer 2021"
                 },
 
@@ -48,6 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 {
                     ProfileId = 1,
                     AssessmentId = 12,
+                    AssessmentSeriesId = 121,
                     AssessmentSeriesName = "Summer 2021"
                 }
             };
@@ -78,6 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             {
                 actualResult[i].ProfileId.Should().Be(expectedResult[i].ProfileId);
                 actualResult[i].AssessmentId.Should().Be(expectedResult[i].AssessmentId);
+                actualResult[i].AssessmentSeriesId.Should().Be(expectedResult[i].AssessmentSeriesId);
                 actualResult[i].AssessmentSeriesName.Should().Be(expectedResult[i].AssessmentSeriesName);
             }
         }

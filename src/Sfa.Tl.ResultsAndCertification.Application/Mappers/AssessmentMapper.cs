@@ -50,6 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.Id))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber))
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.Id))
+                .ForMember(d => d.AssessmentSeriesId, opts => opts.MapFrom(s => s.AssessmentSeries.Id))
                 .ForMember(d => d.AssessmentSeriesName, opts => opts.MapFrom(s => s.AssessmentSeries.Name));
 
             CreateMap<AssessmentSeries, AssessmentSeriesDetails>()

@@ -92,7 +92,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             examPeriodModel.ActionText.Should().Be(AssessmentDetailsContent.Remove_Action_Link_Text);
             examPeriodModel.HiddenActionText.Should().Be(AssessmentDetailsContent.Remove_Action_Link_Hidden_Text);
             examPeriodModel.ActionText.Should().Be(AssessmentDetailsContent.Remove_Action_Link_Text);
-            examPeriodModel.RouteName.Should().Be(RouteConstants.RemoveSpecialismAssessmentEntry);
+            examPeriodModel.RouteName.Should().Be(RouteConstants.RemoveSpecialismAssessmentEntries);
             examPeriodModel.RouteAttributes.Should().NotBeNull();
             examPeriodModel.RouteAttributes.Count.Should().Be(2);
             examPeriodModel.RouteAttributes[Constants.ProfileId].Should().Be(_mockresult.ProfileId.ToString());

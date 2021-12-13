@@ -116,6 +116,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             {
                 ProfileId = expectedAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfileId,
                 AssessmentId = expectedAssessment.Id,
+                AssessmentSeriesId = expectedAssessment.AssessmentSeriesId,
                 AssessmentSeriesName = expectedAssessment.AssessmentSeries.Name
             };
 
@@ -123,6 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             var actualResult = _result.FirstOrDefault();
             actualResult.ProfileId.Should().Be(expectedAssessmentDetails.ProfileId);
             actualResult.AssessmentId.Should().Be(expectedAssessmentDetails.AssessmentId);
+            actualResult.AssessmentSeriesId.Should().Be(expectedAssessmentDetails.AssessmentSeriesId);
             actualResult.AssessmentSeriesName.Should().Be(expectedAssessmentDetails.AssessmentSeriesName);
         }
 

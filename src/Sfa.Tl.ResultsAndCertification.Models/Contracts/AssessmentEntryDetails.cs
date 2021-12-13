@@ -6,7 +6,6 @@
         public long Uln { get; set; }
         public int AssessmentId { get; set; }
         public int AssessmentSeriesId { get; set; }
-
         public string AssessmentSeriesName { get; set; }
     }
 }

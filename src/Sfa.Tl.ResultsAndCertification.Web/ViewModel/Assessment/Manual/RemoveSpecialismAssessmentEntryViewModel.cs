@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
             get
             {
                 // Specialism and assessment must exist
-                if (SpecialismDetails == null || !SpecialismDetails.Any() || !SpecialismDetails.SelectMany(x => x.Assessments).Any())
+                if (SpecialismDetails == null || !SpecialismDetails.Any() || SpecialismDetails.Any(x => x.Assessments == null) || !SpecialismDetails.SelectMany(x => x.Assessments).Any())
                     return false;
 
                 // FirstEntry(not a resit) - Then request should include all Ids to remove.

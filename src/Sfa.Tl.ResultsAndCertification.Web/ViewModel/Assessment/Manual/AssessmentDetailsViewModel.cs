@@ -150,10 +150,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
             {
                 Id = $"examperiod_{specialismViewModel.Id}",
                 Title = AssessmentDetailsContent.Title_Exam_Period,
-                Value = specialismViewModel.Assessments.FirstOrDefault(a => a.SeriesId == specialismViewModel.CurrentSpecialismAssessmentSeriesId).SeriesName,
+                Value = specialismViewModel.Assessments.FirstOrDefault(a => a.SeriesId == specialismViewModel.CurrentSpecialismAssessmentSeriesId)?.SeriesName,
                 ActionText = AssessmentDetailsContent.Remove_Action_Link_Text,
                 HiddenActionText = AssessmentDetailsContent.Remove_Action_Link_Hidden_Text,
-                RouteName = RouteConstants.RemoveSpecialismAssessmentEntry,
+                RouteName = RouteConstants.RemoveSpecialismAssessmentEntries,
                 RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() },
                                                                     { Constants.SpecialismAssessmentIds, GetCurrentSeriesAssessmentId(specialismViewModel) } }
             };
