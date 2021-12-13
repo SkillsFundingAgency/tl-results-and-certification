@@ -159,18 +159,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
             };
         }
 
-        private string GetCurrentSeriesAssessmentId(SpecialismViewModel specialismViewModel)
-        {
-            var specialismIds = specialismViewModel.Id == 0 ? specialismViewModel.CombinedSpecialismId.Split(Constants.PipeSeperator).Select(x => x.ToInt()).ToList() : new List<int> { specialismViewModel.Id };
-
-            //Func<SpecialismViewModel, bool> predicate = e => e.Id == specialismViewModel.Id;
-            //if (specialismViewModel.Id == 0) // Is a Couplet & Not a resit
-            //    predicate = e => specialismIds.Contains(e.Id);
-
-            return string.Join(Constants.PipeSeperator, SpecialismDetails?.Where(s => specialismIds.Contains(s.Id))?
-                                                                                .SelectMany(x => x.Assessments?.Where(a => a.SeriesId == specialismViewModel.CurrentSpecialismAssessmentSeriesId))?.Select(x => x.AssessmentId));
-        }
-
         public SummaryItemModel GetSummaryLastUpdatedOn(SpecialismViewModel specialismViewModel)
         {
             return new SummaryItemModel
@@ -206,6 +194,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                     }
                 };
             }
+        }
+
+        private string GetCurrentSeriesAssessmentId(SpecialismViewModel specialismViewModel)
+        {
+            var specialismIds = specialismViewModel.Id == 0 ? specialismViewModel.CombinedSpecialismId.Split(Constants.PipeSeperator).Select(x => x.ToInt()).ToList() : new List<int> { specialismViewModel.Id };
+
+            // Notes: if SpecialismViewModel.Id == 0 then it is a Couplet & NotResit
+            return string.Join(Constants.PipeSeperator, SpecialismDetails?.Where(s => specialismIds.Contains(s.Id))?
+                                                        .SelectMany(x => x.Assessments?.Where(a => a.SeriesId == specialismViewModel.CurrentSpecialismAssessmentSeriesId))?
+                                                        .Select(x => x.AssessmentId));
         }
     }
 }
