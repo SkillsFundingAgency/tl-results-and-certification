@@ -18,8 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
 
             // CoreCode
             RuleFor(r => r.CoreCode)
-                .MustBeNumberWithLength(8)
-                .WithMessage(ValidationMessages.CorecodeMustBeDigitsOnly)
+                .MustBeStringWithLength(8)
                 .When(x => !string.IsNullOrWhiteSpace(x.CoreCode));
 
             RuleFor(r => r.CoreCode)

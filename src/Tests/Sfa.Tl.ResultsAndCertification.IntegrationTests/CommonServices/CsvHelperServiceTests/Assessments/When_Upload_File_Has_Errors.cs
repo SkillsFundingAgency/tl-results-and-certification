@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
             {
                 new BulkProcessValidationError { RowNum = "2", Uln = string.Empty, ErrorMessage = "ULN required" },
                 new BulkProcessValidationError { RowNum = "3", Uln = "123", ErrorMessage = "ULN must be a 10 digit number" },
-                new BulkProcessValidationError { RowNum = "4", Uln = "1234567890", ErrorMessage = "Core code must have 8 digits only" },
+                new BulkProcessValidationError { RowNum = "4", Uln = "1234567890", ErrorMessage = "Core code must have 8 characters only" },
                 new BulkProcessValidationError { RowNum = "5", Uln = "1234567891", ErrorMessage = "Core code required when core assessment entry is included" },
                 new BulkProcessValidationError { RowNum = "6", Uln = "1234567892", ErrorMessage = "Assessment entry series must be accompanied by a specialism code (or codes)" },
                 new BulkProcessValidationError { RowNum = "7", Uln = "1234567893", ErrorMessage = "Specialism code(s) must have 8 characters only" },
