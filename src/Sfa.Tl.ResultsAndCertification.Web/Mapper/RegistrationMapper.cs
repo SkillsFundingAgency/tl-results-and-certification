@@ -70,7 +70,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.Name, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
                 .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayLarId})"))
                 .ForMember(d => d.ProviderDisplayName, opts => opts.MapFrom(s => $"{s.ProviderName} ({s.ProviderUkprn})"))
-                .ForMember(d => d.SpecialismsDisplayName, opts => opts.MapFrom(s => s.Specialisms.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.Code})")));
+                .ForMember(d => d.SpecialismsDisplayName, opts => opts.MapFrom(s => s.Specialisms.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.Code})")))
+                .ForMember(d => d.IsActiveWithOtherAo, opts => opts.MapFrom(s => s.IsActiveWithOtherAo));
 
             CreateMap<RegistrationDetails, ManageRegistration>()
                 .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.PathwayLarId))

@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove core - Assessment entries.
+        ///   Looks up a localized string similar to Remove core - Assessment entry.
         /// </summary>
         public static string Page_Title {
             get {

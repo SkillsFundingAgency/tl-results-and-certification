@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 PathwayDisplayName = "Test Pathway (987456123)"
             };
 
-            AssessmentLoader.GetAddAssessmentEntryAsync(AoUkprn, ProfileId, ComponentType.Core).Returns(_mockresult);
+            AssessmentLoader.GetAddAssessmentEntryAsync<AddAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Core, ComponentLarIds).Returns(_mockresult);
         }
 
         [Fact]

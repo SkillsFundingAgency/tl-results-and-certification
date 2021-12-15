@@ -48,7 +48,7 @@
                         <vc:summary-item model=Model.SummaryExamPeriod></vc:summary-item>
                         <vc:summary-item model=Model.SummaryLastUpdatedOn></vc:summary-item>
                         <vc:summary-item model=Model.SummaryLastUpdatedBy></vc:summary-item>
-                    </dl>   
+                    </dl>
                 }
                 else
                 {
@@ -80,7 +80,7 @@
                 {
                     @foreach (var specialism in Model.DisplaySpecialisms)
                     {
-                        <h2 class="govuk-heading-m">@string.Format(AssessmentDetails.Specialism_Heading_Text, Model.DisplayMultipleSpecialismsCombined ? Model.SpecialismDisplayName : specialism.DisplayName)</h2>
+                        <h2 class="govuk-heading-m">@string.Format(AssessmentDetails.Specialism_Heading_Text, specialism.DisplayName)</h2>
                         <p class="govuk-body govuk-!-margin-bottom-9">
                             @string.Format(AssessmentDetails.You_Cannot_Register_Learner_For_Occupational_Specialism_Until, Model.NextAvailableSpecialismSeries?.ToLowerInvariant())
                         </p>
@@ -88,21 +88,25 @@
                 }
                 else
                 {
-                    @if (Model.HasCurrentSpecialismAssessmentEntry)
+                    @foreach (var specialism in Model.DisplaySpecialisms)
                     {
-                        // TODO: Display current assessmet record
-                    }
-                    else
-                    {
-                        @foreach (var specialism in Model.DisplaySpecialisms)
+                        <h2 class="govuk-heading-m">@string.Format(AssessmentDetails.Specialism_Heading_Text, specialism.DisplayName)</h2>
+                        var specialismId = !string.IsNullOrWhiteSpace(specialism.CombinedSpecialismId) ? specialism.CombinedSpecialismId : specialism.Id.ToString();
+                        @if (specialism.HasCurrentAssessmentEntry)
                         {
-                            var specialismDisplayName = Model.DisplayMultipleSpecialismsCombined ? Model.SpecialismDisplayName : specialism.DisplayName;
-                            <h2 class="govuk-heading-m">@string.Format(AssessmentDetails.Specialism_Heading_Text, specialismDisplayName)</h2>
+                            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                                <vc:summary-item model=Model.GetSummaryExamPeriod(specialism)></vc:summary-item>
+                                <vc:summary-item model=Model.GetSummaryLastUpdatedOn(specialism)></vc:summary-item>
+                                <vc:summary-item model=Model.GetSummaryLastUpdatedBy(specialism)></vc:summary-item>
+                            </dl>
+                        }
+                        else
+                        {
                             <p class="govuk-body">
                                 @string.Format(AssessmentDetails.No_Assessment_Entries_Have_Been_Recored_For, Model.NextAvailableSpecialismSeries?.ToLowerInvariant())
                             </p>
                             <p class="govuk-body govuk-!-margin-bottom-9">
-                                <a class="govuk-link" href="add-entry-core.html">@string.Format(AssessmentDetails.Add_An_Assessment_Entry_For, specialismDisplayName)</a>
+                                <a class="govuk-link" asp-route="@RouteConstants.AddSpecialismAssessmentEntry" asp-route-profileId="@Model.ProfileId" asp-route-specialismsId="@specialismId">@string.Format(AssessmentDetails.Add_An_Assessment_Entry_For, specialism.DisplayName)</a>
                             </p>
                         }
                     }

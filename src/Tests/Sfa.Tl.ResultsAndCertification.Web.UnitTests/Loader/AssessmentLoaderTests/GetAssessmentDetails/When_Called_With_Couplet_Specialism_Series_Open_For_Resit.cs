@@ -48,6 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                             Id = 5,
                             LarId = "ZT2158963",
                             Name = "Specialism Name1",
+                            TlSpecialismCombinations = new List<KeyValuePair<int,string>> { new KeyValuePair<int, string>(1, "ZT2158963|ZT9874514") },
                             Assessments = new List<Assessment>()
                             {
                                 new Assessment
@@ -55,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                                     Id = 4,
                                     SeriesId = 2,
                                     SeriesName = "Summer 2022",
-                                    AppealEndDate = System.DateTime.UtcNow.AddDays(30),
+                                    AppealEndDate = System.DateTime.UtcNow.AddDays(20),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = System.DateTime.UtcNow,
                                     Results = new List<Result>()
@@ -67,6 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                             Id = 6,
                             LarId = "ZT9874514",
                             Name = "Specialism Name2",
+                            TlSpecialismCombinations = new List<KeyValuePair<int,string>> { new KeyValuePair<int, string>(1, "ZT2158963|ZT9874514") },
                             Assessments = new List<Assessment>()
                             {
                                 new Assessment
@@ -74,7 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                                     Id = 5,
                                     SeriesId = 2,
                                     SeriesName = "Summer 2022",
-                                    AppealEndDate = System.DateTime.UtcNow.AddDays(30),
+                                    AppealEndDate = System.DateTime.UtcNow.AddDays(20),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = System.DateTime.UtcNow,
                                     Results = new List<Result>()
@@ -167,12 +169,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 actualSpecialism.LarId.Should().Be(expectedSpecialism.LarId);
                 actualSpecialism.Name.Should().Be(expectedSpecialism.Name);
                 actualSpecialism.DisplayName.Should().Be($"{expectedSpecialism.Name} ({expectedSpecialism.LarId})");
-                actualSpecialism.Assessments.Should().BeNullOrEmpty();
+
+                foreach (var expectedSpecialismAssessment in expectedSpecialism.Assessments)
+                {
+                    var actualSpecialismAssessment = actualSpecialism.Assessments.FirstOrDefault(r => r.AssessmentId == expectedSpecialismAssessment.Id);
+                    actualSpecialismAssessment.Should().NotBeNull();
+
+                    actualSpecialismAssessment.AssessmentId.Should().Be(expectedSpecialismAssessment.Id);
+                    actualSpecialismAssessment.SeriesId.Should().Be(expectedSpecialismAssessment.SeriesId);
+                    actualSpecialismAssessment.SeriesName.Should().Be(expectedSpecialismAssessment.SeriesName);
+                    actualSpecialismAssessment.LastUpdatedOn.Should().Be(expectedSpecialismAssessment.LastUpdatedOn);
+                    actualSpecialismAssessment.LastUpdatedBy.Should().Be(expectedSpecialismAssessment.LastUpdatedBy);
+                }
             }
 
             ActualResult.IsSpecialismEntryEligible.Should().BeTrue();
-            ActualResult.HasCurrentSpecialismAssessmentEntry.Should().BeFalse();
-            ActualResult.IsResitForSpecialism.Should().BeTrue();
             ActualResult.NextAvailableSpecialismSeries.Should().Be(specialismAssessmentSeriesName);
             ActualResult.IsCoreResultExist.Should().BeFalse();
             ActualResult.HasAnyOutstandingPathwayPrsActivities.Should().BeFalse();
@@ -185,9 +196,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.NeedCoreResultForPreviousAssessmentEntry.Should().BeFalse();
             ActualResult.IsSpecialismRegistered.Should().BeTrue();
             ActualResult.DisplaySpecialisms.Should().NotBeNullOrEmpty();
-
-            ActualResult.DisplayMultipleSpecialismsCombined.Should().BeFalse();
-            ActualResult.SpecialismDisplayName.Should().BeNull();
 
             var expectedDisplaySpecialisms = new List<SpecialismViewModel>();
             foreach (var specialism in expectedApiResult.Pathway.Specialisms)
@@ -212,6 +220,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 actualDisplaySpecialism.LarId.Should().Be(expectedDisplaySpecialism.LarId);
                 actualDisplaySpecialism.Name.Should().Be(expectedDisplaySpecialism.Name);
                 actualDisplaySpecialism.DisplayName.Should().Be($"{expectedDisplaySpecialism.Name} ({expectedDisplaySpecialism.LarId})");
+                actualDisplaySpecialism.IsCouplet.Should().BeTrue();
+                actualDisplaySpecialism.IsResit.Should().BeTrue();
+                actualDisplaySpecialism.HasCurrentAssessmentEntry.Should().BeFalse();
             }
         }
     }

@@ -63,6 +63,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AddCoreAssessmentEntry.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Assessment\AddSpecialismAssessmentEntry.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AddSpecialismAssessmentEntry.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Assessment\AssessmentDetails.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -87,6 +92,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>RemoveCoreAssessmentEntry.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\Assessment\RemoveSpecialismAssessmentEntries.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RemoveSpecialismAssessmentEntries.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Assessment\SearchAssessments.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -906,6 +916,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AddCoreAssessmentEntry.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Content\Assessment\AddSpecialismAssessmentEntry.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AddSpecialismAssessmentEntry.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\Assessment\AssessmentDetails.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AssessmentDetails.Designer.cs</LastGenOutput>
@@ -925,6 +939,10 @@
     <EmbeddedResource Update="Content\Assessment\RemoveCoreAssessmentEntry.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RemoveCoreAssessmentEntry.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Assessment\RemoveSpecialismAssessmentEntries.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RemoveSpecialismAssessmentEntries.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Assessment\SearchAssessments.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

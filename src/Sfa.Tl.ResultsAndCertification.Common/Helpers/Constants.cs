@@ -103,6 +103,7 @@
         public const int AssessmentEndInYears = 4;
         public const int CoreAssessmentStartInYears = 0;
         public const int SpecialismAssessmentStartInYears = 1;
+        public const string SpecialismAssessmentIds = "specialismAssessmentIds";
 
         public const int MaxFileSizeInMb = 5;
 

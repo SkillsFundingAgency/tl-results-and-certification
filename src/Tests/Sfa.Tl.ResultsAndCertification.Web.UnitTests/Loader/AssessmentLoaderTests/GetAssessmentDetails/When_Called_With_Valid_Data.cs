@@ -205,12 +205,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             }
 
             ActualResult.IsSpecialismEntryEligible.Should().Be(expectedApiResult.Pathway.Status == RegistrationPathwayStatus.Active && coreAssessmentSeriesId > 0);
-
-            var expectedHasCurrentSpecialismAssessmentEntry = expectedApiResult.Pathway.Specialisms.SelectMany(sa => sa.Assessments).Any(a => a.SeriesId == specialismAssessmentSeriesId);
-            ActualResult.HasCurrentSpecialismAssessmentEntry.Should().Be(expectedHasCurrentSpecialismAssessmentEntry);
-
-            var expectedIsResitForSpecialism = expectedApiResult.Pathway.Specialisms.SelectMany(sa => sa.Assessments).Any(a => a.SeriesId != specialismAssessmentSeriesId);
-            ActualResult.IsResitForSpecialism.Should().Be(expectedIsResitForSpecialism);
             ActualResult.NextAvailableSpecialismSeries.Should().Be(specialismAssessmentSeriesName);
 
             var expectedIsCoreResultExists = expectedApiResult.Pathway.PathwayAssessments.Any(a => a.Results.Any());
@@ -228,9 +222,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.HasPreviousCoreAssessment.Should().Be(false);
             ActualResult.HasResultForPreviousCoreAssessment.Should().Be(false);
             ActualResult.NeedCoreResultForPreviousAssessmentEntry.Should().Be(false);
-            ActualResult.DisplayMultipleSpecialismsCombined.Should().Be(false);
             ActualResult.IsSpecialismRegistered.Should().Be(true);
-            ActualResult.SpecialismDisplayName.Should().BeNull();
 
             var expectedDisplaySpecialisms = new List<SpecialismViewModel>();
             foreach (var specialism in expectedApiResult.Pathway.Specialisms)
@@ -254,6 +246,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 actualDisplaySpecialism.LarId.Should().Be(expectedDisplaySpecialism.LarId);
                 actualDisplaySpecialism.Name.Should().Be(expectedDisplaySpecialism.Name);
                 actualDisplaySpecialism.DisplayName.Should().Be($"{expectedDisplaySpecialism.Name} ({expectedDisplaySpecialism.LarId})");
+                actualDisplaySpecialism.IsCouplet.Should().BeFalse();
+                actualDisplaySpecialism.IsResit.Should().BeFalse();
+                actualDisplaySpecialism.HasCurrentAssessmentEntry.Should().BeTrue();
             }
         }
     }

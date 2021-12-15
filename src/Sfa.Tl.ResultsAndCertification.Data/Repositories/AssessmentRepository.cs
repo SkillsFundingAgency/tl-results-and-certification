@@ -76,7 +76,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         {
             var registrationSpecialismIds = new HashSet<int>();
             specialismAssessments.ToList().ForEach(r => registrationSpecialismIds.Add(r.TqRegistrationSpecialismId));
-            return await _dbContext.TqSpecialismAssessment.Where(x => registrationSpecialismIds.Contains(x.TqRegistrationSpecialismId) && x.EndDate == null && x.IsOptedin).ToListAsync();
+            
+            var assessments = await _dbContext.TqSpecialismAssessment
+                .Include(x => x.AssessmentSeries)
+                .Where(x => registrationSpecialismIds.Contains(x.TqRegistrationSpecialismId) && x.EndDate == null && x.IsOptedin)
+                .ToListAsync();
+
+            return assessments
+               .GroupBy(x => x.TqRegistrationSpecialismId)
+               .Select(x => x.OrderByDescending(o => o.AssessmentSeries.StartDate).First())
+               .ToList();
         }
 
         public async Task<bool> BulkInsertOrUpdateAssessments(List<TqPathwayAssessment> pathwayAssessments, List<TqSpecialismAssessment> specialismAssessments)
@@ -236,6 +245,18 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .FirstOrDefaultAsync(pa => pa.Id == pathwayAssessmentId && pa.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn);
 
             return pathwayAssessment;
+        }
+
+        public async Task<IList<TqSpecialismAssessment>> GetSpecialismAssessmentDetailsAsync(long aoUkprn, IList<int> specialismAssessmentIds)
+        {
+            var specialismAssessments = await _dbContext.TqSpecialismAssessment
+                                .Include(s => s.AssessmentSeries)
+                                .Include(s => s.TqRegistrationSpecialism)
+                                    .ThenInclude(s => s.TqRegistrationPathway)
+                                        .ThenInclude(s => s.TqRegistrationProfile)
+                 .Where(s => specialismAssessmentIds.Contains(s.Id) && s.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn).ToListAsync();
+
+            return specialismAssessments;
         }
     }
 }

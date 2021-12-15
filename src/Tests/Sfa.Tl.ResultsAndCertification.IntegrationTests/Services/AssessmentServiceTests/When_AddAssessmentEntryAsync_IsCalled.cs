@@ -32,6 +32,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsData(_ulns, TqProvider);
 
+            var coupletUln = 1111111115;
+            _registrations.Add(SeedRegistrationData(coupletUln, RegistrationPathwayStatus.Active, null, true));
+
             var currentYearUln = new List<long> { 1111111114 };
             RegisterUlnForNextAcademicYear(_registrations, currentYearUln);
 
@@ -62,6 +65,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             AssessmentSeriesRepository = new GenericRepository<AssessmentSeries>(AssessmentSeriesRepositoryLogger, DbContext);
             PathwayAssessmentRepositoryLogger = new Logger<GenericRepository<TqPathwayAssessment>>(new NullLoggerFactory());
             PathwayAssessmentRepository = new GenericRepository<TqPathwayAssessment>(PathwayAssessmentRepositoryLogger, DbContext);
+            SpecialismAssessmentRepositoryLogger = new Logger<GenericRepository<TqSpecialismAssessment>>(new NullLoggerFactory());
+            SpecialismAssessmentRepository = new GenericRepository<TqSpecialismAssessment>(SpecialismAssessmentRepositoryLogger, DbContext);
 
             AssessmentService = new AssessmentService(AssessmentRepository, PathwayAssessmentRepository, SpecialismAssessmentRepository, AssessmentSeriesRepository, AssessmentMapper, AssessmentRepositoryLogger);
         }
@@ -83,6 +88,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
         [MemberData(nameof(Data))]
         public async Task Then_Expected_Results_Are_Returned(AddAssessmentEntryRequest request, AddAssessmentEntryResponse expectedResult)
         {
+            var currentAssessmentSeries = AssessmentSeries.FirstOrDefault(a => a.ComponentType == request.ComponentType);
+
+            if(currentAssessmentSeries != null)
+            request.AssessmentSeriesId = currentAssessmentSeries.Id;
+
             await WhenAsync(request);
 
             // Assert
@@ -97,24 +107,24 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             {
                 return new[]
                 {
-                     //Profile not-found - returns false
+                    // Profile not-found - returns false
                     new object[]
-                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 999  },
+                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 999, ComponentType = ComponentType.Core  },
                       new AddAssessmentEntryResponse { IsSuccess = false } },
 
                     // Registration not in active status - returns false
                     new object[]
-                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 1  },
+                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Core  },
                       new AddAssessmentEntryResponse { IsSuccess = false } },
 
                     // Reg has an active assessment already - returns false
                     new object[]
-                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 2  },
+                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 2, ComponentType = ComponentType.Core  },
                       new AddAssessmentEntryResponse { IsSuccess = false } },
 
                     // When specialism entry type - returns false
                     new object[]
-                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Specialism },
+                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Specialism, SpecialismIds = new List<int?> { 1 } },
                       new AddAssessmentEntryResponse { IsSuccess = false } },
 
                     // valid request - returns true
@@ -122,10 +132,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                     { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core },
                       new AddAssessmentEntryResponse { IsSuccess = true, Uln = 1111111113 } },
 
-                     // There is no assessment entry window open.
+                    // There is no assessment entry window open.
                     new object[]
                     { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core },
-                      new AddAssessmentEntryResponse { IsSuccess = false, Uln = 1111111114} }
+                      new AddAssessmentEntryResponse { IsSuccess = false, Uln = 1111111114} },
+
+                    // When specialism entry type couplet - returns true
+                    new object[]
+                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 5, ComponentType = ComponentType.Specialism, SpecialismIds = new List<int?> { 5, 6 } },
+                      new AddAssessmentEntryResponse { IsSuccess = true, Uln = 1111111115 } },
+
+                    // Component type not specified
+                    new object[]
+                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 5, ComponentType = ComponentType.NotSpecified, SpecialismIds = new List<int?> { 1, 2 } },
+                      new AddAssessmentEntryResponse { IsSuccess = false } },
 
                 };
             }

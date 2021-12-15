@@ -88,14 +88,35 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                         {
                             Id = 5,
                             LarId = "ZT2158963",
-                            Name = "Specialism Name",
+                            Name = "Specialism Name1",
+                            TlSpecialismCombinations = new List<KeyValuePair<int,string>> { new KeyValuePair<int, string>(1, "ZT2158963|ZT2158999") },
                             Assessments = new List<Assessment>
                             {
                                 new Assessment
                                 {
                                     Id = 4,
                                     SeriesId = 2,
-                                    SeriesName = "Autumn 2021",
+                                    SeriesName = "Summer 2022",
+                                    AppealEndDate = System.DateTime.UtcNow.AddDays(30),
+                                    LastUpdatedBy = "System",
+                                    LastUpdatedOn = System.DateTime.UtcNow,
+                                    Results = new List<Result>()
+                                }
+                            }
+                        },
+                        new Specialism
+                        {
+                            Id = 6,
+                            LarId = "ZT2158999",
+                            Name = "Specialism Name2",
+                            TlSpecialismCombinations = new List<KeyValuePair<int,string>> { new KeyValuePair<int, string>(1, "ZT2158963|ZT2158999") },
+                            Assessments = new List<Assessment>
+                            {
+                                new Assessment
+                                {
+                                    Id = 5,
+                                    SeriesId = 2,
+                                    SeriesName = "Summer 2022",
                                     AppealEndDate = System.DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = System.DateTime.UtcNow,

@@ -45,13 +45,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             _expectedSuccessBannerMsg = string.Format(AddCoreAssessmentEntryContent.Banner_Message, _mockresult.AssessmentSeriesName, _mockresult.PathwayDisplayName);
 
             AssessmentLoader.AddAssessmentEntryAsync(AoUkprn, ViewModel).Returns(_addAssessmentEntryResponse);
-            AssessmentLoader.GetAddAssessmentEntryAsync(AoUkprn, ProfileId, ComponentType.Core).Returns(_mockresult);
+            AssessmentLoader.GetAddAssessmentEntryAsync<AddAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Core, ComponentLarIds).Returns(_mockresult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AssessmentLoader.Received(1).GetAddAssessmentEntryAsync(AoUkprn, ProfileId, ComponentType.Core);
+            AssessmentLoader.Received(1).GetAddAssessmentEntryAsync<AddAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Core, ComponentLarIds);
             AssessmentLoader.Received(1).AddAssessmentEntryAsync(AoUkprn, ViewModel);
             CacheService.Received(1).SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(x => x.Message.Equals(_expectedSuccessBannerMsg)), CacheExpiryTime.XSmall);
         }

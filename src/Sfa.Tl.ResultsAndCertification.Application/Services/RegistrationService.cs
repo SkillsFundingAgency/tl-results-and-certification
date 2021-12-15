@@ -271,7 +271,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         var latestRegPathway = existingRegistration.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
                         if (latestRegPathway != null && latestRegPathway.Status == RegistrationPathwayStatus.Withdrawn)
                         {
-                            response.ValidationErrors.Add(GetRegistrationValidationError(existingRegistration.UniqueLearnerNumber, ValidationMessages.RegistrationCannotBeInWithdrawnStatus));
+                            var hasAoChanged = amendedRegistration.TqRegistrationPathways.All(rp => rp.TqProvider.TqAwardingOrganisation.TlAwardingOrganisatonId != latestRegPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisatonId);
+                            response.ValidationErrors.Add(GetRegistrationValidationError(existingRegistration.UniqueLearnerNumber, hasAoChanged ? ValidationMessages.LearnerPreviouslyRegisteredWithAnotherAo : ValidationMessages.RegistrationCannotBeInWithdrawnStatus));
                             return;
                         }
 
@@ -377,17 +378,32 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (validateStage3Response.IsValid)
             {
-                var toAddRegistration = TransformManualRegistrationModel(model, validateStage3Response);
-                var hasRegistrationAlreadyExists = await _tqRegistrationRepository.GetFirstOrDefaultAsync(p => p.UniqueLearnerNumber == model.Uln) != null;
+                var transformedRegistration = TransformManualRegistrationModel(model, validateStage3Response);
 
-                if (hasRegistrationAlreadyExists)
+                var existingRegistrationPathway = await _tqRegistrationPathwayRepository.GetManyAsync(p => p.TqRegistrationProfile.UniqueLearnerNumber == model.Uln, p => p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton).OrderByDescending(p => p.CreatedOn).FirstOrDefaultAsync();
+
+                var isRegisteredWithAnotherAOAndWithdrawn = existingRegistrationPathway != null && existingRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn && existingRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != model.AoUkprn;
+
+                var hasRegistrationAlreadyExists = existingRegistrationPathway != null;
+
+                if (isRegisteredWithAnotherAOAndWithdrawn)
+                {
+                    transformedRegistration.Id = existingRegistrationPathway.TqRegistrationProfileId;
+                    transformedRegistration.CreatedBy = existingRegistrationPathway.CreatedBy;
+                    transformedRegistration.CreatedOn = existingRegistrationPathway.CreatedOn;
+                    transformedRegistration.ModifiedOn = DateTime.UtcNow;
+                    transformedRegistration.ModifiedBy = model.PerformedBy;
+                    transformedRegistration.ModifiedOn = DateTime.UtcNow;
+                    return await _tqRegistrationRepository.UpdateAsync(transformedRegistration) > 0;
+                }
+                else if (hasRegistrationAlreadyExists)
                 {
                     _logger.LogWarning(LogEvent.RecordExists, $"Registration already exists for UniqueLearnerNumber = {model.Uln}. Method: AddRegistrationAsync()");
                     return false;
                 }
                 else
                 {
-                    return await _tqRegistrationRepository.CreateAsync(toAddRegistration) > 0;
+                    return await _tqRegistrationRepository.CreateAsync(transformedRegistration) > 0;
                 }
             }
             else
@@ -395,7 +411,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var errorMessage = string.Join(",", validateStage3Response.ValidationErrors.Select(e => e.ErrorMessage));
                 _logger.LogWarning(LogEvent.ManualRegistrationProcessFailed, $"Manual Registration failed to process due to validation errors = {errorMessage}. Method: AddRegistrationAsync()");
                 return false;
-            }
+            }            
         }
 
         public async Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln)
@@ -418,10 +434,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
             var tqRegistration = await _tqRegistrationRepository.GetRegistrationAsync(aoUkprn, profileId);
-
+            
             if (tqRegistration == null || (status != null && tqRegistration.Status != status)) return null;
 
-            return _mapper.Map<RegistrationDetails>(tqRegistration);
+            var isRegisteredWithOtherAo = false;
+            if (tqRegistration.Status == RegistrationPathwayStatus.Withdrawn)
+                isRegisteredWithOtherAo = await IsActiveWithOtherAoAsync(aoUkprn, tqRegistration.TqRegistrationProfile.UniqueLearnerNumber, tqRegistration.CreatedOn);
+
+            return _mapper.Map<RegistrationDetails>(tqRegistration, opt => opt.Items["IsActiveWithOtherAo"] = isRegisteredWithOtherAo);
         }
 
         public async Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId)
@@ -511,6 +531,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
             }
 
+            var isRegisteredWithOtherAo = await IsActiveWithOtherAoAsync(model.AoUkprn, tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, tqRegistrationPathway.CreatedOn);
+            if (isRegisteredWithOtherAo)
+            {
+                _logger.LogWarning(LogEvent.ManualReregistrationProcessFailed, $"Manual Reregistration failed to process due to validation error = Uln: {tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber} is already active with other Ao. Method: RejoinRegistrationAsync({model.AoUkprn}, {model.ProfileId})");
+                return false;
+            }
+
             var tqPathway = new TqRegistrationPathway
             {
                 TqRegistrationProfileId = tqRegistrationPathway.TqRegistrationProfileId,
@@ -533,11 +560,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var tqRegistrationPathway = await _tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == model.ProfileId
                                                                                         && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == model.AoUkprn, p => p, p => p.CreatedOn, false,
-                                                                                        p => p.TqProvider, p => p.TqProvider.TqAwardingOrganisation, p => p.TqProvider.TqAwardingOrganisation.TlPathway);
+                                                                                        p => p.TqProvider, p => p.TqProvider.TqAwardingOrganisation, p => p.TqProvider.TqAwardingOrganisation.TlPathway, p => p.TqRegistrationProfile);
 
             if (tqRegistrationPathway == null || tqRegistrationPathway.Status != RegistrationPathwayStatus.Withdrawn)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: ReregisterRegistrationAsync({model.AoUkprn}, {model.ProfileId})");
+                return false;
+            }
+
+            var isRegisteredWithOtherAo = await IsActiveWithOtherAoAsync(model.AoUkprn, tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, tqRegistrationPathway.CreatedOn);
+            if (isRegisteredWithOtherAo)
+            {
+                _logger.LogWarning(LogEvent.ManualReregistrationProcessFailed, $"Manual Reregistration failed to process due to validation error = Uln: {tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber} is already active with other Ao. Method: ReregisterRegistrationAsync({model.AoUkprn}, {model.ProfileId})");
                 return false;
             }
 
@@ -818,6 +852,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 response.ValidationErrors.Add(GetRegistrationValidationError(amendedRegistration.UniqueLearnerNumber, hasAoChanged ? ValidationMessages.ActiveUlnWithDifferentAo : ValidationMessages.CoreForUlnCannotBeChangedYet));
             }
+
+            // check if specialism has any assessments registered
+
+            var existingSpecialismsInDb = pathwaysToUpdate.SelectMany(p => p.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null));
+            var incomingSpecialisms = amendedRegistration.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList();
+
+            foreach (var existingSpecialism in existingSpecialismsInDb)
+            {
+                var isRequestToRemoveSpecialism = !incomingSpecialisms.Any(s => s.TlSpecialismId == existingSpecialism.TlSpecialismId);
+                var hasActiveAssessmentEntriesForExistingSpecialism = existingSpecialism.TqSpecialismAssessments.Any(a => a.IsOptedin && a.EndDate == null);
+
+                if (isRequestToRemoveSpecialism && hasActiveAssessmentEntriesForExistingSpecialism)
+                {
+                    response.ValidationErrors.Add(GetRegistrationValidationError(amendedRegistration.UniqueLearnerNumber, ValidationMessages.SpecialismCannotBeRemovedWhenActiveAssessmentEntryExist));
+                    break;
+                }
+            }
             return response;
         }
 
@@ -987,6 +1038,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var hasValidSpecialismCodes = coupletSpecialismCodes.Any(cs => specialismCodesToRegister.Except(cs.Split(Constants.PipeSeperator), StringComparer.InvariantCultureIgnoreCase).Count() == 0 );
             var hasValidCoupletSpecialismCodes = coupletSpecialismCodes.Any(cs => cs.Split(Constants.PipeSeperator).Except(specialismCodesToRegister, StringComparer.InvariantCultureIgnoreCase).Count() == 0);
             return hasValidSpecialismCodes && hasValidCoupletSpecialismCodes;
+        }
+
+        private async Task<bool> IsActiveWithOtherAoAsync(long aoUkprn, long uln, DateTime currentAoRegistrationDate)
+        {
+            var isWithOtherAo = await _tqRegistrationPathwayRepository
+                    .GetFirstOrDefaultAsync(OtherAo => OtherAo.TqRegistrationProfile.UniqueLearnerNumber == uln &&
+                    OtherAo.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != aoUkprn &&
+                    OtherAo.Status == RegistrationPathwayStatus.Active &&
+                    OtherAo.CreatedOn >= currentAoRegistrationDate) != null;
+
+            return isWithOtherAo;
         }
 
         #endregion

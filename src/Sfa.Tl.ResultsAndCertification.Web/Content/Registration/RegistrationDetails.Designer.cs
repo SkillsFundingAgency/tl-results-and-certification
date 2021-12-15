@@ -79,6 +79,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This learner&apos;s details cannot be changed. The learner has been withdrawn and has registered with a different awarding organisation..
+        /// </summary>
+        public static string Learner_Registered_With_Other_Ao {
+            get {
+                return ResourceManager.GetString("Learner_Registered_With_Other_Ao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search for a registration - Registration details page.
         /// </summary>
         public static string Page_Title {

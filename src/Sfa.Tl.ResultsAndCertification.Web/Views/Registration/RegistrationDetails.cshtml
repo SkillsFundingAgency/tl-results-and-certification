@@ -13,6 +13,13 @@
     <div class="govuk-grid-column-two-thirds">
 
         <h1 class="govuk-heading-l">@RegistrationDetails.Registration_Details_Heading_Text</h1>
+        @if (Model.IsActiveWithOtherAo)
+        {
+            <div class="govuk-inset-text" aria-label="Information">
+                @RegistrationDetails.Learner_Registered_With_Other_Ao
+            </div>
+        }
+
         <h2 class="govuk-heading-m">@string.Format(@RegistrationDetails.Uln_Heading_Text, Model.Uln)</h2>
 
         <dl class="govuk-summary-list">

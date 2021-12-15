@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             };
 
             InternalApiClient.GetLearnerRecordAsync(AoUkprn, ProfileId).Returns(_expectedApiLearnerResult);
-            InternalApiClient.GetAvailableAssessmentSeriesAsync(AoUkprn, ProfileId, ComponentType.Core).Returns(_expectedApiAvailableAssessmentSeries);
+            InternalApiClient.GetAvailableAssessmentSeriesAsync(AoUkprn, ProfileId, ComponentType.Core, _expectedApiLearnerResult.Pathway.Id.ToString()).Returns(_expectedApiAvailableAssessmentSeries);
         }
 
         [Fact]

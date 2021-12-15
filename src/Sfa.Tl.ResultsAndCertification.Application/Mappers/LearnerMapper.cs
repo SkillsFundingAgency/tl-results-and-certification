@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 {
@@ -75,6 +77,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.LarId, opts => opts.MapFrom(s => s.TlSpecialism.LarId))
                .ForMember(d => d.Name, opts => opts.MapFrom(s => s.TlSpecialism.Name))
+               .ForMember(d => d.TlSpecialismCombinations, opts => opts.MapFrom(s => s.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.TlPathwaySpecialismCombinations
+                                .Where(t => t.IsActive && s.TlSpecialism.TlPathwaySpecialismCombinations.Where(t => t.IsActive)
+                                .Select(c => c.GroupId).Contains(t.GroupId))
+                                .GroupBy(g => g.GroupId)
+                                .Select(c => new KeyValuePair<int, string>(c.Key, string.Join(Constants.PipeSeperator, c.Select(i => i.TlSpecialism.LarId))))))
                .ForMember(d => d.Assessments, opts => opts.MapFrom(s => s.TqSpecialismAssessments));
 
             CreateMap<TqSpecialismAssessment, Assessment>()

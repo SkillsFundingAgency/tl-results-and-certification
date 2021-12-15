@@ -127,7 +127,7 @@
     <value>Remove core component assessment entry from {0}</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Remove core - Assessment entries</value>
+    <value>Remove core - Assessment entry</value>
   </data>
   <data name="Remove_Series_Option_No" xml:space="preserve">
     <value>No, do not remove the entry from {0}</value>

@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 Uln = 1234567890,
                 Firstname = "First",
                 Lastname = "Last",
-                DateofBirth = System.DateTime.UtcNow.AddYears(-30),
+                DateofBirth = DateTime.UtcNow.AddYears(-30),
                 ProviderName = "Test Provider",
                 ProviderUkprn = 1234567,
                 TlevelTitle = "Tlevel Title",

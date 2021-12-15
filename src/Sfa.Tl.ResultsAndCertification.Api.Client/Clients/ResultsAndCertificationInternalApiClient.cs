@@ -198,9 +198,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<AssessmentDetails>(requestUri);
         }
 
-        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)
+        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType, string componentIds)
         {
-            var requestUri = string.Format(ApiConstants.GetAvailableAssessmentSeriesUri, aoUkprn, profileId, (int)componentType);
+            var requestUri = string.Format(ApiConstants.GetAvailableAssessmentSeriesUri, aoUkprn, profileId, (int)componentType, componentIds);
             return await GetAsync<AvailableAssessmentSeries>(requestUri);
         }
 
@@ -214,6 +214,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var requestUri = string.Format(ApiConstants.GetActiveAssessmentEntryDetailsUri, aoUkprn, assessmentId, (int)componentType);
             return await GetAsync<AssessmentEntryDetails>(requestUri);
+        }
+
+        public async Task<IEnumerable<AssessmentEntryDetails>> GetActiveSpecialismAssessmentEntriesAsync(long aoUkprn, string specialismAssessmentIds)
+        {
+            var requestUri = string.Format(ApiConstants.GetActiveSpecialismAssessmentEntriesUri, aoUkprn, specialismAssessmentIds);
+            return await GetAsync<IEnumerable<AssessmentEntryDetails>>(requestUri);
         }
 
         public async Task<bool> RemoveAssessmentEntryAsync(RemoveAssessmentEntryRequest model)

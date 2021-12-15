@@ -1,0 +1,62 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual.AddSpecialismAssessmentEntryViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Assessment
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = @AddSpecialismAssessmentEntry.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="@RouteConstants.SubmitAddSpecialismAssessmentEntry" class="form" id="addSpecialismAssessmentForm">
+            <partial name="_ValidationSummary" />
+
+            <h1 class="govuk-heading-l">@string.Format(@AddSpecialismAssessmentEntry.Page_Heading, Model.AssessmentSeriesName)</h1>
+
+            <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-top-7">
+                <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+                <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+                <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+            </dl>
+
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <input type="hidden" asp-for="AssessmentSeriesId" value="@Model.AssessmentSeriesId" />
+            <input type="hidden" asp-for="SpecialismsId" value="@Model.SpecialismsId" />
+
+            <div class="govuk-form-group" sfa-validation-for="IsOpted" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h2 class="govuk-fieldset__heading">
+                            @string.Format(@AddSpecialismAssessmentEntry.Heading_Is_This_Learner_Entering_Assessment, Model.SpecialismDisplayName, Model.AssessmentSeriesName)
+                        </h2>
+                    </legend>
+
+                    <div class="govuk-radios">
+                        <span sfa-validation-for="IsOpted"></span>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="isopted" asp-for="IsOpted" type="radio" value=true>
+                            <label class="govuk-label govuk-radios__label" for="isopted">
+                                @string.Format(@AddSpecialismAssessmentEntry.Add_Series_Option_Yes, Model.AssessmentSeriesName)
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="addSeries-no" asp-for="IsOpted" type="radio" value=false>
+                            <label class="govuk-label govuk-radios__label" for="addSeries-no">
+                                @string.Format(@AddSpecialismAssessmentEntry.Add_Series_Option_No, Model.AssessmentSeriesName)
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AddSpecialismAssessmentEntry.Submit_Button_Text</button>
+
+        </form>
+    </div>
+</div>
