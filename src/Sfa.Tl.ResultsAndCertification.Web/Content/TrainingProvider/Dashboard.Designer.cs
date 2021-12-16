@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to met the minimum standard for English and maths.
+        ///   Looks up a localized string similar to achieved at least level 2 maths and English.
         /// </summary>
         public static string Met_The_Minimum_Standard_for_English_And_Maths_Text {
             get {
@@ -151,7 +151,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The information you provide here will be used to calculate overall T Level results and issue certificates and statements of achievement. Please make sure it is correct as it will not be checked by ESFA..
+        ///   Looks up a localized string similar to Learners&apos; maths and English attainment could be referenced on both T Level certificates and statements of achievement..
         /// </summary>
         public static string Page_Inset_Text {
             get {
