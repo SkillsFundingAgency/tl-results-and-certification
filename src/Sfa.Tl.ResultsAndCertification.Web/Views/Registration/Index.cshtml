@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.DashboardViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 
 @{
@@ -25,7 +26,7 @@
     <div class="govuk-grid-column-one-half">
         <div class="govuk-form-group registration-card">
             <h2 class="govuk-heading-m govuk-!-padding-top-3">
-                <a class="govuk-link" asp-route="UploadRegistrationsFile">
+                <a class="govuk-link" asp-route="@RouteConstants.UploadRegistrationsFile">
                     @Dashboard.Card_Heading_Link_Multiple_Registrations
                 </a>
             </h2>
@@ -40,7 +41,7 @@
     <div class="govuk-grid-column-one-half">
         <div class="govuk-form-group registration-card">
             <h2 class="govuk-heading-m govuk-!-padding-top-3">
-                <a class="govuk-link" asp-route="AddRegistration">
+                <a class="govuk-link" asp-route="@RouteConstants.AddRegistration">
                     @Dashboard.Card_Heading_Link_Register_A_New_Learner
                 </a>
             </h2>
@@ -54,9 +55,9 @@
     <div class="govuk-grid-column-one-half">
         <div class="govuk-form-group registration-card">
             <h2 class="govuk-heading-m govuk-!-padding-top-3">
-                <a class="govuk-link" asp-route="SearchRegistration">
+                <a class="govuk-link" asp-route="@RouteConstants.SearchRegistration">
                     @Dashboard.Card_Heading_Link_Manage_Existing_Registration
-                </a>                
+                </a>
             </h2>
             <ul class="govuk-list govuk-list--bullet">
                 <li>@Dashboard.List_See_Registration_Details</li>
@@ -64,6 +65,20 @@
                 <li>@Dashboard.List_Change_A_Learners_Course</li>
                 <li>@Dashboard.List_Withdraw_A_Learners_Registration</li>
                 <li>@Dashboard.List_Reactivate_A_Withdrawn_Learner</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group registration-card">
+            <h2 class="govuk-heading-m govuk-!-padding-top-3">
+                <a class="govuk-link" asp-route="">
+                    @Dashboard.Card_Heading_Link_Download_Registrations_Data
+                </a>
+            </h2>
+
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@Dashboard.List_Download_Your_Data_As_Csv_File</li>
             </ul>
         </div>
     </div>
