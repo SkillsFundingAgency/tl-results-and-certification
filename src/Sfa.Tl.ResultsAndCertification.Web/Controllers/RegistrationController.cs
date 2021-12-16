@@ -644,6 +644,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        [Route("registrations-generating-download", Name = RouteConstants.RegistrationsGeneratingDownload)]
+        public async Task<IActionResult> RegistrationsGeneratingDownloadAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<RegistrationCancelledConfirmationViewModel>(CacheKey);
+            if (viewModel == null)
+
+            // TODO: must be a cahced page here. 
+
+            return View();
+        }
+
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());

@@ -142,6 +142,7 @@
         public const string RegistrationCancelledConfirmation = "RegistrationCancelledConfirmation";
         public const string RegistrationCannotBeDeleted = "RegistrationCannotBeDeleted";
         public const string RegistrationCannotBeWithdrawn = "RegistrationCannotBeWithdrawn";
+        public const string RegistrationsGeneratingDownload = "RegistrationsGeneratingDownload";
 
         // Assessment Entries
         public const string AssessmentDashboard = "AssessmentDashboard";
