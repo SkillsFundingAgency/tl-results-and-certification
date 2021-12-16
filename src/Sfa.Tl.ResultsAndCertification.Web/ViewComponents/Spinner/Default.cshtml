@@ -1,0 +1,13 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Spinner.SpinnerModel
+
+@if (Model != null)
+{
+    <div id="divSpinner" class="tl-box-container tl-hide">
+        <div class="tl-spinner-container" tabindex="0">
+            <div class="tl-spinner-control">
+                <div class="tl-spinner"></div>
+            </div>
+            <div id="spinnerText" class="tl-spinner-label govuk-body">@Model.Message</div>
+        </div>
+    </div>
+}
