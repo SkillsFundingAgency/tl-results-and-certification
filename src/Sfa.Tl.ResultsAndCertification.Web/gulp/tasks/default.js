@@ -161,6 +161,20 @@ gulp.task('copy-session-timeout-js', function () {
         .pipe(gulp.dest(paths.dist.defaultJs));
 });
 
+gulp.task('copy-data-export-js', function () {
+    return src([
+        'Frontend/src/javascripts/data-export.js'
+    ])
+        .pipe(concat('data-export.js'))
+        .pipe(minify({
+            noSource: true,
+            ext: {
+                min: '.min.js'
+            }
+        }))
+        .pipe(gulp.dest(paths.dist.defaultJs));
+});
+
 gulp.task('copy-assets', () => {
     return src(paths.src.defaultAssets)
         .pipe(gulp.dest(paths.dist.defaultAssets));

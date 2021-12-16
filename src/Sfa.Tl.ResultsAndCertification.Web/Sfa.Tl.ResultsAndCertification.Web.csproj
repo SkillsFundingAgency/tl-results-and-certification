@@ -73,6 +73,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AssessmentDetails.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Assessment\AssessmentsGeneratingDownload.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AssessmentsGeneratingDownload.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Assessment\AssessmentWithdrawnDetails.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -923,6 +928,10 @@
     <EmbeddedResource Update="Content\Assessment\AssessmentDetails.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AssessmentDetails.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Assessment\AssessmentsGeneratingDownload.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AssessmentsGeneratingDownload.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Assessment\AssessmentWithdrawnDetails.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

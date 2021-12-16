@@ -404,5 +404,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
         }
+
+        [HttpGet]
+        [Route("assessments-generating-download", Name = RouteConstants.AssessmentsGeneratingDownload)]
+        public IActionResult AssessmentsGeneratingDownload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("assessments-generating-download", Name = RouteConstants.SubmitAssessmentsGeneratingDownload)]
+        public IActionResult SubmitAssessmentsGeneratingDownload()
+        {
+            return RedirectToRoute(RouteConstants.AssessmentDashboard);
+        }
     }
 }

@@ -1,0 +1,31 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Assessment
+@using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Spinner
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = AssessmentsGeneratingDownload.Page_Title;
+}
+
+@section Scripts {
+    <script nws-csp-add-nonce="true" src="~/javascripts/data-export.min.js"></script>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="@RouteConstants.SubmitAssessmentsGeneratingDownload" id="submitDataExport">
+            <div class="govuk-form-group">
+                <h2 class="govuk-heading-l">
+                    @AssessmentsGeneratingDownload.Heading_Download_Assessments_Data
+                </h2>
+            </div>
+
+            <vc:spinner model="new SpinnerModel { Message = AssessmentsGeneratingDownload.Processing_Spinner_Text }"></vc:spinner>
+
+            <noscript>
+                <p class="govuk-body">@AssessmentsGeneratingDownload.Js_Disabled_Information</p>
+                <button id="btnContinue" class="govuk-button" data-module="govuk-button" type="submit" data-prevent-double-click="true">@AssessmentsGeneratingDownload.Js_Disabled_Continue_Button</button>
+            </noscript>
+        </form>
+    </div>
+</div>
