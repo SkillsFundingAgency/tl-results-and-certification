@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Dashboard.DashboardViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
@@ -19,7 +20,7 @@
     <div class="govuk-grid-column-one-half">
         <div class="govuk-form-group ao-dashboard-card">
             <h2 class="govuk-heading-m">
-                <a id="tlevelsLink" class="govuk-link" asp-route="TlevelsDashboard">
+                <a id="tlevelsLink" class="govuk-link" asp-route="@RouteConstants.TlevelsDashboard">
                     @AoDashboard.Tile_Tlevel_Heading
                 </a>
             </h2>
@@ -34,7 +35,7 @@
     <div class="govuk-grid-column-one-half">
         <div class="govuk-form-group ao-dashboard-card">
             <h2 class="govuk-heading-m">
-                <a id="providersLink" class="govuk-link" asp-route="FindProvider">
+                <a id="providersLink" class="govuk-link" asp-route="@RouteConstants.FindProvider">
                     @AoDashboard.Tile_Providers_Heading
                 </a>
             </h2>
@@ -49,7 +50,7 @@
     <div class="govuk-grid-column-one-half">
         <div class="govuk-form-group ao-dashboard-card">
             <h2 class="govuk-heading-m">
-                <a id="registrationsLink" class="govuk-link" asp-route="RegistrationDashboard">
+                <a id="registrationsLink" class="govuk-link" asp-route="@RouteConstants.RegistrationDashboard">
                     @AoDashboard.Tile_Registrations_Heading
                 </a>
             </h2>
@@ -58,6 +59,7 @@
                 <li>@AoDashboard.Tile_Registrations_Item_Change_Personal_Details</li>
                 <li>@AoDashboard.Tile_Registrations_Item_Change_Tlevels</li>
                 <li>@AoDashboard.Tile_Registrations_Item_Manage_Movers_Leavers_Rejoiners</li>
+                <li>@AoDashboard.Tile_Download_Registrations_Data</li>
             </ul>
         </div>
     </div>
@@ -65,12 +67,13 @@
     <div class="govuk-grid-column-one-half">
         <div class="govuk-form-group ao-dashboard-card">
             <h2 class="govuk-heading-m">
-                <a id="assessmentsLink" class="govuk-link" asp-route="AssessmentDashboard">
+                <a id="assessmentsLink" class="govuk-link" asp-route="@RouteConstants.AssessmentDashboard">
                     @AoDashboard.Tile_Assessments_Heading
                 </a>
             </h2>
             <ul class="govuk-list govuk-list--bullet">
                 <li>@AoDashboard.Tile_Assessments_Item_Tell_Us_When_To_Assessed</li>
+                <li>@AoDashboard.Tile_Download_Assessments_Data</li>
             </ul>
         </div>
     </div>
@@ -78,12 +81,13 @@
     <div class="govuk-grid-column-one-half">
         <div class="govuk-form-group ao-dashboard-card">
             <h2 class="govuk-heading-m">
-                <a id=""resultsLink class="govuk-link" asp-route="ResultsDashboard">
+                <a id="" resultsLink class="govuk-link" asp-route="@RouteConstants.ResultsDashboard">
                     @AoDashboard.Tile_Results_Heading
                 </a>
             </h2>
             <ul class="govuk-list govuk-list--bullet">
                 <li>@AoDashboard.Tile_Results_Item_Tell_Us_Initial_Grades</li>
+                <li>@AoDashboard.Tile_Download_Results_Data</li>
             </ul>
         </div>
     </div>
@@ -91,7 +95,7 @@
     <div class="govuk-grid-column-one-half">
         <div class="govuk-form-group ao-dashboard-card">
             <h2 class="govuk-heading-m">
-                <a id="appealLink" class="govuk-link" asp-route="StartReviewsAndAppeals">
+                <a id="appealLink" class="govuk-link" asp-route="@RouteConstants.StartReviewsAndAppeals">
                     @AoDashboard.Tile_Appeals_Heading
                 </a>
             </h2>
@@ -105,7 +109,7 @@
     <div class="govuk-grid-column-one-half">
         <div class="govuk-form-group ao-dashboard-card">
             <h2 class="govuk-heading-m">
-                <a id="accountLink" class="govuk-link" asp-route="AccountProfile">
+                <a id="accountLink" class="govuk-link" asp-route="@RouteConstants.AccountProfile">
                     @AoDashboard.Tile_Account_Heading
                 </a>
             </h2>

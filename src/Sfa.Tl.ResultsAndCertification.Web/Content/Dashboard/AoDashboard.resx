@@ -159,6 +159,15 @@
   <data name="Tile_Assessments_Item_Tell_Us_When_To_Assessed" xml:space="preserve">
     <value>Tell us when your learners will be assessed</value>
   </data>
+  <data name="Tile_Download_Assessments_Data" xml:space="preserve">
+    <value>Download assessments data</value>
+  </data>
+  <data name="Tile_Download_Registrations_Data" xml:space="preserve">
+    <value>Download registrations data</value>
+  </data>
+  <data name="Tile_Download_Results_Data" xml:space="preserve">
+    <value>Download results data</value>
+  </data>
   <data name="Tile_Providers_Heading" xml:space="preserve">
     <value>Providers</value>
   </data>

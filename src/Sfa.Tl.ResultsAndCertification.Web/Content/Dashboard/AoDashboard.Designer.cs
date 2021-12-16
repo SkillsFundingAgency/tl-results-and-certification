@@ -187,6 +187,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download assessments data.
+        /// </summary>
+        public static string Tile_Download_Assessments_Data {
+            get {
+                return ResourceManager.GetString("Tile_Download_Assessments_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download registrations data.
+        /// </summary>
+        public static string Tile_Download_Registrations_Data {
+            get {
+                return ResourceManager.GetString("Tile_Download_Registrations_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download results data.
+        /// </summary>
+        public static string Tile_Download_Results_Data {
+            get {
+                return ResourceManager.GetString("Tile_Download_Results_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Providers.
         /// </summary>
         public static string Tile_Providers_Heading {
