@@ -646,14 +646,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("registrations-generating-download", Name = RouteConstants.RegistrationsGeneratingDownload)]
-        public async Task<IActionResult> RegistrationsGeneratingDownloadAsync()
+        public IActionResult RegistrationsGeneratingDownload()
         {
-            var viewModel = await _cacheService.GetAndRemoveAsync<RegistrationCancelledConfirmationViewModel>(CacheKey);
-            if (viewModel == null)
-
-            // TODO: must be a cahced page here. 
-
             return View();
+        }
+
+        [HttpPost]
+        [Route("registrations-generating-download", Name = RouteConstants.SubmitRegistrationsGeneratingDownload)]
+        public IActionResult SubmitRegistrationsGeneratingDownload()
+        {
+            return RedirectToRoute(RouteConstants.RegistrationDashboard);
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()

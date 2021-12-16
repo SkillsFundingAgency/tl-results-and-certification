@@ -1,30 +1,31 @@
-﻿<div class="govuk-grid-row">
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+@using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Spinner
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = RegistrationsGeneratingDownload.Page_Title;
+}
+
+@section Scripts {
+    <script nws-csp-add-nonce="true" src="~/javascripts/data-export.min.js"></script>
+}
+
+<div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form class="form">
+        <form asp-route="@RouteConstants.SubmitRegistrationsGeneratingDownload" id="submitDataExport">
             <div class="govuk-form-group">
-                <fieldset class="govuk-fieldset">
-
-                    <div class="govuk-form-group">
-                        <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                <h1 class="govuk-fieldset__heading">
-                                    Generating registrations data
-                                </h1>
-                            </legend>
-                        </fieldset>
-                    </div>
-
-                    <div class="tl-box-container">
-                        <div class="tl-spinner-container" tabindex="0">
-                            <div class="tl-spinner-control">
-                                <div class="tl-spinner"></div>
-                            </div>
-                            <div id="spinnerText" class="tl-spinner-label govuk-body">Upload.Upload_Processing_Spinner_Text</div>
-                        </div>
-                    </div>
-
-                </fieldset>
+                <h2 class="govuk-heading-l">
+                    @RegistrationsGeneratingDownload.Heading_Download_Registrations_Data
+                </h2>
             </div>
+
+            <vc:spinner model="new SpinnerModel { Message = RegistrationsGeneratingDownload.Processing_Spinner_Text }"></vc:spinner>
+
+            <noscript>
+                <p class="govuk-body">@RegistrationsGeneratingDownload.Js_Disabled_Information</p>
+                <button id="btnContinue" class="govuk-button" data-module="govuk-button" type="submit" data-prevent-double-click="true">@RegistrationsGeneratingDownload.Js_Disabled_Continue_Button</button>
+            </noscript>
         </form>
     </div>
 </div>
