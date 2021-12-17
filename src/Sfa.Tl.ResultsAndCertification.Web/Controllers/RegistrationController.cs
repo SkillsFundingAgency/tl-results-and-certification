@@ -655,7 +655,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("registrations-generating-download", Name = RouteConstants.SubmitRegistrationsGeneratingDownload)]
         public IActionResult SubmitRegistrationsGeneratingDownload()
         {
-            return RedirectToRoute(RouteConstants.RegistrationDashboard);
+            return RedirectToRoute(RouteConstants.RegistrationsNoRecordsFound);
+        }
+
+        [HttpGet]
+        [Route("registrations-no-records-found", Name = RouteConstants.RegistrationsNoRecordsFound)]
+        public IActionResult RegistrationsNoRecordsFound()
+        {
+            return View(new RegistrationsNoRecordsFoundViewModel());
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()

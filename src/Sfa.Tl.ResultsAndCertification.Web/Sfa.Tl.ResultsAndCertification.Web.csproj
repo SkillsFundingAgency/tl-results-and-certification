@@ -318,6 +318,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>RegistrationCannotBeWithdrawn.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Registration\RegistrationsNoRecordsFound.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RegistrationsNoRecordsFound.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\ReregisterCannotSelectSameCore.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1134,6 +1139,10 @@
     <EmbeddedResource Update="Content\Registration\RegistrationCannotBeWithdrawn.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RegistrationCannotBeWithdrawn.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\RegistrationsNoRecordsFound.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RegistrationsNoRecordsFound.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\ReregisterCannotSelectSameCore.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

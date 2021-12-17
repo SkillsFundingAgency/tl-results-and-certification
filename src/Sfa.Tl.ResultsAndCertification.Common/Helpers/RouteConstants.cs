@@ -143,6 +143,9 @@
         public const string RegistrationCannotBeDeleted = "RegistrationCannotBeDeleted";
         public const string RegistrationCannotBeWithdrawn = "RegistrationCannotBeWithdrawn";
 
+        // Data Export
+        public const string RegistrationsNoRecordsFound = "RegistrationsNoRecordsFound";
+
         // Assessment Entries
         public const string AssessmentDashboard = "AssessmentDashboard";
         public const string UploadAssessmentsFile = "UploadAssessmentsFile";
@@ -165,7 +168,7 @@
         public const string SubmitRegistrationsGeneratingDownload = "SubmitRegistrationsGeneratingDownload ";
         public const string AssessmentsGeneratingDownload = "AssessmentsGeneratingDownload";
         public const string SubmitAssessmentsGeneratingDownload = "SubmitAssessmentsGeneratingDownload";
-        public const string AssessmentsNoRecordsFound = "AssessmentsNoRecordsFound";        
+        public const string AssessmentsNoRecordsFound = "AssessmentsNoRecordsFound";
 
         // Search Assessment Entries
         public const string SearchAssessments = "SearchAssessments";
