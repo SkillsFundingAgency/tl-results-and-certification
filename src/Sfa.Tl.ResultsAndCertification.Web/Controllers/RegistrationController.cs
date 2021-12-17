@@ -644,6 +644,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        [Route("registrations-generating-download", Name = RouteConstants.RegistrationsGeneratingDownload)]
+        public IActionResult RegistrationsGeneratingDownload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("registrations-generating-download", Name = RouteConstants.SubmitRegistrationsGeneratingDownload)]
+        public IActionResult SubmitRegistrationsGeneratingDownload()
+        {
+            return RedirectToRoute(RouteConstants.RegistrationDashboard);
+        }
+
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());

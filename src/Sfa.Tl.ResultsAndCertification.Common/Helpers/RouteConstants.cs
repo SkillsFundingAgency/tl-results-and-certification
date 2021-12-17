@@ -161,6 +161,8 @@
         public const string SubmitRemoveSpecialismAssessmentEntries = "SubmitRemoveSpecialismAssessmentEntries";
 
         // Data Export
+        public const string RegistrationsGeneratingDownload = "RegistrationsGeneratingDownload";
+        public const string SubmitRegistrationsGeneratingDownload = "SubmitRegistrationsGeneratingDownload ";
         public const string AssessmentsGeneratingDownload = "AssessmentsGeneratingDownload";
         public const string SubmitAssessmentsGeneratingDownload = "SubmitAssessmentsGeneratingDownload";
         public const string AssessmentsNoRecordsFound = "AssessmentsNoRecordsFound";        

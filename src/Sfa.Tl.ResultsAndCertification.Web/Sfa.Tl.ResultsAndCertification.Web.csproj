@@ -303,6 +303,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CheckAndSubmit.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Registration\RegistrationsGeneratingDownload.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RegistrationsGeneratingDownload.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\RegistrationCannotBeDeleted.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1117,6 +1122,10 @@
     <EmbeddedResource Update="Content\ProviderAddress\CheckAndSubmit.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CheckAndSubmit.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\RegistrationsGeneratingDownload.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RegistrationsGeneratingDownload.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\RegistrationCannotBeDeleted.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
