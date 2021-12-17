@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
             PrepareUcasFileRecords(ucasData);
 
             ExpectedByteData = ReadAllBytesFromFile(fileName);
-            ActualByteData = CsvExtensions.WriteFileAsync(UcasDataRecords, typeof(CsvMapper)).GetAwaiter().GetResult();
+            ActualByteData = CsvExtensions.WriteFileAsync(UcasDataRecords, "|", false, typeof(CsvMapper)).GetAwaiter().GetResult();
         }
 
         [Fact]

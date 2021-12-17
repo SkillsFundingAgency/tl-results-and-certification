@@ -1,12 +1,9 @@
 ﻿namespace Sfa.Tl.ResultsAndCertification.Common.Enum
 {
-    public enum DocumentType
+    public enum DataExportType
     {
         Registrations = 1,
         Assessments = 2,
-        Results = 3,
-        Documents = 4,
-        Ucas = 5,
-        DataExports = 6
+        Results = 3
     }
 }

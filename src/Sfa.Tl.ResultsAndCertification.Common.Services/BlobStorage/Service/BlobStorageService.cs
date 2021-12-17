@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -28,6 +29,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service
         public async Task UploadFromByteArrayAsync(BlobStorageData blobStorageData)
         {
             var blobClient = await GetBlobClient(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
+            await blobClient.SetMetadataAsync(new Dictionary<string, string> { { "RequestedBy", blobStorageData.UserName } }); // TODO.
+            
             await using var fileStream = new MemoryStream(blobStorageData.FileData);
             await blobClient.UploadAsync(fileStream);
             fileStream.Close();
