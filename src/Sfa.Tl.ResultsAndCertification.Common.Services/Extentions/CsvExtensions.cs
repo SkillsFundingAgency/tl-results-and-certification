@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
                     cw.Context.RegisterClassMap(map);
                 }
 
-                if (writeHeader) 
+                if (writeHeader)
                 {
                     var headerNames = typeof(T).GetProperties().Select(pr => pr.GetCustomAttribute<DisplayNameAttribute>(false).DisplayName).ToList();
                     headerNames.ForEach(headerName =>

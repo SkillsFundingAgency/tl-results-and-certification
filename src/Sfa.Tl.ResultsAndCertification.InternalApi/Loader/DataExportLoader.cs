@@ -16,12 +16,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
     {
         private readonly IDataExportService _dataExportService;
         private readonly IBlobStorageService _blobStorageService;
-        private readonly ILogger<DataExportLoader> _logger;
 
-
-        public DataExportLoader(IDataExportService dataExportService)
+        public DataExportLoader(IDataExportService dataExportService, IBlobStorageService blobStorageService)
         {
             _dataExportService = dataExportService;
+            _blobStorageService = blobStorageService;
         }
 
         public async Task<DataExportResponse> ProcessDataExportAsync(long aoUkprn, DataExportType requestType, string requestedBy)
