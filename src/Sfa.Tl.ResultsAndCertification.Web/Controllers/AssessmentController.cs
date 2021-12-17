@@ -416,7 +416,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("assessments-generating-download", Name = RouteConstants.SubmitAssessmentsGeneratingDownload)]
         public IActionResult SubmitAssessmentsGeneratingDownload()
         {
-            return RedirectToRoute(RouteConstants.AssessmentDashboard);
+            return RedirectToRoute(RouteConstants.AssessmentsNoRecordsFound);
+        }
+
+        [HttpGet]
+        [Route("assessments-no-records-found", Name = RouteConstants.AssessmentsNoRecordsFound)]
+        public IActionResult AssessmentsNoRecordsFound()
+        {
+            return View(new AssessmentsNoRecordsFoundViewModel());
         }
     }
 }

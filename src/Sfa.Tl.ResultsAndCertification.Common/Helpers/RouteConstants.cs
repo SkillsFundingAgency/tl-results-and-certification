@@ -163,6 +163,7 @@
         // Data Export
         public const string AssessmentsGeneratingDownload = "AssessmentsGeneratingDownload";
         public const string SubmitAssessmentsGeneratingDownload = "SubmitAssessmentsGeneratingDownload";
+        public const string AssessmentsNoRecordsFound = "AssessmentsNoRecordsFound";        
 
         // Search Assessment Entries
         public const string SearchAssessments = "SearchAssessments";
