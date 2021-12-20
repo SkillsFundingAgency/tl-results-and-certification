@@ -28,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.AssessmentS
             _data.Should().NotBeNull();
             _result.Should().NotBeNull();
             _result.Id.Should().Be(1);
+            _result.ComponentType.Should().Be(_data.ComponentType);
             _result.Name.Should().Be(_data.Name);
             _result.Description.Should().Be(_data.Description);
             _result.Year.Should().Be(_data.Year);

@@ -123,6 +123,9 @@
   <data name="Change_Status_Action_Link_Text" xml:space="preserve">
     <value>Change status</value>
   </data>
+  <data name="Learner_Registered_With_Other_Ao" xml:space="preserve">
+    <value>This learner's details cannot be changed. The learner has been withdrawn and has registered with a different awarding organisation.</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Search for a registration - Registration details page</value>
   </data>

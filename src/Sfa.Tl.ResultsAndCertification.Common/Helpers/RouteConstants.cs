@@ -152,11 +152,13 @@
         public const string ProblemWithAssessmentsUpload = "ProblemWithAssessmentsUpload";
         public const string DownloadAssessmentErrors = "DownloadAssessmentErrors";
         public const string AddCoreAssessmentEntry = "AddCoreAssessmentEntry";
-        public const string EntrySeries = "SubmitAddCoreAssessmentEntry";
-        public const string AssessmentEntryAddedConfirmation = "AssessmentEntryAddedConfirmation";
+        public const string EntrySeries = "SubmitAddCoreAssessmentEntry";        
         public const string RemoveCoreAssessmentEntry = "RemoveCoreAssessmentEntry";
         public const string SubmitRemoveCoreAssessmentEntry = "SubmitRemoveCoreAssessmentEntry";
-        public const string AssessmentEntryRemovedConfirmation = "AssessmentEntryRemovedConfirmation";
+        public const string AddSpecialismAssessmentEntry = "AddSpecialismAssessmentEntry";
+        public const string SubmitAddSpecialismAssessmentEntry = "SubmitAddSpecialismAssessmentEntry";
+        public const string RemoveSpecialismAssessmentEntries = "RemoveSpecialismAssessmentEntries";
+        public const string SubmitRemoveSpecialismAssessmentEntries = "SubmitRemoveSpecialismAssessmentEntries";
 
         // Search Assessment Entries
         public const string SearchAssessments = "SearchAssessments";

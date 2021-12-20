@@ -9,10 +9,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 {
     public class When_Called_With_Invalid_Data : TestSetup
     {
-        private AssessmentDetailsViewModel mockresult = null;
+        private AssessmentUlnWithdrawnViewModel _mockresult = null;
         public override void Given()
         {
-            AssessmentLoader.GetAssessmentDetailsAsync(AoUkprn, ProfileId).Returns(mockresult);
+            AssessmentLoader.GetAssessmentDetailsAsync<AssessmentUlnWithdrawnViewModel>(AoUkprn, ProfileId).Returns(_mockresult);
         }
 
         [Fact]

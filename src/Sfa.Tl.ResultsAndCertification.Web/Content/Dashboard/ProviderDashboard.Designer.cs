@@ -106,6 +106,60 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ..
+        /// </summary>
+        public static string FullStop {
+            get {
+                return ResourceManager.GetString("FullStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On Monday 15 November, at the Second Reading of the Skills Bill, the Secretary of State announced changes to the English and maths requirements for T Levels. We have removed the exit requirement with immediate effect for all T Level students..
+        /// </summary>
+        public static string Inset_Maths_And_English_Requirement_Changes_Info {
+            get {
+                return ResourceManager.GetString("Inset_Maths_And_English_Requirement_Changes_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More about the changes to T Level exit requirements and the timeline for level 3 qualifications reform.
+        /// </summary>
+        public static string Inset_More_About_The_Changes_To_TLevel_Exit_Requirements {
+            get {
+                return ResourceManager.GetString("Inset_More_About_The_Changes_To_TLevel_Exit_Requirements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We expect for the service to fully reflect current policy in spring 2022..
+        /// </summary>
+        public static string Inset_We_Expect_For_The_Service_To_Fully_Reflect_Current_Policy_Info {
+            get {
+                return ResourceManager.GetString("Inset_We_Expect_For_The_Service_To_Fully_Reflect_Current_Policy_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The wording in this service has not yet been updated to reflect the policy changes.
+        /// </summary>
+        public static string List_The_Wording_In_This_Service_Has_Not_Yet_Been_Updated {
+            get {
+                return ResourceManager.GetString("List_The_Wording_In_This_Service_Has_Not_Yet_Been_Updated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must still provide us with English and maths attainment information.
+        /// </summary>
+        public static string List_You_Must_Still_Provide_Us_English_And_Maths_Attainment_Info {
+            get {
+                return ResourceManager.GetString("List_You_Must_Still_Provide_Us_English_And_Maths_Attainment_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add or change your learners&apos; English and maths achievements and industry placement completion status.
         /// </summary>
         public static string Manage_Learner_TLevel_Records_Description_Text {

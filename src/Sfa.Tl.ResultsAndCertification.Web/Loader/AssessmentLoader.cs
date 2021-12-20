@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
@@ -10,7 +11,9 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -83,16 +86,43 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<UlnAssessmentsNotFoundViewModel>(response);
         }
 
-        public async Task<AssessmentDetailsViewModel> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
+        public async Task<T> GetAssessmentDetailsAsync<T>(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            var response = await _internalApiClient.GetAssessmentDetailsAsync(aoUkprn, profileId, status);
-            return _mapper.Map<AssessmentDetailsViewModel>(response);
+            var learnerDetails = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId, status);
+            var assessmentSeries = await _internalApiClient.GetAssessmentSeriesAsync();
+
+            if (learnerDetails == null || assessmentSeries == null || !assessmentSeries.Any())
+                return _mapper.Map<T>(null);
+
+            var learnerAssessmentDetails = _mapper.Map<T>(learnerDetails, opt =>
+            {
+                opt.Items["currentCoreAssessmentSeriesId"] = GetValidAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Core)?.FirstOrDefault()?.Id ?? 0;
+                opt.Items["currentSpecialismAssessmentSeriesId"] = GetValidAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Specialism)?.FirstOrDefault()?.Id ?? 0;
+                opt.Items["coreSeriesName"] = GetNextAvailableAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Core)?.Name;
+                opt.Items["specialismSeriesName"] = GetNextAvailableAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Specialism)?.Name;
+            });
+            return learnerAssessmentDetails;
         }
 
-        public async Task<AddAssessmentEntryViewModel> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)
+        public async Task<T> GetAddAssessmentEntryAsync<T>(long aoUkprn, int profileId, ComponentType componentType, string componentIds = null)
         {
-            var response = await _internalApiClient.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, componentType);
-            return _mapper.Map<AddAssessmentEntryViewModel>(response);
+            var learnerDetails = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId);
+            if (learnerDetails == null || (componentType == ComponentType.Specialism && componentIds == null))
+                return _mapper.Map<T>(null);
+
+            var ids = componentType == ComponentType.Core ? learnerDetails.Pathway.Id.ToString() : componentIds;
+
+            var availableSeries = await _internalApiClient.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, componentType, ids);
+            if (availableSeries == null)
+                return _mapper.Map<T>(null);
+
+            var result = _mapper.Map<T>(learnerDetails, opt =>
+            {
+                opt.Items["currentSpecialismAssessmentSeriesId"] = availableSeries.AssessmentSeriesId;
+            });
+            _mapper.Map(availableSeries, result);
+
+            return result;
         }
 
         public async Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(long aoUkprn, AddAssessmentEntryViewModel viewModel)
@@ -101,10 +131,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.AddAssessmentEntryAsync(request);
         }
 
+        public async Task<AddAssessmentEntryResponse> AddSpecialismAssessmentEntryAsync(long aoUkprn, AddSpecialismAssessmentEntryViewModel viewModel)
+        {
+            var request = _mapper.Map<AddAssessmentEntryRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.AddAssessmentEntryAsync(request);
+        }
+
         public async Task<AssessmentEntryDetailsViewModel> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, ComponentType componentType)
         {
-            var response = await _internalApiClient.GetActiveAssessmentEntryDetailsAsync(aoUkprn, assessmentId, componentType);
-            return _mapper.Map<AssessmentEntryDetailsViewModel>(response);
+            var assessmentEntryDetails = await _internalApiClient.GetActiveAssessmentEntryDetailsAsync(aoUkprn, assessmentId, componentType);
+            if (assessmentEntryDetails == null) return null;
+
+            var learnerDetails = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, assessmentEntryDetails.ProfileId);
+            if (learnerDetails == null) return null;
+
+            var result = _mapper.Map<AssessmentEntryDetailsViewModel>(learnerDetails);
+            return _mapper.Map(assessmentEntryDetails, result);
         }
 
         public async Task<bool> RemoveAssessmentEntryAsync(long aoUkprn, AssessmentEntryDetailsViewModel viewModel)
@@ -112,5 +154,63 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var request = _mapper.Map<RemoveAssessmentEntryRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
             return await _internalApiClient.RemoveAssessmentEntryAsync(request);
         }
+
+        public async Task<RemoveSpecialismAssessmentEntryViewModel> GetRemoveSpecialismAssessmentEntriesAsync(long aoUkprn, int profileId, string specialismAssessmentIds)
+        {
+            // Ensure the input specialismAssessmentIds contains numbers. 
+            var requestedAssessmentIds = specialismAssessmentIds?.Split(Constants.PipeSeperator)?.ToList();
+            if (requestedAssessmentIds == null || !requestedAssessmentIds.All(x => x.IsInt()))
+                return null;
+
+            // Ensure learner details are found
+            var learnerDetails = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId);
+            if (learnerDetails == null || learnerDetails.Pathway == null || !learnerDetails.Pathway.Specialisms.Any())
+                return null;
+
+            // Ensure all requested specialisms assessmentId's are valid
+            var splAssessmentsFoundInRegistration = learnerDetails.Pathway.Specialisms.Where(x => x.Assessments.Any(a => requestedAssessmentIds.Contains(a.Id.ToString())));
+            if (requestedAssessmentIds.Count() != splAssessmentsFoundInRegistration.Count())
+                return null;
+
+            // Ensure all requested entries are currently active
+            var assessmentEntryDetails = await _internalApiClient.GetActiveSpecialismAssessmentEntriesAsync(aoUkprn, specialismAssessmentIds);
+            if (assessmentEntryDetails == null || requestedAssessmentIds.Count() != assessmentEntryDetails.Count() || assessmentEntryDetails.GroupBy(x => x.AssessmentSeriesName).Count() != 1)
+                return null;
+
+            var removeAsessmentEntryViewModel = _mapper.Map<RemoveSpecialismAssessmentEntryViewModel>(learnerDetails, opt => { opt.Items["currentSpecialismAssessmentSeriesId"] = assessmentEntryDetails.FirstOrDefault().AssessmentSeriesId; }); 
+            removeAsessmentEntryViewModel.AssessmentSeriesName = assessmentEntryDetails.FirstOrDefault().AssessmentSeriesName.ToLowerInvariant();
+            removeAsessmentEntryViewModel.SpecialismAssessmentIds = specialismAssessmentIds; 
+            return removeAsessmentEntryViewModel;
+        }
+
+        public async Task<bool> RemoveSpecialismAssessmentEntryAsync(long aoUkprn, RemoveSpecialismAssessmentEntryViewModel viewModel)
+        {
+            var request = _mapper.Map<RemoveAssessmentEntryRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.RemoveAssessmentEntryAsync(request);
+        }
+
+        #region Private methods
+
+        private IList<AssessmentSeriesDetails> GetValidAssessmentSeries(IList<AssessmentSeriesDetails> assessmentSeries, int academicYear, ComponentType componentType)
+        {
+            var currentDate = DateTime.UtcNow.Date;
+            var startInYear = componentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
+
+            var series = assessmentSeries?.Where(s => s.ComponentType == componentType && s.Year > academicYear + startInYear &&
+                                        s.Year <= academicYear + Constants.AssessmentEndInYears &&
+                                        currentDate >= s.StartDate && currentDate <= s.EndDate)?.OrderBy(a => a.Id)?.ToList();
+
+            return series;
+        }
+
+        private AssessmentSeriesDetails GetNextAvailableAssessmentSeries(IList<AssessmentSeriesDetails> assessmentSeries, int academicYear, ComponentType componentType)
+        {
+            var startInYear = componentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
+            var series = assessmentSeries?.OrderBy(a => a.Id)?.FirstOrDefault(s => s.ComponentType == componentType && s.Year > academicYear + startInYear &&
+                                        s.Year <= academicYear + Constants.AssessmentEndInYears && DateTime.UtcNow.Date <= s.EndDate);
+            return series;
+        }
+
+        #endregion
     }
 }

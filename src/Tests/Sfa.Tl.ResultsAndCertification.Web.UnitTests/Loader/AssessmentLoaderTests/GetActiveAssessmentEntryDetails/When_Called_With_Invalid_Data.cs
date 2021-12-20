@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Xunit;
 
 
@@ -7,10 +9,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
 {
     public class When_Called_With_Invalid_Data : TestSetup
     {
+        private LearnerRecord _expectedApiLearnerResult;
+
         public override void Given()
         {
-            expectedApiResult = null;
-            InternalApiClient.GetActiveAssessmentEntryDetailsAsync(AoUkprn, ProfileId, componentType).Returns(expectedApiResult);
+            _expectedApiLearnerResult = new LearnerRecord();
+            ExpectedApiResult = null;
+
+            InternalApiClient.GetLearnerRecordAsync(AoUkprn, AssessmentId).Returns(_expectedApiLearnerResult);
+            InternalApiClient.GetActiveAssessmentEntryDetailsAsync(AoUkprn, AssessmentId, componentType).Returns(ExpectedApiResult);
         }
 
         [Fact]

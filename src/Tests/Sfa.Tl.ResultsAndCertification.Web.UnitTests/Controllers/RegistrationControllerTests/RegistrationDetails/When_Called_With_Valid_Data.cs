@@ -31,7 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
                 PathwayDisplayName = "Pathway (7654321)",
                 SpecialismsDisplayName = new List<string> { "Specialism1 (2345678)", "Specialism2 (555678)" },
                 AcademicYear = 2020,
-                Status = RegistrationPathwayStatus.Active
+                Status = RegistrationPathwayStatus.Active,
+                IsActiveWithOtherAo = false
             };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() } };

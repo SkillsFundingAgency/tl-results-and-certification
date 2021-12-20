@@ -40,13 +40,16 @@
         public const string CoreForUlnCannotBeChangedYet = "Core for ULN cannot be changed yet";
         public const string RegistrationCannotBeInWithdrawnStatus = "Cannot upload data for a withdrawn registration or make it active - these can only be done manually";
         public const string AcademicYearCannotBeChanged = "Year of registration cannot be changed - the learner must be withdrawn and re-registered";
+        public const string LearnerPreviouslyRegisteredWithAnotherAo = "This learner was previously registered with another AO. You must add it as an individual record before you can include it in a bulk upload";
+        public const string SpecialismCannotBeRemovedWhenActiveAssessmentEntryExist = "This learner has been registered for an occupational specialism assessment so the specialism cannot be removed. Either remove the record from the bulk upload or remove the specialism assessment entry for this learner and try again";
 
         // Assessments - Bulk stage 2 validations
         public const string CorecodeMustBeDigitsOnly = "Core code must have 8 digits only";
         public const string CorecodeRequired = "Core code required when core assessment entry is included";
-        public const string SpecialismcodeRequired = "Specialism code required when core assessment entry is included";
+        public const string SpecialismcodeRequired = "Assessment entry series must be accompanied by a specialism code (or codes)";
         public const string CoreAssementEntryInvalidFormat = "Core assessment entry format must be text followed by a space and a 4-digit year";
         public const string SpecialismAssementEntryInvalidFormat = "Specialism assessment entry format must be text followed by a space and a 4-digit year";
+        public const string SpecialismCodesMustBeDifferent = "Specialism codes must be two different numbers";
         public const string AtleastOneEntryRequired = "File must contain at least one ULN on one row";
         public const string NoDataAfterUln = "No data after ULN - need at least one core code or one specialism code";
 
@@ -54,11 +57,12 @@
         public const string UlnNotRegistered = "ULN not registered with awarding organisation";
         public const string CannotAddAssessmentToWithdrawnRegistration = "Cannot add assessment entries to a withdrawn registration";
         public const string InvalidCoreCode = "Core code either not recognised or not registered for this ULN";
-        public const string InvalidSpecialismCode = "Specialism code either not recognised or not registered for this ULN";
+        public const string InvalidSpecialismCode = "There is a problem with the specialism code(s)";
         public const string InvalidCoreAssessmentEntry = "Core assessment entry must be in the format detailed in the 'format rules' and 'example' columns in the technical specification and can only be for the next available series (the second series of the first academic year or subsequent approaching series)";
         public const string InvalidNextCoreAssessmentEntry = "Available to add after the current assessment series has passed";
-        public const string InvalidSpecialismAssessmentEntry = "Specialism assessment entry must be in the format detailed in the 'format rules' and 'example' columns in the technical specification and can only be for the next available series (the second series of the second academic year or subsequent approaching series)";
-        public const string InvalidNextSpecialismAssessmentEntry = "Specialism assessment entry is beyond the next available series - only the next available series is allowed (the second series of the second academic year or subsequent approaching series)";
+        public const string InvalidSpecialismAssessmentEntry = "Specialism assessment entry must be in the format detailed in the 'format rules' and 'example' columns in the technical specification. They can only be for the next available series.";
+        public const string InvalidNextSpecialismAssessmentEntry = "Specialism assessment entry is beyond the next available series - only the next available series is allowed";
+        public const string SpecialismCodeMustBePair = "Specialism code can only be entered or removed as part of a pair";
 
         // Assessments - Bulk stage 4 validations
         public const string AssessmentEntryCannotBeRemovedHasResult = "This assessment has a result so the assessment entry cannot be removed. Either remove the record from the bulk upload or enter the current assessment series to indicate a resit";

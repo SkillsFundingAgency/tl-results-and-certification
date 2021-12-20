@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Xunit;
@@ -9,6 +11,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 {
     public class When_ModelState_Invalid : TestSetup
     {
+        private AddAssessmentEntryViewModel _mockresult = null;
+
         public override void Given()
         {
             ViewModel = new AddAssessmentEntryViewModel
@@ -19,6 +23,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 IsOpted = null
             };
 
+            _mockresult = new AddAssessmentEntryViewModel
+            {
+                ProfileId = 1,
+                AssessmentSeriesId = 11,
+                AssessmentSeriesName = "Summer 2021",
+            };
+
+            AssessmentLoader.GetAddAssessmentEntryAsync<AddAssessmentEntryViewModel>(AoUkprn, ProfileId, ComponentType.Core, ComponentLarIds).Returns(_mockresult);
             Controller.ModelState.AddModelError(nameof(AddAssessmentEntryViewModel.IsOpted), AssessmentContent.AddCoreAssessmentEntry.Select_Option_To_Add_Validation_Text);
         }
 

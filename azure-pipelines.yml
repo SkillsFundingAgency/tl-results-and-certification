@@ -27,6 +27,10 @@ steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@5
   displayName: GitVersion
 
+- task: NodeTool@0
+  inputs:
+    versionSpec: '14.x'  
+
 - task: Npm@1
   displayName: 'npm install'
   inputs: 

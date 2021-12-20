@@ -29,7 +29,7 @@ stages:
       - name: ResourceGroupName
         value: "$(BaseName)"
       - name: EnvironmentName
-        value: "[toUpper(${{ parameters.environmentName }})]"
+        value: ${{ parameters.environmentName }}
       - name: environmentTagName
         value: ${{parameters.environmentTagName}}
 
@@ -56,8 +56,8 @@ stages:
         parameters:
           serviceConnection: ${{ parameters.serviceConnection }}
           sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
-          EnvironmentName: ${{ variables.EnvironmentName }}
-
+          environmentName: ${{ parameters.environmentName }}
+      
       - template: ../jobs/tlevels-publish-site-job.yml
         parameters:
           serviceConnection: ${{ parameters.serviceConnection }}

@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
@@ -73,11 +74,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (response.ShowProblemWithServicePage)
                 return RedirectToRoute(RouteConstants.ProblemWithAssessmentsUpload);
 
-            var unsuccessfulViewModel = new UploadUnsuccessfulViewModel 
-            { 
-                BlobUniqueReference = response.BlobUniqueReference, 
-                FileSize = response.ErrorFileSize, 
-                FileType = FileType.Csv.ToString().ToUpperInvariant() 
+            var unsuccessfulViewModel = new UploadUnsuccessfulViewModel
+            {
+                BlobUniqueReference = response.BlobUniqueReference,
+                FileSize = response.ErrorFileSize,
+                FileType = FileType.Csv.ToString().ToUpperInvariant()
             };
 
             await _cacheService.SetAsync(string.Concat(CacheKey, Constants.UploadUnsuccessfulViewModel), unsuccessfulViewModel, CacheExpiryTime.XSmall);
@@ -146,11 +147,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("assessment-entries-learner-search", Name = RouteConstants.SearchAssessments)]
-        public async Task<IActionResult> SearchAssessmentsAsync()
+        [Route("assessment-entries-learner-search/{populateUln:bool?}", Name = RouteConstants.SearchAssessments)]
+        public async Task<IActionResult> SearchAssessmentsAsync(bool populateUln)
         {
             var defaultValue = await _cacheService.GetAndRemoveAsync<string>(Constants.AssessmentsSearchCriteria);
-            var viewModel = new SearchAssessmentsViewModel { SearchUln = defaultValue };
+            var viewModel = new SearchAssessmentsViewModel { SearchUln = populateUln ? defaultValue : null };
             return View(viewModel);
         }
 
@@ -165,6 +166,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (searchResult?.IsAllowed == true)
             {
+                if (searchResult.IsWithdrawn)
+                    await _cacheService.SetAsync(Constants.AssessmentsSearchCriteria, model.SearchUln);
+
                 return RedirectToRoute(searchResult.IsWithdrawn ? RouteConstants.AssessmentWithdrawnDetails : RouteConstants.AssessmentDetails, new { profileId = searchResult.RegistrationProfileId });
             }
             else
@@ -179,7 +183,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("search-for-learner-ULN-not-found", Name = RouteConstants.SearchAssessmentsNotFound)]
+        [Route("assessment-entries-uln-not-found", Name = RouteConstants.SearchAssessmentsNotFound)]
         public async Task<IActionResult> SearchAssessmentsNotFoundAsync()
         {
             var viewModel = await _cacheService.GetAndRemoveAsync<UlnAssessmentsNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchAssessmentsUlnNotFound));
@@ -193,10 +197,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("learners-assessment-entries-withdrawn-learner/{profileId}", Name = RouteConstants.AssessmentWithdrawnDetails)]
+        [Route("assessment-entries-learner-withdrawn/{profileId}", Name = RouteConstants.AssessmentWithdrawnDetails)]
         public async Task<IActionResult> AssessmentWithdrawnDetailsAsync(int profileId)
         {
-            var viewModel = await _assessmentLoader.GetAssessmentDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+            var viewModel = await _assessmentLoader.GetAssessmentDetailsAsync<AssessmentUlnWithdrawnViewModel>(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
 
             if (viewModel == null)
             {
@@ -208,28 +212,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("learners-assessment-entries/{profileId}", Name = RouteConstants.AssessmentDetails)]
+        [Route("assessment-entry-learner-details/{profileId}", Name = RouteConstants.AssessmentDetails)]
         public async Task<IActionResult> AssessmentDetailsAsync(int profileId)
         {
-            var viewModel = await _assessmentLoader.GetAssessmentDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
-
+            var viewModel = await _assessmentLoader.GetAssessmentDetailsAsync<AssessmentDetailsViewModel>(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No assessment details found. Method: GetAssessmentDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Active}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-
+            viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
             return View(viewModel);
         }
 
         [HttpGet]
-        [Route("add-core-assessment-entry-next-available-series/{profileId}", Name = RouteConstants.AddCoreAssessmentEntry)]
+        [Route("assessment-entry-add-core/{profileId}", Name = RouteConstants.AddCoreAssessmentEntry)]
         public async Task<IActionResult> AddCoreAssessmentEntryAsync(int profileId)
         {
-            var viewModel = await _assessmentLoader.GetAvailableAssessmentSeriesAsync(User.GetUkPrn(), profileId, ComponentType.Core);
+            var viewModel = await _assessmentLoader.GetAddAssessmentEntryAsync<AddAssessmentEntryViewModel>(User.GetUkPrn(), profileId, ComponentType.Core, null);
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment series available. Method: GetAvailableAssessmentSeriesAsync({User.GetUkPrn()}, {profileId}, {ComponentType.Core}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment series available or Learner not found. Method: GetAddAssessmentEntryAsync({User.GetUkPrn()}, {profileId}, {ComponentType.Core}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
@@ -237,11 +240,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("add-core-assessment-entry-next-available-series/{profileId}", Name = RouteConstants.EntrySeries)]
+        [Route("assessment-entry-add-core/{profileId}", Name = RouteConstants.EntrySeries)]
         public async Task<IActionResult> AddCoreAssessmentEntryAsync(AddAssessmentEntryViewModel model)
         {
+            var assessmentEntryDetails = await _assessmentLoader.GetAddAssessmentEntryAsync<AddAssessmentEntryViewModel>(User.GetUkPrn(), model.ProfileId, ComponentType.Core, null);
             if (!ModelState.IsValid)
-                return View(model);
+                return View(assessmentEntryDetails);
 
             if (!model.IsOpted.Value)
                 return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
@@ -255,30 +259,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
 
-            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddAssessmentEntryConfirmationViewModel),
-                new AddAssessmentEntryConfirmationViewModel { ProfileId = model.ProfileId, Uln = response.Uln },
-                CacheExpiryTime.XSmall);
+            var notificationBanner = new NotificationBannerModel { Message = assessmentEntryDetails.SuccessBannerMessage };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
-            return RedirectToRoute(RouteConstants.AssessmentEntryAddedConfirmation);
+            return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
         }
 
         [HttpGet]
-        [Route("assessment-entry-added-confirmation", Name = RouteConstants.AssessmentEntryAddedConfirmation)]
-        public async Task<IActionResult> AddAssessmentEntryConfirmationAsync()
-        {
-            var viewModel = await _cacheService.GetAndRemoveAsync<AddAssessmentEntryConfirmationViewModel>(string.Concat(CacheKey, Constants.AddAssessmentEntryConfirmationViewModel));
-
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read AddAssessmentEntryConfirmationViewModel from redis cache in add assessment confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-            
-            return View(viewModel);
-        }
-
-        [HttpGet]
-        [Route("remove-core-assessment-entry/{assessmentId}", Name = RouteConstants.RemoveCoreAssessmentEntry)]
+        [Route("assessment-entry-remove-core/{assessmentId}", Name = RouteConstants.RemoveCoreAssessmentEntry)]
         public async Task<IActionResult> RemoveCoreAssessmentEntryAsync(int assessmentId)
         {
             var viewModel = await _assessmentLoader.GetActiveAssessmentEntryDetailsAsync(User.GetUkPrn(), assessmentId, ComponentType.Core);
@@ -292,11 +280,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("remove-core-assessment-entry/{assessmentId}", Name = RouteConstants.SubmitRemoveCoreAssessmentEntry)]
+        [Route("assessment-entry-remove-core/{assessmentId}", Name = RouteConstants.SubmitRemoveCoreAssessmentEntry)]
         public async Task<IActionResult> RemoveCoreAssessmentEntryAsync(AssessmentEntryDetailsViewModel model)
         {
+            var assessmentEntryDetails = await _assessmentLoader.GetActiveAssessmentEntryDetailsAsync(User.GetUkPrn(), model.AssessmentId, ComponentType.Core);
             if (!ModelState.IsValid)
-                return View(model);
+                return View(assessmentEntryDetails);
 
             if (!model.CanRemoveAssessmentEntry.Value)
                 return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
@@ -310,25 +299,110 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
 
-            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.RemoveAssessmentEntryConfirmationViewModel),
-                new RemoveAssessmentEntryConfirmationViewModel { ProfileId = model.ProfileId, Uln = model.Uln }, CacheExpiryTime.XSmall);
+            var notificationBanner = new NotificationBannerModel { Message = assessmentEntryDetails.SuccessBannerMessage };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
-            return RedirectToRoute(RouteConstants.AssessmentEntryRemovedConfirmation);                       
+            return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
         }
 
         [HttpGet]
-        [Route("assessment-entry-removed-confirmation", Name = RouteConstants.AssessmentEntryRemovedConfirmation)]
-        public async Task<IActionResult> RemoveAssessmentEntryConfirmationAsync()
+        [Route("assessment-entry-add-specialisms/{profileId}/{specialismsId}", Name = RouteConstants.AddSpecialismAssessmentEntry)]
+        public async Task<IActionResult> AddSpecialismAssessmentEntryAsync(int profileId, string specialismsId)
         {
-            var viewModel = await _cacheService.GetAndRemoveAsync<RemoveAssessmentEntryConfirmationViewModel>(string.Concat(CacheKey, Constants.RemoveAssessmentEntryConfirmationViewModel));
-
+            var viewModel = await _assessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(User.GetUkPrn(), profileId, ComponentType.Specialism, specialismsId);
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read RemoveAssessmentEntryConfirmationViewModel from redis cache in remove assessment confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment series available for specialisms or Learner not found. Method: GetAddAssessmentEntryAsync({User.GetUkPrn()}, {profileId}, {ComponentType.Specialism}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            viewModel.SpecialismsId = specialismsId;
+
+            if (!viewModel.IsValidToAdd)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Not a valid specialism to add assessment entry. Method: GetAddAssessmentEntryAsync({User.GetUkPrn()}, {profileId}, {ComponentType.Specialism}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("assessment-entry-add-specialisms/{profileId}/{specialismsId}", Name = RouteConstants.SubmitAddSpecialismAssessmentEntry)]
+        public async Task<IActionResult> AddSpecialismAssessmentEntryAsync(AddSpecialismAssessmentEntryViewModel model)
+        {
+            var assessmentEntryDetails = await _assessmentLoader.GetAddAssessmentEntryAsync<AddSpecialismAssessmentEntryViewModel>(User.GetUkPrn(), model.ProfileId, ComponentType.Specialism, model.SpecialismsId);
+            assessmentEntryDetails.SpecialismsId = model.SpecialismsId;
+
+            if (!ModelState.IsValid)
+                return View(assessmentEntryDetails);
+
+            if (!model.IsOpted.Value)
+                return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
+
+            if (!assessmentEntryDetails.IsValidToAdd)
+            {
+                _logger.LogWarning(LogEvent.NotValidData, $"Not a valid specialism to add assessment entry. Method: AddSpecialismAssessmentEntryAsync({User.GetUkPrn()}, {model.ProfileId}, {ComponentType.Specialism}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var response = await _assessmentLoader.AddSpecialismAssessmentEntryAsync(User.GetUkPrn(), assessmentEntryDetails);
+
+            if (!response.IsSuccess)
+            {
+                _logger.LogWarning(LogEvent.AddSpecialismAssessmentEntryFailed, $"Unable to add specialism assessment entry for ProfileId: {model.ProfileId}. Method: AddSpecialismAssessmentEntryAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
+
+            var notificationBanner = new NotificationBannerModel { Message = assessmentEntryDetails.SuccessBannerMessage };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("assessment-entry-remove-specialisms/{profileId}/{specialismAssessmentIds}", Name = RouteConstants.RemoveSpecialismAssessmentEntries)]
+        public async Task<IActionResult> RemoveSpecialismAssessmentEntriesAsync(int profileId, string specialismAssessmentIds)
+        {
+            var viewModel = await _assessmentLoader.GetRemoveSpecialismAssessmentEntriesAsync(User.GetUkPrn(), profileId, specialismAssessmentIds);
+            if (viewModel == null || !viewModel.IsValidToRemove)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Not a valid specialism to remove assessment entry. Method: GetRemoveSpecialismAssessmentEntriesAsync({User.GetUkPrn()}, {profileId}, {specialismAssessmentIds}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("assessment-entry-remove-specialisms/{profileId}/{specialismAssessmentIds}", Name = RouteConstants.SubmitRemoveSpecialismAssessmentEntries)]
+        public async Task<IActionResult> RemoveSpecialismAssessmentEntriesAsync(RemoveSpecialismAssessmentEntryViewModel model)
+        {
+            var assessmentEntryDetails = await _assessmentLoader.GetRemoveSpecialismAssessmentEntriesAsync(User.GetUkPrn(), model.ProfileId, model.SpecialismAssessmentIds);
+            if (!ModelState.IsValid)
+                return View(assessmentEntryDetails);
+
+            if (!model.CanRemoveAssessmentEntry.Value)
+                return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
+
+            if (assessmentEntryDetails == null || !assessmentEntryDetails.IsValidToRemove)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Not a valid specialism to remove assessment entry. Method: GetRemoveSpecialismAssessmentEntriesAsync({User.GetUkPrn()}, {model.ProfileId}, {model.SpecialismAssessmentIds}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var isSuccess = await _assessmentLoader.RemoveSpecialismAssessmentEntryAsync(User.GetUkPrn(), assessmentEntryDetails);
+
+            if (!isSuccess)
+            {
+                _logger.LogWarning(LogEvent.RemoveSpecialismAssessmentEntryFailed, $"Unable to remove specialism assessment for ProfileId: {model.ProfileId} and Specialism Lard Ids: {model.SpecialismAssessmentIdList}. Method: RemoveSpecialismAssessmentEntryAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
+
+            var notificationBanner = new NotificationBannerModel { Message = assessmentEntryDetails.SuccessBannerMessage };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual.AssessmentDetailsViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Assessment
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 @{
     ViewData["Title"] = @AssessmentDetails.Page_Title;
@@ -10,30 +11,108 @@
 }
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds assessment-details">
+    <div class="govuk-grid-column-three-quarters">
+        <vc:notification-banner model="@Model.SuccessBanner"></vc:notification-banner>
 
         <h1 class="govuk-heading-l">@AssessmentDetails.Learners_Assessment_Entries_Heading_Text</h1>
-        <h2 class="govuk-heading-m">@string.Format(AssessmentDetails.Uln_Heading_Text, Model.Uln)</h2>
+        <h2 class="govuk-heading-m govuk-!-margin-top-7">@AssessmentDetails.Learner_Details</h2>
 
-        <p class="govuk-body">@string.Format(AssessmentDetails.Name_Heading_Text, Model.Name)</p>
-        <p class="govuk-body">@string.Format(AssessmentDetails.Provider_Heading_Text, Model.ProviderDisplayName)</p>
-        <hr class="govuk-section-break govuk-section-break--visible">
-
-        <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-7 govuk-!-font-weight-bold">@string.Format(AssessmentDetails.Core_Heading_Text, Model.PathwayDisplayName)</h3>
-
-        <dl class="govuk-summary-list">
-            <vc:summary-item model=Model.SummaryCoreAssessmentEntry></vc:summary-item>
+        <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-9" aria-label="@AssessmentDetails.Learners_Details_Aria_Label">
+            <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+            <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+            <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+            <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+            <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
         </dl>
 
-        <hr class="govuk-section-break govuk-section-break--visible">
-        <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-7 govuk-!-font-weight-bold">@string.Format(AssessmentDetails.Specialism_Heading_Text, !string.IsNullOrWhiteSpace(Model.SpecialismDisplayName) ? Model.SpecialismDisplayName : AssessmentDetails.Not_Specified_Text)</h3>
-        <dl class="govuk-summary-list">
-            <vc:summary-item model=Model.SummarySpecialismAssessmentEntry></vc:summary-item>
-        </dl>
-        <hr class="govuk-section-break govuk-section-break--visible">
+        <section id="add-entries">
+            <h2 class="govuk-heading-m">@string.Format(AssessmentDetails.Core_Heading_Text, Model.PathwayDisplayName)</h2>
 
-        <p class="govuk-body govuk-!-margin-top-8"><a class="govuk-link" asp-route="RegistrationDetails" asp-route-profileId="@Model.ProfileId">@AssessmentDetails.View_And_Amend_This_Learners_Registration_Details_Text</a></p>
+            @if (Model.IsCoreEntryEligible == false)
+            {
+                <p class="govuk-body govuk-!-margin-bottom-9">
+                    @string.Format(AssessmentDetails.You_Cannot_Register_Learner_For_Core_Assessment_Until, Model.NextAvailableCoreSeries?.ToLowerInvariant())
+                </p>
+            }
+            else
+            {
+                @if (Model.NeedCoreResultForPreviousAssessmentEntry)
+                {
+                    <p class="govuk-body govuk-!-margin-bottom-9">
+                        @AssessmentDetails.You_Must <a class="govuk-link" asp-route="@RouteConstants.ResultDetails" asp-route-profileId="@Model.ProfileId">@AssessmentDetails.Add_Result_To_Learners_Previous_Assessment</a> @AssessmentDetails.Before_Entering_New_Assessment_Details
+                    </p>
+                }
+                else if (Model.HasCurrentCoreAssessmentEntry)
+                {
+                    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                        <vc:summary-item model=Model.SummaryExamPeriod></vc:summary-item>
+                        <vc:summary-item model=Model.SummaryLastUpdatedOn></vc:summary-item>
+                        <vc:summary-item model=Model.SummaryLastUpdatedBy></vc:summary-item>
+                    </dl>
+                }
+                else
+                {
+                    <p class="govuk-body">
+                        @string.Format(AssessmentDetails.No_Assessment_Entries_Have_Been_Recored_For, Model.NextAvailableCoreSeries?.ToLowerInvariant())
+                    </p>
+                    <p class="govuk-body govuk-!-margin-bottom-9">
+                        <a class="govuk-link" asp-route="@RouteConstants.AddCoreAssessmentEntry" asp-route-profileId="@Model.ProfileId">@string.Format(AssessmentDetails.Add_An_Assessment_Entry_For, Model.PathwayDisplayName)</a>
+                    </p>
+                }
+            }
 
-        <p class="govuk-body govuk-!-margin-top-8"><a id="searchAgainButton" class="govuk-link" asp-route="SearchAssessments">@AssessmentDetails.Search_Again_Text</a></p>
+
+            @if (!Model.IsSpecialismRegistered)
+            {
+                <h2 class="govuk-heading-m">@AssessmentDetails.Occupational_Specialism_Heading</h2>
+                <p class="govuk-body">
+                    @AssessmentDetails.This_Learner_Does_Not_Have_Occuational_Specialisms_Recorded
+                </p>
+
+                <p class="govuk-body govuk-!-margin-bottom-9">
+                    <a class="govuk-link" asp-route="@RouteConstants.RegistrationDetails" asp-route-profileId="@Model.ProfileId">@AssessmentDetails.Link_Add_An_Occupational_Specialism</a>
+                </p>
+            }
+            else
+            {
+
+                @if (Model.IsSpecialismEntryEligible == false)
+                {
+                    @foreach (var specialism in Model.DisplaySpecialisms)
+                    {
+                        <h2 class="govuk-heading-m">@string.Format(AssessmentDetails.Specialism_Heading_Text, specialism.DisplayName)</h2>
+                        <p class="govuk-body govuk-!-margin-bottom-9">
+                            @string.Format(AssessmentDetails.You_Cannot_Register_Learner_For_Occupational_Specialism_Until, Model.NextAvailableSpecialismSeries?.ToLowerInvariant())
+                        </p>
+                    }
+                }
+                else
+                {
+                    @foreach (var specialism in Model.DisplaySpecialisms)
+                    {
+                        <h2 class="govuk-heading-m">@string.Format(AssessmentDetails.Specialism_Heading_Text, specialism.DisplayName)</h2>
+                        var specialismId = !string.IsNullOrWhiteSpace(specialism.CombinedSpecialismId) ? specialism.CombinedSpecialismId : specialism.Id.ToString();
+                        @if (specialism.HasCurrentAssessmentEntry)
+                        {
+                            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                                <vc:summary-item model=Model.GetSummaryExamPeriod(specialism)></vc:summary-item>
+                                <vc:summary-item model=Model.GetSummaryLastUpdatedOn(specialism)></vc:summary-item>
+                                <vc:summary-item model=Model.GetSummaryLastUpdatedBy(specialism)></vc:summary-item>
+                            </dl>
+                        }
+                        else
+                        {
+                            <p class="govuk-body">
+                                @string.Format(AssessmentDetails.No_Assessment_Entries_Have_Been_Recored_For, Model.NextAvailableSpecialismSeries?.ToLowerInvariant())
+                            </p>
+                            <p class="govuk-body govuk-!-margin-bottom-9">
+                                <a class="govuk-link" asp-route="@RouteConstants.AddSpecialismAssessmentEntry" asp-route-profileId="@Model.ProfileId" asp-route-specialismsId="@specialismId">@string.Format(AssessmentDetails.Add_An_Assessment_Entry_For, specialism.DisplayName)</a>
+                            </p>
+                        }
+                    }
+                }
+            }
+        </section>
+        <a id="searchAgainButton" class="govuk-button" role="button" asp-route="@RouteConstants.SearchAssessments">@AssessmentDetails.Search_Again_Text</a>
     </div>
 </div>

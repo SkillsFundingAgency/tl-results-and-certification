@@ -135,6 +135,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<ITrainingProviderRepository, TrainingProviderRepository>();
             services.AddTransient<IStatementOfAchievementRepository, StatementOfAchievementRepository>();
             services.AddTransient<IPostResultsServiceRepository, PostResultsServiceRepository>();
+            services.AddTransient<ILearnerRepository, LearnerRepository>();
             services.AddTransient<ICommonRepository, CommonRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
@@ -174,6 +175,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IProviderAddressService, ProviderAddressService>();
             services.AddTransient<IStatementOfAchievementService, StatementOfAchievementService>();
             services.AddTransient<IPostResultsServiceService, PostResultsServiceService>();
+            services.AddTransient<ILearnerService, LearnerService>();
         }
     }
 }

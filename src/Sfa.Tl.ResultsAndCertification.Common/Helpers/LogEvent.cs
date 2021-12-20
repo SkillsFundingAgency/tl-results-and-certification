@@ -10,6 +10,7 @@
         public const int FileStreamNotFound = 1005;
         public const int RecordExists = 1006;
         public const int StateChanged = 1007;
+        public const int NotValidData = 1008;
 
         public const int ConfirmationPageFailed = 1020;
         public const int UploadSuccessfulPageFailed = 1021;
@@ -39,6 +40,8 @@
         public const int BulkAssessmentProcessFailed = 5001;
         public const int DownloadAssesssmentErrorsFailed = 5002;
         public const int AddCoreAssessmentEntryFailed = 5501;
+        public const int AddSpecialismAssessmentEntryFailed = 5502;
+        public const int RemoveSpecialismAssessmentEntryFailed = 5503;
 
         // Results events
         public const int BulkResultProcessFailed = 6001;

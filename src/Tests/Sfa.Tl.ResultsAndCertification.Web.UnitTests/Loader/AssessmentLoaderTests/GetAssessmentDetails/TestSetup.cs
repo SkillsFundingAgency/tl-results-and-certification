@@ -4,11 +4,11 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
-using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTests.GetAssessmentDetails
 {
@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
         public IBlobStorageService BlobStorageService { get; private set; }
 
         protected AssessmentLoader Loader;
-        protected AssessmentDetails expectedApiResult;
+        protected LearnerRecord expectedApiResult;
         protected AssessmentDetailsViewModel ActualResult;
 
         public override void Setup()
@@ -38,11 +38,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             Mapper = new AutoMapper.Mapper(mapperConfig);
 
             Loader = new AssessmentLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
-        }
-
-        public async override Task When()
-        {
-            ActualResult = await Loader.GetAssessmentDetailsAsync(AoUkprn, ProfileId);
-        }
+        }        
     }
 }

@@ -12,22 +12,30 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <form asp-route="SubmitAddCoreAssessmentEntry" class="form" id="addCoreAssessmentForm">
-            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
-            <input type="hidden" asp-for="AssessmentSeriesName" value="@Model.AssessmentSeriesName" />
-            <input type="hidden" asp-for="AssessmentSeriesId" value="@Model.AssessmentSeriesId" />
             <partial name="_ValidationSummary" />
 
-            <div class="govuk-form-group govuk-!-margin-bottom-7">
+            <h1 class="govuk-heading-l">@string.Format(@AddCoreAssessmentEntry.Page_Heading, Model.AssessmentSeriesName)</h1>
+
+            <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-top-7">
+                <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+                <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+                <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+            </dl>
+
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <input type="hidden" asp-for="AssessmentSeriesId" value="@Model.AssessmentSeriesId" />
+
+            <div class="govuk-form-group" sfa-validation-for="IsOpted" sfa-validation-class="govuk-form-group--error">
                 <fieldset class="govuk-fieldset">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
-                            @string.Format(@AddCoreAssessmentEntry.Page_Heading, Model.AssessmentSeriesName)
-                        </h1>
-                        <p class="govuk-inset-text govuk-body-m govuk-!-font-weight-regular govuk-!-margin-top-4">
-                            @string.Format(@AddCoreAssessmentEntry.Series_Available_Text, Model.AssessmentSeriesName)
-                        </p>
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h2 class="govuk-fieldset__heading">
+                            @string.Format(@AddCoreAssessmentEntry.Heading_Is_This_Learner_Entering_Assessment, Model.AssessmentSeriesName)
+                        </h2>
                     </legend>
-                    <div class="govuk-radios" sfa-validation-for="IsOpted" sfa-validation-class="govuk-form-group--error">
+
+                    <div class="govuk-radios">
                         <span sfa-validation-for="IsOpted"></span>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="isopted" asp-for="IsOpted" type="radio" value=true>
@@ -44,9 +52,9 @@
                     </div>
                 </fieldset>
             </div>
-            <p>
-                <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AddCoreAssessmentEntry.Submit_Button_Text</button>
-            </p>
+
+            <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AddCoreAssessmentEntry.Submit_Button_Text</button>
+
         </form>
     </div>
 </div>

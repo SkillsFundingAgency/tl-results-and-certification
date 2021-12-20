@@ -31,10 +31,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                            .ThenInclude(x => x.TlPathway)
                     .Include(x => x.TqRegistrationSpecialisms)
                        .ThenInclude(x => x.TlSpecialism)
+                    .Include(x => x.TqRegistrationSpecialisms)
+                        .ThenInclude(x => x.TqSpecialismAssessments)
                     .Where(p => uniqueLearnerNumbers.Contains(p.TqRegistrationProfile.UniqueLearnerNumber) &&
-                          p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
-                          (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))
-                    .ToListAsync();
+                        p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
+                        (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))
+                .ToListAsync();
 
             if (registrations == null) return null;
 
@@ -74,7 +76,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         {
             var registrationSpecialismIds = new HashSet<int>();
             specialismAssessments.ToList().ForEach(r => registrationSpecialismIds.Add(r.TqRegistrationSpecialismId));
-            return await _dbContext.TqSpecialismAssessment.Where(x => registrationSpecialismIds.Contains(x.TqRegistrationSpecialismId) && x.EndDate == null && x.IsOptedin).ToListAsync();
+            
+            var assessments = await _dbContext.TqSpecialismAssessment
+                .Include(x => x.AssessmentSeries)
+                .Where(x => registrationSpecialismIds.Contains(x.TqRegistrationSpecialismId) && x.EndDate == null && x.IsOptedin)
+                .ToListAsync();
+
+            return assessments
+               .GroupBy(x => x.TqRegistrationSpecialismId)
+               .Select(x => x.OrderByDescending(o => o.AssessmentSeries.StartDate).First())
+               .ToList();
         }
 
         public async Task<bool> BulkInsertOrUpdateAssessments(List<TqPathwayAssessment> pathwayAssessments, List<TqSpecialismAssessment> specialismAssessments)
@@ -209,17 +220,17 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return regPathway;
         }
 
-        public async Task<AssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, int startInYear)
+        public async Task<IList<AssessmentSeries>> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, int startInYear)
         {
             var currentDate = DateTime.Now.Date;
             
             var series = await _dbContext.TqRegistrationPathway
                 .Where(rpw => rpw.Status == RegistrationPathwayStatus.Active && rpw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn && 
                        rpw.TqRegistrationProfile.Id == profileId)
-                .Select(reg => _dbContext.AssessmentSeries
-                        .FirstOrDefault(s => s.Year > reg.AcademicYear + startInYear && s.Year <= reg.AcademicYear + Common.Helpers.Constants.AssessmentEndInYears && 
+                .SelectMany(reg => _dbContext.AssessmentSeries
+                        .Where(s => s.Year > reg.AcademicYear + startInYear && s.Year <= reg.AcademicYear + Common.Helpers.Constants.AssessmentEndInYears && 
                         currentDate >= s.StartDate && currentDate <= s.EndDate))
-                .FirstOrDefaultAsync();
+                .ToListAsync();
 
             return series;
         }
@@ -234,6 +245,18 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .FirstOrDefaultAsync(pa => pa.Id == pathwayAssessmentId && pa.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn);
 
             return pathwayAssessment;
+        }
+
+        public async Task<IList<TqSpecialismAssessment>> GetSpecialismAssessmentDetailsAsync(long aoUkprn, IList<int> specialismAssessmentIds)
+        {
+            var specialismAssessments = await _dbContext.TqSpecialismAssessment
+                                .Include(s => s.AssessmentSeries)
+                                .Include(s => s.TqRegistrationSpecialism)
+                                    .ThenInclude(s => s.TqRegistrationPathway)
+                                        .ThenInclude(s => s.TqRegistrationProfile)
+                 .Where(s => specialismAssessmentIds.Contains(s.Id) && s.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn).ToListAsync();
+
+            return specialismAssessments;
         }
     }
 }

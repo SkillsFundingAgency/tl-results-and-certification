@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
                 RowNum = 1,
                 Uln = 1234567890,
                 CoreCode = "12345678",
-                SpecialismCode = "Test1234",
+                SpecialismCodes = new List<string> { "Test1234" },
                 CoreAssessmentEntry = "Summer 2021",
                 SpecialismAssessmentEntry = "Autumn 2021"
             };
@@ -41,7 +41,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
             actualData.Uln.Should().Be(expectedRow.Uln);
             actualData.CoreCode.Should().Be(expectedRow.CoreCode);
             actualData.CoreAssessmentEntry.Should().Be(expectedRow.CoreAssessmentEntry);
-            actualData.SpecialismCode.Should().Be(expectedRow.SpecialismCode);
+            actualData.SpecialismCodes.Count().Should().Be(expectedRow.SpecialismCodes.Count());
+            actualData.SpecialismCodes.Should().Equal(expectedRow.SpecialismCodes);
             actualData.SpecialismAssessmentEntry.Should().Be(expectedRow.SpecialismAssessmentEntry);
             actualData.ValidationErrors.Count().Should().Be(0);
         }
@@ -49,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         private StringBuilder GetInputFilecontent()
         {
             StringBuilder csvData = new StringBuilder();
-            csvData.AppendLine("ULN,Core code,Core assessment entry,Specialism code,Specialism assessment entry");
+            csvData.AppendLine(AssessmentEntryHeader);
             csvData.AppendLine("1234567890,12345678,Summer 2021,Test1234,Autumn 2021");
             return csvData;
         }

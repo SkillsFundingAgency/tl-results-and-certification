@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
@@ -11,13 +10,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
-        private AssessmentDetailsViewModel mockresult;
+        private RegistrationAssessmentDetails _mockresult;
 
         public override void Given()
         {
-            mockresult = new AssessmentDetailsViewModel { Uln = 1234567890, ProfileId = 99, IsResultExist = false };
-            RegistrationLoader.GetRegistrationAssessmentAsync(Ukprn, ProfileId, RegistrationPathwayStatus.Active)
-                .Returns(mockresult);
+            _mockresult = new RegistrationAssessmentDetails { Uln = 1234567890, ProfileId = 99, IsCoreResultExist = false };
+            RegistrationLoader.GetRegistrationAssessmentAsync(Ukprn, ProfileId, RegistrationPathwayStatus.Active).Returns(_mockresult);
         }
 
         [Fact]
@@ -37,8 +35,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             var model = viewResult.Model as DeleteRegistrationViewModel;
             model.Should().NotBeNull();
 
-            model.Uln.Should().Be(mockresult.Uln);
-            model.ProfileId.Should().Be(mockresult.ProfileId);
+            model.Uln.Should().Be(_mockresult.Uln);
+            model.ProfileId.Should().Be(_mockresult.ProfileId);
             model.DeleteRegistration.Should().BeNull();
 
             model.BackLink.Should().NotBeNull();
@@ -46,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.BackLink.RouteAttributes.Count.Should().Be(2);
 
             model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string routeValueProfileId);
-            routeValueProfileId.Should().Be(mockresult.ProfileId.ToString());
+            routeValueProfileId.Should().Be(_mockresult.ProfileId.ToString());
             model.BackLink.RouteAttributes.TryGetValue(Constants.ChangeStatusId, out string routeValueChangeStatus);
             routeValueChangeStatus.Should().Be(((int)RegistrationChangeStatus.Delete).ToString());
         }

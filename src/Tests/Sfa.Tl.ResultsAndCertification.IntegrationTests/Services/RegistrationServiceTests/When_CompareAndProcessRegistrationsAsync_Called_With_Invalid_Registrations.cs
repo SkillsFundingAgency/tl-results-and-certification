@@ -31,11 +31,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             // Seed Tlevel data for pearson
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             SeedRegistrationData(1111111111);
+            SeedRegistrationData(1111111115, RegistrationPathwayStatus.Withdrawn);
 
             // Seed Tlevel data for ncfe
             SeedTestData(EnumAwardingOrganisation.Ncfe, true);
             SeedRegistrationData(1111111112);
             SeedRegistrationData(1111111113, RegistrationPathwayStatus.Withdrawn);
+            
+            // Seed Profile with specialisms and assessment entry
+            var registrationProfileWithSpecialism = SeedRegistrationData(1111111116, RegistrationPathwayStatus.Active, TqProviders[TqProviders.Count - 1]);
+            SeedSpecialismAssessmentsData(GetSpecialismAssessmentsDataToProcess(registrationProfileWithSpecialism.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList()));
 
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
@@ -48,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             CreateCommonService();
             RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, CommonService, RegistrationMapper, RegistrationRepositoryLogger);
 
-            _tqRegistrationProfilesData = GetRegistrationsDataToProcess(new List<long> { 1111111111, 1111111112, 1111111113, 1111111114 });
+            _tqRegistrationProfilesData = GetRegistrationsDataToProcess(new List<long> { 1111111111, 1111111112, 1111111113, 1111111114, 1111111115, 1111111116 });
             _expectedValidationErrors = new BulkRegistrationValidationErrorsBuilder().BuildStage4ValidationErrorsList();
         }
 
@@ -74,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             TlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, awardingOrganisation);
             var routes = TlevelDataProvider.CreateTlRoutes(DbContext, awardingOrganisation);
             var pathways = TlevelDataProvider.CreateTlPathways(DbContext, awardingOrganisation, routes);
-            TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, pathways.First());
+            Specialisms = TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, pathways.First());
 
             var tqAwardingOrganisations = TlevelDataProvider.CreateTqAwardingOrganisations(DbContext, awardingOrganisation, TlAwardingOrganisation, pathways);
 
@@ -86,23 +91,28 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             {
                 TqProviders.Add(ProviderDataProvider.CreateTqProvider(DbContext, tqAwardingOrganisation, tlProvider));
             }
-
+            AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             DbContext.SaveChangesAsync();
         }
 
-        private void SeedRegistrationData(long uln, RegistrationPathwayStatus status = RegistrationPathwayStatus.Active)
+        private TqRegistrationProfile SeedRegistrationData(long uln, RegistrationPathwayStatus status = RegistrationPathwayStatus.Active, TqProvider tqProvider = null)
         {
             var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
-            var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, TqProviders.First());
+            var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProviders.First());
+            var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialisms.First());
 
             if (status == RegistrationPathwayStatus.Withdrawn)
             {
                 tqRegistrationPathway.Status = status;
                 tqRegistrationPathway.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                tqRegistrationSpecialism.IsOptedin = true;
+                tqRegistrationSpecialism.EndDate = DateTime.UtcNow.AddDays(-1);
             }
 
             DbContext.SaveChangesAsync();
+            return tqRegistrationProfile;
         }
 
         private List<TqRegistrationProfile> GetRegistrationsDataToProcess(List<long> ulns)
@@ -111,7 +121,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             foreach (var (uln, index) in ulns.Select((value, i) => (value, i)))
             {
-                var tqProvider = TqProviders.Count < index ? TqProviders[index] : TqProviders[TqProviders.Count - 1];
+                var tqProvider = index < TqProviders.Count ? TqProviders[index] : TqProviders[TqProviders.Count - 1];
                 var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
                 var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
                 var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider);

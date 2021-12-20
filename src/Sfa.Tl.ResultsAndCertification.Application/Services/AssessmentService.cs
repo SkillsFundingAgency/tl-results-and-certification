@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var response = new List<AssessmentRecordResponse>();
             var dbRegistrations = await _assessmentRepository.GetBulkAssessmentsAsync(aoUkprn, csvAssessments.Select(x => x.Uln));
             var dbAssessmentSeries = await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
-            
+
             foreach (var assessment in csvAssessments)
             {
                 // 1. ULN not recognised with AO
@@ -76,22 +76,41 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 // 4. Specialism Code is incorrect
-                if (!string.IsNullOrWhiteSpace(assessment.SpecialismCode))
+                if (assessment.SpecialismCodes.Any())
                 {
-                    var isValidSpecialismCode = dbRegistration.TqRegistrationSpecialisms.Any(x => x.TlSpecialism.LarId.Equals(assessment.SpecialismCode, StringComparison.InvariantCultureIgnoreCase));
-                    if (!isValidSpecialismCode)
+                    var registeredSpecialismCodes = dbRegistration.TqRegistrationSpecialisms.Select(x => x.TlSpecialism.LarId);
+                    var invalidSpecialismCodes = assessment.SpecialismCodes.Except(registeredSpecialismCodes, StringComparer.InvariantCultureIgnoreCase);
+
+                    if (invalidSpecialismCodes.Any())
+                    {
                         validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidSpecialismCode));
+                    }
+                    else
+                    {
+                        var registeredAssessments = dbRegistration.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments.Where(x => x.EndDate == null && x.IsOptedin)).Select(x => x.AssessmentSeriesId);
+                        var availableAssessmentSeries = GetValidAssessmentSeries(dbAssessmentSeries, dbRegistration, ComponentType.Specialism);
+
+                        if (availableAssessmentSeries != null)
+                        {
+                            var isResit = registeredAssessments.Except(availableAssessmentSeries.Select(x => x.Id)).Any();
+
+                            if (!isResit && assessment.SpecialismCodes.Count < registeredSpecialismCodes.Count())
+                            {
+                                validationErrors.Add(BuildValidationError(assessment, ValidationMessages.SpecialismCodeMustBePair));
+                            }
+                        }
+                    }
                 }
 
                 // 5. Core assessment entry must be no more than 4 years after the starting academic year
                 if (!string.IsNullOrWhiteSpace(assessment.CoreAssessmentEntry))
                 {
-                    var isSeriesFound = dbAssessmentSeries.Any(x => x.Name.Equals(assessment.CoreAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
+                    var isSeriesFound = dbAssessmentSeries.Any(x => x.ComponentType == ComponentType.Core && x.Name.Equals(assessment.CoreAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
                     if (!isSeriesFound)
                         validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidCoreAssessmentEntry));
                     else
                     {
-                        var isValidNextAssessmentSeries = IsValidNextAssessmentSeries(dbAssessmentSeries, dbRegistration.AcademicYear, assessment.CoreAssessmentEntry, Constants.CoreAssessmentStartInYears);
+                        var isValidNextAssessmentSeries = IsValidNextAssessmentSeries(dbAssessmentSeries, dbRegistration.AcademicYear, assessment.CoreAssessmentEntry, Constants.CoreAssessmentStartInYears, ComponentType.Core);
                         if (!isValidNextAssessmentSeries)
                             validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidNextCoreAssessmentEntry));
                     }
@@ -100,12 +119,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 // 6. Specialism assessment entry must be between one and 4 years after the starting academic year
                 if (!string.IsNullOrWhiteSpace(assessment.SpecialismAssessmentEntry))
                 {
-                    var isSeriesFound = dbAssessmentSeries.Any(x => x.Name.Equals(assessment.SpecialismAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
+                    var isSeriesFound = dbAssessmentSeries.Any(x => x.ComponentType == ComponentType.Specialism && x.Name.Equals(assessment.SpecialismAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
                     if (!isSeriesFound)
                         validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidSpecialismAssessmentEntry));
                     else
                     {
-                        var isValidNextAssessmentSeries = IsValidNextAssessmentSeries(dbAssessmentSeries, dbRegistration.AcademicYear, assessment.SpecialismAssessmentEntry, Constants.SpecialismAssessmentStartInYears);
+                        var isValidNextAssessmentSeries = IsValidNextAssessmentSeries(dbAssessmentSeries, dbRegistration.AcademicYear, assessment.SpecialismAssessmentEntry, Constants.SpecialismAssessmentStartInYears, ComponentType.Specialism);
                         if (!isValidNextAssessmentSeries)
                             validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidNextSpecialismAssessmentEntry));
                     }
@@ -115,19 +134,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     response.Add(new AssessmentRecordResponse { ValidationErrors = validationErrors });
                 else
                 {
-                    var registrationSpecialism = dbRegistration.TqRegistrationSpecialisms
-                                                    .FirstOrDefault(x => x.TlSpecialism.LarId.Equals(assessment.SpecialismCode, StringComparison.InvariantCultureIgnoreCase));
-                    
-                    var csvCoreSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.CoreAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
-                    var csvSpecialismSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.SpecialismAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
+                    var registrationSpecialisms = dbRegistration.TqRegistrationSpecialisms.Where(x => assessment.SpecialismCodes.Any(sc => sc.Equals(x.TlSpecialism.LarId, StringComparison.InvariantCultureIgnoreCase)));
+
+                    var csvCoreSeries = dbAssessmentSeries.FirstOrDefault(x => x.ComponentType == ComponentType.Core && x.Name.Equals(assessment.CoreAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
+                    var csvSpecialismSeries = dbAssessmentSeries.FirstOrDefault(x => x.ComponentType == ComponentType.Specialism && x.Name.Equals(assessment.SpecialismAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
 
                     response.Add(new AssessmentRecordResponse
                     {
-                        TqRegistrationPathwayId = !string.IsNullOrWhiteSpace(assessment.CoreCode) ? dbRegistration?.Id : (int?)null,
-                        PathwayAssessmentSeriesId = !string.IsNullOrWhiteSpace(assessment.CoreAssessmentEntry) ? csvCoreSeries?.Id : (int?)null,
+                        TqRegistrationPathwayId = !string.IsNullOrWhiteSpace(assessment.CoreCode) ? dbRegistration?.Id : null,
+                        PathwayAssessmentSeriesId = !string.IsNullOrWhiteSpace(assessment.CoreAssessmentEntry) ? csvCoreSeries?.Id : null,
 
-                        TqRegistrationSpecialismId = !string.IsNullOrWhiteSpace(assessment.SpecialismCode) ? registrationSpecialism?.Id : (int?)null,
-                        SpecialismAssessmentSeriesId = !string.IsNullOrWhiteSpace(assessment.SpecialismAssessmentEntry) ? csvSpecialismSeries?.Id : (int?)null,
+                        TqRegistrationSpecialismIds = registrationSpecialisms.Select(x => x.Id),
+                        SpecialismAssessmentSeriesId = !string.IsNullOrWhiteSpace(assessment.SpecialismAssessmentEntry) ? csvSpecialismSeries?.Id : null,
                     });
                 }
             }
@@ -157,12 +175,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     });
                 }
 
-                if (assessment.TqRegistrationSpecialismId.HasValue && assessment.TqRegistrationSpecialismId.Value > 0)
+                foreach (var specialismId in assessment.TqRegistrationSpecialismIds)
                 {
                     specialismAssessments.Add(new TqSpecialismAssessment
                     {
                         Id = index - Constants.SpecialismAssessmentsStartIndex,
-                        TqRegistrationSpecialismId = assessment.TqRegistrationSpecialismId.Value,
+                        TqRegistrationSpecialismId = specialismId,
                         AssessmentSeriesId = assessment.SpecialismAssessmentSeriesId ?? 0,
                         StartDate = DateTime.UtcNow,
                         IsOptedin = true,
@@ -304,7 +322,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 amendedSpecialismAssessments.ForEach(amendedSpecialismAssessment =>
                 {
-                    var existingSpecialismAssessment = existingSpecialismAssessmentsFromDb.FirstOrDefault(existingSpecialismAssessment => existingSpecialismAssessment.TqRegistrationSpecialismId == amendedSpecialismAssessment.TqRegistrationSpecialismId);
+                    var existingSpecialismAssessment = GetExistingSpecialismAssessment(existingSpecialismAssessmentsFromDb, amendedSpecialismAssessment);
 
                     if (existingSpecialismAssessment != null)
                     {
@@ -330,6 +348,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 newOrAmendedSpecialismAssessmentRecords.AddRange(newSpecialismAssessments.Where(p => p.TqRegistrationSpecialismId > 0 && p.AssessmentSeriesId > 0));
 
             return newOrAmendedSpecialismAssessmentRecords;
+        }
+
+        private static TqSpecialismAssessment GetExistingSpecialismAssessment(IList<TqSpecialismAssessment> existingSpecialismAssessmentsFromDb, TqSpecialismAssessment amendedOrNewSpecialismAssessment)
+        {
+            return existingSpecialismAssessmentsFromDb.OrderByDescending(x => x.AssessmentSeries.StartDate)
+                                                   .FirstOrDefault(existingSpecialismAssessment => existingSpecialismAssessment.TqRegistrationSpecialismId == amendedOrNewSpecialismAssessment.TqRegistrationSpecialismId);
         }
 
         private AssessmentRecordResponse AddStage3ValidationError(int rowNum, long uln, string errorMessage)
@@ -362,47 +386,92 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var assessmentDetails = _mapper.Map<AssessmentDetails>(tqRegistration);
 
-            assessmentDetails.IsCoreEntryEligible = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, Constants.CoreAssessmentStartInYears) != null;
+            //var assessmentSeriesOld = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, Constants.CoreAssessmentStartInYears);
+
+            var allAssessmentSeries = await GetAllAssessmentSeriesAsync();
+            var coreAssessmentSeries = GetValidAssessmentSeries(allAssessmentSeries, tqRegistration, ComponentType.Core);
+            assessmentDetails.IsCoreEntryEligible = tqRegistration.Status == RegistrationPathwayStatus.Active && coreAssessmentSeries != null && coreAssessmentSeries.Any();
+            assessmentDetails.NextAvailableCoreSeries = GetNextAvailableAssessmentSeries(allAssessmentSeries, tqRegistration, ComponentType.Core)?.Name;
+
+            var specialismAssessmentSeries = GetValidAssessmentSeries(allAssessmentSeries, tqRegistration, ComponentType.Specialism);
+            assessmentDetails.IsSpecialismEntryEligible = tqRegistration.Status == RegistrationPathwayStatus.Active && specialismAssessmentSeries != null && specialismAssessmentSeries.Any();
+            assessmentDetails.NextAvailableSpecialismSeries = GetNextAvailableAssessmentSeries(allAssessmentSeries, tqRegistration, ComponentType.Specialism)?.Name;
             return assessmentDetails;
         }
 
-        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)
+        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType, IList<int> componentIds)
         {
             // Validate
-            var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(aoUkprn, profileId);
-            var isValid = IsValidAddAssessmentRequestAsync(tqRegistration, componentType);
-            if (!isValid) return null;
-
-            var startInYear = componentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
-            var series = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, startInYear);
-            if (series == null)
+            if (componentIds == null || !componentIds.Any())
                 return null;
 
-            return _mapper.Map<AvailableAssessmentSeries>(series, opt => opt.Items["profileId"] = profileId);
+            var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(aoUkprn, profileId);
+            
+            var startInYear = componentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
+            var assessmentSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, startInYear);
+
+            var currentOpenSeries = assessmentSeries?.FirstOrDefault(a => a.ComponentType == componentType);
+            if (currentOpenSeries == null)
+                return null;
+
+            var isValid = IsValidAddAssessmentRequestAsync(tqRegistration, currentOpenSeries.Id, componentType, componentIds);
+            if (!isValid) return null;
+
+            return _mapper.Map<AvailableAssessmentSeries>(currentOpenSeries, opt => opt.Items["profileId"] = profileId);
         }
 
         public async Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request)
         {
             // Validate
             var tqRegistrationPathway = await _assessmentRepository.GetAssessmentsAsync(request.AoUkprn, request.ProfileId);
-            var isValid = IsValidAddAssessmentRequestAsync(tqRegistrationPathway, request.ComponentType);
-            var hasValidSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(request.AoUkprn, request.ProfileId, Constants.CoreAssessmentStartInYears) != null;
 
-            if (!isValid || !hasValidSeries)
+            var startInYear = request.ComponentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
+            var assessmentSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(request.AoUkprn, request.ProfileId, startInYear);
+            var currrentOpenSeries = assessmentSeries?.FirstOrDefault(a => a.ComponentType == request.ComponentType);
+
+            if (currrentOpenSeries == null || currrentOpenSeries.Id != request.AssessmentSeriesId)
+                return new AddAssessmentEntryResponse { IsSuccess = false };
+
+            List<int> componentIds = request.ComponentType == ComponentType.Core ? new List<int> { tqRegistrationPathway.Id } : request.SpecialismIds.Where(x => x != null).Select(x => x.Value).ToList();
+            var isValid = IsValidAddAssessmentRequestAsync(tqRegistrationPathway, currrentOpenSeries.Id, request.ComponentType, componentIds);
+            if (!isValid)
                 return new AddAssessmentEntryResponse { IsSuccess = false };
 
             int status = 0;
             if (request.ComponentType == ComponentType.Core)
+            {
                 status = await _pathwayAssessmentRepository.CreateAsync(new TqPathwayAssessment
                 {
                     TqRegistrationPathwayId = tqRegistrationPathway.Id,
-                    AssessmentSeriesId = request.AssessmentSeriesId,
+                    AssessmentSeriesId = currrentOpenSeries.Id,
                     IsOptedin = true,
                     StartDate = DateTime.UtcNow,
                     EndDate = null,
                     IsBulkUpload = false,
                     CreatedBy = request.PerformedBy
                 });
+            }
+            else if (request.ComponentType == ComponentType.Specialism && request.SpecialismIds != null)
+            {
+                var specialismAssessmentsToAdd = new List<TqSpecialismAssessment>();
+
+                foreach(var specialismId in request.SpecialismIds)
+                {
+                    specialismAssessmentsToAdd.Add(new TqSpecialismAssessment
+                    {
+                        TqRegistrationSpecialismId = specialismId.Value,
+                        AssessmentSeriesId = currrentOpenSeries.Id,
+                        IsOptedin = true,
+                        StartDate = DateTime.UtcNow,
+                        EndDate = null,
+                        IsBulkUpload = false,
+                        CreatedBy = request.PerformedBy
+                    });
+                }
+
+                if(specialismAssessmentsToAdd.Any())
+                status = await _specialismAssessmentRepository.CreateManyAsync(specialismAssessmentsToAdd);
+            }
 
             return new AddAssessmentEntryResponse { Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, IsSuccess = status > 0 };
         }
@@ -415,6 +484,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return null;
 
             return _mapper.Map<AssessmentEntryDetails>(pathwayAssessment);
+        }
+
+        public async Task<IEnumerable<AssessmentEntryDetails>> GetActiveSpecialismAssessmentEntriesAsync(long aoUkprn, IList<int> assessmentIds)
+        {
+            var assessments = await _assessmentRepository.GetSpecialismAssessmentDetailsAsync(aoUkprn, assessmentIds);
+            if (!assessments.Any())
+                return null;
+
+            if (!IsValidActiveSpecialismAssessment(assessments))
+                return null;
+
+            return _mapper.Map<IEnumerable<AssessmentEntryDetails>>(assessments);
         }
 
         public async Task<bool> RemovePathwayAssessmentEntryAsync(RemoveAssessmentEntryRequest model)
@@ -433,6 +514,52 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _pathwayAssessmentRepository.UpdateAsync(pathwayAssessment) > 0;
         }
 
+        public async Task<bool> RemoveSpecialismAssessmentEntryAsync(RemoveAssessmentEntryRequest model)
+        {
+            if (model.SpecialismAssessmentIds == null) return false;
+
+            var specialismAssessments = await _specialismAssessmentRepository.GetManyAsync(sa => model.SpecialismAssessmentIds.Contains(sa.Id) && sa.IsOptedin
+                                                                                    && sa.EndDate == null 
+                                                                                    && sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
+                                                                                    && sa.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == model.AoUkprn).ToListAsync();
+            if (specialismAssessments == null || !specialismAssessments.Any()) return false;
+
+            foreach (var specialismAssessment in specialismAssessments)
+            {
+                specialismAssessment.IsOptedin = false;
+                specialismAssessment.EndDate = DateTime.UtcNow;
+                specialismAssessment.ModifiedOn = DateTime.UtcNow;
+                specialismAssessment.ModifiedBy = model.PerformedBy;
+            }
+            return await _specialismAssessmentRepository.UpdateManyAsync(specialismAssessments) > 0;
+        }
+
+        public async Task<IList<AssessmentSeriesDetails>> GetAssessmentSeriesAsync()
+        {
+            var assessmentSeries =  await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
+            return _mapper.Map<IList<AssessmentSeriesDetails>>(assessmentSeries);
+        }
+
+        public IList<AssessmentSeries> GetValidAssessmentSeries(IList<AssessmentSeries> assessmentSeries, TqRegistrationPathway tqRegistrationPathway, ComponentType componentType)
+        {
+            var currentDate = DateTime.UtcNow.Date;
+            var startInYear = componentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
+
+            var series = assessmentSeries?.Where(s => s.ComponentType == componentType && s.Year > tqRegistrationPathway.AcademicYear + startInYear &&
+                                        s.Year <= tqRegistrationPathway.AcademicYear + Constants.AssessmentEndInYears &&
+                                        currentDate >= s.StartDate && currentDate <= s.EndDate)?.OrderBy(a => a.Id)?.ToList();
+
+            return series;
+        }
+
+        public AssessmentSeries GetNextAvailableAssessmentSeries(IList<AssessmentSeries> assessmentSeries, TqRegistrationPathway tqRegistrationPathway, ComponentType componentType)
+        {
+            var startInYear = componentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
+            var series = assessmentSeries?.OrderBy(a => a.Id)?.FirstOrDefault(s => s.ComponentType == componentType && s.Year > tqRegistrationPathway.AcademicYear + startInYear &&
+                                        s.Year <= tqRegistrationPathway.AcademicYear + Constants.AssessmentEndInYears && DateTime.UtcNow.Date <= s.EndDate);
+            return series;
+        }
+
         private bool IsValidActivePathwayAssessment(TqPathwayAssessment pathwayAssessment)
         {
             // 1. Must be an active registration.
@@ -449,30 +576,60 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return !hasActiveResult;
         }
 
-        private bool IsValidAddAssessmentRequestAsync(TqRegistrationPathway registrationPathway, ComponentType componentType)
+        private bool IsValidAddAssessmentRequestAsync(TqRegistrationPathway registrationPathway, int currentOpenSeriesId, ComponentType componentType, IList<int> componentIds)
         {
             // 1. Must be an active registration.
             if (registrationPathway == null || registrationPathway.Status != RegistrationPathwayStatus.Active)
                 return false;
 
-            // 2. Must not have an active assessment.
+            // 2. Must be registered componentIds
+            var isValidComponentIds = componentType == ComponentType.Core ?
+                        componentIds.Count == 1 && componentIds.FirstOrDefault() == registrationPathway.Id :
+                        componentIds.All(compId => registrationPathway.TqRegistrationSpecialisms.Select(p => p.Id).Contains(compId));
+
+            if (!isValidComponentIds)
+                return false;
+
+            // 3. Must not have an active assessment.
             var anyActiveAssessment = componentType == ComponentType.Core ?
-                        registrationPathway.TqPathwayAssessments.Any(x => x.IsOptedin && x.EndDate == null) :
-                        registrationPathway.TqRegistrationSpecialisms.Any(x => x.TqSpecialismAssessments.Any(x => x.IsOptedin && x.EndDate == null));
+                        registrationPathway.TqPathwayAssessments.Where(p => componentIds.Contains(p.TqRegistrationPathwayId)).Any(x => x.IsOptedin && x.EndDate == null && x.AssessmentSeriesId == currentOpenSeriesId) :
+                        registrationPathway.TqRegistrationSpecialisms.Where(s => componentIds.Contains(s.Id)).All(x => x.TqSpecialismAssessments.Any(x => x.IsOptedin && x.EndDate == null && x.AssessmentSeriesId == currentOpenSeriesId));
 
             return !anyActiveAssessment;
         }
 
-        private static bool IsValidNextAssessmentSeries(IList<AssessmentSeries> dbAssessmentSeries, int regAcademicYear, string assessmentEntryName, int startYearOffset)
+        private bool IsValidActiveSpecialismAssessment(IList<TqSpecialismAssessment> specialismAssessments)
+        {
+            foreach (var splAssessment in specialismAssessments)
+            {
+                // 1. Must be an active registration.
+                if (splAssessment == null || splAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status != RegistrationPathwayStatus.Active)
+                    return false;
+
+                // 2. Must have be an active assessment.
+                var isActiveAssessment = splAssessment.IsOptedin && splAssessment.EndDate == null;
+                if (!isActiveAssessment)
+                    return false;
+            }
+
+            return true;
+        }
+
+        private static bool IsValidNextAssessmentSeries(IList<AssessmentSeries> dbAssessmentSeries, int regAcademicYear, string assessmentEntryName, int startYearOffset, ComponentType componentType)
         {
             var currentDate = DateTime.UtcNow.Date;
 
-            var isValidNextAssessmentSeries = dbAssessmentSeries.Any(s =>
+            var isValidNextAssessmentSeries = dbAssessmentSeries.Any(s => s.ComponentType == componentType &&
                 s.Name.Equals(assessmentEntryName, StringComparison.InvariantCultureIgnoreCase) &&
                 currentDate >= s.StartDate && currentDate <= s.EndDate &&
                 s.Year > regAcademicYear + startYearOffset && s.Year <= regAcademicYear + Constants.AssessmentEndInYears);
 
             return isValidNextAssessmentSeries;
+        }
+
+        private async Task<IList<AssessmentSeries>> GetAllAssessmentSeriesAsync()
+        {
+            return await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
         }
     }
 }

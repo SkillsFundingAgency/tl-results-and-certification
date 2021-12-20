@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         private StringBuilder GetInputFilecontent()
         {
             StringBuilder csvData = new StringBuilder();
-            csvData.AppendLine("ULN,Core code,Core assessment entry,Specialism code,Specialism assessment entry");
+            csvData.AppendLine(AssessmentEntryHeader);
             csvData.AppendLine("1234567890,12345678,Summer 2021,Test1234,Summer 2021");
             return csvData;
         }

@@ -3,23 +3,22 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.AmendActiveRegistrationPost
 {
     public class When_ChangeStatus_Delete_IsValid : TestSetup
     {
-        private AssessmentDetailsViewModel _mockresult;
+        private RegistrationAssessmentDetails _mockresult;
 
         public override void Given()
         {
             ViewModel.ChangeStatus = RegistrationChangeStatus.Delete;
             ViewModel.ProfileId = ProfileId;
 
-            _mockresult = new AssessmentDetailsViewModel { ProfileId = ProfileId, IsResultExist = false };
-            RegistrationLoader.GetRegistrationAssessmentAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active)
-                .Returns(_mockresult);
+            _mockresult = new RegistrationAssessmentDetails { ProfileId = ProfileId, IsCoreResultExist = false };
+            RegistrationLoader.GetRegistrationAssessmentAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(_mockresult);
         }
 
         [Fact]

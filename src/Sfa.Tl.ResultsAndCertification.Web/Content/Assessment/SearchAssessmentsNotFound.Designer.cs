@@ -61,11 +61,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to search.
+        ///   Looks up a localized string similar to Back to home.
         /// </summary>
-        public static string Back_To_Search_Link_Text {
+        public static string Button_Back_To_Home {
             get {
-                return ResourceManager.GetString("Back_To_Search_Link_Text", resourceCulture);
+                return ResourceManager.GetString("Button_Back_To_Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search again.
+        /// </summary>
+        public static string Button_Search_Again {
+            get {
+                return ResourceManager.GetString("Button_Search_Again", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to has never been registered with us.
+        /// </summary>
+        public static string Has_Never_Been_Registered_With_Us_Text {
+            get {
+                return ResourceManager.GetString("Has_Never_Been_Registered_With_Us_Text", resourceCulture);
             }
         }
         
@@ -79,15 +97,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to is not registered with us.
-        /// </summary>
-        public static string Is_Not_Registered_With_Us_Text {
-            get {
-                return ResourceManager.GetString("Is_Not_Registered_With_Us_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to is registered with another awarding organisation.
         /// </summary>
         public static string Is_Registered_With_Another_Ao_Text {
@@ -97,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessment entries - ULN cannot be found page.
+        ///   Looks up a localized string similar to ULN not found - Assessment entries.
         /// </summary>
         public static string Page_Title {
             get {

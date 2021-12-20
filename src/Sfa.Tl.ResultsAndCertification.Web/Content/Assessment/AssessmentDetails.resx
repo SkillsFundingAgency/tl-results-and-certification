@@ -117,58 +117,88 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add_An_Assessment_Entry_For" xml:space="preserve">
+    <value>Add an assessment entry for {0}</value>
+  </data>
   <data name="Add_Entry_Action_Link_Text" xml:space="preserve">
     <value>Add entry</value>
   </data>
-  <data name="Available_After_Autumn2021" xml:space="preserve">
-    <value>Available to add after Autumn 2021 series has passed</value>
+  <data name="Add_Result_To_Learners_Previous_Assessment" xml:space="preserve">
+    <value>add a result to this learner's previous assessment</value>
   </data>
-  <data name="Available_After_Current_Assessment_Series" xml:space="preserve">
-    <value>Available to add after the current assessment series has passed</value>
-  </data>
-  <data name="Core_Assessment_Entry_Hidden_Text" xml:space="preserve">
-    <value> for core</value>
+  <data name="Before_Entering_New_Assessment_Details" xml:space="preserve">
+    <value>before entering new assessment details.</value>
   </data>
   <data name="Core_Heading_Text" xml:space="preserve">
-    <value>Core: {0}</value>
+    <value>Core (code): {0}</value>
   </data>
   <data name="Learners_Assessment_Entries_Heading_Text" xml:space="preserve">
     <value>Learner's assessment entries</value>
   </data>
-  <data name="Name_Heading_Text" xml:space="preserve">
-    <value>Name: {0}</value>
+  <data name="Learners_Details_Aria_Label" xml:space="preserve">
+    <value>Learners details</value>
   </data>
-  <data name="Not_Specified_Text" xml:space="preserve">
-    <value>Not specified</value>
+  <data name="Learner_Details" xml:space="preserve">
+    <value>Learner's details</value>
+  </data>
+  <data name="Link_Add_An_Occupational_Specialism" xml:space="preserve">
+    <value>Add an occupational specialism to this learner's record</value>
+  </data>
+  <data name="No_Assessment_Entries_Have_Been_Recored_For" xml:space="preserve">
+    <value>No assessment entries have yet been recorded for {0}</value>
+  </data>
+  <data name="Occupational_Specialism_Heading" xml:space="preserve">
+    <value>Occupational specialism</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Learner’s assessment entries page</value>
+    <value>Learner details - Assessment entries</value>
   </data>
-  <data name="Provider_Heading_Text" xml:space="preserve">
-    <value>Provider: {0}</value>
+  <data name="Remove_Action_Link_Hidden_Text" xml:space="preserve">
+    <value> assessment entry</value>
   </data>
-  <data name="Remove_Entry_Action_Link_Text" xml:space="preserve">
-    <value>Remove entry</value>
+  <data name="Remove_Action_Link_Text" xml:space="preserve">
+    <value>Remove</value>
   </data>
   <data name="Search_Again_Text" xml:space="preserve">
     <value>Search again</value>
   </data>
-  <data name="Specialism_Assessment_Entry_Hidden_Text" xml:space="preserve">
-    <value> for specialism</value>
-  </data>
   <data name="Specialism_Heading_Text" xml:space="preserve">
-    <value>Specialism: {0}</value>
+    <value>Specialism (code): {0}</value>
   </data>
-  <data name="Title_Assessment_Entry_Text" xml:space="preserve">
-    <value>First assessment entry</value>
+  <data name="This_Learner_Does_Not_Have_Occuational_Specialisms_Recorded" xml:space="preserve">
+    <value>This learner does not have an occupational specialism recorded on this service</value>
   </data>
-  <data name="Uln_Heading_Text" xml:space="preserve">
-    <value>ULN: {0}</value>
+  <data name="Title_DateofBirth_Text" xml:space="preserve">
+    <value>Date of birth</value>
   </data>
-  <data name="View_And_Amend_This_Learners_Registration_Details_Text" xml:space="preserve">
-    <value>View and amend this learner's registration details</value>
+  <data name="Title_Exam_Period" xml:space="preserve">
+    <value>Exam period</value>
   </data>
-  <data name="View_This_Learners_Registration_Details_Text" xml:space="preserve">
-    <value>View this learner's registration details</value>
+  <data name="Title_Last_Updated_By" xml:space="preserve">
+    <value>Updated by</value>
+  </data>
+  <data name="Title_Last_Updated_On" xml:space="preserve">
+    <value>Last updated</value>
+  </data>
+  <data name="Title_Name_Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Title_Provider_Text" xml:space="preserve">
+    <value>Provider &lt;br/&gt; (UKPRN)</value>
+  </data>
+  <data name="Title_TLevel_Text" xml:space="preserve">
+    <value>T Level</value>
+  </data>
+  <data name="Title_Uln_Text" xml:space="preserve">
+    <value>ULN</value>
+  </data>
+  <data name="You_Cannot_Register_Learner_For_Core_Assessment_Until" xml:space="preserve">
+    <value>You cannot register this learner for a core component assessment until the {0} window opens.</value>
+  </data>
+  <data name="You_Cannot_Register_Learner_For_Occupational_Specialism_Until" xml:space="preserve">
+    <value>You cannot register this learner for an occupational specialism assessment until the {0} window opens.</value>
+  </data>
+  <data name="You_Must" xml:space="preserve">
+    <value>You must</value>
   </data>
 </root>

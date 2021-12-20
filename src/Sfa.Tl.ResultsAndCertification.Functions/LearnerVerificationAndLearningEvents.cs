@@ -12,10 +12,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 {
     public class LearnerVerificationAndLearningEvents
     {
-        private readonly IPersonalLearningRecordService _personalLearningRecordService;
+        private readonly ILrsPersonalLearningRecordService _personalLearningRecordService;
         private readonly ICommonService _commonService;
 
-        public LearnerVerificationAndLearningEvents(ICommonService commonService, IPersonalLearningRecordService personalLearningRecordService)
+        public LearnerVerificationAndLearningEvents(ICommonService commonService, ILrsPersonalLearningRecordService personalLearningRecordService)
         {
             _commonService = commonService;
             _personalLearningRecordService = personalLearningRecordService;

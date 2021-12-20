@@ -159,6 +159,16 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
             {
                 Uln = "1111111114",
                 ErrorMessage = ValidationMessages.AcademicYearMustBeCurrentOne
+            },
+            new BulkProcessValidationError
+            {
+                Uln = "1111111115",
+                ErrorMessage = ValidationMessages.LearnerPreviouslyRegisteredWithAnotherAo
+            },
+            new BulkProcessValidationError
+            {
+                Uln = "1111111116",
+                ErrorMessage = ValidationMessages.SpecialismCannotBeRemovedWhenActiveAssessmentEntryExist
             }
         };
     }

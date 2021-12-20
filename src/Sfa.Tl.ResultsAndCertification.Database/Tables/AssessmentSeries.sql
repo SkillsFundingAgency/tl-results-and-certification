@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[AssessmentSeries]
 (
-	[Id] INT IDENTITY(1,1) NOT NULL,	
+	[Id] INT IDENTITY(1,1) NOT NULL,
+	[ComponentType] INT NOT NULL DEFAULT 0,
 	[Name] NVARCHAR(255),
 	[Description] NVARCHAR(1000),
 	[Year] INT NOT NULL,

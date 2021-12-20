@@ -90,7 +90,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service
         {
             var blobServiceClient = new BlobServiceClient(_configuration.BlobStorageConnectionString);
             var containerClient = blobServiceClient.GetBlobContainerClient(containerName?.ToLowerInvariant());
-            await containerClient.CreateIfNotExistsAsync();
+
+            if (!await containerClient.ExistsAsync())
+                await containerClient.CreateAsync();
+
             return containerClient;
         }
     }

@@ -14,7 +14,9 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
             else if (x.GetType() != y.GetType())
                 return false;
             else
-                return x.TqRegistrationSpecialismId == y.TqRegistrationSpecialismId;
+                return x.TqRegistrationSpecialismId == y.TqRegistrationSpecialismId &&
+                    ((x.AssessmentSeriesId == y.AssessmentSeriesId) || (x.AssessmentSeriesId != y.AssessmentSeriesId && y.AssessmentSeriesId <= 0));
+                    //(sameSeriesId || (IsRemovalRequest))
         }
 
         public int GetHashCode(TqSpecialismAssessment assessment)

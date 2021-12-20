@@ -108,12 +108,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             return profiles;
         }
 
-        public TqRegistrationProfile SeedRegistrationData(long uln, TqProvider tqProvider = null)
+        public TqRegistrationProfile SeedRegistrationData(long uln, TqProvider tqProvider = null, bool isCouplet = false)
         {
             var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProviders.First());
-            var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, TlSpecialisms.First());
+
+            var specialismsToRegister = isCouplet ? TlSpecialisms.Take(2) : TlSpecialisms.Take(1);
+
+            foreach (var specialism in specialismsToRegister)
+                RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, specialism);
 
             DbContext.SaveChanges();
             return profile;
@@ -121,17 +125,26 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
         public TqPathwayAssessment SeedPathwayAssessmentData(TqRegistrationProfile registrationProfile)
         {
-            var pathwayAssessment = new TqPathwayAssessmentBuilder().Build(registrationProfile.TqRegistrationPathways.First());
+            var pathwayAssessment = new TqPathwayAssessmentBuilder().Build(registrationProfile.TqRegistrationPathways.First(), AssessmentSeries[0]);
             var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, pathwayAssessment);
 
             DbContext.SaveChanges();
             return tqPathwayAssessment;
         }
 
+        public TqSpecialismAssessment SeedSpecialismAssessmentData(TqRegistrationSpecialism registrationSpecialism)
+        {
+            var specialismAssessment = new TqSpecialismAssessmentBuilder().Build(registrationSpecialism, AssessmentSeries[0]);
+            var tqSpecialismAssessment = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, specialismAssessment);
+
+            DbContext.SaveChanges();
+            return tqSpecialismAssessment;
+        }
+
         public TqSpecialismAssessment SeedSpecialismAssessmentData(TqRegistrationProfile registrationProfile)
         {
             var specialism = registrationProfile.TqRegistrationPathways.First().TqRegistrationSpecialisms.First();
-            var specialsimAssessment = new TqSpecialismAssessmentBuilder().Build(specialism);
+            var specialsimAssessment = new TqSpecialismAssessmentBuilder().Build(specialism, AssessmentSeries[0]);
             var tqSpecialismAssessment = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, specialsimAssessment);
             DbContext.SaveChanges();
             return tqSpecialismAssessment;

@@ -52,9 +52,7 @@
         public const string RegistrationCannotBeDeletedViewModel = "RegistrationCannotBeDeletedViewModel";
         public const string AssessmentsUploadSuccessfulViewModel = "AssessmentsUploadSuccessfulViewModel";
         public const string AssessmentsSearchCriteria = "AssessmentsSearchCriteria";
-        public const string SearchAssessmentsUlnNotFound = "SearchAssessmentsUlnNotFound";
-        public const string AddAssessmentEntryConfirmationViewModel = "AddAssessmentEntryConfirmationViewModel";
-        public const string RemoveAssessmentEntryConfirmationViewModel = "RemoveAssessmentEntryConfirmationViewModel";
+        public const string SearchAssessmentsUlnNotFound = "SearchAssessmentsUlnNotFound";        
         public const string SearchResultsUlnNotFound = "SearchResultsUlnNotFound";
         public const string ResultWithdrawn = "ResultWithdrawn";
         public const string ResultsSearchCriteria = "ResultsSearchCriteria";
@@ -105,6 +103,7 @@
         public const int AssessmentEndInYears = 4;
         public const int CoreAssessmentStartInYears = 0;
         public const int SpecialismAssessmentStartInYears = 1;
+        public const string SpecialismAssessmentIds = "specialismAssessmentIds";
 
         public const int MaxFileSizeInMb = 5;
 
