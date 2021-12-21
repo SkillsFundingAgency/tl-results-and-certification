@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download assessments data.
+        ///   Looks up a localized string similar to Generating assessments data.
         /// </summary>
         public static string Heading_Download_Assessments_Data {
             get {

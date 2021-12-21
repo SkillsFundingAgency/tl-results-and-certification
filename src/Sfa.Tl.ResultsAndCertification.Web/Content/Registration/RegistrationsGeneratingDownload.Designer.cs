@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download registrations data.
+        ///   Looks up a localized string similar to Generating registrations data.
         /// </summary>
         public static string Heading_Download_Registrations_Data {
             get {
