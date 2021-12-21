@@ -19,31 +19,30 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<IList<RegistrationsExport>> GetDataExportRegistrationsAsync(long aoUkprn)
         {
-            // TODO: one from each pathway id?
-            // or latest pathway for each profilid.
             var registrations = await _dbContext.TqRegistrationPathway
-                   .Include(x => x.TqRegistrationProfile)
-                   .Include(x => x.TqProvider)
-                       .ThenInclude(x => x.TqAwardingOrganisation)
-                           .ThenInclude(x => x.TlPathway)
-                   .Include(x => x.TqRegistrationSpecialisms)
-                       .ThenInclude(x => x.TlSpecialism)
                    .Where(x => x.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn && (x.Status == RegistrationPathwayStatus.Active || x.Status == RegistrationPathwayStatus.Withdrawn))
-                   .Select(x => new RegistrationsExport 
-                   { 
-                       Uln = x.TqRegistrationProfile.UniqueLearnerNumber.ToString(),
+                   .Select(x => new RegistrationsExport
+                   {
+                       Uln = x.TqRegistrationProfile.UniqueLearnerNumber,
                        FirstName = x.TqRegistrationProfile.Firstname,
                        LastName = x.TqRegistrationProfile.Lastname,
-                       DateOfBirth = x.TqRegistrationProfile.DateofBirth.ToShortDateString(), // TODO convert
-                       Ukprn = x.TqProvider.TlProvider.UkPrn.ToString(),
-                       AcademicYear = x.AcademicYear.ToString(), // TODO: get value
+                       DateOfBirth = x.TqRegistrationProfile.DateofBirth,
+                       Ukprn = x.TqProvider.TlProvider.UkPrn,
+                       AcademicYear = x.AcademicYear,
                        Core = x.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-                       Specialisms = string.Join(",", x.TqRegistrationSpecialisms.Select(s => s.TlSpecialism.LarId)), // TOOD: null check and constant. 
-                       Status = x.Status.ToString()
-
+                       Specialisms = string.Join(",", x.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null).Select(s => s.TlSpecialism.LarId)),
+                       Status = x.Status.ToString(),
+                       CreatedOn = x.CreatedOn
                    }).ToListAsync();
 
-          return registrations;
+            if (registrations == null) return null;
+
+            var latestRegistratons = registrations
+                    .GroupBy(x => x.Uln)
+                    .Select(x => x.OrderByDescending(o => o.CreatedOn).Take(1))
+                    .ToList();
+
+            return registrations;
         }
     }
 }
