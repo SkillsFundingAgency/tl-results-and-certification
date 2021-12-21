@@ -48,7 +48,6 @@
         public const string AddResultUri = "/api/result/AddResult";
         public const string ChangeResultUri = "/api/result/ChangeResult";
         
-        
         // DocumentUploadHistory Related Uri's
         public const string GetDocumentUploadHistoryDetailsAsyncUri = "/api/DocumentUploadHistory/GetDocumentUploadHistoryDetails/{0}/{1}";
 
@@ -107,5 +106,7 @@
         public const string GetAcademicYears = "/api/common/AcademicYears";
 
         public const string GetLearnerRecordUri = "/api/learner/GetLearnerRecord/{0}/{1}/{2}";
+
+        public const string GetDataExportUri = "/api/DataExport/GetDataExport/{0}/{1}/{2}";
     }
 }
