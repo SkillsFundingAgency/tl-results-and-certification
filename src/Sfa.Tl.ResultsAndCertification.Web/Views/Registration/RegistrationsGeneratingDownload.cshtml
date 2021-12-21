@@ -15,9 +15,9 @@
     <div class="govuk-grid-column-two-thirds">
         <form asp-route="@RouteConstants.SubmitRegistrationsGeneratingDownload" id="submitDataExport">
             <div class="govuk-form-group">
-                <h2 class="govuk-heading-l">
+                <h1 class="govuk-heading-l">
                     @RegistrationsGeneratingDownload.Heading_Download_Registrations_Data
-                </h2>
+                </h1>
             </div>
 
             <vc:spinner model="new SpinnerModel { Message = RegistrationsGeneratingDownload.Processing_Spinner_Text }"></vc:spinner>
