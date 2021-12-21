@@ -27,9 +27,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
         public async Task<IList<DataExportResponse>> ProcessDataExportAsync(long aoUkprn, DataExportType requestType, string requestedBy)
         {
             var response = new List<DataExportResponse>();
-            DataExportResponse blobResponse = null;
-
             byte[] byteData;
+            DataExportResponse blobResponse;
+            
             switch (requestType)
             {
                 case DataExportType.Registrations:
@@ -81,7 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             {
                 ContainerName = DocumentType.DataExports.ToString().ToLower(),
                 SourceFilePath = $"{aoUkprn}/{requestType}",
-                BlobFileName = blobUniqueReference.ToString(),
+                BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
                 FileData = byteData,
                 UserName = requestedBy
             });

@@ -654,7 +654,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("registrations-generating-download", Name = RouteConstants.SubmitRegistrationsGeneratingDownload)]
-        public async Task<IActionResult> SubmitRegistrationsGeneratingDownload()
+        public async Task<IActionResult> SubmitRegistrationsGeneratingDownloadAsync()
         {
             var response = await _registrationLoader.GenerateRegistrationsExportAsync(User.GetUkPrn(), User.GetUserEmail());
             if (response == null || response.Count != 1)
@@ -668,11 +668,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.RegistrationsNoRecordsFound);
             }
 
-            var responseItem = response.FirstOrDefault();
+            var regExportResponse = response.FirstOrDefault();
             var registrationsDownloadViewModel = new RegistrationsDownloadViewModel
             {
-                BlobUniqueReference = responseItem.BlobUniqueReference,
-                FileSize = responseItem.FileSize,
+                BlobUniqueReference = regExportResponse.BlobUniqueReference,
+                FileSize = regExportResponse.FileSize,
                 FileType = FileType.Csv.ToString().ToUpperInvariant()
             };
 
@@ -710,7 +710,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 var fileStream = await _registrationLoader.GetRegistrationsDataFileAsync(User.GetUkPrn(), id.ToGuid());
                 if (fileStream == null)
                 {
-                    _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download registration data. Method: GetRegistrationValidationErrorsFileAsync(AoUkprn: {User.GetUkPrn()}, BlobUniqueReference = {id})");
+                    _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download registration data. Method: RegistrationsDownloadDataLinkAsync(AoUkprn: {User.GetUkPrn()}, BlobUniqueReference = {id})");
                     return RedirectToRoute(RouteConstants.PageNotFound);
                 }
 

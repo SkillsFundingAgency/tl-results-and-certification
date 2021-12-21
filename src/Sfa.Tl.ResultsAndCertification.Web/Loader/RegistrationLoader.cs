@@ -291,7 +291,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
             {
                 ContainerName = DocumentType.DataExports.ToString().ToLower(),
-                BlobFileName = blobUniqueReference.ToString(),
+                BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
                 SourceFilePath = $"{aoUkprn}/{DataExportType.Registrations}"
             });
 
