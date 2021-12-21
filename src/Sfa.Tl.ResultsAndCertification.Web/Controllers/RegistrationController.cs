@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
@@ -653,9 +654,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("registrations-generating-download", Name = RouteConstants.SubmitRegistrationsGeneratingDownload)]
-        public IActionResult SubmitRegistrationsGeneratingDownload()
+        public async Task<IActionResult> SubmitRegistrationsGeneratingDownload()
         {
-            return RedirectToRoute(RouteConstants.RegistrationsNoRecordsFound);
+            var response = await _registrationLoader.GenerateRegistrationsExportAsync(User.GetUkPrn(), User.GetUserEmail());
+            if (response == null || response.Count != 1)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            if (!response.FirstOrDefault().IsDataFound)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound,
+                    $"There are no registrations found for the Data export. Method: GenerateRegistrationsExportAsync({User.GetUkPrn()}, {User.GetUserEmail()})");
+
+                return RedirectToRoute(RouteConstants.RegistrationsNoRecordsFound);
+            }
+
+            return RedirectToRoute(RouteConstants.RegistrationDashboard); // TODO: 
         }
 
         [HttpGet]

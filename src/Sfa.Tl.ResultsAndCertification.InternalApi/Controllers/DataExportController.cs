@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
@@ -20,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpGet]
         [Route("GetDataExport/{aoUkprn}/{requestType}/{requestedBy}")]
-        public async Task<DataExportResponse> GetDataExportAsync(long aoUkprn, DataExportType requestType, string requestedBy)
+        public async Task<IList<DataExportResponse>> GetDataExportAsync(long aoUkprn, DataExportType requestType, string requestedBy)
         {
             return await _dataExportLoader.ProcessDataExportAsync(aoUkprn, requestType, requestedBy);
         }
