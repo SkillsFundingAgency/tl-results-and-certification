@@ -303,6 +303,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CheckAndSubmit.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Registration\RegistrationsDownloadData.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RegistrationsDownloadData.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\RegistrationsGeneratingDownload.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1127,6 +1132,10 @@
     <EmbeddedResource Update="Content\ProviderAddress\CheckAndSubmit.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CheckAndSubmit.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\RegistrationsDownloadData.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RegistrationsDownloadData.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\RegistrationsGeneratingDownload.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

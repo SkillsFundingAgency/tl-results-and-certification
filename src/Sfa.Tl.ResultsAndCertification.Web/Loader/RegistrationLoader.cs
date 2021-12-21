@@ -285,5 +285,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             return await _internalApiClient.GenerateDataExportAsync(aoUkprn, DataExportType.Registrations, requestedBy);
         }
+
+        public async Task<Stream> GetRegistrationsDataFileAsync(long aoUkprn, Guid blobUniqueReference)
+        {
+            var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
+            {
+                ContainerName = DocumentType.DataExports.ToString().ToLower(),
+                BlobFileName = blobUniqueReference.ToString(),
+                SourceFilePath = $"{aoUkprn}/{DataExportType.Registrations}"
+            });
+
+            if (fileStream == null)
+            {
+                var blobReadError = $"No FileStream found to download registrations data. Method: GetRegistrationsDataFileAsync(ContainerName: {DocumentType.Registrations}, BlobFileName = {blobUniqueReference}, SourceFilePath = {aoUkprn}/{DataExportType.Registrations})";
+                _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
+            }
+            return fileStream;
+        }
     }
 }

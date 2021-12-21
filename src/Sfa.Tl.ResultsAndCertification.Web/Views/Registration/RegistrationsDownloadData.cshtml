@@ -1,36 +1,41 @@
-﻿<div class="govuk-grid-row">
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.RegistrationsDownloadViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = RegistrationsDownloadData.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form class="form" action="/V2-0/AO/tlevels-dashboard" method="post" novalidate="" data-validate="search-for-learner-validation">
-            <div class="govuk-form-group">
-                <fieldset class="govuk-fieldset">
 
-                    <div class="govuk-form-group">
-                        <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                <h1 class="govuk-fieldset__heading">
-                                    Download registrations data
-                                </h1>
-                            </legend>
+        <h1 class="govuk-heading-l">
+            @RegistrationsDownloadData.Heading_Download_Registratinos_Data
+        </h1>
 
-                        </fieldset>
-                    </div>
-
-                    <div class="govuk-grid-row">
-
-                        <div class="govuk-grid-column-one-quarter">
-                            <img src="/public/images/document-image.png" alt="Document-image">
-                        </div>
-                        <div class="govuk-grid-column-three-quarters">
-                            <h1 class="govuk-heading-s">
-
-                                <a href="data:text/csv;charset=utf-8,ULN,Core code,Core assessment entry,Specialism code(s),Specialism assessment entry
-                          22222222222222,60358294,Summer 2021,22222222222223,60358294,Summer 2021,22222222222224,60358294,Summer 2021" download="2021-11-18_16-38_11_registrations.csv">Registrations.CSV, 295 bytes</a>
-                            </h1>
-                        </div>
-                    </div>
-                </fieldset>
+        <section class="govuk-clearfix">
+            <div class="gem-c-attachment__thumbnail">
+                <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="@RouteConstants.RegistrationsDownloadDataLink" asp-route-id="@Model.BlobUniqueReference">
+                    <svg class="gem-c-attachment__thumbnail-image" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
+                        <path d="M12 12h75v27H12zM12 59h9v9h-9zM12 77h9v9h-9zM12 95h9v9h-9zM12 113h9v9h-9zM30 59h57v9H30zM30 77h39v9H30zM30 95h57v9H30zM30 113h48v9H30z" stroke-width="0"></path>
+                    </svg>
+                </a>
             </div>
-            <button class="govuk-button" data-module="govuk-button">Back to home</button>
-        </form>
+            <div>
+                <h3 class="govuk-heading-s">
+                    <a class="govuk-link" target="_self" asp-route="@RouteConstants.RegistrationsDownloadDataLink" asp-route-id="@Model.BlobUniqueReference">
+                        @RegistrationsDownloadData.Registrations_Report, @Model.FileSize <abbr title="bytes">@RegistrationsDownloadData.File_Size_Units</abbr>
+                    </a>
+                </h3>
+            </div>
+        </section>
+
+        <div class="govuk-button-group govuk-!-margin-bottom-6">
+            <a id="backToHomeButton" class="govuk-button" role="button" asp-route="@RouteConstants.Home">@RegistrationsDownloadData.Button_Back_To_Home</a>
+        </div>
     </div>
 </div>

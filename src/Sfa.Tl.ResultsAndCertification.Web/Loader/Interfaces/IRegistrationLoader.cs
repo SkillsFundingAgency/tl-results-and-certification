@@ -41,5 +41,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync();
         Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync();
         Task<IList<DataExportResponse>> GenerateRegistrationsExportAsync(long aoUkprn, string requestedBy);
+        Task<Stream> GetRegistrationsDataFileAsync(long aoUkprn, Guid blobUniqueReference);
     }
 }

@@ -668,9 +668,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.RegistrationsNoRecordsFound);
             }
 
-            var registrationsDownloadViewModel = new RegistrationsDownloadViewModel 
+            var responseItem = response.FirstOrDefault();
+            var registrationsDownloadViewModel = new RegistrationsDownloadViewModel
             {
-              // TODO:    
+                BlobUniqueReference = responseItem.BlobUniqueReference,
+                FileSize = responseItem.FileSize,
+                FileType = FileType.Csv.ToString().ToUpperInvariant()
             };
 
             await _cacheService.SetAsync(CacheKey, registrationsDownloadViewModel, CacheExpiryTime.XSmall);
@@ -697,6 +700,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return View(cacheModel);
         }
+
+        [HttpGet]
+        [Route("download-registrations-data", Name = RouteConstants.RegistrationsDownloadDataLink)]
+        public async Task<IActionResult> RegistrationsDownloadDataLinkAsync(string id)
+        {
+            if (id.IsGuid())
+            {
+                var fileStream = await _registrationLoader.GetRegistrationsDataFileAsync(User.GetUkPrn(), id.ToGuid());
+                if (fileStream == null)
+                {
+                    _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download registration data. Method: GetRegistrationValidationErrorsFileAsync(AoUkprn: {User.GetUkPrn()}, BlobUniqueReference = {id})");
+                    return RedirectToRoute(RouteConstants.PageNotFound);
+                }
+
+                fileStream.Position = 0;
+                return new FileStreamResult(fileStream, "text/csv")
+                {
+                    FileDownloadName = RegistrationContent.RegistrationsDownloadData.Registrations_Data_Report_File_Name_Text
+                };
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.DocumentDownloadFailed, $"Not a valid guid to read file.Method: RegistrationsDownloadDataLinkAsync(Id = { id}), Ukprn: { User.GetUkPrn()}, User: { User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
+        }
+
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
