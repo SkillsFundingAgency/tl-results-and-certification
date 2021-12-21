@@ -128,6 +128,7 @@
         public const string UlnValidationRegex = @"^\d{10}$";
         public const string PipeSeperator = "|";
         public const string AndSeperator = " and ";
+        public const string CommaSeperator = ",";
 
 
         // Function Name Constants
