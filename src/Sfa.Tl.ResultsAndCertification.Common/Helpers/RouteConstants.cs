@@ -169,6 +169,7 @@
         public const string AssessmentsGeneratingDownload = "AssessmentsGeneratingDownload";
         public const string SubmitAssessmentsGeneratingDownload = "SubmitAssessmentsGeneratingDownload";
         public const string AssessmentsNoRecordsFound = "AssessmentsNoRecordsFound";
+        public const string RegistrationsDownloadData = "RegistrationsDownloadData";
 
         // Search Assessment Entries
         public const string SearchAssessments = "SearchAssessments";

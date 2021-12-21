@@ -65,14 +65,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
                 case DataExportType.Results:
                     break;
+
                 default:
                     break;
             }
 
-            response.Add(blobResponse);
             return response;
         }
-
 
         private async Task<DataExportResponse> WriteCsvToBlobAsync(long aoUkprn, DataExportType requestType, string requestedBy, byte[] byteData)
         {

@@ -647,7 +647,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("registrations-generating-download", Name = RouteConstants.RegistrationsGeneratingDownload)]
-        public IActionResult RegistrationsGeneratingDownload()
+        public IActionResult RegistrationsGeneratingDownload()  
         {
             return View();
         }
@@ -660,7 +660,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (response == null || response.Count != 1)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
-            if (!response.FirstOrDefault().IsDataFound)
+            if (!response.Any(x => x.IsDataFound))
             {
                 _logger.LogWarning(LogEvent.NoDataFound,
                     $"There are no registrations found for the Data export. Method: GenerateRegistrationsExportAsync({User.GetUkPrn()}, {User.GetUserEmail()})");
@@ -668,7 +668,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.RegistrationsNoRecordsFound);
             }
 
-            return RedirectToRoute(RouteConstants.RegistrationDashboard); // TODO: 
+            var registrationsDownloadViewModel = new RegistrationsDownloadViewModel 
+            {
+              // TODO:    
+            };
+
+            await _cacheService.SetAsync(CacheKey, registrationsDownloadViewModel, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.RegistrationsDownloadData);
         }
 
         [HttpGet]
@@ -676,6 +682,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public IActionResult RegistrationsNoRecordsFound()
         {
             return View(new RegistrationsNoRecordsFoundViewModel());
+        }
+
+        [HttpGet]
+        [Route("registrations-download-data", Name = RouteConstants.RegistrationsDownloadData)]
+        public async Task<IActionResult> RegistrationsDownloadDataAsync()
+        {
+            var cacheModel = await _cacheService.GetAndRemoveAsync<RegistrationsDownloadViewModel>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read DataExportResponse from redis cache in registrations download page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(cacheModel);
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
