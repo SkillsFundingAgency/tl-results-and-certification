@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Mapper;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
@@ -36,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                     if (registrations == null || !registrations.Any())
                         return new List<DataExportResponse> { new DataExportResponse { IsDataFound = false } };
 
-                    byteData = await CsvExtensions.WriteFileAsync(registrations);
+                    byteData = await CsvExtensions.WriteFileAsync(registrations, classMapType: typeof(RegistrationsExportMap));
                     blobResponse = await WriteCsvToBlobAsync(aoUkprn, requestType, requestedBy, byteData);
                     response.Add(blobResponse);
                     break;
@@ -72,6 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return response;
         }
 
+
         private async Task<DataExportResponse> WriteCsvToBlobAsync(long aoUkprn, DataExportType requestType, string requestedBy, byte[] byteData)
         {
             // 3. Save to Blob
@@ -88,7 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             // 4. Return response
             return new DataExportResponse
             {
-                FileSize = Math.Round((byteData.Length / 1024D), 2),
+                FileSize = Math.Round(byteData.Length / 1024D, 2),
                 BlobUniqueReference = blobUniqueReference,
                 IsDataFound = true
             };

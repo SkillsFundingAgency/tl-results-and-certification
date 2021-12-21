@@ -19,6 +19,8 @@
         public const string LrsProfileId = "profileId";
         public const string LrsResponseCode = "responseCode";
         public const string FunctionPerformedBy = "System";
+        public const string DefaultPerformedBy = "System";
+        public const string CreatedBy = "createdBy";
 
         // Controller Names
         public const string HomeController = "Home";

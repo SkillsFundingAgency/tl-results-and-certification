@@ -19,8 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             {
                 HasHeaderRecord = false,
                 Delimiter = delimeter,
-                ShouldQuote = args => false,
-                
+                ShouldQuote = args => false                
             };
 
             await using var ms = new MemoryStream();
@@ -35,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 
                 if (writeHeader)
                 {
-                    var headerNames = typeof(T).GetProperties().Select(pr => pr.GetCustomAttribute<DisplayNameAttribute>(false).DisplayName).ToList();
+                    var headerNames = typeof(T).GetProperties().Where(p => p.GetCustomAttribute<DisplayNameAttribute>(false) != null).Select(pr => pr.GetCustomAttribute<DisplayNameAttribute>(false).DisplayName).ToList();
                     headerNames.ForEach(headerName =>
                     {
                         cw.WriteField(headerName);
