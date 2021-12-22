@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.DataExport;
@@ -74,8 +73,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
                 expectedProfile.Should().NotBeNull();
 
                 var expectedPathway = expectedProfile.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
-                                
-                var expectedSpecialisms = expectedPathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null);
+
+                var expectedSpecialisms = expectedPathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null).Select(s => s.TlSpecialism.LarId).ToList();
 
                 actualExport.Uln.Should().Be(expectedProfile.UniqueLearnerNumber);
                 actualExport.FirstName.Should().Be(expectedProfile.Firstname);
@@ -86,15 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
                 actualExport.AcademicYear.Should().Be(expectedPathway.AcademicYear);
                 actualExport.DisplayAcademicYear.Should().Be("2020/21");
                 actualExport.Core.Should().Be(expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId);
-                
-                if (expectedSpecialisms.Any())
-                {
-                    actualExport.Specialisms.Split(Constants.CommaSeperator).Should().BeEquivalentTo(expectedSpecialisms.Select(s => s.TlSpecialism.LarId));
-                }
-                else
-                {
-                    actualExport.Specialisms.Should().BeNullOrEmpty();
-                }
+                actualExport.SpecialismsList.Should().BeEquivalentTo(expectedSpecialisms);
                 actualExport.Status.Should().Be(expectedPathway.Status.ToString());
             }
         }

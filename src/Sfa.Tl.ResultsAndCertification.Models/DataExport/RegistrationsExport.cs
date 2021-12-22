@@ -1,41 +1,52 @@
-﻿using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.DataExport
 {
     public class RegistrationsExport
     {
-        [DisplayName(RegistrationFluentHeader.Uln)]
+        [DisplayName(RegistrationsExportHeader.Uln)]
         public long Uln { get; set; }
 
-        [DisplayName(RegistrationFluentHeader.FirstName)]
+        [DisplayName(RegistrationsExportHeader.FirstName)]
         public string FirstName { get; set; }
 
-        [DisplayName(RegistrationFluentHeader.LastName)]
+        [DisplayName(RegistrationsExportHeader.LastName)]
         public string LastName { get; set; }
 
-        [DisplayName(RegistrationFluentHeader.DateOfBirth)]
+        [DisplayName(RegistrationsExportHeader.DateOfBirth)]
         public string DisplayDateOfBirth => DateOfBirth.ToString("ddMMyyyy");
 
-        [DisplayName(RegistrationFluentHeader.Ukprn)]
+        [DisplayName(RegistrationsExportHeader.Ukprn)]
         public long Ukprn { get; set; }
 
-        [DisplayName(RegistrationFluentHeader.AcademicYear)]
+        [DisplayName(RegistrationsExportHeader.AcademicYear)]
         public string DisplayAcademicYear => AcademicYear.ToString().Length == 4 ? $"{AcademicYear}/{(AcademicYear + 1).ToString().Substring(2)}" : string.Empty;
 
-        [DisplayName(RegistrationFluentHeader.Core)]
+        [DisplayName(RegistrationsExportHeader.Core)]
         public string Core { get; set; }
 
-        [DisplayName(RegistrationFluentHeader.Specialisms)]
-        public string Specialisms { get; set; }
+        [DisplayName(RegistrationsExportHeader.Specialisms)]
+        public string Specialisms
+        {
+            get
+            {
+                return SpecialismsList.Any() && SpecialismsList.Count() > 1 ?
+                    $"\"{string.Join(Constants.CommaSeperator, SpecialismsList)}\"" :
+                    SpecialismsList.FirstOrDefault();
+            }
+        }
 
-        [DisplayName("Status")]
+        [DisplayName(RegistrationsExportHeader.Status)]
         public string Status { get; set; }
 
+        public IList<string> SpecialismsList { get; set; }
+        
         public DateTime DateOfBirth { get; set; }
-
+        
         public int AcademicYear { get; set; }       
 
         public DateTime CreatedOn { get; set; }

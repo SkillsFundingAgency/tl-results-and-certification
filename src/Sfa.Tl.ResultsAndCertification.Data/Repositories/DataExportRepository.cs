@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.DataExport;
 using System.Collections.Generic;
@@ -31,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                        Ukprn = x.TqProvider.TlProvider.UkPrn,
                        AcademicYear = x.AcademicYear,
                        Core = x.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-                       Specialisms = string.Join(Constants.CommaSeperator, x.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null).Select(s => s.TlSpecialism.LarId)),
+                       SpecialismsList = x.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null).Select(s => s.TlSpecialism.LarId).ToList(),
                        Status = x.Status.ToString(),
                        CreatedOn = x.CreatedOn
                    }).ToListAsync();
