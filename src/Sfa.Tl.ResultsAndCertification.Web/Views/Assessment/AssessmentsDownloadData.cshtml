@@ -12,44 +12,55 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-
-        <h1 class="govuk-heading-l">
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-8">
             @AssessmentsDownloadData.Heading_Download_Assessments_Data
         </h1>
 
-        <section class="govuk-clearfix">
-            <div class="gem-c-attachment__thumbnail">
-                <svg class="gem-c-attachment__thumbnail-image" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
-                    <path d="M12 12h75v27H12zM12 59h9v9h-9zM12 77h9v9h-9zM12 95h9v9h-9zM12 113h9v9h-9zM30 59h57v9H30zM30 77h39v9H30zM30 95h57v9H30zM30 113h48v9H30z" stroke-width="0"></path>
-                </svg>
-            </div>
-
-            @if (Model.CoreAssesmentsDownloadLinkViewModel != null)
-            {
-                <div>
-                    <h2 class="govuk-heading-s">@AssessmentsDownloadData.SubHeading_Core_Components</h2>
-                    <h3 class="govuk-heading-s">
+        @if (Model.CoreAssesmentsDownloadLinkViewModel != null)
+        {
+            <section class="govuk-clearfix">
+                <div class="attachment__thumbnail">
+                    <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="@RouteConstants.AssessmentsDownloadDataLink" asp-route-id="@Model.CoreAssesmentsDownloadLinkViewModel.BlobUniqueReference" asp-route-componentType="@Model.CoreComponentType">
+                        <svg class="attachment__thumbnail-image thumbnail-image-large" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
+                            <path d="M12 12h75v27H12zm0 47h18.75v63H12zm55 2v59H51V61h16m2-2H49v63h20V59z" stroke-width="0"></path>
+                            <path d="M49 61.05V120H32.8V61.05H49m2-2H30.75v63H51V59zm34 2V120H69.05V61.05H85m2-2H67v63h20V59z" stroke-width="0"></path>
+                            <path d="M30 68.5h56.5M30 77.34h56.5M30 112.7h56.5M30 95.02h56.5M30 86.18h56.5M30 103.86h56.5" fill="none" stroke-miterlimit="10" stroke-width="2"></path>
+                        </svg>
+                    </a>
+                </div>
+                <div class="attachment__details">
+                    <h3 class="govuk-heading-m">
                         <a class="govuk-link" target="_self" asp-route="@RouteConstants.AssessmentsDownloadDataLink" asp-route-id="@Model.CoreAssesmentsDownloadLinkViewModel.BlobUniqueReference" asp-route-componentType="@Model.CoreComponentType">
                             @AssessmentsDownloadData.Core_Assessments_Link_DisplayName (@Model.CoreAssesmentsDownloadLinkViewModel.FileType, @Model.CoreAssesmentsDownloadLinkViewModel.FileSize<abbr title="Kilobyte">@AssessmentsDownloadData.File_Size_Units</abbr>)
                         </a>
                     </h3>
                 </div>
-            }
+            </section>
+        }
 
-            @if (Model.SpecialismAsssmentsDownloadLinkViewModel != null)
-            {
-                <div>
-                    <h2 class="govuk-heading-s">@AssessmentsDownloadData.SubHeading_Specialism_Components</h2>
-                    <h3 class="govuk-heading-s">
+        @if (Model.SpecialismAsssmentsDownloadLinkViewModel != null)
+        {
+            <section class="govuk-clearfix">
+                <div class="attachment__thumbnail">
+                    <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="@RouteConstants.AssessmentsDownloadDataLink" asp-route-id="@Model.SpecialismAsssmentsDownloadLinkViewModel.BlobUniqueReference" asp-route-componentType="@Model.SpecialismComponentType">
+                        <svg class="attachment__thumbnail-image thumbnail-image-large" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
+                            <path d="M12 12h75v27H12zm0 47h18.75v63H12zm55 2v59H51V61h16m2-2H49v63h20V59z" stroke-width="0"></path>
+                            <path d="M49 61.05V120H32.8V61.05H49m2-2H30.75v63H51V59zm34 2V120H69.05V61.05H85m2-2H67v63h20V59z" stroke-width="0"></path>
+                            <path d="M30 68.5h56.5M30 77.34h56.5M30 112.7h56.5M30 95.02h56.5M30 86.18h56.5M30 103.86h56.5" fill="none" stroke-miterlimit="10" stroke-width="2"></path>
+                        </svg>
+                    </a>
+                </div>
+                <div class="attachment__details">
+                    <h3 class="govuk-heading-m">
                         <a class="govuk-link" target="_self" asp-route="@RouteConstants.AssessmentsDownloadDataLink" asp-route-id="@Model.SpecialismAsssmentsDownloadLinkViewModel.BlobUniqueReference" asp-route-componentType="@Model.SpecialismComponentType">
                             @AssessmentsDownloadData.Specialism_Assessments_Link_DisplayName (@Model.SpecialismAsssmentsDownloadLinkViewModel.FileType, @Model.SpecialismAsssmentsDownloadLinkViewModel.FileSize<abbr title="Kilobyte">@AssessmentsDownloadData.File_Size_Units</abbr>)
                         </a>
                     </h3>
                 </div>
-            }
-        </section>
+            </section>
+        }
 
-        <div class="govuk-button-group govuk-!-margin-bottom-6">
+        <div class="govuk-button-group govuk-!-margin-top-5">
             <a id="backToHomeButton" class="govuk-button" role="button" asp-route="@RouteConstants.Home">@AssessmentsDownloadData.Button_Back_To_Home</a>
         </div>
     </div>
