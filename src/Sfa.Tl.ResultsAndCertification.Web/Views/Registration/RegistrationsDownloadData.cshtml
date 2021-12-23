@@ -28,7 +28,7 @@
             <div>
                 <h3 class="govuk-heading-s">
                     <a class="govuk-link" target="_self" asp-route="@RouteConstants.RegistrationsDownloadDataLink" asp-route-id="@Model.BlobUniqueReference">
-                        @RegistrationsDownloadData.Registrations_Report, @Model.FileSize <abbr title="bytes">@RegistrationsDownloadData.File_Size_Units</abbr>
+                        @RegistrationsDownloadData.Registrations_Link_DisplayName (@Model.FileType, @Model.FileSize <abbr title="Kilobyte">@RegistrationsDownloadData.File_Size_Units</abbr>)
                     </a>
                 </h3>
             </div>

@@ -121,7 +121,7 @@
     <value>Back to home</value>
   </data>
   <data name="File_Size_Units" xml:space="preserve">
-    <value>bytes</value>
+    <value>KB</value>
   </data>
   <data name="Heading_Download_Registratinos_Data" xml:space="preserve">
     <value>Download registrations data</value>
@@ -130,9 +130,9 @@
     <value>Download data - Registrations</value>
   </data>
   <data name="Registrations_Data_Report_File_Name_Text" xml:space="preserve">
-    <value>Registrations.csv</value>
+    <value>Registrations_data.CSV</value>
   </data>
-  <data name="Registrations_Report" xml:space="preserve">
-    <value>Registrations.CSV</value>
+  <data name="Registrations_Link_DisplayName" xml:space="preserve">
+    <value>Registrations data</value>
   </data>
 </root>

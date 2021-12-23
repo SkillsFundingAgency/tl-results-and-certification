@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class RegistrationsDownloadData {
@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to bytes.
+        ///   Looks up a localized string similar to KB.
         /// </summary>
         public static string File_Size_Units {
             get {
@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registrations.csv.
+        ///   Looks up a localized string similar to Registrations_data.CSV.
         /// </summary>
         public static string Registrations_Data_Report_File_Name_Text {
             get {
@@ -107,11 +107,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registrations.CSV.
+        ///   Looks up a localized string similar to Registrations data.
         /// </summary>
-        public static string Registrations_Report {
+        public static string Registrations_Link_DisplayName {
             get {
-                return ResourceManager.GetString("Registrations_Report", resourceCulture);
+                return ResourceManager.GetString("Registrations_Link_DisplayName", resourceCulture);
             }
         }
     }

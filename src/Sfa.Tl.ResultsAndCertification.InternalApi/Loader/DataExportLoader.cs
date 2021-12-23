@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             // 4. Return response
             return new DataExportResponse
             {
-                FileSize = byteData.Length,
+                FileSize = Math.Round((byteData.Length / 1024D), 2),
                 BlobUniqueReference = blobUniqueReference,
                 IsDataFound = true
             };
