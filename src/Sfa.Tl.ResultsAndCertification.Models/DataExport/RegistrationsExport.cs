@@ -8,6 +8,11 @@ namespace Sfa.Tl.ResultsAndCertification.Models.DataExport
 {
     public class RegistrationsExport
     {
+        public RegistrationsExport()
+        {
+            SpecialismsList = new List<string>();
+        }
+
         [DisplayName(RegistrationsExportHeader.Uln)]
         public long Uln { get; set; }
 
