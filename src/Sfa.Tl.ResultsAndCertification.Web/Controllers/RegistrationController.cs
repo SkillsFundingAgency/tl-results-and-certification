@@ -727,7 +727,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
         }
 
-
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());
