@@ -1,0 +1,56 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual.AssessmentsDownloadViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Assessment
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = AssessmentsDownloadData.Page_Title;
+}
+
+@section NavigationBar {
+<vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-l">
+            @AssessmentsDownloadData.Heading_Download_Assessments_Data
+        </h1>
+
+        <section class="govuk-clearfix">
+            <div class="gem-c-attachment__thumbnail">
+                <svg class="gem-c-attachment__thumbnail-image" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
+                    <path d="M12 12h75v27H12zM12 59h9v9h-9zM12 77h9v9h-9zM12 95h9v9h-9zM12 113h9v9h-9zM30 59h57v9H30zM30 77h39v9H30zM30 95h57v9H30zM30 113h48v9H30z" stroke-width="0"></path>
+                </svg>
+            </div>
+
+            @if (Model.CoreAssesmentsDownloadLinkViewModel != null)
+            {
+                <div>
+                    <h2 class="govuk-heading-s">@AssessmentsDownloadData.SubHeading_Core_Components</h2>
+                    <h3 class="govuk-heading-s">
+                        <a class="govuk-link" target="_self" asp-route="@RouteConstants.AssessmentsDownloadDataLink" asp-route-id="@Model.CoreAssesmentsDownloadLinkViewModel.BlobUniqueReference" asp-route-componentType="@Model.CoreComponentType">
+                            @AssessmentsDownloadData.Core_Assessments_Link_DisplayName (@Model.CoreAssesmentsDownloadLinkViewModel.FileType, @Model.CoreAssesmentsDownloadLinkViewModel.FileSize<abbr title="Kilobyte">@AssessmentsDownloadData.File_Size_Units</abbr>)
+                        </a>
+                    </h3>
+                </div>
+            }
+
+            @if (Model.SpecialismAsssmentsDownloadLinkViewModel != null)
+            {
+                <div>
+                    <h2 class="govuk-heading-s">@AssessmentsDownloadData.SubHeading_Specialism_Components</h2>
+                    <h3 class="govuk-heading-s">
+                        <a class="govuk-link" target="_self" asp-route="@RouteConstants.AssessmentsDownloadDataLink" asp-route-id="@Model.SpecialismAsssmentsDownloadLinkViewModel.BlobUniqueReference" asp-route-componentType="@Model.SpecialismComponentType">
+                            @AssessmentsDownloadData.Specialism_Assessments_Link_DisplayName (@Model.SpecialismAsssmentsDownloadLinkViewModel.FileType, @Model.SpecialismAsssmentsDownloadLinkViewModel.FileSize<abbr title="Kilobyte">@AssessmentsDownloadData.File_Size_Units</abbr>)
+                        </a>
+                    </h3>
+                </div>
+            }
+        </section>
+
+        <div class="govuk-button-group govuk-!-margin-bottom-6">
+            <a id="backToHomeButton" class="govuk-button" role="button" asp-route="@RouteConstants.Home">@AssessmentsDownloadData.Button_Back_To_Home</a>
+        </div>
+    </div>
+</div>
