@@ -79,7 +79,105 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
 
             DbContext.SaveChanges();
             return profile;
-        }             
+        }
+
+        public List<TqPathwayAssessment> GetPathwayAssessmentsDataToProcess(List<TqRegistrationPathway> pathwayRegistrations, bool seedPathwayAssessmentsAsActive = true, bool isHistorical = false, string assessmentSeriesName = "Summer 2021")
+        {
+            var tqPathwayAssessments = new List<TqPathwayAssessment>();
+
+            foreach (var (pathwayRegistration, index) in pathwayRegistrations.Select((value, i) => (value, i)))
+            {
+                if (isHistorical)
+                {
+                    // Historical record
+                    var pathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, AssessmentSeries[index]);
+                    pathwayAssessment.IsOptedin = false;
+                    pathwayAssessment.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                    var tqPathwayAssessmentHistorical = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, pathwayAssessment);
+                    tqPathwayAssessments.Add(tqPathwayAssessmentHistorical);
+                }
+
+                var assessmentSeries = AssessmentSeries.FirstOrDefault(x => x.ComponentType == ComponentType.Core && x.Name.Equals(assessmentSeriesName, StringComparison.InvariantCultureIgnoreCase));
+                var activePathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, assessmentSeries);
+                var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, activePathwayAssessment);
+                if (!seedPathwayAssessmentsAsActive)
+                {
+                    tqPathwayAssessment.IsOptedin = pathwayRegistration.Status == RegistrationPathwayStatus.Withdrawn ? true : false;
+                    tqPathwayAssessment.EndDate = DateTime.UtcNow;
+                }
+
+                tqPathwayAssessments.Add(tqPathwayAssessment);
+            }
+            return tqPathwayAssessments;
+        }
+
+        public List<TqPathwayAssessment> SeedPathwayAssessments(List<TqRegistrationProfile> registrations, List<long> pathwaysWithAssessments, string assessmentSeriesName)
+        {
+            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+
+            foreach (var registration in registrations.Where(x => pathwaysWithAssessments.Contains(x.UniqueLearnerNumber)))
+            {
+                var pathwayAssessments = GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), assessmentSeriesName: assessmentSeriesName);
+                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
+            }
+
+            DbContext.SaveChanges();
+            return tqPathwayAssessmentsSeedData;
+        }
+
+        public List<TqSpecialismAssessment> SeedSpecialismAssessments(List<TqRegistrationPathway> tqRegistrationPathways, string assessmentSeriesName = "Summer 2022", bool saveChanges = true)
+        {
+            var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
+
+            foreach (var registrationPathway in tqRegistrationPathways)
+            {
+                var seedSpecialismAssessmentsAsActive = registrationPathway.Status != RegistrationPathwayStatus.Withdrawn;
+                var specialismAssessments = GetSpecialismAssessmentsDataToProcess(registrationPathway.TqRegistrationSpecialisms.ToList(), seedSpecialismAssessmentsAsActive, assessmentSeriesName: assessmentSeriesName);
+                tqSpecialismAssessmentsSeedData.AddRange(specialismAssessments);
+            }
+
+            if(saveChanges)
+                DbContext.SaveChanges();
+
+            return tqSpecialismAssessmentsSeedData;
+        }
+
+        public List<TqSpecialismAssessment> GetSpecialismAssessmentsDataToProcess(List<TqRegistrationSpecialism> specialismRegistrations, bool seedSpecialismAssessmentsAsActive = true, bool isHistorical = false, string assessmentSeriesName = "Summer 2022")
+        {
+            var tqSpecialismAssessments = new List<TqSpecialismAssessment>();
+
+            foreach (var (specialismRegistration, index) in specialismRegistrations.Select((value, i) => (value, i)))
+            {
+                if (isHistorical)
+                {
+                    // Historical record
+                    var specialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, AssessmentSeries[index]);
+                    specialismAssessment.IsOptedin = false;
+                    specialismAssessment.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                    var tqSpecialismAssessmentHistorical = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, specialismAssessment);
+                    tqSpecialismAssessments.Add(tqSpecialismAssessmentHistorical);
+                }
+
+                var assessmentSeries = AssessmentSeries.FirstOrDefault(x => x.ComponentType == ComponentType.Specialism && x.Name.Equals(assessmentSeriesName, StringComparison.InvariantCultureIgnoreCase));
+                var activeSpecialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, assessmentSeries);
+                var tqSpecialismAssessment = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, activeSpecialismAssessment);
+                if (!seedSpecialismAssessmentsAsActive)
+                {
+                    tqSpecialismAssessment.IsOptedin = specialismRegistration.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? true : false;
+                    tqSpecialismAssessment.EndDate = DateTime.UtcNow;
+                }
+                tqSpecialismAssessments.Add(tqSpecialismAssessment);
+
+            }
+            return tqSpecialismAssessments;
+        }
+
+        public int GetAcademicYear()
+        {
+            return AcademicYears.FirstOrDefault(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate).Year;
+        }
     }
 
     public enum AwardingOrganisation

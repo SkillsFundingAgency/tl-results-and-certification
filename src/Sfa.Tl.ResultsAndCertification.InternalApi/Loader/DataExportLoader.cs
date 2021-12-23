@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             var blobUniqueReference = Guid.NewGuid();
             await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
             {
-                ContainerName = DocumentType.DataExports.ToString().ToLower(),
+                ContainerName = DocumentType.DataExports.ToString(),
                 SourceFilePath = $"{aoUkprn}/{requestType}",
                 BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
                 FileData = byteData,
