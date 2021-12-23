@@ -416,7 +416,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("assessments-generating-download", Name = RouteConstants.SubmitAssessmentsGeneratingDownload)]
-        public async Task<IActionResult> SubmitAssessmentsGeneratingDownload()
+        public async Task<IActionResult> SubmitAssessmentsGeneratingDownloadAsync()
         {
             var exportResponse = await _assessmentLoader.GenerateAssessmentsExportAsync(User.GetUkPrn(), User.GetUserEmail());
             if (exportResponse == null || exportResponse.Any(r => r.ComponentType == ComponentType.NotSpecified))
