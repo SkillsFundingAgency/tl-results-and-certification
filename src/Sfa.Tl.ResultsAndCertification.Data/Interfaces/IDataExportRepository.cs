@@ -7,5 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
     public interface IDataExportRepository
     {
         Task<IList<RegistrationsExport>> GetDataExportRegistrationsAsync(long aoUkprn);
+        Task<IList<CoreAssessmentsExport>> GetDataExportCoreAssessmentsAsync(long aoUkprn);
+        Task<IList<SpecialismAssessmentsExport>> GetDataExportSpecialismAssessmentsAsync(long aoUkprn);
     }
 }

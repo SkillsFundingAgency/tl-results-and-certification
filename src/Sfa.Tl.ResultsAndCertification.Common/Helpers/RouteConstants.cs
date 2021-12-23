@@ -171,6 +171,8 @@
         public const string AssessmentsNoRecordsFound = "AssessmentsNoRecordsFound";
         public const string RegistrationsDownloadData = "RegistrationsDownloadData";
         public const string RegistrationsDownloadDataLink = "RegistrationsDownloadDataLink";
+        public const string AssessmentsDownloadData = "AssessmentsDownloadData";
+        public const string AssessmentsDownloadDataLink = "AssessmentsDownloadDataLink";
 
         // Search Assessment Entries
         public const string SearchAssessments = "SearchAssessments";

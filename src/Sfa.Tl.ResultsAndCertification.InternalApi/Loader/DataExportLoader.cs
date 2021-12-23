@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
     {
         private readonly IDataExportService _dataExportService;
         private readonly IBlobStorageService _blobStorageService;
-        
+
         public DataExportLoader(IDataExportService dataExportService, IBlobStorageService blobStorageService)
         {
             _dataExportService = dataExportService;
@@ -26,50 +26,50 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
         public async Task<IList<DataExportResponse>> ProcessDataExportAsync(long aoUkprn, DataExportType requestType, string requestedBy)
         {
-            var response = new List<DataExportResponse>();
-            byte[] byteData;
-            DataExportResponse blobResponse;
-            
-            switch (requestType)
+            return requestType switch
             {
-                case DataExportType.Registrations:
-                    var registrations = await _dataExportService.GetDataExportRegistrationsAsync(aoUkprn);
-                    if (registrations == null || !registrations.Any())
-                        return new List<DataExportResponse> { new DataExportResponse { IsDataFound = false } };
+                DataExportType.Registrations => await ProcessRegistrationsRequestAsync(aoUkprn, requestType, requestedBy),
+                DataExportType.Assessments => await ProcessAssessmentsRequestAsync(aoUkprn, requestType, requestedBy),
+                DataExportType.Results => null,
+                _ => null,
+            };
+        }
 
-                    byteData = await CsvExtensions.WriteFileAsync(registrations, classMapType: typeof(RegistrationsExportMap));
-                    blobResponse = await WriteCsvToBlobAsync(aoUkprn, requestType, requestedBy, byteData);
-                    response.Add(blobResponse);
-                    break;
+        private async Task<IList<DataExportResponse>> ProcessRegistrationsRequestAsync(long aoUkprn, DataExportType requestType, string requestedBy)
+        {
+            var registrations = await _dataExportService.GetDataExportRegistrationsAsync(aoUkprn);
+            var exportResponse = await ProcessDataExportResponseAsync(registrations, aoUkprn, requestType, requestedBy, typeof(RegistrationsExportMap));
+            return new List<DataExportResponse>() { exportResponse };
+        }
 
-                case DataExportType.Assessments:
-                    // CoreAssessments
-                    var coreAssessment = await _dataExportService.GetDataExportRegistrationsAsync(aoUkprn); // CoreAssessments
-                    if (coreAssessment == null || !coreAssessment.Any())
-                        return new List<DataExportResponse> { new DataExportResponse { IsDataFound = false } };
+        private async Task<IList<DataExportResponse>> ProcessAssessmentsRequestAsync(long aoUkprn, DataExportType requestType, string requestedBy)
+        {
+            // Core Assessments
+            var coreAssessments = await _dataExportService.GetDataExportCoreAssessmentsAsync(aoUkprn);
 
-                    byteData = await CsvExtensions.WriteFileAsync(coreAssessment);
-                    blobResponse = await WriteCsvToBlobAsync(aoUkprn, requestType, requestedBy, byteData);
-                    response.Add(blobResponse);
+            // Specialism Assessments
+            var specialismAssessments = await _dataExportService.GetDataExportSpecialismAssessmentsAsync(aoUkprn);
 
-                    // SpecialismAssessments
-                    var specialismsAssessment = await _dataExportService.GetDataExportRegistrationsAsync(aoUkprn); // SpecialismsAssessment
-                    if (specialismsAssessment == null || !specialismsAssessment.Any())
-                        return new List<DataExportResponse> { new DataExportResponse { IsDataFound = false } };
+            var response = new List<DataExportResponse>();
 
-                    byteData = await CsvExtensions.WriteFileAsync(coreAssessment);
-                    blobResponse = await WriteCsvToBlobAsync(aoUkprn, requestType, requestedBy, byteData);
-                    response.Add(blobResponse);
+            var coreAssessmentsResponse = await ProcessDataExportResponseAsync(coreAssessments, aoUkprn, requestType, requestedBy);
+            coreAssessmentsResponse.ComponentType = ComponentType.Core;
+            response.Add(coreAssessmentsResponse);
 
-                    break;
+            var specialismAssessmentsResponse = await ProcessDataExportResponseAsync(specialismAssessments, aoUkprn, requestType, requestedBy);
+            specialismAssessmentsResponse.ComponentType = ComponentType.Specialism;
+            response.Add(specialismAssessmentsResponse);
 
-                case DataExportType.Results:
-                    break;
+            return response;
+        }
 
-                default:
-                    break;
-            }
+        private async Task<DataExportResponse> ProcessDataExportResponseAsync<T>(IList<T> data, long aoUkprn, DataExportType requestType, string requestedBy, Type classMapType = null)
+        {
+            if (data == null || !data.Any())
+                return new DataExportResponse { IsDataFound = false };
 
+            var byteData = await CsvExtensions.WriteFileAsync(data, classMapType: classMapType);
+            var response = await WriteCsvToBlobAsync(aoUkprn, requestType, requestedBy, byteData);
             return response;
         }
 

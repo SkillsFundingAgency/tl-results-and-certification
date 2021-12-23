@@ -19,5 +19,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return await _dataExportRepository.GetDataExportRegistrationsAsync(aoUkprn);
         }
+
+        public async Task<IList<CoreAssessmentsExport>> GetDataExportCoreAssessmentsAsync(long aoUkprn)
+        {
+            return await _dataExportRepository.GetDataExportCoreAssessmentsAsync(aoUkprn);
+        }
+
+        public async Task<IList<SpecialismAssessmentsExport>> GetDataExportSpecialismAssessmentsAsync(long aoUkprn)
+        {
+            return await _dataExportRepository.GetDataExportSpecialismAssessmentsAsync(aoUkprn);
+        }
     }
 }
