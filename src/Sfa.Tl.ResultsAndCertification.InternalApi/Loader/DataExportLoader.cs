@@ -52,11 +52,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             var response = new List<DataExportResponse>();
 
-            var coreAssessmentsResponse = await ProcessDataExportResponseAsync(coreAssessments, aoUkprn, requestType, requestedBy, ComponentType.Core);
-            response.Add(coreAssessmentsResponse);
+            var coreAssessmentsResponse = ProcessDataExportResponseAsync(coreAssessments, aoUkprn, requestType, requestedBy, ComponentType.Core);
+            var specialismAssessmentsResponse = ProcessDataExportResponseAsync(specialismAssessments, aoUkprn, requestType, requestedBy, ComponentType.Specialism);
 
-            var specialismAssessmentsResponse = await ProcessDataExportResponseAsync(specialismAssessments, aoUkprn, requestType, requestedBy, ComponentType.Specialism);
-            response.Add(specialismAssessmentsResponse);
+            await Task.WhenAll(coreAssessmentsResponse, specialismAssessmentsResponse);
+
+            response.Add(coreAssessmentsResponse.Result);
+            response.Add(specialismAssessmentsResponse.Result);
 
             return response;
         }
