@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Card_Heading_Link_Download_Registrations_Data" xml:space="preserve">
+    <value>Download registrations data</value>
+  </data>
   <data name="Card_Heading_Link_Manage_Existing_Registration" xml:space="preserve">
     <value>Manage existing registrations</value>
   </data>
@@ -137,6 +140,9 @@
   </data>
   <data name="List_Download_A_Template_With_Registrations_Data_Formats_And_Rules_Guidance" xml:space="preserve">
     <value>Download a template with registrations data formats and rules guidance</value>
+  </data>
+  <data name="List_Download_Your_Data_As_Csv_File" xml:space="preserve">
+    <value>Download your data as a CSV file</value>
   </data>
   <data name="List_Reactivate_A_Withdrawn_Learner" xml:space="preserve">
     <value>Reactivate a withdrawn learner</value>

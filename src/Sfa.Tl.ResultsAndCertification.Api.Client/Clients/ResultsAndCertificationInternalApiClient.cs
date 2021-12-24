@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
@@ -384,6 +385,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var requestUri = string.Format(ApiConstants.GetLearnerRecordUri, aoUkprn, profileId, (int?)status);
             return await GetAsync<LearnerRecord>(requestUri);
+        }
+
+        public async Task<IList<DataExportResponse>> GenerateDataExportAsync(long aoUkprn, DataExportType dataExportType, string requestedBy)
+        {
+            var requestUri = string.Format(ApiConstants.GetDataExportUri, aoUkprn, (int)dataExportType, requestedBy);
+            return await GetAsync<IList<DataExportResponse>>(requestUri);
         }
 
         #region Private Methods

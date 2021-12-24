@@ -6,6 +6,7 @@
         Assessments = 2,
         Results = 3,
         Documents = 4,
-        Ucas = 5
+        Ucas = 5,
+        DataExports = 6
     }
 }

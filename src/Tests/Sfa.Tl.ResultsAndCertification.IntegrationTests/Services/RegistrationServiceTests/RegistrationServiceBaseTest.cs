@@ -21,7 +21,7 @@ using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
 {
-    public abstract class RegistrationServiceBaseTest : BaseTest<TqProvider>
+    public abstract class RegistrationServiceBaseTest : BaseTest<TqRegistrationPathway>
     {
         protected RegistrationService RegistrationService;
         protected TlRoute Route;

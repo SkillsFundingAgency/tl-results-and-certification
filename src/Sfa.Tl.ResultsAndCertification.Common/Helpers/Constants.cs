@@ -19,6 +19,8 @@
         public const string LrsProfileId = "profileId";
         public const string LrsResponseCode = "responseCode";
         public const string FunctionPerformedBy = "System";
+        public const string DefaultPerformedBy = "System";
+        public const string CreatedBy = "createdBy";
 
         // Controller Names
         public const string HomeController = "Home";
@@ -126,6 +128,7 @@
         public const string UlnValidationRegex = @"^\d{10}$";
         public const string PipeSeperator = "|";
         public const string AndSeperator = " and ";
+        public const string CommaSeperator = ",";
 
 
         // Function Name Constants

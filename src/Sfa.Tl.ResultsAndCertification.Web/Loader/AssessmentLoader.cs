@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
@@ -187,6 +188,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var request = _mapper.Map<RemoveAssessmentEntryRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
             return await _internalApiClient.RemoveAssessmentEntryAsync(request);
+        }
+
+        public async Task<IList<DataExportResponse>> GenerateAssessmentsExportAsync(long aoUkprn, string requestedBy)
+        {
+            return await _internalApiClient.GenerateDataExportAsync(aoUkprn, DataExportType.Assessments, requestedBy);
+        }
+
+        public async Task<Stream> GetAssessmentsDataFileAsync(long aoUkprn, Guid blobUniqueReference, ComponentType componentType)
+        {
+            var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
+            {
+                ContainerName = DocumentType.DataExports.ToString(),
+                BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
+                SourceFilePath = $"{aoUkprn}/{DataExportType.Assessments}/{componentType}"
+            });
+
+            if (fileStream == null)
+            {
+                var blobReadError = $"No FileStream found to download assessments data. Method: GetAssessmentsDataFileAsync(ContainerName: {DocumentType.Assessments}, BlobFileName = {blobUniqueReference}, SourceFilePath = {aoUkprn}/{DataExportType.Assessments})";
+                _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
+            }
+            return fileStream;
         }
 
         #region Private methods

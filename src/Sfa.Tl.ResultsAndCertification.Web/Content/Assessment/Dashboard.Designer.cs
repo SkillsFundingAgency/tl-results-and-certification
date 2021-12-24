@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download assessments data.
+        /// </summary>
+        public static string Card_Heading_Link_Download_Assessments_Data {
+            get {
+                return ResourceManager.GetString("Card_Heading_Link_Download_Assessments_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage an assessment.
         /// </summary>
         public static string Card_Heading_Link_Manage_An_Assessment {
@@ -111,6 +120,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         public static string List_Download_A_Template_With_Assessments_Data_Formats_And_Rules_Guidance {
             get {
                 return ResourceManager.GetString("List_Download_A_Template_With_Assessments_Data_Formats_And_Rules_Guidance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download your data as a CSV file.
+        /// </summary>
+        public static string List_Download_Your_Data_As_Csv_File {
+            get {
+                return ResourceManager.GetString("List_Download_Your_Data_As_Csv_File", resourceCulture);
             }
         }
         
