@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registrations_data.CSV.
+        ///   Looks up a localized string similar to registrations_data.csv.
         /// </summary>
         public static string Registrations_Data_Report_File_Name_Text {
             get {

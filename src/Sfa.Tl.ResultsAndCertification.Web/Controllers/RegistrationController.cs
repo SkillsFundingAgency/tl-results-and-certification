@@ -702,7 +702,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("download-registrations-data", Name = RouteConstants.RegistrationsDownloadDataLink)]
+        [Route("download-registrations-data/{id}", Name = RouteConstants.RegistrationsDownloadDataLink)]
         public async Task<IActionResult> RegistrationsDownloadDataLinkAsync(string id)
         {
             if (id.IsGuid())

@@ -130,7 +130,7 @@
     <value>Download data - Registrations</value>
   </data>
   <data name="Registrations_Data_Report_File_Name_Text" xml:space="preserve">
-    <value>Registrations_data.CSV</value>
+    <value>registrations_data.csv</value>
   </data>
   <data name="Registrations_Link_DisplayName" xml:space="preserve">
     <value>Registrations data</value>
