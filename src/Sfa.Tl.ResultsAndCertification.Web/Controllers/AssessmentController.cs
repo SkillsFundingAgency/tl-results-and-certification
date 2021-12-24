@@ -483,7 +483,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (id.IsGuid())
             {
-                var fileStream = await _assessmentLoader.GetAssessmentsDataFileAsync(User.GetUkPrn(), id.ToGuid());
+                var fileStream = await _assessmentLoader.GetAssessmentsDataFileAsync(User.GetUkPrn(), id.ToGuid(), componentType);
                 if (fileStream == null)
                 {
                     _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download registration data. Method: AssessmentsDownloadDataLinkAsync(AoUkprn: {User.GetUkPrn()}, BlobUniqueReference = {id})");

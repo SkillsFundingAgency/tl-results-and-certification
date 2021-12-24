@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
         private async Task<IList<DataExportResponse>> ProcessRegistrationsRequestAsync(long aoUkprn, DataExportType requestType, string requestedBy)
         {
             var registrations = await _dataExportService.GetDataExportRegistrationsAsync(aoUkprn);
-            var exportResponse = await ProcessDataExportResponseAsync(registrations, aoUkprn, requestType, requestedBy, typeof(RegistrationsExportMap));
+            var exportResponse = await ProcessDataExportResponseAsync(registrations, aoUkprn, requestType, requestedBy, classMapType: typeof(RegistrationsExportMap));
             return new List<DataExportResponse>() { exportResponse };
         }
 
@@ -52,35 +52,33 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             var response = new List<DataExportResponse>();
 
-            var coreAssessmentsResponse = await ProcessDataExportResponseAsync(coreAssessments, aoUkprn, requestType, requestedBy);
-            coreAssessmentsResponse.ComponentType = ComponentType.Core;
+            var coreAssessmentsResponse = await ProcessDataExportResponseAsync(coreAssessments, aoUkprn, requestType, requestedBy, ComponentType.Core);
             response.Add(coreAssessmentsResponse);
 
-            var specialismAssessmentsResponse = await ProcessDataExportResponseAsync(specialismAssessments, aoUkprn, requestType, requestedBy);
-            specialismAssessmentsResponse.ComponentType = ComponentType.Specialism;
+            var specialismAssessmentsResponse = await ProcessDataExportResponseAsync(specialismAssessments, aoUkprn, requestType, requestedBy, ComponentType.Specialism);
             response.Add(specialismAssessmentsResponse);
 
             return response;
         }
 
-        private async Task<DataExportResponse> ProcessDataExportResponseAsync<T>(IList<T> data, long aoUkprn, DataExportType requestType, string requestedBy, Type classMapType = null)
+        private async Task<DataExportResponse> ProcessDataExportResponseAsync<T>(IList<T> data, long aoUkprn, DataExportType requestType, string requestedBy, ComponentType componentType = ComponentType.NotSpecified, Type classMapType = null)
         {
             if (data == null || !data.Any())
-                return new DataExportResponse { IsDataFound = false };
+                return new DataExportResponse { ComponentType = componentType, IsDataFound = false };
 
             var byteData = await CsvExtensions.WriteFileAsync(data, classMapType: classMapType);
-            var response = await WriteCsvToBlobAsync(aoUkprn, requestType, requestedBy, byteData);
+            var response = await WriteCsvToBlobAsync(aoUkprn, requestType, requestedBy, byteData, componentType);
             return response;
         }
 
-        private async Task<DataExportResponse> WriteCsvToBlobAsync(long aoUkprn, DataExportType requestType, string requestedBy, byte[] byteData)
+        private async Task<DataExportResponse> WriteCsvToBlobAsync(long aoUkprn, DataExportType requestType, string requestedBy, byte[] byteData, ComponentType componentType = ComponentType.NotSpecified)
         {
             // 3. Save to Blob
             var blobUniqueReference = Guid.NewGuid();
             await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
             {
                 ContainerName = DocumentType.DataExports.ToString(),
-                SourceFilePath = $"{aoUkprn}/{requestType}",
+                SourceFilePath = componentType == ComponentType.NotSpecified ? $"{aoUkprn}/{requestType}" : $"{aoUkprn}/{requestType}/{componentType}",
                 BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
                 FileData = byteData,
                 UserName = requestedBy
@@ -91,6 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             {
                 FileSize = Math.Round((byteData.Length / 1024D), 2),
                 BlobUniqueReference = blobUniqueReference,
+                ComponentType = componentType,
                 IsDataFound = true
             };
         }

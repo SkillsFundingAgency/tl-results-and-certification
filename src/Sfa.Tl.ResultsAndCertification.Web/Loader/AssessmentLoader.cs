@@ -195,13 +195,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.GenerateDataExportAsync(aoUkprn, DataExportType.Assessments, requestedBy);
         }
 
-        public async Task<Stream> GetAssessmentsDataFileAsync(long aoUkprn, Guid blobUniqueReference)
+        public async Task<Stream> GetAssessmentsDataFileAsync(long aoUkprn, Guid blobUniqueReference, ComponentType componentType)
         {
             var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
             {
                 ContainerName = DocumentType.DataExports.ToString(),
                 BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
-                SourceFilePath = $"{aoUkprn}/{DataExportType.Assessments}"
+                SourceFilePath = $"{aoUkprn}/{DataExportType.Assessments}/{componentType}"
             });
 
             if (fileStream == null)

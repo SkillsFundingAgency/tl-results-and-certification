@@ -13,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
         public override void Given()
         {
             BlobUniqueReference = Guid.NewGuid();
+            ComponentType = Common.Enum.ComponentType.Core;
             BlobStorageService.DownloadFileAsync(Arg.Any<BlobStorageData>()).Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test assessments entries data file")));
         }
 
