@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
@@ -16,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
     {
         protected readonly long AoUkprn = 12345678;
         protected Guid BlobUniqueReference;
+        protected ComponentType ComponentType;
         protected IMapper Mapper;
         protected ILogger<AssessmentLoader> Logger;
         protected IBlobStorageService BlobStorageService;
@@ -37,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetAssessmentsDataFileAsync(AoUkprn, BlobUniqueReference);
+            ActualResult = await Loader.GetAssessmentsDataFileAsync(AoUkprn, BlobUniqueReference, ComponentType);
         }
     }
 }

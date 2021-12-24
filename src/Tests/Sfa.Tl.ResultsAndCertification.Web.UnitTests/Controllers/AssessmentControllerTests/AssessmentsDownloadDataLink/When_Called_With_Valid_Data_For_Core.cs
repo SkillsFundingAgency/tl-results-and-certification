@@ -16,13 +16,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         {
             Id = Guid.NewGuid().ToString();
             ComponentType = Common.Enum.ComponentType.Core;
-            AssessmentLoader.GetAssessmentsDataFileAsync(Ukprn, Id.ToGuid()).Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File for core assessment entries")));
+            AssessmentLoader.GetAssessmentsDataFileAsync(Ukprn, Id.ToGuid(), ComponentType).Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File for core assessment entries")));
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            AssessmentLoader.Received(1).GetAssessmentsDataFileAsync(Ukprn, Id.ToGuid());
+            AssessmentLoader.Received(1).GetAssessmentsDataFileAsync(Ukprn, Id.ToGuid(), ComponentType);
         }
 
         [Fact]

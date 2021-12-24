@@ -24,6 +24,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<RemoveSpecialismAssessmentEntryViewModel> GetRemoveSpecialismAssessmentEntriesAsync(long aoUkprn, int profileId, string specialismAssessmentIds);
         Task<bool> RemoveSpecialismAssessmentEntryAsync(long aoUkprn, RemoveSpecialismAssessmentEntryViewModel viewModel);
         Task<IList<DataExportResponse>> GenerateAssessmentsExportAsync(long aoUkprn, string requestedBy);
-        Task<Stream> GetAssessmentsDataFileAsync(long aoUkprn, Guid blobUniqueReference);
+        Task<Stream> GetAssessmentsDataFileAsync(long aoUkprn, Guid blobUniqueReference, ComponentType componentType);
     }
 }
