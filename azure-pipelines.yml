@@ -42,6 +42,12 @@ steps:
   inputs:
     gulpFile: src/Sfa.Tl.ResultsAndCertification.Web/gulpfile.js
 
+- task: UseDotNet@2 
+  displayName: "Install .NET 6 SDK"
+  inputs:
+      packageType: 'sdk'
+      version: '6.x'
+      
 - task: DotNetCoreCLI@2
   displayName: dot restore
   inputs:
