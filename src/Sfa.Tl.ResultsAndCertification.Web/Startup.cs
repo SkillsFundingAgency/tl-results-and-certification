@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 });
                 config.Filters.Add<SessionActivityFilterAttribute>();
                 config.Filters.Add<CustomExceptionFilterAttribute>();
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            });
 
             if (_env.IsDevelopment())
             {
