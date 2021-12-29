@@ -173,6 +173,7 @@
         public const string RegistrationsDownloadDataLink = "RegistrationsDownloadDataLink";
         public const string AssessmentsDownloadData = "AssessmentsDownloadData";
         public const string AssessmentsDownloadDataLink = "AssessmentsDownloadDataLink";
+        public const string ResultsGeneratingDownload = "ResultsGeneratingDownload";
 
         // Search Assessment Entries
         public const string SearchAssessments = "SearchAssessments";

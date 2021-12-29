@@ -1,0 +1,31 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Result
+@using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Spinner
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = ResultsGeneratingDownload.Page_Title;
+}
+
+@section Scripts {
+    <script nws-csp-add-nonce="true" src="~/javascripts/data-export.min.js"></script>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="#" id="submitDataExport1">
+            <div class="govuk-form-group">
+                <h1 class="govuk-heading-l">
+                    @ResultsGeneratingDownload.Heading_Download_Results_Data
+                </h1>
+            </div>
+
+            <vc:spinner model="new SpinnerModel { Message = ResultsGeneratingDownload.Processing_Spinner_Text }"></vc:spinner>
+
+            <noscript>
+                <p class="govuk-body">@ResultsGeneratingDownload.Js_Disabled_Information</p>
+                <button id="btnContinue" class="govuk-button" data-module="govuk-button" type="submit" data-prevent-double-click="true">@ResultsGeneratingDownload.Js_Disabled_Continue_Button</button>
+            </noscript>
+        </form>
+    </div>
+</div>

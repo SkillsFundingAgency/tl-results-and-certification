@@ -342,5 +342,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             return View(viewModel);
         }
+
+        [HttpGet]
+        [Route("results-generating-download", Name = RouteConstants.ResultsGeneratingDownload)]
+        public IActionResult ResultsGeneratingDownload()
+        {
+            return View();
+        }
     }
 }
