@@ -77,5 +77,29 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     SpecialismAssessmentEntry = sa.AssessmentSeries.Name
                 }).ToListAsync();
         }
+
+        public async Task<IList<CoreResultsExport>> GetDataExportCoreResultsAsync(long aoUkprn)
+        {
+            // TODO: 
+            return await _dbContext.TqPathwayAssessment
+                .Where(pa => pa.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
+                       && pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
+                       && pa.TqRegistrationPathway.EndDate == null
+                       && pa.IsOptedin && pa.EndDate == null)
+                .OrderByDescending(pa => pa.CreatedOn)
+                .Select(pa => new CoreResultsExport
+                {
+                    Uln = pa.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
+                    CoreCode = pa.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
+                    CoreAssessmentEntry = pa.AssessmentSeries.Name
+                }).ToListAsync();
+        }
+
+        public async Task<IList<SpecialismResultsExport>> GetDataExportSpecialismResultsAsync(long aoUkprn)
+        {
+            // TODO: Next story.
+            await Task.CompletedTask;
+            return new List<SpecialismResultsExport>();
+        }
     }
 }

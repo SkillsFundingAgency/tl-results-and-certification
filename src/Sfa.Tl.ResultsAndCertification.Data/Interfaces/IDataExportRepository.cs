@@ -9,5 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
         Task<IList<RegistrationsExport>> GetDataExportRegistrationsAsync(long aoUkprn);
         Task<IList<CoreAssessmentsExport>> GetDataExportCoreAssessmentsAsync(long aoUkprn);
         Task<IList<SpecialismAssessmentsExport>> GetDataExportSpecialismAssessmentsAsync(long aoUkprn);
+        Task<IList<CoreResultsExport>> GetDataExportCoreResultsAsync(long aoUkprn);
+        Task<IList<SpecialismResultsExport>> GetDataExportSpecialismResultsAsync(long aoUkprn);
     }
 }
