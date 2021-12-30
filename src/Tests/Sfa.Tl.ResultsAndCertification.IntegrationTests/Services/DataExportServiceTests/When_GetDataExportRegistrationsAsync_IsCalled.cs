@@ -76,7 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.DataExportSer
 
                 var expectedPathway = expectedProfile.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
 
-                var expectedSpecialisms = expectedPathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null).Select(s => s.TlSpecialism.LarId).ToList();
+                var expectedSpecialisms = expectedPathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin).Select(s => s.TlSpecialism.LarId).ToList();
 
                 actualExport.Uln.Should().Be(expectedProfile.UniqueLearnerNumber);
                 actualExport.FirstName.Should().Be(expectedProfile.Firstname);
