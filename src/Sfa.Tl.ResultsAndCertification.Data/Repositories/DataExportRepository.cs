@@ -80,18 +80,18 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<IList<CoreResultsExport>> GetDataExportCoreResultsAsync(long aoUkprn)
         {
-            // TODO: 
-            return await _dbContext.TqPathwayAssessment
-                .Where(pa => pa.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
-                       && pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
-                       && pa.TqRegistrationPathway.EndDate == null
-                       && pa.IsOptedin && pa.EndDate == null)
+            return await _dbContext.TqPathwayResult
+                .Where(pr => pr.TqPathwayAssessment.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
+                       && pr.TqPathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
+                       && pr.TqPathwayAssessment.TqRegistrationPathway.EndDate == null
+                       && pr.IsOptedin && pr.EndDate == null)
                 .OrderByDescending(pa => pa.CreatedOn)
-                .Select(pa => new CoreResultsExport
+                .Select(pr => new CoreResultsExport
                 {
-                    Uln = pa.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
-                    CoreCode = pa.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-                    CoreAssessmentEntry = pa.AssessmentSeries.Name
+                    Uln = pr.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
+                    CoreCode = pr.TqPathwayAssessment.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
+                    CoreAssessmentEntry = pr.TqPathwayAssessment.AssessmentSeries.Name,
+                    CoreGrade = pr.TlLookup.Value
                 }).ToListAsync();
         }
 

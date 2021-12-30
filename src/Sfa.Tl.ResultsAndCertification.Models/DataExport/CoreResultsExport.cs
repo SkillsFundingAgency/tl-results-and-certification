@@ -4,13 +4,16 @@ namespace Sfa.Tl.ResultsAndCertification.Models.DataExport
 {
     public class CoreResultsExport
     {
-        [DisplayName(CoreAssessmentsExportHeader.Uln)]
+        [DisplayName(CoreResultsExportHeader.Uln)]
         public long Uln { get; set; }
 
-        [DisplayName(CoreAssessmentsExportHeader.CoreCode)]
+        [DisplayName(CoreResultsExportHeader.CoreCode)]
         public string CoreCode { get; set; }
 
-        [DisplayName(CoreAssessmentsExportHeader.CoreAssessmentEntry)]
+        [DisplayName(CoreResultsExportHeader.CoreAssessmentEntry)]
         public string CoreAssessmentEntry { get; set; }
+
+        [DisplayName(CoreResultsExportHeader.CoreGrade)]
+        public string CoreGrade { get; set; }
     }
 }
