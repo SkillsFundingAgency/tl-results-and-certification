@@ -373,6 +373,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ResultNoAssessmentEntry.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Result\ResultsDownloadData.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ResultsDownloadData.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Result\ResultsGeneratingDownload.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1198,6 +1203,10 @@
     <EmbeddedResource Update="Content\Result\ResultNoAssessmentEntry.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResultNoAssessmentEntry.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Result\ResultsDownloadData.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResultsDownloadData.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Result\ResultsGeneratingDownload.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

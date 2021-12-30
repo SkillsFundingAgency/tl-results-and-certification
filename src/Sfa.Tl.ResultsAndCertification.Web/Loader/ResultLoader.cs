@@ -7,10 +7,12 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -156,6 +158,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             }
             var request = _mapper.Map<ChangeResultRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
             return await _internalApiClient.ChangeResultAsync(request);
+        }
+
+        public async Task<IList<DataExportResponse>> GenerateResultsExportAsync(long aoUkprn, string requestedBy)
+        {
+            return await _internalApiClient.GenerateDataExportAsync(aoUkprn, DataExportType.Results, requestedBy);
+        }
+
+        public async Task<Stream> GetResultsDataFileAsync(long aoUkprn, Guid blobUniqueReference, ComponentType componentType)
+        {
+            var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
+            {
+                ContainerName = DocumentType.DataExports.ToString(),
+                BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
+                SourceFilePath = $"{aoUkprn}/{DataExportType.Results}/{componentType}"
+            });
+
+            if (fileStream == null)
+            {
+                var blobReadError = $"No FileStream found to download results data. Method: GetResultsDataFileAsync(ContainerName: {DocumentType.Assessments}, BlobFileName = {blobUniqueReference}, SourceFilePath = {aoUkprn}/{DataExportType.Assessments})";
+                _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
+            }
+            return fileStream;
         }
     }
 }
