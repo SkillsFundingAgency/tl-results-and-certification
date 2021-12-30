@@ -31,19 +31,19 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                        Ukprn = x.TqProvider.TlProvider.UkPrn,
                        AcademicYear = x.AcademicYear,
                        Core = x.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-                       SpecialismsList = x.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null).Select(s => s.TlSpecialism.LarId).ToList(),
+                       SpecialismsList = x.TqRegistrationSpecialisms.Where(s => s.IsOptedin).Select(s => s.TlSpecialism.LarId).ToList(),
                        Status = x.Status.ToString(),
                        CreatedOn = x.CreatedOn
                    }).ToListAsync();
 
             if (registrations == null) return null;
 
-            var latestRegistratons = registrations
+            var latestRegistrations = registrations
                     .GroupBy(x => x.Uln)
-                    .Select(x => x.OrderByDescending(o => o.CreatedOn).Take(1))
+                    .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
                     .ToList();
 
-            return registrations;
+            return latestRegistrations;
         }
 
         public async Task<IList<CoreAssessmentsExport>> GetDataExportCoreAssessmentsAsync(long aoUkprn)
