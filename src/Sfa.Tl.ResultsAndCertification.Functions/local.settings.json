@@ -14,6 +14,6 @@
     "ConfigurationStorageConnectionString": "UseDevelopmentStorage=true;",
     "EnvironmentName": "LOCAL",
     "ServiceName": "Sfa.Tl.ResultsAndCertification",
-    "Version": "1.0"
+    "ServiceVersion": "1.0" // Need ServiceVersion rather than Version in local with .Net 6
   }
 }

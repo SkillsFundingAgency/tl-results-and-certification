@@ -6,6 +6,7 @@
         public const string EnvironmentNameConfigKey = "EnvironmentName";
         public const string ConfigurationStorageConnectionStringConfigKey = "ConfigurationStorageConnectionString";
         public const string VersionConfigKey = "Version";
+        public const string ServiceVersionConfigKey = "ServiceVersion";
         public const string ServiceNameConfigKey = "ServiceName";
 
         // LearnerRecordService(LRS) Constants
