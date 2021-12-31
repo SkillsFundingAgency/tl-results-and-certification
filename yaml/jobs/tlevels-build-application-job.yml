@@ -2,7 +2,7 @@ jobs:
 - job: 'CodeBuild'
   pool:
       name: 'Azure Pipelines'
-      vmImage: 'windows-latest' #'vs2017-win2016'
+      vmImage: 'windows-2022' #'vs2017-win2016'
   workspace:
     clean: all
   steps:        
