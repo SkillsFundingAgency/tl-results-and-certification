@@ -182,7 +182,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 registrationProfiles.Add(new TqRegistrationProfile
                 {
-                    Id = 0, //index - Constants.RegistrationProfileStartIndex,
+                    Id = index - Constants.RegistrationProfileStartIndex,
                     UniqueLearnerNumber = registration.Uln,
                     Firstname = registration.FirstName,
                     Lastname = registration.LastName,
@@ -194,7 +194,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         new TqRegistrationPathway
                         {
-                            Id = 0, //index - Constants.RegistrationPathwayStartIndex,
+                            Id = index - Constants.RegistrationPathwayStartIndex,
                             TqProviderId = registration.TqProviderId,
                             AcademicYear = registration.AcademicYear,
                             StartDate = DateTime.UtcNow,
@@ -797,7 +797,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return specialismsList.Select((x, index) => new TqRegistrationSpecialism
             {
-                Id = 0, //isBulkUpload ? index - specialismStartIndex : 0,
+                Id = isBulkUpload ? index - specialismStartIndex : 0,
                 TlSpecialismId = x.Key,
                 StartDate = DateTime.UtcNow,
                 IsOptedin = true,
@@ -912,7 +912,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         associatedPathwayToAdd.IndustryPlacements.Add(new IndustryPlacement
                         {
-                            Id = 0, //idx - ipStartIndex,
+                            Id = idx - ipStartIndex,
                             Status = industryPlacement.Status,
                             CreatedOn = DateTime.UtcNow,
                             CreatedBy = amendedRegistration.CreatedBy
@@ -930,7 +930,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                         var newActiveAssessment = new TqPathwayAssessment
                         {
-                            Id = 0, //idx - pathwayAssessmentStartIndex,
+                            Id = idx - pathwayAssessmentStartIndex,
                             AssessmentSeriesId = pathwayAssessment.AssessmentSeriesId,
                             IsOptedin = true,
                             StartDate = DateTime.UtcNow,
@@ -949,7 +949,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                             var newActiveResult = new TqPathwayResult
                             {
-                                Id = 0, //index - pathwayResultStartIndex,
+                                Id = index - pathwayResultStartIndex,
                                 TlLookupId = pathwayResult.TlLookupId,
                                 IsOptedin = true,
                                 StartDate = DateTime.UtcNow,

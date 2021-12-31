@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
@@ -44,8 +45,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             _bulkAssessmentsTestFixture.TqPathwayAssessmentsData = _bulkAssessmentsTestFixture.GetPathwayAssessmentsDataToProcess(registrationPathways.ToList());
             _bulkAssessmentsTestFixture.TqSpecialismAssessmentsData = _bulkAssessmentsTestFixture.GetSpecialismAssessmentsDataToProcess(registrationSpecialisms.ToList());
 
+            var pathwayAssessmentIndex = 0;
+            foreach (var pathwayAssessment in _bulkAssessmentsTestFixture.TqPathwayAssessmentsData)
+            {
+                pathwayAssessment.Id = pathwayAssessmentIndex - Constants.PathwayAssessmentsStartIndex;
+                pathwayAssessmentIndex++;
+            }
 
             _bulkAssessmentsTestFixture.TqRegistrationProfilesData.Add(removeAssessmentEntryProfile);
+
+            var specialismAssessmentIndex = 0;
+            foreach (var specialismAssessment in _bulkAssessmentsTestFixture.TqSpecialismAssessmentsData)
+            {
+                specialismAssessment.Id = specialismAssessmentIndex - Constants.SpecialismAssessmentsStartIndex;
+                specialismAssessmentIndex++;
+            }
 
             var pathwayAssessmentToRemove = _bulkAssessmentsTestFixture.GetPathwayAssessmentsDataToProcess(removeAssessmentEntryProfile.TqRegistrationPathways.ToList());
             pathwayAssessmentToRemove.ForEach(p => p.AssessmentSeriesId = 0);

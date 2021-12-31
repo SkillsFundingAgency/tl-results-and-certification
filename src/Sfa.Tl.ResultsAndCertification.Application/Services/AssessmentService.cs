@@ -164,7 +164,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     pathwayAssessments.Add(new TqPathwayAssessment
                     {
-                        Id = 0, //index - Constants.PathwayAssessmentsStartIndex,
+                        Id = index - Constants.PathwayAssessmentsStartIndex,
                         TqRegistrationPathwayId = assessment.TqRegistrationPathwayId.Value,
                         AssessmentSeriesId = assessment.PathwayAssessmentSeriesId ?? 0,
                         StartDate = DateTime.UtcNow,
@@ -179,7 +179,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     specialismAssessments.Add(new TqSpecialismAssessment
                     {
-                        Id = 0, //index - Constants.SpecialismAssessmentsStartIndex,
+                        Id = index - Constants.SpecialismAssessmentsStartIndex,
                         TqRegistrationSpecialismId = specialismId,
                         AssessmentSeriesId = assessment.SpecialismAssessmentSeriesId ?? 0,
                         StartDate = DateTime.UtcNow,

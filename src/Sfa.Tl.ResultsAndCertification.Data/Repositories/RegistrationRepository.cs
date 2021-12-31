@@ -132,7 +132,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     {
                         try
                          {
-                            var bulkConfig = new BulkConfig() { UseTempDB = true, SetOutputIdentity = true, OnSaveChangesSetFK = false, BatchSize = 5000, BulkCopyTimeout = 60 };
+                            var bulkConfig = new BulkConfig() { UseTempDB = true, SetOutputIdentity = true, PreserveInsertOrder = false, BatchSize = 5000, BulkCopyTimeout = 60 };
 
                             var pathwayRegistrations = pathwayEntities ?? new List<TqRegistrationPathway>();
 
@@ -186,9 +186,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
                     if (profile.Id <= 0)
                         profileEntity = profileEntities.FirstOrDefault(x => x.UniqueLearnerNumber == profile.UniqueLearnerNumber);
-                    else
-                        profileEntity = profile;
-
+                    
                     foreach (var pathway in profile.TqRegistrationPathways)
                     {
                         // update fk relationship id for newly added records
@@ -220,10 +218,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                         pathwayEntity = pathwayRegistrations.FirstOrDefault(p => p.TqRegistrationProfileId == pathway.TqRegistrationProfileId
                                                                                 && p.TqProviderId == pathway.TqProviderId
                                                                                 && p.Status == RegistrationPathwayStatus.Active);
-                    }
-                    else
-                    {
-                        pathwayEntity = pathway;
                     }
 
                     foreach (var industryPlacement in pathway.IndustryPlacements)
@@ -268,7 +262,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             if (specialismRegistrations.Count > 0)
             {
                 specialismRegistrations = SortUpdateAndInsertOrder(specialismRegistrations, x => x.Id);
-                await _dbContext.BulkInsertOrUpdateAsync(specialismRegistrations, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.SetOutputIdentity = true; bulkConfig.BatchSize = 5000; bulkConfig.BulkCopyTimeout = 60; });
+                await _dbContext.BulkInsertOrUpdateAsync(specialismRegistrations, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.SetOutputIdentity = true; bulkConfig.PreserveInsertOrder = false; bulkConfig.BatchSize = 5000; bulkConfig.BulkCopyTimeout = 60; });
             }
         }
 
@@ -304,7 +298,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 return;
 
             pathwayResults = SortUpdateAndInsertOrder(pathwayResults, x => x.Id);
-            await _dbContext.BulkInsertOrUpdateAsync(pathwayResults, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.BatchSize = 5000; bulkConfig.BulkCopyTimeout = 60; });
+            await _dbContext.BulkInsertOrUpdateAsync(pathwayResults, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.SetOutputIdentity = false; bulkConfig.PreserveInsertOrder = false; bulkConfig.BatchSize = 5000; bulkConfig.BulkCopyTimeout = 60; });
         }
 
         private async Task ProcessIndustryPlacements(List<IndustryPlacement> industryPlacements)
@@ -313,28 +307,24 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 return;
 
             industryPlacements = SortUpdateAndInsertOrder(industryPlacements, x => x.Id);
-            await _dbContext.BulkInsertOrUpdateAsync(industryPlacements, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.BatchSize = 5000; bulkConfig.BulkCopyTimeout = 60; });
+            await _dbContext.BulkInsertOrUpdateAsync(industryPlacements, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.SetOutputIdentity = false; bulkConfig.PreserveInsertOrder = false; bulkConfig.BatchSize = 5000; bulkConfig.BulkCopyTimeout = 60; });
         }
 
         private List<T> SortUpdateAndInsertOrder<T>(List<T> entities, Func<T, int> selector) where T : class
         {
-            return entities;
-
-            // until package version 3.3.1 below is required but we are in version > 6.2.5 so we do not need below
-
             // It is important as we are doing BulkInsertOrUpdate in one go, we would like to have update
             // records at the top and newley added records at the bootom of the list, so that SetOutputIdentiy
             // will work as expected. If you change the order of the entities then Id values will be interchanged. 
             // please do not make any changes to below code
 
-            //var returnResult = new List<T>();
+            var returnResult = new List<T>();
 
-            //if (entities != null && selector != null)
-            //{
-            //    returnResult.AddRange(entities.Where(x => selector(x) > 0).OrderBy(x => selector)); // listToUpdate
-            //    returnResult.AddRange(entities.Where(x => selector(x) <= 0).OrderBy(x => selector)); // listToAdd
-            //}
-            //return returnResult;
+            if (entities != null && selector != null)
+            {
+                returnResult.AddRange(entities.Where(x => selector(x) > 0).OrderBy(x => selector)); // listToUpdate
+                returnResult.AddRange(entities.Where(x => selector(x) <= 0).OrderBy(x => selector)); // listToAdd
+            }
+            return returnResult;
         }
         
         #endregion

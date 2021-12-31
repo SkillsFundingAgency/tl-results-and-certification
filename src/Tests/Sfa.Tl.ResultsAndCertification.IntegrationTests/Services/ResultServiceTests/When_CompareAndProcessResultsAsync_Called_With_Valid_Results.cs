@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Result.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
@@ -26,6 +27,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             
             _bulkResultsTestFixture.TqPathwayAssessmentsData = _bulkResultsTestFixture.SeedPathwayAssessmentsData(registrationPathways.ToList());
             _bulkResultsTestFixture.TqPathwayResultsData = _bulkResultsTestFixture.GetPathwayResultsDataToProcess(_bulkResultsTestFixture.TqPathwayAssessmentsData.ToList());
+
+            var pathwayResultIndex = 0;
+            foreach (var pathwayResult in _bulkResultsTestFixture.TqPathwayResultsData)
+            {
+                pathwayResult.Id = pathwayResultIndex - Constants.PathwayResultsStartIndex;
+                pathwayResultIndex++;
+            }
         }
 
         [Fact]

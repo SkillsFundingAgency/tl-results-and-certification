@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -40,6 +41,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             // Input param
             var registrationDataToProcess = _bulkRegistrationTestFixture.GetRegistrationsDataToProcess(_bulkRegistrationTestFixture.Uln, walsallCollegeTqProvider);
+            registrationDataToProcess.Id = 0 - Constants.RegistrationProfileStartIndex;
+
+            var pathwayIndex = 0;
+            foreach (var pathway in registrationDataToProcess.TqRegistrationPathways)
+            {
+                pathway.Id = pathwayIndex - Constants.RegistrationPathwayStartIndex;
+            }
+
+            var specialismIndex = 0;
+            foreach (var sp in registrationDataToProcess.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms))
+            {
+                sp.Id = specialismIndex - Constants.RegistrationSpecialismsStartIndex;
+                specialismIndex++;
+            }
             _bulkRegistrationTestFixture.TqRegistrationProfilesData = new List<TqRegistrationProfile> { registrationDataToProcess };
         }
 
