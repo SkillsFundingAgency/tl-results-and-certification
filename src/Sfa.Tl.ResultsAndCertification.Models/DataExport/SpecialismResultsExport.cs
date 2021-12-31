@@ -4,13 +4,17 @@ namespace Sfa.Tl.ResultsAndCertification.Models.DataExport
 {
     public class SpecialismResultsExport
     {
-        [DisplayName(SpecialismAssessmentsExportHeader.Uln)]
+        [DisplayName(SpecialismResultsExportHeader.Uln)]
         public long Uln { get; set; }
 
-        [DisplayName(SpecialismAssessmentsExportHeader.SpecialismCode)]
+        [DisplayName(SpecialismResultsExportHeader.SpecialismCode)]
         public string SpecialismCode { get; set; }
 
-        [DisplayName(SpecialismAssessmentsExportHeader.SpecialismAssessmentEntry)]
+        [DisplayName(SpecialismResultsExportHeader.SpecialismAssessmentEntry)]
         public string SpecialismAssessmentEntry { get; set; }
+
+
+        [DisplayName(SpecialismResultsExportHeader.SpecialismGrade)]
+        public string SpecialismGrade { get; set; }
     }
 }
