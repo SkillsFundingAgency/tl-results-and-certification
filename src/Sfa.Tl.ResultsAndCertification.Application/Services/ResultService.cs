@@ -143,7 +143,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     pathwayResults.Add(new TqPathwayResult
                     {
-                        Id = index - Constants.PathwayResultsStartIndex,
+                        Id = 0, //index - Constants.PathwayResultsStartIndex,
                         TqPathwayAssessmentId = result.TqPathwayAssessmentId.Value,
                         TlLookupId = result.PathwayComponentGradeLookupId ?? 0,
                         StartDate = DateTime.UtcNow,

@@ -27,14 +27,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IRepository<TqRegistrationSpecialism> _tqRegistrationSpecialismRepository;
         private readonly ICommonService _commonService;
         private readonly IMapper _mapper;
-        private readonly ILogger<IRegistrationRepository> _logger;        
+        private readonly ILogger<IRegistrationRepository> _logger;
 
-        public RegistrationService(IProviderRepository providerRespository, 
+        public RegistrationService(IProviderRepository providerRespository,
             IRegistrationRepository tqRegistrationRepository,
             IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
             IRepository<TqRegistrationSpecialism> tqRegistrationSpecialismRepository,
             ICommonService commonService,
-            IMapper mapper, 
+            IMapper mapper,
             ILogger<IRegistrationRepository> logger
             )
         {
@@ -156,7 +156,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     }
                 }
             }
-            
+
             return new RegistrationRecordResponse
             {
                 Uln = registrationData.Uln,
@@ -182,7 +182,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 registrationProfiles.Add(new TqRegistrationProfile
                 {
-                    Id = index - Constants.RegistrationProfileStartIndex,
+                    Id = 0, //index - Constants.RegistrationProfileStartIndex,
                     UniqueLearnerNumber = registration.Uln,
                     Firstname = registration.FirstName,
                     Lastname = registration.LastName,
@@ -194,7 +194,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         new TqRegistrationPathway
                         {
-                            Id = index - Constants.RegistrationPathwayStartIndex,
+                            Id = 0, //index - Constants.RegistrationPathwayStartIndex,
                             TqProviderId = registration.TqProviderId,
                             AcademicYear = registration.AcademicYear,
                             StartDate = DateTime.UtcNow,
@@ -411,7 +411,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var errorMessage = string.Join(",", validateStage3Response.ValidationErrors.Select(e => e.ErrorMessage));
                 _logger.LogWarning(LogEvent.ManualRegistrationProcessFailed, $"Manual Registration failed to process due to validation errors = {errorMessage}. Method: AddRegistrationAsync()");
                 return false;
-            }            
+            }
         }
 
         public async Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln)
@@ -421,10 +421,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     Uln = x.UniqueLearnerNumber,
                     RegistrationProfileId = x.Id,
-                    Status = x.TqRegistrationPathways.Where(p => p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn)
-                                                     .OrderByDescending(o => o.CreatedOn)
-                                                     .FirstOrDefault(pw => pw.Status == RegistrationPathwayStatus.Active || pw.Status == RegistrationPathwayStatus.Withdrawn).Status,
-                    IsRegisteredWithOtherAo = x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active && pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != aoUkprn)
+                    Status = x.TqRegistrationPathways.Any(p => p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn)
+                                                     ? x.TqRegistrationPathways
+                                                        .Where(p => p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn)
+                                                        .OrderByDescending(o => o.CreatedOn)
+                                                        .FirstOrDefault(pw => pw.Status == RegistrationPathwayStatus.Active ||
+                                                                              pw.Status == RegistrationPathwayStatus.Withdrawn)
+                                                        .Status
+                                                     : RegistrationPathwayStatus.NotSpecified,
+                    IsRegisteredWithOtherAo = x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active 
+                                                                           && pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != aoUkprn)
                 })
                 .FirstOrDefaultAsync();
 
@@ -434,7 +440,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
             var tqRegistration = await _tqRegistrationRepository.GetRegistrationAsync(aoUkprn, profileId);
-            
+
             if (tqRegistration == null || (status != null && tqRegistration.Status != status)) return null;
 
             var isRegisteredWithOtherAo = false;
@@ -504,7 +510,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 _logger.LogWarning(LogEvent.ManualRegistrationProcessFailed, $"Manual Change Registration failed to process due to validation errors = {errorMessage}. Method: UpdateRegistrationAsync()");
                 return false;
             }
-        }        
+        }
 
         public async Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model)
         {
@@ -554,7 +560,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
 
             return await _tqRegistrationPathwayRepository.CreateAsync(tqPathway) > 0;
-        }        
+        }
 
         public async Task<bool> ReregistrationAsync(ReregistrationRequest model)
         {
@@ -608,7 +614,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var errorMessage = string.Join(",", validateStage3Response.ValidationErrors.Select(e => e.ErrorMessage));
                 _logger.LogWarning(LogEvent.ManualReregistrationProcessFailed, $"Manual Reregistration failed to process due to validation errors = {errorMessage}. Method: ReregistrationAsync()");
                 return false;
-            }            
+            }
         }
 
         #region Private Methods
@@ -639,9 +645,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
 
             var pathways = new List<TqRegistrationPathway>();
-            
+
             EndRegistrationWithStatus(pathway, RegistrationPathwayStatus.Transferred, model.PerformedBy);
-            
+
             pathways.Add(pathway);
 
             // add new records
@@ -669,7 +675,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var existingPathway = await _tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.TqRegistrationProfileId == model.ProfileId
                                                                                                && p.Status == RegistrationPathwayStatus.Active
                                                                                                && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == model.AoUkprn);
-            
+
             if (existingPathway == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No record found to update Registration for UniqueLearnerNumber = {model.Uln}. Method: HandleSpecialismChanges()");
@@ -791,10 +797,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return specialismsList.Select((x, index) => new TqRegistrationSpecialism
             {
-                Id = isBulkUpload ? index - specialismStartIndex : 0,
+                Id = 0, //isBulkUpload ? index - specialismStartIndex : 0,
                 TlSpecialismId = x.Key,
                 StartDate = DateTime.UtcNow,
-                IsOptedin = true,                
+                IsOptedin = true,
                 IsBulkUpload = isBulkUpload,
                 CreatedBy = performedBy,
                 CreatedOn = DateTime.UtcNow,
@@ -878,7 +884,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var hasOnlySpecialismsRecordChanged = false;
 
             var hasProviderChanged = !pathwaysToUpdate.Any(x => amendedRegistration.TqRegistrationPathways.Any(r => r.TqProvider.TlProviderId == x.TqProvider.TlProviderId));
-            
+
             if (hasProviderChanged)
             {
                 // Transferred - Change existing TqRegistrationPathway record status and related TqRegistrationSpecialism records enddate
@@ -902,14 +908,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     });
 
                     // Transfer - Industry Placements
-                    foreach(var (industryPlacement, idx) in pathwayToUpdate.IndustryPlacements.Select((value, i) => (value, i)))
+                    foreach (var (industryPlacement, idx) in pathwayToUpdate.IndustryPlacements.Select((value, i) => (value, i)))
                     {
-                        associatedPathwayToAdd.IndustryPlacements.Add(new IndustryPlacement 
-                        { 
-                            Id = idx - ipStartIndex,
+                        associatedPathwayToAdd.IndustryPlacements.Add(new IndustryPlacement
+                        {
+                            Id = 0, //idx - ipStartIndex,
                             Status = industryPlacement.Status,
                             CreatedOn = DateTime.UtcNow,
-                            CreatedBy = amendedRegistration.CreatedBy 
+                            CreatedBy = amendedRegistration.CreatedBy
                         });
                     }
                     ipStartIndex -= pathwayToUpdate.IndustryPlacements.Count();
@@ -924,7 +930,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                         var newActiveAssessment = new TqPathwayAssessment
                         {
-                            Id = idx - pathwayAssessmentStartIndex,
+                            Id = 0, //idx - pathwayAssessmentStartIndex,
                             AssessmentSeriesId = pathwayAssessment.AssessmentSeriesId,
                             IsOptedin = true,
                             StartDate = DateTime.UtcNow,
@@ -943,7 +949,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                             var newActiveResult = new TqPathwayResult
                             {
-                                Id = index - pathwayResultStartIndex,
+                                Id = 0, //index - pathwayResultStartIndex,
                                 TlLookupId = pathwayResult.TlLookupId,
                                 IsOptedin = true,
                                 StartDate = DateTime.UtcNow,
@@ -1035,7 +1041,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var coupletSpecialismCodes = coupletPairs.Select(x => x.Value).ToList();
 
-            var hasValidSpecialismCodes = coupletSpecialismCodes.Any(cs => specialismCodesToRegister.Except(cs.Split(Constants.PipeSeperator), StringComparer.InvariantCultureIgnoreCase).Count() == 0 );
+            var hasValidSpecialismCodes = coupletSpecialismCodes.Any(cs => specialismCodesToRegister.Except(cs.Split(Constants.PipeSeperator), StringComparer.InvariantCultureIgnoreCase).Count() == 0);
             var hasValidCoupletSpecialismCodes = coupletSpecialismCodes.Any(cs => cs.Split(Constants.PipeSeperator).Except(specialismCodesToRegister, StringComparer.InvariantCultureIgnoreCase).Count() == 0);
             return hasValidSpecialismCodes && hasValidCoupletSpecialismCodes;
         }

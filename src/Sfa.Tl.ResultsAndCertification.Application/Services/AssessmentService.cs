@@ -164,7 +164,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     pathwayAssessments.Add(new TqPathwayAssessment
                     {
-                        Id = index - Constants.PathwayAssessmentsStartIndex,
+                        Id = 0, //index - Constants.PathwayAssessmentsStartIndex,
                         TqRegistrationPathwayId = assessment.TqRegistrationPathwayId.Value,
                         AssessmentSeriesId = assessment.PathwayAssessmentSeriesId ?? 0,
                         StartDate = DateTime.UtcNow,
@@ -179,7 +179,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     specialismAssessments.Add(new TqSpecialismAssessment
                     {
-                        Id = index - Constants.SpecialismAssessmentsStartIndex,
+                        Id = 0, //index - Constants.SpecialismAssessmentsStartIndex,
                         TqRegistrationSpecialismId = specialismId,
                         AssessmentSeriesId = assessment.SpecialismAssessmentSeriesId ?? 0,
                         StartDate = DateTime.UtcNow,
@@ -385,8 +385,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (tqRegistration == null || (status != null && tqRegistration.Status != status)) return null;
 
             var assessmentDetails = _mapper.Map<AssessmentDetails>(tqRegistration);
-
-            //var assessmentSeriesOld = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, Constants.CoreAssessmentStartInYears);
 
             var allAssessmentSeries = await GetAllAssessmentSeriesAsync();
             var coreAssessmentSeries = GetValidAssessmentSeries(allAssessmentSeries, tqRegistration, ComponentType.Core);

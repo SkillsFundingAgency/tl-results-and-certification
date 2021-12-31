@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                              TlProviderId = tlprov.Id,
                                              TlevelTitle = tqao.TlPathway.TlevelTitle,
                                              TqProviderId = result.Id
-                                         }).OrderBy(o => o.TlevelTitle)
+                                         }).OrderBy(o => o.TlevelTitle).ToList()
                           }).FirstOrDefaultAsync();
         }
 
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                              TqAwardingOrganisationId = tqao.Id,
                                              TlProviderId = tlprov.Id,
                                              TlevelTitle = tqao.TlPathway.TlevelTitle
-                                         }).OrderBy(o => o.TlevelTitle)
+                                         }).OrderBy(o => o.TlevelTitle).ToList()
                           }).FirstOrDefaultAsync();
         }
     }

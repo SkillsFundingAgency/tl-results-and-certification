@@ -205,14 +205,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         public async Task<T> GetSingleOrDefaultAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] navigationPropertyPath)
         {
             var queryable = GetQueryableWithIncludes(predicate, null, true, navigationPropertyPath);
-
             try
             {
                 return await queryable.SingleOrDefaultAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
 
