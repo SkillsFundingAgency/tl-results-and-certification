@@ -26,6 +26,9 @@
         "sqlDatabaseTier": {
             "type": "string"
         },
+        "sqlserverlessAutoPauseDelay": {
+            "type": "string"
+        },
         "configurationStorageConnectionString": {
             "type": "securestring"
         },
@@ -417,7 +420,7 @@
                             },
                             {
                                 "name": "FUNCTIONS_EXTENSION_VERSION",
-                                "value": "~3"
+                                "value": "~4"
                             },
                             {
                                 "name": "LearnerVerificationAndLearningEventsTrigger",
@@ -493,6 +496,9 @@
                     },
                     "databaseTier": {
                         "value": "[parameters('sqlDatabaseTier')]"
+                    },
+                    "serverlessAutoPauseDelay": {
+                        "value": "[parameters('sqlserverlessAutoPauseDelay')]"
                     }
                 }
             }
@@ -520,6 +526,9 @@
                     },
                     "databaseTier": {
                         "value": "[parameters('sqlDatabaseTier')]"
+                    },
+                    "serverlessAutoPauseDelay": {
+                        "value": "[parameters('sqlserverlessAutoPauseDelay')]"
                     }
                 }
             }
