@@ -141,10 +141,4 @@
   <data name="Specialism_Results_Link_DisplayName" xml:space="preserve">
     <value>Specialism results data</value>
   </data>
-  <data name="SubHeading_Core_Components" xml:space="preserve">
-    <value>Core components</value>
-  </data>
-  <data name="SubHeading_Specialism_Components" xml:space="preserve">
-    <value>Occupational specialisms</value>
-  </data>
 </root>

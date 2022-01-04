@@ -131,23 +131,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
                 return ResourceManager.GetString("Specialism_Results_Link_DisplayName", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Core components.
-        /// </summary>
-        public static string SubHeading_Core_Components {
-            get {
-                return ResourceManager.GetString("SubHeading_Core_Components", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Occupational specialisms.
-        /// </summary>
-        public static string SubHeading_Specialism_Components {
-            get {
-                return ResourceManager.GetString("SubHeading_Specialism_Components", resourceCulture);
-            }
-        }
     }
 }

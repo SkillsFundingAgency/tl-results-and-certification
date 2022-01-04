@@ -84,6 +84,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Where(pr => pr.TqPathwayAssessment.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
                        && pr.TqPathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
                        && pr.TqPathwayAssessment.TqRegistrationPathway.EndDate == null
+                       && pr.TqPathwayAssessment.IsOptedin && pr.TqPathwayAssessment.EndDate == null
                        && pr.IsOptedin && pr.EndDate == null)
                 .OrderByDescending(pa => pa.CreatedOn)
                 .Select(pr => new CoreResultsExport
