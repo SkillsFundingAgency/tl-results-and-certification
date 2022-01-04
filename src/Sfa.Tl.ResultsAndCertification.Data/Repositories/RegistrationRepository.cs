@@ -132,7 +132,15 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     {
                         try
                          {
-                            var bulkConfig = new BulkConfig() { UseTempDB = true, SetOutputIdentity = true, PreserveInsertOrder = false, BatchSize = 5000, BulkCopyTimeout = 60 };
+                            var bulkConfig = new BulkConfig() 
+                            {
+                                UseTempDB = true,
+                                SetOutputIdentity = true,
+                                PreserveInsertOrder = false,
+                                OnSaveChangesSetFK = false,
+                                BatchSize = 5000,
+                                BulkCopyTimeout = 60
+                            };
 
                             var pathwayRegistrations = pathwayEntities ?? new List<TqRegistrationPathway>();
 
@@ -262,7 +270,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             if (specialismRegistrations.Count > 0)
             {
                 specialismRegistrations = SortUpdateAndInsertOrder(specialismRegistrations, x => x.Id);
-                await _dbContext.BulkInsertOrUpdateAsync(specialismRegistrations, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.SetOutputIdentity = true; bulkConfig.PreserveInsertOrder = false; bulkConfig.BatchSize = 5000; bulkConfig.BulkCopyTimeout = 60; });
+                await _dbContext.BulkInsertOrUpdateAsync(specialismRegistrations, bulkConfig => 
+                { 
+                    bulkConfig.UseTempDB = true;
+                    bulkConfig.SetOutputIdentity = true;
+                    bulkConfig.PreserveInsertOrder = false;
+                    bulkConfig.OnSaveChangesSetFK = false;
+                    bulkConfig.BatchSize = 5000;
+                    bulkConfig.BulkCopyTimeout = 60; });
             }
         }
 
@@ -298,7 +313,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 return;
 
             pathwayResults = SortUpdateAndInsertOrder(pathwayResults, x => x.Id);
-            await _dbContext.BulkInsertOrUpdateAsync(pathwayResults, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.SetOutputIdentity = false; bulkConfig.PreserveInsertOrder = false; bulkConfig.BatchSize = 5000; bulkConfig.BulkCopyTimeout = 60; });
+            await _dbContext.BulkInsertOrUpdateAsync(pathwayResults, bulkConfig => 
+            { 
+                bulkConfig.UseTempDB = true;
+                bulkConfig.SetOutputIdentity = false;
+                bulkConfig.PreserveInsertOrder = false;
+                bulkConfig.BatchSize = 5000;
+                bulkConfig.BulkCopyTimeout = 60;
+            });
         }
 
         private async Task ProcessIndustryPlacements(List<IndustryPlacement> industryPlacements)
@@ -307,7 +329,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 return;
 
             industryPlacements = SortUpdateAndInsertOrder(industryPlacements, x => x.Id);
-            await _dbContext.BulkInsertOrUpdateAsync(industryPlacements, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.SetOutputIdentity = false; bulkConfig.PreserveInsertOrder = false; bulkConfig.BatchSize = 5000; bulkConfig.BulkCopyTimeout = 60; });
+            await _dbContext.BulkInsertOrUpdateAsync(industryPlacements, bulkConfig => 
+            { 
+                bulkConfig.UseTempDB = true;
+                bulkConfig.SetOutputIdentity = false;
+                bulkConfig.PreserveInsertOrder = false;
+                bulkConfig.OnSaveChangesSetFK = false;
+                bulkConfig.BatchSize = 5000;
+                bulkConfig.BulkCopyTimeout = 60; });
         }
 
         private List<T> SortUpdateAndInsertOrder<T>(List<T> entities, Func<T, int> selector) where T : class
