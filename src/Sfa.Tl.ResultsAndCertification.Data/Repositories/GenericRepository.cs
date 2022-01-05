@@ -209,8 +209,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             {
                 return await queryable.SingleOrDefaultAsync();
             }
-            catch (Exception)
+            catch (DbUpdateException due)
             {
+                _logger.LogError(due.Message, due.InnerException);
                 throw;
             }
         }
