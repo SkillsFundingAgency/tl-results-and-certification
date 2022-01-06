@@ -436,5 +436,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
         }
+
+        [HttpGet]
+        [Route("results-no-records-found", Name = RouteConstants.ResultsNoRecordsFound)]
+        public IActionResult ResultsNoRecordsFound()
+        {
+            return View(new ResultsNoRecordsFoundViewModel());
+        }
     }
 }
