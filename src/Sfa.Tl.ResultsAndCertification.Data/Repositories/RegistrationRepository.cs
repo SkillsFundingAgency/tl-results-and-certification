@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Z.EntityFramework.Plus;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 {
@@ -24,21 +23,21 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         public async Task<TqRegistrationPathway> GetRegistrationLiteAsync(long aoUkprn, int profileId, bool includeProfile = true, bool includeIndustryPlacements = false)
         {
             var pathwayQueryable = _dbContext.TqRegistrationPathway.AsQueryable();
-               
+
             if (includeProfile)
                 pathwayQueryable = pathwayQueryable.Include(p => p.TqRegistrationProfile);
 
-            if(includeIndustryPlacements)
+            if (includeIndustryPlacements)
                 pathwayQueryable = pathwayQueryable.Include(p => p.IndustryPlacements);
 
             var registrationPathway = await pathwayQueryable
-                .IncludeFilter(p => p.TqRegistrationSpecialisms.Where(s => s.IsOptedin && (p.Status == RegistrationPathwayStatus.Withdrawn) ? s.EndDate != null : s.EndDate == null))
-                .IncludeFilter(p => p.TqPathwayAssessments.Where(s => s.IsOptedin && (p.Status == RegistrationPathwayStatus.Withdrawn) ? s.EndDate != null : s.EndDate == null))
-                .IncludeFilter(p => p.TqPathwayAssessments.Where(s => s.IsOptedin && (p.Status == RegistrationPathwayStatus.Withdrawn) ? s.EndDate != null : s.EndDate == null)
-                                                          .SelectMany(a => a.TqPathwayResults.Where(r => r.IsOptedin && (a.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn) ? r.EndDate != null : r.EndDate == null)))
-                .OrderByDescending(p => p.CreatedOn)
-                .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn);
-            return registrationPathway;
+               .Include(p => p.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin && (rs.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn) ? rs.EndDate != null : rs.EndDate == null))
+               .Include(p => p.TqPathwayAssessments.Where(pa => pa.IsOptedin && (pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn) ? pa.EndDate != null : pa.EndDate == null))
+                    .ThenInclude(pa => pa.TqPathwayResults.Where(pr => pr.IsOptedin && pr.TqPathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? pr.EndDate != null : pr.EndDate == null))
+               .OrderByDescending(p => p.CreatedOn)
+               .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn);
+
+            return registrationPathway;            
         }
 
         public async Task<TqRegistrationProfile> GetRegistrationDataWithHistoryAsync(long aoUkprn, int profileId)
