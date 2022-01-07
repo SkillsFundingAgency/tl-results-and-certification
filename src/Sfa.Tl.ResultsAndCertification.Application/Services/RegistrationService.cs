@@ -711,17 +711,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             if (pathway != null)
             {
+                // Pathway
                 pathway.Status = status;
                 pathway.EndDate = DateTime.UtcNow;
                 pathway.ModifiedBy = performedBy;
                 pathway.ModifiedOn = DateTime.UtcNow;
-
-                pathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(s =>
-                {
-                    s.EndDate = DateTime.UtcNow;
-                    s.ModifiedBy = performedBy;
-                    s.ModifiedOn = DateTime.UtcNow;
-                });
 
                 pathway.TqPathwayAssessments.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(pa =>
                 {
@@ -735,6 +729,22 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         pr.ModifiedBy = performedBy;
                         pr.ModifiedOn = DateTime.UtcNow;
                     });
+                });
+
+                // Specialisms
+                var specialisms = pathway.TqRegistrationSpecialisms;
+                specialisms.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(s =>
+                {
+                    s.EndDate = DateTime.UtcNow;
+                    s.ModifiedBy = performedBy;
+                    s.ModifiedOn = DateTime.UtcNow;
+                });
+
+                specialisms.SelectMany(a => a.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.EndDate == null)).ToList().ForEach(sa =>
+                {
+                    sa.EndDate = DateTime.UtcNow;
+                    sa.ModifiedBy = performedBy;
+                    sa.ModifiedOn = DateTime.UtcNow;
                 });
             }
         }
