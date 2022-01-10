@@ -213,6 +213,29 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
             actualPathwayAssessment.CreatedBy.Should().Be(expectedPathwayAssessment.CreatedBy);
         }
 
+        public void AssertSpecialismAssessment(IList<TqSpecialismAssessment> actualSpecialismAssessment, IList<TqSpecialismAssessment> expectedSpecialismAssessment)
+        {
+            actualSpecialismAssessment.Should().NotBeEmpty();
+            actualSpecialismAssessment.Should().HaveSameCount(expectedSpecialismAssessment);
+
+            actualSpecialismAssessment.ToList().ForEach(actualAssessment =>
+            {
+                var expectedAssessment = expectedSpecialismAssessment.FirstOrDefault(x => x.Id == actualAssessment.Id);
+                expectedAssessment.Should().NotBeNull();
+
+                actualAssessment.TqRegistrationSpecialismId.Should().Be(expectedAssessment.TqRegistrationSpecialismId);
+                actualAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.AssessmentSeriesId);
+                actualAssessment.IsOptedin.Should().Be(expectedAssessment.IsOptedin);
+                actualAssessment.IsBulkUpload.Should().Be(expectedAssessment.IsBulkUpload);
+                actualAssessment.StartDate.Should().Be(expectedAssessment.StartDate);
+                actualAssessment.CreatedBy.Should().Be(expectedAssessment.CreatedBy);
+                if (expectedAssessment.EndDate != null)
+                    actualAssessment.EndDate.Value.ToShortDateString().Should().Be(expectedAssessment.EndDate.Value.ToShortDateString());
+                else
+                    actualAssessment.EndDate.Should().BeNull();
+            });
+        }
+
         public void AssertIndustryPlacement(IndustryPlacement actualIndustryPlacement, IndustryPlacement expectedIndustryPlacement)
         {
             if (expectedIndustryPlacement == null)

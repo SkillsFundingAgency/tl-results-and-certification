@@ -732,19 +732,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 });
 
                 // Specialisms
-                var specialisms = pathway.TqRegistrationSpecialisms;
-                specialisms.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(s =>
+                pathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(s =>
                 {
                     s.EndDate = DateTime.UtcNow;
                     s.ModifiedBy = performedBy;
                     s.ModifiedOn = DateTime.UtcNow;
-                });
 
-                specialisms.SelectMany(a => a.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.EndDate == null)).ToList().ForEach(sa =>
-                {
-                    sa.EndDate = DateTime.UtcNow;
-                    sa.ModifiedBy = performedBy;
-                    sa.ModifiedOn = DateTime.UtcNow;
+                    s.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.EndDate == null).ToList().ForEach(sa =>
+                    {
+                        sa.EndDate = DateTime.UtcNow;
+                        sa.ModifiedBy = performedBy;
+                        sa.ModifiedOn = DateTime.UtcNow;
+                    });
                 });
             }
         }

@@ -45,10 +45,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
                 var isLatestActive = _ulns[registration.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
 
                 var pathwayAssessments = GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive, isHistoricAssessent);
+                var specialismsAssessments = GetSpecialismAssessmentsDataToProcess(registration.TqRegistrationPathways.SelectMany(x => x.TqRegistrationSpecialisms).ToList(), isLatestActive, isHistoricAssessent);
+
                 tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
+                tqSpecialismAssessmentsSeedData.AddRange(specialismsAssessments);
             }
 
             _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
+            SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
 
             foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111 && x.UniqueLearnerNumber != 1111111114))
                 SeedIndustyPlacementData(registration.UniqueLearnerNumber);
@@ -75,8 +79,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
 
         [Theory()]
         [MemberData(nameof(Data))]
-        public async Task Then_Expected_Results_Are_Returned(long aoUkprn, int uln, bool includeProfile, bool includeIndustryPlacement, 
-            bool isRegistrationPathwayExpected, bool isRegistrationProfileExpected, bool isPathwayAssessmentExpected, bool isIndustryPlacementExpected)
+        public async Task Then_Expected_Results_Are_Returned(long aoUkprn, int uln, bool includeProfile, bool includeIndustryPlacement,
+            bool isRegistrationPathwayExpected, bool isRegistrationProfileExpected, bool isAssessmentExpected, bool isIndustryPlacementExpected)
         {
             var profileId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln).Id;
             await WhenAsync(aoUkprn, profileId, includeProfile, includeIndustryPlacement);
@@ -103,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
                 _actualResult.TqRegistrationProfile.Should().BeNull();
 
             // Assert if PathwayAssessment included
-            if (isPathwayAssessmentExpected)
+            if (isAssessmentExpected)
             {
                 _actualResult.TqPathwayAssessments.Any().Should().BeTrue();
 
@@ -114,6 +118,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
             }
             else
                 _actualResult.TqPathwayAssessments.Any().Should().BeFalse();
+
+            // Assert Specialism Assessments
+            if (isAssessmentExpected)  // TODO: pass as param. 
+            {
+                _actualResult.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments).Any().Should().BeTrue();
+
+                // Assert SpecialismAssessments
+                var actualSpecialismAssessment = GetSpecialismsAssessments(uln, _actualResult);
+                var expectedSpecialismAssessment = GetSpecialismsAssessments(uln, expectedPathway);
+                AssertSpecialismAssessment(actualSpecialismAssessment, expectedSpecialismAssessment);
+            }
+            else
+                _actualResult.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments).Any().Should().BeFalse();
 
             // Assert Industry Placement
             if (isIndustryPlacementExpected)
@@ -134,7 +151,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
             {
                 return new[]
                 {
-                    // InputParams: aoUkprn, Uln, inclProf, inclIp AND ExpectedResult: isRegistrationPathwayExpected, isRegistrationProfileExpected, isPathwayAssessmentExpected, isIndustryPlacementExpected
+                    // InputParams: aoUkprn, Uln, inclProf, inclIp AND ExpectedResult: isRegistrationPathwayExpected, isRegistrationProfileExpected, isAssessmentExpected, isIndustryPlacementExpected
                     new object[] { 99999999, 1111111111, false, false, false, false, false, false },
                     new object[] { 10011881, 1111111112, true, true, true, true, true, true },
                     new object[] { 10011881, 1111111113, true, true, true, true, true, true },
@@ -169,6 +186,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
                 return _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln && x.IsOptedin && x.EndDate != null);
             else
                 return _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln && x.IsOptedin && x.EndDate == null);
+        }
+
+        private IList<TqSpecialismAssessment> GetSpecialismsAssessments(int uln, TqRegistrationPathway pathway)
+        {
+            if (pathway.Status == RegistrationPathwayStatus.Withdrawn)
+                return pathway.TqRegistrationSpecialisms.Where(x => x.IsOptedin && x.EndDate != null)
+                    .SelectMany(x => x.TqSpecialismAssessments).Where(sa => sa.IsOptedin && sa.EndDate != null).ToList();
+            else
+                return pathway.TqRegistrationSpecialisms.Where(x => x.IsOptedin && x.EndDate == null)
+                    .SelectMany(x => x.TqSpecialismAssessments).Where(sa => sa.IsOptedin && sa.EndDate == null).ToList();
         }
     }
 }
