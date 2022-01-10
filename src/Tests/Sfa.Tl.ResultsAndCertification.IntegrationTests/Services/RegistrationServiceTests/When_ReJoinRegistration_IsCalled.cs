@@ -44,6 +44,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             }
 
             SeedPathwayResultsData(tqPathwayResultsSeedData, false);
+
+            // Specialism Assessments seed
+            var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
+            var specialismAssessments = GetSpecialismAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList());
+            tqSpecialismAssessmentsSeedData.AddRange(specialismAssessments);
+            SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
+
             DbContext.SaveChangesAsync();
 
             CreateMapper();
@@ -90,6 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var actualRegistrationProfile = DbContext.TqRegistrationProfile.AsNoTracking().Where(x => x.UniqueLearnerNumber == _tqRegistrationProfile.UniqueLearnerNumber)
                                                                                                                        .Include(x => x.TqRegistrationPathways)
                                                                                                                            .ThenInclude(x => x.TqRegistrationSpecialisms)
+                                                                                                                                .ThenInclude(x => x.TqSpecialismAssessments)
                                                                                                                        .Include(x => x.TqRegistrationPathways)
                                                                                                                             .ThenInclude(x => x.TqPathwayAssessments)
                                                                                                                                 .ThenInclude(x => x.TqPathwayResults)
@@ -126,6 +134,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var actualActiveResult = actualActiveAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate == null);
             var expectedPreviousResult = expectedPreviousAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate != null);
             AssertPathwayResults(actualActiveResult, expectedPreviousResult, isRejoin: true);
+
+            // Assert Withdrawn SpecialismAssessment
+            foreach (var activeSpecialism in actualActivePathway.TqRegistrationSpecialisms.Where(s => s.EndDate == null))
+            {
+                var withdrawnSpecialism = expectedActivePathway.TqRegistrationSpecialisms.FirstOrDefault(x => x.TlSpecialismId == activeSpecialism.TlSpecialismId && x.EndDate != null);
+                var actualActiveSpecialismAssessment = activeSpecialism.TqSpecialismAssessments.FirstOrDefault(x => x.EndDate == null);
+                var expectedPreviousSpecialismAssessment = withdrawnSpecialism.TqSpecialismAssessments.FirstOrDefault(x => x.EndDate != null);
+                AssertSpecialismAssessment(actualActiveSpecialismAssessment, expectedPreviousSpecialismAssessment, isRejoin: true);
+            }
 
             // Assert IndustryPlacement Data
             var actualActiveIndustryPlacement = actualActivePathway.IndustryPlacements.FirstOrDefault();

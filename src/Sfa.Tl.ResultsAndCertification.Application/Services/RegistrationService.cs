@@ -552,7 +552,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 StartDate = DateTime.UtcNow,
                 Status = RegistrationPathwayStatus.Active,
                 IsBulkUpload = false,
-                TqRegistrationSpecialisms = MapSpecialisms(tqRegistrationPathway.TqRegistrationSpecialisms.Select(s => new KeyValuePair<int, string>(s.TlSpecialismId, null)), model.PerformedBy, 0, false),
+                TqRegistrationSpecialisms = MapSpecialismAssessmentsAndResults(tqRegistrationPathway, true, false, model.PerformedBy),                
                 TqPathwayAssessments = MapPathwayAssessmentsAndResults(tqRegistrationPathway, true, false, model.PerformedBy),
                 IndustryPlacements = MapIndustryPlacements(tqRegistrationPathway, model.PerformedBy),
                 CreatedBy = model.PerformedBy,
@@ -823,6 +823,27 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     IsOptedin = isOptedIn,
                     IsBulkUpload = isBulkUpload,
                     CreatedBy = performedBy,
+                }).ToList()
+            }).ToList();
+        }
+
+        private static List<TqRegistrationSpecialism> MapSpecialismAssessmentsAndResults(TqRegistrationPathway tqRegistrationPathway, bool isOptedIn, bool isBulkUpload, string performedBy)
+        {
+            return tqRegistrationPathway.TqRegistrationSpecialisms.Select(x => new TqRegistrationSpecialism
+            {
+                TlSpecialismId = x.TlSpecialismId,
+                StartDate = DateTime.UtcNow,
+                IsOptedin = isOptedIn,
+                IsBulkUpload = isBulkUpload,
+                CreatedBy = performedBy,
+                CreatedOn = DateTime.UtcNow,
+                TqSpecialismAssessments = x.TqSpecialismAssessments.Select(sa => new TqSpecialismAssessment
+                {
+                    AssessmentSeriesId = sa.AssessmentSeriesId,
+                    StartDate = DateTime.UtcNow,
+                    IsOptedin = isOptedIn,
+                    IsBulkUpload = isBulkUpload,
+                    CreatedBy = performedBy
                 }).ToList()
             }).ToList();
         }

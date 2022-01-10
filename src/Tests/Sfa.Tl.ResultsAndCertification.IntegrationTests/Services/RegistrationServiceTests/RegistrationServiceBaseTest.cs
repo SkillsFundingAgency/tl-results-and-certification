@@ -356,5 +356,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             else
                 actualResult.EndDate.Should().NotBeNull();
         }
+
+        public static void AssertSpecialismAssessment(TqSpecialismAssessment actualAssessment, TqSpecialismAssessment expectedAssessment, bool isRejoin = false)
+        {
+            actualAssessment.Should().NotBeNull();
+            if (!isRejoin)
+                actualAssessment.TqRegistrationSpecialismId.Should().Be(expectedAssessment.TqRegistrationSpecialismId);
+
+            actualAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.AssessmentSeriesId);
+            actualAssessment.IsOptedin.Should().BeTrue();
+            actualAssessment.IsBulkUpload.Should().BeFalse();
+
+            if (actualAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active)
+                actualAssessment.EndDate.Should().BeNull();
+            else
+                actualAssessment.EndDate.Should().NotBeNull();
+        }
     }
 }
