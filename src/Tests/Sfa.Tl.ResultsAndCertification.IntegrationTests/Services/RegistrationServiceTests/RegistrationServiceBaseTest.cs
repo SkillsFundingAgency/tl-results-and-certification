@@ -357,20 +357,27 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 actualResult.EndDate.Should().NotBeNull();
         }
 
-        public static void AssertSpecialismAssessment(TqSpecialismAssessment actualAssessment, TqSpecialismAssessment expectedAssessment, bool isRejoin = false)
+        public void AssertSpecialismAssessment(IEnumerable<TqSpecialismAssessment> actualSpecialismAssessment, IEnumerable<TqSpecialismAssessment> expectedSpecialismAssessment)
         {
-            actualAssessment.Should().NotBeNull();
-            if (!isRejoin)
+            actualSpecialismAssessment.Should().NotBeEmpty();
+            actualSpecialismAssessment.Should().HaveSameCount(expectedSpecialismAssessment);
+
+            actualSpecialismAssessment.ToList().ForEach(actualAssessment =>
+            {
+                var expectedAssessment = expectedSpecialismAssessment.FirstOrDefault(x => x.Id == actualAssessment.Id);
+                expectedAssessment.Should().NotBeNull();
+
                 actualAssessment.TqRegistrationSpecialismId.Should().Be(expectedAssessment.TqRegistrationSpecialismId);
-
-            actualAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.AssessmentSeriesId);
-            actualAssessment.IsOptedin.Should().BeTrue();
-            actualAssessment.IsBulkUpload.Should().BeFalse();
-
-            if (actualAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active)
-                actualAssessment.EndDate.Should().BeNull();
-            else
-                actualAssessment.EndDate.Should().NotBeNull();
+                actualAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.AssessmentSeriesId);
+                actualAssessment.IsOptedin.Should().Be(expectedAssessment.IsOptedin);
+                actualAssessment.IsBulkUpload.Should().Be(expectedAssessment.IsBulkUpload);
+                actualAssessment.StartDate.Should().Be(expectedAssessment.StartDate);
+                actualAssessment.CreatedBy.Should().Be(expectedAssessment.CreatedBy);
+                if (expectedAssessment.EndDate != null)
+                    actualAssessment.EndDate.Value.ToShortDateString().Should().Be(expectedAssessment.EndDate.Value.ToShortDateString());
+                else
+                    actualAssessment.EndDate.Should().BeNull();
+            });
         }
     }
 }
