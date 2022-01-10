@@ -660,7 +660,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     StartDate = DateTime.UtcNow,
                     Status = RegistrationPathwayStatus.Active,
                     IsBulkUpload = false,
-                    TqRegistrationSpecialisms = MapSpecialisms(registrationRecord.TlSpecialismLarIds, model.PerformedBy, 0, false),
+                    TqRegistrationSpecialisms = MapSpecialismAssessmentsAndResults(pathway, true, false, model.PerformedBy),
                     TqPathwayAssessments = MapPathwayAssessmentsAndResults(pathway, true, false, model.PerformedBy),
                     IndustryPlacements = MapIndustryPlacements(pathway, model.PerformedBy),
                     CreatedBy = model.PerformedBy,
@@ -838,7 +838,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private static List<TqRegistrationSpecialism> MapSpecialismAssessmentsAndResults(TqRegistrationPathway tqRegistrationPathway, bool isOptedIn, bool isBulkUpload, string performedBy)
         {
-            return tqRegistrationPathway.TqRegistrationSpecialisms.Select(x => new TqRegistrationSpecialism
+            return tqRegistrationPathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate != null).Select(x => new TqRegistrationSpecialism
             {
                 TlSpecialismId = x.TlSpecialismId,
                 StartDate = DateTime.UtcNow,
@@ -846,7 +846,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 IsBulkUpload = isBulkUpload,
                 CreatedBy = performedBy,
                 CreatedOn = DateTime.UtcNow,
-                TqSpecialismAssessments = x.TqSpecialismAssessments.Select(sa => new TqSpecialismAssessment
+                TqSpecialismAssessments = x.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.EndDate != null).Select(sa => new TqSpecialismAssessment
                 {
                     AssessmentSeriesId = sa.AssessmentSeriesId,
                     StartDate = DateTime.UtcNow,
