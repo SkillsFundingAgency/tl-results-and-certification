@@ -15,6 +15,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
@@ -672,13 +673,22 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private async Task<bool> HandleSpecialismChanges(ManageRegistration model, RegistrationRecordResponse registrationRecord)
         {
-            var existingPathway = await _tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.TqRegistrationProfileId == model.ProfileId
-                                                                                               && p.Status == RegistrationPathwayStatus.Active
-                                                                                               && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == model.AoUkprn);
+            var existingPathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, false, false);
 
-            if (existingPathway == null)
+            if (existingPathway == null || existingPathway.Status != RegistrationPathwayStatus.Active)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No record found to update Registration for UniqueLearnerNumber = {model.Uln}. Method: HandleSpecialismChanges()");
+                return false;
+            }
+
+            var hasActiveSpecialismAssessmentEntries = existingPathway.TqRegistrationSpecialisms
+                                                       .Where(s => s.IsOptedin && s.EndDate == null)
+                                                       .Any(s => s.TqSpecialismAssessments
+                                                       .Any(sa => sa.IsOptedin && sa.EndDate == null));
+
+            if (hasActiveSpecialismAssessmentEntries)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to change specialisms as there are active assessment entries registered for specialism. UniqueLearnerNumber = {model.Uln}. Method: HandleSpecialismChanges()");
                 return false;
             }
 
