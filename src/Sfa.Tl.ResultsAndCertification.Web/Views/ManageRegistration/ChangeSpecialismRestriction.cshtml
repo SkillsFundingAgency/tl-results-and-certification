@@ -1,0 +1,22 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ChangeSpecialismRestrictionViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = @ChangeSpecialismRestriction.Page_Title;
+}
+
+@section NavigationBar {
+<vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">@ChangeSpecialismRestriction.Page_Heading</h1>
+        <p class="govuk-body">@ChangeSpecialismRestriction.If_You_Want_To_Change_This_Occupational_Specialism</p>
+
+        <a id="removeAssessmentEntryButton" class="govuk-button" role="button" asp-route="@RouteConstants.AssessmentDetails" asp-route-profileId="@Model.ProfileId">
+            @ChangeSpecialismRestriction.Remove_This_Assessment_Entry_Button
+        </a>
+    </div>
+</div>

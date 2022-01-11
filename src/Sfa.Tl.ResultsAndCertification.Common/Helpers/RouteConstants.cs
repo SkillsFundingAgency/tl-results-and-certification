@@ -96,6 +96,7 @@
         public const string SubmitChangeCoreQuestion = "SubmitChangeCoreQuestion";
         public const string ChangeRegistrationConfirmation = "ChangeRegistrationConfirmation";
         public const string ChangeRegistrationCore = "ChangeRegistrationCore";
+        public const string ChangeSpecialismRestriction = "ChangeSpecialismRestriction";        
         public const string ChangeRegistrationSpecialismQuestion = "ChangeRegistrationSpecialismQuestion";
         public const string SubmitChangeRegistrationSpecialismQuestion = "SubmitChangeRegistrationSpecialismQuestion";
         public const string ChangeRegistrationSpecialisms = "ChangeRegistrationSpecialisms";

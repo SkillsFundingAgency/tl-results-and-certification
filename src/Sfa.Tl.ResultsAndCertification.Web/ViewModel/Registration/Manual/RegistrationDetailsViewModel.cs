@@ -47,7 +47,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 
         public string GetSpecialismHiddenText => (SpecialismsDisplayName == null || !SpecialismsDisplayName.Any()) ? RegistrationDetailsContent.Specialism_None_Selected_Text : null;
 
-        public string GetSpecialismRouteName => SpecialismsDisplayName != null && SpecialismsDisplayName.Any() ? RouteConstants.ChangeRegistrationSpecialismQuestion : RouteConstants.ChangeRegistrationSpecialisms;
+        public string GetSpecialismRouteName => SpecialismsDisplayName != null && SpecialismsDisplayName.Any() 
+            ? (HasActiveAssessmentEntriesForSpecialisms ? RouteConstants.ChangeSpecialismRestriction : RouteConstants.ChangeRegistrationSpecialismQuestion)
+            : RouteConstants.ChangeRegistrationSpecialisms;
 
         public BreadcrumbModel Breadcrumb
         {

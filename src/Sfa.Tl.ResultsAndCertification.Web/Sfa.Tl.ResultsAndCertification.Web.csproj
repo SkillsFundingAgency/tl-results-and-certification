@@ -308,6 +308,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CheckAndSubmit.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Registration\ChangeSpecialismRestriction.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ChangeSpecialismRestriction.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\RegistrationsDownloadData.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1141,6 +1146,10 @@
     <EmbeddedResource Update="Content\ProviderAddress\CheckAndSubmit.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CheckAndSubmit.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\ChangeSpecialismRestriction.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ChangeSpecialismRestriction.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\RegistrationsDownloadData.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
