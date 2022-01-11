@@ -430,7 +430,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                                                               pw.Status == RegistrationPathwayStatus.Withdrawn)
                                                         .Status
                                                      : RegistrationPathwayStatus.NotSpecified,
-                    IsRegisteredWithOtherAo = x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active 
+                    IsRegisteredWithOtherAo = x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active
                                                                            && pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != aoUkprn)
                 })
                 .FirstOrDefaultAsync();
@@ -444,11 +444,26 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (tqRegistration == null || (status != null && tqRegistration.Status != status)) return null;
 
+            var hasActiveAssessmentEntriesForSpecialisms = false;
+
+            if (tqRegistration.TqRegistrationSpecialisms.Any())
+            {
+                var specialismIds = tqRegistration.TqRegistrationSpecialisms.Select(s => s.Id);
+                hasActiveAssessmentEntriesForSpecialisms = await _tqRegistrationSpecialismRepository
+                                                                .CountAsync(s => specialismIds
+                                                                .Contains(s.Id) && s.TqSpecialismAssessments
+                                                                .Any(sa => sa.IsOptedin && sa.EndDate == null)) > 0;
+            }
+
             var isRegisteredWithOtherAo = false;
             if (tqRegistration.Status == RegistrationPathwayStatus.Withdrawn)
                 isRegisteredWithOtherAo = await IsActiveWithOtherAoAsync(aoUkprn, tqRegistration.TqRegistrationProfile.UniqueLearnerNumber, tqRegistration.CreatedOn);
 
-            return _mapper.Map<RegistrationDetails>(tqRegistration, opt => opt.Items["IsActiveWithOtherAo"] = isRegisteredWithOtherAo);
+            return _mapper.Map<RegistrationDetails>(tqRegistration, opt =>
+            {
+                opt.Items["IsActiveWithOtherAo"] = isRegisteredWithOtherAo;
+                opt.Items["HasActiveAssessmentEntriesForSpecialisms"] = hasActiveAssessmentEntriesForSpecialisms;
+            });
         }
 
         public async Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId)
@@ -553,7 +568,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 StartDate = DateTime.UtcNow,
                 Status = RegistrationPathwayStatus.Active,
                 IsBulkUpload = false,
-                TqRegistrationSpecialisms = MapSpecialismAssessmentsAndResults(tqRegistrationPathway, true, false, model.PerformedBy),                
+                TqRegistrationSpecialisms = MapSpecialismAssessmentsAndResults(tqRegistrationPathway, true, false, model.PerformedBy),
                 TqPathwayAssessments = MapPathwayAssessmentsAndResults(tqRegistrationPathway, true, false, model.PerformedBy),
                 IndustryPlacements = MapIndustryPlacements(tqRegistrationPathway, model.PerformedBy),
                 CreatedBy = model.PerformedBy,

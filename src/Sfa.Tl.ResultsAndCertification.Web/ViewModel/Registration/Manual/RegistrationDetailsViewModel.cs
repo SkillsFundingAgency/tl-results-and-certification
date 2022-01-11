@@ -1,15 +1,14 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryList;
 using System;
 using System.Collections.Generic;
-using RegistrationDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration.RegistrationDetails;
-using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using System.Linq;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
+using RegistrationDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration.RegistrationDetails;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 {
@@ -27,6 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public RegistrationPathwayStatus Status { get; set; }
         public IEnumerable<AcademicYear> AcademicYears { get; set; }
         public bool IsActiveWithOtherAo { get; set; }
+        public bool HasActiveAssessmentEntriesForSpecialisms { get; set; }
 
         public bool ShowAssessmentEntriesLink { get { return Status == RegistrationPathwayStatus.Active;  } }
         
