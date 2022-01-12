@@ -262,6 +262,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("registration-specialism-change-restriction/{profileId}", Name = RouteConstants.ChangeSpecialismRestriction)]
+        public IActionResult ChangeSpecialismRestriction(int profileId)
+        {
+            var viewModel = new ChangeSpecialismRestrictionViewModel
+            {
+                ProfileId = profileId
+            };
+            return View(viewModel);
+        }
+
+        [HttpGet]
         [Route("change-registration-learner-decided-specialism-question/{profileId}", Name = RouteConstants.ChangeRegistrationSpecialismQuestion)]
         public async Task<IActionResult> ChangeRegistrationSpecialismQuestionAsync(int profileId)
         {
