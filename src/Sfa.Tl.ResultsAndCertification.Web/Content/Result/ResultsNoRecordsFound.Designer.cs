@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Dashboard {
+    public class ResultsNoRecordsFound {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Dashboard() {
+        internal ResultsNoRecordsFound() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Result.Dashboard", typeof(Dashboard).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Result.ResultsNoRecordsFound", typeof(ResultsNoRecordsFound).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,88 +61,70 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download results data.
+        ///   Looks up a localized string similar to Add results.
         /// </summary>
-        public static string Card_Heading_Download_Results_Data {
+        public static string Button_Add_Results {
             get {
-                return ResourceManager.GetString("Card_Heading_Download_Results_Data", resourceCulture);
+                return ResourceManager.GetString("Button_Add_Results", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage a result.
+        ///   Looks up a localized string similar to Back to home.
         /// </summary>
-        public static string Card_Heading_Link_Manage_A_Result {
+        public static string Button_Back_To_Home {
             get {
-                return ResourceManager.GetString("Card_Heading_Link_Manage_A_Result", resourceCulture);
+                return ResourceManager.GetString("Button_Back_To_Home", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload multiple results.
+        ///   Looks up a localized string similar to contact us.
         /// </summary>
-        public static string Card_Heading_Link_Upload_Multiple_Results {
+        public static string Contact_Us {
             get {
-                return ResourceManager.GetString("Card_Heading_Link_Upload_Multiple_Results", resourceCulture);
+                return ResourceManager.GetString("Contact_Us", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a result for one learner.
+        ///   Looks up a localized string similar to No result records found.
         /// </summary>
-        public static string List_Add_A_Result_For_One_Learner {
+        public static string Email_Subject {
             get {
-                return ResourceManager.GetString("List_Add_A_Result_For_One_Learner", resourceCulture);
+                return ResourceManager.GetString("Email_Subject", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add or change results for more than one learner.
+        ///   Looks up a localized string similar to Get help with the Manage T Level results service.
         /// </summary>
-        public static string List_Add_Or_Change_Results_For_More_Than_One_Learner {
+        public static string Get_Help_With_Mangage_TLevel_Results_Service {
             get {
-                return ResourceManager.GetString("List_Add_Or_Change_Results_For_More_Than_One_Learner", resourceCulture);
+                return ResourceManager.GetString("Get_Help_With_Mangage_TLevel_Results_Service", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change a result for one learner.
+        ///   Looks up a localized string similar to If you need help with the Manage T Level results service please.
         /// </summary>
-        public static string List_Change_A_Result_For_One_Learner {
+        public static string If_You_Need_Help {
             get {
-                return ResourceManager.GetString("List_Change_A_Result_For_One_Learner", resourceCulture);
+                return ResourceManager.GetString("If_You_Need_Help", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download a template with results data formats and rules guidance.
+        ///   Looks up a localized string similar to A CSV file cannot be generated as there are no learners&apos; results in our system for your organisation..
         /// </summary>
-        public static string List_Download_A_Template_With_Results_Data_Formats_And_Rules_Guidance {
+        public static string No_Records_Found_Message {
             get {
-                return ResourceManager.GetString("List_Download_A_Template_With_Results_Data_Formats_And_Rules_Guidance", resourceCulture);
+                return ResourceManager.GetString("No_Records_Found_Message", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download your data as a CSV file.
-        /// </summary>
-        public static string List_Download_Your_Data_As_Csv {
-            get {
-                return ResourceManager.GetString("List_Download_Your_Data_As_Csv", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to View a learner&apos;s results.
-        /// </summary>
-        public static string List_View_A_Learners_Results {
-            get {
-                return ResourceManager.GetString("List_View_A_Learners_Results", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Results.
+        ///   Looks up a localized string similar to No records found.
         /// </summary>
         public static string Page_Heading {
             get {
@@ -151,7 +133,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Results.
+        ///   Looks up a localized string similar to No records found - Results.
         /// </summary>
         public static string Page_Title {
             get {
@@ -160,11 +142,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell us what your learners have achieved.
+        ///   Looks up a localized string similar to We aim to respond within 3 working days..
         /// </summary>
-        public static string Para_Tell_Us_When_Your_Learners_Have_Achieved {
+        public static string We_Aim_To_Respond_Within_3_Working_Days {
             get {
-                return ResourceManager.GetString("Para_Tell_Us_When_Your_Learners_Have_Achieved", resourceCulture);
+                return ResourceManager.GetString("We-Aim_To_Respond_Within_3_Working_Days", resourceCulture);
             }
         }
     }

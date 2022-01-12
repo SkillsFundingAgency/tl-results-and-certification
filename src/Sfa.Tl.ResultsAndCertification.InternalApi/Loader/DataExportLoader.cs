@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             {
                 DataExportType.Registrations => await ProcessRegistrationsRequestAsync(aoUkprn, requestType, requestedBy),
                 DataExportType.Assessments => await ProcessAssessmentsRequestAsync(aoUkprn, requestType, requestedBy),
-                DataExportType.Results => null,
+                DataExportType.Results => await ProcessResultsRequestAsync(aoUkprn, requestType, requestedBy),
                 _ => null,
             };
         }
@@ -59,6 +59,27 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             response.Add(coreAssessmentsResponse.Result);
             response.Add(specialismAssessmentsResponse.Result);
+
+            return response;
+        }
+
+        private async Task<IList<DataExportResponse>> ProcessResultsRequestAsync(long aoUkprn, DataExportType requestType, string requestedBy)
+        {
+            // Core Results
+            var coreResults = await _dataExportService.GetDataExportCoreResultsAsync(aoUkprn);
+
+            // Specialism Results
+            var specialismResults = await _dataExportService.GetDataExportSpecialismResultsAsync(aoUkprn);
+
+            var response = new List<DataExportResponse>();
+
+            var coreResultsResponse = ProcessDataExportResponseAsync(coreResults, aoUkprn, requestType, requestedBy, ComponentType.Core);
+            var specialismResultsResponse = ProcessDataExportResponseAsync(specialismResults, aoUkprn, requestType, requestedBy, ComponentType.Specialism);
+
+            await Task.WhenAll(coreResultsResponse, specialismResultsResponse);
+
+            response.Add(coreResultsResponse.Result);
+            response.Add(specialismResultsResponse.Result);
 
             return response;
         }

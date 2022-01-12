@@ -117,40 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Card_Heading_Download_Results_Data" xml:space="preserve">
-    <value>Download results data</value>
+  <data name="Button_Add_Results" xml:space="preserve">
+    <value>Add results</value>
   </data>
-  <data name="Card_Heading_Link_Manage_A_Result" xml:space="preserve">
-    <value>Manage a result</value>
+  <data name="Button_Back_To_Home" xml:space="preserve">
+    <value>Back to home</value>
   </data>
-  <data name="Card_Heading_Link_Upload_Multiple_Results" xml:space="preserve">
-    <value>Upload multiple results</value>
+  <data name="Contact_Us" xml:space="preserve">
+    <value>contact us</value>
   </data>
-  <data name="List_Add_A_Result_For_One_Learner" xml:space="preserve">
-    <value>Add a result for one learner</value>
+  <data name="Email_Subject" xml:space="preserve">
+    <value>No result records found</value>
   </data>
-  <data name="List_Add_Or_Change_Results_For_More_Than_One_Learner" xml:space="preserve">
-    <value>Add or change results for more than one learner</value>
+  <data name="Get_Help_With_Mangage_TLevel_Results_Service" xml:space="preserve">
+    <value>Get help with the Manage T Level results service</value>
   </data>
-  <data name="List_Change_A_Result_For_One_Learner" xml:space="preserve">
-    <value>Change a result for one learner</value>
+  <data name="If_You_Need_Help" xml:space="preserve">
+    <value>If you need help with the Manage T Level results service please</value>
   </data>
-  <data name="List_Download_A_Template_With_Results_Data_Formats_And_Rules_Guidance" xml:space="preserve">
-    <value>Download a template with results data formats and rules guidance</value>
-  </data>
-  <data name="List_Download_Your_Data_As_Csv" xml:space="preserve">
-    <value>Download your data as a CSV file</value>
-  </data>
-  <data name="List_View_A_Learners_Results" xml:space="preserve">
-    <value>View a learner's results</value>
+  <data name="No_Records_Found_Message" xml:space="preserve">
+    <value>A CSV file cannot be generated as there are no learners' results in our system for your organisation.</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
-    <value>Results</value>
+    <value>No records found</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Results</value>
+    <value>No records found - Results</value>
   </data>
-  <data name="Para_Tell_Us_When_Your_Learners_Have_Achieved" xml:space="preserve">
-    <value>Tell us what your learners have achieved</value>
+  <data name="We-Aim_To_Respond_Within_3_Working_Days" xml:space="preserve">
+    <value>We aim to respond within 3 working days.</value>
   </data>
 </root>

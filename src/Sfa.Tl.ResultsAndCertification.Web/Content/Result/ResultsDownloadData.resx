@@ -117,40 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Card_Heading_Download_Results_Data" xml:space="preserve">
+  <data name="Button_Back_To_Home" xml:space="preserve">
+    <value>Back to home</value>
+  </data>
+  <data name="Core_Results_Download_FileName" xml:space="preserve">
+    <value>core_results_data.csv</value>
+  </data>
+  <data name="Core_Results_Link_DisplayName" xml:space="preserve">
+    <value>Core results data</value>
+  </data>
+  <data name="File_Size_Units" xml:space="preserve">
+    <value>KB</value>
+  </data>
+  <data name="Heading_Download_Results_Data" xml:space="preserve">
     <value>Download results data</value>
   </data>
-  <data name="Card_Heading_Link_Manage_A_Result" xml:space="preserve">
-    <value>Manage a result</value>
-  </data>
-  <data name="Card_Heading_Link_Upload_Multiple_Results" xml:space="preserve">
-    <value>Upload multiple results</value>
-  </data>
-  <data name="List_Add_A_Result_For_One_Learner" xml:space="preserve">
-    <value>Add a result for one learner</value>
-  </data>
-  <data name="List_Add_Or_Change_Results_For_More_Than_One_Learner" xml:space="preserve">
-    <value>Add or change results for more than one learner</value>
-  </data>
-  <data name="List_Change_A_Result_For_One_Learner" xml:space="preserve">
-    <value>Change a result for one learner</value>
-  </data>
-  <data name="List_Download_A_Template_With_Results_Data_Formats_And_Rules_Guidance" xml:space="preserve">
-    <value>Download a template with results data formats and rules guidance</value>
-  </data>
-  <data name="List_Download_Your_Data_As_Csv" xml:space="preserve">
-    <value>Download your data as a CSV file</value>
-  </data>
-  <data name="List_View_A_Learners_Results" xml:space="preserve">
-    <value>View a learner's results</value>
-  </data>
-  <data name="Page_Heading" xml:space="preserve">
-    <value>Results</value>
-  </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Results</value>
+    <value>Download data - Results</value>
   </data>
-  <data name="Para_Tell_Us_When_Your_Learners_Have_Achieved" xml:space="preserve">
-    <value>Tell us what your learners have achieved</value>
+  <data name="Specialism_Results_Download_FileName" xml:space="preserve">
+    <value>specialism_results_data.csv</value>
+  </data>
+  <data name="Specialism_Results_Link_DisplayName" xml:space="preserve">
+    <value>Specialism results data</value>
   </data>
 </root>

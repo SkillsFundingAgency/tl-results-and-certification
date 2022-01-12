@@ -13,18 +13,17 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.AssessmentsNoRecordsFound
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.ResultsDownloadData
 {
-    public abstract class TestSetup : BaseTest<AssessmentController>
+    public abstract class TestSetup : BaseTest<ResultController>
     {
-        protected int Ukprn;
-        protected string Uln;
+        protected int AoUkprn;
         protected Guid UserId;
         protected string CacheKey;
-        protected IAssessmentLoader AssessmentLoader;
+        protected IResultLoader ResultLoader;
         protected ICacheService CacheService;
-        protected ILogger<AssessmentController> Logger;
-        protected AssessmentController Controller;
+        protected ILogger<ResultController> Logger;
+        protected ResultController Controller;
         protected IHttpContextAccessor HttpContextAccessor;
 
         public IActionResult Result { get; private set; }
@@ -32,27 +31,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         public override void Setup()
         {
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
-            AssessmentLoader = Substitute.For<IAssessmentLoader>();
+            ResultLoader = Substitute.For<IResultLoader>();
             CacheService = Substitute.For<ICacheService>();
-            Logger = Substitute.For<ILogger<AssessmentController>>();
-            Controller = new AssessmentController(AssessmentLoader, CacheService, Logger);
+            Logger = Substitute.For<ILogger<ResultController>>();
+            Controller = new ResultController(ResultLoader, CacheService, Logger);
 
-            Ukprn = 1234567890;
-            Uln = "8765456786";
-            var httpContext = new ClaimsIdentityBuilder<AssessmentController>(Controller)
-               .Add(CustomClaimTypes.Ukprn, Ukprn.ToString())
+            AoUkprn = 1234567890;
+
+            var httpContext = new ClaimsIdentityBuilder<ResultController>(Controller)
+               .Add(CustomClaimTypes.Ukprn, AoUkprn.ToString())
                .Add(CustomClaimTypes.UserId, Guid.NewGuid().ToString())
                .Build()
                .HttpContext;
 
-            HttpContextAccessor.HttpContext.Returns(httpContext); 
-            CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.AssessmentCacheKey);
+            HttpContextAccessor.HttpContext.Returns(httpContext);
+            CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.ResultCacheKey);
         }
 
-        public override Task When()
+        public async override Task When()
         {
-            Result = Controller.AssessmentsNoRecordsFound();
-            return Task.CompletedTask;
+            Result = await Controller.ResultsDownloadDataAsync();
         }
     }
 }
