@@ -11,6 +11,7 @@ trigger:
 pr: 
   - master
   - develop
+  - feature/*
 
 workspace:
     clean: all
