@@ -12,9 +12,10 @@ using RegistrationDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Re
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.RegistrationDetails
 {
-    public class When_Called_With_IsActiveWithOtherAo : TestSetup
+    public class When_Called_With_HasActiveSpecialismAssessments : TestSetup
     {
         private RegistrationDetailsViewModel mockresult = null;
+        private Dictionary<string, string> _routeAttributes;
         private IList<AcademicYear> _academicYears;
 
         public override void Given()
@@ -30,9 +31,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
                 SpecialismsDisplayName = new List<string> { "Specialism1 (2345678)", "Specialism2 (555678)" },
                 AcademicYear = 2020,
                 Status = RegistrationPathwayStatus.Active,
-                IsActiveWithOtherAo = true
+                IsActiveWithOtherAo = false,
+                HasActiveAssessmentEntriesForSpecialisms = true
             };
 
+            _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() } };
             _academicYears = new List<AcademicYear> { new AcademicYear { Id = 1, Name = "2020/21", Year = 2020 }, new AcademicYear { Id = 2, Name = "2021/22", Year = 2021 } };
 
             RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId).Returns(mockresult);
@@ -51,13 +54,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             var model = viewResult.Model as RegistrationDetailsViewModel;
             model.Should().NotBeNull();
 
-            // Summary Status
-            model.SummaryStatus.Should().NotBeNull();
-            model.SummaryStatus.Title.Should().Be(RegistrationDetailsContent.Title_Status);
-            model.SummaryStatus.Value.Should().Be(mockresult.Status.ToString());
-            model.SummaryStatus.ActionText.Should().BeNull();
-            model.SummaryStatus.RouteName.Should().BeNull();
-            model.SummaryStatus.RouteAttributes.Should().BeNull();
+            // Summary Specialisms
+            model.SummarySpecialisms.Should().NotBeNull();
+            model.SummarySpecialisms.Title.Should().Be(RegistrationDetailsContent.Title_Specialism_Text);
+            model.SummarySpecialisms.Value.Should().BeEquivalentTo(mockresult.SpecialismsDisplayName);
+            model.SummarySpecialisms.ActionText.Should().Be(RegistrationDetailsContent.Change_Action_Link_Text);
+            model.SummarySpecialisms.RouteName.Should().Be(RouteConstants.ChangeSpecialismRestriction);
+            model.SummaryStatus.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);            
         }
     }
 }

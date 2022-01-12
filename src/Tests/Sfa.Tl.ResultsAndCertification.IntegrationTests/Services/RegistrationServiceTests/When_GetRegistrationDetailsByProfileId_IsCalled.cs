@@ -23,14 +23,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         {
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             var pearsonRegistrationProfile = SeedRegistrationData(1111111111, RegistrationPathwayStatus.Withdrawn);
-            SeedRegistrationData(1111111112);
+            var profile = SeedRegistrationData(1111111112);
+
+            // Seed specialism assesment entries for Uln 1111111112
+            SeedSpecialismAssessmentsData(GetSpecialismAssessmentsDataToProcess(profile.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList()));
 
             // Uln 1111111111 is withdrawn from Pearson above registerign with NCFE below. 
             SeedTestData(EnumAwardingOrganisation.Ncfe, true);
             var ncfeRegistrationProfile = SeedRegistrationData(1111111111, RegistrationPathwayStatus.Active, false);
             ncfeRegistrationProfile.TqRegistrationPathways.ToList().ForEach(x => { x.TqRegistrationProfileId = pearsonRegistrationProfile.Id; });
             pearsonRegistrationProfile.TqRegistrationPathways.Add(ncfeRegistrationProfile.TqRegistrationPathways.ToList()[0]);
-
+            
             DbContext.SaveChanges();
 
             CreateMapper();
@@ -82,6 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             actualResult.AcademicYear.Should().Be(expectedResponse.AcademicYear);
             actualResult.Status.Should().Be(expectedResponse.Status);
             actualResult.IsActiveWithOtherAo.Should().Be(expectedResponse.IsActiveWithOtherAo);
+            actualResult.HasActiveAssessmentEntriesForSpecialisms.Should().Be(expectedResponse.HasActiveAssessmentEntriesForSpecialisms);
         }
 
         public static IEnumerable<object[]> Data
@@ -117,7 +121,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                             Specialisms = tlSpecialisms.Select(x => new SpecialismDetails { Name = x.Name , Code = x.LarId}),
                             AcademicYear = tqRegistrationPathway.AcademicYear,
                             Status = RegistrationPathwayStatus.Withdrawn,
-                            IsActiveWithOtherAo = true
+                            IsActiveWithOtherAo = true,
+                            HasActiveAssessmentEntriesForSpecialisms = false
                         }
                     },
                     // IsActive
@@ -137,7 +142,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                             Specialisms = tlSpecialisms.Select(x => new SpecialismDetails { Name = x.Name , Code = x.LarId}),
                             AcademicYear = tqRegistrationPathway.AcademicYear,
                             Status = RegistrationPathwayStatus.Active,
-                            IsActiveWithOtherAo = false
+                            IsActiveWithOtherAo = false,
+                            HasActiveAssessmentEntriesForSpecialisms = true
                         }
                     }
                 };
