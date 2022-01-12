@@ -163,7 +163,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                             await ProcessPathwayResults(pathwayResults);
 
                             // Specialisms
-                            var specialismAssessments = await ProcessRegistrationSpecialismEntities(specialismRegistrations);
+                            var specialismAssessments = await ProcessRegistrationSpecialismEntities(bulkConfig, specialismRegistrations);
                             await ProcessSpecialismAssessments(specialismAssessments);
 
                             transaction.Commit();
@@ -264,31 +264,23 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return new Tuple<List<TqRegistrationSpecialism>, List<TqPathwayAssessment>, List<IndustryPlacement>>(specialismRegistrations, pathwayAssessments, industryPlacements);
         }
 
-        private async Task<List<TqSpecialismAssessment>> ProcessRegistrationSpecialismEntities(List<TqRegistrationSpecialism> specialismRegistrations)
+        private async Task<List<TqSpecialismAssessment>> ProcessRegistrationSpecialismEntities(BulkConfig bulkConfig, List<TqRegistrationSpecialism> specialismRegistrations)
         {
-            var specialismAssessments = new List<TqSpecialismAssessment>();
             if (specialismRegistrations.Count <= 0)
-                return specialismAssessments;
+                return null;
 
             var originalSpecialismRegistrationsCopy = new List<TqRegistrationSpecialism>(specialismRegistrations);
 
             specialismRegistrations = SortUpdateAndInsertOrder(specialismRegistrations, x => x.Id);
-            await _dbContext.BulkInsertOrUpdateAsync(specialismRegistrations, bulkConfig =>
-            {
-                bulkConfig.UseTempDB = true;
-                bulkConfig.SetOutputIdentity = true;
-                bulkConfig.PreserveInsertOrder = false;
-                bulkConfig.OnSaveChangesSetFK = false;
-                bulkConfig.BatchSize = 5000;
-                bulkConfig.BulkCopyTimeout = 60;
-            });
+            await _dbContext.BulkInsertOrUpdateAsync(specialismRegistrations, bulkConfig);
 
             // Add foreignkey ref(i.e. SpecialismId available after save from above) to the SpecialismAssessment enitty.
+            var specialismAssessments = new List<TqSpecialismAssessment>();
             originalSpecialismRegistrationsCopy.ForEach(specialism =>
             {
                 TqRegistrationSpecialism specialismEntity = null;
                 if (specialism.Id <= 0)
-                    specialismEntity = specialismRegistrations.FirstOrDefault(s => s.TqRegistrationPathwayId == specialism.TqRegistrationPathwayId);
+                    specialismEntity = specialismRegistrations.FirstOrDefault(s => s.TqRegistrationPathwayId == specialism.TqRegistrationPathwayId && s.TlSpecialismId == specialism.TlSpecialismId);
 
                 foreach (var splAssessment in specialism.TqSpecialismAssessments)
                 {

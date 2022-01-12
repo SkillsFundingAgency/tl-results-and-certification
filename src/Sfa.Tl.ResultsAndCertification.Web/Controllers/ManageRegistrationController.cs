@@ -447,8 +447,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
-                var registrationAssessmentDetails = await _registrationLoader.GetRegistrationAssessmentAsync(User.GetUkPrn(), model.ProfileId, RegistrationPathwayStatus.Active);
-                if (registrationAssessmentDetails == null || registrationAssessmentDetails.HasAnyOutstandingPathwayPrsActivities) // TODO: Can this check be moved to Api
+                var registrationDetails = await _registrationLoader.GetRegistrationAssessmentAsync(User.GetUkPrn(), model.ProfileId, RegistrationPathwayStatus.Active);
+                if (registrationDetails == null || registrationDetails.HasAnyOutstandingPathwayPrsActivities)
                     return RedirectToRoute(RouteConstants.PageNotFound);
 
                 var response = await _registrationLoader.WithdrawRegistrationAsync(User.GetUkPrn(), model);
