@@ -156,13 +156,15 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                             pathwayAssessments = processEntitiesResult.Item2;
                             industryPlacements = processEntitiesResult.Item3;
 
-                            await ProcessRegistrationSpecialismEntities(specialismRegistrations);
-
                             await ProcessIndustryPlacements(industryPlacements);
 
                             var pathwayResults = new List <TqPathwayResult>();
                             await ProcessPathwayAssessments(bulkConfig, pathwayAssessments, pathwayResults);
                             await ProcessPathwayResults(pathwayResults);
+
+                            // Specialisms
+                            var specialismAssessments = await ProcessRegistrationSpecialismEntities(specialismRegistrations);
+                            await ProcessSpecialismAssessments(specialismAssessments);
 
                             transaction.Commit();
                         }
@@ -185,7 +187,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 var orignialProfileEntititesCopy = new List<TqRegistrationProfile>(profileEntities);
 
                 profileEntities = SortUpdateAndInsertOrder(profileEntities, x => x.Id);
-
                 await _dbContext.BulkInsertOrUpdateAsync(profileEntities, bulkConfig);
 
                 orignialProfileEntititesCopy.ForEach(profile =>
@@ -213,9 +214,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             if (pathwayRegistrations.Count > 0)
             {
                 var orignialPathwayEntititesCopy = new List<TqRegistrationPathway>(pathwayRegistrations);
-
                 pathwayRegistrations = SortUpdateAndInsertOrder(pathwayRegistrations, x => x.Id);
-
                 await _dbContext.BulkInsertOrUpdateAsync(pathwayRegistrations, bulkConfig);
 
                 orignialPathwayEntititesCopy.ForEach(pathway =>
@@ -265,20 +264,42 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return new Tuple<List<TqRegistrationSpecialism>, List<TqPathwayAssessment>, List<IndustryPlacement>>(specialismRegistrations, pathwayAssessments, industryPlacements);
         }
 
-        private async Task ProcessRegistrationSpecialismEntities(List<TqRegistrationSpecialism> specialismRegistrations)
+        private async Task<List<TqSpecialismAssessment>> ProcessRegistrationSpecialismEntities(List<TqRegistrationSpecialism> specialismRegistrations)
         {
-            if (specialismRegistrations.Count > 0)
+            var specialismAssessments = new List<TqSpecialismAssessment>();
+            if (specialismRegistrations.Count <= 0)
+                return specialismAssessments;
+
+            var originalSpecialismRegistrationsCopy = new List<TqRegistrationSpecialism>(specialismRegistrations);
+
+            specialismRegistrations = SortUpdateAndInsertOrder(specialismRegistrations, x => x.Id);
+            await _dbContext.BulkInsertOrUpdateAsync(specialismRegistrations, bulkConfig =>
             {
-                specialismRegistrations = SortUpdateAndInsertOrder(specialismRegistrations, x => x.Id);
-                await _dbContext.BulkInsertOrUpdateAsync(specialismRegistrations, bulkConfig => 
-                { 
-                    bulkConfig.UseTempDB = true;
-                    bulkConfig.SetOutputIdentity = true;
-                    bulkConfig.PreserveInsertOrder = false;
-                    bulkConfig.OnSaveChangesSetFK = false;
-                    bulkConfig.BatchSize = 5000;
-                    bulkConfig.BulkCopyTimeout = 60; });
-            }
+                bulkConfig.UseTempDB = true;
+                bulkConfig.SetOutputIdentity = true;
+                bulkConfig.PreserveInsertOrder = false;
+                bulkConfig.OnSaveChangesSetFK = false;
+                bulkConfig.BatchSize = 5000;
+                bulkConfig.BulkCopyTimeout = 60;
+            });
+
+            // Add foreignkey ref(i.e. SpecialismId available after save from above) to the SpecialismAssessment enitty.
+            originalSpecialismRegistrationsCopy.ForEach(specialism =>
+            {
+                TqRegistrationSpecialism specialismEntity = null;
+                if (specialism.Id <= 0)
+                    specialismEntity = specialismRegistrations.FirstOrDefault(s => s.TqRegistrationPathwayId == specialism.TqRegistrationPathwayId);
+
+                foreach (var splAssessment in specialism.TqSpecialismAssessments)
+                {
+                    if (splAssessment.TqRegistrationSpecialismId == 0)
+                        splAssessment.TqRegistrationSpecialismId = specialismEntity.Id;
+
+                    specialismAssessments.Add(splAssessment);
+                }
+            });
+
+            return specialismAssessments;
         }
 
         private async Task ProcessPathwayAssessments(BulkConfig bulkConfig, List<TqPathwayAssessment> pathwayAssessments, List<TqPathwayResult> pathwayResults)
@@ -315,6 +336,22 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             pathwayResults = SortUpdateAndInsertOrder(pathwayResults, x => x.Id);
             await _dbContext.BulkInsertOrUpdateAsync(pathwayResults, bulkConfig => 
             { 
+                bulkConfig.UseTempDB = true;
+                bulkConfig.SetOutputIdentity = false;
+                bulkConfig.PreserveInsertOrder = false;
+                bulkConfig.BatchSize = 5000;
+                bulkConfig.BulkCopyTimeout = 60;
+            });
+        }
+
+        private async Task ProcessSpecialismAssessments(List<TqSpecialismAssessment> specialismAssessments)
+        {
+            if (specialismAssessments == null || !specialismAssessments.Any())
+                return;
+
+            specialismAssessments = SortUpdateAndInsertOrder(specialismAssessments, x => x.Id);
+            await _dbContext.BulkInsertOrUpdateAsync(specialismAssessments, bulkConfig =>
+            {
                 bulkConfig.UseTempDB = true;
                 bulkConfig.SetOutputIdentity = false;
                 bulkConfig.PreserveInsertOrder = false;
