@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Dashboard {
@@ -57,6 +57,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download results data.
+        /// </summary>
+        public static string Card_Heading_Download_Results_Data {
+            get {
+                return ResourceManager.GetString("Card_Heading_Download_Results_Data", resourceCulture);
             }
         }
         
@@ -111,6 +120,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static string List_Download_A_Template_With_Results_Data_Formats_And_Rules_Guidance {
             get {
                 return ResourceManager.GetString("List_Download_A_Template_With_Results_Data_Formats_And_Rules_Guidance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download your data as a CSV file.
+        /// </summary>
+        public static string List_Download_Your_Data_As_Csv {
+            get {
+                return ResourceManager.GetString("List_Download_Your_Data_As_Csv", resourceCulture);
             }
         }
         

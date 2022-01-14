@@ -27,7 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 Specialisms = new List<SpecialismDetails> { new SpecialismDetails { Code = "2345678", Name = "Specialism1" }, new SpecialismDetails { Code = "55567", Name = "Specialism2" } },
                 AcademicYear = 2020,
                 Status = RegistrationPathwayStatus.Active,
-                IsActiveWithOtherAo = false
+                IsActiveWithOtherAo = false,
+                HasActiveAssessmentEntriesForSpecialisms = true
             };
 
             InternalApiClient.GetRegistrationDetailsAsync(AoUkprn, ProfileId).Returns(expectedApiResult);
@@ -52,6 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             ActualResult.AcademicYear.Should().Be(expectedApiResult.AcademicYear);
             ActualResult.Status.Should().Be(expectedApiResult.Status);
             ActualResult.IsActiveWithOtherAo.Should().Be(expectedApiResult.IsActiveWithOtherAo);
+            ActualResult.HasActiveAssessmentEntriesForSpecialisms.Should().Be(expectedApiResult.HasActiveAssessmentEntriesForSpecialisms);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.DashboardViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Result
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 @{
     ViewData["Title"] = @Dashboard.Page_Title;
@@ -49,4 +50,18 @@
             </ul>
         </div>
     </div>
+
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group result-card">
+            <h2 class="govuk-heading-m govuk-!-padding-top-3">
+                <a class="govuk-link" asp-route="@RouteConstants.ResultsGeneratingDownload">
+                    @Dashboard.Card_Heading_Download_Results_Data
+                </a>
+            </h2>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@Dashboard.List_Download_Your_Data_As_Csv</li>
+            </ul>
+        </div>
+    </div>
+
 </div>

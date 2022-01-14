@@ -96,6 +96,7 @@
         public const string SubmitChangeCoreQuestion = "SubmitChangeCoreQuestion";
         public const string ChangeRegistrationConfirmation = "ChangeRegistrationConfirmation";
         public const string ChangeRegistrationCore = "ChangeRegistrationCore";
+        public const string ChangeSpecialismRestriction = "ChangeSpecialismRestriction";        
         public const string ChangeRegistrationSpecialismQuestion = "ChangeRegistrationSpecialismQuestion";
         public const string SubmitChangeRegistrationSpecialismQuestion = "SubmitChangeRegistrationSpecialismQuestion";
         public const string ChangeRegistrationSpecialisms = "ChangeRegistrationSpecialisms";
@@ -173,6 +174,11 @@
         public const string RegistrationsDownloadDataLink = "RegistrationsDownloadDataLink";
         public const string AssessmentsDownloadData = "AssessmentsDownloadData";
         public const string AssessmentsDownloadDataLink = "AssessmentsDownloadDataLink";
+        public const string ResultsGeneratingDownload = "ResultsGeneratingDownload";
+        public const string SubmitResultsGeneratingDownload = "SubmitResultsGeneratingDownload";
+        public const string ResultsDownloadData = "ResultsDownloadData";
+        public const string ResultsDownloadDataLink = "ResultsDownloadDataLink";
+        public const string ResultsNoRecordsFound = "ResultsNoRecordsFound";
 
         // Search Assessment Entries
         public const string SearchAssessments = "SearchAssessments";

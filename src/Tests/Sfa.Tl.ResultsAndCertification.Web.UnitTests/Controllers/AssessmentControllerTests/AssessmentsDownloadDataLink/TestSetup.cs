@@ -22,7 +22,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         protected AssessmentController Controller;
         protected IHttpContextAccessor HttpContextAccessor;
         public IActionResult Result { get; private set; }
-        //protected Guid BlobUniqueReference;
         protected string Id;
         protected ComponentType ComponentType;
 

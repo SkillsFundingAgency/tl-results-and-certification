@@ -42,6 +42,7 @@ jobs:
             -sharedSQLServerName "$(SharedSQLServerName)"
             -sqlDatabaseSkuName "$(SQLDatabaseSkuName)"
             -sqlDatabaseTier "$(SQLDatabaseTier)"
+            -sqlserverlessAutoPauseDelay "$(SQLServerlessAutoPauseDelay)"
             -configurationStorageConnectionString "$(ConfigurationStorageConnectionString)"
             -uiCustomHostName "$(UICustomHostName)"
             -uiCertificateName "$(CertificateName)"

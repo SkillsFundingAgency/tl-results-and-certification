@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                .Build()
                .HttpContext;
 
-            HttpContextAccessor.HttpContext.Returns(httpContext);
+            HttpContextAccessor.HttpContext.Returns(httpContext); 
             CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.AssessmentCacheKey);
         }
 

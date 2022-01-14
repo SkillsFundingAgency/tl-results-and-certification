@@ -31,8 +31,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                        join tqAo in _dbContext.TqAwardingOrganisation on tqProvider.TqAwardingOrganisationId equals tqAo.Id
                                        join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
                                        orderby tqPathway.CreatedOn descending
-                                       let industryPlacements = _dbContext.IndustryPlacement.Where(p => p.TqRegistrationPathwayId == tqPathway.Id)
-                                       let qualificationsAchieved = _dbContext.QualificationAchieved.Where(q => q.TqRegistrationProfileId == tqProfile.Id)
                                        where tqProfile.UniqueLearnerNumber == uln && tlProvider.UkPrn == providerUkprn
                                        select new FindLearnerRecord
                                        {
@@ -43,10 +41,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                            ProviderName = tlProvider.Name + " (" + tlProvider.UkPrn + ")",
                                            PathwayName = tlPathway.Name + " (" + tlPathway.LarId + ")",                                           
                                            IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn,
-                                           IsLearnerRecordAdded = tqProfile.IsEnglishAndMathsAchieved.HasValue && industryPlacements.Any(),
+                                           IsLearnerRecordAdded = tqProfile.IsEnglishAndMathsAchieved.HasValue && tqPathway.IndustryPlacements.Any(),
                                            IsEnglishAndMathsAchieved = tqProfile.IsEnglishAndMathsAchieved ?? false,
                                            IsSendLearner = tqProfile.IsSendLearner,
-                                           HasLrsEnglishAndMaths = tqProfile.IsRcFeed == false && qualificationsAchieved.Any(),
+                                           HasLrsEnglishAndMaths = tqProfile.IsRcFeed == false && tqProfile.QualificationAchieved.Any(),
                                            IsRcFeed = tqProfile.IsRcFeed
                                        })
                                 .FirstOrDefaultAsync();
@@ -62,8 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         join tqAo in _dbContext.TqAwardingOrganisation on tqProvider.TqAwardingOrganisationId equals tqAo.Id
                                         join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
                                         orderby tqPathway.CreatedOn descending
-                                        let qualificationsAchieved = _dbContext.QualificationAchieved.Where(q => q.TqRegistrationProfileId == tqProfile.Id)
-                                        let ipRecord = _dbContext.IndustryPlacement.FirstOrDefault(p => p.TqRegistrationPathwayId == tqPathway.Id)
+                                        let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()
                                         where tqProfile.Id == profileId && tlProvider.UkPrn == providerUkprn
                                         select new LearnerRecordDetails
                                         {
@@ -78,9 +75,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             IsLearnerRecordAdded = tqProfile.IsEnglishAndMathsAchieved.HasValue && ipRecord != null,
                                             IsEnglishAndMathsAchieved = tqProfile.IsEnglishAndMathsAchieved ?? false,
                                             IsSendLearner = tqProfile.IsSendLearner,
-                                            HasLrsEnglishAndMaths = tqProfile.IsRcFeed == false && qualificationsAchieved.Any(),
-                                            IndustryPlacementId = ipRecord.Id,
-                                            IndustryPlacementStatus = ipRecord.Status
+                                            HasLrsEnglishAndMaths = tqProfile.IsRcFeed == false && tqProfile.QualificationAchieved.Any(),
+                                            IndustryPlacementId = ipRecord != null ? ipRecord.Id : 0,
+                                            IndustryPlacementStatus = ipRecord != null ? ipRecord.Status : null
                                         };
 
             var learnerRecordDetails = pathwayId.HasValue ? await learnerRecordQuerable.FirstOrDefaultAsync(p => p.RegistrationPathwayId == pathwayId) : await learnerRecordQuerable.FirstOrDefaultAsync();

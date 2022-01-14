@@ -6,6 +6,7 @@
         public const string EnvironmentNameConfigKey = "EnvironmentName";
         public const string ConfigurationStorageConnectionStringConfigKey = "ConfigurationStorageConnectionString";
         public const string VersionConfigKey = "Version";
+        public const string ServiceVersionConfigKey = "ServiceVersion";
         public const string ServiceNameConfigKey = "ServiceName";
 
         // LearnerRecordService(LRS) Constants
@@ -77,7 +78,7 @@
 
         // Assessment Data Index Constants
         public const int PathwayAssessmentsStartIndex = 100000;
-        public const int SpecialismAssessmentsStartIndex = 100000;
+        public const int SpecialismAssessmentsStartIndex = 300000;
 
         // Results Data Index Constants
         public const int PathwayResultsStartIndex = 100000;

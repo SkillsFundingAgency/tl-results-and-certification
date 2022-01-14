@@ -49,6 +49,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 PathwayName = "Pathway (7654321)",
                 Specialisms = new List<SpecialismDetails> { new SpecialismDetails { Code = "2345678", Name = "Specialism1" }, new SpecialismDetails { Code = "55567", Name = "Specialism2" } },
                 AcademicYear = 2020,
+                IsActiveWithOtherAo = false,
+                HasActiveAssessmentEntriesForSpecialisms = true,
                 Status = RegistrationPathwayStatus.Active
             };
         }
@@ -80,6 +82,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             
             _result.AcademicYear.Should().Be(_mockHttpResult.AcademicYear);
             _result.Status.Should().Be(_mockHttpResult.Status);
+            _result.IsActiveWithOtherAo.Should().Be(_mockHttpResult.IsActiveWithOtherAo);
+            _result.HasActiveAssessmentEntriesForSpecialisms.Should().Be(_mockHttpResult.HasActiveAssessmentEntriesForSpecialisms);
         }
     }
 }

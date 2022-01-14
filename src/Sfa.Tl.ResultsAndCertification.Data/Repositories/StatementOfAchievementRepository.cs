@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
@@ -29,8 +30,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                           join tqAo in _dbContext.TqAwardingOrganisation on tqProvider.TqAwardingOrganisationId equals tqAo.Id
                                           join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
                                           orderby tqPathway.CreatedOn descending
-                                          let industryPlacements = _dbContext.IndustryPlacement.Where(p => p.TqRegistrationPathwayId == tqPathway.Id)
-                                          let pathwayResults = _dbContext.TqPathwayAssessment.Join(_dbContext.TqPathwayResult, pa => pa.Id, pr => pr.TqPathwayAssessmentId, (pa, pr) => new { pa, pr }).Where(x => x.pa.TqRegistrationPathwayId == tqPathway.Id && x.pa.IsOptedin && x.pr.IsOptedin)
                                           where tqProfile.UniqueLearnerNumber == uln && tlProvider.UkPrn == providerUkprn
                                           select new FindSoaLearnerRecord
                                           {
@@ -41,9 +40,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                               ProviderName = tlProvider.Name + " (" + tlProvider.UkPrn + ")",
                                               TlevelTitle = tlPathway.TlevelTitle,
                                               Status = tqPathway.Status,
-                                              IsIndustryPlacementAdded = industryPlacements.Any(),
-                                              IndustryPlacementStatus = industryPlacements.FirstOrDefault().Status,
-                                              HasPathwayResult = pathwayResults.Any()
+                                              IsIndustryPlacementAdded = tqPathway.IndustryPlacements.Any(),
+                                              IndustryPlacementStatus = tqPathway.IndustryPlacements.Any() ? tqPathway.IndustryPlacements.FirstOrDefault().Status : IndustryPlacementStatus.NotSpecified,
+                                              HasPathwayResult = tqPathway.TqPathwayAssessments.Any(pa => pa.IsOptedin && pa.TqPathwayResults.Any(pr => pr.IsOptedin))
                                           })
                                 .FirstOrDefaultAsync();
             return soaLearnerRecord;
@@ -58,9 +57,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                           join tqAo in _dbContext.TqAwardingOrganisation on tqProvider.TqAwardingOrganisationId equals tqAo.Id
                                           join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
                                           orderby tqPathway.CreatedOn descending
-                                          let ipRecord = _dbContext.IndustryPlacement.FirstOrDefault(ip => ip.TqRegistrationPathwayId == tqPathway.Id)
-                                          let pathwayResults = _dbContext.TqPathwayAssessment.Join(_dbContext.TqPathwayResult, pa => pa.Id, pr => pr.TqPathwayAssessmentId, (pa, pr) => new { pa, pr }).Where(x => x.pa.TqRegistrationPathwayId == tqPathway.Id && x.pa.IsOptedin && x.pr.IsOptedin)
-                                          let specialism = _dbContext.TqRegistrationSpecialism.FirstOrDefault(s => s.TqRegistrationPathwayId == tqPathway.Id && s.IsOptedin)
+                                          let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()
+                                          let pathwayResults = tqPathway.TqPathwayAssessments.Where(pa => pa.IsOptedin).SelectMany(pa => pa.TqPathwayResults.Where(pr => pr.IsOptedin))
+                                          let specialism = tqPathway.TqRegistrationSpecialisms.FirstOrDefault(s => s.IsOptedin)
                                           let printRequest = _dbContext.PrintCertificate.OrderByDescending(o => o.CreatedOn).FirstOrDefault(c => c.Uln == tqProfile.UniqueLearnerNumber && c.TqRegistrationPathwayId == tqPathway.Id)
                                           where tqProfile.Id == profileId && tlProvider.UkPrn == providerUkprn
                                           select new SoaLearnerRecordDetails
@@ -77,16 +76,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                               RegistrationPathwayId = tqPathway.Id,
                                               PathwayName = tlPathway.Name,
                                               PathwayCode = tlPathway.LarId,
-                                              PathwayGrade = pathwayResults.OrderByDescending(r => r.pr.CreatedOn).FirstOrDefault().pr.TlLookup.Value,
-                                              SpecialismName = specialism.TlSpecialism.Name,
-                                              SpecialismCode = specialism.TlSpecialism.LarId,
+                                              PathwayGrade = pathwayResults.OrderByDescending(r => r.CreatedOn).FirstOrDefault().TlLookup.Value,
+                                              SpecialismName = specialism != null ? specialism.TlSpecialism.Name : null,
+                                              SpecialismCode = specialism != null ? specialism.TlSpecialism.LarId : null,
 
                                               IsEnglishAndMathsAchieved = tqProfile.IsEnglishAndMathsAchieved ?? false,
                                               IsSendLearner = tqProfile.IsSendLearner,
                                               HasLrsEnglishAndMaths = tqProfile.IsRcFeed == false,
-                                              IndustryPlacementStatus = ipRecord.Status,
+                                              IndustryPlacementStatus = ipRecord != null ? ipRecord.Status : IndustryPlacementStatus.NotSpecified,
 
-                                              ProviderAddress = _dbContext.TlProviderAddress.Where(pa => pa.TlProviderId == tlProvider.Id && pa.IsActive)
+                                              ProviderAddress = tlProvider.TlProviderAddresses.Where(pa => pa.IsActive)
                                                                                             .OrderByDescending(pa => pa.CreatedOn)
                                                                                             .Select(address => new Address
                                                                                             {

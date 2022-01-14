@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Card_Heading_Download_Results_Data" xml:space="preserve">
+    <value>Download results data</value>
+  </data>
   <data name="Card_Heading_Link_Manage_A_Result" xml:space="preserve">
     <value>Manage a result</value>
   </data>
@@ -134,6 +137,9 @@
   </data>
   <data name="List_Download_A_Template_With_Results_Data_Formats_And_Rules_Guidance" xml:space="preserve">
     <value>Download a template with results data formats and rules guidance</value>
+  </data>
+  <data name="List_Download_Your_Data_As_Csv" xml:space="preserve">
+    <value>Download your data as a CSV file</value>
   </data>
   <data name="List_View_A_Learners_Results" xml:space="preserve">
     <value>View a learner's results</value>

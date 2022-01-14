@@ -262,6 +262,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("registration-specialism-change-restriction/{profileId}", Name = RouteConstants.ChangeSpecialismRestriction)]
+        public IActionResult ChangeSpecialismRestriction(int profileId)
+        {
+            var viewModel = new ChangeSpecialismRestrictionViewModel
+            {
+                ProfileId = profileId
+            };
+            return View(viewModel);
+        }
+
+        [HttpGet]
         [Route("change-registration-learner-decided-specialism-question/{profileId}", Name = RouteConstants.ChangeRegistrationSpecialismQuestion)]
         public async Task<IActionResult> ChangeRegistrationSpecialismQuestionAsync(int profileId)
         {
@@ -436,8 +447,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
-                var registrationAssessmentDetails = await _registrationLoader.GetRegistrationAssessmentAsync(User.GetUkPrn(), model.ProfileId, RegistrationPathwayStatus.Active);
-                if (registrationAssessmentDetails == null || registrationAssessmentDetails.HasAnyOutstandingPathwayPrsActivities)
+                var registrationDetails = await _registrationLoader.GetRegistrationAssessmentAsync(User.GetUkPrn(), model.ProfileId, RegistrationPathwayStatus.Active);
+                if (registrationDetails == null || registrationDetails.HasAnyOutstandingPathwayPrsActivities)
                     return RedirectToRoute(RouteConstants.PageNotFound);
 
                 var response = await _registrationLoader.WithdrawRegistrationAsync(User.GetUkPrn(), model);
