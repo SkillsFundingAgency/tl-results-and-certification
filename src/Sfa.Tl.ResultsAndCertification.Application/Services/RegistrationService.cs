@@ -265,7 +265,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 amendedRegistrations.ForEach(amendedRegistration =>
                 {
-                    // Query: rename below to existingProfileInDb.
                     var existingRegistration = existingRegistrationsFromDb.FirstOrDefault(profile => profile.UniqueLearnerNumber == amendedRegistration.UniqueLearnerNumber);
 
                     if (existingRegistration != null)
