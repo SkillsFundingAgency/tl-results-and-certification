@@ -86,6 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var actualRegistrationProfile = _bulkRegistrationTestFixture.DbContext.TqRegistrationProfile.AsNoTracking().Where(x => x.UniqueLearnerNumber == _bulkRegistrationTestFixture.Uln)
                                                                                                                        .Include(x => x.TqRegistrationPathways)
                                                                                                                            .ThenInclude(x => x.TqRegistrationSpecialisms)
+                                                                                                                                .ThenInclude(x => x.TqSpecialismAssessments)
                                                                                                                        .Include(x => x.TqRegistrationPathways)
                                                                                                                             .ThenInclude(x => x.TqPathwayAssessments)
                                                                                                                                 .ThenInclude(x => x.TqPathwayResults)
@@ -135,13 +136,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             AssertPathwayResults(actualTransferredResult, expectedTransferredResult);
 
             // Assert Active SpecialismAssessment
-            var actualActiveSpecialismAssessment = activePathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null).SelectMany(s => s.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.EndDate == null));
-            var expectedActiveSpecialismAssessment = expectedActivePathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null).SelectMany(s => s.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.EndDate == null));
+            var actualActiveSpecialismAssessment = activePathway.TqRegistrationSpecialisms.Where(s => s.EndDate == null).SelectMany(s => s.TqSpecialismAssessments.Where(sa => sa.EndDate == null));
+            var expectedActiveSpecialismAssessment = expectedActivePathway.TqRegistrationSpecialisms.Where(s => s.EndDate == null).SelectMany(s => s.TqSpecialismAssessments.Where(sa => sa.EndDate == null));
             AssertSpecialismAssessments(actualActiveSpecialismAssessment, expectedActiveSpecialismAssessment);
 
             // Assert Transferred SpecialismAssessment
-            var actualTransferredSpecialismAssessment = actualTransferredPathway.TqRegistrationSpecialisms.Where(s => !s.IsOptedin && s.EndDate != null).SelectMany(s => s.TqSpecialismAssessments.Where(sa => !sa.IsOptedin && sa.EndDate != null));
-            var expectedTransferredSpecialismAssessment = expectedTransferredPathway.TqRegistrationSpecialisms.Where(s => !s.IsOptedin && s.EndDate != null).SelectMany(s => s.TqSpecialismAssessments.Where(sa => !sa.IsOptedin && sa.EndDate != null));
+            var actualTransferredSpecialismAssessment = actualTransferredPathway.TqRegistrationSpecialisms.Where(s => s.EndDate != null).SelectMany(s => s.TqSpecialismAssessments.Where(sa => sa.EndDate != null));
+            var expectedTransferredSpecialismAssessment = expectedTransferredPathway.TqRegistrationSpecialisms.Where(s => s.EndDate != null).SelectMany(s => s.TqSpecialismAssessments.Where(sa => sa.EndDate != null));
             AssertSpecialismAssessments(actualTransferredSpecialismAssessment, expectedTransferredSpecialismAssessment);
 
             // Assert IndustryPlacement Data
