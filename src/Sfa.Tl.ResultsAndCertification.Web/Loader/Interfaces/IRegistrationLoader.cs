@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
@@ -39,5 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 
         Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync();
         Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync();
+        Task<IList<DataExportResponse>> GenerateRegistrationsExportAsync(long aoUkprn, string requestedBy);
+        Task<Stream> GetRegistrationsDataFileAsync(long aoUkprn, Guid blobUniqueReference);
     }
 }

@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download registrations data.
+        /// </summary>
+        public static string Card_Heading_Link_Download_Registrations_Data {
+            get {
+                return ResourceManager.GetString("Card_Heading_Link_Download_Registrations_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage existing registrations.
         /// </summary>
         public static string Card_Heading_Link_Manage_Existing_Registration {
@@ -120,6 +129,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string List_Download_A_Template_With_Registrations_Data_Formats_And_Rules_Guidance {
             get {
                 return ResourceManager.GetString("List_Download_A_Template_With_Registrations_Data_Formats_And_Rules_Guidance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download your data as a CSV file.
+        /// </summary>
+        public static string List_Download_Your_Data_As_Csv_File {
+            get {
+                return ResourceManager.GetString("List_Download_Your_Data_As_Csv_File", resourceCulture);
             }
         }
         

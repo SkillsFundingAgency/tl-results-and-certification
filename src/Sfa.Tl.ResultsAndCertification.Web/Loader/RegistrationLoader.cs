@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
@@ -278,6 +279,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync()
         {
             return await _internalApiClient.GetAcademicYearsAsync();
+        }
+
+        public async Task<IList<DataExportResponse>> GenerateRegistrationsExportAsync(long aoUkprn, string requestedBy)
+        {
+            return await _internalApiClient.GenerateDataExportAsync(aoUkprn, DataExportType.Registrations, requestedBy);
+        }
+
+        public async Task<Stream> GetRegistrationsDataFileAsync(long aoUkprn, Guid blobUniqueReference)
+        {
+            var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
+            {
+                ContainerName = DocumentType.DataExports.ToString(),
+                BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
+                SourceFilePath = $"{aoUkprn}/{DataExportType.Registrations}"
+            });
+
+            if (fileStream == null)
+            {
+                var blobReadError = $"No FileStream found to download registrations data. Method: GetRegistrationsDataFileAsync(ContainerName: {DocumentType.Registrations}, BlobFileName = {blobUniqueReference}, SourceFilePath = {aoUkprn}/{DataExportType.Registrations})";
+                _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
+            }
+            return fileStream;
         }
     }
 }

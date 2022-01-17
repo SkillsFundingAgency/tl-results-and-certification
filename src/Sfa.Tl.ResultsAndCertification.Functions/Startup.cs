@@ -38,7 +38,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _configuration = ConfigurationLoader.Load(
                Environment.GetEnvironmentVariable(Constants.EnvironmentNameConfigKey),
                Environment.GetEnvironmentVariable(Constants.ConfigurationStorageConnectionStringConfigKey),
-               Environment.GetEnvironmentVariable(Constants.VersionConfigKey),
+               Environment.GetEnvironmentVariable(Constants.VersionConfigKey)
+               ?? Environment.GetEnvironmentVariable(Constants.ServiceVersionConfigKey), // Need ServiceVersion rather than Version in local with .Net 6
                Environment.GetEnvironmentVariable(Constants.ServiceNameConfigKey));
 
             RegisterDependencies(builder.Services);

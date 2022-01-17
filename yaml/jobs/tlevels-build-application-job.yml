@@ -6,39 +6,16 @@ jobs:
   workspace:
     clean: all
   steps:        
-    # - task: UseDotNet@2
-    #   displayName: 'Use .NET Core SDK 2.x LTS'
-    #   inputs:
-    #     packageType: sdk
-    #     version: 2.x
-    #     installationPath: $(Agent.ToolsDirectory)/dotnet
-
     - task: GitVersion@5
       displayName: GitVersion
       inputs:
         runtime: 'core'
         updateAssemblyInfo: true
     
-    # - task: UseDotNet@2
-    #   displayName: 'Use .NET Core SDK $(dotnetVersion)'
-    #   inputs:
-    #     packageType: sdk
-    #     version: $(dotnetVersion)
-    #     installationPath: $(Agent.ToolsDirectory)/dotnet
-
-    - task: DotNetCoreCLI@2
-      displayName: Restore
-      inputs:
-        command: restore
-        projects: 'src/**/*.csproj' #'src/Sfa.Tl.ResultsAndCertification.sln' 
-        noCache: true
-        # feedsToUse: config
-        # nugetConfigPath: src/NuGet.config
-    
     - task: NodeTool@0
       inputs:
-        versionSpec: '14.x'  
-
+        versionSpec: '14.x' 
+    
     - task: Npm@1
       displayName: 'npm install'
       inputs:
@@ -51,6 +28,19 @@ jobs:
         gulpFile: src/Sfa.Tl.ResultsAndCertification.Web/gulpfile.js
         targets: default
     
+    - task: UseDotNet@2 
+      displayName: "Install .NET 6 SDK"
+      inputs:
+        packageType: 'sdk'
+        version: '6.x'
+
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: restore
+        projects: 'src/Sfa.Tl.ResultsAndCertification.sln' 
+        noCache: true
+
     - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
@@ -63,13 +53,6 @@ jobs:
         command: test
         projects: '**/*.UnitTests.csproj'
         arguments: '--configuration $(buildConfiguration) --no-build'
-    
-    # - task: DotNetCoreCLI@2
-    #   displayName: Integration Tests
-    #   inputs:
-    #     command: test
-    #     projects: '**/*.IntegrationTests.csproj'
-    #     arguments: '--configuration $(buildConfiguration)'
 
     - task: DotNetCoreCLI@2
       displayName: Integration Tests

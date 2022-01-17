@@ -176,6 +176,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IStatementOfAchievementService, StatementOfAchievementService>();
             services.AddTransient<IPostResultsServiceService, PostResultsServiceService>();
             services.AddTransient<ILearnerService, LearnerService>();
+
+            // DataExports 
+            services.AddTransient<IDataExportLoader, DataExportLoader>();
+            services.AddTransient<IDataExportService, DataExportService>();
+            services.AddTransient<IDataExportRepository, DataExportRepository>();
         }
     }
 }

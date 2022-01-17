@@ -386,8 +386,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var assessmentDetails = _mapper.Map<AssessmentDetails>(tqRegistration);
 
-            //var assessmentSeriesOld = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, Constants.CoreAssessmentStartInYears);
-
             var allAssessmentSeries = await GetAllAssessmentSeriesAsync();
             var coreAssessmentSeries = GetValidAssessmentSeries(allAssessmentSeries, tqRegistration, ComponentType.Core);
             assessmentDetails.IsCoreEntryEligible = tqRegistration.Status == RegistrationPathwayStatus.Active && coreAssessmentSeries != null && coreAssessmentSeries.Any();

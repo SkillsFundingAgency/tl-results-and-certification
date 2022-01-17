@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
@@ -642,6 +643,88 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("registrations-generating-download", Name = RouteConstants.RegistrationsGeneratingDownload)]
+        public IActionResult RegistrationsGeneratingDownload()  
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("registrations-generating-download", Name = RouteConstants.SubmitRegistrationsGeneratingDownload)]
+        public async Task<IActionResult> SubmitRegistrationsGeneratingDownloadAsync()
+        {
+            var response = await _registrationLoader.GenerateRegistrationsExportAsync(User.GetUkPrn(), User.GetUserEmail());
+            if (response == null || response.Count != 1)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            if (!response.Any(x => x.IsDataFound))
+            {
+                _logger.LogWarning(LogEvent.NoDataFound,
+                    $"There are no registrations found for the Data export. Method: GenerateRegistrationsExportAsync({User.GetUkPrn()}, {User.GetUserEmail()})");
+
+                return RedirectToRoute(RouteConstants.RegistrationsNoRecordsFound);
+            }
+
+            var regExportResponse = response.FirstOrDefault();
+            var registrationsDownloadViewModel = new RegistrationsDownloadViewModel
+            {
+                BlobUniqueReference = regExportResponse.BlobUniqueReference,
+                FileSize = regExportResponse.FileSize,
+                FileType = FileType.Csv.ToString().ToUpperInvariant()
+            };
+
+            await _cacheService.SetAsync(CacheKey, registrationsDownloadViewModel, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.RegistrationsDownloadData);
+        }
+
+        [HttpGet]
+        [Route("registrations-no-records-found", Name = RouteConstants.RegistrationsNoRecordsFound)]
+        public IActionResult RegistrationsNoRecordsFound()
+        {
+            return View(new RegistrationsNoRecordsFoundViewModel());
+        }
+
+        [HttpGet]
+        [Route("registrations-download-data", Name = RouteConstants.RegistrationsDownloadData)]
+        public async Task<IActionResult> RegistrationsDownloadDataAsync()
+        {
+            var cacheModel = await _cacheService.GetAndRemoveAsync<RegistrationsDownloadViewModel>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read DataExportResponse from redis cache in registrations download page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(cacheModel);
+        }
+
+        [HttpGet]
+        [Route("download-registrations-data/{id}", Name = RouteConstants.RegistrationsDownloadDataLink)]
+        public async Task<IActionResult> RegistrationsDownloadDataLinkAsync(string id)
+        {
+            if (id.IsGuid())
+            {
+                var fileStream = await _registrationLoader.GetRegistrationsDataFileAsync(User.GetUkPrn(), id.ToGuid());
+                if (fileStream == null)
+                {
+                    _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download registration data. Method: RegistrationsDownloadDataLinkAsync(AoUkprn: {User.GetUkPrn()}, BlobUniqueReference = {id})");
+                    return RedirectToRoute(RouteConstants.PageNotFound);
+                }
+
+                fileStream.Position = 0;
+                return new FileStreamResult(fileStream, "text/csv")
+                {
+                    FileDownloadName = RegistrationContent.RegistrationsDownloadData.Registrations_Data_Report_File_Name_Text
+                };
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.DocumentDownloadFailed, $"Not a valid guid to read file.Method: RegistrationsDownloadDataLinkAsync(Id = { id}), Ukprn: { User.GetUkPrn()}, User: { User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()

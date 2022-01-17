@@ -11,6 +11,8 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
+using System.Linq;
 using System.Threading.Tasks;
 using AssessmentContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment;
 
@@ -403,6 +405,104 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
             return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("assessments-generating-download", Name = RouteConstants.AssessmentsGeneratingDownload)]
+        public IActionResult AssessmentsGeneratingDownload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("assessments-generating-download", Name = RouteConstants.SubmitAssessmentsGeneratingDownload)]
+        public async Task<IActionResult> SubmitAssessmentsGeneratingDownloadAsync()
+        {
+            var exportResponse = await _assessmentLoader.GenerateAssessmentsExportAsync(User.GetUkPrn(), User.GetUserEmail());
+            if (exportResponse == null || exportResponse.Any(r => r.ComponentType == ComponentType.NotSpecified))
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            if (exportResponse.All(x => !x.IsDataFound))
+            {
+                _logger.LogWarning(LogEvent.NoDataFound,
+                    $"There are no assessment entries found for the Data export. Method: GenerateAssessmentsExportAsync({User.GetUkPrn()}, {User.GetUserEmail()})");
+
+                return RedirectToRoute(RouteConstants.AssessmentsNoRecordsFound);
+            }
+
+            var assessmentsDownloadViewModel = new AssessmentsDownloadViewModel();
+
+            foreach (var response in exportResponse.Where(r => r.IsDataFound))
+            {
+                var downloadViewModel = new DownloadLinkViewModel
+                {
+                    BlobUniqueReference = response.BlobUniqueReference,
+                    FileSize = response.FileSize,
+                    FileType = FileType.Csv.ToString().ToUpperInvariant()
+                };
+
+                switch (response.ComponentType)
+                {
+                    case ComponentType.Core:
+                        assessmentsDownloadViewModel.CoreAssesmentsDownloadLinkViewModel = downloadViewModel;
+                        break;
+                    case ComponentType.Specialism:
+                        assessmentsDownloadViewModel.SpecialismAsssmentsDownloadLinkViewModel = downloadViewModel;
+                        break;
+                }
+            }
+
+            await _cacheService.SetAsync(CacheKey, assessmentsDownloadViewModel, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.AssessmentsDownloadData);
+        }
+
+        [HttpGet]
+        [Route("assessments-no-records-found", Name = RouteConstants.AssessmentsNoRecordsFound)]
+        public IActionResult AssessmentsNoRecordsFound()
+        {
+            return View(new AssessmentsNoRecordsFoundViewModel());
+        }
+
+        [HttpGet]
+        [Route("assessments-download-data", Name = RouteConstants.AssessmentsDownloadData)]
+        public async Task<IActionResult> AssessmentsDownloadDataAsync()
+        {
+            var cacheModel = await _cacheService.GetAndRemoveAsync<AssessmentsDownloadViewModel>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read DataExportResponse from redis cache in assessments download page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(cacheModel);
+        }
+
+        [HttpGet]
+        [Route("download-assessments-data/{id}/{componentType}", Name = RouteConstants.AssessmentsDownloadDataLink)]
+        public async Task<IActionResult> AssessmentsDownloadDataLinkAsync(string id, ComponentType componentType)
+        {
+            if (id.IsGuid())
+            {
+                var fileStream = await _assessmentLoader.GetAssessmentsDataFileAsync(User.GetUkPrn(), id.ToGuid(), componentType);
+                if (fileStream == null)
+                {
+                    _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download registration data. Method: AssessmentsDownloadDataLinkAsync(AoUkprn: {User.GetUkPrn()}, BlobUniqueReference = {id})");
+                    return RedirectToRoute(RouteConstants.PageNotFound);
+                }
+
+                fileStream.Position = 0;
+                return new FileStreamResult(fileStream, "text/csv")
+                {
+                    FileDownloadName = componentType == ComponentType.Core
+                                       ? AssessmentContent.AssessmentsDownloadData.Core_Assessments_Download_FileName
+                                       : AssessmentContent.AssessmentsDownloadData.Specialism_Assessments_Download_FileName
+                };
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.DocumentDownloadFailed, $"Not a valid guid to read file.Method: AssessmentsDownloadDataLinkAsync(Id = { id}), Ukprn: { User.GetUkPrn()}, User: { User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
         }
     }
 }

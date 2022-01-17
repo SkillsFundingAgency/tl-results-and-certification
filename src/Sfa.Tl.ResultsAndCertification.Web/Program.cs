@@ -1,27 +1,18 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Web;
 
-namespace Sfa.Tl.ResultsAndCertification.Web
-{
-    public class Program
+Host.CreateDefaultBuilder(args)
+    .ConfigureLogging(logging =>
     {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-            .ConfigureLogging(logging =>
-            {
-                logging.ClearProviders();
-                logging.AddConsole();
-                logging.AddDebug();
-            })
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            });
-    }
-}
+        logging.ClearProviders();
+        logging.AddConsole();
+        logging.AddDebug();
+    })
+    .ConfigureWebHostDefaults(webBuilder =>
+    {
+        webBuilder.UseStartup<Startup>();
+    })
+    .Build()
+    .Run();

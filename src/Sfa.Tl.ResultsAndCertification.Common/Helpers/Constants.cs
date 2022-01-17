@@ -6,6 +6,7 @@
         public const string EnvironmentNameConfigKey = "EnvironmentName";
         public const string ConfigurationStorageConnectionStringConfigKey = "ConfigurationStorageConnectionString";
         public const string VersionConfigKey = "Version";
+        public const string ServiceVersionConfigKey = "ServiceVersion";
         public const string ServiceNameConfigKey = "ServiceName";
 
         // LearnerRecordService(LRS) Constants
@@ -19,6 +20,8 @@
         public const string LrsProfileId = "profileId";
         public const string LrsResponseCode = "responseCode";
         public const string FunctionPerformedBy = "System";
+        public const string DefaultPerformedBy = "System";
+        public const string CreatedBy = "createdBy";
 
         // Controller Names
         public const string HomeController = "Home";
@@ -75,7 +78,7 @@
 
         // Assessment Data Index Constants
         public const int PathwayAssessmentsStartIndex = 100000;
-        public const int SpecialismAssessmentsStartIndex = 100000;
+        public const int SpecialismAssessmentsStartIndex = 300000;
 
         // Results Data Index Constants
         public const int PathwayResultsStartIndex = 100000;
@@ -126,6 +129,7 @@
         public const string UlnValidationRegex = @"^\d{10}$";
         public const string PipeSeperator = "|";
         public const string AndSeperator = " and ";
+        public const string CommaSeperator = ",";
 
 
         // Function Name Constants

@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             ucasDataRecords.AddRange(ucasData.UcasDataRecords);
             ucasDataRecords.Add(ucasData.Trailer);
             
-            var byteData = await CsvExtensions.WriteFileAsync(ucasDataRecords, typeof(CsvMapper));
+            var byteData = await CsvExtensions.WriteFileAsync(ucasDataRecords, delimeter: Constants.PipeSeperator, writeHeader: false, typeof(CsvMapper));
             
             if (byteData.Length <= 0)
             {

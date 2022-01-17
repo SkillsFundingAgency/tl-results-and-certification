@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.DashboardViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Assessment
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 @{
     ViewData["Title"] = @Dashboard.Page_Title;
@@ -24,21 +25,21 @@
     <div class="govuk-grid-column-one-half">
         <div class="govuk-form-group assessment-card">
             <h2 class="govuk-heading-m govuk-!-padding-top-3">
-                <a class="govuk-link" asp-route="UploadAssessmentsFile">
+                <a class="govuk-link" asp-route="@RouteConstants.UploadAssessmentsFile">
                     @Dashboard.Card_Heading_Link_Upload_Multiple_Assessments
                 </a>
             </h2>
             <ul class="govuk-list govuk-list--bullet">
                 <li>@Dashboard.List_Add_Or_Change_Assessment_Periods</li>
                 <li>@Dashboard.List_Download_A_Template_With_Assessments_Data_Formats_And_Rules_Guidance</li>
-            </ul>            
+            </ul>
         </div>
     </div>
 
     <div class="govuk-grid-column-one-half">
         <div class="govuk-form-group assessment-card">
             <h2 class="govuk-heading-m govuk-!-padding-top-3">
-                <a class="govuk-link" asp-route="SearchAssessments">
+                <a class="govuk-link" asp-route="@RouteConstants.SearchAssessments">
                     @Dashboard.Card_Heading_Link_Manage_An_Assessment
                 </a>
             </h2>
@@ -46,7 +47,20 @@
                 <li>@Dashboard.List_View_A_Learners_AssessmentPeriod</li>
                 <li>@Dashboard.List_Add_An_Assessment_Period_For_One_Learner</li>
                 <li>@Dashboard.List_Change_An_Assessment_Period_For_One_Learner</li>
-            </ul>            
+            </ul>
         </div>
-    </div>    
+    </div>
+
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group assessment-card">
+            <h2 class="govuk-heading-m govuk-!-padding-top-3">
+                <a class="govuk-link" asp-route="@RouteConstants.AssessmentsGeneratingDownload">
+                    @Dashboard.Card_Heading_Link_Download_Assessments_Data
+                </a>
+            </h2>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@Dashboard.List_Download_Your_Data_As_Csv_File</li>
+            </ul>
+        </div>
+    </div>
 </div>

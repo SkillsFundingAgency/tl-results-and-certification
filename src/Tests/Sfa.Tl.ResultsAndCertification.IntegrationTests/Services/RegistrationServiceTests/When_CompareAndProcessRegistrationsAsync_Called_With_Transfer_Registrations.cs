@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -28,18 +29,38 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             _bulkRegistrationTestFixture.TqRegistrationProfileBeforeSeed = _bulkRegistrationTestFixture.SeedRegistrationData(_bulkRegistrationTestFixture.Uln, barnsleyCollegeTqProvider, seedIndustryPlacement: true);
 
-            // Assessments seed
+            // PathwayAssessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
             var seededRegistrationPathways = _bulkRegistrationTestFixture.TqRegistrationProfileBeforeSeed.TqRegistrationPathways.ToList();
             tqPathwayAssessmentsSeedData.AddRange(_bulkRegistrationTestFixture.GetPathwayAssessmentsDataToProcess(seededRegistrationPathways));
             var _pathwayAssessments = _bulkRegistrationTestFixture.SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData);
 
-            // Results seed
+            // PathwayResults seed
             var results = _bulkRegistrationTestFixture.GetPathwayResultsDataToProcess(_pathwayAssessments);
             var _pathwayResults = _bulkRegistrationTestFixture.SeedPathwayResultsData(results);
 
+            // SpecialismAssessments seed
+            var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
+            var seededRegistrationSpecialisms = _bulkRegistrationTestFixture.TqRegistrationProfileBeforeSeed.TqRegistrationPathways.SelectMany(x => x.TqRegistrationSpecialisms);
+            tqSpecialismAssessmentsSeedData.AddRange(_bulkRegistrationTestFixture.GetSpecialismAssessmentsDataToProcess(seededRegistrationSpecialisms));
+            _bulkRegistrationTestFixture.SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData);
+
             // Input param
             var registrationDataToProcess = _bulkRegistrationTestFixture.GetRegistrationsDataToProcess(_bulkRegistrationTestFixture.Uln, walsallCollegeTqProvider);
+            registrationDataToProcess.Id = 0 - Constants.RegistrationProfileStartIndex;
+
+            var pathwayIndex = 0;
+            foreach (var pathway in registrationDataToProcess.TqRegistrationPathways)
+            {
+                pathway.Id = pathwayIndex - Constants.RegistrationPathwayStartIndex;
+            }
+
+            var specialismIndex = 0;
+            foreach (var sp in registrationDataToProcess.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms))
+            {
+                sp.Id = specialismIndex - Constants.RegistrationSpecialismsStartIndex;
+                specialismIndex++;
+            }
             _bulkRegistrationTestFixture.TqRegistrationProfilesData = new List<TqRegistrationProfile> { registrationDataToProcess };
         }
 
@@ -65,6 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var actualRegistrationProfile = _bulkRegistrationTestFixture.DbContext.TqRegistrationProfile.AsNoTracking().Where(x => x.UniqueLearnerNumber == _bulkRegistrationTestFixture.Uln)
                                                                                                                        .Include(x => x.TqRegistrationPathways)
                                                                                                                            .ThenInclude(x => x.TqRegistrationSpecialisms)
+                                                                                                                                .ThenInclude(x => x.TqSpecialismAssessments)
                                                                                                                        .Include(x => x.TqRegistrationPathways)
                                                                                                                             .ThenInclude(x => x.TqPathwayAssessments)
                                                                                                                                 .ThenInclude(x => x.TqPathwayResults)
@@ -112,6 +134,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var actualTransferredResult = actualTransferredAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate != null);
             var expectedTransferredResult = expectedTransferredAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate != null);
             AssertPathwayResults(actualTransferredResult, expectedTransferredResult);
+
+            // Assert Active SpecialismAssessment
+            var actualActiveSpecialismAssessment = activePathway.TqRegistrationSpecialisms.Where(s => s.EndDate == null).SelectMany(s => s.TqSpecialismAssessments.Where(sa => sa.EndDate == null));
+            var expectedActiveSpecialismAssessment = expectedActivePathway.TqRegistrationSpecialisms.Where(s => s.EndDate == null).SelectMany(s => s.TqSpecialismAssessments.Where(sa => sa.EndDate == null));
+            AssertSpecialismAssessments(actualActiveSpecialismAssessment, expectedActiveSpecialismAssessment);
+
+            // Assert Transferred SpecialismAssessment
+            var actualTransferredSpecialismAssessment = actualTransferredPathway.TqRegistrationSpecialisms.Where(s => s.EndDate != null).SelectMany(s => s.TqSpecialismAssessments.Where(sa => sa.EndDate != null));
+            var expectedTransferredSpecialismAssessment = expectedTransferredPathway.TqRegistrationSpecialisms.Where(s => s.EndDate != null).SelectMany(s => s.TqSpecialismAssessments.Where(sa => sa.EndDate != null));
+            AssertSpecialismAssessments(actualTransferredSpecialismAssessment, expectedTransferredSpecialismAssessment);
 
             // Assert IndustryPlacement Data
             var actualActiveIndustryPlacement = activePathway.IndustryPlacements.FirstOrDefault();
@@ -168,6 +200,28 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 actualResult.EndDate.Should().BeNull();
             else
                 actualResult.EndDate.Should().NotBeNull();
+        }
+
+        private void AssertSpecialismAssessments(IEnumerable<TqSpecialismAssessment> actualAssessments, IEnumerable<TqSpecialismAssessment> expectedAssessments)
+        {
+            actualAssessments.Should().NotBeEmpty();
+            actualAssessments.Should().HaveSameCount(expectedAssessments);
+            
+            foreach (var expectedAssessment in expectedAssessments)
+            {
+                var actualAssessment = actualAssessments.FirstOrDefault(x => x.TqRegistrationSpecialismId == expectedAssessment.TqRegistrationSpecialismId);
+                actualAssessment.Should().NotBeNull(); 
+                actualAssessment.TqRegistrationSpecialismId.Should().Be(expectedAssessment.TqRegistrationSpecialismId);
+                actualAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.AssessmentSeriesId);
+                actualAssessment.IsOptedin.Should().BeTrue();
+                actualAssessment.IsBulkUpload.Should().BeTrue();
+
+                if (actualAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == Common.Enum.RegistrationPathwayStatus.Active)
+                    actualAssessment.EndDate.Should().BeNull();
+                else
+                    actualAssessment.EndDate.Should().NotBeNull();
+
+            }
         }
     }
 }

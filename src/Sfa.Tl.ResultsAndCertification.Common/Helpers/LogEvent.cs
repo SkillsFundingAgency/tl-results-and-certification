@@ -11,6 +11,7 @@
         public const int RecordExists = 1006;
         public const int StateChanged = 1007;
         public const int NotValidData = 1008;
+        public const int DocumentDownloadFailed = 1009;
 
         public const int ConfirmationPageFailed = 1020;
         public const int UploadSuccessfulPageFailed = 1021;
@@ -57,5 +58,6 @@
 
         // Provider Address events
         public const int AddAddressFailed = 9001;
+
     }
 }

@@ -18,13 +18,13 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
             PrepareUcasFileRecords(ucasData);
 
             ExpectedByteData = ReadAllBytesFromFile(fileName);
-            ActualByteData = CsvExtensions.WriteFileAsync(UcasDataRecords, typeof(CsvMapper)).GetAwaiter().GetResult();
+            ActualByteData = CsvExtensions.WriteFileAsync(UcasDataRecords, "|", false, typeof(CsvMapper)).GetAwaiter().GetResult();
         }
 
         [Fact]
         public void Then_Expected_File_Data_Is_Created()
         {
-            ActualByteData.Length.Should().Equals(ExpectedByteData.Length);
+            ActualByteData.Length.Should().Be(ExpectedByteData.Length);
             ActualByteData.SequenceEqual(ExpectedByteData).Should().BeTrue();
         }
     }

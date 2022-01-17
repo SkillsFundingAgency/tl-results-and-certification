@@ -8,8 +8,10 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
+using System.Linq;
 using System.Threading.Tasks;
 using ResultContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result;
 
@@ -66,7 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 var successfulViewModel = new UploadSuccessfulViewModel { Stats = response.Stats };
                 await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ResultsUploadSuccessfulViewModel), successfulViewModel, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.ResultsUploadSuccessful);
-            }            
+            }
 
             if (response.ShowProblemWithServicePage)
                 return RedirectToRoute(RouteConstants.ProblemWithResultsUpload);
@@ -252,12 +254,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AddCoreResultAsync(int profileId, int assessmentId)
         {
             var viewModel = await _resultLoader.GetManageCoreResultAsync(User.GetUkPrn(), profileId, assessmentId, isChangeMode: false);
-            
+
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No details found. Method: GetAddCoreResultViewModelAsync({User.GetUkPrn()}, {profileId}, {assessmentId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
-            }            
+            }
 
             return View(viewModel);
         }
@@ -341,6 +343,105 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("results-generating-download", Name = RouteConstants.ResultsGeneratingDownload)]
+        public IActionResult ResultsGeneratingDownload()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [Route("results-generating-download", Name = RouteConstants.SubmitResultsGeneratingDownload)]
+        public async Task<IActionResult> SubmitResultsGeneratingDownloadAsync()
+        {
+            var exportResponse = await _resultLoader.GenerateResultsExportAsync(User.GetUkPrn(), User.GetUserEmail());
+            if (exportResponse == null || exportResponse.Any(r => r.ComponentType == ComponentType.NotSpecified))
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            if (exportResponse.All(x => !x.IsDataFound))
+            {
+                _logger.LogWarning(LogEvent.NoDataFound,
+                    $"There are no results entries found for the Data export. Method: GenerateResultsExportAsync({User.GetUkPrn()}, {User.GetUserEmail()})");
+
+                return RedirectToRoute(RouteConstants.ResultsNoRecordsFound);
+            }
+
+            var resultsDownloadViewModel = new ResultsDownloadViewModel();
+
+            foreach (var response in exportResponse.Where(r => r.IsDataFound))
+            {
+                var downloadViewModel = new DownloadLinkViewModel
+                {
+                    BlobUniqueReference = response.BlobUniqueReference,
+                    FileSize = response.FileSize,
+                    FileType = FileType.Csv.ToString().ToUpperInvariant()
+                };
+
+                switch (response.ComponentType)
+                {
+                    case ComponentType.Core:
+                        resultsDownloadViewModel.CoreResultsDownloadLinkViewModel = downloadViewModel;
+                        break;
+                    case ComponentType.Specialism:
+                        resultsDownloadViewModel.SpecialismResultsDownloadLinkViewModel = downloadViewModel;
+                        break;
+                }
+            }
+
+            await _cacheService.SetAsync(CacheKey, resultsDownloadViewModel, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.ResultsDownloadData);
+        }
+
+        [HttpGet]
+        [Route("results-download-data", Name = RouteConstants.ResultsDownloadData)]
+        public async Task<IActionResult> ResultsDownloadDataAsync()
+        {
+            var cacheModel = await _cacheService.GetAndRemoveAsync<ResultsDownloadViewModel>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read DataExportResponse from redis cache in results download page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(cacheModel);
+        }
+
+        [HttpGet]
+        [Route("download-results-data/{id}/{componentType}", Name = RouteConstants.ResultsDownloadDataLink)]
+        public async Task<IActionResult> ResultsDownloadDataLinkAsync(string id, ComponentType componentType)
+        {
+            if (id.IsGuid())
+            {
+                var fileStream = await _resultLoader.GetResultsDataFileAsync(User.GetUkPrn(), id.ToGuid(), componentType);
+                if (fileStream == null)
+                {
+                    _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download result data. Method: GetResultsDataFileAsync(AoUkprn: {User.GetUkPrn()}, BlobUniqueReference = {id}, componentType = {componentType})");
+                    return RedirectToRoute(RouteConstants.PageNotFound);
+                }
+
+                fileStream.Position = 0;
+                return new FileStreamResult(fileStream, "text/csv")
+                {
+                    FileDownloadName = componentType == ComponentType.Core
+                                       ? ResultContent.ResultsDownloadData.Core_Results_Download_FileName
+                                       : ResultContent.ResultsDownloadData.Specialism_Results_Download_FileName
+                };
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.DocumentDownloadFailed, $"Not a valid guid to read file.Method: ResultsDownloadDataLinkAsync(Id = { id}), Ukprn: { User.GetUkPrn()}, User: { User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
+        }
+
+        [HttpGet]
+        [Route("results-no-records-found", Name = RouteConstants.ResultsNoRecordsFound)]
+        public IActionResult ResultsNoRecordsFound()
+        {
+            return View(new ResultsNoRecordsFoundViewModel());
         }
     }
 }

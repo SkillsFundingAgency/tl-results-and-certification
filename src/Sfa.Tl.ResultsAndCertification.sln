@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29215.179
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Sfa.Tl.ResultsAndCertification.Database", "Sfa.Tl.ResultsAndCertification.Database\Sfa.Tl.ResultsAndCertification.Database.sqlproj", "{2714B171-03E8-4D0E-8C57-F240DB3D49BE}"
 EndProject

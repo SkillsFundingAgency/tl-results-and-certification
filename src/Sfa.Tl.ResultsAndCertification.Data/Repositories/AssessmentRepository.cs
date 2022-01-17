@@ -100,7 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     {
                         try
                         {
-                            var bulkConfig = new BulkConfig() { UseTempDB = true, BatchSize = 5000, BulkCopyTimeout = 60 };
+                            var bulkConfig = new BulkConfig() { UseTempDB = true, SetOutputIdentity = false, PreserveInsertOrder = false, BatchSize = 5000, BulkCopyTimeout = 60 };
 
                             await ProcessPathwayAssessments(bulkConfig, pathwayAssessments);
 

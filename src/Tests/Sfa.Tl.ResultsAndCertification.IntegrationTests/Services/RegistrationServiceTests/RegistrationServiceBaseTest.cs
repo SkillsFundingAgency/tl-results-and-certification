@@ -21,7 +21,7 @@ using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
 {
-    public abstract class RegistrationServiceBaseTest : BaseTest<TqProvider>
+    public abstract class RegistrationServiceBaseTest : BaseTest<TqRegistrationPathway>
     {
         protected RegistrationService RegistrationService;
         protected TlRoute Route;
@@ -300,11 +300,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             return qualifications;
         }
 
-        public static void AssertRegistrationPathway(TqRegistrationPathway actualPathway, TqRegistrationPathway expectedPathway, bool assertStatus = true)
+        public static void AssertRegistrationPathway(TqRegistrationPathway actualPathway, TqRegistrationPathway expectedPathway, bool assertStatus = true, bool isTransferred = false)
         {
             actualPathway.Should().NotBeNull();
-            actualPathway.TqProviderId.Should().Be(expectedPathway.TqProviderId);
+
+            if(!isTransferred)
+                actualPathway.TqProviderId.Should().Be(expectedPathway.TqProviderId);
+
             actualPathway.AcademicYear.Should().Be(expectedPathway.AcademicYear);
+
             if (assertStatus)
                 actualPathway.Status.Should().Be(expectedPathway.Status);
 
@@ -324,13 +328,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             }
         }
 
-        public static void AssertPathwayAssessment(TqPathwayAssessment actualAssessment, TqPathwayAssessment expectedAssessment, bool isRejoin = false)
+        public static void AssertPathwayAssessment(TqPathwayAssessment actualAssessment, TqPathwayAssessment expectedAssessment, bool isRejoin = false, bool isTransferred = false)
         {
             actualAssessment.Should().NotBeNull();
-            if (!isRejoin)
+            if (!isRejoin && !isTransferred)
                 actualAssessment.TqRegistrationPathwayId.Should().Be(expectedAssessment.TqRegistrationPathwayId);
 
-            actualAssessment.TqRegistrationPathway.TqProviderId.Should().Be(expectedAssessment.TqRegistrationPathway.TqProviderId);
+            if(!isTransferred)
+                actualAssessment.TqRegistrationPathway.TqProviderId.Should().Be(expectedAssessment.TqRegistrationPathway.TqProviderId);
+
             actualAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.AssessmentSeriesId);
             actualAssessment.IsOptedin.Should().BeTrue();
             actualAssessment.IsBulkUpload.Should().BeFalse();
@@ -355,6 +361,45 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 actualResult.EndDate.Should().BeNull();
             else
                 actualResult.EndDate.Should().NotBeNull();
+        }
+
+        public void AssertSpecialismAssessment(IEnumerable<TqSpecialismAssessment> actualSpecialismAssessment, IEnumerable<TqSpecialismAssessment> expectedSpecialismAssessment)
+        {
+            actualSpecialismAssessment.Should().NotBeEmpty();
+            actualSpecialismAssessment.Should().HaveSameCount(expectedSpecialismAssessment);
+
+            actualSpecialismAssessment.ToList().ForEach(actualAssessment =>
+            {
+                var expectedAssessment = expectedSpecialismAssessment.FirstOrDefault(x => x.Id == actualAssessment.Id);
+                expectedAssessment.Should().NotBeNull();
+
+                actualAssessment.TqRegistrationSpecialismId.Should().Be(expectedAssessment.TqRegistrationSpecialismId);
+                actualAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.AssessmentSeriesId);
+                actualAssessment.IsOptedin.Should().Be(expectedAssessment.IsOptedin);
+                actualAssessment.IsBulkUpload.Should().Be(expectedAssessment.IsBulkUpload);
+                actualAssessment.StartDate.Should().Be(expectedAssessment.StartDate);
+                actualAssessment.CreatedBy.Should().Be(expectedAssessment.CreatedBy);
+                if (expectedAssessment.EndDate != null)
+                    actualAssessment.EndDate.Value.ToShortDateString().Should().Be(expectedAssessment.EndDate.Value.ToShortDateString());
+                else
+                    actualAssessment.EndDate.Should().BeNull();
+            });
+        }
+
+        public static void AssertSpecialismAssessment(TqSpecialismAssessment actualAssessment, TqSpecialismAssessment expectedAssessment, bool isRejoin = false, bool isTransferred = false)
+        {
+            actualAssessment.Should().NotBeNull();
+            if (!isRejoin && !isTransferred)
+                actualAssessment.TqRegistrationSpecialismId.Should().Be(expectedAssessment.TqRegistrationSpecialismId);
+
+            actualAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.AssessmentSeriesId);
+            actualAssessment.IsOptedin.Should().BeTrue();
+            actualAssessment.IsBulkUpload.Should().BeFalse();
+
+            if (actualAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active)
+                actualAssessment.EndDate.Should().BeNull();
+            else
+                actualAssessment.EndDate.Should().NotBeNull();
         }
     }
 }

@@ -96,6 +96,7 @@
         public const string SubmitChangeCoreQuestion = "SubmitChangeCoreQuestion";
         public const string ChangeRegistrationConfirmation = "ChangeRegistrationConfirmation";
         public const string ChangeRegistrationCore = "ChangeRegistrationCore";
+        public const string ChangeSpecialismRestriction = "ChangeSpecialismRestriction";        
         public const string ChangeRegistrationSpecialismQuestion = "ChangeRegistrationSpecialismQuestion";
         public const string SubmitChangeRegistrationSpecialismQuestion = "SubmitChangeRegistrationSpecialismQuestion";
         public const string ChangeRegistrationSpecialisms = "ChangeRegistrationSpecialisms";
@@ -143,6 +144,9 @@
         public const string RegistrationCannotBeDeleted = "RegistrationCannotBeDeleted";
         public const string RegistrationCannotBeWithdrawn = "RegistrationCannotBeWithdrawn";
 
+        // Data Export
+        public const string RegistrationsNoRecordsFound = "RegistrationsNoRecordsFound";
+
         // Assessment Entries
         public const string AssessmentDashboard = "AssessmentDashboard";
         public const string UploadAssessmentsFile = "UploadAssessmentsFile";
@@ -159,6 +163,22 @@
         public const string SubmitAddSpecialismAssessmentEntry = "SubmitAddSpecialismAssessmentEntry";
         public const string RemoveSpecialismAssessmentEntries = "RemoveSpecialismAssessmentEntries";
         public const string SubmitRemoveSpecialismAssessmentEntries = "SubmitRemoveSpecialismAssessmentEntries";
+
+        // Data Export
+        public const string RegistrationsGeneratingDownload = "RegistrationsGeneratingDownload";
+        public const string SubmitRegistrationsGeneratingDownload = "SubmitRegistrationsGeneratingDownload ";
+        public const string AssessmentsGeneratingDownload = "AssessmentsGeneratingDownload";
+        public const string SubmitAssessmentsGeneratingDownload = "SubmitAssessmentsGeneratingDownload";
+        public const string AssessmentsNoRecordsFound = "AssessmentsNoRecordsFound";
+        public const string RegistrationsDownloadData = "RegistrationsDownloadData";
+        public const string RegistrationsDownloadDataLink = "RegistrationsDownloadDataLink";
+        public const string AssessmentsDownloadData = "AssessmentsDownloadData";
+        public const string AssessmentsDownloadDataLink = "AssessmentsDownloadDataLink";
+        public const string ResultsGeneratingDownload = "ResultsGeneratingDownload";
+        public const string SubmitResultsGeneratingDownload = "SubmitResultsGeneratingDownload";
+        public const string ResultsDownloadData = "ResultsDownloadData";
+        public const string ResultsDownloadDataLink = "ResultsDownloadDataLink";
+        public const string ResultsNoRecordsFound = "ResultsNoRecordsFound";
 
         // Search Assessment Entries
         public const string SearchAssessments = "SearchAssessments";

@@ -1,0 +1,34 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual.ResultsNoRecordsFoundViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Result
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper
+@inject IWebConfigurationService ConfigurationService
+
+@{
+    ViewData["Title"] = ResultsNoRecordsFound.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">
+            @ResultsNoRecordsFound.Page_Heading
+        </h1>
+
+        <p class="govuk-body">@ResultsNoRecordsFound.No_Records_Found_Message</p>
+
+        <div class="govuk-button-group govuk-!-margin-bottom-6">
+            <a id="backToHomeButton" class="govuk-button" role="button" asp-route="@RouteConstants.Home">@ResultsNoRecordsFound.Button_Back_To_Home</a>
+            <a id="backToAddResults" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.ResultsDashboard">@ResultsNoRecordsFound.Button_Add_Results</a>
+        </div>
+
+        <h2 class="govuk-heading-m">@ResultsNoRecordsFound.Get_Help_With_Mangage_TLevel_Results_Service</h2>
+
+        <p class="govuk-body">
+            @ResultsNoRecordsFound.If_You_Need_Help <a class="govuk-link" href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()?subject=@ResultsNoRecordsFound.Email_Subject">@ResultsNoRecordsFound.Contact_Us</a>. @ResultsNoRecordsFound.We_Aim_To_Respond_Within_3_Working_Days
+        </p>
+    </div>
+</div>

@@ -4,7 +4,9 @@ using Azure.Storage.Blobs.Specialized;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -28,8 +30,14 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service
         public async Task UploadFromByteArrayAsync(BlobStorageData blobStorageData)
         {
             var blobClient = await GetBlobClient(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
+
+            var metadata = new Dictionary<string, string>
+            {
+                { Helpers.Constants.CreatedBy, blobStorageData.UserName ?? Helpers.Constants.DefaultPerformedBy }
+            };
+
             await using var fileStream = new MemoryStream(blobStorageData.FileData);
-            await blobClient.UploadAsync(fileStream);
+            await blobClient.UploadAsync(fileStream, metadata: metadata);
             fileStream.Close();
         }
 
