@@ -107,6 +107,71 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             }
         };
 
+        public TlLookup BuildSpecialismResult() => new TlLookup
+        {
+            Category = "SpecialismComponentGrade",
+            Code = "SCG1",
+            Value = "Distinction",
+            IsActive = true,
+            SortOrder = 1,
+            CreatedBy = Constants.CreatedByUser,
+            CreatedOn = Constants.CreatedOn,
+            ModifiedBy = Constants.ModifiedByUser,
+            ModifiedOn = Constants.ModifiedOn
+        };
+
+        public IList<TlLookup> BuildSpecialismResultList() => new List<TlLookup>
+        {
+            new TlLookup
+            {
+                Category = "SpecialismComponentGrade",
+                Code = "SCG1",
+                Value = "Distinction",
+                IsActive = true,
+                SortOrder = 1,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "SpecialismComponentGrade",
+                Code = "SCG2",
+                Value = "Merit",
+                IsActive = true,
+                SortOrder = 2,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+           new TlLookup
+            {
+                Category = "SpecialismComponentGrade",
+                Code = "SCG3",
+                Value = "Pass",
+                IsActive = true,
+                SortOrder = 3,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "SpecialismComponentGrade",
+                Code = "SCG4",
+                Value = "Unclassified",
+                IsActive = true,
+                SortOrder = 4,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            }
+        };
+
         public TlLookup BuildSubjectType() => new TlLookup
         {
             Category = "Subject",
