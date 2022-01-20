@@ -4,7 +4,6 @@ using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 {
-    // Generic ExamTable
     public class ComponentExamViewModel
     {
         public int AssessmentId { get; set; }
@@ -15,5 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public string UpdatedBy { get; set; }
         public DateTime AppealEndDate { get; set; }
         public PrsStatus? PrsStatus { get; set; }
+
+        public string HiddenActionText { get; set; } // TODO:
     }
 }

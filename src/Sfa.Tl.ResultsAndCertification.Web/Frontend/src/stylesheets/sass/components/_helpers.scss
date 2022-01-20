@@ -142,3 +142,18 @@ input[type="radio"] {
         display: block;
     }
  }
+
+
+/*TODO: discuss with the design team */
+@media (min-width: 769px) {
+    .responsive-table__heading {
+        display: none;
+    }
+}
+
+.responsive-table__heading {
+    font-weight: 700;
+    padding-right: 1em;
+    text-align: left;
+    word-break: initial;
+}

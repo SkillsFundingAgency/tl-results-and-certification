@@ -11,8 +11,10 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual.ResultDetailsViewModelNew;
 using ResultContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -247,6 +249,73 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("learners-results-new/{profileId}", Name = "ResDetails")]
+        public async Task<IActionResult> ResultDetailsNewAsync(int profileId)
+        {
+            var viewModel = await _resultLoader.GetResultDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No result details found. Method: GetResultDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Active}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            if (!viewModel.IsPathwayAssessmentEntryRegistered)
+            {
+                await _cacheService.SetAsync(Constants.ResultsSearchCriteria, viewModel.Uln.ToString());
+                await _cacheService.SetAsync(CacheKey, _resultLoader.GetResultNoAssessmentEntryViewModel(viewModel));
+                return RedirectToRoute(RouteConstants.ResultNoAssessmentEntry);
+            }
+
+            var vm = new ResultDetailsViewModelNew
+            {
+                Firstname = "John",
+                Lastname = "Smith",
+                Uln = 5647382910,
+                DateofBirth = System.DateTime.Today,
+                ProviderName = "Barnsley College",
+                ProviderUkprn = 100656,
+                TlevelTitle = "Design, Surveying and Planning for Construction",
+
+                // Core
+                CoreComponentDisplayName = "Design, Surveying and Planning (123456)",
+                CoreComponentExams = new List<ComponentExamViewModel>
+                {
+                    new ComponentExamViewModel { AssessmentSeries = "Autumn 2022", Grade = null, PrsStatus = null, LastUpdated = null, UpdatedBy = null, AppealEndDate = System.DateTime.Today.AddDays(10) },
+                    new ComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "B", PrsStatus = null, LastUpdated = "6 June 2021", UpdatedBy = "User 3", AppealEndDate = System.DateTime.Today.AddDays(10) },
+                    new ComponentExamViewModel { AssessmentSeries = "Autumn 2021", Grade = "B", PrsStatus = PrsStatus.BeingAppealed, LastUpdated = "5 June 2021", UpdatedBy = "User 2", AppealEndDate = System.DateTime.Today.AddDays(10) },
+                    new ComponentExamViewModel { AssessmentSeries = "Summer 2021", Grade = "A", PrsStatus = PrsStatus.Final, LastUpdated = "4 June 2021", UpdatedBy = "User 1", AppealEndDate = System.DateTime.Today.AddDays(10) },
+                    new ComponentExamViewModel { AssessmentSeries = "Autumn 2020", Grade = "D", PrsStatus = null, LastUpdated = "34 June 2021", UpdatedBy = "User 1", AppealEndDate = System.DateTime.Today.AddDays(-365), AssessmentId = 1 }
+                },
+
+                // Specialisms
+                SpecialismComponents = new List<SpecialismComponentViewModel>
+                {
+                    new SpecialismComponentViewModel
+                    {
+                        SpecialismComponentDisplayName = "Plumbing",
+                        SpecialismComponentExams = new List<ComponentExamViewModel>
+                        {
+                            new ComponentExamViewModel { AssessmentSeries = "Autumn 2022", Grade = null, PrsStatus = null, LastUpdated = null, UpdatedBy = null, AppealEndDate = System.DateTime.Today.AddDays(10) },
+                            new ComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "Merit", PrsStatus = null, LastUpdated = "6 June 2021", UpdatedBy = "User 1",AppealEndDate = System.DateTime.Today.AddDays(10), AssessmentId = 1 }
+                        }
+                    },
+
+                    new SpecialismComponentViewModel
+                    {
+                        SpecialismComponentDisplayName = "Heating",
+                        SpecialismComponentExams = new List<ComponentExamViewModel>
+                        {
+                            new ComponentExamViewModel { AssessmentSeries = "Autumn 2022", Grade = null, PrsStatus = null, LastUpdated = "7 June 2021", UpdatedBy = "User 2", AppealEndDate = System.DateTime.Today.AddDays(10) },
+                            new ComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "Merit", PrsStatus = null, LastUpdated = "6 June 2021", UpdatedBy = "User 1", AppealEndDate = System.DateTime.Today.AddDays(10) }
+                        }
+                    }
+                }
+            };
+
+            return View(vm);
         }
 
         [HttpGet]

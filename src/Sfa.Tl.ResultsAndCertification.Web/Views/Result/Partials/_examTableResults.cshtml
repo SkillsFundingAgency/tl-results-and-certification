@@ -1,0 +1,45 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual.ComponentExamViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Result
+
+<tr class="govuk-table__row">
+    <td class="govuk-table__cell">
+        <span class="responsive-table__heading" aria-hidden="true">@ResultDetails.Table_Column_Hidden_Exam_Period</span>
+        @Model.AssessmentSeries
+    </td>
+    <td class="govuk-table__cell">
+        <span class="responsive-table__heading" aria-hidden="true">@ResultDetails.Table_Column_Hidden_Grade</span>
+        <span>
+
+            @if (string.IsNullOrWhiteSpace(Model.Grade))
+            {
+                <a class="govuk-link" href="#">@ResultDetails.Add_Result_Action_Link_Text <span class="govuk-visually-hidden">for core</span></a>
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(Model.PrsDisplayText))
+                {
+                    @Model.Grade <a class="govuk-link govuk-!-margin-left-2" href="#">@ResultDetails.Change_Result_Action_Link_Text <span class="govuk-visually-hidden">core result</span></a>
+                }
+                else
+                {
+                    @Model.Grade @Html.Raw(Model.PrsDisplayText) 
+                }
+            }
+            
+        </span>
+    </td>
+    <td class="govuk-table__cell">
+        <span class="responsive-table__heading" aria-hidden="true">@ResultDetails.Table_Column_Hidden_Last_Updated</span>
+        @Model.LastUpdated
+    </td>
+    <td class="govuk-table__cell">
+        <span class="responsive-table__heading" aria-hidden="true">@ResultDetails.Table_Column_Hidden_Updated_By</span>
+        @Model.UpdatedBy
+    </td>
+</tr>
+
+@*
+TODO:
+1. space before prs status
+2. hidden text
+3. Create this as VC*@

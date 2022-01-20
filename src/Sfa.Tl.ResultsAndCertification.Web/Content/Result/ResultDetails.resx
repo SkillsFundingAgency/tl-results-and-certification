@@ -129,17 +129,40 @@
   <data name="Contactus_Link" xml:space="preserve">
     <value>contact us</value>
   </data>
+  <data name="Details_Summary_Text_Link_More_About" xml:space="preserve">
+    <value>More about grade statuses</value>
+  </data>
+  <data name="Details_Summary_Text_Result_Final_Result_No_Longer_Changed_Here" xml:space="preserve">
+    <value>Once a grade has been entered after a review or an appeal it is marked as ‘final’ and can no longer be changed here. If you need to change a grade after entering a review or an appeal result, or change a grade after the deadline, please</value>
+  </data>
+  <data name="Details_Summary_Text_Result_Overall_Results_Calculated_When_Final" xml:space="preserve">
+    <value>An overall T Level result cannot be calculated unless all assessments have grades marked 'final'.</value>
+  </data>
+  <data name="Details_Summary_Text_Result_Pending_Result_Cannot_Be_Changed" xml:space="preserve">
+    <value>If a result is marked as ‘pending’ the grade cannot be changed here. A review or an appeal outcome must be entered in the reviews and appeals section of this service.</value>
+  </data>
+  <data name="Email_Subject" xml:space="preserve">
+    <value>Request to change a grade marked final</value>
+  </data>
   <data name="Fullstop" xml:space="preserve">
     <value>.</value>
+    <comment>Delete?</comment>
   </data>
   <data name="Heading_Core" xml:space="preserve">
-    <value>Core (code): {0}</value>
+    <value>Core component: {0}</value>
   </data>
   <data name="Heading_Learners_Details" xml:space="preserve">
     <value>Learner’s details</value>
+    <comment>Delete</comment>
   </data>
   <data name="Heading_Learners_Results" xml:space="preserve">
-    <value>Learner’s results</value>
+    <value>{0}'s results</value>
+  </data>
+  <data name="Heading_Not_Specified" xml:space="preserve">
+    <value>not specified</value>
+  </data>
+  <data name="Heading_Specialism" xml:space="preserve">
+    <value>Occupational specialism(s): {0}</value>
   </data>
   <data name="Hidden_Action_Text_Core" xml:space="preserve">
     <value> core</value>
@@ -152,18 +175,57 @@
   </data>
   <data name="Inset_Appeal_Date_Ended" xml:space="preserve">
     <value>This result is final and cannot be changed.</value>
+    <comment>Delete</comment>
   </data>
   <data name="Inset_Appeal_Final_Outcome_Recorded" xml:space="preserve">
     <value>This result is final as the outcome of an appeal has been recorded. If you need to change the grade please</value>
+    <comment>Delete</comment>
   </data>
   <data name="Inset_BeingAppealing_Grade_Text" xml:space="preserve">
     <value>This learner's results cannot be changed because they are appealing a grade.</value>
+    <comment>Delete</comment>
+  </data>
+  <data name="Link_Add_Assessment" xml:space="preserve">
+    <value>Add an assessment</value>
   </data>
   <data name="Not_Received_Text" xml:space="preserve">
     <value>Not received</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Learner’s results page</value>
+    <value>Learner's results</value>
+  </data>
+  <data name="Para_No_Core_Assessments" xml:space="preserve">
+    <value>This learner does not have any core component assessments registered in this system</value>
+  </data>
+  <data name="Para_No_Specialisms_Registered" xml:space="preserve">
+    <value>This learner does not have an occupational specialism registered in this system</value>
+  </data>
+  <data name="Para_No_Specialism_Assessments" xml:space="preserve">
+    <value>This learner does not have any occupational specialism assessments registered in this system.</value>
+  </data>
+  <data name="Table_Column_Exam_Period" xml:space="preserve">
+    <value>Exam period</value>
+  </data>
+  <data name="Table_Column_Grade" xml:space="preserve">
+    <value>Grade</value>
+  </data>
+  <data name="Table_Column_Hidden_Exam_Period" xml:space="preserve">
+    <value>Exam period</value>
+  </data>
+  <data name="Table_Column_Hidden_Grade" xml:space="preserve">
+    <value>Grade</value>
+  </data>
+  <data name="Table_Column_Hidden_Last_Updated" xml:space="preserve">
+    <value>Last updated</value>
+  </data>
+  <data name="Table_Column_Hidden_Updated_By" xml:space="preserve">
+    <value>Updated by</value>
+  </data>
+  <data name="Table_Column_Last_Updated" xml:space="preserve">
+    <value>Last updated</value>
+  </data>
+  <data name="Table_Column_Updated_By" xml:space="preserve">
+    <value>Updated by</value>
   </data>
   <data name="Title_Assessment_Series" xml:space="preserve">
     <value>Exam period</value>
@@ -177,11 +239,18 @@
   <data name="Title_Pathway_Grade" xml:space="preserve">
     <value>Grade</value>
   </data>
+  <data name="Title_Provider_Name_Text" xml:space="preserve">
+    <value>Provider</value>
+  </data>
   <data name="Title_Provider_Text" xml:space="preserve">
-    <value>Provider &lt;br/&gt; (UKPRN)</value>
+    <value>Provider&lt;br&gt;(UKPRN)</value>
+    <comment>Delete</comment>
+  </data>
+  <data name="Title_Provider_Ukprn_Text" xml:space="preserve">
+    <value>UKPRN</value>
   </data>
   <data name="Title_TLevel_Text" xml:space="preserve">
-    <value>T Level title</value>
+    <value>T Level</value>
   </data>
   <data name="Title_Uln_Text" xml:space="preserve">
     <value>ULN</value>

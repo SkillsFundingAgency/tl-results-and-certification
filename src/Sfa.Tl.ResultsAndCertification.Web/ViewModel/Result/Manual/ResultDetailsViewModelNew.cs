@@ -20,16 +20,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
             TlevelTitleLabel = ResultDetailsContent.Title_TLevel_Text;
 
             CoreComponentExams = new List<ComponentExamViewModel>();
+            SpecialismComponents = new List<SpecialismComponentViewModel>();
         }
 
         // Core Component
         public string CoreComponentDisplayName { get; set; }
+        public bool IsCoreAssessmentEntryRegistered { get { return CoreComponentExams.Any(x => x.AssessmentId > 0); } }
         public IList<ComponentExamViewModel> CoreComponentExams { get; set; }
 
         // Specialism Components
         public IList<SpecialismComponentViewModel> SpecialismComponents { get; set; }
-
-        public bool IsPathwayAssessmentEntryRegistered { get { return CoreComponentExams.Any(x => x.AssessmentId > 0); } }
 
         public BreadcrumbModel Breadcrumb
         {
