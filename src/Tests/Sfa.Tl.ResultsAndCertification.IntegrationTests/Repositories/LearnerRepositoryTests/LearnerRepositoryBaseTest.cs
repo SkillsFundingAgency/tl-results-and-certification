@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
             PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
             AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
 
-            DbContext.SaveChangesAsync();
+            DbContext.SaveChanges();
         }
 
         public List<TqRegistrationProfile> SeedRegistrationsData(List<long> ulns, TqProvider tqProvider = null)
@@ -209,7 +209,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
             if (isHistorical)
             {
                 // Historical record
-                var pathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, isBulkUpload: isBulkUpload);
+                var pathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, PathwayComponentGrades[0], isBulkUpload: isBulkUpload);
                 pathwayResult.IsOptedin = false;
                 pathwayResult.EndDate = DateTime.UtcNow.AddDays(-1);
 
@@ -217,7 +217,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
                 tqPathwayResults.Add(tqPathwayResultHistorical);
             }
 
-            var activePathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, isBulkUpload: isBulkUpload);
+            var activePathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, PathwayComponentGrades[0], isBulkUpload: isBulkUpload);
             var tqPathwayResult = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, activePathwayResult);
             if (!seedPathwayResultsAsActive)
             {

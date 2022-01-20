@@ -83,6 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerServic
             SeedIndustyPlacementData(industryPlacementUln);
 
             DbContext.SaveChanges();
+            DetachAll();
 
             LearnerRepositoryLogger = new Logger<LearnerRepository>(new NullLoggerFactory());
             LearnerRepository = new LearnerRepository(DbContext);

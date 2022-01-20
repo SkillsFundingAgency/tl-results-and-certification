@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -69,6 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
             SeedIndustyPlacementData(industryPlacementUln);
 
             DbContext.SaveChanges();
+            DetachAll();
 
             LearnerRepository = new LearnerRepository(DbContext);
         }
