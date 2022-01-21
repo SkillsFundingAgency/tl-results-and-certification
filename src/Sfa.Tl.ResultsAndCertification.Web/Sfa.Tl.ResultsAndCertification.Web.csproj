@@ -5,32 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Content\Dashboard.Designer.cs" />
-    <Compile Remove="ViewModel\TlevelQueryViewModel.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="wwwroot\javascripts\english-maths-question.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Remove="Content\Dashboard.resx" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Frontend\src\javascripts\user-guide.js" />
-  </ItemGroup>
-
-
-  <ItemGroup>
     <Folder Include="Frontend\src\stylesheets\css\" />
   </ItemGroup>
-
-
-  <ItemGroup>
-    <None Include="wwwroot\javascripts\english-maths-question.js" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />

@@ -119,10 +119,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<ManageCoreResultViewModel> GetManageCoreResultAsync(long aoUkprn, int profileId, int assessmentId, bool isChangeMode)
         {
-            var response = await _internalApiClient.GetResultDetailsAsync(aoUkprn, profileId, RegistrationPathwayStatus.Active);
-            
-            if (response == null || response.PathwayAssessmentId != assessmentId || 
-                (!isChangeMode && response.PathwayResultId.HasValue) || (isChangeMode && !response.PathwayResultId.HasValue))
+            var response = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId, RegistrationPathwayStatus.Active);
+
+            if (response == null)
+                return null;
+
+            var assessment = response.Pathway.PathwayAssessments.FirstOrDefault(p => p.Id == assessmentId);
+            var hasResult = assessment?.Results?.Any() ?? false;
+
+            if (assessment == null || (!isChangeMode && hasResult) || (isChangeMode && !hasResult))
                 return null;
 
             var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
@@ -130,7 +135,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 return null;
 
             grades.Insert(0, new LookupData { Code = string.Empty, Value = Content.Result.ManageCoreResult.Option_Not_Received });
-            return _mapper.Map<ManageCoreResultViewModel>(response, opt => opt.Items["grades"] = grades);
+
+            return _mapper.Map<ManageCoreResultViewModel>(response, opt => 
+            { 
+                opt.Items["grades"] = grades;
+                opt.Items["assessment"] = assessment; 
+            });
         }
 
         public async Task<bool?> IsCoreResultChangedAsync(long aoUkprn, ManageCoreResultViewModel viewModel)
