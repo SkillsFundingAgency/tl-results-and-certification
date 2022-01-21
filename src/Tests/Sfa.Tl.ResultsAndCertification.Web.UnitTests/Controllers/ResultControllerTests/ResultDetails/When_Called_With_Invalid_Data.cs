@@ -13,13 +13,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         private ResultDetailsViewModel mockresult = null;
         public override void Given()
         {
-            ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(mockresult);
+            ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId).Returns(mockresult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            ResultLoader.Received(1).GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active);
+            ResultLoader.Received(1).GetResultDetailsAsync(AoUkprn, ProfileId);
         }
 
         [Fact]

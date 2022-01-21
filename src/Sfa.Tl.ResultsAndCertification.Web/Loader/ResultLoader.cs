@@ -98,20 +98,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<ResultNoAssessmentEntryViewModel>(resultDetails);
         }
 
-        public async Task<ResultDetailsViewModel> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
-        {
-            var response = await _internalApiClient.GetResultDetailsAsync(aoUkprn, profileId, status);
-            return _mapper.Map<ResultDetailsViewModel>(response);
-        }
-
-        public async Task<ResultDetailsViewModelNew> GetResultDetailsNewAsync(long aoUkprn, int profileId)
+        public async Task<ResultDetailsViewModel> GetResultDetailsAsync(long aoUkprn, int profileId)
         {
             var response = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId);
             if (response.Pathway.Status != RegistrationPathwayStatus.Active)
                 return null;
 
-            // Below code is to set the ComponentType property that is used to render the HiddenActionText in the page.
-            var viewModel = _mapper.Map<ResultDetailsViewModelNew>(response);
+            // Below code is to set the ComponentType property which is used to render the HiddenActionText in the page.
+            var viewModel = _mapper.Map<ResultDetailsViewModel>(response);
             viewModel.CoreComponentExams.ToList().ForEach(x => { x.ComponentType = ComponentType.Core; });
             viewModel.SpecialismComponents.ToList().ForEach(x => { x.SpecialismComponentExams.ToList().ForEach(s => { s.ComponentType = ComponentType.Specialism; }); });
 

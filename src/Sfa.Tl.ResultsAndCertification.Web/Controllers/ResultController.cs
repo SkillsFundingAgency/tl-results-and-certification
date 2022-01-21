@@ -11,10 +11,8 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual.ResultDetailsViewModelNew;
 using ResultContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -231,39 +229,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("learners-results/{profileId}", Name = RouteConstants.ResultDetails)]
+        [Route("learners-results/{profileId}", Name = "ResDetails")]
         public async Task<IActionResult> ResultDetailsAsync(int profileId)
         {
-            var viewModel = await _resultLoader.GetResultDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No result details found. Method: GetResultDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Active}), User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            if (!viewModel.IsPathwayAssessmentEntryRegistered)
-            {
-                await _cacheService.SetAsync(Constants.ResultsSearchCriteria, viewModel.Uln.ToString());
-                await _cacheService.SetAsync(CacheKey, _resultLoader.GetResultNoAssessmentEntryViewModel(viewModel));
-                return RedirectToRoute(RouteConstants.ResultNoAssessmentEntry);
-            }
-
-            return View(viewModel);
-        }
-
-        [HttpGet]
-        [Route("learners-results-new/{profileId}", Name = "ResDetails")]
-        public async Task<IActionResult> ResultDetailsNewAsync(int profileId)
-        {
-            var viewModel = await _resultLoader.GetResultDetailsNewAsync(User.GetUkPrn(), profileId);
+            var viewModel = await _resultLoader.GetResultDetailsAsync(User.GetUkPrn(), profileId);
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No result details found. Method: GetResultDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
+            // TODO: TechDebt to remove an exsiting 'no-assessment-entries' page
 
             return View(viewModel);
-            // TODO: Cleanup story required remove the GetResultNoAssessmentEntryViewModel page;
         }
 
         [HttpGet]
