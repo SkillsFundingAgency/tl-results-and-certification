@@ -146,14 +146,9 @@
   </data>
   <data name="Fullstop" xml:space="preserve">
     <value>.</value>
-    <comment>Delete?</comment>
   </data>
   <data name="Heading_Core" xml:space="preserve">
     <value>Core component: {0}</value>
-  </data>
-  <data name="Heading_Learners_Details" xml:space="preserve">
-    <value>Learner’s details</value>
-    <comment>Delete</comment>
   </data>
   <data name="Heading_Learners_Results" xml:space="preserve">
     <value>{0}'s results</value>
@@ -164,32 +159,20 @@
   <data name="Heading_Specialism" xml:space="preserve">
     <value>Occupational specialism(s): {0}</value>
   </data>
-  <data name="Hidden_Action_Text_Core" xml:space="preserve">
-    <value> core</value>
+  <data name="Hidden_Text_Component_Result" xml:space="preserve">
+    <value>{0} result</value>
   </data>
-  <data name="Hidden_Action_Text_For_Core" xml:space="preserve">
-    <value> for core</value>
+  <data name="Hidden_Text_Core" xml:space="preserve">
+    <value>core</value>
   </data>
-  <data name="Hidden_Value_Text_For" xml:space="preserve">
-    <value>for </value>
+  <data name="Hidden_Text_For_Component" xml:space="preserve">
+    <value>for {0}</value>
   </data>
-  <data name="Inset_Appeal_Date_Ended" xml:space="preserve">
-    <value>This result is final and cannot be changed.</value>
-    <comment>Delete</comment>
-  </data>
-  <data name="Inset_Appeal_Final_Outcome_Recorded" xml:space="preserve">
-    <value>This result is final as the outcome of an appeal has been recorded. If you need to change the grade please</value>
-    <comment>Delete</comment>
-  </data>
-  <data name="Inset_BeingAppealing_Grade_Text" xml:space="preserve">
-    <value>This learner's results cannot be changed because they are appealing a grade.</value>
-    <comment>Delete</comment>
+  <data name="Hidden_Text_Specialism" xml:space="preserve">
+    <value>specialilsm</value>
   </data>
   <data name="Link_Add_Assessment" xml:space="preserve">
     <value>Add an assessment</value>
-  </data>
-  <data name="Not_Received_Text" xml:space="preserve">
-    <value>Not received</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Learner's results</value>
@@ -241,10 +224,6 @@
   </data>
   <data name="Title_Provider_Name_Text" xml:space="preserve">
     <value>Provider</value>
-  </data>
-  <data name="Title_Provider_Text" xml:space="preserve">
-    <value>Provider&lt;br&gt;(UKPRN)</value>
-    <comment>Delete</comment>
   </data>
   <data name="Title_Provider_Ukprn_Text" xml:space="preserve">
     <value>UKPRN</value>

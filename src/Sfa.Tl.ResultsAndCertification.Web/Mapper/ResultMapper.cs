@@ -37,24 +37,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IsAllowed, opts => opts.MapFrom(s => s.Status == RegistrationPathwayStatus.Active || s.Status == RegistrationPathwayStatus.Withdrawn))
                .ForMember(d => d.IsWithdrawn, opts => opts.MapFrom(s => s.Status == RegistrationPathwayStatus.Withdrawn));
 
-            CreateMap<ResultDetails, ResultDetailsViewModel>()
-                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
-                .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))
-                .ForMember(d => d.Lastname, opts => opts.MapFrom(s => s.Lastname))
-                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
-                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
-                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
-                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
-                .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayLarId})"))
-                .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
-                .ForMember(d => d.PathwayAssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
-                .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AppealEndDate))
-                .ForMember(d => d.PathwayResult, opts => opts.MapFrom(s => s.PathwayResult))
-                .ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))
-                .ForMember(d => d.PathwayPrsStatus, opts => opts.MapFrom(s => s.PathwayPrsStatus))
-                .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.Status));
-
             CreateMap<ResultDetails, ResultWithdrawnViewModel>()
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
                 .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))
@@ -120,7 +102,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Core))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ManageCoreResultViewModel, ChangeResultRequest>>());
 
-            CreateMap<LearnerRecord, ResultDetailsViewModelNew>()
+            CreateMap<LearnerRecord, ResultDetailsViewModel>()
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
                 .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))
                 .ForMember(d => d.Lastname, opts => opts.MapFrom(s => s.Lastname))
@@ -133,13 +115,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.SpecialismComponents, opts => opts.MapFrom(s => s.Pathway.Specialisms));
 
             CreateMap<Specialism, SpecialismComponentViewModel>()
-                .ForMember(d => d.SpecialismComponentDisplayName, opts => opts.MapFrom(s => $"{s.Name} ({s.LarId})"));
+                .ForMember(d => d.SpecialismComponentDisplayName, opts => opts.MapFrom(s => $"{s.Name} ({s.LarId})"))
+                .ForMember(d => d.SpecialismComponentExams, opts => opts.MapFrom(s => s.Assessments));
 
             CreateMap<Assessment, ComponentExamViewModel>()
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.Id))
                 .ForMember(d => d.AssessmentSeries, opts => opts.MapFrom(s => s.SeriesName))
                 .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AppealEndDate))
-                .ForMember(d => d.Grade, opts => opts.MapFrom(s => !s.Results.Any() ? null : s.Results.FirstOrDefault().Grade)) // TODO: Tech Debt result should be flat in LearnerDetails?
+                .ForMember(d => d.Grade, opts => opts.MapFrom(s => !s.Results.Any() ? null : s.Results.FirstOrDefault().Grade)) // TODO: Tech Debt result should be a single item rather IEnumerable in Assessments Contract.
                 .ForMember(d => d.LastUpdated, opts => opts.MapFrom(s => !s.Results.Any() ? null : s.Results.FirstOrDefault().LastUpdatedOn.ToDobFormat()))
                 .ForMember(d => d.UpdatedBy, opts => opts.MapFrom(s => !s.Results.Any() ? null : s.Results.FirstOrDefault().LastUpdatedBy))
                 .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => !s.Results.Any() ? null : s.Results.FirstOrDefault().PrsStatus));

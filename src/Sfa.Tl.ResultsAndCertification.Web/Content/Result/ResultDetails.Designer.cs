@@ -160,15 +160,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner’s details.
-        /// </summary>
-        public static string Heading_Learners_Details {
-            get {
-                return ResourceManager.GetString("Heading_Learners_Details", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to {0}&apos;s results.
         /// </summary>
         public static string Heading_Learners_Results {
@@ -196,56 +187,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  core.
+        ///   Looks up a localized string similar to {0} result.
         /// </summary>
-        public static string Hidden_Action_Text_Core {
+        public static string Hidden_Text_Component_Result {
             get {
-                return ResourceManager.GetString("Hidden_Action_Text_Core", resourceCulture);
+                return ResourceManager.GetString("Hidden_Text_Component_Result", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  for core.
+        ///   Looks up a localized string similar to core.
         /// </summary>
-        public static string Hidden_Action_Text_For_Core {
+        public static string Hidden_Text_Core {
             get {
-                return ResourceManager.GetString("Hidden_Action_Text_For_Core", resourceCulture);
+                return ResourceManager.GetString("Hidden_Text_Core", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to for .
+        ///   Looks up a localized string similar to for {0}.
         /// </summary>
-        public static string Hidden_Value_Text_For {
+        public static string Hidden_Text_For_Component {
             get {
-                return ResourceManager.GetString("Hidden_Value_Text_For", resourceCulture);
+                return ResourceManager.GetString("Hidden_Text_For_Component", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This result is final and cannot be changed..
+        ///   Looks up a localized string similar to specialilsm.
         /// </summary>
-        public static string Inset_Appeal_Date_Ended {
+        public static string Hidden_Text_Specialism {
             get {
-                return ResourceManager.GetString("Inset_Appeal_Date_Ended", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This result is final as the outcome of an appeal has been recorded. If you need to change the grade please.
-        /// </summary>
-        public static string Inset_Appeal_Final_Outcome_Recorded {
-            get {
-                return ResourceManager.GetString("Inset_Appeal_Final_Outcome_Recorded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This learner&apos;s results cannot be changed because they are appealing a grade..
-        /// </summary>
-        public static string Inset_BeingAppealing_Grade_Text {
-            get {
-                return ResourceManager.GetString("Inset_BeingAppealing_Grade_Text", resourceCulture);
+                return ResourceManager.GetString("Hidden_Text_Specialism", resourceCulture);
             }
         }
         
@@ -255,15 +228,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static string Link_Add_Assessment {
             get {
                 return ResourceManager.GetString("Link_Add_Assessment", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Not received.
-        /// </summary>
-        public static string Not_Received_Text {
-            get {
-                return ResourceManager.GetString("Not_Received_Text", resourceCulture);
             }
         }
         
@@ -417,15 +381,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static string Title_Provider_Name_Text {
             get {
                 return ResourceManager.GetString("Title_Provider_Name_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Provider&lt;br&gt;(UKPRN).
-        /// </summary>
-        public static string Title_Provider_Text {
-            get {
-                return ResourceManager.GetString("Title_Provider_Text", resourceCulture);
             }
         }
         

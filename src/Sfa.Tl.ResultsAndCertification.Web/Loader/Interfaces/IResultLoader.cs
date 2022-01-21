@@ -17,9 +17,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 
         Task<UlnResultsNotFoundViewModel> FindUlnResultsAsync(long aoUkprn, long Uln);
         Task<ResultWithdrawnViewModel> GetResultWithdrawnViewModelAsync(long aoUkprn, int profileId);
-        ResultNoAssessmentEntryViewModel GetResultNoAssessmentEntryViewModel(ResultDetailsViewModel resultDetails); 
-        Task<ResultDetailsViewModel> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
-        Task<ResultDetailsViewModelNew> GetResultDetailsNewAsync(long aoUkprn, int profileId);
+        ResultNoAssessmentEntryViewModel GetResultNoAssessmentEntryViewModel(ResultDetailsViewModel resultDetails);
+        Task<ResultDetailsViewModel> GetResultDetailsAsync(long aoUkprn, int profileId);
 
         Task<AddResultResponse> AddCoreResultAsync(long aoUkprn, ManageCoreResultViewModel viewModel);
         Task<ManageCoreResultViewModel> GetManageCoreResultAsync(long aoUkprn, int profileId, int assessmentId, bool isChangeMode);
