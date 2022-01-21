@@ -229,7 +229,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("learners-results/{profileId}", Name = "ResDetails")]
+        [Route("learners-results/{profileId}", Name = RouteConstants.ResultDetails)]
         public async Task<IActionResult> ResultDetailsAsync(int profileId)
         {
             var viewModel = await _resultLoader.GetResultDetailsAsync(User.GetUkPrn(), profileId);
