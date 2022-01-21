@@ -104,6 +104,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<ResultDetailsViewModel>(response);
         }
 
+        public async Task<ResultDetailsViewModelNew> GetResultDetailsNewAsync(long aoUkprn, int profileId)
+        {
+            var response = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId);
+            if (response.Pathway.Status != RegistrationPathwayStatus.Active)
+                return null;
+
+            return _mapper.Map<ResultDetailsViewModelNew>(response);
+        }
+
         public async Task<AddResultResponse> AddCoreResultAsync(long aoUkprn, ManageCoreResultViewModel viewModel)
         {
             var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
