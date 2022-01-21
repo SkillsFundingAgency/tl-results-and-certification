@@ -41,9 +41,8 @@
                     <span sfa-validation-for="SelectedGradeCode"></span>
                     @foreach (var grade in Model?.Grades?.Select((value, i) => (value, i)))
                     {
-                        if(string.IsNullOrWhiteSpace(grade.value.Code))
-                        {
-                            <div class="govuk-radios__divider">or</div>
+                        if(string.IsNullOrWhiteSpace(grade.value.Code)) {
+                            <div class="govuk-radios__divider">@ManageCoreResult.Or_Text</div>
                         }
 
                         var elementId = (grade.i > 0) ? "selectedgradecode-" + grade.i : "selectedgradecode";

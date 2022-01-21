@@ -97,6 +97,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to or.
+        /// </summary>
+        public static string Or_Text {
+            get {
+                return ResourceManager.GetString("Or_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a result for {0}.
         /// </summary>
         public static string Page_Heading_Add_Result {

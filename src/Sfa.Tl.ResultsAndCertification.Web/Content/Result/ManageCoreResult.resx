@@ -129,6 +129,9 @@
   <data name="Option_Not_Received" xml:space="preserve">
     <value>This learner's grade has not been received</value>
   </data>
+  <data name="Or_Text" xml:space="preserve">
+    <value>or</value>
+  </data>
   <data name="Page_Heading_Add_Result" xml:space="preserve">
     <value>Add a result for {0}</value>
   </data>
