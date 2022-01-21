@@ -261,9 +261,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [HttpPost]
         [Route("select-core-result", Name = RouteConstants.SubmitAddCoreResult)]
         public async Task<IActionResult> AddCoreResultAsync(ManageCoreResultViewModel model)
-        {
-            if (string.IsNullOrWhiteSpace(model?.SelectedGradeCode))
-                return RedirectToRoute(RouteConstants.ResultDetails, new { profileId = model.ProfileId });
+        {           
+            if (!ModelState.IsValid)
+            {
+                var resultsViewModel = await _resultLoader.GetManageCoreResultAsync(User.GetUkPrn(), model.ProfileId, model.AssessmentId, isChangeMode: false);
+                return View(resultsViewModel);
+            }
 
             var response = await _resultLoader.AddCoreResultAsync(User.GetUkPrn(), model);
 

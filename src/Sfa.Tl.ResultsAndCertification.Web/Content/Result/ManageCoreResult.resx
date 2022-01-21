@@ -123,19 +123,49 @@
   <data name="Core_Assessment_Title" xml:space="preserve">
     <value>{0} for {1}</value>
   </data>
+  <data name="Core_Component" xml:space="preserve">
+    <value>Core component: {0}</value>
+  </data>
   <data name="Heading" xml:space="preserve">
     <value>Select the core result</value>
+  </data>
+  <data name="Learner_Details" xml:space="preserve">
+    <value>Learners details</value>
   </data>
   <data name="Option_Not_Received" xml:space="preserve">
     <value>Not received</value>
   </data>
+  <data name="Page_Heading" xml:space="preserve">
+    <value>Add a result for {0}</value>
+  </data>
   <data name="Page_Title_Add_Result" xml:space="preserve">
-    <value>Select the core result page</value>
+    <value>Select core result</value>
   </data>
   <data name="Page_Title_Change_Result" xml:space="preserve">
     <value>Change core result page</value>
   </data>
+  <data name="Select_The_Grade_For" xml:space="preserve">
+    <value>Select the grade for {0}</value>
+  </data>
   <data name="Submit_Button" xml:space="preserve">
     <value>Submit</value>
+  </data>
+  <data name="Title_DateofBirth_Text" xml:space="preserve">
+    <value>Date of birth</value>
+  </data>
+  <data name="Title_Provider_Name_Text" xml:space="preserve">
+    <value>Provider</value>
+  </data>
+  <data name="Title_Provider_Ukprn_Text" xml:space="preserve">
+    <value>UKPRN</value>
+  </data>
+  <data name="Title_TLevel_Text" xml:space="preserve">
+    <value>T Level</value>
+  </data>
+  <data name="Title_Uln_Text" xml:space="preserve">
+    <value>ULN</value>
+  </data>
+  <data name="Validation_Select_Grade_Required_Message" xml:space="preserve">
+    <value>Please select the grade</value>
   </data>
 </root>
