@@ -11,16 +11,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
-        private ManageCoreResultViewModel mockresult = null;
+        private ManageCoreResultViewModel _mockresult = null;
         private Dictionary<string, string> _routeAttributes;
         private List<LookupViewModel> grades;
 
         public override void Given()
         {
             grades = new List<LookupViewModel> { new LookupViewModel { Id = 1, Code = "C1", Value = "V1" }, new LookupViewModel { Id = 2, Code = "C2", Value = "V2" } };
-            mockresult = new ManageCoreResultViewModel
+            _mockresult = new ManageCoreResultViewModel
             {
                 ProfileId = 1,
+                PathwayName = "Pathway",
                 PathwayDisplayName = "Pathway (7654321)",
                 AssessmentSeries = "Summer 2021",
                 AssessmentId = 11,
@@ -30,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } };
-            ResultLoader.GetManageCoreResultAsync(AoUkprn, ProfileId, AssessmentId, false).Returns(mockresult);
+            ResultLoader.GetManageCoreResultAsync(AoUkprn, ProfileId, AssessmentId, false).Returns(_mockresult);
         }
 
         [Fact]
@@ -45,12 +46,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             var model = viewResult.Model as ManageCoreResultViewModel;
             model.Should().NotBeNull();
 
-            model.ProfileId.Should().Be(mockresult.ProfileId);
-            model.PathwayDisplayName.Should().Be(mockresult.PathwayDisplayName);
-            model.AssessmentId.Should().Be(mockresult.AssessmentId);
-            model.AssessmentSeries.Should().Be(mockresult.AssessmentSeries);
-            model.ResultId.Should().Be(mockresult.ResultId);
-            model.SelectedGradeCode.Should().Be(mockresult.SelectedGradeCode);
+            model.ProfileId.Should().Be(_mockresult.ProfileId);
+            model.PathwayName.Should().Be(_mockresult.PathwayName);
+            model.PathwayDisplayName.Should().Be(_mockresult.PathwayDisplayName);
+            model.AssessmentId.Should().Be(_mockresult.AssessmentId);
+            model.AssessmentSeries.Should().Be(_mockresult.AssessmentSeries);
+            model.ResultId.Should().Be(_mockresult.ResultId);
+            model.SelectedGradeCode.Should().Be(_mockresult.SelectedGradeCode);
 
             // Back link
             model.BackLink.Should().NotBeNull();

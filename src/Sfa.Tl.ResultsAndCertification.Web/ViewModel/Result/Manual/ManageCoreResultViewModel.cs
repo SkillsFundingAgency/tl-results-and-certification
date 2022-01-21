@@ -26,6 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public int AssessmentId { get; set; }
         public string AssessmentSeries { get; set; }
         public DateTime? AppealEndDate { get; set; }
+        public string PathwayName { get; set; }
         public string PathwayDisplayName { get; set; }
         
         public int? ResultId { get; set; }
@@ -37,6 +38,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 
         public List<LookupViewModel> Grades { get; set; }
         public bool IsValid => (PathwayPrsStatus.HasValue == false || PathwayPrsStatus == PrsStatus.NotSpecified) && CommonHelper.IsAppealsAllowed(AppealEndDate);
+
+        public string SuccessBannerMessage { get { return string.Format(ManageCoreResultContent.Banner_Message_For_Result_Added, AssessmentSeries, PathwayName); } }
 
         public override BackLinkModel BackLink => new()
         {

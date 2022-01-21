@@ -104,6 +104,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
             ActualResult.AssessmentSeries.Should().Be(expectedPathwayAsssessment.SeriesName.ToLowerInvariant());
             ActualResult.AppealEndDate.Should().Be(expectedPathwayAsssessment.AppealEndDate);
 
+            ActualResult.PathwayName.Should().Be(expectedApiResultDetails.Pathway.Name);
             ActualResult.PathwayDisplayName.Should().Be($"{expectedApiResultDetails.Pathway.Name} ({expectedApiResultDetails.Pathway.LarId})");
             ActualResult.ResultId.Should().BeNull();
             ActualResult.SelectedGradeCode.Should().BeNull();

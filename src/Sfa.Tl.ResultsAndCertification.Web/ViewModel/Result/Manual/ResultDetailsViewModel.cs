@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using System.Collections.Generic;
 using System.Linq;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
@@ -30,6 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 
         // Specialism Components
         public IList<SpecialismComponentViewModel> SpecialismComponents { get; set; }
+
+        public NotificationBannerModel SuccessBanner { get; set; }
 
         public BreadcrumbModel Breadcrumb
         {

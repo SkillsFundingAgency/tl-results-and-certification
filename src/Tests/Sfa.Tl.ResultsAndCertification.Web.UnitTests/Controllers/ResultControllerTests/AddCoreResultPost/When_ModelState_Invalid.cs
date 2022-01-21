@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         {
             ViewModel.SelectedGradeCode = string.Empty;
 
-            ResultLoader.GetManageCoreResultAsync(AoUkprn, ProfileId, 1, false).Returns(new ManageCoreResultViewModel());
+            ResultLoader.GetManageCoreResultAsync(AoUkprn, ProfileId, ViewModel.AssessmentId, false).Returns(new ManageCoreResultViewModel());
             Controller.ModelState.AddModelError("SelectedGradeCode", Content.Result.ManageCoreResult.Validation_Select_Grade_Required_Message);
         }
 

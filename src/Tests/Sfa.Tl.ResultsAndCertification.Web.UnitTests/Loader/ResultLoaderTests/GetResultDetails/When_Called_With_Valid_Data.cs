@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                 Uln = 1234567890,
                 Firstname = "John",
                 Lastname = "Smith",
-                DateofBirth = System.DateTime.UtcNow.AddYears(-29),
+                DateofBirth = DateTime.UtcNow.AddYears(-29),
                 Gender = "M",
                 Pathway = new Pathway
                 {
@@ -44,9 +44,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             Id = 11,
                             SeriesId = 1,
                             SeriesName = "Autumn 2022",
-                            AppealEndDate = System.DateTime.UtcNow.AddDays(10),
+                            AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
-                            LastUpdatedOn = System.DateTime.UtcNow
+                            LastUpdatedOn = DateTime.UtcNow
                         },
 
                         new Assessment
@@ -54,9 +54,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             Id = 12,
                             SeriesId = 2,
                             SeriesName = "Summer 2022",
-                            AppealEndDate = System.DateTime.UtcNow.AddDays(10),
+                            AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
-                            LastUpdatedOn = System.DateTime.UtcNow,
+                            LastUpdatedOn = DateTime.UtcNow,
                             Results = new List<Result>
                             {
                                 new Result
@@ -65,7 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                     Grade = "C",
                                     PrsStatus = null,
                                     LastUpdatedBy = "System",
-                                    LastUpdatedOn = System.DateTime.UtcNow
+                                    LastUpdatedOn = DateTime.UtcNow
                                 }
                             }
                         },
@@ -75,9 +75,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             Id = 13,
                             SeriesId = 3,
                             SeriesName = "Autumn 2021",
-                            AppealEndDate = System.DateTime.UtcNow.AddDays(10),
+                            AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
-                            LastUpdatedOn = System.DateTime.UtcNow,
+                            LastUpdatedOn = DateTime.UtcNow,
                             Results = new List<Result>
                             {
                                 new Result
@@ -86,7 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                     Grade = "B",
                                     PrsStatus = PrsStatus.BeingAppealed,
                                     LastUpdatedBy = "System",
-                                    LastUpdatedOn = System.DateTime.UtcNow
+                                    LastUpdatedOn = DateTime.UtcNow
                                 }
                             }
                         },
@@ -96,9 +96,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             Id = 14,
                             SeriesId = 4,
                             SeriesName = "Summer 2021",
-                            AppealEndDate = System.DateTime.UtcNow.AddDays(10),
+                            AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
-                            LastUpdatedOn = System.DateTime.UtcNow,
+                            LastUpdatedOn = DateTime.UtcNow,
                             Results = new List<Result>
                             {
                                 new Result
@@ -107,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                     Grade = "A",
                                     PrsStatus = PrsStatus.Final,
                                     LastUpdatedBy = "System",
-                                    LastUpdatedOn = System.DateTime.UtcNow
+                                    LastUpdatedOn = DateTime.UtcNow
                                 }
                             }
                         },
@@ -117,9 +117,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             Id = 15,
                             SeriesId = 5,
                             SeriesName = "Autumn 2020",
-                            AppealEndDate = System.DateTime.UtcNow.AddDays(-10),
+                            AppealEndDate = DateTime.UtcNow.AddDays(-10),
                             LastUpdatedBy = "System",
-                            LastUpdatedOn = System.DateTime.UtcNow,
+                            LastUpdatedOn = DateTime.UtcNow,
                             Results = new List<Result>
                             {
                                 new Result
@@ -128,7 +128,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                     Grade = "D",
                                     PrsStatus = null,
                                     LastUpdatedBy = "System",
-                                    LastUpdatedOn = System.DateTime.UtcNow
+                                    LastUpdatedOn = DateTime.UtcNow
                                 }
                             }
                         }
@@ -147,18 +147,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                     Id = 100,
                                     SeriesId = 1,
                                     SeriesName = "Summer 2022",
-                                    AppealEndDate = System.DateTime.UtcNow.AddDays(30),
+                                    AppealEndDate = DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
-                                    LastUpdatedOn = System.DateTime.UtcNow,
+                                    LastUpdatedOn = DateTime.UtcNow,
                                 },
                                 new Assessment
                                 {
                                     Id = 101,
                                     SeriesId = 2,
                                     SeriesName = "Summer 2021",
-                                    AppealEndDate = System.DateTime.UtcNow.AddDays(30),
+                                    AppealEndDate = DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
-                                    LastUpdatedOn = System.DateTime.UtcNow,
+                                    LastUpdatedOn = DateTime.UtcNow,
                                     Results = new List<Result>
                                     {
                                         new Result
@@ -167,7 +167,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                             Grade = "Merit",
                                             PrsStatus = null,
                                             LastUpdatedBy = "System",
-                                            LastUpdatedOn = System.DateTime.UtcNow
+                                            LastUpdatedOn = DateTime.UtcNow
                                         }
                                     }
                                 }
@@ -186,9 +186,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                     Id = 102,
                                     SeriesId = 2,
                                     SeriesName = "Summer 2021",
-                                    AppealEndDate = System.DateTime.UtcNow.AddDays(-30),
+                                    AppealEndDate = DateTime.UtcNow.AddDays(-30),
                                     LastUpdatedBy = "System",
-                                    LastUpdatedOn = System.DateTime.UtcNow,
+                                    LastUpdatedOn = DateTime.UtcNow,
                                     Results = new List<Result>
                                     {
                                         new Result
