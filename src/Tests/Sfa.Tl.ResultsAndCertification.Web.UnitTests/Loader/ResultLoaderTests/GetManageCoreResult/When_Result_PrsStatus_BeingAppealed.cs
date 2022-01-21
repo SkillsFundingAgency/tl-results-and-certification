@@ -120,7 +120,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
 
             var expectedResult = expectedPathwayAsssessment.Results.FirstOrDefault();
             ActualResult.ResultId.Should().Be(expectedResult.Id);
-            ActualResult.SelectedGradeCode.Should().Be(expectedResult.Grade);
+            ActualResult.SelectedGradeCode.Should().Be(expectedResult.GradeCode);
             ActualResult.PathwayPrsStatus.Should().Be(expectedResult.PrsStatus);
             ActualResult.IsValid.Should().BeFalse();
 

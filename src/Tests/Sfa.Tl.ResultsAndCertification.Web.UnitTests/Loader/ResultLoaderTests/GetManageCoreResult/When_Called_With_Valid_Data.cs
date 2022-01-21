@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
 
             ActualResult.PathwayDisplayName.Should().Be($"{expectedApiResultDetails.Pathway.Name} ({expectedApiResultDetails.Pathway.LarId})");
             ActualResult.ResultId.Should().BeNull();
-            ActualResult.SelectedGradeCode.Should().Be(string.Empty);
+            ActualResult.SelectedGradeCode.Should().BeNull();
             ActualResult.PathwayPrsStatus.Should().BeNull();
             ActualResult.IsValid.Should().BeTrue();
 

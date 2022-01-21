@@ -70,29 +70,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} for {1}.
-        /// </summary>
-        public static string Core_Assessment_Title {
-            get {
-                return ResourceManager.GetString("Core_Assessment_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Core component: {0}.
         /// </summary>
         public static string Core_Component {
             get {
                 return ResourceManager.GetString("Core_Component", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select the core result.
-        /// </summary>
-        public static string Heading {
-            get {
-                return ResourceManager.GetString("Heading", resourceCulture);
             }
         }
         
@@ -106,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Not received.
+        ///   Looks up a localized string similar to This learner&apos;s grade has not been received.
         /// </summary>
         public static string Option_Not_Received {
             get {
@@ -117,9 +99,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         /// <summary>
         ///   Looks up a localized string similar to Add a result for {0}.
         /// </summary>
-        public static string Page_Heading {
+        public static string Page_Heading_Add_Result {
             get {
-                return ResourceManager.GetString("Page_Heading", resourceCulture);
+                return ResourceManager.GetString("Page_Heading_Add_Result", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change a result for {0}.
+        /// </summary>
+        public static string Page_Heading_Change_Result {
+            get {
+                return ResourceManager.GetString("Page_Heading_Change_Result", resourceCulture);
             }
         }
         
@@ -133,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change core result page.
+        ///   Looks up a localized string similar to Change core result.
         /// </summary>
         public static string Page_Title_Change_Result {
             get {

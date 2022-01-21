@@ -45,6 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             ViewModel = new ManageCoreResultViewModel
             {
                 ProfileId = 1,
+                AssessmentId = 1,
                 ResultId = 11,
                 SelectedGradeCode = "PCG1"
             };

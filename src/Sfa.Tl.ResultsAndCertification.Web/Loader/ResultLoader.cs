@@ -154,13 +154,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         }
 
         public async Task<bool?> IsCoreResultChangedAsync(long aoUkprn, ManageCoreResultViewModel viewModel)
-        {
-            var existingResult = await _internalApiClient.GetResultDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
+        {            
+            var existingResult = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
 
-            if (existingResult == null || existingResult.PathwayResultId != viewModel.ResultId)
+            if (existingResult == null)
                 return null;
 
-            var isResultChanged = !existingResult.PathwayResultCode.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCultureIgnoreCase);
+            var assessment = existingResult.Pathway.PathwayAssessments.FirstOrDefault(p => p.Id == viewModel.AssessmentId);
+            var result = assessment?.Results?.FirstOrDefault(r => r.Id == viewModel.ResultId);
+
+            if (result == null)
+                return null;
+
+            var isResultChanged = !result.GradeCode.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCultureIgnoreCase);
             return isResultChanged;
         }
 

@@ -120,29 +120,26 @@
   <data name="Change_Button" xml:space="preserve">
     <value>Change</value>
   </data>
-  <data name="Core_Assessment_Title" xml:space="preserve">
-    <value>{0} for {1}</value>
-  </data>
   <data name="Core_Component" xml:space="preserve">
     <value>Core component: {0}</value>
-  </data>
-  <data name="Heading" xml:space="preserve">
-    <value>Select the core result</value>
   </data>
   <data name="Learner_Details" xml:space="preserve">
     <value>Learners details</value>
   </data>
   <data name="Option_Not_Received" xml:space="preserve">
-    <value>Not received</value>
+    <value>This learner's grade has not been received</value>
   </data>
-  <data name="Page_Heading" xml:space="preserve">
+  <data name="Page_Heading_Add_Result" xml:space="preserve">
     <value>Add a result for {0}</value>
+  </data>
+  <data name="Page_Heading_Change_Result" xml:space="preserve">
+    <value>Change a result for {0}</value>
   </data>
   <data name="Page_Title_Add_Result" xml:space="preserve">
     <value>Select core result</value>
   </data>
   <data name="Page_Title_Change_Result" xml:space="preserve">
-    <value>Change core result page</value>
+    <value>Change core result</value>
   </data>
   <data name="Select_The_Grade_For" xml:space="preserve">
     <value>Select the grade for {0}</value>

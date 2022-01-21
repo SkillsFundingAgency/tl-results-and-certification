@@ -208,6 +208,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerServic
                                 {
                                     Id = expectedPathwayResult.Id,
                                     Grade = expectedPathwayResult.TlLookup.Value,
+                                    GradeCode = expectedPathwayResult.TlLookup.Code,
                                     PrsStatus = expectedPathwayResult.PrsStatus,
                                     LastUpdatedBy = expectedPathwayResult.CreatedBy,
                                     LastUpdatedOn = expectedPathwayResult.CreatedOn

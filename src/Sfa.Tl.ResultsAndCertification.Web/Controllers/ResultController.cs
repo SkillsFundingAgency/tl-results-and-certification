@@ -329,9 +329,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("change-core-result", Name = RouteConstants.SubmitChangeCoreResult)]
+        [Route("change-core-result/{profileId}/{assessmentId}", Name = RouteConstants.SubmitChangeCoreResult)]
         public async Task<IActionResult> ChangeCoreResultAsync(ManageCoreResultViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                var resultsViewModel = await _resultLoader.GetManageCoreResultAsync(User.GetUkPrn(), model.ProfileId, model.AssessmentId, isChangeMode: true);
+                return View(resultsViewModel);
+            }
+
             var isResultChanged = await _resultLoader.IsCoreResultChangedAsync(User.GetUkPrn(), model);
             if (!isResultChanged.HasValue)
             {

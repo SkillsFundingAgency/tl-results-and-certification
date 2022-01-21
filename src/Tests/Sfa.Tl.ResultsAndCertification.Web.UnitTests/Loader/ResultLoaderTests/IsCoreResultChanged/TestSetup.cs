@@ -3,8 +3,8 @@ using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
@@ -22,12 +22,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
         protected ILogger<ResultLoader> Logger;
         public IBlobStorageService BlobStorageService { get; private set; }
 
+        protected readonly int ProfileId = 1;
         protected readonly long AoUkprn = 12345678; 
         protected ResultLoader Loader;
-        protected ManageCoreResultViewModel ViewModel = new ManageCoreResultViewModel { ResultId = 1, SelectedGradeCode = "PCG1" };
+        protected ManageCoreResultViewModel ViewModel = new ManageCoreResultViewModel { ProfileId = 1, ResultId = 1, SelectedGradeCode = "PCG1" };
         protected bool? ActualResult;
 
-        protected ResultDetails expectedApiResultDetails;
+        protected LearnerRecord expectedApiResultDetails;
         protected IList<LookupData> expectedApiLookupData;
 
         public override void Setup()
