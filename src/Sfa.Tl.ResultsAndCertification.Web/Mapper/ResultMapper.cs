@@ -121,7 +121,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.Id))
                 .ForMember(d => d.AssessmentSeries, opts => opts.MapFrom(s => s.SeriesName))
                 .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AppealEndDate))
-                .ForMember(d => d.Grade, opts => opts.MapFrom(s => !s.Results.Any() ? null : s.Results.FirstOrDefault().Grade)) // TODO: Tech Debt result should be flat in LearnerDetails?
+                .ForMember(d => d.Grade, opts => opts.MapFrom(s => !s.Results.Any() ? null : s.Results.FirstOrDefault().Grade)) // TODO: Tech Debt result should be a single item rather IEnumerable in Assessments Contract.
                 .ForMember(d => d.LastUpdated, opts => opts.MapFrom(s => !s.Results.Any() ? null : s.Results.FirstOrDefault().LastUpdatedOn.ToDobFormat()))
                 .ForMember(d => d.UpdatedBy, opts => opts.MapFrom(s => !s.Results.Any() ? null : s.Results.FirstOrDefault().LastUpdatedBy))
                 .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => !s.Results.Any() ? null : s.Results.FirstOrDefault().PrsStatus));

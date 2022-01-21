@@ -110,7 +110,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (response.Pathway.Status != RegistrationPathwayStatus.Active)
                 return null;
 
-            return _mapper.Map<ResultDetailsViewModelNew>(response);
+            // Below code is to set the ComponentType property that is used to render the HiddenActionText in the page.
+            var viewModel = _mapper.Map<ResultDetailsViewModelNew>(response);
+            viewModel.CoreComponentExams.ToList().ForEach(x => { x.ComponentType = ComponentType.Core; });
+            viewModel.SpecialismComponents.ToList().ForEach(x => { x.SpecialismComponentExams.ToList().ForEach(s => { s.ComponentType = ComponentType.Specialism; }); });
+
+            return viewModel;
         }
 
         public async Task<AddResultResponse> AddCoreResultAsync(long aoUkprn, ManageCoreResultViewModel viewModel)

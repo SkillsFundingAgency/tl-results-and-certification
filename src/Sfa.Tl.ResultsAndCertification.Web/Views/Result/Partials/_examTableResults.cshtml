@@ -12,17 +12,17 @@
 
             @if (string.IsNullOrWhiteSpace(Model.Grade))
             {
-                <a class="govuk-link" href="#">@ResultDetails.Add_Result_Action_Link_Text <span class="govuk-visually-hidden">for core</span></a>
+                <a class="govuk-link" href="#">@ResultDetails.Add_Result_Action_Link_Text <span class="govuk-visually-hidden">@String.Format(ResultDetails.Hidden_Text_For_Component, Model.HiddenActionText) </span></a>
             }
             else
             {
                 if (string.IsNullOrWhiteSpace(Model.PrsDisplayText))
                 {
-                    @Model.Grade <a class="govuk-link govuk-!-margin-left-2" href="#">@ResultDetails.Change_Result_Action_Link_Text <span class="govuk-visually-hidden">core result</span></a>
+                    @Model.Grade <a class="govuk-link govuk-!-margin-left-2" href="#">@ResultDetails.Change_Result_Action_Link_Text <span class="govuk-visually-hidden">@String.Format(ResultDetails.Hidden_Text_Component_Result, Model.HiddenActionText) </span></a>
                 }
                 else
                 {
-                    @Model.Grade @Html.Raw(Model.PrsDisplayText) 
+                    @Html.Raw(string.Format("{0} {1}", Model.Grade, Model.PrsDisplayText));
                 }
             }
             
@@ -37,9 +37,3 @@
         @Model.UpdatedBy
     </td>
 </tr>
-
-@*
-TODO:
-1. space before prs status
-2. hidden text
-3. Create this as VC*@

@@ -170,6 +170,22 @@
   <data name="Hidden_Action_Text_For_Core" xml:space="preserve">
     <value> for core</value>
   </data>
+  <data name="Hidden_Text_Component_Result" xml:space="preserve">
+    <value>{0} result</value>
+    <comment>new</comment>
+  </data>
+  <data name="Hidden_Text_Core" xml:space="preserve">
+    <value>core</value>
+    <comment>New</comment>
+  </data>
+  <data name="Hidden_Text_For_Component" xml:space="preserve">
+    <value>for {0}</value>
+    <comment>new</comment>
+  </data>
+  <data name="Hidden_Text_Specialism" xml:space="preserve">
+    <value>specialilsm</value>
+    <comment>New</comment>
+  </data>
   <data name="Hidden_Value_Text_For" xml:space="preserve">
     <value>for </value>
   </data>
@@ -205,27 +221,35 @@
   </data>
   <data name="Table_Column_Exam_Period" xml:space="preserve">
     <value>Exam period</value>
+    <comment>new</comment>
   </data>
   <data name="Table_Column_Grade" xml:space="preserve">
     <value>Grade</value>
+    <comment>new</comment>
   </data>
   <data name="Table_Column_Hidden_Exam_Period" xml:space="preserve">
     <value>Exam period</value>
+    <comment>new</comment>
   </data>
   <data name="Table_Column_Hidden_Grade" xml:space="preserve">
     <value>Grade</value>
+    <comment>new</comment>
   </data>
   <data name="Table_Column_Hidden_Last_Updated" xml:space="preserve">
     <value>Last updated</value>
+    <comment>new</comment>
   </data>
   <data name="Table_Column_Hidden_Updated_By" xml:space="preserve">
     <value>Updated by</value>
+    <comment>new</comment>
   </data>
   <data name="Table_Column_Last_Updated" xml:space="preserve">
     <value>Last updated</value>
+    <comment>new</comment>
   </data>
   <data name="Table_Column_Updated_By" xml:space="preserve">
     <value>Updated by</value>
+    <comment>new</comment>
   </data>
   <data name="Title_Assessment_Series" xml:space="preserve">
     <value>Exam period</value>

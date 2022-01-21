@@ -1,6 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using System;
+using ResultDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result.ResultDetails;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 {
@@ -15,6 +16,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public DateTime AppealEndDate { get; set; }
         public PrsStatus? PrsStatus { get; set; }
 
-        public string HiddenActionText { get; set; } // TODO:
+        // Below two properties are used to render the HiddenActionText in the page.
+        public ComponentType ComponentType { get; set; }
+        public string HiddenActionText { get { return ComponentType == ComponentType.Core ? ResultDetailsContent.Hidden_Text_Core : ResultDetailsContent.Hidden_Text_Specialism; } }
     }
 }

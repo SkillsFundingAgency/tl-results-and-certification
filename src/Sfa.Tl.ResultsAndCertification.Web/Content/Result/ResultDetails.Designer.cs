@@ -214,6 +214,42 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} result.
+        /// </summary>
+        public static string Hidden_Text_Component_Result {
+            get {
+                return ResourceManager.GetString("Hidden_Text_Component_Result", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to core.
+        /// </summary>
+        public static string Hidden_Text_Core {
+            get {
+                return ResourceManager.GetString("Hidden_Text_Core", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to for {0}.
+        /// </summary>
+        public static string Hidden_Text_For_Component {
+            get {
+                return ResourceManager.GetString("Hidden_Text_For_Component", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to specialilsm.
+        /// </summary>
+        public static string Hidden_Text_Specialism {
+            get {
+                return ResourceManager.GetString("Hidden_Text_Specialism", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to for .
         /// </summary>
         public static string Hidden_Value_Text_For {
