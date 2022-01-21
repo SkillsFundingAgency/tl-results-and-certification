@@ -97,6 +97,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learners details.
+        /// </summary>
+        public static string Learner_Details {
+            get {
+                return ResourceManager.GetString("Learner_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not received.
         /// </summary>
         public static string Option_Not_Received {
@@ -192,6 +201,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static string Title_Uln_Text {
             get {
                 return ResourceManager.GetString("Title_Uln_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select the grade.
+        /// </summary>
+        public static string Validation_Select_Grade_Required_Message {
+            get {
+                return ResourceManager.GetString("Validation_Select_Grade_Required_Message", resourceCulture);
             }
         }
     }

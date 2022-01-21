@@ -143,7 +143,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (grades == null || !grades.Any())
                 return null;
 
-            grades.Insert(0, new LookupData { Code = string.Empty, Value = Content.Result.ManageCoreResult.Option_Not_Received });
+            if(isChangeMode)
+                grades.Insert(grades.Count, new LookupData { Code = string.Empty, Value = Content.Result.ManageCoreResult.Option_Not_Received });
 
             return _mapper.Map<ManageCoreResultViewModel>(response, opt => 
             { 

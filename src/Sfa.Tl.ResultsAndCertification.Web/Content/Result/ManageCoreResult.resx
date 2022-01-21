@@ -129,6 +129,9 @@
   <data name="Heading" xml:space="preserve">
     <value>Select the core result</value>
   </data>
+  <data name="Learner_Details" xml:space="preserve">
+    <value>Learners details</value>
+  </data>
   <data name="Option_Not_Received" xml:space="preserve">
     <value>Not received</value>
   </data>
@@ -161,5 +164,8 @@
   </data>
   <data name="Title_Uln_Text" xml:space="preserve">
     <value>ULN</value>
+  </data>
+  <data name="Validation_Select_Grade_Required_Message" xml:space="preserve">
+    <value>Please select the grade</value>
   </data>
 </root>

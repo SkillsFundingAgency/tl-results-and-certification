@@ -15,9 +15,11 @@
             <input type="hidden" asp-for="ProfileId" />
             <input type="hidden" asp-for="AssessmentId" />
 
+            <partial name="_ValidationSummary" />
+
             <h1 class="govuk-heading-l">@string.Format(ManageCoreResult.Page_Heading, @Model.LearnerName)</h1>
 
-            <dl class="govuk-summary-list govuk-summary-list--no-border" aria-label="Learners details">
+            <dl class="govuk-summary-list govuk-summary-list--no-border" aria-label="@ManageCoreResult.Learner_Details">
                 <vc:summary-item model=Model.SummaryUln></vc:summary-item>
                 <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
                 <vc:summary-item model=Model.SummaryProviderName></vc:summary-item>
@@ -25,7 +27,7 @@
                 <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
             </dl>
 
-            <div class="govuk-form-group">
+            <div class="govuk-form-group" sfa-validation-for="SelectedGradeCode" sfa-validation-class="govuk-form-group--error">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                         <h2 class="govuk-fieldset__heading">
@@ -35,10 +37,10 @@
                     <div id="core-component-hint" class="govuk-hint">
                         @string.Format(ManageCoreResult.Core_Component, @Model.PathwayDisplayName)
                     </div>
-
+                    <span sfa-validation-for="SelectedGradeCode"></span>
                     @foreach (var grade in Model?.Grades?.Select((value, i) => (value, i)))
                     {
-                        var elementId = (grade.i > 0) ? "hasgradeselected-" + grade.i : "hasgradeselected";
+                        var elementId = (grade.i > 0) ? "selectedgradecode-" + grade.i : "selectedgradecode";
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="@elementId" type="radio" asp-for="@Model.SelectedGradeCode" value="@Model.Grades[grade.i].Code">
                             <label class="govuk-label govuk-radios__label" for="@elementId">

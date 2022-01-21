@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using ManageCoreResultContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result.ManageCoreResult;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
@@ -26,8 +27,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public string AssessmentSeries { get; set; }
         public DateTime? AppealEndDate { get; set; }
         public string PathwayDisplayName { get; set; }
-
+        
         public int? ResultId { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(ManageCoreResultContent), ErrorMessageResourceName = "Validation_Select_Grade_Required_Message")]
         public string SelectedGradeCode { get; set; }
         public int? LookupId { get; set; }
         public PrsStatus? PathwayPrsStatus { get; set; }
