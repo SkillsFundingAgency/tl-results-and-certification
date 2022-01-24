@@ -17,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public PrsStatus? PrsStatus { get; set; }
 
         // Below two properties are used to render the HiddenActionText in the page.
+        public int ProfileId { get; set; }
         public ComponentType ComponentType { get; set; }
         public string HiddenActionText { get { return ComponentType == ComponentType.Core ? ResultDetailsContent.Hidden_Text_Core : ResultDetailsContent.Hidden_Text_Specialism; } }
     }

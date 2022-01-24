@@ -228,7 +228,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
         public void Then_Returns_Expected_Results()
         {
             ActualResult.Should().NotBeNull();
-
+            
+            ActualResult.ProfileId.Should().Be(expectedApiResult.ProfileId);
             ActualResult.Uln.Should().Be(expectedApiResult.Uln);
             ActualResult.Firstname.Should().Be(expectedApiResult.Firstname);
             ActualResult.Lastname.Should().Be(expectedApiResult.Lastname);
@@ -254,6 +255,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                 actualExam.LastUpdated.Should().Be(!isResultAvailable ? null : expectedExam.Results.FirstOrDefault().LastUpdatedOn.ToDobFormat());
                 actualExam.UpdatedBy.Should().Be(!isResultAvailable ? null : expectedExam.Results.FirstOrDefault().LastUpdatedBy);
                 actualExam.ComponentType.Should().Be(ComponentType.Core);
+                actualExam.ProfileId.Should().Be(expectedApiResult.ProfileId);
             }
 
             // Specialism Components
@@ -275,6 +277,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                     actualExam.LastUpdated.Should().Be(!isResultAvailable ? null : expectedExam.Results.FirstOrDefault().LastUpdatedOn.ToDobFormat());
                     actualExam.UpdatedBy.Should().Be(!isResultAvailable ? null : expectedExam.Results.FirstOrDefault().LastUpdatedBy);
                     actualExam.ComponentType.Should().Be(ComponentType.Specialism);
+                    actualExam.ProfileId.Should().Be(expectedApiResult.ProfileId);
                 }
             }
         }
