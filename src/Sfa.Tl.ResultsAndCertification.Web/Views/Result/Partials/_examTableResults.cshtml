@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual.ComponentExamViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Result
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 <tr class="govuk-table__row">
     <td class="govuk-table__cell">
@@ -12,13 +13,13 @@
 
             @if (string.IsNullOrWhiteSpace(Model.Grade))
             {
-                <a class="govuk-link" href="#">@ResultDetails.Add_Result_Action_Link_Text <span class="govuk-visually-hidden">@String.Format(ResultDetails.Hidden_Text_For_Component, Model.HiddenActionText) </span></a>
+                <a class="govuk-link" asp-route="@Model.ResultRouteName" asp-all-route-data="@Model.ResultRouteAttributes">@ResultDetails.Add_Result_Action_Link_Text <span class="govuk-visually-hidden">@String.Format(ResultDetails.Hidden_Text_For_Component, Model.HiddenActionText) </span></a>
             }
             else
             {
                 if (string.IsNullOrWhiteSpace(Model.PrsDisplayText))
                 {
-                    @Model.Grade <a class="govuk-link govuk-!-margin-left-2" href="#">@ResultDetails.Change_Result_Action_Link_Text <span class="govuk-visually-hidden">@String.Format(ResultDetails.Hidden_Text_Component_Result, Model.HiddenActionText) </span></a>
+                    @Model.Grade <a class="govuk-link govuk-!-margin-left-2" asp-route="@Model.ResultRouteName" asp-all-route-data="@Model.ResultRouteAttributes">@ResultDetails.Change_Result_Action_Link_Text <span class="govuk-visually-hidden">@String.Format(ResultDetails.Hidden_Text_Component_Result, Model.HiddenActionText) </span></a>
                 }
                 else
                 {
