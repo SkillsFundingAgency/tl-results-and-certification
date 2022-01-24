@@ -1,12 +1,10 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System;
-using System.Collections.Generic;
 using Xunit;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using ResultDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result.ResultDetails;
@@ -16,34 +14,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
     public class When_Called_With_Valid_Data : TestSetup
     {
         private ResultDetailsViewModel _mockResult = null;
-        private Dictionary<string, string> _routeAttributes;
 
         public override void Given()
         {
             _mockResult = new ResultDetailsViewModel
             {
-                //ProfileId = 1,
+                ProfileId = 1,
                 Uln = 1234567890,
                 Firstname = "First",
                 Lastname = "Last",
                 DateofBirth = DateTime.Now.AddYears(-30),
                 ProviderName = "Test Provider",
                 ProviderUkprn = 1234567891,
-                TlevelTitle = "Tlevel title",
-                //PathwayDisplayName = "Pathway (7654321)",
-                //PathwayAssessmentSeries = "Summer 2021",
-                //AppealEndDate = DateTime.Today.AddDays(7),
-                //PathwayAssessmentId = 11,
-                //PathwayResult = "A",
-                //PathwayResultId = 123, 
-                //PathwayStatus = RegistrationPathwayStatus.Active
+                TlevelTitle = "Tlevel title"
             };
-
-            //_routeAttributes =  new Dictionary<string, string> 
-            //{ 
-            //    { Constants.ProfileId, ProfileId.ToString() }, 
-            //    { Constants.AssessmentId, _mockResult.PathwayAssessmentId.ToString() } 
-            //};
 
             ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId).Returns(_mockResult);
         }
@@ -66,6 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             var model = viewResult.Model as ResultDetailsViewModel;
             model.Should().NotBeNull();
 
+            model.ProfileId.Should().Be(_mockResult.ProfileId);
             model.Uln.Should().Be(_mockResult.Uln);
             model.Firstname.Should().Be(_mockResult.Firstname);
             model.Lastname.Should().Be(_mockResult.Lastname);
@@ -75,14 +60,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.ProviderUkprn.Should().Be(_mockResult.ProviderUkprn);
             model.ProviderDisplayName.Should().Be($"{_mockResult.ProviderName}<br/>({_mockResult.ProviderUkprn})");
             model.TlevelTitle.Should().Be(_mockResult.TlevelTitle);
-            //model.PathwayDisplayName.Should().Be(_mockResult.PathwayDisplayName);
-            //model.PathwayAssessmentSeries.Should().Be(_mockResult.PathwayAssessmentSeries);
-            //model.AppealEndDate.Should().Be(_mockResult.AppealEndDate);
-            //model.PathwayAssessmentId.Should().Be(_mockResult.PathwayAssessmentId);
-            //model.PathwayResult.Should().Be(_mockResult.PathwayResult);
-            //model.PathwayStatus.Should().Be(_mockResult.PathwayStatus);
-            //model.IsPathwayAssessmentEntryRegistered.Should().Be(_mockResult.IsPathwayAssessmentEntryRegistered);
-            //model.IsResultAddOrChangeAllowed.Should().Be(_mockResult.IsResultAddOrChangeAllowed);
 
             // Uln
             model.SummaryUln.Title.Should().Be(ResultDetailsContent.Title_Uln_Text);
@@ -97,29 +74,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.SummaryDateofBirth.Value.Should().Be(_mockResult.DateofBirth.ToDobFormat());
 
             // ProviderName
-            //model.SummaryProvider.Title.Should().Be(ResultDetailsContent.Title_Provider_Text);
-            //model.SummaryProvider.Value.Should().Be(_mockResult.ProviderDisplayName);
+            model.SummaryProviderName.Title.Should().Be(ResultDetailsContent.Title_Provider_Name_Text);
+            model.SummaryProviderName.Value.Should().Be(_mockResult.ProviderName);
+
+            // ProviderUkprn
+            model.SummaryProviderUkprn.Title.Should().Be(ResultDetailsContent.Title_Provider_Ukprn_Text);
+            model.SummaryProviderUkprn.Value.Should().Be(_mockResult.ProviderUkprn.ToString());
 
             // TLevelTitle
             model.SummaryTlevelTitle.Title.Should().Be(ResultDetailsContent.Title_TLevel_Text);
             model.SummaryTlevelTitle.Value.Should().Be(_mockResult.TlevelTitle);
 
-            // ExamPeriod
-            //model.SummaryAssessmentSeries.Title.Should().Be(ResultDetailsContent.Title_Assessment_Series);
-            //model.SummaryAssessmentSeries.Value.Should().Be(_mockResult.PathwayAssessmentSeries);
-
-            //// Summary CoreResult
-            //model.SummaryPathwayGrade.Should().NotBeNull();
-            //model.SummaryPathwayGrade.Title.Should().Be(ResultDetailsContent.Title_Pathway_Grade);
-            //model.SummaryPathwayGrade.Value.Should().Be(_mockResult.PathwayResult);
-            //model.SummaryPathwayGrade.Value2.Should().BeNull();
-            //model.SummaryPathwayGrade.Value2CustomCssClass.Should().BeNull();
-            //model.SummaryPathwayGrade.RenderActionColumn.Should().Be(_mockResult.IsResultAddOrChangeAllowed);
-            //model.SummaryPathwayGrade.ActionText.Should().Be(ResultDetailsContent.Change_Result_Action_Link_Text);
-            //model.SummaryPathwayGrade.RenderHiddenActionText.Should().Be(true);
-            //model.SummaryPathwayGrade.HiddenActionText.Should().Be(ResultDetailsContent.Hidden_Action_Text_Core);
-            //model.SummaryPathwayGrade.HiddenValueText.Should().Be(ResultDetailsContent.Hidden_Value_Text_For); 
-            //model.SummaryPathwayGrade.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             // Breadcrumbs
             model.Breadcrumb.Should().NotBeNull();

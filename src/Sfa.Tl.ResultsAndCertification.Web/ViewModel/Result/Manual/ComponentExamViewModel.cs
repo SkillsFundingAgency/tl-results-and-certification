@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public DateTime AppealEndDate { get; set; }
         public PrsStatus? PrsStatus { get; set; }
 
-        // Below two properties are used to render the HiddenActionText in the page.
+        // Below properties are used to render the HiddenActionText in the page.
         public int ProfileId { get; set; }
         public ComponentType ComponentType { get; set; }
         

@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If a result is marked as ‘pending’ the grade cannot be changed here. A review or an appeal outcome must be entered in the reviews and appeals section of this service..
+        ///   Looks up a localized string similar to If a result is marked as ‘appeal’ the grade cannot be changed here. A review or an appeal outcome must be entered in the reviews and appeals section of this service..
         /// </summary>
         public static string Details_Summary_Text_Result_Pending_Result_Cannot_Be_Changed {
             get {
