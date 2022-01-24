@@ -199,6 +199,7 @@
         public const string SubmitChangeCoreResult = "SubmitChangeCoreResult";
         public const string AddCoreResult = "AddCoreResult";
         public const string SubmitAddCoreResult = "SubmitAddCoreResult";
+        public const string AddSpecialismResult = "AddSpecialismResult";
 
         // Search Results
         public const string SearchResults = "SearchResults";

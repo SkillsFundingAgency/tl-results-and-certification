@@ -324,6 +324,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ReregistrationConfirmation.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Result\ManageSpecialismResult.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ManageSpecialismResult.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Result\ResultsNoRecordsFound.Designer.cs">
       <DependentUpon>ResultsNoRecordsFound.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -1169,6 +1174,10 @@
     <EmbeddedResource Update="Content\Registration\ReregistrationConfirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ReregistrationConfirmation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Result\ManageSpecialismResult.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ManageSpecialismResult.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Result\ResultsNoRecordsFound.resx">
       <LastGenOutput>ResultsNoRecordsFound.Designer.cs</LastGenOutput>

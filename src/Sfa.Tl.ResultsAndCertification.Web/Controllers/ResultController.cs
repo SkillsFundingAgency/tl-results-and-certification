@@ -328,6 +328,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("select-specialism-result/{profileId}/{assessmentId}", Name = RouteConstants.AddSpecialismResult)]
+        public async Task<IActionResult> AddSpecialismResultAsync(int profileId, int assessmentId)
+        {
+            var viewModel = await _resultLoader.GetManageSpecialismResultAsync(User.GetUkPrn(), profileId, assessmentId, isChangeMode: false);
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No details found. Method: GetManageSpecialismResultViewModelAsync({User.GetUkPrn()}, {profileId}, {assessmentId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
         [Route("results-generating-download", Name = RouteConstants.ResultsGeneratingDownload)]
         public IActionResult ResultsGeneratingDownload()
         {

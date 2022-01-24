@@ -26,5 +26,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<ChangeResultResponse> ChangeCoreResultAsync(long aoUkprn, ManageCoreResultViewModel viewModel);
         Task<IList<DataExportResponse>> GenerateResultsExportAsync(long aoUkprn, string requestedBy);
         Task<Stream> GetResultsDataFileAsync(long aoUkprn, Guid blobUniqueReference, ComponentType componentType);
+        Task<ManageSpecialismResultViewModel> GetManageSpecialismResultAsync(long aoUkprn, int profileId, int assessmentId, bool isChangeMode);
     }
 }

@@ -186,6 +186,32 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.ChangeResultAsync(request);
         }
 
+        public async Task<ManageSpecialismResultViewModel> GetManageSpecialismResultAsync(long aoUkprn, int profileId, int assessmentId, bool isChangeMode)
+        {
+            var response = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId, RegistrationPathwayStatus.Active);
+
+            if (response == null)
+                return null;
+
+            var specialism = response.Pathway.Specialisms.FirstOrDefault(s => s.Assessments.Any(a => a.Id == assessmentId));
+            var assessment = specialism?.Assessments?.FirstOrDefault(sa => sa.Id == assessmentId);
+            var hasResult = assessment?.Results?.Any() ?? false;
+
+            if (assessment == null || (!isChangeMode && hasResult) || (isChangeMode && !hasResult))
+                return null;
+
+            var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.SpecialismComponentGrade);
+            if (grades == null || !grades.Any())
+                return null;
+
+            return _mapper.Map<ManageSpecialismResultViewModel>(response, opt =>
+            {
+                opt.Items["grades"] = grades;
+                opt.Items["specialism"] = specialism;
+                opt.Items["assessment"] = assessment;
+            });
+        }
+
         public async Task<IList<DataExportResponse>> GenerateResultsExportAsync(long aoUkprn, string requestedBy)
         {
             return await _internalApiClient.GenerateDataExportAsync(aoUkprn, DataExportType.Results, requestedBy);

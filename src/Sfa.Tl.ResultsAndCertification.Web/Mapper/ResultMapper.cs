@@ -127,6 +127,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.LastUpdated, opts => opts.MapFrom(s => !s.Results.Any() ? null : s.Results.FirstOrDefault().LastUpdatedOn.ToDobFormat()))
                 .ForMember(d => d.UpdatedBy, opts => opts.MapFrom(s => !s.Results.Any() ? null : s.Results.FirstOrDefault().LastUpdatedBy))
                 .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => !s.Results.Any() ? null : s.Results.FirstOrDefault().PrsStatus));
+
+            CreateMap<LearnerRecord, ManageSpecialismResultViewModel>()
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))
+                .ForMember(d => d.Lastname, opts => opts.MapFrom(s => s.Lastname))
+                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
+                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.Pathway.Provider.Name))
+                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.Pathway.Provider.Ukprn))
+                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.Pathway.Title))
+                .ForMember(d => d.SpecialismName, opts => opts.MapFrom((src, dest, destMember, context) => ((Specialism)context.Items["specialism"]).Name))
+                .ForMember(d => d.SpecialismDisplayName, opts => opts.MapFrom((src, dest, destMember, context) => $"{((Specialism)context.Items["specialism"]).Name} ({((Specialism)context.Items["specialism"]).LarId})"))
+                .ForMember(d => d.AssessmentSeries, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).SeriesName?.ToLowerInvariant()))
+                .ForMember(d => d.AppealEndDate, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.AppealEndDate))
+                .ForMember(d => d.AssessmentId, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.Id))
+                .ForMember(d => d.ResultId, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).Results.FirstOrDefault()?.Id))
+                .ForMember(d => d.PrsStatus, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).Results.FirstOrDefault()?.PrsStatus))
+                .ForMember(d => d.Grades, opts => opts.MapFrom((src, dest, destMember, context) => (IList<LookupData>)context.Items["grades"]));
         }
     }
 }
