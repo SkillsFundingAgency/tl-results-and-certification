@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
@@ -29,13 +30,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 TlevelTitle = "Tlevel title"
             };
 
-            ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId).Returns(_mockResult);
+            ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(_mockResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            ResultLoader.Received(1).GetResultDetailsAsync(AoUkprn, ProfileId);
+            ResultLoader.Received(1).GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active);
         }
 
         [Fact]

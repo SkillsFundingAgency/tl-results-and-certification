@@ -33,6 +33,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 
         // Specialism Components
         public IList<SpecialismComponentViewModel> SpecialismComponents { get; set; }
+        
+        // TODO: Below pro- inprogress. 
+        public bool ShowMultiSpecialism
+        {
+            get
+            {
+                // hasMoreThanOneSpecialism && NoneHasAssessmentEntries
+                return SpecialismComponents.Count > 1 && SpecialismComponents.All(x => !x.IsSpecialismAssessmentEntryRegistered);
+            }
+        }
+
+        public SpecialismComponentViewModel MultiSpecialism 
+        { 
+            get 
+            {
+                if (!ShowMultiSpecialism) return null;
+                return new SpecialismComponentViewModel 
+                {
+                    SpecialismComponentDisplayName = string.Join(Constants.AndSeperator, SpecialismComponents.Select(x => x.SpecialismComponentDisplayName))
+                }; 
+            } 
+        }
 
         public NotificationBannerModel SuccessBanner { get; set; }
 

@@ -215,13 +215,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                 }
             };
 
-            InternalApiClient.GetLearnerRecordAsync(AoUkprn, ProfileId).Returns(expectedApiResult);
+            InternalApiClient.GetLearnerRecordAsync(AoUkprn, ProfileId, CoreStatus).Returns(expectedApiResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            InternalApiClient.Received(1).GetLearnerRecordAsync(AoUkprn, ProfileId);
+            InternalApiClient.Received(1).GetLearnerRecordAsync(AoUkprn, ProfileId, CoreStatus);
         }
 
         [Fact]

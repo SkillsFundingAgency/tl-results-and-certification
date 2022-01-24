@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
@@ -18,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
         protected readonly int ProfileId = 1;
         protected readonly long Uln = 1234567890;
         protected readonly int ProviderId = 1;
+        protected RegistrationPathwayStatus CoreStatus = RegistrationPathwayStatus.Active;
 
         protected IResultsAndCertificationInternalApiClient InternalApiClient;
         protected IMapper Mapper;
@@ -42,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetResultDetailsAsync(AoUkprn, ProfileId);
+            ActualResult = await Loader.GetResultDetailsAsync(AoUkprn, ProfileId, CoreStatus);
         }
     }
 }
