@@ -98,10 +98,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<ResultNoAssessmentEntryViewModel>(resultDetails);
         }
 
-        public async Task<ResultDetailsViewModel> GetResultDetailsAsync(long aoUkprn, int profileId)
+        public async Task<ResultDetailsViewModel> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            var response = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId);
-            if (response.Pathway.Status != RegistrationPathwayStatus.Active)
+            var response = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId, status);
+            if (response == null || response.Pathway.Status != RegistrationPathwayStatus.Active)
                 return null;
 
             // Below code is to set the ComponentType property which is used to render the ActionText dependent information.

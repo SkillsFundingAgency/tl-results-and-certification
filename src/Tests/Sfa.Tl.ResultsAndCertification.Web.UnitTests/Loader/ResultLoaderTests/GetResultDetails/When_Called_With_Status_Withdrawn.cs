@@ -10,23 +10,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
     {
         public override void Given()
         {
+            CoreStatus = RegistrationPathwayStatus.Withdrawn;
             expectedApiResult = new LearnerRecord
             {
                 ProfileId = 1,
                 Pathway = new Pathway
                 {
                     Id = 2,
-                    Status = RegistrationPathwayStatus.Withdrawn,
+                    Status = CoreStatus,
                 }
             };
 
-            InternalApiClient.GetLearnerRecordAsync(AoUkprn, ProfileId).Returns(expectedApiResult);
+            InternalApiClient.GetLearnerRecordAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Withdrawn).Returns(expectedApiResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            InternalApiClient.Received(1).GetLearnerRecordAsync(AoUkprn, ProfileId);
+            InternalApiClient.Received(1).GetLearnerRecordAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Withdrawn);
         }
 
         [Fact]

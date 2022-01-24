@@ -233,7 +233,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("learners-results/{profileId}", Name = RouteConstants.ResultDetails)]
         public async Task<IActionResult> ResultDetailsAsync(int profileId)
         {
-            var viewModel = await _resultLoader.GetResultDetailsAsync(User.GetUkPrn(), profileId);
+            var viewModel = await _resultLoader.GetResultDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No result details found. Method: GetResultDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");

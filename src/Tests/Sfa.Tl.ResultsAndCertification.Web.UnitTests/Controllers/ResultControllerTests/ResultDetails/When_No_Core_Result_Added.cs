@@ -40,13 +40,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 }
             };
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, _mockResult.ProfileId.ToString() }, { Constants.AssessmentId, _mockResult.CoreComponentExams[0].AssessmentId.ToString() } };
-            ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId).Returns(_mockResult);
+            ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(_mockResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            ResultLoader.Received(1).GetResultDetailsAsync(AoUkprn, ProfileId);
+            ResultLoader.Received(1).GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active);
         }
 
         [Fact]

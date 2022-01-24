@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System;
@@ -27,14 +28,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             };
 
             var notificationBannerModel = new NotificationBannerModel { Message = _expectedSuccessBannerMessage };
-            ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId).Returns(_mockResult);
+            ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(_mockResult);
             CacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey).Returns(notificationBannerModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            ResultLoader.Received(1).GetResultDetailsAsync(AoUkprn, ProfileId);
+            ResultLoader.Received(1).GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active);
             CacheService.Received(1).GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
         }
 
