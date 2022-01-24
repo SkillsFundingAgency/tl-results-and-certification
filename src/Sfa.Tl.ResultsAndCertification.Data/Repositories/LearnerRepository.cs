@@ -45,6 +45,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 p.Status == RegistrationPathwayStatus.Withdrawn
                            ));
 
+            if (regPathway == null)
+                return null;
+
+            // Sort core and specialism assessments.
+            regPathway.TqPathwayAssessments = regPathway.TqPathwayAssessments?.OrderByDescending(x => x.AssessmentSeriesId).ThenByDescending(x => x.CreatedOn).ToList();
+            regPathway.TqRegistrationSpecialisms?.ToList().ForEach(s => 
+            {
+                s.TqSpecialismAssessments = s.TqSpecialismAssessments?.OrderByDescending(x => x.AssessmentSeriesId).ThenByDescending(x => x.CreatedOn).ToList();
+            });  
+
             return regPathway;
         }
     }
