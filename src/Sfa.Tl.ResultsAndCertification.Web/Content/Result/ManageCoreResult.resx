@@ -120,6 +120,9 @@
   <data name="Banner_Message_For_Result_Added" xml:space="preserve">
     <value>The {0} {1} result has been added</value>
   </data>
+  <data name="Banner_Message_For_Result_Changed" xml:space="preserve">
+    <value>The {0} {1} result has been changed</value>
+  </data>
   <data name="Change_Button" xml:space="preserve">
     <value>Change</value>
   </data>

@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The {0} {1} result has been changed.
+        /// </summary>
+        public static string Banner_Message_For_Result_Changed {
+            get {
+                return ResourceManager.GetString("Banner_Message_For_Result_Changed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change.
         /// </summary>
         public static string Change_Button {

@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual.ManageCoreResultViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Result
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 @{
     ViewData["Title"] = ManageCoreResult.Page_Title_Change_Result;
@@ -15,6 +16,8 @@
             <input type="hidden" asp-for="ProfileId" />
             <input type="hidden" asp-for="AssessmentId" />
             <input type="hidden" asp-for="ResultId" />            
+            <input type="hidden" asp-for="AssessmentSeries" />
+            <input type="hidden" asp-for="PathwayName" />
 
             <partial name="_ValidationSummary" />
 
@@ -41,7 +44,7 @@
                     <span sfa-validation-for="SelectedGradeCode"></span>
                     @foreach (var grade in Model?.Grades?.Select((value, i) => (value, i)))
                     {
-                        if(string.IsNullOrWhiteSpace(grade.value.Code)) {
+                        if(!string.IsNullOrWhiteSpace(grade.value.Code) && grade.value.Code.Equals(Constants.NotReceived, StringComparison.InvariantCultureIgnoreCase)) {
                             <div class="govuk-radios__divider">@ManageCoreResult.Or_Text</div>
                         }
 

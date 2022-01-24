@@ -143,7 +143,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 return null;
 
             if(isChangeMode)
-                grades.Insert(grades.Count, new LookupData { Code = string.Empty, Value = Content.Result.ManageCoreResult.Option_Not_Received });
+                grades.Insert(grades.Count, new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageCoreResult.Option_Not_Received });
 
             return _mapper.Map<ManageCoreResultViewModel>(response, opt => 
             { 
@@ -171,7 +171,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<ChangeResultResponse> ChangeCoreResultAsync(long aoUkprn, ManageCoreResultViewModel viewModel)
         {
-            if (!string.IsNullOrWhiteSpace(viewModel.SelectedGradeCode))
+            if (!string.IsNullOrWhiteSpace(viewModel.SelectedGradeCode) && !viewModel.SelectedGradeCode.Equals(Constants.NotReceived, StringComparison.InvariantCultureIgnoreCase))
             {
                 var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
 
