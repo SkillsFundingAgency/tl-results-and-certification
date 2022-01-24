@@ -12,7 +12,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetManageCoreResult
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetManageSpecialismResult
 {
     public abstract class TestSetup : BaseTest<ResultLoader>
     {
@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
 
         protected bool IsChangeMode = false;
         protected ResultLoader Loader;
-        protected ManageCoreResultViewModel ActualResult;
+        protected ManageSpecialismResultViewModel ActualResult;
 
         protected LearnerRecord expectedApiResultDetails;
         protected IList<LookupData> expectedApiLookupData;
@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetManageCoreResultAsync(AoUkprn, ProfileId, AssessmentId, IsChangeMode);
+            ActualResult = await Loader.GetManageSpecialismResultAsync(AoUkprn, ProfileId, AssessmentId, IsChangeMode);
         }
     }
 }

@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.ResultDetails
 {
-    public class When_No_Core_Result_Added : TestSetup
+    public class When_No_Specialism_Result_Added : TestSetup
     {
         private ResultDetailsViewModel _mockResult = null;
         private Dictionary<string, string> _routeAttributes;
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         {
             _mockResult = new ResultDetailsViewModel
             {
-                ProfileId = 1,
+                ProfileId = ProfileId,
                 Uln = 1234567890,
                 Firstname = "First",
                 Lastname = "Last",
@@ -27,18 +27,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 ProviderName = "Test Provider",
                 ProviderUkprn = 1234567891,
                 TlevelTitle = "Tlevel title",
-                CoreComponentExams = new List<ComponentExamViewModel>
+                SpecialismComponents = new List<SpecialismComponentViewModel>
                 {
-                    new ComponentExamViewModel
+                    new SpecialismComponentViewModel
                     {
-                        ProfileId = ProfileId,
-                        AssessmentId = 1,
-                        ComponentType = ComponentType.Core,
-                        Grade = null
+                        SpecialismComponentDisplayName = "Specialism (1234567)",
+                        SpecialismComponentExams = new List<ComponentExamViewModel>
+                        {
+                            new ComponentExamViewModel
+                            {
+                                ProfileId = ProfileId,
+                                AssessmentId = 1,
+                                ComponentType = ComponentType.Specialism,
+                                Grade = null
+                            }
+                        }
                     }
                 }
             };
-            _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, _mockResult.ProfileId.ToString() }, { Constants.AssessmentId, _mockResult.CoreComponentExams[0].AssessmentId.ToString() } };
+            _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, _mockResult.ProfileId.ToString() }, { Constants.AssessmentId, _mockResult.SpecialismComponents[0].SpecialismComponentExams[0].AssessmentId.ToString() } };
             ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId).Returns(_mockResult);
         }
 
@@ -63,8 +70,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             foreach (var examComponent in _mockResult.CoreComponentExams)
             {
                 examComponent.ProfileId.Should().Be(_mockResult.ProfileId);
-                examComponent.AssessmentId.Should().Be(_mockResult.CoreComponentExams[0].AssessmentId);
-                examComponent.ResultRouteName.Should().Be(RouteConstants.AddCoreResult);
+                examComponent.AssessmentId.Should().Be(_mockResult.SpecialismComponents[0].SpecialismComponentExams[0].AssessmentId);
+                examComponent.ResultRouteName.Should().Be(RouteConstants.AddSpecialismResult);
                 examComponent.ResultRouteAttributes.Should().BeEquivalentTo(_routeAttributes);
             }
         }
