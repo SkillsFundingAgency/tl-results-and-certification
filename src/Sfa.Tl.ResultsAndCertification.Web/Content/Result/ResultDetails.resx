@@ -139,7 +139,7 @@
     <value>An overall T Level result cannot be calculated unless all assessments have grades marked 'final'.</value>
   </data>
   <data name="Details_Summary_Text_Result_Pending_Result_Cannot_Be_Changed" xml:space="preserve">
-    <value>If a result is marked as ‘pending’ the grade cannot be changed here. A review or an appeal outcome must be entered in the reviews and appeals section of this service.</value>
+    <value>If a result is marked as ‘appeal’ the grade cannot be changed here. A review or an appeal outcome must be entered in the reviews and appeals section of this service.</value>
   </data>
   <data name="Email_Subject" xml:space="preserve">
     <value>Request to change a grade marked final</value>
