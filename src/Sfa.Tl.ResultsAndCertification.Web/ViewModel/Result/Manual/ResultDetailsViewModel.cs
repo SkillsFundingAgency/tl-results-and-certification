@@ -24,6 +24,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
             SpecialismComponents = new List<SpecialismComponentViewModel>();
         }
 
+        public int ProfileId { get; set; }
+
         // Core Component
         public string CoreComponentDisplayName { get; set; }
         public bool IsCoreAssessmentEntryRegistered { get { return CoreComponentExams.Any(x => x.AssessmentId > 0); } }

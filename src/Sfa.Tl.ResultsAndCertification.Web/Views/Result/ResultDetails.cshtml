@@ -2,6 +2,8 @@
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Result
 @using Sfa.Tl.ResultsAndCertification.Common.Enum
 @using Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
 @inject IWebConfigurationService ConfigurationService
 
 @{
@@ -44,7 +46,7 @@
         @if (!Model.IsCoreAssessmentEntryRegistered)
         {
             <p class="govuk-body govuk-!-margin-top-5">@ResultDetails.Para_No_Core_Assessments</p>
-            <p class="govuk-body"><a href="#" class="govuk-link">@ResultDetails.Link_Add_Assessment</a></p>
+            <p class="govuk-body"><a id="addCoreAssessmentLink" asp-route="@RouteConstants.AssessmentDetails" asp-route-profileId="@Model.ProfileId" class="govuk-link">@ResultDetails.Link_Add_Assessment</a></p>
         }
         <!-- #endregion -->
 
@@ -77,7 +79,7 @@
             @if (!specialism.IsSpecialismAssessmentEntryRegistered)
             {
                 <p class="govuk-body govuk-!-margin-top-5">@ResultDetails.Para_No_Specialism_Assessments</p>
-                <p class="govuk-body"><a href="#" class="govuk-link">@ResultDetails.Link_Add_Assessment</a></p>
+                <p class="govuk-body"><a id="addSpecialismAssessmentLink" asp-route="@RouteConstants.AssessmentDetails" asp-route-profileId="@Model.ProfileId" class="govuk-link">@ResultDetails.Link_Add_Assessment</a></p>
             }
         }
 
