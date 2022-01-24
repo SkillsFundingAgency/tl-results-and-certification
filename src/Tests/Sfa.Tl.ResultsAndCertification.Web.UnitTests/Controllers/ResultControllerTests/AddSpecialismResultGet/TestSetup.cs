@@ -13,7 +13,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.AddCoreResultGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.AddSpecialismResultGet
 {
     public abstract class TestSetup : BaseTest<ResultController>
     {
@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
 
         public async override Task When()
         {
-            Result = await Controller.AddCoreResultAsync(ProfileId, AssessmentId);
+            Result = await Controller.AddSpecialismResultAsync(ProfileId, AssessmentId);
         }
     }
 }

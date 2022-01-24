@@ -24,10 +24,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         
         public string HiddenActionText { get { return ComponentType == ComponentType.Core ? ResultDetailsContent.Hidden_Text_Core : ResultDetailsContent.Hidden_Text_Specialism; } }
 
-        public string ResultRouteName { get { return ComponentType == ComponentType.Core ? GetPathwayResultRouteName : string.Empty; } }
+        public string ResultRouteName { get { return ComponentType == ComponentType.Core ? GetPathwayResultRouteName : GetSpecialismResultRouteName; } }
         
         public Dictionary<string, string> ResultRouteAttributes { get { return new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, AssessmentId.ToString() } }; } }
 
         private string GetPathwayResultRouteName { get { return string.IsNullOrWhiteSpace(Grade) ? RouteConstants.AddCoreResult : RouteConstants.ChangeCoreResult; } }
+
+        private string GetSpecialismResultRouteName { get { return string.IsNullOrWhiteSpace(Grade) ? RouteConstants.AddSpecialismResult : string.Empty; } }
     }
 }

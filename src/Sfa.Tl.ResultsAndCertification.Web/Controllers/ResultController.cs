@@ -328,6 +328,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("select-specialism-result/{profileId}/{assessmentId}", Name = RouteConstants.AddSpecialismResult)]
+        public async Task<IActionResult> AddSpecialismResultAsync(int profileId, int assessmentId)
+        {
+            var viewModel = await _resultLoader.GetManageSpecialismResultAsync(User.GetUkPrn(), profileId, assessmentId, isChangeMode: false);
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No details found. Method: GetManageSpecialismResultViewModelAsync({User.GetUkPrn()}, {profileId}, {assessmentId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("select-specialism-result/{profileId}/{assessmentId}", Name = RouteConstants.SubmitAddSpecialismResult)]
+        public async Task<IActionResult> AddSpecialismResultAsync(ManageSpecialismResultViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var resultsViewModel = await _resultLoader.GetManageSpecialismResultAsync(User.GetUkPrn(), model.ProfileId, model.AssessmentId, isChangeMode: false);
+                return View(resultsViewModel);
+            }
+
+            return RedirectToRoute(RouteConstants.ResultDetails, new { model.ProfileId });
+        }
+
+        [HttpGet]
         [Route("results-generating-download", Name = RouteConstants.ResultsGeneratingDownload)]
         public IActionResult ResultsGeneratingDownload()
         {
