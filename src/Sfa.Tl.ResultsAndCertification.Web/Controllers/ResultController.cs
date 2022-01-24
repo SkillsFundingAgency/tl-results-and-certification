@@ -283,20 +283,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("result-added-confirmation", Name = RouteConstants.AddResultConfirmation)]
-        public async Task<IActionResult> AddResultConfirmationAsync()
-        {
-            var viewModel = await _cacheService.GetAndRemoveAsync<ResultConfirmationViewModel>(string.Concat(CacheKey, Constants.ResultConfirmationViewModel));
-
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ResultConfirmationViewModel from redis cache in add result confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-            return View(viewModel);
-        }
-
-        [HttpGet]
         [Route("change-core-result/{profileId}/{assessmentId}", Name = RouteConstants.ChangeCoreResult)]
         public async Task<IActionResult> ChangeCoreResultAsync(int profileId, int assessmentId)
         {
@@ -342,26 +328,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("result-change-confirmation", Name = RouteConstants.ChangeResultConfirmation)]
-        public async Task<IActionResult> ChangeResultConfirmationAsync()
-        {
-            var viewModel = await _cacheService.GetAndRemoveAsync<ResultConfirmationViewModel>(string.Concat(CacheKey, Constants.ChangeResultConfirmationViewModel));
-
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ResultConfirmationViewModel from redis cache in change result confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-            return View(viewModel);
-        }
-
-        [HttpGet]
         [Route("results-generating-download", Name = RouteConstants.ResultsGeneratingDownload)]
         public IActionResult ResultsGeneratingDownload()
         {
             return View();
         }
-
 
         [HttpPost]
         [Route("results-generating-download", Name = RouteConstants.SubmitResultsGeneratingDownload)]

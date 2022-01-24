@@ -60,8 +60,7 @@
         public const string ResultWithdrawn = "ResultWithdrawn";
         public const string ResultsSearchCriteria = "ResultsSearchCriteria";
         public const string ResultsUploadSuccessfulViewModel = "ResultsUploadSuccessfulViewModel";
-        public const string ResultConfirmationViewModel = "ResultConfirmationViewModel";
-        public const string ChangeResultConfirmationViewModel = "ChangeResultConfirmationViewModel";
+        public const string ResultConfirmationViewModel = "ResultConfirmationViewModel";        
         public const string AddLearnerRecordConfirmation = "AddLearnerRecordConfirmation";
         public const string SearchLearnerRecordViewModel = "SearchLearnerRecordViewModel";
         public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
