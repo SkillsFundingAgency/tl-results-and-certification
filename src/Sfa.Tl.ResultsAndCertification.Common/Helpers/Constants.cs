@@ -130,6 +130,7 @@
         public const string PipeSeperator = "|";
         public const string AndSeperator = " and ";
         public const string CommaSeperator = ",";
+        public const string NotReceived = "NR";
 
 
         // Function Name Constants

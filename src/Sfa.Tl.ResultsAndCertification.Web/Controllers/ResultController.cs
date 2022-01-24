@@ -335,8 +335,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (response == null || !response.IsSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
-            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ChangeResultConfirmationViewModel), new ResultConfirmationViewModel { Uln = response.Uln, ProfileId = response.ProfileId }, CacheExpiryTime.XSmall);
-            return RedirectToRoute(RouteConstants.ChangeResultConfirmation);
+            var notificationBanner = new NotificationBannerModel { Message = model.SuccessBannerMessage };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.ResultDetails, new { model.ProfileId });
         }
 
         [HttpGet]
