@@ -375,7 +375,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 var specialism = registrationPathway.TqRegistrationSpecialisms.FirstOrDefault(s => s.IsOptedin &&
                                                                                               s.EndDate == null &&
-                                                                                              s.TqSpecialismAssessments.Any(sa => s.Id == addResultRequest.AssessmentId));
+                                                                                              s.TqSpecialismAssessments.Any(sa => sa.Id == addResultRequest.AssessmentId));
 
                 var assessmentEntry = specialism?.TqSpecialismAssessments?.FirstOrDefault(p => p.Id == addResultRequest.AssessmentId && p.IsOptedin && p.EndDate == null);
 

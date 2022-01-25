@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using Xunit;
 using System.Collections.Generic;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
+using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.AddSpecialismResultGet
 {
@@ -27,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 AssessmentId = 11,
                 ResultId = null,
                 SelectedGradeCode = string.Empty,
+                AppealEndDate = DateTime.Now.AddDays(7),
                 Grades = grades
             };
 

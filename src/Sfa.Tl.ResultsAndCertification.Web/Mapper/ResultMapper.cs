@@ -63,6 +63,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Core))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ManageCoreResultViewModel, AddResultRequest>>());
 
+            CreateMap<ManageSpecialismResultViewModel, AddResultRequest>()
+                .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+                .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.AssessmentId))
+                .ForMember(d => d.LookupId, opts => opts.MapFrom(s => s.LookupId))
+                .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Specialism))
+                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ManageSpecialismResultViewModel, AddResultRequest>>());
+
             CreateMap<LearnerRecord, ManageCoreResultViewModel>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
