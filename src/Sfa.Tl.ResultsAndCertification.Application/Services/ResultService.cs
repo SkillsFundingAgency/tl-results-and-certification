@@ -24,15 +24,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IRepository<TlLookup> _tlLookupRepository;
         private readonly IResultRepository _resultRepository;
         private readonly IRepository<TqPathwayResult> _pathwayResultRepository;
+        private readonly IRepository<TqSpecialismResult> _specialismResultRepository;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public ResultService(IRepository<AssessmentSeries> assessmentSeriesRepository, IRepository<TlLookup> tlLookupRepository, IResultRepository resultRepository, IRepository<TqPathwayResult> pathwayResultRepository, IMapper mapper, ILogger<ResultService> logger)
+        public ResultService(IRepository<AssessmentSeries> assessmentSeriesRepository,
+            IRepository<TlLookup> tlLookupRepository,
+            IResultRepository resultRepository,
+            IRepository<TqPathwayResult> pathwayResultRepository,
+            IRepository<TqSpecialismResult> specialismResultRepository,
+            IMapper mapper,
+            ILogger<ResultService> logger)
         {
             _assessmentSeriesRepository = assessmentSeriesRepository;
             _tlLookupRepository = tlLookupRepository;
             _resultRepository = resultRepository;
             _pathwayResultRepository = pathwayResultRepository;
+            _specialismResultRepository = specialismResultRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -243,6 +251,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             int status = 0;
             if (request.ComponentType == ComponentType.Core)
+            {
                 status = await _pathwayResultRepository.CreateAsync(new TqPathwayResult
                 {
                     TqPathwayAssessmentId = request.AssessmentId,
@@ -253,7 +262,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     IsBulkUpload = false,
                     CreatedBy = request.PerformedBy
                 });
-
+            }
+            else if(request.ComponentType == ComponentType.Specialism)
+            {
+                status = await _specialismResultRepository.CreateAsync(new TqSpecialismResult
+                {
+                    TqSpecialismAssessmentId = request.AssessmentId,
+                    TlLookupId = request.LookupId,
+                    IsOptedin = true,
+                    StartDate = DateTime.UtcNow,
+                    EndDate = null,
+                    IsBulkUpload = false,
+                    CreatedBy = request.PerformedBy
+                });
+            }
             return new AddResultResponse { Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ProfileId = request.ProfileId, IsSuccess = status > 0 };
         }
 
@@ -340,7 +362,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (registrationPathway == null || registrationPathway.Status != RegistrationPathwayStatus.Active)
                 return false;
 
-
             if(addResultRequest.ComponentType == ComponentType.Core)
             {
                 var assessmentEntry = registrationPathway.TqPathwayAssessments.FirstOrDefault(p => p.Id == addResultRequest.AssessmentId && p.IsOptedin && p.EndDate == null);
@@ -348,6 +369,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 if (assessmentEntry == null) return false;
 
                 var anyActiveResult = assessmentEntry.TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null);
+                return !anyActiveResult;
+            }
+            else if(addResultRequest.ComponentType == ComponentType.Specialism)
+            {
+                var specialism = registrationPathway.TqRegistrationSpecialisms.FirstOrDefault(s => s.IsOptedin &&
+                                                                                              s.EndDate == null &&
+                                                                                              s.TqSpecialismAssessments.Any(sa => s.Id == addResultRequest.AssessmentId));
+
+                var assessmentEntry = specialism?.TqSpecialismAssessments?.FirstOrDefault(p => p.Id == addResultRequest.AssessmentId && p.IsOptedin && p.EndDate == null);
+
+                if (assessmentEntry == null) return false;
+
+                var anyActiveResult = assessmentEntry.TqSpecialismResults.Any(x => x.IsOptedin && x.EndDate == null);
                 return !anyActiveResult;
             }
             else

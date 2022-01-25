@@ -49,6 +49,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         public ResultsAndCertificationDbContext DbContext;
         protected IRepository<TqPathwayResult> PathwayResultRepository;
         protected ILogger<GenericRepository<TqPathwayResult>> PathwayResultRepositoryLogger;
+        protected IRepository<TqSpecialismResult> SpecialismResultRepository;
+        protected ILogger<GenericRepository<TqSpecialismResult>> SpecialismResultRepositoryLogger;
         protected IRepository<TlLookup> TlLookupRepository;
         protected ILogger<GenericRepository<TlLookup>> TlLookupRepositoryLogger;
         protected IList<TlLookup> TlLookup;
@@ -69,6 +71,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             PathwayResultRepositoryLogger = new Logger<GenericRepository<TqPathwayResult>>(new NullLoggerFactory());
             PathwayResultRepository = new GenericRepository<TqPathwayResult>(PathwayResultRepositoryLogger, DbContext);
 
+            SpecialismResultRepositoryLogger = new Logger<GenericRepository<TqSpecialismResult>>(new NullLoggerFactory());
+            SpecialismResultRepository = new GenericRepository<TqSpecialismResult>(SpecialismResultRepositoryLogger, DbContext);
+
             AssessmentSeriesRepositoryLogger = new Logger<GenericRepository<AssessmentSeries>>(new NullLoggerFactory());
             AssessmentSeriesRepository = new GenericRepository<AssessmentSeries>(AssessmentSeriesRepositoryLogger, DbContext);
 
@@ -80,7 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
 
             Logger = new Logger<ResultService>(new NullLoggerFactory());
             // Service
-            ResultService = new ResultService(AssessmentSeriesRepository, TlLookupRepository, ResultRepository, PathwayResultRepository, ResultMapper, Logger);
+            ResultService = new ResultService(AssessmentSeriesRepository, TlLookupRepository, ResultRepository, PathwayResultRepository, SpecialismResultRepository, ResultMapper, Logger);
         }
 
         protected void CreateMapper()
