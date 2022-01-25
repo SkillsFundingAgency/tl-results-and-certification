@@ -32,27 +32,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 
         // Specialism Components
         public IList<SpecialismComponentViewModel> SpecialismComponents { get; set; }
-        
-        // TODO: Below pro- inprogress. 
-        public bool ShowMultiSpecialism
+        public IList<SpecialismComponentViewModel> RenderSpecialismComponents
         {
             get
             {
-                // hasMoreThanOneSpecialism && NoneHasAssessmentEntries
-                return SpecialismComponents.Count > 1 && SpecialismComponents.All(x => !x.IsSpecialismAssessmentEntryRegistered);
-            }
-        }
-
-        public SpecialismComponentViewModel MultiSpecialism 
-        { 
-            get 
-            {
-                if (!ShowMultiSpecialism) return null;
-                return new SpecialismComponentViewModel 
+                // When hasMoreThanOneSpecialism && NoneHasAssessmentEntries Then showMultiSpecialismsTogether
+                var showMultiSpecialismsTogether = SpecialismComponents.Count > 1 && SpecialismComponents.All(x => !x.IsSpecialismAssessmentEntryRegistered);
+                if (showMultiSpecialismsTogether)
                 {
-                    SpecialismComponentDisplayName = string.Join(Constants.AndSeperator, SpecialismComponents.Select(x => x.SpecialismComponentDisplayName))
-                }; 
-            } 
+                    return new List<SpecialismComponentViewModel>
+                    {
+                        new SpecialismComponentViewModel { SpecialismComponentDisplayName = string.Join(Constants.AndSeperator, SpecialismComponents.Select(x => x.SpecialismComponentDisplayName)) } 
+                    };
+                }
+
+                return SpecialismComponents;
+            }
         }
 
         public NotificationBannerModel SuccessBanner { get; set; }
