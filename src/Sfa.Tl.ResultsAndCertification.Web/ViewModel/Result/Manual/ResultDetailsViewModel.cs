@@ -14,7 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         {
             // Base Profile Summary
             UlnLabel = ResultDetailsContent.Title_Uln_Text;
-            LearnerNameLabel = ResultDetailsContent.Title_Name_Text;
             DateofBirthLabel = ResultDetailsContent.Title_DateofBirth_Text;
             ProviderUkprnLabel = ResultDetailsContent.Title_Provider_Ukprn_Text;
             ProviderNameLabel = ResultDetailsContent.Title_Provider_Name_Text;

@@ -23,7 +23,7 @@
                 }
                 else
                 {
-                    @Html.Raw(string.Format("{0} {1}", Model.Grade, Model.PrsDisplayText));
+                    @Html.Raw(string.Format("{0} <span class='govuk-!-margin-left-2'>{1}</span>", Model.Grade, Model.PrsDisplayText));
                 }
             }
             

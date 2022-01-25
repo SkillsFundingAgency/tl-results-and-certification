@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learners details.
+        /// </summary>
+        public static string Aria_Label_Text_Learner_Details {
+            get {
+                return ResourceManager.GetString("Aria_Label_Text_Learner_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search again.
         /// </summary>
         public static string Button_Search_Again {
@@ -354,15 +363,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static string Title_DateofBirth_Text {
             get {
                 return ResourceManager.GetString("Title_DateofBirth_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        public static string Title_Name_Text {
-            get {
-                return ResourceManager.GetString("Title_Name_Text", resourceCulture);
             }
         }
         
