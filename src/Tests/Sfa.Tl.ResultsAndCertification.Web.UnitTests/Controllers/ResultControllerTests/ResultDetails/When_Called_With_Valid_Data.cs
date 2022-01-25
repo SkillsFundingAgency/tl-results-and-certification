@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System;
+using System.Collections.Generic;
 using Xunit;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using ResultDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result.ResultDetails;
@@ -20,14 +21,48 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         {
             _mockResult = new ResultDetailsViewModel
             {
-                ProfileId = 1,
-                Uln = 1234567890,
-                Firstname = "First",
-                Lastname = "Last",
-                DateofBirth = DateTime.Now.AddYears(-30),
-                ProviderName = "Test Provider",
-                ProviderUkprn = 1234567891,
-                TlevelTitle = "Tlevel title"
+                Firstname = "John",
+                Lastname = "Smith",
+                Uln = 5647382910,
+                DateofBirth = DateTime.Today,
+                ProviderName = "Barnsley College",
+                ProviderUkprn = 100656,
+                TlevelTitle = "Design, Surveying and Planning for Construction",
+
+                // Core
+                CoreComponentDisplayName = "Design, Surveying and Planning (123456)",
+                CoreComponentExams = new List<ComponentExamViewModel>
+                {
+                    new ComponentExamViewModel { AssessmentSeries = "Autumn 2022", Grade = null, PrsStatus = null, LastUpdated = null, UpdatedBy = null, AppealEndDate = System.DateTime.Today.AddDays(10), AssessmentId = 1 },
+                    new ComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "B", PrsStatus = null, LastUpdated = "6 June 2021", UpdatedBy = "User 3", AppealEndDate = DateTime.Today.AddDays(10), AssessmentId = 2 },
+                    new ComponentExamViewModel { AssessmentSeries = "Autumn 2021", Grade = "B", PrsStatus = PrsStatus.BeingAppealed, LastUpdated = "5 June 2021", UpdatedBy = "User 2", AppealEndDate = System.DateTime.Today.AddDays(10), AssessmentId = 3 },
+                    new ComponentExamViewModel { AssessmentSeries = "Summer 2021", Grade = "A", PrsStatus = PrsStatus.Final, LastUpdated = "4 June 2021", UpdatedBy = "User 1", AppealEndDate = System.DateTime.Today.AddDays(10), AssessmentId = 4 },
+                    new ComponentExamViewModel { AssessmentSeries = "Autumn 2020", Grade = "D", PrsStatus = null, LastUpdated = "34 June 2021", UpdatedBy = "User 1", AppealEndDate = System.DateTime.Today.AddDays(-365), AssessmentId = 5 }
+                },
+
+                // Specialisms
+                SpecialismComponents = new List<SpecialismComponentViewModel>
+                {
+                    new SpecialismComponentViewModel
+                    {
+                        SpecialismComponentDisplayName = "Plumbing",
+                        SpecialismComponentExams = new List<ComponentExamViewModel>
+                        {
+                            new ComponentExamViewModel { AssessmentSeries = "Autumn 2022", Grade = null, PrsStatus = null, LastUpdated = null, UpdatedBy = null, AppealEndDate = DateTime.Today.AddDays(10), AssessmentId = 6 },
+                            new ComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "Merit", PrsStatus = null, LastUpdated = "6 June 2021", UpdatedBy = "User 1",AppealEndDate = System.DateTime.Today.AddDays(10), AssessmentId = 7 }
+                        }
+                    },
+
+                    new SpecialismComponentViewModel
+                    {
+                        SpecialismComponentDisplayName = "Heating",
+                        SpecialismComponentExams = new List<ComponentExamViewModel>
+                        {
+                            new ComponentExamViewModel { AssessmentSeries = "Autumn 2022", Grade = null, PrsStatus = null, LastUpdated = "7 June 2021", UpdatedBy = "User 2", AppealEndDate = DateTime.Today.AddDays(10), AssessmentId = 8 },
+                            new ComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "Merit", PrsStatus = null, LastUpdated = "6 June 2021", UpdatedBy = "User 1", AppealEndDate = System.DateTime.Today.AddDays(10), AssessmentId = 9 }
+                        }
+                    }
+                }
             };
 
             ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(_mockResult);
@@ -61,6 +96,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.ProviderUkprn.Should().Be(_mockResult.ProviderUkprn);
             model.ProviderDisplayName.Should().Be($"{_mockResult.ProviderName}<br/>({_mockResult.ProviderUkprn})");
             model.TlevelTitle.Should().Be(_mockResult.TlevelTitle);
+
+            model.IsCoreAssessmentEntryRegistered.Should().BeTrue();
+            foreach (var specialism in model.SpecialismComponents)
+                specialism.IsSpecialismAssessmentEntryRegistered.Should().BeTrue();
 
             // Uln
             model.SummaryUln.Title.Should().Be(ResultDetailsContent.Title_Uln_Text);
