@@ -105,10 +105,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.SummaryUln.Title.Should().Be(ResultDetailsContent.Title_Uln_Text);
             model.SummaryUln.Value.Should().Be(_mockResult.Uln.ToString());
 
-            // LearnerName
-            model.SummaryLearnerName.Title.Should().Be(ResultDetailsContent.Title_Name_Text);
-            model.SummaryLearnerName.Value.Should().Be(_mockResult.LearnerName);
-
             // DateofBirth
             model.SummaryDateofBirth.Title.Should().Be(ResultDetailsContent.Title_DateofBirth_Text);
             model.SummaryDateofBirth.Value.Should().Be(_mockResult.DateofBirth.ToDobFormat());

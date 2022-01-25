@@ -11,14 +11,14 @@
 }
 
 @section NavigationBar {
-    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+<vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
         <vc:notification-banner model="@Model.SuccessBanner"></vc:notification-banner>
         <h1 class="govuk-heading-l">@string.Format(@ResultDetails.Heading_Learners_Results, Model.LearnerName)</h1>
-        <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border" aria-label="Learners details">
+        <dl class="govuk-summary-list govuk-summary-list--no-border" aria-label="@ResultDetails.Aria_Label_Text_Learner_Details">
             <vc:summary-item model=Model.SummaryUln></vc:summary-item>
             <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
             <vc:summary-item model=Model.SummaryProviderName></vc:summary-item>
@@ -27,13 +27,14 @@
         </dl>
 
         <!-- #region Core -->
-        <table class="govuk-table govuk-!-margin-top-9 responsive-table" role="table">
-            <caption class="govuk-table__caption govuk-table__caption--m">
-                @string.Format(ResultDetails.Heading_Core, Model.CoreComponentDisplayName)
-            </caption>
+        @if (Model.IsCoreAssessmentEntryRegistered)
+        {
+            <table class="govuk-table govuk-!-margin-top-9 responsive-table">
+                <caption class="govuk-table__caption govuk-table__caption--m">
+                    @string.Format(ResultDetails.Heading_Core, Model.CoreComponentDisplayName)
+                </caption>
 
-            @if (Model.IsCoreAssessmentEntryRegistered)
-            {
+
                 <partial name="Partials/_examTableHeader.cshtml" />
                 <tbody>
                     @foreach (var exam in Model.CoreComponentExams)
@@ -41,31 +42,31 @@
                         <partial name="Partials/_examTableResults.cshtml" model="exam" />
                     }
                 </tbody>
-            }
-        </table>
-        @if (!Model.IsCoreAssessmentEntryRegistered)
+            </table>
+        }
+        else
         {
+            <h2 class="govuk-heading-m govuk-!-margin-top-7">@string.Format(ResultDetails.Heading_Core, Model.CoreComponentDisplayName)</h2>
             <p class="govuk-body govuk-!-margin-top-5">@ResultDetails.Para_No_Core_Assessments</p>
             <p class="govuk-body"><a id="addCoreAssessmentLink" asp-route="@RouteConstants.AssessmentDetails" asp-route-profileId="@Model.ProfileId" class="govuk-link">@ResultDetails.Link_Add_Assessment</a></p>
         }
         <!-- #endregion -->
-
-
         <!-- #region Specialism -->
-        @if(!Model.SpecialismComponents.Any())
+        @if (!Model.RenderSpecialismComponents.Any())
         {
             <h2 class="govuk-heading-m govuk-!-margin-top-7">@string.Format(ResultDetails.Heading_Specialism, ResultDetails.Heading_Not_Specified)</h2>
             <p class="govuk-body">@ResultDetails.Para_No_Specialisms_Registered</p>
         }
-        @foreach(var specialism in Model.SpecialismComponents)
+        @foreach (var specialism in Model.RenderSpecialismComponents)
         {
-            <table class="govuk-table govuk-!-margin-top-9 responsive-table" role="table">
-                <caption class="govuk-table__caption govuk-table__caption--m">
-                    @string.Format(ResultDetails.Heading_Specialism, specialism.SpecialismComponentDisplayName)
-                </caption>
+            @if (specialism.IsSpecialismAssessmentEntryRegistered)
+            {
+                <table class="govuk-table govuk-!-margin-top-9 responsive-table">
+                    <caption class="govuk-table__caption govuk-table__caption--m">
+                        @string.Format(ResultDetails.Heading_Specialism, specialism.SpecialismComponentDisplayName)
+                    </caption>
 
-                @if (specialism.IsSpecialismAssessmentEntryRegistered)
-                {
+
                     <partial name="Partials/_examTableHeader.cshtml" />
                     <tbody>
                         @foreach (var exam in specialism.SpecialismComponentExams)
@@ -73,11 +74,11 @@
                             <partial name="Partials/_examTableResults.cshtml" model="exam" />
                         }
                     </tbody>
-                }
-            </table>
-
-            @if (!specialism.IsSpecialismAssessmentEntryRegistered)
+                </table>
+            }
+            else
             {
+                <h2 class="govuk-heading-m govuk-!-margin-top-7">@string.Format(ResultDetails.Heading_Specialism, specialism.SpecialismComponentDisplayName) </h2>
                 <p class="govuk-body govuk-!-margin-top-5">@ResultDetails.Para_No_Specialism_Assessments</p>
                 <p class="govuk-body"><a id="addSpecialismAssessmentLink" asp-route="@RouteConstants.AssessmentDetails" asp-route-profileId="@Model.ProfileId" class="govuk-link">@ResultDetails.Link_Add_Assessment</a></p>
             }
@@ -90,14 +91,17 @@
                 <span class="govuk-details__summary-text">@ResultDetails.Details_Summary_Text_Link_More_About</span>
             </summary>
             <div class="govuk-details__text">
-                @ResultDetails.Details_Summary_Text_Result_Overall_Results_Calculated_When_Final<br><br>
-                @ResultDetails.Details_Summary_Text_Result_Pending_Result_Cannot_Be_Changed<br><br>
-                @ResultDetails.Details_Summary_Text_Result_Final_Result_No_Longer_Changed_Here
-                <a href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()?subject=@ResultDetails.Email_Subject" class="govuk-link">@ResultDetails.Contactus_Link</a>@ResultDetails.Fullstop
-                </div>
+                <p>@ResultDetails.Details_Summary_Text_Result_Overall_Results_Calculated_When_Final</p>
+                <p>@ResultDetails.Details_Summary_Text_Result_Pending_Result_Cannot_Be_Changed</p>
+                <p>
+                    @ResultDetails.Details_Summary_Text_Result_Final_Result_No_Longer_Changed_Here
+                    <a href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()?subject=@ResultDetails.Email_Subject" class="govuk-link">@ResultDetails.Contactus_Link</a>@ResultDetails.Fullstop
+                </p>
+
+            </div>
         </details>
 
-        <a id="buttonSearchAgain" class="govuk-button govuk-!-margin-top-7" role="button" asp-route="SearchResults">@ResultDetails.Button_Search_Again</a>
+        <a id="buttonSearchAgain" class="govuk-button" role="button" asp-route="SearchResults">@ResultDetails.Button_Search_Again</a>
     </div>
 
 </div>
