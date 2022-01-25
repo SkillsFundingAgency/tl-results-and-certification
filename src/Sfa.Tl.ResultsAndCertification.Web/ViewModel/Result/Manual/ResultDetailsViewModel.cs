@@ -1,6 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
@@ -36,17 +37,49 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         {
             get
             {
-                // When hasMoreThanOneSpecialism && NoneHasAssessmentEntries Then showMultiSpecialismsTogether
-                var showMultiSpecialismsTogether = SpecialismComponents.Count > 1 && SpecialismComponents.All(x => !x.IsSpecialismAssessmentEntryRegistered);
-                if (showMultiSpecialismsTogether)
+                // If MultiSpecialisms && NoneHasAssessments && ContainsCouplets then ShowCoupletsTogether
+                var showCoupletsTogether = SpecialismComponents.Count > 1 && 
+                                           SpecialismComponents.All(x => !x.IsSpecialismAssessmentEntryRegistered) &&
+                                           SpecialismComponents.Any(x => x.IsCouplet);
+                if (!showCoupletsTogether)
+                    return SpecialismComponents;
+
+                var specialismToDisplay = new List<SpecialismComponentViewModel>();
+                foreach (var specialism in SpecialismComponents.Where(x => x.IsCouplet))
                 {
-                    return new List<SpecialismComponentViewModel>
+                    foreach (var spCombination in specialism.TlSpecialismCombinations)
                     {
-                        new SpecialismComponentViewModel { SpecialismComponentDisplayName = string.Join(Constants.AndSeperator, SpecialismComponents.Select(x => x.SpecialismComponentDisplayName)) } 
-                    };
+                        var pairedSpecialismCodes = spCombination.Value.Split(Constants.PipeSeperator).Except(new List<string> { specialism.LarId }, StringComparer.InvariantCultureIgnoreCase);
+                        var combinedSpecialismId = specialism.Id.ToString();
+                        var combinedDisplayName = specialism.SpecialismComponentDisplayName;
+                        var hasValidEntry = false;
+
+                        foreach (var pairedSpecialismCode in pairedSpecialismCodes)
+                        {
+                            var validSpecialism = SpecialismComponents.FirstOrDefault(s => s.LarId.Equals(pairedSpecialismCode, StringComparison.InvariantCultureIgnoreCase));
+
+                            if (validSpecialism != null)
+                            {
+                                hasValidEntry = true;
+                                combinedSpecialismId = $"{combinedSpecialismId}{Constants.PipeSeperator}{validSpecialism.Id}";
+                                combinedDisplayName = $"{combinedDisplayName}{Constants.AndSeperator}{validSpecialism.SpecialismComponentDisplayName}";
+                            }
+                        }
+
+                        var canAdd = hasValidEntry && !specialismToDisplay.Any(s => combinedSpecialismId.Split(Constants.PipeSeperator).Except(s.CombinedSpecialismId.Split(Constants.PipeSeperator), StringComparer.InvariantCulture).Count() == 0);
+                        if (canAdd)
+                        {
+                            specialismToDisplay.Add(new SpecialismComponentViewModel
+                            {
+                                CombinedSpecialismId = combinedSpecialismId,
+                                SpecialismComponentDisplayName = combinedDisplayName,
+                                TlSpecialismCombinations = specialism.TlSpecialismCombinations
+                            });
+                        }
+                    }
                 }
 
-                return SpecialismComponents;
+                return specialismToDisplay;
             }
         }
 
