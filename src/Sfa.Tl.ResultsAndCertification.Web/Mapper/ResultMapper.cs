@@ -124,8 +124,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.SpecialismComponents, opts => opts.MapFrom(s => s.Pathway.Specialisms));
 
             CreateMap<Specialism, SpecialismComponentViewModel>()
+                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
+                .ForMember(d => d.LarId, opts => opts.MapFrom(s => s.LarId))
                 .ForMember(d => d.SpecialismComponentDisplayName, opts => opts.MapFrom(s => $"{s.Name} ({s.LarId})"))
-                .ForMember(d => d.SpecialismComponentExams, opts => opts.MapFrom(s => s.Assessments));
+                .ForMember(d => d.SpecialismComponentExams, opts => opts.MapFrom(s => s.Assessments))
+                .ForMember(d => d.TlSpecialismCombinations, opts => opts.MapFrom(s => s.TlSpecialismCombinations));
 
             CreateMap<Assessment, ComponentExamViewModel>()
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.Id))
