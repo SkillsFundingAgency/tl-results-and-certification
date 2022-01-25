@@ -5,15 +5,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqPathwayResult
+namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqSpecialismResult
 {
-    public class When_CreateMany_Is_Called : BaseTest<Domain.Models.TqPathwayResult>
-    {
-        private IList<Domain.Models.TqPathwayResult> _data;
+    public class When_CreateMany_Is_Called : BaseTest<Domain.Models.TqSpecialismResult>
+    {        
+        private IList<Domain.Models.TqSpecialismResult> _data;
 
         public override void Given()
         {
-            _data = new TqPathwayResultBuilder().BuildList();
+            _data = new TqSpecialismResultBuilder().BuildList();
         }
 
         public async override Task When()

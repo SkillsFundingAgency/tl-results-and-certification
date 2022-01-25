@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Domain.Models
 {
     public partial class TqSpecialismAssessment : BaseEntity
     {
+        public TqSpecialismAssessment()
+        {
+            TqSpecialismResults = new HashSet<TqSpecialismResult>();
+        }
         public int TqRegistrationSpecialismId { get; set; }
         public int AssessmentSeriesId { get; set; }
         public DateTime StartDate { get; set; }
@@ -13,5 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
 
         public virtual TqRegistrationSpecialism TqRegistrationSpecialism { get; set; }
         public virtual AssessmentSeries AssessmentSeries { get; set; }
+        public virtual ICollection<TqSpecialismResult> TqSpecialismResults { get; set; }
     }
 }
