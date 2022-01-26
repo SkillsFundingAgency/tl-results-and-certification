@@ -45,37 +45,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
                     return SpecialismComponents;
 
                 var specialismToDisplay = new List<SpecialismComponentViewModel>();
+                var processedLarIds = new List<string>();
                 foreach (var specialism in SpecialismComponents)
                 {
                     if (specialism.IsCouplet)
                     {
                         foreach (var spCombination in specialism.TlSpecialismCombinations)
                         {
-                            var pairedSpecialismCodes = spCombination.Value.Split(Constants.PipeSeperator).Except(new List<string> { specialism.LarId }, StringComparer.InvariantCultureIgnoreCase);
-                            var combinedSpecialismId = specialism.Id.ToString();
+                            // Initialize first item
+                            var combinedSpecialismLarId = specialism.LarId.ToString();
                             var combinedDisplayName = specialism.SpecialismComponentDisplayName;
-                            var hasValidEntry = false;
 
-                            foreach (var pairedSpecialismCode in pairedSpecialismCodes)
+                            // Find partners to join.
+                            var isPairFound = false;
+                            var otherLarIdsInGroup = spCombination.Value.Split(Constants.PipeSeperator).Except(new List<string> { specialism.LarId }, StringComparer.InvariantCultureIgnoreCase);
+                            foreach (var otherLarId in otherLarIdsInGroup)
                             {
-                                var validSpecialism = SpecialismComponents.FirstOrDefault(s => s.LarId.Equals(pairedSpecialismCode, StringComparison.InvariantCultureIgnoreCase));
-
-                                if (validSpecialism != null)
+                                var otherSpecialism = SpecialismComponents.FirstOrDefault(s => s.LarId.Equals(otherLarId, StringComparison.InvariantCultureIgnoreCase));
+                                if (otherSpecialism != null)
                                 {
-                                    hasValidEntry = true;
-                                    combinedSpecialismId = $"{combinedSpecialismId}{Constants.PipeSeperator}{validSpecialism.Id}";
-                                    combinedDisplayName = $"{combinedDisplayName}{Constants.AndSeperator}{validSpecialism.SpecialismComponentDisplayName}";
+                                    isPairFound = true;
+                                    combinedSpecialismLarId = $"{combinedSpecialismLarId}{Constants.PipeSeperator}{otherSpecialism.LarId}";
+                                    combinedDisplayName = $"{combinedDisplayName}{Constants.AndSeperator}{otherSpecialism.SpecialismComponentDisplayName}";
                                 }
                             }
 
-                            var canAdd = hasValidEntry && !specialismToDisplay.Any(s => combinedSpecialismId.Split(Constants.PipeSeperator).Except(s.CombinedSpecialismId.Split(Constants.PipeSeperator), StringComparer.InvariantCulture).Count() == 0);
-                            if (canAdd)
+                            var isAddedAlready = processedLarIds.Any(s => combinedSpecialismLarId.Split(Constants.PipeSeperator).Except(s.Split(Constants.PipeSeperator), StringComparer.InvariantCultureIgnoreCase).Count() == 0);
+                            if (isPairFound && !isAddedAlready)
                             {
+                                processedLarIds.Add(combinedSpecialismLarId);
                                 specialismToDisplay.Add(new SpecialismComponentViewModel
                                 {
-                                    CombinedSpecialismId = combinedSpecialismId,
-                                    SpecialismComponentDisplayName = combinedDisplayName,
-                                    TlSpecialismCombinations = specialism.TlSpecialismCombinations
+                                    SpecialismComponentDisplayName = combinedDisplayName
                                 });
                             }
                         }

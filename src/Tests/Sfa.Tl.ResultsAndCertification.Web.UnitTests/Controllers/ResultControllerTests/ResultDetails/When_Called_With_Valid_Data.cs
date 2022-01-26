@@ -46,6 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                     new SpecialismComponentViewModel
                     {
                         SpecialismComponentDisplayName = "Plumbing",
+                        LarId = "S111",
                         SpecialismComponentExams = new List<ComponentExamViewModel>
                         {
                             new ComponentExamViewModel { AssessmentSeries = "Autumn 2022", Grade = null, PrsStatus = null, LastUpdated = null, UpdatedBy = null, AppealEndDate = DateTime.Today.AddDays(10), AssessmentId = 6 },
@@ -56,6 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                     new SpecialismComponentViewModel
                     {
                         SpecialismComponentDisplayName = "Heating",
+                        LarId = "S222",
                         SpecialismComponentExams = new List<ComponentExamViewModel>
                         {
                             new ComponentExamViewModel { AssessmentSeries = "Autumn 2022", Grade = null, PrsStatus = null, LastUpdated = "7 June 2021", UpdatedBy = "User 2", AppealEndDate = DateTime.Today.AddDays(10), AssessmentId = 8 },
@@ -99,7 +101,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
 
             model.IsCoreAssessmentEntryRegistered.Should().BeTrue();
             foreach (var specialism in model.SpecialismComponents)
+            {
                 specialism.IsSpecialismAssessmentEntryRegistered.Should().BeTrue();
+                specialism.IsCouplet.Should().BeFalse();
+            }
 
             // Uln
             model.SummaryUln.Title.Should().Be(ResultDetailsContent.Title_Uln_Text);

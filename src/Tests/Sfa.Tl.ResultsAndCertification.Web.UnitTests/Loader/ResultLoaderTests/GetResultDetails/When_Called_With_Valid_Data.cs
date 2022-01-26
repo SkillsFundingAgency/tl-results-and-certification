@@ -264,6 +264,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
             {
                 var actualSpecialism = ActualResult.SpecialismComponents.FirstOrDefault(x => x.SpecialismComponentDisplayName.Equals($"{expectedSpecialism.Name} ({expectedSpecialism.LarId})", StringComparison.InvariantCultureIgnoreCase));
                 actualSpecialism.Should().NotBeNull();
+                actualSpecialism.LarId.Should().Be(expectedSpecialism.LarId);
+                actualSpecialism.IsCouplet.Should().BeFalse();
+
                 foreach (var expectedExam in expectedSpecialism.Assessments)
                 {
                     var actualExam = actualSpecialism.SpecialismComponentExams.FirstOrDefault(x => x.AssessmentId == expectedExam.Id);

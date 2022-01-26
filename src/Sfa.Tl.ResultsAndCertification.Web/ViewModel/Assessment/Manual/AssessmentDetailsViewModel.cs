@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                                 }
                             }
                             
-                            var canAdd = hasValidEntry && !specialismToDisplay.Any(s => combinedSpecialismId.Split(Constants.PipeSeperator).Except(s.CombinedSpecialismId.Split(Constants.PipeSeperator), StringComparer.InvariantCulture).Count() == 0);
+                            var canAdd = hasValidEntry && !specialismToDisplay.Any(s => combinedSpecialismId.Split(Constants.PipeSeperator).Except(s.CombinedSpecialismId.Split(Constants.PipeSeperator), StringComparer.InvariantCultureIgnoreCase).Count() == 0);
 
                             if (canAdd)
                             {
