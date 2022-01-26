@@ -93,11 +93,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<ResultWithdrawnViewModel>(response);
         }
 
-        public ResultNoAssessmentEntryViewModel GetResultNoAssessmentEntryViewModel(ResultDetailsViewModel resultDetails)
-        {
-            return _mapper.Map<ResultNoAssessmentEntryViewModel>(resultDetails);
-        }
-
         public async Task<ResultDetailsViewModel> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
             var response = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId, status);

@@ -216,33 +216,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("no-assessment-entries", Name = RouteConstants.ResultNoAssessmentEntry)]
-        public async Task<IActionResult> ResultNoAssessmentEntryAsync()
-        {
-            var viewModel = await _cacheService.GetAndRemoveAsync<ResultNoAssessmentEntryViewModel>(CacheKey);
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read ResultNoAssessmentEntryViewModel from redis cache in assessment no assessment entries page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(viewModel);
-        }
-
-        [HttpGet]
         [Route("learner-results/{profileId}", Name = RouteConstants.ResultDetails)]
         public async Task<IActionResult> ResultDetailsAsync(int profileId)
         {
             var viewModel = await _resultLoader.GetResultDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No result details found. Method: GetResultDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No result details found. Method: GetResultDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Active}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
             viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
-            // TODO: TechDebt to remove an exsiting 'no-assessment-entries' page
-
             return View(viewModel);
         }
 

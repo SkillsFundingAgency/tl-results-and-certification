@@ -207,7 +207,6 @@
         public const string SubmitSearchResults = "SubmitSearchResults";
         public const string SearchResultsNotFound = "SearchResultsNotFound";
         public const string ResultWithdrawnDetails = "ResultWithdrawnDetails";
-        public const string ResultNoAssessmentEntry = "ResultNoAssessmentEntry";
         public const string ResultDetails = "ResultDetails";
 
         // Error
