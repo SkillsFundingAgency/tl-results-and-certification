@@ -46,41 +46,46 @@
         }
         else
         {
+            // Show link - add assessments
             <h2 class="govuk-heading-m govuk-!-margin-top-7">@string.Format(ResultDetails.Heading_Core, Model.CoreComponentDisplayName)</h2>
             <p class="govuk-body govuk-!-margin-top-5">@ResultDetails.Para_No_Core_Assessments</p>
             <p class="govuk-body"><a id="addCoreAssessmentLink" asp-route="@RouteConstants.AssessmentDetails" asp-route-profileId="@Model.ProfileId" class="govuk-link">@ResultDetails.Link_Add_Assessment</a></p>
         }
         <!-- #endregion -->
         <!-- #region Specialism -->
-        @if (!Model.RenderSpecialismComponents.Any())
+        @if (!Model.SpecialismComponents.Any())
         {
             <h2 class="govuk-heading-m govuk-!-margin-top-7">@string.Format(ResultDetails.Heading_Specialism, ResultDetails.Heading_Not_Specified)</h2>
             <p class="govuk-body">@ResultDetails.Para_No_Specialisms_Registered</p>
         }
-        @foreach (var specialism in Model.RenderSpecialismComponents)
+        else
         {
-            @if (specialism.IsSpecialismAssessmentEntryRegistered)
+            @foreach (var specialism in Model.RenderSpecialismComponents)
             {
-                <table class="govuk-table govuk-!-margin-top-9 responsive-table">
-                    <caption class="govuk-table__caption govuk-table__caption--m">
-                        @string.Format(ResultDetails.Heading_Specialism, specialism.SpecialismComponentDisplayName)
-                    </caption>
+                @if (specialism.IsSpecialismAssessmentEntryRegistered)
+                {
+                    <table class="govuk-table govuk-!-margin-top-9 responsive-table">
+                        <caption class="govuk-table__caption govuk-table__caption--m">
+                            @string.Format(ResultDetails.Heading_Specialism, specialism.SpecialismComponentDisplayName)
+                        </caption>
 
 
-                    <partial name="Partials/_examTableHeader.cshtml" />
-                    <tbody>
-                        @foreach (var exam in specialism.SpecialismComponentExams)
-                        {
-                            <partial name="Partials/_examTableResults.cshtml" model="exam" />
-                        }
-                    </tbody>
-                </table>
-            }
-            else
-            {
-                <h2 class="govuk-heading-m govuk-!-margin-top-7">@string.Format(ResultDetails.Heading_Specialism, specialism.SpecialismComponentDisplayName) </h2>
-                <p class="govuk-body govuk-!-margin-top-5">@ResultDetails.Para_No_Specialism_Assessments</p>
-                <p class="govuk-body"><a id="addSpecialismAssessmentLink" asp-route="@RouteConstants.AssessmentDetails" asp-route-profileId="@Model.ProfileId" class="govuk-link">@ResultDetails.Link_Add_Assessment</a></p>
+                        <partial name="Partials/_examTableHeader.cshtml" />
+                        <tbody>
+                            @foreach (var exam in specialism.SpecialismComponentExams)
+                            {
+                                <partial name="Partials/_examTableResults.cshtml" model="exam" />
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    // Show link - add assessments
+                    <h2 class="govuk-heading-m govuk-!-margin-top-7">@string.Format(ResultDetails.Heading_Specialism, specialism.SpecialismComponentDisplayName) </h2>
+                    <p class="govuk-body govuk-!-margin-top-5">@ResultDetails.Para_No_Specialism_Assessments</p>
+                    <p class="govuk-body"><a id="addSpecialismAssessmentLink" asp-route="@RouteConstants.AssessmentDetails" asp-route-profileId="@Model.ProfileId" class="govuk-link">@ResultDetails.Link_Add_Assessment</a></p>
+                }
             }
         }
 
