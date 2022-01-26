@@ -92,10 +92,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         public async Task<TqRegistrationPathway> GetResultsAsync(long aoUkprn, int profileId)
         {
             var regPathway = await _dbContext.TqRegistrationPathway
-                   .Include(x => x.TqPathwayAssessments)
+                   .Include(x => x.TqPathwayAssessments.Where(pa => pa.IsOptedin && pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? pa.EndDate != null : pa.EndDate == null))
                        .ThenInclude(x => x.AssessmentSeries)
-                   .Include(x => x.TqPathwayAssessments)
-                       .ThenInclude(x => x.TqPathwayResults)
+                   .Include(x => x.TqPathwayAssessments.Where(pa => pa.IsOptedin && pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? pa.EndDate != null : pa.EndDate == null))
+                       .ThenInclude(x => x.TqPathwayResults.Where(pr => pr.IsOptedin && pr.TqPathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? pr.EndDate != null : pr.EndDate == null))
                        .ThenInclude(x => x.TlLookup)
                    .Include(x => x.TqRegistrationProfile)
                    .Include(x => x.TqProvider)
@@ -103,38 +103,17 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                            .ThenInclude(x => x.TlPathway)
                    .Include(x => x.TqProvider)
                        .ThenInclude(x => x.TlProvider)
-                   .Include(x => x.TqRegistrationSpecialisms)
+                   .Include(x => x.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin && rs.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? rs.EndDate != null : rs.EndDate == null))
                        .ThenInclude(x => x.TlSpecialism)
+                   .Include(x => x.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin && rs.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? rs.EndDate != null : rs.EndDate == null))
+                       .ThenInclude(x => x.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? sa.EndDate != null : sa.EndDate == null))
+                            .ThenInclude(x => x.TqSpecialismResults.Where(sr => sr.IsOptedin && sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? sr.EndDate != null : sr.EndDate == null))
                     .OrderByDescending(o => o.CreatedOn)
                     .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId &&
                             p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
                             (
                                 p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn
                             ));
-
-            if (regPathway == null) return null;
-
-            Func<TqPathwayAssessment, bool> pathwayAssessmentPredicate = e => e.IsOptedin && e.EndDate == null;
-            if (regPathway.Status == RegistrationPathwayStatus.Withdrawn)
-                pathwayAssessmentPredicate = e => e.IsOptedin && e.EndDate != null;
-            regPathway.TqPathwayAssessments = regPathway.TqPathwayAssessments.Where(pathwayAssessmentPredicate).ToList();
-
-            // PathwaySpecialism
-            Func<TqRegistrationSpecialism, bool> specialismPredicate = e => e.IsOptedin && e.EndDate == null;
-            if (regPathway.Status == RegistrationPathwayStatus.Withdrawn)
-                specialismPredicate = e => e.IsOptedin && e.EndDate != null;
-            regPathway.TqRegistrationSpecialisms = regPathway.TqRegistrationSpecialisms.Where(specialismPredicate).ToList();
-
-            foreach (var pathwayAssessment in regPathway.TqPathwayAssessments)
-            {
-                // TqPathwayResults
-                Func<TqPathwayResult, bool> pathwayResultPredicate = e => e.IsOptedin && e.EndDate == null;
-                if (regPathway.Status == RegistrationPathwayStatus.Withdrawn)
-                    pathwayResultPredicate = e => e.IsOptedin && e.EndDate != null;
-
-                pathwayAssessment.TqPathwayResults = pathwayAssessment.TqPathwayResults.Where(pathwayResultPredicate).ToList();
-            }
-
             return regPathway;
         }
 

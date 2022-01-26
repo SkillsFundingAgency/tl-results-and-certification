@@ -207,6 +207,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             });
         }
 
+        public async Task<AddResultResponse> AddSpecialismResultAsync(long aoUkprn, ManageSpecialismResultViewModel viewModel)
+        {
+            var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.SpecialismComponentGrade);
+
+            var selectedGrade = grades?.FirstOrDefault(x => x.Code.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCultureIgnoreCase));
+
+            if (selectedGrade == null) return null;
+
+            viewModel.LookupId = selectedGrade.Id;
+            var request = _mapper.Map<AddResultRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.AddResultAsync(request);
+        }
+
         public async Task<IList<DataExportResponse>> GenerateResultsExportAsync(long aoUkprn, string requestedBy)
         {
             return await _internalApiClient.GenerateDataExportAsync(aoUkprn, DataExportType.Results, requestedBy);

@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The {0} {1} result has been added.
+        /// </summary>
+        public static string Banner_Message_For_Result_Added {
+            get {
+                return ResourceManager.GetString("Banner_Message_For_Result_Added", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Learners details.
         /// </summary>
         public static string Learner_Details {

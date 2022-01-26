@@ -58,7 +58,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                 tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(new List<TqPathwayAssessment> { assessment }, isLatestResultActive, false, prsStatus));
             }
 
-            SeedPathwayResultsData(tqPathwayResultsSeedData);            
+            SeedPathwayResultsData(tqPathwayResultsSeedData);
+
+            DetachAll();
 
             PathwayResultRepositoryLogger = new Logger<GenericRepository<TqPathwayResult>>(new NullLoggerFactory());
             PathwayResultRepository = new GenericRepository<TqPathwayResult>(PathwayResultRepositoryLogger, DbContext);
