@@ -92,7 +92,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AssessmentSeries.AppealEndDate))
                .ForMember(d => d.LastUpdatedOn, opts => opts.MapFrom(s => s.CreatedOn))
                .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.CreatedBy))
-               .ForMember(d => d.Results, opts => opts.MapFrom(s => new List<Result>()));
+               .ForMember(d => d.Results, opts => opts.MapFrom(s => s.TqSpecialismResults));
+
+            CreateMap<TqSpecialismResult, Result>()
+              .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
+              .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.TlLookup.Value))
+              .ForMember(d => d.GradeCode, opts => opts.MapFrom(s => s.TlLookup.Code))
+              .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => s.PrsStatus))
+              .ForMember(d => d.LastUpdatedOn, opts => opts.MapFrom(s => s.CreatedOn))
+              .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.CreatedBy));
 
             CreateMap<Domain.Models.IndustryPlacement, Models.Contracts.Learner.IndustryPlacement>()
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
