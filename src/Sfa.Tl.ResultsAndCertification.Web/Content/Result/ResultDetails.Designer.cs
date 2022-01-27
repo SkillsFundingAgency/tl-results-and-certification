@@ -259,7 +259,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This learner does not have any occupational specialism assessments registered in this system..
+        ///   Looks up a localized string similar to This learner does not have any occupational specialism assessments registered in this system.
         /// </summary>
         public static string Para_No_Specialism_Assessments {
             get {
@@ -349,29 +349,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exam period.
-        /// </summary>
-        public static string Title_Assessment_Series {
-            get {
-                return ResourceManager.GetString("Title_Assessment_Series", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Date of birth.
         /// </summary>
         public static string Title_DateofBirth_Text {
             get {
                 return ResourceManager.GetString("Title_DateofBirth_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Grade.
-        /// </summary>
-        public static string Title_Pathway_Grade {
-            get {
-                return ResourceManager.GetString("Title_Pathway_Grade", resourceCulture);
             }
         }
         

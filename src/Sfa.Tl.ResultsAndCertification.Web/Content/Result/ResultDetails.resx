@@ -187,7 +187,7 @@
     <value>This learner does not have an occupational specialism registered in this system</value>
   </data>
   <data name="Para_No_Specialism_Assessments" xml:space="preserve">
-    <value>This learner does not have any occupational specialism assessments registered in this system.</value>
+    <value>This learner does not have any occupational specialism assessments registered in this system</value>
   </data>
   <data name="Table_Column_Exam_Period" xml:space="preserve">
     <value>Exam period</value>
@@ -213,14 +213,8 @@
   <data name="Table_Column_Updated_By" xml:space="preserve">
     <value>Updated by</value>
   </data>
-  <data name="Title_Assessment_Series" xml:space="preserve">
-    <value>Exam period</value>
-  </data>
   <data name="Title_DateofBirth_Text" xml:space="preserve">
     <value>Date of birth</value>
-  </data>
-  <data name="Title_Pathway_Grade" xml:space="preserve">
-    <value>Grade</value>
   </data>
   <data name="Title_Provider_Name_Text" xml:space="preserve">
     <value>Provider</value>

@@ -180,7 +180,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                         Grade = "Pass",
                                         PrsStatus = null,
                                         LastUpdatedBy = "System",
-                                        LastUpdatedOn = System.DateTime.UtcNow
+                                        LastUpdatedOn = DateTime.UtcNow
                                     }
                                 }
                             }
