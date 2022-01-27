@@ -129,7 +129,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 return null;
 
             var assessment = response.Pathway.PathwayAssessments.FirstOrDefault(p => p.Id == assessmentId);
-            var hasResult = assessment?.Results?.Any() ?? false;
+            var hasResult = assessment?.Result?.Id > 0;
 
             if (assessment == null || (!isChangeMode && hasResult) || (isChangeMode && !hasResult))
                 return null;
@@ -156,9 +156,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 return null;
 
             var assessment = existingResult.Pathway.PathwayAssessments.FirstOrDefault(p => p.Id == viewModel.AssessmentId);
-            var result = assessment?.Results?.FirstOrDefault(r => r.Id == viewModel.ResultId);
+            var result = assessment?.Result;
 
-            if (result == null)
+            if (result == null || result.Id != viewModel.ResultId)
                 return null;
 
             var isResultChanged = !result.GradeCode.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCultureIgnoreCase);
@@ -190,7 +190,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             var specialism = response.Pathway.Specialisms.FirstOrDefault(s => s.Assessments.Any(a => a.Id == assessmentId));
             var assessment = specialism?.Assessments?.FirstOrDefault(sa => sa.Id == assessmentId);
-            var hasResult = assessment?.Results?.Any() ?? false;
+            var hasResult = assessment?.Result?.Id > 0;
 
             if (assessment == null || (!isChangeMode && hasResult) || (isChangeMode && !hasResult))
                 return null;

@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
-                            Results = new List<Result>()
+                            Result = null
                         }
                     },
                     Specialisms = new List<Specialism>
@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                     AppealEndDate = DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = DateTime.UtcNow,
-                                    Results = new List<Result>()
+                                    Result = null
                                 }
                             }
                         }

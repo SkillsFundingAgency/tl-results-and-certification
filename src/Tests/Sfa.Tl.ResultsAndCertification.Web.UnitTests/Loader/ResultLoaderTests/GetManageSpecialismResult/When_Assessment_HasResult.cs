@@ -45,16 +45,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
-                            Results = new List<Result>
+                            Result = new Result
                             {
-                                new Result
-                                {
-                                    Id = 1,
-                                    Grade = "A",
-                                    PrsStatus = null,
-                                    LastUpdatedBy = "System",
-                                    LastUpdatedOn = DateTime.UtcNow
-                                }
+                                Id = 1,
+                                Grade = "A",
+                                PrsStatus = null,
+                                LastUpdatedBy = "System",
+                                LastUpdatedOn = DateTime.UtcNow
                             }
                         }
                     },
@@ -75,16 +72,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                     AppealEndDate = DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = DateTime.UtcNow,
-                                    Results = new List<Result>
+                                    Result = new Result
                                     {
-                                        new Result
-                                        {
-                                            Id = 1,
-                                            Grade = "Pass",
-                                            PrsStatus = null,
-                                            LastUpdatedBy = "System",
-                                            LastUpdatedOn = DateTime.UtcNow
-                                        }
+                                        Id = 1,
+                                        Grade = "Pass",
+                                        PrsStatus = null,
+                                        LastUpdatedBy = "System",
+                                        LastUpdatedOn = DateTime.UtcNow
                                     }
                                 }
                             }

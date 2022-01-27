@@ -149,8 +149,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
                 .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.Pathway.Status))
-                .ForMember(d => d.IsCoreResultExist, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments.Any() && s.Pathway.PathwayAssessments.Any(a => a.Results.Any())))
-                .ForMember(d => d.HasAnyOutstandingPathwayPrsActivities, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments.Any() && s.Pathway.PathwayAssessments.Any(a => a.Results.Any(r => r.PrsStatus == PrsStatus.BeingAppealed))))
+                .ForMember(d => d.IsCoreResultExist, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments.Any() && s.Pathway.PathwayAssessments.Any(a => a.Result != null)))
+                .ForMember(d => d.HasAnyOutstandingPathwayPrsActivities, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments.Any() && s.Pathway.PathwayAssessments.Any(a => a.Result != null && a.Result.PrsStatus == PrsStatus.BeingAppealed)))
                 .ForMember(d => d.IsIndustryPlacementExist, opts => opts.MapFrom(s => s.Pathway.IndustryPlacements.Any()));
         }
     }

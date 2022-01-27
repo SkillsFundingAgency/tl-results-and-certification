@@ -44,16 +44,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                             AppealEndDate = System.DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = System.DateTime.UtcNow,
-                            Results = new List<Result>
+                            Result = new Result
                             {
-                                new Result
-                                {
-                                    Id = 1,
-                                    Grade = "A",
-                                    PrsStatus = null,
-                                    LastUpdatedBy = "System",
-                                    LastUpdatedOn = System.DateTime.UtcNow
-                                }
+                                Id = 1,
+                                Grade = "A",
+                                PrsStatus = null,
+                                LastUpdatedBy = "System",
+                                LastUpdatedOn = System.DateTime.UtcNow
                             }
                         }
                     },
@@ -74,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                                     AppealEndDate = System.DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = System.DateTime.UtcNow,
-                                    Results = new List<Result>()
+                                    Result = null
                                 }
                             }
                         }

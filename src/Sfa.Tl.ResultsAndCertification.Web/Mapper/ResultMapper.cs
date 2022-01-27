@@ -76,8 +76,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AssessmentSeries, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).SeriesName?.ToLowerInvariant()))
                 .ForMember(d => d.AppealEndDate, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.AppealEndDate))
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.Id))
-                .ForMember(d => d.ResultId, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).Results.FirstOrDefault()?.Id))
-                .ForMember(d => d.PathwayPrsStatus, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).Results.FirstOrDefault()?.PrsStatus))
+                .ForMember(d => d.ResultId, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).Result?.Id))
+                .ForMember(d => d.PathwayPrsStatus, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).Result?.PrsStatus))
                 .ForMember(d => d.Grades, opts => opts.MapFrom((src, dest, destMember, context) => (IList<LookupData>)context.Items["grades"]));
 
             CreateMap<ResultDetails, ManageCoreResultViewModel>()
@@ -124,10 +124,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.Id))
                 .ForMember(d => d.AssessmentSeries, opts => opts.MapFrom(s => s.SeriesName))
                 .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AppealEndDate))
-                .ForMember(d => d.Grade, opts => opts.MapFrom(s => !s.Results.Any() ? null : s.Results.FirstOrDefault().Grade)) // TODO: Tech Debt result should be a single item rather IEnumerable in Assessments Contract.
-                .ForMember(d => d.LastUpdated, opts => opts.MapFrom(s => !s.Results.Any() ? null : s.Results.FirstOrDefault().LastUpdatedOn.ToDobFormat()))
-                .ForMember(d => d.UpdatedBy, opts => opts.MapFrom(s => !s.Results.Any() ? null : s.Results.FirstOrDefault().LastUpdatedBy))
-                .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => !s.Results.Any() ? null : s.Results.FirstOrDefault().PrsStatus));
+                .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.Result != null ? s.Result.Grade : null))
+                .ForMember(d => d.LastUpdated, opts => opts.MapFrom(s => s.Result != null ? s.Result.LastUpdatedOn.ToDobFormat() : null))
+                .ForMember(d => d.UpdatedBy, opts => opts.MapFrom(s => s.Result != null ? s.Result.LastUpdatedBy : null))
+                .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => s.Result != null ? s.Result.PrsStatus : null));
 
             CreateMap<LearnerRecord, ManageSpecialismResultViewModel>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
@@ -143,8 +143,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AssessmentSeries, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).SeriesName?.ToLowerInvariant()))
                 .ForMember(d => d.AppealEndDate, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.AppealEndDate))
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.Id))
-                .ForMember(d => d.ResultId, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).Results.FirstOrDefault()?.Id))
-                .ForMember(d => d.PrsStatus, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).Results.FirstOrDefault()?.PrsStatus))
+                .ForMember(d => d.ResultId, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).Result?.Id))
+                .ForMember(d => d.PrsStatus, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).Result?.PrsStatus))
                 .ForMember(d => d.Grades, opts => opts.MapFrom((src, dest, destMember, context) => (IList<LookupData>)context.Items["grades"]));
         }
     }

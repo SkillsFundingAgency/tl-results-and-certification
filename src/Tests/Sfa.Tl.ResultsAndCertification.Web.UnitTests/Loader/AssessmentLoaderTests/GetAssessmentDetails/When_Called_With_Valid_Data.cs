@@ -50,16 +50,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                             AppealEndDate = System.DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = System.DateTime.UtcNow,
-                            Results = new List<Result>
+                            Result = new Result
                             {
-                                new Result
-                                {
-                                    Id = 1,
-                                    Grade = "A",
-                                    PrsStatus = null,
-                                    LastUpdatedBy = "System",
-                                    LastUpdatedOn = System.DateTime.UtcNow
-                                }
+                                Id = 1,
+                                Grade = "A",
+                                PrsStatus = null,
+                                LastUpdatedBy = "System",
+                                LastUpdatedOn = System.DateTime.UtcNow
                             }
                         }
                     },
@@ -80,7 +77,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                                     AppealEndDate = System.DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = System.DateTime.UtcNow,
-                                    Results = new List<Result>()
+                                    Result = null
                                 }
                             }
                         }
@@ -165,18 +162,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.PathwayAssessment.LastUpdatedOn.Should().Be(expectedPathwayAssessment.LastUpdatedOn);
             ActualResult.PathwayAssessment.LastUpdatedBy.Should().Be(expectedPathwayAssessment.LastUpdatedBy);
 
-            ActualResult.PathwayAssessment.Results.Count().Should().Be(expectedPathwayAssessment.Results.Count());
-           
-            foreach(var expectedResult in expectedPathwayAssessment.Results)
-            {
-                var actualResult = ActualResult.PathwayAssessment.Results.FirstOrDefault(r => r.Id == expectedResult.Id);
-                actualResult.Should().NotBeNull();
+            var actualResult = ActualResult.PathwayAssessment.Result;
+            actualResult.Should().NotBeNull();
 
-                actualResult.Id.Should().Be(expectedResult.Id);
-                actualResult.Grade.Should().Be(expectedResult.Grade);
-                actualResult.LastUpdatedBy.Should().Be(expectedResult.LastUpdatedBy);
-                actualResult.LastUpdatedOn.Should().Be(expectedResult.LastUpdatedOn);
-            }
+            var expectedResult = expectedPathwayAssessment.Result;
+            expectedResult.Should().NotBeNull();
+
+            actualResult.Id.Should().Be(expectedResult.Id);
+            actualResult.Grade.Should().Be(expectedResult.Grade);
+            actualResult.LastUpdatedBy.Should().Be(expectedResult.LastUpdatedBy);
+            actualResult.LastUpdatedOn.Should().Be(expectedResult.LastUpdatedOn);
 
             ActualResult.PreviousPathwayAssessment.Should().BeNull();
 
@@ -207,10 +202,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.IsSpecialismEntryEligible.Should().Be(expectedApiResult.Pathway.Status == RegistrationPathwayStatus.Active && coreAssessmentSeriesId > 0);
             ActualResult.NextAvailableSpecialismSeries.Should().Be(specialismAssessmentSeriesName);
 
-            var expectedIsCoreResultExists = expectedApiResult.Pathway.PathwayAssessments.Any(a => a.Results.Any());
+            var expectedIsCoreResultExists = expectedApiResult.Pathway.PathwayAssessments.Any(a => a.Result?.Id > 0);
             ActualResult.IsCoreResultExist.Should().Be(expectedIsCoreResultExists);
 
-            var expectedHasAnyOutstandingPathwayPrsActivities = expectedApiResult.Pathway.PathwayAssessments.Any(a => a.Results.Any(r => r.PrsStatus == PrsStatus.BeingAppealed));
+            var expectedHasAnyOutstandingPathwayPrsActivities = expectedApiResult.Pathway.PathwayAssessments.Any(a => a.Result != null && a.Result.PrsStatus == PrsStatus.BeingAppealed);
             ActualResult.HasAnyOutstandingPathwayPrsActivities.Should().Be(expectedHasAnyOutstandingPathwayPrsActivities);
 
             var expectedIsIndustryPlacementExist = expectedApiResult.Pathway.IndustryPlacements.Any();
@@ -235,6 +230,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                     DisplayName = $"{specialism.Name} ({specialism.LarId})"
                 });
             }
+
             ActualResult.DisplaySpecialisms.Count().Should().Be(expectedDisplaySpecialisms.Count());
 
             foreach(var expectedDisplaySpecialism in expectedDisplaySpecialisms)

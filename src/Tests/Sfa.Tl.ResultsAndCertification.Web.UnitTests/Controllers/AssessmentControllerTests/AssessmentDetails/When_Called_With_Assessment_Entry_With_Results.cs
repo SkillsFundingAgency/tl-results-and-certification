@@ -33,10 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                     SeriesName = "Summer 2021",
                     LastUpdatedBy = "Test User",
                     LastUpdatedOn = DateTime.Today,
-                    Results = new List<ResultViewModel>
-                    {
-                        new ResultViewModel { Id = 111, Grade = "C" }
-                    }
+                    Result = new ResultViewModel { Id = 111, Grade = "C" }
                 }
             };
 

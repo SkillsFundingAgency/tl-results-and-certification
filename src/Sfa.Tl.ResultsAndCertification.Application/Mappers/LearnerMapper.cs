@@ -64,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AssessmentSeries.AppealEndDate))
                .ForMember(d => d.LastUpdatedOn, opts => opts.MapFrom(s => s.CreatedOn))
                .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.CreatedBy))
-               .ForMember(d => d.Results, opts => opts.MapFrom(s => s.TqPathwayResults));
+               .ForMember(d => d.Result, opts => opts.MapFrom(s => s.TqPathwayResults.FirstOrDefault()));
 
             CreateMap<TqPathwayResult, Result>()
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
@@ -92,7 +92,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AssessmentSeries.AppealEndDate))
                .ForMember(d => d.LastUpdatedOn, opts => opts.MapFrom(s => s.CreatedOn))
                .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.CreatedBy))
-               .ForMember(d => d.Results, opts => opts.MapFrom(s => new List<Result>()));
+               .ForMember(d => d.Result, opts => opts.MapFrom(s => (Result)null));
 
             CreateMap<Domain.Models.IndustryPlacement, Models.Contracts.Learner.IndustryPlacement>()
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))

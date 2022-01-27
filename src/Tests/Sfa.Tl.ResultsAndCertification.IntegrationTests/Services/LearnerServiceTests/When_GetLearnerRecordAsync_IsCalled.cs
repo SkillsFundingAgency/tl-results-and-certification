@@ -202,8 +202,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerServic
                             AppealEndDate = expectedPathwayAssessment.AssessmentSeries.AppealEndDate,
                             LastUpdatedBy = expectedPathwayAssessment.CreatedBy,
                             LastUpdatedOn = expectedPathwayAssessment.CreatedOn,
-                            Results = expectedPathwayResult != null ? new List<Result>
-                            {
+                            Result = expectedPathwayResult != null ?
                                 new Result
                                 {
                                     Id = expectedPathwayResult.Id,
@@ -213,7 +212,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerServic
                                     LastUpdatedBy = expectedPathwayResult.CreatedBy,
                                     LastUpdatedOn = expectedPathwayResult.CreatedOn
                                 }
-                            } : new List<Result>()
+                                : null
                         }
                     } : new List<Assessment>(),
                     Specialisms = new List<Specialism>
@@ -224,7 +223,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerServic
                             LarId = expectedSpecialim.TlSpecialism.LarId,
                             Name = expectedSpecialim.TlSpecialism.Name,
                             Assessments = expectedSpecialismAssessment != null ? new List<Assessment>
-                            { 
+                            {
                                 new Assessment
                                 {
                                     Id = expectedSpecialismAssessment.Id,
@@ -233,7 +232,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerServic
                                     AppealEndDate = expectedSpecialismAssessment.AssessmentSeries.AppealEndDate,
                                     LastUpdatedBy = expectedSpecialismAssessment.CreatedBy,
                                     LastUpdatedOn = expectedSpecialismAssessment.CreatedOn,
-                                    Results = new List<Result>()
+                                    Result = null
                                 }
                             } : new List<Assessment>()
                         }
@@ -256,7 +255,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerServic
             _result.Lastname.Should().Be(expectedLearnerRecord.Lastname);
             _result.DateofBirth.Should().Be(expectedLearnerRecord.DateofBirth);
             _result.Gender.Should().Be(expectedLearnerRecord.Gender);
-            _result.Pathway.Should().BeEquivalentTo(expectedLearnerRecord.Pathway);            
+            _result.Pathway.Should().BeEquivalentTo(expectedLearnerRecord.Pathway);
         }
 
         public static IEnumerable<object[]> Data

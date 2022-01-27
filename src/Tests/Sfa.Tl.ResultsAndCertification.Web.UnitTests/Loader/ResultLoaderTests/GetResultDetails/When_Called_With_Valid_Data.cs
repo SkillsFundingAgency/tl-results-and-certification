@@ -57,16 +57,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
-                            Results = new List<Result>
+                            Result = new Result
                             {
-                                new Result
-                                {
-                                    Id = 1,
-                                    Grade = "C",
-                                    PrsStatus = null,
-                                    LastUpdatedBy = "System",
-                                    LastUpdatedOn = DateTime.UtcNow
-                                }
+                                Id = 1,
+                                Grade = "C",
+                                PrsStatus = null,
+                                LastUpdatedBy = "System",
+                                LastUpdatedOn = DateTime.UtcNow
                             }
                         },
 
@@ -78,16 +75,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
-                            Results = new List<Result>
+                            Result = new Result
                             {
-                                new Result
-                                {
-                                    Id = 1,
-                                    Grade = "B",
-                                    PrsStatus = PrsStatus.BeingAppealed,
-                                    LastUpdatedBy = "System",
-                                    LastUpdatedOn = DateTime.UtcNow
-                                }
+                                Id = 1,
+                                Grade = "B",
+                                PrsStatus = PrsStatus.BeingAppealed,
+                                LastUpdatedBy = "System",
+                                LastUpdatedOn = DateTime.UtcNow
                             }
                         },
 
@@ -99,16 +93,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
-                            Results = new List<Result>
+                            Result = new Result
                             {
-                                new Result
-                                {
-                                    Id = 1,
-                                    Grade = "A",
-                                    PrsStatus = PrsStatus.Final,
-                                    LastUpdatedBy = "System",
-                                    LastUpdatedOn = DateTime.UtcNow
-                                }
+                                Id = 1,
+                                Grade = "A",
+                                PrsStatus = PrsStatus.Final,
+                                LastUpdatedBy = "System",
+                                LastUpdatedOn = DateTime.UtcNow
                             }
                         },
 
@@ -120,16 +111,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             AppealEndDate = DateTime.UtcNow.AddDays(-10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
-                            Results = new List<Result>
+                            Result = new Result
                             {
-                                new Result
-                                {
-                                    Id = 1,
-                                    Grade = "D",
-                                    PrsStatus = null,
-                                    LastUpdatedBy = "System",
-                                    LastUpdatedOn = DateTime.UtcNow
-                                }
+                                Id = 1,
+                                Grade = "D",
+                                PrsStatus = null,
+                                LastUpdatedBy = "System",
+                                LastUpdatedOn = DateTime.UtcNow
                             }
                         }
                     },
@@ -159,17 +147,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                     AppealEndDate = DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = DateTime.UtcNow,
-                                    Results = new List<Result>
+                                    Result = new Result
                                     {
-                                        new Result
-                                        {
-                                            Id = 1,
-                                            Grade = "Merit",
-                                            PrsStatus = null,
-                                            LastUpdatedBy = "System",
-                                            LastUpdatedOn = DateTime.UtcNow
-                                        }
-                                    }
+                                        Id = 1,
+                                        Grade = "Merit",
+                                        PrsStatus = null,
+                                        LastUpdatedBy = "System",
+                                        LastUpdatedOn = DateTime.UtcNow
+                                    }                                    
                                 }
                             }
                         },
@@ -189,16 +174,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                     AppealEndDate = DateTime.UtcNow.AddDays(-30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = DateTime.UtcNow,
-                                    Results = new List<Result>
+                                    Result = new Result
                                     {
-                                        new Result
-                                        {
-                                            Id = 1,
-                                            Grade = "Pass",
-                                            PrsStatus = null,
-                                            LastUpdatedBy = "System",
-                                            LastUpdatedOn = System.DateTime.UtcNow
-                                        }
+                                        Id = 1,
+                                        Grade = "Pass",
+                                        PrsStatus = null,
+                                        LastUpdatedBy = "System",
+                                        LastUpdatedOn = System.DateTime.UtcNow
                                     }
                                 }
                             }
@@ -249,11 +231,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                 actualExam.AssessmentSeries.Should().Be(expectedExam.SeriesName);
                 actualExam.AppealEndDate.Should().Be(expectedExam.AppealEndDate);
 
-                var isResultAvailable = expectedExam.Results.Any();
-                actualExam.Grade.Should().Be(!isResultAvailable ? null : expectedExam.Results.FirstOrDefault().Grade);
-                actualExam.PrsStatus.Should().Be(!isResultAvailable ? null : expectedExam.Results.FirstOrDefault().PrsStatus);
-                actualExam.LastUpdated.Should().Be(!isResultAvailable ? null : expectedExam.Results.FirstOrDefault().LastUpdatedOn.ToDobFormat());
-                actualExam.UpdatedBy.Should().Be(!isResultAvailable ? null : expectedExam.Results.FirstOrDefault().LastUpdatedBy);
+                var isResultAvailable = expectedExam.Result != null;
+                actualExam.Grade.Should().Be(!isResultAvailable ? null : expectedExam.Result.Grade);
+                actualExam.PrsStatus.Should().Be(!isResultAvailable ? null : expectedExam.Result.PrsStatus);
+                actualExam.LastUpdated.Should().Be(!isResultAvailable ? null : expectedExam.Result.LastUpdatedOn.ToDobFormat());
+                actualExam.UpdatedBy.Should().Be(!isResultAvailable ? null : expectedExam.Result.LastUpdatedBy);
                 actualExam.ComponentType.Should().Be(ComponentType.Core);
                 actualExam.ProfileId.Should().Be(expectedApiResult.ProfileId);
             }
@@ -274,11 +256,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                     actualExam.AssessmentSeries.Should().Be(expectedExam.SeriesName);
                     actualExam.AppealEndDate.Should().Be(expectedExam.AppealEndDate);
 
-                    var isResultAvailable = expectedExam.Results.Any();
-                    actualExam.Grade.Should().Be(!isResultAvailable ? null : expectedExam.Results.FirstOrDefault().Grade);
-                    actualExam.PrsStatus.Should().Be(!isResultAvailable ? null : expectedExam.Results.FirstOrDefault().PrsStatus);
-                    actualExam.LastUpdated.Should().Be(!isResultAvailable ? null : expectedExam.Results.FirstOrDefault().LastUpdatedOn.ToDobFormat());
-                    actualExam.UpdatedBy.Should().Be(!isResultAvailable ? null : expectedExam.Results.FirstOrDefault().LastUpdatedBy);
+                    var isResultAvailable = expectedExam.Result != null;
+                    actualExam.Grade.Should().Be(!isResultAvailable ? null : expectedExam.Result.Grade);
+                    actualExam.PrsStatus.Should().Be(!isResultAvailable ? null : expectedExam.Result.PrsStatus);
+                    actualExam.LastUpdated.Should().Be(!isResultAvailable ? null : expectedExam.Result.LastUpdatedOn.ToDobFormat());
+                    actualExam.UpdatedBy.Should().Be(!isResultAvailable ? null : expectedExam.Result.LastUpdatedBy);
                     actualExam.ComponentType.Should().Be(ComponentType.Specialism);
                     actualExam.ProfileId.Should().Be(expectedApiResult.ProfileId);
                 }

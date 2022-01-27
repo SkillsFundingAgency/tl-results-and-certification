@@ -42,9 +42,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public NotificationBannerModel SuccessBanner { get; set; }
 
         public bool HasCurrentCoreAssessmentEntry => PathwayAssessment != null;
-        public bool HasResultForCurrentCoreAssessment => HasCurrentCoreAssessmentEntry && PathwayAssessment.Results.Any();
+        public bool HasResultForCurrentCoreAssessment => HasCurrentCoreAssessmentEntry && PathwayAssessment.Result != null && PathwayAssessment.Result.Id > 0;
         public bool HasPreviousCoreAssessment => PreviousPathwayAssessment != null;
-        public bool HasResultForPreviousCoreAssessment => HasPreviousCoreAssessment && PreviousPathwayAssessment.Results.Any();
+        public bool HasResultForPreviousCoreAssessment => HasPreviousCoreAssessment && PreviousPathwayAssessment.Result != null && PreviousPathwayAssessment.Result.Id > 0;
         public bool NeedCoreResultForPreviousAssessmentEntry => !HasCurrentCoreAssessmentEntry && HasPreviousCoreAssessment && !HasResultForPreviousCoreAssessment;
         public bool IsSpecialismRegistered => SpecialismDetails.Any();
 

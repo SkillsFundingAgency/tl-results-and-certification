@@ -57,16 +57,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
-                            Results = new List<Result>
+                            Result = new Result
                             {
-                                new Result
-                                {
-                                    Id = 1,
-                                    Grade = "A",
-                                    PrsStatus = null,
-                                    LastUpdatedBy = "System",
-                                    LastUpdatedOn = DateTime.UtcNow
-                                }
+                                Id = 1,
+                                Grade = "A",
+                                PrsStatus = null,
+                                LastUpdatedBy = "System",
+                                LastUpdatedOn = DateTime.UtcNow
                             }
                         }
                     },
@@ -87,7 +84,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                     AppealEndDate = DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = DateTime.UtcNow,
-                                    Results = new List<Result>()
+                                    Result = null
                                 }
                             }
                         }
@@ -118,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
             ActualResult.PathwayName.Should().Be(expectedApiResultDetails.Pathway.Name);
             ActualResult.PathwayDisplayName.Should().Be($"{expectedApiResultDetails.Pathway.Name} ({expectedApiResultDetails.Pathway.LarId})");
 
-            var expectedResult = expectedPathwayAsssessment.Results.FirstOrDefault();
+            var expectedResult = expectedPathwayAsssessment.Result;
             ActualResult.ResultId.Should().Be(expectedResult.Id);
             ActualResult.SelectedGradeCode.Should().Be(expectedResult.GradeCode);
             ActualResult.PathwayPrsStatus.Should().Be(expectedResult.PrsStatus);
