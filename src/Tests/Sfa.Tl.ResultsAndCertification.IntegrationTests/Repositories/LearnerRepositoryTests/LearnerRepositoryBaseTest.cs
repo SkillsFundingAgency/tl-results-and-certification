@@ -251,6 +251,38 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
             return tqPathwayAssessmentsSeedData;
         }
 
+        public IList<TqSpecialismResult> GetSpecialismResultDataToProcess(TqSpecialismAssessment specialismAssessment, bool seedSpecialismResultsAsActive, bool isHistorical, PrsStatus? prsStatus = null, bool isBulkUpload = true)
+        {
+            var tqSpecialismResults = new List<TqSpecialismResult>();
+
+            if (isHistorical)
+            {
+                // Historical record
+                var specialismResult = new TqSpecialismResultBuilder().Build(specialismAssessment, PathwayComponentGrades[0], isBulkUpload: isBulkUpload);
+                specialismResult.IsOptedin = false;
+                specialismResult.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                var tqSpecialismResultHistorical = TqSpecialismResultDataProvider.CreateTqSpecialismResult(DbContext, specialismResult);
+                tqSpecialismResults.Add(tqSpecialismResultHistorical);
+            }
+
+            var activeSpecialismResult = new TqSpecialismResultBuilder().Build(specialismAssessment, PathwayComponentGrades[0], isBulkUpload: isBulkUpload);
+            var tqSpecialismResult = TqSpecialismResultDataProvider.CreateTqSpecialismResult(DbContext, activeSpecialismResult);
+            if (!seedSpecialismResultsAsActive)
+            {
+                tqSpecialismResult.IsOptedin = specialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn;
+                tqSpecialismResult.EndDate = DateTime.UtcNow;
+            }
+            else
+            {
+                tqSpecialismResult.PrsStatus = prsStatus;
+            }
+
+            tqSpecialismResults.Add(tqSpecialismResult);
+            return tqSpecialismResults;
+        }
+
+
         public int GetAcademicYear()
         {
             return AcademicYears.FirstOrDefault(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate).Year;
@@ -306,6 +338,28 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
 
             actualPathwayResult.CreatedBy.Should().Be(expectedPathwayResult.CreatedBy);
             actualPathwayResult.PrsStatus.Should().Be(expectedPathwayResult.PrsStatus);
+        }
+
+        public void AssertSpecialismResult(TqSpecialismResult actualSpecialismResult, TqSpecialismResult expectedSpecialismResult)
+        {
+            if (expectedSpecialismResult == null)
+            {
+                actualSpecialismResult.Should().BeNull();
+                return;
+            }
+
+            actualSpecialismResult.TqSpecialismAssessmentId.Should().Be(expectedSpecialismResult.TqSpecialismAssessmentId);
+            actualSpecialismResult.TlLookupId.Should().Be(expectedSpecialismResult.TlLookupId);
+            actualSpecialismResult.IsOptedin.Should().Be(expectedSpecialismResult.IsOptedin);
+            actualSpecialismResult.IsBulkUpload.Should().Be(expectedSpecialismResult.IsBulkUpload);
+            actualSpecialismResult.StartDate.Should().Be(expectedSpecialismResult.StartDate);
+            if (expectedSpecialismResult.EndDate != null)
+                actualSpecialismResult.EndDate.Value.ToShortDateString().Should().Be(expectedSpecialismResult.EndDate.Value.ToShortDateString());
+            else
+                actualSpecialismResult.EndDate.Should().BeNull();
+
+            actualSpecialismResult.CreatedBy.Should().Be(expectedSpecialismResult.CreatedBy);
+            actualSpecialismResult.PrsStatus.Should().Be(expectedSpecialismResult.PrsStatus);
         }
 
         public void AssertIndustryPlacement(IndustryPlacement actualIndustryPlacement, IndustryPlacement expectedIndustryPlacement)
