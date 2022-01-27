@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
                         foreach (var spCombination in specialism.TlSpecialismCombinations)
                         {
                             // Initialize first item
-                            var combinedSpecialismLarId = specialism.LarId.ToString();
+                            var combinedSpecialismLarId = new List<string> { specialism.LarId.ToString() };
                             var combinedDisplayName = specialism.SpecialismComponentDisplayName;
 
                             // Find partners to join.
@@ -65,15 +65,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
                                 if (otherSpecialism != null)
                                 {
                                     isPairFound = true;
-                                    combinedSpecialismLarId = $"{combinedSpecialismLarId}{Constants.PipeSeperator}{otherSpecialism.LarId}";
+                                    combinedSpecialismLarId.Add(otherSpecialism.LarId);
                                     combinedDisplayName = $"{combinedDisplayName}{Constants.AndSeperator}{otherSpecialism.SpecialismComponentDisplayName}";
                                 }
                             }
 
-                            var isAddedAlready = processedLarIds.Any(s => combinedSpecialismLarId.Split(Constants.PipeSeperator).Except(s.Split(Constants.PipeSeperator), StringComparer.InvariantCultureIgnoreCase).Count() == 0);
+                            var isAddedAlready = processedLarIds.Any(s => combinedSpecialismLarId.Contains(s));
                             if (isPairFound && !isAddedAlready)
                             {
-                                processedLarIds.Add(combinedSpecialismLarId);
+                                processedLarIds.AddRange(combinedSpecialismLarId);
                                 specialismToDisplay.Add(new SpecialismComponentViewModel
                                 {
                                     SpecialismComponentDisplayName = combinedDisplayName
@@ -81,7 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
                             }
                         }
                     }
-                    else 
+                    else
                     {
                         specialismToDisplay.Add(specialism);
                     }
