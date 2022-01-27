@@ -29,6 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
         protected IList<AssessmentSeries> AssessmentSeries;
         protected IList<TlLookup> TlLookup;
         protected IList<TlLookup> PathwayComponentGrades;
+        protected IList<TlLookup> SpecialismComponentGrades;
         protected IList<AcademicYear> AcademicYears;
         protected ILearnerRepository LearnerRepository;
 
@@ -44,6 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
             PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
+            SpecialismComponentGrades = TlLookupDataProvider.CreateSpecialismGradeTlLookupList(DbContext, null, true);
             AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
 
             DbContext.SaveChanges();
@@ -258,7 +260,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
             if (isHistorical)
             {
                 // Historical record
-                var specialismResult = new TqSpecialismResultBuilder().Build(specialismAssessment, PathwayComponentGrades[0], isBulkUpload: isBulkUpload);
+                var specialismResult = new TqSpecialismResultBuilder().Build(specialismAssessment, SpecialismComponentGrades[0], isBulkUpload: isBulkUpload);
                 specialismResult.IsOptedin = false;
                 specialismResult.EndDate = DateTime.UtcNow.AddDays(-1);
 
@@ -266,7 +268,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
                 tqSpecialismResults.Add(tqSpecialismResultHistorical);
             }
 
-            var activeSpecialismResult = new TqSpecialismResultBuilder().Build(specialismAssessment, PathwayComponentGrades[0], isBulkUpload: isBulkUpload);
+            var activeSpecialismResult = new TqSpecialismResultBuilder().Build(specialismAssessment, SpecialismComponentGrades[0], isBulkUpload: isBulkUpload);
             var tqSpecialismResult = TqSpecialismResultDataProvider.CreateTqSpecialismResult(DbContext, activeSpecialismResult);
             if (!seedSpecialismResultsAsActive)
             {
