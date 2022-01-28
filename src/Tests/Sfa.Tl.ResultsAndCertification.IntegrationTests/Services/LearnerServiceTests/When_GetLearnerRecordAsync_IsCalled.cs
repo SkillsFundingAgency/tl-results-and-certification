@@ -51,8 +51,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerServic
 
             // Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+			var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+            
             var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
-            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+            var tqSpecialismResultsSeedData = new List<TqSpecialismResult>();
             var industryPlacementUln = 1111111115;
             var profilesWithPrsStatus = new List<(long, PrsStatus?)> { (1111111111, null), (1111111112, null), (1111111113, null), (1111111114, PrsStatus.BeingAppealed), (1111111115, null) };
 
@@ -65,16 +67,25 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerServic
                 var pathwayAssessments = GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive, isHistoricAssessent);
                 tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
 
-                foreach (var pathway in registration.TqRegistrationPathways)
-                {
-                    tqSpecialismAssessmentsSeedData.AddRange(GetSpecialismAssessmentsDataToProcess(pathway.TqRegistrationSpecialisms.ToList(), isLatestActive, isHistoricAssessent));
-                }
-
                 // Build Pathway results
                 foreach (var pathwayAssessment in pathwayAssessments)
                 {
                     var prsStatus = profilesWithPrsStatus.FirstOrDefault(p => p.Item1 == pathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber).Item2;
                     tqPathwayResultsSeedData.AddRange(GetPathwayResultDataToProcess(pathwayAssessment, isLatestActive, isHistoricAssessent, prsStatus));
+                }
+
+                // Specialism Assesments
+                foreach (var pathway in registration.TqRegistrationPathways)
+                {
+                    var specialismAssessments = GetSpecialismAssessmentsDataToProcess(pathway.TqRegistrationSpecialisms.ToList(), isLatestActive, isHistoricAssessent);
+                    tqSpecialismAssessmentsSeedData.AddRange(specialismAssessments);
+
+                    foreach (var specialismAssessment in specialismAssessments)
+                    {
+                        // Specialism Results
+                        var prsStatus = profilesWithPrsStatus.FirstOrDefault(p => p.Item1 == specialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber).Item2;
+                        tqSpecialismResultsSeedData.AddRange(GetSpecialismResultDataToProcess(specialismAssessment, isLatestActive, isHistoricAssessent, prsStatus));
+                    }
                 }
             }
 
@@ -157,14 +168,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerServic
             }
 
             TqSpecialismAssessment expectedSpecialismAssessment = null;
+            TqSpecialismResult expectedSpecialismResult = null;
 
             if (status == RegistrationPathwayStatus.Withdrawn)
             {
                 expectedSpecialismAssessment = _specialismAssessments.FirstOrDefault(x => x.TqRegistrationSpecialismId == expectedSpecialim.Id && x.IsOptedin && x.EndDate != null);
+                expectedSpecialismResult = expectedSpecialismAssessment?.TqSpecialismResults.FirstOrDefault(x => x.TqSpecialismAssessmentId == expectedSpecialismAssessment.Id && x.IsOptedin && x.EndDate != null);
             }
             else
             {
                 expectedSpecialismAssessment = _specialismAssessments.FirstOrDefault(x => x.TqRegistrationSpecialismId == expectedSpecialim.Id && x.IsOptedin && x.EndDate == null);
+                expectedSpecialismResult = expectedSpecialismAssessment?.TqSpecialismResults.FirstOrDefault(x => x.TqSpecialismAssessmentId == expectedSpecialismAssessment.Id && x.IsOptedin && x.EndDate == null);
             }
 
             var expectedIndustryPlacement = expectedPathway.IndustryPlacements?.FirstOrDefault();
@@ -232,8 +246,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerServic
                                     AppealEndDate = expectedSpecialismAssessment.AssessmentSeries.AppealEndDate,
                                     LastUpdatedBy = expectedSpecialismAssessment.CreatedBy,
                                     LastUpdatedOn = expectedSpecialismAssessment.CreatedOn,
-                                    Result = null
-                                }
+                                    Result = expectedSpecialismResult != null ?
+                                        new Result
+                                        {
+                                            Id = expectedSpecialismResult.Id,
+                                            Grade = expectedSpecialismResult.TlLookup.Value,
+                                            GradeCode = expectedSpecialismResult.TlLookup.Code,
+                                            PrsStatus = expectedSpecialismResult.PrsStatus,
+                                            LastUpdatedBy = expectedSpecialismResult.CreatedBy,
+                                            LastUpdatedOn = expectedSpecialismResult.CreatedOn
+                                        }
+                                        : null
+                                        }
                             } : new List<Assessment>()
                         }
                     },
