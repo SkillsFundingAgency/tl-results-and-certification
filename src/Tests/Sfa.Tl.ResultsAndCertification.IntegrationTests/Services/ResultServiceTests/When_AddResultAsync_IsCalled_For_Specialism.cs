@@ -19,7 +19,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private AddResultResponse _actualResult;
         private List<TqRegistrationProfile> _registrations;
-        private List<TqPathwayAssessment> _pathwayAssessments;
         private List<TqSpecialismAssessment> _specialismAssessments;
 
         public override void Given()
