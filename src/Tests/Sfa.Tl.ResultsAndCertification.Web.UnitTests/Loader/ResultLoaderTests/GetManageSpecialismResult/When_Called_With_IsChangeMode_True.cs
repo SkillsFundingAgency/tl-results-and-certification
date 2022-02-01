@@ -117,7 +117,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
             ActualResult.SpecialismName.Should().Be(expectedSpecialism.Name);
             ActualResult.SpecialismDisplayName.Should().Be($"{expectedSpecialism.Name} ({expectedSpecialism.LarId})");
             ActualResult.ResultId.Should().Be(expectedResult.Id);
-            ActualResult.SelectedGradeCode.Should().Be(expectedResult.GradeCode);
             ActualResult.PrsStatus.Should().BeNull();
 
             ActualResult.IsValid.Should().BeTrue();
