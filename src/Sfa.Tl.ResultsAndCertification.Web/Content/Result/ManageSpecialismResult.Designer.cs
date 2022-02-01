@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string Change_Button {
+            get {
+                return ResourceManager.GetString("Change_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Learners details.
         /// </summary>
         public static string Learner_Details {
@@ -88,6 +97,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to or.
+        /// </summary>
+        public static string Or_Text {
+            get {
+                return ResourceManager.GetString("Or_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a result for {0}.
         /// </summary>
         public static string Page_Heading_Add_Result {
@@ -97,11 +115,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change a result for {0}.
+        /// </summary>
+        public static string Page_Heading_Change_Result {
+            get {
+                return ResourceManager.GetString("Page_Heading_Change_Result", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select specialism result.
         /// </summary>
         public static string Page_Title_Add_Result {
             get {
                 return ResourceManager.GetString("Page_Title_Add_Result", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change specialism result.
+        /// </summary>
+        public static string Page_Title_Change_Result {
+            get {
+                return ResourceManager.GetString("Page_Title_Change_Result", resourceCulture);
             }
         }
         

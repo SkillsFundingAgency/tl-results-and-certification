@@ -348,6 +348,43 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("change-specialism-result/{profileId}/{assessmentId}", Name = RouteConstants.ChangeSpecialismResult)]
+        public async Task<IActionResult> ChangeSpecialismResultAsync(int profileId, int assessmentId)
+        {
+            var viewModel = await _resultLoader.GetManageSpecialismResultAsync(User.GetUkPrn(), profileId, assessmentId, isChangeMode: true);
+
+            if (viewModel == null || !viewModel.IsValid)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No details found. Method: GetManageSpecialismResultAsync({User.GetUkPrn()}, {profileId}, {assessmentId}, {true}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("change-specialism-result/{profileId}/{assessmentId}", Name = RouteConstants.SubmitChangeSpecialismResult)]
+        public async Task<IActionResult> ChangeSpecialismResultAsync(ManageSpecialismResultViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var resultsViewModel = await _resultLoader.GetManageSpecialismResultAsync(User.GetUkPrn(), model.ProfileId, model.AssessmentId, isChangeMode: true);
+                return View(resultsViewModel);
+            }
+
+            var isResultChanged = await _resultLoader.IsSpecialismResultChangedAsync(User.GetUkPrn(), model);
+            if (!isResultChanged.HasValue)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"ChangeSpecialismResult request data-mismatch. Method:IsSpecialismResultChanged({User.GetUkPrn()}, {model}), ProfileId: {model.ProfileId}, ResultId: {model.ResultId}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            if (isResultChanged == false)
+                return RedirectToRoute(RouteConstants.ResultDetails, new { profileId = model.ProfileId });
+
+            return RedirectToRoute(RouteConstants.ResultDetails, new { model.ProfileId });
+        }
+
+        [HttpGet]
         [Route("results-generating-download", Name = RouteConstants.ResultsGeneratingDownload)]
         public IActionResult ResultsGeneratingDownload()
         {

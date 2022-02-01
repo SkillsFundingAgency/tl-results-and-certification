@@ -3,7 +3,7 @@
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 @{
-    ViewData["Title"] = ManageSpecialismResult.Page_Title_Add_Result;
+    ViewData["Title"] = ManageSpecialismResult.Page_Title_Change_Result;
 }
 
 @section NavigationBar {
@@ -12,7 +12,7 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form class="form" asp-route="@RouteConstants.SubmitAddSpecialismResult">
+        <form class="form" asp-route="@RouteConstants.SubmitChangeSpecialismResult">
             <input type="hidden" asp-for="ProfileId" />
             <input type="hidden" asp-for="AssessmentId" />
             <input type="hidden" asp-for="AssessmentSeries" />
@@ -20,7 +20,7 @@
 
             <partial name="_ValidationSummary" />
 
-            <h1 class="govuk-heading-l">@string.Format(ManageSpecialismResult.Page_Heading_Add_Result, @Model.LearnerName)</h1>
+            <h1 class="govuk-heading-l">@string.Format(ManageSpecialismResult.Page_Heading_Change_Result, @Model.LearnerName)</h1>
 
             <dl class="govuk-summary-list govuk-summary-list--no-border" aria-label="@ManageSpecialismResult.Learner_Details">
                 <vc:summary-item model=Model.SummaryUln></vc:summary-item>
@@ -43,6 +43,9 @@
                     <span sfa-validation-for="SelectedGradeCode"></span>
                     @foreach (var grade in Model?.Grades?.Select((value, i) => (value, i)))
                     {
+                        if(!string.IsNullOrWhiteSpace(grade.value.Code) && grade.value.Code.Equals(Constants.NotReceived, StringComparison.InvariantCultureIgnoreCase)) {
+                            <div class="govuk-radios__divider">@ManageSpecialismResult.Or_Text</div>
+                        }
                         var elementId = (grade.i > 0) ? "selectedgradecode-" + grade.i : "selectedgradecode";
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="@elementId" type="radio" asp-for="@Model.SelectedGradeCode" value="@Model.Grades[grade.i].Code">
@@ -54,7 +57,7 @@
                 </fieldset>
             </div>
 
-            <button type="submit" id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ManageSpecialismResult.Submit_Button</button>
+            <button type="submit" id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ManageSpecialismResult.Change_Button</button>
         </form>
     </div>
 </div>
