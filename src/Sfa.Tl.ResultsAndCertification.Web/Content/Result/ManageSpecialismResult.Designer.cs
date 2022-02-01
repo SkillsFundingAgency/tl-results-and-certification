@@ -97,6 +97,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This learner&apos;s grade has not been received.
+        /// </summary>
+        public static string Option_Not_Received {
+            get {
+                return ResourceManager.GetString("Option_Not_Received", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to or.
         /// </summary>
         public static string Or_Text {

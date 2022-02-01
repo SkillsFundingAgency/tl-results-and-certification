@@ -200,7 +200,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 return null;
 
             if (isChangeMode)
-                grades.Insert(grades.Count, new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageCoreResult.Option_Not_Received });
+                grades.Insert(grades.Count, new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageSpecialismResult.Option_Not_Received });
 
             return _mapper.Map<ManageSpecialismResultViewModel>(response, opt =>
             {
