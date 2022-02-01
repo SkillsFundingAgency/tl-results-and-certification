@@ -5,32 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Content\Dashboard.Designer.cs" />
-    <Compile Remove="ViewModel\TlevelQueryViewModel.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="wwwroot\javascripts\english-maths-question.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Remove="Content\Dashboard.resx" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Frontend\src\javascripts\user-guide.js" />
-  </ItemGroup>
-
-
-  <ItemGroup>
     <Folder Include="Frontend\src\stylesheets\css\" />
   </ItemGroup>
-
-
-  <ItemGroup>
-    <None Include="wwwroot\javascripts\english-maths-question.js" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
@@ -348,6 +324,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ReregistrationConfirmation.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Result\ManageSpecialismResult.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ManageSpecialismResult.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Result\ResultsNoRecordsFound.Designer.cs">
       <DependentUpon>ResultsNoRecordsFound.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -377,11 +358,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ResultDetails.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\Result\ResultNoAssessmentEntry.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ResultNoAssessmentEntry.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Result\ResultsDownloadData.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -1194,6 +1170,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ReregistrationConfirmation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Content\Result\ManageSpecialismResult.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ManageSpecialismResult.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\Result\ResultsNoRecordsFound.resx">
       <LastGenOutput>ResultsNoRecordsFound.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1217,10 +1197,6 @@
     <EmbeddedResource Update="Content\Result\ResultDetails.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResultDetails.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\Result\ResultNoAssessmentEntry.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ResultNoAssessmentEntry.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Result\ResultsDownloadData.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

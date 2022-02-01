@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ManageCoreResult {
@@ -61,6 +61,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The {0} {1} result has been added.
+        /// </summary>
+        public static string Banner_Message_For_Result_Added {
+            get {
+                return ResourceManager.GetString("Banner_Message_For_Result_Added", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The {0} {1} result has been changed.
+        /// </summary>
+        public static string Banner_Message_For_Result_Changed {
+            get {
+                return ResourceManager.GetString("Banner_Message_For_Result_Changed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change.
         /// </summary>
         public static string Change_Button {
@@ -70,25 +88,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} for {1}.
+        ///   Looks up a localized string similar to Core component: {0}.
         /// </summary>
-        public static string Core_Assessment_Title {
+        public static string Core_Component {
             get {
-                return ResourceManager.GetString("Core_Assessment_Title", resourceCulture);
+                return ResourceManager.GetString("Core_Component", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select the core result.
+        ///   Looks up a localized string similar to Learners details.
         /// </summary>
-        public static string Heading {
+        public static string Learner_Details {
             get {
-                return ResourceManager.GetString("Heading", resourceCulture);
+                return ResourceManager.GetString("Learner_Details", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Not received.
+        ///   Looks up a localized string similar to This learner&apos;s grade has not been received.
         /// </summary>
         public static string Option_Not_Received {
             get {
@@ -97,7 +115,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select the core result page.
+        ///   Looks up a localized string similar to or.
+        /// </summary>
+        public static string Or_Text {
+            get {
+                return ResourceManager.GetString("Or_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a result for {0}.
+        /// </summary>
+        public static string Page_Heading_Add_Result {
+            get {
+                return ResourceManager.GetString("Page_Heading_Add_Result", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change a result for {0}.
+        /// </summary>
+        public static string Page_Heading_Change_Result {
+            get {
+                return ResourceManager.GetString("Page_Heading_Change_Result", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select core result.
         /// </summary>
         public static string Page_Title_Add_Result {
             get {
@@ -106,11 +151,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change core result page.
+        ///   Looks up a localized string similar to Change core result.
         /// </summary>
         public static string Page_Title_Change_Result {
             get {
                 return ResourceManager.GetString("Page_Title_Change_Result", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the grade for {0}.
+        /// </summary>
+        public static string Select_The_Grade_For {
+            get {
+                return ResourceManager.GetString("Select_The_Grade_For", resourceCulture);
             }
         }
         
@@ -120,6 +174,60 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static string Submit_Button {
             get {
                 return ResourceManager.GetString("Submit_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of birth.
+        /// </summary>
+        public static string Title_DateofBirth_Text {
+            get {
+                return ResourceManager.GetString("Title_DateofBirth_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provider.
+        /// </summary>
+        public static string Title_Provider_Name_Text {
+            get {
+                return ResourceManager.GetString("Title_Provider_Name_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UKPRN.
+        /// </summary>
+        public static string Title_Provider_Ukprn_Text {
+            get {
+                return ResourceManager.GetString("Title_Provider_Ukprn_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Level.
+        /// </summary>
+        public static string Title_TLevel_Text {
+            get {
+                return ResourceManager.GetString("Title_TLevel_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ULN.
+        /// </summary>
+        public static string Title_Uln_Text {
+            get {
+                return ResourceManager.GetString("Title_Uln_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select the grade.
+        /// </summary>
+        public static string Validation_Select_Grade_Required_Message {
+            get {
+                return ResourceManager.GetString("Validation_Select_Grade_Required_Message", resourceCulture);
             }
         }
     }

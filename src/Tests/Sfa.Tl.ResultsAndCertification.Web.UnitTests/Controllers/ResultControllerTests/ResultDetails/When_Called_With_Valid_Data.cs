@@ -16,33 +16,55 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
     public class When_Called_With_Valid_Data : TestSetup
     {
         private ResultDetailsViewModel _mockResult = null;
-        private Dictionary<string, string> _routeAttributes;
 
         public override void Given()
         {
             _mockResult = new ResultDetailsViewModel
             {
-                ProfileId = 1,
-                Uln = 1234567890,
-                Firstname = "First",
-                Lastname = "Last",
-                DateofBirth = DateTime.Now.AddYears(-30),
-                ProviderName = "Test Provider",
-                ProviderUkprn = 1234567891,
-                TlevelTitle = "Tlevel title",
-                PathwayDisplayName = "Pathway (7654321)",
-                PathwayAssessmentSeries = "Summer 2021",
-                AppealEndDate = DateTime.Today.AddDays(7),
-                PathwayAssessmentId = 11,
-                PathwayResult = "A",
-                PathwayResultId = 123, 
-                PathwayStatus = RegistrationPathwayStatus.Active
-            };
+                Firstname = "John",
+                Lastname = "Smith",
+                Uln = 5647382910,
+                DateofBirth = DateTime.Today,
+                ProviderName = "Barnsley College",
+                ProviderUkprn = 100656,
+                TlevelTitle = "Design, Surveying and Planning for Construction",
 
-            _routeAttributes =  new Dictionary<string, string> 
-            { 
-                { Constants.ProfileId, ProfileId.ToString() }, 
-                { Constants.AssessmentId, _mockResult.PathwayAssessmentId.ToString() } 
+                // Core
+                CoreComponentDisplayName = "Design, Surveying and Planning (123456)",
+                CoreComponentExams = new List<ComponentExamViewModel>
+                {
+                    new ComponentExamViewModel { AssessmentSeries = "Autumn 2022", Grade = null, PrsStatus = null, LastUpdated = null, UpdatedBy = null, AppealEndDate = System.DateTime.Today.AddDays(10), AssessmentId = 1 },
+                    new ComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "B", PrsStatus = null, LastUpdated = "6 June 2021", UpdatedBy = "User 3", AppealEndDate = DateTime.Today.AddDays(10), AssessmentId = 2 },
+                    new ComponentExamViewModel { AssessmentSeries = "Autumn 2021", Grade = "B", PrsStatus = PrsStatus.BeingAppealed, LastUpdated = "5 June 2021", UpdatedBy = "User 2", AppealEndDate = System.DateTime.Today.AddDays(10), AssessmentId = 3 },
+                    new ComponentExamViewModel { AssessmentSeries = "Summer 2021", Grade = "A", PrsStatus = PrsStatus.Final, LastUpdated = "4 June 2021", UpdatedBy = "User 1", AppealEndDate = System.DateTime.Today.AddDays(10), AssessmentId = 4 },
+                    new ComponentExamViewModel { AssessmentSeries = "Autumn 2020", Grade = "D", PrsStatus = null, LastUpdated = "34 June 2021", UpdatedBy = "User 1", AppealEndDate = System.DateTime.Today.AddDays(-365), AssessmentId = 5 }
+                },
+
+                // Specialisms
+                SpecialismComponents = new List<SpecialismComponentViewModel>
+                {
+                    new SpecialismComponentViewModel
+                    {
+                        SpecialismComponentDisplayName = "Plumbing",
+                        LarId = "S111",
+                        SpecialismComponentExams = new List<ComponentExamViewModel>
+                        {
+                            new ComponentExamViewModel { AssessmentSeries = "Autumn 2022", Grade = null, PrsStatus = null, LastUpdated = null, UpdatedBy = null, AppealEndDate = DateTime.Today.AddDays(10), AssessmentId = 6 },
+                            new ComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "Merit", PrsStatus = null, LastUpdated = "6 June 2021", UpdatedBy = "User 1",AppealEndDate = System.DateTime.Today.AddDays(10), AssessmentId = 7 }
+                        }
+                    },
+
+                    new SpecialismComponentViewModel
+                    {
+                        SpecialismComponentDisplayName = "Heating",
+                        LarId = "S222",
+                        SpecialismComponentExams = new List<ComponentExamViewModel>
+                        {
+                            new ComponentExamViewModel { AssessmentSeries = "Autumn 2022", Grade = null, PrsStatus = null, LastUpdated = "7 June 2021", UpdatedBy = "User 2", AppealEndDate = DateTime.Today.AddDays(10), AssessmentId = 8 },
+                            new ComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "Merit", PrsStatus = null, LastUpdated = "6 June 2021", UpdatedBy = "User 1", AppealEndDate = System.DateTime.Today.AddDays(10), AssessmentId = 9 }
+                        }
+                    }
+                }
             };
 
             ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(_mockResult);
@@ -66,6 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             var model = viewResult.Model as ResultDetailsViewModel;
             model.Should().NotBeNull();
 
+            model.ProfileId.Should().Be(_mockResult.ProfileId);
             model.Uln.Should().Be(_mockResult.Uln);
             model.Firstname.Should().Be(_mockResult.Firstname);
             model.Lastname.Should().Be(_mockResult.Lastname);
@@ -75,56 +98,39 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.ProviderUkprn.Should().Be(_mockResult.ProviderUkprn);
             model.ProviderDisplayName.Should().Be($"{_mockResult.ProviderName}<br/>({_mockResult.ProviderUkprn})");
             model.TlevelTitle.Should().Be(_mockResult.TlevelTitle);
-            model.PathwayDisplayName.Should().Be(_mockResult.PathwayDisplayName);
-            model.PathwayAssessmentSeries.Should().Be(_mockResult.PathwayAssessmentSeries);
-            model.AppealEndDate.Should().Be(_mockResult.AppealEndDate);
-            model.PathwayAssessmentId.Should().Be(_mockResult.PathwayAssessmentId);
-            model.PathwayResult.Should().Be(_mockResult.PathwayResult);
-            model.PathwayStatus.Should().Be(_mockResult.PathwayStatus);
-            model.IsPathwayAssessmentEntryRegistered.Should().Be(_mockResult.IsPathwayAssessmentEntryRegistered);
-            model.IsResultAddOrChangeAllowed.Should().Be(_mockResult.IsResultAddOrChangeAllowed);
+
+            model.IsCoreAssessmentEntryRegistered.Should().BeTrue();
+            foreach (var specialism in model.SpecialismComponents)
+            {
+                specialism.IsSpecialismAssessmentEntryRegistered.Should().BeTrue();
+                specialism.IsCouplet.Should().BeFalse();
+            }
 
             // Uln
             model.SummaryUln.Title.Should().Be(ResultDetailsContent.Title_Uln_Text);
             model.SummaryUln.Value.Should().Be(_mockResult.Uln.ToString());
-
-            // LearnerName
-            model.SummaryLearnerName.Title.Should().Be(ResultDetailsContent.Title_Name_Text);
-            model.SummaryLearnerName.Value.Should().Be(_mockResult.LearnerName);
 
             // DateofBirth
             model.SummaryDateofBirth.Title.Should().Be(ResultDetailsContent.Title_DateofBirth_Text);
             model.SummaryDateofBirth.Value.Should().Be(_mockResult.DateofBirth.ToDobFormat());
 
             // ProviderName
-            model.SummaryProvider.Title.Should().Be(ResultDetailsContent.Title_Provider_Text);
-            model.SummaryProvider.Value.Should().Be(_mockResult.ProviderDisplayName);
+            model.SummaryProviderName.Title.Should().Be(ResultDetailsContent.Title_Provider_Name_Text);
+            model.SummaryProviderName.Value.Should().Be(_mockResult.ProviderName);
+
+            // ProviderUkprn
+            model.SummaryProviderUkprn.Title.Should().Be(ResultDetailsContent.Title_Provider_Ukprn_Text);
+            model.SummaryProviderUkprn.Value.Should().Be(_mockResult.ProviderUkprn.ToString());
 
             // TLevelTitle
             model.SummaryTlevelTitle.Title.Should().Be(ResultDetailsContent.Title_TLevel_Text);
             model.SummaryTlevelTitle.Value.Should().Be(_mockResult.TlevelTitle);
 
-            // ExamPeriod
-            model.SummaryAssessmentSeries.Title.Should().Be(ResultDetailsContent.Title_Assessment_Series);
-            model.SummaryAssessmentSeries.Value.Should().Be(_mockResult.PathwayAssessmentSeries);
-
-            // Summary CoreResult
-            model.SummaryPathwayGrade.Should().NotBeNull();
-            model.SummaryPathwayGrade.Title.Should().Be(ResultDetailsContent.Title_Pathway_Grade);
-            model.SummaryPathwayGrade.Value.Should().Be(_mockResult.PathwayResult);
-            model.SummaryPathwayGrade.Value2.Should().BeNull();
-            model.SummaryPathwayGrade.Value2CustomCssClass.Should().BeNull();
-            model.SummaryPathwayGrade.RenderActionColumn.Should().Be(_mockResult.IsResultAddOrChangeAllowed);
-            model.SummaryPathwayGrade.ActionText.Should().Be(ResultDetailsContent.Change_Result_Action_Link_Text);
-            model.SummaryPathwayGrade.RenderHiddenActionText.Should().Be(true);
-            model.SummaryPathwayGrade.HiddenActionText.Should().Be(ResultDetailsContent.Hidden_Action_Text_Core);
-            model.SummaryPathwayGrade.HiddenValueText.Should().Be(ResultDetailsContent.Hidden_Value_Text_For); 
-            model.SummaryPathwayGrade.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             // Breadcrumbs
             model.Breadcrumb.Should().NotBeNull();
             model.Breadcrumb.BreadcrumbItems.Should().NotBeNull();
-            model.Breadcrumb.BreadcrumbItems.Count.Should().Be(4);
+            model.Breadcrumb.BreadcrumbItems.Count.Should().Be(3);
 
             model.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Home);
             model.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(BreadcrumbContent.Home);
@@ -132,8 +138,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Result_Dashboard);
             model.Breadcrumb.BreadcrumbItems[2].RouteName.Should().Be(RouteConstants.SearchResults);
             model.Breadcrumb.BreadcrumbItems[2].DisplayName.Should().Be(BreadcrumbContent.Search_For_Results);
-            model.Breadcrumb.BreadcrumbItems[3].RouteName.Should().BeNullOrEmpty();
-            model.Breadcrumb.BreadcrumbItems[3].DisplayName.Should().Be(BreadcrumbContent.Learners_Results);
         }
     }
 }

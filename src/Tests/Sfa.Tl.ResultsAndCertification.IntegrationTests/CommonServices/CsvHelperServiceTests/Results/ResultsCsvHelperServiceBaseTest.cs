@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
 
         protected virtual string GetCodeBaseAbsolutePath()
         {
-            var codeBaseUri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
+            var codeBaseUri = new Uri(Assembly.GetExecutingAssembly().Location);
             return Uri.UnescapeDataString(codeBaseUri.AbsolutePath);
         }
 

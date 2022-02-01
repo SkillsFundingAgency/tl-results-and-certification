@@ -104,6 +104,8 @@
     <Build Include="Indexes\IX_Unique_TqPathwayResult.sql" />
     <Build Include="Tables\AcademicYear.sql" />
     <Build Include="Tables\TlPathwaySpecialismCombination.sql" />
+    <Build Include="Tables\TqSpecialismResult.sql" />
+    <Build Include="Indexes\IX_Unique_TqSpecialismResult.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sfa.Tl.ResultsAndCertification.Database.refactorlog" />

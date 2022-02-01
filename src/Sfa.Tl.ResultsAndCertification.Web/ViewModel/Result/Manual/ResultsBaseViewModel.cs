@@ -20,11 +20,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         protected string UlnLabel { get; set; }
         protected string LearnerNameLabel { get; set; }
         protected string DateofBirthLabel { get; set; }
+        protected string ProviderUkprnLabel { get; set; }
         protected string ProviderNameLabel { get; set; }
         protected string TlevelTitleLabel { get; set; }
 
         public string LearnerName => $"{Firstname} {Lastname}";
-        public string ProviderDisplayName => $"{ProviderName}<br/>({ProviderUkprn})";
+        public string ProviderDisplayName => $"{ProviderName}<br/>({ProviderUkprn})";  // TODO: will delete later
 
         public SummaryItemModel SummaryUln => new SummaryItemModel
         {
@@ -46,13 +47,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
             Title = DateofBirthLabel,
             Value = DateofBirth.ToDobFormat()
         };
-
+        
+        // TODO: below prop to delete.
         public SummaryItemModel SummaryProvider => new SummaryItemModel
         {
             Id = "providername",
             Title = ProviderNameLabel,
             Value = ProviderDisplayName,
             IsRawHtml = true
+        };
+
+        public SummaryItemModel SummaryProviderName => new SummaryItemModel
+        {
+            Id = "providername",
+            Title = ProviderNameLabel,
+            Value = ProviderName,
+        };
+
+        public SummaryItemModel SummaryProviderUkprn => new SummaryItemModel
+        {
+            Id = "providerukprn",
+            Title = ProviderUkprnLabel,
+            Value = ProviderUkprn.ToString(),
         };
 
         public SummaryItemModel SummaryTlevelTitle => new SummaryItemModel

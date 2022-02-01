@@ -29,6 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<TqPathwayAssessment> TqPathwayAssessment { get; set; }
         public virtual DbSet<TqSpecialismAssessment> TqSpecialismAssessment { get; set; }        
         public virtual DbSet<TqPathwayResult> TqPathwayResult { get; set; }
+        public virtual DbSet<TqSpecialismResult> TqSpecialismResult { get; set; }
 
         public virtual DbSet<QualificationType> QualificationType { get; set; }
         public virtual DbSet<QualificationGrade> QualificationGrade { get; set; }

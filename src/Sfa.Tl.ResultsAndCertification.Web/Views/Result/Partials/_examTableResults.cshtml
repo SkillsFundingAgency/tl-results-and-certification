@@ -1,0 +1,40 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual.ComponentExamViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Result
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+<tr class="govuk-table__row">
+    <td class="govuk-table__cell">
+        <span class="responsive-table__heading" aria-hidden="true">@ResultDetails.Table_Column_Hidden_Exam_Period</span>
+        @Model.AssessmentSeries
+    </td>
+    <td class="govuk-table__cell">
+        <span class="responsive-table__heading" aria-hidden="true">@ResultDetails.Table_Column_Hidden_Grade</span>
+        <span>
+
+            @if (string.IsNullOrWhiteSpace(Model.Grade))
+            {
+                <a class="govuk-link" asp-route="@Model.ResultRouteName" asp-all-route-data="@Model.ResultRouteAttributes">@ResultDetails.Add_Result_Action_Link_Text <span class="govuk-visually-hidden">@String.Format(ResultDetails.Hidden_Text_For_Component, Model.HiddenActionText)</span></a>
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(Model.PrsDisplayText))
+                {
+                    <span class="govuk-!-margin-right-2">@Model.Grade</span><a class="govuk-link" asp-route="@Model.ResultRouteName" asp-all-route-data="@Model.ResultRouteAttributes">@ResultDetails.Change_Result_Action_Link_Text <span class="govuk-visually-hidden">@String.Format(ResultDetails.Hidden_Text_Component_Result, Model.HiddenActionText)</span></a>
+                }
+                else
+                {
+                    @Html.Raw(string.Format("<span class='govuk-!-margin-right-2'>{0}</span>{1}", Model.Grade, Model.PrsDisplayText));
+                }
+            }
+            
+        </span>
+    </td>
+    <td class="govuk-table__cell">
+        <span class="responsive-table__heading" aria-hidden="true">@ResultDetails.Table_Column_Hidden_Last_Updated</span>
+        @Model.LastUpdated
+    </td>
+    <td class="govuk-table__cell">
+        <span class="responsive-table__heading" aria-hidden="true">@ResultDetails.Table_Column_Hidden_Updated_By</span>
+        @Model.UpdatedBy
+    </td>
+</tr>

@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -18,8 +19,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
     {
         private readonly long _ukprn = 12345678;
         private readonly int _profileId = 1;
-        private readonly ComponentType componentType = ComponentType.Core;
-        private readonly string componentIds;
+        private readonly ComponentType _componentType = ComponentType.Core;
+        private string _componentIds;
         protected AvailableAssessmentSeries _mockHttpResult;
 
         private ITokenServiceClient _tokenServiceClient;
@@ -42,17 +43,19 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 AssessmentSeriesId = 11,
                 AssessmentSeriesName = "Summer 2021"
             };
+
+            _componentIds = "120";
         }
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<AvailableAssessmentSeries>(_mockHttpResult, string.Format(ApiConstants.GetAvailableAssessmentSeriesUri, _ukprn, _profileId, (int)componentType, componentIds), HttpStatusCode.OK));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<AvailableAssessmentSeries>(_mockHttpResult, string.Format(ApiConstants.GetAvailableAssessmentSeriesUri, _ukprn, _profileId, (int)_componentType, _componentIds), HttpStatusCode.OK));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public async override Task When()
         {
-            _result = await _apiClient.GetAvailableAssessmentSeriesAsync(_ukprn, _profileId, componentType, componentIds);
+            _result = await _apiClient.GetAvailableAssessmentSeriesAsync(_ukprn, _profileId, _componentType, _componentIds);
         }
 
         [Fact]

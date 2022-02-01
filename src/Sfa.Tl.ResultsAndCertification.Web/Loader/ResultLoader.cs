@@ -93,15 +93,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<ResultWithdrawnViewModel>(response);
         }
 
-        public ResultNoAssessmentEntryViewModel GetResultNoAssessmentEntryViewModel(ResultDetailsViewModel resultDetails)
-        {
-            return _mapper.Map<ResultNoAssessmentEntryViewModel>(resultDetails);
-        }
-
         public async Task<ResultDetailsViewModel> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            var response = await _internalApiClient.GetResultDetailsAsync(aoUkprn, profileId, status);
-            return _mapper.Map<ResultDetailsViewModel>(response);
+            var response = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId, status);
+            if (response == null || response.Pathway.Status != RegistrationPathwayStatus.Active)
+                return null;
+
+            // Below code is to set the ComponentType property which is used to render the ActionText dependent information.
+            var viewModel = _mapper.Map<ResultDetailsViewModel>(response);
+            viewModel.CoreComponentExams.ToList().ForEach(x => { x.ComponentType = ComponentType.Core; x.ProfileId = viewModel.ProfileId; });
+            viewModel.SpecialismComponents.ToList().ForEach(x => { x.SpecialismComponentExams.ToList()
+                .ForEach(s => { s.ComponentType = ComponentType.Specialism; s.ProfileId = viewModel.ProfileId; }); });
+
+            return viewModel;
         }
 
         public async Task<AddResultResponse> AddCoreResultAsync(long aoUkprn, ManageCoreResultViewModel viewModel)
@@ -119,34 +123,51 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<ManageCoreResultViewModel> GetManageCoreResultAsync(long aoUkprn, int profileId, int assessmentId, bool isChangeMode)
         {
-            var response = await _internalApiClient.GetResultDetailsAsync(aoUkprn, profileId, RegistrationPathwayStatus.Active);
-            
-            if (response == null || response.PathwayAssessmentId != assessmentId || 
-                (!isChangeMode && response.PathwayResultId.HasValue) || (isChangeMode && !response.PathwayResultId.HasValue))
+            var response = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId, RegistrationPathwayStatus.Active);
+
+            if (response == null)
+                return null;
+
+            var assessment = response.Pathway.PathwayAssessments.FirstOrDefault(p => p.Id == assessmentId);
+            var hasResult = assessment?.Result?.Id > 0;
+
+            if (assessment == null || (!isChangeMode && hasResult) || (isChangeMode && !hasResult))
                 return null;
 
             var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
             if (grades == null || !grades.Any())
                 return null;
 
-            grades.Insert(0, new LookupData { Code = string.Empty, Value = Content.Result.ManageCoreResult.Option_Not_Received });
-            return _mapper.Map<ManageCoreResultViewModel>(response, opt => opt.Items["grades"] = grades);
+            if(isChangeMode)
+                grades.Insert(grades.Count, new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageCoreResult.Option_Not_Received });
+
+            return _mapper.Map<ManageCoreResultViewModel>(response, opt => 
+            { 
+                opt.Items["grades"] = grades;
+                opt.Items["assessment"] = assessment; 
+            });
         }
 
         public async Task<bool?> IsCoreResultChangedAsync(long aoUkprn, ManageCoreResultViewModel viewModel)
-        {
-            var existingResult = await _internalApiClient.GetResultDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
+        {            
+            var existingResult = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
 
-            if (existingResult == null || existingResult.PathwayResultId != viewModel.ResultId)
+            if (existingResult == null)
                 return null;
 
-            var isResultChanged = !existingResult.PathwayResultCode.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCultureIgnoreCase);
+            var assessment = existingResult.Pathway.PathwayAssessments.FirstOrDefault(p => p.Id == viewModel.AssessmentId);
+            var result = assessment?.Result;
+
+            if (result == null || result.Id != viewModel.ResultId)
+                return null;
+
+            var isResultChanged = !result.GradeCode.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCultureIgnoreCase);
             return isResultChanged;
         }
 
         public async Task<ChangeResultResponse> ChangeCoreResultAsync(long aoUkprn, ManageCoreResultViewModel viewModel)
         {
-            if (!string.IsNullOrWhiteSpace(viewModel.SelectedGradeCode))
+            if (!string.IsNullOrWhiteSpace(viewModel.SelectedGradeCode) && !viewModel.SelectedGradeCode.Equals(Constants.NotReceived, StringComparison.InvariantCultureIgnoreCase))
             {
                 var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
 
@@ -158,6 +179,45 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             }
             var request = _mapper.Map<ChangeResultRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
             return await _internalApiClient.ChangeResultAsync(request);
+        }
+
+        public async Task<ManageSpecialismResultViewModel> GetManageSpecialismResultAsync(long aoUkprn, int profileId, int assessmentId, bool isChangeMode)
+        {
+            var response = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId, RegistrationPathwayStatus.Active);
+
+            if (response == null)
+                return null;
+
+            var specialism = response.Pathway.Specialisms.FirstOrDefault(s => s.Assessments.Any(a => a.Id == assessmentId));
+            var assessment = specialism?.Assessments?.FirstOrDefault(sa => sa.Id == assessmentId);
+            var hasResult = assessment?.Result?.Id > 0;
+
+            if (assessment == null || (!isChangeMode && hasResult) || (isChangeMode && !hasResult))
+                return null;
+
+            var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.SpecialismComponentGrade);
+            if (grades == null || !grades.Any())
+                return null;
+
+            return _mapper.Map<ManageSpecialismResultViewModel>(response, opt =>
+            {
+                opt.Items["grades"] = grades;
+                opt.Items["specialism"] = specialism;
+                opt.Items["assessment"] = assessment;
+            });
+        }
+
+        public async Task<AddResultResponse> AddSpecialismResultAsync(long aoUkprn, ManageSpecialismResultViewModel viewModel)
+        {
+            var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.SpecialismComponentGrade);
+
+            var selectedGrade = grades?.FirstOrDefault(x => x.Code.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCultureIgnoreCase));
+
+            if (selectedGrade == null) return null;
+
+            viewModel.LookupId = selectedGrade.Id;
+            var request = _mapper.Map<AddResultRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.AddResultAsync(request);
         }
 
         public async Task<IList<DataExportResponse>> GenerateResultsExportAsync(long aoUkprn, string requestedBy)
