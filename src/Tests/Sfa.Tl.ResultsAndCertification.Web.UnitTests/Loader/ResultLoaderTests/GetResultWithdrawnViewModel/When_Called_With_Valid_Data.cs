@@ -53,7 +53,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
             ActualResult.TlevelTitle.Should().Be(expectedApiResult.TlevelTitle);
             ActualResult.ProviderName.Should().Be(expectedApiResult.ProviderName);
             ActualResult.ProviderUkprn.Should().Be(expectedApiResult.ProviderUkprn);
-            ActualResult.ProviderDisplayName.Should().Be($"{expectedApiResult.ProviderName}<br/>({expectedApiResult.ProviderUkprn})");
         }
     }
 }
