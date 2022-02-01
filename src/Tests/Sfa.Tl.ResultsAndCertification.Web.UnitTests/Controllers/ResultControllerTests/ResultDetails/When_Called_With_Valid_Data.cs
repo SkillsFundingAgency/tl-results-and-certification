@@ -96,7 +96,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.DateofBirth.Should().Be(_mockResult.DateofBirth);
             model.ProviderName.Should().Be(_mockResult.ProviderName);
             model.ProviderUkprn.Should().Be(_mockResult.ProviderUkprn);
-            model.ProviderDisplayName.Should().Be($"{_mockResult.ProviderName}<br/>({_mockResult.ProviderUkprn})");
             model.TlevelTitle.Should().Be(_mockResult.TlevelTitle);
 
             model.IsCoreAssessmentEntryRegistered.Should().BeTrue();

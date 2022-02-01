@@ -54,7 +54,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.ProviderName.Should().Be(_mockResult.ProviderName);
             model.ProviderUkprn.Should().Be(_mockResult.ProviderUkprn);
             model.TlevelTitle.Should().Be(_mockResult.TlevelTitle);
-            model.ProviderDisplayName.Should().Be($"{_mockResult.ProviderName}<br/>({_mockResult.ProviderUkprn})");
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.SearchResults);

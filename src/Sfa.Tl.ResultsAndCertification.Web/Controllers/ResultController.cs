@@ -202,7 +202,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("learners-results-withdrawn-learner/{profileId}", Name = RouteConstants.ResultWithdrawnDetails)]
+        [Route("results-learner-withdrawn/{profileId}", Name = RouteConstants.ResultWithdrawnDetails)]
         public async Task<IActionResult> ResultWithdrawnDetailsAsync(int profileId)
         {
             var viewModel = await _resultLoader.GetResultWithdrawnViewModelAsync(User.GetUkPrn(), profileId);
