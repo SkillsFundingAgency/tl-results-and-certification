@@ -381,6 +381,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (isResultChanged == false)
                 return RedirectToRoute(RouteConstants.ResultDetails, new { profileId = model.ProfileId });
 
+            var response = await _resultLoader.ChangeSpecialismResultAsync(User.GetUkPrn(), model);
+
+            if (response == null || !response.IsSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            var notificationBanner = new NotificationBannerModel { Message = model.SuccessBannerMessage };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
             return RedirectToRoute(RouteConstants.ResultDetails, new { model.ProfileId });
         }
 

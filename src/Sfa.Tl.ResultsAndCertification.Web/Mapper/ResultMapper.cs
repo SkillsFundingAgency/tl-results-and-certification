@@ -146,6 +146,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ResultId, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).Result?.Id))
                 .ForMember(d => d.PrsStatus, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).Result?.PrsStatus))
                 .ForMember(d => d.Grades, opts => opts.MapFrom((src, dest, destMember, context) => (IList<LookupData>)context.Items["grades"]));
+
+            CreateMap<ManageSpecialismResultViewModel, ChangeResultRequest>()
+                .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+                .ForMember(d => d.ResultId, opts => opts.MapFrom(s => s.ResultId))
+                .ForMember(d => d.LookupId, opts => opts.MapFrom(s => s.LookupId))
+                .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Specialism))
+                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ManageSpecialismResultViewModel, ChangeResultRequest>>());
         }
     }
 }

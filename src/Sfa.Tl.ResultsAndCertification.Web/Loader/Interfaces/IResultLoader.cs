@@ -28,5 +28,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<ManageSpecialismResultViewModel> GetManageSpecialismResultAsync(long aoUkprn, int profileId, int assessmentId, bool isChangeMode);
         Task<AddResultResponse> AddSpecialismResultAsync(long aoUkprn, ManageSpecialismResultViewModel viewModel);
         Task<bool?> IsSpecialismResultChangedAsync(long aoUkprn, ManageSpecialismResultViewModel viewModel);
+        Task<ChangeResultResponse> ChangeSpecialismResultAsync(long aoUkprn, ManageSpecialismResultViewModel viewModel);
     }
 }
