@@ -188,7 +188,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("search-for-learner-results-ULN-not-found", Name = RouteConstants.SearchResultsNotFound)]
+        [Route("results-uln-not-found", Name = RouteConstants.SearchResultsNotFound)]
         public async Task<IActionResult> SearchResultsNotFoundAsync()
         {
             var viewModel = await _cacheService.GetAndRemoveAsync<UlnResultsNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchResultsUlnNotFound));
