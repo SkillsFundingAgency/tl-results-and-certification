@@ -148,7 +148,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("results-learner-search/{populateUln:bool?}", Name = RouteConstants.SearchResults)]
+        [Route("results-search-uln/{populateUln:bool?}", Name = RouteConstants.SearchResults)]
         public async Task<IActionResult> SearchResultsAsync(bool populateUln)
         {
             var defaultValue = await _cacheService.GetAndRemoveAsync<string>(Constants.ResultsSearchCriteria);
@@ -158,7 +158,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("results-learner-search", Name = RouteConstants.SubmitSearchResults)]
+        [Route("results-search-uln", Name = RouteConstants.SubmitSearchResults)]
         public async Task<IActionResult> SearchResultsAsync(SearchResultsViewModel model)
         {
             if (!ModelState.IsValid)
