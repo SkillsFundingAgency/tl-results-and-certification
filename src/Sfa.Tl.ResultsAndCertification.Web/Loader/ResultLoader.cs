@@ -223,6 +223,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.AddResultAsync(request);
         }
 
+        public async Task<ChangeResultResponse> ChangeSpecialismResultAsync(long aoUkprn, ManageSpecialismResultViewModel viewModel)
+        {
+            if (!string.IsNullOrWhiteSpace(viewModel.SelectedGradeCode) && !viewModel.SelectedGradeCode.Equals(Constants.NotReceived, StringComparison.InvariantCultureIgnoreCase))
+            {
+                var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.SpecialismComponentGrade);
+
+                var selectedGrade = grades?.FirstOrDefault(x => x.Code.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCultureIgnoreCase));
+
+                if (selectedGrade == null) return null;
+
+                viewModel.LookupId = selectedGrade.Id;
+            }
+            var request = _mapper.Map<ChangeResultRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.ChangeResultAsync(request);
+        }
+
         public async Task<bool?> IsSpecialismResultChangedAsync(long aoUkprn, ManageSpecialismResultViewModel viewModel)
         {
             var existingResult = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);

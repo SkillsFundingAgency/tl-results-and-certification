@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class ResultService : IResultService
-    {        
+    {
         private readonly IRepository<AssessmentSeries> _assessmentSeriesRepository;
         private readonly IRepository<TlLookup> _tlLookupRepository;
         private readonly IResultRepository _resultRepository;
@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var dbRegistrations = await _resultRepository.GetBulkResultsAsync(aoUkprn, csvResults.Select(x => x.Uln));
             var dbAssessmentSeries = await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
             var tlLookup = await _tlLookupRepository.GetManyAsync().ToListAsync();
-            
+
             foreach (var result in csvResults)
             {
                 // 1. ULN not recognised with AO
@@ -69,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     response.Add(AddStage3ValidationError(result.RowNum, result.Uln, ValidationMessages.CannotAddResultToWithdrawnRegistration));
                     continue;
                 }
-                                
+
                 var validationErrors = new List<BulkProcessValidationError>();
                 var isCoreAndAssesssmentSeriesValid = true;
 
@@ -228,7 +228,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 // Process Results
                 response.IsSuccess = await _resultRepository.BulkInsertOrUpdateResults(newAndAmendedPathwayResultRecords);
             }
-            
+
             return response;
         }
 
@@ -263,7 +263,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     CreatedBy = request.PerformedBy
                 });
             }
-            else if(request.ComponentType == ComponentType.Specialism)
+            else if (request.ComponentType == ComponentType.Specialism)
             {
                 status = await _specialismResultRepository.CreateAsync(new TqSpecialismResult
                 {
@@ -281,19 +281,28 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<ChangeResultResponse> ChangeResultAsync(ChangeResultRequest request)
         {
-            if (request.ComponentType != ComponentType.Core)
-                return new ChangeResultResponse { IsSuccess = false };
+            var isSuccess = request.ComponentType switch
+            {
+                ComponentType.Core => await ProcessChangeCoreResultAsync(request),
+                ComponentType.Specialism => await ProcessChangeSpecialismResultAsync(request),
+                _ => false,
+            };
+            return new ChangeResultResponse { Uln = request.Uln, ProfileId = request.ProfileId, IsSuccess = isSuccess };
+        }
 
-            var existingPathwayResult = await _pathwayResultRepository.GetFirstOrDefaultAsync(pr => pr.Id == request.ResultId && pr.EndDate == null && pr.IsOptedin
-                                                                         && pr.TqPathwayAssessment.EndDate == null && pr.IsOptedin
-                                                                         && pr.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId
-                                                                         && pr.TqPathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
-                                                                         && pr.TqPathwayAssessment.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == request.AoUkprn);
+        private async Task<bool> ProcessChangeCoreResultAsync(ChangeResultRequest request)
+        {
+            var existingPathwayResult = await _pathwayResultRepository.GetFirstOrDefaultAsync(pr => pr.Id == request.ResultId
+                                                                                              && pr.EndDate == null && pr.IsOptedin
+                                                                                              && pr.TqPathwayAssessment.EndDate == null && pr.IsOptedin
+                                                                                              && pr.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId
+                                                                                              && pr.TqPathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
+                                                                                              && pr.TqPathwayAssessment.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == request.AoUkprn);
 
             if (existingPathwayResult == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to change Pathway Result for ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: ChangeResultAsync({request})");
-                return new ChangeResultResponse { IsSuccess = false };
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to change Pathway Result for ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: ProcessCoreResultAsync({request})");
+                return false;
             }
 
             var pathwayResultsToUpdate = new List<TqPathwayResult>();
@@ -319,10 +328,51 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 });
             }
 
-            var isSuccess = await _pathwayResultRepository.UpdateManyAsync(pathwayResultsToUpdate) > 0;
-
-            return new ChangeResultResponse { Uln = request.Uln, ProfileId = request.ProfileId, IsSuccess = isSuccess };
+            return await _pathwayResultRepository.UpdateManyAsync(pathwayResultsToUpdate) > 0;
         }
+
+        private async Task<bool> ProcessChangeSpecialismResultAsync(ChangeResultRequest request)
+        {
+            var existingSpecialismResult = await _specialismResultRepository.GetFirstOrDefaultAsync(pr => pr.Id == request.ResultId
+                                                                                                    && pr.EndDate == null && pr.IsOptedin
+                                                                                                    && pr.TqSpecialismAssessment.EndDate == null && pr.IsOptedin
+                                                                                                    && pr.TqSpecialismAssessment.TqRegistrationSpecialism.EndDate == null && pr.TqSpecialismAssessment.TqRegistrationSpecialism.IsOptedin
+                                                                                                    && pr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId
+                                                                                                    && pr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
+                                                                                                    && pr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == request.AoUkprn);
+
+            if (existingSpecialismResult == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to change Specialism Result for ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: ProcessSpecialismResultAsync({request})");
+                return false;
+            }
+
+            var specialismResultsToUpdate = new List<TqSpecialismResult>();
+
+            existingSpecialismResult.IsOptedin = false;
+            existingSpecialismResult.EndDate = DateTime.UtcNow;
+            existingSpecialismResult.ModifiedBy = request.PerformedBy;
+            existingSpecialismResult.ModifiedOn = DateTime.UtcNow;
+
+            specialismResultsToUpdate.Add(existingSpecialismResult);
+
+            if (request.LookupId.HasValue && request.LookupId > 0)
+            {
+                specialismResultsToUpdate.Add(new TqSpecialismResult
+                {
+                    TqSpecialismAssessmentId = existingSpecialismResult.TqSpecialismAssessmentId,
+                    TlLookupId = request.LookupId.Value,
+                    IsOptedin = true,
+                    StartDate = DateTime.UtcNow,
+                    EndDate = null,
+                    IsBulkUpload = false,
+                    CreatedBy = request.PerformedBy
+                });
+            }
+
+            return await _specialismResultRepository.UpdateManyAsync(specialismResultsToUpdate) > 0;
+        }
+
 
         #region Private Methods
 
@@ -362,7 +412,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (registrationPathway == null || registrationPathway.Status != RegistrationPathwayStatus.Active)
                 return false;
 
-            if(addResultRequest.ComponentType == ComponentType.Core)
+            if (addResultRequest.ComponentType == ComponentType.Core)
             {
                 var assessmentEntry = registrationPathway.TqPathwayAssessments.FirstOrDefault(p => p.Id == addResultRequest.AssessmentId && p.IsOptedin && p.EndDate == null);
 
@@ -371,7 +421,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var anyActiveResult = assessmentEntry.TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null);
                 return !anyActiveResult;
             }
-            else if(addResultRequest.ComponentType == ComponentType.Specialism)
+            else if (addResultRequest.ComponentType == ComponentType.Specialism)
             {
                 var specialism = registrationPathway.TqRegistrationSpecialisms.FirstOrDefault(s => s.IsOptedin &&
                                                                                               s.EndDate == null &&
