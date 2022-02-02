@@ -14,13 +14,13 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultServiceTests
 {
-    public class When_ChangeResultAsync_IsCalled : ResultServiceBaseTest
+    public class When_ChangeResultAsync_For_Specialism_IsCalled : ResultServiceBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private AddResultResponse _actualResult;
         private List<TqRegistrationProfile> _registrations;
-        private List<TqPathwayAssessment> _pathwayAssessments;
-        private List<TqPathwayResult> _pathwayResults;
+        private List<TqSpecialismAssessment> _specialismAssessments;
+        private List<TqSpecialismResult> _specialismResults;
 
         public override void Given()
         {
@@ -28,36 +28,46 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             CreateMapper();
 
             // Parameters
-            _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Withdrawn }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Active } };
+            _ulns = new Dictionary<long, RegistrationPathwayStatus>
+            {
+                { 1111111111, RegistrationPathwayStatus.Withdrawn },
+                { 1111111112, RegistrationPathwayStatus.Active },
+                { 1111111113, RegistrationPathwayStatus.Active },
+                { 1111111114, RegistrationPathwayStatus.Active }
+            };
 
             // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsData(_ulns, TqProvider);
 
             // Assessments seed
-            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+            var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
             foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111))
             {
                 var hasHitoricData = new List<long> { 1111111112 };
                 var isHistoricAssessent = hasHitoricData.Any(x => x == registration.UniqueLearnerNumber);
                 var isLatestActive = _ulns[registration.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
 
-                tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive, isHistoricAssessent));
+                tqSpecialismAssessmentsSeedData.AddRange(GetSpecialismAssessmentsDataToProcess(registration.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList(), isLatestActive, isHistoricAssessent));
             }
 
-            _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData);
+            _specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
 
-            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+            var ulnsToAddResults = new List<long> { 1111111113, 1111111114 };
+            var tqSpecialismResultsSeedData = new List<TqSpecialismResult>();
 
-            foreach(var assessment in _pathwayAssessments)
+            foreach (var uln in ulnsToAddResults)
             {
-                var inactiveResultUlns = new List<long> { 1111111112 };
-                var isLatestResultActive = !inactiveResultUlns.Any(x => x == assessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber);
-
-                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(new List<TqPathwayAssessment> { assessment }, isLatestResultActive, false));
+                var assessment = _specialismAssessments.FirstOrDefault(x => x.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln);
+                if (assessment != null)
+                {
+                    tqSpecialismResultsSeedData.AddRange(GetSpecialismResultsDataToProcess(new List<TqSpecialismAssessment> { assessment }));
+                }
             }
 
-            _pathwayResults = SeedPathwayResultsData(tqPathwayResultsSeedData);
+            _specialismResults = SeedSpecialismResultsData(tqSpecialismResultsSeedData, false);
+
+            DbContext.SaveChanges();
 
             PathwayResultRepositoryLogger = new Logger<GenericRepository<TqPathwayResult>>(new NullLoggerFactory());
             PathwayResultRepository = new GenericRepository<TqPathwayResult>(PathwayResultRepositoryLogger, DbContext);
@@ -96,16 +106,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         [MemberData(nameof(Data))]
         public async Task Then_Expected_Results_Are_Returned(ChangeResultRequest request, ChangeResultResponse expectedResult)
         {
-            var assessment = _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId && x.IsOptedin && x.EndDate == null);
+            var assessment = _specialismAssessments.FirstOrDefault(x => x.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId && x.IsOptedin && x.EndDate == null);
 
             if (assessment != null)
             {
-                request.Uln = assessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber;
-                var resultId = _pathwayResults.FirstOrDefault(x => x.TqPathwayAssessmentId == assessment.Id && x.IsOptedin && x.EndDate == null)?.Id;
-                if(resultId != null)
+                request.Uln = assessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber;
+                var resultId = _specialismResults?.FirstOrDefault(x => x.TqSpecialismAssessmentId == assessment.Id && x.IsOptedin && x.EndDate == null)?.Id;
+                if (resultId != null)
                 {
                     request.ResultId = resultId.Value;
-                }                
+                }
             }
 
             await WhenAsync(request);
@@ -125,30 +135,35 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             {
                 return new[]
                 {
-                     // Result not-found - returns false
+                      // Result not-found - returns false
                     new object[]
-                    { new ChangeResultRequest { AoUkprn = 10011881, ProfileId = 999, LookupId = 2, ComponentType = ComponentType.Core },
+                    { new ChangeResultRequest { AoUkprn = 10011881, ProfileId = 999, LookupId = 2, ComponentType = ComponentType.Specialism },
                       new ChangeResultResponse { IsSuccess = false } },
 
                     // Registration not in active status - returns false
                     new object[]
-                    { new ChangeResultRequest { AoUkprn = 10011881, ProfileId = 1, LookupId = 2, ComponentType = ComponentType.Core },
+                    { new ChangeResultRequest { AoUkprn = 10011881, ProfileId = 1, LookupId = 2, ComponentType = ComponentType.Specialism },
                       new ChangeResultResponse { IsSuccess = false } },
 
                     // No active result - returns false
                     new object[]
-                    { new ChangeResultRequest { AoUkprn = 10011881, ProfileId = 2, LookupId = 2, ComponentType = ComponentType.Core },
+                    { new ChangeResultRequest { AoUkprn = 10011881, ProfileId = 2, LookupId = 2, ComponentType = ComponentType.Specialism },
                       new ChangeResultResponse { IsSuccess = false } },
 
-                    // When componenttype = specialism - returns false
+                    // When componenttype = notspecified - returns false
                     new object[]
                     { new ChangeResultRequest { AoUkprn = 10011881, ProfileId = 3, LookupId = 2, ComponentType = ComponentType.NotSpecified },
                       new ChangeResultResponse { IsSuccess = false } },                    
 
                     // valid request with Active result - returns true
                     new object[]
-                    { new ChangeResultRequest { AoUkprn = 10011881, ProfileId = 3, LookupId = 2, ComponentType = ComponentType.Core },
-                      new ChangeResultResponse { IsSuccess = true, Uln = 1111111113, ProfileId = 3 } }
+                    { new ChangeResultRequest { AoUkprn = 10011881, ProfileId = 3, LookupId = 2, ComponentType = ComponentType.Specialism },
+                      new ChangeResultResponse { IsSuccess = true, Uln = 1111111113, ProfileId = 3 } },
+
+                    // valid request with Active result and removing result - returns true
+                    new object[]
+                    { new ChangeResultRequest { AoUkprn = 10011881, ProfileId = 4, LookupId = null, ComponentType = ComponentType.Specialism },
+                      new ChangeResultResponse { IsSuccess = true, Uln = 1111111114, ProfileId = 4 } }
                 };
             }
         }

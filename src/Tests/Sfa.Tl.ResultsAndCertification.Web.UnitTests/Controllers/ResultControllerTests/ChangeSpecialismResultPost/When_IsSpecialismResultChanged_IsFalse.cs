@@ -5,15 +5,15 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.ChangeCoreResultPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.ChangeSpecialismResultPost
 {
-    public class When_IsCoreResultChanged_IsFalse : TestSetup
+    public class When_IsSpecialismResultChanged_IsFalse : TestSetup
     {
-        private readonly bool? _mockResult = false;
+        private readonly bool? mockResult = false;
 
         public override void Given()
         {
-            ResultLoader.IsCoreResultChangedAsync(AoUkprn, Arg.Any<ManageCoreResultViewModel>()).Returns(_mockResult);
+            ResultLoader.IsSpecialismResultChangedAsync(AoUkprn, Arg.Any<ManageSpecialismResultViewModel>()).Returns(mockResult);
         }
 
         [Fact]
