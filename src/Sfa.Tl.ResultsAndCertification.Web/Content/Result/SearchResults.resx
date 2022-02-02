@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Enter_Uln_Field_Text" xml:space="preserve">
-    <value>Enter the Unique Learner Number (ULN)</value>
+    <value>Enter the unique learner number (ULN)</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Results - Search for a learner page</value>
+    <value>Search ULN - Results</value>
   </data>
   <data name="Search_Button_Text" xml:space="preserve">
     <value>Search</value>
@@ -136,9 +136,9 @@
     <value>ULN must be 10 digits long</value>
   </data>
   <data name="Uln_Not_Valid_Validation_Message" xml:space="preserve">
-    <value>Enter a valid ULN</value>
+    <value>Enter a valid 10-digit ULN</value>
   </data>
   <data name="Uln_Required_Validation_Message" xml:space="preserve">
-    <value>Enter a ULN</value>
+    <value>Enter a ULN with 10 digits</value>
   </data>
 </root>
