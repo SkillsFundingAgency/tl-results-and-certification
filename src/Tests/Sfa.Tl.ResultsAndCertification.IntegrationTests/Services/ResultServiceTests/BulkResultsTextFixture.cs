@@ -9,7 +9,6 @@ using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Result.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Configuration;
@@ -31,6 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         public IList<TqProvider> TqProviders;
         protected IList<TlSpecialism> TlSpecialisms;
         public IList<TqPathwayAssessment> TqPathwayAssessmentsData;
+        public IList<TqSpecialismAssessment> TqSpecialismAssessmentsData;
         protected ResultService ResultService;
         protected ILogger<ResultRepository> ResultRepositoryLogger;
         protected ILogger<GenericRepository<AssessmentSeries>> AssessmentSeriesRepositoryLogger;
@@ -44,6 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         public ResultProcessResponse Result;
         public IList<TqRegistrationProfile> TqRegistrationProfilesData;
         public IList<TqPathwayResult> TqPathwayResultsData;
+        public IList<TqSpecialismResult> TqSpecialismResultsData;
         protected IList<AssessmentSeries> AssessmentSeries;
         public Checkpoint DbCheckpoint;
         public ResultsAndCertificationDbContext DbContext;
@@ -55,6 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         protected ILogger<GenericRepository<TlLookup>> TlLookupRepositoryLogger;
         protected IList<TlLookup> TlLookup;
         protected IList<TlLookup> PathwayComponentGrades;
+        protected IList<TlLookup> SpecialismComponentGrades;
         protected ILogger<ResultService> Logger;
 
         public BulkResultsTextFixture()
@@ -96,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
 
         public async Task WhenAsync()
         {
-            Result = await ResultService.CompareAndProcessResultsAsync(TqPathwayResultsData);
+            Result = await ResultService.CompareAndProcessResultsAsync(TqPathwayResultsData, TqSpecialismResultsData);
         }
 
         public void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson)
@@ -108,11 +110,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             var pathways = TlevelDataProvider.CreateTlPathways(DbContext, awardingOrganisation, routes);
             TlSpecialisms = TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, pathways.First());
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext);
-
+            var specialismGradesLookup = TlLookupDataProvider.CreateSpecialismGradeTlLookupList(DbContext);
             var tqAwardingOrganisations = TlevelDataProvider.CreateTqAwardingOrganisations(DbContext, awardingOrganisation, tlAwardingOrganisation, pathways);
             DbContext.SaveChanges();
 
             PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
+            SpecialismComponentGrades = specialismGradesLookup;
+
             TqProviders = new List<TqProvider>();
             foreach (var tqAwardingOrganisation in tqAwardingOrganisations)
             {
@@ -154,13 +158,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             return pathwayAssessments;
         }
 
-        public TqPathwayAssessment SeedPathwayAssessmentData(TqRegistrationProfile registrationProfile)
+        public List<TqSpecialismAssessment> SeedSpecialismAssessmentData(List<TqRegistrationSpecialism> registrationSpecialisms)
         {
-            var pathwayAssessment = new TqPathwayAssessmentBuilder().Build(registrationProfile.TqRegistrationPathways.First());
-            var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, pathwayAssessment);
-
+            var specialismAssessments = GetSpecialismAssessmentsDataToProcess(registrationSpecialisms);
             DbContext.SaveChanges();
-            return tqPathwayAssessment;
+            return specialismAssessments;
         }
 
         public TqSpecialismAssessment SeedSpecialismAssessmentData(TqRegistrationProfile registrationProfile)
@@ -209,6 +211,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                 tqPathwayResults.Add(tqPathwayResult);
             }
             return tqPathwayResults;
+        }
+
+        public List<TqSpecialismResult> GetSpecialismResultsDataToProcess(List<TqSpecialismAssessment> specialismAssessments)
+        {
+            var tqSpecialismResults = new List<TqSpecialismResult>();
+
+            foreach (var (specialismAssessment, index) in specialismAssessments.Select((value, i) => (value, i)))
+            {
+                var specialismResult = new TqSpecialismResultBuilder().Build(specialismAssessment, SpecialismComponentGrades[index]);
+                var tqSpecialismResult = TqSpecialismResultDataProvider.CreateTqSpecialismResult(DbContext, specialismResult);
+                tqSpecialismResults.Add(tqSpecialismResult);
+            }
+            return tqSpecialismResults;
         }
 
         public void Dispose()

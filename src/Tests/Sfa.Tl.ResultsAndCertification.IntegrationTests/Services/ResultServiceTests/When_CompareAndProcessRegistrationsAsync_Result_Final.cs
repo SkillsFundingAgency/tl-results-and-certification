@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         private ResultProcessResponse _result;
         private List<TqRegistrationProfile> _registrations;
         private List<TqPathwayResult> _inputPathwayResultsData;
+        private List<TqSpecialismResult> _inputSpecialismResultsData;
         private IList<BulkProcessValidationError> _expectedValidationErrors;
         private readonly Dictionary<long, RegistrationPathwayStatus> _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Withdrawn }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Active }, { 1111111114, RegistrationPathwayStatus.Active }, { 1111111115, RegistrationPathwayStatus.Active } };
 
@@ -47,6 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
 
             var pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
 
+            _inputSpecialismResultsData = new List<TqSpecialismResult>();
             _inputPathwayResultsData = new List<TqPathwayResult>();
             var tqPathwayResultsSeedData = new List<TqPathwayResult>();
             var profilesWithResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, null), (1111111114, null), (1111111115, PrsStatus.Final) };
@@ -88,7 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
 
         public async override Task When()
         {
-            _result = await ResultService.CompareAndProcessResultsAsync(_inputPathwayResultsData);
+            _result = await ResultService.CompareAndProcessResultsAsync(_inputPathwayResultsData, _inputSpecialismResultsData);
         }
 
         [Fact]

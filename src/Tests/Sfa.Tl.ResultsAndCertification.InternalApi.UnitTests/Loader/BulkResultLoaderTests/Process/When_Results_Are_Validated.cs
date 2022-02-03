@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkResult
             ResultService.TransformResultsModel(expectedStage3Response, Arg.Any<string>()).Returns(transformationResponse);
 
             var resultsProcessResult = new ResultProcessResponse { IsSuccess = true };
-            ResultService.CompareAndProcessResultsAsync(transformationResponse).Returns(resultsProcessResult);
+            ResultService.CompareAndProcessResultsAsync(transformationResponse, null).Returns(resultsProcessResult);
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkResult
             CsvService.Received(1).ReadAndParseFileAsync(Arg.Any<ResultCsvRecordRequest>());
             ResultService.Received(1).ValidateResultsAsync(AoUkprn, Arg.Any<IEnumerable<ResultCsvRecordResponse>>());
             ResultService.Received(1).TransformResultsModel(Arg.Any<IList<ResultRecordResponse>>(), Arg.Any<string>());
-            ResultService.Received(1).CompareAndProcessResultsAsync(Arg.Any<IList<TqPathwayResult>>());
+            ResultService.Received(1).CompareAndProcessResultsAsync(Arg.Any<IList<TqPathwayResult>>(), Arg.Any<IList<TqSpecialismResult>>());
             BlobService.Received(1).MoveFileAsync(Arg.Any<BlobStorageData>());
             DocumentUploadHistoryService.Received(1).CreateDocumentUploadHistory(Arg.Any<DocumentUploadHistoryDetails>());
 

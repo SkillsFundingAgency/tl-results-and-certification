@@ -82,6 +82,8 @@
         // Results Data Index Constants
         public const int PathwayResultsStartIndex = 100000;
 
+        public const int SpecialismResultsStartIndex = 300000;
+
         // Industry Placement Data Index Constants
         public const int IndustryPlacementStartIndex = 100000;
 

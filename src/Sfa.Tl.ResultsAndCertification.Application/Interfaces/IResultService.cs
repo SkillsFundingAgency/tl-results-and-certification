@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     {
         Task<IList<ResultRecordResponse>> ValidateResultsAsync(long aoUkprn, IEnumerable<ResultCsvRecordResponse> csvResults);        
         IList<TqPathwayResult> TransformResultsModel(IList<ResultRecordResponse> resultsData, string performedBy);
-        Task<ResultProcessResponse> CompareAndProcessResultsAsync(IList<TqPathwayResult> pathwayResultsToProcess);
+        Task<ResultProcessResponse> CompareAndProcessResultsAsync(IList<TqPathwayResult> pathwayResultsToProcess, IList<TqSpecialismResult> specialismResultsToProcess);
 
         Task<ResultDetails> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
         Task<AddResultResponse> AddResultAsync(AddResultRequest request);

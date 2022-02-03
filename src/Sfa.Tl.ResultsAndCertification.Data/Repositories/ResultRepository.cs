@@ -59,6 +59,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return await _dbContext.TqPathwayResult.Where(x => pathwayAssessmentIds.Contains(x.TqPathwayAssessmentId) && x.EndDate == null && x.IsOptedin).ToListAsync();
         }
 
+        public async Task<IList<TqSpecialismResult>> GetBulkSpecialismResultsAsync(IList<TqSpecialismResult> specialismResults)
+        {
+            var specialismAssessmentIds = new HashSet<int>();
+            specialismResults.ToList().ForEach(r => specialismAssessmentIds.Add(r.TqSpecialismAssessmentId));
+            return await _dbContext.TqSpecialismResult.Where(x => specialismAssessmentIds.Contains(x.TqSpecialismAssessmentId) && x.EndDate == null && x.IsOptedin).ToListAsync();
+        }
+
         public async Task<bool> BulkInsertOrUpdateResults(List<TqPathwayResult> pathwayResults)
         {
             var result = true;
