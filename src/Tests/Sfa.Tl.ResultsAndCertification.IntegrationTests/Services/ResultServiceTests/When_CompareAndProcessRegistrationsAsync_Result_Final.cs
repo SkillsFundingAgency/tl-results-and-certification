@@ -62,9 +62,38 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
 
             SeedPathwayResultsData(tqPathwayResultsSeedData);
 
+            // Specialism Assessments seed
+            var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
+            foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111))
+            {
+                var hasHitoricData = new List<long> { 1111111112 };
+                var isHistoricAssessent = hasHitoricData.Any(x => x == registration.UniqueLearnerNumber);
+                var isLatestActive = _ulns[registration.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
+
+                tqSpecialismAssessmentsSeedData.AddRange(GetSpecialismAssessmentsDataToProcess(registration.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList(), isLatestActive, isHistoricAssessent));
+            }
+
+            var specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
+
+            var ulnsToAddResults = new List<long> { 1111111113, 1111111114 };
+            var tqSpecialismResultsSeedData = new List<TqSpecialismResult>();
+            var profilesWithSpecialismResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, null), (1111111114, PrsStatus.Final), (1111111115, null) };
+
+            foreach (var assessment in specialismAssessments)
+            {
+                var inactiveResultUlns = new List<long> { 1111111112 };
+                var isLatestResultActive = !inactiveResultUlns.Any(x => x == assessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber);
+                var prsStatus = profilesWithSpecialismResults.FirstOrDefault(p => p.Item1 == assessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber).Item2;
+                tqSpecialismResultsSeedData.AddRange(GetSpecialismResultsDataToProcess(new List<TqSpecialismAssessment> { assessment }, isLatestResultActive, false, prsStatus));
+            }
+
+            SeedSpecialismResultsData(tqSpecialismResultsSeedData, false);
+
             DbContext.SaveChanges();
 
             _inputPathwayResultsData.AddRange(GetPathwayResultsDataToProcess(pathwayAssessments));
+
+            _inputSpecialismResultsData.AddRange(GetSpecialismResultsDataToProcess(specialismAssessments));
 
             // Dependencies 
             PathwayResultRepositoryLogger = new Logger<GenericRepository<TqPathwayResult>>(new NullLoggerFactory());
@@ -105,7 +134,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         private void SetupExpectedValidationErrors()
         {
             _expectedValidationErrors = new List<BulkProcessValidationError>
-            {            
+            {
+                new BulkProcessValidationError
+                {
+                    Uln = "1111111114",
+                    ErrorMessage = ValidationMessages.ResultIsInFinal
+                },
                 new BulkProcessValidationError
                 {
                     Uln = "1111111115",
