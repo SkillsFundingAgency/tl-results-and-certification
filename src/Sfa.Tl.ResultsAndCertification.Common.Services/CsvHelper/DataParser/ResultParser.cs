@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interf
 using System.Collections.Generic;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Result.BulkProcess;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
 {
@@ -20,6 +21,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
                 CoreAssessmentSeries = result.CoreAssessmentSeries?.Trim(),
                 CoreCode = result.CoreCode?.Trim(),
                 CoreGrade = result.CoreGrade?.Trim(),
+                SpecialismCodes = result.SpecialismCodes.Trim().Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim()))?.Select(sp => sp.Trim()).ToList(),
+                SpecialismAssessmentSeries = result.SpecialismSeries.Trim(),
+                SpecialismGrades = result.SpecialismGrades.Trim().Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim()))?.Select(sp => sp.Trim()).ToList(),
                 RowNum = rownum,
                 ValidationErrors = new List<BulkProcessValidationError>()
             };

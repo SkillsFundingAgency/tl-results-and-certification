@@ -52,7 +52,7 @@
         public const string SpecialismCodesMustBeDifferent = "Specialism codes must be two different numbers";
         public const string AtleastOneEntryRequired = "File must contain at least one ULN on one row";
         public const string NoDataAfterUln = "No data after ULN - need at least one core code or one specialism code";
-
+        
         // Assesments - Bulk stage 3 validations
         public const string UlnNotRegistered = "ULN not registered with awarding organisation";
         public const string CannotAddAssessmentToWithdrawnRegistration = "Cannot add assessment entries to a withdrawn registration";
@@ -72,8 +72,12 @@
         public const string CorecodeRequiredWhenResultIncluded = "Core component code required when result is included";
         public const string AssessmentSeriesNeedsToBeProvided = "Assessment series needs to be provided";
         public const string InvalidCoreAssessmentSeries = "Core assessment series format must be text followed by a space and a 4-digit year";
-        public const string NoDataAfterUlnNeedCoreCode = "No data after ULN - need a core component code";
-
+        public const string SpecialismCodeMustBeProvided = "ComponentCode (Specialisms) must be provided when there is an entry in the ComponentGrade (Specialisms) field";
+        public const string SpecialismSeriesRequired = "AssessmentSeries (Specialisms) cannot be blank";
+        public const string SpecialismSeriesInvalidFormat = "AssessmentSeries (Specialisms) format must be Summer or Autumn followed by a space and a 4-digit year";
+        public const string SpecialismGradeCountMismatch = "There is only one paired specialism grade. Please either add another grade or indicate a blank field using comma separation.";
+        public const string NoResultDataAfterUln = "No data provided for this learner. Please provide data or remove the row.";
+        
         // Results - Bulk stage 3 validations
         public const string CannotAddResultToWithdrawnRegistration = "Cannot add results to a withdrawn registration";
         public const string InvalidCoreComponentCode = "Core component code either not recognised or not registered for this ULN";
