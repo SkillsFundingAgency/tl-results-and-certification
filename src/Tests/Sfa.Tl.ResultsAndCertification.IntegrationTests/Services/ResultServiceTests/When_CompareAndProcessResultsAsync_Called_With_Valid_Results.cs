@@ -77,6 +77,24 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                 actualPathwayResult.IsBulkUpload.Should().Be(expectedPathwayResult.IsBulkUpload);
                 actualPathwayResult.StartDate.ToShortDateString().Should().Be(expectedPathwayResult.StartDate.ToShortDateString());
                 actualPathwayResult.CreatedBy.Should().Be(expectedPathwayResult.CreatedBy);
+
+                foreach (var registeredSpecialism in registeredSpecialisms)
+                {
+                    var specialismAssessment = _bulkResultsTestFixture.TqSpecialismAssessmentsData.FirstOrDefault(p => p.TqRegistrationSpecialismId == registeredSpecialism.Id);
+
+                    var expectedSpecialismResult = _bulkResultsTestFixture.TqSpecialismResultsData.FirstOrDefault(r => r.TqSpecialismAssessmentId == specialismAssessment.Id);
+
+                    var actualSpecialismResult = _bulkResultsTestFixture.DbContext.TqSpecialismResult.FirstOrDefault(x => x.TqSpecialismAssessmentId == specialismAssessment.Id && x.IsOptedin && x.EndDate == null);
+
+                    // assert specialism result data
+                    actualSpecialismResult.Should().NotBeNull();
+                    actualSpecialismResult.TqSpecialismAssessmentId.Should().Be(expectedSpecialismResult.TqSpecialismAssessmentId);
+                    actualSpecialismResult.TlLookupId.Should().Be(expectedSpecialismResult.TlLookupId);
+                    actualSpecialismResult.IsOptedin.Should().Be(expectedSpecialismResult.IsOptedin);
+                    actualSpecialismResult.IsBulkUpload.Should().Be(expectedSpecialismResult.IsBulkUpload);
+                    actualSpecialismResult.StartDate.ToShortDateString().Should().Be(expectedSpecialismResult.StartDate.ToShortDateString());
+                    actualSpecialismResult.CreatedBy.Should().Be(expectedSpecialismResult.CreatedBy);
+                }
             }
         }
     }

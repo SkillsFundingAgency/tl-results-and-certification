@@ -66,10 +66,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return await _dbContext.TqSpecialismResult.Where(x => specialismAssessmentIds.Contains(x.TqSpecialismAssessmentId) && x.EndDate == null && x.IsOptedin).ToListAsync();
         }
 
-        public async Task<bool> BulkInsertOrUpdateResults(List<TqPathwayResult> pathwayResults)
+        public async Task<bool> BulkInsertOrUpdateResults(List<TqPathwayResult> pathwayResults, List<TqSpecialismResult> specialismResults)
         {
             var result = true;
-            if (pathwayResults != null && pathwayResults.Count > 0)
+            if ((pathwayResults != null && pathwayResults.Count > 0) || (specialismResults != null && specialismResults.Count > 0))
             {
                 var strategy = _dbContext.Database.CreateExecutionStrategy();
                 await strategy.ExecuteAsync(async () =>
@@ -81,6 +81,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                             var bulkConfig = new BulkConfig() { UseTempDB = true, SetOutputIdentity = false, PreserveInsertOrder = false, BatchSize = 5000, BulkCopyTimeout = 60 };
 
                             await ProcessPathwayResults(bulkConfig, pathwayResults);
+
+                            await ProcessSpecialismResults(bulkConfig, specialismResults);
 
                             transaction.Commit();
                         }
@@ -145,6 +147,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 await _dbContext.BulkInsertOrUpdateAsync(pathwayResults, bulkConfig);
             }
         }
+
+        private async Task ProcessSpecialismResults(BulkConfig bulkConfig, List<TqSpecialismResult> specialismResults)
+        {
+            if (specialismResults.Count > 0)
+            {
+                specialismResults = SortUpdateAndInsertOrder(specialismResults, x => x.Id);
+                await _dbContext.BulkInsertOrUpdateAsync(specialismResults, bulkConfig);
+            }
+        }
+
         private List<T> SortUpdateAndInsertOrder<T>(List<T> entities, Func<T, int> selector) where T : class
         {
             // It is important as we are doing BulkInsertOrUpdate in one go, we would like to have update

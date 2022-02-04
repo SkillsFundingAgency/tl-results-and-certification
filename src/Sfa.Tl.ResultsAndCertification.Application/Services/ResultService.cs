@@ -176,7 +176,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var newOrAmendedSpecialismResultRecords = await PrepareNewAndAmendedSpecialismResults(specialismResultsToProcess, response);
 
             if (response.IsValid)
-                response.IsSuccess = await _resultRepository.BulkInsertOrUpdateResults(newOrAmendedPathwayResultRecords);
+                response.IsSuccess = await _resultRepository.BulkInsertOrUpdateResults(newOrAmendedPathwayResultRecords, newOrAmendedSpecialismResultRecords);
 
             return response;
         }
