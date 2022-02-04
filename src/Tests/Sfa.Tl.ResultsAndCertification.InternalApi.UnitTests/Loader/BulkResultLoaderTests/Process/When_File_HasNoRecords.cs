@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkResult
             csvResponse = new CsvResponseModel<ResultCsvRecordResponse>
             {
                 IsDirty = true,
-                ErrorMessage = ValidationMessages.InvalidColumnFound,
+                ErrorMessage = ValidationMessages.NoRecordsFound,
                 ErrorCode = CsvFileErrorCode.NoRecordsFound
             };
 
@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkResult
         public void Then_Returns_Expected_Results()
         {
             CsvService.Received(1).ReadAndParseFileAsync(Arg.Any<ResultCsvRecordRequest>());
-            CsvService.Received(1).WriteFileAsync(Arg.Is<List<BulkProcessValidationError>>(x => x.First().ErrorMessage.Equals(ValidationMessages.EachRowMustContainUln)));
+            CsvService.Received(1).WriteFileAsync(Arg.Is<List<BulkProcessValidationError>>(x => x.First().ErrorMessage.Equals(ValidationMessages.NoRecordsFound)));
             BlobService.Received(1).UploadFromByteArrayAsync(Arg.Any<BlobStorageData>());
             BlobService.Received(1).MoveFileAsync(Arg.Any<BlobStorageData>());
             DocumentUploadHistoryService.Received(1).CreateDocumentUploadHistory(Arg.Any<DocumentUploadHistoryDetails>());

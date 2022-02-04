@@ -131,10 +131,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
         private IList<BulkProcessValidationError> ExtractAllValidationErrors(CsvResponseModel<ResultCsvRecordResponse> stage2Response = null, IList<ResultRecordResponse> stage3Response = null)
         {
             if (stage2Response != null && stage2Response.IsDirty)
-            {
-                var errorMessage = stage2Response.ErrorCode == CsvFileErrorCode.NoRecordsFound ? ValidationMessages.EachRowMustContainUln : stage2Response.ErrorMessage;
-                return new List<BulkProcessValidationError> { new BulkProcessValidationError { ErrorMessage = errorMessage } };
-            }
+                return new List<BulkProcessValidationError> { new BulkProcessValidationError { ErrorMessage = stage2Response.ErrorMessage } };
 
             var errors = new List<BulkProcessValidationError>();
 

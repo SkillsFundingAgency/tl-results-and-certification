@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
             ReadAndParseFileResponse.Should().NotBeNull();
             ReadAndParseFileResponse.IsDirty.Should().BeFalse();
             ReadAndParseFileResponse.ErrorMessage.Should().BeNullOrWhiteSpace();
-            ReadAndParseFileResponse.Rows.Count.Should().Be(2);
+            ReadAndParseFileResponse.Rows.Count.Should().Be(7);
             ReadAndParseFileResponse.Rows.Any(r => r.ValidationErrors.Count > 0).Should().BeFalse();
         }
     }

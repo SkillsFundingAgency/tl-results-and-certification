@@ -60,19 +60,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
                 new BulkProcessValidationError { RowNum = "9", Uln = string.Empty, ErrorMessage = "Data in more than the required 7 columns" },
                 new BulkProcessValidationError { RowNum = "10", Uln = string.Empty, ErrorMessage = "ULN required" },
 
-
-                // {0} must have {1} characters only
-                // "ComponentCode (Specialisms) must be provided when there is an entry in the ComponentGrade (Specialisms) field"
-                //"Specialism codes must be two different numbers"
-
-                // "AssessmentSeries (Specialisms) cannot be blank"
-                // "AssessmentSeries (Specialisms) format must be Summer or Autumn followed by a space and a 4-digit year"
-                // "There is only one paired specialism grade. Please either add another grade or indicate a blank field using comma separation."
-
-
-                // 6 more message to be added. 
-                // File level validations
-                // one validation at bulkloader
+                new BulkProcessValidationError { RowNum = "11", Uln = "1234567896", ErrorMessage = "ComponentCode (Specialisms) must have 8 characters only" },
+                new BulkProcessValidationError { RowNum = "12", Uln = "1234567897", ErrorMessage = "ComponentCode (Specialisms) must be provided when there is an entry in the AssessmentSeries (Specialisms) field" },
+                new BulkProcessValidationError { RowNum = "13", Uln = "1234567898", ErrorMessage = "Specialism codes must be two different numbers" },
+                new BulkProcessValidationError { RowNum = "14", Uln = "1234567899", ErrorMessage = "AssessmentSeries (Specialisms) cannot be blank" },
+                new BulkProcessValidationError { RowNum = "15", Uln = "1234567900", ErrorMessage = "AssessmentSeries (Specialisms) format must be Summer or Autumn followed by a space and a 4-digit year" },
+                new BulkProcessValidationError { RowNum = "16", Uln = "1234567901", ErrorMessage = "There is only one paired specialism grade. Please either add another grade or indicate a blank field using comma separation." },
             };
 
             return validationErrors;
