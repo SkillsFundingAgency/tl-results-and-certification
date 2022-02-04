@@ -72,12 +72,13 @@
         public const string CorecodeRequiredWhenResultIncluded = "Core component code required when result is included";
         public const string AssessmentSeriesNeedsToBeProvided = "Assessment series needs to be provided";
         public const string InvalidCoreAssessmentSeries = "Core assessment series format must be text followed by a space and a 4-digit year";
-        public const string SpecialismCodeMustBeProvided = "ComponentCode (Specialisms) must be provided when there is an entry in the ComponentGrade (Specialisms) field";
+        public const string SpecialismCodeMustBeProvided = "ComponentCode (Specialisms) must be provided when there is an entry in the AssessmentSeries (Specialisms) field";
         public const string SpecialismSeriesRequired = "AssessmentSeries (Specialisms) cannot be blank";
         public const string SpecialismSeriesInvalidFormat = "AssessmentSeries (Specialisms) format must be Summer or Autumn followed by a space and a 4-digit year";
         public const string SpecialismGradeCountMismatch = "There is only one paired specialism grade. Please either add another grade or indicate a blank field using comma separation.";
         public const string NoResultDataAfterUln = "No data provided for this learner. Please provide data or remove the row.";
-        
+        public const string EachRowMustContainUln = "Each row must contain a ULN";
+
         // Results - Bulk stage 3 validations
         public const string CannotAddResultToWithdrawnRegistration = "Cannot add results to a withdrawn registration";
         public const string InvalidCoreComponentCode = "Core component code either not recognised or not registered for this ULN";
