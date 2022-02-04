@@ -47,11 +47,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
                 .When(r => !string.IsNullOrWhiteSpace(r.SpecialismCodes));
             RuleFor(r => r.SpecialismCodes)
                 .Required()
-                .WithMessage(ValidationMessages.SpecialismCodeMustBeProvided) // TODO: content tbe o revisted. 
+                .WithMessage(ValidationMessages.SpecialismCodeMustBeProvided) 
                 .When(x => !string.IsNullOrWhiteSpace(x.SpecialismSeries) || !string.IsNullOrWhiteSpace(x.SpecialismGrades));
             RuleFor(r => r.SpecialismCodes)
                 .Must(spl => !IsDuplicate(spl))
-                .WithMessage(ValidationMessages.SpecialismCodesMustBeDifferent)  // Notes: Not part of story, so review required.
+                .WithMessage(ValidationMessages.SpecialismCodesMustBeDifferent)
                 .When(r => !string.IsNullOrWhiteSpace(r.SpecialismCodes) && r.SpecialismCodes.Split(',').Count() > 1);
 
             // SpecialismSeries

@@ -60,6 +60,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
                 new BulkProcessValidationError { RowNum = "9", Uln = string.Empty, ErrorMessage = "Data in more than the required 7 columns" },
                 new BulkProcessValidationError { RowNum = "10", Uln = string.Empty, ErrorMessage = "ULN required" },
 
+
+                // {0} must have {1} characters only
+                // "ComponentCode (Specialisms) must be provided when there is an entry in the ComponentGrade (Specialisms) field"
+                //"Specialism codes must be two different numbers"
+
+                // "AssessmentSeries (Specialisms) cannot be blank"
+                // "AssessmentSeries (Specialisms) format must be Summer or Autumn followed by a space and a 4-digit year"
+                // "There is only one paired specialism grade. Please either add another grade or indicate a blank field using comma separation."
+
+
                 // 6 more message to be added. 
                 // File level validations
                 // one validation at bulkloader

@@ -132,7 +132,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
         {
             if (stage2Response != null && stage2Response.IsDirty)
             {
-                var errorMessage = stage2Response.ErrorCode == CsvFileErrorCode.NoRecordsFound ? ValidationMessages.AtleastOneEntryRequired : stage2Response.ErrorMessage;
+                var errorMessage = stage2Response.ErrorCode == CsvFileErrorCode.NoRecordsFound ? ValidationMessages.EachRowMustContainUln : stage2Response.ErrorMessage;
                 return new List<BulkProcessValidationError> { new BulkProcessValidationError { ErrorMessage = errorMessage } };
             }
 
