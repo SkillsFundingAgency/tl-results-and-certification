@@ -64,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
                 new BulkProcessValidationError { RowNum = "12", Uln = "1234567897", ErrorMessage = "ComponentCode (Specialisms) must be provided when there is an entry in the AssessmentSeries (Specialisms) field" },
                 new BulkProcessValidationError { RowNum = "13", Uln = "1234567898", ErrorMessage = "Specialism codes must be two different numbers" },
                 new BulkProcessValidationError { RowNum = "14", Uln = "1234567899", ErrorMessage = "AssessmentSeries (Specialisms) cannot be blank" },
-                new BulkProcessValidationError { RowNum = "15", Uln = "1234567900", ErrorMessage = "AssessmentSeries (Specialisms) format must be Summer or Autumn followed by a space and a 4-digit year" },
+                new BulkProcessValidationError { RowNum = "15", Uln = "1234567900", ErrorMessage = "AssessmentSeries (Specialisms) must contain the word Summer followed by a space and a 4-digit year" },
                 new BulkProcessValidationError { RowNum = "16", Uln = "1234567901", ErrorMessage = "There is only one paired specialism grade. Please either add another grade or indicate a blank field using comma separation." },
             };
 

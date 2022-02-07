@@ -131,19 +131,41 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     var pathwayAssessment = dbRegistration.TqPathwayAssessments.FirstOrDefault(pa => pa.IsOptedin && pa.EndDate == null && pa.AssessmentSeries.Name.Equals(result.CoreAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
                     var pathwayComponentGrade = pathwayComponentGrades.FirstOrDefault(pcg => pcg.Value.Equals(result.CoreGrade, StringComparison.InvariantCultureIgnoreCase));
 
+                    // TODO: how we ensure order is correct betwen SolCode and SplGrade?
+                    var specialismAssessments = dbRegistration.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments)
+                                                                                        .Where(x => x.IsOptedin && x.EndDate == null 
+                                                                                            && result.SpecialismCodes.Any(splcode => splcode.Equals(x.TqRegistrationSpecialism.TlSpecialism.LarId, StringComparison.InvariantCultureIgnoreCase))
+                                                                                            && x.AssessmentSeries.Name.Equals(result.SpecialismAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
+                    
+                    var specialismLookupGrades = tlLookup.Where(lr => lr.Category.Equals(LookupCategory.SpecialismComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase));
+                    var specialismComponentGradeIds = new List<int?>();
+                    if (result.SpecialismGrades != null) 
+                    {
+                        foreach (var splGrade in result.SpecialismGrades)
+                        {
+                            var specialismComponentGrade = specialismLookupGrades.FirstOrDefault(scg => scg.Value.Equals(splGrade, StringComparison.InvariantCultureIgnoreCase));
+                            specialismComponentGradeIds.Add(specialismComponentGrade?.Id);
+                        }
+                    }
+
                     response.Add(new ResultRecordResponse
                     {
                         TqPathwayAssessmentId = !string.IsNullOrWhiteSpace(result.CoreCode) ? pathwayAssessment?.Id : null,
-                        PathwayComponentGradeLookupId = !string.IsNullOrWhiteSpace(result.CoreGrade) ? pathwayComponentGrade?.Id : null
-                    });
+                        PathwayComponentGradeLookupId = !string.IsNullOrWhiteSpace(result.CoreGrade) ? pathwayComponentGrade?.Id : null,
+                        
+                        SpecialismAssessmentSeriesIds = (result.SpecialismCodes == null || !result.SpecialismCodes.Any()) ? null : specialismAssessments.Select(x => x.AssessmentSeriesId).ToList(),
+                        SpecialismComponentGradeLookupIds = (result.SpecialismGrades == null || !result.SpecialismGrades.Any()) ? null : specialismComponentGradeIds
+                    });;
                 }
             }
             return response;
         }
 
-        public IList<TqPathwayResult> TransformResultsModel(IList<ResultRecordResponse> resultsData, string performedBy)
+        public (IList<TqPathwayResult>, IList<TqSpecialismResult>) TransformResultsModel(IList<ResultRecordResponse> resultsData, string performedBy)
         {
             var pathwayResults = new List<TqPathwayResult>();
+            var specialismResults = new List<TqSpecialismResult>();
+
 
             foreach (var (result, index) in resultsData.Select((value, i) => (value, i)))
             {
@@ -161,8 +183,27 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         CreatedOn = DateTime.UtcNow
                     });
                 }
+
+                if (result.SpecialismAssessmentSeriesIds != null)
+                {
+                    foreach (var specialismAssessment in result.SpecialismAssessmentSeriesIds.Select((splAssessmentId, idx) => (splAssessmentId, idx)))
+                    {
+                        specialismResults.Add(new TqSpecialismResult
+                        {
+                            Id = index - Constants.SpecialismResultsStartIndex,
+                            TqSpecialismAssessmentId = specialismAssessment.splAssessmentId,
+                            TlLookupId = result.SpecialismComponentGradeLookupIds[specialismAssessment.idx] ?? 0,
+                            StartDate = DateTime.UtcNow,
+                            IsOptedin = true,
+                            IsBulkUpload = true,
+                            CreatedBy = performedBy,
+                            CreatedOn = DateTime.UtcNow
+                        });
+                    }
+                }
             }
-            return pathwayResults;
+
+            return (pathwayResults, specialismResults);
         }
 
         public async Task<ResultProcessResponse> CompareAndProcessResultsAsync(IList<TqPathwayResult> pathwayResultsToProcess, IList<TqSpecialismResult> specialismResultsToProcess)

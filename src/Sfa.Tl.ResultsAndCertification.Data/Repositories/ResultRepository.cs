@@ -28,7 +28,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                    .Include(x => x.TqRegistrationProfile)
                    .Include(x => x.TqProvider)
                        .ThenInclude(x => x.TqAwardingOrganisation)
-                           .ThenInclude(x => x.TlPathway)                  
+                           .ThenInclude(x => x.TlPathway)
+                    .Include(x => x.TqRegistrationSpecialisms)
+                       .ThenInclude(x => x.TlSpecialism)
+                    .Include(x => x.TqRegistrationSpecialisms)
+                        .ThenInclude(x => x.TqSpecialismAssessments)
+                            .ThenInclude(x => x.AssessmentSeries)
                    .Where(p => uniqueLearnerNumbers.Contains(p.TqRegistrationProfile.UniqueLearnerNumber) &&
                           p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
                           (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))
@@ -46,7 +51,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 Func<TqPathwayAssessment, bool> pathwayAssessmentPredicate = e => e.IsOptedin && e.EndDate == null;
                 if (reg.Status == RegistrationPathwayStatus.Withdrawn)
                     pathwayAssessmentPredicate = e => e.IsOptedin && e.EndDate != null;
-                reg.TqPathwayAssessments = reg.TqPathwayAssessments.Where(pathwayAssessmentPredicate).ToList();                
+                reg.TqPathwayAssessments = reg.TqPathwayAssessments.Where(pathwayAssessmentPredicate).ToList();
+
+                Func<TqRegistrationSpecialism, bool> specialismPredicate = e => e.IsOptedin && e.EndDate == null;
+                if (reg.Status == RegistrationPathwayStatus.Withdrawn)
+                    specialismPredicate = e => e.IsOptedin && e.EndDate != null;
+                reg.TqRegistrationSpecialisms = reg.TqRegistrationSpecialisms.Where(specialismPredicate).ToList();
             }
 
             return latestRegistratons;

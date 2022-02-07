@@ -74,7 +74,7 @@
         public const string InvalidCoreAssessmentSeries = "Core assessment series format must be text followed by a space and a 4-digit year";
         public const string SpecialismCodeMustBeProvided = "ComponentCode (Specialisms) must be provided when there is an entry in the AssessmentSeries (Specialisms) field";
         public const string SpecialismSeriesRequired = "AssessmentSeries (Specialisms) cannot be blank";
-        public const string SpecialismSeriesInvalidFormat = "AssessmentSeries (Specialisms) format must be Summer or Autumn followed by a space and a 4-digit year";
+        public const string SpecialismSeriesInvalidFormat = "AssessmentSeries (Specialisms) must contain the word Summer followed by a space and a 4-digit year";
         public const string SpecialismGradeCountMismatch = "There is only one paired specialism grade. Please either add another grade or indicate a blank field using comma separation.";
         public const string NoResultDataAfterUln = "No data provided for this learner. Please provide data or remove the row.";
         public const string EachRowMustContainUln = "Each row must contain a ULN";

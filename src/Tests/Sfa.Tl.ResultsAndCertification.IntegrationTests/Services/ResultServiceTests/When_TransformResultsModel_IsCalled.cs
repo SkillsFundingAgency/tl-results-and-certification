@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
 {
     public class When_TransformResultsModel_IsCalled : ResultServiceBaseTest
     {
-        private IList<TqPathwayResult> _result;
+        private (IList<TqPathwayResult>, IList<TqSpecialismResult>) _result;
         private IList<ResultRecordResponse> _resultRecords;
         private string _performedBy = "System";
 
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             //await WhenAsync();
             _result.Should().NotBeNull();
 
-            var pathwayResults = _result;           
+            var pathwayResults = _result.Item1;           
 
             var expectedPathwayResultsCount = _resultRecords.Count(a => a.TqPathwayAssessmentId != null);
 

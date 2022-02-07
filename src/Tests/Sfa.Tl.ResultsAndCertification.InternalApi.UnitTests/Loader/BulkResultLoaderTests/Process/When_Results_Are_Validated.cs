@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkResult
             ResultService.TransformResultsModel(expectedStage3Response, Arg.Any<string>()).Returns(transformationResponse);
 
             var resultsProcessResult = new ResultProcessResponse { IsSuccess = true };
-            ResultService.CompareAndProcessResultsAsync(transformationResponse, null).Returns(resultsProcessResult);
+            ResultService.CompareAndProcessResultsAsync(transformationResponse.Item1, transformationResponse.Item2).Returns(resultsProcessResult);
         }
 
         [Fact]
@@ -61,11 +61,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkResult
             Response.ErrorFileSize.Should().Be(0);
         }
 
-        private IList<TqPathwayResult> GetTransformResultsModel()
+        private (IList<TqPathwayResult>, IList<TqSpecialismResult>) GetTransformResultsModel()
         {
             var pathwayResults = new List<TqPathwayResult> { new TqPathwayResult { TqPathwayAssessmentId = 1, TlLookupId = 1 } };
 
-            return pathwayResults;
+            return (pathwayResults, null); // TODO
         }
     }
 }

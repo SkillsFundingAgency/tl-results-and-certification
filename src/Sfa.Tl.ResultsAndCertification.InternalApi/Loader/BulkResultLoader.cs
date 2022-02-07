@@ -86,7 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 var results = _resultService.TransformResultsModel(stage3Response, request.PerformedBy);
 
                 // Step: Process Stage 4 validation and DB operation
-                var resultsProcessResult = await _resultService.CompareAndProcessResultsAsync(results, null);                
+                var resultsProcessResult = await _resultService.CompareAndProcessResultsAsync(results.Item1, results.Item2);                
 
                 // update total assessment records stats
                 resultsProcessResult.BulkUploadStats = new BulkUploadStats { TotalRecordsCount = stage3Response.Count };
