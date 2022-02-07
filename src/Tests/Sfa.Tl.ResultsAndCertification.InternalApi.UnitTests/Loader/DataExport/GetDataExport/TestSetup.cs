@@ -5,7 +5,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
