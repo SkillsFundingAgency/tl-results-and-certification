@@ -27,6 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
         protected IList<AssessmentSeries> AssessmentSeries;
         protected IList<TlLookup> TlLookup;
         protected IList<TlLookup> PathwayComponentGrades;
+        protected IList<TlLookup> SpecialismComponentGrades;
         protected IList<AcademicYear> AcademicYears;
         protected IDataExportRepository DataExportRepository;
 
@@ -42,6 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
             PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
+            SpecialismComponentGrades = TlLookupDataProvider.CreateSpecialismGradeTlLookupList(DbContext, null, true);
             AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
 
             DbContext.SaveChanges();
@@ -126,6 +128,24 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
             return tqPathwayAssessmentsSeedData;
         }
 
+        public List<TqSpecialismAssessment> SeedSpecialismAssessments(List<TqRegistrationProfile> registrations, List<long> specialismsWithAssessments, string assessmentSeriesName)
+        {
+            var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
+
+            foreach (var registration in registrations.Where(x => specialismsWithAssessments.Contains(x.UniqueLearnerNumber)))
+            {
+                foreach (var specialism in registration.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList())
+                {
+                    var seedSpecialismsActive = specialism.TqRegistrationPathway.Status != RegistrationPathwayStatus.Withdrawn;
+                    var specialismAssessments = GetSpecialismAssessmentsDataToProcess(new List<TqRegistrationSpecialism> { specialism }, seedSpecialismAssessmentsAsActive: seedSpecialismsActive, assessmentSeriesName: assessmentSeriesName);
+                    tqSpecialismAssessmentsSeedData.AddRange(specialismAssessments);
+                }
+            }
+
+            DbContext.SaveChanges();
+            return tqSpecialismAssessmentsSeedData;
+        }
+
         public List<TqSpecialismAssessment> SeedSpecialismAssessments(List<TqRegistrationPathway> tqRegistrationPathways, string assessmentSeriesName = "Summer 2022", bool saveChanges = true)
         {
             var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
@@ -149,18 +169,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
 
             foreach (var (specialismRegistration, index) in specialismRegistrations.Select((value, i) => (value, i)))
             {
+                var assessmentSeries = AssessmentSeries.FirstOrDefault(x => x.ComponentType == ComponentType.Specialism && x.Name.Equals(assessmentSeriesName, StringComparison.InvariantCultureIgnoreCase));
                 if (isHistorical)
                 {
                     // Historical record
-                    var specialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, AssessmentSeries[index]);
+                    var specialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, assessmentSeries);
                     specialismAssessment.IsOptedin = false;
                     specialismAssessment.EndDate = DateTime.UtcNow.AddDays(-1);
 
                     var tqSpecialismAssessmentHistorical = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, specialismAssessment);
                     tqSpecialismAssessments.Add(tqSpecialismAssessmentHistorical);
                 }
-
-                var assessmentSeries = AssessmentSeries.FirstOrDefault(x => x.ComponentType == ComponentType.Specialism && x.Name.Equals(assessmentSeriesName, StringComparison.InvariantCultureIgnoreCase));
+                
                 var activeSpecialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, assessmentSeries);
                 var tqSpecialismAssessment = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, activeSpecialismAssessment);
                 if (!seedSpecialismAssessmentsAsActive)
@@ -232,6 +252,69 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
             }
 
             DbContext.SaveChanges();
+        }
+
+        public void SeedSpecialismAssessmentsAndResults(List<TqRegistrationProfile> registrations, List<long> specialismsWithAssessments, List<long> specialismsWithResults, string assessmentSeriesName)
+        {
+            var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
+            var tqSpecialismResultsSeedData = new List<TqSpecialismResult>();
+
+            foreach (var registration in registrations.Where(x => specialismsWithAssessments.Contains(x.UniqueLearnerNumber)))
+            {
+                foreach(var specialism in registration.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList())
+                {
+                    var seedSpecialismsActive = specialism.TqRegistrationPathway.Status != RegistrationPathwayStatus.Withdrawn;
+                    var specialismAssessments = GetSpecialismAssessmentsDataToProcess(new List<TqRegistrationSpecialism> { specialism }, seedSpecialismAssessmentsAsActive: seedSpecialismsActive, assessmentSeriesName: assessmentSeriesName);
+                    tqSpecialismAssessmentsSeedData.AddRange(specialismAssessments);
+
+                    var specialismAssessmentsWithResults = specialismAssessments.Where(x => specialismsWithResults.Contains(x.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber)).ToList();
+                    tqSpecialismResultsSeedData.AddRange(GetSpecialismResultsDataToProcess(specialismAssessmentsWithResults, seedSpecialismsActive));
+                }          
+            }
+
+            DbContext.SaveChanges();
+        }
+
+        public List<TqSpecialismResult> GetSpecialismResultsDataToProcess(List<TqSpecialismAssessment> specialismAssessments, bool seedSpecialismResultsAsActive = true, bool isHistorical = false)
+        {
+            var tqSpecialismResults = new List<TqSpecialismResult>();
+
+            foreach (var (specialismAssessment, index) in specialismAssessments.Select((value, i) => (value, i)))
+            {
+                var tqresults = GetSpecialismResultDataToProcess(specialismAssessments, seedSpecialismResultsAsActive, isHistorical, null, true);
+                tqSpecialismResults.AddRange(tqresults);
+            }
+            return tqSpecialismResults;
+        }
+
+        public List<TqSpecialismResult> GetSpecialismResultDataToProcess(List<TqSpecialismAssessment> specialismAssessments, bool seedSpecialismResultsAsActive = true, bool isHistorical = false, PrsStatus? prsStatus = null, bool isBulkUpload = true)
+        {
+            var tqSpecialismResults = new List<TqSpecialismResult>();
+
+            foreach (var (specialismAssessment, index) in specialismAssessments.Select((value, i) => (value, i)))
+            {
+                if (isHistorical)
+                {
+                    // Historical record
+                    var specialismResult = new TqSpecialismResultBuilder().Build(specialismAssessment, SpecialismComponentGrades[index]);
+                    specialismResult.IsOptedin = false;
+                    specialismResult.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                    var tqSpecialismResultHistorical = TqSpecialismResultDataProvider.CreateTqSpecialismResult(DbContext, specialismResult);
+                    tqSpecialismResults.Add(tqSpecialismResultHistorical);
+                }
+
+                var activeSpecialismResult = new TqSpecialismResultBuilder().Build(specialismAssessment, SpecialismComponentGrades[index]);
+                var tqSpecialismResult = TqSpecialismResultDataProvider.CreateTqSpecialismResult(DbContext, activeSpecialismResult);
+                if (!seedSpecialismResultsAsActive)
+                {
+                    tqSpecialismResult.IsOptedin = specialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? true : false;
+                    tqSpecialismResult.EndDate = DateTime.UtcNow;
+                }
+
+                tqSpecialismResults.Add(tqSpecialismResult);
+            }
+            return tqSpecialismResults;
         }
 
         public int GetAcademicYear()
