@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
             {
                 new BulkProcessValidationError { RowNum = "2", Uln = string.Empty, ErrorMessage = "ULN required" },
                 new BulkProcessValidationError { RowNum = "3", Uln = "123", ErrorMessage = "ULN must be a 10 digit number" },
-                new BulkProcessValidationError { RowNum = "4", Uln = "1234567890", ErrorMessage = "Core component code must have 8 digits only" },
+                new BulkProcessValidationError { RowNum = "4", Uln = "1234567890", ErrorMessage = "Core component code must have 8 characters only" },
                 new BulkProcessValidationError { RowNum = "5", Uln = "1234567891", ErrorMessage = "Core component code required when result is included" },
                 new BulkProcessValidationError { RowNum = "6", Uln = "1234567892", ErrorMessage = "Assessment series needs to be provided" },
                 new BulkProcessValidationError { RowNum = "7", Uln = "1234567893", ErrorMessage = "Core assessment series format must be text followed by a space and a 4-digit year" },
