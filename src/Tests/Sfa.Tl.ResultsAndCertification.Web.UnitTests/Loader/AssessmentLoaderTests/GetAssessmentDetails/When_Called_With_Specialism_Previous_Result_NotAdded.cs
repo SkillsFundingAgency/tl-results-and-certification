@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTests.GetAssessmentDetails
 {
-    public class When_Called_With_Single_Specialism_Series_Open_For_Resit : TestSetup
+    public class When_Called_With_Specialism_Previous_Result_NotAdded : TestSetup
     {
         private IList<AssessmentSeriesDetails> _assessmentSeriesDetails;
 
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                         Ukprn = 456123987,
                         Name = "Provider Name",
                         DisplayName = "Provider display name",
-                    },
+                    },                    
                     Specialisms = new List<Specialism>
                     {
                         new Specialism
@@ -51,19 +51,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                             {
                                 new Assessment
                                 {
-                                    Id = 4,
-                                    SeriesId = 2,
-                                    SeriesName = "Summer 2022",
+                                    Id = 1,
+                                    SeriesId = 1,
+                                    SeriesName = "Summer 2021",
                                     AppealEndDate = System.DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = System.DateTime.UtcNow,
-                                    Result = new Result
-                                    {
-                                        Id = 1,
-                                        Grade = "Pass",
-                                        GradeCode = "SCG2",
-                                        PrsStatus = null
-                                    }
+                                    Result = null // No result
                                 }
                             }
                         }
@@ -76,12 +70,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 new AssessmentSeriesDetails
                 {
                     Id = 1,
-                    ComponentType = ComponentType.Core,
-                    Name = "Autumn 2021",
-                    Description = "Autumn 2021",
-                    StartDate = System.DateTime.UtcNow.AddDays(10),
-                    EndDate = System.DateTime.UtcNow.AddDays(30),
-                    AppealEndDate = System.DateTime.UtcNow.AddDays(40),
+                    ComponentType = ComponentType.Specialism,
+                    Name = "Summer 2021",
+                    Description = "Summer 2021",
+                    StartDate = System.DateTime.UtcNow.AddDays(-10),
+                    EndDate = System.DateTime.UtcNow.AddDays(-1),
+                    AppealEndDate = System.DateTime.UtcNow.AddDays(10),
                     Year = 2021
                 },
                 new AssessmentSeriesDetails
@@ -90,21 +84,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                     ComponentType = ComponentType.Specialism,
                     Name = "Summer 2022",
                     Description = "Summer 2022",
-                    StartDate = System.DateTime.UtcNow.AddDays(-10),
-                    EndDate = System.DateTime.UtcNow.AddDays(-1),
-                    AppealEndDate = System.DateTime.UtcNow.AddDays(20),
-                    Year = 2022
-                },
-                new AssessmentSeriesDetails
-                {
-                    Id = 3,
-                    ComponentType = ComponentType.Specialism,
-                    Name = "Summer 2023",
-                    Description = "Summer 2023",
                     StartDate = System.DateTime.UtcNow.AddDays(-1),
-                    EndDate = System.DateTime.UtcNow.AddDays(10),
-                    AppealEndDate = System.DateTime.UtcNow.AddDays(20),
-                    Year = 2023
+                    EndDate = System.DateTime.UtcNow.AddDays(30),
+                    AppealEndDate = System.DateTime.UtcNow.AddDays(40),
+                    Year = 2022
                 }
             };
 
@@ -120,8 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var coreAssessmentSeriesName = _assessmentSeriesDetails[0].Name;
-            var specialismAssessmentSeriesName = _assessmentSeriesDetails[2].Name;
+            var specialismAssessmentSeriesName = _assessmentSeriesDetails[1].Name;
             ActualResult.Should().NotBeNull();
 
             ActualResult.ProfileId.Should().Be(expectedApiResult.ProfileId);
@@ -137,7 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.IsCoreEntryEligible.Should().BeFalse();
             ActualResult.PathwayId.Should().Be(expectedApiResult.Pathway.Id);
             ActualResult.PathwayDisplayName.Should().Be($"{expectedApiResult.Pathway.Name} ({expectedApiResult.Pathway.LarId})");
-            ActualResult.NextAvailableCoreSeries.Should().Be(coreAssessmentSeriesName);
+            ActualResult.NextAvailableCoreSeries.Should().BeNull();
 
             ActualResult.PathwayAssessment.Should().BeNull();
             ActualResult.PreviousPathwayAssessment.Should().BeNull();
@@ -164,11 +146,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                     actualSpecialismAssessment.SeriesName.Should().Be(expectedSpecialismAssessment.SeriesName);
                     actualSpecialismAssessment.LastUpdatedOn.Should().Be(expectedSpecialismAssessment.LastUpdatedOn);
                     actualSpecialismAssessment.LastUpdatedBy.Should().Be(expectedSpecialismAssessment.LastUpdatedBy);
-                    actualSpecialismAssessment.Result.Should().NotBeNull();
-
-                    var expectedResult = actualSpecialismAssessment.Result;
-                    actualSpecialismAssessment.Result.Id.Should().Be(expectedResult.Id);
-                    actualSpecialismAssessment.Result.Grade.Should().Be(expectedResult.Grade);
+                    actualSpecialismAssessment.Result.Should().BeNull();
                 }
             }
 
@@ -212,7 +190,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 actualDisplaySpecialism.IsCouplet.Should().BeFalse();
                 actualDisplaySpecialism.IsResit.Should().BeTrue();
                 actualDisplaySpecialism.HasCurrentAssessmentEntry.Should().BeFalse();
-                actualDisplaySpecialism.NeedResultForPreviousAssessmentEntry.Should().BeFalse();
+                actualDisplaySpecialism.NeedResultForPreviousAssessmentEntry.Should().BeTrue();
             }
         }
     }
