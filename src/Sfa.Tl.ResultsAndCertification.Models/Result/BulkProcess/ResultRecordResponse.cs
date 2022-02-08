@@ -7,14 +7,12 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Result.BulkProcess
     {
         public ResultRecordResponse()
         {
-            SpecialismAssessmentSeriesIds = new List<int>();
-            SpecialismComponentGradeLookupIds = new List<int?>();
+            SpecialismResults = new Dictionary<int, int?>();
         }
 
         public int? TqPathwayAssessmentId { get; set; }
         public int? PathwayComponentGradeLookupId { get; set; }
 
-        public IList<int> SpecialismAssessmentSeriesIds { get; set; }
-        public IList<int?> SpecialismComponentGradeLookupIds { get; set; }
+        public Dictionary<int, int?> SpecialismResults { get; set; }
     }
 }

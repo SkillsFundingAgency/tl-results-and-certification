@@ -73,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                     var validationErrors = ExtractAllValidationErrors(stage2Response);
                     return await SaveErrorsAndUpdateResponse(request, response, validationErrors);
                 }
-                
+
                 // Stage 3 valiation. 
                 var stage3Response = await _resultService.ValidateResultsAsync(request.AoUkprn, stage2Response.Rows.Where(x => x.IsValid));
                 if (stage2Response.Rows.Any(x => !x.IsValid) || stage3Response.Any(x => !x.IsValid))
@@ -86,7 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 var results = _resultService.TransformResultsModel(stage3Response, request.PerformedBy);
 
                 // Step: Process Stage 4 validation and DB operation
-                var resultsProcessResult = await _resultService.CompareAndProcessResultsAsync(results.Item1, results.Item2);                
+                var resultsProcessResult = await _resultService.CompareAndProcessResultsAsync(results.Item1, results.Item2);
 
                 // update total assessment records stats
                 resultsProcessResult.BulkUploadStats = new BulkUploadStats { TotalRecordsCount = stage3Response.Count };
@@ -95,7 +95,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                     await ProcessResultsResponse(request, response, resultsProcessResult) :
                     await SaveErrorsAndUpdateResponse(request, response, resultsProcessResult.ValidationErrors);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var errorMessage = $"Something went wrong while processing bluk results. Method: ProcessBulkResultsAsync(BulkProcessRequest : {JsonConvert.SerializeObject(request)}), User: {request.PerformedBy}";
                 _logger.LogError(LogEvent.BulkResultProcessFailed, ex, errorMessage);
