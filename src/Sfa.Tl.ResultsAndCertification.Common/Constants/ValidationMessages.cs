@@ -77,7 +77,6 @@
         public const string SpecialismSeriesInvalidFormat = "AssessmentSeries (Specialisms) must contain the word Summer followed by a space and a 4-digit year";
         public const string SpecialismGradeCountMismatch = "There is only one paired specialism grade. Please either add another grade or indicate a blank field using comma separation.";
         public const string NoResultDataAfterUln = "No data provided for this learner. Please provide data or remove the row.";
-        public const string EachRowMustContainUln = "Each row must contain a ULN";
 
         // Results - Bulk stage 3 validations
         public const string CannotAddResultToWithdrawnRegistration = "Cannot add results to a withdrawn registration";
@@ -86,6 +85,13 @@
         public const string NoCoreAssessmentEntryCurrentlyActive = "No assessment entry is currently active for the core component on this registration - needs adding first through assessment entries file upload or manual entry";
         public const string AssessmentSeriesDoesNotMatchTheSeriesOnTheRegistration = "Assessment series does not match the series on the registration";
         public const string InvalidCoreComponentGrade = "Core component grade not valid - needs to be A* to E, or Unclassified";
+        
+        public const string SpecialismCodeNotRecognised = "Specialism code(s) either not recognised or not registered for this ULN";
+        public const string NoSpecialismAssessmentEntryCurrentlyActive = "No assessment entry is currently active for the Specialism on this registration - needs adding first through assessment entries file upload or manual entry";
+        public const string InvalidSpecialismAssessmentSeriesEntry = "Specialism assessment series does not exist";
+        public const string SpecialismSeriesDoesNotMatchTheSeriesOnTheRegistration = "Assessment series does not match the series on the registration";
+        public const string SpecialismGradeIsNotValid = "Specialism grade not valid";
+        public const string SpecialismSeriesNotCurrentlyOpen = "Incorrect Assessment series";
 
         // Results - Bulk stage 4 validations
         public const string ResultCannotBeInBeingAppealedStatus = "This learner's results cannot be changed because they are appealing a grade. Please remove this learner and try again.";

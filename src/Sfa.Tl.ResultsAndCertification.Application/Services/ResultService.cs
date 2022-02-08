@@ -84,10 +84,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     }
                 }
 
-                // 4. Assessment Series does not exists
+                // 4. Core Assessment Series does not exists
                 if (!string.IsNullOrWhiteSpace(result.CoreAssessmentSeries))
                 {
-                    var isSeriesFound = dbAssessmentSeries.Any(x => x.Name.Equals(result.CoreAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
+                    var isSeriesFound = dbAssessmentSeries.Any(x => x.ComponentType == ComponentType.Core && x.Name.Equals(result.CoreAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
                     if (!isSeriesFound)
                     {
                         validationErrors.Add(BuildValidationError(result, ValidationMessages.InvalidCoreAssessmentSeriesEntry));
@@ -95,7 +95,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     }
                 }
 
-                // 5. Core component grade not valid - needs to be A* to E, or Unclassified
+                // 5. Core Grade not valid - needs to be A* to E, or Unclassified
                 var pathwayComponentGrades = tlLookup.Where(lr => lr.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase));
                 if (!string.IsNullOrWhiteSpace(result.CoreGrade))
                 {
@@ -104,7 +104,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         validationErrors.Add(BuildValidationError(result, ValidationMessages.InvalidCoreComponentGrade));
                 }
 
-                // 6. No assessment entry is currently active
+                // 6. Core No assessment entry is currently active
                 var hasActiveCoreAssessmentEntry = true;
                 if (!string.IsNullOrWhiteSpace(result.CoreCode))
                 {
@@ -116,12 +116,75 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     }
                 }
 
-                // 7. Assessment entry mapping error 
+                // 7. Core Series not matched with reg. 
                 if (isCoreAndAssesssmentSeriesValid && hasActiveCoreAssessmentEntry && !string.IsNullOrWhiteSpace(result.CoreAssessmentSeries))
                 {
                     var hasAssessmentSeriesMatchTheSeriesOnRegistrationCore = dbRegistration.TqPathwayAssessments.Any(pa => pa.IsOptedin && pa.EndDate == null && pa.AssessmentSeries.Name.Equals(result.CoreAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
                     if (!hasAssessmentSeriesMatchTheSeriesOnRegistrationCore)
                         validationErrors.Add(BuildValidationError(result, ValidationMessages.AssessmentSeriesDoesNotMatchTheSeriesOnTheRegistration));
+                }
+
+                // 8. Specialism - Code is not recognised. 
+                var isSpecialismAndAssesssmentSeriesValid = true;
+                if (result.SpecialismCodes != null && result.SpecialismCodes.Any())
+                {
+                    var registeredSpecialismsLarIds = dbRegistration.TqRegistrationSpecialisms.Select(x => x.TlSpecialism.LarId);
+                    var hasInvalidSpecialismCode = result.SpecialismCodes.Except(registeredSpecialismsLarIds, StringComparer.InvariantCultureIgnoreCase).Any();
+                    if (hasInvalidSpecialismCode)
+                    {
+                        validationErrors.Add(BuildValidationError(result, ValidationMessages.SpecialismCodeNotRecognised));
+                        isSpecialismAndAssesssmentSeriesValid = false;
+                    }
+                }
+
+                // 9. Specialism - Assessment Series does not exists
+                if (!string.IsNullOrWhiteSpace(result.SpecialismAssessmentSeries))
+                {
+                    var isSeriesFound = dbAssessmentSeries.Any(x => x.ComponentType == ComponentType.Specialism && x.Name.Equals(result.SpecialismAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
+                    if (!isSeriesFound)
+                    {
+                        validationErrors.Add(BuildValidationError(result, ValidationMessages.InvalidSpecialismAssessmentSeriesEntry));
+                        isSpecialismAndAssesssmentSeriesValid = false;
+                    }
+                }
+
+                // 10. Specialism - No assessment entry is currently active
+                var hasActivSpecialismAssessmentEntry = true;
+                if (result.SpecialismCodes != null && result.SpecialismCodes.Any())
+                {
+                    var hasAnyActivSpecialismAssessmentEntry = dbRegistration.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments).Any(pa => pa.IsOptedin && pa.EndDate == null);
+                    if (!hasAnyActivSpecialismAssessmentEntry)
+                    {
+                        validationErrors.Add(BuildValidationError(result, ValidationMessages.NoSpecialismAssessmentEntryCurrentlyActive));
+                        hasActivSpecialismAssessmentEntry = false;
+                    }
+                }
+
+                // 11. Specialism - Assessment entry mapping error 
+                if (isSpecialismAndAssesssmentSeriesValid && hasActivSpecialismAssessmentEntry && !string.IsNullOrWhiteSpace(result.SpecialismAssessmentSeries))
+                {
+                    var hasAssessmentSeriesMatchTheSeriesOnRegistrationSpecialism = dbRegistration.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments)
+                                                                                    .Any(sa => sa.IsOptedin && sa.EndDate == null && sa.AssessmentSeries.Name.Equals(result.SpecialismAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
+
+                    if (!hasAssessmentSeriesMatchTheSeriesOnRegistrationSpecialism)
+                        validationErrors.Add(BuildValidationError(result, ValidationMessages.SpecialismSeriesDoesNotMatchTheSeriesOnTheRegistration));
+                }
+
+                // 12. Specialim - Assessment series is not open 
+                if (isSpecialismAndAssesssmentSeriesValid && hasActivSpecialismAssessmentEntry && !string.IsNullOrWhiteSpace(result.SpecialismAssessmentSeries))
+                {
+                    var isValidNextAssessmentSeries = IsValidNextAssessmentSeries(dbAssessmentSeries.Where(x => x.ComponentType == ComponentType.Specialism).ToList(), dbRegistration.AcademicYear, result.SpecialismAssessmentSeries, Constants.SpecialismAssessmentStartInYears, ComponentType.Specialism);
+                    if (!isValidNextAssessmentSeries)
+                        validationErrors.Add(BuildValidationError(result, ValidationMessages.SpecialismSeriesNotCurrentlyOpen));
+                }
+
+                // 13. Specialism - Grade not valid
+                var specialismLookupGrades = tlLookup.Where(lr => lr.Category.Equals(LookupCategory.SpecialismComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase));
+                if (result.SpecialismGrades != null && result.SpecialismGrades.Any())
+                {
+                    var hasInvalidSpecialismComponentGrade = result.SpecialismGrades.Except(specialismLookupGrades.Select(g => g.Value), StringComparer.InvariantCultureIgnoreCase).Any();
+                    if (hasInvalidSpecialismComponentGrade)
+                        validationErrors.Add(BuildValidationError(result, ValidationMessages.SpecialismGradeIsNotValid));
                 }
 
                 if (validationErrors.Any())
@@ -131,20 +194,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     var pathwayAssessment = dbRegistration.TqPathwayAssessments.FirstOrDefault(pa => pa.IsOptedin && pa.EndDate == null && pa.AssessmentSeries.Name.Equals(result.CoreAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
                     var pathwayComponentGrade = pathwayComponentGrades.FirstOrDefault(pcg => pcg.Value.Equals(result.CoreGrade, StringComparison.InvariantCultureIgnoreCase));
 
-                    // TODO: how we ensure order is correct betwen SolCode and SplGrade?
-                    var specialismAssessments = dbRegistration.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments)
-                                                                                        .Where(x => x.IsOptedin && x.EndDate == null 
-                                                                                            && result.SpecialismCodes.Any(splcode => splcode.Equals(x.TqRegistrationSpecialism.TlSpecialism.LarId, StringComparison.InvariantCultureIgnoreCase))
-                                                                                            && x.AssessmentSeries.Name.Equals(result.SpecialismAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
-                    
-                    var specialismLookupGrades = tlLookup.Where(lr => lr.Category.Equals(LookupCategory.SpecialismComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase));
-                    var specialismComponentGradeIds = new List<int?>();
-                    if (result.SpecialismGrades != null) 
+                    var specialismResults = new Dictionary<int, int?>();
+
+                    if (result.SpecialismCodes != null)
                     {
-                        foreach (var splGrade in result.SpecialismGrades)
+                        foreach (var specialismCode in result.SpecialismCodes?.Select((code, idx) => (code, idx)))
                         {
-                            var specialismComponentGrade = specialismLookupGrades.FirstOrDefault(scg => scg.Value.Equals(splGrade, StringComparison.InvariantCultureIgnoreCase));
-                            specialismComponentGradeIds.Add(specialismComponentGrade?.Id);
+                            var specialismAssessment = dbRegistration.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments)
+                                                                                            .FirstOrDefault(x => x.IsOptedin && x.EndDate == null
+                                                                                                && x.TqRegistrationSpecialism.TlSpecialism.LarId.Equals(specialismCode.code, StringComparison.InvariantCultureIgnoreCase)
+                                                                                                && x.AssessmentSeries.Name.Equals(result.SpecialismAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
+
+                            var specialismGrade = specialismLookupGrades.FirstOrDefault(scg => scg.Value.Equals(result.SpecialismGrades[specialismCode.idx], StringComparison.InvariantCultureIgnoreCase));
+                            specialismResults.Add(specialismAssessment.Id, specialismGrade?.Id);
                         }
                     }
 
@@ -152,10 +214,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         TqPathwayAssessmentId = !string.IsNullOrWhiteSpace(result.CoreCode) ? pathwayAssessment?.Id : null,
                         PathwayComponentGradeLookupId = !string.IsNullOrWhiteSpace(result.CoreGrade) ? pathwayComponentGrade?.Id : null,
-                        
-                        SpecialismAssessmentSeriesIds = (result.SpecialismCodes == null || !result.SpecialismCodes.Any()) ? null : specialismAssessments.Select(x => x.AssessmentSeriesId).ToList(),
-                        SpecialismComponentGradeLookupIds = (result.SpecialismGrades == null || !result.SpecialismGrades.Any()) ? null : specialismComponentGradeIds
-                    });;
+                        SpecialismResults = specialismResults.Any() ? specialismResults : null
+                    });
                 }
             }
             return response;
@@ -184,15 +244,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     });
                 }
 
-                if (result.SpecialismAssessmentSeriesIds != null)
+                if (result.SpecialismResults != null)
                 {
-                    foreach (var specialismAssessment in result.SpecialismAssessmentSeriesIds.Select((splAssessmentId, idx) => (splAssessmentId, idx)))
+                    foreach (var specialismResult in result.SpecialismResults)
                     {
                         specialismResults.Add(new TqSpecialismResult
                         {
                             Id = index - Constants.SpecialismResultsStartIndex,
-                            TqSpecialismAssessmentId = specialismAssessment.splAssessmentId,
-                            TlLookupId = result.SpecialismComponentGradeLookupIds[specialismAssessment.idx] ?? 0,
+                            TqSpecialismAssessmentId = specialismResult.Key,
+                            TlLookupId = specialismResult.Value ?? 0,
                             StartDate = DateTime.UtcNow,
                             IsOptedin = true,
                             IsBulkUpload = true,
@@ -544,6 +604,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 return false;
             }
+        }
+
+        private static bool IsValidNextAssessmentSeries(IList<AssessmentSeries> dbAssessmentSeries, int regAcademicYear, string assessmentEntryName, int startYearOffset, ComponentType componentType)
+        {
+            // TODO: move to common
+            var currentDate = DateTime.UtcNow.Date;
+
+            var isValidNextAssessmentSeries = dbAssessmentSeries.Any(s => s.ComponentType == componentType &&
+                s.Name.Equals(assessmentEntryName, StringComparison.InvariantCultureIgnoreCase) &&
+                currentDate >= s.StartDate && currentDate <= s.EndDate &&
+                s.Year > regAcademicYear + startYearOffset && s.Year <= regAcademicYear + Constants.AssessmentEndInYears);
+
+            return isValidNextAssessmentSeries;
         }
 
         #endregion
