@@ -92,7 +92,14 @@
                     {
                         <h2 class="govuk-heading-m">@string.Format(AssessmentDetails.Specialism_Heading_Text, specialism.DisplayName)</h2>
                         var specialismId = !string.IsNullOrWhiteSpace(specialism.CombinedSpecialismId) ? specialism.CombinedSpecialismId : specialism.Id.ToString();
-                        @if (specialism.HasCurrentAssessmentEntry)
+
+                        @if (specialism.NeedResultForPreviousAssessmentEntry)
+                        {
+                            <p class="govuk-body govuk-!-margin-bottom-9">
+                                @AssessmentDetails.You_Must <a class="govuk-link" asp-route="@RouteConstants.ResultDetails" asp-route-profileId="@Model.ProfileId">@AssessmentDetails.Add_Result_To_Learners_Previous_Assessment</a> @AssessmentDetails.Before_Entering_New_Assessment_Details
+                            </p>
+                        }
+                        else if (specialism.HasCurrentAssessmentEntry)
                         {
                             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
                                 <vc:summary-item model=Model.GetSummaryExamPeriod(specialism)></vc:summary-item>

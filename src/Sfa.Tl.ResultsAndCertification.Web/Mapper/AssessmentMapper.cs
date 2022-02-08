@@ -186,7 +186,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.SeriesId, opts => opts.MapFrom(s => s.SeriesId))
                 .ForMember(d => d.SeriesName, opts => opts.MapFrom(s => s.SeriesName))
                 .ForMember(d => d.LastUpdatedOn, opts => opts.MapFrom(s => s.LastUpdatedOn))
-                .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.LastUpdatedBy));
+                .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.LastUpdatedBy))
+                .ForMember(d => d.Result, opts => opts.MapFrom(s => s.Result));
 
         }
     }

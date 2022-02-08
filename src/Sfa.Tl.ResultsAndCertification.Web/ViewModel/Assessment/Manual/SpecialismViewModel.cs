@@ -17,5 +17,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public bool IsCouplet => TlSpecialismCombinations != null && TlSpecialismCombinations.Any();
         public bool HasCurrentAssessmentEntry => Assessments != null && CurrentSpecialismAssessmentSeriesId.HasValue && Assessments.Any(a => a.SeriesId == CurrentSpecialismAssessmentSeriesId.Value);
         public bool IsResit => Assessments != null && CurrentSpecialismAssessmentSeriesId.HasValue && Assessments.Any(a => a.SeriesId != CurrentSpecialismAssessmentSeriesId.Value);
+
+        public SpecialismAssessmentViewModel PreviousAssessment => Assessments?.Where(a => a.SeriesId != CurrentSpecialismAssessmentSeriesId)?.OrderByDescending(a => a.SeriesId)?.FirstOrDefault();
+        public bool HasPreviousAssessment => PreviousAssessment != null;
+        public bool HasResultForPreviousAssessment => HasPreviousAssessment && PreviousAssessment.Result != null && PreviousAssessment.Result.Id > 0;
+        public bool NeedResultForPreviousAssessmentEntry => !HasCurrentAssessmentEntry && !HasResultForPreviousAssessment;
     }
 }
