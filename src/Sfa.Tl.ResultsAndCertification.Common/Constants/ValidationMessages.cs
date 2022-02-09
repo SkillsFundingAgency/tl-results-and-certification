@@ -65,8 +65,11 @@
         public const string SpecialismCodeMustBePair = "Specialism code can only be entered or removed as part of a pair";
 
         // Assessments - Bulk stage 4 validations
-        public const string AssessmentEntryCannotBeRemovedHasResult = "This assessment has a result so the assessment entry cannot be removed. Either remove the record from the bulk upload or enter the current assessment series to indicate a resit";
-        public const string AssessmentEntryCannotBeAddedUntilResultRecordedForExistingEntry = "Assessment entry cannot be added until the existing assessment entry has a result";
+        public const string AssessmentEntryForCoreCannotBeAddedUntilResultRecordedForExistingEntry = "This core component assessment cannot be entered as there is a previous assessment that does not have a result. Remove the previous assessment or add a result to proceed.";
+        public const string AssessmentEntryForCoreCannotBeRemovedHasResult = "There is a core component assessment entry with an associated result recorded. The core assessment entry cannot be removed using bulk upload.";
+
+        public const string AssessmentEntryForSpecialismCannotBeAddedUntilResultRecordedForExistingEntry = "This occupational specialism assessment cannot be entered as there is a previous assessment that does not have a result. Remove the previous assessment or add a result to proceed.";
+        public const string AssessmentEntryForSpecialismCannotBeRemovedHasResult = "There is an occupational specialism assessment entry with an associated result recorded. The specialism assessment entry cannot be removed using bulk upload.";
 
         // Results - Bulk Stage 2 validations
         public const string CorecodeRequiredWhenResultIncluded = "Core component code required when result is included";

@@ -233,7 +233,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         var hasResultForExistingAssessment = existingPathwayAssessment.TqPathwayResults.Any(x => x.EndDate == null && x.IsOptedin);
                         if (!hasResultForExistingAssessment)
-                            response.ValidationErrors.Add(GetAssessmentValidationError(existingPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.AssessmentEntryCannotBeAddedUntilResultRecordedForExistingEntry));
+                            response.ValidationErrors.Add(GetAssessmentValidationError(existingPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.AssessmentEntryForCoreCannotBeAddedUntilResultRecordedForExistingEntry));
                     }
                 });
             }
@@ -252,7 +252,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                         if (hasPathwayAssessmentChanged)
                         {
-                            response = ValidateStage4Rules(existingPathwayAssessment, amendedPathwayAssessment, response);
+                            response = ValidateStage4RulesForCore(existingPathwayAssessment, amendedPathwayAssessment, response);
                             if (!response.IsValid)
                                 return;
 
@@ -283,14 +283,24 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return existingPathwayAssessmentsFromDb.OrderByDescending(x => x.AssessmentSeries.StartDate)
                                                    .FirstOrDefault(existingPathwayAssessment => existingPathwayAssessment.TqRegistrationPathwayId == amendedOrNewPathwayAssessment.TqRegistrationPathwayId);
-        }
+        }        
 
-        private AssessmentProcessResponse ValidateStage4Rules(TqPathwayAssessment existingPathwayAssessment, TqPathwayAssessment amendedOrNewPathwayAssessment, AssessmentProcessResponse response)
+        private AssessmentProcessResponse ValidateStage4RulesForCore(TqPathwayAssessment existingPathwayAssessment, TqPathwayAssessment amendedOrNewPathwayAssessment, AssessmentProcessResponse response)
         {
             // Rule: Assessment entry can not be removed when results are associated to it. 
             var hasResult = existingPathwayAssessment.TqPathwayResults.Any(x => x.EndDate == null && x.IsOptedin);
             if (hasResult && amendedOrNewPathwayAssessment.AssessmentSeriesId == 0)
-                response.ValidationErrors.Add(GetAssessmentValidationError(existingPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.AssessmentEntryCannotBeRemovedHasResult));
+                response.ValidationErrors.Add(GetAssessmentValidationError(existingPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.AssessmentEntryForCoreCannotBeRemovedHasResult));
+
+            return response;
+        }
+
+        private AssessmentProcessResponse ValidateStage4RulesForSpecialism(TqSpecialismAssessment existingSpecialismAssessment, TqSpecialismAssessment amendedOrNewSpecialismAssessment, AssessmentProcessResponse response)
+        {
+            // Rule: Assessment entry can not be removed when results are associated to it. 
+            var hasResult = existingSpecialismAssessment.TqSpecialismResults.Any(x => x.EndDate == null && x.IsOptedin);
+            if (hasResult && amendedOrNewSpecialismAssessment.AssessmentSeriesId == 0)
+                response.ValidationErrors.Add(GetAssessmentValidationError(existingSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.AssessmentEntryForSpecialismCannotBeRemovedHasResult));
 
             return response;
         }
@@ -316,6 +326,22 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var unchangedSpecialismAssessments = matchedSpecialismAssessments.Intersect(existingSpecialismAssessmentsFromDb, new TqSpecialismAssessmentRecordEqualityComparer()).ToList();
             var hasAnyMatchedSpecialismAssessmentsToProcess = matchedSpecialismAssessments.Count != unchangedSpecialismAssessments.Count;
 
+            // Stage 4 Rule For new assessment entry: To add new Assessment entry previous assessment entry should have result
+            if (newSpecialismAssessments.Any())
+            {
+                newSpecialismAssessments.ForEach(newSpecialismAssessment =>
+                {
+                    var existingSpecialismAssessment = GetExistingSpecialismAssessment(existingSpecialismAssessmentsFromDb, newSpecialismAssessment);
+
+                    if (existingSpecialismAssessment != null)
+                    {
+                        var hasResultForExistingAssessment = existingSpecialismAssessment.TqSpecialismResults.Any(x => x.EndDate == null && x.IsOptedin);
+                        if (!hasResultForExistingAssessment)
+                            response.ValidationErrors.Add(GetAssessmentValidationError(existingSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.AssessmentEntryForSpecialismCannotBeAddedUntilResultRecordedForExistingEntry));
+                    }
+                });
+            }
+
             if (hasAnyMatchedSpecialismAssessmentsToProcess)
             {
                 amendedSpecialismAssessments = matchedSpecialismAssessments.Except(unchangedSpecialismAssessments, specialismAssessmentComparer).ToList();
@@ -330,6 +356,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                         if (hasSpecialismAssessmentChanged)
                         {
+                            response = ValidateStage4RulesForSpecialism(existingSpecialismAssessment, amendedSpecialismAssessment, response);
+                            if (!response.IsValid)
+                                return;
+
                             existingSpecialismAssessment.IsOptedin = false;
                             existingSpecialismAssessment.EndDate = DateTime.UtcNow;
                             existingSpecialismAssessment.ModifiedBy = amendedSpecialismAssessment.CreatedBy;

@@ -42,13 +42,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             });
 
             // Summer Assessment/Results
-            var pathwaysWithAssessments = new List<long> { 1111111111 };
-            var summerAssessments = SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults: null, $"Summer {currentAcademicYear}");
+            var ulnsWithAssessments = new List<long> { 1111111111 };
+            var summerAssessments = SeedAssessmentsAndResults(_registrations, ulnsWithAssessments, pathwaysWithResults: null, $"Summer {currentAcademicYear}");
+
+            var summer2022AssessmentsForSpecialism = SeedSpecialismAssessmentsAndResults(_registrations, ulnsWithAssessments, ulnsWithResults: null, $"Summer 2022");
 
             // Autumn Assessment/Results
-            pathwaysWithAssessments = new List<long> { 1111111112 };
-            var pathwaysWithResults = new List<long> { 1111111112 };
-            var autumnAssessments = SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, $"Autumn {currentAcademicYear}");
+            ulnsWithAssessments = new List<long> { 1111111112 };
+            var ulnsWithResults = new List<long> { 1111111112 };
+            var autumnAssessments = SeedAssessmentsAndResults(_registrations, ulnsWithAssessments, ulnsWithResults, $"Autumn {currentAcademicYear}");
+
+            var summer2023AssessmentsForSpecialisms = SeedSpecialismAssessmentsAndResults(_registrations, ulnsWithAssessments, ulnsWithResults, $"Summer 2023");
 
             // Create a test class instance.
             AssessmentRepositoryLogger = new Logger<AssessmentRepository>(new NullLoggerFactory());
@@ -58,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             AssessmentService = new AssessmentService(AssessmentRepository, PathwayAssessmentRepository, SpecialismAssessmentRepository, AssessmentSeriesRepository, AssessmentMapper, AssessmentRepositoryLogger);
 
             _pathwayAssessments = summerAssessments.Concat(autumnAssessments).ToList();
-            _specialismAssessments = new List<TqSpecialismAssessment>();
+            _specialismAssessments = summer2022AssessmentsForSpecialism.Concat(summer2023AssessmentsForSpecialisms).ToList();
         }
 
         public override Task When()
@@ -73,21 +77,36 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
         [Theory()]
         [MemberData(nameof(Data))]
-        public async Task Then_Expected_Results_Are_Returned(long uln, string seriesName, string expectedValidationMessage)
+        public async Task Then_Expected_Results_Are_Returned(long uln, string seriesName, ComponentType componentType, string expectedValidationMessage)
         {
-            var pathwayAssessment = _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln);
-            var series = DbContext.AssessmentSeries.FirstOrDefault(x => x.Name.Equals(seriesName, System.StringComparison.InvariantCultureIgnoreCase));
+            var pathwayAssessments = new List<TqPathwayAssessment>();
+            var specialismAssessments = new List<TqSpecialismAssessment>();
 
-            var pathwayAssessments = new List<TqPathwayAssessment>
+            if (componentType == ComponentType.Core)
             {
-                new TqPathwayAssessment
+                var pathwayAssessment = _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln);
+                var pathwayAssessmentSeries = DbContext.AssessmentSeries.FirstOrDefault(x => x.ComponentType == ComponentType.Core && x.Name.Equals(seriesName, System.StringComparison.InvariantCultureIgnoreCase));
+
+                pathwayAssessments.Add(new TqPathwayAssessment
                 {
-                    TqRegistrationPathwayId = pathwayAssessment.Id,
-                    AssessmentSeriesId = !string.IsNullOrEmpty(seriesName) ? series.Id : 0
-                }
-            };
-            
-            await WhenAsync(pathwayAssessments, _specialismAssessments);
+                    TqRegistrationPathwayId = pathwayAssessment.TqRegistrationPathwayId,
+                    AssessmentSeriesId = !string.IsNullOrEmpty(seriesName) ? pathwayAssessmentSeries.Id : 0
+                });
+            }
+
+            if (componentType == ComponentType.Specialism)
+            {
+                var specialismAssessment = _specialismAssessments.FirstOrDefault(x => x.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln);
+                var specialismAssessmentSeries = DbContext.AssessmentSeries.FirstOrDefault(x => x.ComponentType == ComponentType.Specialism && x.Name.Equals(seriesName, System.StringComparison.InvariantCultureIgnoreCase));
+
+                specialismAssessments.Add(new TqSpecialismAssessment
+                {
+                    TqRegistrationSpecialismId = specialismAssessment.TqRegistrationSpecialismId,
+                    AssessmentSeriesId = !string.IsNullOrEmpty(seriesName) ? specialismAssessmentSeries.Id : 0
+                });
+            }
+
+            await WhenAsync(pathwayAssessments, specialismAssessments);
 
             _result.Should().NotBeNull();
             _result.ValidationErrors.Count.Should().Be(1);
@@ -100,8 +119,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             {
                 return new[]
                 {
-                    new object[] { 1111111111, "Autumn 2021", ValidationMessages.AssessmentEntryCannotBeAddedUntilResultRecordedForExistingEntry },
-                    new object[] { 1111111112, null, ValidationMessages.AssessmentEntryCannotBeRemovedHasResult }
+                    new object[] { 1111111111, "Autumn 2021", ComponentType.Core, ValidationMessages.AssessmentEntryForCoreCannotBeAddedUntilResultRecordedForExistingEntry },
+                    new object[] { 1111111112, null, ComponentType.Core, ValidationMessages.AssessmentEntryForCoreCannotBeRemovedHasResult },
+
+                    new object[] { 1111111111, "Summer 2023", ComponentType.Specialism, ValidationMessages.AssessmentEntryForSpecialismCannotBeAddedUntilResultRecordedForExistingEntry },
+                    new object[] { 1111111112, null, ComponentType.Specialism, ValidationMessages.AssessmentEntryForSpecialismCannotBeRemovedHasResult },
                 };
             }
         }
