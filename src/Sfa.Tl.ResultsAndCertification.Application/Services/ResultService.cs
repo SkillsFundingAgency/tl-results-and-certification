@@ -182,7 +182,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var specialismLookupGrades = tlLookup.Where(lr => lr.Category.Equals(LookupCategory.SpecialismComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase));
                 if (result.SpecialismGrades != null && result.SpecialismGrades.Any())
                 {
-                    var hasInvalidSpecialismComponentGrade = result.SpecialismGrades.Except(specialismLookupGrades.Select(g => g.Value), StringComparer.InvariantCultureIgnoreCase).Any();
+                    var hasInvalidSpecialismComponentGrade = result.SpecialismGrades.Where(x => !string.IsNullOrWhiteSpace(x)).Except(specialismLookupGrades.Select(g => g.Value), StringComparer.InvariantCultureIgnoreCase).Any();
                     if (hasInvalidSpecialismComponentGrade)
                         validationErrors.Add(BuildValidationError(result, ValidationMessages.SpecialismGradeIsNotValid));
                 }

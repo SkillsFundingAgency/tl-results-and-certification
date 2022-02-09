@@ -200,13 +200,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         public List<TqSpecialismAssessment> GetSpecialismAssessmentsDataToProcess(List<TqRegistrationSpecialism> specialismsRegistrations, bool seedSpecialismAssessmentsAsActive = true, bool isHistorical = false)
         {
             var tqSpecialismAssessments = new List<TqSpecialismAssessment>();
+            var specialismAssessmentSeries = AssessmentSeries.Where(x => x.ComponentType == ComponentType.Specialism).ToList();
 
             foreach (var (specialismRegistration, index) in specialismsRegistrations.Select((value, i) => (value, i)))
             {
                 if (isHistorical)
                 {
                     // Historical record
-                    var specialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, AssessmentSeries[index]);
+                    var specialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, specialismAssessmentSeries[index]);
                     specialismAssessment.IsOptedin = false;
                     specialismAssessment.EndDate = DateTime.UtcNow.AddDays(-1);
 
@@ -214,7 +215,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                     tqSpecialismAssessments.Add(tqSpecialismAssessmentHistorical);
                 }
 
-                var activeSpecialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, AssessmentSeries[index]);
+                var activeSpecialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, specialismAssessmentSeries[index]);
                 var tqSpecialismAssessment = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, activeSpecialismAssessment);
                 if (!seedSpecialismAssessmentsAsActive)
                 {

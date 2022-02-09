@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
                 CoreGrade = result.CoreGrade?.Trim(),
                 SpecialismCodes = result.SpecialismCodes.Trim().Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim()))?.Select(sp => sp.Trim()).ToList(),
                 SpecialismAssessmentSeries = result.SpecialismSeries.Trim(),
-                SpecialismGrades = result.SpecialismGrades.Trim().Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim()))?.Select(sp => sp.Trim()).ToList(),
+                SpecialismGrades = result.SpecialismGrades.Trim().Split(',')?.Select(sp => sp.Trim())?.ToList(),
                 RowNum = rownum,
                 ValidationErrors = new List<BulkProcessValidationError>()
             };
