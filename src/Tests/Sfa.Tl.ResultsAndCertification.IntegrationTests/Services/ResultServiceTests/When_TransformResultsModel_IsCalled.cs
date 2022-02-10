@@ -61,13 +61,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             //await WhenAsync();
             _result.Should().NotBeNull();
 
-            var pathwayResults = _result.Item1;           
+            var pathwayResults = _result.Item1;
+            var actualSpecialismResults = _result.Item2;
 
             var expectedPathwayResultsCount = _resultRecords.Count(a => a.TqPathwayAssessmentId != null);
+            var expectedSpecialismResultCount = _resultRecords.Sum(sr => sr.SpecialismResults.Count());
 
             pathwayResults.Should().NotBeNull();
+            actualSpecialismResults.Should().NotBeNull();
 
             pathwayResults.Count.Should().Be(expectedPathwayResultsCount);
+            actualSpecialismResults.Count.Should().Be(expectedSpecialismResultCount);
 
             foreach (var expectedResult in _resultRecords)
             {
@@ -83,7 +87,22 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                     actualPathwayResult.Should().NotBeNull();
                     actualPathwayResult.TqPathwayAssessmentId.Should().Be(expectedResult.TqPathwayAssessmentId);
                     actualPathwayResult.TlLookupId.Should().Be(expectedResult.PathwayComponentGradeLookupId);
-                }                
+                    actualPathwayResult.IsOptedin.Should().BeTrue();
+                    actualPathwayResult.IsBulkUpload.Should().BeTrue();
+                }
+
+
+                // Assessment Results
+                foreach (var expectedSpecialismResult in expectedResult.SpecialismResults)
+                {
+                    var actualSpecialismResult = actualSpecialismResults.FirstOrDefault(x => x.TqSpecialismAssessmentId == expectedSpecialismResult.Key);
+
+                    actualSpecialismResult.Should().NotBeNull();
+                    actualSpecialismResult.TqSpecialismAssessmentId.Should().Be(expectedSpecialismResult.Key);
+                    actualSpecialismResult.TlLookupId.Should().Be(expectedSpecialismResult.Value ?? 0);
+                    actualSpecialismResult.IsOptedin.Should().BeTrue();
+                    actualSpecialismResult.IsBulkUpload.Should().BeTrue();
+                }
             }
         }
     }
