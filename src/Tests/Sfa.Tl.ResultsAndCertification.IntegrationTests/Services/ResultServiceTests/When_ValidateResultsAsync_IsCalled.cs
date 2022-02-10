@@ -95,7 +95,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         }
 
         [Fact]
-        public void Expected_Results_Are_Returned1()
+        public void Expected_Results_Are_Returned()
         {
             _stage3Result.Result.Should().NotBeNull();
             var actualResult = _stage3Result.Result;

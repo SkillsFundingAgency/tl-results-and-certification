@@ -205,8 +205,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                                                                                 && x.TqRegistrationSpecialism.TlSpecialism.LarId.Equals(specialismCode.code, StringComparison.InvariantCultureIgnoreCase)
                                                                                                 && x.AssessmentSeries.Name.Equals(result.SpecialismAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
 
-                            var specialismGrade = specialismLookupGrades.FirstOrDefault(scg => scg.Value.Equals(result.SpecialismGrades[specialismCode.idx], StringComparison.InvariantCultureIgnoreCase));
-                            specialismResults.Add(specialismAssessment.Id, specialismGrade?.Id);
+                            TlLookup specialismGradeLookup;
+                            if (result.SpecialismCodes.Count != result.SpecialismGrades.Count && result.SpecialismGrades.All(x => string.IsNullOrWhiteSpace(x)))
+                                specialismGradeLookup = null;
+                            else
+                                specialismGradeLookup = specialismLookupGrades.FirstOrDefault(scg => scg.Value.Equals(result.SpecialismGrades[specialismCode.idx], StringComparison.InvariantCultureIgnoreCase));
+
+                            specialismResults.Add(specialismAssessment.Id, specialismGradeLookup?.Id);
                         }
                     }
 

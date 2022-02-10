@@ -68,7 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             RuleFor(r => r.SpecialismGrades)
                 .Must((row, grades) => grades.Split(',').Count() == row.SpecialismCodes.Split(',').Count()) 
                 .WithMessage(ValidationMessages.SpecialismGradeCountMismatch)
-                .When(r => !string.IsNullOrWhiteSpace(r.SpecialismCodes) || !string.IsNullOrWhiteSpace(r.SpecialismGrades));
+                .When(r => !string.IsNullOrWhiteSpace(r.SpecialismGrades));
         }
 
         private bool IsDuplicate(string commaSeparatedString)

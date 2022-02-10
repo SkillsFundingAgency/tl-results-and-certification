@@ -22,66 +22,25 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<IEnumerable<TqRegistrationPathway>> GetBulkResultsAsync(long aoUkprn, IEnumerable<long> uniqueLearnerNumbers)
         {
-            // TODO: Integration test failures on below code. 
-            //var registrations = await _dbContext.TqRegistrationPathway
-            //       .Include(x => x.TqPathwayAssessments.Where(pa => pa.IsOptedin && pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? pa.EndDate != null : pa.EndDate == null))
-            //           .ThenInclude(x => x.AssessmentSeries)
-            //       .Include(x => x.TqRegistrationProfile)
-            //       .Include(x => x.TqProvider)
-            //           .ThenInclude(x => x.TqAwardingOrganisation)
-            //               .ThenInclude(x => x.TlPathway)
-            //       .Include(x => x.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin && rs.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? rs.EndDate != null : rs.EndDate == null))
-            //           .ThenInclude(x => x.TlSpecialism)
-            //       .Include(x => x.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin && rs.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? rs.EndDate != null : rs.EndDate == null))
-            //           .ThenInclude(x => x.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? sa.EndDate != null : sa.EndDate == null))
-            //            .ThenInclude(x => x.AssessmentSeries)
-            //           .OrderByDescending(o => o.CreatedOn)
-            //        .Where(p => uniqueLearnerNumbers.Contains(p.TqRegistrationProfile.UniqueLearnerNumber) &&
-            //              p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
-            //              (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))
-            //       .ToListAsync();
-
-            //return registrations;
-
-
             var registrations = await _dbContext.TqRegistrationPathway
-                   .Include(x => x.TqPathwayAssessments)
+                   .Include(x => x.TqPathwayAssessments.Where(pa => pa.IsOptedin && pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? pa.EndDate != null : pa.EndDate == null))
                        .ThenInclude(x => x.AssessmentSeries)
                    .Include(x => x.TqRegistrationProfile)
                    .Include(x => x.TqProvider)
                        .ThenInclude(x => x.TqAwardingOrganisation)
                            .ThenInclude(x => x.TlPathway)
-                    .Include(x => x.TqRegistrationSpecialisms)
+                   .Include(x => x.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin && rs.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? rs.EndDate != null : rs.EndDate == null))
                        .ThenInclude(x => x.TlSpecialism)
-                    .Include(x => x.TqRegistrationSpecialisms)
-                        .ThenInclude(x => x.TqSpecialismAssessments)
-                            .ThenInclude(x => x.AssessmentSeries)
-                   .Where(p => uniqueLearnerNumbers.Contains(p.TqRegistrationProfile.UniqueLearnerNumber) &&
+                   .Include(x => x.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin && rs.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? rs.EndDate != null : rs.EndDate == null))
+                       .ThenInclude(x => x.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? sa.EndDate != null : sa.EndDate == null))
+                        .ThenInclude(x => x.AssessmentSeries)
+                       .OrderByDescending(o => o.CreatedOn)
+                    .Where(p => uniqueLearnerNumbers.Contains(p.TqRegistrationProfile.UniqueLearnerNumber) &&
                           p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
                           (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))
                    .ToListAsync();
 
-            if (registrations == null) return null;
-
-            var latestRegistratons = registrations
-                    .GroupBy(x => x.TqRegistrationProfileId)
-                    .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
-                    .ToList();
-
-            foreach (var reg in latestRegistratons)
-            {
-                Func<TqPathwayAssessment, bool> pathwayAssessmentPredicate = e => e.IsOptedin && e.EndDate == null;
-                if (reg.Status == RegistrationPathwayStatus.Withdrawn)
-                    pathwayAssessmentPredicate = e => e.IsOptedin && e.EndDate != null;
-                reg.TqPathwayAssessments = reg.TqPathwayAssessments.Where(pathwayAssessmentPredicate).ToList();
-
-                Func<TqRegistrationSpecialism, bool> specialismPredicate = e => e.IsOptedin && e.EndDate == null;
-                if (reg.Status == RegistrationPathwayStatus.Withdrawn)
-                    specialismPredicate = e => e.IsOptedin && e.EndDate != null;
-                reg.TqRegistrationSpecialisms = reg.TqRegistrationSpecialisms.Where(specialismPredicate).ToList();
-            }
-
-            return latestRegistratons;
+            return registrations;
         }
 
         public async Task<IList<TqPathwayResult>> GetBulkPathwayResultsAsync(IList<TqPathwayResult> pathwayResults)

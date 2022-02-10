@@ -43,6 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.ResultRep
 
             _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
             DbContext.SaveChanges();
+            DetachAll();
 
             // TestClass
             ResultRepositoryLogger = new Logger<ResultRepository>(new NullLoggerFactory());
