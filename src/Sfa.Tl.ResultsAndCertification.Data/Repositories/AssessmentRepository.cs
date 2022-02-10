@@ -78,6 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             specialismAssessments.ToList().ForEach(r => registrationSpecialismIds.Add(r.TqRegistrationSpecialismId));
             
             var assessments = await _dbContext.TqSpecialismAssessment
+                .Include(x => x.TqSpecialismResults)
                 .Include(x => x.AssessmentSeries)
                 .Where(x => registrationSpecialismIds.Contains(x.TqRegistrationSpecialismId) && x.EndDate == null && x.IsOptedin)
                 .ToListAsync();
