@@ -50,8 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.Ukprn, opts => opts.MapFrom(s => s.Ukprn));
 
             CreateMap<IList<ProviderDetailsViewModel>, YourProvidersViewModel>()
-               .ForMember(d => d.Providers, opts => opts.MapFrom(s => s))
-               .ForAllOtherMembers(d => d.Ignore());
+               .ForMember(d => d.Providers, opts => opts.MapFrom(s => s));
 
             CreateMap<ProviderTlevelDetails, ProviderTlevelDetailsViewModel>()
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
@@ -62,21 +61,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<ProviderDetails, SelectListItem>()
                 .ForMember(m => m.Text, o => o.MapFrom(s => $"{s.DisplayName} ({s.Ukprn})"))
-                .ForMember(m => m.Value, o => o.MapFrom(s => s.Ukprn.ToString()))
-                .ForAllOtherMembers(s => s.Ignore());
+                .ForMember(m => m.Value, o => o.MapFrom(s => s.Ukprn.ToString()));
 
             CreateMap<IList<ProviderDetails>, SelectProviderViewModel>()
-               .ForMember(d => d.ProvidersSelectList, opts => opts.MapFrom(s => s))
-               .ForAllOtherMembers(d => d.Ignore());
+               .ForMember(d => d.ProvidersSelectList, opts => opts.MapFrom(s => s));
 
             CreateMap<PathwayDetails, SelectListItem>()
                 .ForMember(m => m.Text, o => o.MapFrom(s => $"{s.Name} ({s.Code})"))
-                .ForMember(m => m.Value, o => o.MapFrom(s => s.Code.ToString()))
-                .ForAllOtherMembers(s => s.Ignore());
+                .ForMember(m => m.Value, o => o.MapFrom(s => s.Code.ToString()));
 
             CreateMap<IList<PathwayDetails>, SelectCoreViewModel>()
-               .ForMember(d => d.CoreSelectList, opts => opts.MapFrom(s => s))
-               .ForAllOtherMembers(d => d.Ignore());
+               .ForMember(d => d.CoreSelectList, opts => opts.MapFrom(s => s));
         }
     }
 }
