@@ -142,7 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
 
                     // When componenttype = specialism - returns false
                     new object[]
-                    { new ChangeResultRequest { AoUkprn = 10011881, ProfileId = 3, LookupId = 2, ComponentType = ComponentType.Specialism },
+                    { new ChangeResultRequest { AoUkprn = 10011881, ProfileId = 3, LookupId = 2, ComponentType = ComponentType.NotSpecified },
                       new ChangeResultResponse { IsSuccess = false } },                    
 
                     // valid request with Active result - returns true

@@ -70,6 +70,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The {0} {1} result has been changed.
+        /// </summary>
+        public static string Banner_Message_For_Result_Changed {
+            get {
+                return ResourceManager.GetString("Banner_Message_For_Result_Changed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string Change_Button {
+            get {
+                return ResourceManager.GetString("Change_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Learners details.
         /// </summary>
         public static string Learner_Details {
@@ -88,6 +106,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This learner&apos;s grade has not been received.
+        /// </summary>
+        public static string Option_Not_Received {
+            get {
+                return ResourceManager.GetString("Option_Not_Received", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to or.
+        /// </summary>
+        public static string Or_Text {
+            get {
+                return ResourceManager.GetString("Or_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a result for {0}.
         /// </summary>
         public static string Page_Heading_Add_Result {
@@ -97,11 +133,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change a result for {0}.
+        /// </summary>
+        public static string Page_Heading_Change_Result {
+            get {
+                return ResourceManager.GetString("Page_Heading_Change_Result", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select specialism result.
         /// </summary>
         public static string Page_Title_Add_Result {
             get {
                 return ResourceManager.GetString("Page_Title_Add_Result", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change specialism result.
+        /// </summary>
+        public static string Page_Title_Change_Result {
+            get {
+                return ResourceManager.GetString("Page_Title_Change_Result", resourceCulture);
             }
         }
         

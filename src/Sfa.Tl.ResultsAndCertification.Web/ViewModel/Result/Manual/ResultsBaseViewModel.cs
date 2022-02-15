@@ -3,7 +3,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
-using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 {
@@ -25,7 +24,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         protected string TlevelTitleLabel { get; set; }
 
         public string LearnerName => $"{Firstname} {Lastname}";
-        public string ProviderDisplayName => $"{ProviderName}<br/>({ProviderUkprn})";  // TODO: will delete later
 
         public SummaryItemModel SummaryUln => new SummaryItemModel
         {
@@ -46,15 +44,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
             Id = "dateofbirth",
             Title = DateofBirthLabel,
             Value = DateofBirth.ToDobFormat()
-        };
-        
-        // TODO: below prop to delete.
-        public SummaryItemModel SummaryProvider => new SummaryItemModel
-        {
-            Id = "providername",
-            Title = ProviderNameLabel,
-            Value = ProviderDisplayName,
-            IsRawHtml = true
         };
 
         public SummaryItemModel SummaryProviderName => new SummaryItemModel

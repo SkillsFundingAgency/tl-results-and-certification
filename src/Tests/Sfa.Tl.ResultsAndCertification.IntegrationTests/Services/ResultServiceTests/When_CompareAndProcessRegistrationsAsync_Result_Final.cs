@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         private ResultProcessResponse _result;
         private List<TqRegistrationProfile> _registrations;
         private List<TqPathwayResult> _inputPathwayResultsData;
+        private List<TqSpecialismResult> _inputSpecialismResultsData;
         private IList<BulkProcessValidationError> _expectedValidationErrors;
         private readonly Dictionary<long, RegistrationPathwayStatus> _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Withdrawn }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Active }, { 1111111114, RegistrationPathwayStatus.Active }, { 1111111115, RegistrationPathwayStatus.Active } };
 
@@ -47,6 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
 
             var pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
 
+            _inputSpecialismResultsData = new List<TqSpecialismResult>();
             _inputPathwayResultsData = new List<TqPathwayResult>();
             var tqPathwayResultsSeedData = new List<TqPathwayResult>();
             var profilesWithResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, null), (1111111114, null), (1111111115, PrsStatus.Final) };
@@ -60,9 +62,38 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
 
             SeedPathwayResultsData(tqPathwayResultsSeedData);
 
+            // Specialism Assessments seed
+            var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
+            foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111))
+            {
+                var hasHitoricData = new List<long> { 1111111112 };
+                var isHistoricAssessent = hasHitoricData.Any(x => x == registration.UniqueLearnerNumber);
+                var isLatestActive = _ulns[registration.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
+
+                tqSpecialismAssessmentsSeedData.AddRange(GetSpecialismAssessmentsDataToProcess(registration.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList(), isLatestActive, isHistoricAssessent));
+            }
+
+            var specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
+
+            var ulnsToAddResults = new List<long> { 1111111113, 1111111114 };
+            var tqSpecialismResultsSeedData = new List<TqSpecialismResult>();
+            var profilesWithSpecialismResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, null), (1111111114, PrsStatus.Final), (1111111115, null) };
+
+            foreach (var assessment in specialismAssessments)
+            {
+                var inactiveResultUlns = new List<long> { 1111111112 };
+                var isLatestResultActive = !inactiveResultUlns.Any(x => x == assessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber);
+                var prsStatus = profilesWithSpecialismResults.FirstOrDefault(p => p.Item1 == assessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber).Item2;
+                tqSpecialismResultsSeedData.AddRange(GetSpecialismResultsDataToProcess(new List<TqSpecialismAssessment> { assessment }, isLatestResultActive, false, prsStatus));
+            }
+
+            SeedSpecialismResultsData(tqSpecialismResultsSeedData, false);
+
             DbContext.SaveChanges();
 
             _inputPathwayResultsData.AddRange(GetPathwayResultsDataToProcess(pathwayAssessments));
+
+            _inputSpecialismResultsData.AddRange(GetSpecialismResultsDataToProcess(specialismAssessments));
 
             // Dependencies 
             PathwayResultRepositoryLogger = new Logger<GenericRepository<TqPathwayResult>>(new NullLoggerFactory());
@@ -88,7 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
 
         public async override Task When()
         {
-            _result = await ResultService.CompareAndProcessResultsAsync(_inputPathwayResultsData);
+            _result = await ResultService.CompareAndProcessResultsAsync(_inputPathwayResultsData, _inputSpecialismResultsData);
         }
 
         [Fact]
@@ -103,7 +134,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         private void SetupExpectedValidationErrors()
         {
             _expectedValidationErrors = new List<BulkProcessValidationError>
-            {            
+            {
+                new BulkProcessValidationError
+                {
+                    Uln = "1111111114",
+                    ErrorMessage = ValidationMessages.ResultIsInFinal
+                },
                 new BulkProcessValidationError
                 {
                     Uln = "1111111115",

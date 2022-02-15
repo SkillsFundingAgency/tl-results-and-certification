@@ -1,10 +1,16 @@
-﻿ULN,ComponentCode (Core),AssessmentSeries (Core),ComponentGrade (Core)
-,12345678,Summer 2021,A
-123,12345678,Summer 2021,A
-1234567890,123,Summer 2021,A
-1234567891,,Summer 2021,A
-1234567892,12345678,,A
-1234567893,12345678,TEST,A
-1234567894,,,
-1234567895,12345678,TEST,A,
-,,,
+﻿ULN,ComponentCode (Core),AssessmentSeries (Core),ComponentGrade (Core),ComponentCode (Specialisms),AssessmentSeries (Specialisms),ComponentGrade (Specialisms)
+,12345678,Summer 2021,A,,,
+123,12345678,Summer 2021,A,,,
+1234567890,123,Summer 2021,A,,,
+1234567891,,Summer 2021,A,,,
+1234567892,12345678,,A,,,
+1234567893,12345678,TEST,A,,,
+1234567894,,,,,,
+1234567895,12345678,TEST,A,,,,,
+,,,,,,
+1234567896,,,,ZZZ,Summer 2021,Merit
+1234567897,,,,,Summer 2021,Merit
+1234567898,,,,"OS123456,OS123456",Summer 2021,"Merit,Merit"
+1234567899,,,,"OS123456",,Merit
+1234567900,,,,"OS123456",2021,Merit
+1234567901,,,,"OS123456, OS123457",Summer 2021,Merit

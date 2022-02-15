@@ -120,17 +120,35 @@
   <data name="Banner_Message_For_Result_Added" xml:space="preserve">
     <value>The {0} {1} result has been added</value>
   </data>
+  <data name="Banner_Message_For_Result_Changed" xml:space="preserve">
+    <value>The {0} {1} result has been changed</value>
+  </data>
+  <data name="Change_Button" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="Learner_Details" xml:space="preserve">
     <value>Learners details</value>
   </data>
   <data name="Occupiational_Specialism_Component" xml:space="preserve">
     <value>Occupational specialism: {0}</value>
   </data>
+  <data name="Option_Not_Received" xml:space="preserve">
+    <value>This learner's grade has not been received</value>
+  </data>
+  <data name="Or_Text" xml:space="preserve">
+    <value>or</value>
+  </data>
   <data name="Page_Heading_Add_Result" xml:space="preserve">
     <value>Add a result for {0}</value>
   </data>
+  <data name="Page_Heading_Change_Result" xml:space="preserve">
+    <value>Change a result for {0}</value>
+  </data>
   <data name="Page_Title_Add_Result" xml:space="preserve">
     <value>Select specialism result</value>
+  </data>
+  <data name="Page_Title_Change_Result" xml:space="preserve">
+    <value>Change specialism result</value>
   </data>
   <data name="Select_The_Grade_For" xml:space="preserve">
     <value>Select the grade for {0}</value>

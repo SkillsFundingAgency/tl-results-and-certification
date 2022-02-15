@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser;
@@ -34,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
             ReadAndParseFileResponse.Should().NotBeNull();
             ReadAndParseFileResponse.IsDirty.Should().BeFalse();
             ReadAndParseFileResponse.ErrorMessage.Should().BeNullOrWhiteSpace();
-            ReadAndParseFileResponse.Rows.Count.Should().Be(2);
+            ReadAndParseFileResponse.Rows.Count.Should().Be(10);
             ReadAndParseFileResponse.Rows.Any(r => r.ValidationErrors.Count > 0).Should().BeFalse();
         }
     }

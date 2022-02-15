@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 
         public List<LookupViewModel> Grades { get; set; }
         public bool IsValid => (PrsStatus.HasValue == false || PrsStatus == EnumPrsStatus.NotSpecified) && CommonHelper.IsAppealsAllowed(AppealEndDate);
-        public string SuccessBannerMessage { get { return string.Format(ResultId.HasValue ? string.Empty : ManageSpecialismResultContent.Banner_Message_For_Result_Added, AssessmentSeries, SpecialismName); } }
+        public string SuccessBannerMessage { get { return string.Format(ResultId.HasValue ? ManageSpecialismResultContent.Banner_Message_For_Result_Changed : ManageSpecialismResultContent.Banner_Message_For_Result_Added, AssessmentSeries, SpecialismName); } }
         
         public override BackLinkModel BackLink => new()
         {

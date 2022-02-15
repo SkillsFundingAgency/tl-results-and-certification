@@ -23,33 +23,24 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         public async Task<IEnumerable<TqRegistrationPathway>> GetBulkResultsAsync(long aoUkprn, IEnumerable<long> uniqueLearnerNumbers)
         {
             var registrations = await _dbContext.TqRegistrationPathway
-                   .Include(x => x.TqPathwayAssessments)
-                       .ThenInclude(x => x.AssessmentSeries)                   
+                   .Include(x => x.TqPathwayAssessments.Where(pa => pa.IsOptedin && pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? pa.EndDate != null : pa.EndDate == null))
+                       .ThenInclude(x => x.AssessmentSeries)
                    .Include(x => x.TqRegistrationProfile)
                    .Include(x => x.TqProvider)
                        .ThenInclude(x => x.TqAwardingOrganisation)
-                           .ThenInclude(x => x.TlPathway)                  
-                   .Where(p => uniqueLearnerNumbers.Contains(p.TqRegistrationProfile.UniqueLearnerNumber) &&
+                           .ThenInclude(x => x.TlPathway)
+                   .Include(x => x.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin && rs.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? rs.EndDate != null : rs.EndDate == null))
+                       .ThenInclude(x => x.TlSpecialism)
+                   .Include(x => x.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin && rs.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? rs.EndDate != null : rs.EndDate == null))
+                       .ThenInclude(x => x.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? sa.EndDate != null : sa.EndDate == null))
+                        .ThenInclude(x => x.AssessmentSeries)
+                       .OrderByDescending(o => o.CreatedOn)
+                    .Where(p => uniqueLearnerNumbers.Contains(p.TqRegistrationProfile.UniqueLearnerNumber) &&
                           p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
                           (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))
                    .ToListAsync();
 
-            if (registrations == null) return null;
-
-            var latestRegistratons = registrations
-                    .GroupBy(x => x.TqRegistrationProfileId)
-                    .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
-                    .ToList();
-
-            foreach (var reg in latestRegistratons)
-            {
-                Func<TqPathwayAssessment, bool> pathwayAssessmentPredicate = e => e.IsOptedin && e.EndDate == null;
-                if (reg.Status == RegistrationPathwayStatus.Withdrawn)
-                    pathwayAssessmentPredicate = e => e.IsOptedin && e.EndDate != null;
-                reg.TqPathwayAssessments = reg.TqPathwayAssessments.Where(pathwayAssessmentPredicate).ToList();                
-            }
-
-            return latestRegistratons;
+            return registrations;
         }
 
         public async Task<IList<TqPathwayResult>> GetBulkPathwayResultsAsync(IList<TqPathwayResult> pathwayResults)
@@ -59,10 +50,17 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return await _dbContext.TqPathwayResult.Where(x => pathwayAssessmentIds.Contains(x.TqPathwayAssessmentId) && x.EndDate == null && x.IsOptedin).ToListAsync();
         }
 
-        public async Task<bool> BulkInsertOrUpdateResults(List<TqPathwayResult> pathwayResults)
+        public async Task<IList<TqSpecialismResult>> GetBulkSpecialismResultsAsync(IList<TqSpecialismResult> specialismResults)
+        {
+            var specialismAssessmentIds = new HashSet<int>();
+            specialismResults.ToList().ForEach(r => specialismAssessmentIds.Add(r.TqSpecialismAssessmentId));
+            return await _dbContext.TqSpecialismResult.Where(x => specialismAssessmentIds.Contains(x.TqSpecialismAssessmentId) && x.EndDate == null && x.IsOptedin).ToListAsync();
+        }
+
+        public async Task<bool> BulkInsertOrUpdateResults(List<TqPathwayResult> pathwayResults, List<TqSpecialismResult> specialismResults)
         {
             var result = true;
-            if (pathwayResults != null && pathwayResults.Count > 0)
+            if ((pathwayResults != null && pathwayResults.Count > 0) || (specialismResults != null && specialismResults.Count > 0))
             {
                 var strategy = _dbContext.Database.CreateExecutionStrategy();
                 await strategy.ExecuteAsync(async () =>
@@ -74,6 +72,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                             var bulkConfig = new BulkConfig() { UseTempDB = true, SetOutputIdentity = false, PreserveInsertOrder = false, BatchSize = 5000, BulkCopyTimeout = 60 };
 
                             await ProcessPathwayResults(bulkConfig, pathwayResults);
+
+                            await ProcessSpecialismResults(bulkConfig, specialismResults);
 
                             transaction.Commit();
                         }
@@ -138,6 +138,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 await _dbContext.BulkInsertOrUpdateAsync(pathwayResults, bulkConfig);
             }
         }
+
+        private async Task ProcessSpecialismResults(BulkConfig bulkConfig, List<TqSpecialismResult> specialismResults)
+        {
+            if (specialismResults.Count > 0)
+            {
+                specialismResults = SortUpdateAndInsertOrder(specialismResults, x => x.Id);
+                await _dbContext.BulkInsertOrUpdateAsync(specialismResults, bulkConfig);
+            }
+        }
+
         private List<T> SortUpdateAndInsertOrder<T>(List<T> entities, Func<T, int> selector) where T : class
         {
             // It is important as we are doing BulkInsertOrUpdate in one go, we would like to have update

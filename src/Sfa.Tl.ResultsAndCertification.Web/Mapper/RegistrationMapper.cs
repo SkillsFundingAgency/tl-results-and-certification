@@ -114,8 +114,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<ChangeSpecialismQuestionViewModel, ManageRegistration>()
                 .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom(s => new List<string>()))
                 .ForMember(d => d.HasSpecialismsChanged, opts => opts.MapFrom(s => true))
-                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeSpecialismQuestionViewModel, ManageRegistration>>())
-                .ForAllOtherMembers(d => d.Ignore());
+                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeSpecialismQuestionViewModel, ManageRegistration>>());
             CreateMap<ChangeSpecialismViewModel, ManageRegistration>()
                 .ForMember(d => d.HasSpecialismsChanged, opts => opts.MapFrom(s => true))
                 .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom((src, dest, destMember, context) => context.Mapper.Map<List<string>>(src.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected))))
@@ -142,8 +141,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<AcademicYear, SelectListItem>()
                 .ForMember(m => m.Text, o => o.MapFrom(s => s.Name))
-                .ForMember(m => m.Value, o => o.MapFrom(s => s.Id.ToString()))
-                .ForAllOtherMembers(s => s.Ignore());
+                .ForMember(m => m.Value, o => o.MapFrom(s => s.Id.ToString()));
 
             CreateMap<LearnerRecord, RegistrationAssessmentDetails>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))

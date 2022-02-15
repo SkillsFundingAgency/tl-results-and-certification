@@ -41,6 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             }
 
             _specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData);
+            SeedSpecialismResultsData(GetSpecialismResultsDataToProcess(_specialismAssessments));
             AssessmentRepositoryLogger = new Logger<AssessmentRepository>(new NullLoggerFactory());
             AssessmentRepository = new AssessmentRepository(AssessmentRepositoryLogger, DbContext);
         }
@@ -78,6 +79,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
                 expectedSpecialismAssessment.StartDate.ToShortDateString().Should().Be(actualSpecialismAssessment.StartDate.ToShortDateString());
                 expectedSpecialismAssessment.EndDate.Should().BeNull();
                 expectedSpecialismAssessment.CreatedBy.Should().Be(actualSpecialismAssessment.CreatedBy);
+
+                var actualSpecialismResult = actualSpecialismAssessment.TqSpecialismResults.FirstOrDefault();
+                var expectedSpecialismResult = expectedSpecialismAssessment.TqSpecialismResults.FirstOrDefault();
+
+                expectedSpecialismResult.Should().BeEquivalentTo(actualSpecialismResult);
             }
         }
     }

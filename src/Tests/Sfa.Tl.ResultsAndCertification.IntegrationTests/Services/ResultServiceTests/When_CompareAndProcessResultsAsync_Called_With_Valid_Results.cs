@@ -28,11 +28,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             _bulkResultsTestFixture.TqPathwayAssessmentsData = _bulkResultsTestFixture.SeedPathwayAssessmentsData(registrationPathways.ToList());
             _bulkResultsTestFixture.TqPathwayResultsData = _bulkResultsTestFixture.GetPathwayResultsDataToProcess(_bulkResultsTestFixture.TqPathwayAssessmentsData.ToList());
 
+            _bulkResultsTestFixture.TqSpecialismAssessmentsData = _bulkResultsTestFixture.SeedSpecialismAssessmentData(registrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList());
+            _bulkResultsTestFixture.TqSpecialismResultsData = _bulkResultsTestFixture.GetSpecialismResultsDataToProcess(_bulkResultsTestFixture.TqSpecialismAssessmentsData.ToList());
+
             var pathwayResultIndex = 0;
             foreach (var pathwayResult in _bulkResultsTestFixture.TqPathwayResultsData)
             {
                 pathwayResult.Id = pathwayResultIndex - Constants.PathwayResultsStartIndex;
                 pathwayResultIndex++;
+            }
+
+            var specialismResultIndex = 0;
+            foreach (var specialismResult in _bulkResultsTestFixture.TqSpecialismResultsData)
+            {
+                specialismResult.Id = specialismResultIndex - Constants.SpecialismResultsStartIndex;
+                specialismResultIndex++;
             }
         }
 
@@ -51,6 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             {
                 var expectedRegistrationProfile = _bulkResultsTestFixture.TqRegistrationProfilesData.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
                 var registrationPathway = expectedRegistrationProfile.TqRegistrationPathways.First();
+                var registeredSpecialisms = registrationPathway.TqRegistrationSpecialisms;
 
                 var pathwayAssessment = _bulkResultsTestFixture.TqPathwayAssessmentsData.FirstOrDefault(p => p.TqRegistrationPathwayId == registrationPathway.Id);
 
@@ -65,7 +76,25 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                 actualPathwayResult.IsOptedin.Should().Be(expectedPathwayResult.IsOptedin);
                 actualPathwayResult.IsBulkUpload.Should().Be(expectedPathwayResult.IsBulkUpload);
                 actualPathwayResult.StartDate.ToShortDateString().Should().Be(expectedPathwayResult.StartDate.ToShortDateString());
-                actualPathwayResult.CreatedBy.Should().Be(expectedPathwayResult.CreatedBy);                
+                actualPathwayResult.CreatedBy.Should().Be(expectedPathwayResult.CreatedBy);
+
+                foreach (var registeredSpecialism in registeredSpecialisms)
+                {
+                    var specialismAssessment = _bulkResultsTestFixture.TqSpecialismAssessmentsData.FirstOrDefault(p => p.TqRegistrationSpecialismId == registeredSpecialism.Id);
+
+                    var expectedSpecialismResult = _bulkResultsTestFixture.TqSpecialismResultsData.FirstOrDefault(r => r.TqSpecialismAssessmentId == specialismAssessment.Id);
+
+                    var actualSpecialismResult = _bulkResultsTestFixture.DbContext.TqSpecialismResult.FirstOrDefault(x => x.TqSpecialismAssessmentId == specialismAssessment.Id && x.IsOptedin && x.EndDate == null);
+
+                    // assert specialism result data
+                    actualSpecialismResult.Should().NotBeNull();
+                    actualSpecialismResult.TqSpecialismAssessmentId.Should().Be(expectedSpecialismResult.TqSpecialismAssessmentId);
+                    actualSpecialismResult.TlLookupId.Should().Be(expectedSpecialismResult.TlLookupId);
+                    actualSpecialismResult.IsOptedin.Should().Be(expectedSpecialismResult.IsOptedin);
+                    actualSpecialismResult.IsBulkUpload.Should().Be(expectedSpecialismResult.IsBulkUpload);
+                    actualSpecialismResult.StartDate.ToShortDateString().Should().Be(expectedSpecialismResult.StartDate.ToShortDateString());
+                    actualSpecialismResult.CreatedBy.Should().Be(expectedSpecialismResult.CreatedBy);
+                }
             }
         }
     }

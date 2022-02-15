@@ -21,5 +21,17 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Result.BulkProcess
         [Column(ResultFileHeader.CoreGrade, Order = 3)]
         [Display(Name = ResultFluentHeader.CoreGrade)]
         public string CoreGrade { get; set; }
+
+        [Column(ResultFileHeader.SpecialismCodes, Order = 4)]
+        [Display(Name = ResultFluentHeader.SpecialismCodes)]
+        public string SpecialismCodes { get; set; }
+
+        [Column(ResultFileHeader.SpecialismSeries, Order = 5)]
+        [Display(Name = ResultFluentHeader.SpecialismSeries)]
+        public string SpecialismSeries { get; set; }
+
+        [Column(ResultFileHeader.SpecialismGrades, Order = 6)]
+        [Display(Name = ResultFluentHeader.SpecialismGrades)]
+        public string SpecialismGrades { get; set; }
     }
 }

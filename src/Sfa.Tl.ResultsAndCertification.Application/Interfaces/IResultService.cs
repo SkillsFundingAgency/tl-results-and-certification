@@ -10,8 +10,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     public interface IResultService
     {
         Task<IList<ResultRecordResponse>> ValidateResultsAsync(long aoUkprn, IEnumerable<ResultCsvRecordResponse> csvResults);        
-        IList<TqPathwayResult> TransformResultsModel(IList<ResultRecordResponse> resultsData, string performedBy);
-        Task<ResultProcessResponse> CompareAndProcessResultsAsync(IList<TqPathwayResult> pathwayResultsToProcess);
+        (IList<TqPathwayResult>, IList<TqSpecialismResult>) TransformResultsModel(IList<ResultRecordResponse> resultsData, string performedBy);
+        Task<ResultProcessResponse> CompareAndProcessResultsAsync(IList<TqPathwayResult> pathwayResultsToProcess, IList<TqSpecialismResult> specialismResultsToProcess);
 
         Task<ResultDetails> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
         Task<AddResultResponse> AddResultAsync(AddResultRequest request);

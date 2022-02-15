@@ -30,6 +30,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 
         private string GetPathwayResultRouteName { get { return string.IsNullOrWhiteSpace(Grade) ? RouteConstants.AddCoreResult : RouteConstants.ChangeCoreResult; } }
 
-        private string GetSpecialismResultRouteName { get { return string.IsNullOrWhiteSpace(Grade) ? RouteConstants.AddSpecialismResult : string.Empty; } }
+        private string GetSpecialismResultRouteName { get { return string.IsNullOrWhiteSpace(Grade) ? RouteConstants.AddSpecialismResult : RouteConstants.ChangeSpecialismResult; } }
     }
 }

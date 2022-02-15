@@ -57,8 +57,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         private StringBuilder GetInputFilecontent()
         {
             StringBuilder csvData = new StringBuilder();
-            csvData.AppendLine("ULN,ComponentCode (Core),AssessmentSeries (Core),ComponentGrade (Core)");
-            csvData.AppendLine("1234567890,999,Summer 2021,A");
+            csvData.AppendLine(Header);
+            csvData.AppendLine("1234567890,999,Autumn 2021,A,\"OS1234,OS234567\",Summer 2022,\"Merit,Pass\"");
             return csvData;
         }
     }

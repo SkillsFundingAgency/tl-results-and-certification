@@ -12,11 +12,12 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l">@string.Format(@SearchResultsNotFound.Heading_Uln_Not_Found, @Model.Uln)</h1>
-        <p class="govuk-body">@SearchResultsNotFound.Para_We_Cannot_Find_Learner_Because_Uln_Wrong</p>
-        <p class="govuk-body">@SearchResultsNotFound.Para_Check_You_Have_Entered_The_Correct_Uln</p>
+        <p class="govuk-body">@SearchResultsNotFound.Para_We_Cannot_Find_Learner_For_Uln_Provided</p>
+        <p class="govuk-body">@SearchResultsNotFound.Para_Check_You_Have_Entered_The_Correct_Number</p>
+
         <div class="govuk-button-group govuk-!-margin-top-6">
             <a id="searchAgainButton" class="govuk-button" role="button" asp-route="@Model.BackLink.RouteName">@SearchResultsNotFound.Button_Search_Again</a>
             <a id="backToHomeButton" class="govuk-button govuk-button--secondary" role="button" asp-route="Home">@SearchResultsNotFound.Button_Back_To_Home</a>
-        </div>
+          </div>
     </div>
 </div>

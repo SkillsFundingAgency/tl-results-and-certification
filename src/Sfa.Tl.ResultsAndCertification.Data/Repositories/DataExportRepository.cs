@@ -98,9 +98,20 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<IList<SpecialismResultsExport>> GetDataExportSpecialismResultsAsync(long aoUkprn)
         {
-            // TODO: Next story.
-            await Task.CompletedTask;
-            return new List<SpecialismResultsExport>();
+            return await _dbContext.TqSpecialismResult
+                .Where(sr => sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
+                       && sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
+                       && sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.EndDate == null
+                       && sr.TqSpecialismAssessment.IsOptedin && sr.TqSpecialismAssessment.EndDate == null
+                       && sr.IsOptedin && sr.EndDate == null)
+                .OrderByDescending(pa => pa.CreatedOn)
+                .Select(sr => new SpecialismResultsExport
+                {
+                    Uln = sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
+                    SpecialismCode = sr.TqSpecialismAssessment.TqRegistrationSpecialism.TlSpecialism.LarId,
+                    SpecialismAssessmentEntry = sr.TqSpecialismAssessment.AssessmentSeries.Name,
+                    SpecialismGrade = sr.TlLookup.Value
+                }).ToListAsync();
         }
     }
 }

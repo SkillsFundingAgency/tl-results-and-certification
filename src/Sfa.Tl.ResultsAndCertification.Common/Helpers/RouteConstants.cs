@@ -201,6 +201,8 @@
         public const string SubmitAddCoreResult = "SubmitAddCoreResult";
         public const string AddSpecialismResult = "AddSpecialismResult";
         public const string SubmitAddSpecialismResult = "SubmitAddSpecialismResult";
+        public const string ChangeSpecialismResult = "ChangeSpecialismResult";
+        public const string SubmitChangeSpecialismResult = "SubmitChangeSpecialismResult";
 
         // Search Results
         public const string SearchResults = "SearchResults";

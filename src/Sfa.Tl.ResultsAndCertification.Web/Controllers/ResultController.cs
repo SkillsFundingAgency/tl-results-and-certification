@@ -148,7 +148,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("results-learner-search/{populateUln:bool?}", Name = RouteConstants.SearchResults)]
+        [Route("results-search-uln/{populateUln:bool?}", Name = RouteConstants.SearchResults)]
         public async Task<IActionResult> SearchResultsAsync(bool populateUln)
         {
             var defaultValue = await _cacheService.GetAndRemoveAsync<string>(Constants.ResultsSearchCriteria);
@@ -158,7 +158,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("results-learner-search", Name = RouteConstants.SubmitSearchResults)]
+        [Route("results-search-uln", Name = RouteConstants.SubmitSearchResults)]
         public async Task<IActionResult> SearchResultsAsync(SearchResultsViewModel model)
         {
             if (!ModelState.IsValid)
@@ -188,7 +188,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("search-for-learner-results-ULN-not-found", Name = RouteConstants.SearchResultsNotFound)]
+        [Route("results-uln-not-found", Name = RouteConstants.SearchResultsNotFound)]
         public async Task<IActionResult> SearchResultsNotFoundAsync()
         {
             var viewModel = await _cacheService.GetAndRemoveAsync<UlnResultsNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchResultsUlnNotFound));
@@ -202,7 +202,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("learners-results-withdrawn-learner/{profileId}", Name = RouteConstants.ResultWithdrawnDetails)]
+        [Route("results-learner-withdrawn/{profileId}", Name = RouteConstants.ResultWithdrawnDetails)]
         public async Task<IActionResult> ResultWithdrawnDetailsAsync(int profileId)
         {
             var viewModel = await _resultLoader.GetResultWithdrawnViewModelAsync(User.GetUkPrn(), profileId);
@@ -337,6 +337,51 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             var response = await _resultLoader.AddSpecialismResultAsync(User.GetUkPrn(), model);
+
+            if (response == null || !response.IsSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            var notificationBanner = new NotificationBannerModel { Message = model.SuccessBannerMessage };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.ResultDetails, new { model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("change-specialism-result/{profileId}/{assessmentId}", Name = RouteConstants.ChangeSpecialismResult)]
+        public async Task<IActionResult> ChangeSpecialismResultAsync(int profileId, int assessmentId)
+        {
+            var viewModel = await _resultLoader.GetManageSpecialismResultAsync(User.GetUkPrn(), profileId, assessmentId, isChangeMode: true);
+
+            if (viewModel == null || !viewModel.IsValid)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No details found. Method: GetManageSpecialismResultAsync({User.GetUkPrn()}, {profileId}, {assessmentId}, {true}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("change-specialism-result/{profileId}/{assessmentId}", Name = RouteConstants.SubmitChangeSpecialismResult)]
+        public async Task<IActionResult> ChangeSpecialismResultAsync(ManageSpecialismResultViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var resultsViewModel = await _resultLoader.GetManageSpecialismResultAsync(User.GetUkPrn(), model.ProfileId, model.AssessmentId, isChangeMode: true);
+                return View(resultsViewModel);
+            }
+
+            var isResultChanged = await _resultLoader.IsSpecialismResultChangedAsync(User.GetUkPrn(), model);
+            if (!isResultChanged.HasValue)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"ChangeSpecialismResult request data-mismatch. Method:IsSpecialismResultChanged({User.GetUkPrn()}, {model}), ProfileId: {model.ProfileId}, ResultId: {model.ResultId}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            if (isResultChanged == false)
+                return RedirectToRoute(RouteConstants.ResultDetails, new { profileId = model.ProfileId });
+
+            var response = await _resultLoader.ChangeSpecialismResultAsync(User.GetUkPrn(), model);
 
             if (response == null || !response.IsSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);

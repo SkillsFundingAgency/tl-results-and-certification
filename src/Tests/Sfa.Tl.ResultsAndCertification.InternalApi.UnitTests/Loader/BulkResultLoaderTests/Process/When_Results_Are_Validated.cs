@@ -14,6 +14,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkResult
 {
     public class When_Results_Are_Validated : TestSetup
     {
+        private List<ResultRecordResponse> _expectedStage3Response;
+        private (IList<TqPathwayResult>, IList<TqSpecialismResult>) _transformationResponse;
+
         public override void Given()
         {
             var expectedStage2Response = new List<ResultCsvRecordResponse>
@@ -23,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkResult
                 new ResultCsvRecordResponse { RowNum = 3, Uln = 1111111113,  }
             };
 
-            var expectedStage3Response = new List<ResultRecordResponse>
+            _expectedStage3Response = new List<ResultRecordResponse>
             {
                 new ResultRecordResponse { TqPathwayAssessmentId = 1, PathwayComponentGradeLookupId = 1 },
                 new ResultRecordResponse { TqPathwayAssessmentId = 2, PathwayComponentGradeLookupId = 2 },
@@ -35,14 +38,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkResult
 
             BlobService.DownloadFileAsync(Arg.Any<BlobStorageData>()).Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File")));
             CsvService.ReadAndParseFileAsync(Arg.Any<ResultCsvRecordRequest>()).Returns(csvResponse);
-            ResultService.ValidateResultsAsync(AoUkprn, Arg.Any<IEnumerable<ResultCsvRecordResponse>>()).Returns(expectedStage3Response);
+            ResultService.ValidateResultsAsync(AoUkprn, Arg.Any<IEnumerable<ResultCsvRecordResponse>>()).Returns(_expectedStage3Response);
             CsvService.WriteFileAsync(Arg.Any<List<BulkProcessValidationError>>()).Returns(expectedWriteFileBytes);
 
-            var transformationResponse = GetTransformResultsModel();
-            ResultService.TransformResultsModel(expectedStage3Response, Arg.Any<string>()).Returns(transformationResponse);
+            _transformationResponse = GetTransformResultsModel();
+            ResultService.TransformResultsModel(_expectedStage3Response, Arg.Any<string>()).Returns(_transformationResponse);
 
             var resultsProcessResult = new ResultProcessResponse { IsSuccess = true };
-            ResultService.CompareAndProcessResultsAsync(transformationResponse).Returns(resultsProcessResult);
+            ResultService.CompareAndProcessResultsAsync(_transformationResponse.Item1, _transformationResponse.Item2).Returns(resultsProcessResult);
         }
 
         [Fact]
@@ -51,8 +54,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkResult
             BlobService.Received(1).DownloadFileAsync(Arg.Any<BlobStorageData>());
             CsvService.Received(1).ReadAndParseFileAsync(Arg.Any<ResultCsvRecordRequest>());
             ResultService.Received(1).ValidateResultsAsync(AoUkprn, Arg.Any<IEnumerable<ResultCsvRecordResponse>>());
-            ResultService.Received(1).TransformResultsModel(Arg.Any<IList<ResultRecordResponse>>(), Arg.Any<string>());
-            ResultService.Received(1).CompareAndProcessResultsAsync(Arg.Any<IList<TqPathwayResult>>());
+            ResultService.Received(1).TransformResultsModel(_expectedStage3Response, Arg.Any<string>());
+            ResultService.Received(1).CompareAndProcessResultsAsync(_transformationResponse.Item1, _transformationResponse.Item2);
             BlobService.Received(1).MoveFileAsync(Arg.Any<BlobStorageData>());
             DocumentUploadHistoryService.Received(1).CreateDocumentUploadHistory(Arg.Any<DocumentUploadHistoryDetails>());
 
@@ -61,11 +64,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkResult
             Response.ErrorFileSize.Should().Be(0);
         }
 
-        private IList<TqPathwayResult> GetTransformResultsModel()
+        private (IList<TqPathwayResult>, IList<TqSpecialismResult>) GetTransformResultsModel()
         {
             var pathwayResults = new List<TqPathwayResult> { new TqPathwayResult { TqPathwayAssessmentId = 1, TlLookupId = 1 } };
+            var specialismResults = new List<TqSpecialismResult> { new TqSpecialismResult { TqSpecialismAssessmentId = 1, TlLookupId = 1 } };
 
-            return pathwayResults;
+            return (pathwayResults, specialismResults);
         }
     }
 }

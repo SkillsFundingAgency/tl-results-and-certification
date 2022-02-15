@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual.ResultWithdrawnViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Result
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 @{
     ViewData["Title"] = @ResultWithdrawnDetails.Page_Title;
@@ -11,21 +12,20 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
-        <h1 class="govuk-heading-l">@ResultWithdrawnDetails.Heading_Learner_Has_Been_Withdrawn</h1>
-        <div class="govuk-inset-text">@ResultWithdrawnDetails.Inset_This_Learner_Withdrawn_You_Can_Not_Change</div>
-        <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-7 govuk-!-margin-top-7">
+        <h1 class="govuk-heading-l">@string.Format(ResultWithdrawnDetails.Heading_Learner_Withdrawn, @Model.LearnerName)</h1>
+        <p class="govuk-body">@ResultWithdrawnDetails.Para_Learner_Registration_Withdrawn</p>
 
-        <dl class="govuk-summary-list govuk-summary-list--no-border">
-            <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+        <dl class="govuk-summary-list govuk-summary-list--no-border" aria-label="@ResultWithdrawnDetails.Aria_Label_Learner_Details">
             <vc:summary-item model=Model.SummaryUln></vc:summary-item>
             <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
-            <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+            <vc:summary-item model=Model.SummaryProviderName></vc:summary-item>
+            <vc:summary-item model=Model.SummaryProviderUkprn></vc:summary-item>
             <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
         </dl>
 
-        <div class="govuk-button-group">
-            <a id="searchAgainButton" class="govuk-button" role="button" asp-route="SearchResults">@ResultWithdrawnDetails.Button_Search_Again</a>
-            <a id="backToHomeButton" class="govuk-button govuk-button--secondary" role="button" asp-route="Home">@ResultWithdrawnDetails.Button_Back_To_Home</a>
+         <div class="govuk-button-group">
+            <a id="searchAgainButton" class="govuk-button" role="button" asp-route="@RouteConstants.SearchResults">@ResultWithdrawnDetails.Button_Search_Again</a>
+            <a id="backToHomeButton" class="govuk-button govuk-button--secondary" role="button" asp-route="@RouteConstants.Home">@ResultWithdrawnDetails.Button_Back_To_Home</a>
         </div>
     </div>
 </div>

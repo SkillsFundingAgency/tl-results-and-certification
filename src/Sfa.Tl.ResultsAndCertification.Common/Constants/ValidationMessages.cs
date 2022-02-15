@@ -52,7 +52,7 @@
         public const string SpecialismCodesMustBeDifferent = "Specialism codes must be two different numbers";
         public const string AtleastOneEntryRequired = "File must contain at least one ULN on one row";
         public const string NoDataAfterUln = "No data after ULN - need at least one core code or one specialism code";
-
+        
         // Assesments - Bulk stage 3 validations
         public const string UlnNotRegistered = "ULN not registered with awarding organisation";
         public const string CannotAddAssessmentToWithdrawnRegistration = "Cannot add assessment entries to a withdrawn registration";
@@ -65,14 +65,21 @@
         public const string SpecialismCodeMustBePair = "Specialism code can only be entered or removed as part of a pair";
 
         // Assessments - Bulk stage 4 validations
-        public const string AssessmentEntryCannotBeRemovedHasResult = "This assessment has a result so the assessment entry cannot be removed. Either remove the record from the bulk upload or enter the current assessment series to indicate a resit";
-        public const string AssessmentEntryCannotBeAddedUntilResultRecordedForExistingEntry = "Assessment entry cannot be added until the existing assessment entry has a result";
+        public const string AssessmentEntryForCoreCannotBeAddedUntilResultRecordedForExistingEntry = "This core component assessment cannot be entered as there is a previous assessment that does not have a result. Remove the previous assessment or add a result to proceed.";
+        public const string AssessmentEntryForCoreCannotBeRemovedHasResult = "There is a core component assessment entry with an associated result recorded. The core assessment entry cannot be removed using bulk upload.";
+
+        public const string AssessmentEntryForSpecialismCannotBeAddedUntilResultRecordedForExistingEntry = "This occupational specialism assessment cannot be entered as there is a previous assessment that does not have a result. Remove the previous assessment or add a result to proceed.";
+        public const string AssessmentEntryForSpecialismCannotBeRemovedHasResult = "There is an occupational specialism assessment entry with an associated result recorded. The specialism assessment entry cannot be removed using bulk upload.";
 
         // Results - Bulk Stage 2 validations
         public const string CorecodeRequiredWhenResultIncluded = "Core component code required when result is included";
         public const string AssessmentSeriesNeedsToBeProvided = "Assessment series needs to be provided";
         public const string InvalidCoreAssessmentSeries = "Core assessment series format must be text followed by a space and a 4-digit year";
-        public const string NoDataAfterUlnNeedCoreCode = "No data after ULN - need a core component code";
+        public const string SpecialismCodeMustBeProvided = "ComponentCode (Specialisms) must be provided when there is an entry in the AssessmentSeries (Specialisms) field";
+        public const string SpecialismSeriesRequired = "AssessmentSeries (Specialisms) cannot be blank";
+        public const string SpecialismSeriesInvalidFormat = "AssessmentSeries (Specialisms) must contain the word Summer followed by a space and a 4-digit year";
+        public const string SpecialismGradeCountMismatch = "There is only one paired specialism grade. Please either add another grade or indicate a blank field using comma separation.";
+        public const string NoResultDataAfterUln = "No data provided for this learner. Please provide data or remove the row.";
 
         // Results - Bulk stage 3 validations
         public const string CannotAddResultToWithdrawnRegistration = "Cannot add results to a withdrawn registration";
@@ -81,6 +88,13 @@
         public const string NoCoreAssessmentEntryCurrentlyActive = "No assessment entry is currently active for the core component on this registration - needs adding first through assessment entries file upload or manual entry";
         public const string AssessmentSeriesDoesNotMatchTheSeriesOnTheRegistration = "Assessment series does not match the series on the registration";
         public const string InvalidCoreComponentGrade = "Core component grade not valid - needs to be A* to E, or Unclassified";
+        
+        public const string SpecialismCodeNotRecognised = "Specialism code(s) either not recognised or not registered for this ULN";
+        public const string NoSpecialismAssessmentEntryCurrentlyActive = "No assessment entry is currently active for the Specialism on this registration - needs adding first through assessment entries file upload or manual entry";
+        public const string InvalidSpecialismAssessmentSeriesEntry = "Specialism assessment series does not exist";
+        public const string SpecialismSeriesDoesNotMatchTheSeriesOnTheRegistration = "Assessment series does not match the series on the registration";
+        public const string SpecialismGradeIsNotValid = "Specialism grade not valid";
+        public const string SpecialismSeriesNotCurrentlyOpen = "Incorrect Assessment series";
 
         // Results - Bulk stage 4 validations
         public const string ResultCannotBeInBeingAppealedStatus = "This learner's results cannot be changed because they are appealing a grade. Please remove this learner and try again.";

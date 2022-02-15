@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class ResultService : IResultService
-    {        
+    {
         private readonly IRepository<AssessmentSeries> _assessmentSeriesRepository;
         private readonly IRepository<TlLookup> _tlLookupRepository;
         private readonly IResultRepository _resultRepository;
@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var dbRegistrations = await _resultRepository.GetBulkResultsAsync(aoUkprn, csvResults.Select(x => x.Uln));
             var dbAssessmentSeries = await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
             var tlLookup = await _tlLookupRepository.GetManyAsync().ToListAsync();
-            
+
             foreach (var result in csvResults)
             {
                 // 1. ULN not recognised with AO
@@ -69,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     response.Add(AddStage3ValidationError(result.RowNum, result.Uln, ValidationMessages.CannotAddResultToWithdrawnRegistration));
                     continue;
                 }
-                                
+
                 var validationErrors = new List<BulkProcessValidationError>();
                 var isCoreAndAssesssmentSeriesValid = true;
 
@@ -84,10 +84,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     }
                 }
 
-                // 4. Assessment Series does not exists
+                // 4. Core Assessment Series does not exists
                 if (!string.IsNullOrWhiteSpace(result.CoreAssessmentSeries))
                 {
-                    var isSeriesFound = dbAssessmentSeries.Any(x => x.Name.Equals(result.CoreAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
+                    var isSeriesFound = dbAssessmentSeries.Any(x => x.ComponentType == ComponentType.Core && x.Name.Equals(result.CoreAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
                     if (!isSeriesFound)
                     {
                         validationErrors.Add(BuildValidationError(result, ValidationMessages.InvalidCoreAssessmentSeriesEntry));
@@ -95,7 +95,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     }
                 }
 
-                // 5. Core component grade not valid - needs to be A* to E, or Unclassified
+                // 5. Core Grade not valid - needs to be A* to E, or Unclassified
                 var pathwayComponentGrades = tlLookup.Where(lr => lr.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase));
                 if (!string.IsNullOrWhiteSpace(result.CoreGrade))
                 {
@@ -104,7 +104,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         validationErrors.Add(BuildValidationError(result, ValidationMessages.InvalidCoreComponentGrade));
                 }
 
-                // 6. No assessment entry is currently active
+                // 6. Core No assessment entry is currently active
                 var hasActiveCoreAssessmentEntry = true;
                 if (!string.IsNullOrWhiteSpace(result.CoreCode))
                 {
@@ -116,12 +116,75 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     }
                 }
 
-                // 7. Assessment entry mapping error 
+                // 7. Core Series not matched with reg. 
                 if (isCoreAndAssesssmentSeriesValid && hasActiveCoreAssessmentEntry && !string.IsNullOrWhiteSpace(result.CoreAssessmentSeries))
                 {
                     var hasAssessmentSeriesMatchTheSeriesOnRegistrationCore = dbRegistration.TqPathwayAssessments.Any(pa => pa.IsOptedin && pa.EndDate == null && pa.AssessmentSeries.Name.Equals(result.CoreAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
                     if (!hasAssessmentSeriesMatchTheSeriesOnRegistrationCore)
                         validationErrors.Add(BuildValidationError(result, ValidationMessages.AssessmentSeriesDoesNotMatchTheSeriesOnTheRegistration));
+                }
+
+                // 8. Specialism - Code is not recognised. 
+                var isSpecialismAndAssesssmentSeriesValid = true;
+                if (result.SpecialismCodes != null && result.SpecialismCodes.Any())
+                {
+                    var registeredSpecialismsLarIds = dbRegistration.TqRegistrationSpecialisms.Select(x => x.TlSpecialism.LarId);
+                    var hasInvalidSpecialismCode = result.SpecialismCodes.Except(registeredSpecialismsLarIds, StringComparer.InvariantCultureIgnoreCase).Any();
+                    if (hasInvalidSpecialismCode)
+                    {
+                        validationErrors.Add(BuildValidationError(result, ValidationMessages.SpecialismCodeNotRecognised));
+                        isSpecialismAndAssesssmentSeriesValid = false;
+                    }
+                }
+
+                // 9. Specialism - Assessment Series does not exists
+                if (!string.IsNullOrWhiteSpace(result.SpecialismAssessmentSeries))
+                {
+                    var isSeriesFound = dbAssessmentSeries.Any(x => x.ComponentType == ComponentType.Specialism && x.Name.Equals(result.SpecialismAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
+                    if (!isSeriesFound)
+                    {
+                        validationErrors.Add(BuildValidationError(result, ValidationMessages.InvalidSpecialismAssessmentSeriesEntry));
+                        isSpecialismAndAssesssmentSeriesValid = false;
+                    }
+                }
+
+                // 10. Specialism - No assessment entry is currently active
+                var hasActivSpecialismAssessmentEntry = true;
+                if (result.SpecialismCodes != null && result.SpecialismCodes.Any())
+                {
+                    var hasAnyActivSpecialismAssessmentEntry = dbRegistration.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments).Any(pa => pa.IsOptedin && pa.EndDate == null);
+                    if (!hasAnyActivSpecialismAssessmentEntry)
+                    {
+                        validationErrors.Add(BuildValidationError(result, ValidationMessages.NoSpecialismAssessmentEntryCurrentlyActive));
+                        hasActivSpecialismAssessmentEntry = false;
+                    }
+                }
+
+                // 11. Specialism - Assessment entry mapping error 
+                if (isSpecialismAndAssesssmentSeriesValid && hasActivSpecialismAssessmentEntry && !string.IsNullOrWhiteSpace(result.SpecialismAssessmentSeries))
+                {
+                    var hasAssessmentSeriesMatchTheSeriesOnRegistrationSpecialism = dbRegistration.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments)
+                                                                                    .Any(sa => sa.IsOptedin && sa.EndDate == null && sa.AssessmentSeries.Name.Equals(result.SpecialismAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
+
+                    if (!hasAssessmentSeriesMatchTheSeriesOnRegistrationSpecialism)
+                        validationErrors.Add(BuildValidationError(result, ValidationMessages.SpecialismSeriesDoesNotMatchTheSeriesOnTheRegistration));
+                }
+
+                // 12. Specialim - Assessment series is not open 
+                if (isSpecialismAndAssesssmentSeriesValid && hasActivSpecialismAssessmentEntry && !string.IsNullOrWhiteSpace(result.SpecialismAssessmentSeries))
+                {
+                    var isValidNextAssessmentSeries = IsValidNextAssessmentSeries(dbAssessmentSeries.Where(x => x.ComponentType == ComponentType.Specialism).ToList(), dbRegistration.AcademicYear, result.SpecialismAssessmentSeries, Constants.SpecialismAssessmentStartInYears, ComponentType.Specialism);
+                    if (!isValidNextAssessmentSeries)
+                        validationErrors.Add(BuildValidationError(result, ValidationMessages.SpecialismSeriesNotCurrentlyOpen));
+                }
+
+                // 13. Specialism - Grade not valid
+                var specialismLookupGrades = tlLookup.Where(lr => lr.Category.Equals(LookupCategory.SpecialismComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase));
+                if (result.SpecialismGrades != null && result.SpecialismGrades.Any())
+                {
+                    var hasInvalidSpecialismComponentGrade = result.SpecialismGrades.Where(x => !string.IsNullOrWhiteSpace(x)).Except(specialismLookupGrades.Select(g => g.Value), StringComparer.InvariantCultureIgnoreCase).Any();
+                    if (hasInvalidSpecialismComponentGrade)
+                        validationErrors.Add(BuildValidationError(result, ValidationMessages.SpecialismGradeIsNotValid));
                 }
 
                 if (validationErrors.Any())
@@ -131,19 +194,43 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     var pathwayAssessment = dbRegistration.TqPathwayAssessments.FirstOrDefault(pa => pa.IsOptedin && pa.EndDate == null && pa.AssessmentSeries.Name.Equals(result.CoreAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
                     var pathwayComponentGrade = pathwayComponentGrades.FirstOrDefault(pcg => pcg.Value.Equals(result.CoreGrade, StringComparison.InvariantCultureIgnoreCase));
 
+                    var specialismResults = new Dictionary<int, int?>();
+
+                    if (result.SpecialismCodes != null)
+                    {
+                        foreach (var specialismCode in result.SpecialismCodes?.Select((code, idx) => (code, idx)))
+                        {
+                            var specialismAssessment = dbRegistration.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments)
+                                                                                            .FirstOrDefault(x => x.IsOptedin && x.EndDate == null
+                                                                                                && x.TqRegistrationSpecialism.TlSpecialism.LarId.Equals(specialismCode.code, StringComparison.InvariantCultureIgnoreCase)
+                                                                                                && x.AssessmentSeries.Name.Equals(result.SpecialismAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
+
+                            TlLookup specialismGradeLookup;
+                            if (result.SpecialismCodes.Count != result.SpecialismGrades.Count && result.SpecialismGrades.All(x => string.IsNullOrWhiteSpace(x)))
+                                specialismGradeLookup = null;
+                            else
+                                specialismGradeLookup = specialismLookupGrades.FirstOrDefault(scg => scg.Value.Equals(result.SpecialismGrades[specialismCode.idx], StringComparison.InvariantCultureIgnoreCase));
+
+                            specialismResults.Add(specialismAssessment.Id, specialismGradeLookup?.Id);
+                        }
+                    }
+
                     response.Add(new ResultRecordResponse
                     {
                         TqPathwayAssessmentId = !string.IsNullOrWhiteSpace(result.CoreCode) ? pathwayAssessment?.Id : null,
-                        PathwayComponentGradeLookupId = !string.IsNullOrWhiteSpace(result.CoreGrade) ? pathwayComponentGrade?.Id : null
+                        PathwayComponentGradeLookupId = !string.IsNullOrWhiteSpace(result.CoreGrade) ? pathwayComponentGrade?.Id : null,
+                        SpecialismResults = specialismResults.Any() ? specialismResults : null
                     });
                 }
             }
             return response;
         }
 
-        public IList<TqPathwayResult> TransformResultsModel(IList<ResultRecordResponse> resultsData, string performedBy)
+        public (IList<TqPathwayResult>, IList<TqSpecialismResult>) TransformResultsModel(IList<ResultRecordResponse> resultsData, string performedBy)
         {
             var pathwayResults = new List<TqPathwayResult>();
+            var specialismResults = new List<TqSpecialismResult>();
+
 
             foreach (var (result, index) in resultsData.Select((value, i) => (value, i)))
             {
@@ -161,15 +248,47 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         CreatedOn = DateTime.UtcNow
                     });
                 }
+
+                if (result.SpecialismResults != null)
+                {
+                    foreach (var specialismResult in result.SpecialismResults)
+                    {
+                        specialismResults.Add(new TqSpecialismResult
+                        {
+                            Id = index - Constants.SpecialismResultsStartIndex,
+                            TqSpecialismAssessmentId = specialismResult.Key,
+                            TlLookupId = specialismResult.Value ?? 0,
+                            StartDate = DateTime.UtcNow,
+                            IsOptedin = true,
+                            IsBulkUpload = true,
+                            CreatedBy = performedBy,
+                            CreatedOn = DateTime.UtcNow
+                        });
+                    }
+                }
             }
-            return pathwayResults;
+
+            return (pathwayResults, specialismResults);
         }
 
-        public async Task<ResultProcessResponse> CompareAndProcessResultsAsync(IList<TqPathwayResult> pathwayResultsToProcess)
+        public async Task<ResultProcessResponse> CompareAndProcessResultsAsync(IList<TqPathwayResult> pathwayResultsToProcess, IList<TqSpecialismResult> specialismResultsToProcess)
         {
             var response = new ResultProcessResponse();
 
             // Prepare Pathway Results
+            var newOrAmendedPathwayResultRecords = await PrepareNewAndAmendedPathwayResults(pathwayResultsToProcess, response);
+
+            // Prepare Specialism Results
+            var newOrAmendedSpecialismResultRecords = await PrepareNewAndAmendedSpecialismResults(specialismResultsToProcess, response);
+
+            if (response.IsValid)
+                response.IsSuccess = await _resultRepository.BulkInsertOrUpdateResults(newOrAmendedPathwayResultRecords, newOrAmendedSpecialismResultRecords);
+
+            return response;
+        }
+
+        private async Task<List<TqPathwayResult>> PrepareNewAndAmendedPathwayResults(IList<TqPathwayResult> pathwayResultsToProcess, ResultProcessResponse response)
+        {
             var pathwayResultComparer = new TqPathwayResultEqualityComparer();
             var amendedPathwayResults = new List<TqPathwayResult>();
             var newAndAmendedPathwayResultRecords = new List<TqPathwayResult>();
@@ -220,16 +339,68 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 });
             }
 
-            if (response.IsValid)
-            {
-                if (newPathwayResults.Any())
-                    newAndAmendedPathwayResultRecords.AddRange(newPathwayResults.Where(p => p.TqPathwayAssessmentId > 0 && p.TlLookupId > 0));
+            if (response.IsValid && newPathwayResults.Any())
+                newAndAmendedPathwayResultRecords.AddRange(newPathwayResults.Where(p => p.TqPathwayAssessmentId > 0 && p.TlLookupId > 0));
 
-                // Process Results
-                response.IsSuccess = await _resultRepository.BulkInsertOrUpdateResults(newAndAmendedPathwayResultRecords);
+            return newAndAmendedPathwayResultRecords;
+        }
+
+        private async Task<List<TqSpecialismResult>> PrepareNewAndAmendedSpecialismResults(IList<TqSpecialismResult> specialismResultsToProcess, ResultProcessResponse response)
+        {
+            var specialismResultComparer = new TqSpecialismResultEqualityComparer();
+            var amendedSpecialismResults = new List<TqSpecialismResult>();
+            var newAndAmendedSpecialismResultRecords = new List<TqSpecialismResult>();
+
+            var existingSpecialismResultsFromDb = await _resultRepository.GetBulkSpecialismResultsAsync(specialismResultsToProcess);
+            var newSpecialismResults = specialismResultsToProcess.Except(existingSpecialismResultsFromDb, specialismResultComparer).ToList();
+            var matchedSpecialismResults = specialismResultsToProcess.Intersect(existingSpecialismResultsFromDb, specialismResultComparer).ToList();
+            var unchangedSpecialismResults = matchedSpecialismResults.Intersect(existingSpecialismResultsFromDb, new TqSpecialismResultRecordEqualityComparer()).ToList();
+            var hasAnyMatchedSpecialismResultsToProcess = matchedSpecialismResults.Count != unchangedSpecialismResults.Count;
+
+            if (hasAnyMatchedSpecialismResultsToProcess)
+            {
+                amendedSpecialismResults = matchedSpecialismResults.Except(unchangedSpecialismResults, specialismResultComparer).ToList();
+                amendedSpecialismResults.ForEach(amendedSpecialismResult =>
+                {
+                    var existingSpecialismResult = existingSpecialismResultsFromDb.FirstOrDefault(existingSpecialismResult => existingSpecialismResult.TqSpecialismAssessmentId == amendedSpecialismResult.TqSpecialismAssessmentId);
+                    if (existingSpecialismResult != null)
+                    {
+                        var isAppealDatePassed = DateTime.Today > existingSpecialismResult.TqSpecialismAssessment.AssessmentSeries.AppealEndDate.Date;
+                        if (isAppealDatePassed || existingSpecialismResult.PrsStatus == PrsStatus.Final)
+                        {
+                            response.ValidationErrors.Add(GetResultValidationError(existingSpecialismResult.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.ResultIsInFinal));
+                            return;
+                        }
+
+                        // Validation: Result should not be in BeingAppealed Status.
+                        if (existingSpecialismResult.PrsStatus == PrsStatus.BeingAppealed)
+                        {
+                            response.ValidationErrors.Add(GetResultValidationError(existingSpecialismResult.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.ResultCannotBeInBeingAppealedStatus));
+                            return;
+                        }
+
+                        var hasSpecialismResultChanged = amendedSpecialismResult.TlLookupId != existingSpecialismResult.TlLookupId;
+
+                        if (hasSpecialismResultChanged)
+                        {
+                            existingSpecialismResult.IsOptedin = false;
+                            existingSpecialismResult.EndDate = DateTime.UtcNow;
+                            existingSpecialismResult.ModifiedBy = amendedSpecialismResult.CreatedBy;
+                            existingSpecialismResult.ModifiedOn = DateTime.UtcNow;
+
+                            newAndAmendedSpecialismResultRecords.Add(existingSpecialismResult);
+
+                            if (amendedSpecialismResult.TqSpecialismAssessmentId > 0 && amendedSpecialismResult.TlLookupId > 0)
+                                newAndAmendedSpecialismResultRecords.Add(amendedSpecialismResult);
+                        }
+                    }
+                });
             }
-            
-            return response;
+
+            if (response.IsValid && newSpecialismResults.Any())
+                newAndAmendedSpecialismResultRecords.AddRange(newSpecialismResults.Where(p => p.TqSpecialismAssessmentId > 0 && p.TlLookupId > 0));
+
+            return newAndAmendedSpecialismResultRecords;
         }
 
         public async Task<ResultDetails> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
@@ -263,7 +434,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     CreatedBy = request.PerformedBy
                 });
             }
-            else if(request.ComponentType == ComponentType.Specialism)
+            else if (request.ComponentType == ComponentType.Specialism)
             {
                 status = await _specialismResultRepository.CreateAsync(new TqSpecialismResult
                 {
@@ -281,19 +452,28 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<ChangeResultResponse> ChangeResultAsync(ChangeResultRequest request)
         {
-            if (request.ComponentType != ComponentType.Core)
-                return new ChangeResultResponse { IsSuccess = false };
+            var isSuccess = request.ComponentType switch
+            {
+                ComponentType.Core => await ProcessChangeCoreResultAsync(request),
+                ComponentType.Specialism => await ProcessChangeSpecialismResultAsync(request),
+                _ => false,
+            };
+            return new ChangeResultResponse { Uln = request.Uln, ProfileId = request.ProfileId, IsSuccess = isSuccess };
+        }
 
-            var existingPathwayResult = await _pathwayResultRepository.GetFirstOrDefaultAsync(pr => pr.Id == request.ResultId && pr.EndDate == null && pr.IsOptedin
-                                                                         && pr.TqPathwayAssessment.EndDate == null && pr.IsOptedin
-                                                                         && pr.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId
-                                                                         && pr.TqPathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
-                                                                         && pr.TqPathwayAssessment.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == request.AoUkprn);
+        private async Task<bool> ProcessChangeCoreResultAsync(ChangeResultRequest request)
+        {
+            var existingPathwayResult = await _pathwayResultRepository.GetFirstOrDefaultAsync(pr => pr.Id == request.ResultId
+                                                                                              && pr.EndDate == null && pr.IsOptedin
+                                                                                              && pr.TqPathwayAssessment.EndDate == null && pr.IsOptedin
+                                                                                              && pr.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId
+                                                                                              && pr.TqPathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
+                                                                                              && pr.TqPathwayAssessment.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == request.AoUkprn);
 
             if (existingPathwayResult == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to change Pathway Result for ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: ChangeResultAsync({request})");
-                return new ChangeResultResponse { IsSuccess = false };
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to change Pathway Result for ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: ProcessCoreResultAsync({request})");
+                return false;
             }
 
             var pathwayResultsToUpdate = new List<TqPathwayResult>();
@@ -319,10 +499,51 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 });
             }
 
-            var isSuccess = await _pathwayResultRepository.UpdateManyAsync(pathwayResultsToUpdate) > 0;
-
-            return new ChangeResultResponse { Uln = request.Uln, ProfileId = request.ProfileId, IsSuccess = isSuccess };
+            return await _pathwayResultRepository.UpdateManyAsync(pathwayResultsToUpdate) > 0;
         }
+
+        private async Task<bool> ProcessChangeSpecialismResultAsync(ChangeResultRequest request)
+        {
+            var existingSpecialismResult = await _specialismResultRepository.GetFirstOrDefaultAsync(pr => pr.Id == request.ResultId
+                                                                                                    && pr.EndDate == null && pr.IsOptedin
+                                                                                                    && pr.TqSpecialismAssessment.EndDate == null && pr.IsOptedin
+                                                                                                    && pr.TqSpecialismAssessment.TqRegistrationSpecialism.EndDate == null && pr.TqSpecialismAssessment.TqRegistrationSpecialism.IsOptedin
+                                                                                                    && pr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId
+                                                                                                    && pr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
+                                                                                                    && pr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == request.AoUkprn);
+
+            if (existingSpecialismResult == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to change Specialism Result for ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: ProcessSpecialismResultAsync({request})");
+                return false;
+            }
+
+            var specialismResultsToUpdate = new List<TqSpecialismResult>();
+
+            existingSpecialismResult.IsOptedin = false;
+            existingSpecialismResult.EndDate = DateTime.UtcNow;
+            existingSpecialismResult.ModifiedBy = request.PerformedBy;
+            existingSpecialismResult.ModifiedOn = DateTime.UtcNow;
+
+            specialismResultsToUpdate.Add(existingSpecialismResult);
+
+            if (request.LookupId.HasValue && request.LookupId > 0)
+            {
+                specialismResultsToUpdate.Add(new TqSpecialismResult
+                {
+                    TqSpecialismAssessmentId = existingSpecialismResult.TqSpecialismAssessmentId,
+                    TlLookupId = request.LookupId.Value,
+                    IsOptedin = true,
+                    StartDate = DateTime.UtcNow,
+                    EndDate = null,
+                    IsBulkUpload = false,
+                    CreatedBy = request.PerformedBy
+                });
+            }
+
+            return await _specialismResultRepository.UpdateManyAsync(specialismResultsToUpdate) > 0;
+        }
+
 
         #region Private Methods
 
@@ -362,7 +583,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (registrationPathway == null || registrationPathway.Status != RegistrationPathwayStatus.Active)
                 return false;
 
-            if(addResultRequest.ComponentType == ComponentType.Core)
+            if (addResultRequest.ComponentType == ComponentType.Core)
             {
                 var assessmentEntry = registrationPathway.TqPathwayAssessments.FirstOrDefault(p => p.Id == addResultRequest.AssessmentId && p.IsOptedin && p.EndDate == null);
 
@@ -371,7 +592,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var anyActiveResult = assessmentEntry.TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null);
                 return !anyActiveResult;
             }
-            else if(addResultRequest.ComponentType == ComponentType.Specialism)
+            else if (addResultRequest.ComponentType == ComponentType.Specialism)
             {
                 var specialism = registrationPathway.TqRegistrationSpecialisms.FirstOrDefault(s => s.IsOptedin &&
                                                                                               s.EndDate == null &&
@@ -388,6 +609,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 return false;
             }
+        }
+
+        private static bool IsValidNextAssessmentSeries(IList<AssessmentSeries> dbAssessmentSeries, int regAcademicYear, string assessmentEntryName, int startYearOffset, ComponentType componentType)
+        {
+            // TODO: move to common
+            var currentDate = DateTime.UtcNow.Date;
+
+            var isValidNextAssessmentSeries = dbAssessmentSeries.Any(s => s.ComponentType == componentType &&
+                s.Name.Equals(assessmentEntryName, StringComparison.InvariantCultureIgnoreCase) &&
+                currentDate >= s.StartDate && currentDate <= s.EndDate &&
+                s.Year > regAcademicYear + startYearOffset && s.Year <= regAcademicYear + Constants.AssessmentEndInYears);
+
+            return isValidNextAssessmentSeries;
         }
 
         #endregion
