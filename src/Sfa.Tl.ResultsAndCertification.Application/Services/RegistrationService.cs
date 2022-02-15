@@ -772,6 +772,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         sa.EndDate = DateTime.UtcNow;
                         sa.ModifiedBy = performedBy;
                         sa.ModifiedOn = DateTime.UtcNow;
+
+                        sa.TqSpecialismResults.Where(sr => sr.IsOptedin && sr.EndDate == null).ToList().ForEach(sr =>
+                        {
+                            sr.EndDate = DateTime.UtcNow;
+                            sr.ModifiedBy = performedBy;
+                            sr.ModifiedOn = DateTime.UtcNow;
+                        });
                     });
                 });
             }

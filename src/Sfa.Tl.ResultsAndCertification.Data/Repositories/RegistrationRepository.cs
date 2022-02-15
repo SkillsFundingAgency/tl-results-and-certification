@@ -33,6 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             var registrationPathway = await pathwayQueryable
                .Include(p => p.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin && (rs.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn) ? rs.EndDate != null : rs.EndDate == null))
                     .ThenInclude(x => x.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? sa.EndDate != null : sa.EndDate == null))
+                        .ThenInclude(x => x.TqSpecialismResults.Where(sr => sr.IsOptedin && sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? sr.EndDate != null : sr.EndDate == null))
                .Include(p => p.TqPathwayAssessments.Where(pa => pa.IsOptedin && (pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn) ? pa.EndDate != null : pa.EndDate == null))
                     .ThenInclude(pa => pa.TqPathwayResults.Where(pr => pr.IsOptedin && pr.TqPathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? pr.EndDate != null : pr.EndDate == null))
                .OrderByDescending(p => p.CreatedOn)
