@@ -874,7 +874,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private static List<TqRegistrationSpecialism> MapSpecialismAssessmentsAndResults(TqRegistrationPathway tqRegistrationPathway, bool isOptedIn, bool isBulkUpload, string performedBy)
         {
-            return tqRegistrationPathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate != null).Select(x => new TqRegistrationSpecialism
+            return tqRegistrationPathway.TqRegistrationSpecialisms.Select(x => new TqRegistrationSpecialism
             {
                 TlSpecialismId = x.TlSpecialismId,
                 StartDate = DateTime.UtcNow,
@@ -882,13 +882,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 IsBulkUpload = isBulkUpload,
                 CreatedBy = performedBy,
                 CreatedOn = DateTime.UtcNow,
-                TqSpecialismAssessments = x.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.EndDate != null).Select(sa => new TqSpecialismAssessment
+                TqSpecialismAssessments = x.TqSpecialismAssessments.Select(sa => new TqSpecialismAssessment
                 {
                     AssessmentSeriesId = sa.AssessmentSeriesId,
                     StartDate = DateTime.UtcNow,
                     IsOptedin = isOptedIn,
                     IsBulkUpload = isBulkUpload,
-                    CreatedBy = performedBy
+                    CreatedBy = performedBy,
+                    TqSpecialismResults = sa.TqSpecialismResults.Select(sr => new TqSpecialismResult
+                    {
+                        TlLookupId = sr.TlLookupId,
+                        StartDate = DateTime.UtcNow,
+                        IsOptedin = isOptedIn,
+                        IsBulkUpload = isBulkUpload,
+                        CreatedBy = performedBy,
+                    }).ToList()
                 }).ToList()
             }).ToList();
         }
