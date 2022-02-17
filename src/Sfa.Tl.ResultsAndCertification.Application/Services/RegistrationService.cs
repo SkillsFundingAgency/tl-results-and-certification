@@ -482,11 +482,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
             }
 
-            var isResultExist = registrationProfile.TqRegistrationPathways.Any(p => p.TqPathwayAssessments
-                                                    .Any(a => a.TqPathwayResults.Any(r => r.IsOptedin && r.EndDate == null)));
-            if (isResultExist)
+            var hasCoreResult = registrationProfile.TqRegistrationPathways
+                                        .Any(p => p.TqPathwayAssessments.Any(a => a.TqPathwayResults.Any(r => r.IsOptedin && r.EndDate == null)));
+
+            var hasSpecialismResult = registrationProfile.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms)
+                                        .Any(s => s.TqSpecialismAssessments.Any(sa => sa.TqSpecialismResults.Any(sr => sr.IsOptedin && sr.EndDate == null)));
+
+            if (hasCoreResult || hasSpecialismResult)
             {
-                _logger.LogWarning(LogEvent.RegistrationNotDeleted, $"Unable to delete registration as registration has results exist for ProfileId = {profileId}. Method: DeleteRegistrationByProfileId({aoUkprn}, {profileId})");
+                _logger.LogWarning(LogEvent.RegistrationNotDeleted, $"Unable to delete registration as registration has a result for either core or specialisms for ProfileId = {profileId}. Method: DeleteRegistrationByProfileId({aoUkprn}, {profileId})");
                 return false;
             }
 

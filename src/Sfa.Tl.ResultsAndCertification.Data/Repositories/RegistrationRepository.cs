@@ -49,6 +49,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Include(x => x.QualificationAchieved)
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqRegistrationSpecialisms)
+                    .ThenInclude(x => x.TqSpecialismAssessments)
+                    .ThenInclude(x => x.TqSpecialismResults)
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.IndustryPlacements)
                 .Include(x => x.TqRegistrationPathways)
