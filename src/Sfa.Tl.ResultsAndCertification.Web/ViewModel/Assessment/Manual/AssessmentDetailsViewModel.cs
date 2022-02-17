@@ -90,7 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                                     DisplayName = combinedDisplayName,
                                     CurrentSpecialismAssessmentSeriesId = specialism.CurrentSpecialismAssessmentSeriesId,
                                     TlSpecialismCombinations = specialism.TlSpecialismCombinations,
-                                    Assessments = specialism.Assessments?.Where(a => a.SeriesId == specialism.CurrentSpecialismAssessmentSeriesId),
+                                    Assessments = specialism.Assessments,
                                 });
                             }
                         }
