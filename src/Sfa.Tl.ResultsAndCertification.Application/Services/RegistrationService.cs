@@ -874,7 +874,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private static List<TqRegistrationSpecialism> MapSpecialismAssessmentsAndResults(TqRegistrationPathway tqRegistrationPathway, bool isOptedIn, bool isBulkUpload, string performedBy)
         {
-            return tqRegistrationPathway.TqRegistrationSpecialisms.Select(x => new TqRegistrationSpecialism
+            return tqRegistrationPathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate != null).Select(x => new TqRegistrationSpecialism
             {
                 TlSpecialismId = x.TlSpecialismId,
                 StartDate = DateTime.UtcNow,
