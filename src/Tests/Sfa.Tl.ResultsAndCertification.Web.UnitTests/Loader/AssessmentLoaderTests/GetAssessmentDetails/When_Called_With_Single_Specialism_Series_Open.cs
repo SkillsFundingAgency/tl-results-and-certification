@@ -168,6 +168,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 actualDisplaySpecialism.IsResit.Should().BeFalse();
                 actualDisplaySpecialism.HasCurrentAssessmentEntry.Should().BeFalse();
                 actualDisplaySpecialism.NeedResultForPreviousAssessmentEntry.Should().BeFalse();
+                actualDisplaySpecialism.HasResultForCurrentAssessment.Should().BeFalse();
             }
         }
     }
