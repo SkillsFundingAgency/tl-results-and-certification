@@ -52,6 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
             actualResult.Id.Should().Be(1);
             actualResult.Name.Should().Be(expectedResult.Name);
             actualResult.LarId.Should().Be(expectedResult.LarId);
+            actualResult.StartYear.Should().Be(expectedResult.StartYear);
             actualResult.TlRouteId.Should().Be(expectedResult.TlRouteId);
             actualResult.CreatedBy.Should().Be(expectedResult.CreatedBy);
             actualResult.CreatedOn.Should().Be(expectedResult.CreatedOn);
