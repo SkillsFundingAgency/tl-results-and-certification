@@ -129,6 +129,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             {
                 tqRegistrationPathway.EndDate = DateTime.UtcNow.AddDays(-1);
             }
+
+            foreach (var specialism in Specialisms)
+            {
+                tqRegistrationPathway.TqRegistrationSpecialisms.Add(RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, specialism));
+                if (status == RegistrationPathwayStatus.Withdrawn)
+                    tqRegistrationPathway.TqRegistrationSpecialisms.ToList().ForEach(s => { s.EndDate = DateTime.UtcNow.AddDays(-1); });
+            }
+
             if (saveChanges)
                 DbContext.SaveChanges();
             
