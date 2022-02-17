@@ -223,6 +223,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 actualDisplaySpecialism.IsCouplet.Should().BeTrue();
                 actualDisplaySpecialism.IsResit.Should().BeTrue();
                 actualDisplaySpecialism.HasCurrentAssessmentEntry.Should().BeFalse();
+                actualDisplaySpecialism.HasResultForCurrentAssessment.Should().BeFalse();
             }
         }
     }

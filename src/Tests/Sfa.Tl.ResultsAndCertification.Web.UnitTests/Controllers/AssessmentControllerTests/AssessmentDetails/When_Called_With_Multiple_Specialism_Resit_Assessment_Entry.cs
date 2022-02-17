@@ -47,7 +47,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                                 SeriesId = 2,
                                 SeriesName = "Summer 2023",
                                 LastUpdatedBy = "Test user",
-                                LastUpdatedOn = DateTime.UtcNow
+                                LastUpdatedOn = DateTime.UtcNow,
+                                Result = new ResultViewModel { Id = 12, Grade = "Merit" }
                             },
                             new SpecialismAssessmentViewModel
                             {
@@ -55,7 +56,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                                 SeriesId = 3,
                                 SeriesName = "Autumn 2023",
                                 LastUpdatedBy = "Test user",
-                                LastUpdatedOn = DateTime.UtcNow
+                                LastUpdatedOn = DateTime.UtcNow,
+                                Result = new ResultViewModel { Id = 11, Grade = "Merit" }
                             }
                         }
                     },
@@ -75,7 +77,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                                 SeriesId = 2,
                                 SeriesName = "Summer 2023",
                                 LastUpdatedBy = "Test user",
-                                LastUpdatedOn = DateTime.UtcNow
+                                LastUpdatedOn = DateTime.UtcNow,
+                                Result = new ResultViewModel { Id = 12, Grade = "Merit" }
                             },
                             new SpecialismAssessmentViewModel
                             {
@@ -83,7 +86,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                                 SeriesId = 3,
                                 SeriesName = "Autumn 2023",
                                 LastUpdatedBy = "Test user",
-                                LastUpdatedOn = DateTime.UtcNow
+                                LastUpdatedOn = DateTime.UtcNow,
+                                Result = new ResultViewModel { Id = 12, Grade = "Merit" }
                             }
                         }
                     }
@@ -123,16 +127,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 
                 examPeriodModel.Title.Should().Be(AssessmentDetailsContent.Title_Exam_Period);
                 examPeriodModel.Value.Should().Be(_mockresult.SpecialismDetails.SelectMany(x => x.Assessments.Where(a => a.SeriesId == x.CurrentSpecialismAssessmentSeriesId)).FirstOrDefault().SeriesName);
-                examPeriodModel.ActionText.Should().Be(AssessmentDetailsContent.Remove_Action_Link_Text);
-                examPeriodModel.HiddenActionText.Should().Be(AssessmentDetailsContent.Remove_Action_Link_Hidden_Text);
-                examPeriodModel.ActionText.Should().Be(AssessmentDetailsContent.Remove_Action_Link_Text);
-                examPeriodModel.RouteName.Should().Be(RouteConstants.RemoveSpecialismAssessmentEntries);
-                examPeriodModel.RouteAttributes.Should().NotBeNull();
-                examPeriodModel.RouteAttributes.Count.Should().Be(2);
-                examPeriodModel.RouteAttributes[Constants.ProfileId].Should().Be(_mockresult.ProfileId.ToString());
-                examPeriodModel.RouteAttributes[Constants.SpecialismAssessmentIds].Should().Be(_mockresult.SpecialismDetails.Where(s => s.Id == specialism.Id)
-                                                                                                .SelectMany(x => x.Assessments.Where(a => a.SeriesId == x.CurrentSpecialismAssessmentSeriesId))
-                                                                                                .FirstOrDefault().AssessmentId.ToString());
+                examPeriodModel.ActionText.Should().BeNull();
+                examPeriodModel.HiddenActionText.Should().BeNull();
+                examPeriodModel.RouteAttributes.Should().BeNull();
             }
         }
     }
