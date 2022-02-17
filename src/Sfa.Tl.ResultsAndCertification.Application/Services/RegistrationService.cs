@@ -261,6 +261,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 int pathwayAssessmentStartIndex = Constants.PathwayAssessmentsStartIndex;
                 int pathwayResultStartIndex = Constants.PathwayResultsStartIndex;
                 int specialismAssessmentsStartIndex = Constants.SpecialismAssessmentsStartIndex;
+                int specialismResultStartIndex = Constants.SpecialismResultsStartIndex;
                 int ipStartIndex = Constants.IndustryPlacementStartIndex;
 
                 amendedRegistrations.ForEach(amendedRegistration =>
@@ -307,13 +308,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                             if (response.IsValid)
                             {
-                                var entitiesChangeStatus = PrepareAndAmendRegistrationData(amendedRegistration, pathwaysToAdd, pathwaysToUpdate, pathwayAssessmentStartIndex, pathwayResultStartIndex, specialismAssessmentsStartIndex, ipStartIndex);
+                                var entitiesChangeStatus = PrepareAndAmendRegistrationData(amendedRegistration, pathwaysToAdd, pathwaysToUpdate, pathwayAssessmentStartIndex, pathwayResultStartIndex, specialismAssessmentsStartIndex, specialismResultStartIndex, ipStartIndex);
                                 hasBothPathwayAndSpecialismsRecordsChanged = entitiesChangeStatus.Item1;
                                 hasOnlySpecialismsRecordChanged = entitiesChangeStatus.Item2;
                                 pathwayAssessmentStartIndex = entitiesChangeStatus.Item3;
                                 pathwayResultStartIndex = entitiesChangeStatus.Item4;
                                 specialismAssessmentsStartIndex = entitiesChangeStatus.Item5;
-                                ipStartIndex = entitiesChangeStatus.Item6;
+                                specialismResultStartIndex = entitiesChangeStatus.Item6;
+                                ipStartIndex = entitiesChangeStatus.Item7;
                             }
                         }
 
@@ -576,8 +578,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 StartDate = DateTime.UtcNow,
                 Status = RegistrationPathwayStatus.Active,
                 IsBulkUpload = false,
-                TqRegistrationSpecialisms = MapSpecialismAssessmentsAndResults(tqRegistrationPathway, true, false, model.PerformedBy),
-                TqPathwayAssessments = MapPathwayAssessmentsAndResults(tqRegistrationPathway, true, false, model.PerformedBy),
+                TqRegistrationSpecialisms = MapInactiveSpecialismAssessmentsAndResults(tqRegistrationPathway, true, false, model.PerformedBy),
+                TqPathwayAssessments = MapInactivePathwayAssessmentsAndResults(tqRegistrationPathway, true, false, model.PerformedBy),
                 IndustryPlacements = MapIndustryPlacements(tqRegistrationPathway, model.PerformedBy),
                 CreatedBy = model.PerformedBy,
                 CreatedOn = DateTime.UtcNow
@@ -684,8 +686,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     StartDate = DateTime.UtcNow,
                     Status = RegistrationPathwayStatus.Active,
                     IsBulkUpload = false,
-                    TqRegistrationSpecialisms = MapSpecialismAssessmentsAndResults(pathway, true, false, model.PerformedBy),
-                    TqPathwayAssessments = MapPathwayAssessmentsAndResults(pathway, true, false, model.PerformedBy),
+                    TqRegistrationSpecialisms = MapInactiveSpecialismAssessmentsAndResults(pathway, true, false, model.PerformedBy),
+                    TqPathwayAssessments = MapInactivePathwayAssessmentsAndResults(pathway, true, false, model.PerformedBy),
                     IndustryPlacements = MapIndustryPlacements(pathway, model.PerformedBy),
                     CreatedBy = model.PerformedBy,
                     CreatedOn = DateTime.UtcNow
@@ -856,16 +858,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }).ToList();
         }
 
-        private static List<TqPathwayAssessment> MapPathwayAssessmentsAndResults(TqRegistrationPathway tqRegistrationPathway, bool isOptedIn, bool isBulkUpload, string performedBy)
+        private static List<TqPathwayAssessment> MapInactivePathwayAssessmentsAndResults(TqRegistrationPathway tqRegistrationPathway, bool isOptedIn, bool isBulkUpload, string performedBy)
         {
-            return tqRegistrationPathway.TqPathwayAssessments.Select(x => new TqPathwayAssessment
+            return tqRegistrationPathway.TqPathwayAssessments.Where(a => a.IsOptedin && a.EndDate != null).Select(x => new TqPathwayAssessment
             {
                 AssessmentSeriesId = x.AssessmentSeriesId,
                 StartDate = DateTime.UtcNow,
                 IsOptedin = isOptedIn,
                 IsBulkUpload = isBulkUpload,
                 CreatedBy = performedBy,
-                TqPathwayResults = x.TqPathwayResults.Select(r => new TqPathwayResult
+                TqPathwayResults = x.TqPathwayResults.Where(pr => pr.IsOptedin && pr.EndDate != null).Select(r => new TqPathwayResult
                 {
                     TlLookupId = r.TlLookupId,
                     StartDate = DateTime.UtcNow,
@@ -876,7 +878,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }).ToList();
         }
 
-        private static List<TqRegistrationSpecialism> MapSpecialismAssessmentsAndResults(TqRegistrationPathway tqRegistrationPathway, bool isOptedIn, bool isBulkUpload, string performedBy)
+        private static List<TqRegistrationSpecialism> MapInactiveSpecialismAssessmentsAndResults(TqRegistrationPathway tqRegistrationPathway, bool isOptedIn, bool isBulkUpload, string performedBy)
         {
             return tqRegistrationPathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate != null).Select(x => new TqRegistrationSpecialism
             {
@@ -886,14 +888,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 IsBulkUpload = isBulkUpload,
                 CreatedBy = performedBy,
                 CreatedOn = DateTime.UtcNow,
-                TqSpecialismAssessments = x.TqSpecialismAssessments.Select(sa => new TqSpecialismAssessment
+                TqSpecialismAssessments = x.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.EndDate != null).Select(sa => new TqSpecialismAssessment
                 {
                     AssessmentSeriesId = sa.AssessmentSeriesId,
                     StartDate = DateTime.UtcNow,
                     IsOptedin = isOptedIn,
                     IsBulkUpload = isBulkUpload,
                     CreatedBy = performedBy,
-                    TqSpecialismResults = sa.TqSpecialismResults.Select(sr => new TqSpecialismResult
+                    TqSpecialismResults = sa.TqSpecialismResults.Where(sr => sr.IsOptedin && sr.EndDate != null).Select(sr => new TqSpecialismResult
                     {
                         TlLookupId = sr.TlLookupId,
                         StartDate = DateTime.UtcNow,
@@ -956,13 +958,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return response;
         }
 
-        private Tuple<bool, bool, int, int, int, int> PrepareAndAmendRegistrationData(
+        private Tuple<bool, bool, int, int, int, int, int> PrepareAndAmendRegistrationData(
             TqRegistrationProfile amendedRegistration, 
             List<TqRegistrationPathway> pathwaysToAdd, 
             List<TqRegistrationPathway> pathwaysToUpdate, 
             int pathwayAssessmentStartIndex, 
             int pathwayResultStartIndex, 
             int specialismAssessmentStartIndex,
+            int specialismResultStartIndex,
             int ipStartIndex)
         {
             var hasBothPathwayAndSpecialismsRecordsChanged = false;
@@ -989,7 +992,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     var specialismsToUpdate = pathwayToUpdate.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null).ToList();
                     foreach (var (specialismToUpdate, idx) in specialismsToUpdate.Select((value, i) => (value, i)))
                     {
-
                         var associatedSpecialismsToAdd = associatedPathwayToAdd.TqRegistrationSpecialisms.FirstOrDefault(s => s.TlSpecialismId == specialismToUpdate.TlSpecialismId);
                         if (associatedSpecialismsToAdd == null)
                             throw new ApplicationException("AssociatedSpecialisms cannot be null");
@@ -1010,7 +1012,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                             // Add new Specialism Assessment record 
                             var newActiveSpecialismsAssessment = new TqSpecialismAssessment
                             {
-                                Id = idx - specialismAssessmentStartIndex,
+                                Id = index - specialismAssessmentStartIndex,
                                 AssessmentSeriesId = splAssessment.AssessmentSeriesId,
                                 IsOptedin = true,
                                 StartDate = DateTime.UtcNow,
@@ -1018,6 +1020,28 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                 CreatedOn = DateTime.UtcNow,
                                 CreatedBy = amendedRegistration.CreatedBy
                             };
+
+                            // Transfer - Specialism Results
+                            var specialismResultsToUpdate = splAssessment.TqSpecialismResults.Where(s => s.IsOptedin && s.EndDate == null).ToList();
+                            foreach (var (specialismResult, spIndex) in specialismResultsToUpdate.Select((value, i) => (value, i)))
+                            {
+                                specialismResult.EndDate = DateTime.UtcNow;
+                                specialismResult.ModifiedBy = amendedRegistration.CreatedBy;
+                                specialismResult.ModifiedOn = DateTime.UtcNow;
+
+                                var newActiveSpecialismResult = new TqSpecialismResult
+                                {
+                                    Id = spIndex - specialismResultStartIndex,
+                                    TlLookupId = specialismResult.TlLookupId,
+                                    IsOptedin = true,
+                                    StartDate = DateTime.UtcNow,
+                                    IsBulkUpload = true,
+                                    CreatedOn = DateTime.UtcNow,
+                                    CreatedBy = amendedRegistration.CreatedBy
+                                };
+                                newActiveSpecialismsAssessment.TqSpecialismResults.Add(newActiveSpecialismResult);
+                            };
+                            specialismResultStartIndex -= specialismResultsToUpdate.Count();
 
                             associatedSpecialismsToAdd.TqSpecialismAssessments.Add(newActiveSpecialismsAssessment);
                         }
@@ -1128,7 +1152,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     }
                 }
             }
-            return new Tuple<bool, bool, int, int, int, int>(hasBothPathwayAndSpecialismsRecordsChanged, hasOnlySpecialismsRecordChanged, pathwayAssessmentStartIndex, pathwayResultStartIndex, specialismAssessmentStartIndex, ipStartIndex);
+            return new Tuple<bool, bool, int, int, int, int, int>(hasBothPathwayAndSpecialismsRecordsChanged, hasOnlySpecialismsRecordChanged, pathwayAssessmentStartIndex, pathwayResultStartIndex, specialismAssessmentStartIndex, specialismResultStartIndex, ipStartIndex);
         }
 
         private BulkProcessValidationError GetRegistrationValidationError(long uln, string errorMessage)
