@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Sfa.Tl.ResultsAndCertification.Application.Helpers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
@@ -196,12 +197,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
             var assessmentService = new AssessmentService(null, null, null, null, null, null);
 
-            var coreAssessmentSeries = assessmentService.GetValidAssessmentSeries(AssessmentSeries, expectedPathway, ComponentType.Core);
-            var expectedNextAvailableCoreSeries = assessmentService.GetNextAvailableAssessmentSeries(AssessmentSeries, expectedPathway, ComponentType.Core)?.Name;
+            var coreAssessmentSeries = CommonHelper.GetValidAssessmentSeries(AssessmentSeries, expectedPathway, ComponentType.Core);
+            var expectedNextAvailableCoreSeries = CommonHelper.GetNextAvailableAssessmentSeries(AssessmentSeries, expectedPathway, ComponentType.Core)?.Name;
 
-            var specialismAssessmentSeries = assessmentService.GetValidAssessmentSeries(AssessmentSeries, expectedPathway, ComponentType.Specialism);
+            var specialismAssessmentSeries = CommonHelper.GetValidAssessmentSeries(AssessmentSeries, expectedPathway, ComponentType.Specialism);
             var isSpecialismEntryEligible = expectedPathway.Status == RegistrationPathwayStatus.Active && specialismAssessmentSeries != null && specialismAssessmentSeries.Any();
-            var expectedNextAvailableSpecialismSeries = assessmentService.GetNextAvailableAssessmentSeries(AssessmentSeries, expectedPathway, ComponentType.Specialism)?.Name;
+            var expectedNextAvailableSpecialismSeries = CommonHelper.GetNextAvailableAssessmentSeries(AssessmentSeries, expectedPathway, ComponentType.Specialism)?.Name;
 
             // Assert
             _result.ProfileId.Should().Be(expectedAssessmentDetails.ProfileId);

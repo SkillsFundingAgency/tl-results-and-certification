@@ -197,7 +197,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerServic
                     LarId = expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                     Name = expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.Name,
                     Title = expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
-                    AcademicYear = expectedPathway.AcademicYear,
+                    StartYear = expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.StartYear,
+                    AcademicYear = expectedPathway.AcademicYear,                    
                     Status = expectedPathway.Status,
                     Provider = new Provider
                     {

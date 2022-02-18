@@ -99,35 +99,35 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             {
                 return new[]
                 {
-                    //// core assessment window opend
-                    //new object[]
-                    //{ new RequestParameter { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 1 } },
-                    //  new AvailableAssessmentSeries { ProfileId = 1, AssessmentSeriesId = 1, AssessmentSeriesName = "Summer 2021" } },
+                    // core assessment window opend
+                    new object[]
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 1 } },
+                      new AvailableAssessmentSeries { ProfileId = 1, AssessmentSeriesId = 1, AssessmentSeriesName = "Summer 2021" } },
 
-                    //// specialism assessment window not opened
-                    //new object[]
-                    //{ new RequestParameter { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Specialism, ComponentIds = new List<int> { 1 } },
-                    //  new AvailableAssessmentSeries { ProfileId = 1, AssessmentSeriesId = 7, AssessmentSeriesName = "Summer 2022" } },
+                    // specialism assessment window not opened
+                    new object[]
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Specialism, ComponentIds = new List<int> { 1 } },
+                      new AvailableAssessmentSeries { ProfileId = 1, AssessmentSeriesId = 7, AssessmentSeriesName = "Summer 2022" } },
 
-                    //// Has an active assessment
-                    //new object[]
-                    //{ new RequestParameter { AoUkprn = 10011881, ProfileId = 2, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 2 } },
-                    //  null },
+                    // Has an active assessment
+                    new object[]
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 2, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 2 } },
+                      null },
 
                     // Request contains invalid component ids 
                     new object[]
                     { new RequestParameter { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 2 } },
                       null },
 
-                    //// registration is withdrawn
-                    //new object[]
-                    //{ new RequestParameter { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 1 } },
-                    //  null },
+                    // registration is withdrawn
+                    new object[]
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 1 } },
+                      null },
 
-                    //// invalid profil id
-                    //new object[]
-                    //{ new RequestParameter { AoUkprn = 10011881, ProfileId = 99, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 1 } },
-                    //  null },
+                    // invalid profil id
+                    new object[]
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 99, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 1 } },
+                      null },
                 };
             }
         }

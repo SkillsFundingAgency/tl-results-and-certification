@@ -15,6 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner
         public string LarId { get; set; }
         public string Title { get; set; }
         public string Name { get; set; }
+        public int StartYear { get; set; }
         public int AcademicYear { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
         public Provider Provider { get; set; }
