@@ -158,6 +158,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.PathwayAssessment.Should().BeNull();
             ActualResult.PreviousPathwayAssessment.Should().BeNull();
             ActualResult.SpecialismDetails.Should().NotBeNullOrEmpty();
+            ActualResult.HasResultForCurrentSpecialismAssessment.Should().BeFalse();
 
             foreach (var expectedSpecialism in expectedApiResult.Pathway.Specialisms)
             {
@@ -223,7 +224,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 actualDisplaySpecialism.IsCouplet.Should().BeTrue();
                 actualDisplaySpecialism.IsResit.Should().BeTrue();
                 actualDisplaySpecialism.HasCurrentAssessmentEntry.Should().BeFalse();
-                actualDisplaySpecialism.HasResultForCurrentAssessment.Should().BeFalse();
             }
         }
     }
