@@ -48,16 +48,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public bool NeedCoreResultForPreviousAssessmentEntry => !HasCurrentCoreAssessmentEntry && HasPreviousCoreAssessment && !HasResultForPreviousCoreAssessment;
         public bool IsSpecialismRegistered => SpecialismDetails.Any();
 
-        public bool HasResultForCurrentSpecialismAssessment 
-        { 
-            get 
-            {
-                var specialism = SpecialismDetails.FirstOrDefault(x => x.CurrentSpecialismAssessmentSeriesId.HasValue);
-                var hasResult = specialism != null && SpecialismDetails.Any(s => s.Assessments.Any(sa => sa.SeriesId == specialism.CurrentSpecialismAssessmentSeriesId && sa.Result?.Id > 0));
-                return hasResult; 
-            } 
-        } 
-
         public List<SpecialismViewModel> DisplaySpecialisms
         {
             get
@@ -156,7 +146,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 
         public SummaryItemModel GetSummaryExamPeriod(SpecialismViewModel specialismViewModel)
         {
-            return HasResultForCurrentSpecialismAssessment ?
+            return HasResultForCurrentSpecialismAssessment(specialismViewModel) ?
                 new SummaryItemModel
                 {
                     Id = $"examperiod_{specialismViewModel.Id}",
@@ -175,7 +165,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                     RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() },
                                                                         { Constants.SpecialismAssessmentIds, GetCurrentSeriesAssessmentId(specialismViewModel) } }
                 };
-        } 
+        }
 
         public SummaryItemModel GetSummaryLastUpdatedOn(SpecialismViewModel specialismViewModel)
         {
@@ -222,6 +212,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
             return string.Join(Constants.PipeSeperator, SpecialismDetails?.Where(s => specialismIds.Contains(s.Id))?
                                                         .SelectMany(x => x.Assessments?.Where(a => a.SeriesId == specialismViewModel.CurrentSpecialismAssessmentSeriesId))?
                                                         .Select(x => x.AssessmentId));
+        }
+
+        private bool HasResultForCurrentSpecialismAssessment(SpecialismViewModel specialismViewModel)
+        {
+            if (!string.IsNullOrWhiteSpace(specialismViewModel.CombinedSpecialismId)) // CombinedSpecialismId has data implies that it is a FirstEntry for Couplet.
+                return SpecialismDetails.Any(s => specialismViewModel.CombinedSpecialismId.Split(Constants.PipeSeperator).Contains(s.Id.ToString()) && s.Assessments.Any(sa => sa.Result?.Id > 0));
+            else
+                return specialismViewModel.HasResultForCurrentAssessment;
         }
     }
 }
