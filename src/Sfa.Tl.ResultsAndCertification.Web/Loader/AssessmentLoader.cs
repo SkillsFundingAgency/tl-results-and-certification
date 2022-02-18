@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
@@ -97,10 +98,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             var learnerAssessmentDetails = _mapper.Map<T>(learnerDetails, opt =>
             {
-                opt.Items["currentCoreAssessmentSeriesId"] = GetValidAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Core)?.FirstOrDefault()?.Id ?? 0;
-                opt.Items["currentSpecialismAssessmentSeriesId"] = GetValidAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Specialism)?.FirstOrDefault()?.Id ?? 0;
-                opt.Items["coreSeriesName"] = GetNextAvailableAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Core)?.Name;
-                opt.Items["specialismSeriesName"] = GetNextAvailableAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, ComponentType.Specialism)?.Name;
+                opt.Items["currentCoreAssessmentSeriesId"] = CommonHelper.GetValidAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, learnerDetails.Pathway.StartYear, ComponentType.Core)?.FirstOrDefault()?.Id ?? 0;
+                opt.Items["currentSpecialismAssessmentSeriesId"] = CommonHelper.GetValidAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, learnerDetails.Pathway.StartYear, ComponentType.Specialism)?.FirstOrDefault()?.Id ?? 0;
+                opt.Items["coreSeriesName"] = CommonHelper.GetNextAvailableAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, learnerDetails.Pathway.StartYear, ComponentType.Core)?.Name;
+                opt.Items["specialismSeriesName"] = CommonHelper.GetNextAvailableAssessmentSeries(assessmentSeries, learnerDetails.Pathway.AcademicYear, learnerDetails.Pathway.StartYear, ComponentType.Specialism)?.Name;
             });
             return learnerAssessmentDetails;
         }
@@ -210,30 +211,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
             }
             return fileStream;
-        }
-
-        #region Private methods
-
-        private IList<AssessmentSeriesDetails> GetValidAssessmentSeries(IList<AssessmentSeriesDetails> assessmentSeries, int academicYear, ComponentType componentType)
-        {
-            var currentDate = DateTime.UtcNow.Date;
-            var startInYear = componentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
-
-            var series = assessmentSeries?.Where(s => s.ComponentType == componentType && s.Year > academicYear + startInYear &&
-                                        s.Year <= academicYear + Constants.AssessmentEndInYears &&
-                                        currentDate >= s.StartDate && currentDate <= s.EndDate)?.OrderBy(a => a.Id)?.ToList();
-
-            return series;
-        }
-
-        private AssessmentSeriesDetails GetNextAvailableAssessmentSeries(IList<AssessmentSeriesDetails> assessmentSeries, int academicYear, ComponentType componentType)
-        {
-            var startInYear = componentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
-            var series = assessmentSeries?.OrderBy(a => a.Id)?.FirstOrDefault(s => s.ComponentType == componentType && s.Year > academicYear + startInYear &&
-                                        s.Year <= academicYear + Constants.AssessmentEndInYears && DateTime.UtcNow.Date <= s.EndDate);
-            return series;
-        }
-
-        #endregion
+        }        
     }
 }
