@@ -871,6 +871,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     TlLookupId = r.TlLookupId,
                     StartDate = DateTime.UtcNow,
+                    PrsStatus = r.PrsStatus,
                     IsOptedin = isOptedIn,
                     IsBulkUpload = isBulkUpload,
                     CreatedBy = performedBy,
@@ -899,6 +900,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         TlLookupId = sr.TlLookupId,
                         StartDate = DateTime.UtcNow,
+                        PrsStatus = sr.PrsStatus,
                         IsOptedin = isOptedIn,
                         IsBulkUpload = isBulkUpload,
                         CreatedBy = performedBy,
@@ -1033,6 +1035,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                 {
                                     Id = spIndex - specialismResultStartIndex,
                                     TlLookupId = specialismResult.TlLookupId,
+                                    PrsStatus = specialismResult.PrsStatus,
                                     IsOptedin = true,
                                     StartDate = DateTime.UtcNow,
                                     IsBulkUpload = true,
@@ -1092,6 +1095,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                             {
                                 Id = index - pathwayResultStartIndex,
                                 TlLookupId = pathwayResult.TlLookupId,
+                                PrsStatus = pathwayResult.PrsStatus,
                                 IsOptedin = true,
                                 StartDate = DateTime.UtcNow,
                                 IsBulkUpload = true,
