@@ -28,11 +28,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             CreateMapper();
 
             // Parameters
-            _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Active }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Withdrawn } };
+            _ulns = new Dictionary<long, RegistrationPathwayStatus> 
+            { 
+                { 1111111111, RegistrationPathwayStatus.Active },
+                { 1111111112, RegistrationPathwayStatus.Active },
+                { 1111111113, RegistrationPathwayStatus.Withdrawn },
+                { 1111111114, RegistrationPathwayStatus.Active }
+            };
 
             // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsData(_ulns, TqProvider);
+
+            // Second cohort Ulns for Specialisms assessment entry to be taken in 1st year
+            var secondCohortUlns = new List<long> { 1111111114 };
+            RegisterUlnForNextCohort(_registrations, secondCohortUlns, 2021);
 
             // Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
@@ -124,7 +134,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                     { new RequestParameter { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 1 } },
                       null },
 
-                    // invalid profil id
+                    // specialism assessment window opened for second cohort learner (registered in 2021 for T level launched in 2020)
+                    new object[]
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Specialism, ComponentIds = new List<int> { 4 } },
+                      new AvailableAssessmentSeries { ProfileId = 4, AssessmentSeriesId = 7, AssessmentSeriesName = "Summer 2022" } },
+
+                    // invalid profile id
                     new object[]
                     { new RequestParameter { AoUkprn = 10011881, ProfileId = 99, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 1 } },
                       null },
