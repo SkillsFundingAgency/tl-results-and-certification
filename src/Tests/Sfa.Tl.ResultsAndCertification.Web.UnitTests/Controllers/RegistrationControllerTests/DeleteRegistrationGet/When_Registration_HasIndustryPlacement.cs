@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
     {
         public override void Given()
         {
-            var mockresult = new RegistrationAssessmentDetails { ProfileId = 99, IsCoreResultExist = false, IsIndustryPlacementExist = true };
+            var mockresult = new RegistrationAssessmentDetails { ProfileId = 99, AnyComponentResultExist = false, IsIndustryPlacementExist = true };
             RegistrationLoader.GetRegistrationAssessmentAsync(Ukprn, ProfileId, RegistrationPathwayStatus.Active).Returns(mockresult);
         }
 

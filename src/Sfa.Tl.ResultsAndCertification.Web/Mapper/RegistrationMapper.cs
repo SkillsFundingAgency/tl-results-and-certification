@@ -55,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ConstructUsing((m, context) =>
                 {
                     var codes = new List<string>();
-                    m.ToList().ForEach(s => codes.AddRange(s.Code.Split(Constants.PipeSeperator)));                    
+                    m.ToList().ForEach(s => codes.AddRange(s.Code.Split(Constants.PipeSeperator)));
                     return codes;
                 });
 
@@ -119,7 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.HasSpecialismsChanged, opts => opts.MapFrom(s => true))
                 .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom((src, dest, destMember, context) => context.Mapper.Map<List<string>>(src.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected))))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeSpecialismViewModel, ManageRegistration>>());
-            
+
             CreateMap<WithdrawRegistrationViewModel, WithdrawRegistrationRequest>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                 .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
@@ -147,7 +147,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
                 .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.Pathway.Status))
-                .ForMember(d => d.IsCoreResultExist, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments.Any() && s.Pathway.PathwayAssessments.Any(a => a.Result != null)))
+                .ForMember(d => d.AnyComponentResultExist, opts => opts.MapFrom(s => // Any PathwayResult Or SpecialismResults
+                                (s.Pathway.PathwayAssessments.Any() && s.Pathway.PathwayAssessments.Any(a => a.Result != null)) ||
+                                (s.Pathway.Specialisms.Any() && s.Pathway.Specialisms.Any(s => s.Assessments.Any(sa => sa.Result != null)))))
                 .ForMember(d => d.HasAnyOutstandingPathwayPrsActivities, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments.Any() && s.Pathway.PathwayAssessments.Any(a => a.Result != null && a.Result.PrsStatus == PrsStatus.BeingAppealed)))
                 .ForMember(d => d.IsIndustryPlacementExist, opts => opts.MapFrom(s => s.Pathway.IndustryPlacements.Any()));
         }
