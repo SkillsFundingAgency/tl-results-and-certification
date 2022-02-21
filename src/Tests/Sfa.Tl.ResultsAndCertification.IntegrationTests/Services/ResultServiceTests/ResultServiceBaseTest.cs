@@ -291,5 +291,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
 
             return tqSpecialismResults;
         }
+
+        public void RegisterUlnForNextCohort(List<TqRegistrationProfile> _registrations, IList<long> ulns, int academicYear = 2020)
+        {
+            ulns.ToList().ForEach(uln =>
+            {
+                var registration = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln);
+                registration.TqRegistrationPathways.FirstOrDefault().AcademicYear = academicYear;
+            });
+        }
     }
 }

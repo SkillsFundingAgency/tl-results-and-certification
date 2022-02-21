@@ -37,7 +37,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             // Seed Profile data
             _bulkAssessmentsTestFixture.Ulns = new List<long> { 1111111111, 1111111112, 1111111113 };
             _bulkAssessmentsTestFixture.TqRegistrationProfilesData = _bulkAssessmentsTestFixture.SeedRegistrationsData(_bulkAssessmentsTestFixture.Ulns);
-            
+
+            // Second Cohort Uln for specialism assessment to register from 1st year
+            var secondCohortUln = 1111111113;
+            _bulkAssessmentsTestFixture.TqRegistrationProfilesData.FirstOrDefault(p => p.UniqueLearnerNumber == secondCohortUln).TqRegistrationPathways.FirstOrDefault().AcademicYear = 2021;
+
             var registrationPathways = _bulkAssessmentsTestFixture.TqRegistrationProfilesData.SelectMany(x => x.TqRegistrationPathways);
             var registrationSpecialisms = registrationPathways.SelectMany(x => x.TqRegistrationSpecialisms);
 
