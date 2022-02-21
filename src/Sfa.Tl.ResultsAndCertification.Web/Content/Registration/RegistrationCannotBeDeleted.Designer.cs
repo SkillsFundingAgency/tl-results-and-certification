@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class RegistrationCannotBeDeleted {
@@ -80,16 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to both of the above..
-        /// </summary>
-        public static string Item_Both_Of_Them {
-            get {
-                return ResourceManager.GetString("Item_Both_Of_Them", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to the education provider has added an industry placement record for this learner;.
+        ///   Looks up a localized string similar to industry placement information.
         /// </summary>
         public static string Item_Industry_Placement_Added {
             get {
@@ -98,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to your organisation has added a core component result to this learner&apos;s registration;.
+        ///   Looks up a localized string similar to results.
         /// </summary>
         public static string Item_Results_Added {
             get {
@@ -116,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This registration has results data so cannot be deleted. This could be because:.
+        ///   Looks up a localized string similar to This learner’s registration cannot be deleted because it has one or both of the following:.
         /// </summary>
         public static string Para_Can_Not_Be_Deleted_Because {
             get {
@@ -125,29 +116,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check you are trying to delete the correct registration..
+        ///   Looks up a localized string similar to Please check whether you entered the correct ULN..
         /// </summary>
         public static string Para_Check_Trying_The_Correct_Registration {
             get {
                 return ResourceManager.GetString("Para_Check_Trying_The_Correct_Registration", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to If this registration should not have an industry placement record, contact the education provider..
-        /// </summary>
-        public static string Para_If_No_Industry_Placement_Contact_Provider {
-            get {
-                return ResourceManager.GetString("Para_If_No_Industry_Placement_Contact_Provider", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to If this registration should not have a core component result, you should amend the results for this registration..
-        /// </summary>
-        public static string Para_If_Not_Have_Core_Results {
-            get {
-                return ResourceManager.GetString("Para_If_Not_Have_Core_Results", resourceCulture);
             }
         }
     }
