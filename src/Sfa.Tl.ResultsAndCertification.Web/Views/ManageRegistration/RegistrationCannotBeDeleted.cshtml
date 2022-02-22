@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.RegistrationCannotBeDeletedViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 @{
     ViewData["Title"] = @RegistrationCannotBeDeleted.Page_Title;
@@ -28,7 +29,7 @@
             <p class="govuk-body">@RegistrationCannotBeDeleted.Para_Check_Trying_The_Correct_Registration</p>
         </div>
         <p>
-            <a class="govuk-button" id="backButton" role="button" asp-route="RegistrationDetails" asp-route-profileId="@Model.ProfileId">
+            <a class="govuk-button" id="backButton" role="button" asp-route="@RouteConstants.RegistrationDetails" asp-route-profileId="@Model.ProfileId">
                 @RegistrationCannotBeDeleted.Back_Button_Text
             </a>
         </p>
