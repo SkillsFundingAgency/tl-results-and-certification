@@ -209,6 +209,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             actualResult.Should().NotBeNull();
             actualResult.TqPathwayAssessmentId.Should().Be(expectedResult.TqPathwayAssessmentId);
             actualResult.TlLookupId.Should().Be(expectedResult.TlLookupId);
+            actualResult.PrsStatus.Should().Be(expectedResult.PrsStatus);
             actualResult.IsOptedin.Should().BeTrue();
             actualResult.IsBulkUpload.Should().BeTrue();
 
@@ -251,6 +252,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 actualResult.Should().NotBeNull();
                 actualResult.TqSpecialismAssessmentId.Should().Be(expectedResult.TqSpecialismAssessmentId);
                 actualResult.TlLookupId.Should().Be(expectedResult.TlLookupId);
+                actualResult.PrsStatus.Should().Be(expectedResult.PrsStatus);
                 actualResult.IsOptedin.Should().BeTrue();
                 actualResult.IsBulkUpload.Should().BeTrue();
 
