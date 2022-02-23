@@ -174,7 +174,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 // 12. Specialim - Assessment series is not open 
                 if (isSpecialismAndAssesssmentSeriesValid && hasActivSpecialismAssessmentEntry && !string.IsNullOrWhiteSpace(result.SpecialismAssessmentSeries))
                 {
-                    var isValidNextAssessmentSeries = CommonHelper.IsValidNextAssessmentSeries(dbAssessmentSeries.Where(x => x.ComponentType == ComponentType.Specialism).ToList(), dbRegistration.AcademicYear, result.SpecialismAssessmentSeries, dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.StartYear, ComponentType.Specialism);
+                    var isValidNextAssessmentSeries = CommonHelper.IsValidNextAssessmentSeries(result.SpecialismAssessmentSeries, dbRegistration.AcademicYear, dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.StartYear, ComponentType.Specialism, dbAssessmentSeries.Where(x => x.ComponentType == ComponentType.Specialism).ToList());
                     if (!isValidNextAssessmentSeries)
                         validationErrors.Add(BuildValidationError(result, ValidationMessages.SpecialismSeriesNotCurrentlyOpen));
                 }

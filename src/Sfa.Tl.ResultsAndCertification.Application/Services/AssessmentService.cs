@@ -111,7 +111,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidCoreAssessmentEntry));
                     else
                     {
-                        var isValidNextAssessmentSeries = CommonHelper.IsValidNextAssessmentSeries(dbAssessmentSeries, dbRegistration.AcademicYear, assessment.CoreAssessmentEntry, dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.StartYear, ComponentType.Core);
+                        var isValidNextAssessmentSeries = CommonHelper.IsValidNextAssessmentSeries(assessment.CoreAssessmentEntry, dbRegistration.AcademicYear, dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.StartYear, ComponentType.Core, dbAssessmentSeries);
                         if (!isValidNextAssessmentSeries)
                             validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidNextCoreAssessmentEntry));
                     }
@@ -125,7 +125,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidSpecialismAssessmentEntry));
                     else
                     {
-                        var isValidNextAssessmentSeries = CommonHelper.IsValidNextAssessmentSeries(dbAssessmentSeries, dbRegistration.AcademicYear, assessment.SpecialismAssessmentEntry, dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.StartYear, ComponentType.Specialism);
+                        var isValidNextAssessmentSeries = CommonHelper.IsValidNextAssessmentSeries(assessment.SpecialismAssessmentEntry, dbRegistration.AcademicYear, dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.StartYear, ComponentType.Specialism, dbAssessmentSeries);
                         if (!isValidNextAssessmentSeries)
                             validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidNextSpecialismAssessmentEntry));
                     }
@@ -410,24 +410,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         #endregion
 
-        public async Task<AssessmentDetails> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
-        {
-            var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(aoUkprn, profileId);
-            if (tqRegistration == null || (status != null && tqRegistration.Status != status)) return null;
-
-            var assessmentDetails = _mapper.Map<AssessmentDetails>(tqRegistration);
-
-            var allAssessmentSeries = await GetAllAssessmentSeriesAsync();
-            var coreAssessmentSeries = CommonHelper.GetValidAssessmentSeries(allAssessmentSeries, tqRegistration, ComponentType.Core);
-            assessmentDetails.IsCoreEntryEligible = tqRegistration.Status == RegistrationPathwayStatus.Active && coreAssessmentSeries != null && coreAssessmentSeries.Any();
-            assessmentDetails.NextAvailableCoreSeries = CommonHelper.GetNextAvailableAssessmentSeries(allAssessmentSeries, tqRegistration, ComponentType.Core)?.Name;
-
-            var specialismAssessmentSeries = CommonHelper.GetValidAssessmentSeries(allAssessmentSeries, tqRegistration, ComponentType.Specialism);
-            assessmentDetails.IsSpecialismEntryEligible = tqRegistration.Status == RegistrationPathwayStatus.Active && specialismAssessmentSeries != null && specialismAssessmentSeries.Any();
-            assessmentDetails.NextAvailableSpecialismSeries = CommonHelper.GetNextAvailableAssessmentSeries(allAssessmentSeries, tqRegistration, ComponentType.Specialism)?.Name;
-            return assessmentDetails;
-        }
-
         public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType, IList<int> componentIds)
         {
             // Validate
@@ -439,8 +421,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (tqRegistration == null)
                 return null;
 
-            int startInYear = CommonHelper.GetStartInYear(tqRegistration.AcademicYear, tqRegistration.TqProvider.TqAwardingOrganisation.TlPathway.StartYear, componentType);
-            var assessmentSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, startInYear);
+            int startYearOffset = CommonHelper.GetStartYearOffset(tqRegistration.AcademicYear, tqRegistration.TqProvider.TqAwardingOrganisation.TlPathway.StartYear, componentType);
+            var assessmentSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, startYearOffset);
 
             var currentOpenSeries = assessmentSeries?.FirstOrDefault(a => a.ComponentType == componentType);
             if (currentOpenSeries == null)
@@ -460,8 +442,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (tqRegistrationPathway == null)
                 return new AddAssessmentEntryResponse { IsSuccess = false };
 
-            int startInYear = CommonHelper.GetStartInYear(tqRegistrationPathway.AcademicYear, tqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.StartYear, request.ComponentType);
-            var assessmentSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(request.AoUkprn, request.ProfileId, startInYear);
+            int startYearOffset = CommonHelper.GetStartYearOffset(tqRegistrationPathway.AcademicYear, tqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.StartYear, request.ComponentType);
+            var assessmentSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(request.AoUkprn, request.ProfileId, startYearOffset);
             var currrentOpenSeries = assessmentSeries?.FirstOrDefault(a => a.ComponentType == request.ComponentType);
 
             if (currrentOpenSeries == null || currrentOpenSeries.Id != request.AssessmentSeriesId)
@@ -628,11 +610,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
 
             return true;
-        }
-
-        private async Task<IList<AssessmentSeries>> GetAllAssessmentSeriesAsync()
-        {
-            return await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
         }
     }
 }

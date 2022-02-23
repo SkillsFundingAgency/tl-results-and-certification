@@ -39,31 +39,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
         public static IList<AssessmentSeriesDetails> GetValidAssessmentSeries(IList<AssessmentSeriesDetails> assessmentSeries, int academicYear, int tlevelStartYear, ComponentType componentType)
         {
             var currentDate = DateTime.UtcNow.Date;
-            int startInYear = GetStartInYear(academicYear, tlevelStartYear, componentType);
+            int startYearOffset = GetStartYearOffset(academicYear, tlevelStartYear, componentType);
 
-            var series = assessmentSeries?.Where(s => s.ComponentType == componentType && s.Year > academicYear + startInYear &&
-                                        s.Year <= academicYear + Constants.AssessmentEndInYears &&
-                                        currentDate >= s.StartDate && currentDate <= s.EndDate)?.OrderBy(a => a.Id)?.ToList();
+            var series = assessmentSeries?.Where(s => s.ComponentType == componentType &&
+                                                 s.Year > academicYear + startYearOffset &&
+                                                 s.Year <= academicYear + Constants.AssessmentEndInYears &&
+                                                 currentDate >= s.StartDate && currentDate <= s.EndDate)
+                                         ?.OrderBy(a => a.Id)?.ToList();
 
             return series;
         }
 
         public static AssessmentSeriesDetails GetNextAvailableAssessmentSeries(IList<AssessmentSeriesDetails> assessmentSeries, int academicYear, int tlevelStartYear, ComponentType componentType)
         {
-            int startInYear = GetStartInYear(academicYear, tlevelStartYear, componentType);
+            int startYearOffset = GetStartYearOffset(academicYear, tlevelStartYear, componentType);
 
-            var series = assessmentSeries?.OrderBy(a => a.Id)?.FirstOrDefault(s => s.ComponentType == componentType && s.Year > academicYear + startInYear &&
-                                        s.Year <= academicYear + Constants.AssessmentEndInYears && DateTime.UtcNow.Date <= s.EndDate);
+            var series = assessmentSeries?.OrderBy(a => a.Id)
+                                         ?.FirstOrDefault(s => s.ComponentType == componentType &&
+                                                          s.Year > academicYear + startYearOffset &&
+                                                          s.Year <= academicYear + Constants.AssessmentEndInYears &&
+                                                          DateTime.UtcNow.Date <= s.EndDate);
             return series;
         }
 
         private static string FormatPrsStatusDisplayHtml(string tagClassName, string statusText) => string.Format(PrsStatusContent.PrsStatus_Display_Html, tagClassName, statusText);
 
-        private static int GetStartInYear(int academicYear, int tlevelStartYear, ComponentType componentType)
+        private static int GetStartYearOffset(int academicYear, int tlevelStartYear, ComponentType componentType)
         {
             var isTlevelStartYearSameAsAcademicYear = academicYear == tlevelStartYear;
-            var startInYear = componentType == ComponentType.Specialism ? (isTlevelStartYearSameAsAcademicYear ? Constants.SpecialismAssessmentStartInYears : 0) : Constants.CoreAssessmentStartInYears;
-            return startInYear;
+            var startYearOffset = componentType == ComponentType.Specialism 
+                                ? (isTlevelStartYearSameAsAcademicYear ? Constants.SpecialismAssessmentStartInYears : 0) 
+                                : Constants.CoreAssessmentStartInYears;
+            return startYearOffset;
         }
     }
 }
