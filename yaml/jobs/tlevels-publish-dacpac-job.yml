@@ -32,7 +32,7 @@ jobs:
         SqlUsername: '$(SQLServerAdminUsername)'
         SqlPassword: '$(SQLServerAdminPassword)'
         DacpacFile: '$(System.ArtifactsDirectory)/sqldrop/src/Sfa.Tl.ResultsAndCertification.Database/bin/Release/Sfa.Tl.ResultsAndCertification.Database.dacpac'
-        AdditionalArguments: '/p:GenerateSmartDefaults=True /v:environment=$(environmentTagName)'
+        AdditionalArguments: '/p:GenerateSmartDefaults=True /v:environment=$(sqlPublishEnvironmentName)'
 
     - pwsh: | 
         $SqlConnectionString = "Server=tcp:$(SharedSQLServerName).database.windows.net,1433;Database=$(DatabaseName);User ID=$(ResacSQLServiceAccountUsername);Password=$(ResacSQLServiceAccountPassword);Trusted_Connection=False;Pooling=True;Connect Timeout=30;MultipleActiveResultSets=True"
