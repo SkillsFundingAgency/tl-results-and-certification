@@ -127,7 +127,7 @@
     <value>File name must have no more than {0} characters</value>
   </data>
   <data name="File_Size_Kb_Text" xml:space="preserve">
-    <value>212KB</value>
+    <value>284KB</value>
   </data>
   <data name="File_Size_Too_Large_Validation_Message" xml:space="preserve">
     <value>File size too large – must be no more than {0}MB</value>
@@ -181,10 +181,10 @@
     <value>You can download a template with data formats and rules guidance to help you.</value>
   </data>
   <data name="Registrations_Published_On" xml:space="preserve">
-    <value>published 30 September 2021</value>
+    <value>published 2 March 2022</value>
   </data>
   <data name="Registrations_Version" xml:space="preserve">
-    <value>version 1.6</value>
+    <value>version 1.7</value>
   </data>
   <data name="Select_File_To_Upload_Required_Validation_Message" xml:space="preserve">
     <value>Select a file to upload</value>
