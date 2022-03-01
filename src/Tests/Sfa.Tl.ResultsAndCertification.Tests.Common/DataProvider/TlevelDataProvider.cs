@@ -149,7 +149,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return tlPathway;
         }
 
-        public static TlPathway CreateTlPathway(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, TlRoute tlRoute, string larId, string tlevelTitle, string pathwayName, bool addToDbContext = true)
+        public static TlPathway CreateTlPathway(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, TlRoute tlRoute, string larId, string tlevelTitle, string pathwayName, int startYear, bool addToDbContext = true)
         {
             if (tlRoute == null)
             {
@@ -162,6 +162,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
                 LarId = larId,
                 TlevelTitle = tlevelTitle,
                 Name = pathwayName,
+                StartYear = startYear,
                 TlRoute = tlRoute
             };
 

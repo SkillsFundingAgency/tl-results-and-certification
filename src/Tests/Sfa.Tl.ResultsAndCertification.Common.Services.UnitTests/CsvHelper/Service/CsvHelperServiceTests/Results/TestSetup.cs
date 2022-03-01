@@ -22,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         protected CsvResponseModel<ResultCsvRecordResponse> Response;
 
         public StringBuilder InputFileContent;
+        public string Header = "ULN,ComponentCode (Core),AssessmentSeries (Core),ComponentGrade (Core),ComponentCode (Specialisms),AssessmentSeries (Specialisms),ComponentGrade (Specialisms)";
 
         public override void Setup()
         {

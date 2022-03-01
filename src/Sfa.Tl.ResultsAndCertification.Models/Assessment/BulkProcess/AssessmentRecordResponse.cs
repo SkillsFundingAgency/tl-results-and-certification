@@ -12,7 +12,9 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess
 
         public int? TqRegistrationPathwayId { get; set; }
         public int? PathwayAssessmentSeriesId { get; set; }
-        public IEnumerable<int> TqRegistrationSpecialismIds { get; set; }
+        
         public int? SpecialismAssessmentSeriesId { get; set; }
+        public IEnumerable<int> TqRegistrationSpecialismIds { get; set; }
+
     }
 }

@@ -159,7 +159,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             return tqPathwayAssessments;
         }
 
-        public List<TqSpecialismAssessment> GetSpecialismAssessmentsDataToProcess(List<TqRegistrationSpecialism> specialismRegistrations, bool seedSpecialismAssessmentsAsActive = true, bool isHistorical = false)
+        public List<TqSpecialismAssessment> GetSpecialismAssessmentsDataToProcess(List<TqRegistrationSpecialism> specialismRegistrations, bool seedSpecialismAssessmentsAsActive = true, bool isHistorical = false, string assessmentSeriesName = "Summer 2021")
         {
             var tqSpecialismAssessments = new List<TqSpecialismAssessment>();
 
@@ -242,6 +242,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             });
         }
 
+        public void RegisterUlnForNextCohort(List<TqRegistrationProfile> _registrations, IList<long> ulns, int academicYear = 2020)
+        {
+            ulns.ToList().ForEach(uln =>
+            {
+                var registration = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln);
+                registration.TqRegistrationPathways.FirstOrDefault().AcademicYear = academicYear;
+            });
+        }
+
         public List<TqPathwayAssessment> SeedAssessmentsAndResults(List<TqRegistrationProfile> registrations, List<long> pathwaysWithAssessments, List<long> pathwaysWithResults, string assessmentSeriesName)
         {
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
@@ -262,6 +271,72 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             DbContext.SaveChanges();
             return tqPathwayAssessmentsSeedData;
         }
+
+        public List<TqSpecialismAssessment> SeedSpecialismAssessmentsAndResults(List<TqRegistrationProfile> registrations, List<long> ulnsWithAssessments, List<long> ulnsWithResults, string assessmentSeriesName)
+        {
+            var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
+            var tqSpecialismResultsSeedData = new List<TqSpecialismResult>();
+
+            foreach (var registration in registrations.Where(x => ulnsWithAssessments.Contains(x.UniqueLearnerNumber)))
+            {
+                var specialismAssessments = GetSpecialismAssessmentsDataToProcess(registration.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList(), assessmentSeriesName: assessmentSeriesName);
+                tqSpecialismAssessmentsSeedData.AddRange(specialismAssessments);
+
+                if (ulnsWithResults != null && ulnsWithResults.Any())
+                {
+                    var specialismAssessmentsWithResults = specialismAssessments.Where(x => ulnsWithResults.Contains(x.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber)).ToList();
+                    tqSpecialismResultsSeedData.AddRange(GetSpecialismResultsDataToProcess(specialismAssessmentsWithResults));
+                }
+            }
+
+            DbContext.SaveChanges();
+            return tqSpecialismAssessmentsSeedData;
+        }
+
+        public List<TqSpecialismResult> GetSpecialismResultsDataToProcess(List<TqSpecialismAssessment> specialismAssessments, bool seedSpecialismResultsAsActive = true, bool isHistorical = false, bool isBulkUpload = true)
+        {
+            var tqSpecialismResults = new List<TqSpecialismResult>();
+
+            foreach (var (specialismAssessment, index) in specialismAssessments.Select((value, i) => (value, i)))
+            {
+                var tqresults = GetSpecialismResultDataToProcess(specialismAssessment, seedSpecialismResultsAsActive, isHistorical, null, isBulkUpload);
+                tqSpecialismResults.AddRange(tqresults);
+            }
+
+            return tqSpecialismResults;
+        }
+
+        public List<TqSpecialismResult> GetSpecialismResultDataToProcess(TqSpecialismAssessment specialismAssessment, bool seedSpecialismResultsAsActive = true, bool isHistorical = false, PrsStatus? prsStatus = null, bool isBulkUpload = true)
+        {
+            var tqSpecialismResults = new List<TqSpecialismResult>();
+
+            if (isHistorical)
+            {
+                // Historical record
+                var specialismResult = new TqSpecialismResultBuilder().Build(specialismAssessment, isBulkUpload: isBulkUpload);
+                specialismResult.IsOptedin = false;
+                specialismResult.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                var tqSpecialismResultHistorical = TqSpecialismResultDataProvider.CreateTqSpecialismResult(DbContext, specialismResult);
+                tqSpecialismResults.Add(tqSpecialismResultHistorical);
+            }
+
+            var activeSpecialismResult = new TqSpecialismResultBuilder().Build(specialismAssessment, isBulkUpload: isBulkUpload);
+            var tqSpecialismResult = TqSpecialismResultDataProvider.CreateTqSpecialismResult(DbContext, activeSpecialismResult);
+            if (!seedSpecialismResultsAsActive)
+            {
+                tqSpecialismResult.IsOptedin = specialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn;
+                tqSpecialismResult.EndDate = DateTime.UtcNow;
+            }
+            else
+            {
+                tqSpecialismResult.PrsStatus = prsStatus;
+            }
+
+            tqSpecialismResults.Add(tqSpecialismResult);
+            return tqSpecialismResults;
+        }
+
         public int GetAcademicYear()
         {
             return AcademicYears.FirstOrDefault(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate).Year;

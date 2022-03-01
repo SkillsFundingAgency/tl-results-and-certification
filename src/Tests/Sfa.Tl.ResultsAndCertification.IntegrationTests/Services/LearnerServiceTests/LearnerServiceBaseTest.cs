@@ -31,6 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerServic
         protected IList<TlLookup> TlLookup;
         public IList<AcademicYear> AcademicYears;
         protected IList<TlLookup> PathwayComponentGrades;
+        protected IList<TlLookup> SpecialismComponentGrades;
 
         protected ILogger<ILearnerRepository> LearnerRepositoryLogger;
         protected ILearnerRepository LearnerRepository;
@@ -55,6 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerServic
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
             AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
             PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
+            SpecialismComponentGrades = TlLookupDataProvider.CreateSpecialismGradeTlLookupList(DbContext, null, true);
             DbContext.SaveChangesAsync();
         }
 
@@ -253,6 +255,38 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerServic
             DbContext.SaveChanges();
             return tqPathwayAssessmentsSeedData;
         }
+
+        public IList<TqSpecialismResult> GetSpecialismResultDataToProcess(TqSpecialismAssessment specialismAssessment, bool seedSpecialismResultsAsActive, bool isHistorical, PrsStatus? prsStatus = null, bool isBulkUpload = true)
+        {
+            var tqSpecialismResults = new List<TqSpecialismResult>();
+
+            if (isHistorical)
+            {
+                // Historical record
+                var specialismResult = new TqSpecialismResultBuilder().Build(specialismAssessment, SpecialismComponentGrades[0], isBulkUpload: isBulkUpload);
+                specialismResult.IsOptedin = false;
+                specialismResult.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                var tqSpecialismResultHistorical = TqSpecialismResultDataProvider.CreateTqSpecialismResult(DbContext, specialismResult);
+                tqSpecialismResults.Add(tqSpecialismResultHistorical);
+            }
+
+            var activeSpecialismResult = new TqSpecialismResultBuilder().Build(specialismAssessment, SpecialismComponentGrades[0], isBulkUpload: isBulkUpload);
+            var tqSpecialismResult = TqSpecialismResultDataProvider.CreateTqSpecialismResult(DbContext, activeSpecialismResult);
+            if (!seedSpecialismResultsAsActive)
+            {
+                tqSpecialismResult.IsOptedin = specialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn;
+                tqSpecialismResult.EndDate = DateTime.UtcNow;
+            }
+            else
+            {
+                tqSpecialismResult.PrsStatus = prsStatus;
+            }
+
+            tqSpecialismResults.Add(tqSpecialismResult);
+            return tqSpecialismResults;
+        }
+
         public int GetAcademicYear()
         {
             return AcademicYears.FirstOrDefault(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate).Year;

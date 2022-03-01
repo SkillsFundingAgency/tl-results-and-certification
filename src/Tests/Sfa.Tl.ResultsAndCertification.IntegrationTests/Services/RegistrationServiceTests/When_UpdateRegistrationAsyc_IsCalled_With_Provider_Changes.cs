@@ -47,6 +47,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             SeedPathwayResultsData(tqPathwayResultsSeedData);
 
+            // Seed Specialism assessments
+            var specialismAssessments = SeedSpecialismAssessmentsData(GetSpecialismAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList(), isBulkUpload: false));
+
+            // Seed Specialism results
+            var tqSpecialismResultsSeedData = new List<TqSpecialismResult>();
+            foreach (var assessment in specialismAssessments)
+                tqSpecialismResultsSeedData.AddRange(GetSpecialismResultsDataToProcess(new List<TqSpecialismAssessment> { assessment }, isBulkUpload: false));
+
+            SeedSpecialismResultsData(tqSpecialismResultsSeedData);
+
             CreateMapper();
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
@@ -68,6 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 DateOfBirth = DateTime.UtcNow.AddYears(-20),
                 AoUkprn = TlAwardingOrganisation.UkPrn,
                 ProviderUkprn = newProvider.UkPrn,
+                AcademicYear = 2020,
                 CoreCode = Pathway.LarId,
                 SpecialismCodes = new List<string>(),
                 PerformedBy = "Test User",
@@ -100,6 +111,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 var actualRegistrationProfile = DbContext.TqRegistrationProfile.AsNoTracking().Where(x => x.UniqueLearnerNumber == _tqRegistrationProfile.UniqueLearnerNumber)
                                                                                                                            .Include(x => x.TqRegistrationPathways)
                                                                                                                                .ThenInclude(x => x.TqRegistrationSpecialisms)
+                                                                                                                                    .ThenInclude(x => x.TqSpecialismAssessments)
+                                                                                                                                        .ThenInclude(x => x.TqSpecialismResults)
                                                                                                                            .Include(x => x.TqRegistrationPathways)
                                                                                                                                 .ThenInclude(x => x.TqPathwayAssessments)
                                                                                                                                     .ThenInclude(x => x.TqPathwayResults)
@@ -116,11 +129,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 actualRegistrationProfile.UniqueLearnerNumber.Should().Be(expectedRegistrationProfile.UniqueLearnerNumber);
 
                 // Assert registration pathway data
-                actualRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == Common.Enum.RegistrationPathwayStatus.Active).ToList().Count.Should().Be(1);
-                actualRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == Common.Enum.RegistrationPathwayStatus.Transferred).ToList().Count.Should().Be(1);
+                actualRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == RegistrationPathwayStatus.Active).ToList().Count.Should().Be(1);
+                actualRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == RegistrationPathwayStatus.Transferred).ToList().Count.Should().Be(1);
 
-                var expectedPathwayBeforeTransfer = expectedRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == Common.Enum.RegistrationPathwayStatus.Transferred).ToList();
-                var expectedPathwayAfterTransfer = expectedRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == Common.Enum.RegistrationPathwayStatus.Active).ToList();
+                var expectedPathwayBeforeTransfer = expectedRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == RegistrationPathwayStatus.Transferred).ToList();
+                var expectedPathwayAfterTransfer = expectedRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == RegistrationPathwayStatus.Active).ToList();
 
                 // Assert Transferred Pathway
                 var actualTransferredPathway = actualRegistrationProfile.TqRegistrationPathways.FirstOrDefault(x => expectedPathwayBeforeTransfer.Any(y => y.TqProviderId == x.TqProviderId));
@@ -130,27 +143,62 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 // Assert Active Pathway
                 var activePathway = actualRegistrationProfile.TqRegistrationPathways.FirstOrDefault(x => expectedPathwayAfterTransfer.Any(y => y.TqProviderId == x.TqProviderId));
                 var expectedActivePathway = expectedPathwayAfterTransfer.FirstOrDefault(x => actualRegistrationProfile.TqRegistrationPathways.Any(y => y.TqProviderId == x.TqProviderId));
-                AssertRegistrationPathway(activePathway, expectedActivePathway);
+                //var activePathway = actualRegistrationProfile.TqRegistrationPathways.FirstOrDefault(x => x.EndDate == null && x.Status == RegistrationPathwayStatus.Active);
+                //var expectedActivePathway = expectedRegistrationProfile.TqRegistrationPathways.FirstOrDefault(x => actualRegistrationProfile.TqRegistrationPathways.Any(y => y.TqProviderId == x.TqProviderId && x.Status == RegistrationPathwayStatus.Transferred));
+                AssertRegistrationPathway(activePathway, expectedActivePathway, isTransferred: true);
 
                 // Assert Active PathwayAssessment
                 var actualActiveAssessment = activePathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate == null);
                 var expectedActiveAssessment = expectedActivePathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate == null);
-                AssertPathwayAssessment(actualActiveAssessment, expectedActiveAssessment);
+                AssertPathwayAssessment(actualActiveAssessment, expectedActiveAssessment, isTransferred: true);
 
                 // Assert Transferred PathwayAssessment
                 var actualTransferredAssessment = actualTransferredPathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate != null);
                 var expectedTransferredAssessment = expectedTransferredPathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate != null);
-                AssertPathwayAssessment(actualTransferredAssessment, expectedTransferredAssessment);
+                AssertPathwayAssessment(actualTransferredAssessment, expectedTransferredAssessment, isTransferred: true);
 
                 // Assert Active PathwayResult
                 var actualActiveResult = actualActiveAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate == null);
                 var expectedActiveResult = expectedActiveAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate == null);
-                AssertPathwayResults(actualActiveResult, expectedActiveResult);
+                AssertPathwayResults(actualActiveResult, expectedActiveResult, isTransferred: true);
 
                 // Assert Transferred PathwayResult
                 var actualTransferredResult = actualTransferredAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate != null);
                 var expectedTransferredResult = expectedTransferredAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate != null);
-                AssertPathwayResults(actualTransferredResult, expectedTransferredResult);
+                AssertPathwayResults(actualTransferredResult, expectedTransferredResult, isTransferred: true);
+
+                // Assert specialisms releated data
+
+                foreach(var activeSpecialism in activePathway.TqRegistrationSpecialisms.Where(x => x.EndDate == null))
+                {
+                    var expectedActiveSpecialism = expectedActivePathway.TqRegistrationSpecialisms.FirstOrDefault(x => x.TlSpecialismId == activeSpecialism.TlSpecialismId && x.EndDate == null);
+
+                    var actualTransferredSpecialism = actualTransferredPathway.TqRegistrationSpecialisms.FirstOrDefault(x => x.TlSpecialismId == activeSpecialism.TlSpecialismId && x.EndDate != null);
+                    var expectedTransferredSpecialism = expectedTransferredPathway.TqRegistrationSpecialisms.FirstOrDefault(x => x.TlSpecialismId == activeSpecialism.TlSpecialismId && x.EndDate != null);
+
+                    // Assert Active SpecialismAssessment
+                    var actualActiveSpecialismAssessment = activeSpecialism.TqSpecialismAssessments.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
+                    var expectedActiveSpecialismAssessment = expectedActiveSpecialism.TqSpecialismAssessments.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
+                    AssertSpecialismAssessment(actualActiveSpecialismAssessment, expectedActiveSpecialismAssessment, isTransferred: true);
+
+                    // Assert Transferred SpecialismAssessment
+                    var actualTransferredSpecialismAssessment = actualTransferredSpecialism.TqSpecialismAssessments.FirstOrDefault(x => x.EndDate != null);
+                    var expectedTransferredSpecialismAssessment = expectedTransferredSpecialism.TqSpecialismAssessments.FirstOrDefault(x => x.EndDate != null);
+                    AssertSpecialismAssessment(actualTransferredSpecialismAssessment, expectedTransferredSpecialismAssessment, isTransferred: true);
+
+                    // Assert Active SpecialismResult
+                    var actualActiveSpecialismResult = actualActiveSpecialismAssessment.TqSpecialismResults.FirstOrDefault(x => x.EndDate == null);
+                    var expectedActiveSpecialismResult = expectedActiveSpecialismAssessment.TqSpecialismResults.FirstOrDefault(x => x.EndDate == null);
+                    AssertSpecialismResult(actualActiveSpecialismResult, expectedActiveSpecialismResult, isTransferred: true);
+
+                    // Assert Transferred PathwayResult
+                    var actualTransferredSpecialismResult = actualTransferredSpecialismAssessment.TqSpecialismResults.FirstOrDefault(x => x.EndDate != null);
+                    var expectedTransferredSpecialismResult = expectedTransferredSpecialismAssessment.TqSpecialismResults.FirstOrDefault(x => x.EndDate != null);
+                    AssertSpecialismResult(actualTransferredSpecialismResult, expectedTransferredSpecialismResult, isTransferred: true);
+                }
+
+                //var activeSpecialism = activePathway.TqRegistrationSpecialisms.FirstOrDefault(x => x.EndDate == null);
+                
 
                 // Assert IndustryPlacement Data
                 var actualActiveIndustryPlacement = activePathway.IndustryPlacements.FirstOrDefault();

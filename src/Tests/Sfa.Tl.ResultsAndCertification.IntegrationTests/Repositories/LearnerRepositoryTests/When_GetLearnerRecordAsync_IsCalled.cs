@@ -37,8 +37,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
 
             // Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
-            var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
             var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+            var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
+            var tqSpecialismResultsSeedData = new List<TqSpecialismResult>();
             var industryPlacementUln = 1111111115;
             var profilesWithPrsStatus = new List<(long, PrsStatus?)> { (1111111111, null), (1111111112, null), (1111111113, null), (1111111114, PrsStatus.BeingAppealed), (1111111115, null) };
 
@@ -48,27 +49,39 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
                 var isHistoricAssessent = hasHitoricData.Any(x => x == registration.UniqueLearnerNumber);
                 var isLatestActive = _ulns[registration.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
 
+                // Pathway Assessments
                 var pathwayAssessments = GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive, isHistoricAssessent);
                 tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
-
-                foreach (var pathway in registration.TqRegistrationPathways)
-                {
-                    tqSpecialismAssessmentsSeedData.AddRange(GetSpecialismAssessmentsDataToProcess(pathway.TqRegistrationSpecialisms.ToList(), isLatestActive, isHistoricAssessent));
-                }
-
-                // Build Pathway results
+                
+                // Pathway Results
                 foreach (var pathwayAssessment in pathwayAssessments)
                 {
                     var prsStatus = profilesWithPrsStatus.FirstOrDefault(p => p.Item1 == pathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber).Item2;
                     tqPathwayResultsSeedData.AddRange(GetPathwayResultDataToProcess(pathwayAssessment, isLatestActive, isHistoricAssessent, prsStatus));
                 }
+
+                // Specialism Assesments
+                foreach (var pathway in registration.TqRegistrationPathways)
+                {
+                    var specialismAssessments = GetSpecialismAssessmentsDataToProcess(pathway.TqRegistrationSpecialisms.ToList(), isLatestActive, isHistoricAssessent);
+                    tqSpecialismAssessmentsSeedData.AddRange(specialismAssessments);
+
+                    foreach (var specialismAssessment in specialismAssessments)
+                    {
+                        // Specialism Results
+                        var prsStatus = profilesWithPrsStatus.FirstOrDefault(p => p.Item1 == specialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber).Item2;
+                        tqSpecialismResultsSeedData.AddRange(GetSpecialismResultDataToProcess(specialismAssessment, isLatestActive, isHistoricAssessent, prsStatus));
+                    }
+                }
             }
 
             _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
             _specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
+
             SeedIndustyPlacementData(industryPlacementUln);
 
             DbContext.SaveChanges();
+            DetachAll();
 
             LearnerRepository = new LearnerRepository(DbContext);
         }
@@ -142,24 +155,29 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
             }
 
             TqSpecialismAssessment expectedSpecialismAssessment = null;
+            TqSpecialismResult expectedSpecialismResult = null;
 
             if (status == RegistrationPathwayStatus.Withdrawn)
             {
                 expectedSpecialismAssessment = _specialismAssessments.FirstOrDefault(x => x.TqRegistrationSpecialismId == expectedSpecialim.Id && x.IsOptedin && x.EndDate != null);
+                expectedSpecialismResult = expectedSpecialismAssessment?.TqSpecialismResults.FirstOrDefault(x => x.TqSpecialismAssessmentId == expectedSpecialismAssessment.Id && x.IsOptedin && x.EndDate != null);
             }
             else
             {
                 expectedSpecialismAssessment = _specialismAssessments.FirstOrDefault(x => x.TqRegistrationSpecialismId == expectedSpecialim.Id && x.IsOptedin && x.EndDate == null);
+                expectedSpecialismResult = expectedSpecialismAssessment?.TqSpecialismResults.FirstOrDefault(x => x.TqSpecialismAssessmentId == expectedSpecialismAssessment.Id && x.IsOptedin && x.EndDate == null);
             }
 
             _result.Should().NotBeNull();
 
             // Actual result
             var actualPathway = _result;
-            var actualSpecialism = actualPathway.TqRegistrationSpecialisms.FirstOrDefault();
             var actualPathwayAssessment = actualPathway.TqPathwayAssessments.FirstOrDefault();
-            var actualSpecialismAssessment = actualSpecialism.TqSpecialismAssessments.FirstOrDefault();
             var actualPathwayResult = actualPathwayAssessment?.TqPathwayResults.FirstOrDefault();
+            
+            var actualSpecialism = actualPathway.TqRegistrationSpecialisms.FirstOrDefault();
+            var actualSpecialismAssessment = actualSpecialism.TqSpecialismAssessments.FirstOrDefault();
+            var actualSpecialismResult = actualSpecialismAssessment?.TqSpecialismResults.FirstOrDefault();
 
             // Assert Registration Pathway
             actualPathway.TqRegistrationProfileId.Should().Be(expectedPathway.TqRegistrationProfileId);
@@ -183,6 +201,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
                 AssertSpecialismAssessment(actualSpecialismAssessment, expectedSpecialismAssessment);
 
                 AssertPathwayResult(actualPathwayResult, expectedPathwayResult);
+                AssertSpecialismResult(actualSpecialismResult, expectedSpecialismResult);
             }
 
             // Industry Placement

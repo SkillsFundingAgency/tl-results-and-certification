@@ -20,30 +20,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.Gender, opts => opts.MapFrom(s => s.TqRegistrationProfile.Gender))
                 .ForMember(d => d.Pathway, opts => opts.MapFrom(s => s));
 
-            //CreateMap<TqRegistrationPathway, ICollection<Pathway>>()
-            //    .ConstructUsing((m, context) =>
-            //    {
-            //        return new List<Pathway>
-            //        {
-            //            new Pathway
-            //            {
-            //                Id = m.Id,
-            //                LarId = m.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-            //                Name = m.TqProvider.TqAwardingOrganisation.TlPathway.Name,
-            //                Title = m.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
-            //                Status = m.Status,
-            //                Provider = context.Mapper.Map<Provider>(m.TqProvider),
-            //                PathwayAssessments = context.Mapper.Map<IList<Assessment>>(m.TqPathwayAssessments),
-            //                Specialisms = context.Mapper.Map<IList<Specialism>>(m.TqRegistrationSpecialisms)
-            //            }
-            //        };
-            //    });
-
             CreateMap<TqRegistrationPathway, Pathway>()
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.LarId, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.LarId))
                .ForMember(d => d.Name, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.Name))
                .ForMember(d => d.Title, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle))
+               .ForMember(d => d.StartYear, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.StartYear))
                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
                .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status))
                .ForMember(d => d.Provider, opts => opts.MapFrom(s => s.TqProvider))
@@ -64,11 +46,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AssessmentSeries.AppealEndDate))
                .ForMember(d => d.LastUpdatedOn, opts => opts.MapFrom(s => s.CreatedOn))
                .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.CreatedBy))
-               .ForMember(d => d.Results, opts => opts.MapFrom(s => s.TqPathwayResults));
+               .ForMember(d => d.Result, opts => opts.MapFrom(s => s.TqPathwayResults.FirstOrDefault()));
 
             CreateMap<TqPathwayResult, Result>()
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.TlLookup.Value))
+               .ForMember(d => d.GradeCode, opts => opts.MapFrom(s => s.TlLookup.Code))
                .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => s.PrsStatus))
                .ForMember(d => d.LastUpdatedOn, opts => opts.MapFrom(s => s.CreatedOn))
                .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.CreatedBy));
@@ -91,7 +74,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AssessmentSeries.AppealEndDate))
                .ForMember(d => d.LastUpdatedOn, opts => opts.MapFrom(s => s.CreatedOn))
                .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.CreatedBy))
-               .ForMember(d => d.Results, opts => opts.MapFrom(s => new List<Result>()));
+               .ForMember(d => d.Result, opts => opts.MapFrom(s => s.TqSpecialismResults.FirstOrDefault()));
+
+            CreateMap<TqSpecialismResult, Result>()
+              .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
+              .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.TlLookup.Value))
+              .ForMember(d => d.GradeCode, opts => opts.MapFrom(s => s.TlLookup.Code))
+              .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => s.PrsStatus))
+              .ForMember(d => d.LastUpdatedOn, opts => opts.MapFrom(s => s.CreatedOn))
+              .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.CreatedBy));
 
             CreateMap<Domain.Models.IndustryPlacement, Models.Contracts.Learner.IndustryPlacement>()
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))

@@ -45,16 +45,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                             AppealEndDate = System.DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = System.DateTime.UtcNow,
-                            Results = new List<Result>
+                            Result = new Result
                             {
-                                new Result
-                                {
-                                    Id = 1,
-                                    Grade = "A",
-                                    PrsStatus = null,
-                                    LastUpdatedBy = "System",
-                                    LastUpdatedOn = System.DateTime.UtcNow
-                                }
+                                Id = 1,
+                                Grade = "A",
+                                PrsStatus = null,
+                                LastUpdatedBy = "System",
+                                LastUpdatedOn = System.DateTime.UtcNow
                             }
                         }
                     },
@@ -75,7 +72,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                                     AppealEndDate = System.DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = System.DateTime.UtcNow,
-                                    Results = new List<Result>()
+                                    Result = null
                                 }
                             }
                         }
@@ -103,7 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             ActualResult.Uln.Should().Be(expectedApiResult.Uln);
             ActualResult.PathwayStatus.Should().Be(expectedApiResult.Pathway.Status);
             
-            ActualResult.IsCoreResultExist.Should().Be(true);
+            ActualResult.AnyComponentResultExist.Should().Be(true);
             ActualResult.HasAnyOutstandingPathwayPrsActivities.Should().Be(false);
             ActualResult.IsIndustryPlacementExist.Should().Be(true);                     
         }

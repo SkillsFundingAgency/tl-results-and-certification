@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Loader\ResultLoaderTests\GetResultNoAssessmentEntryViewModel\**" />
+    <EmbeddedResource Remove="Loader\ResultLoaderTests\GetResultNoAssessmentEntryViewModel\**" />
+    <None Remove="Loader\ResultLoaderTests\GetResultNoAssessmentEntryViewModel\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Called_With_Invalid_Data.cs" />
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Called_With_Valid_Data.cs" />
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Registration_HasResult.cs" />
@@ -14,17 +20,22 @@
     <Compile Remove="Controllers\PostResultsServiceControllerTests\PrsGradeChangeRequestGet\When_PrsStatus_Is_BeingAppealed.cs" />
     <Compile Remove="Controllers\PostResultsServiceControllerTests\PrsGradeChangeRequestGet\When_ViewModel_IsInvalid.cs" />
     <Compile Remove="Controllers\ResultControllerTests\AddCoreResultGet\When_Called_With_Withdrawn_Status_Data.cs" />
+    <Compile Remove="Controllers\ResultControllerTests\ResultDetails\When_Called_With_Withdrawn_Status_Data.cs" />
+    <Compile Remove="Controllers\ResultControllerTests\ResultDetails\When_HasActiveResult_AppealDate_Ended.cs" />
+    <Compile Remove="Controllers\ResultControllerTests\ResultDetails\When_NoActiveResult_AppealDate_Ended.cs" />
+    <Compile Remove="Controllers\ResultControllerTests\ResultDetails\When_No_Assessment_Entry.cs" />
+    <Compile Remove="Controllers\ResultControllerTests\ResultDetails\When_Result_PrsStatus_Is_BeingAppealed.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="6.3.0" />
+    <PackageReference Include="FluentAssertions" Version="6.5.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="coverlet.collector" Version="1.3.0">
+    <PackageReference Include="coverlet.collector" Version="3.1.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

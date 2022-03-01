@@ -142,3 +142,95 @@ input[type="radio"] {
         display: block;
     }
  }
+
+
+/* Responsive table styling */
+.responsive-table {
+    margin-bottom: 0;
+    width: 100%;
+}
+
+thead {
+    border: 0;
+    clip: rect(0 0 0 0);
+    -webkit-clip-path: inset(50%);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+tbody tr {
+    display: block;
+    margin-bottom: 1.5em;
+    padding: 0 0.5em;
+}
+
+tbody tr td {
+    display: block; /* browsers that don't support flex */
+    display: flex;
+    justify-content: space-between;
+    min-width: 1px;
+    text-align: right;
+}
+
+@media all and (-ms-high-contrast: none) { /* IE11 flex fix */
+    tbody tr td {
+        display: block;
+    }
+}
+
+.responsive-table__heading {
+    font-weight: 700;
+    padding-right: 1em;
+    text-align: left;
+    word-break: initial;
+}
+
+@media (max-width: 768px) {
+    tbody tr td {
+        padding-right: 0;
+    }
+
+    tbody tr td:last-child {
+        border-bottom: 0;
+    }
+
+    tbody tr {
+        border-bottom: 3px solid grey;
+    }
+
+    .govuk-table__cell {
+        padding: 10px 0px 10px 0
+    }
+}
+
+@media (min-width: 769px) {
+    thead {
+        clip: auto;
+        -webkit-clip-path: none;
+        clip-path: none;
+        display: table-header-group;
+        height: auto;
+        overflow: auto;
+        position: relative;
+        width: auto;
+    }
+
+    tbody tr {
+        display: table-row;
+    }
+
+    tbody tr td {
+        display: table-cell;
+        text-align: left;
+    }
+
+    .responsive-table__heading {
+        display: none;
+    }
+}

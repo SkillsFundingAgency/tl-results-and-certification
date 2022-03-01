@@ -15,6 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public string LarId { get; set; }
         public string TlevelTitle { get; set; }
         public string Name { get; set; }
+        public int StartYear { get; set; }
         public bool IsActive { get; set; }
 
         public virtual TlRoute TlRoute { get; set; }

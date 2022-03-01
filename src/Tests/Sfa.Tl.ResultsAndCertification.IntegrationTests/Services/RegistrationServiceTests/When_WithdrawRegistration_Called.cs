@@ -33,23 +33,29 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             _tqRegistrationProfile = SeedRegistrationData(_uln);
 
-            // Assessments seed
+            // Pathway Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
             tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.ToList(), isBulkUpload: false));
             var pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData);
+
+            // Pathway results seed
+            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+            foreach (var assessment in pathwayAssessments)
+                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(new List<TqPathwayAssessment> { assessment }, isBulkUpload: false));
+
+            SeedPathwayResultsData(tqPathwayResultsSeedData);
 
             // Specialisms assessment seed
             var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
             tqSpecialismAssessmentsSeedData.AddRange(GetSpecialismAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.SelectMany(x => x.TqRegistrationSpecialisms).ToList()));
             var specialismsAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData);
 
-            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
-            foreach (var assessment in pathwayAssessments)
-            {
-                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(new List<TqPathwayAssessment> { assessment }, isBulkUpload: false));
-            }
+            // Specialism results seed
+            var tqSpecialismResultsSeedData = new List<TqSpecialismResult>();
+            foreach (var assessment in specialismsAssessments)
+                tqSpecialismResultsSeedData.AddRange(GetSpecialismResultsDataToProcess(new List<TqSpecialismAssessment> { assessment }, isBulkUpload: false));
 
-            SeedPathwayResultsData(tqPathwayResultsSeedData);
+            SeedSpecialismResultsData(tqSpecialismResultsSeedData);
 
             CreateMapper();
 
@@ -95,6 +101,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                                                                                                                            .Include(x => x.TqRegistrationPathways)
                                                                                                                                .ThenInclude(x => x.TqRegistrationSpecialisms)
                                                                                                                                     .ThenInclude(x => x.TqSpecialismAssessments)
+                                                                                                                                        .ThenInclude(x => x.TqSpecialismResults)
                                                                                                                            .Include(x => x.TqRegistrationPathways)
                                                                                                                                 .ThenInclude(x => x.TqPathwayAssessments)
                                                                                                                                     .ThenInclude(x => x.TqPathwayResults)
@@ -120,7 +127,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 var expectedWithdrawnPathway = expectedRegistrationProfile.TqRegistrationPathways.FirstOrDefault(x => actualRegistrationProfile.TqRegistrationPathways.Any(y => y.TqProviderId == x.TqProviderId));
                 AssertRegistrationPathway(actualWithdrawnPathway, expectedWithdrawnPathway);
 
-                // Assert Any Active PathwayAssessments
+                // Assert withdrawn PathwayAssessments should not have any active assessments
                 actualWithdrawnPathway.TqPathwayAssessments.Any(x => x.EndDate == null).Should().BeFalse();
 
                 // Assert Withdrawn PathwayAssessment
@@ -128,24 +135,41 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 var expectedWithdrawnAssessment = expectedWithdrawnPathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate != null);
                 AssertPathwayAssessment(actualWithdrawnAssessment, expectedWithdrawnAssessment);
 
-                // Assert Any Active SpecialismAssessments
+                // Assert withdrawn record should not have active SpecialismAssessments
                 actualWithdrawnPathway.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments).Any(x => x.EndDate == null).Should().BeFalse();
 
                 // Assert Withdrawn SpecialismAssessment
-                var actualWithdrawnSpecialismAssessment = actualWithdrawnPathway.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments).Where(x => x.EndDate != null);
-                var expectedWithdrawnSpecialismAssessment = expectedWithdrawnPathway.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments).Where(x => x.EndDate != null);
-                AssertSpecialismAssessment(actualWithdrawnSpecialismAssessment, expectedWithdrawnSpecialismAssessment);
+                var actualWithdrawnSpecialismAssessments = actualWithdrawnPathway.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments).Where(x => x.EndDate != null);
+                var expectedWithdrawnSpecialismAssessments = expectedWithdrawnPathway.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments).Where(x => x.EndDate != null);
+                AssertSpecialismAssessment(actualWithdrawnSpecialismAssessments, expectedWithdrawnSpecialismAssessments);
 
-                // Assert Any Active PathwayResult
-                foreach (var pathwayResult in actualWithdrawnPathway.TqPathwayAssessments)
+                // Assert withdrawn record should not have active PathwayResult
+                foreach (var pathwayAssessment in actualWithdrawnPathway.TqPathwayAssessments)
                 {
-                    pathwayResult.TqPathwayResults.Any(x => x.EndDate == null).Should().BeFalse();
+                    pathwayAssessment.TqPathwayResults.Any(x => x.EndDate == null).Should().BeFalse();
                 }
 
                 // Assert Withdrawn PathwayResult
                 var actualWithdrawnResult = actualWithdrawnAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate != null);
                 var expectedWithdrawndResult = expectedWithdrawnAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate != null);
                 AssertPathwayResults(actualWithdrawnResult, expectedWithdrawndResult);
+
+                // Assert withdrawn record should not have active SpecialismResult
+                foreach (var actualWithdrawnSpecialismAssessment in actualWithdrawnSpecialismAssessments)
+                {
+                    actualWithdrawnSpecialismAssessment.TqSpecialismResults.Any(x => x.EndDate == null).Should().BeFalse();
+                }
+
+                // Assert Withdrawn Specialism Assessment Result
+                foreach(var actualWithdrawnSpecialismAssessment in actualWithdrawnSpecialismAssessments)
+                {
+                    var expectedWithdrawnSpecialismResult = expectedWithdrawnSpecialismAssessments.FirstOrDefault(x => x.TqRegistrationSpecialismId == actualWithdrawnSpecialismAssessment.TqRegistrationSpecialismId);
+
+                    var actualWithdrawnSpecialismResult = actualWithdrawnSpecialismAssessment.TqSpecialismResults.FirstOrDefault(x => x.EndDate != null);
+                    var expectedWithdrawndSpecialismResult = expectedWithdrawnSpecialismResult.TqSpecialismResults.FirstOrDefault(x => x.EndDate != null);
+
+                    AssertSpecialismResult(actualWithdrawnSpecialismResult, expectedWithdrawndSpecialismResult);
+                }                
             }
         }
 
@@ -165,7 +189,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             else
                 actualAssessment.EndDate.Should().NotBeNull();
         }
-
 
         public static IEnumerable<object[]> Data
         {

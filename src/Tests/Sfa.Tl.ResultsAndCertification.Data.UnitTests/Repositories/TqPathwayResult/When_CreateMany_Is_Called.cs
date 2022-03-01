@@ -9,7 +9,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqPathwayRe
 {
     public class When_CreateMany_Is_Called : BaseTest<Domain.Models.TqPathwayResult>
     {
-        private int _result;
         private IList<Domain.Models.TqPathwayResult> _data;
 
         public override void Given()
@@ -19,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqPathwayRe
 
         public async override Task When()
         {
-            _result = await Repository.CreateManyAsync(_data);
+            await Repository.CreateManyAsync(_data);
         }
 
         [Fact]

@@ -57,7 +57,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                                     AppealEndDate = System.DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = System.DateTime.UtcNow,
-                                    Results = new List<Result>()
+                                    Result = new Result
+                                    {
+                                        Id = 1,
+                                        Grade = "Pass",
+                                        GradeCode = "SCG2",
+                                        PrsStatus = null
+                                    }
                                 }
                             }
                         }
@@ -158,6 +164,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                     actualSpecialismAssessment.SeriesName.Should().Be(expectedSpecialismAssessment.SeriesName);
                     actualSpecialismAssessment.LastUpdatedOn.Should().Be(expectedSpecialismAssessment.LastUpdatedOn);
                     actualSpecialismAssessment.LastUpdatedBy.Should().Be(expectedSpecialismAssessment.LastUpdatedBy);
+                    actualSpecialismAssessment.Result.Should().NotBeNull();
+
+                    var expectedResult = actualSpecialismAssessment.Result;
+                    actualSpecialismAssessment.Result.Id.Should().Be(expectedResult.Id);
+                    actualSpecialismAssessment.Result.Grade.Should().Be(expectedResult.Grade);
                 }
             }
 
@@ -201,6 +212,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 actualDisplaySpecialism.IsCouplet.Should().BeFalse();
                 actualDisplaySpecialism.IsResit.Should().BeTrue();
                 actualDisplaySpecialism.HasCurrentAssessmentEntry.Should().BeFalse();
+                actualDisplaySpecialism.NeedResultForPreviousAssessmentEntry.Should().BeFalse();
+                actualDisplaySpecialism.HasResultForCurrentAssessment.Should().BeFalse();
             }
         }
     }

@@ -78,6 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             specialismAssessments.ToList().ForEach(r => registrationSpecialismIds.Add(r.TqRegistrationSpecialismId));
             
             var assessments = await _dbContext.TqSpecialismAssessment
+                .Include(x => x.TqSpecialismResults)
                 .Include(x => x.AssessmentSeries)
                 .Where(x => registrationSpecialismIds.Contains(x.TqRegistrationSpecialismId) && x.EndDate == null && x.IsOptedin)
                 .ToListAsync();
@@ -220,7 +221,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return regPathway;
         }
 
-        public async Task<IList<AssessmentSeries>> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, int startInYear)
+        public async Task<IList<AssessmentSeries>> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, int startYearOffset)
         {
             var currentDate = DateTime.Now.Date;
             
@@ -228,7 +229,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Where(rpw => rpw.Status == RegistrationPathwayStatus.Active && rpw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn && 
                        rpw.TqRegistrationProfile.Id == profileId)
                 .SelectMany(reg => _dbContext.AssessmentSeries
-                        .Where(s => s.Year > reg.AcademicYear + startInYear && s.Year <= reg.AcademicYear + Common.Helpers.Constants.AssessmentEndInYears && 
+                        .Where(s => s.Year > reg.AcademicYear + startYearOffset && s.Year <= reg.AcademicYear + Common.Helpers.Constants.AssessmentEndInYears && 
                         currentDate >= s.StartDate && currentDate <= s.EndDate))
                 .ToListAsync();
 

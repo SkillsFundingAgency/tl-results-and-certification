@@ -29,6 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
         protected IList<AssessmentSeries> AssessmentSeries;
         protected IList<TlLookup> TlLookup;
         protected IList<TlLookup> PathwayComponentGrades;
+        protected IList<TlLookup> SpecialismComponentGrades;
         protected IList<AcademicYear> AcademicYears;
         protected ILearnerRepository LearnerRepository;
 
@@ -44,9 +45,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
             PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
+            SpecialismComponentGrades = TlLookupDataProvider.CreateSpecialismGradeTlLookupList(DbContext, null, true);
             AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
 
-            DbContext.SaveChangesAsync();
+            DbContext.SaveChanges();
         }
 
         public List<TqRegistrationProfile> SeedRegistrationsData(List<long> ulns, TqProvider tqProvider = null)
@@ -209,7 +211,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
             if (isHistorical)
             {
                 // Historical record
-                var pathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, isBulkUpload: isBulkUpload);
+                var pathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, PathwayComponentGrades[0], isBulkUpload: isBulkUpload);
                 pathwayResult.IsOptedin = false;
                 pathwayResult.EndDate = DateTime.UtcNow.AddDays(-1);
 
@@ -217,7 +219,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
                 tqPathwayResults.Add(tqPathwayResultHistorical);
             }
 
-            var activePathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, isBulkUpload: isBulkUpload);
+            var activePathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, PathwayComponentGrades[0], isBulkUpload: isBulkUpload);
             var tqPathwayResult = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, activePathwayResult);
             if (!seedPathwayResultsAsActive)
             {
@@ -250,6 +252,38 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
             DbContext.SaveChanges();
             return tqPathwayAssessmentsSeedData;
         }
+
+        public IList<TqSpecialismResult> GetSpecialismResultDataToProcess(TqSpecialismAssessment specialismAssessment, bool seedSpecialismResultsAsActive, bool isHistorical, PrsStatus? prsStatus = null, bool isBulkUpload = true)
+        {
+            var tqSpecialismResults = new List<TqSpecialismResult>();
+
+            if (isHistorical)
+            {
+                // Historical record
+                var specialismResult = new TqSpecialismResultBuilder().Build(specialismAssessment, SpecialismComponentGrades[0], isBulkUpload: isBulkUpload);
+                specialismResult.IsOptedin = false;
+                specialismResult.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                var tqSpecialismResultHistorical = TqSpecialismResultDataProvider.CreateTqSpecialismResult(DbContext, specialismResult);
+                tqSpecialismResults.Add(tqSpecialismResultHistorical);
+            }
+
+            var activeSpecialismResult = new TqSpecialismResultBuilder().Build(specialismAssessment, SpecialismComponentGrades[0], isBulkUpload: isBulkUpload);
+            var tqSpecialismResult = TqSpecialismResultDataProvider.CreateTqSpecialismResult(DbContext, activeSpecialismResult);
+            if (!seedSpecialismResultsAsActive)
+            {
+                tqSpecialismResult.IsOptedin = specialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn;
+                tqSpecialismResult.EndDate = DateTime.UtcNow;
+            }
+            else
+            {
+                tqSpecialismResult.PrsStatus = prsStatus;
+            }
+
+            tqSpecialismResults.Add(tqSpecialismResult);
+            return tqSpecialismResults;
+        }
+
 
         public int GetAcademicYear()
         {
@@ -306,6 +340,28 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.LearnerRe
 
             actualPathwayResult.CreatedBy.Should().Be(expectedPathwayResult.CreatedBy);
             actualPathwayResult.PrsStatus.Should().Be(expectedPathwayResult.PrsStatus);
+        }
+
+        public void AssertSpecialismResult(TqSpecialismResult actualSpecialismResult, TqSpecialismResult expectedSpecialismResult)
+        {
+            if (expectedSpecialismResult == null)
+            {
+                actualSpecialismResult.Should().BeNull();
+                return;
+            }
+
+            actualSpecialismResult.TqSpecialismAssessmentId.Should().Be(expectedSpecialismResult.TqSpecialismAssessmentId);
+            actualSpecialismResult.TlLookupId.Should().Be(expectedSpecialismResult.TlLookupId);
+            actualSpecialismResult.IsOptedin.Should().Be(expectedSpecialismResult.IsOptedin);
+            actualSpecialismResult.IsBulkUpload.Should().Be(expectedSpecialismResult.IsBulkUpload);
+            actualSpecialismResult.StartDate.Should().Be(expectedSpecialismResult.StartDate);
+            if (expectedSpecialismResult.EndDate != null)
+                actualSpecialismResult.EndDate.Value.ToShortDateString().Should().Be(expectedSpecialismResult.EndDate.Value.ToShortDateString());
+            else
+                actualSpecialismResult.EndDate.Should().BeNull();
+
+            actualSpecialismResult.CreatedBy.Should().Be(expectedSpecialismResult.CreatedBy);
+            actualSpecialismResult.PrsStatus.Should().Be(expectedSpecialismResult.PrsStatus);
         }
 
         public void AssertIndustryPlacement(IndustryPlacement actualIndustryPlacement, IndustryPlacement expectedIndustryPlacement)

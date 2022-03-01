@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
 
         private string GetCodeBaseAbsolutePath()
         {
-            var codeBaseUri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
+            var codeBaseUri = new Uri(Assembly.GetExecutingAssembly().Location);
             return Uri.UnescapeDataString(codeBaseUri.AbsolutePath);
         }
     }

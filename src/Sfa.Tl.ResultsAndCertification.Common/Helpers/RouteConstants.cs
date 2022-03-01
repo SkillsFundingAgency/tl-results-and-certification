@@ -199,15 +199,16 @@
         public const string SubmitChangeCoreResult = "SubmitChangeCoreResult";
         public const string AddCoreResult = "AddCoreResult";
         public const string SubmitAddCoreResult = "SubmitAddCoreResult";
-        public const string AddResultConfirmation = "AddResultConfirmation";
-        public const string ChangeResultConfirmation = "ChangeResultConfirmation";
+        public const string AddSpecialismResult = "AddSpecialismResult";
+        public const string SubmitAddSpecialismResult = "SubmitAddSpecialismResult";
+        public const string ChangeSpecialismResult = "ChangeSpecialismResult";
+        public const string SubmitChangeSpecialismResult = "SubmitChangeSpecialismResult";
 
         // Search Results
         public const string SearchResults = "SearchResults";
         public const string SubmitSearchResults = "SubmitSearchResults";
         public const string SearchResultsNotFound = "SearchResultsNotFound";
         public const string ResultWithdrawnDetails = "ResultWithdrawnDetails";
-        public const string ResultNoAssessmentEntry = "ResultNoAssessmentEntry";
         public const string ResultDetails = "ResultDetails";
 
         // Error

@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result;
@@ -147,7 +148,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("results-learner-search/{populateUln:bool?}", Name = RouteConstants.SearchResults)]
+        [Route("results-search-uln/{populateUln:bool?}", Name = RouteConstants.SearchResults)]
         public async Task<IActionResult> SearchResultsAsync(bool populateUln)
         {
             var defaultValue = await _cacheService.GetAndRemoveAsync<string>(Constants.ResultsSearchCriteria);
@@ -157,7 +158,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("results-learner-search", Name = RouteConstants.SubmitSearchResults)]
+        [Route("results-search-uln", Name = RouteConstants.SubmitSearchResults)]
         public async Task<IActionResult> SearchResultsAsync(SearchResultsViewModel model)
         {
             if (!ModelState.IsValid)
@@ -187,7 +188,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("search-for-learner-results-ULN-not-found", Name = RouteConstants.SearchResultsNotFound)]
+        [Route("results-uln-not-found", Name = RouteConstants.SearchResultsNotFound)]
         public async Task<IActionResult> SearchResultsNotFoundAsync()
         {
             var viewModel = await _cacheService.GetAndRemoveAsync<UlnResultsNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchResultsUlnNotFound));
@@ -201,7 +202,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("learners-results-withdrawn-learner/{profileId}", Name = RouteConstants.ResultWithdrawnDetails)]
+        [Route("results-learner-withdrawn/{profileId}", Name = RouteConstants.ResultWithdrawnDetails)]
         public async Task<IActionResult> ResultWithdrawnDetailsAsync(int profileId)
         {
             var viewModel = await _resultLoader.GetResultWithdrawnViewModelAsync(User.GetUkPrn(), profileId);
@@ -215,21 +216,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("no-assessment-entries", Name = RouteConstants.ResultNoAssessmentEntry)]
-        public async Task<IActionResult> ResultNoAssessmentEntryAsync()
-        {
-            var viewModel = await _cacheService.GetAndRemoveAsync<ResultNoAssessmentEntryViewModel>(CacheKey);
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read ResultNoAssessmentEntryViewModel from redis cache in assessment no assessment entries page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(viewModel);
-        }
-
-        [HttpGet]
-        [Route("learners-results/{profileId}", Name = RouteConstants.ResultDetails)]
+        [Route("learner-results/{profileId}", Name = RouteConstants.ResultDetails)]
         public async Task<IActionResult> ResultDetailsAsync(int profileId)
         {
             var viewModel = await _resultLoader.GetResultDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
@@ -239,13 +226,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            if (!viewModel.IsPathwayAssessmentEntryRegistered)
-            {
-                await _cacheService.SetAsync(Constants.ResultsSearchCriteria, viewModel.Uln.ToString());
-                await _cacheService.SetAsync(CacheKey, _resultLoader.GetResultNoAssessmentEntryViewModel(viewModel));
-                return RedirectToRoute(RouteConstants.ResultNoAssessmentEntry);
-            }
-
+            viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
             return View(viewModel);
         }
 
@@ -267,31 +248,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [HttpPost]
         [Route("select-core-result", Name = RouteConstants.SubmitAddCoreResult)]
         public async Task<IActionResult> AddCoreResultAsync(ManageCoreResultViewModel model)
-        {
-            if (string.IsNullOrWhiteSpace(model?.SelectedGradeCode))
-                return RedirectToRoute(RouteConstants.ResultDetails, new { profileId = model.ProfileId });
+        {           
+            if (!ModelState.IsValid)
+            {
+                var resultsViewModel = await _resultLoader.GetManageCoreResultAsync(User.GetUkPrn(), model.ProfileId, model.AssessmentId, isChangeMode: false);
+                return View(resultsViewModel);
+            }
 
             var response = await _resultLoader.AddCoreResultAsync(User.GetUkPrn(), model);
 
             if (response == null || !response.IsSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
-            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ResultConfirmationViewModel), new ResultConfirmationViewModel { Uln = response.Uln, ProfileId = response.ProfileId }, CacheExpiryTime.XSmall);
-            return RedirectToRoute(RouteConstants.AddResultConfirmation);
-        }
+            var notificationBanner = new NotificationBannerModel { Message = model.SuccessBannerMessage };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
-        [HttpGet]
-        [Route("result-added-confirmation", Name = RouteConstants.AddResultConfirmation)]
-        public async Task<IActionResult> AddResultConfirmationAsync()
-        {
-            var viewModel = await _cacheService.GetAndRemoveAsync<ResultConfirmationViewModel>(string.Concat(CacheKey, Constants.ResultConfirmationViewModel));
-
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ResultConfirmationViewModel from redis cache in add result confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-            return View(viewModel);
+            return RedirectToRoute(RouteConstants.ResultDetails, new { model.ProfileId });
         }
 
         [HttpGet]
@@ -309,9 +281,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("change-core-result", Name = RouteConstants.SubmitChangeCoreResult)]
+        [Route("change-core-result/{profileId}/{assessmentId}", Name = RouteConstants.SubmitChangeCoreResult)]
         public async Task<IActionResult> ChangeCoreResultAsync(ManageCoreResultViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                var resultsViewModel = await _resultLoader.GetManageCoreResultAsync(User.GetUkPrn(), model.ProfileId, model.AssessmentId, isChangeMode: true);
+                return View(resultsViewModel);
+            }
+
             var isResultChanged = await _resultLoader.IsCoreResultChangedAsync(User.GetUkPrn(), model);
             if (!isResultChanged.HasValue)
             {
@@ -327,22 +305,91 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (response == null || !response.IsSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
-            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ChangeResultConfirmationViewModel), new ResultConfirmationViewModel { Uln = response.Uln, ProfileId = response.ProfileId }, CacheExpiryTime.XSmall);
-            return RedirectToRoute(RouteConstants.ChangeResultConfirmation);
+            var notificationBanner = new NotificationBannerModel { Message = model.SuccessBannerMessage };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.ResultDetails, new { model.ProfileId });
         }
 
         [HttpGet]
-        [Route("result-change-confirmation", Name = RouteConstants.ChangeResultConfirmation)]
-        public async Task<IActionResult> ChangeResultConfirmationAsync()
+        [Route("select-specialism-result/{profileId}/{assessmentId}", Name = RouteConstants.AddSpecialismResult)]
+        public async Task<IActionResult> AddSpecialismResultAsync(int profileId, int assessmentId)
         {
-            var viewModel = await _cacheService.GetAndRemoveAsync<ResultConfirmationViewModel>(string.Concat(CacheKey, Constants.ChangeResultConfirmationViewModel));
+            var viewModel = await _resultLoader.GetManageSpecialismResultAsync(User.GetUkPrn(), profileId, assessmentId, isChangeMode: false);
 
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ResultConfirmationViewModel from redis cache in change result confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No details found. Method: GetManageSpecialismResultViewModelAsync({User.GetUkPrn()}, {profileId}, {assessmentId}, {false}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("select-specialism-result/{profileId}/{assessmentId}", Name = RouteConstants.SubmitAddSpecialismResult)]
+        public async Task<IActionResult> AddSpecialismResultAsync(ManageSpecialismResultViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var resultsViewModel = await _resultLoader.GetManageSpecialismResultAsync(User.GetUkPrn(), model.ProfileId, model.AssessmentId, isChangeMode: false);
+                return View(resultsViewModel);
+            }
+
+            var response = await _resultLoader.AddSpecialismResultAsync(User.GetUkPrn(), model);
+
+            if (response == null || !response.IsSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            var notificationBanner = new NotificationBannerModel { Message = model.SuccessBannerMessage };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.ResultDetails, new { model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("change-specialism-result/{profileId}/{assessmentId}", Name = RouteConstants.ChangeSpecialismResult)]
+        public async Task<IActionResult> ChangeSpecialismResultAsync(int profileId, int assessmentId)
+        {
+            var viewModel = await _resultLoader.GetManageSpecialismResultAsync(User.GetUkPrn(), profileId, assessmentId, isChangeMode: true);
+
+            if (viewModel == null || !viewModel.IsValid)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No details found. Method: GetManageSpecialismResultAsync({User.GetUkPrn()}, {profileId}, {assessmentId}, {true}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("change-specialism-result/{profileId}/{assessmentId}", Name = RouteConstants.SubmitChangeSpecialismResult)]
+        public async Task<IActionResult> ChangeSpecialismResultAsync(ManageSpecialismResultViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var resultsViewModel = await _resultLoader.GetManageSpecialismResultAsync(User.GetUkPrn(), model.ProfileId, model.AssessmentId, isChangeMode: true);
+                return View(resultsViewModel);
+            }
+
+            var isResultChanged = await _resultLoader.IsSpecialismResultChangedAsync(User.GetUkPrn(), model);
+            if (!isResultChanged.HasValue)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"ChangeSpecialismResult request data-mismatch. Method:IsSpecialismResultChanged({User.GetUkPrn()}, {model}), ProfileId: {model.ProfileId}, ResultId: {model.ResultId}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            if (isResultChanged == false)
+                return RedirectToRoute(RouteConstants.ResultDetails, new { profileId = model.ProfileId });
+
+            var response = await _resultLoader.ChangeSpecialismResultAsync(User.GetUkPrn(), model);
+
+            if (response == null || !response.IsSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            var notificationBanner = new NotificationBannerModel { Message = model.SuccessBannerMessage };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.ResultDetails, new { model.ProfileId });
         }
 
         [HttpGet]
@@ -351,7 +398,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             return View();
         }
-
 
         [HttpPost]
         [Route("results-generating-download", Name = RouteConstants.SubmitResultsGeneratingDownload)]

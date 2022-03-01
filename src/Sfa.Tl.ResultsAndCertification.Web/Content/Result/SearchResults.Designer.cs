@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class SearchResults {
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter the Unique Learner Number (ULN).
+        ///   Looks up a localized string similar to Enter the unique learner number (ULN).
         /// </summary>
         public static string Enter_Uln_Field_Text {
             get {
@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Results - Search for a learner page.
+        ///   Looks up a localized string similar to Search ULN - Results.
         /// </summary>
         public static string Page_Title {
             get {
@@ -115,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter a valid ULN.
+        ///   Looks up a localized string similar to Enter a valid 10-digit ULN.
         /// </summary>
         public static string Uln_Not_Valid_Validation_Message {
             get {
@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter a ULN.
+        ///   Looks up a localized string similar to Enter a ULN with 10 digits.
         /// </summary>
         public static string Uln_Required_Validation_Message {
             get {

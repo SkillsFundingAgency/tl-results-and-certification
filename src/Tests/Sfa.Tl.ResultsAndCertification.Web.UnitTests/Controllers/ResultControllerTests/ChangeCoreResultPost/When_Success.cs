@@ -4,13 +4,16 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using Xunit;
+using ManageCoreResultContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result.ManageCoreResult;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.ChangeCoreResultPost
 {
     public class When_Success : TestSetup
     {
+        private string _expectedSuccessBannerMsg;
         private ChangeResultResponse ChangeResultResponse;
 
         public override void Given()
@@ -30,6 +33,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 ProfileId = 1
             };
 
+            _expectedSuccessBannerMsg = string.Format(ManageCoreResultContent.Banner_Message_For_Result_Changed, ViewModel.AssessmentSeries, ViewModel.PathwayName);
+
             ResultLoader.IsCoreResultChangedAsync(AoUkprn, ViewModel).Returns(true);
             ResultLoader.ChangeCoreResultAsync(AoUkprn, ViewModel).Returns(ChangeResultResponse);
         }
@@ -39,18 +44,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         {
             ResultLoader.Received(1).IsCoreResultChangedAsync(AoUkprn, ViewModel);
             ResultLoader.Received(1).ChangeCoreResultAsync(AoUkprn, ViewModel);
-            CacheService.Received(1).SetAsync(string.Concat(CacheKey, Constants.ChangeResultConfirmationViewModel),
-                Arg.Is<ResultConfirmationViewModel>
-                (x => x.ProfileId == ViewModel.ProfileId &&
-                      x.Uln == ChangeResultResponse.Uln),
-                 CacheExpiryTime.XSmall);
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(x => x.Message.Equals(_expectedSuccessBannerMsg)), CacheExpiryTime.XSmall);
         }
 
         [Fact]
-        public void Then_Redirected_To_ChangeResultConfirmation()
+        public void Then_Redirected_To_ResultDetails()
         {
-            var routeName = (Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.ChangeResultConfirmation);
+            var route = Result as RedirectToRouteResult;
+            route.RouteName.Should().Be(RouteConstants.ResultDetails);
+            route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
         }
     }
 }

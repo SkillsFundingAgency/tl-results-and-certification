@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class SearchResultsNotFound {
@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unique learner number (ULN) {0} not found.
+        ///   Looks up a localized string similar to {0} not found.
         /// </summary>
         public static string Heading_Uln_Not_Found {
             get {
@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ULN cannot be found – Results.
+        ///   Looks up a localized string similar to ULN not found - Results.
         /// </summary>
         public static string Page_Title {
             get {
@@ -97,20 +97,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check that you have entered the correct ULN. If you have, you will need to contact your organisation’s registrations editor for help..
+        ///   Looks up a localized string similar to Check that you have entered the correct number. If you have, you will need to contact your organisation’s registrations editor for help..
         /// </summary>
-        public static string Para_Check_You_Have_Entered_The_Correct_Uln {
+        public static string Para_Check_You_Have_Entered_The_Correct_Number {
             get {
-                return ResourceManager.GetString("Para_Check_You_Have_Entered_The_Correct_Uln", resourceCulture);
+                return ResourceManager.GetString("Para_Check_You_Have_Entered_The_Correct_Number", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to We cannot find a learner for the ULN you provided. This might be because the ULN is wrong or that they are not registered with us..
         /// </summary>
-        public static string Para_We_Cannot_Find_Learner_Because_Uln_Wrong {
+        public static string Para_We_Cannot_Find_Learner_For_Uln_Provided {
             get {
-                return ResourceManager.GetString("Para_We_Cannot_Find_Learner_Because_Uln_Wrong", resourceCulture);
+                return ResourceManager.GetString("Para_We_Cannot_Find_Learner_For_Uln_Provided", resourceCulture);
             }
         }
     }

@@ -3,7 +3,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
-using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 {
@@ -20,11 +19,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         protected string UlnLabel { get; set; }
         protected string LearnerNameLabel { get; set; }
         protected string DateofBirthLabel { get; set; }
+        protected string ProviderUkprnLabel { get; set; }
         protected string ProviderNameLabel { get; set; }
         protected string TlevelTitleLabel { get; set; }
 
         public string LearnerName => $"{Firstname} {Lastname}";
-        public string ProviderDisplayName => $"{ProviderName}<br/>({ProviderUkprn})";
 
         public SummaryItemModel SummaryUln => new SummaryItemModel
         {
@@ -47,12 +46,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
             Value = DateofBirth.ToDobFormat()
         };
 
-        public SummaryItemModel SummaryProvider => new SummaryItemModel
+        public SummaryItemModel SummaryProviderName => new SummaryItemModel
         {
             Id = "providername",
             Title = ProviderNameLabel,
-            Value = ProviderDisplayName,
-            IsRawHtml = true
+            Value = ProviderName,
+        };
+
+        public SummaryItemModel SummaryProviderUkprn => new SummaryItemModel
+        {
+            Id = "providerukprn",
+            Title = ProviderUkprnLabel,
+            Value = ProviderUkprn.ToString(),
         };
 
         public SummaryItemModel SummaryTlevelTitle => new SummaryItemModel

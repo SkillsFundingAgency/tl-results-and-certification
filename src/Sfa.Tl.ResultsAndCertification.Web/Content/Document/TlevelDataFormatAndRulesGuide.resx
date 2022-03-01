@@ -127,10 +127,10 @@
     <value>Assessment entries</value>
   </data>
   <data name="Assessment_Entries_PublishedDate_Text" xml:space="preserve">
-    <value>21 December 2021</value>
+    <value>2 March 2022</value>
   </data>
   <data name="Assessment_Entries_Version_Text" xml:space="preserve">
-    <value>version 1.4</value>
+    <value>version 1.5</value>
   </data>
   <data name="Choose_The_Right_Core_And_Specialism_Codes_Text" xml:space="preserve">
     <value>choose the right core and specialism codes</value>
@@ -154,31 +154,31 @@
     <value>published</value>
   </data>
   <data name="Registrations_FileSize_Text" xml:space="preserve">
-    <value>212</value>
+    <value>284</value>
   </data>
   <data name="Registrations_Heading_Text" xml:space="preserve">
     <value>Registrations</value>
   </data>
   <data name="Registrations_PublishedDate_Text" xml:space="preserve">
-    <value>30 September 2021</value>
+    <value>2 March 2022</value>
   </data>
   <data name="Registrations_Version_Text" xml:space="preserve">
-    <value>version 1.6</value>
+    <value>version 1.7</value>
   </data>
   <data name="Registration_DataFormat_And_Rules" xml:space="preserve">
     <value>registrations data format and rules</value>
   </data>
   <data name="Results_FileSize_Text" xml:space="preserve">
-    <value>204</value>
+    <value>274</value>
   </data>
   <data name="Results_Heading_Text" xml:space="preserve">
     <value>Results</value>
   </data>
   <data name="Results_PublishedDate_Text" xml:space="preserve">
-    <value>30 September 2021</value>
+    <value>2 March 2022</value>
   </data>
   <data name="Results_Version_Text" xml:space="preserve">
-    <value>version 1.2</value>
+    <value>version 1.3</value>
   </data>
   <data name="Result_DataFormat_And_Rules" xml:space="preserve">
     <value>results data format and rules</value>

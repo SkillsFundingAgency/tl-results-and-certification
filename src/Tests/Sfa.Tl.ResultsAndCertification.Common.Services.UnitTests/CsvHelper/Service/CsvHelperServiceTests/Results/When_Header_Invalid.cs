@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         private StringBuilder GetInputFilecontent()
         {
             StringBuilder csvData = new StringBuilder();
-            csvData.AppendLine("DIRTYColumn,ComponentCode (Core),AssessmentSeries (Core),ComponentGrade (Core)");
+            csvData.AppendLine("DIRTYColumn,ComponentCode (Core),AssessmentSeries (Core),ComponentGrade (Core),ComponentCode (Specialisms),AssessmentSeries (Specialisms),ComponentGrade (Specialisms)");
             return csvData;
         }
     }

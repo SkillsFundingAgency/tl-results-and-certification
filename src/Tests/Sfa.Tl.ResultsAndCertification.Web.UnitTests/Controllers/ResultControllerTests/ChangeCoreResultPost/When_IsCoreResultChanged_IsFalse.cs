@@ -9,10 +9,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
 {
     public class When_IsCoreResultChanged_IsFalse : TestSetup
     {
-        private readonly bool? mockResult = false;
+        private readonly bool? _mockResult = false;
+
         public override void Given()
         {
-            ResultLoader.IsCoreResultChangedAsync(AoUkprn, Arg.Any<ManageCoreResultViewModel>()).Returns(mockResult);
+            ResultLoader.IsCoreResultChangedAsync(AoUkprn, Arg.Any<ManageCoreResultViewModel>()).Returns(_mockResult);
         }
 
         [Fact]

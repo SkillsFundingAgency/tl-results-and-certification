@@ -52,13 +52,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
             {
                 new BulkProcessValidationError { RowNum = "2", Uln = string.Empty, ErrorMessage = "ULN required" },
                 new BulkProcessValidationError { RowNum = "3", Uln = "123", ErrorMessage = "ULN must be a 10 digit number" },
-                new BulkProcessValidationError { RowNum = "4", Uln = "1234567890", ErrorMessage = "Core component code must have 8 digits only" },
+                new BulkProcessValidationError { RowNum = "4", Uln = "1234567890", ErrorMessage = "Core component code must have 8 characters only" },
                 new BulkProcessValidationError { RowNum = "5", Uln = "1234567891", ErrorMessage = "Core component code required when result is included" },
                 new BulkProcessValidationError { RowNum = "6", Uln = "1234567892", ErrorMessage = "Assessment series needs to be provided" },
                 new BulkProcessValidationError { RowNum = "7", Uln = "1234567893", ErrorMessage = "Core assessment series format must be text followed by a space and a 4-digit year" },
-                new BulkProcessValidationError { RowNum = "8", Uln = "1234567894", ErrorMessage = "No data after ULN - need a core component code" },
-                new BulkProcessValidationError { RowNum = "9", Uln = string.Empty, ErrorMessage = "Data in more than the required 4 columns" },
+                new BulkProcessValidationError { RowNum = "8", Uln = "1234567894", ErrorMessage = "No data provided for this learner. Please provide data or remove the row." },
+                new BulkProcessValidationError { RowNum = "9", Uln = string.Empty, ErrorMessage = "Data in more than the required 7 columns" },
                 new BulkProcessValidationError { RowNum = "10", Uln = string.Empty, ErrorMessage = "ULN required" },
+
+                new BulkProcessValidationError { RowNum = "11", Uln = "1234567896", ErrorMessage = "ComponentCode (Specialisms) must have 8 characters only" },
+                new BulkProcessValidationError { RowNum = "12", Uln = "1234567897", ErrorMessage = "ComponentCode (Specialisms) must be provided when there is an entry in the AssessmentSeries (Specialisms) field" },
+                new BulkProcessValidationError { RowNum = "13", Uln = "1234567898", ErrorMessage = "Specialism codes must be two different numbers" },
+                new BulkProcessValidationError { RowNum = "14", Uln = "1234567899", ErrorMessage = "AssessmentSeries (Specialisms) cannot be blank" },
+                new BulkProcessValidationError { RowNum = "15", Uln = "1234567900", ErrorMessage = "AssessmentSeries (Specialisms) must contain the word Summer followed by a space and a 4-digit year" },
+                new BulkProcessValidationError { RowNum = "16", Uln = "1234567901", ErrorMessage = "There is only one paired specialism grade. Please either add another grade or indicate a blank field using comma separation." },
             };
 
             return validationErrors;

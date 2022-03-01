@@ -28,11 +28,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             CreateMapper();
 
             // Parameters
-            _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Active }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Withdrawn } };
+            _ulns = new Dictionary<long, RegistrationPathwayStatus> 
+            { 
+                { 1111111111, RegistrationPathwayStatus.Active },
+                { 1111111112, RegistrationPathwayStatus.Active },
+                { 1111111113, RegistrationPathwayStatus.Withdrawn },
+                { 1111111114, RegistrationPathwayStatus.Active }
+            };
 
             // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsData(_ulns, TqProvider);
+
+            // Second cohort Ulns for Specialisms assessment entry to be taken in 1st year
+            var secondCohortUlns = new List<long> { 1111111114 };
+            RegisterUlnForNextCohort(_registrations, secondCohortUlns, 2021);
 
             // Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
@@ -99,35 +109,40 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             {
                 return new[]
                 {
-                    //// core assessment window opend
-                    //new object[]
-                    //{ new RequestParameter { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 1 } },
-                    //  new AvailableAssessmentSeries { ProfileId = 1, AssessmentSeriesId = 1, AssessmentSeriesName = "Summer 2021" } },
+                    // core assessment window opend
+                    new object[]
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 1 } },
+                      new AvailableAssessmentSeries { ProfileId = 1, AssessmentSeriesId = 1, AssessmentSeriesName = "Summer 2021" } },
 
-                    //// specialism assessment window not opened
-                    //new object[]
-                    //{ new RequestParameter { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Specialism, ComponentIds = new List<int> { 1 } },
-                    //  new AvailableAssessmentSeries { ProfileId = 1, AssessmentSeriesId = 7, AssessmentSeriesName = "Summer 2022" } },
+                    // specialism assessment window not opened
+                    new object[]
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Specialism, ComponentIds = new List<int> { 1 } },
+                      new AvailableAssessmentSeries { ProfileId = 1, AssessmentSeriesId = 7, AssessmentSeriesName = "Summer 2022" } },
 
-                    //// Has an active assessment
-                    //new object[]
-                    //{ new RequestParameter { AoUkprn = 10011881, ProfileId = 2, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 2 } },
-                    //  null },
+                    // Has an active assessment
+                    new object[]
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 2, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 2 } },
+                      null },
 
                     // Request contains invalid component ids 
                     new object[]
                     { new RequestParameter { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 2 } },
                       null },
 
-                    //// registration is withdrawn
-                    //new object[]
-                    //{ new RequestParameter { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 1 } },
-                    //  null },
+                    // registration is withdrawn
+                    new object[]
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 1 } },
+                      null },
 
-                    //// invalid profil id
-                    //new object[]
-                    //{ new RequestParameter { AoUkprn = 10011881, ProfileId = 99, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 1 } },
-                    //  null },
+                    // specialism assessment window opened for second cohort learner (registered in 2021 for T level launched in 2020)
+                    new object[]
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Specialism, ComponentIds = new List<int> { 4 } },
+                      new AvailableAssessmentSeries { ProfileId = 4, AssessmentSeriesId = 7, AssessmentSeriesName = "Summer 2022" } },
+
+                    // invalid profile id
+                    new object[]
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 99, ComponentType = ComponentType.Core, ComponentIds = new List<int> { 1 } },
+                      null },
                 };
             }
         }

@@ -154,8 +154,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.SpecialismDetails, opts => opts.MapFrom(s => s.Pathway.Specialisms))
                 .ForMember(d => d.IsSpecialismEntryEligible, opts => opts.MapFrom((src, dest, destMember, context) => src.Pathway.Status == RegistrationPathwayStatus.Active && (int)context.Items["currentSpecialismAssessmentSeriesId"] > 0))
                 .ForMember(d => d.NextAvailableSpecialismSeries, opts => opts.MapFrom((src, dest, destMember, context) => context.Items["specialismSeriesName"]))
-                .ForMember(d => d.IsCoreResultExist, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments.Any() && s.Pathway.PathwayAssessments.Any(a => a.Results.Any())))
-                .ForMember(d => d.HasAnyOutstandingPathwayPrsActivities, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments.Any() && s.Pathway.PathwayAssessments.Any(a => a.Results.Any(r => r.PrsStatus == PrsStatus.BeingAppealed))))
+                .ForMember(d => d.IsCoreResultExist, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments.Any() && s.Pathway.PathwayAssessments.Any(a => a.Result != null)))
+                .ForMember(d => d.HasAnyOutstandingPathwayPrsActivities, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments.Any() && s.Pathway.PathwayAssessments.Any(a => a.Result != null && a.Result.PrsStatus == PrsStatus.BeingAppealed)))
                 .ForMember(d => d.IsIndustryPlacementExist, opts => opts.MapFrom(s => s.Pathway.IndustryPlacements.Any()));
 
             CreateMap<Assessment, PathwayAssessmentViewModel>()
@@ -164,7 +164,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.SeriesName, opts => opts.MapFrom(s => s.SeriesName))
                 .ForMember(d => d.LastUpdatedOn, opts => opts.MapFrom(s => s.LastUpdatedOn))
                 .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.LastUpdatedBy))
-                .ForMember(d => d.Results, opts => opts.MapFrom(s => s.Results));
+                .ForMember(d => d.Result, opts => opts.MapFrom(s => s.Result));
 
             CreateMap<Result, ResultViewModel>()
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
@@ -186,8 +186,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.SeriesId, opts => opts.MapFrom(s => s.SeriesId))
                 .ForMember(d => d.SeriesName, opts => opts.MapFrom(s => s.SeriesName))
                 .ForMember(d => d.LastUpdatedOn, opts => opts.MapFrom(s => s.LastUpdatedOn))
-                .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.LastUpdatedBy));
-
+                .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.LastUpdatedBy))
+                .ForMember(d => d.Result, opts => opts.MapFrom(s => s.Result));
         }
     }
 }

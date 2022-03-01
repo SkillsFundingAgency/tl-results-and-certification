@@ -1,0 +1,60 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual.ManageSpecialismResultViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Result
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = ManageSpecialismResult.Page_Title_Add_Result;
+}
+
+@section NavigationBar {
+<vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="@RouteConstants.SubmitAddSpecialismResult">
+            <input type="hidden" asp-for="ProfileId" />
+            <input type="hidden" asp-for="AssessmentId" />
+            <input type="hidden" asp-for="AssessmentSeries" />
+            <input type="hidden" asp-for="SpecialismName" />            
+
+            <partial name="_ValidationSummary" />
+
+            <h1 class="govuk-heading-l">@string.Format(ManageSpecialismResult.Page_Heading_Add_Result, @Model.LearnerName)</h1>
+
+            <dl class="govuk-summary-list govuk-summary-list--no-border" aria-label="@ManageSpecialismResult.Learner_Details">
+                <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+                <vc:summary-item model=Model.SummaryProviderName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryProviderUkprn></vc:summary-item>
+                <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+            </dl>
+
+            <div class="govuk-form-group" sfa-validation-for="SelectedGradeCode" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h2 class="govuk-fieldset__heading">
+                            @string.Format(ManageSpecialismResult.Select_The_Grade_For, @Model.AssessmentSeries)
+                        </h2>
+                    </legend>
+                    <div class="govuk-hint">
+                        @string.Format(ManageSpecialismResult.Occupiational_Specialism_Component, @Model.SpecialismDisplayName)
+                    </div>
+                    <span sfa-validation-for="SelectedGradeCode"></span>
+                    @foreach (var grade in Model?.Grades?.Select((value, i) => (value, i)))
+                    {
+                        var elementId = (grade.i > 0) ? "selectedgradecode-" + grade.i : "selectedgradecode";
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="@elementId" type="radio" asp-for="@Model.SelectedGradeCode" value="@Model.Grades[grade.i].Code">
+                            <label class="govuk-label govuk-radios__label" for="@elementId">
+                                @grade.value.Value
+                            </label>
+                        </div>
+                    }
+                </fieldset>
+            </div>
+
+            <button type="submit" id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ManageSpecialismResult.Submit_Button</button>
+        </form>
+    </div>
+</div>

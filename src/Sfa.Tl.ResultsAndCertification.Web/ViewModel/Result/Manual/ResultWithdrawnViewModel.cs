@@ -10,9 +10,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public ResultWithdrawnViewModel()
         {
             UlnLabel = WithdrawResultContent.Title_Uln_Text;
-            LearnerNameLabel = WithdrawResultContent.Title_Name_Text;
             DateofBirthLabel = WithdrawResultContent.Title_DateofBirth_Text;
-            ProviderNameLabel = WithdrawResultContent.Title_Provider_Text;
+            ProviderUkprnLabel = WithdrawResultContent.Title_Provider_Ukprn_Text;
+            ProviderNameLabel = WithdrawResultContent.Title_Provider_Name_Text;
             TlevelTitleLabel = WithdrawResultContent.Title_TLevel_Text;
         }
 

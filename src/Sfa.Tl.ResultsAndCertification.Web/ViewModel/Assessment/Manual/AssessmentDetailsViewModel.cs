@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public PathwayAssessmentViewModel PathwayAssessment { get; set; }
         public PathwayAssessmentViewModel PreviousPathwayAssessment { get; set; }
         public string NextAvailableCoreSeries { get; set; }
-        public bool IsCoreEntryEligible { get; set; }        
+        public bool IsCoreEntryEligible { get; set; }
         public bool IsCoreResultExist { get; set; }
         public bool HasAnyOutstandingPathwayPrsActivities { get; set; }
         public bool IsIndustryPlacementExist { get; set; }
@@ -42,9 +42,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public NotificationBannerModel SuccessBanner { get; set; }
 
         public bool HasCurrentCoreAssessmentEntry => PathwayAssessment != null;
-        public bool HasResultForCurrentCoreAssessment => HasCurrentCoreAssessmentEntry && PathwayAssessment.Results.Any();
+        public bool HasResultForCurrentCoreAssessment => HasCurrentCoreAssessmentEntry && PathwayAssessment.Result != null && PathwayAssessment.Result.Id > 0;
         public bool HasPreviousCoreAssessment => PreviousPathwayAssessment != null;
-        public bool HasResultForPreviousCoreAssessment => HasPreviousCoreAssessment && PreviousPathwayAssessment.Results.Any();
+        public bool HasResultForPreviousCoreAssessment => HasPreviousCoreAssessment && PreviousPathwayAssessment.Result != null && PreviousPathwayAssessment.Result.Id > 0;
         public bool NeedCoreResultForPreviousAssessmentEntry => !HasCurrentCoreAssessmentEntry && HasPreviousCoreAssessment && !HasResultForPreviousCoreAssessment;
         public bool IsSpecialismRegistered => SpecialismDetails.Any();
 
@@ -56,9 +56,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 
                 if (SpecialismDetails == null) return specialismToDisplay;
 
-                foreach(var specialism in SpecialismDetails)
+                foreach (var specialism in SpecialismDetails)
                 {
-                    if(specialism.IsCouplet && specialism.IsResit == false)
+                    if (specialism.IsCouplet && specialism.IsResit == false)
                     {
                         foreach (var spCombination in specialism.TlSpecialismCombinations)
                         {
@@ -72,15 +72,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                             {
                                 var validSpecialism = SpecialismDetails.FirstOrDefault(s => s.LarId.Equals(pairedSpecialismCode, StringComparison.InvariantCultureIgnoreCase));
 
-                                if(validSpecialism != null)
+                                if (validSpecialism != null)
                                 {
                                     hasValidEntry = true;
                                     combinedSpecialismId = $"{combinedSpecialismId}{Constants.PipeSeperator}{validSpecialism.Id}";
                                     combinedDisplayName = $"{combinedDisplayName}{Constants.AndSeperator}{validSpecialism.DisplayName}";
                                 }
                             }
-                            
-                            var canAdd = hasValidEntry && !specialismToDisplay.Any(s => combinedSpecialismId.Split(Constants.PipeSeperator).Except(s.CombinedSpecialismId.Split(Constants.PipeSeperator), StringComparer.InvariantCulture).Count() == 0);
+
+                            var canAdd = hasValidEntry && !specialismToDisplay.Any(s => combinedSpecialismId.Split(Constants.PipeSeperator).Except(s.CombinedSpecialismId.Split(Constants.PipeSeperator), StringComparer.InvariantCultureIgnoreCase).Count() == 0);
 
                             if (canAdd)
                             {
@@ -90,7 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                                     DisplayName = combinedDisplayName,
                                     CurrentSpecialismAssessmentSeriesId = specialism.CurrentSpecialismAssessmentSeriesId,
                                     TlSpecialismCombinations = specialism.TlSpecialismCombinations,
-                                    Assessments = specialism.Assessments?.Where(a => a.SeriesId == specialism.CurrentSpecialismAssessmentSeriesId)
+                                    Assessments = specialism.Assessments,
                                 });
                             }
                         }
@@ -146,17 +146,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 
         public SummaryItemModel GetSummaryExamPeriod(SpecialismViewModel specialismViewModel)
         {
-            return new SummaryItemModel
-            {
-                Id = $"examperiod_{specialismViewModel.Id}",
-                Title = AssessmentDetailsContent.Title_Exam_Period,
-                Value = specialismViewModel.Assessments.FirstOrDefault(a => a.SeriesId == specialismViewModel.CurrentSpecialismAssessmentSeriesId)?.SeriesName,
-                ActionText = AssessmentDetailsContent.Remove_Action_Link_Text,
-                HiddenActionText = AssessmentDetailsContent.Remove_Action_Link_Hidden_Text,
-                RouteName = RouteConstants.RemoveSpecialismAssessmentEntries,
-                RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() },
-                                                                    { Constants.SpecialismAssessmentIds, GetCurrentSeriesAssessmentId(specialismViewModel) } }
-            };
+            return HasResultForCurrentSpecialismAssessment(specialismViewModel) ?
+                new SummaryItemModel
+                {
+                    Id = $"examperiod_{specialismViewModel.Id}",
+                    Title = AssessmentDetailsContent.Title_Exam_Period,
+                    Value = specialismViewModel.Assessments.FirstOrDefault(a => a.SeriesId == specialismViewModel.CurrentSpecialismAssessmentSeriesId)?.SeriesName
+                }
+                :
+                new SummaryItemModel
+                {
+                    Id = $"examperiod_{specialismViewModel.Id}",
+                    Title = AssessmentDetailsContent.Title_Exam_Period,
+                    Value = specialismViewModel.Assessments.FirstOrDefault(a => a.SeriesId == specialismViewModel.CurrentSpecialismAssessmentSeriesId)?.SeriesName,
+                    ActionText = AssessmentDetailsContent.Remove_Action_Link_Text,
+                    HiddenActionText = AssessmentDetailsContent.Remove_Action_Link_Hidden_Text,
+                    RouteName = RouteConstants.RemoveSpecialismAssessmentEntries,
+                    RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() },
+                                                                        { Constants.SpecialismAssessmentIds, GetCurrentSeriesAssessmentId(specialismViewModel) } }
+                };
         }
 
         public SummaryItemModel GetSummaryLastUpdatedOn(SpecialismViewModel specialismViewModel)
@@ -204,6 +212,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
             return string.Join(Constants.PipeSeperator, SpecialismDetails?.Where(s => specialismIds.Contains(s.Id))?
                                                         .SelectMany(x => x.Assessments?.Where(a => a.SeriesId == specialismViewModel.CurrentSpecialismAssessmentSeriesId))?
                                                         .Select(x => x.AssessmentId));
+        }
+
+        private bool HasResultForCurrentSpecialismAssessment(SpecialismViewModel specialismViewModel)
+        {
+            if (!string.IsNullOrWhiteSpace(specialismViewModel.CombinedSpecialismId)) // CombinedSpecialismId has data implies that it is a FirstEntry for Couplet.
+                return SpecialismDetails.Any(s => specialismViewModel.CombinedSpecialismId.Split(Constants.PipeSeperator).Contains(s.Id.ToString()) && s.Assessments.Any(sa => sa.Result?.Id > 0));
+            else
+                return specialismViewModel.HasResultForCurrentAssessment;
         }
     }
 }

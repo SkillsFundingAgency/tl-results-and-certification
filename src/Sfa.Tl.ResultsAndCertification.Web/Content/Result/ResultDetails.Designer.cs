@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ResultDetails {
@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learners details.
+        /// </summary>
+        public static string Aria_Label_Text_Learner_Details {
+            get {
+                return ResourceManager.GetString("Aria_Label_Text_Learner_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search again.
         /// </summary>
         public static string Button_Search_Again {
@@ -97,6 +106,51 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to More about grade statuses.
+        /// </summary>
+        public static string Details_Summary_Text_Link_More_About {
+            get {
+                return ResourceManager.GetString("Details_Summary_Text_Link_More_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Once a grade has been entered after a review or an appeal it is marked as ‘final’ and can no longer be changed here. If you need to change a grade after entering a review or an appeal result, or change a grade after the deadline, please.
+        /// </summary>
+        public static string Details_Summary_Text_Result_Final_Result_No_Longer_Changed_Here {
+            get {
+                return ResourceManager.GetString("Details_Summary_Text_Result_Final_Result_No_Longer_Changed_Here", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An overall T Level result cannot be calculated unless all assessments have grades marked &apos;final&apos;..
+        /// </summary>
+        public static string Details_Summary_Text_Result_Overall_Results_Calculated_When_Final {
+            get {
+                return ResourceManager.GetString("Details_Summary_Text_Result_Overall_Results_Calculated_When_Final", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If a result is marked as ‘appeal’ the grade cannot be changed here. A review or an appeal outcome must be entered in the reviews and appeals section of this service..
+        /// </summary>
+        public static string Details_Summary_Text_Result_Pending_Result_Cannot_Be_Changed {
+            get {
+                return ResourceManager.GetString("Details_Summary_Text_Result_Pending_Result_Cannot_Be_Changed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request to change a grade marked final.
+        /// </summary>
+        public static string Email_Subject {
+            get {
+                return ResourceManager.GetString("Email_Subject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ..
         /// </summary>
         public static string Fullstop {
@@ -106,7 +160,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Core (code): {0}.
+        ///   Looks up a localized string similar to Core component: {0}.
         /// </summary>
         public static string Heading_Core {
             get {
@@ -115,16 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner’s details.
-        /// </summary>
-        public static string Heading_Learners_Details {
-            get {
-                return ResourceManager.GetString("Heading_Learners_Details", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Learner’s results.
+        ///   Looks up a localized string similar to {0}&apos;s results.
         /// </summary>
         public static string Heading_Learners_Results {
             get {
@@ -133,70 +178,70 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  core.
+        ///   Looks up a localized string similar to not specified.
         /// </summary>
-        public static string Hidden_Action_Text_Core {
+        public static string Heading_Not_Specified {
             get {
-                return ResourceManager.GetString("Hidden_Action_Text_Core", resourceCulture);
+                return ResourceManager.GetString("Heading_Not_Specified", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  for core.
+        ///   Looks up a localized string similar to Occupational specialism(s): {0}.
         /// </summary>
-        public static string Hidden_Action_Text_For_Core {
+        public static string Heading_Specialism {
             get {
-                return ResourceManager.GetString("Hidden_Action_Text_For_Core", resourceCulture);
+                return ResourceManager.GetString("Heading_Specialism", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to for .
+        ///   Looks up a localized string similar to {0} result.
         /// </summary>
-        public static string Hidden_Value_Text_For {
+        public static string Hidden_Text_Component_Result {
             get {
-                return ResourceManager.GetString("Hidden_Value_Text_For", resourceCulture);
+                return ResourceManager.GetString("Hidden_Text_Component_Result", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This result is final and cannot be changed..
+        ///   Looks up a localized string similar to core.
         /// </summary>
-        public static string Inset_Appeal_Date_Ended {
+        public static string Hidden_Text_Core {
             get {
-                return ResourceManager.GetString("Inset_Appeal_Date_Ended", resourceCulture);
+                return ResourceManager.GetString("Hidden_Text_Core", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This result is final as the outcome of an appeal has been recorded. If you need to change the grade please.
+        ///   Looks up a localized string similar to for {0}.
         /// </summary>
-        public static string Inset_Appeal_Final_Outcome_Recorded {
+        public static string Hidden_Text_For_Component {
             get {
-                return ResourceManager.GetString("Inset_Appeal_Final_Outcome_Recorded", resourceCulture);
+                return ResourceManager.GetString("Hidden_Text_For_Component", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This learner&apos;s results cannot be changed because they are appealing a grade..
+        ///   Looks up a localized string similar to specialilsm.
         /// </summary>
-        public static string Inset_BeingAppealing_Grade_Text {
+        public static string Hidden_Text_Specialism {
             get {
-                return ResourceManager.GetString("Inset_BeingAppealing_Grade_Text", resourceCulture);
+                return ResourceManager.GetString("Hidden_Text_Specialism", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Not received.
+        ///   Looks up a localized string similar to Add an assessment.
         /// </summary>
-        public static string Not_Received_Text {
+        public static string Link_Add_Assessment {
             get {
-                return ResourceManager.GetString("Not_Received_Text", resourceCulture);
+                return ResourceManager.GetString("Link_Add_Assessment", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner’s results page.
+        ///   Looks up a localized string similar to Learner&apos;s results.
         /// </summary>
         public static string Page_Title {
             get {
@@ -205,11 +250,101 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This learner does not have any core component assessments registered in this system.
+        /// </summary>
+        public static string Para_No_Core_Assessments {
+            get {
+                return ResourceManager.GetString("Para_No_Core_Assessments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This learner does not have any occupational specialism assessments registered in this system.
+        /// </summary>
+        public static string Para_No_Specialism_Assessments {
+            get {
+                return ResourceManager.GetString("Para_No_Specialism_Assessments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This learner does not have an occupational specialism registered in this system.
+        /// </summary>
+        public static string Para_No_Specialisms_Registered {
+            get {
+                return ResourceManager.GetString("Para_No_Specialisms_Registered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exam period.
         /// </summary>
-        public static string Title_Assessment_Series {
+        public static string Table_Column_Exam_Period {
             get {
-                return ResourceManager.GetString("Title_Assessment_Series", resourceCulture);
+                return ResourceManager.GetString("Table_Column_Exam_Period", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grade.
+        /// </summary>
+        public static string Table_Column_Grade {
+            get {
+                return ResourceManager.GetString("Table_Column_Grade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exam period.
+        /// </summary>
+        public static string Table_Column_Hidden_Exam_Period {
+            get {
+                return ResourceManager.GetString("Table_Column_Hidden_Exam_Period", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grade.
+        /// </summary>
+        public static string Table_Column_Hidden_Grade {
+            get {
+                return ResourceManager.GetString("Table_Column_Hidden_Grade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last updated.
+        /// </summary>
+        public static string Table_Column_Hidden_Last_Updated {
+            get {
+                return ResourceManager.GetString("Table_Column_Hidden_Last_Updated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated by.
+        /// </summary>
+        public static string Table_Column_Hidden_Updated_By {
+            get {
+                return ResourceManager.GetString("Table_Column_Hidden_Updated_By", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last updated.
+        /// </summary>
+        public static string Table_Column_Last_Updated {
+            get {
+                return ResourceManager.GetString("Table_Column_Last_Updated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated by.
+        /// </summary>
+        public static string Table_Column_Updated_By {
+            get {
+                return ResourceManager.GetString("Table_Column_Updated_By", resourceCulture);
             }
         }
         
@@ -223,34 +358,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
+        ///   Looks up a localized string similar to Provider.
         /// </summary>
-        public static string Title_Name_Text {
+        public static string Title_Provider_Name_Text {
             get {
-                return ResourceManager.GetString("Title_Name_Text", resourceCulture);
+                return ResourceManager.GetString("Title_Provider_Name_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Grade.
+        ///   Looks up a localized string similar to UKPRN.
         /// </summary>
-        public static string Title_Pathway_Grade {
+        public static string Title_Provider_Ukprn_Text {
             get {
-                return ResourceManager.GetString("Title_Pathway_Grade", resourceCulture);
+                return ResourceManager.GetString("Title_Provider_Ukprn_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Provider &lt;br/&gt; (UKPRN).
-        /// </summary>
-        public static string Title_Provider_Text {
-            get {
-                return ResourceManager.GetString("Title_Provider_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to T Level title.
+        ///   Looks up a localized string similar to T Level.
         /// </summary>
         public static string Title_TLevel_Text {
             get {
