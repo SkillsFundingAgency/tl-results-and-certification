@@ -27,6 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 { 1111111112, RegistrationPathwayStatus.Withdrawn },
                 { 1111111113, RegistrationPathwayStatus.Active },
                 { 1111111114, RegistrationPathwayStatus.Active },
+                { 1111111115, RegistrationPathwayStatus.Active }
             };
 
             // Seed data
@@ -52,6 +53,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
                     var tqPathwayResultSeedData = GetPathwayResultDataToProcess(assessment, isLatestActiveResult, isHistoricAssessent);
                     tqPathwayResultsSeedData.AddRange(tqPathwayResultSeedData);
+                }
+
+                // Specialism Assessments seed
+                if (registration.UniqueLearnerNumber == 1111111115)
+                {
+                    var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
+                    var specialismAssessments = GetSpecialismAssessmentsDataToProcess(registration.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList());
+                    tqSpecialismAssessmentsSeedData.AddRange(specialismAssessments);
+                    SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
+
+                    var tqSpecialismResultsSeedData = new List<TqSpecialismResult>();
+                    foreach (var assessment in specialismAssessments)
+                        tqSpecialismResultsSeedData.AddRange(GetSpecialismResultsDataToProcess(new List<TqSpecialismAssessment> { assessment }, isBulkUpload: false));
+
+                    SeedSpecialismResultsData(tqSpecialismResultsSeedData, false);
                 }
             }
 
@@ -100,6 +116,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                     new object[] { 10011881, 2, false }, // PathwayWidrawn + ResultInactive 
                     new object[] { 10011881, 3, true },  // PathwayActive  + ResultInactive
                     new object[] { 10011881, 4, false},  // PathwayActive  + NoResult         + IP_Exist
+                    new object[] { 10011881, 5, false},  // PathwayActive  + Specialism has result
                 };
             }
         }

@@ -193,12 +193,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<BulkProcessRequest, BulkAssessmentResponse>(requestUri, model);
         }
 
-        public async Task<AssessmentDetails> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
-        {
-            var requestUri = string.Format(ApiConstants.GetAssessmentDetailsUri, aoUkprn, profileId, (int?)status);
-            return await GetAsync<AssessmentDetails>(requestUri);
-        }
-
         public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType, string componentIds)
         {
             var requestUri = string.Format(ApiConstants.GetAvailableAssessmentSeriesUri, aoUkprn, profileId, (int)componentType, componentIds);

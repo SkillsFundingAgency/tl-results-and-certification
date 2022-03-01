@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Authentication.Local
@@ -18,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication.Local
             new Claim(ClaimTypes.Role, RolesExtensions.SiteAdministrator),
             new Claim(CustomClaimTypes.HasAccessToService, HasAccessToService.ToString()),            
             new Claim(CustomClaimTypes.Ukprn, string.IsNullOrWhiteSpace(Ukprn) ? Ukprn : "10009696"),
+            new Claim(CustomClaimTypes.LoginUserType, ((int)LoginUserType.AwardingOrganisation).ToString())
         }, "local");
     }
 }

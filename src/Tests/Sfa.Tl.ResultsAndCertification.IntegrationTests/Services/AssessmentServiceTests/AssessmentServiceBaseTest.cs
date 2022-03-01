@@ -242,6 +242,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             });
         }
 
+        public void RegisterUlnForNextCohort(List<TqRegistrationProfile> _registrations, IList<long> ulns, int academicYear = 2020)
+        {
+            ulns.ToList().ForEach(uln =>
+            {
+                var registration = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln);
+                registration.TqRegistrationPathways.FirstOrDefault().AcademicYear = academicYear;
+            });
+        }
+
         public List<TqPathwayAssessment> SeedAssessmentsAndResults(List<TqRegistrationProfile> registrations, List<long> pathwaysWithAssessments, List<long> pathwaysWithResults, string assessmentSeriesName)
         {
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();

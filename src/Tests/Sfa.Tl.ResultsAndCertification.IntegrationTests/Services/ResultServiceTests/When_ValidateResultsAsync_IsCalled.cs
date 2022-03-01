@@ -25,7 +25,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         private List<TqPathwayAssessment> _pathwayAssessments;
         private List<TqSpecialismAssessment> _specialismAssessments;
 
-        private readonly Dictionary<long, RegistrationPathwayStatus> _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Withdrawn }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Active }, { 1111111114, RegistrationPathwayStatus.Active } };
+        private readonly Dictionary<long, RegistrationPathwayStatus> _ulns = new Dictionary<long, RegistrationPathwayStatus> 
+        { 
+            { 1111111111, RegistrationPathwayStatus.Withdrawn },
+            { 1111111112, RegistrationPathwayStatus.Active },
+            { 1111111113, RegistrationPathwayStatus.Active },
+            { 1111111114, RegistrationPathwayStatus.Active },
+            { 1111111115, RegistrationPathwayStatus.Active }
+        };
 
         public override void Given()
         {
@@ -34,6 +41,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             // Data seed
             SeedTestData(EnumAwardingOrganisation.Pearson);
             _registrations = SeedRegistrationsData(_ulns, TqProvider);
+
+            // Second cohort Ulns for Specialisms assessment entry to be taken in 1st year
+            var secondCohortUlns = new List<long> { 1111111115 };
+            RegisterUlnForNextCohort(_registrations, secondCohortUlns, 2021);
 
             // Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
@@ -173,6 +184,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
 
                 // 16. Specialism - Grade is not valid 
                 new ResultCsvRecordResponse { RowNum = 16, Uln = 1111111114, SpecialismCodes = new List<string> { "10123456" }, SpecialismAssessmentSeries = "Summer 2022", SpecialismGrades = new List<string> { "Hello" }},
+
+                 // 17. Valid Row - Second cohort learner registerd in 2021 and allowed to take specialism in summer 2022
+                new ResultCsvRecordResponse { RowNum = 17, Uln = 1111111115, CoreCode = "10123456", CoreAssessmentSeries = "Summer 2021", CoreGrade = "A", SpecialismCodes = new List<string> { "10123456" }, SpecialismAssessmentSeries = "Summer 2022", SpecialismGrades = new List<string> { "Merit" }},
 
             };
         }

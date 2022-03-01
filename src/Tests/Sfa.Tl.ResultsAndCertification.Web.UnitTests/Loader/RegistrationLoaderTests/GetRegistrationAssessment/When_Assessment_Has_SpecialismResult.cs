@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.GetRegistrationAssessment
 {
-    public class When_Assessment_Has_Result : TestSetup
+    public class When_Assessment_Has_SpecialismResult : TestSetup
     {
         public override void Given()
         {
@@ -44,14 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                             AppealEndDate = System.DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = System.DateTime.UtcNow,
-                            Result = new Result
-                            {
-                                Id = 1,
-                                Grade = "A",
-                                PrsStatus = null,
-                                LastUpdatedBy = "System",
-                                LastUpdatedOn = System.DateTime.UtcNow
-                            }
+                            Result = null
                         }
                     },
                     Specialisms = new List<Specialism>
@@ -71,7 +64,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                                     AppealEndDate = System.DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = System.DateTime.UtcNow,
-                                    Result = null
+                                    Result = new Result
+                                    {
+                                        Id = 1,
+                                        Grade = "Merit",
+                                        PrsStatus = null,
+                                        LastUpdatedBy = "System",
+                                        LastUpdatedOn = System.DateTime.UtcNow
+                                    }
                                 }
                             }
                         }
@@ -93,7 +93,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         [Fact]
         public void Then_IsResultExist_IsTrue()
         {
-            ActualResult.IsCoreResultExist.Should().BeTrue();
+            ActualResult.AnyComponentResultExist.Should().BeTrue();
         }
     }
 }

@@ -34,7 +34,6 @@
 
         // Assessments Related Uri's
         public const string ProcessBulkAssessmentsUri = "/api/assessment/ProcessBulkAssessments";
-        public const string GetAssessmentDetailsUri = "/api/assessment/GetAssessmentDetails/{0}/{1}/{2}";
         public const string GetAvailableAssessmentSeriesUri = "/api/assessment/GetAvailableAssessmentSeries/{0}/{1}/{2}/{3}";
         public const string AddAssessmentEntryUri = "/api/assessment/AddAssessmentEntry";
         public const string GetActiveAssessmentEntryDetailsUri = "/api/assessment/GetActiveAssessmentEntryDetails/{0}/{1}/{2}";

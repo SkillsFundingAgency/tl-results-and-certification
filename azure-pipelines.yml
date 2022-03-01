@@ -25,6 +25,12 @@ pool:
   vmImage: 'windows-latest' #'vs2017-win2016'
 
 steps:
+- task: UseDotNet@2 
+  displayName: "Use .NET Core SDK 2.1.x"
+  inputs:
+      packageType: 'sdk'
+      version: '2.1.x'
+
 - task: gittools.gitversion.gitversion-task.GitVersion@5
   displayName: GitVersion
 

@@ -20,30 +20,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.Gender, opts => opts.MapFrom(s => s.TqRegistrationProfile.Gender))
                 .ForMember(d => d.Pathway, opts => opts.MapFrom(s => s));
 
-            //CreateMap<TqRegistrationPathway, ICollection<Pathway>>()
-            //    .ConstructUsing((m, context) =>
-            //    {
-            //        return new List<Pathway>
-            //        {
-            //            new Pathway
-            //            {
-            //                Id = m.Id,
-            //                LarId = m.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-            //                Name = m.TqProvider.TqAwardingOrganisation.TlPathway.Name,
-            //                Title = m.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
-            //                Status = m.Status,
-            //                Provider = context.Mapper.Map<Provider>(m.TqProvider),
-            //                PathwayAssessments = context.Mapper.Map<IList<Assessment>>(m.TqPathwayAssessments),
-            //                Specialisms = context.Mapper.Map<IList<Specialism>>(m.TqRegistrationSpecialisms)
-            //            }
-            //        };
-            //    });
-
             CreateMap<TqRegistrationPathway, Pathway>()
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.LarId, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.LarId))
                .ForMember(d => d.Name, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.Name))
                .ForMember(d => d.Title, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle))
+               .ForMember(d => d.StartYear, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.StartYear))
                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
                .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status))
                .ForMember(d => d.Provider, opts => opts.MapFrom(s => s.TqProvider))

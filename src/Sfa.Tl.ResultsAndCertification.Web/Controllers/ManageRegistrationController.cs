@@ -406,7 +406,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
                 if (model.ChangeStatus == RegistrationChangeStatus.Delete)
                 {
-                    if (registrationAssessmentDetails.IsCoreResultExist || registrationAssessmentDetails.IsIndustryPlacementExist)
+                    if (registrationAssessmentDetails.AnyComponentResultExist || registrationAssessmentDetails.IsIndustryPlacementExist)
                     {
                         var cannotBeDeletedViewModel = new RegistrationCannotBeDeletedViewModel { ProfileId = registrationAssessmentDetails.ProfileId };
                         await _cacheService.SetAsync(string.Concat(CacheKey, Constants.RegistrationCannotBeDeletedViewModel), cannotBeDeletedViewModel, CacheExpiryTime.XSmall);

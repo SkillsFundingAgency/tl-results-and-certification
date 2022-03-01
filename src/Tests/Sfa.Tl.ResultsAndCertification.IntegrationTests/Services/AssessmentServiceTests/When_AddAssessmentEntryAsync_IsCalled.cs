@@ -26,7 +26,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             CreateMapper();
 
             // Parameters
-            _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Withdrawn }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Active }, { 1111111114, RegistrationPathwayStatus.Active } };
+            _ulns = new Dictionary<long, RegistrationPathwayStatus> 
+            { 
+                { 1111111111, RegistrationPathwayStatus.Withdrawn },
+                { 1111111112, RegistrationPathwayStatus.Active },
+                { 1111111113, RegistrationPathwayStatus.Active },
+                { 1111111114, RegistrationPathwayStatus.Active } 
+            };
 
             // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
@@ -37,6 +43,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
             var currentYearUln = new List<long> { 1111111114 };
             RegisterUlnForNextAcademicYear(_registrations, currentYearUln);
+
+            var secondCohortUln = 1111111116;
+            var secondCohortRegistration = SeedRegistrationData(secondCohortUln, RegistrationPathwayStatus.Active, null, true);
+            secondCohortRegistration.TqRegistrationPathways.FirstOrDefault().AcademicYear = 2021;
+            _registrations.Add(secondCohortRegistration);
 
             // Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
@@ -107,46 +118,50 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             {
                 return new[]
                 {
-                    // Profile not-found - returns false
-                    new object[]
-                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 999, ComponentType = ComponentType.Core  },
-                      new AddAssessmentEntryResponse { IsSuccess = false } },
+                    //// Profile not-found - returns false
+                    //new object[]
+                    //{ new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 999, ComponentType = ComponentType.Core  },
+                    //  new AddAssessmentEntryResponse { IsSuccess = false } },
 
-                    // Registration not in active status - returns false
-                    new object[]
-                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Core  },
-                      new AddAssessmentEntryResponse { IsSuccess = false } },
+                    //// Registration not in active status - returns false
+                    //new object[]
+                    //{ new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Core  },
+                    //  new AddAssessmentEntryResponse { IsSuccess = false } },
 
-                    // Reg has an active assessment already - returns false
-                    new object[]
-                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 2, ComponentType = ComponentType.Core  },
-                      new AddAssessmentEntryResponse { IsSuccess = false } },
+                    //// Reg has an active assessment already - returns false
+                    //new object[]
+                    //{ new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 2, ComponentType = ComponentType.Core  },
+                    //  new AddAssessmentEntryResponse { IsSuccess = false } },
 
-                    // When specialism entry type - returns false
-                    new object[]
-                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Specialism, SpecialismIds = new List<int?> { 1 } },
-                      new AddAssessmentEntryResponse { IsSuccess = false } },
+                    //// When specialism entry type - returns false
+                    //new object[]
+                    //{ new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Specialism, SpecialismIds = new List<int?> { 1 } },
+                    //  new AddAssessmentEntryResponse { IsSuccess = false } },
 
-                    // valid request - returns true
-                    new object[]
-                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core },
-                      new AddAssessmentEntryResponse { IsSuccess = true, Uln = 1111111113 } },
+                    //// valid request - returns true
+                    //new object[]
+                    //{ new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core },
+                    //  new AddAssessmentEntryResponse { IsSuccess = true, Uln = 1111111113 } },
 
-                    // There is no assessment entry window open.
-                    new object[]
-                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core },
-                      new AddAssessmentEntryResponse { IsSuccess = false, Uln = 1111111114} },
+                    //// There is no assessment entry window open.
+                    //new object[]
+                    //{ new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core },
+                    //  new AddAssessmentEntryResponse { IsSuccess = false, Uln = 1111111114} },
 
-                    // When specialism entry type couplet - returns true
-                    new object[]
-                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 5, ComponentType = ComponentType.Specialism, SpecialismIds = new List<int?> { 5, 6 } },
-                      new AddAssessmentEntryResponse { IsSuccess = true, Uln = 1111111115 } },
+                    //// When specialism entry type couplet - returns true
+                    //new object[]
+                    //{ new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 5, ComponentType = ComponentType.Specialism, SpecialismIds = new List<int?> { 5, 6 } },
+                    //  new AddAssessmentEntryResponse { IsSuccess = true, Uln = 1111111115 } },
 
-                    // Component type not specified
-                    new object[]
-                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 5, ComponentType = ComponentType.NotSpecified, SpecialismIds = new List<int?> { 1, 2 } },
-                      new AddAssessmentEntryResponse { IsSuccess = false } },
+                    //// Component type not specified
+                    //new object[]
+                    //{ new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 5, ComponentType = ComponentType.NotSpecified, SpecialismIds = new List<int?> { 1, 2 } },
+                    //  new AddAssessmentEntryResponse { IsSuccess = false } },
 
+                    // When specialism entry type for 2nd Cohort - returns true
+                    new object[]
+                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 6, ComponentType = ComponentType.Specialism, SpecialismIds = new List<int?> { 7, 8 } },
+                      new AddAssessmentEntryResponse { IsSuccess = true, Uln = 1111111116 } },
                 };
             }
         }

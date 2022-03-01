@@ -17,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<TqRegistrationProfile> _registrations;
         private List<TqPathwayAssessment> _pathwayAssessments;
+        private List<TqSpecialismAssessment> _specialismAssessments;
 
         // Input or Output
         private TqRegistrationPathway _actualResult;
@@ -38,6 +39,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
             var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
 
+            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+            var tqSpecialismResultsSeedData = new List<TqSpecialismResult>();
+
             foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111))
             {
                 var hasHitoricData = new List<long> { 1111111112 };
@@ -49,10 +53,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
 
                 tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
                 tqSpecialismAssessmentsSeedData.AddRange(specialismsAssessments);
+
+                // Build results
+                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(pathwayAssessments, isLatestActive, isHistoricAssessent));
+                tqSpecialismResultsSeedData.AddRange(GetSpecialismResultsDataToProcess(specialismsAssessments, isLatestActive, isHistoricAssessent));
             }
 
             _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
-            SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
+            _specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
+
+            var pathwayResults = SeedPathwayResultsData(tqPathwayResultsSeedData, false);
+            var specialismResults = SeedSpecialismResultsData(tqSpecialismResultsSeedData, false);
 
             foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111 && x.UniqueLearnerNumber != 1111111114))
                 SeedIndustyPlacementData(registration.UniqueLearnerNumber);
@@ -80,7 +91,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
         [Theory()]
         [MemberData(nameof(Data))]
         public async Task Then_Expected_Results_Are_Returned(long aoUkprn, int uln, bool includeProfile, bool includeIndustryPlacement,
-            bool isRegistrationPathwayExpected, bool isRegistrationProfileExpected, bool isAssessmentExpected, bool isIndustryPlacementExpected)
+            bool isRegistrationPathwayExpected, bool isRegistrationProfileExpected, bool isAssessmentExpected, bool isResultExpected, bool isIndustryPlacementExpected)
         {
             var profileId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln).Id;
             await WhenAsync(aoUkprn, profileId, includeProfile, includeIndustryPlacement);
@@ -125,12 +136,29 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
                 _actualResult.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments).Any().Should().BeTrue();
 
                 // Assert SpecialismAssessments
-                var actualSpecialismAssessment = GetSpecialismsAssessments(uln, _actualResult);
-                var expectedSpecialismAssessment = GetSpecialismsAssessments(uln, expectedPathway);
+                var actualSpecialismAssessment = GetSpecialismsAssessments(_actualResult);
+                var expectedSpecialismAssessment = GetSpecialismsAssessments(expectedPathway);
                 AssertSpecialismAssessment(actualSpecialismAssessment, expectedSpecialismAssessment);
             }
             else
                 _actualResult.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments).Any().Should().BeFalse();
+
+            if (isResultExpected)
+            {
+                // Assert Pathway results
+                _actualResult.TqPathwayAssessments.SelectMany(x => x.TqPathwayResults).Any().Should().BeTrue();
+
+                var actualPathwayResult = GetPathwayResult(_actualResult);
+                var expectedPathwayResult = GetPathwayResult(expectedPathway);
+                AssertPathwayResult(actualPathwayResult, expectedPathwayResult);
+
+                // Assert Specialism results
+                _actualResult.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments).SelectMany(x => x.TqSpecialismResults).Any().Should().BeTrue();
+                
+                var actualSpecialismResults = GetSpecialismsResults(_actualResult);
+                var expectedSpecialismResults = GetSpecialismsResults(expectedPathway);
+                AssertSpecialismResults(actualSpecialismResults, expectedSpecialismResults);
+            }
 
             // Assert Industry Placement
             if (isIndustryPlacementExpected)
@@ -151,15 +179,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
             {
                 return new[]
                 {
-                    // InputParams: aoUkprn, Uln, inclProf, inclIp AND ExpectedResult: isRegistrationPathwayExpected, isRegistrationProfileExpected, isAssessmentExpected, isIndustryPlacementExpected
-                    new object[] { 99999999, 1111111111, false, false, false, false, false, false },
-                    new object[] { 10011881, 1111111112, true, true, true, true, true, true },
-                    new object[] { 10011881, 1111111113, true, true, true, true, true, true },
-                    new object[] { 10011881, 1111111114, true, true, true, true, true, false },
+                    // InputParams: aoUkprn, Uln, inclProf, inclIp AND ExpectedResult: isRegistrationPathwayExpected, isRegistrationProfileExpected, isAssessmentExpected, isResultExpected, isIndustryPlacementExpected
+                    new object[] { 99999999, 1111111111, false, false, false, false, false, false, false },
+                    new object[] { 10011881, 1111111112, true, true, true, true, true, true, true },
+                    new object[] { 10011881, 1111111113, true, true, true, true, true, true, true },
+                    new object[] { 10011881, 1111111114, true, true, true, true, true, true, false },
 
-                    new object[] { 10011881, 1111111112, false, false, true, false, true, false },
-                    new object[] { 10011881, 1111111113, false, false, true, false, true, false },
-                    new object[] { 10011881, 1111111114, false, false, true, false, true, false },
+                    new object[] { 10011881, 1111111112, false, false, true, false, true, true, false },
+                    new object[] { 10011881, 1111111113, false, false, true, false, true, true, false },
+                    new object[] { 10011881, 1111111114, false, false, true, false, true, true, false },
                 };
             }
         }
@@ -188,7 +216,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
                 return _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln && x.IsOptedin && x.EndDate == null);
         }
 
-        private IList<TqSpecialismAssessment> GetSpecialismsAssessments(int uln, TqRegistrationPathway pathway)
+        private TqPathwayResult GetPathwayResult(TqRegistrationPathway pathway)
+        {
+            if (pathway.Status == RegistrationPathwayStatus.Withdrawn)
+                return pathway.TqPathwayAssessments.Where(x => x.IsOptedin && x.EndDate != null)
+                    .SelectMany(x => x.TqPathwayResults).FirstOrDefault(pr => pr.IsOptedin && pr.EndDate != null);
+            else
+                return pathway.TqPathwayAssessments.Where(x => x.IsOptedin && x.EndDate == null)
+                   .SelectMany(x => x.TqPathwayResults).FirstOrDefault(pr => pr.IsOptedin && pr.EndDate == null);
+        }
+
+        private IList<TqSpecialismAssessment> GetSpecialismsAssessments(TqRegistrationPathway pathway)
         {
             if (pathway.Status == RegistrationPathwayStatus.Withdrawn)
                 return pathway.TqRegistrationSpecialisms.Where(x => x.IsOptedin && x.EndDate != null)
@@ -196,6 +234,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
             else
                 return pathway.TqRegistrationSpecialisms.Where(x => x.IsOptedin && x.EndDate == null)
                     .SelectMany(x => x.TqSpecialismAssessments).Where(sa => sa.IsOptedin && sa.EndDate == null).ToList();
+        }
+
+        private IList<TqSpecialismResult> GetSpecialismsResults(TqRegistrationPathway pathway)
+        {
+            if (pathway.Status == RegistrationPathwayStatus.Withdrawn)
+                return pathway.TqRegistrationSpecialisms.Where(x => x.IsOptedin && x.EndDate != null)
+                    .SelectMany(x => x.TqSpecialismAssessments).Where(sa => sa.IsOptedin && sa.EndDate != null)
+                    .SelectMany(x => x.TqSpecialismResults).Where(sr => sr.IsOptedin && sr.EndDate != null).ToList();
+            else
+                return pathway.TqRegistrationSpecialisms.Where(x => x.IsOptedin && x.EndDate == null)
+                    .SelectMany(x => x.TqSpecialismAssessments).Where(sa => sa.IsOptedin && sa.EndDate == null)
+                    .SelectMany(x => x.TqSpecialismResults).Where(sr => sr.IsOptedin && sr.EndDate == null).ToList();
         }
     }
 }

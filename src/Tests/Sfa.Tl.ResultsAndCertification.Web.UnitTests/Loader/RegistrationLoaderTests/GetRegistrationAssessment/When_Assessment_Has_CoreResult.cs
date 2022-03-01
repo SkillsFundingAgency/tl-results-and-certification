@@ -1,14 +1,13 @@
 ﻿using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using System.Collections.Generic;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.GetRegistrationAssessment
 {
-    public class When_Called_With_Valid_Data : TestSetup
+    public class When_Assessment_Has_CoreResult : TestSetup
     {
         public override void Given()
         {
@@ -86,23 +85,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                         }
                     }
                 }
-            };
+            };          
 
-            InternalApiClient.GetLearnerRecordAsync(AoUkprn, ProfileId).Returns(expectedApiResult);            
+            InternalApiClient.GetLearnerRecordAsync(AoUkprn, ProfileId).Returns(expectedApiResult);
         }
 
         [Fact]
-        public void Then_Returns_Expected_Results()
+        public void Then_IsResultExist_IsTrue()
         {
-            ActualResult.Should().NotBeNull();
-
-            ActualResult.ProfileId.Should().Be(expectedApiResult.ProfileId);
-            ActualResult.Uln.Should().Be(expectedApiResult.Uln);
-            ActualResult.PathwayStatus.Should().Be(expectedApiResult.Pathway.Status);
-            
-            ActualResult.AnyComponentResultExist.Should().Be(true);
-            ActualResult.HasAnyOutstandingPathwayPrsActivities.Should().Be(false);
-            ActualResult.IsIndustryPlacementExist.Should().Be(true);                     
+            ActualResult.AnyComponentResultExist.Should().BeTrue();
         }
     }
 }

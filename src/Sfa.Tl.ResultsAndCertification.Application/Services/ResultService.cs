@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Application.Helpers;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -173,7 +174,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 // 12. Specialim - Assessment series is not open 
                 if (isSpecialismAndAssesssmentSeriesValid && hasActivSpecialismAssessmentEntry && !string.IsNullOrWhiteSpace(result.SpecialismAssessmentSeries))
                 {
-                    var isValidNextAssessmentSeries = IsValidNextAssessmentSeries(dbAssessmentSeries.Where(x => x.ComponentType == ComponentType.Specialism).ToList(), dbRegistration.AcademicYear, result.SpecialismAssessmentSeries, Constants.SpecialismAssessmentStartInYears, ComponentType.Specialism);
+                    var isValidNextAssessmentSeries = CommonHelper.IsValidNextAssessmentSeries(result.SpecialismAssessmentSeries, dbRegistration.AcademicYear, dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.StartYear, ComponentType.Specialism, dbAssessmentSeries.Where(x => x.ComponentType == ComponentType.Specialism).ToList());
                     if (!isValidNextAssessmentSeries)
                         validationErrors.Add(BuildValidationError(result, ValidationMessages.SpecialismSeriesNotCurrentlyOpen));
                 }
@@ -609,19 +610,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 return false;
             }
-        }
-
-        private static bool IsValidNextAssessmentSeries(IList<AssessmentSeries> dbAssessmentSeries, int regAcademicYear, string assessmentEntryName, int startYearOffset, ComponentType componentType)
-        {
-            // TODO: move to common
-            var currentDate = DateTime.UtcNow.Date;
-
-            var isValidNextAssessmentSeries = dbAssessmentSeries.Any(s => s.ComponentType == componentType &&
-                s.Name.Equals(assessmentEntryName, StringComparison.InvariantCultureIgnoreCase) &&
-                currentDate >= s.StartDate && currentDate <= s.EndDate &&
-                s.Year > regAcademicYear + startYearOffset && s.Year <= regAcademicYear + Constants.AssessmentEndInYears);
-
-            return isValidNextAssessmentSeries;
         }
 
         #endregion

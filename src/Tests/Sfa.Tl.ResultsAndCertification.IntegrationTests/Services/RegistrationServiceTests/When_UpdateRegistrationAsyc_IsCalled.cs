@@ -86,8 +86,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             if(hasProviderChanged)
             {
                 // Assessments seed
-                SeedPathwayAssessmentsData(GetPathwayAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.ToList(), isBulkUpload: false));
-                SeedSpecialismAssessmentsData(GetSpecialismAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList()));
+                var pathwayAssessments = SeedPathwayAssessmentsData(GetPathwayAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.ToList(), isBulkUpload: false));
+                var pathwayResults = SeedPathwayResultsData(GetPathwayResultsDataToProcess(pathwayAssessments, isBulkUpload: false));
+                
+                var specialismAssessments = SeedSpecialismAssessmentsData(GetSpecialismAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList()));
+                var specialismResults = SeedSpecialismResultsData(GetSpecialismResultsDataToProcess(specialismAssessments, isBulkUpload: false));
             }
 
             await WhenAsync();
@@ -106,6 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                                                                                                                        .Include(x => x.TqRegistrationPathways)
                                                                                                                            .ThenInclude(x => x.TqRegistrationSpecialisms)
                                                                                                                                 .ThenInclude(x => x.TqSpecialismAssessments)
+                                                                                                                                    .ThenInclude(x => x.TqSpecialismResults)
                                                                                                                        .Include(x => x.TqRegistrationPathways)
                                                                                                                             .ThenInclude(x => x.TqPathwayAssessments)
                                                                                                                                 .ThenInclude(x => x.TqPathwayResults)
@@ -138,6 +142,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var expectedPreviousAssessment = expectedActivePathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate != null);
             AssertPathwayAssessment(actualActiveAssessment, expectedPreviousAssessment, isTransferred: true);
 
+            // Assert Pathway result
+            var actualActiveResult = actualActiveAssessment.TqPathwayResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
+            var expectedPreviousResult = expectedPreviousAssessment.TqPathwayResults.FirstOrDefault(x => x.IsOptedin && x.EndDate != null);
+            AssertPathwayResults(actualActiveResult, expectedPreviousResult, isTransferred: true);
+
             // Assert Transferred SpecialismAssessment
             foreach (var activeSpecialism in actualActivePathway.TqRegistrationSpecialisms.Where(s => s.EndDate == null))
             {
@@ -145,7 +154,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 var actualActiveSpecialismAssessment = activeSpecialism.TqSpecialismAssessments.FirstOrDefault(x => x.EndDate == null);
                 var expectedPreviousSpecialismAssessment = transferredSpecialism.TqSpecialismAssessments.FirstOrDefault(x => x.EndDate != null);
                 AssertSpecialismAssessment(actualActiveSpecialismAssessment, expectedPreviousSpecialismAssessment, isRejoin: false, isTransferred: true);
-            }            
+
+                // Assert Specialism result
+                var actualActiveSpecialismResult = actualActiveSpecialismAssessment.TqSpecialismResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
+                var expectedPreviousSpecialismResult = expectedPreviousSpecialismAssessment.TqSpecialismResults.FirstOrDefault(x => x.IsOptedin && x.EndDate != null);
+                AssertSpecialismResult(actualActiveSpecialismResult, expectedPreviousSpecialismResult, isTransferred: true);
+            }
         }
 
         public static IEnumerable<object[]> Data

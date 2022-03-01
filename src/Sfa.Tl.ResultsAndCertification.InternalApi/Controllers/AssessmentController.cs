@@ -30,14 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public async Task<BulkAssessmentResponse> ProcessBulkAssessmentsAsync(BulkProcessRequest request)
         {
             return await _bulkAssementProcess.ProcessAsync(request);
-        }
-
-        [HttpGet]
-        [Route("GetAssessmentDetails/{aoUkprn}/{profileId}/{status:int?}")]
-        public async Task<AssessmentDetails> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
-        {
-            return await _assessmentService.GetAssessmentDetailsAsync(aoUkprn, profileId, status);
-        }
+        }        
 
         [HttpGet]
         [Route("GetAvailableAssessmentSeries/{aoUkprn}/{profileId}/{componentType}/{componentIds}")]

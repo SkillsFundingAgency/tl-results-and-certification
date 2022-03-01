@@ -123,28 +123,19 @@
   <data name="Heading" xml:space="preserve">
     <value>You cannot delete this registration</value>
   </data>
-  <data name="Item_Both_Of_Them" xml:space="preserve">
-    <value>both of the above.</value>
-  </data>
   <data name="Item_Industry_Placement_Added" xml:space="preserve">
-    <value>the education provider has added an industry placement record for this learner;</value>
+    <value>industry placement information</value>
   </data>
   <data name="Item_Results_Added" xml:space="preserve">
-    <value>your organisation has added a core component result to this learner's registration;</value>
+    <value>results</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Registration cannot be deleted page</value>
   </data>
   <data name="Para_Can_Not_Be_Deleted_Because" xml:space="preserve">
-    <value>This registration has results data so cannot be deleted. This could be because:</value>
+    <value>This learner’s registration cannot be deleted because it has one or both of the following:</value>
   </data>
   <data name="Para_Check_Trying_The_Correct_Registration" xml:space="preserve">
-    <value>Check you are trying to delete the correct registration.</value>
-  </data>
-  <data name="Para_If_Not_Have_Core_Results" xml:space="preserve">
-    <value>If this registration should not have a core component result, you should amend the results for this registration.</value>
-  </data>
-  <data name="Para_If_No_Industry_Placement_Contact_Provider" xml:space="preserve">
-    <value>If this registration should not have an industry placement record, contact the education provider.</value>
+    <value>Please check whether you entered the correct ULN.</value>
   </data>
 </root>

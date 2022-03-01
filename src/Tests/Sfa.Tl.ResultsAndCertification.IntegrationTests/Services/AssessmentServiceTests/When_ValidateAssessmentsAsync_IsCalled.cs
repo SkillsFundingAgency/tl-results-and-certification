@@ -23,7 +23,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
         private Task<IList<AssessmentRecordResponse>> _stage3Result;
         private long _aoUkprn;
 
-        private readonly Dictionary<long, RegistrationPathwayStatus> _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Withdrawn }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Active }, { 1111111114, RegistrationPathwayStatus.Active }, { 1111111115, RegistrationPathwayStatus.Active } };
+        private readonly Dictionary<long, RegistrationPathwayStatus> _ulns = new Dictionary<long, RegistrationPathwayStatus> 
+        { 
+            { 1111111111, RegistrationPathwayStatus.Withdrawn },
+            { 1111111112, RegistrationPathwayStatus.Active },
+            { 1111111113, RegistrationPathwayStatus.Active },
+            { 1111111114, RegistrationPathwayStatus.Active },
+            { 1111111115, RegistrationPathwayStatus.Active },
+            { 1111111116, RegistrationPathwayStatus.Active }
+        };
 
         public override void Given()
         {
@@ -34,8 +42,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
 
             var registrations = SeedRegistrationsData(_ulns, TqProvider);
+
+            // Second cohort Ulns for Specialisms assessment entry to be taken in 1st year
+            var secondCohortUlns = new List<long> { 1111111116 };
+            RegisterUlnForNextCohort(registrations, secondCohortUlns, 2021);
+
             var coupletRegistrations = new List<long> { 1111111114, 1111111115 };
-            var coupletAssessments = new List<long> { 1111111115 };
+            var coupletAssessments = new List<long> { 1111111115, 1111111116 };
 
             var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
             foreach (var coupletReg in coupletRegistrations)
@@ -119,7 +132,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             };
             TestValidatonErrors(actualResult.ValidationErrors, expectedErrors, rowIndex);
 
-            // 6. Couplets registered - first entry, both entries are expected but has only one.   
+            // 5. Couplets registered - first entry, both entries are expected but has only one.   
             rowIndex++;
             actualResult = _stage3Result.Result[rowIndex];
             actualResult.IsValid.Should().BeFalse();
@@ -130,7 +143,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             };
             TestValidatonErrors(actualResult.ValidationErrors, expectedErrors, rowIndex);
 
-            // 7. Couplets registered - Contains invalid code   
+            // 6. Couplets registered - Contains invalid code   
             rowIndex++;
             actualResult = _stage3Result.Result[rowIndex];
             actualResult.IsValid.Should().BeFalse();
@@ -142,7 +155,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             TestValidatonErrors(actualResult.ValidationErrors, expectedErrors, rowIndex);
 
 
-            // 5. Valid Rows.
+            // 7. Valid Rows.
             for (int i = ++rowIndex; i < _stage2Response.ToList().Count; i++)
             {
                 actualResult = _stage3Result.Result[i];
@@ -196,6 +209,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 new AssessmentCsvRecordResponse { RowNum = 10, Uln = 1111111113, SpecialismCodes = new List<string> {"10123456" }, SpecialismAssessmentEntry = "SUMMER 2022" },
                 new AssessmentCsvRecordResponse { RowNum = 11, Uln = 1111111114, SpecialismCodes = new List<string> {"10123456", "10123457" }, SpecialismAssessmentEntry = "SUMMER 2022" }, // New entry for Couplet
                 new AssessmentCsvRecordResponse { RowNum = 12, Uln = 1111111115, SpecialismCodes = new List<string> {"10123456" }, SpecialismAssessmentEntry = "SUMMER 2022" }, // Resit from Couplet
+                new AssessmentCsvRecordResponse { RowNum = 13, Uln = 1111111116, SpecialismCodes = new List<string> {"10123456" }, SpecialismAssessmentEntry = "SUMMER 2022" }, // Registerd in 2021 (second cohort) and can take specialism in Summer 2022
             };
         }
     }

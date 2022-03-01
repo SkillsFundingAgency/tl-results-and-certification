@@ -51,6 +51,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             tqSpecialismAssessmentsSeedData.AddRange(specialismAssessments);
             SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
 
+            var tqSpecialismResultsSeedData = new List<TqSpecialismResult>();
+            foreach (var assessment in specialismAssessments)
+            {
+                tqSpecialismResultsSeedData.AddRange(GetSpecialismResultsDataToProcess(new List<TqSpecialismAssessment> { assessment }, isBulkUpload: false));
+            }
+
+            SeedSpecialismResultsData(tqSpecialismResultsSeedData, false);
+
             DbContext.SaveChangesAsync();
 
             CreateMapper();
@@ -98,6 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                                                                                                                        .Include(x => x.TqRegistrationPathways)
                                                                                                                            .ThenInclude(x => x.TqRegistrationSpecialisms)
                                                                                                                                 .ThenInclude(x => x.TqSpecialismAssessments)
+                                                                                                                                    .ThenInclude(x => x.TqSpecialismResults)
                                                                                                                        .Include(x => x.TqRegistrationPathways)
                                                                                                                             .ThenInclude(x => x.TqPathwayAssessments)
                                                                                                                                 .ThenInclude(x => x.TqPathwayResults)
@@ -142,7 +151,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 var actualActiveSpecialismAssessment = activeSpecialism.TqSpecialismAssessments.FirstOrDefault(x => x.EndDate == null);
                 var expectedPreviousSpecialismAssessment = withdrawnSpecialism.TqSpecialismAssessments.FirstOrDefault(x => x.EndDate != null);
                 AssertSpecialismAssessment(actualActiveSpecialismAssessment, expectedPreviousSpecialismAssessment, isRejoin: true);
-            }
+
+                var actualActiveSpecialismResult = actualActiveSpecialismAssessment.TqSpecialismResults.FirstOrDefault(x => x.EndDate == null);
+                var expectedPreviousSpecialismResult = expectedPreviousSpecialismAssessment.TqSpecialismResults.FirstOrDefault(x => x.EndDate != null);
+
+                AssertSpecialismResult(actualActiveSpecialismResult, expectedPreviousSpecialismResult, isRejoin: true);
+            }            
 
             // Assert IndustryPlacement Data
             var actualActiveIndustryPlacement = actualActivePathway.IndustryPlacements.FirstOrDefault();
