@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("appeals", Name = RouteConstants.StartReviewsAndAppeals)]
+        [Route("post-results-reviews-appeals-and-grade-changes", Name = RouteConstants.StartReviewsAndAppeals)]
         public async Task<IActionResult> StartReviewsAndAppealsAsync()
         {
             await _cacheService.RemoveAsync<PrsSearchLearnerViewModel>(CacheKey);
