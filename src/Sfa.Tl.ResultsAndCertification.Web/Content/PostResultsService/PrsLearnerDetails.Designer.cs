@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class PrsLearnerDetails {
@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Core (code): {0}.
+        ///   Looks up a localized string similar to Core component: {0}.
         /// </summary>
         public static string Heading_Core {
             get {
@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner’s component grade status.
+        ///   Looks up a localized string similar to Learner’s grades - Post-results.
         /// </summary>
         public static string Heading_Learner_Component_Grades_Status {
             get {
@@ -120,6 +120,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         public static string Heading_Learner_Details {
             get {
                 return ResourceManager.GetString("Heading_Learner_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}&apos;s grades.
+        /// </summary>
+        public static string Heading_Learners_Results {
+            get {
+                return ResourceManager.GetString("Heading_Learners_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Occupational specialism: {0}.
+        /// </summary>
+        public static string Heading_Specialism {
+            get {
+                return ResourceManager.GetString("Heading_Specialism", resourceCulture);
             }
         }
         
@@ -232,11 +250,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Provider.
+        /// </summary>
+        public static string Title_Provider_Name_Text {
+            get {
+                return ResourceManager.GetString("Title_Provider_Name_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Provider &lt;br/&gt; (UKPRN).
         /// </summary>
         public static string Title_Provider_Text {
             get {
                 return ResourceManager.GetString("Title_Provider_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UKPRN.
+        /// </summary>
+        public static string Title_Provider_Ukprn_Text {
+            get {
+                return ResourceManager.GetString("Title_Provider_Ukprn_Text", resourceCulture);
             }
         }
         

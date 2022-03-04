@@ -130,13 +130,19 @@
     <value>.</value>
   </data>
   <data name="Heading_Core" xml:space="preserve">
-    <value>Core (code): {0}</value>
+    <value>Core component: {0}</value>
+  </data>
+  <data name="Heading_Learners_Results" xml:space="preserve">
+    <value>{0}'s grades</value>
   </data>
   <data name="Heading_Learner_Component_Grades_Status" xml:space="preserve">
-    <value>Learner’s component grade status</value>
+    <value>Learner’s grades - Post-results</value>
   </data>
   <data name="Heading_Learner_Details" xml:space="preserve">
     <value>Learner's details</value>
+  </data>
+  <data name="Heading_Specialism" xml:space="preserve">
+    <value>Occupational specialism: {0}</value>
   </data>
   <data name="Hidden_Action_Text_Grade" xml:space="preserve">
     <value> grade</value>
@@ -174,8 +180,14 @@
   <data name="Title_Pathway_Grade_LastUpdatedOn" xml:space="preserve">
     <value>Last updated</value>
   </data>
+  <data name="Title_Provider_Name_Text" xml:space="preserve">
+    <value>Provider</value>
+  </data>
   <data name="Title_Provider_Text" xml:space="preserve">
     <value>Provider &lt;br/&gt; (UKPRN)</value>
+  </data>
+  <data name="Title_Provider_Ukprn_Text" xml:space="preserve">
+    <value>UKPRN</value>
   </data>
   <data name="Title_TLevel_Text" xml:space="preserve">
     <value>T Level</value>

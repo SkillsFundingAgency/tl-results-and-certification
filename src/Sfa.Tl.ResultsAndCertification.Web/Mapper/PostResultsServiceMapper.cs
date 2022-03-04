@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
@@ -34,6 +35,32 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))
                 .ForMember(d => d.PathwayGradeLastUpdatedOn, opts => opts.MapFrom(s => s.PathwayGradeLastUpdatedOn.ToDobFormat()))
                 .ForMember(d => d.PathwayGradeLastUpdatedBy, opts => opts.MapFrom(s => s.PathwayGradeLastUpdatedBy));
+
+            CreateMap<LearnerRecord, PrsLearnerDetailsViewModel1>()
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))
+                .ForMember(d => d.Lastname, opts => opts.MapFrom(s => s.Lastname))
+                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
+                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.Pathway.Provider.Name))
+                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.Pathway.Provider.Ukprn))
+                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.Pathway.Title))
+                .ForMember(d => d.CoreComponentDisplayName, opts => opts.MapFrom(s => $"{s.Pathway.Name} ({s.Pathway.LarId})"))
+                .ForMember(d => d.PrsCoreComponentExams, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments))
+                .ForMember(d => d.PrsSpecialismComponents, opts => opts.MapFrom(s => s.Pathway.Specialisms));
+
+            CreateMap<Specialism, PrsSpecialismComponentViewModel>()
+                .ForMember(d => d.SpecialismComponentDisplayName, opts => opts.MapFrom(s => $"{s.Name} ({s.LarId})"))
+                .ForMember(d => d.SpecialismComponentExams, opts => opts.MapFrom(s => s.Assessments));
+
+            CreateMap<Assessment, PrsComponentExamViewModel>()
+                .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.Id))
+                .ForMember(d => d.AssessmentSeries, opts => opts.MapFrom(s => s.SeriesName))
+                .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AppealEndDate))
+                .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.Result != null ? s.Result.Grade : null))
+                .ForMember(d => d.LastUpdated, opts => opts.MapFrom(s => s.Result != null ? s.Result.LastUpdatedOn.ToDobFormat() : null))
+                .ForMember(d => d.UpdatedBy, opts => opts.MapFrom(s => s.Result != null ? s.Result.LastUpdatedBy : null))
+                .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => s.Result != null ? s.Result.PrsStatus : null));
 
             CreateMap<PrsLearnerDetails, AppealCoreGradeViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
