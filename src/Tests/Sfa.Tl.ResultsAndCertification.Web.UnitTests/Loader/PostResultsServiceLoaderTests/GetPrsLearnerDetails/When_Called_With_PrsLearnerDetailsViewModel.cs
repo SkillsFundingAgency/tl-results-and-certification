@@ -51,6 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             Id = 11,
                             SeriesId = 1,
                             SeriesName = "Autumn 2022",
+                            RommEndDate = DateTime.UtcNow.AddDays(5),
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow
@@ -61,6 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             Id = 12,
                             SeriesId = 2,
                             SeriesName = "Summer 2022",
+                            RommEndDate = DateTime.UtcNow.AddDays(5),
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
@@ -79,6 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             Id = 13,
                             SeriesId = 3,
                             SeriesName = "Autumn 2021",
+                            RommEndDate = DateTime.UtcNow.AddDays(5),
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
@@ -97,6 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             Id = 14,
                             SeriesId = 4,
                             SeriesName = "Summer 2021",
+                            RommEndDate = DateTime.UtcNow.AddDays(5),
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
@@ -115,6 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             Id = 15,
                             SeriesId = 5,
                             SeriesName = "Autumn 2020",
+                            RommEndDate = DateTime.UtcNow.AddDays(-15),
                             AppealEndDate = DateTime.UtcNow.AddDays(-10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
@@ -142,6 +147,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                     Id = 100,
                                     SeriesId = 1,
                                     SeriesName = "Summer 2022",
+                                    RommEndDate = DateTime.UtcNow.AddDays(15),
                                     AppealEndDate = DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = DateTime.UtcNow,
@@ -151,6 +157,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                     Id = 101,
                                     SeriesId = 2,
                                     SeriesName = "Summer 2021",
+                                    RommEndDate = DateTime.UtcNow.AddDays(15),
                                     AppealEndDate = DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = DateTime.UtcNow,
@@ -178,6 +185,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                     Id = 102,
                                     SeriesId = 2,
                                     SeriesName = "Summer 2021",
+                                    RommEndDate = DateTime.UtcNow.AddDays(-40),
                                     AppealEndDate = DateTime.UtcNow.AddDays(-30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = DateTime.UtcNow,
@@ -236,11 +244,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 var actualExam = ActualResult.PrsCoreComponentExams.FirstOrDefault(x => x.AssessmentId == expectedExam.Id);
                 actualExam.Should().NotBeNull();
                 actualExam.AssessmentSeries.Should().Be(expectedExam.SeriesName);
+                actualExam.RommEndDate.Should().Be(expectedExam.RommEndDate);
                 actualExam.AppealEndDate.Should().Be(expectedExam.AppealEndDate);
 
                 var isResultAvailable = expectedExam.Result != null;
                 var isGradeExists = expectedExam.Id > 0 && isResultAvailable && !string.IsNullOrWhiteSpace(expectedExam.Result.Grade);
-                var isAddRommAllowed = isGradeExists && (DateTime.UtcNow <= expectedExam.AppealEndDate);
+                var isAddRommAllowed = isGradeExists && (DateTime.UtcNow <= expectedExam.RommEndDate);
 
                 actualExam.Grade.Should().Be(!isResultAvailable ? null : expectedExam.Result.Grade);
                 actualExam.PrsStatus.Should().Be(!isResultAvailable ? null : expectedExam.Result.PrsStatus);
@@ -264,11 +273,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                     var actualExam = actualSpecialism.SpecialismComponentExams.FirstOrDefault(x => x.AssessmentId == expectedExam.Id);
                     actualExam.Should().NotBeNull();
                     actualExam.AssessmentSeries.Should().Be(expectedExam.SeriesName);
+                    actualExam.RommEndDate.Should().Be(expectedExam.RommEndDate);
                     actualExam.AppealEndDate.Should().Be(expectedExam.AppealEndDate);
 
                     var isResultAvailable = expectedExam.Result != null;
                     var isGradeExists = expectedExam.Id > 0 && isResultAvailable && !string.IsNullOrWhiteSpace(expectedExam.Result.Grade);
-                    var isAddRommAllowed = isGradeExists && (DateTime.UtcNow <= expectedExam.AppealEndDate);
+                    var isAddRommAllowed = isGradeExists && (DateTime.UtcNow <= expectedExam.RommEndDate);
 
                     actualExam.Grade.Should().Be(!isResultAvailable ? null : expectedExam.Result.Grade);
                     actualExam.PrsStatus.Should().Be(!isResultAvailable ? null : expectedExam.Result.PrsStatus);

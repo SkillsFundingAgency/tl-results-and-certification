@@ -58,6 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom((src, dest, destMember, context) => (int)context.Items[Constants.ProfileId]))
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.Id))
                 .ForMember(d => d.AssessmentSeries, opts => opts.MapFrom(s => s.SeriesName))
+                .ForMember(d => d.RommEndDate, opts => opts.MapFrom(s => s.RommEndDate))
                 .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AppealEndDate))
                 .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.Result != null ? s.Result.Grade : null))
                 .ForMember(d => d.LastUpdated, opts => opts.MapFrom(s => s.Result != null ? s.Result.LastUpdatedOn.ToDobFormat() : null))
