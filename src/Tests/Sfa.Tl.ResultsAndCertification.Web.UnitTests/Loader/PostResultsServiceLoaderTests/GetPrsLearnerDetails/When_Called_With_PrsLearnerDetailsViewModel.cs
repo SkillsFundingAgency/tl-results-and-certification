@@ -2,8 +2,11 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -11,66 +14,271 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 {
     public class When_Called_With_PrsLearnerDetailsViewModel : TestSetup
     {
-        private Models.Contracts.PostResultsService.PrsLearnerDetails _expectedApiResult;
-        protected PrsLearnerDetailsViewModel ActualResult { get; set; }
+        private Models.Contracts.Learner.LearnerRecord _expectedApiResult;
+
+        protected PrsLearnerDetailsViewModel1 ActualResult { get; set; }
 
         public override void Given()
         {
-            _expectedApiResult = new Models.Contracts.PostResultsService.PrsLearnerDetails
+            ProfileId = 1;
+            _expectedApiResult = new LearnerRecord
             {
-                ProfileId = 1,
-                Uln = 123456789,
+                ProfileId = ProfileId,
+                Uln = 1234567890,
                 Firstname = "John",
                 Lastname = "Smith",
-                DateofBirth = DateTime.UtcNow.AddYears(-20),
-                ProviderName = "Barsley College",
-                ProviderUkprn = 54678945,
-                TlevelTitle = "Title",
-                Status = RegistrationPathwayStatus.Active,
+                DateofBirth = DateTime.UtcNow.AddYears(-29),
+                Gender = "M",
+                Pathway = new Pathway
+                {
+                    Id = 2,
+                    LarId = "89564123",
+                    Name = "Test Pathway",
+                    Title = "Test Pathwya title",
+                    AcademicYear = 2020,
+                    Status = RegistrationPathwayStatus.Active,
+                    Provider = new Provider
+                    {
+                        Id = 1,
+                        Ukprn = 456123987,
+                        Name = "Provider Name",
+                        DisplayName = "Provider display name",
+                    },
+                    PathwayAssessments = new List<Assessment>
+                    {
+                        new Assessment
+                        {
+                            Id = 11,
+                            SeriesId = 1,
+                            SeriesName = "Autumn 2022",
+                            AppealEndDate = DateTime.UtcNow.AddDays(10),
+                            LastUpdatedBy = "System",
+                            LastUpdatedOn = DateTime.UtcNow
+                        },
 
-                PathwayAssessmentId = 99,
-                PathwayAssessmentSeries = "Summer 2021",
-                PathwayCode = "12345678",
-                PathwayName = "Childcare Education",
-                PathwayGrade = "A*",
-                PathwayResultId = 77,
-                PathwayPrsStatus = PrsStatus.BeingAppealed,
-                AppealEndDate = DateTime.Today.AddDays(7),
-                PathwayGradeLastUpdatedBy = "Barsley User",
-                PathwayGradeLastUpdatedOn = DateTime.Today
+                        new Assessment
+                        {
+                            Id = 12,
+                            SeriesId = 2,
+                            SeriesName = "Summer 2022",
+                            AppealEndDate = DateTime.UtcNow.AddDays(10),
+                            LastUpdatedBy = "System",
+                            LastUpdatedOn = DateTime.UtcNow,
+                            Result = new Result
+                            {
+                                Id = 1,
+                                Grade = "C",
+                                PrsStatus = null,
+                                LastUpdatedBy = "System",
+                                LastUpdatedOn = DateTime.UtcNow
+                            }
+                        },
+
+                        new Assessment
+                        {
+                            Id = 13,
+                            SeriesId = 3,
+                            SeriesName = "Autumn 2021",
+                            AppealEndDate = DateTime.UtcNow.AddDays(10),
+                            LastUpdatedBy = "System",
+                            LastUpdatedOn = DateTime.UtcNow,
+                            Result = new Result
+                            {
+                                Id = 1,
+                                Grade = "B",
+                                PrsStatus = PrsStatus.BeingAppealed,
+                                LastUpdatedBy = "System",
+                                LastUpdatedOn = DateTime.UtcNow
+                            }
+                        },
+
+                        new Assessment
+                        {
+                            Id = 14,
+                            SeriesId = 4,
+                            SeriesName = "Summer 2021",
+                            AppealEndDate = DateTime.UtcNow.AddDays(10),
+                            LastUpdatedBy = "System",
+                            LastUpdatedOn = DateTime.UtcNow,
+                            Result = new Result
+                            {
+                                Id = 1,
+                                Grade = "A",
+                                PrsStatus = PrsStatus.Final,
+                                LastUpdatedBy = "System",
+                                LastUpdatedOn = DateTime.UtcNow
+                            }
+                        },
+
+                        new Assessment
+                        {
+                            Id = 15,
+                            SeriesId = 5,
+                            SeriesName = "Autumn 2020",
+                            AppealEndDate = DateTime.UtcNow.AddDays(-10),
+                            LastUpdatedBy = "System",
+                            LastUpdatedOn = DateTime.UtcNow,
+                            Result = new Result
+                            {
+                                Id = 1,
+                                Grade = "D",
+                                PrsStatus = null,
+                                LastUpdatedBy = "System",
+                                LastUpdatedOn = DateTime.UtcNow
+                            }
+                        }
+                    },
+                    Specialisms = new List<Specialism>
+                    {
+                        new Specialism
+                        {
+                            Id = 20,
+                            LarId = "12345678",
+                            Name = "Plumbing",
+                            Assessments = new List<Assessment>
+                            {
+                                new Assessment
+                                {
+                                    Id = 100,
+                                    SeriesId = 1,
+                                    SeriesName = "Summer 2022",
+                                    AppealEndDate = DateTime.UtcNow.AddDays(30),
+                                    LastUpdatedBy = "System",
+                                    LastUpdatedOn = DateTime.UtcNow,
+                                },
+                                new Assessment
+                                {
+                                    Id = 101,
+                                    SeriesId = 2,
+                                    SeriesName = "Summer 2021",
+                                    AppealEndDate = DateTime.UtcNow.AddDays(30),
+                                    LastUpdatedBy = "System",
+                                    LastUpdatedOn = DateTime.UtcNow,
+                                    Result = new Result
+                                    {
+                                        Id = 1,
+                                        Grade = "Merit",
+                                        PrsStatus = null,
+                                        LastUpdatedBy = "System",
+                                        LastUpdatedOn = DateTime.UtcNow
+                                    }
+                                }
+                            }
+                        },
+
+                        new Specialism
+                        {
+                            Id = 22,
+                            LarId = "12345679",
+                            Name = "Heating",
+                            Assessments = new List<Assessment>
+                            {
+                                new Assessment
+                                {
+                                    Id = 102,
+                                    SeriesId = 2,
+                                    SeriesName = "Summer 2021",
+                                    AppealEndDate = DateTime.UtcNow.AddDays(-30),
+                                    LastUpdatedBy = "System",
+                                    LastUpdatedOn = DateTime.UtcNow,
+                                    Result = new Result
+                                    {
+                                        Id = 1,
+                                        Grade = "Pass",
+                                        PrsStatus = null,
+                                        LastUpdatedBy = "System",
+                                        LastUpdatedOn = DateTime.UtcNow
+                                    }
+                                }
+                            }
+                        },
+                    },
+                    IndustryPlacements = new List<IndustryPlacement>
+                    {
+                        new IndustryPlacement
+                        {
+                            Id = 7,
+                            Status = IndustryPlacementStatus.Completed
+                        }
+                    }
+                }
             };
 
-            InternalApiClient.GetPrsLearnerDetailsAsync(AoUkprn, ProfileId, AssessmentId).Returns(_expectedApiResult);
+            InternalApiClient.GetLearnerRecordAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(_expectedApiResult);
         }
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId, AssessmentId);
+            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel1>(AoUkprn, ProfileId);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
             ActualResult.Should().NotBeNull();
+
             ActualResult.ProfileId.Should().Be(_expectedApiResult.ProfileId);
             ActualResult.Uln.Should().Be(_expectedApiResult.Uln);
             ActualResult.Firstname.Should().Be(_expectedApiResult.Firstname);
             ActualResult.Lastname.Should().Be(_expectedApiResult.Lastname);
             ActualResult.DateofBirth.Should().Be(_expectedApiResult.DateofBirth);
-            ActualResult.ProviderName.Should().Be(_expectedApiResult.ProviderName);
-            ActualResult.ProviderUkprn.Should().Be(_expectedApiResult.ProviderUkprn);
-            ActualResult.TlevelTitle.Should().Be(_expectedApiResult.TlevelTitle);
-            ActualResult.Status.Should().Be(_expectedApiResult.Status);
+            ActualResult.TlevelTitle.Should().Be(_expectedApiResult.Pathway.Title);
+            ActualResult.ProviderName.Should().Be(_expectedApiResult.Pathway.Provider.Name);
+            ActualResult.ProviderUkprn.Should().Be(_expectedApiResult.Pathway.Provider.Ukprn);
 
-            ActualResult.PathwayAssessmentId.Should().Be(_expectedApiResult.PathwayAssessmentId);
-            ActualResult.PathwayAssessmentSeries.Should().Be(_expectedApiResult.PathwayAssessmentSeries);
-            ActualResult.AppealEndDate.Should().Be(_expectedApiResult.AppealEndDate);
-            ActualResult.PathwayTitle.Should().Be($"{_expectedApiResult.PathwayName} ({_expectedApiResult.PathwayCode})");
-            ActualResult.PathwayGrade.Should().Be(_expectedApiResult.PathwayGrade);
-            ActualResult.PathwayResultId.Should().Be(_expectedApiResult.PathwayResultId);
-            ActualResult.PathwayPrsStatus.Should().Be(_expectedApiResult.PathwayPrsStatus);            
-            ActualResult.PathwayGradeLastUpdatedBy.Should().Be(_expectedApiResult.PathwayGradeLastUpdatedBy);
-            ActualResult.PathwayGradeLastUpdatedOn.Should().Be(_expectedApiResult.PathwayGradeLastUpdatedOn.ToDobFormat());
+            // Core Component 
+            ActualResult.HasCoreResults.Should().BeTrue();
+            ActualResult.CoreComponentDisplayName.Should().Be($"{_expectedApiResult.Pathway.Name} ({_expectedApiResult.Pathway.LarId})");
+            ActualResult.PrsCoreComponentExams.Should().HaveCount(_expectedApiResult.Pathway.PathwayAssessments.Count(p => p.Result != null));
+            
+            foreach (var expectedExam in _expectedApiResult.Pathway.PathwayAssessments.Where(p => p.Result != null))
+            {
+                var actualExam = ActualResult.PrsCoreComponentExams.FirstOrDefault(x => x.AssessmentId == expectedExam.Id);
+                actualExam.Should().NotBeNull();
+                actualExam.AssessmentSeries.Should().Be(expectedExam.SeriesName);
+                actualExam.AppealEndDate.Should().Be(expectedExam.AppealEndDate);
+
+                var isResultAvailable = expectedExam.Result != null;
+                var isGradeExists = expectedExam.Id > 0 && isResultAvailable && !string.IsNullOrWhiteSpace(expectedExam.Result.Grade);
+                var isAddRommAllowed = isGradeExists && (DateTime.UtcNow <= expectedExam.AppealEndDate);
+
+                actualExam.Grade.Should().Be(!isResultAvailable ? null : expectedExam.Result.Grade);
+                actualExam.PrsStatus.Should().Be(!isResultAvailable ? null : expectedExam.Result.PrsStatus);
+                actualExam.LastUpdated.Should().Be(!isResultAvailable ? null : expectedExam.Result.LastUpdatedOn.ToDobFormat());
+                actualExam.UpdatedBy.Should().Be(!isResultAvailable ? null : expectedExam.Result.LastUpdatedBy);
+                //actualExam.ComponentType.Should().Be(ComponentType.Core);
+                actualExam.IsAddRommAllowed.Should().Be(isAddRommAllowed);
+                actualExam.ProfileId.Should().Be(_expectedApiResult.ProfileId);
+            }
+
+            // Specialism Components
+            ActualResult.PrsSpecialismComponents.Should().HaveCount(_expectedApiResult.Pathway.Specialisms.Count());
+
+            foreach (var expectedSpecialism in _expectedApiResult.Pathway.Specialisms)
+            {
+                var actualSpecialism = ActualResult.PrsSpecialismComponents.FirstOrDefault(x => x.SpecialismComponentDisplayName.Equals($"{expectedSpecialism.Name} ({expectedSpecialism.LarId})", StringComparison.InvariantCultureIgnoreCase));
+                actualSpecialism.Should().NotBeNull();
+
+                foreach (var expectedExam in expectedSpecialism.Assessments.Where(s => s.Result != null))
+                {
+                    var actualExam = actualSpecialism.SpecialismComponentExams.FirstOrDefault(x => x.AssessmentId == expectedExam.Id);
+                    actualExam.Should().NotBeNull();
+                    actualExam.AssessmentSeries.Should().Be(expectedExam.SeriesName);
+                    actualExam.AppealEndDate.Should().Be(expectedExam.AppealEndDate);
+
+                    var isResultAvailable = expectedExam.Result != null;
+                    var isGradeExists = expectedExam.Id > 0 && isResultAvailable && !string.IsNullOrWhiteSpace(expectedExam.Result.Grade);
+                    var isAddRommAllowed = isGradeExists && (DateTime.UtcNow <= expectedExam.AppealEndDate);
+
+                    actualExam.Grade.Should().Be(!isResultAvailable ? null : expectedExam.Result.Grade);
+                    actualExam.PrsStatus.Should().Be(!isResultAvailable ? null : expectedExam.Result.PrsStatus);
+                    actualExam.LastUpdated.Should().Be(!isResultAvailable ? null : expectedExam.Result.LastUpdatedOn.ToDobFormat());
+                    actualExam.UpdatedBy.Should().Be(!isResultAvailable ? null : expectedExam.Result.LastUpdatedBy);
+                    //actualExam.ComponentType.Should().Be(ComponentType.Specialism);
+                    actualExam.IsAddRommAllowed.Should().Be(isAddRommAllowed);
+                    actualExam.ProfileId.Should().Be(_expectedApiResult.ProfileId);
+                }
+            }
         }
     }
 }

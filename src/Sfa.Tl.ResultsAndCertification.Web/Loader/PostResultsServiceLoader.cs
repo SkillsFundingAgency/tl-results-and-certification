@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
@@ -26,18 +27,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.FindPrsLearnerRecordAsync(aoUkprn, uln, profileId);
         }
 
-        public async Task<PrsLearnerDetailsViewModel1> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId)
+        public async Task<T> GetPrsLearnerDetailsAsync<T>(long aoUkprn, int profileId)
         {
             var response = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId, RegistrationPathwayStatus.Active);
-            if (response == null)
-                return null;
-
-            // Below code is to set the ComponentType property which is used to render the ActionText dependent information.
-            var viewModel = _mapper.Map<PrsLearnerDetailsViewModel1>(response);
-            viewModel.PrsCoreComponentExams.ToList().ForEach(x => { x.ComponentType = ComponentType.Core; x.ProfileId = viewModel.ProfileId; });
-            viewModel.PrsSpecialismComponents.ToList().ForEach(x => { x.SpecialismComponentExams.ToList()
-                .ForEach(s => { s.ComponentType = ComponentType.Specialism; s.ProfileId = viewModel.ProfileId; });
-            });
+           
+            var viewModel = _mapper.Map<T>(response, opt => opt.Items[Constants.ProfileId] = profileId);
 
             return viewModel;
         }
