@@ -16,5 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public PrsStatus? PrsStatus { get; set; }
         public ComponentType ComponentType { get; set; }
         public string PrsDisplayText { get { return CommonHelper.GetPrsStatusDisplayText(PrsStatus, AppealEndDate); } }
+        public bool IsAddRommAllowed => IsGradeExists && CommonHelper.IsAppealsAllowed(AppealEndDate);
+        private bool IsGradeExists => AssessmentId > 0 && !string.IsNullOrWhiteSpace(Grade);
     }
 }

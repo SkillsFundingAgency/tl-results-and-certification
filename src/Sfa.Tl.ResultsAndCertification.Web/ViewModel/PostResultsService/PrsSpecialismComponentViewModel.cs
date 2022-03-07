@@ -12,6 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public string SpecialismComponentDisplayName { get; set; }        
         public IList<PrsComponentExamViewModel> SpecialismComponentExams { get; set; }
-        public bool IsSpecialismAssessmentEntryRegistered { get { return SpecialismComponentExams.Any(x => x.AssessmentId > 0); } }
+        public bool HasSpecialismResults { get { return SpecialismComponentExams.Any(x => x.AssessmentId > 0 && !string.IsNullOrWhiteSpace(x.Grade)); } }
     }
 }

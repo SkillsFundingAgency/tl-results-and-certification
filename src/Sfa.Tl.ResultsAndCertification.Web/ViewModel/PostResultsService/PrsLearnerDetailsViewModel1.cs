@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         // Core Component
         public string CoreComponentDisplayName { get; set; }
-        public bool IsCoreAssessmentEntryRegistered { get { return PrsCoreComponentExams.Any(x => x.AssessmentId > 0); } }
+        public bool HasCoreResults { get { return PrsCoreComponentExams.Any(x => x.AssessmentId > 0 && !string.IsNullOrWhiteSpace(x.Grade)); } }
         public IList<PrsComponentExamViewModel> PrsCoreComponentExams { get; set; }
 
         // Specialism Components

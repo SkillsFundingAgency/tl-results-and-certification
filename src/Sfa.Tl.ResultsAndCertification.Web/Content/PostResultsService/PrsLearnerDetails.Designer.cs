@@ -61,11 +61,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add ROMM.
+        /// </summary>
+        public static string Action_Button_Add_Romm {
+            get {
+                return ResourceManager.GetString("Action_Button_Add_Romm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update.
         /// </summary>
         public static string Action_Link_Update {
             get {
                 return ResourceManager.GetString("Action_Link_Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learners details.
+        /// </summary>
+        public static string Aria_Label_Text_Learner_Details {
+            get {
+                return ResourceManager.GetString("Aria_Label_Text_Learner_Details", resourceCulture);
             }
         }
         
@@ -88,6 +106,60 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to an appeal outcome has been added.
+        /// </summary>
+        public static string Details_Summary_Text_An_Appeal_Outcome_Has_Been_Added {
+            get {
+                return ResourceManager.GetString("Details_Summary_Text_An_Appeal_Outcome_Has_Been_Added", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grades marked ‘FINAL’ can no longer be changed here when:.
+        /// </summary>
+        public static string Details_Summary_Text_Grades_Marked_Final_Can_No_Longer_Be_Changed {
+            get {
+                return ResourceManager.GetString("Details_Summary_Text_Grades_Marked_Final_Can_No_Longer_Be_Changed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If a grade status is ‘ROMM’ or ‘APPEAL’ then the overall result will not be sent for certificate printing until an outcome has been added..
+        /// </summary>
+        public static string Details_Summary_Text_If_Grade_Status {
+            get {
+                return ResourceManager.GetString("Details_Summary_Text_If_Grade_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More about grades and their statuses.
+        /// </summary>
+        public static string Details_Summary_Text_Link_More_About {
+            get {
+                return ResourceManager.GetString("Details_Summary_Text_Link_More_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The highest grade for each component will be used to calculate the overall T Level result for results day..
+        /// </summary>
+        public static string Details_Summary_Text_The_Highest_Grade_For_Each_Component {
+            get {
+                return ResourceManager.GetString("Details_Summary_Text_The_Highest_Grade_For_Each_Component", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to the ROMM or appeal deadline has passed, or.
+        /// </summary>
+        public static string Details_Summary_Text_The_Room_Or_Appeal_deadline_Has_Passed {
+            get {
+                return ResourceManager.GetString("Details_Summary_Text_The_Room_Or_Appeal_deadline_Has_Passed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ..
         /// </summary>
         public static string Fullstop {
@@ -102,24 +174,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         public static string Heading_Core {
             get {
                 return ResourceManager.GetString("Heading_Core", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Learner’s grades - Post-results.
-        /// </summary>
-        public static string Heading_Learner_Component_Grades_Status {
-            get {
-                return ResourceManager.GetString("Heading_Learner_Component_Grades_Status", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Learner&apos;s details.
-        /// </summary>
-        public static string Heading_Learner_Details {
-            get {
-                return ResourceManager.GetString("Heading_Learner_Details", resourceCulture);
             }
         }
         
@@ -142,56 +196,101 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  grade.
-        /// </summary>
-        public static string Hidden_Action_Text_Grade {
-            get {
-                return ResourceManager.GetString("Hidden_Action_Text_Grade", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This result is final as the date for appeal has passed. To tell us that the grade is being appealed please.
-        /// </summary>
-        public static string Inset_Result_Is_Final {
-            get {
-                return ResourceManager.GetString("Inset_Result_Is_Final", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This result is final as the outcome of an appeal has been recorded. If you need to change the grade please.
-        /// </summary>
-        public static string Inset_Result_Is_Final_Outcome_Registered {
-            get {
-                return ResourceManager.GetString("Inset_Result_Is_Final_Outcome_Registered", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to contact us.
-        /// </summary>
-        public static string Link_Contactus {
-            get {
-                return ResourceManager.GetString("Link_Contactus", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to raise a request.
-        /// </summary>
-        public static string Link_Raise_Request {
-            get {
-                return ResourceManager.GetString("Link_Raise_Request", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Learner’s component grade status.
+        ///   Looks up a localized string similar to Learner’s grades - Post-results.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        public static string Table_Column_Action {
+            get {
+                return ResourceManager.GetString("Table_Column_Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exam period.
+        /// </summary>
+        public static string Table_Column_Exam_Period {
+            get {
+                return ResourceManager.GetString("Table_Column_Exam_Period", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grade.
+        /// </summary>
+        public static string Table_Column_Grade {
+            get {
+                return ResourceManager.GetString("Table_Column_Grade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        public static string Table_Column_Hidden_Action {
+            get {
+                return ResourceManager.GetString("Table_Column_Hidden_Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exam period.
+        /// </summary>
+        public static string Table_Column_Hidden_Exam_Period {
+            get {
+                return ResourceManager.GetString("Table_Column_Hidden_Exam_Period", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grade.
+        /// </summary>
+        public static string Table_Column_Hidden_Grade {
+            get {
+                return ResourceManager.GetString("Table_Column_Hidden_Grade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last updated.
+        /// </summary>
+        public static string Table_Column_Hidden_Last_Updated {
+            get {
+                return ResourceManager.GetString("Table_Column_Hidden_Last_Updated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated by.
+        /// </summary>
+        public static string Table_Column_Hidden_Updated_By {
+            get {
+                return ResourceManager.GetString("Table_Column_Hidden_Updated_By", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last updated.
+        /// </summary>
+        public static string Table_Column_Last_Updated {
+            get {
+                return ResourceManager.GetString("Table_Column_Last_Updated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated by.
+        /// </summary>
+        public static string Table_Column_Updated_By {
+            get {
+                return ResourceManager.GetString("Table_Column_Updated_By", resourceCulture);
             }
         }
         

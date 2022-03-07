@@ -56,6 +56,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             IsRawHtml = true
         };
 
+        public SummaryItemModel SummaryProviderName => new SummaryItemModel
+        {
+            Id = "providername",
+            Title = ProviderNameLabel,
+            Value = ProviderName,
+        };
+
         public SummaryItemModel SummaryProviderUkprn => new SummaryItemModel
         {
             Id = "providerukprn",
