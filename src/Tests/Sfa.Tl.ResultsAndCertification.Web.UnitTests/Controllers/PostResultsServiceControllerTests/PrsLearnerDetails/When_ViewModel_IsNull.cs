@@ -15,13 +15,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 11;
 
-            Loader.GetPrsLearnerDetailsAsync(AoUkprn, ProfileId).Returns(_mockLearnerDetails);
+            Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel1>(AoUkprn, ProfileId).Returns(_mockLearnerDetails);
         }
 
         [Fact]
         public void Then_Expected_Method_IsCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync(AoUkprn, ProfileId);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel1>(AoUkprn, ProfileId);
         }
 
         [Fact]

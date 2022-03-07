@@ -17,8 +17,7 @@ using LearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostRes
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsLearnerDetails
 {
     public class When_PrsStatus_Is_BeingAppealed : TestSetup
-    {
-        private PrsLearnerDetailsViewModel _mockLearnerDetails;
+    {        
         private PrsLearnerDetailsViewModel1 _mockResult;
         private NotificationBannerModel _notificationBanner;
 
@@ -68,14 +67,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
             //_notificationBanner = new NotificationBannerModel { Message = "Updated Successfully." };
 
-            Loader.GetPrsLearnerDetailsAsync(AoUkprn, ProfileId).Returns(_mockResult);
+            Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel1>(AoUkprn, ProfileId).Returns(_mockResult);
             //CacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey).Returns(_notificationBanner);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync(AoUkprn, ProfileId);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel1>(AoUkprn, ProfileId);
             //CacheService.Received(1).GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
         }
 
@@ -182,30 +181,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
         }
 
-        private bool IsValidPathwayPrsStatus => _mockLearnerDetails.PathwayPrsStatus.HasValue && _mockLearnerDetails.PathwayPrsStatus != PrsStatus.NotSpecified;
+        //private bool IsValidPathwayPrsStatus => _mockLearnerDetails.PathwayPrsStatus.HasValue && _mockLearnerDetails.PathwayPrsStatus != PrsStatus.NotSpecified;
 
-        private string GetUpdatePathwayGradeRouteName
-        {
-            get
-            {
-                return _mockLearnerDetails.PathwayPrsStatus switch
-                {
-                    PrsStatus.BeingAppealed => RouteConstants.PrsAppealOutcomePathwayGrade,
-                    _ => RouteConstants.PrsAppealCoreGrade,
-                };
-            }
-        }
+        //private string GetUpdatePathwayGradeRouteName
+        //{
+        //    get
+        //    {
+        //        return _mockLearnerDetails.PathwayPrsStatus switch
+        //        {
+        //            PrsStatus.BeingAppealed => RouteConstants.PrsAppealOutcomePathwayGrade,
+        //            _ => RouteConstants.PrsAppealCoreGrade,
+        //        };
+        //    }
+        //}
 
-        private Dictionary<string, string> GetUpdatePathwayGradeRouteAttributes
-        {
-            get
-            {
-                return _mockLearnerDetails.PathwayPrsStatus switch
-                {
-                    PrsStatus.BeingAppealed => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, _mockLearnerDetails.PathwayAssessmentId.ToString() }, { Constants.ResultId, _mockLearnerDetails.PathwayResultId.ToString() } },
-                    _ => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, _mockLearnerDetails.PathwayAssessmentId.ToString() }, { Constants.ResultId, _mockLearnerDetails.PathwayResultId.ToString() } },
-                };
-            }
-        }
+        //private Dictionary<string, string> GetUpdatePathwayGradeRouteAttributes
+        //{
+        //    get
+        //    {
+        //        return _mockLearnerDetails.PathwayPrsStatus switch
+        //        {
+        //            PrsStatus.BeingAppealed => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, _mockLearnerDetails.PathwayAssessmentId.ToString() }, { Constants.ResultId, _mockLearnerDetails.PathwayResultId.ToString() } },
+        //            _ => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, _mockLearnerDetails.PathwayAssessmentId.ToString() }, { Constants.ResultId, _mockLearnerDetails.PathwayResultId.ToString() } },
+        //        };
+        //    }
+        //}
     }
 }

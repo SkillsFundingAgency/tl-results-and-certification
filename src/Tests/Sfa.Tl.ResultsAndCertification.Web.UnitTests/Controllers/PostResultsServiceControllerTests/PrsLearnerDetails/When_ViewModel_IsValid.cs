@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
             //_notificationBanner = new NotificationBannerModel { Message = "Updated Successfully." };
 
-            Loader.GetPrsLearnerDetailsAsync(AoUkprn, ProfileId).Returns(_mockResult);
+            Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel1>(AoUkprn, ProfileId).Returns(_mockResult);
             //CacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey).Returns(_notificationBanner);
         }
 
@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         public void Then_Expected_Methods_AreCalled()
         {
             // TODO: Rajesh
-            Loader.Received(1).GetPrsLearnerDetailsAsync(AoUkprn, ProfileId);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel1>(AoUkprn, ProfileId);
             //CacheService.Received(1).GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
         }
 

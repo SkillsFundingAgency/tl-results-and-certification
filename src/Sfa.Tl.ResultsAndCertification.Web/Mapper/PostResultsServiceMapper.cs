@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
@@ -46,14 +47,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.Pathway.Provider.Ukprn))
                 .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.Pathway.Title))
                 .ForMember(d => d.CoreComponentDisplayName, opts => opts.MapFrom(s => $"{s.Pathway.Name} ({s.Pathway.LarId})"))
-                .ForMember(d => d.PrsCoreComponentExams, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments))
+                .ForMember(d => d.PrsCoreComponentExams, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments.Where(pa => pa.Result != null && !string.IsNullOrWhiteSpace(pa.Result.Grade))))
                 .ForMember(d => d.PrsSpecialismComponents, opts => opts.MapFrom(s => s.Pathway.Specialisms));
 
             CreateMap<Specialism, PrsSpecialismComponentViewModel>()
                 .ForMember(d => d.SpecialismComponentDisplayName, opts => opts.MapFrom(s => $"{s.Name} ({s.LarId})"))
-                .ForMember(d => d.SpecialismComponentExams, opts => opts.MapFrom(s => s.Assessments));
+                .ForMember(d => d.SpecialismComponentExams, opts => opts.MapFrom(s => s.Assessments.Where(sa => sa.Result != null && !string.IsNullOrWhiteSpace(sa.Result.Grade))));
 
             CreateMap<Assessment, PrsComponentExamViewModel>()
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom((src, dest, destMember, context) => (int)context.Items[Constants.ProfileId]))
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.Id))
                 .ForMember(d => d.AssessmentSeries, opts => opts.MapFrom(s => s.SeriesName))
                 .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AppealEndDate))
