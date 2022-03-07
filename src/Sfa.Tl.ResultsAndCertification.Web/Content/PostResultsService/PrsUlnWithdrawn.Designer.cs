@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class PrsUlnWithdrawn {
@@ -70,29 +70,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner has been withdrawn by the exam board.
+        ///   Looks up a localized string similar to {0} is withdrawn.
         /// </summary>
-        public static string Heading_Learner_Has_Been_Withdrawn {
+        public static string Heading_Learner_Withdrawn {
             get {
-                return ResourceManager.GetString("Heading_Learner_Has_Been_Withdrawn", resourceCulture);
+                return ResourceManager.GetString("Heading_Learner_Withdrawn", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This learner&apos;s registration has been withdrawn. An appeal cannot be requested..
-        /// </summary>
-        public static string Inset_This_Learners_Registration_Has_Been_Withdrawn {
-            get {
-                return ResourceManager.GetString("Inset_This_Learners_Registration_Has_Been_Withdrawn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Learner has been withdrawn.
+        ///   Looks up a localized string similar to Learner withdrawn - Post-results.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This learner&apos;s registration has been withdrawn. You cannot log a ROMM or an appeal. Please speak to your organisation’s registrations editor to change this learner’s status..
+        /// </summary>
+        public static string Para_Learner_Registration_Withdrawn {
+            get {
+                return ResourceManager.GetString("Para_Learner_Registration_Withdrawn", resourceCulture);
             }
         }
         
@@ -106,20 +106,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
+        ///   Looks up a localized string similar to Provider.
         /// </summary>
-        public static string Title_Name_Text {
+        public static string Title_Provider_Name_Text {
             get {
-                return ResourceManager.GetString("Title_Name_Text", resourceCulture);
+                return ResourceManager.GetString("Title_Provider_Name_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Provider &lt;br/&gt; (UKPRN).
+        ///   Looks up a localized string similar to UKPRN.
         /// </summary>
-        public static string Title_Provider_Text {
+        public static string Title_Provider_Ukprn_Text {
             get {
-                return ResourceManager.GetString("Title_Provider_Text", resourceCulture);
+                return ResourceManager.GetString("Title_Provider_Ukprn_Text", resourceCulture);
             }
         }
         
