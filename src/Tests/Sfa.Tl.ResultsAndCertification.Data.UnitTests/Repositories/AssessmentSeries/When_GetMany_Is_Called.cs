@@ -44,6 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.AssessmentS
             result.Year.Should().Be(testData.Year);
             result.StartDate.Should().Be(testData.StartDate);
             result.EndDate.Should().Be(testData.EndDate);
+            result.RommEndDate.Should().Be(testData.RommEndDate);
             result.AppealEndDate.Should().Be(testData.AppealEndDate);
             result.CreatedBy.Should().Be(Constants.CreatedByUser);
             result.CreatedOn.Should().Be(Constants.CreatedOn);
