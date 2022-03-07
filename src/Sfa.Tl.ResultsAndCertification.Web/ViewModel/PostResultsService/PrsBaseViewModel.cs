@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         protected string LearnerNameLabel { get; set; }
         protected string DateofBirthLabel { get; set; }
         protected string ProviderNameLabel { get; set; }
+        protected string ProviderUkprnLabel { get; set; }
         protected string TlevelTitleLabel { get; set; }
 
         public string LearnerName => $"{Firstname} {Lastname}";
@@ -53,6 +54,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             Title = ProviderNameLabel,
             Value = ProviderDisplayName,
             IsRawHtml = true
+        };
+
+        public SummaryItemModel SummaryProviderName => new SummaryItemModel
+        {
+            Id = "providername",
+            Title = ProviderNameLabel,
+            Value = ProviderName,
+        };
+
+        public SummaryItemModel SummaryProviderUkprn => new SummaryItemModel
+        {
+            Id = "providerukprn",
+            Title = ProviderUkprnLabel,
+            Value = ProviderUkprn.ToString(),
         };
 
         public SummaryItemModel SummaryTlevelTitle => new SummaryItemModel

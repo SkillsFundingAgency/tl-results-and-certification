@@ -234,3 +234,9 @@ tbody tr td {
         display: none;
     }
 }
+
+@media (max-width: 640px) {
+    .remove-class-mobile {
+        display: none;
+    }
+}

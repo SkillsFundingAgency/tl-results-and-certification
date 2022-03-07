@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Breadcrumb {
@@ -255,6 +255,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static string Search_For_Results {
             get {
                 return ResourceManager.GetString("Search_For_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Post-results.
+        /// </summary>
+        public static string StartPostResultsService {
+            get {
+                return ResourceManager.GetString("StartPostResultsService", resourceCulture);
             }
         }
         

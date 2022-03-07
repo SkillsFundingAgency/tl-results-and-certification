@@ -87,7 +87,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PrsSelectAssessmentSeries, new { profileId = prsLearnerRecord.ProfileId });
             }
 
-            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId, assessmentId = prsLearnerRecord.PathwayAssessments.FirstOrDefault().AssessmentId });
+            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId });
         }
 
         [HttpGet]
@@ -147,14 +147,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reviews-and-appeals-learner-status/{profileId}/{assessmentId}", Name = RouteConstants.PrsLearnerDetails)]
-        public async Task<IActionResult> PrsLearnerDetailsAsync(int profileId, int assessmentId)
+        [Route("post-results-learners-grades/{profileId}", Name = RouteConstants.PrsLearnerDetails)]
+        public async Task<IActionResult> PrsLearnerDetailsAsync(int profileId)
         {
-            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(User.GetUkPrn(), profileId, assessmentId);
-            if (viewModel == null || !viewModel.IsValid)
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync(User.GetUkPrn(), profileId);
+            if (viewModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
+            //viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
             return View(viewModel);
         }
 

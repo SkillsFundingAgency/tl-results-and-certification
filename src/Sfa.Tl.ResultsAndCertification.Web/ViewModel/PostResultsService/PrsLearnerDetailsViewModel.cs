@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             ActionText = IsResultUpdateAllowed ? PrsLearnerDetailsContent.Action_Link_Update : null,
             RouteName = IsResultUpdateAllowed ? GetUpdatePathwayGradeRouteName : null,
             RouteAttributes = IsResultUpdateAllowed ? GetUpdatePathwayGradeRouteAttributes : null,
-            HiddenActionText = IsResultUpdateAllowed ? PrsLearnerDetailsContent.Hidden_Action_Text_Grade : null
+            HiddenActionText = IsResultUpdateAllowed ? "grade" : null
         };
 
         public SummaryItemModel SummaryPathwayGradeLastUpdatedOn => new SummaryItemModel
