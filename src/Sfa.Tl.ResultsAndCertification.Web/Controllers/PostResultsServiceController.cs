@@ -91,7 +91,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reviews-and-appeals-uln-not-found", Name = RouteConstants.PrsUlnNotFound)]
+        [Route("post-results-uln-not-found", Name = RouteConstants.PrsUlnNotFound)]
         public async Task<IActionResult> PrsUlnNotFoundAsync()
         {
             var cacheModel = await _cacheService.GetAndRemoveAsync<PrsUlnNotFoundViewModel>(CacheKey);
