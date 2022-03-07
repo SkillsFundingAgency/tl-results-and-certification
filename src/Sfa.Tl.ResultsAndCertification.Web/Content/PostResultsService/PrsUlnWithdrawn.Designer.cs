@@ -61,11 +61,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learners details.
+        /// </summary>
+        public static string Aria_Label_Learner_Details {
+            get {
+                return ResourceManager.GetString("Aria_Label_Learner_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back to Home.
         /// </summary>
-        public static string Back_To_Home {
+        public static string Button_Back_To_Home {
             get {
-                return ResourceManager.GetString("Back_To_Home", resourceCulture);
+                return ResourceManager.GetString("Button_Back_To_Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search again.
+        /// </summary>
+        public static string Button_Search_Again {
+            get {
+                return ResourceManager.GetString("Button_Search_Again", resourceCulture);
             }
         }
         
