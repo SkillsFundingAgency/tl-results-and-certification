@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reviews-and-appeals-search-learner/{populateUln:bool?}", Name = RouteConstants.PrsSearchLearner)]
+        [Route("post-results-search-uln/{populateUln:bool?}", Name = RouteConstants.PrsSearchLearner)]
         public async Task<IActionResult> PrsSearchLearnerAsync(bool populateUln)
         {
             var cacheModel = await _cacheService.GetAsync<PrsSearchLearnerViewModel>(CacheKey);
