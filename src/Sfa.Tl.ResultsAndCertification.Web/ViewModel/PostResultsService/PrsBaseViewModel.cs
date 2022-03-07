@@ -16,6 +16,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string ProviderName { get; set; }
         public long ProviderUkprn { get; set; }
         public string TlevelTitle { get; set; }
+        public string Core { get; set; }
+        public string ExamPeriod { get; set; }
+        public string Grade { get; set; }
 
         protected string UlnLabel { get; set; }
         protected string LearnerNameLabel { get; set; }
@@ -23,6 +26,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         protected string ProviderNameLabel { get; set; }
         protected string ProviderUkprnLabel { get; set; }
         protected string TlevelTitleLabel { get; set; }
+        protected string CoreLabel { get; set; }
+        protected string ExamPeriodLabel { get; set; }
+        protected string GradeLabel { get; set; }
 
         public string LearnerName => $"{Firstname} {Lastname}";
         public string ProviderDisplayName => $"{ProviderName}<br/>({ProviderUkprn})";
@@ -75,6 +81,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             Id = "tleveltitle",
             Title = TlevelTitleLabel,
             Value = TlevelTitle
+        };
+
+        public SummaryItemModel SummaryCore => new SummaryItemModel
+        {
+            Id = "core",
+            Title = CoreLabel,
+            Value = Core
+        };
+
+        public SummaryItemModel SummaryExamPeriod => new SummaryItemModel
+        {
+            Id = "examperiod",
+            Title = ExamPeriodLabel,
+            Value = ExamPeriod
+        };
+
+        public SummaryItemModel SummaryGrade => new SummaryItemModel
+        {
+            Id = "grade",
+            Title = GradeLabel,
+            Value = Grade
         };
 
         public virtual BackLinkModel BackLink => new BackLinkModel
