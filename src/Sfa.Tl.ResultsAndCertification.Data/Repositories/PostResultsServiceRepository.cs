@@ -48,7 +48,15 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                         AssessmentId = x.Id,
                                                         SeriesName = x.AssessmentSeries.Name,
                                                         HasResult = x.TqPathwayResults.Any(r => r.IsOptedin && r.EndDate == null)
-                                                    })
+                                                    }),
+                               SpecialismAssessments = tqPathway.TqRegistrationSpecialisms.SelectMany(s => s.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.EndDate == null))
+                                                       .OrderByDescending(o => o.AssessmentSeriesId)
+                                                       .Select(x => new PrsAssessment
+                                                       {
+                                                           AssessmentId = x.Id,
+                                                           SeriesName = x.AssessmentSeries.Name,
+                                                           HasResult = x.TqSpecialismResults.Any(r => r.IsOptedin && r.EndDate == null)
+                                                       })
                            };
 
             bool searchByUlnPredicate() => uln != null;
