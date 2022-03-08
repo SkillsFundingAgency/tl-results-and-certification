@@ -214,7 +214,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Appeals.
+        ///   Looks up a localized string similar to Post-results.
         /// </summary>
         public static string Reviews_And_Appeals {
             get {
