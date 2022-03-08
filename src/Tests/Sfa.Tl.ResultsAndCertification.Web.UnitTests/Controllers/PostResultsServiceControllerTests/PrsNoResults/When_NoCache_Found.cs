@@ -5,14 +5,14 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsNoGradeRegistered
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsNoResults
 {
     public class When_NoCache_Found : TestSetup
     {
-        private readonly PrsNoGradeRegisteredViewModel _mockCache = null;
+        private readonly PrsNoResultsViewModel _mockCache = null;
         public override void Given()
         {
-            CacheService.GetAndRemoveAsync<PrsNoGradeRegisteredViewModel>(CacheKey).Returns(_mockCache);
+            CacheService.GetAndRemoveAsync<PrsNoResultsViewModel>(CacheKey).Returns(_mockCache);
         }
 
         [Fact]
@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         [Fact]
         public void Then_Expected_Method_IsCalled()
         {
-            CacheService.Received(1).GetAndRemoveAsync<PrsNoGradeRegisteredViewModel>(CacheKey);
+            CacheService.Received(1).GetAndRemoveAsync<PrsNoResultsViewModel>(CacheKey);
         }
     }
 }

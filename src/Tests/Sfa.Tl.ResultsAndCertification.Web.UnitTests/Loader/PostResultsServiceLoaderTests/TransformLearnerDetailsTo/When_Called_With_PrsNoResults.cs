@@ -9,9 +9,9 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.TransformLearnerDetailsTo
 {
-    public class When_Called_With_HasSinlgleAssessmentWithNoGrade : TestSetup
+    public class When_Called_With_PrsNoResults : TestSetup
     {
-        public PrsNoGradeRegisteredViewModel ActualResult;
+        public PrsNoResultsViewModel ActualResult;
 
         public override void Given()
         {
@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 
         public override async Task When()
         {
-            ActualResult = Loader.TransformLearnerDetailsTo<PrsNoGradeRegisteredViewModel>(FindPrsLearnerRecord);
+            ActualResult = Loader.TransformLearnerDetailsTo<PrsNoResultsViewModel>(FindPrsLearnerRecord);
             await Task.CompletedTask;
         }
 
@@ -50,7 +50,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.ProviderName.Should().Be(FindPrsLearnerRecord.ProviderName);
             ActualResult.ProviderUkprn.Should().Be(FindPrsLearnerRecord.ProviderUkprn);
             ActualResult.TlevelTitle.Should().Be(FindPrsLearnerRecord.TlevelTitle);
-            ActualResult.AssessmentSeries.Should().Be(FindPrsLearnerRecord.PathwayAssessments.FirstOrDefault().SeriesName);
         } 
     }
 }

@@ -23,6 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         private readonly long _aoUkprn = 12345678;
         private readonly long _uln = 987654321;
         private IList<PrsAssessment> _pathwayAssessments;
+        private IList<PrsAssessment> _specialismAssessments;
 
         // results
         private FindPrsLearnerRecord _actualResult;
@@ -46,6 +47,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 new PrsAssessment { AssessmentId = 11, SeriesName = "Summer 2021", HasResult = true },
                 new PrsAssessment { AssessmentId = 12, SeriesName = "Autumn 2021", HasResult = true }
             };
+
+            _specialismAssessments = new List<PrsAssessment>
+            {
+                new PrsAssessment { AssessmentId = 15, SeriesName = "Summer 2021", HasResult = true },
+                new PrsAssessment { AssessmentId = 16, SeriesName = "Autumn 2021", HasResult = true }
+            };
+
             _mockApiResponse = new FindPrsLearnerRecord
             {
                 ProfileId = 11,
@@ -57,7 +65,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 ProviderUkprn = 123456789,
                 TlevelTitle = "Title",
                 Status = RegistrationPathwayStatus.Active,
-                PathwayAssessments = _pathwayAssessments
+                PathwayAssessments = _pathwayAssessments,
+                SpecialismAssessments = _specialismAssessments
             };
         }
 
@@ -84,7 +93,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.ProviderUkprn.Should().Be(_mockApiResponse.ProviderUkprn);
             _actualResult.TlevelTitle.Should().Be(_mockApiResponse.TlevelTitle);
             _actualResult.Status.Should().Be(_mockApiResponse.Status);
-            _actualResult.SingleAssessmentWithNoGrade.Should().BeFalse();
+            _actualResult.HasResults.Should().BeTrue();
             _actualResult.PathwayAssessments.Should().NotBeEmpty();
             _actualResult.PathwayAssessments.Count().Should().Be(_pathwayAssessments.Count());
 
@@ -93,6 +102,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 _actualResult.PathwayAssessments.ElementAt(i).AssessmentId.Should().Be(_pathwayAssessments[i].AssessmentId);
                 _actualResult.PathwayAssessments.ElementAt(i).SeriesName.Should().Be(_pathwayAssessments[i].SeriesName);
                 _actualResult.PathwayAssessments.ElementAt(i).HasResult.Should().Be(_pathwayAssessments[i].HasResult);
+            }
+
+            _actualResult.SpecialismAssessments.Count().Should().Be(_specialismAssessments.Count());
+
+
+            for (int i = 0; i < _specialismAssessments.Count(); i++)
+            {
+                _actualResult.SpecialismAssessments.ElementAt(i).AssessmentId.Should().Be(_specialismAssessments[i].AssessmentId);
+                _actualResult.SpecialismAssessments.ElementAt(i).SeriesName.Should().Be(_specialismAssessments[i].SeriesName);
+                _actualResult.SpecialismAssessments.ElementAt(i).HasResult.Should().Be(_specialismAssessments[i].HasResult);
             }
         }
     }

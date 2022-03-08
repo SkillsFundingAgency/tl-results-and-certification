@@ -6,26 +6,26 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
-using PrsNoGradeContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsNoGradeRegistered;
+using PrsNoResultsContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsNoResults;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsNoGradeRegistered
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsNoResults
 {
     public class When_Cache_Found : TestSetup
     {
         private readonly long _uln = 1234567890;
-        private PrsNoGradeRegisteredViewModel _mockCache = null;
+        private PrsNoResultsViewModel _mockCache = null;
 
         public override void Given()
         {
-            _mockCache = new PrsNoGradeRegisteredViewModel { ProfileId = 1, Uln = _uln, Firstname = "Test", Lastname = "User", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Provider", ProviderUkprn = 985647841, TlevelTitle = "Title", AssessmentSeries = "Summer 2021" };
-            CacheService.GetAndRemoveAsync<PrsNoGradeRegisteredViewModel>(CacheKey).Returns(_mockCache);
+            _mockCache = new PrsNoResultsViewModel { ProfileId = 1, Uln = _uln, Firstname = "Test", Lastname = "User", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Provider", ProviderUkprn = 985647841, TlevelTitle = "Title" };
+            CacheService.GetAndRemoveAsync<PrsNoResultsViewModel>(CacheKey).Returns(_mockCache);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
             var viewResult = Result as ViewResult;
-            var model = viewResult.Model as PrsNoGradeRegisteredViewModel;
+            var model = viewResult.Model as PrsNoResultsViewModel;
 
             model.Should().NotBeNull();
             model.ProfileId.Should().Be(_mockCache.ProfileId);
@@ -36,26 +36,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.ProviderName.Should().Be(_mockCache.ProviderName);
             model.ProviderUkprn.Should().Be(_mockCache.ProviderUkprn);
             model.TlevelTitle.Should().Be(_mockCache.TlevelTitle);
-            model.AssessmentSeries.Should().Be(_mockCache.AssessmentSeries);
 
             // Uln
-            model.SummaryUln.Title.Should().Be(PrsNoGradeContent.Title_Uln_Text);
+            model.SummaryUln.Title.Should().Be(PrsNoResultsContent.Title_Uln_Text);
             model.SummaryUln.Value.Should().Be(_mockCache.Uln.ToString());
 
             // LearnerName
-            model.SummaryLearnerName.Title.Should().Be(PrsNoGradeContent.Title_Name_Text);
+            model.SummaryLearnerName.Title.Should().Be(PrsNoResultsContent.Title_Name_Text);
             model.SummaryLearnerName.Value.Should().Be($"{_mockCache.Firstname} {_mockCache.Lastname}");
 
             // DateofBirth
-            model.SummaryDateofBirth.Title.Should().Be(PrsNoGradeContent.Title_DateofBirth_Text);
+            model.SummaryDateofBirth.Title.Should().Be(PrsNoResultsContent.Title_DateofBirth_Text);
             model.SummaryDateofBirth.Value.Should().Be(_mockCache.DateofBirth.ToDobFormat());
 
             // ProviderName
-            model.SummaryProvider.Title.Should().Be(PrsNoGradeContent.Title_Provider_Text);
-            model.SummaryProvider.Value.Should().Be($"{_mockCache.ProviderName}<br/>({_mockCache.ProviderUkprn})");
+            model.SummaryProviderName.Title.Should().Be(PrsNoResultsContent.Title_Provider_Name_Text);
+            model.SummaryProviderName.Value.Should().Be(_mockCache.ProviderName);
+
+            // ProviderUkprn
+            model.SummaryProviderUkprn.Title.Should().Be(PrsNoResultsContent.Title_Provider_Ukprn_Text);
+            model.SummaryProviderUkprn.Value.Should().Be(_mockCache.ProviderUkprn.ToString());
 
             // TLevelTitle
-            model.SummaryTlevelTitle.Title.Should().Be(PrsNoGradeContent.Title_TLevel_Text);
+            model.SummaryTlevelTitle.Title.Should().Be(PrsNoResultsContent.Title_TLevel_Text);
             model.SummaryTlevelTitle.Value.Should().Be(_mockCache.TlevelTitle);
 
             model.BackLink.Should().NotBeNull();
@@ -68,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            CacheService.Received(1).GetAndRemoveAsync<PrsNoGradeRegisteredViewModel>(CacheKey);
+            CacheService.Received(1).GetAndRemoveAsync<PrsNoResultsViewModel>(CacheKey);
         }
     }
 }

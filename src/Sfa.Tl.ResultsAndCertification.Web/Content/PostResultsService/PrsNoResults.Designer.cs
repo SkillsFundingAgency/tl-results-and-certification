@@ -19,17 +19,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class PrsNoGradeRegistered {
+    public class PrsNoResults {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal PrsNoGradeRegistered() {
+        internal PrsNoResults() {
         }
         
         /// <summary>
@@ -39,8 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsNoGradeRegistere" +
-                            "d", typeof(PrsNoGradeRegistered).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsNoResults", typeof(PrsNoResults).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -80,29 +79,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner does not have any registered grades for {0}.
+        ///   Looks up a localized string similar to Learner does not have any results.
         /// </summary>
-        public static string Heading_Learner_Not_Have_Registered_Grade {
+        public static string Heading_Learner_Does_Not_Have_Any_Results {
             get {
-                return ResourceManager.GetString("Heading_Learner_Not_Have_Registered_Grade", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to before you can appeal a grade..
-        /// </summary>
-        public static string Inset_Text_Before_Appeal {
-            get {
-                return ResourceManager.GetString("Inset_Text_Before_Appeal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You must.
-        /// </summary>
-        public static string Inset_Text_You_Must {
-            get {
-                return ResourceManager.GetString("Inset_Text_You_Must", resourceCulture);
+                return ResourceManager.GetString("Heading_Learner_Does_Not_Have_Any_Results", resourceCulture);
             }
         }
         
@@ -116,11 +97,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No registered grades.
+        ///   Looks up a localized string similar to No results - Post-results.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to for this learner before you can tell us about a ROMM or appeal.for this learner before you can tell us about a ROMM or appeal..
+        /// </summary>
+        public static string Para_Tell_Us_About_Romm_Or_Appeal {
+            get {
+                return ResourceManager.GetString("Para_Tell_Us_About_Romm_Or_Appeal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must.
+        /// </summary>
+        public static string Para_You_Must {
+            get {
+                return ResourceManager.GetString("Para_You_Must", resourceCulture);
             }
         }
         
@@ -143,11 +142,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Provider &lt;br/&gt; (UKPRN).
+        ///   Looks up a localized string similar to Provider.
         /// </summary>
-        public static string Title_Provider_Text {
+        public static string Title_Provider_Name_Text {
             get {
-                return ResourceManager.GetString("Title_Provider_Text", resourceCulture);
+                return ResourceManager.GetString("Title_Provider_Name_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UKPRN.
+        /// </summary>
+        public static string Title_Provider_Ukprn_Text {
+            get {
+                return ResourceManager.GetString("Title_Provider_Ukprn_Text", resourceCulture);
             }
         }
         

@@ -69,15 +69,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 var prsUlnWithdrawnViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsUlnWithdrawnViewModel>(prsLearnerRecord);
                 await _cacheService.SetAsync(CacheKey, prsUlnWithdrawnViewModel, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.PrsUlnWithdrawn);
-            }            
-            else if (prsLearnerRecord.SingleAssessmentWithNoGrade)
+            }
+            else if (!prsLearnerRecord.HasResults)
             {
-                var prsNoGradeViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsNoGradeRegisteredViewModel>(prsLearnerRecord);
-                await _cacheService.SetAsync(CacheKey, prsNoGradeViewModel, CacheExpiryTime.XSmall);
-                return RedirectToRoute(RouteConstants.PrsNoGradeRegistered);
-            }            
-
-            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId });
+                var prsNoResultsViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsNoResultsViewModel>(prsLearnerRecord);
+                await _cacheService.SetAsync(CacheKey, prsNoResultsViewModel, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.PrsNoResults);
+            }
+            else
+            {
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId });
+            }
         }
 
         [HttpGet]
@@ -109,13 +111,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }        
 
         [HttpGet]
-        [Route("reviews-and-appeals-no-registered-grades", Name = RouteConstants.PrsNoGradeRegistered)]
-        public async Task<IActionResult> PrsNoGradeRegisteredAsync()
+        [Route("post-results-no-results", Name = RouteConstants.PrsNoResults)]
+        public async Task<IActionResult> PrsNoResultsAsync()
         {
-            var cacheModel = await _cacheService.GetAndRemoveAsync<PrsNoGradeRegisteredViewModel>(CacheKey);
+            var cacheModel = await _cacheService.GetAndRemoveAsync<PrsNoResultsViewModel>(CacheKey);
             if (cacheModel == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PrsNoGradeRegisteredViewModel from redis cache in post results service no grade registered page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PrsNoResultsViewModel from redis cache in post results service no results page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 

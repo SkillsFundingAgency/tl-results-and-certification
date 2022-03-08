@@ -335,7 +335,7 @@
         public const string SubmitPrsPathwayGradeCheckAndSubmit = "SubmitPrsPathwayGradeCheckAndSubmit";
         public const string PrsAppealUpdatePathwayGrade = "PrsAppealUpdatePathwayGrade";
         public const string SubmitPrsAppealUpdatePathwayGrade = "SubmitPrsAppealUpdatePathwayGrade";        
-        public const string PrsNoGradeRegistered = "PrsNoGradeRegistered";
+        public const string PrsNoResults = "PrsNoResults";
         public const string PrsCancelAppealUpdate = "PrsCancelAppealUpdate";
         public const string SubmitPrsCancelAppealUpdate = "SubmitPrsCancelAppealUpdate";
         public const string PrsGradeChangeRequest = "PrsGradeChangeRequest";

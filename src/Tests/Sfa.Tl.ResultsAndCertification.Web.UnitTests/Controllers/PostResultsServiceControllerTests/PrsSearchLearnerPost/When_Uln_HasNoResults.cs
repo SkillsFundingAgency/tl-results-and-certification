@@ -12,10 +12,10 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsSearchLearnerPost
 {
-    public class When_Uln_HasSinlgleAssessmentWithNoGrade : TestSetup
+    public class When_Uln_HasNoResults : TestSetup
     {
         private FindPrsLearnerRecord _findPrsLearner;
-        private PrsNoGradeRegisteredViewModel _prsNoGradeRegisteredViewModel;
+        private PrsNoResultsViewModel _prsNoResultsViewModel;
         private readonly int _profileId = 1;
 
         public override void Given()
@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 }
             };
 
-            _prsNoGradeRegisteredViewModel = new PrsNoGradeRegisteredViewModel
+            _prsNoResultsViewModel = new PrsNoResultsViewModel
             {
                 ProfileId = _findPrsLearner.ProfileId,
                 Uln = _findPrsLearner.Uln,
@@ -47,12 +47,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ProviderName = _findPrsLearner.ProviderName,
                 ProviderUkprn = _findPrsLearner.ProviderUkprn,
                 TlevelTitle = _findPrsLearner.TlevelTitle,
-                AssessmentSeries = _findPrsLearner.PathwayAssessments.First().SeriesName
             };
 
             ViewModel = new PrsSearchLearnerViewModel { SearchUln = _findPrsLearner.Uln.ToString() };
             Loader.FindPrsLearnerRecordAsync(AoUkprn, ViewModel.SearchUln.ToLong()).Returns(_findPrsLearner);
-            Loader.TransformLearnerDetailsTo<PrsNoGradeRegisteredViewModel>(_findPrsLearner).Returns(_prsNoGradeRegisteredViewModel);
+            Loader.TransformLearnerDetailsTo<PrsNoResultsViewModel>(_findPrsLearner).Returns(_prsNoResultsViewModel);
         }
 
         [Fact]
@@ -60,8 +59,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             Loader.Received(1).FindPrsLearnerRecordAsync(AoUkprn, ViewModel.SearchUln.ToLong());
             CacheService.Received(1).SetAsync(CacheKey, ViewModel);
-            Loader.Received(1).TransformLearnerDetailsTo<PrsNoGradeRegisteredViewModel>(_findPrsLearner);
-            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<PrsNoGradeRegisteredViewModel>(x =>
+            Loader.Received(1).TransformLearnerDetailsTo<PrsNoResultsViewModel>(_findPrsLearner);
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<PrsNoResultsViewModel>(x =>
                     x.ProfileId == _findPrsLearner.ProfileId &&
                     x.Uln == _findPrsLearner.Uln &&
                     x.Firstname == _findPrsLearner.Firstname &&
@@ -69,16 +68,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                     x.DateofBirth == _findPrsLearner.DateofBirth &&
                     x.ProviderName == _findPrsLearner.ProviderName &&
                     x.ProviderUkprn == _findPrsLearner.ProviderUkprn &&
-                    x.TlevelTitle == _findPrsLearner.TlevelTitle &&
-                    x.AssessmentSeries == _findPrsLearner.PathwayAssessments.FirstOrDefault().SeriesName),
+                    x.TlevelTitle == _findPrsLearner.TlevelTitle),
                     Common.Enum.CacheExpiryTime.XSmall);
         }
 
         [Fact]
-        public void Then_Redirected_To_PrsNoAssessmentEntry()
+        public void Then_Redirected_To_PrsNoResults()
         {
             var route = Result as RedirectToRouteResult;
-            route.RouteName.Should().Be(RouteConstants.PrsNoGradeRegistered);
+            route.RouteName.Should().Be(RouteConstants.PrsNoResults);
         }
     }
 }
