@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string ProviderName { get; set; }
         public long ProviderUkprn { get; set; }
         public string TlevelTitle { get; set; }
-        public string Core { get; set; }
+        public string CoreDisplayName { get; set; }
         public string ExamPeriod { get; set; }
         public string Grade { get; set; }
 
@@ -87,7 +87,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         {
             Id = "core",
             Title = CoreLabel,
-            Value = Core
+            Value = CoreDisplayName
         };
 
         public SummaryItemModel SummaryExamPeriod => new SummaryItemModel

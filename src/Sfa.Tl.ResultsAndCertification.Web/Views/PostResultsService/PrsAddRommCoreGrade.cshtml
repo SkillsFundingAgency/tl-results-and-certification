@@ -31,7 +31,7 @@
                 <vc:summary-item model=Model.SummaryGrade></vc:summary-item>
             </dl>
 
-            <div class="govuk-form-group" sfa-validation-for="RommRequested" sfa-validation-class="govuk-form-group--error">
+            <div class="govuk-form-group" sfa-validation-for="IsRommRequested" sfa-validation-class="govuk-form-group--error">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                         <h2 class="govuk-fieldset__heading">
@@ -39,16 +39,16 @@
                         </h2>
                     </legend>
                     
-                    <span sfa-validation-for="RommRequested"></span>
+                    <span sfa-validation-for="IsRommRequested"></span>
                     <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="rommrequested" asp-for="RommRequested" type="radio" value="true">
+                            <input class="govuk-radios__input" id="rommrequested" asp-for="IsRommRequested" type="radio" value="true">
                             <label class="govuk-label govuk-radios__label" for="rommrequested">
                                 @PrsAddRommCoreGrade.Radio_Button_Yes
                             </label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="rommrequested-no" asp-for="RommRequested" type="radio" value="false">
+                            <input class="govuk-radios__input" id="rommrequested-no" asp-for="IsRommRequested" type="radio" value="false">
                             <label class="govuk-label govuk-radios__label" for="rommrequested-no">
                                 @PrsAddRommCoreGrade.Radio_Button_No
                             </label>

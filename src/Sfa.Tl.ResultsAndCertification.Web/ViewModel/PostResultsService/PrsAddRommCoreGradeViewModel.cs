@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public DateTime RommEndDate { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(PrsAddRommCoreGradeContent), ErrorMessageResourceName = "Validation_Message")]
-        public bool? RommRequested { get; set; }
+        public bool? IsRommRequested { get; set; }
 
         public bool IsValid => (PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified) && CommonHelper.IsRommAllowed(RommEndDate);
 

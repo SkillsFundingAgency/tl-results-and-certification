@@ -180,7 +180,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(prsDetails);
             }      
 
-            if(model.RommRequested == false)
+            if(model.IsRommRequested == false)
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
             else
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
