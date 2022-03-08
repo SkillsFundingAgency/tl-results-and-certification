@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 {
     public class When_Called_With_PrsLearnerDetailsViewModel : TestSetup
     {
-        private Models.Contracts.Learner.LearnerRecord _expectedApiResult;
+        private LearnerRecord _expectedApiResult;
 
         protected PrsLearnerDetailsViewModel1 ActualResult { get; set; }
 

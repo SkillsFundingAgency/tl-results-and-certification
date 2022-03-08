@@ -36,6 +36,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return viewModel;
         }
 
+        public async Task<T> GetPrsLearnerDetailsAsync<T>(long aoUkprn, int profileId, int assessmentId, ComponentType componentType)
+        {
+            var response = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId, RegistrationPathwayStatus.Active);
+
+            if (response == null || componentType == ComponentType.NotSpecified)
+                return _mapper.Map<T>(response);
+
+            var assessment = response.Pathway.PathwayAssessments.FirstOrDefault(p => p.Id == assessmentId);
+            var hasResult = assessment?.Result?.Id > 0;
+
+            if (assessment == null || !hasResult)
+                return _mapper.Map<T>(null);
+
+            return _mapper.Map<T>(response, opt =>
+            {
+                opt.Items["assessment"] = assessment;
+            });
+        }
+
         public async Task<T> GetPrsLearnerDetailsAsync<T>(long aoUkprn, int profileId, int assessementId)
         {
             var prsLearnerDetails = await _internalApiClient.GetPrsLearnerDetailsAsync(aoUkprn, profileId, assessementId);

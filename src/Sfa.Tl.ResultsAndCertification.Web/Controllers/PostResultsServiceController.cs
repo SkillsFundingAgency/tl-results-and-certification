@@ -159,6 +159,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("post-results-add-romm/{profileId}/{assessmentId}", Name = RouteConstants.PrsAddRommCoreGrade)]
+        public async Task<IActionResult> PrsAddRommCoreGradeAsync(int profileId, int assessmentId)
+        {
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(User.GetUkPrn(), profileId, assessmentId, ComponentType.Core);
+
+            if (viewModel == null || !viewModel.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("post-results-add-romm/{profileId}/{assessmentId}", Name = RouteConstants.SubmitPrsAddRommCoreGrade)]
+        public async Task<IActionResult> PrsAddRommCoreGradeAsync(PrsAddRommCoreGradeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, ComponentType.Core);
+                return View(prsDetails);
+            }      
+
+            if(model.IsRommRequested == false)
+            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+            else
+            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+        }
+
+        [HttpGet]
         [Route("reviews-and-appeals-appeal-grade/{profileId}/{assessmentId}/{resultId}", Name = RouteConstants.PrsAppealCoreGrade)]
         public async Task<IActionResult> PrsAppealCoreGradeAsync(int profileId, int assessmentId, int resultId)
         {

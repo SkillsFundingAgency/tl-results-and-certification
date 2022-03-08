@@ -245,6 +245,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
                 .ForMember(d => d.ResultId, opts => opts.MapFrom(s => s.PathwayResultId))
                 .ForMember(d => d.RequestedUserEmailAddress, opts => opts.MapFrom<UserEmailResolver<AppealGradeAfterDeadlineConfirmViewModel, AppealGradeAfterDeadlineRequest>>());
+
+            // Add Romm
+
+            CreateMap<LearnerRecord, PrsAddRommCoreGradeViewModel>()
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))
+                .ForMember(d => d.Lastname, opts => opts.MapFrom(s => s.Lastname))
+                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
+                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.Pathway.Provider.Name))
+                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.Pathway.Provider.Ukprn))
+                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.Pathway.Title))
+                .ForMember(d => d.CoreDisplayName, opts => opts.MapFrom(s => $"{s.Pathway.Name} ({s.Pathway.LarId})"))
+                .ForMember(d => d.ExamPeriod, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.SeriesName))
+                .ForMember(d => d.Grade, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.Result?.Grade))
+                .ForMember(d => d.RommEndDate, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.RommEndDate))
+                .ForMember(d => d.AssessmentId, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.Id))
+                .ForMember(d => d.PrsStatus, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.Result?.PrsStatus));
         }
     }
 }

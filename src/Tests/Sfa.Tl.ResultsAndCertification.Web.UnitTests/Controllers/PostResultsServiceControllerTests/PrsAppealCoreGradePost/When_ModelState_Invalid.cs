@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             Loader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_appealCoreGradeViewModel);
 
             ViewModel = new AppealCoreGradeViewModel { ProfileId = 1, PathwayAssessmentId = AssessmentId, PathwayResultId = ResultId, AppealGrade = null };
-            Controller.ModelState.AddModelError("AppealGrade", Content.PostResultsService.AppealCoreGrade.Validation_Message);
+            Controller.ModelState.AddModelError("AppealGrade", AppealCoreGradeContent.Validation_Message);
         }
 
         [Fact]

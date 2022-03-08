@@ -1,6 +1,8 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using System;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 {
@@ -19,5 +21,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string PrsDisplayText { get { return CommonHelper.GetPrsStatusDisplayText(PrsStatus, AppealEndDate); } }
         public bool IsAddRommAllowed => IsGradeExists && CommonHelper.IsAppealsAllowed(RommEndDate);
         private bool IsGradeExists => AssessmentId > 0 && !string.IsNullOrWhiteSpace(Grade);
+
+        public string RommRouteName { get { return RouteConstants.PrsAddRommCoreGrade; } }
+
+        public Dictionary<string, string> RommRouteAttributes { get { return new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, AssessmentId.ToString() } }; } }
     }
 }
