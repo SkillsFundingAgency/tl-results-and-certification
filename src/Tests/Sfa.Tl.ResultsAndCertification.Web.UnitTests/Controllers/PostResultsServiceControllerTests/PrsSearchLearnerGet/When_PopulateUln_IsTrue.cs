@@ -36,14 +36,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             // Breadcrumb
             model.Breadcrumb.Should().NotBeNull();
             model.Breadcrumb.BreadcrumbItems.Should().NotBeNull();
-            model.Breadcrumb.BreadcrumbItems.Count.Should().Be(3);
+            model.Breadcrumb.BreadcrumbItems.Count.Should().Be(2);
 
             model.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Home);
             model.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(BreadcrumbContent.Home);
             model.Breadcrumb.BreadcrumbItems[1].RouteName.Should().Be(RouteConstants.StartReviewsAndAppeals);
             model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Reviews_And_Appeals);
-            model.Breadcrumb.BreadcrumbItems[2].RouteName.Should().BeNullOrEmpty();
-            model.Breadcrumb.BreadcrumbItems[2].DisplayName.Should().Be(BreadcrumbContent.Search_For_Learner);
         }
     }
 }
