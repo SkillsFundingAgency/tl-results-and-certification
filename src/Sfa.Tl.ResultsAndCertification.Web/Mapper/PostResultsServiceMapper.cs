@@ -159,15 +159,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
                 .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle));
 
-            CreateMap<FindPrsLearnerRecord, PrsNoAssessmentEntryViewModel>()
-                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
-                .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))
-                .ForMember(d => d.Lastname, opts => opts.MapFrom(s => s.Lastname))
-                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
-                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
-                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
-                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle));
-
             CreateMap<FindPrsLearnerRecord, PrsNoGradeRegisteredViewModel>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
@@ -178,16 +169,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
                 .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
                 .ForMember(d => d.AssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessments.FirstOrDefault().SeriesName));
-
-            CreateMap<FindPrsLearnerRecord, PrsSelectAssessmentSeriesViewModel>()
-                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
-                .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))
-                .ForMember(d => d.Lastname, opts => opts.MapFrom(s => s.Lastname))
-                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
-                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
-                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
-                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
-                .ForMember(d => d.AssessmentSerieses, opts => opts.MapFrom(s => s.PathwayAssessments));
 
             CreateMap<PrsLearnerDetails, PrsGradeChangeRequestViewModel>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))

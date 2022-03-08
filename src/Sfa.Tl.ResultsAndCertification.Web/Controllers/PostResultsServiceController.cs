@@ -69,23 +69,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 var prsUlnWithdrawnViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsUlnWithdrawnViewModel>(prsLearnerRecord);
                 await _cacheService.SetAsync(CacheKey, prsUlnWithdrawnViewModel, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.PrsUlnWithdrawn);
-            }
-            else if (prsLearnerRecord.NoAssessmentEntryRegistered)
-            {
-                var prsNoAssessmentEntryViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsNoAssessmentEntryViewModel>(prsLearnerRecord);
-                await _cacheService.SetAsync(CacheKey, prsNoAssessmentEntryViewModel, CacheExpiryTime.XSmall);
-                return RedirectToRoute(RouteConstants.PrsNoAssessmentEntry);
-            }
+            }            
             else if (prsLearnerRecord.SingleAssessmentWithNoGrade)
             {
                 var prsNoGradeViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsNoGradeRegisteredViewModel>(prsLearnerRecord);
                 await _cacheService.SetAsync(CacheKey, prsNoGradeViewModel, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.PrsNoGradeRegistered);
-            }
-            else if (prsLearnerRecord.HasMultipleAssessments)
-            {
-                return RedirectToRoute(RouteConstants.PrsSelectAssessmentSeries, new { profileId = prsLearnerRecord.ProfileId });
-            }
+            }            
 
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId });
         }
@@ -116,21 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return View(cacheModel);
-        }
-
-        [HttpGet]
-        [Route("reviews-and-appeals-no-assessment-entry", Name = RouteConstants.PrsNoAssessmentEntry)]
-        public async Task<IActionResult> PrsNoAssessmentEntryAsync()
-        {
-            var cacheModel = await _cacheService.GetAndRemoveAsync<PrsNoAssessmentEntryViewModel>(CacheKey);
-            if (cacheModel == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PrsNoAssessmentEntryViewModel from redis cache in post results service no assessment entry page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(cacheModel);
-        }
+        }        
 
         [HttpGet]
         [Route("reviews-and-appeals-no-registered-grades", Name = RouteConstants.PrsNoGradeRegistered)]
@@ -341,40 +317,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var notificationBanner = new NotificationBannerModel { Message = successMessage };
             await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId });
-        }
-
-        [HttpGet]
-        [Route("select-exam-period/{profileId}", Name = RouteConstants.PrsSelectAssessmentSeries)]
-        public async Task<IActionResult> PrsSelectAssessmentSeriesAsync(int profileId)
-        {
-            var prsLearner = await _postResultsServiceLoader.FindPrsLearnerRecordAsync(User.GetUkPrn(), null, profileId);
-            if (prsLearner == null || prsLearner.Status != RegistrationPathwayStatus.Active || !prsLearner.HasMultipleAssessments)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            var viewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsSelectAssessmentSeriesViewModel>(prsLearner);
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("select-exam-period", Name = RouteConstants.SubmitPrsSelectAssessmentSeries)]
-        public async Task<IActionResult> PrsSelectAssessmentSeriesAsync(PrsSelectAssessmentSeriesViewModel model)
-        {
-            var prsLearnerRecord = await _postResultsServiceLoader.FindPrsLearnerRecordAsync(User.GetUkPrn(), model.Uln);
-            if (!ModelState.IsValid)
-            {
-                var prsSelectAssessmentSeriesViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsSelectAssessmentSeriesViewModel>(prsLearnerRecord);
-                return View(prsSelectAssessmentSeriesViewModel);
-            }
-
-            var isSelectedSeriesHasResult = prsLearnerRecord.PathwayAssessments.Any(x => x.AssessmentId == model.SelectedAssessmentId && x.HasResult);
-            if (!isSelectedSeriesHasResult)
-            {
-                var prsNoGradeViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsNoGradeRegisteredViewModel>(prsLearnerRecord);
-                await _cacheService.SetAsync(CacheKey, prsNoGradeViewModel, CacheExpiryTime.XSmall);
-                return RedirectToRoute(RouteConstants.PrsNoGradeRegistered);
-            }
-
-            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId, assessmentId = model.SelectedAssessmentId });
         }
 
         [HttpGet]

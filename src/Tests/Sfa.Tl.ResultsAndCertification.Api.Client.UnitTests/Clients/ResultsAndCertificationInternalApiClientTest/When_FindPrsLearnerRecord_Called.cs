@@ -84,9 +84,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.ProviderUkprn.Should().Be(_mockApiResponse.ProviderUkprn);
             _actualResult.TlevelTitle.Should().Be(_mockApiResponse.TlevelTitle);
             _actualResult.Status.Should().Be(_mockApiResponse.Status);
-            _actualResult.NoAssessmentEntryRegistered.Should().BeFalse();
             _actualResult.SingleAssessmentWithNoGrade.Should().BeFalse();
-            _actualResult.HasMultipleAssessments.Should().BeTrue();
             _actualResult.PathwayAssessments.Should().NotBeEmpty();
             _actualResult.PathwayAssessments.Count().Should().Be(_pathwayAssessments.Count());
 

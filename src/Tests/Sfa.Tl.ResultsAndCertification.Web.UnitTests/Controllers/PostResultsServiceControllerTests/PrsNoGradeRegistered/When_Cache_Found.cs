@@ -6,7 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
-using PrsNoGradeContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsNoAssessmentEntry;
+using PrsNoGradeContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsNoGradeRegistered;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsNoGradeRegistered
 {

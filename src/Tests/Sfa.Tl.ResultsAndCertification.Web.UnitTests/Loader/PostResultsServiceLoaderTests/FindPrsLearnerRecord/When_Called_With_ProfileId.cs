@@ -54,9 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.TlevelTitle.Should().Be(_expectedApiResult.TlevelTitle);
             ActualResult.Status.Should().Be(_expectedApiResult.Status);
 
-            ActualResult.NoAssessmentEntryRegistered.Should().BeFalse();
             ActualResult.SingleAssessmentWithNoGrade.Should().BeFalse();
-            ActualResult.HasMultipleAssessments.Should().BeTrue();
             ActualResult.PathwayAssessments.Should().NotBeEmpty();
             ActualResult.PathwayAssessments.Count().Should().Be(_pathwayAssessments.Count());
 
