@@ -2,7 +2,6 @@
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

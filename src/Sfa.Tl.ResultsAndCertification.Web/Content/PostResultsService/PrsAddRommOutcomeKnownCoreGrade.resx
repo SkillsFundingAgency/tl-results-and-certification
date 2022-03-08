@@ -123,23 +123,23 @@
   <data name="Button_Continue" xml:space="preserve">
     <value>Continue</value>
   </data>
-  <data name="Has_Learner_Requested_Romm" xml:space="preserve">
-    <value>Has Danny Waldron requested a ROMM of this grade?</value>
+  <data name="Does_The_Romm_Logged_Against_This_Grade_Have_Outcome" xml:space="preserve">
+    <value>Does the ROMM logged against this grade have an outcome?</value>
   </data>
-  <data name="Heading_Add_Romm" xml:space="preserve">
-    <value>Add a ROMM</value>
+  <data name="Heading_Add_Romm_Outcome" xml:space="preserve">
+    <value>Add a ROMM outcome</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Add a ROMM - Post-results</value>
-  </data>
-  <data name="Para_Tell_Us_That_Learner_Has_Asked_For" xml:space="preserve">
-    <value>Tell us that {0} has asked for a review of moderated marking (ROMM) of their Design, Surveying and Planning grade</value>
+    <value>ROMM outcome known - Post-results</value>
   </data>
   <data name="Radio_Button_No" xml:space="preserve">
     <value>No</value>
   </data>
-  <data name="Radio_Button_Yes" xml:space="preserve">
-    <value>Yes</value>
+  <data name="Radio_Button_Yes_Grade_Has_Changed" xml:space="preserve">
+    <value>Yes, the grade has changed</value>
+  </data>
+  <data name="Radio_Button_Yes_Grade_Is_Same" xml:space="preserve">
+    <value>Yes, the grade is the same</value>
   </data>
   <data name="Title_Core_Text" xml:space="preserve">
     <value>Core</value>
@@ -153,6 +153,9 @@
   <data name="Title_Grade_Text" xml:space="preserve">
     <value>Grade</value>
   </data>
+  <data name="Title_Name_Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
   <data name="Title_TLevel_Text" xml:space="preserve">
     <value>T Level</value>
   </data>
@@ -160,6 +163,6 @@
     <value>ULN</value>
   </data>
   <data name="Validation_Message" xml:space="preserve">
-    <value>Select ‘yes’ if the learner has requested a ROMM for this grade</value>
+    <value>Select whether the ROMM logged against this grade has an outcome</value>
   </data>
 </root>

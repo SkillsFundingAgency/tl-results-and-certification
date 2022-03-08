@@ -135,13 +135,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("post-results-add-romm/{profileId}/{assessmentId}", Name = RouteConstants.PrsAddRommCoreGrade)]
-        public async Task<IActionResult> PrsAddRommCoreGradeAsync(int profileId, int assessmentId)
+        [Route("post-results-add-romm/{profileId}/{assessmentId}/{isBack:bool?}", Name = RouteConstants.PrsAddRommCoreGrade)]
+        public async Task<IActionResult> PrsAddRommCoreGradeAsync(int profileId, int assessmentId, bool? isBack)
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(User.GetUkPrn(), profileId, assessmentId, ComponentType.Core);
 
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
+
+            viewModel.IsRommRequested = isBack;
 
             return View(viewModel);
         }
@@ -156,9 +158,36 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(prsDetails);
             }      
 
-            if(model.IsRommRequested == false)
-            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+            if(model.IsRommRequested == true)
+            return RedirectToRoute(RouteConstants.PrsAddRommOutcomeKnownCoreGrade, new { profileId = model.ProfileId, assessmentId = model.AssessmentId });
             else
+            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+        }
+
+
+        [HttpGet]
+        [Route("post-results-romm-outcome-known/{profileId}/{assessmentId}/{outcomeKnownTypeId:int?}", Name = RouteConstants.PrsAddRommOutcomeKnownCoreGrade)]
+        public async Task<IActionResult> PrsAddRommOutcomeKnownCoreGradeAsync(int profileId, int assessmentId, int? outcomeKnownTypeId)
+        {
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(User.GetUkPrn(), profileId, assessmentId, ComponentType.Core);
+
+            if (viewModel == null || !viewModel.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            viewModel.SetOutcomeType(outcomeKnownTypeId);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("post-results-romm-outcome-known/{profileId}/{assessmentId}/{outcomeKnownTypeId:int?}", Name = RouteConstants.SubmitPrsAddRommOutcomeKnownCoreGrade)]
+        public async Task<IActionResult> PrsAddRommOutcomeKnownCoreGradeAsync(PrsAddRommOutcomeKnownCoreGradeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, ComponentType.Core);
+                return View(prsDetails);
+            }
+
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
         }
 

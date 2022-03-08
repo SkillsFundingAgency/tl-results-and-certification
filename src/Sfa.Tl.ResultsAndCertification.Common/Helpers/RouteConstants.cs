@@ -325,6 +325,8 @@
         public const string PrsLearnerDetails = "PrsLearnerDetails";
         public const string PrsAddRommCoreGrade = "PrsAddRommCoreGrade";
         public const string SubmitPrsAddRommCoreGrade = "SubmitPrsAddRommCoreGrade";
+        public const string PrsAddRommOutcomeKnownCoreGrade = "PrsAddRommOutcomeKnownCoreGrade";
+        public const string SubmitPrsAddRommOutcomeKnownCoreGrade = "SubmitPrsAddRommOutcomeKnownCoreGrade";
         public const string PrsAppealCoreGrade = "PrsAppealCoreGrade";
         public const string SubmitPrsAppealCoreGrade = "SubmitPrsAppealCoreGrade";
         public const string PrsAppealOutcomePathwayGrade = "PrsAppealOutcomePathwayGrade";

@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class PrsAddRommCoreGrade {
+    public class PrsAddRommOutcomeKnownCoreGrade {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal PrsAddRommCoreGrade() {
+        internal PrsAddRommOutcomeKnownCoreGrade() {
         }
         
         /// <summary>
@@ -39,8 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsAddRommCoreGrade" +
-                            "", typeof(PrsAddRommCoreGrade).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsAddRommOutcomeKn" +
+                            "ownCoreGrade", typeof(PrsAddRommOutcomeKnownCoreGrade).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -80,38 +80,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Has Danny Waldron requested a ROMM of this grade?.
+        ///   Looks up a localized string similar to Does the ROMM logged against this grade have an outcome?.
         /// </summary>
-        public static string Has_Learner_Requested_Romm {
+        public static string Does_The_Romm_Logged_Against_This_Grade_Have_Outcome {
             get {
-                return ResourceManager.GetString("Has_Learner_Requested_Romm", resourceCulture);
+                return ResourceManager.GetString("Does_The_Romm_Logged_Against_This_Grade_Have_Outcome", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a ROMM.
+        ///   Looks up a localized string similar to Add a ROMM outcome.
         /// </summary>
-        public static string Heading_Add_Romm {
+        public static string Heading_Add_Romm_Outcome {
             get {
-                return ResourceManager.GetString("Heading_Add_Romm", resourceCulture);
+                return ResourceManager.GetString("Heading_Add_Romm_Outcome", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a ROMM - Post-results.
+        ///   Looks up a localized string similar to ROMM outcome known - Post-results.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tell us that {0} has asked for a review of moderated marking (ROMM) of their Design, Surveying and Planning grade.
-        /// </summary>
-        public static string Para_Tell_Us_That_Learner_Has_Asked_For {
-            get {
-                return ResourceManager.GetString("Para_Tell_Us_That_Learner_Has_Asked_For", resourceCulture);
             }
         }
         
@@ -125,11 +116,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes.
+        ///   Looks up a localized string similar to Yes, the grade has changed.
         /// </summary>
-        public static string Radio_Button_Yes {
+        public static string Radio_Button_Yes_Grade_Has_Changed {
             get {
-                return ResourceManager.GetString("Radio_Button_Yes", resourceCulture);
+                return ResourceManager.GetString("Radio_Button_Yes_Grade_Has_Changed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes, the grade is the same.
+        /// </summary>
+        public static string Radio_Button_Yes_Grade_Is_Same {
+            get {
+                return ResourceManager.GetString("Radio_Button_Yes_Grade_Is_Same", resourceCulture);
             }
         }
         
@@ -170,6 +170,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Title_Name_Text {
+            get {
+                return ResourceManager.GetString("Title_Name_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to T Level.
         /// </summary>
         public static string Title_TLevel_Text {
@@ -188,7 +197,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select ‘yes’ if the learner has requested a ROMM for this grade.
+        ///   Looks up a localized string similar to Select whether the ROMM logged against this grade has an outcome.
         /// </summary>
         public static string Validation_Message {
             get {
