@@ -1,0 +1,62 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsRommGradeChangeViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Enum
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = PrsRommGradeChange.Page_Title;
+}
+
+@section NavigationBar {
+<vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="@RouteConstants.SubmitPrsRommGradeChange">
+            <input type="hidden" asp-for="ProfileId" />
+            <input type="hidden" asp-for="AssessmentId" />
+
+            <partial name="_ValidationSummary" />
+
+            <h1 class="govuk-heading-l">@PrsRommGradeChange.Heading_Romm_Change_Grade</h1>
+
+            <dl class="govuk-summary-list govuk-summary-list--no-border" aria-label="@PrsRommGradeChange.Aria_Label_Text_Learner_Details">
+                <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>                
+                <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+                <vc:summary-item model=Model.SummaryCore></vc:summary-item>
+                <vc:summary-item model=Model.SummaryExamPeriod></vc:summary-item>
+                <vc:summary-item model=Model.SummaryGrade></vc:summary-item>
+            </dl>
+
+            <div class="govuk-form-group" sfa-validation-for="SelectedGradeCode" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h2 class="govuk-fieldset__heading">
+                            @PrsRommGradeChange.What_Is_The_New_Grade
+                        </h2>
+                    </legend>
+
+                    <div class="govuk-radios">
+                        <span sfa-validation-for="SelectedGradeCode"></span>
+                        @foreach (var grade in Model?.Grades?.Select((value, i) => (value, i)))
+                        {
+                            var elementId = (grade.i > 0) ? "selectedgradecode-" + grade.i : "selectedgradecode";
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="@elementId" type="radio" asp-for="@Model.SelectedGradeCode" value="@Model.Grades[grade.i].Code">
+                                <label class="govuk-label govuk-radios__label" for="@elementId">
+                                    @grade.value.Value
+                                </label>
+                                <input type="hidden" asp-for="@Model.Grades[grade.i].Code" />
+                                <input type="hidden" asp-for="@Model.Grades[grade.i].Value" />
+                            </div>
+                        }
+                    </div>
+                </fieldset>
+            </div>
+            <button type="submit" id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsRommGradeChange.Button_Continue</button>
+        </form>
+    </div>
+</div>

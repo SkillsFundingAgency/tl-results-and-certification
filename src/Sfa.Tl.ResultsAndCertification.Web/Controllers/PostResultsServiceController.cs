@@ -190,6 +190,37 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(prsDetails);
             }
 
+            if(model.RommOutcome == RommOutcomeKnownType.GradeChanged)
+            {
+                return RedirectToRoute(RouteConstants.PrsRommGradeChange, new { profileId = model.ProfileId, assessmentId = model.AssessmentId });
+            }
+
+            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("post-results-romm-change-grade/{profileId}/{assessmentId}/{isRommOutcomeJourney:bool?}/{isChangeMode:bool?}", Name = RouteConstants.PrsRommGradeChange)]
+        public async Task<IActionResult> PrsRommGradeChangeAsync(int profileId, int assessmentId, bool? isRommOutcomeJourney, bool? isChangeMode)
+        {
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(User.GetUkPrn(), profileId, assessmentId, ComponentType.Core);
+
+            if (viewModel == null || !viewModel.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            viewModel.IsChangeMode = isChangeMode ?? false;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("post-results-romm-change-grade/{profileId}/{assessmentId}/{isRommOutcomeJourney:bool?}/{isChangeMode:bool?}", Name = RouteConstants.SubmitPrsRommGradeChange)]
+        public async Task<IActionResult> PrsRommGradeChangeAsync(PrsRommGradeChangeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, ComponentType.Core);
+                return View(prsDetails);
+            }
+
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
         }
 
