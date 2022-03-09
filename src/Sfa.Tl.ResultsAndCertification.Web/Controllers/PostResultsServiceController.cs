@@ -207,6 +207,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            viewModel.IsRommOutcomeJourney = isRommOutcomeJourney ?? false;
             viewModel.IsChangeMode = isChangeMode ?? false;
             return View(viewModel);
         }

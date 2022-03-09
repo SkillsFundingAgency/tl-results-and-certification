@@ -37,9 +37,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public bool IsRommOutcomeJourney { get; set; }
         public bool IsChangeMode { get; set; }
 
-        public bool IsValid => (PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.UnderReview 
-                            || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified )
-                            && CommonHelper.IsRommAllowed(RommEndDate);
+        public bool IsValid => ((PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified) 
+                            && CommonHelper.IsRommAllowed(RommEndDate))
+                            || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.UnderReview;
 
         public override BackLinkModel BackLink => new BackLinkModel
         {
