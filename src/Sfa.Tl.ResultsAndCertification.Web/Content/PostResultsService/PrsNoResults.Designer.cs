@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to for this learner before you can tell us about a ROMM or appeal.for this learner before you can tell us about a ROMM or appeal..
+        ///   Looks up a localized string similar to for this learner before you can tell us about a ROMM or appeal..
         /// </summary>
         public static string Para_Tell_Us_About_Romm_Or_Appeal {
             get {
