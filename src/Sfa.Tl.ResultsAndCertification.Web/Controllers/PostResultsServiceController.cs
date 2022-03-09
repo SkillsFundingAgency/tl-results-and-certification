@@ -151,7 +151,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("post-results-add-romm/{profileId}/{assessmentId}", Name = RouteConstants.SubmitPrsAddRommCoreGrade)]
+        [Route("post-results-add-romm/{profileId}/{assessmentId}/{isBack:bool?}", Name = RouteConstants.SubmitPrsAddRommCoreGrade)]
         public async Task<IActionResult> PrsAddRommCoreGradeAsync(PrsAddRommCoreGradeViewModel model)
         {
             if (!ModelState.IsValid)
