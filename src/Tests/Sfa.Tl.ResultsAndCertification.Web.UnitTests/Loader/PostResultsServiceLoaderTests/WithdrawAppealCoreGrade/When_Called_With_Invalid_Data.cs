@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
         public override void Given()
         {
             expectedApiResult = false;
-            InternalApiClient.AppealGradeAsync(Arg.Any<AppealGradeRequest>()).Returns(expectedApiResult);
+            InternalApiClient.PrsActivityAsync(Arg.Any<PrsActivityRequest>()).Returns(expectedApiResult);
         }
 
         [Fact]

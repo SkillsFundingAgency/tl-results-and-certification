@@ -2,7 +2,7 @@
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
 {
-    public class AppealGradeRequest
+    public class PrsActivityRequest
     {
         public long AoUkprn { get; set; }
         public int ProfileId { get; set; }

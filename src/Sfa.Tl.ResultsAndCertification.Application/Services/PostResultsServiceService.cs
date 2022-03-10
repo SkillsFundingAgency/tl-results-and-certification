@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _postResultsServiceRepository.GetPrsLearnerDetailsAsync(aoUkPrn, profileId, assessmentId);
         }
 
-        public async Task<bool> AppealGradeAsync(AppealGradeRequest request)
+        public async Task<bool> PrsActivityAsync(PrsActivityRequest request)
         {
             if (request.ComponentType != ComponentType.Core || request.PrsStatus == PrsStatus.NotSpecified)
                 return false;
@@ -59,13 +59,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (existingPathwayResult == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to change Pathway Result for ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: AppealGradeAsync({request})");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to change Pathway Result for ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: PrsActivityAsync({request})");
                 return false;
             }
 
             if (!IsResultStatusValid(request.PrsStatus, existingPathwayResult.PrsStatus))
             {
-                _logger.LogWarning(LogEvent.StateChanged, $"Requested status: {request.PrsStatus} is not valid. Current result status = {existingPathwayResult.PrsStatus}, ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: AppealGradeAsync({request})");
+                _logger.LogWarning(LogEvent.StateChanged, $"Requested status: {request.PrsStatus} is not valid. Current result status = {existingPathwayResult.PrsStatus}, ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: PrsActivityAsync({request})");
                 return false;
             }
 

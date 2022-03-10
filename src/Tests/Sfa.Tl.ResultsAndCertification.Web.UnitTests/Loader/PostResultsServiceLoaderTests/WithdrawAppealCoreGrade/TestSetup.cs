@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 c.AddMaps(typeof(ResultMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<AppealOutcomePathwayGradeViewModel, AppealGradeRequest>(HttpContextAccessor) : null);
+                                new UserNameResolver<AppealOutcomePathwayGradeViewModel, PrsActivityRequest>(HttpContextAccessor) : null);
             });
             Mapper = new AutoMapper.Mapper(mapperConfig);
 

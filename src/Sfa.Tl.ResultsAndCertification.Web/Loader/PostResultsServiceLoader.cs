@@ -78,19 +78,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<bool> PrsRommActivityAsync(long aoUkprn, PrsAddRommOutcomeKnownCoreGradeViewModel model)
         {
-            var request = _mapper.Map<AppealGradeRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
-            return await _internalApiClient.AppealGradeAsync(request);
+            var request = _mapper.Map<PrsActivityRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.PrsActivityAsync(request);
         }
 
         public async Task<bool> AppealCoreGradeAsync(long aoUkprn, AppealCoreGradeViewModel model)
         {
-            var request = _mapper.Map<AppealGradeRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
-            return await _internalApiClient.AppealGradeAsync(request);
+            var request = _mapper.Map<PrsActivityRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.PrsActivityAsync(request);
         }
 
         public async Task<bool> AppealCoreGradeAsync(long aoUkprn, PrsPathwayGradeCheckAndSubmitViewModel model)
         {
-            var request = _mapper.Map<AppealGradeRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
+            var request = _mapper.Map<PrsActivityRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
 
             // Assign new grade lookup id
             var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
@@ -99,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 return false;
             request.ResultLookupId = newGrade.Id;
 
-            return await _internalApiClient.AppealGradeAsync(request);
+            return await _internalApiClient.PrsActivityAsync(request);
         }
 
         public async Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequestViewModel model)
@@ -121,8 +121,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<bool> WithdrawAppealCoreGradeAsync(long aoUkprn, AppealOutcomePathwayGradeViewModel model)
         {
-            var request = _mapper.Map<AppealGradeRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
-            return await _internalApiClient.AppealGradeAsync(request);
+            var request = _mapper.Map<PrsActivityRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.PrsActivityAsync(request);
         }
     }
 }

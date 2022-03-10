@@ -15,12 +15,12 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_AppealGrade_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_PrsActivity_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
 
-        private AppealGradeRequest _model;
+        private PrsActivityRequest _model;
         private ResultsAndCertificationInternalApiClient _apiClient;
         private bool _mockHttpResult;
         private bool _result;
@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
             _mockHttpResult = true;
 
-            _model = new AppealGradeRequest
+            _model = new PrsActivityRequest
             {
                 ProfileId = 1,
                 AssessentId = 2,
@@ -50,13 +50,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, ApiConstants.AppealGradeUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_model)));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, ApiConstants.PrsActivityUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_model)));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public async override Task When()
         {
-            _result = await _apiClient.AppealGradeAsync(_model);
+            _result = await _apiClient.PrsActivityAsync(_model);
         }
 
         [Fact]

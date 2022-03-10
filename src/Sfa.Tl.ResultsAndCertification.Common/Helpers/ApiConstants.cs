@@ -74,7 +74,7 @@
         public const string FindPrsLearnerRecordUri = "/api/postresultsservice/FindPrsLearnerRecord/{0}/{1}";
         public const string FindPrsLearnerRecordByProfileIdUri = "/api/postresultsservice/FindPrsLearnerRecordByProfileId/{0}/{1}";
         public const string GetPrsLearnerDetailsUri = "/api/postresultsservice/GetPrsLearnerDetails/{0}/{1}/{2}";
-        public const string AppealGradeUri = "/api/postresultsservice/AppealGrade";
+        public const string PrsActivityUri = "/api/postresultsservice/PrsActivity";
         public const string PrsGradeChangeRequestUri = "/api/postresultsservice/PrsGradeChangeRequest";
         public const string AppealGradeAfterDeadlineRequestUri = "/api/postresultsservice/AppealGradeAfterDeadlineRequest";
 

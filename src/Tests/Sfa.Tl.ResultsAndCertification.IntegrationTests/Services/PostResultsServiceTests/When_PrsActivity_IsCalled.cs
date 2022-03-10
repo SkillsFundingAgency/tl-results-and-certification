@@ -17,7 +17,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsServiceTests
 {
-    public class When_AppealGrade_IsCalled : PostResultsServiceServiceBaseTest
+    public class When_PrsActivity_IsCalled : PostResultsServiceServiceBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<TqRegistrationProfile> _registrations;
@@ -96,14 +96,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
             return Task.CompletedTask;
         }
 
-        public async Task WhenAsync(AppealGradeRequest request)
+        public async Task WhenAsync(PrsActivityRequest request)
         {
-            _actualResult = await PostResultsServiceService.AppealGradeAsync(request);
+            _actualResult = await PostResultsServiceService.PrsActivityAsync(request);
         }
 
         [Theory()]
         [MemberData(nameof(Data))]
-        public async Task Then_Expected_Results_Are_Returned(AppealGradeRequest request, bool expectedResult)
+        public async Task Then_Expected_Results_Are_Returned(PrsActivityRequest request, bool expectedResult)
         {
             var assessment = _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId && x.IsOptedin && x.EndDate == null);
 
@@ -163,48 +163,48 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                 {
                     //Result not-found - returns false
                     new object[]
-                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 999, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.BeingAppealed },
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 999, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.BeingAppealed },
                       false },
 
                     // Registration not in active status - returns false
                     new object[]
-                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.BeingAppealed },
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.BeingAppealed },
                       false },
 
                     // No active result - returns false
                     new object[]
-                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 2, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.BeingAppealed },
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 2, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.BeingAppealed },
                       false },
 
                     // When componenttype = specialism - returns false
                     new object[]
-                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Specialism, PrsStatus = PrsStatus.BeingAppealed },
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Specialism, PrsStatus = PrsStatus.BeingAppealed },
                      false },                    
 
                     // valid request with Active result - returns true
                     new object[]
-                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.BeingAppealed },
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.BeingAppealed },
                       true },
 
                     // Below are the tests to check if request has valid new grade in the cycle. 
                     // CurrentStatus is Null -> Requesting Final
                     new object[]
-                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
                       false },
 
                     // CurrentStatus is BeingAppeal -> Requesting Final
                     new object[]
-                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
                       true },
 
                     // CurrentStatus is BeingAppeal -> Requesting Reviewed
                     new object[]
-                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Reviewed, ResultLookupId = 3 },
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Reviewed, ResultLookupId = 3 },
                       false },
 
                     // CurrentStatus is BeingAppeal -> Requesting Withdraw
                     new object[]
-                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Withdraw, ResultLookupId = 0 },
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Withdraw, ResultLookupId = 0 },
                       true },
                 };
             }

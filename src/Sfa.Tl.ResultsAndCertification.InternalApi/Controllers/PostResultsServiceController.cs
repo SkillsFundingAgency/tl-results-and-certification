@@ -39,10 +39,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpPost]
-        [Route("AppealGrade")]
-        public async Task<bool> AppealGradeAsync(AppealGradeRequest request)
+        [Route("PrsActivity")]
+        public async Task<bool> PrsActivityAsync(PrsActivityRequest request)
         {
-            return await _postResultsServiceService.AppealGradeAsync(request);
+            return await _postResultsServiceService.PrsActivityAsync(request);
         }
 
         [HttpPost]

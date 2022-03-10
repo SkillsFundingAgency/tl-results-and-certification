@@ -355,10 +355,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<PrsLearnerDetails>(requestUri);
         }
 
-        public async Task<bool> AppealGradeAsync(AppealGradeRequest request)
+        public async Task<bool> PrsActivityAsync(PrsActivityRequest request)
         {
-            var requestUri = ApiConstants.AppealGradeUri;
-            return await PostAsync<AppealGradeRequest, bool>(requestUri, request);
+            var requestUri = ApiConstants.PrsActivityUri;
+            return await PostAsync<PrsActivityRequest, bool>(requestUri, request);
         }
 
         public async Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request)

@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 PathwayResultId = 3
             };
 
-            InternalApiClient.AppealGradeAsync(Arg.Is<AppealGradeRequest>(x =>
+            InternalApiClient.PrsActivityAsync(Arg.Is<PrsActivityRequest>(x =>
                                 x.ProfileId == AppealCoreGradeViewModel.ProfileId &&
                                 x.AssessentId == AppealCoreGradeViewModel.PathwayAssessmentId &&
                                 x.ResultId == AppealCoreGradeViewModel.PathwayResultId &&
