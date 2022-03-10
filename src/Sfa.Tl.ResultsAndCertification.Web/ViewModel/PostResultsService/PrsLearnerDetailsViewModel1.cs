@@ -1,10 +1,6 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.Helpers;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
@@ -24,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             TlevelTitleLabel = PrsLearnerDetailsContent.Title_TLevel_Text;
         }
 
-        public int ProfileId { get; set; }
+        public int ProfileId { get; set; }        
 
         // Core Component
         public string CoreComponentDisplayName { get; set; }
@@ -33,6 +29,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         // Specialism Components
         public IList<PrsSpecialismComponentViewModel> PrsSpecialismComponents { get; set; }
+
+        public NotificationBannerModel SuccessBanner { get; set; }
 
         public BreadcrumbModel Breadcrumb
         {

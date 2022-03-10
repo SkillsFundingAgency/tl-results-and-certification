@@ -132,7 +132,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            //viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
+            viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
             return View(viewModel);
         }
 
@@ -184,13 +184,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("post-results-romm-outcome-known/{profileId}/{assessmentId}/{outcomeKnownTypeId:int?}", Name = RouteConstants.SubmitPrsAddRommOutcomeKnownCoreGrade)]
         public async Task<IActionResult> PrsAddRommOutcomeKnownCoreGradeAsync(PrsAddRommOutcomeKnownCoreGradeViewModel model)
         {
+            var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, ComponentType.Core);
+
             if (!ModelState.IsValid)
             {
-                var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, ComponentType.Core);
                 return View(prsDetails);
             }
 
-            if(model.RommOutcome == RommOutcomeKnownType.GradeChanged)
+            if (model.RommOutcome == RommOutcomeKnownType.GradeChanged)
             {
                 await _cacheService.RemoveAsync<PrsRommCheckAndSubmitViewModel>(CacheKey);
                 return RedirectToRoute(RouteConstants.PrsRommGradeChange, new { profileId = model.ProfileId, assessmentId = model.AssessmentId });
@@ -204,8 +205,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
                 return RedirectToRoute(RouteConstants.PrsRommCheckAndSubmit);
             }
+            else if (model.RommOutcome == RommOutcomeKnownType.No)
+            {
+                bool isSuccess = await _postResultsServiceLoader.PrsRommActivityAsync(User.GetUkPrn(), model);
+                if (!isSuccess)
+                    return RedirectToRoute(RouteConstants.ProblemWithService);
 
-            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+                var notificationBanner = new NotificationBannerModel { IsPrsJourney = true, HeaderMessage = prsDetails.Banner_HeaderMesage, Message = prsDetails.SuccessBannerMessage };
+                await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+            }
+            else
+            {
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+            }
         }
 
         [HttpGet]

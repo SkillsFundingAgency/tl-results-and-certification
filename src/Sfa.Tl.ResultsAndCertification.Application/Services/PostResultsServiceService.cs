@@ -86,7 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 TqPathwayAssessmentId = existingPathwayResult.TqPathwayAssessmentId,
                 TlLookupId = resultLookupId,
-                PrsStatus = request.PrsStatus == PrsStatus.Withdraw ? (PrsStatus?)null : request.PrsStatus,
+                PrsStatus = request.PrsStatus == PrsStatus.Withdraw ? null : request.PrsStatus,
                 IsOptedin = true,
                 StartDate = DateTime.UtcNow,
                 EndDate = null,

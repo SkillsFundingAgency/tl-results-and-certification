@@ -125,6 +125,7 @@
 
         // Other constants
         public const string NoBorderBottomCssClassName = "tl-no-border-bottom";
+        public const string BlueTagClassName = "govuk-tag--blue";
         public const string PurpleTagClassName = "govuk-tag--purple";
         public const string RedTagClassName = "govuk-tag--red";
         public const string TagFloatRightClassName = "tag-float-right";

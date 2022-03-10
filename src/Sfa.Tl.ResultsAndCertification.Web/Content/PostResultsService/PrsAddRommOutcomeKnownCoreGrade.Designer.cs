@@ -71,6 +71,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ROMM recorded.
+        /// </summary>
+        public static string Banner_HeaderMessage_Romm_Recorded {
+            get {
+                return ResourceManager.GetString("Banner_HeaderMessage_Romm_Recorded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have recorded that {0} requested a ROMM for their {1} {2} grade.
+        /// </summary>
+        public static string Banner_Message {
+            get {
+                return ResourceManager.GetString("Banner_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         public static string Button_Continue {

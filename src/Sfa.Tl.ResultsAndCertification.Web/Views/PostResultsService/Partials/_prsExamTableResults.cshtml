@@ -34,5 +34,9 @@
         {
             <a class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0" role="button" asp-route="@Model.RommRouteName" asp-all-route-data="@Model.RommRouteAttributes">@PrsLearnerDetails.Action_Button_Add_Romm</a>
         }
+        else if (Model.IsAddRommOutcomeAllowed)
+        {
+            <a class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0" role="button" asp-route="">@PrsLearnerDetails.Action_Button_Add_Romm_Outcome</a>
+        }
     </td> 
 </tr>

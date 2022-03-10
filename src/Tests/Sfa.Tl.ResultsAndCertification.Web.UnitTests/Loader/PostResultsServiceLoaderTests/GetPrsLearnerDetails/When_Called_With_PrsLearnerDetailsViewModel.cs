@@ -51,6 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             Id = 11,
                             SeriesId = 1,
                             SeriesName = "Autumn 2022",
+                            ComponentType = ComponentType.Core,
                             RommEndDate = DateTime.UtcNow.AddDays(5),
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
@@ -62,6 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             Id = 12,
                             SeriesId = 2,
                             SeriesName = "Summer 2022",
+                            ComponentType = ComponentType.Core,
                             RommEndDate = DateTime.UtcNow.AddDays(5),
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
@@ -81,6 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             Id = 13,
                             SeriesId = 3,
                             SeriesName = "Autumn 2021",
+                            ComponentType = ComponentType.Core,
                             RommEndDate = DateTime.UtcNow.AddDays(5),
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
@@ -100,6 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             Id = 14,
                             SeriesId = 4,
                             SeriesName = "Summer 2021",
+                            ComponentType = ComponentType.Core,
                             RommEndDate = DateTime.UtcNow.AddDays(5),
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
@@ -119,6 +123,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             Id = 15,
                             SeriesId = 5,
                             SeriesName = "Autumn 2020",
+                            ComponentType = ComponentType.Core,
                             RommEndDate = DateTime.UtcNow.AddDays(-15),
                             AppealEndDate = DateTime.UtcNow.AddDays(-10),
                             LastUpdatedBy = "System",
@@ -147,6 +152,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                     Id = 100,
                                     SeriesId = 1,
                                     SeriesName = "Summer 2022",
+                                    ComponentType = ComponentType.Specialism,
                                     RommEndDate = DateTime.UtcNow.AddDays(15),
                                     AppealEndDate = DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
@@ -157,6 +163,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                     Id = 101,
                                     SeriesId = 2,
                                     SeriesName = "Summer 2021",
+                                    ComponentType = ComponentType.Specialism,
                                     RommEndDate = DateTime.UtcNow.AddDays(15),
                                     AppealEndDate = DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
@@ -185,6 +192,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                     Id = 102,
                                     SeriesId = 2,
                                     SeriesName = "Summer 2021",
+                                    ComponentType = ComponentType.Specialism,
                                     RommEndDate = DateTime.UtcNow.AddDays(-40),
                                     AppealEndDate = DateTime.UtcNow.AddDays(-30),
                                     LastUpdatedBy = "System",
@@ -249,7 +257,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 
                 var isResultAvailable = expectedExam.Result != null;
                 var isGradeExists = expectedExam.Id > 0 && isResultAvailable && !string.IsNullOrWhiteSpace(expectedExam.Result.Grade);
-                var isAddRommAllowed = isGradeExists && (DateTime.UtcNow <= expectedExam.RommEndDate);
+                var isAddRommAllowed = isGradeExists && (expectedExam.Result.PrsStatus == null || expectedExam.Result.PrsStatus == PrsStatus.NotSpecified) && (DateTime.UtcNow <= expectedExam.RommEndDate);
 
                 actualExam.Grade.Should().Be(!isResultAvailable ? null : expectedExam.Result.Grade);
                 actualExam.PrsStatus.Should().Be(!isResultAvailable ? null : expectedExam.Result.PrsStatus);
@@ -278,13 +286,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 
                     var isResultAvailable = expectedExam.Result != null;
                     var isGradeExists = expectedExam.Id > 0 && isResultAvailable && !string.IsNullOrWhiteSpace(expectedExam.Result.Grade);
-                    var isAddRommAllowed = isGradeExists && (DateTime.UtcNow <= expectedExam.RommEndDate);
+                    var isAddRommAllowed = isGradeExists && (expectedExam.Result.PrsStatus == null || expectedExam.Result.PrsStatus == PrsStatus.NotSpecified) && (DateTime.UtcNow <= expectedExam.RommEndDate);
 
                     actualExam.Grade.Should().Be(!isResultAvailable ? null : expectedExam.Result.Grade);
                     actualExam.PrsStatus.Should().Be(!isResultAvailable ? null : expectedExam.Result.PrsStatus);
                     actualExam.LastUpdated.Should().Be(!isResultAvailable ? null : expectedExam.Result.LastUpdatedOn.ToDobFormat());
                     actualExam.UpdatedBy.Should().Be(!isResultAvailable ? null : expectedExam.Result.LastUpdatedBy);
-                    //actualExam.ComponentType.Should().Be(ComponentType.Specialism);
+                    actualExam.ComponentType.Should().Be(ComponentType.Specialism);
                     actualExam.IsAddRommAllowed.Should().Be(isAddRommAllowed);
                     actualExam.ProfileId.Should().Be(_expectedApiResult.ProfileId);
                 }

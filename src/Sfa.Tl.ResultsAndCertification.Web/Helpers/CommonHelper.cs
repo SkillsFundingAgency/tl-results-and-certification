@@ -32,6 +32,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
 
         public static string GetPrsStatusDisplayText(PrsStatus? prsStatus, DateTime? appealsEndDate)
         {
+            if(prsStatus == PrsStatus.UnderReview)
+                return FormatPrsStatusDisplayHtml(Constants.BlueTagClassName, PrsStatusContent.Under_Review_Display_Text);
+
             if (prsStatus == PrsStatus.BeingAppealed)
                 return FormatPrsStatusDisplayHtml(Constants.PurpleTagClassName, PrsStatusContent.Being_Appealed_Display_Text);
 

@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add outcome.
+        /// </summary>
+        public static string Action_Button_Add_Romm_Outcome {
+            get {
+                return ResourceManager.GetString("Action_Button_Add_Romm_Outcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update.
         /// </summary>
         public static string Action_Link_Update {

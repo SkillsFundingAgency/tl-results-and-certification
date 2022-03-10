@@ -1,4 +1,5 @@
 ﻿using System;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner
 {
@@ -11,6 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner
         public DateTime AppealEndDate { get; set; }
         public DateTime LastUpdatedOn { get; set; }
         public string LastUpdatedBy { get; set; }
+        public ComponentType ComponentType { get; set; }
         public Result Result { get; set; }
     }
 }

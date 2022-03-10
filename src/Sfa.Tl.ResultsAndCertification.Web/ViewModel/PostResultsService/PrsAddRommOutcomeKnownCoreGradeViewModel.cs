@@ -26,8 +26,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public int ProfileId { get; set; }
         public int AssessmentId { get; set; }
+        public int ResultId { get; set; }
         public PrsStatus? PrsStatus { get; set; }
-        public DateTime RommEndDate { get; set; }
+        public DateTime RommEndDate { get; set; }        
 
         [Required(ErrorMessageResourceType = typeof(PrsAddRommOutcomeKnownCoreGradeContent), ErrorMessageResourceName = "Validation_Message")]
         public RommOutcomeKnownType? RommOutcome { get; set; }
@@ -44,5 +45,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         {
             RommOutcome = EnumExtensions.IsValidValue<RommOutcomeKnownType>(outcomeKnownTypeId) ? (RommOutcomeKnownType?)outcomeKnownTypeId : null;
         }
+
+        public string SuccessBannerMessage 
+        { 
+            get 
+            { 
+                return string.Format(PrsAddRommOutcomeKnownCoreGradeContent.Banner_Message, LearnerName, ExamPeriod, ComponentType == ComponentType.Core ? CoreDisplayName : string.Empty);
+            }
+        }
+
+        public string Banner_HeaderMesage => (PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified) 
+                                          ? PrsAddRommOutcomeKnownCoreGradeContent.Banner_HeaderMessage_Romm_Recorded : string.Empty;
     }
 }
