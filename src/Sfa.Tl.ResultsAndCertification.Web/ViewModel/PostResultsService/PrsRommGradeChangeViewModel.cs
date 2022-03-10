@@ -37,18 +37,35 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public bool IsRommOutcomeJourney { get; set; }
         public bool IsChangeMode { get; set; }
 
-        public bool IsValid => ((PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified) 
+        public bool IsValid => ((PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified)
                             && CommonHelper.IsRommAllowed(RommEndDate))
                             || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.UnderReview;
 
-        public override BackLinkModel BackLink => new BackLinkModel
+        public override BackLinkModel BackLink => new()
         {
-            RouteName = !IsRommOutcomeJourney ? RouteConstants.PrsAddRommOutcomeKnownCoreGrade : string.Empty,
-            RouteAttributes = new Dictionary<string, string> 
-            { 
+            RouteName = GetRouteName,
+            RouteAttributes = GetRouteAttributes
+        };
+
+        private string GetRouteName => IsChangeMode ? RouteConstants.PrsRommCheckAndSubmit : GetRommOutcomeJourneyRoute;
+
+        private string GetRommOutcomeJourneyRoute => IsRommOutcomeJourney ? string.Empty : RouteConstants.PrsAddRommOutcomeKnownCoreGrade;
+
+        private Dictionary<string, string> GetRouteAttributes => 
+            IsChangeMode ? null : 
+            IsRommOutcomeJourney ? 
+            new Dictionary<string, string>
+            {
                 { Constants.ProfileId, ProfileId.ToString() },
                 { Constants.AssessmentId, AssessmentId.ToString() },
-                { Constants.RommOutcomeKnownTypeId, ((int)RommOutcomeKnownType.GradeChanged).ToString() } }
-        };
+                { Constants.RommOutcomeKnownTypeId, ((int)RommOutcomeKnownType.GradeChanged).ToString() }
+            }
+            :
+            new Dictionary<string, string>
+            {
+                { Constants.ProfileId, ProfileId.ToString() },
+                { Constants.AssessmentId, AssessmentId.ToString() },
+                { Constants.RommOutcomeKnownTypeId, ((int)RommOutcomeKnownType.GradeChanged).ToString() }
+            };
     }
 }

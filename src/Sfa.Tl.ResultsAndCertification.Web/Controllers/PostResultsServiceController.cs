@@ -192,7 +192,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if(model.RommOutcome == RommOutcomeKnownType.GradeChanged)
             {
+                await _cacheService.RemoveAsync<PrsRommCheckAndSubmitViewModel>(CacheKey);
                 return RedirectToRoute(RouteConstants.PrsRommGradeChange, new { profileId = model.ProfileId, assessmentId = model.AssessmentId });
+            }
+            else if (model.RommOutcome == RommOutcomeKnownType.GradeNotChanged)
+            {
+                var checkAndSubmitViewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, ComponentType.Core);
+                checkAndSubmitViewModel.NewGrade = checkAndSubmitViewModel.OldGrade;
+                checkAndSubmitViewModel.IsGradeChanged = false;
+                await _cacheService.SetAsync(CacheKey, checkAndSubmitViewModel);
+
+                return RedirectToRoute(RouteConstants.PrsRommCheckAndSubmit);
             }
 
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
@@ -207,6 +217,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            var checkAndSubmitDetails = await _cacheService.GetAsync<PrsRommCheckAndSubmitViewModel>(CacheKey);
+            if (checkAndSubmitDetails != null && (isChangeMode == null || isChangeMode.Value == false))
+                viewModel.SelectedGradeCode = viewModel.Grades?.FirstOrDefault(g => g.Value == checkAndSubmitDetails?.NewGrade)?.Code;
+
             viewModel.IsRommOutcomeJourney = isRommOutcomeJourney ?? false;
             viewModel.IsChangeMode = isChangeMode ?? false;
             return View(viewModel);
@@ -219,10 +233,35 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
             {
                 var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, ComponentType.Core);
+                prsDetails.IsRommOutcomeJourney = model.IsRommOutcomeJourney;
+                prsDetails.IsChangeMode = model.IsChangeMode;
                 return View(prsDetails);
             }
 
-            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+            var checkAndSubmitViewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, ComponentType.Core);
+            checkAndSubmitViewModel.NewGrade = model.Grades?.FirstOrDefault(x => x.Code == model.SelectedGradeCode)?.Value;
+
+            if (string.IsNullOrWhiteSpace(checkAndSubmitViewModel.NewGrade))
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            checkAndSubmitViewModel.IsGradeChanged = true;
+            await _cacheService.SetAsync(CacheKey, checkAndSubmitViewModel);
+
+            return RedirectToRoute(RouteConstants.PrsRommCheckAndSubmit);
+        }
+
+        [HttpGet]
+        [Route("post-results-romm-check", Name = RouteConstants.PrsRommCheckAndSubmit)]
+        public async Task<IActionResult> PrsRommCheckAndSubmitAsync()
+        {
+            var viewModel = await _cacheService.GetAsync<PrsRommCheckAndSubmitViewModel>(CacheKey);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PrsRommCheckAndSubmitViewModel from redis cache in Prs romm outcome check and submit page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
         }
 
         [HttpGet]

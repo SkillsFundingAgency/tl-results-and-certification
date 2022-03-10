@@ -55,10 +55,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 return _mapper.Map<T>(response, opt => { opt.Items["assessment"] = assessment; opt.Items["grades"] = grades; });
             }
             else
-            return _mapper.Map<T>(response, opt =>
             {
-                opt.Items["assessment"] = assessment;
-            });
+                return _mapper.Map<T>(response, opt =>
+                {
+                    opt.Items["assessment"] = assessment;
+                });
+            }
         }
 
         public async Task<T> GetPrsLearnerDetailsAsync<T>(long aoUkprn, int profileId, int assessementId)
