@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reviews-and-appeals-learner-withdrawn", Name = RouteConstants.PrsUlnWithdrawn)]
+        [Route("post-results-learner-withdrawn", Name = RouteConstants.PrsUlnWithdrawn)]
         public async Task<IActionResult> PrsUlnWithdrawnAsync()
         {
             var cacheModel = await _cacheService.GetAndRemoveAsync<PrsUlnWithdrawnViewModel>(CacheKey);
