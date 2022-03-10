@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             {
                 { Constants.ProfileId, ProfileId.ToString() },
                 { Constants.AssessmentId, AssessmentId.ToString() },
-                { "isRommOutcomeJourney", "false" },
+                { Constants.IsRommOutcomeJourney, "false" },
                 { Constants.IsChangeMode, "true" }
             }
         };
@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             {
                 { Constants.ProfileId, ProfileId.ToString() },
                 { Constants.AssessmentId, AssessmentId.ToString() },
-                { "isRommOutcomeJourney", "false" },
+                { Constants.IsRommOutcomeJourney, "false" },
                 { Constants.IsChangeMode, "false" }
             }
             : new Dictionary<string, string>
