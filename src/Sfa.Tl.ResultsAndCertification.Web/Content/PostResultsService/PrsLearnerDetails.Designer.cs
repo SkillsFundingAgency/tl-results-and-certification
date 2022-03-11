@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add appeal.
+        /// </summary>
+        public static string Action_Button_Add_Appeal {
+            get {
+                return ResourceManager.GetString("Action_Button_Add_Appeal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add ROMM.
         /// </summary>
         public static string Action_Button_Add_Romm {
