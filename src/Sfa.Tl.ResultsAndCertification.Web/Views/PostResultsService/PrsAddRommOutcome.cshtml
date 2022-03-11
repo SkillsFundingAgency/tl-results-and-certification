@@ -43,20 +43,20 @@
 
                     <span sfa-validation-for="RommOutcome"></span>
                     <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="rommoutcome" asp-for="RommOutcome" type="radio" value="@RommOutcomeKnownType.GradeChanged">
+                        <input class="govuk-radios__input" id="rommoutcome" asp-for="RommOutcome" type="radio" value="@RommOutcomeType.GradeChanged">
                         <label class="govuk-label govuk-radios__label" for="rommoutcome">
                             @PrsAddRommOutcome.Radio_Button_Yes_Grade_Has_Changed
                         </label>
                     </div>
                     <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="rommoutcome-gradenotchanged" asp-for="RommOutcome" type="radio" value="@RommOutcomeKnownType.GradeNotChanged">
+                        <input class="govuk-radios__input" id="rommoutcome-gradenotchanged" asp-for="RommOutcome" type="radio" value="@RommOutcomeType.GradeNotChanged">
                         <label class="govuk-label govuk-radios__label" for="rommoutcome-gradenotchanged">
                             @PrsAddRommOutcome.Radio_Button_Yes_Grade_Is_Same
                         </label>
                     </div>
                     <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="appealoutcome-no" asp-for="RommOutcome" type="radio" value="@RommOutcomeKnownType.No">
-                        <label class="govuk-label govuk-radios__label" for="appealoutcome-no">
+                        <input class="govuk-radios__input" id="appealoutcome-withdraw" asp-for="RommOutcome" type="radio" value="@RommOutcomeType.Withdraw">
+                        <label class="govuk-label govuk-radios__label" for="appealoutcome-withdraw">
                             @PrsAddRommOutcome.Radio_Button_Withdrawn
                         </label>
                     </div>
