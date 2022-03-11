@@ -21,6 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string PrsDisplayText { get { return CommonHelper.GetPrsStatusDisplayText(PrsStatus, AppealEndDate); } }
         public bool IsAddRommAllowed => IsGradeExists && (PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified) && CommonHelper.IsRommAllowed(RommEndDate);
         public bool IsAddRommOutcomeAllowed => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.UnderReview;
+        public bool IsAddAppealAllowed => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Reviewed && CommonHelper.IsAppealsAllowed(AppealEndDate);
+
         private bool IsGradeExists => AssessmentId > 0 && !string.IsNullOrWhiteSpace(Grade);
 
         public string RommRouteName { get { return RouteConstants.PrsAddRommCoreGrade; } }
