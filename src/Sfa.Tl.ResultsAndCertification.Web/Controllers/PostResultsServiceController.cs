@@ -187,9 +187,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, ComponentType.Core);
 
             if (!ModelState.IsValid)
-            {
                 return View(prsDetails);
-            }
+
+            if (prsDetails == null || !prsDetails.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
 
             if (model.RommOutcome == RommOutcomeKnownType.GradeChanged)
             {

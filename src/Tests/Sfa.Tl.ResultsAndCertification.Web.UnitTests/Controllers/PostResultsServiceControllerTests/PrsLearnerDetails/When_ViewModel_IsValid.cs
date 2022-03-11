@@ -65,18 +65,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 }
             };
 
-            //_notificationBanner = new NotificationBannerModel { Message = "Updated Successfully." };
+            _notificationBanner = new NotificationBannerModel { Message = "Updated Successfully." };
 
             Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel1>(AoUkprn, ProfileId).Returns(_mockResult);
-            //CacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey).Returns(_notificationBanner);
+            CacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey).Returns(_notificationBanner);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            // TODO: Rajesh
             Loader.Received(1).GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel1>(AoUkprn, ProfileId);
-            //CacheService.Received(1).GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
+            CacheService.Received(1).GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
         }
 
         [Fact]
@@ -138,31 +137,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.Breadcrumb.BreadcrumbItems[1].RouteName.Should().Be(RouteConstants.StartReviewsAndAppeals);
             model.Breadcrumb.BreadcrumbItems[2].DisplayName.Should().Be(BreadcrumbContent.Search_For_Learner);
             model.Breadcrumb.BreadcrumbItems[2].RouteName.Should().Be(RouteConstants.PrsSearchLearner);
-        }
-
-
-        //private string GetUpdatePathwayGradeRouteName
-        //{
-        //    get
-        //    {
-        //        return _mockLearnerDetails.PathwayPrsStatus switch
-        //        {
-        //            PrsStatus.BeingAppealed => RouteConstants.PrsAppealOutcomePathwayGrade,
-        //            _ => RouteConstants.PrsAppealCoreGrade,
-        //        };
-        //    }
-        //}
-
-        //private Dictionary<string, string> GetUpdatePathwayGradeRouteAttributes
-        //{
-        //    get
-        //    {
-        //        return _mockLearnerDetails.PathwayPrsStatus switch
-        //        {
-        //            PrsStatus.BeingAppealed => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, _mockLearnerDetails.PathwayAssessmentId.ToString() }, { Constants.ResultId, _mockLearnerDetails.PathwayResultId.ToString() } },
-        //            _ => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, _mockLearnerDetails.PathwayAssessmentId.ToString() }, { Constants.ResultId, _mockLearnerDetails.PathwayResultId.ToString() } },
-        //        };
-        //    }
-        //}
+        }        
     }
 }

@@ -157,6 +157,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private bool IsResultStatusValid(PrsStatus requestPrsStatus, PrsStatus? currentPrsStatus)
         {
+            if (requestPrsStatus == PrsStatus.UnderReview)
+                return currentPrsStatus == null || currentPrsStatus == PrsStatus.NotSpecified;
+
             if (requestPrsStatus == PrsStatus.BeingAppealed)
                 return currentPrsStatus == null || currentPrsStatus == PrsStatus.NotSpecified;
 

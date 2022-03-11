@@ -117,10 +117,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                 LastUpdatedOn = DateTime.UtcNow
                             }
                         },
-
                         new Assessment
                         {
                             Id = 15,
+                            SeriesId = 5,
+                            SeriesName = "Autumn 2020",
+                            ComponentType = ComponentType.Core,
+                            RommEndDate = DateTime.UtcNow.AddDays(5),
+                            AppealEndDate = DateTime.UtcNow.AddDays(10),
+                            LastUpdatedBy = "System",
+                            LastUpdatedOn = DateTime.UtcNow,
+                            Result = new Result
+                            {
+                                Id = 1,
+                                Grade = "D",
+                                PrsStatus = PrsStatus.UnderReview,
+                                LastUpdatedBy = "System",
+                                LastUpdatedOn = DateTime.UtcNow
+                            }
+                        },
+                        new Assessment
+                        {
+                            Id = 16,
                             SeriesId = 5,
                             SeriesName = "Autumn 2020",
                             ComponentType = ComponentType.Core,
@@ -258,13 +276,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 var isResultAvailable = expectedExam.Result != null;
                 var isGradeExists = expectedExam.Id > 0 && isResultAvailable && !string.IsNullOrWhiteSpace(expectedExam.Result.Grade);
                 var isAddRommAllowed = isGradeExists && (expectedExam.Result.PrsStatus == null || expectedExam.Result.PrsStatus == PrsStatus.NotSpecified) && (DateTime.UtcNow <= expectedExam.RommEndDate);
+                var isAddRommOutcomeAllowed = expectedExam.Result?.PrsStatus == PrsStatus.UnderReview;
 
                 actualExam.Grade.Should().Be(!isResultAvailable ? null : expectedExam.Result.Grade);
                 actualExam.PrsStatus.Should().Be(!isResultAvailable ? null : expectedExam.Result.PrsStatus);
                 actualExam.LastUpdated.Should().Be(!isResultAvailable ? null : expectedExam.Result.LastUpdatedOn.ToDobFormat());
                 actualExam.UpdatedBy.Should().Be(!isResultAvailable ? null : expectedExam.Result.LastUpdatedBy);
-                //actualExam.ComponentType.Should().Be(ComponentType.Core);
+                actualExam.ComponentType.Should().Be(ComponentType.Core);
                 actualExam.IsAddRommAllowed.Should().Be(isAddRommAllowed);
+                actualExam.IsAddRommOutcomeAllowed.Should().Be(isAddRommOutcomeAllowed);
                 actualExam.ProfileId.Should().Be(_expectedApiResult.ProfileId);
             }
 
@@ -287,6 +307,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                     var isResultAvailable = expectedExam.Result != null;
                     var isGradeExists = expectedExam.Id > 0 && isResultAvailable && !string.IsNullOrWhiteSpace(expectedExam.Result.Grade);
                     var isAddRommAllowed = isGradeExists && (expectedExam.Result.PrsStatus == null || expectedExam.Result.PrsStatus == PrsStatus.NotSpecified) && (DateTime.UtcNow <= expectedExam.RommEndDate);
+                    var isAddRommOutcomeAllowed = expectedExam.Result?.PrsStatus == PrsStatus.UnderReview;
 
                     actualExam.Grade.Should().Be(!isResultAvailable ? null : expectedExam.Result.Grade);
                     actualExam.PrsStatus.Should().Be(!isResultAvailable ? null : expectedExam.Result.PrsStatus);
@@ -294,6 +315,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                     actualExam.UpdatedBy.Should().Be(!isResultAvailable ? null : expectedExam.Result.LastUpdatedBy);
                     actualExam.ComponentType.Should().Be(ComponentType.Specialism);
                     actualExam.IsAddRommAllowed.Should().Be(isAddRommAllowed);
+                    actualExam.IsAddRommOutcomeAllowed.Should().Be(isAddRommOutcomeAllowed);
                     actualExam.ProfileId.Should().Be(_expectedApiResult.ProfileId);
                 }
             }
