@@ -17,7 +17,13 @@
         <form class="form" asp-route="SubmitPrsRommCheckAndSubmit">
             <input type="hidden" asp-for="@Model.ProfileId" />
             <input type="hidden" asp-for="@Model.AssessmentId" />
+            <input type="hidden" asp-for="@Model.ResultId" />
             <input type="hidden" asp-for="@Model.NewGrade" />
+            <input type="hidden" asp-for="@Model.Firstname" />
+            <input type="hidden" asp-for="@Model.Lastname" />
+            <input type="hidden" asp-for="@Model.ExamPeriod" />
+            <input type="hidden" asp-for="@Model.CoreDisplayName" />
+            <input type="hidden" asp-for="@Model.ComponentType" />
 
             <h2 class="govuk-heading-m">@PrsRommCheckAndSubmit.Heading_Learner_Details </h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border">

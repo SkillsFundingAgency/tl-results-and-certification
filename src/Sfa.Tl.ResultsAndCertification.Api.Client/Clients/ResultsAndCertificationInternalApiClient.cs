@@ -255,9 +255,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         }
 
         # region Common controller
-        public async Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade)
+        public async Task<IList<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory)
         {
-            var requestUri = string.Format(ApiConstants.GetLookupDataUri, (int)pathwayComponentGrade);
+            var requestUri = string.Format(ApiConstants.GetLookupDataUri, (int)lookupCategory);
             return await GetAsync<IList<LookupData>>(requestUri);
         }
 

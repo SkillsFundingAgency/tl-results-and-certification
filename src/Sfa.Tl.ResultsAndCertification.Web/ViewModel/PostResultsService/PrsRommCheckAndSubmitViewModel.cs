@@ -24,6 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public int ProfileId { get; set; }
         public int AssessmentId { get; set; }
+        public int ResultId { get; set; }
         public string OldGrade { get; set; }
         public string NewGrade { get; set; }
         public bool IsGradeChanged { get; set; }
@@ -69,5 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                 { Constants.RommOutcomeKnownTypeId, ((int)RommOutcomeKnownType.GradeNotChanged).ToString() }
             }
         };
+
+        public string SuccessBannerMessage
+        {
+            get
+            {
+                return string.Format(PrsRommCheckAndSubmitContent.Banner_Message, LearnerName, ExamPeriod, ComponentType == ComponentType.Core ? CoreDisplayName : string.Empty);
+            }
+        }
+
+        public string Banner_HeaderMesage => PrsRommCheckAndSubmitContent.Banner_HeaderMessage_Romm_Recorded;
     }
 }

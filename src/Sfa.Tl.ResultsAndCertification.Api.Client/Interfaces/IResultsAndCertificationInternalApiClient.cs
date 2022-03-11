@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<bool> AppealGradeAfterDeadlineRequestAsync(AppealGradeAfterDeadlineRequest request);
 
         // Common
-        Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade);
+        Task<IList<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory);
         Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn);
         Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync();
         Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync();
