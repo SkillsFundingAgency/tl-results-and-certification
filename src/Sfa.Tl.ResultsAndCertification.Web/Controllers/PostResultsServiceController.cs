@@ -180,7 +180,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("post-results-add-romm-outcome/{profileId}/{assessmentId}/{outcomeTypeId:int?}", Name = RouteConstants.SubmitPrsAddRommOutcomeKnownCoreGrade)]
+        [Route("post-results-add-romm-outcome/{profileId}/{assessmentId}/{outcomeTypeId:int?}", Name = RouteConstants.SubmitPrsAddRommOutcome)]
         public async Task<IActionResult> PrsAddRommOutcomeAsync(PrsAddRommOutcomeViewModel model)
         {
             var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, ComponentType.Core);
