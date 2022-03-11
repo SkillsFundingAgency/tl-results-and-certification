@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             ProviderUkprnLabel = PrsRommCheckAndSubmitContent.Title_Provider_Ukprn_Text;
             TlevelTitleLabel = PrsRommCheckAndSubmitContent.Title_TLevel_Text;
             CoreLabel = PrsRommCheckAndSubmitContent.Title_Core_Text;
-            ExamPeriodLabel = PrsRommCheckAndSubmitContent.Title_ExamPeriod_Text;            
+            ExamPeriodLabel = PrsRommCheckAndSubmitContent.Title_ExamPeriod_Text;
         }
 
         public int ProfileId { get; set; }
@@ -28,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string OldGrade { get; set; }
         public string NewGrade { get; set; }
         public bool IsGradeChanged { get; set; }
+        public PrsStatus? PrsStatus { get; set; }
 
         public SummaryItemModel SummaryOldGrade => new SummaryItemModel
         {
@@ -55,20 +56,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public override BackLinkModel BackLink => new BackLinkModel
         {
-            RouteName = IsGradeChanged ? RouteConstants.PrsRommGradeChange : RouteConstants.PrsAddRommOutcomeKnownCoreGrade,
+            RouteName = IsGradeChanged ? RouteConstants.PrsRommGradeChange : GetRommOutcomeRouteName,
             RouteAttributes = IsGradeChanged ? new Dictionary<string, string>
             {
                 { Constants.ProfileId, ProfileId.ToString() },
                 { Constants.AssessmentId, AssessmentId.ToString() },
-                { Constants.IsRommOutcomeJourney, "false" },
+                { Constants.IsRommOutcomeJourney, IsRommOutcomeJourney.ToString().ToLowerInvariant() },
                 { Constants.IsChangeMode, "false" }
             }
-            : new Dictionary<string, string>
-            {
-                { Constants.ProfileId, ProfileId.ToString() },
-                { Constants.AssessmentId, AssessmentId.ToString() },                
-                { Constants.RommOutcomeKnownTypeId, ((int)RommOutcomeKnownType.GradeNotChanged).ToString() }
-            }
+           : GetRommOutcomeRouteAttributes
         };
 
         public string SuccessBannerMessage
@@ -80,5 +76,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         }
 
         public string Banner_HeaderMesage => PrsRommCheckAndSubmitContent.Banner_HeaderMessage_Romm_Recorded;
+
+        private bool IsRommOutcomeJourney => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.UnderReview;
+        private string GetRommOutcomeRouteName => IsRommOutcomeJourney ? RouteConstants.PrsAddRommOutcome : RouteConstants.PrsAddRommOutcomeKnownCoreGrade;
+
+        private Dictionary<string, string> GetRommOutcomeRouteAttributes
+        {
+            get
+            {
+                return IsRommOutcomeJourney
+                        ?
+                        new Dictionary<string, string>
+                        {
+                            { Constants.ProfileId, ProfileId.ToString() },
+                            { Constants.AssessmentId, AssessmentId.ToString() },
+                            { Constants.RommOutcomeTypeId, ((int)RommOutcomeType.GradeNotChanged).ToString() }
+                        }
+                        :
+                        new Dictionary<string, string>
+                        {
+                            { Constants.ProfileId, ProfileId.ToString() },
+                            { Constants.AssessmentId, AssessmentId.ToString() },
+                            { Constants.RommOutcomeKnownTypeId, ((int)RommOutcomeKnownType.GradeNotChanged).ToString() }
+                        };
+            }
+        }
     }
 }

@@ -102,6 +102,7 @@
         public const string PopulateUln = "populateUln";
         public const string AppealOutcomeTypeId = "outcomeTypeId";
         public const string IsResultJourney = "isResultJourney";
+        public const string RommOutcomeTypeId = "outcomeTypeId";
         public const string RommOutcomeKnownTypeId = "outcomeKnownTypeId";
         public const string IsRommOutcomeJourney = "isRommOutcomeJourney";
 

@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         private string GetRouteName => IsChangeMode ? RouteConstants.PrsRommCheckAndSubmit : GetRommOutcomeJourneyRoute;
 
-        private string GetRommOutcomeJourneyRoute => IsRommOutcomeJourney ? string.Empty : RouteConstants.PrsAddRommOutcomeKnownCoreGrade;
+        private string GetRommOutcomeJourneyRoute => IsRommOutcomeJourney ? RouteConstants.PrsAddRommOutcome : RouteConstants.PrsAddRommOutcomeKnownCoreGrade;
 
         private Dictionary<string, string> GetRouteAttributes => 
             IsChangeMode ? null : 
@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             {
                 { Constants.ProfileId, ProfileId.ToString() },
                 { Constants.AssessmentId, AssessmentId.ToString() },
-                { Constants.RommOutcomeKnownTypeId, ((int)RommOutcomeKnownType.GradeChanged).ToString() }
+                { Constants.RommOutcomeTypeId, ((int)RommOutcomeType.GradeChanged).ToString() }
             }
             :
             new Dictionary<string, string>
