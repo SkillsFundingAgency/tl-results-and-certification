@@ -24,6 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         private bool IsGradeExists => AssessmentId > 0 && !string.IsNullOrWhiteSpace(Grade);
 
         public string RommRouteName { get { return RouteConstants.PrsAddRommCoreGrade; } }
+        public string RommOutcomeRouteName { get { return RouteConstants.PrsAddRommOutcome; } }
 
         public Dictionary<string, string> RommRouteAttributes { get { return new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, AssessmentId.ToString() } }; } }
     }
