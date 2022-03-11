@@ -1,12 +1,11 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using PrsAddRommOutcomeContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsAddRommOutcomeKnownCoreGrade;
+using PrsAddRommOutcomeContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsAddRommOutcome;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 {
@@ -54,6 +53,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             }
         }
 
-        public string Banner_HeaderMesage => PrsAddRommOutcomeContent.Banner_HeaderMessage_Romm_Recorded;
+        public string Banner_HeaderMesage => PrsAddRommOutcomeContent.Banner_HeaderMessage_Romm_Withdrawn;
     }
 }

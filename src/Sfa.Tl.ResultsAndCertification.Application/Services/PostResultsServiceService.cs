@@ -170,7 +170,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return currentPrsStatus == PrsStatus.BeingAppealed;
 
             if (requestPrsStatus == PrsStatus.Withdraw)
-                return currentPrsStatus == PrsStatus.BeingAppealed;
+                return currentPrsStatus == PrsStatus.UnderReview || currentPrsStatus == PrsStatus.BeingAppealed;
 
             return false;
         }

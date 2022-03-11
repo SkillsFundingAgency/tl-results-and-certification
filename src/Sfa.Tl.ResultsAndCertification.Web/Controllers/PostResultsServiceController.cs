@@ -204,7 +204,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 await _cacheService.SetAsync(CacheKey, checkAndSubmitViewModel);
 
                 return RedirectToRoute(RouteConstants.PrsRommCheckAndSubmit);
-            }            
+            }
+            else if (model.RommOutcome == RommOutcomeType.Withdraw)
+            {
+                bool isSuccess = await _postResultsServiceLoader.PrsRommActivityAsync(User.GetUkPrn(), model);
+                if (!isSuccess)
+                    return RedirectToRoute(RouteConstants.ProblemWithService);
+
+                var notificationBanner = new NotificationBannerModel { IsPrsJourney = true, HeaderMessage = prsDetails.Banner_HeaderMesage, Message = prsDetails.SuccessBannerMessage };
+                await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+            }
             else
             {
                 return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
