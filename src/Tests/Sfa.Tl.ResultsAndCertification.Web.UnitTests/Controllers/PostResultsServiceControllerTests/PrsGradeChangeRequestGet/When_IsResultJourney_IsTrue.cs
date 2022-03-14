@@ -26,9 +26,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 AssessmentId = AssessmentId,
                 ResultId = ResultId,
                 Status = RegistrationPathwayStatus.Active,
-                PathwayPrsStatus = PrsStatus.Final
+                PrsStatus = PrsStatus.Final
             };
-            Loader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_mockGradeChangeRequestViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_mockGradeChangeRequestViewModel);
         }
 
         [Fact]

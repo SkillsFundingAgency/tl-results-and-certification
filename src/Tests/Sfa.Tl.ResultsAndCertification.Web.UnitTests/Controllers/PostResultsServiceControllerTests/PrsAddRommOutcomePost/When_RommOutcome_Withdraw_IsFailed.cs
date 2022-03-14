@@ -32,7 +32,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ExamPeriod = "Summer 2021",
                 Grade = "A",
                 PrsStatus = PrsStatus.UnderReview,
-                RommEndDate = DateTime.UtcNow.AddDays(7)
+                RommEndDate = DateTime.UtcNow.AddDays(7),
+                ComponentType = ComponentType.Core
             };
 
             ViewModel = new PrsAddRommOutcomeViewModel

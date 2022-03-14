@@ -34,21 +34,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
                 ProviderName = "Barsely College",
                 ProviderUkprn = 9876543210,
-
+                CoreDisplayName = "Childcare (1234567)",
                 TlevelTitle = "Tlevel in Childcare",
 
-                PathwayAssessmentSeries = "Summer 2021",
-                PathwayGrade = "B",
-                PathwayPrsStatus = PrsStatus.Final
+                ExamPeriod = "Summer 2021",
+                Grade = "B",
+                PrsStatus = PrsStatus.Final,
+                AppealEndDate = DateTime.Now.AddDays(1)
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_mockGradeChangeRequestViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_mockGradeChangeRequestViewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
         }
 
         [Fact]
@@ -66,6 +67,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.Lastname.Should().Be(_mockGradeChangeRequestViewModel.Lastname);
             model.DateofBirth.Should().Be(_mockGradeChangeRequestViewModel.DateofBirth);
             model.Status.Should().Be(_mockGradeChangeRequestViewModel.Status);
+            model.PrsStatus.Should().Be(_mockGradeChangeRequestViewModel.PrsStatus);
+            model.AppealEndDate.Should().Be(_mockGradeChangeRequestViewModel.AppealEndDate);
             model.CanRequestFinalGradeChange.Should().BeTrue();
             model.ChangeRequestData.Should().BeNull();
             model.IsResultJourney.Should().BeFalse();
@@ -74,9 +77,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.ProviderUkprn.Should().Be(_mockGradeChangeRequestViewModel.ProviderUkprn);
             model.TlevelTitle.Should().Be(_mockGradeChangeRequestViewModel.TlevelTitle);
 
-            model.PathwayAssessmentSeries.Should().Be(_mockGradeChangeRequestViewModel.PathwayAssessmentSeries);
-            model.PathwayGrade.Should().Be(_mockGradeChangeRequestViewModel.PathwayGrade);
-            model.PathwayPrsStatus.Should().Be(_mockGradeChangeRequestViewModel.PathwayPrsStatus);
+            model.ExamPeriod.Should().Be(_mockGradeChangeRequestViewModel.ExamPeriod);
+            model.Grade.Should().Be(_mockGradeChangeRequestViewModel.Grade);
+            model.PrsStatus.Should().Be(_mockGradeChangeRequestViewModel.PrsStatus);
 
             // Uln
             model.SummaryUln.Title.Should().Be(GradeChangeContent.Title_Uln_Text);
@@ -90,27 +93,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.SummaryDateofBirth.Title.Should().Be(GradeChangeContent.Title_DateofBirth_Text);
             model.SummaryDateofBirth.Value.Should().Be(_mockGradeChangeRequestViewModel.DateofBirth.ToDobFormat());
 
+            // T Level title
+            model.SummaryTlevelTitle.Title.Should().Be(GradeChangeContent.Title_TLevel_Text);
+            model.SummaryTlevelTitle.Value.Should().Be(_mockGradeChangeRequestViewModel.TlevelTitle);
+
             // Pathway name
             model.SummaryCore.Title.Should().Be(GradeChangeContent.Title_Core_Text);
-            model.SummaryCore.Value.Should().Be(_mockGradeChangeRequestViewModel.PathwayDisplayName);
-            model.SummaryCore.IsRawHtml.Should().BeTrue();
+            model.SummaryCore.Value.Should().Be(_mockGradeChangeRequestViewModel.CoreDisplayName);
 
             // Exam period
-            model.SummaryCoreExamPeriod.Title.Should().Be(GradeChangeContent.Title_ExamPeriod_Text);
-            model.SummaryCoreExamPeriod.Value.Should().Be(_mockGradeChangeRequestViewModel.PathwayAssessmentSeries);
+            model.SummaryExamPeriod.Title.Should().Be(GradeChangeContent.Title_ExamPeriod_Text);
+            model.SummaryExamPeriod.Value.Should().Be(_mockGradeChangeRequestViewModel.ExamPeriod);
 
             // Pathway grade
-            model.SummaryCoreGrade.Title.Should().Be(GradeChangeContent.Title_Grade_Text);
-            model.SummaryCoreGrade.Value.Should().Be(_mockGradeChangeRequestViewModel.PathwayGrade);
+            model.SummaryGrade.Title.Should().Be(GradeChangeContent.Title_Grade_Text);
+            model.SummaryGrade.Value.Should().Be(_mockGradeChangeRequestViewModel.Grade);
 
             // Back link
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.PrsLearnerDetails);
-            model.BackLink.RouteAttributes.Count.Should().Be(2);
+            model.BackLink.RouteAttributes.Count.Should().Be(1);
             model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string profileId);
             profileId.Should().Be(_mockGradeChangeRequestViewModel.ProfileId.ToString());
-            model.BackLink.RouteAttributes.TryGetValue(Constants.AssessmentId, out string assessmentId);
-            assessmentId.Should().Be(_mockGradeChangeRequestViewModel.AssessmentId.ToString());
         }
     }
 }

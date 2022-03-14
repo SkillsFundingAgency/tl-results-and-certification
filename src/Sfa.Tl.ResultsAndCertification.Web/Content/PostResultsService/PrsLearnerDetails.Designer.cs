@@ -88,6 +88,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Request change.
+        /// </summary>
+        public static string Action_Button_Request_Change {
+            get {
+                return ResourceManager.GetString("Action_Button_Request_Change", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update.
         /// </summary>
         public static string Action_Link_Update {

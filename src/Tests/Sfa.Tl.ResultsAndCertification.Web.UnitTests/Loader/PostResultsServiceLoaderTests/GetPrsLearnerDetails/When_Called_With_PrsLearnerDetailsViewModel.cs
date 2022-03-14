@@ -3,6 +3,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using System.Collections.Generic;
@@ -277,6 +278,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 var isGradeExists = expectedExam.Id > 0 && isResultAvailable && !string.IsNullOrWhiteSpace(expectedExam.Result.Grade);
                 var isAddRommAllowed = isGradeExists && (expectedExam.Result.PrsStatus == null || expectedExam.Result.PrsStatus == PrsStatus.NotSpecified) && (DateTime.UtcNow <= expectedExam.RommEndDate);
                 var isAddRommOutcomeAllowed = expectedExam.Result?.PrsStatus == PrsStatus.UnderReview;
+                var isChangedRequestAllowed = ((expectedExam.Result?.PrsStatus == null || expectedExam.Result?.PrsStatus == PrsStatus.NotSpecified) && CommonHelper.IsRommAllowed(expectedExam.RommEndDate) == false)
+                                           || (expectedExam.Result?.PrsStatus == PrsStatus.Reviewed && CommonHelper.IsAppealsAllowed(expectedExam.AppealEndDate) == false)
+                                           || expectedExam.Result?.PrsStatus == PrsStatus.Final;
 
                 actualExam.Grade.Should().Be(!isResultAvailable ? null : expectedExam.Result.Grade);
                 actualExam.PrsStatus.Should().Be(!isResultAvailable ? null : expectedExam.Result.PrsStatus);
@@ -285,6 +289,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 actualExam.ComponentType.Should().Be(ComponentType.Core);
                 actualExam.IsAddRommAllowed.Should().Be(isAddRommAllowed);
                 actualExam.IsAddRommOutcomeAllowed.Should().Be(isAddRommOutcomeAllowed);
+                actualExam.IsRequestChangeAllowed.Should().Be(isChangedRequestAllowed);
                 actualExam.ProfileId.Should().Be(_expectedApiResult.ProfileId);
             }
 
@@ -308,6 +313,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                     var isGradeExists = expectedExam.Id > 0 && isResultAvailable && !string.IsNullOrWhiteSpace(expectedExam.Result.Grade);
                     var isAddRommAllowed = isGradeExists && (expectedExam.Result.PrsStatus == null || expectedExam.Result.PrsStatus == PrsStatus.NotSpecified) && (DateTime.UtcNow <= expectedExam.RommEndDate);
                     var isAddRommOutcomeAllowed = expectedExam.Result?.PrsStatus == PrsStatus.UnderReview;
+                    var isChangedRequestAllowed = ((expectedExam.Result?.PrsStatus == null || expectedExam.Result?.PrsStatus == PrsStatus.NotSpecified) && CommonHelper.IsRommAllowed(expectedExam.RommEndDate) == false)
+                                           || (expectedExam.Result?.PrsStatus == PrsStatus.Reviewed && CommonHelper.IsAppealsAllowed(expectedExam.AppealEndDate) == false)
+                                           || expectedExam.Result?.PrsStatus == PrsStatus.Final;
 
                     actualExam.Grade.Should().Be(!isResultAvailable ? null : expectedExam.Result.Grade);
                     actualExam.PrsStatus.Should().Be(!isResultAvailable ? null : expectedExam.Result.PrsStatus);
@@ -316,6 +324,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                     actualExam.ComponentType.Should().Be(ComponentType.Specialism);
                     actualExam.IsAddRommAllowed.Should().Be(isAddRommAllowed);
                     actualExam.IsAddRommOutcomeAllowed.Should().Be(isAddRommOutcomeAllowed);
+                    actualExam.IsRequestChangeAllowed.Should().Be(isChangedRequestAllowed);
                     actualExam.ProfileId.Should().Be(_expectedApiResult.ProfileId);
                 }
             }
