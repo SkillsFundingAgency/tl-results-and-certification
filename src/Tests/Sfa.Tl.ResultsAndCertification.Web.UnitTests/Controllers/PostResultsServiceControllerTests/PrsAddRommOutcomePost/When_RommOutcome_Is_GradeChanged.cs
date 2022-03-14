@@ -7,18 +7,18 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomeKnownCoreGradePost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomePost
 {
     public class When_RommOutcome_Is_GradeChanged : TestSetup
     {
-        private PrsAddRommOutcomeKnownCoreGradeViewModel _addRommOutcomeKnownCoreGradeViewModel;
+        private PrsAddRommOutcomeViewModel _addRommOutcomeViewModel;
 
         public override void Given()
         {
             ProfileId = 1;
             AssessmentId = 7;
 
-            _addRommOutcomeKnownCoreGradeViewModel = new PrsAddRommOutcomeKnownCoreGradeViewModel
+            _addRommOutcomeViewModel = new PrsAddRommOutcomeViewModel
             {
                 ProfileId = ProfileId,
                 AssessmentId = AssessmentId,
@@ -30,12 +30,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 CoreDisplayName = "Childcare (12121212)",
                 ExamPeriod = "Summer 2021",
                 Grade = "A",
-                PrsStatus = null,
+                PrsStatus = PrsStatus.UnderReview,
                 RommEndDate = DateTime.UtcNow.AddDays(7)
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_addRommOutcomeKnownCoreGradeViewModel);
-            ViewModel = new PrsAddRommOutcomeKnownCoreGradeViewModel { ProfileId = ProfileId, AssessmentId = AssessmentId, RommOutcome = RommOutcomeKnownType.GradeChanged };
+            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_addRommOutcomeViewModel);
+            ViewModel = new PrsAddRommOutcomeViewModel { ProfileId = ProfileId, AssessmentId = AssessmentId, RommOutcome = RommOutcomeType.GradeChanged };
         }
 
         [Fact]
@@ -49,9 +49,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             var route = Result as RedirectToRouteResult;
             route.RouteName.Should().Be(RouteConstants.PrsRommGradeChange);
-            route.RouteValues.Count.Should().Be(2);
+            route.RouteValues.Count.Should().Be(3);
             route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
             route.RouteValues[Constants.AssessmentId].Should().Be(ViewModel.AssessmentId);
+            route.RouteValues[Constants.IsRommOutcomeJourney].Should().Be("true");
         }
     }
 }
