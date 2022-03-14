@@ -189,22 +189,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ResultId, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.Result?.Id))
                 .ForMember(d => d.PrsStatus, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.Result?.PrsStatus));
 
-            //CreateMap<PrsLearnerDetails, PrsGradeChangeRequestViewModel>()
-            //    .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-            //    .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
-            //    .ForMember(d => d.ResultId, opts => opts.MapFrom(s => s.PathwayResultId))
-            //    .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
-            //    .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))
-            //    .ForMember(d => d.Lastname, opts => opts.MapFrom(s => s.Lastname))
-            //    .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
-            //    .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
-            //    .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
-            //    .ForMember(d => d.CoreDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayCode})"))
-            //    .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
-            //    .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.PathwayGrade))
-            //    .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status))
-            //    .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => s.PathwayPrsStatus));
-
             CreateMap<PrsLearnerDetails, PrsCancelGradeChangeRequestViewModel>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))

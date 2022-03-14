@@ -547,7 +547,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("request-grade-change/{profileId}/{assessmentId}/{isResultJourney:bool?}", Name = RouteConstants.SubmitPrsGradeChangeRequest)]
+        [Route("post-results-final-grade-change-request/{profileId}/{assessmentId}/{isResultJourney:bool?}", Name = RouteConstants.SubmitPrsGradeChangeRequest)]
         public async Task<IActionResult> PrsGradeChangeRequestAsync(PrsGradeChangeRequestViewModel viewModel)
         {
             var learnerDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(User.GetUkPrn(), viewModel.ProfileId, viewModel.AssessmentId, ComponentType.Core);
@@ -566,7 +566,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!isSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
-            var confirmationViewModel = new PrsGradeChangeRequestConfirmationViewModel { ProfileId = viewModel.ProfileId, AssessmentId = viewModel.AssessmentId };
+            var confirmationViewModel = new PrsGradeChangeRequestConfirmationViewModel { ProfileId = viewModel.ProfileId };
             await _cacheService.SetAsync(CacheKey, confirmationViewModel, CacheExpiryTime.XSmall);
 
             return RedirectToRoute(RouteConstants.PrsGradeChangeRequestConfirmation);
@@ -606,7 +606,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("grade-change-request-sent", Name = RouteConstants.PrsGradeChangeRequestConfirmation)]
+        [Route("post-results-final-grade-change-request-sent", Name = RouteConstants.PrsGradeChangeRequestConfirmation)]
         public async Task<IActionResult> PrsGradeChangeRequestConfirmationAsync()
         {
             var viewModel = await _cacheService.GetAndRemoveAsync<PrsGradeChangeRequestConfirmationViewModel>(CacheKey);
@@ -621,7 +621,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("grade-change-request-sent", Name = RouteConstants.SubmitPrsGradeChangeRequestConfirmation)]
+        [Route("post-results-final-grade-change-request-sent", Name = RouteConstants.SubmitPrsGradeChangeRequestConfirmation)]
         public IActionResult PrsGradeChangeRequestConfirmation(PrsGradeChangeRequestConfirmationViewModel viewModel)
         {
             if (viewModel == null)
@@ -629,7 +629,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return viewModel.NavigationOption switch
             {
-                PrsGradeChangeConfirmationNavigationOptions.BackToLearnersPage => RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = viewModel.ProfileId, assessmentId = viewModel.AssessmentId }),
+                PrsGradeChangeConfirmationNavigationOptions.BackToLearnersPage => RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = viewModel.ProfileId }),
                 PrsGradeChangeConfirmationNavigationOptions.SearchForAnotherLearner => RedirectToRoute(RouteConstants.PrsSearchLearner),
                 PrsGradeChangeConfirmationNavigationOptions.BackToHome => RedirectToRoute(RouteConstants.Home),
                 _ => RedirectToRoute(RouteConstants.Home)

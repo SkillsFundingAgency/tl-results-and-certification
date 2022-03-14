@@ -42,8 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             Loader.Received(1).GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType.Core);
             Loader.Received(1).PrsGradeChangeRequestAsync(ViewModel);
             CacheService.Received(1).SetAsync(CacheKey, Arg.Is<PrsGradeChangeRequestConfirmationViewModel>
-                (x => x.ProfileId == ViewModel.ProfileId &&
-                      x.AssessmentId == ViewModel.AssessmentId), CacheExpiryTime.XSmall);
+                (x => x.ProfileId == ViewModel.ProfileId), CacheExpiryTime.XSmall);
         }
 
         [Fact]
