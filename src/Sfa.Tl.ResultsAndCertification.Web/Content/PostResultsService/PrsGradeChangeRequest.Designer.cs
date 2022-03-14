@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class PrsGradeChangeRequest {
@@ -62,6 +62,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learners details.
+        /// </summary>
+        public static string Aria_Label_Text_Learner_Details {
+            get {
+                return ResourceManager.GetString("Aria_Label_Text_Learner_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send.
         /// </summary>
         public static string Button_Send {
@@ -80,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request a change to this learner’s grade.
+        ///   Looks up a localized string similar to Request to change a &apos;FINAL&apos; grade.
         /// </summary>
         public static string Heading_Request_To_Change_Learners_Grade {
             get {
@@ -107,7 +116,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request grade change.
+        ///   Looks up a localized string similar to Change a ‘final’ grade - Post-results.
         /// </summary>
         public static string Page_Title {
             get {
@@ -118,14 +127,32 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         /// <summary>
         ///   Looks up a localized string similar to Please do not add any details here that identify the learner, for example their name, date of birth or unique learner number..
         /// </summary>
-        public static string Para_Please_Do_Not_Add_Any_Details {
+        public static string Para_Hint_Text_Please_Do_Not_Add_Any_Details {
             get {
-                return ResourceManager.GetString("Para_Please_Do_Not_Add_Any_Details", resourceCulture);
+                return ResourceManager.GetString("Para_Hint_Text_Please_Do_Not_Add_Any_Details", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Core &lt;br/&gt; (code).
+        ///   Looks up a localized string similar to If you need to change a grade after it has been marked &apos;FINAL&apos;, we need to make a manual change to the grade record..
+        /// </summary>
+        public static string Para_If_You_Need_To_Change_A_Grade {
+            get {
+                return ResourceManager.GetString("Para_If_You_Need_To_Change_A_Grade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This change will take up to 3 working days..
+        /// </summary>
+        public static string Para_This_Change_Will_Take_Upto {
+            get {
+                return ResourceManager.GetString("Para_This_Change_Will_Take_Upto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Core.
         /// </summary>
         public static string Title_Core_Text {
             get {
@@ -166,6 +193,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         public static string Title_Name_Text {
             get {
                 return ResourceManager.GetString("Title_Name_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Level.
+        /// </summary>
+        public static string Title_TLevel_Text {
+            get {
+                return ResourceManager.GetString("Title_TLevel_Text", resourceCulture);
             }
         }
         

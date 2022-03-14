@@ -126,6 +126,9 @@
   <data name="Action_Button_Add_Romm_Outcome" xml:space="preserve">
     <value>Add outcome</value>
   </data>
+  <data name="Action_Button_Request_Change" xml:space="preserve">
+    <value>Request change</value>
+  </data>
   <data name="Action_Link_Update" xml:space="preserve">
     <value>Update</value>
   </data>

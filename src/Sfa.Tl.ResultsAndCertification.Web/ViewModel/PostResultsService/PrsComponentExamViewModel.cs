@@ -18,16 +18,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public DateTime AppealEndDate { get; set; }
         public PrsStatus? PrsStatus { get; set; }
         public ComponentType ComponentType { get; set; }
-        public string PrsDisplayText { get { return CommonHelper.GetPrsStatusDisplayText(PrsStatus, AppealEndDate); } }
-        public bool IsAddRommAllowed => IsGradeExists && (PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified) && CommonHelper.IsRommAllowed(RommEndDate);
+        public string PrsDisplayText { get { return CommonHelper.GetPrsStatusDisplayText(PrsStatus, RommEndDate, AppealEndDate); } }
+        public bool IsAddRommAllowed => IsGradeExists && (PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified) 
+                                     && CommonHelper.IsRommAllowed(RommEndDate);
         public bool IsAddRommOutcomeAllowed => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.UnderReview;
         public bool IsAddAppealAllowed => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Reviewed && CommonHelper.IsAppealsAllowed(AppealEndDate);
-
-        private bool IsGradeExists => AssessmentId > 0 && !string.IsNullOrWhiteSpace(Grade);
+        public bool IsRequestChangeAllowed => ((PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified) && CommonHelper.IsRommAllowed(RommEndDate) == false)
+                                           || (PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Reviewed && CommonHelper.IsAppealsAllowed(AppealEndDate) == false)
+                                           || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Final;
 
         public string RommRouteName { get { return RouteConstants.PrsAddRommCoreGrade; } }
         public string RommOutcomeRouteName { get { return RouteConstants.PrsAddRommOutcome; } }
+        public string PrsGradeChangeRequestRouteName { get { return RouteConstants.PrsGradeChangeRequest; } }
 
         public Dictionary<string, string> RommRouteAttributes { get { return new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, AssessmentId.ToString() } }; } }
+
+        private bool IsGradeExists => AssessmentId > 0 && !string.IsNullOrWhiteSpace(Grade);
     }
 }

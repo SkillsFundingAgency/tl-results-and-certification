@@ -42,5 +42,9 @@
         {
             <a class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0" role="button" asp-route="">@PrsLearnerDetails.Action_Button_Add_Appeal</a>
         }
+        else if (Model.IsRequestChangeAllowed)
+        {
+            <a class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0" role="button" asp-route="@Model.PrsGradeChangeRequestRouteName" asp-all-route-data="@Model.RommRouteAttributes">@PrsLearnerDetails.Action_Button_Request_Change</a>            
+        }
     </td> 
 </tr>

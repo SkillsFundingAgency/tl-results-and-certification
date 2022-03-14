@@ -28,10 +28,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 AssessmentId = ViewModel.AssessmentId,
                 ResultId = 10,
                 Status = RegistrationPathwayStatus.Withdrawn,
-                PathwayPrsStatus = PrsStatus.BeingAppealed
+                PrsStatus = PrsStatus.BeingAppealed
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId).Returns(_mockGradeChangeRequestViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType.Core).Returns(_mockGradeChangeRequestViewModel);
         }
 
         [Fact]

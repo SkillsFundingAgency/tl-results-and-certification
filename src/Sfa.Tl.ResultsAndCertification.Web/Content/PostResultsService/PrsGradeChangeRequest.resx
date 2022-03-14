@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Aria_Label_Text_Learner_Details" xml:space="preserve">
+    <value>Learners details</value>
+  </data>
   <data name="Button_Send" xml:space="preserve">
     <value>Send</value>
   </data>
@@ -124,7 +127,7 @@
     <value>Please tell us what you need to change and why</value>
   </data>
   <data name="Heading_Request_To_Change_Learners_Grade" xml:space="preserve">
-    <value>Request a change to this learner’s grade</value>
+    <value>Request to change a 'FINAL' grade</value>
   </data>
   <data name="Hint_Your_Message_Must_Be_1000_Char_Or_Fewer" xml:space="preserve">
     <value>Your message must be 1,000 characters or fewer.</value>
@@ -133,13 +136,19 @@
     <value>Cancel</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Request grade change</value>
+    <value>Change a ‘final’ grade - Post-results</value>
   </data>
-  <data name="Para_Please_Do_Not_Add_Any_Details" xml:space="preserve">
+  <data name="Para_Hint_Text_Please_Do_Not_Add_Any_Details" xml:space="preserve">
     <value>Please do not add any details here that identify the learner, for example their name, date of birth or unique learner number.</value>
   </data>
+  <data name="Para_If_You_Need_To_Change_A_Grade" xml:space="preserve">
+    <value>If you need to change a grade after it has been marked 'FINAL', we need to make a manual change to the grade record.</value>
+  </data>
+  <data name="Para_This_Change_Will_Take_Upto" xml:space="preserve">
+    <value>This change will take up to 3 working days.</value>
+  </data>
   <data name="Title_Core_Text" xml:space="preserve">
-    <value>Core &lt;br/&gt; (code)</value>
+    <value>Core</value>
   </data>
   <data name="Title_DateofBirth_Text" xml:space="preserve">
     <value>Date of birth</value>
@@ -152,6 +161,9 @@
   </data>
   <data name="Title_Name_Text" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="Title_TLevel_Text" xml:space="preserve">
+    <value>T Level</value>
   </data>
   <data name="Title_Uln_Text" xml:space="preserve">
     <value>ULN</value>
