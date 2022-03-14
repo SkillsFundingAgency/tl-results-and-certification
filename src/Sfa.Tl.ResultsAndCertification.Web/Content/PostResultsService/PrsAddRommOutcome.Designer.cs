@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes, the grade has changed.
+        ///   Looks up a localized string similar to The grade has changed.
         /// </summary>
         public static string Radio_Button_Yes_Grade_Has_Changed {
             get {
@@ -133,7 +133,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes, the grade is the same.
+        ///   Looks up a localized string similar to No change to grade.
         /// </summary>
         public static string Radio_Button_Yes_Grade_Is_Same {
             get {

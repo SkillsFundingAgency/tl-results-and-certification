@@ -139,10 +139,10 @@
     <value>ROMM withdrawn</value>
   </data>
   <data name="Radio_Button_Yes_Grade_Has_Changed" xml:space="preserve">
-    <value>Yes, the grade has changed</value>
+    <value>The grade has changed</value>
   </data>
   <data name="Radio_Button_Yes_Grade_Is_Same" xml:space="preserve">
-    <value>Yes, the grade is the same</value>
+    <value>No change to grade</value>
   </data>
   <data name="Title_Core_Text" xml:space="preserve">
     <value>Core</value>

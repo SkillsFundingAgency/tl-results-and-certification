@@ -43,15 +43,15 @@
 
                     <span sfa-validation-for="RommOutcome"></span>
                     <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="rommoutcome" asp-for="RommOutcome" type="radio" value="@RommOutcomeType.GradeChanged">
+                        <input class="govuk-radios__input" id="rommoutcome" asp-for="RommOutcome" type="radio" value="@RommOutcomeType.GradeNotChanged">
                         <label class="govuk-label govuk-radios__label" for="rommoutcome">
-                            @PrsAddRommOutcome.Radio_Button_Yes_Grade_Has_Changed
+                            @PrsAddRommOutcome.Radio_Button_Yes_Grade_Is_Same
                         </label>
                     </div>
                     <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="rommoutcome-gradenotchanged" asp-for="RommOutcome" type="radio" value="@RommOutcomeType.GradeNotChanged">
-                        <label class="govuk-label govuk-radios__label" for="rommoutcome-gradenotchanged">
-                            @PrsAddRommOutcome.Radio_Button_Yes_Grade_Is_Same
+                        <input class="govuk-radios__input" id="rommoutcome-gradechanged" asp-for="RommOutcome" type="radio" value="@RommOutcomeType.GradeChanged">
+                        <label class="govuk-label govuk-radios__label" for="rommoutcome-gradechanged">
+                            @PrsAddRommOutcome.Radio_Button_Yes_Grade_Has_Changed
                         </label>
                     </div>
                     <div class="govuk-radios__item">
