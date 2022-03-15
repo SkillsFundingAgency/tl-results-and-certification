@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class PrsGradeChangeRequestConfirmation {
@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Grade change request sent.
+        ///   Looks up a localized string similar to Request to change a ‘final’ grade sent - Post-results.
         /// </summary>
         public static string Page_Title {
             get {
@@ -107,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to We will contact you within 3 days to let you know the outcome of your request.
+        ///   Looks up a localized string similar to We will contact you within 3 working days to let you know the outcome of your request.
         /// </summary>
         public static string Para_We_Will_Contact_You {
             get {
@@ -125,7 +125,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request for a grade change has been sent.
+        ///   Looks up a localized string similar to Request to change grade sent.
         /// </summary>
         public static string Request_Grade_Change_Successful {
             get {
@@ -143,7 +143,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to What happens now?.
+        ///   Looks up a localized string similar to What happens now.
         /// </summary>
         public static string What_Happens_Now {
             get {

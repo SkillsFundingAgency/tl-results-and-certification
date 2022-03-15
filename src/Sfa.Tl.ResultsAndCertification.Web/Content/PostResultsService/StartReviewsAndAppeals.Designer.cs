@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class StartReviewsAndAppeals {
@@ -62,51 +62,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to a current recorded grade.
-        /// </summary>
-        public static string Bullet_Item_A_Current_Recorded_Grade {
-            get {
-                return ResourceManager.GetString("Bullet_Item_A_Current_Recorded_Grade", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to an active registration status.
-        /// </summary>
-        public static string Bullet_Item_An_Active_Registration_Status {
-            get {
-                return ResourceManager.GetString("Bullet_Item_An_Active_Registration_Status", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to an assessment entry.
-        /// </summary>
-        public static string Bullet_Item_An_Assessment_Entry {
-            get {
-                return ResourceManager.GetString("Bullet_Item_An_Assessment_Entry", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to calculate the learner’s overall T Level result.
-        /// </summary>
-        public static string Bullet_Item_Calculate_Overall_Result {
-            get {
-                return ResourceManager.GetString("Bullet_Item_Calculate_Overall_Result", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to issue a certificate.
-        /// </summary>
-        public static string Bullet_Item_Issue_Certificate {
-            get {
-                return ResourceManager.GetString("Bullet_Item_Issue_Certificate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         public static string Button_Continue {
@@ -125,20 +80,92 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Appeals.
+        ///   Looks up a localized string similar to Post-results reviews, appeals and grade changes.
         /// </summary>
-        public static string Heading_Review_And_Appeal {
+        public static string Heading_Prs_Review_Appeal_Grade_Change {
             get {
-                return ResourceManager.GetString("Heading_Review_And_Appeal", resourceCulture);
+                return ResourceManager.GetString("Heading_Prs_Review_Appeal_Grade_Change", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Appeal after deadline request sent.
+        ///   Looks up a localized string similar to an active registration, not withdrawn.
+        /// </summary>
+        public static string List_Active_Registration {
+            get {
+                return ResourceManager.GetString("List_Active_Registration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to a grade recorded in this system..
+        /// </summary>
+        public static string List_Grade_Recorded {
+            get {
+                return ResourceManager.GetString("List_Grade_Recorded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to that a learner has requested an appeal.
+        /// </summary>
+        public static string List_Learner_Requested_Appeal {
+            get {
+                return ResourceManager.GetString("List_Learner_Requested_Appeal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to that a learner has requested a review of marking or moderation (ROMM).
+        /// </summary>
+        public static string List_Learner_Requested_ROMM {
+            get {
+                return ResourceManager.GetString("List_Learner_Requested_ROMM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to the outcome of any appeal.
+        /// </summary>
+        public static string List_Outcome_Of_Any_Appeal {
+            get {
+                return ResourceManager.GetString("List_Outcome_Of_Any_Appeal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to the outcome of any ROMM.
+        /// </summary>
+        public static string List_Outcome_Of_Any_ROMM {
+            get {
+                return ResourceManager.GetString("List_Outcome_Of_Any_ROMM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Post-results reviews, appeals and grade changes.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A certificate cannot be issued while a ROMM or an appeal is logged with no outcome..
+        /// </summary>
+        public static string Para_Certificate_Cannot_Issues_While_Prs {
+            get {
+                return ResourceManager.GetString("Para_Certificate_Cannot_Issues_While_Prs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We need this information to issue the learner’s certificate with the correct overall T Level grade..
+        /// </summary>
+        public static string Para_Need_Information_For_Certificate {
+            get {
+                return ResourceManager.GetString("Para_Need_Information_For_Certificate", resourceCulture);
             }
         }
         
@@ -152,20 +179,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to While a component is under review or being appealed we cannot:.
+        ///   Looks up a localized string similar to You must tell us:.
         /// </summary>
-        public static string Para_While_Review_We_Cannot {
+        public static string Para_You_Must_Tell_Us {
             get {
-                return ResourceManager.GetString("Para_While_Review_We_Cannot", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You must tell us if a component of a learner’s T Level is being appealed for a teacher-assessed grade..
-        /// </summary>
-        public static string Para_You_Must_Tell_Component_Under_Review_Or_Appealed {
-            get {
-                return ResourceManager.GetString("Para_You_Must_Tell_Component_Under_Review_Or_Appealed", resourceCulture);
+                return ResourceManager.GetString("Para_You_Must_Tell_Us", resourceCulture);
             }
         }
     }

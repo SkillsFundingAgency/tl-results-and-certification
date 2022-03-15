@@ -84,12 +84,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         // Post Results Service 
         Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null);
         Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId, int assessmentId);
-        Task<bool> AppealGradeAsync(AppealGradeRequest request);
+        Task<bool> PrsActivityAsync(PrsActivityRequest request);
         Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request);
         Task<bool> AppealGradeAfterDeadlineRequestAsync(AppealGradeAfterDeadlineRequest request);
 
         // Common
-        Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade);
+        Task<IList<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory);
         Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn);
         Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync();
         Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync();

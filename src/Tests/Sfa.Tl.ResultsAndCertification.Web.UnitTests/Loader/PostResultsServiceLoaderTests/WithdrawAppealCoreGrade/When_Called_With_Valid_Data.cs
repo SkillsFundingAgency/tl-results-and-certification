@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 PathwayResultId = 3,
             };
 
-            InternalApiClient.AppealGradeAsync(Arg.Is<AppealGradeRequest>(x =>
+            InternalApiClient.PrsActivityAsync(Arg.Is<PrsActivityRequest>(x =>
                                 x.ProfileId == ViewModel.ProfileId &&
                                 x.AssessentId == ViewModel.PathwayAssessmentId &&
                                 x.ResultId == ViewModel.PathwayResultId &&
@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            InternalApiClient.Received(1).AppealGradeAsync(Arg.Is<AppealGradeRequest>(x =>
+            InternalApiClient.Received(1).PrsActivityAsync(Arg.Is<PrsActivityRequest>(x =>
                                 x.ProfileId == ViewModel.ProfileId &&
                                 x.AssessentId == ViewModel.PathwayAssessmentId &&
                                 x.ResultId == ViewModel.PathwayResultId &&

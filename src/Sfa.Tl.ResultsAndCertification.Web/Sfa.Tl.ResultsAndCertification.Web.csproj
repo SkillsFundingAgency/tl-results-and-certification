@@ -159,6 +159,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AppealUpdatePathwayGrade.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\PostResultsService\PrsAddRommCoreGrade.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PrsAddRommCoreGrade.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\PostResultsService\PrsAddRommOutcome.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PrsAddRommOutcome.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\PostResultsService\PrsAddRommOutcomeKnownCoreGrade.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PrsAddRommOutcomeKnownCoreGrade.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\PostResultsService\PrsAppealGradeAfterDeadline.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -189,6 +204,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PrsGradeChangeRequestConfirmation.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\PostResultsService\PrsRommCheckAndSubmit.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PrsRommCheckAndSubmit.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\PostResultsService\PrsRommGradeChange.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PrsRommGradeChange.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\PostResultsService\PrsWithdrawAppeal.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -199,25 +224,15 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PrsCancelAppealUpdate.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\PostResultsService\PrsNoAssessmentEntry.Designer.cs">
+    <Compile Update="Content\PostResultsService\PrsNoResults.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>PrsNoAssessmentEntry.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\PostResultsService\PrsNoGradeRegistered.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PrsNoGradeRegistered.resx</DependentUpon>
+      <DependentUpon>PrsNoResults.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\PostResultsService\PrsPathwayGradeCheckAndSubmit.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>PrsPathwayGradeCheckAndSubmit.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\PostResultsService\PrsSelectAssessmentSeries.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PrsSelectAssessmentSeries.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\PostResultsService\PrsStatus.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -1038,6 +1053,18 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AppealUpdatePathwayGrade.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Content\PostResultsService\PrsAddRommCoreGrade.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PrsAddRommCoreGrade.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\PostResultsService\PrsAddRommOutcome.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PrsAddRommOutcome.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\PostResultsService\PrsAddRommOutcomeKnownCoreGrade.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PrsAddRommOutcomeKnownCoreGrade.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\PostResultsService\PrsAppealGradeAfterDeadline.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PrsAppealGradeAfterDeadline.Designer.cs</LastGenOutput>
@@ -1062,6 +1089,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PrsGradeChangeRequestConfirmation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Content\PostResultsService\PrsRommCheckAndSubmit.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PrsRommCheckAndSubmit.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\PostResultsService\PrsRommGradeChange.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PrsRommGradeChange.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\PostResultsService\PrsWithdrawAppeal.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PrsWithdrawAppeal.Designer.cs</LastGenOutput>
@@ -1070,21 +1105,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PrsCancelAppealUpdate.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\PostResultsService\PrsNoAssessmentEntry.resx">
+    <EmbeddedResource Update="Content\PostResultsService\PrsNoResults.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>PrsNoAssessmentEntry.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\PostResultsService\PrsNoGradeRegistered.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>PrsNoGradeRegistered.Designer.cs</LastGenOutput>
+      <LastGenOutput>PrsNoResults.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\PostResultsService\PrsPathwayGradeCheckAndSubmit.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PrsPathwayGradeCheckAndSubmit.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\PostResultsService\PrsSelectAssessmentSeries.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>PrsSelectAssessmentSeries.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\PostResultsService\PrsStatus.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

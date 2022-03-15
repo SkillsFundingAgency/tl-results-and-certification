@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class AoDashboard {
@@ -142,33 +142,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Appeals.
-        /// </summary>
-        public static string Tile_Appeals_Heading {
-            get {
-                return ResourceManager.GetString("Tile_Appeals_Heading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tell us when a learner has appealed a grade.
-        /// </summary>
-        public static string Tile_Appeals_Item_Tell_Us_Appealed_Grade {
-            get {
-                return ResourceManager.GetString("Tile_Appeals_Item_Tell_Us_Appealed_Grade", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tell us the result of an appeal.
-        /// </summary>
-        public static string Tile_Appeals_Item_Tell_Us_Result_Of_Appeal {
-            get {
-                return ResourceManager.GetString("Tile_Appeals_Item_Tell_Us_Result_Of_Appeal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Assessments.
         /// </summary>
         public static string Tile_Assessments_Heading {
@@ -246,6 +219,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         public static string Tile_Providers_Item_Select_Tlevel {
             get {
                 return ResourceManager.GetString("Tile_Providers_Item_Select_Tlevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Post-results.
+        /// </summary>
+        public static string Tile_Prs_Heading {
+            get {
+                return ResourceManager.GetString("Tile_Prs_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tell us the outcome of a ROMM or appeal.
+        /// </summary>
+        public static string Tile_Prs_Outcome_ROMM_Or_Appeal {
+            get {
+                return ResourceManager.GetString("Tile_Prs_Outcome_ROMM_Or_Appeal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tell us when a learner has requested a ROMM or appeal.
+        /// </summary>
+        public static string Tile_Prs_When_ROMM_Or_Appeal_Requested {
+            get {
+                return ResourceManager.GetString("Tile_Prs_When_ROMM_Or_Appeal_Requested", resourceCulture);
             }
         }
         

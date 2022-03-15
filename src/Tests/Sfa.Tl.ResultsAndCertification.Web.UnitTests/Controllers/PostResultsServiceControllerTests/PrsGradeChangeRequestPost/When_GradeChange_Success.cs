@@ -29,21 +29,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 AssessmentId = ViewModel.AssessmentId,
                 ResultId = 10,
                 Status = RegistrationPathwayStatus.Active,
-                PathwayPrsStatus = PrsStatus.Final
+                PrsStatus = PrsStatus.Final
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId).Returns(_mockGradeChangeRequestViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType.Core).Returns(_mockGradeChangeRequestViewModel);
             Loader.PrsGradeChangeRequestAsync(ViewModel).Returns(_gradeChangeRequestResponse);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType.Core);
             Loader.Received(1).PrsGradeChangeRequestAsync(ViewModel);
             CacheService.Received(1).SetAsync(CacheKey, Arg.Is<PrsGradeChangeRequestConfirmationViewModel>
-                (x => x.ProfileId == ViewModel.ProfileId &&
-                      x.AssessmentId == ViewModel.AssessmentId), CacheExpiryTime.XSmall);
+                (x => x.ProfileId == ViewModel.ProfileId), CacheExpiryTime.XSmall);
         }
 
         [Fact]

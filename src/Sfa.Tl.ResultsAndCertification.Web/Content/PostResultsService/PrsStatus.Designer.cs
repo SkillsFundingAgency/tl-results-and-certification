@@ -86,5 +86,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
                 return ResourceManager.GetString("PrsStatus_Display_Html", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ROMM.
+        /// </summary>
+        public static string Under_Review_Display_Text {
+            get {
+                return ResourceManager.GetString("Under_Review_Display_Text", resourceCulture);
+            }
+        }
     }
 }

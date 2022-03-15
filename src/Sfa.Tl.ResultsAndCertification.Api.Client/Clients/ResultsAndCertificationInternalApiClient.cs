@@ -255,9 +255,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         }
 
         # region Common controller
-        public async Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade)
+        public async Task<IList<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory)
         {
-            var requestUri = string.Format(ApiConstants.GetLookupDataUri, (int)pathwayComponentGrade);
+            var requestUri = string.Format(ApiConstants.GetLookupDataUri, (int)lookupCategory);
             return await GetAsync<IList<LookupData>>(requestUri);
         }
 
@@ -355,10 +355,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<PrsLearnerDetails>(requestUri);
         }
 
-        public async Task<bool> AppealGradeAsync(AppealGradeRequest request)
+        public async Task<bool> PrsActivityAsync(PrsActivityRequest request)
         {
-            var requestUri = ApiConstants.AppealGradeUri;
-            return await PostAsync<AppealGradeRequest, bool>(requestUri, request);
+            var requestUri = ApiConstants.PrsActivityUri;
+            return await PostAsync<PrsActivityRequest, bool>(requestUri, request);
         }
 
         public async Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request)

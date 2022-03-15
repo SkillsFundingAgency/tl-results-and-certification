@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             Id = "pathwaygrade",
             Title = PrsLearnerDetailsContent.Title_Pathway_Grade,
             Value = PathwayGrade,
-            Value2 = CommonHelper.GetPrsStatusDisplayText(PathwayPrsStatus, AppealEndDate),
+            Value2 = CommonHelper.GetPrsStatusDisplayText(PathwayPrsStatus, null, AppealEndDate),
             Value2CustomCssClass = !IsResultUpdateAllowed ? Constants.TagFloatRightClassName : null,
             RenderEmptyRowForValue2 = IsValidPathwayPrsStatus,
             RenderActionColumn = IsResultUpdateAllowed,
@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             ActionText = IsResultUpdateAllowed ? PrsLearnerDetailsContent.Action_Link_Update : null,
             RouteName = IsResultUpdateAllowed ? GetUpdatePathwayGradeRouteName : null,
             RouteAttributes = IsResultUpdateAllowed ? GetUpdatePathwayGradeRouteAttributes : null,
-            HiddenActionText = IsResultUpdateAllowed ? PrsLearnerDetailsContent.Hidden_Action_Text_Grade : null
+            HiddenActionText = IsResultUpdateAllowed ? "grade" : null
         };
 
         public SummaryItemModel SummaryPathwayGradeLastUpdatedOn => new SummaryItemModel

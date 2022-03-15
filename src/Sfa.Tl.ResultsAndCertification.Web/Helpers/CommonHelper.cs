@@ -20,13 +20,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
             return requestedDate.HasValue && DateTime.Today < requestedDate.Value.Date.AddDays(reRequestAllowedInDays);
         }
 
+        public static bool IsRommAllowed(DateTime? rommEndDate)
+        {
+            return rommEndDate.HasValue && DateTime.Today <= rommEndDate.Value;
+        }
+
         public static bool IsAppealsAllowed(DateTime? appealsEndDate)
         {
             return appealsEndDate.HasValue && DateTime.Today <= appealsEndDate.Value;
         }
 
-        public static string GetPrsStatusDisplayText(PrsStatus? prsStatus, DateTime? appealsEndDate)
+        public static string GetPrsStatusDisplayText(PrsStatus? prsStatus, DateTime? rommEndDate, DateTime? appealsEndDate)
         {
+            if((prsStatus == null || prsStatus == PrsStatus.NotSpecified) && rommEndDate.HasValue && IsRommAllowed(rommEndDate) == false)
+                return FormatPrsStatusDisplayHtml(Constants.RedTagClassName, PrsStatusContent.Final_Display_Text);
+
+            if (prsStatus == PrsStatus.UnderReview)
+                return FormatPrsStatusDisplayHtml(Constants.BlueTagClassName, PrsStatusContent.Under_Review_Display_Text);
+
             if (prsStatus == PrsStatus.BeingAppealed)
                 return FormatPrsStatusDisplayHtml(Constants.PurpleTagClassName, PrsStatusContent.Being_Appealed_Display_Text);
 

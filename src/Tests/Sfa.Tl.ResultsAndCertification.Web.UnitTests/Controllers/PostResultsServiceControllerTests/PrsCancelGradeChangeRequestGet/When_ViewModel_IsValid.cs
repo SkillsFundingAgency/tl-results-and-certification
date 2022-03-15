@@ -4,6 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
+using System;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsCancelGradeChangeRequestGet
@@ -22,16 +23,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ProfileId = ProfileId,
                 AssessmentId = AssessmentId,
                 Status = RegistrationPathwayStatus.Active,
-                PathwayPrsStatus = PrsStatus.Final,
+                PrsStatus = null,
+                AppealEndDate = DateTime.Now.AddDays(-5)
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsCancelGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_mockCancelGradeChangeRequestViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsCancelGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_mockCancelGradeChangeRequestViewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsCancelGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsCancelGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
         }
 
         [Fact]
@@ -44,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.ProfileId.Should().Be(_mockCancelGradeChangeRequestViewModel.ProfileId);
             model.AssessmentId.Should().Be(_mockCancelGradeChangeRequestViewModel.AssessmentId);
             model.Status.Should().Be(_mockCancelGradeChangeRequestViewModel.Status);
-            model.PathwayPrsStatus.Should().Be(_mockCancelGradeChangeRequestViewModel.PathwayPrsStatus);
+            model.PrsStatus.Should().Be(_mockCancelGradeChangeRequestViewModel.PrsStatus);
             model.IsResultJourney.Should().BeFalse();
             model.AreYouSureToCancel.Should().BeNull();
 

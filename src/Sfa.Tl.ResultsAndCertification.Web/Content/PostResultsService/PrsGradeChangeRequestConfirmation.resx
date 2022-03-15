@@ -130,22 +130,22 @@
     <value>If you have not heard from us by then please contact us.</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Grade change request sent</value>
+    <value>Request to change a ‘final’ grade sent - Post-results</value>
   </data>
   <data name="Para_We_Will_Contact_You" xml:space="preserve">
-    <value>We will contact you within 3 days to let you know the outcome of your request</value>
+    <value>We will contact you within 3 working days to let you know the outcome of your request</value>
   </data>
   <data name="Para_We_Will_Send_You_Confirmation_Email" xml:space="preserve">
     <value>We will send you a confirmation email containing a reference number for your records</value>
   </data>
   <data name="Request_Grade_Change_Successful" xml:space="preserve">
-    <value>Request for a grade change has been sent</value>
+    <value>Request to change grade sent</value>
   </data>
   <data name="Search_For_Another_Learner" xml:space="preserve">
     <value>Search for another learner</value>
   </data>
   <data name="What_Happens_Now" xml:space="preserve">
-    <value>What happens now?</value>
+    <value>What happens now</value>
   </data>
   <data name="What_Would_You_Like_To_Do_Next" xml:space="preserve">
     <value>What would you like to do next?</value>

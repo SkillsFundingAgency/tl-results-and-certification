@@ -1,0 +1,35 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsNoResultsViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = PrsNoResults.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+
+        <h1 class="govuk-heading-l">@PrsNoResults.Heading_Learner_Does_Not_Have_Any_Results</h1>
+        <p class="govuk-body">
+            @PrsNoResults.Para_You_Must <a id="addResultLink" class="govuk-link" asp-route="@RouteConstants.ResultDetails" asp-route-profileId=@Model.ProfileId>@PrsNoResults.Link_Add_Result</a> @PrsNoResults.Para_Tell_Us_About_Romm_Or_Appeal
+        </p>
+
+        <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+            <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+            <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+            <vc:summary-item model=Model.SummaryProviderName></vc:summary-item>
+            <vc:summary-item model=Model.SummaryProviderUkprn></vc:summary-item>
+            <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+        </dl>
+
+        <div class="govuk-button-group">
+            <a id="searchAgainButton" class="govuk-button" role="button" asp-route="@RouteConstants.PrsSearchLearner">@PrsNoResults.Button_Search_Again</a>
+            <a id="backToHomeButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.Home">@PrsNoResults.Button_Back_To_Home</a>
+        </div>
+    </div>
+</div>

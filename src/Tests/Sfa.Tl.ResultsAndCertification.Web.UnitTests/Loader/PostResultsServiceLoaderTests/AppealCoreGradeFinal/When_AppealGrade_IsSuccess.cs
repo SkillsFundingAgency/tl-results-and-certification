@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             InternalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade).
                 Returns(lookupGrades);
 
-            InternalApiClient.AppealGradeAsync(Arg.Is<AppealGradeRequest>(x =>
+            InternalApiClient.PrsActivityAsync(Arg.Is<PrsActivityRequest>(x =>
                                 x.ProfileId == ViewModel.ProfileId &&
                                 x.AssessentId == ViewModel.AssessmentId &&
                                 x.ResultId == ViewModel.ResultId &&
@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
         public void Then_Expected_Methods_Are_Called()
         {
             InternalApiClient.Received(1).GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
-            InternalApiClient.Received(1).AppealGradeAsync(Arg.Is<AppealGradeRequest>(x =>
+            InternalApiClient.Received(1).PrsActivityAsync(Arg.Is<PrsActivityRequest>(x =>
                                 x.ProfileId == ViewModel.ProfileId &&
                                 x.AssessentId == ViewModel.AssessmentId &&
                                 x.ResultId == ViewModel.ResultId &&

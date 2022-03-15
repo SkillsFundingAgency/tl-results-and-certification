@@ -117,40 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Bullet_Item_An_Active_Registration_Status" xml:space="preserve">
-    <value>an active registration status</value>
-  </data>
-  <data name="Bullet_Item_An_Assessment_Entry" xml:space="preserve">
-    <value>an assessment entry</value>
-  </data>
-  <data name="Bullet_Item_A_Current_Recorded_Grade" xml:space="preserve">
-    <value>a current recorded grade</value>
-  </data>
-  <data name="Bullet_Item_Calculate_Overall_Result" xml:space="preserve">
-    <value>calculate the learner’s overall T Level result</value>
-  </data>
-  <data name="Bullet_Item_Issue_Certificate" xml:space="preserve">
-    <value>issue a certificate</value>
-  </data>
   <data name="Button_Continue" xml:space="preserve">
     <value>Continue</value>
   </data>
   <data name="Heading_Before_You_Start" xml:space="preserve">
     <value>Before you start</value>
   </data>
-  <data name="Heading_Review_And_Appeal" xml:space="preserve">
-    <value>Appeals</value>
+  <data name="Heading_Prs_Review_Appeal_Grade_Change" xml:space="preserve">
+    <value>Post-results reviews, appeals and grade changes</value>
+  </data>
+  <data name="List_Active_Registration" xml:space="preserve">
+    <value>an active registration, not withdrawn</value>
+  </data>
+  <data name="List_Grade_Recorded" xml:space="preserve">
+    <value>a grade recorded in this system.</value>
+  </data>
+  <data name="List_Learner_Requested_Appeal" xml:space="preserve">
+    <value>that a learner has requested an appeal</value>
+  </data>
+  <data name="List_Learner_Requested_ROMM" xml:space="preserve">
+    <value>that a learner has requested a review of marking or moderation (ROMM)</value>
+  </data>
+  <data name="List_Outcome_Of_Any_Appeal" xml:space="preserve">
+    <value>the outcome of any appeal</value>
+  </data>
+  <data name="List_Outcome_Of_Any_ROMM" xml:space="preserve">
+    <value>the outcome of any ROMM</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Appeal after deadline request sent</value>
+    <value>Post-results reviews, appeals and grade changes</value>
+  </data>
+  <data name="Para_Certificate_Cannot_Issues_While_Prs" xml:space="preserve">
+    <value>A certificate cannot be issued while a ROMM or an appeal is logged with no outcome.</value>
+  </data>
+  <data name="Para_Need_Information_For_Certificate" xml:space="preserve">
+    <value>We need this information to issue the learner’s certificate with the correct overall T Level grade.</value>
   </data>
   <data name="Para_The_Learner_Mush_Have" xml:space="preserve">
     <value>The learner must have:</value>
   </data>
-  <data name="Para_While_Review_We_Cannot" xml:space="preserve">
-    <value>While a component is under review or being appealed we cannot:</value>
-  </data>
-  <data name="Para_You_Must_Tell_Component_Under_Review_Or_Appealed" xml:space="preserve">
-    <value>You must tell us if a component of a learner’s T Level is being appealed for a teacher-assessed grade.</value>
+  <data name="Para_You_Must_Tell_Us" xml:space="preserve">
+    <value>You must tell us:</value>
   </data>
 </root>

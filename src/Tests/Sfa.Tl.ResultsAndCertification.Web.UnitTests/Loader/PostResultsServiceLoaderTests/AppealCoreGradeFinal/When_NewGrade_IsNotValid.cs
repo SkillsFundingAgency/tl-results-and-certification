@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
         public void Then_Expected_Methods_Are_Called()
         {
             InternalApiClient.Received(1).GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
-            InternalApiClient.DidNotReceive().AppealGradeAsync(Arg.Any<AppealGradeRequest>());
+            InternalApiClient.DidNotReceive().PrsActivityAsync(Arg.Any<PrsActivityRequest>());
         }
     }
 }

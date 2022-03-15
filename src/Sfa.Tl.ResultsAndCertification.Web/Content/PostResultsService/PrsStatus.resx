@@ -126,4 +126,7 @@
   <data name="PrsStatus_Display_Html" xml:space="preserve">
     <value>&lt;strong class="govuk-tag {0}"&gt;{1}&lt;/strong&gt;</value>
   </data>
+  <data name="Under_Review_Display_Text" xml:space="preserve">
+    <value>ROMM</value>
+  </data>
 </root>

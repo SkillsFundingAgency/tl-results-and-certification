@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _postResultsServiceRepository.GetPrsLearnerDetailsAsync(aoUkPrn, profileId, assessmentId);
         }
 
-        public async Task<bool> AppealGradeAsync(AppealGradeRequest request)
+        public async Task<bool> PrsActivityAsync(PrsActivityRequest request)
         {
             if (request.ComponentType != ComponentType.Core || request.PrsStatus == PrsStatus.NotSpecified)
                 return false;
@@ -59,13 +59,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (existingPathwayResult == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to change Pathway Result for ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: AppealGradeAsync({request})");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to change Pathway Result for ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: PrsActivityAsync({request})");
                 return false;
             }
 
             if (!IsResultStatusValid(request.PrsStatus, existingPathwayResult.PrsStatus))
             {
-                _logger.LogWarning(LogEvent.StateChanged, $"Requested status: {request.PrsStatus} is not valid. Current result status = {existingPathwayResult.PrsStatus}, ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: AppealGradeAsync({request})");
+                _logger.LogWarning(LogEvent.StateChanged, $"Requested status: {request.PrsStatus} is not valid. Current result status = {existingPathwayResult.PrsStatus}, ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: PrsActivityAsync({request})");
                 return false;
             }
 
@@ -86,7 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 TqPathwayAssessmentId = existingPathwayResult.TqPathwayAssessmentId,
                 TlLookupId = resultLookupId,
-                PrsStatus = request.PrsStatus == PrsStatus.Withdraw ? (PrsStatus?)null : request.PrsStatus,
+                PrsStatus = request.PrsStatus == PrsStatus.Withdraw ? null : request.PrsStatus,
                 IsOptedin = true,
                 StartDate = DateTime.UtcNow,
                 EndDate = null,
@@ -157,6 +157,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private bool IsResultStatusValid(PrsStatus requestPrsStatus, PrsStatus? currentPrsStatus)
         {
+            if (requestPrsStatus == PrsStatus.UnderReview)
+                return currentPrsStatus == null || currentPrsStatus == PrsStatus.NotSpecified;
+
+            if (requestPrsStatus == PrsStatus.Reviewed)
+                return currentPrsStatus == null || currentPrsStatus == PrsStatus.NotSpecified || currentPrsStatus == PrsStatus.UnderReview;
+
             if (requestPrsStatus == PrsStatus.BeingAppealed)
                 return currentPrsStatus == null || currentPrsStatus == PrsStatus.NotSpecified;
 
@@ -164,7 +170,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return currentPrsStatus == PrsStatus.BeingAppealed;
 
             if (requestPrsStatus == PrsStatus.Withdraw)
-                return currentPrsStatus == PrsStatus.BeingAppealed;
+                return currentPrsStatus == PrsStatus.UnderReview || currentPrsStatus == PrsStatus.BeingAppealed;
 
             return false;
         }

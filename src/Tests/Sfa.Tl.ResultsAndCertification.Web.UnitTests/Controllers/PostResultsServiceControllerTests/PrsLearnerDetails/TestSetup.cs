@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
         public async override Task When()
         {
-            Result = await Controller.PrsLearnerDetailsAsync(ProfileId, AssessmentId);
+            Result = await Controller.PrsLearnerDetailsAsync(ProfileId);
         }
     }
 }

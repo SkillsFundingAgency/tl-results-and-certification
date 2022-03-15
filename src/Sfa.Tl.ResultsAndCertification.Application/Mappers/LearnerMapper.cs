@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
@@ -43,7 +44,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.SeriesId, opts => opts.MapFrom(s => s.AssessmentSeries.Id))
                .ForMember(d => d.SeriesName, opts => opts.MapFrom(s => s.AssessmentSeries.Name))
+               .ForMember(d => d.RommEndDate, opts => opts.MapFrom(s => s.AssessmentSeries.RommEndDate))
                .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AssessmentSeries.AppealEndDate))
+               .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Core))
                .ForMember(d => d.LastUpdatedOn, opts => opts.MapFrom(s => s.CreatedOn))
                .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.CreatedBy))
                .ForMember(d => d.Result, opts => opts.MapFrom(s => s.TqPathwayResults.FirstOrDefault()));
@@ -71,7 +74,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.SeriesId, opts => opts.MapFrom(s => s.AssessmentSeries.Id))
                .ForMember(d => d.SeriesName, opts => opts.MapFrom(s => s.AssessmentSeries.Name))
+               .ForMember(d => d.RommEndDate, opts => opts.MapFrom(s => s.AssessmentSeries.RommEndDate))
                .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AssessmentSeries.AppealEndDate))
+               .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Specialism))
                .ForMember(d => d.LastUpdatedOn, opts => opts.MapFrom(s => s.CreatedOn))
                .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.CreatedBy))
                .ForMember(d => d.Result, opts => opts.MapFrom(s => s.TqSpecialismResults.FirstOrDefault()));

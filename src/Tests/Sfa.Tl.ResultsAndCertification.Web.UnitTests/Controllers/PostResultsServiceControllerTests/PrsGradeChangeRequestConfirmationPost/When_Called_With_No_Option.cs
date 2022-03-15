@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
     {
         public override void Given()
         {
-            ViewModel = new PrsGradeChangeRequestConfirmationViewModel { ProfileId = 1, AssessmentId = 10, NavigationOption = null };
+            ViewModel = new PrsGradeChangeRequestConfirmationViewModel { ProfileId = 1, NavigationOption = null };
         }
 
         [Fact]
