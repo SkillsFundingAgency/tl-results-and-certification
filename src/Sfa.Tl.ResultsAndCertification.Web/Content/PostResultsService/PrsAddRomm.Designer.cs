@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Has Danny Waldron requested a ROMM of this grade?.
+        ///   Looks up a localized string similar to Has {0} requested a ROMM of this grade?.
         /// </summary>
         public static string Has_Learner_Requested_Romm {
             get {

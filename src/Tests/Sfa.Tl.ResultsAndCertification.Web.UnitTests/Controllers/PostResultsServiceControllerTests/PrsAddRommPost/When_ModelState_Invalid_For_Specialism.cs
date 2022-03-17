@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommPost
 {
-    public class When_ModelState_Invalid_For_Core : TestSetup
+    public class When_ModelState_Invalid_For_Specialism : TestSetup
     {
         private PrsAddRommViewModel _addRommCoreGradeViewModel;
 
@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 1;
             AssessmentId = 7;
-            ComponentType = ComponentType.Core;
+            ComponentType = ComponentType.Specialism;
 
             _addRommCoreGradeViewModel = new PrsAddRommViewModel
             {
@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Lastname = " Smith",
                 DateofBirth = DateTime.Today.AddYears(-20),
                 TlevelTitle = "TLevel in Childcare",
-                CoreDisplayName = "Childcare (12121212)",
+                SpecialismDisplayName = "Childcare (12121212)",
                 ExamPeriod = "Summer 2021",
                 Grade = "A",
                 PrsStatus = null,
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.LearnerName.Should().Be(_addRommCoreGradeViewModel.LearnerName);
             model.DateofBirth.Should().Be(_addRommCoreGradeViewModel.DateofBirth);
             model.TlevelTitle.Should().Be(_addRommCoreGradeViewModel.TlevelTitle);
-            model.CoreDisplayName.Should().Be(_addRommCoreGradeViewModel.CoreDisplayName);
+            model.SpecialismDisplayName.Should().Be(_addRommCoreGradeViewModel.SpecialismDisplayName);
             model.ExamPeriod.Should().Be(_addRommCoreGradeViewModel.ExamPeriod);
             model.Grade.Should().Be(_addRommCoreGradeViewModel.Grade);
             model.RommEndDate.Should().Be(_addRommCoreGradeViewModel.RommEndDate);
@@ -78,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.BackLink.RouteName.Should().Be(RouteConstants.PrsLearnerDetails);
             model.BackLink.RouteAttributes.Count.Should().Be(1);
             model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string profileIdRouteValue);
-            profileIdRouteValue.Should().Be(ProfileId.ToString());            
+            profileIdRouteValue.Should().Be(ProfileId.ToString());
         }
     }
 }

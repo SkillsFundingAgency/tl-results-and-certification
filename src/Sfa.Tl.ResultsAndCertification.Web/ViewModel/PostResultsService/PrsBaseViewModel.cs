@@ -44,21 +44,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             Value = Uln.ToString()
         };
 
-        public SummaryItemModel SummaryLearnerName => new SummaryItemModel
+        public SummaryItemModel SummaryLearnerName => new()
         {
             Id = "learnername",
             Title = LearnerNameLabel,
             Value = LearnerName
         };
 
-        public SummaryItemModel SummaryDateofBirth => new SummaryItemModel
+        public SummaryItemModel SummaryDateofBirth => new()
         {
             Id = "dateofbirth",
             Title = DateofBirthLabel,
             Value = DateofBirth.ToDobFormat()
         };
 
-        public SummaryItemModel SummaryProvider => new SummaryItemModel
+        public SummaryItemModel SummaryProvider => new()
         {
             Id = "providername",
             Title = ProviderNameLabel,
@@ -73,49 +73,49 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             Value = ProviderName,
         };
 
-        public SummaryItemModel SummaryProviderUkprn => new SummaryItemModel
+        public SummaryItemModel SummaryProviderUkprn => new()
         {
             Id = "providerukprn",
             Title = ProviderUkprnLabel,
             Value = ProviderUkprn.ToString(),
         };
 
-        public SummaryItemModel SummaryTlevelTitle => new SummaryItemModel
+        public SummaryItemModel SummaryTlevelTitle => new()
         {
             Id = "tleveltitle",
             Title = TlevelTitleLabel,
             Value = TlevelTitle
         };
 
-        public SummaryItemModel SummaryComponentDisplayName => new SummaryItemModel
+        public SummaryItemModel SummaryComponentDisplayName => new()
         {
             Id = "componentdisplayname",
             Title = ComponentType == ComponentType.Core ? CoreLabel : SpecialismLabel,
             Value = ComponentType == ComponentType.Core ? CoreDisplayName : SpecialismDisplayName
         };
 
-        public SummaryItemModel SummaryCore => new SummaryItemModel
+        public SummaryItemModel SummaryCore => new()
         {
             Id = "core",
             Title = CoreLabel,
             Value = CoreDisplayName
         };
 
-        public SummaryItemModel SummaryExamPeriod => new SummaryItemModel
+        public SummaryItemModel SummaryExamPeriod => new()
         {
             Id = "examperiod",
             Title = ExamPeriodLabel,
             Value = ExamPeriod
         };
 
-        public SummaryItemModel SummaryGrade => new SummaryItemModel
+        public SummaryItemModel SummaryGrade => new()
         {
             Id = "grade",
             Title = GradeLabel,
             Value = Grade
         };
 
-        public virtual BackLinkModel BackLink => new BackLinkModel
+        public virtual BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.PrsSearchLearner,
             RouteAttributes = new Dictionary<string, string> { { Constants.PopulateUln, true.ToString() } }

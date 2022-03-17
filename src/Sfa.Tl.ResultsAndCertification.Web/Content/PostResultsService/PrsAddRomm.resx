@@ -124,7 +124,7 @@
     <value>Continue</value>
   </data>
   <data name="Has_Learner_Requested_Romm" xml:space="preserve">
-    <value>Has Danny Waldron requested a ROMM of this grade?</value>
+    <value>Has {0} requested a ROMM of this grade?</value>
   </data>
   <data name="Heading_Add_Romm" xml:space="preserve">
     <value>Add a ROMM</value>
