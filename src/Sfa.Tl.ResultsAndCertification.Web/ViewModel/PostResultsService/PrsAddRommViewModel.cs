@@ -5,22 +5,22 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using PrsAddRommCoreGradeContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsAddRommCoreGrade;
+using PrsAddRommContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsAddRomm;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 {
-    public class PrsAddRommCoreGradeViewModel : PrsBaseViewModel
+    public class PrsAddRommViewModel : PrsBaseViewModel
     {
-        public PrsAddRommCoreGradeViewModel()
+        public PrsAddRommViewModel()
         {
             // Base Profile Summary
-            UlnLabel = PrsAddRommCoreGradeContent.Title_Uln_Text;
-            DateofBirthLabel = PrsAddRommCoreGradeContent.Title_DateofBirth_Text;
-            TlevelTitleLabel = PrsAddRommCoreGradeContent.Title_TLevel_Text;
-            CoreLabel = PrsAddRommCoreGradeContent.Title_Core_Text;
-            SpecialismLabel = PrsAddRommCoreGradeContent.Title_Core_Text;
-            ExamPeriodLabel = PrsAddRommCoreGradeContent.Title_ExamPeriod_Text;
-            GradeLabel = PrsAddRommCoreGradeContent.Title_Grade_Text;
+            UlnLabel = PrsAddRommContent.Title_Uln_Text;
+            DateofBirthLabel = PrsAddRommContent.Title_DateofBirth_Text;
+            TlevelTitleLabel = PrsAddRommContent.Title_TLevel_Text;
+            CoreLabel = PrsAddRommContent.Title_Core_Text;
+            SpecialismLabel = PrsAddRommContent.Title_Core_Text;
+            ExamPeriodLabel = PrsAddRommContent.Title_ExamPeriod_Text;
+            GradeLabel = PrsAddRommContent.Title_Grade_Text;
         }
 
         public int ProfileId { get; set; }
@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public PrsStatus? PrsStatus { get; set; }
         public DateTime RommEndDate { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(PrsAddRommCoreGradeContent), ErrorMessageResourceName = "Validation_Message")]
+        [Required(ErrorMessageResourceType = typeof(PrsAddRommContent), ErrorMessageResourceName = "Validation_Message")]
         public bool? IsRommRequested { get; set; }
 
         public bool IsValid => (PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified) && CommonHelper.IsRommAllowed(RommEndDate);

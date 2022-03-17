@@ -7,18 +7,19 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommCoreGradePost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommPost
 {
-    public class When_ModelState_Invalid : TestSetup
+    public class When_ModelState_Invalid_For_Core : TestSetup
     {
-        private PrsAddRommCoreGradeViewModel _addRommCoreGradeViewModel;
+        private PrsAddRommViewModel _addRommCoreGradeViewModel;
 
         public override void Given()
         {
             ProfileId = 1;
             AssessmentId = 7;
-            
-            _addRommCoreGradeViewModel = new PrsAddRommCoreGradeViewModel
+            ComponentType = ComponentType.Core;
+
+            _addRommCoreGradeViewModel = new PrsAddRommViewModel
             {
                 ProfileId = ProfileId,
                 AssessmentId = AssessmentId,
@@ -31,15 +32,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ExamPeriod = "Summer 2021",
                 Grade = "A",
                 PrsStatus = null,
-                ComponentType = ComponentType.Core,
+                ComponentType = ComponentType,
                 RommEndDate = DateTime.UtcNow.AddDays(7)
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(AoUkprn, _addRommCoreGradeViewModel.ProfileId, _addRommCoreGradeViewModel.AssessmentId, _addRommCoreGradeViewModel.ComponentType)
+            Loader.GetPrsLearnerDetailsAsync<PrsAddRommViewModel>(AoUkprn, _addRommCoreGradeViewModel.ProfileId, _addRommCoreGradeViewModel.AssessmentId, _addRommCoreGradeViewModel.ComponentType)
                   .Returns(_addRommCoreGradeViewModel);
 
-            ViewModel = new PrsAddRommCoreGradeViewModel { ProfileId = 1, AssessmentId = AssessmentId, ComponentType = ComponentType.Core, IsRommRequested = null };
-            Controller.ModelState.AddModelError("IsRommRequested", Content.PostResultsService.PrsAddRommCoreGrade.Validation_Message);
+            ViewModel = new PrsAddRommViewModel { ProfileId = 1, AssessmentId = AssessmentId, ComponentType = ComponentType.Core, IsRommRequested = null };
+            Controller.ModelState.AddModelError("IsRommRequested", Content.PostResultsService.PrsAddRomm.Validation_Message);
         }
 
         [Fact]
@@ -48,9 +49,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             Result.Should().BeOfType(typeof(ViewResult));
 
             var viewResult = Result as ViewResult;
-            viewResult.Model.Should().BeOfType(typeof(PrsAddRommCoreGradeViewModel));
+            viewResult.Model.Should().BeOfType(typeof(PrsAddRommViewModel));
 
-            var model = viewResult.Model as PrsAddRommCoreGradeViewModel;
+            var model = viewResult.Model as PrsAddRommViewModel;
 
             model.Should().NotBeNull();
 
@@ -68,10 +69,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.IsRommRequested.Should().BeNull();
 
             Controller.ViewData.ModelState.Should().ContainSingle();
-            Controller.ViewData.ModelState.ContainsKey(nameof(PrsAddRommCoreGradeViewModel.IsRommRequested)).Should().BeTrue();
+            Controller.ViewData.ModelState.ContainsKey(nameof(PrsAddRommViewModel.IsRommRequested)).Should().BeTrue();
 
-            var modelState = Controller.ViewData.ModelState[nameof(PrsAddRommCoreGradeViewModel.IsRommRequested)];
-            modelState.Errors[0].ErrorMessage.Should().Be(Content.PostResultsService.PrsAddRommCoreGrade.Validation_Message);
+            var modelState = Controller.ViewData.ModelState[nameof(PrsAddRommViewModel.IsRommRequested)];
+            modelState.Errors[0].ErrorMessage.Should().Be(Content.PostResultsService.PrsAddRomm.Validation_Message);
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.PrsLearnerDetails);

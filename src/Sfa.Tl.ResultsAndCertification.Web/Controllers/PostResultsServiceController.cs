@@ -137,10 +137,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("post-results-add-romm/{profileId}/{assessmentId}/{componentType}/{isBack:bool?}", Name = RouteConstants.PrsAddRommCoreGrade)]
-        public async Task<IActionResult> PrsAddRommCoreGradeAsync(int profileId, int assessmentId, ComponentType componentType, bool? isBack)
+        [Route("post-results-add-romm/{profileId}/{assessmentId}/{componentType}/{isBack:bool?}", Name = RouteConstants.PrsAddRomm)]
+        public async Task<IActionResult> PrsAddRommAsync(int profileId, int assessmentId, ComponentType componentType, bool? isBack)
         {
-            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
 
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -151,12 +151,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("post-results-add-romm/{profileId}/{assessmentId}/{componentType}/{isBack:bool?}", Name = RouteConstants.SubmitPrsAddRommCoreGrade)]
-        public async Task<IActionResult> PrsAddRommCoreGradeAsync(PrsAddRommCoreGradeViewModel model)
+        [Route("post-results-add-romm/{profileId}/{assessmentId}/{componentType}/{isBack:bool?}", Name = RouteConstants.SubmitPrsAddRomm)]
+        public async Task<IActionResult> PrsAddRommAsync(PrsAddRommViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
+                var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
                 return View(prsDetails);
             }      
 

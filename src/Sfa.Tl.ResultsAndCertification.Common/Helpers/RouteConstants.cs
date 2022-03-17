@@ -323,8 +323,8 @@
         public const string PrsUlnNotFound = "PrsUlnNotFound";
         public const string PrsUlnWithdrawn = "PrsUlnWithdrawn";
         public const string PrsLearnerDetails = "PrsLearnerDetails";
-        public const string PrsAddRommCoreGrade = "PrsAddRommCoreGrade";
-        public const string SubmitPrsAddRommCoreGrade = "SubmitPrsAddRommCoreGrade";
+        public const string PrsAddRomm = "PrsAddRomm";
+        public const string SubmitPrsAddRomm = "SubmitPrsAddRomm";
         public const string PrsAddRommOutcome = "PrsAddRommOutcome";
         public const string SubmitPrsAddRommOutcome = "SubmitPrsAddRommOutcome";
         public const string PrsAddRommOutcomeKnownCoreGrade = "PrsAddRommOutcomeKnownCoreGrade";

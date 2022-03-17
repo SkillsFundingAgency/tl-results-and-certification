@@ -2,7 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommCoreGradeGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommGet
 {
     public abstract class TestSetup : PostResultsServiceControllerTestBase
     {
@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
         public async override Task When()
         {
-            Result = await Controller.PrsAddRommCoreGradeAsync(ProfileId, AssessmentId, ComponentType, IsBack);
+            Result = await Controller.PrsAddRommAsync(ProfileId, AssessmentId, ComponentType, IsBack);
         }
     }
 }

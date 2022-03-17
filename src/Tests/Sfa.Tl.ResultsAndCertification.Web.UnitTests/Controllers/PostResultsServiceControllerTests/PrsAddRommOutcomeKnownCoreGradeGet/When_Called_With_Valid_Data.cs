@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.RommOutcome.Should().BeNull();
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.PrsAddRommCoreGrade);
+            model.BackLink.RouteName.Should().Be(RouteConstants.PrsAddRomm);
             model.BackLink.RouteAttributes.Count.Should().Be(4);
             model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string profileIdRouteValue);
             profileIdRouteValue.Should().Be(ProfileId.ToString());

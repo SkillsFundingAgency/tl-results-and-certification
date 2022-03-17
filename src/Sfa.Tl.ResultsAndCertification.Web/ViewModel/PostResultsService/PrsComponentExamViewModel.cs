@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                                            || (PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Reviewed && !CommonHelper.IsAppealsAllowed(AppealEndDate))
                                            || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Final;
 
-        public string RommRouteName { get { return RouteConstants.PrsAddRommCoreGrade; } }
+        public string RommRouteName { get { return RouteConstants.PrsAddRomm; } }
         public string RommOutcomeRouteName { get { return RouteConstants.PrsAddRommOutcome; } }
         public string PrsGradeChangeRequestRouteName { get { return RouteConstants.PrsGradeChangeRequest; } }
 

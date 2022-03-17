@@ -74,7 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             modelState.Errors[0].ErrorMessage.Should().Be(Content.PostResultsService.PrsAddRommOutcomeKnownCoreGrade.Validation_Message);
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.PrsAddRommCoreGrade);
+            model.BackLink.RouteName.Should().Be(RouteConstants.PrsAddRomm);
             model.BackLink.RouteAttributes.Count.Should().Be(4);
             model.BackLink.RouteAttributes[Constants.ProfileId].Should().Be(ProfileId.ToString());
             model.BackLink.RouteAttributes[Constants.AssessmentId].Should().Be(AssessmentId.ToString());

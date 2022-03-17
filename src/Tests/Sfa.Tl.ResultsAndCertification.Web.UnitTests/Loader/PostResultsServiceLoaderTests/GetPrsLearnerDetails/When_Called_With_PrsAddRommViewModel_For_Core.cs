@@ -11,10 +11,10 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.GetPrsLearnerDetails
 {
-    public class When_Called_With_PrsAddRommCoreGradeViewModel : TestSetup
+    public class When_Called_With_PrsAddRommViewModel_For_Core : TestSetup
     {
         private LearnerRecord _expectedApiResult;
-        protected PrsAddRommCoreGradeViewModel ActualResult { get; set; }
+        protected PrsAddRommViewModel ActualResult { get; set; }
 
         public override void Given()
         {
@@ -103,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
+            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsAddRommViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
         }
 
         [Fact]

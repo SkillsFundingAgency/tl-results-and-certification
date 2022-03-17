@@ -7,20 +7,19 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommCoreGradeGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommGet
 {
-    public class When_Called_With_IsBack_True : TestSetup
+    public class When_Called_With_Valid_Data_For_Core : TestSetup
     {
-        private PrsAddRommCoreGradeViewModel _addRommCoreGradeViewModel;
+        private PrsAddRommViewModel _addRommViewModel;
 
         public override void Given()
         {
             ProfileId = 1;
             AssessmentId = 7;
             ComponentType = ComponentType.Core;
-            IsBack = true;
 
-            _addRommCoreGradeViewModel = new PrsAddRommCoreGradeViewModel
+            _addRommViewModel = new PrsAddRommViewModel
             {
                 ProfileId = ProfileId,
                 AssessmentId = AssessmentId,
@@ -37,34 +36,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 RommEndDate = DateTime.UtcNow.AddDays(7)
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_addRommCoreGradeViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsAddRommViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_addRommViewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
             var viewResult = Result as ViewResult;
-            var model = viewResult.Model as PrsAddRommCoreGradeViewModel;
+            var model = viewResult.Model as PrsAddRommViewModel;
 
             model.Should().NotBeNull();
-            model.ProfileId.Should().Be(_addRommCoreGradeViewModel.ProfileId);
-            model.AssessmentId.Should().Be(_addRommCoreGradeViewModel.AssessmentId);
-            model.Uln.Should().Be(_addRommCoreGradeViewModel.Uln);
-            model.LearnerName.Should().Be(_addRommCoreGradeViewModel.LearnerName);
-            model.DateofBirth.Should().Be(_addRommCoreGradeViewModel.DateofBirth);
-            model.TlevelTitle.Should().Be(_addRommCoreGradeViewModel.TlevelTitle);
-            model.CoreDisplayName.Should().Be(_addRommCoreGradeViewModel.CoreDisplayName);
-            model.ExamPeriod.Should().Be(_addRommCoreGradeViewModel.ExamPeriod);
-            model.Grade.Should().Be(_addRommCoreGradeViewModel.Grade);
-            model.RommEndDate.Should().Be(_addRommCoreGradeViewModel.RommEndDate);
-            model.ComponentType.Should().Be(_addRommCoreGradeViewModel.ComponentType);
-            model.IsRommRequested.Should().BeTrue();
+            model.ProfileId.Should().Be(_addRommViewModel.ProfileId);
+            model.AssessmentId.Should().Be(_addRommViewModel.AssessmentId);
+            model.Uln.Should().Be(_addRommViewModel.Uln);
+            model.LearnerName.Should().Be(_addRommViewModel.LearnerName);
+            model.DateofBirth.Should().Be(_addRommViewModel.DateofBirth);
+            model.TlevelTitle.Should().Be(_addRommViewModel.TlevelTitle);
+            model.CoreDisplayName.Should().Be(_addRommViewModel.CoreDisplayName);
+            model.ExamPeriod.Should().Be(_addRommViewModel.ExamPeriod);
+            model.Grade.Should().Be(_addRommViewModel.Grade);
+            model.RommEndDate.Should().Be(_addRommViewModel.RommEndDate);
+            model.ComponentType.Should().Be(_addRommViewModel.ComponentType);
+            model.IsRommRequested.Should().BeNull();
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.PrsLearnerDetails);

@@ -7,11 +7,11 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommCoreGradeGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommGet
 {
-    public class When_Called_With_Invalid_RommEndDate : TestSetup
+    public class When_Called_With_Invalid_PrsStatus_For_Core : TestSetup
     {
-        private PrsAddRommCoreGradeViewModel _addRommCoreGradeViewModel;
+        private PrsAddRommViewModel _addRommViewModel;
 
         public override void Given()
         {
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             AssessmentId = 7;
             ComponentType = ComponentType.Core;
 
-            _addRommCoreGradeViewModel = new PrsAddRommCoreGradeViewModel
+            _addRommViewModel = new PrsAddRommViewModel
             {
                 ProfileId = ProfileId,
                 AssessmentId = AssessmentId,
@@ -31,18 +31,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 CoreDisplayName = "Childcare (12121212)",
                 ExamPeriod = "Summer 2021",
                 Grade = "A",
-                PrsStatus = null,
+                PrsStatus = PrsStatus.UnderReview,
                 ComponentType = ComponentType,
-                RommEndDate = DateTime.UtcNow.AddDays(-7)
+                RommEndDate = DateTime.UtcNow.AddDays(7)
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_addRommCoreGradeViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsAddRommViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_addRommViewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType);
         }
 
         [Fact]
