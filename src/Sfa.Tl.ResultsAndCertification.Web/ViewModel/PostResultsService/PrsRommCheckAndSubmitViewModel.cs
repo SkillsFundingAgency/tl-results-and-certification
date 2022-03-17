@@ -49,6 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             {
                 { Constants.ProfileId, ProfileId.ToString() },
                 { Constants.AssessmentId, AssessmentId.ToString() },
+                { Constants.ComponentType, ((int)ComponentType).ToString() },
                 { Constants.IsRommOutcomeJourney, "false" },
                 { Constants.IsChangeMode, "true" }
             }
@@ -61,6 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             {
                 { Constants.ProfileId, ProfileId.ToString() },
                 { Constants.AssessmentId, AssessmentId.ToString() },
+                { Constants.ComponentType, ((int)ComponentType).ToString() },
                 { Constants.IsRommOutcomeJourney, IsRommOutcomeJourney.ToString().ToLowerInvariant() },
                 { Constants.IsChangeMode, "false" }
             }
@@ -90,6 +92,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                         {
                             { Constants.ProfileId, ProfileId.ToString() },
                             { Constants.AssessmentId, AssessmentId.ToString() },
+                            { Constants.ComponentType, ((int)ComponentType).ToString() },
                             { Constants.RommOutcomeTypeId, ((int)RommOutcomeType.GradeNotChanged).ToString() }
                         }
                         :
@@ -97,6 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                         {
                             { Constants.ProfileId, ProfileId.ToString() },
                             { Constants.AssessmentId, AssessmentId.ToString() },
+                            { Constants.ComponentType, ((int)ComponentType).ToString() },
                             { Constants.RommOutcomeKnownTypeId, ((int)RommOutcomeKnownType.GradeNotChanged).ToString() }
                         };
             }

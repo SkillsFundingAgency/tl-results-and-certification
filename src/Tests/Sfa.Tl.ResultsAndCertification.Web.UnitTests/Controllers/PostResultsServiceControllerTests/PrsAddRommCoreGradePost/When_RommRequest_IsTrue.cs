@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
     {
         public override void Given()
         {
-            ViewModel = new PrsAddRommCoreGradeViewModel { ProfileId = 1, AssessmentId = 11, IsRommRequested = true, RommEndDate = DateTime.Today.AddDays(7) };
+            ViewModel = new PrsAddRommCoreGradeViewModel { ProfileId = 1, AssessmentId = 11, ComponentType = ComponentType.Core, IsRommRequested = true, RommEndDate = DateTime.Today.AddDays(7) };
             Loader.GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(ViewModel);
         }
 
@@ -22,9 +22,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             var route = Result as RedirectToRouteResult;
             route.RouteName.Should().Be(RouteConstants.PrsAddRommOutcomeKnownCoreGrade);
-            route.RouteValues.Count.Should().Be(2);
+            route.RouteValues.Count.Should().Be(3);
             route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
             route.RouteValues[Constants.AssessmentId].Should().Be(ViewModel.AssessmentId);
+            route.RouteValues[Constants.ComponentType].Should().Be((int)ViewModel.ComponentType);
         }
     }
 }

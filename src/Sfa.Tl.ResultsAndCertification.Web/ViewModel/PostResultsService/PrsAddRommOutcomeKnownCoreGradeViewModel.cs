@@ -38,7 +38,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public override BackLinkModel BackLink => new BackLinkModel
         {
             RouteName = RouteConstants.PrsAddRommCoreGrade,
-            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, AssessmentId.ToString() }, { Constants.IsBack, "true" } }
+            RouteAttributes = new Dictionary<string, string> 
+            { 
+                { Constants.ProfileId, ProfileId.ToString() },
+                { Constants.AssessmentId, AssessmentId.ToString() },
+                { Constants.ComponentType, ((int)ComponentType).ToString() },
+                { Constants.IsBack, "true" }
+            }
         };
 
         public void SetOutcomeType(int? outcomeKnownTypeId)

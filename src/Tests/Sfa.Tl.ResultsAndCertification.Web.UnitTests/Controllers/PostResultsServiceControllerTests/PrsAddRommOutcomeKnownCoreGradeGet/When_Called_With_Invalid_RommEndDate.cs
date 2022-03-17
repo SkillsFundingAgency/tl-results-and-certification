@@ -17,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 1;
             AssessmentId = 7;
+            ComponentType = ComponentType.Core;
 
             _addRommOutcomeKnownCoreGradeViewModel = new PrsAddRommOutcomeKnownCoreGradeViewModel
             {
@@ -31,16 +32,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ExamPeriod = "Summer 2021",
                 Grade = "A",
                 PrsStatus = null,
-                RommEndDate = DateTime.UtcNow.AddDays(-7)
+                RommEndDate = DateTime.UtcNow.AddDays(-7),
+                ComponentType = ComponentType
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_addRommOutcomeKnownCoreGradeViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_addRommOutcomeKnownCoreGradeViewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType);
         }
 
         [Fact]

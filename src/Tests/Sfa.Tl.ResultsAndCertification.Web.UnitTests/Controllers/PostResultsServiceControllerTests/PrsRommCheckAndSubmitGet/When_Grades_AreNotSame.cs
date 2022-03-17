@@ -20,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             var previousGrade = "C";
             var newGrade = "A";
+            ComponentType = ComponentType.Core;
 
             _mockCache = new PrsRommCheckAndSubmitViewModel
             {
@@ -35,6 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 NewGrade = newGrade,
                 OldGrade = previousGrade,
                 IsGradeChanged = true,
+                ComponentType = ComponentType,
 
                 ProfileId = 1,
                 AssessmentId = 2
@@ -59,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.CoreDisplayName.Should().Be(_mockCache.CoreDisplayName);
             model.NewGrade.Should().Be(_mockCache.NewGrade);
             model.OldGrade.Should().Be(_mockCache.OldGrade);
-
+            model.ComponentType.Should().Be(_mockCache.ComponentType);
             model.ProfileId.Should().Be(_mockCache.ProfileId);
             model.AssessmentId.Should().Be(_mockCache.AssessmentId);
             model.IsGradeChanged.Should().BeTrue();
@@ -107,11 +109,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             // Backlink
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.PrsRommGradeChange);
-            model.BackLink.RouteAttributes.Count.Should().Be(4);
+            model.BackLink.RouteAttributes.Count.Should().Be(5);
             model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string routeProfileId);
             routeProfileId.Should().Be(_mockCache.ProfileId.ToString());
             model.BackLink.RouteAttributes.TryGetValue(Constants.AssessmentId, out string routeAssessmentId);
             routeAssessmentId.Should().Be(_mockCache.AssessmentId.ToString());
+            model.BackLink.RouteAttributes.TryGetValue(Constants.ComponentType, out string routeComponentType);
+            routeComponentType.Should().Be(((int)ComponentType).ToString());
             model.BackLink.RouteAttributes.TryGetValue(Constants.IsRommOutcomeJourney, out string routeRommOutcomeJourney);
             routeRommOutcomeJourney.Should().Be("false");
             model.BackLink.RouteAttributes.TryGetValue(Constants.IsChangeMode, out string routeIsChangeMode);
@@ -131,6 +135,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 {
                     { Constants.ProfileId, _mockCache.ProfileId.ToString() },
                     { Constants.AssessmentId, _mockCache.AssessmentId.ToString() },
+                    { Constants.ComponentType, ((int)ComponentType).ToString() },
                     { Constants.IsRommOutcomeJourney, "false" },
                     { Constants.IsChangeMode, "true" }
                 };

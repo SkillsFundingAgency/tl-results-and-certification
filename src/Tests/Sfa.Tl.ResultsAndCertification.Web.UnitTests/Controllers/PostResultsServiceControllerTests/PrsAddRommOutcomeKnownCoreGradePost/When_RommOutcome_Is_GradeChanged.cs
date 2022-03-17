@@ -17,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 1;
             AssessmentId = 7;
+            ComponentType = ComponentType.Core;
 
             _addRommOutcomeKnownCoreGradeViewModel = new PrsAddRommOutcomeKnownCoreGradeViewModel
             {
@@ -31,11 +32,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ExamPeriod = "Summer 2021",
                 Grade = "A",
                 PrsStatus = null,
-                RommEndDate = DateTime.UtcNow.AddDays(7)
+                RommEndDate = DateTime.UtcNow.AddDays(7),
+                ComponentType = ComponentType
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_addRommOutcomeKnownCoreGradeViewModel);
-            ViewModel = new PrsAddRommOutcomeKnownCoreGradeViewModel { ProfileId = ProfileId, AssessmentId = AssessmentId, RommOutcome = RommOutcomeKnownType.GradeChanged };
+            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_addRommOutcomeKnownCoreGradeViewModel);
+            ViewModel = new PrsAddRommOutcomeKnownCoreGradeViewModel { ProfileId = ProfileId, AssessmentId = AssessmentId, ComponentType = ComponentType, RommOutcome = RommOutcomeKnownType.GradeChanged };
         }
 
         [Fact]
@@ -49,9 +51,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             var route = Result as RedirectToRouteResult;
             route.RouteName.Should().Be(RouteConstants.PrsRommGradeChange);
-            route.RouteValues.Count.Should().Be(2);
+            route.RouteValues.Count.Should().Be(3);
             route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
             route.RouteValues[Constants.AssessmentId].Should().Be(ViewModel.AssessmentId);
+            route.RouteValues[Constants.ComponentType].Should().Be(((int)ComponentType));
         }
     }
 }

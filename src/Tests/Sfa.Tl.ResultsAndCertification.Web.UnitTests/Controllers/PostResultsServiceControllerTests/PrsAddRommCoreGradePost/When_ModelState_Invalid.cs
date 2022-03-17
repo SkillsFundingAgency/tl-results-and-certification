@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 1;
             AssessmentId = 7;
-
+            
             _addRommCoreGradeViewModel = new PrsAddRommCoreGradeViewModel
             {
                 ProfileId = ProfileId,
@@ -31,12 +31,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ExamPeriod = "Summer 2021",
                 Grade = "A",
                 PrsStatus = null,
+                ComponentType = ComponentType.Core,
                 RommEndDate = DateTime.UtcNow.AddDays(7)
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_addRommCoreGradeViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(AoUkprn, _addRommCoreGradeViewModel.ProfileId, _addRommCoreGradeViewModel.AssessmentId, _addRommCoreGradeViewModel.ComponentType)
+                  .Returns(_addRommCoreGradeViewModel);
 
-            ViewModel = new PrsAddRommCoreGradeViewModel { ProfileId = 1, AssessmentId = AssessmentId, IsRommRequested = null };
+            ViewModel = new PrsAddRommCoreGradeViewModel { ProfileId = 1, AssessmentId = AssessmentId, ComponentType = ComponentType.Core, IsRommRequested = null };
             Controller.ModelState.AddModelError("IsRommRequested", Content.PostResultsService.PrsAddRommCoreGrade.Validation_Message);
         }
 
@@ -62,6 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.ExamPeriod.Should().Be(_addRommCoreGradeViewModel.ExamPeriod);
             model.Grade.Should().Be(_addRommCoreGradeViewModel.Grade);
             model.RommEndDate.Should().Be(_addRommCoreGradeViewModel.RommEndDate);
+            model.ComponentType.Should().Be(_addRommCoreGradeViewModel.ComponentType);
             model.IsRommRequested.Should().BeNull();
 
             Controller.ViewData.ModelState.Should().ContainSingle();

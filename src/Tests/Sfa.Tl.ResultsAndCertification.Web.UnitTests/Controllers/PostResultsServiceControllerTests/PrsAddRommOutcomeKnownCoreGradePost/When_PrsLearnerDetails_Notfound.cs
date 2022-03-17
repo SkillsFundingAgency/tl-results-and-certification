@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         public override void Given()
         {
             ComponentType = Common.Enum.ComponentType.Core;
-            ViewModel = new PrsAddRommOutcomeKnownCoreGradeViewModel { ProfileId = 0, AssessmentId = 11 };
+            ViewModel = new PrsAddRommOutcomeKnownCoreGradeViewModel { ProfileId = 0, AssessmentId = 11, ComponentType = ComponentType };
             Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType)
                   .Returns(_mockLoaderResponse);
         }

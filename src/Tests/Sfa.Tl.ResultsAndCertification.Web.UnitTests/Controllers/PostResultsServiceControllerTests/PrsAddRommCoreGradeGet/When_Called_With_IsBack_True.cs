@@ -17,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 1;
             AssessmentId = 7;
+            ComponentType = ComponentType.Core;
             IsBack = true;
 
             _addRommCoreGradeViewModel = new PrsAddRommCoreGradeViewModel
@@ -32,16 +33,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ExamPeriod = "Summer 2021",
                 Grade = "A",
                 PrsStatus = null,
+                ComponentType = ComponentType,
                 RommEndDate = DateTime.UtcNow.AddDays(7)
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_addRommCoreGradeViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_addRommCoreGradeViewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType);
         }
 
         [Fact]
@@ -61,6 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.ExamPeriod.Should().Be(_addRommCoreGradeViewModel.ExamPeriod);
             model.Grade.Should().Be(_addRommCoreGradeViewModel.Grade);
             model.RommEndDate.Should().Be(_addRommCoreGradeViewModel.RommEndDate);
+            model.ComponentType.Should().Be(_addRommCoreGradeViewModel.ComponentType);
             model.IsRommRequested.Should().BeTrue();
 
             model.BackLink.Should().NotBeNull();

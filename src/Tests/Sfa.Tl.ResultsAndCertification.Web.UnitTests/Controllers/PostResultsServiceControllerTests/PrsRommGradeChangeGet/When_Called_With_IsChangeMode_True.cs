@@ -22,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             ProfileId = 1;
             AssessmentId = 7;
             IsChangeMode = true;
+            ComponentType = ComponentType.Core;
 
             _grades = new List<LookupViewModel> { new LookupViewModel { Id = 1, Code = "C1", Value = "V1" }, new LookupViewModel { Id = 2, Code = "C2", Value = "V2" } };
             _rommGradeChangeViewModel = new PrsRommGradeChangeViewModel
@@ -36,19 +37,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ExamPeriod = "Summer 2021",
                 Grade = "B",
                 PrsStatus = PrsStatus.UnderReview,
-                Grades = _grades
+                Grades = _grades,
+                ComponentType = ComponentType
             };
 
             _prsRommCheckAndSubmitViewModel = null;
             CacheService.GetAsync<PrsRommCheckAndSubmitViewModel>(CacheKey).Returns(_prsRommCheckAndSubmitViewModel);
-            Loader.GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_rommGradeChangeViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_rommGradeChangeViewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
             CacheService.Received(1).GetAsync<PrsRommCheckAndSubmitViewModel>(CacheKey);
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType);
         }
 
         [Fact]
@@ -68,6 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.ExamPeriod.Should().Be(_rommGradeChangeViewModel.ExamPeriod);
             model.Grade.Should().Be(_rommGradeChangeViewModel.Grade);
             model.RommEndDate.Should().Be(_rommGradeChangeViewModel.RommEndDate);
+            model.ComponentType.Should().Be(_rommGradeChangeViewModel.ComponentType);
             model.SelectedGradeCode.Should().BeNull();
             model.Grades.Should().BeEquivalentTo(_rommGradeChangeViewModel.Grades);
             model.IsChangeMode.Should().BeTrue();

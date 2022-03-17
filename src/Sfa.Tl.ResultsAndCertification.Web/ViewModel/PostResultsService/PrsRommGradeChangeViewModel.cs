@@ -58,6 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             {
                 { Constants.ProfileId, ProfileId.ToString() },
                 { Constants.AssessmentId, AssessmentId.ToString() },
+                { Constants.ComponentType, ((int)ComponentType).ToString() },
                 { Constants.RommOutcomeTypeId, ((int)RommOutcomeType.GradeChanged).ToString() }
             }
             :
@@ -65,6 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             {
                 { Constants.ProfileId, ProfileId.ToString() },
                 { Constants.AssessmentId, AssessmentId.ToString() },
+                { Constants.ComponentType, ((int)ComponentType).ToString() },
                 { Constants.RommOutcomeKnownTypeId, ((int)RommOutcomeKnownType.GradeChanged).ToString() }
             };
     }

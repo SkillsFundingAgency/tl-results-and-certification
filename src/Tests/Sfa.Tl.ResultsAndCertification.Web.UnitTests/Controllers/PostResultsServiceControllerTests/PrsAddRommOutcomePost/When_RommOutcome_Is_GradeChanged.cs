@@ -17,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 1;
             AssessmentId = 7;
+            ComponentType = ComponentType.Core;
 
             _addRommOutcomeViewModel = new PrsAddRommOutcomeViewModel
             {
@@ -31,11 +32,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ExamPeriod = "Summer 2021",
                 Grade = "A",
                 PrsStatus = PrsStatus.UnderReview,
+                ComponentType = ComponentType,
                 RommEndDate = DateTime.UtcNow.AddDays(7)
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_addRommOutcomeViewModel);
-            ViewModel = new PrsAddRommOutcomeViewModel { ProfileId = ProfileId, AssessmentId = AssessmentId, RommOutcome = RommOutcomeType.GradeChanged };
+            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_addRommOutcomeViewModel);
+            ViewModel = new PrsAddRommOutcomeViewModel { ProfileId = ProfileId, AssessmentId = AssessmentId, ComponentType = ComponentType, RommOutcome = RommOutcomeType.GradeChanged };
         }
 
         [Fact]
@@ -49,9 +51,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             var route = Result as RedirectToRouteResult;
             route.RouteName.Should().Be(RouteConstants.PrsRommGradeChange);
-            route.RouteValues.Count.Should().Be(3);
+            route.RouteValues.Count.Should().Be(4);
             route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
             route.RouteValues[Constants.AssessmentId].Should().Be(ViewModel.AssessmentId);
+            route.RouteValues[Constants.ComponentType].Should().Be((int)ViewModel.ComponentType);
             route.RouteValues[Constants.IsRommOutcomeJourney].Should().Be("true");
         }
     }

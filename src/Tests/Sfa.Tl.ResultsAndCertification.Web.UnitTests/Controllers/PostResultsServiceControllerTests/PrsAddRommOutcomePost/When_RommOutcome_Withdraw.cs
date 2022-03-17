@@ -41,10 +41,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ProfileId = 1,
                 AssessmentId = 2,
                 ResultId = 3,
-                RommOutcome = RommOutcomeType.Withdraw                
+                RommOutcome = RommOutcomeType.Withdraw,
+                ComponentType = ComponentType.Core
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType.Core).Returns(_addRommOutcomeViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ViewModel.ComponentType).Returns(_addRommOutcomeViewModel);
             Loader.PrsRommActivityAsync(AoUkprn, ViewModel).Returns(true);
 
             _expectedBannerHeaderMsg = PrsAddRommOutcomeContent.Banner_HeaderMessage_Romm_Withdrawn;

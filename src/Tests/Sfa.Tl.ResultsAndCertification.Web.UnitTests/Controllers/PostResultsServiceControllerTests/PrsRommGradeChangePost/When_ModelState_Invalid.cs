@@ -17,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 1;
             AssessmentId = 7;
+            ComponentType = ComponentType.Core;
 
             _rommGradeChangeViewModel = new PrsRommGradeChangeViewModel
             {
@@ -31,12 +32,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ExamPeriod = "Summer 2021",
                 Grade = "A",
                 PrsStatus = null,
-                RommEndDate = DateTime.UtcNow.AddDays(7)
+                RommEndDate = DateTime.UtcNow.AddDays(7),
+                ComponentType = ComponentType
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_rommGradeChangeViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_rommGradeChangeViewModel);
 
-            ViewModel = new PrsRommGradeChangeViewModel { ProfileId = ProfileId, AssessmentId = AssessmentId, SelectedGradeCode = null };
+            ViewModel = new PrsRommGradeChangeViewModel { ProfileId = ProfileId, AssessmentId = AssessmentId, ComponentType = ComponentType, SelectedGradeCode = null };
             Controller.ModelState.AddModelError("SelectedGradeCode", Content.PostResultsService.PrsRommGradeChange.Validation_Message);
         }
 
@@ -62,6 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.ExamPeriod.Should().Be(_rommGradeChangeViewModel.ExamPeriod);
             model.Grade.Should().Be(_rommGradeChangeViewModel.Grade);
             model.RommEndDate.Should().Be(_rommGradeChangeViewModel.RommEndDate);
+            model.ComponentType.Should().Be(_rommGradeChangeViewModel.ComponentType);
             model.SelectedGradeCode.Should().BeNull();
 
             Controller.ViewData.ModelState.Should().ContainSingle();
@@ -72,9 +75,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.PrsAddRommOutcomeKnownCoreGrade);
-            model.BackLink.RouteAttributes.Count.Should().Be(3);
+            model.BackLink.RouteAttributes.Count.Should().Be(4);
             model.BackLink.RouteAttributes[Constants.ProfileId].Should().Be(ProfileId.ToString());
             model.BackLink.RouteAttributes[Constants.AssessmentId].Should().Be(AssessmentId.ToString());
+            model.BackLink.RouteAttributes[Constants.ComponentType].Should().Be(((int)ComponentType).ToString());
             model.BackLink.RouteAttributes[Constants.RommOutcomeKnownTypeId].Should().Be(((int)RommOutcomeKnownType.GradeChanged).ToString());
         }
     }

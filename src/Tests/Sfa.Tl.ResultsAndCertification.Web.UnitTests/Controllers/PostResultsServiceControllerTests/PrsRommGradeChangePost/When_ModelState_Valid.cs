@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 1;
             AssessmentId = 7;
+            ComponentType = ComponentType.Core;
 
             _grades = new List<LookupViewModel> { new LookupViewModel { Id = 1, Code = "C1", Value = "A" }, new LookupViewModel { Id = 2, Code = "C2", Value = "B" } };
             _prsRommCheckAndSubmitViewModel = new PrsRommCheckAndSubmitViewModel
@@ -37,17 +38,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 CoreDisplayName = "Core (12345)",
                 ExamPeriod = "Summer 2022",
                 OldGrade = "B",
-                IsGradeChanged = true
+                IsGradeChanged = true,
+                ComponentType = ComponentType
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_prsRommCheckAndSubmitViewModel);
-            ViewModel = new PrsRommGradeChangeViewModel { ProfileId = ProfileId, AssessmentId = AssessmentId, SelectedGradeCode = "C1", Grades = _grades };
+            Loader.GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_prsRommCheckAndSubmitViewModel);
+            ViewModel = new PrsRommGradeChangeViewModel { ProfileId = ProfileId, AssessmentId = AssessmentId, ComponentType = ComponentType, SelectedGradeCode = "C1", Grades = _grades };
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType.Core);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType);
 
             CacheService.Received(1).SetAsync(CacheKey,
                 Arg.Is<PrsRommCheckAndSubmitViewModel>
@@ -62,6 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                       x.TlevelTitle == _prsRommCheckAndSubmitViewModel.TlevelTitle &&
                       x.CoreDisplayName == _prsRommCheckAndSubmitViewModel.CoreDisplayName &&
                       x.ExamPeriod == _prsRommCheckAndSubmitViewModel.ExamPeriod &&
+                      x.ComponentType == _prsRommCheckAndSubmitViewModel.ComponentType &&
                       x.OldGrade == _prsRommCheckAndSubmitViewModel.OldGrade &&
                       x.NewGrade == _grades.FirstOrDefault(g => g.Code == ViewModel.SelectedGradeCode).Value &&
                       x.IsGradeChanged == _prsRommCheckAndSubmitViewModel.IsGradeChanged));

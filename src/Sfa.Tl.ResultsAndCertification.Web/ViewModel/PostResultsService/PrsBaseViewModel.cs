@@ -18,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public long ProviderUkprn { get; set; }
         public string TlevelTitle { get; set; }
         public string CoreDisplayName { get; set; }
+        public string SpecialismDisplayName { get; set; }
         public string ExamPeriod { get; set; }
         public string Grade { get; set; }
         public ComponentType ComponentType { get; set; }
@@ -29,6 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         protected string ProviderUkprnLabel { get; set; }
         protected string TlevelTitleLabel { get; set; }
         protected string CoreLabel { get; set; }
+        protected string SpecialismLabel { get; set; }
         protected string ExamPeriodLabel { get; set; }
         protected string GradeLabel { get; set; }
 
@@ -64,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             IsRawHtml = true
         };
 
-        public SummaryItemModel SummaryProviderName => new SummaryItemModel
+        public SummaryItemModel SummaryProviderName => new()
         {
             Id = "providername",
             Title = ProviderNameLabel,
@@ -83,6 +85,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             Id = "tleveltitle",
             Title = TlevelTitleLabel,
             Value = TlevelTitle
+        };
+
+        public SummaryItemModel SummaryComponentDisplayName => new SummaryItemModel
+        {
+            Id = "componentdisplayname",
+            Title = ComponentType == ComponentType.Core ? CoreLabel : SpecialismLabel,
+            Value = ComponentType == ComponentType.Core ? CoreDisplayName : SpecialismDisplayName
         };
 
         public SummaryItemModel SummaryCore => new SummaryItemModel
@@ -111,5 +120,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             RouteName = RouteConstants.PrsSearchLearner,
             RouteAttributes = new Dictionary<string, string> { { Constants.PopulateUln, true.ToString() } }
         };
+
+        public void SetComponentType(int? componentTypeId)
+        {
+            ComponentType = EnumExtensions.IsValidValue<ComponentType>(componentTypeId) ? (ComponentType)componentTypeId : ComponentType.NotSpecified;
+        }
     }
 }

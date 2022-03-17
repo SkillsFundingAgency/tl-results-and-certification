@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
     {
         public override void Given()
         {
-            ViewModel = new PrsAddRommCoreGradeViewModel { ProfileId = 1, AssessmentId = 11, IsRommRequested = false, RommEndDate = DateTime.Today.AddDays(7) };
+            ViewModel = new PrsAddRommCoreGradeViewModel { ProfileId = 1, AssessmentId = 11, ComponentType = ComponentType.Core, IsRommRequested = false, RommEndDate = DateTime.Today.AddDays(7) };
             Loader.GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(ViewModel);
         }
 

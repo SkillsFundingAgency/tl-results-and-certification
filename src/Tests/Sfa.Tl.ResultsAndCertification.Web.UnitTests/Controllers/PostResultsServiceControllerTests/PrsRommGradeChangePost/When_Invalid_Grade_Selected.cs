@@ -20,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 1;
             AssessmentId = 7;
+            ComponentType = ComponentType.Core;
 
             _grades = new List<LookupViewModel> { new LookupViewModel { Id = 1, Code = "C1", Value = "A" }, new LookupViewModel { Id = 2, Code = "C2", Value = "B" } };
             _prsRommCheckAndSubmitViewModel = new PrsRommCheckAndSubmitViewModel
@@ -40,14 +41,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 AssessmentId = 2
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_prsRommCheckAndSubmitViewModel);
-            ViewModel = new PrsRommGradeChangeViewModel { ProfileId = 1, AssessmentId = AssessmentId, SelectedGradeCode = "X", Grades = _grades };
+            Loader.GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_prsRommCheckAndSubmitViewModel);
+            ViewModel = new PrsRommGradeChangeViewModel { ProfileId = 1, AssessmentId = AssessmentId, ComponentType = ComponentType, SelectedGradeCode = "X", Grades = _grades };
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType.Core);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType);
             CacheService.DidNotReceive().SetAsync(CacheKey, Arg.Any<PrsRommCheckAndSubmitViewModel>());
         }
 

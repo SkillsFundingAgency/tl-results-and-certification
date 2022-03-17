@@ -19,6 +19,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
         public override void Given()
         {
+            ComponentType = ComponentType.Core;
+
             _addRommOutcomeViewModel = new PrsAddRommOutcomeViewModel
             {
                 ProfileId = ProfileId,
@@ -33,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Grade = "A",
                 PrsStatus = PrsStatus.UnderReview,
                 RommEndDate = DateTime.UtcNow.AddDays(7),
-                ComponentType = ComponentType.Core
+                ComponentType = ComponentType
             };
 
             ViewModel = new PrsAddRommOutcomeViewModel
@@ -41,10 +43,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ProfileId = 1,
                 AssessmentId = 2,
                 ResultId = 3,
-                RommOutcome = RommOutcomeType.Withdraw
+                RommOutcome = RommOutcomeType.Withdraw,
+                ComponentType = ComponentType
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType.Core).Returns(_addRommOutcomeViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType).Returns(_addRommOutcomeViewModel);
             Loader.PrsRommActivityAsync(AoUkprn, ViewModel).Returns(false);
 
             _expectedBannerHeaderMsg = PrsAddRommOutcomeContent.Banner_HeaderMessage_Romm_Withdrawn;
@@ -61,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         [Fact]
         public void Then_Expected_Method_Are_Called()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType.Core);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType);
             Loader.Received(1).PrsRommActivityAsync(AoUkprn, ViewModel);            
             CacheService.DidNotReceive().SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(x => x.IsPrsJourney == true && x.Message.Equals(_expectedBannerHeaderMsg) && x.Message.Equals(_expectedSuccessBannerMsg)), CacheExpiryTime.XSmall);
         }

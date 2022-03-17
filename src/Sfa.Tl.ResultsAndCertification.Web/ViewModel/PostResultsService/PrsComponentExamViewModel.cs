@@ -38,7 +38,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                 return new Dictionary<string, string> 
                 { 
                     { Constants.ProfileId, ProfileId.ToString() },
-                    { Constants.AssessmentId, AssessmentId.ToString() }
+                    { Constants.AssessmentId, AssessmentId.ToString() },
+                    { Constants.ComponentType, ((int)ComponentType).ToString() }
                 };
             }
         }

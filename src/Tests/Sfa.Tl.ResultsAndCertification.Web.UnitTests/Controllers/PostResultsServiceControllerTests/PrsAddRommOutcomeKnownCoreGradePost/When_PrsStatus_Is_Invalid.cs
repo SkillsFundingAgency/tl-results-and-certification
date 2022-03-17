@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 RommEndDate = DateTime.Today.AddDays(7)
             };
 
-            ViewModel = new PrsAddRommOutcomeKnownCoreGradeViewModel { ProfileId = 1, AssessmentId = 11, RommOutcome = RommOutcomeKnownType.No };
+            ViewModel = new PrsAddRommOutcomeKnownCoreGradeViewModel { ProfileId = 1, AssessmentId = 11, ComponentType = ComponentType, RommOutcome = RommOutcomeKnownType.No };
             Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType)
                   .Returns(_mockLoaderResponse);
         }

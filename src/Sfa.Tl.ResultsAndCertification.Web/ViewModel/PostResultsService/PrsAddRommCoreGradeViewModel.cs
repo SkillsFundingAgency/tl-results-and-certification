@@ -18,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             DateofBirthLabel = PrsAddRommCoreGradeContent.Title_DateofBirth_Text;
             TlevelTitleLabel = PrsAddRommCoreGradeContent.Title_TLevel_Text;
             CoreLabel = PrsAddRommCoreGradeContent.Title_Core_Text;
+            SpecialismLabel = PrsAddRommCoreGradeContent.Title_Core_Text;
             ExamPeriodLabel = PrsAddRommCoreGradeContent.Title_ExamPeriod_Text;
             GradeLabel = PrsAddRommCoreGradeContent.Title_Grade_Text;
         }
@@ -32,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public bool IsValid => (PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified) && CommonHelper.IsRommAllowed(RommEndDate);
 
-        public override BackLinkModel BackLink => new BackLinkModel
+        public override BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.PrsLearnerDetails,
             RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }

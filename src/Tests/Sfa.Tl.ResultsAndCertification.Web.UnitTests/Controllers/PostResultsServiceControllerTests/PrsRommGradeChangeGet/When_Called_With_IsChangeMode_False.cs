@@ -22,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             ProfileId = 1;
             AssessmentId = 7;
             IsChangeMode = false;
+            ComponentType = ComponentType.Core;
 
             _grades = new List<LookupViewModel> { new LookupViewModel { Id = 1, Code = "C1", Value = "V1" }, new LookupViewModel { Id = 2, Code = "C2", Value = "V2" } };
             _rommGradeChangeViewModel = new PrsRommGradeChangeViewModel
@@ -36,19 +37,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ExamPeriod = "Summer 2021",
                 Grade = "B",
                 PrsStatus = PrsStatus.UnderReview,
-                Grades = _grades
+                Grades = _grades,
+                ComponentType = ComponentType
             };
 
             _prsRommCheckAndSubmitViewModel = null;
             CacheService.GetAsync<PrsRommCheckAndSubmitViewModel>(CacheKey).Returns(_prsRommCheckAndSubmitViewModel);
-            Loader.GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_rommGradeChangeViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_rommGradeChangeViewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
             CacheService.Received(1).GetAsync<PrsRommCheckAndSubmitViewModel>(CacheKey);
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType);
         }
 
         [Fact]
@@ -68,6 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.ExamPeriod.Should().Be(_rommGradeChangeViewModel.ExamPeriod);
             model.Grade.Should().Be(_rommGradeChangeViewModel.Grade);
             model.RommEndDate.Should().Be(_rommGradeChangeViewModel.RommEndDate);
+            model.ComponentType.Should().Be(_rommGradeChangeViewModel.ComponentType);
             model.SelectedGradeCode.Should().BeNull();
             model.Grades.Should().BeEquivalentTo(_rommGradeChangeViewModel.Grades);
             model.IsChangeMode.Should().BeFalse();
@@ -75,11 +78,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.PrsAddRommOutcomeKnownCoreGrade);
-            model.BackLink.RouteAttributes.Count.Should().Be(3);
+            model.BackLink.RouteAttributes.Count.Should().Be(4);
             model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string profileIdRouteValue);
             profileIdRouteValue.Should().Be(ProfileId.ToString());
             model.BackLink.RouteAttributes.TryGetValue(Constants.AssessmentId, out string assessmentIdRouteValue);
             assessmentIdRouteValue.Should().Be(AssessmentId.ToString());
+            model.BackLink.RouteAttributes.TryGetValue(Constants.ComponentType, out string componentTypeRouteValue);
+            componentTypeRouteValue.Should().Be(((int)ComponentType).ToString());
             model.BackLink.RouteAttributes.TryGetValue(Constants.RommOutcomeKnownTypeId, out string rommOutcomeKnownRouteValue);
             rommOutcomeKnownRouteValue.Should().Be(((int)RommOutcomeKnownType.GradeChanged).ToString());
         }
