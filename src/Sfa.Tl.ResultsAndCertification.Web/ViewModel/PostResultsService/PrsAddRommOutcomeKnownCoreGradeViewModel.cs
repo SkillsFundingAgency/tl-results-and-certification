@@ -20,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             DateofBirthLabel = PrsAddRommOutcomeKnownCoreGradeContent.Title_DateofBirth_Text;
             TlevelTitleLabel = PrsAddRommOutcomeKnownCoreGradeContent.Title_TLevel_Text;
             CoreLabel = PrsAddRommOutcomeKnownCoreGradeContent.Title_Core_Text;
+            SpecialismLabel = PrsAddRommOutcomeKnownCoreGradeContent.Title_Specialism_Text;
             ExamPeriodLabel = PrsAddRommOutcomeKnownCoreGradeContent.Title_ExamPeriod_Text;
             GradeLabel = PrsAddRommOutcomeKnownCoreGradeContent.Title_Grade_Text;
         }
