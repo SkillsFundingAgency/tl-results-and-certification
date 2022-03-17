@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             Id = 11,
                             SeriesId = 2,
                             SeriesName = "Summer 2022",
-                            RommEndDate = DateTime.UtcNow.AddDays(5),
+                            RommEndDate = DateTime.UtcNow.AddDays(-5),
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
@@ -125,6 +125,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.ProfileId.Should().Be(_expectedApiResult.ProfileId);
             ActualResult.AssessmentId.Should().Be(expectedCoreAssessment.Id);
             ActualResult.ResultId.Should().Be(expectedCoreAssessment?.Result?.Id);
+            ActualResult.RommEndDate.Should().Be(expectedCoreAssessment.RommEndDate);
             ActualResult.AppealEndDate.Should().Be(expectedCoreAssessment.AppealEndDate);
             ActualResult.PrsStatus.Should().Be(expectedCoreAssessment.Result.PrsStatus);
 
@@ -134,6 +135,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.Grade.Should().Be(expectedCoreAssessment.Result.Grade);
 
             ActualResult.IsResultJourney.Should().BeNull();
+            ActualResult.CanRequestFinalGradeChange.Should().BeTrue();
             ActualResult.ChangeRequestData.Should().BeNull();
         }
     }

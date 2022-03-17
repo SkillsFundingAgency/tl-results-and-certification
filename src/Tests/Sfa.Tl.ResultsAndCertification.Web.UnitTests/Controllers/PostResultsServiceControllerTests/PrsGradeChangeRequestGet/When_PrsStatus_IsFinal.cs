@@ -11,7 +11,7 @@ using GradeChangeContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResult
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsGradeChangeRequestGet
 {
-    public class When_ViewModel_IsValid : TestSetup
+    public class When_PrsStatus_IsFinal : TestSetup
     {
         private PrsGradeChangeRequestViewModel _mockGradeChangeRequestViewModel;
 
@@ -39,9 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
                 ExamPeriod = "Summer 2021",
                 Grade = "B",
-                PrsStatus = null,
-                RommEndDate = DateTime.Now.AddDays(-1),
-                AppealEndDate = DateTime.Now.AddDays(10)
+                PrsStatus = PrsStatus.Final,
+                AppealEndDate = DateTime.Now.AddDays(1)
             };
 
             Loader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_mockGradeChangeRequestViewModel);
