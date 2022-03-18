@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (typeof(T) == typeof(PrsRommGradeChangeViewModel))
             {
                 var grades = await _internalApiClient.GetLookupDataAsync(componentType == ComponentType.Core ? LookupCategory.PathwayComponentGrade : LookupCategory.SpecialismComponentGrade);
-                return _mapper.Map<T>(response, opt => { opt.Items["assessment"] = assessment; opt.Items["grades"] = grades; });
+                return _mapper.Map<T>(response, opt => { opt.Items["assessment"] = assessment; opt.Items["specialism"] = specialism; opt.Items["grades"] = grades; });
             }
             else
             {
