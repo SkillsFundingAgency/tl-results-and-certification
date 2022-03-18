@@ -7,11 +7,11 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomeKnownCoreGradeGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomeKnownGet
 {
-    public class When_Called_With_Valid_Data : TestSetup
+    public class When_Called_With_Valid_Data_For_Core : TestSetup
     {
-        private PrsAddRommOutcomeKnownCoreGradeViewModel _addRommOutcomeKnownCoreGradeViewModel;
+        private PrsAddRommOutcomeKnownViewModel _addRommOutcomeKnownViewModel;
 
         public override void Given()
         {
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             AssessmentId = 7;
             ComponentType = ComponentType.Core;
 
-            _addRommOutcomeKnownCoreGradeViewModel = new PrsAddRommOutcomeKnownCoreGradeViewModel
+            _addRommOutcomeKnownViewModel = new PrsAddRommOutcomeKnownViewModel
             {
                 ProfileId = ProfileId,
                 AssessmentId = AssessmentId,
@@ -33,36 +33,36 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Grade = "A",
                 PrsStatus = null,
                 RommEndDate = DateTime.UtcNow.AddDays(7),
-                ComponentType = ComponentType.Core
+                ComponentType = ComponentType
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_addRommOutcomeKnownCoreGradeViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_addRommOutcomeKnownViewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
             var viewResult = Result as ViewResult;
-            var model = viewResult.Model as PrsAddRommOutcomeKnownCoreGradeViewModel;
+            var model = viewResult.Model as PrsAddRommOutcomeKnownViewModel;
 
             model.Should().NotBeNull();
-            model.ProfileId.Should().Be(_addRommOutcomeKnownCoreGradeViewModel.ProfileId);
-            model.AssessmentId.Should().Be(_addRommOutcomeKnownCoreGradeViewModel.AssessmentId);
-            model.Uln.Should().Be(_addRommOutcomeKnownCoreGradeViewModel.Uln);
-            model.LearnerName.Should().Be(_addRommOutcomeKnownCoreGradeViewModel.LearnerName);
-            model.DateofBirth.Should().Be(_addRommOutcomeKnownCoreGradeViewModel.DateofBirth);
-            model.TlevelTitle.Should().Be(_addRommOutcomeKnownCoreGradeViewModel.TlevelTitle);
-            model.CoreDisplayName.Should().Be(_addRommOutcomeKnownCoreGradeViewModel.CoreDisplayName);
-            model.ExamPeriod.Should().Be(_addRommOutcomeKnownCoreGradeViewModel.ExamPeriod);
-            model.Grade.Should().Be(_addRommOutcomeKnownCoreGradeViewModel.Grade);
-            model.RommEndDate.Should().Be(_addRommOutcomeKnownCoreGradeViewModel.RommEndDate);
-            model.ComponentType.Should().Be(_addRommOutcomeKnownCoreGradeViewModel.ComponentType);
+            model.ProfileId.Should().Be(_addRommOutcomeKnownViewModel.ProfileId);
+            model.AssessmentId.Should().Be(_addRommOutcomeKnownViewModel.AssessmentId);
+            model.Uln.Should().Be(_addRommOutcomeKnownViewModel.Uln);
+            model.LearnerName.Should().Be(_addRommOutcomeKnownViewModel.LearnerName);
+            model.DateofBirth.Should().Be(_addRommOutcomeKnownViewModel.DateofBirth);
+            model.TlevelTitle.Should().Be(_addRommOutcomeKnownViewModel.TlevelTitle);
+            model.CoreDisplayName.Should().Be(_addRommOutcomeKnownViewModel.CoreDisplayName);
+            model.ExamPeriod.Should().Be(_addRommOutcomeKnownViewModel.ExamPeriod);
+            model.Grade.Should().Be(_addRommOutcomeKnownViewModel.Grade);
+            model.RommEndDate.Should().Be(_addRommOutcomeKnownViewModel.RommEndDate);
+            model.ComponentType.Should().Be(_addRommOutcomeKnownViewModel.ComponentType);
             model.RommOutcome.Should().BeNull();
 
             model.BackLink.Should().NotBeNull();

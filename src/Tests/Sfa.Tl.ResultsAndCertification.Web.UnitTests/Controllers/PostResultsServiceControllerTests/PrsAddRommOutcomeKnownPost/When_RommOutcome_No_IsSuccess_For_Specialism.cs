@@ -7,19 +7,19 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
-using PrsAddRommOutcomeKnownCoreGradeContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsAddRommOutcomeKnownCoreGrade;
+using PrsAddRommOutcomeKnownContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsAddRommOutcomeKnown;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomeKnownCoreGradePost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomeKnownPost
 {
-    public class When_RommOutcome_No_IsSuccess : TestSetup
+    public class When_RommOutcome_No_IsSuccess_For_Specialism : TestSetup
     {
         private readonly bool _prsActivityResponse = true;
         private string _expectedSuccessBannerMsg;
 
         public override void Given()
         {
-            ComponentType = ComponentType.Core;
-            ViewModel = new PrsAddRommOutcomeKnownCoreGradeViewModel
+            ComponentType = ComponentType.Specialism;
+            ViewModel = new PrsAddRommOutcomeKnownViewModel
             {
                 ProfileId = 1,
                 AssessmentId = 11,
@@ -27,22 +27,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Firstname = "Test",
                 Lastname = "John",
                 ExamPeriod = "Summer 2022",
-                CoreDisplayName = "Education (1234567)",
+                SpecialismDisplayName = "Education (1234567)",
                 ComponentType = ComponentType,
                 RommOutcome = RommOutcomeKnownType.No,
                 RommEndDate = DateTime.Today.AddDays(7)
             };
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType)
+            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType)
                 .Returns(ViewModel);
 
             Loader.PrsRommActivityAsync(AoUkprn, ViewModel).Returns(_prsActivityResponse);
-            _expectedSuccessBannerMsg = string.Format(PrsAddRommOutcomeKnownCoreGradeContent.Banner_Message, ViewModel.LearnerName, ViewModel.ExamPeriod, ViewModel.CoreDisplayName);
+            _expectedSuccessBannerMsg = string.Format(PrsAddRommOutcomeKnownContent.Banner_Message, ViewModel.LearnerName, ViewModel.ExamPeriod, ViewModel.CoreDisplayName);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType);
             Loader.Received(1).PrsRommActivityAsync(AoUkprn, ViewModel);
             CacheService.Received(1).SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(x => x.Message.Equals(_expectedSuccessBannerMsg)), CacheExpiryTime.XSmall);
         }

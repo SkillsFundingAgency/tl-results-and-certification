@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         private string GetRouteName => IsChangeMode ? RouteConstants.PrsRommCheckAndSubmit : GetRommOutcomeJourneyRoute;
 
-        private string GetRommOutcomeJourneyRoute => IsRommOutcomeJourney ? RouteConstants.PrsAddRommOutcome : RouteConstants.PrsAddRommOutcomeKnownCoreGrade;
+        private string GetRommOutcomeJourneyRoute => IsRommOutcomeJourney ? RouteConstants.PrsAddRommOutcome : RouteConstants.PrsAddRommOutcomeKnown;
 
         private Dictionary<string, string> GetRouteAttributes => 
             IsChangeMode ? null : 

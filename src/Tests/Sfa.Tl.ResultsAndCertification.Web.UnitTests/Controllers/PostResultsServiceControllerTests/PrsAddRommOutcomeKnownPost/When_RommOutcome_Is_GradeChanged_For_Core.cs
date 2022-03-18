@@ -7,11 +7,11 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomeKnownCoreGradePost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomeKnownPost
 {
-    public class When_RommOutcome_Is_GradeChanged : TestSetup
+    public class When_RommOutcome_Is_GradeChanged_For_Core : TestSetup
     {
-        private PrsAddRommOutcomeKnownCoreGradeViewModel _addRommOutcomeKnownCoreGradeViewModel;
+        private PrsAddRommOutcomeKnownViewModel _addRommOutcomeKnownViewModel;
 
         public override void Given()
         {
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             AssessmentId = 7;
             ComponentType = ComponentType.Core;
 
-            _addRommOutcomeKnownCoreGradeViewModel = new PrsAddRommOutcomeKnownCoreGradeViewModel
+            _addRommOutcomeKnownViewModel = new PrsAddRommOutcomeKnownViewModel
             {
                 ProfileId = ProfileId,
                 AssessmentId = AssessmentId,
@@ -36,8 +36,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ComponentType = ComponentType
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_addRommOutcomeKnownCoreGradeViewModel);
-            ViewModel = new PrsAddRommOutcomeKnownCoreGradeViewModel { ProfileId = ProfileId, AssessmentId = AssessmentId, ComponentType = ComponentType, RommOutcome = RommOutcomeKnownType.GradeChanged };
+            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_addRommOutcomeKnownViewModel);
+            ViewModel = new PrsAddRommOutcomeKnownViewModel { ProfileId = ProfileId, AssessmentId = AssessmentId, ComponentType = ComponentType, RommOutcome = RommOutcomeKnownType.GradeChanged };
         }
 
         [Fact]

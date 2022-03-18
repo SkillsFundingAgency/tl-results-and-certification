@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string Banner_HeaderMesage => PrsRommCheckAndSubmitContent.Banner_HeaderMessage_Romm_Recorded;
 
         private bool IsRommOutcomeJourney => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.UnderReview;
-        private string GetRommOutcomeRouteName => IsRommOutcomeJourney ? RouteConstants.PrsAddRommOutcome : RouteConstants.PrsAddRommOutcomeKnownCoreGrade;
+        private string GetRommOutcomeRouteName => IsRommOutcomeJourney ? RouteConstants.PrsAddRommOutcome : RouteConstants.PrsAddRommOutcomeKnown;
 
         private Dictionary<string, string> GetRommOutcomeRouteAttributes
         {

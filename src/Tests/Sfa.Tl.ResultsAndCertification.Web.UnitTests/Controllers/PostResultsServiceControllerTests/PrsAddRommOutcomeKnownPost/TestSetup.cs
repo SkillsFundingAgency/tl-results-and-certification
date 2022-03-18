@@ -3,7 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomeKnownCoreGradePost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomeKnownPost
 {
     public abstract class TestSetup : PostResultsServiceControllerTestBase
     {
@@ -11,11 +11,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         public int AssessmentId { get; set; }
         public ComponentType ComponentType { get; set; }
         public IActionResult Result { get; private set; }
-        public PrsAddRommOutcomeKnownCoreGradeViewModel ViewModel { get; set; }
+        public PrsAddRommOutcomeKnownViewModel ViewModel { get; set; }
 
         public async override Task When()
         {
-            Result = await Controller.PrsAddRommOutcomeKnownCoreGradeAsync(ViewModel);
+            Result = await Controller.PrsAddRommOutcomeKnownAsync(ViewModel);
         }
     }
 }

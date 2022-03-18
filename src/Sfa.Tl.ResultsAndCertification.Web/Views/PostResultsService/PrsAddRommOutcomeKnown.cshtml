@@ -1,10 +1,10 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsAddRommOutcomeKnownCoreGradeViewModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsAddRommOutcomeKnownViewModel
 @using Sfa.Tl.ResultsAndCertification.Common.Enum
 @using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 @{
-    ViewData["Title"] = PrsAddRommOutcomeKnownCoreGrade.Page_Title;
+    ViewData["Title"] = PrsAddRommOutcomeKnown.Page_Title;
 }
 
 @section NavigationBar {
@@ -13,7 +13,7 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form class="form" asp-route="@RouteConstants.SubmitPrsAddRommOutcomeKnownCoreGrade">
+        <form class="form" asp-route="@RouteConstants.SubmitPrsAddRommOutcomeKnown">
             <input type="hidden" asp-for="ProfileId" />
             <input type="hidden" asp-for="AssessmentId" />
             <input type="hidden" asp-for="ResultId" />
@@ -21,9 +21,9 @@
 
             <partial name="_ValidationSummary" />
 
-            <h1 class="govuk-heading-l">@PrsAddRommOutcomeKnownCoreGrade.Heading_Add_Romm_Outcome</h1>
+            <h1 class="govuk-heading-l">@PrsAddRommOutcomeKnown.Heading_Add_Romm_Outcome</h1>
 
-            <dl class="govuk-summary-list govuk-summary-list--no-border" aria-label="@PrsAddRommOutcomeKnownCoreGrade.Aria_Label_Text_Learner_Details">
+            <dl class="govuk-summary-list govuk-summary-list--no-border" aria-label="@PrsAddRommOutcomeKnown.Aria_Label_Text_Learner_Details">
                 <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
                 <vc:summary-item model=Model.SummaryUln></vc:summary-item>
                 <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>                
@@ -37,7 +37,7 @@
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                         <h2 class="govuk-fieldset__heading">
-                            @PrsAddRommOutcomeKnownCoreGrade.Does_The_Romm_Logged_Against_This_Grade_Have_Outcome
+                            @PrsAddRommOutcomeKnown.Does_The_Romm_Logged_Against_This_Grade_Have_Outcome
                         </h2>
                     </legend>
                     
@@ -45,25 +45,25 @@
                     <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="rommoutcome" asp-for="RommOutcome" type="radio" value="@RommOutcomeKnownType.GradeChanged">
                             <label class="govuk-label govuk-radios__label" for="rommoutcome">
-                                @PrsAddRommOutcomeKnownCoreGrade.Radio_Button_Yes_Grade_Has_Changed
+                                @PrsAddRommOutcomeKnown.Radio_Button_Yes_Grade_Has_Changed
                             </label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="rommoutcome-gradenotchanged" asp-for="RommOutcome" type="radio" value="@RommOutcomeKnownType.GradeNotChanged">
                             <label class="govuk-label govuk-radios__label" for="rommoutcome-gradenotchanged">
-                                @PrsAddRommOutcomeKnownCoreGrade.Radio_Button_Yes_Grade_Is_Same
+                                @PrsAddRommOutcomeKnown.Radio_Button_Yes_Grade_Is_Same
                             </label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="appealoutcome-no" asp-for="RommOutcome" type="radio" value="@RommOutcomeKnownType.No">
                             <label class="govuk-label govuk-radios__label" for="appealoutcome-no">
-                                @PrsAddRommOutcomeKnownCoreGrade.Radio_Button_No
+                                @PrsAddRommOutcomeKnown.Radio_Button_No
                             </label>
                         </div>
                     
                 </fieldset>
             </div>
-            <button type="submit" id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsAddRommOutcomeKnownCoreGrade.Button_Continue</button>
+            <button type="submit" id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsAddRommOutcomeKnown.Button_Continue</button>
         </form>
     </div>
 </div>

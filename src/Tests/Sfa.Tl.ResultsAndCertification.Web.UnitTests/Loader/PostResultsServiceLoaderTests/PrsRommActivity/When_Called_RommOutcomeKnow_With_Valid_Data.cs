@@ -13,14 +13,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 {
     public class When_Called_RommOutcomeKnow_With_Valid_Data : TestSetup
     {
-        private PrsAddRommOutcomeKnownCoreGradeViewModel _model;
+        private PrsAddRommOutcomeKnownViewModel _model;
         private readonly bool _expectedApiResult = true;
 
         public override void Given()
         {
             CreateMapper();
 
-            _model = new PrsAddRommOutcomeKnownCoreGradeViewModel
+            _model = new PrsAddRommOutcomeKnownViewModel
             {
                 ProfileId = 1,
                 AssessmentId = 2,
@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 c.AddMaps(typeof(PostResultsServiceMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<PrsAddRommOutcomeKnownCoreGradeViewModel, PrsActivityRequest>(HttpContextAccessor) : null);
+                                new UserNameResolver<PrsAddRommOutcomeKnownViewModel, PrsActivityRequest>(HttpContextAccessor) : null);
             });
             Mapper = new AutoMapper.Mapper(mapperConfig);
         }

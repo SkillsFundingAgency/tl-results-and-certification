@@ -7,11 +7,11 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomeKnownCoreGradePost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomeKnownPost
 {
-    public class When_PrsStatus_Is_Invalid : TestSetup
+    public class When_PrsStatus_Is_Invalid_For_Core : TestSetup
     {
-        private PrsAddRommOutcomeKnownCoreGradeViewModel _mockLoaderResponse = null;
+        private PrsAddRommOutcomeKnownViewModel _mockLoaderResponse = null;
 
         public override void Given()
         {
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             AssessmentId = 10;
             ComponentType = ComponentType.Core;
 
-            _mockLoaderResponse = new PrsAddRommOutcomeKnownCoreGradeViewModel
+            _mockLoaderResponse = new PrsAddRommOutcomeKnownViewModel
             {
                 ProfileId = 1,
                 AssessmentId = 11,
@@ -34,8 +34,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 RommEndDate = DateTime.Today.AddDays(7)
             };
 
-            ViewModel = new PrsAddRommOutcomeKnownCoreGradeViewModel { ProfileId = 1, AssessmentId = 11, ComponentType = ComponentType, RommOutcome = RommOutcomeKnownType.No };
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType)
+            ViewModel = new PrsAddRommOutcomeKnownViewModel { ProfileId = 1, AssessmentId = 11, ComponentType = ComponentType, RommOutcome = RommOutcomeKnownType.No };
+            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType)
                   .Returns(_mockLoaderResponse);
         }
 

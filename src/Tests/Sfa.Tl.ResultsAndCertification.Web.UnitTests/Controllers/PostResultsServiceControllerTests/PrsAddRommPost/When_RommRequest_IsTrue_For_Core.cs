@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         public void Then_Redirected_To_PrsAddRommOutcomeKnownCoreGrade()
         {
             var route = Result as RedirectToRouteResult;
-            route.RouteName.Should().Be(RouteConstants.PrsAddRommOutcomeKnownCoreGrade);
+            route.RouteName.Should().Be(RouteConstants.PrsAddRommOutcomeKnown);
             route.RouteValues.Count.Should().Be(3);
             route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
             route.RouteValues[Constants.AssessmentId].Should().Be(ViewModel.AssessmentId);

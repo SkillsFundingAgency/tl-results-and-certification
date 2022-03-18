@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<T> GetPrsLearnerDetailsAsync<T>(long aoUkprn, int profileId);
         Task<T> GetPrsLearnerDetailsAsync<T>(long aoUkprn, int profileId, int assessmentId, ComponentType componentType);
         Task<bool> PrsRommActivityAsync(long aoUkprn, PrsAddRommOutcomeViewModel model);
-        Task<bool> PrsRommActivityAsync(long aoUkprn, PrsAddRommOutcomeKnownCoreGradeViewModel model);
+        Task<bool> PrsRommActivityAsync(long aoUkprn, PrsAddRommOutcomeKnownViewModel model);
         Task<bool> PrsRommActivityAsync(long aoUkprn, PrsRommCheckAndSubmitViewModel model);
         Task<bool> AppealCoreGradeAsync(long aoUkprn, AppealCoreGradeViewModel model);
         Task<bool> AppealCoreGradeAsync(long aoUkprn, PrsPathwayGradeCheckAndSubmitViewModel model);

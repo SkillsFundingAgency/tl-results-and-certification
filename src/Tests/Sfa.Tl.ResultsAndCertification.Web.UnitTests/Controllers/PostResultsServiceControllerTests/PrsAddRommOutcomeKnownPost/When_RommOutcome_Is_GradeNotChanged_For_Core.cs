@@ -7,9 +7,9 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomeKnownCoreGradePost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomeKnownPost
 {
-    public class When_RommOutcome_Is_GradeNotChanged : TestSetup
+    public class When_RommOutcome_Is_GradeNotChanged_For_Core : TestSetup
     {
         private PrsRommCheckAndSubmitViewModel _checkAndSubmitViewModel;
 
@@ -19,16 +19,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             AssessmentId = 10;
             ComponentType = ComponentType.Core;
 
-            ViewModel = new PrsAddRommOutcomeKnownCoreGradeViewModel 
+            ViewModel = new PrsAddRommOutcomeKnownViewModel 
             { 
                 ProfileId = ProfileId,
                 AssessmentId = AssessmentId,
                 RommEndDate = DateTime.UtcNow.AddDays(10),
                 RommOutcome = RommOutcomeKnownType.GradeNotChanged,
-                ComponentType = ComponentType.Core
+                ComponentType = ComponentType
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(ViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(ViewModel);
 
             _checkAndSubmitViewModel = new PrsRommCheckAndSubmitViewModel { OldGrade = "B" };
             Loader.GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_checkAndSubmitViewModel);
@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType);
             Loader.Received(1).GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType);
             CacheService.Received(1).SetAsync(CacheKey, Arg.Is<PrsRommCheckAndSubmitViewModel>(x => ComponentType == ComponentType && x.OldGrade == x.NewGrade && x.IsGradeChanged == false));
         }

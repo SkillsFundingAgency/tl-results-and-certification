@@ -161,7 +161,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }      
 
             if(model.IsRommRequested == true)
-            return RedirectToRoute(RouteConstants.PrsAddRommOutcomeKnownCoreGrade, new { profileId = model.ProfileId, assessmentId = model.AssessmentId, componentType = (int)model.ComponentType });
+            return RedirectToRoute(RouteConstants.PrsAddRommOutcomeKnown, new { profileId = model.ProfileId, assessmentId = model.AssessmentId, componentType = (int)model.ComponentType });
             else
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
         }
@@ -223,10 +223,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("post-results-romm-outcome-known/{profileId}/{assessmentId}/{componentType}/{outcomeKnownTypeId:int?}", Name = RouteConstants.PrsAddRommOutcomeKnownCoreGrade)]
-        public async Task<IActionResult> PrsAddRommOutcomeKnownCoreGradeAsync(int profileId, int assessmentId, ComponentType componentType, int? outcomeKnownTypeId)
+        [Route("post-results-romm-outcome-known/{profileId}/{assessmentId}/{componentType}/{outcomeKnownTypeId:int?}", Name = RouteConstants.PrsAddRommOutcomeKnown)]
+        public async Task<IActionResult> PrsAddRommOutcomeKnownAsync(int profileId, int assessmentId, ComponentType componentType, int? outcomeKnownTypeId)
         {
-            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
 
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -236,10 +236,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("post-results-romm-outcome-known/{profileId}/{assessmentId}/{componentType}/{outcomeKnownTypeId:int?}", Name = RouteConstants.SubmitPrsAddRommOutcomeKnownCoreGrade)]
-        public async Task<IActionResult> PrsAddRommOutcomeKnownCoreGradeAsync(PrsAddRommOutcomeKnownCoreGradeViewModel model)
+        [Route("post-results-romm-outcome-known/{profileId}/{assessmentId}/{componentType}/{outcomeKnownTypeId:int?}", Name = RouteConstants.SubmitPrsAddRommOutcomeKnown)]
+        public async Task<IActionResult> PrsAddRommOutcomeKnownAsync(PrsAddRommOutcomeKnownViewModel model)
         {
-            var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
+            var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
 
             if (!ModelState.IsValid)
                 return View(prsDetails);

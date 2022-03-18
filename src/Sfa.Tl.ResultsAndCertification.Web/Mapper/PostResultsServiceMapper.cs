@@ -269,7 +269,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ComponentType, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.ComponentType))
                 .ForMember(d => d.PrsStatus, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.Result?.PrsStatus));
 
-            CreateMap<LearnerRecord, PrsAddRommOutcomeKnownCoreGradeViewModel>()
+            CreateMap<LearnerRecord, PrsAddRommOutcomeKnownViewModel>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
                 .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))
@@ -334,14 +334,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => PrsStatus.Withdraw))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<PrsAddRommOutcomeViewModel, PrsActivityRequest>>());
 
-            CreateMap<PrsAddRommOutcomeKnownCoreGradeViewModel, PrsActivityRequest>()
+            CreateMap<PrsAddRommOutcomeKnownViewModel, PrsActivityRequest>()
                .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.AssessentId, opts => opts.MapFrom(s => s.AssessmentId))
                .ForMember(d => d.ResultId, opts => opts.MapFrom(s => s.ResultId))
                .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => s.ComponentType))
                .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => PrsStatus.UnderReview))
-               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<PrsAddRommOutcomeKnownCoreGradeViewModel, PrsActivityRequest>>());
+               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<PrsAddRommOutcomeKnownViewModel, PrsActivityRequest>>());
 
             CreateMap<PrsRommCheckAndSubmitViewModel, PrsActivityRequest>()
                .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
