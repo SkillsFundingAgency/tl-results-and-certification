@@ -4,21 +4,37 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
+using System;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsRommGradeChangeGet
 {
-    public class When_Called_With_InValid_Data : TestSetup
+    public class When_Called_With_Invalid_PrsStatus_For_Core : TestSetup
     {
         private PrsRommGradeChangeViewModel _rommGradeChangeViewModel;
 
         public override void Given()
         {
-            ProfileId = 0;
+            ProfileId = 1;
             AssessmentId = 7;
             ComponentType = ComponentType.Core;
 
-            _rommGradeChangeViewModel = null;
+            _rommGradeChangeViewModel = new PrsRommGradeChangeViewModel
+            {
+                ProfileId = ProfileId,
+                AssessmentId = AssessmentId,
+                Uln = 1234567890,
+                Firstname = "John",
+                Lastname = " Smith",
+                DateofBirth = DateTime.Today.AddYears(-20),
+                TlevelTitle = "TLevel in Childcare",
+                CoreDisplayName = "Childcare (12121212)",
+                ExamPeriod = "Summer 2021",
+                Grade = "A",
+                PrsStatus = PrsStatus.Reviewed,
+                RommEndDate = DateTime.UtcNow.AddDays(7),
+                ComponentType = ComponentType
+            };
 
             Loader.GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_rommGradeChangeViewModel);
         }

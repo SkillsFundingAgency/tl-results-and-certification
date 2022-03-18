@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsRommGradeChangePost
 {
-    public class When_Invalid_Grade_Selected : TestSetup
+    public class When_Invalid_Grade_Selected_For_Specialism : TestSetup
     {
         private PrsRommCheckAndSubmitViewModel _prsRommCheckAndSubmitViewModel;
         private List<LookupViewModel> _grades;
@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 1;
             AssessmentId = 7;
-            ComponentType = ComponentType.Core;
+            ComponentType = ComponentType.Specialism;
 
             _grades = new List<LookupViewModel> { new LookupViewModel { Id = 1, Code = "C1", Value = "A" }, new LookupViewModel { Id = 2, Code = "C2", Value = "B" } };
             _prsRommCheckAndSubmitViewModel = new PrsRommCheckAndSubmitViewModel

@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.GetPrsLearnerDetails
 {
-    public class When_Called_With_PrsRommGradeChangeViewModel : TestSetup
+    public class When_Called_With_PrsRommGradeChangeViewModel_For_Specialism : TestSetup
     {
         private LearnerRecord _expectedApiResult;
         protected PrsRommGradeChangeViewModel ActualResult { get; set; }
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
         public override void Given()
         {
             ProfileId = 1;
-            AssessmentId = 11;
+            AssessmentId = 101;
 
             _expectedApiResult = new LearnerRecord
             {
@@ -53,6 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             SeriesName = "Summer 2022",
                             RommEndDate = DateTime.UtcNow.AddDays(5),
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
+                            ComponentType = ComponentType.Core,
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
                             Result = new Result
@@ -81,6 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                     SeriesName = "Summer 2021",
                                     RommEndDate = DateTime.UtcNow.AddDays(15),
                                     AppealEndDate = DateTime.UtcNow.AddDays(30),
+                                    ComponentType = ComponentType.Specialism,
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = DateTime.UtcNow,
                                     Result = new Result
@@ -103,7 +105,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
+            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Specialism);
         }
 
         [Fact]
@@ -125,16 +127,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.ProviderName.Should().Be(_expectedApiResult.Pathway.Provider.Name);
             ActualResult.ProviderUkprn.Should().Be(_expectedApiResult.Pathway.Provider.Ukprn);
 
-            var expectedCoreAssessment = _expectedApiResult.Pathway.PathwayAssessments.FirstOrDefault(p => p.Id == AssessmentId);
+            var expectedSpecialism = _expectedApiResult.Pathway.Specialisms.FirstOrDefault(s => s.Assessments.Any(a => a.Id == AssessmentId));
+            var expectedAssessment = expectedSpecialism?.Assessments?.FirstOrDefault(sa => sa.Id == AssessmentId);
             ActualResult.ProfileId.Should().Be(_expectedApiResult.ProfileId);
-            ActualResult.AssessmentId.Should().Be(expectedCoreAssessment.Id);
-            ActualResult.RommEndDate.Should().Be(expectedCoreAssessment.RommEndDate);
-            ActualResult.PrsStatus.Should().Be(expectedCoreAssessment.Result.PrsStatus);
+            ActualResult.AssessmentId.Should().Be(expectedAssessment.Id);
+            ActualResult.RommEndDate.Should().Be(expectedAssessment.RommEndDate);
+            ActualResult.PrsStatus.Should().Be(expectedAssessment.Result.PrsStatus);
+            ActualResult.ComponentType.Should().Be(ComponentType.Specialism);
 
-            // Core Component 
-            ActualResult.CoreDisplayName.Should().Be($"{_expectedApiResult.Pathway.Name} ({_expectedApiResult.Pathway.LarId})");
-            ActualResult.ExamPeriod.Should().Be(expectedCoreAssessment.SeriesName);
-            ActualResult.Grade.Should().Be(expectedCoreAssessment.Result.Grade);
+            // Specialism Component 
+            ActualResult.SpecialismDisplayName.Should().Be($"{expectedSpecialism.Name} ({expectedSpecialism.LarId})");
+            ActualResult.ExamPeriod.Should().Be(expectedAssessment.SeriesName);
+            ActualResult.Grade.Should().Be(expectedAssessment.Result.Grade);
         }
     }
 }

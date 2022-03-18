@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsRommGradeChangeGet
 {
-    public class When_Called_With_Invalid_RommEndDate : TestSetup
+    public class When_Called_With_Invalid_RommEndDate_For_Specialism : TestSetup
     {
         private PrsRommGradeChangeViewModel _rommGradeChangeViewModel;
 
@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 1;
             AssessmentId = 7;
-            ComponentType = ComponentType.Core;
+            ComponentType = ComponentType.Specialism;
 
             _rommGradeChangeViewModel = new PrsRommGradeChangeViewModel
             {

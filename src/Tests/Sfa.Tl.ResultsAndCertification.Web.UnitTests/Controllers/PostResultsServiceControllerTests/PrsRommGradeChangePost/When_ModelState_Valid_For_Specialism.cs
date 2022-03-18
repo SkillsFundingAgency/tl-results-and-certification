@@ -12,7 +12,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsRommGradeChangePost
 {
-    public class When_ModelState_Valid : TestSetup
+    public class When_ModelState_Valid_For_Specialism : TestSetup
     {
         private PrsRommCheckAndSubmitViewModel _prsRommCheckAndSubmitViewModel;
         private List<LookupViewModel> _grades;
@@ -21,13 +21,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 1;
             AssessmentId = 7;
-            ComponentType = ComponentType.Core;
+            ComponentType = ComponentType.Specialism;
 
             _grades = new List<LookupViewModel> { new LookupViewModel { Id = 1, Code = "C1", Value = "A" }, new LookupViewModel { Id = 2, Code = "C2", Value = "B" } };
             _prsRommCheckAndSubmitViewModel = new PrsRommCheckAndSubmitViewModel
             {
                 ProfileId = ProfileId,
-                AssessmentId = AssessmentId,                
+                AssessmentId = AssessmentId,
                 Uln = 1234567890,
                 Firstname = "John",
                 Lastname = "Smith",
@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             CacheService.Received(1).SetAsync(CacheKey,
                 Arg.Is<PrsRommCheckAndSubmitViewModel>
                 (x => x.ProfileId == _prsRommCheckAndSubmitViewModel.ProfileId &&
-                      x.AssessmentId == _prsRommCheckAndSubmitViewModel.AssessmentId &&                      
+                      x.AssessmentId == _prsRommCheckAndSubmitViewModel.AssessmentId &&
                       x.Uln == _prsRommCheckAndSubmitViewModel.Uln &&
                       x.Firstname == _prsRommCheckAndSubmitViewModel.Firstname &&
                       x.Lastname == _prsRommCheckAndSubmitViewModel.Lastname &&

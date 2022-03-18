@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsRommGradeChangeGet
 {
-    public class When_Called_With_IsChangeMode_False : TestSetup
+    public class When_Called_With_IsChangeMode_False_For_Core : TestSetup
     {
         private PrsRommGradeChangeViewModel _rommGradeChangeViewModel;
         private PrsRommCheckAndSubmitViewModel _prsRommCheckAndSubmitViewModel;
