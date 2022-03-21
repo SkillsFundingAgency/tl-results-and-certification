@@ -23,6 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
         protected PostResultsServiceService PostResultsServiceService;
         protected IPostResultsServiceRepository PostResultsServiceRepository;
         protected IRepository<TqPathwayResult> PathwayResultsRepository;
+        protected IRepository<TqSpecialismResult> SpecialismResultsRepository;
         protected IAsyncNotificationClient NotificationsClient;
         protected ILogger<NotificationService> NotificationLogger;
         protected IRepository<NotificationTemplate> NotificationTemplateRepository;
