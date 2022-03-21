@@ -15,7 +15,7 @@
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l">@PrsRommCheckAndSubmit.Heading_Check_The_Romm_Outcome</h1>
 
-        <form class="form" asp-route="SubmitPrsRommCheckAndSubmit">
+        <form class="form" asp-route="@RouteConstants.SubmitPrsRommCheckAndSubmit">
             <input type="hidden" asp-for="@Model.ProfileId" />
             <input type="hidden" asp-for="@Model.AssessmentId" />
             <input type="hidden" asp-for="@Model.ResultId" />
@@ -50,7 +50,7 @@
             <p class="govuk-body">@string.Format(PrsRommCheckAndSubmit.Para_By_Submitting_This_Romm_Outcome, Model.LearnerName)</p>
             <div class="govuk-button-group">
                 <button id="submitButton" type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsRommCheckAndSubmit.Button_Submit</button>
-                <a id="cancelLink" class="govuk-link" asp-route="">@PrsRommCheckAndSubmit.Cancel_Link</a>
+                <a id="cancelLink" class="govuk-link" asp-route="@RouteConstants.PrsCancelRommUpdate">@PrsRommCheckAndSubmit.Cancel_Link</a>
             </div>
         </form>
     </div>

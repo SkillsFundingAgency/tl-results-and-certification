@@ -350,6 +350,37 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("post-results-cancel-ROMM-update", Name = RouteConstants.PrsCancelRommUpdate)]
+        public async Task<IActionResult> PrsCancelRommUpdateAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<PrsRommCheckAndSubmitViewModel>(CacheKey);
+
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = new PrsCancelRommUpdateViewModel { ProfileId = cacheModel.ProfileId };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("post-results-cancel-ROMM-update", Name = RouteConstants.SubmitPrsCancelRommUpdate)]
+        public async Task<IActionResult> PrsCancelRommUpdateAsync(PrsCancelRommUpdateViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+            
+            if (model.AreYouSureToCancel.Value)
+            {
+                await _cacheService.RemoveAsync<PrsRommCheckAndSubmitViewModel>(CacheKey);
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+            }
+            else
+            {
+                return RedirectToRoute(RouteConstants.PrsRommCheckAndSubmit);
+            }
+        }
+
+        [HttpGet]
         [Route("reviews-and-appeals-appeal-grade/{profileId}/{assessmentId}/{resultId}", Name = RouteConstants.PrsAppealCoreGrade)]
         public async Task<IActionResult> PrsAppealCoreGradeAsync(int profileId, int assessmentId, int resultId)
         {
