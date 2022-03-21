@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.PrsRommActivity
 {
-    public class When_Called_RommOutcomeKnow_With_Valid_Data : TestSetup
+    public class When_AddRomm_With_Valid_Data : TestSetup
     {
         private PrsAddRommOutcomeKnownViewModel _model;
         private readonly bool _expectedApiResult = true;

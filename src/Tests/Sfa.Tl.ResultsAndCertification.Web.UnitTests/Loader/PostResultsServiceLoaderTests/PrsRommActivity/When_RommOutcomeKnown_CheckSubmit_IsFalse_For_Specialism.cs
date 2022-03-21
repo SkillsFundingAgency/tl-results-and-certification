@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.PrsRommActivity
 {
-    public class When_RommOutcomeKnown_CheckSubmit_IsNotSuccess : TestSetup
+    public class When_RommOutcomeKnown_CheckSubmit_IsFalse_For_Specialism : TestSetup
     {
         private bool _expectedApiResult;
         private PrsRommCheckAndSubmitViewModel _model;

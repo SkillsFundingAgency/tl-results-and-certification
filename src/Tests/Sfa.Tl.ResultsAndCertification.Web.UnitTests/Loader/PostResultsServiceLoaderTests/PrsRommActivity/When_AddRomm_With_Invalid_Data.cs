@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.PrsRommActivity
 {
-    public class When_Called_RommOutcomeKnow_With_Invalid_Data : TestSetup
+    public class When_AddRomm_With_Invalid_Data : TestSetup
     {
         private bool _expectedApiResult;
         private PrsAddRommOutcomeKnownViewModel _model;

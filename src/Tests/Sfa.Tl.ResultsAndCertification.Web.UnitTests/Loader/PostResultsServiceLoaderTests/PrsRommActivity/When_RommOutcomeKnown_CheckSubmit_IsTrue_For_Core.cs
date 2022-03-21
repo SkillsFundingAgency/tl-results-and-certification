@@ -13,7 +13,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.PrsRommActivity
 {
-    public class When_RommOutcomeKnown_CheckSubmit_IsSuccess : TestSetup
+    public class When_RommOutcomeKnown_CheckSubmit_IsTrue_For_Core : TestSetup
     {
         private int _newGradeLookupId;
         private PrsRommCheckAndSubmitViewModel _model;
