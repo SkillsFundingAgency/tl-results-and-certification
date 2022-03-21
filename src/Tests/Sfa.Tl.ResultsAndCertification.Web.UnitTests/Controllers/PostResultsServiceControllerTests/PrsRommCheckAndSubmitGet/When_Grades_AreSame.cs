@@ -31,7 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 TlevelTitle = "Tlevel in Education",
                 ProviderName = "Barsley College",
                 ProviderUkprn = 87654321,
-                CoreDisplayName = "Core Display (1234567)",
+                CoreName = "Education",
+                CoreLarId = "1234567",
                 ExamPeriod = "Summer 2021",
                 NewGrade = newGrade,
                 OldGrade = previousGrade,
@@ -58,7 +59,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.ProviderName.Should().Be(_mockCache.ProviderName);
             model.ProviderUkprn.Should().Be(_mockCache.ProviderUkprn);
             model.TlevelTitle.Should().Be(_mockCache.TlevelTitle);
-            model.CoreDisplayName.Should().Be(_mockCache.CoreDisplayName);
+            model.CoreName.Should().Be(_mockCache.CoreName);
+            model.CoreLarId.Should().Be(_mockCache.CoreLarId);
+            model.CoreDisplayName.Should().Be($"{_mockCache.CoreName} ({_mockCache.CoreLarId})");
             model.NewGrade.Should().Be(_mockCache.NewGrade);
             model.OldGrade.Should().Be(_mockCache.OldGrade);
             model.ComponentType.Should().Be(_mockCache.ComponentType);

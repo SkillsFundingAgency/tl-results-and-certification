@@ -57,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         { 
             get 
             { 
-                return string.Format(PrsAddRommOutcomeKnownContent.Banner_Message, LearnerName, ExamPeriod, ComponentType == ComponentType.Core ? CoreDisplayName : string.Empty);
+                return string.Format(PrsAddRommOutcomeKnownContent.Banner_Message, LearnerName, ExamPeriod, ComponentType == ComponentType.Core ? CoreDisplayName : SpecialismDisplayName);
             }
         }
 

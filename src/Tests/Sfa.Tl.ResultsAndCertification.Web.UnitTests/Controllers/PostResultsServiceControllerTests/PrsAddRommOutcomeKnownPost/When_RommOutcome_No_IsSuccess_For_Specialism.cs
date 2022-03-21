@@ -27,7 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Firstname = "Test",
                 Lastname = "John",
                 ExamPeriod = "Summer 2022",
-                SpecialismDisplayName = "Education (1234567)",
+                SpecialismName = "Education",
+                SpecialismLarId = "1234567",
                 ComponentType = ComponentType,
                 RommOutcome = RommOutcomeKnownType.No,
                 RommEndDate = DateTime.Today.AddDays(7)
@@ -36,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 .Returns(ViewModel);
 
             Loader.PrsRommActivityAsync(AoUkprn, ViewModel).Returns(_prsActivityResponse);
-            _expectedSuccessBannerMsg = string.Format(PrsAddRommOutcomeKnownContent.Banner_Message, ViewModel.LearnerName, ViewModel.ExamPeriod, ViewModel.CoreDisplayName);
+            _expectedSuccessBannerMsg = string.Format(PrsAddRommOutcomeKnownContent.Banner_Message, ViewModel.LearnerName, ViewModel.ExamPeriod, ViewModel.SpecialismDisplayName);
         }
 
         [Fact]

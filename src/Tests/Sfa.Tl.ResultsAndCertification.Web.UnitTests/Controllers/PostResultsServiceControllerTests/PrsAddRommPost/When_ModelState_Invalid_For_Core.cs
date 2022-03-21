@@ -28,7 +28,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Lastname = " Smith",
                 DateofBirth = DateTime.Today.AddYears(-20),
                 TlevelTitle = "TLevel in Childcare",
-                CoreDisplayName = "Childcare (12121212)",
+                CoreName = "Childcare",
+                CoreLarId = "12121212",
                 ExamPeriod = "Summer 2021",
                 Grade = "A",
                 PrsStatus = null,
@@ -61,7 +62,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.LearnerName.Should().Be(_addRommCoreGradeViewModel.LearnerName);
             model.DateofBirth.Should().Be(_addRommCoreGradeViewModel.DateofBirth);
             model.TlevelTitle.Should().Be(_addRommCoreGradeViewModel.TlevelTitle);
-            model.CoreDisplayName.Should().Be(_addRommCoreGradeViewModel.CoreDisplayName);
+            model.CoreName.Should().Be(_addRommCoreGradeViewModel.CoreName);
+            model.CoreLarId.Should().Be(_addRommCoreGradeViewModel.CoreLarId);
+            model.CoreDisplayName.Should().Be($"{_addRommCoreGradeViewModel.CoreName} ({_addRommCoreGradeViewModel.CoreLarId})");
             model.ExamPeriod.Should().Be(_addRommCoreGradeViewModel.ExamPeriod);
             model.Grade.Should().Be(_addRommCoreGradeViewModel.Grade);
             model.RommEndDate.Should().Be(_addRommCoreGradeViewModel.RommEndDate);

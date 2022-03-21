@@ -16,9 +16,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
         public long ProviderUkprn { get; set; }
+        public string CoreName { get; set; }
+        public string CoreLarId { get; set; }
+        public string SpecialismName { get; set; }
+        public string SpecialismLarId { get; set; }
         public string TlevelTitle { get; set; }
-        public string CoreDisplayName { get; set; }
-        public string SpecialismDisplayName { get; set; }
+        
         public string ExamPeriod { get; set; }
         public string Grade { get; set; }
         public ComponentType ComponentType { get; set; }
@@ -36,8 +39,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public string LearnerName => $"{Firstname} {Lastname}";
         public string ProviderDisplayName => $"{ProviderName}<br/>({ProviderUkprn})";
+        public string CoreDisplayName => $"{CoreName} ({CoreLarId})";
+        public string SpecialismDisplayName => $"{SpecialismName} ({SpecialismLarId})";
 
-        public SummaryItemModel SummaryUln => new SummaryItemModel
+        public SummaryItemModel SummaryUln => new()
         {
             Id = "uln",
             Title = UlnLabel,

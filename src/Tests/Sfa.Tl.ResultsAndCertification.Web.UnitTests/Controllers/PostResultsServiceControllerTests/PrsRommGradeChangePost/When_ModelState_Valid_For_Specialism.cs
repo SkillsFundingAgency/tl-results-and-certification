@@ -35,7 +35,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ProviderName = "Barnsley",
                 ProviderUkprn = 912121212,
                 TlevelTitle = "Tlevel in Health",
-                CoreDisplayName = "Core (12345)",
+                CoreName = "Childcare",
+                CoreLarId = "12121212",
                 ExamPeriod = "Summer 2022",
                 OldGrade = "B",
                 IsGradeChanged = true,
@@ -62,7 +63,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                       x.ProviderName == _prsRommCheckAndSubmitViewModel.ProviderName &&
                       x.ProviderUkprn == _prsRommCheckAndSubmitViewModel.ProviderUkprn &&
                       x.TlevelTitle == _prsRommCheckAndSubmitViewModel.TlevelTitle &&
-                      x.CoreDisplayName == _prsRommCheckAndSubmitViewModel.CoreDisplayName &&
+                      x.CoreName == _prsRommCheckAndSubmitViewModel.CoreName &&
+                      x.CoreLarId == _prsRommCheckAndSubmitViewModel.CoreLarId &&
                       x.ExamPeriod == _prsRommCheckAndSubmitViewModel.ExamPeriod &&
                       x.ComponentType == _prsRommCheckAndSubmitViewModel.ComponentType &&
                       x.OldGrade == _prsRommCheckAndSubmitViewModel.OldGrade &&

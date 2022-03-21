@@ -28,7 +28,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Lastname = " Smith",
                 DateofBirth = DateTime.Today.AddYears(-20),
                 TlevelTitle = "TLevel in Childcare",
-                SpecialismDisplayName = "Childcare (12121212)",
+                CoreName = "Childcare",
+                CoreLarId = "12121212",
                 ExamPeriod = "Summer 2021",
                 Grade = "A",
                 PrsStatus = null,
@@ -60,7 +61,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.LearnerName.Should().Be(_addRommOutcomeKnownViewModel.LearnerName);
             model.DateofBirth.Should().Be(_addRommOutcomeKnownViewModel.DateofBirth);
             model.TlevelTitle.Should().Be(_addRommOutcomeKnownViewModel.TlevelTitle);
-            model.SpecialismDisplayName.Should().Be(_addRommOutcomeKnownViewModel.SpecialismDisplayName);
+            model.SpecialismName.Should().Be(_addRommOutcomeKnownViewModel.SpecialismName);
+            model.SpecialismLarId.Should().Be(_addRommOutcomeKnownViewModel.SpecialismLarId);
+            model.SpecialismDisplayName.Should().Be($"{_addRommOutcomeKnownViewModel.SpecialismName} ({_addRommOutcomeKnownViewModel.SpecialismLarId})");
             model.ExamPeriod.Should().Be(_addRommOutcomeKnownViewModel.ExamPeriod);
             model.Grade.Should().Be(_addRommOutcomeKnownViewModel.Grade);
             model.RommEndDate.Should().Be(_addRommOutcomeKnownViewModel.RommEndDate);

@@ -33,7 +33,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Firstname = "John",
                 Lastname = "Smith",
                 DateofBirth = DateTime.Today.AddYears(-20),
-                SpecialismDisplayName = "Childcare (12121212)",
+                SpecialismName = "Childcare",
+                SpecialismLarId = "12121212",
                 ExamPeriod = "Summer 2021",
                 Grade = "B",
                 PrsStatus = PrsStatus.UnderReview,
@@ -66,7 +67,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.LearnerName.Should().Be(_rommGradeChangeViewModel.LearnerName);
             model.DateofBirth.Should().Be(_rommGradeChangeViewModel.DateofBirth);
             model.TlevelTitle.Should().Be(_rommGradeChangeViewModel.TlevelTitle);
-            model.SpecialismDisplayName.Should().Be(_rommGradeChangeViewModel.SpecialismDisplayName);
+            model.SpecialismName.Should().Be(_rommGradeChangeViewModel.SpecialismName);
+            model.SpecialismLarId.Should().Be(_rommGradeChangeViewModel.SpecialismLarId);
+            model.SpecialismDisplayName.Should().Be($"{_rommGradeChangeViewModel.SpecialismName} ({_rommGradeChangeViewModel.SpecialismLarId})");
             model.ExamPeriod.Should().Be(_rommGradeChangeViewModel.ExamPeriod);
             model.Grade.Should().Be(_rommGradeChangeViewModel.Grade);
             model.RommEndDate.Should().Be(_rommGradeChangeViewModel.RommEndDate);
