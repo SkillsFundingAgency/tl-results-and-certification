@@ -20,13 +20,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             CoreLabel = GradeChangeContent.Title_Core_Text;
             ExamPeriodLabel = GradeChangeContent.Title_ExamPeriod_Text;
             GradeLabel = GradeChangeContent.Title_Grade_Text;
-        }       
+        }
 
         public int ProfileId { get; set; }
         public int AssessmentId { get; set; }
         public int ResultId { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
         public PrsStatus? PrsStatus { get; set; }
+        public DateTime RommEndDate { get; set; }
         public DateTime AppealEndDate { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(GradeChangeContent), ErrorMessageResourceName = "Validation_Message")]
@@ -34,12 +35,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public bool? IsResultJourney { get; set; }
 
-        public bool CanRequestFinalGradeChange 
-        { 
+        public bool CanRequestFinalGradeChange
+        {
             get
-            { 
+            {
                 return Status == RegistrationPathwayStatus.Active &&
-                       (PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Final || !CommonHelper.IsAppealsAllowed(AppealEndDate));
+                (
+                    ((PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified) && !CommonHelper.IsRommAllowed(RommEndDate)) 
+                    || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Final 
+                    || !CommonHelper.IsAppealsAllowed(AppealEndDate)
+                );
             }
         }
 

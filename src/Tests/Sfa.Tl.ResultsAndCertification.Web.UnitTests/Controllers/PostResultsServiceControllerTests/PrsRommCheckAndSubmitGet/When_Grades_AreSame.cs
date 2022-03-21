@@ -20,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             var previousGrade = "A";
             var newGrade = "A";
+            ComponentType = ComponentType.Core;
 
             _mockCache = new PrsRommCheckAndSubmitViewModel
             {
@@ -30,12 +31,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 TlevelTitle = "Tlevel in Education",
                 ProviderName = "Barsley College",
                 ProviderUkprn = 87654321,
-                CoreDisplayName = "Core Display (1234567)",
+                CoreName = "Education",
+                CoreLarId = "1234567",
                 ExamPeriod = "Summer 2021",
                 NewGrade = newGrade,
                 OldGrade = previousGrade,
                 IsGradeChanged = false,
-                
+                ComponentType = ComponentType,
+
                 ProfileId = 1,
                 AssessmentId = 2
             };
@@ -56,9 +59,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.ProviderName.Should().Be(_mockCache.ProviderName);
             model.ProviderUkprn.Should().Be(_mockCache.ProviderUkprn);
             model.TlevelTitle.Should().Be(_mockCache.TlevelTitle);
-            model.CoreDisplayName.Should().Be(_mockCache.CoreDisplayName);
+            model.CoreName.Should().Be(_mockCache.CoreName);
+            model.CoreLarId.Should().Be(_mockCache.CoreLarId);
+            model.CoreDisplayName.Should().Be($"{_mockCache.CoreName} ({_mockCache.CoreLarId})");
             model.NewGrade.Should().Be(_mockCache.NewGrade);
             model.OldGrade.Should().Be(_mockCache.OldGrade);
+            model.ComponentType.Should().Be(_mockCache.ComponentType);
 
             model.ProfileId.Should().Be(_mockCache.ProfileId);
             model.AssessmentId.Should().Be(_mockCache.AssessmentId);
@@ -106,12 +112,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
             // Backlink
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.PrsAddRommOutcomeKnownCoreGrade);
-            model.BackLink.RouteAttributes.Count.Should().Be(3);
+            model.BackLink.RouteName.Should().Be(RouteConstants.PrsAddRommOutcomeKnown);
+            model.BackLink.RouteAttributes.Count.Should().Be(4);
             model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string routeProfileId);
             routeProfileId.Should().Be(_mockCache.ProfileId.ToString());
             model.BackLink.RouteAttributes.TryGetValue(Constants.AssessmentId, out string routeAssessmentId);
             routeAssessmentId.Should().Be(_mockCache.AssessmentId.ToString());
+            model.BackLink.RouteAttributes.TryGetValue(Constants.ComponentType, out string routeComponentType);
+            routeComponentType.Should().Be(((int)ComponentType).ToString());
             model.BackLink.RouteAttributes.TryGetValue(Constants.RommOutcomeKnownTypeId, out string routeRommOutcomeKnownTypeId);
             routeRommOutcomeKnownTypeId.Should().Be(((int)RommOutcomeKnownType.GradeNotChanged).ToString());
         }
@@ -129,6 +137,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 {
                     { Constants.ProfileId, _mockCache.ProfileId.ToString() },
                     { Constants.AssessmentId, _mockCache.AssessmentId.ToString() },
+                    { Constants.ComponentType, ((int)ComponentType).ToString() },
                     { Constants.IsRommOutcomeJourney, "false" },
                     { Constants.IsChangeMode, "true" }
                 };

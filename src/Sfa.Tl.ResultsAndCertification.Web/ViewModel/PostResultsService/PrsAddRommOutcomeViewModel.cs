@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public bool IsValid => (PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.UnderReview);
 
-        public override BackLinkModel BackLink => new BackLinkModel
+        public override BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.PrsLearnerDetails,
             RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }

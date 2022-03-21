@@ -20,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             DateofBirthLabel = PrsRommGradeChangeContent.Title_DateofBirth_Text;
             TlevelTitleLabel = PrsRommGradeChangeContent.Title_TLevel_Text;
             CoreLabel = PrsRommGradeChangeContent.Title_Core_Text;
+            SpecialismLabel = PrsRommGradeChangeContent.Title_Specialism_Text;
             ExamPeriodLabel = PrsRommGradeChangeContent.Title_ExamPeriod_Text;
             GradeLabel = PrsRommGradeChangeContent.Title_Grade_Text;
         }
@@ -49,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         private string GetRouteName => IsChangeMode ? RouteConstants.PrsRommCheckAndSubmit : GetRommOutcomeJourneyRoute;
 
-        private string GetRommOutcomeJourneyRoute => IsRommOutcomeJourney ? RouteConstants.PrsAddRommOutcome : RouteConstants.PrsAddRommOutcomeKnownCoreGrade;
+        private string GetRommOutcomeJourneyRoute => IsRommOutcomeJourney ? RouteConstants.PrsAddRommOutcome : RouteConstants.PrsAddRommOutcomeKnown;
 
         private Dictionary<string, string> GetRouteAttributes => 
             IsChangeMode ? null : 
@@ -58,6 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             {
                 { Constants.ProfileId, ProfileId.ToString() },
                 { Constants.AssessmentId, AssessmentId.ToString() },
+                { Constants.ComponentType, ((int)ComponentType).ToString() },
                 { Constants.RommOutcomeTypeId, ((int)RommOutcomeType.GradeChanged).ToString() }
             }
             :
@@ -65,6 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             {
                 { Constants.ProfileId, ProfileId.ToString() },
                 { Constants.AssessmentId, AssessmentId.ToString() },
+                { Constants.ComponentType, ((int)ComponentType).ToString() },
                 { Constants.RommOutcomeKnownTypeId, ((int)RommOutcomeKnownType.GradeChanged).ToString() }
             };
     }

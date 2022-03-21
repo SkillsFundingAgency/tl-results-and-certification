@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
     public class When_Called_With_PrsAddRommOutcomeKnownCoreGradeViewModel : TestSetup
     {
         private LearnerRecord _expectedApiResult;
-        protected PrsAddRommOutcomeKnownCoreGradeViewModel ActualResult { get; set; }
+        protected PrsAddRommOutcomeKnownViewModel ActualResult { get; set; }
 
         public override void Given()
         {
@@ -103,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
+            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
         }
 
         [Fact]

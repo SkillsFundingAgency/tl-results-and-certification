@@ -1,0 +1,64 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsAddRommViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Common.Enum
+
+@{
+    ViewData["Title"] = PrsAddRomm.Page_Title;
+}
+
+@section NavigationBar {
+<vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="@RouteConstants.SubmitPrsAddRomm">
+            <input type="hidden" asp-for="ProfileId" />
+            <input type="hidden" asp-for="AssessmentId" />
+            <input type="hidden" asp-for="ComponentType" />
+
+            <partial name="_ValidationSummary" />
+
+            <h1 class="govuk-heading-l">@PrsAddRomm.Heading_Add_Romm</h1>
+
+            <p class="govuk-body">@string.Format(PrsAddRomm.Para_Tell_Us_That_Learner_Has_Asked_For, Model.LearnerName, Model.ComponentType == ComponentType.Core ? Model.CoreName : Model.SpecialismName)</p>
+
+            <dl class="govuk-summary-list govuk-summary-list--no-border" aria-label="@PrsAddRomm.Aria_Label_Text_Learner_Details">
+                <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>                
+                <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+                <vc:summary-item model=Model.SummaryComponentDisplayName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryExamPeriod></vc:summary-item>
+                <vc:summary-item model=Model.SummaryGrade></vc:summary-item>
+            </dl>
+
+            <div class="govuk-form-group" sfa-validation-for="IsRommRequested" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h2 class="govuk-fieldset__heading">
+                            @string.Format(PrsAddRomm.Has_Learner_Requested_Romm, @Model.LearnerName)
+                        </h2>
+                    </legend>
+                    
+                    <span sfa-validation-for="IsRommRequested"></span>
+                    <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="isrommrequested" asp-for="IsRommRequested" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="isrommrequested">
+                                @PrsAddRomm.Radio_Button_Yes
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="isrommrequested-no" asp-for="IsRommRequested" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="isrommrequested-no">
+                                @PrsAddRomm.Radio_Button_No
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button type="submit" id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsAddRomm.Button_Continue</button>
+        </form>
+    </div>
+</div>

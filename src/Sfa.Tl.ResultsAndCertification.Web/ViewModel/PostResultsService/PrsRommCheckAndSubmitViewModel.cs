@@ -49,6 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             {
                 { Constants.ProfileId, ProfileId.ToString() },
                 { Constants.AssessmentId, AssessmentId.ToString() },
+                { Constants.ComponentType, ((int)ComponentType).ToString() },
                 { Constants.IsRommOutcomeJourney, "false" },
                 { Constants.IsChangeMode, "true" }
             }
@@ -61,6 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             {
                 { Constants.ProfileId, ProfileId.ToString() },
                 { Constants.AssessmentId, AssessmentId.ToString() },
+                { Constants.ComponentType, ((int)ComponentType).ToString() },
                 { Constants.IsRommOutcomeJourney, IsRommOutcomeJourney.ToString().ToLowerInvariant() },
                 { Constants.IsChangeMode, "false" }
             }
@@ -78,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string Banner_HeaderMesage => PrsRommCheckAndSubmitContent.Banner_HeaderMessage_Romm_Recorded;
 
         private bool IsRommOutcomeJourney => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.UnderReview;
-        private string GetRommOutcomeRouteName => IsRommOutcomeJourney ? RouteConstants.PrsAddRommOutcome : RouteConstants.PrsAddRommOutcomeKnownCoreGrade;
+        private string GetRommOutcomeRouteName => IsRommOutcomeJourney ? RouteConstants.PrsAddRommOutcome : RouteConstants.PrsAddRommOutcomeKnown;
 
         private Dictionary<string, string> GetRommOutcomeRouteAttributes
         {
@@ -90,6 +92,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                         {
                             { Constants.ProfileId, ProfileId.ToString() },
                             { Constants.AssessmentId, AssessmentId.ToString() },
+                            { Constants.ComponentType, ((int)ComponentType).ToString() },
                             { Constants.RommOutcomeTypeId, ((int)RommOutcomeType.GradeNotChanged).ToString() }
                         }
                         :
@@ -97,6 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                         {
                             { Constants.ProfileId, ProfileId.ToString() },
                             { Constants.AssessmentId, AssessmentId.ToString() },
+                            { Constants.ComponentType, ((int)ComponentType).ToString() },
                             { Constants.RommOutcomeKnownTypeId, ((int)RommOutcomeKnownType.GradeNotChanged).ToString() }
                         };
             }

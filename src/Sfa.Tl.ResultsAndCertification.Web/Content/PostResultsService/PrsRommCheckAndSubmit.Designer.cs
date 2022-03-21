@@ -152,6 +152,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Occupational specialism: {0}.
+        /// </summary>
+        public static string Heading_Occupational_Specialism {
+            get {
+                return ResourceManager.GetString("Heading_Occupational_Specialism", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check ROMM outcome - Post-results.
         /// </summary>
         public static string Page_Title {

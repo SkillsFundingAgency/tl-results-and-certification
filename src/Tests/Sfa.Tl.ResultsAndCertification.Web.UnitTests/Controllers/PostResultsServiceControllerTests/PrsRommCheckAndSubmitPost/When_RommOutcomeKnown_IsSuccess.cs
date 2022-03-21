@@ -27,7 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Firstname = "John",
                 Lastname = "Smith",
                 ExamPeriod = "Summer 2022",
-                CoreDisplayName = "Design and Education (12345678)"
+                CoreName = "Design and Education",
+                CoreLarId = "12345678",
             };
 
             Loader.PrsRommActivityAsync(AoUkprn, ViewModel).Returns(isAppealSuccess);

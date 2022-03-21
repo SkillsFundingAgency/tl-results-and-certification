@@ -147,6 +147,9 @@
   <data name="Heading_Learner_Details" xml:space="preserve">
     <value>Learner's details</value>
   </data>
+  <data name="Heading_Occupational_Specialism" xml:space="preserve">
+    <value>Occupational specialism: {0}</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Check ROMM outcome - Post-results</value>
   </data>

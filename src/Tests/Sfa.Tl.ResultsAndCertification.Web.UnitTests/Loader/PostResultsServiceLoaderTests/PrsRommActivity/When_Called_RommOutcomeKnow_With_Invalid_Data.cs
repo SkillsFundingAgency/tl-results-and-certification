@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
     public class When_Called_RommOutcomeKnow_With_Invalid_Data : TestSetup
     {
         private bool _expectedApiResult;
-        private PrsAddRommOutcomeKnownCoreGradeViewModel _model;
+        private PrsAddRommOutcomeKnownViewModel _model;
         public override void Given()
         {
             _model = null;
