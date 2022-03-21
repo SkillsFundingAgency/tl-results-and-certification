@@ -1,6 +1,7 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsRommCheckAndSubmitViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Common.Enum
 
 @{
     ViewData["Title"] = PrsRommCheckAndSubmit.Page_Title;
@@ -36,7 +37,11 @@
                 <vc:summary-item model=Model.SummaryExamPeriod></vc:summary-item>
             </dl>
 
-            <h2 class="govuk-heading-m">@string.Format(PrsRommCheckAndSubmit.Heading_Core_Component, Model.CoreDisplayName)</h2>
+            @{
+                var componentHeading = Model.ComponentType == ComponentType.Core ? PrsRommCheckAndSubmit.Heading_Core_Component : PrsRommCheckAndSubmit.Heading_Occupational_Specialism;
+                var componentDisplayName = Model.ComponentType == ComponentType.Core ? Model.CoreDisplayName : Model.SpecialismDisplayName;
+            }
+            <h2 class="govuk-heading-m">@string.Format(componentHeading, componentDisplayName)</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
                 <vc:summary-item model=Model.SummaryOldGrade></vc:summary-item>
                 <vc:summary-item model=Model.SummaryNewGrade></vc:summary-item>
