@@ -12,7 +12,7 @@ using LearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostRes
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsRommCheckAndSubmitGet
 {
-    public class When_Grades_AreNotSame : TestSetup
+    public class When_Grades_AreNotSame_For_Specialism : TestSetup
     {
         private PrsRommCheckAndSubmitViewModel _mockCache = null;
 
@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             var previousGrade = "C";
             var newGrade = "A";
-            ComponentType = ComponentType.Core;
+            ComponentType = ComponentType.Specialism;
 
             _mockCache = new PrsRommCheckAndSubmitViewModel
             {
@@ -31,8 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 TlevelTitle = "Tlevel in Education",
                 ProviderName = "Barsley College",
                 ProviderUkprn = 87654321,
-                CoreName = "Education",
-                CoreLarId = "1234567",
+                SpecialismName = "Education",
+                SpecialismLarId = "1234567",
                 ExamPeriod = "Summer 2021",
                 NewGrade = newGrade,
                 OldGrade = previousGrade,
@@ -59,9 +59,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.ProviderName.Should().Be(_mockCache.ProviderName);
             model.ProviderUkprn.Should().Be(_mockCache.ProviderUkprn);
             model.TlevelTitle.Should().Be(_mockCache.TlevelTitle);
-            model.CoreName.Should().Be(_mockCache.CoreName);
-            model.CoreLarId.Should().Be(_mockCache.CoreLarId);
-            model.CoreDisplayName.Should().Be($"{_mockCache.CoreName} ({_mockCache.CoreLarId})");
+            model.SpecialismName.Should().Be(_mockCache.SpecialismName);
+            model.SpecialismLarId.Should().Be(_mockCache.SpecialismLarId);
+            model.SpecialismDisplayName.Should().Be($"{_mockCache.SpecialismName} ({_mockCache.SpecialismLarId})");
             model.NewGrade.Should().Be(_mockCache.NewGrade);
             model.OldGrade.Should().Be(_mockCache.OldGrade);
             model.ComponentType.Should().Be(_mockCache.ComponentType);

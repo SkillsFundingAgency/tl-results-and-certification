@@ -12,7 +12,7 @@ using LearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostRes
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsRommCheckAndSubmitGet
 {
-    public class When_Grades_AreSame : TestSetup
+    public class When_Grades_AreSame_For_Core : TestSetup
     {
         private PrsRommCheckAndSubmitViewModel _mockCache = null;
 
