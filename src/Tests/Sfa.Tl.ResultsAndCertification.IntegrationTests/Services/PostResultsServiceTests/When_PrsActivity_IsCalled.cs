@@ -23,6 +23,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
         private List<TqRegistrationProfile> _registrations;
         private List<TqPathwayAssessment> _pathwayAssessments;
         private List<TqPathwayResult> _pathwayResults;
+        private List<TqSpecialismAssessment> _specialismAssessments;
+        private List<TqSpecialismResult> _specialismResults;
 
         private bool _actualResult;
 
@@ -38,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                 { 1111111112, RegistrationPathwayStatus.Active },
                 { 1111111113, RegistrationPathwayStatus.Active },
                 { 1111111114, RegistrationPathwayStatus.Active },
+                { 1111111115, RegistrationPathwayStatus.Active },
             };
 
             // Registrations seed
@@ -46,29 +49,50 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
 
             // Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+            var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
+            _pathwayResults = new List<TqPathwayResult>();
+            _specialismResults = new List<TqSpecialismResult>();
+
             foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111))
             {
                 var hasHitoricData = new List<long> { 1111111112 };
                 var isHistoricAssessent = hasHitoricData.Any(x => x == registration.UniqueLearnerNumber);
                 var isLatestActive = _ulns[registration.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
 
-                tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive, isHistoricAssessent));
+                var pathwayAssessments = GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive, isHistoricAssessent);
+                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
+
+                // Results seed
+                var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+                var profilesWithResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, null), (1111111114, PrsStatus.UnderReview), (1111111115, PrsStatus.Reviewed) };
+                foreach (var assessment in pathwayAssessments)
+                {
+                    var inactiveResultUlns = new List<long> { 1111111112 };
+                    var isLatestResultActive = !inactiveResultUlns.Any(x => x == assessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber);
+
+                    var prsStatus = profilesWithResults.FirstOrDefault(p => p.Item1 == assessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber).Item2;
+                    _pathwayResults.AddRange(GetPathwayResultDataToProcess(assessment, isLatestResultActive, false, prsStatus));
+                }
+
+                // Specialism Assesments
+                foreach (var pathway in registration.TqRegistrationPathways)
+                {
+                    var specialismAssessments = GetSpecialismAssessmentsDataToProcess(pathway.TqRegistrationSpecialisms.ToList(), isLatestActive, isHistoricAssessent);
+                    tqSpecialismAssessmentsSeedData.AddRange(specialismAssessments);
+
+                    foreach (var specialismAssessment in specialismAssessments)
+                    {
+                        // Specialism Results
+                        var prsStatus = profilesWithResults.FirstOrDefault(p => p.Item1 == specialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber).Item2;
+                        _specialismResults.AddRange(GetSpecialismResultDataToProcess(specialismAssessment, isLatestActive, isHistoricAssessent, prsStatus));
+                    }
+                }
             }
 
-            _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData);
-
-            // Results seed
-            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
-            var profilesWithResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, null), (1111111114, PrsStatus.BeingAppealed) };
-            foreach (var assessment in _pathwayAssessments)
-            {
-                var inactiveResultUlns = new List<long> { 1111111112 };
-                var isLatestResultActive = !inactiveResultUlns.Any(x => x == assessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber);
-
-                var prsStatus = profilesWithResults.FirstOrDefault(p => p.Item1 == assessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber).Item2;
-                tqPathwayResultsSeedData.AddRange(GetPathwayResultDataToProcess(assessment, isLatestResultActive, false, prsStatus));
-            }
-            _pathwayResults = SeedPathwayResultsData(tqPathwayResultsSeedData);
+            _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
+            _specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
+                        
+            DbContext.SaveChanges();
 
             // Test class and dependencies. 
             CreateMapper();
@@ -108,11 +132,22 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
         [MemberData(nameof(Data))]
         public async Task Then_Expected_Results_Are_Returned(PrsActivityRequest request, bool expectedResult)
         {
-            var assessment = _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId && x.IsOptedin && x.EndDate == null);
+            int? assessmentId;
+            
+            if(request.ComponentType == ComponentType.Core)
+                assessmentId = _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId && x.IsOptedin && x.EndDate == null)?.Id;
+            else
+                assessmentId = _specialismAssessments.FirstOrDefault(x => x.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId && x.IsOptedin && x.EndDate == null)?.Id;
 
-            if (assessment != null)
+            if (assessmentId != null)
             {
-                var resultId = _pathwayResults.FirstOrDefault(x => x.TqPathwayAssessmentId == assessment.Id && x.IsOptedin && x.EndDate == null)?.Id;
+                int? resultId;
+
+                if (request.ComponentType == ComponentType.Core)
+                    resultId = _pathwayResults.FirstOrDefault(x => x.TqPathwayAssessmentId == assessmentId && x.IsOptedin && x.EndDate == null)?.Id;
+                else
+                    resultId = _specialismResults.FirstOrDefault(x => x.TqSpecialismAssessmentId == assessmentId && x.IsOptedin && x.EndDate == null)?.Id;
+
                 if (resultId != null)
                 {
                     request.ResultId = resultId.Value;
@@ -124,35 +159,70 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
             // Assert
             _actualResult.Should().Be(expectedResult);
 
-            if (assessment != null)
+            if (assessmentId != null)
             {
-                var latestResult = DbContext.TqPathwayResult.FirstOrDefault(x => x.TqPathwayAssessmentId == assessment.Id && x.IsOptedin && x.EndDate == null);
-                if (expectedResult == true)
+                if (request.ComponentType == ComponentType.Core)
                 {
-                    if (request.PrsStatus == PrsStatus.Withdraw)
+                    var latestResult = DbContext.TqPathwayResult.FirstOrDefault(x => x.TqPathwayAssessmentId == assessmentId && x.IsOptedin && x.EndDate == null);
+                    if (expectedResult == true)
                     {
-                        var previousResult = DbContext.TqPathwayResult.FirstOrDefault(x => x.TqPathwayAssessmentId == assessment.Id && !x.IsOptedin && x.EndDate != null && x.PrsStatus == PrsStatus.BeingAppealed);
-                        
-                        latestResult.PrsStatus.Should().BeNull();
-                        latestResult.TlLookup.Value.Should().Be(previousResult.TlLookup.Value);
-                        return;
+                        if (request.PrsStatus == PrsStatus.Withdraw)
+                        {
+                            var previousResult = DbContext.TqPathwayResult.FirstOrDefault(x => x.TqPathwayAssessmentId == assessmentId && !x.IsOptedin && x.EndDate != null && x.PrsStatus == PrsStatus.UnderReview);
+
+                            latestResult.PrsStatus.Should().BeNull();
+                            latestResult.TlLookup.Value.Should().Be(previousResult.TlLookup.Value);
+                            return;
+                        }
+
+                        latestResult.PrsStatus.Should().Be(request.PrsStatus);
+
+                        if (request.ResultLookupId > 0)
+                        {
+                            var expectedGrade = DbContext.TlLookup.FirstOrDefault(x => x.Id == request.ResultLookupId).Value;
+                            latestResult.TlLookup.Value.Should().Be(expectedGrade);
+                        }
                     }
-
-                    latestResult.PrsStatus.Should().Be(request.PrsStatus);
-
-                    if (request.ResultLookupId > 0)
+                    else
                     {
-                        var expectedGrade = DbContext.TlLookup.FirstOrDefault(x => x.Id == request.ResultLookupId).Value;
-                        latestResult.TlLookup.Value.Should().Be(expectedGrade);
+                        var previousResult = _pathwayResults.FirstOrDefault(x => x.TqPathwayAssessmentId == assessmentId && x.IsOptedin && x.EndDate == null);
+                        if (previousResult != null)
+                        {
+                            latestResult.PrsStatus.Should().Be(previousResult.PrsStatus);
+                            latestResult.TlLookup.Value.Should().Be(previousResult.TlLookup.Value);
+                        }
                     }
                 }
                 else
                 {
-                    var previousResult = _pathwayResults.FirstOrDefault(x => x.TqPathwayAssessmentId == assessment.Id && x.IsOptedin && x.EndDate == null);
-                    if (previousResult != null)
+                    var latestResult = DbContext.TqSpecialismResult.FirstOrDefault(x => x.TqSpecialismAssessmentId == assessmentId && x.IsOptedin && x.EndDate == null);
+                    if (expectedResult == true)
                     {
-                        latestResult.PrsStatus.Should().Be(previousResult.PrsStatus);
-                        latestResult.TlLookup.Value.Should().Be(previousResult.TlLookup.Value);
+                        if (request.PrsStatus == PrsStatus.Withdraw)
+                        {
+                            var previousResult = DbContext.TqSpecialismResult.FirstOrDefault(x => x.TqSpecialismAssessmentId == assessmentId && !x.IsOptedin && x.EndDate != null && x.PrsStatus == PrsStatus.UnderReview);
+
+                            latestResult.PrsStatus.Should().BeNull();
+                            latestResult.TlLookup.Value.Should().Be(previousResult.TlLookup.Value);
+                            return;
+                        }
+
+                        latestResult.PrsStatus.Should().Be(request.PrsStatus);
+
+                        if (request.ResultLookupId > 0)
+                        {
+                            var expectedGrade = DbContext.TlLookup.FirstOrDefault(x => x.Id == request.ResultLookupId).Value;
+                            latestResult.TlLookup.Value.Should().Be(expectedGrade);
+                        }
+                    }
+                    else
+                    {
+                        var previousResult = _specialismResults.FirstOrDefault(x => x.TqSpecialismAssessmentId == assessmentId && x.IsOptedin && x.EndDate == null);
+                        if (previousResult != null)
+                        {
+                            latestResult.PrsStatus.Should().Be(previousResult.PrsStatus);
+                            latestResult.TlLookup.Value.Should().Be(previousResult.TlLookup.Value);
+                        }
                     }
                 }
             }
@@ -166,27 +236,37 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                 {
                     //Result not-found - returns false
                     new object[]
-                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 999, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.BeingAppealed },
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 999, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.UnderReview },
                       false },
 
                     // Registration not in active status - returns false
                     new object[]
-                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.BeingAppealed },
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.UnderReview },
                       false },
 
                     // No active result - returns false
                     new object[]
-                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 2, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.BeingAppealed },
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 2, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.UnderReview },
                       false },
 
-                    // When componenttype = specialism - returns false
+                    // When componenttype = specialism - and CurrentStatus is null - returns true
                     new object[]
-                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Specialism, PrsStatus = PrsStatus.BeingAppealed },
-                     false },                    
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Specialism, PrsStatus = PrsStatus.UnderReview },
+                     true },                    
 
                     // valid request with Active result - returns true
                     new object[]
-                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.BeingAppealed },
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.UnderReview },
+                      true },
+
+                    // When componenttype = specialism - and CurrentStatus is null - returns true
+                    new object[]
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Specialism, PrsStatus = PrsStatus.Reviewed },
+                     true },                    
+
+                    // valid request with Active result - returns true
+                    new object[]
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Reviewed },
                       true },
 
                     // Below are the tests to check if request has valid new grade in the cycle. 
@@ -195,20 +275,35 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                     { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
                       false },
 
-                    // CurrentStatus is BeingAppeal -> Requesting Final
+                    // CurrentStatus is UnderReview -> Requesting Final
                     new object[]
                     { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
-                      true },
-
-                    // CurrentStatus is BeingAppeal -> Requesting Reviewed
-                    new object[]
-                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Reviewed, ResultLookupId = 3 },
                       false },
 
-                    // CurrentStatus is BeingAppeal -> Requesting Withdraw
+                    // CurrentStatus is UnderReview -> Requesting Withdraw
                     new object[]
                     { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Withdraw, ResultLookupId = 0 },
                       true },
+
+                    // When componenttype = specialism - CurrentStatus is UnderReview -> Requesting Final
+                    new object[]
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Specialism, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
+                      false },                    
+
+                    // When componenttype = specialism - CurrentStatus is UnderReview -> Requesting Withdraw
+                    new object[]
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Specialism, PrsStatus = PrsStatus.Withdraw, ResultLookupId = 0 },
+                      true },
+
+                    // When componenttype = Core - CurrentStatus is Reviewed -> Requesting Final
+                    new object[]
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 5, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
+                      false },
+
+                    // When componenttype = specialism - CurrentStatus is Reviewed -> Requesting Final
+                    new object[]
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 5, ComponentType = ComponentType.Specialism, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
+                      false },
                 };
             }
         }
