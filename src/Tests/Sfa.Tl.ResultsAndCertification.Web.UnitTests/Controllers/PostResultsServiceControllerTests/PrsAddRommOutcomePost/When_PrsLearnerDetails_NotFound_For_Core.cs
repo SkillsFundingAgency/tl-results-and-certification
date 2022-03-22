@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomePost
 {
-    public class When_PrsLearnerDetails_NotFound : TestSetup
+    public class When_PrsLearnerDetails_NotFound_For_Core : TestSetup
     {
         private readonly PrsAddRommOutcomeViewModel _mockLoaderResponse = null;
 

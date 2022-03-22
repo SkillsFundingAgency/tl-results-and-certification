@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomePost
 {
-    public class When_RommOutcome_Is_GradeNotChanged : TestSetup
+    public class When_RommOutcome_Is_GradeNotChanged_For_Core : TestSetup
     {
         private PrsRommCheckAndSubmitViewModel _checkAndSubmitViewModel;
 

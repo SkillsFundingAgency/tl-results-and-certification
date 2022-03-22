@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomePost
 {
-    public class When_PrsStatus_Is_Invalid : TestSetup
+    public class When_PrsStatus_Is_Invalid_For_Core : TestSetup
     {
         private PrsAddRommOutcomeViewModel _mockLoaderResponse = null;
 

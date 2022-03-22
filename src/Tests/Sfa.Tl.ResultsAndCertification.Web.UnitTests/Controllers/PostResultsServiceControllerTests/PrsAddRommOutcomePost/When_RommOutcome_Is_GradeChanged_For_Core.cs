@@ -7,9 +7,9 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomeGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomePost
 {
-    public class When_Called_With_Invalid_PrsStatus : TestSetup
+    public class When_RommOutcome_Is_GradeChanged_For_Core : TestSetup
     {
         private PrsAddRommOutcomeViewModel _addRommOutcomeViewModel;
 
@@ -32,24 +32,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 CoreLarId = "12121212",
                 ExamPeriod = "Summer 2021",
                 Grade = "A",
-                PrsStatus = null,
+                PrsStatus = PrsStatus.UnderReview,
+                ComponentType = ComponentType,
                 RommEndDate = DateTime.UtcNow.AddDays(7)
             };
 
             Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_addRommOutcomeViewModel);
+            ViewModel = new PrsAddRommOutcomeViewModel { ProfileId = ProfileId, AssessmentId = AssessmentId, ComponentType = ComponentType, RommOutcome = RommOutcomeType.GradeChanged };
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType);
+            CacheService.Received(1).RemoveAsync<PrsRommCheckAndSubmitViewModel>(CacheKey);
         }
 
         [Fact]
-        public void Then_Redirected_To_PageNotFound()
+        public void Then_Redirected_To_PrsRommGradeChange()
         {
-            var routeName = (Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.PageNotFound);
+            var route = Result as RedirectToRouteResult;
+            route.RouteName.Should().Be(RouteConstants.PrsRommGradeChange);
+            route.RouteValues.Count.Should().Be(4);
+            route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
+            route.RouteValues[Constants.AssessmentId].Should().Be(ViewModel.AssessmentId);
+            route.RouteValues[Constants.ComponentType].Should().Be((int)ViewModel.ComponentType);
+            route.RouteValues[Constants.IsRommOutcomeJourney].Should().Be("true");
         }
     }
 }

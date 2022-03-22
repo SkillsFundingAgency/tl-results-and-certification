@@ -11,7 +11,7 @@ using PrsAddRommOutcomeContent = Sfa.Tl.ResultsAndCertification.Web.Content.Post
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomePost
 {
-    public class When_RommOutcome_Withdraw_IsFailed : TestSetup
+    public class When_RommOutcome_Withdraw_For_Core : TestSetup
     {
         private PrsAddRommOutcomeViewModel _addRommOutcomeViewModel;
         private string _expectedSuccessBannerMsg;
@@ -19,8 +19,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
         public override void Given()
         {
-            ComponentType = ComponentType.Core;
-
             _addRommOutcomeViewModel = new PrsAddRommOutcomeViewModel
             {
                 ProfileId = ProfileId,
@@ -36,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Grade = "A",
                 PrsStatus = PrsStatus.UnderReview,
                 RommEndDate = DateTime.UtcNow.AddDays(7),
-                ComponentType = ComponentType
+                ComponentType = ComponentType.Core
             };
 
             ViewModel = new PrsAddRommOutcomeViewModel
@@ -45,29 +43,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 AssessmentId = 2,
                 ResultId = 3,
                 RommOutcome = RommOutcomeType.Withdraw,
-                ComponentType = ComponentType
+                ComponentType = ComponentType.Core
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType).Returns(_addRommOutcomeViewModel);
-            Loader.PrsRommActivityAsync(AoUkprn, ViewModel).Returns(false);
+            Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ViewModel.ComponentType).Returns(_addRommOutcomeViewModel);
+            Loader.PrsRommActivityAsync(AoUkprn, ViewModel).Returns(true);
 
             _expectedBannerHeaderMsg = PrsAddRommOutcomeContent.Banner_HeaderMessage_Romm_Withdrawn;
             _expectedSuccessBannerMsg = string.Format(PrsAddRommOutcomeContent.Banner_Message, _addRommOutcomeViewModel.LearnerName, _addRommOutcomeViewModel.ExamPeriod, _addRommOutcomeViewModel.CoreDisplayName);
         }
 
         [Fact]
-        public void Then_Redirected_To_ProblemWithService()
+        public void Then_Redirected_To_PrsLearnerDetails()
         {
-            var routeName = (Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.ProblemWithService);
+            var route = Result as RedirectToRouteResult;
+            route.RouteName.Should().Be(RouteConstants.PrsLearnerDetails);
+            route.RouteValues.Count.Should().Be(1);
+            route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
         }
 
         [Fact]
         public void Then_Expected_Method_Are_Called()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType);
-            Loader.Received(1).PrsRommActivityAsync(AoUkprn, ViewModel);            
-            CacheService.DidNotReceive().SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(x => x.IsPrsJourney == true && x.Message.Equals(_expectedBannerHeaderMsg) && x.Message.Equals(_expectedSuccessBannerMsg)), CacheExpiryTime.XSmall);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType.Core);
+            Loader.Received(1).PrsRommActivityAsync(AoUkprn, ViewModel);
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(x => x.HeaderMessage.Equals(_expectedBannerHeaderMsg) && x.Message.Equals(_expectedSuccessBannerMsg)), CacheExpiryTime.XSmall);
         }
     }
 }

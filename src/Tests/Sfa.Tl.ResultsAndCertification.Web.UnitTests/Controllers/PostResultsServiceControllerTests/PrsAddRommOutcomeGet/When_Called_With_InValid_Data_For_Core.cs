@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomeGet
 {
-    public class When_Called_With_InValid_Data : TestSetup
+    public class When_Called_With_InValid_Data_For_Core : TestSetup
     {
         private PrsAddRommOutcomeViewModel _addRommOutcomeViewModel;
 

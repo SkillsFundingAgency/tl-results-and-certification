@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomePost
 {
-    public class When_RommOutcome_Is_GradeChanged : TestSetup
+    public class When_RommOutcome_Is_GradeChanged_For_Specialism : TestSetup
     {
         private PrsAddRommOutcomeViewModel _addRommOutcomeViewModel;
 
@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 1;
             AssessmentId = 7;
-            ComponentType = ComponentType.Core;
+            ComponentType = ComponentType.Specialism;
 
             _addRommOutcomeViewModel = new PrsAddRommOutcomeViewModel
             {
@@ -28,8 +28,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Lastname = " Smith",
                 DateofBirth = DateTime.Today.AddYears(-20),
                 TlevelTitle = "TLevel in Childcare",
-                CoreName = "Childcare",
-                CoreLarId = "12121212",
+                SpecialismName = "Childcare",
+                SpecialismLarId = "12121212",
                 ExamPeriod = "Summer 2021",
                 Grade = "A",
                 PrsStatus = PrsStatus.UnderReview,

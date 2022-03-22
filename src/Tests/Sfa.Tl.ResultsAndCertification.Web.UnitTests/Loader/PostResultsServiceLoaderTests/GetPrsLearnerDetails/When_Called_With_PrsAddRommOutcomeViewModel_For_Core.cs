@@ -11,10 +11,10 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.GetPrsLearnerDetails
 {
-    public class When_Called_With_PrsAddRommOutcomeKnownCoreGradeViewModel : TestSetup
+    public class When_Called_With_PrsAddRommOutcomeViewModel_For_Core : TestSetup
     {
         private LearnerRecord _expectedApiResult;
-        protected PrsAddRommOutcomeKnownViewModel ActualResult { get; set; }
+        protected PrsAddRommOutcomeViewModel ActualResult { get; set; }
 
         public override void Given()
         {
@@ -53,6 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             SeriesName = "Summer 2022",
                             RommEndDate = DateTime.UtcNow.AddDays(5),
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
+                            ComponentType = ComponentType.Core,
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
                             Result = new Result
@@ -81,6 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                     SeriesName = "Summer 2021",
                                     RommEndDate = DateTime.UtcNow.AddDays(15),
                                     AppealEndDate = DateTime.UtcNow.AddDays(30),
+                                    ComponentType = ComponentType.Specialism,
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = DateTime.UtcNow,
                                     Result = new Result
@@ -103,7 +105,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
+            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
         }
 
         [Fact]
