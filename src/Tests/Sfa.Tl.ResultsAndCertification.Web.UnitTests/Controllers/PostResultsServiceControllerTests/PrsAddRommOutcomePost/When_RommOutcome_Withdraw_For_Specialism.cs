@@ -11,7 +11,7 @@ using PrsAddRommOutcomeContent = Sfa.Tl.ResultsAndCertification.Web.Content.Post
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomePost
 {
-    public class When_RommOutcome_Withdraw_For_Core : TestSetup
+    public class When_RommOutcome_Withdraw_For_Specialism : TestSetup
     {
         private PrsAddRommOutcomeViewModel _addRommOutcomeViewModel;
         private string _expectedSuccessBannerMsg;
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
         public override void Given()
         {
-            ComponentType = ComponentType.Core;
+            ComponentType = ComponentType.Specialism;
 
             _addRommOutcomeViewModel = new PrsAddRommOutcomeViewModel
             {
@@ -30,8 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Lastname = " Smith",
                 DateofBirth = DateTime.Today.AddYears(-20),
                 TlevelTitle = "TLevel in Childcare",
-                CoreName = "Childcare",
-                CoreLarId = "12121212",
+                SpecialismName = "Childcare",
+                SpecialismLarId = "12121212",
                 ExamPeriod = "Summer 2021",
                 Grade = "A",
                 PrsStatus = PrsStatus.UnderReview,
@@ -45,14 +45,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 AssessmentId = 2,
                 ResultId = 3,
                 RommOutcome = RommOutcomeType.Withdraw,
-                ComponentType = ComponentType.Core
+                ComponentType = ComponentType.Specialism
             };
 
             Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ViewModel.ComponentType).Returns(_addRommOutcomeViewModel);
             Loader.PrsRommActivityAsync(AoUkprn, ViewModel).Returns(true);
 
             _expectedBannerHeaderMsg = PrsAddRommOutcomeContent.Banner_HeaderMessage_Romm_Withdrawn;
-            _expectedSuccessBannerMsg = string.Format(PrsAddRommOutcomeContent.Banner_Message, _addRommOutcomeViewModel.LearnerName, _addRommOutcomeViewModel.ExamPeriod, _addRommOutcomeViewModel.CoreDisplayName);
+            _expectedSuccessBannerMsg = string.Format(PrsAddRommOutcomeContent.Banner_Message, _addRommOutcomeViewModel.LearnerName, _addRommOutcomeViewModel.ExamPeriod, _addRommOutcomeViewModel.SpecialismDisplayName);
         }
 
         [Fact]
