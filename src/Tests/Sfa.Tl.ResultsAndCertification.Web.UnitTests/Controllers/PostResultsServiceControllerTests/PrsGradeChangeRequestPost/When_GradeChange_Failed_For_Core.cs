@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsGradeChangeRequestPost
 {
-    public class When_GradeChange_Failed : TestSetup
+    public class When_GradeChange_Failed_For_Core : TestSetup
     {
         private readonly bool _gradeChangeRequestResponse = false;
         private PrsGradeChangeRequestViewModel _mockGradeChangeRequestViewModel;

@@ -12,7 +12,7 @@ using GradeChangeContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResult
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsGradeChangeRequestPost
 {
-    public class When_ModelState_Invalid : TestSetup
+    public class When_ModelState_Invalid_For_Core : TestSetup
     {
         private PrsGradeChangeRequestViewModel _mockGradeChangeRequestViewModel;
 
@@ -76,6 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.DateofBirth.Should().Be(_mockGradeChangeRequestViewModel.DateofBirth);
             model.CoreName.Should().Be(_mockGradeChangeRequestViewModel.CoreName);
             model.CoreLarId.Should().Be(_mockGradeChangeRequestViewModel.CoreLarId);
+            model.CoreDisplayName.Should().Be($"{_mockGradeChangeRequestViewModel.CoreName} ({_mockGradeChangeRequestViewModel.CoreLarId})");
             model.Status.Should().Be(_mockGradeChangeRequestViewModel.Status);
             model.CanRequestFinalGradeChange.Should().BeTrue();
             model.ChangeRequestData.Should().BeNull();

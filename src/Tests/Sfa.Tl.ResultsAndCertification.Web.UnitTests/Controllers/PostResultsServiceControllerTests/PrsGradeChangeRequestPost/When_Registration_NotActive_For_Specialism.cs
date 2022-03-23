@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsGradeChangeRequestPost
 {
-    public class When_PrsStatus_IsNotFinal : TestSetup
+    public class When_Registration_NotActive_For_Specialism : TestSetup
     {
         private PrsGradeChangeRequestViewModel _mockGradeChangeRequestViewModel;
 
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ProfileId = 1,
                 AssessmentId = 2,
                 ResultId = 3,
-                ComponentType = ComponentType.Core,
+                ComponentType = ComponentType.Specialism,
                 ChangeRequestData = "Grade change"
             };
 
@@ -29,10 +29,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 AssessmentId = ViewModel.AssessmentId,
                 ResultId = 10,
                 Status = RegistrationPathwayStatus.Withdrawn,
-                PrsStatus = PrsStatus.BeingAppealed
+                PrsStatus = PrsStatus.Final
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType.Core).Returns(_mockGradeChangeRequestViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType.Specialism).Returns(_mockGradeChangeRequestViewModel);
         }
 
         [Fact]
