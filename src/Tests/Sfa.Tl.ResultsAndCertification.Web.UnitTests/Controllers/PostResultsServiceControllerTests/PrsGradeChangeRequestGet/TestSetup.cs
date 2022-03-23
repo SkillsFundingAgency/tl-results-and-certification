@@ -9,11 +9,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         public int ProfileId { get; set; }
         public int AssessmentId { get; set; }
         public int ResultId { get; set; }
+        public int ComponentType { get; set; }
         public bool IsResultJourney { get; set; }
 
         public async override Task When()
         {
-            Result = await Controller.PrsGradeChangeRequestAsync(ProfileId, AssessmentId, IsResultJourney);
+            Result = await Controller.PrsGradeChangeRequestAsync(ProfileId, AssessmentId, ComponentType, IsResultJourney);
         }
     }
 }

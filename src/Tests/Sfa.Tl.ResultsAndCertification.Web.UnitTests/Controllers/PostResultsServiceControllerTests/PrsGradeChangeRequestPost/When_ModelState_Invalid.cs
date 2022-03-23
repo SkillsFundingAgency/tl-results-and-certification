@@ -22,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             {
                 ProfileId = 1,
                 AssessmentId = 2,
+                ComponentType = ComponentType.Core,
                 IsResultJourney = false,
                 ChangeRequestData = string.Empty
             };

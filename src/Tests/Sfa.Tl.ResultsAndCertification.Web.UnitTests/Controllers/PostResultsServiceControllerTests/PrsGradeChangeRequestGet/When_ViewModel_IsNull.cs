@@ -16,15 +16,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 11;
             AssessmentId = 1;
-
+            ComponentType = (int)Common.Enum.ComponentType.Core;
             _mockGradeChangeRequestViewModel = null;
-            Loader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_mockGradeChangeRequestViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, (ComponentType)ComponentType).Returns(_mockGradeChangeRequestViewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, (ComponentType)ComponentType);
         }
 
         [Fact]

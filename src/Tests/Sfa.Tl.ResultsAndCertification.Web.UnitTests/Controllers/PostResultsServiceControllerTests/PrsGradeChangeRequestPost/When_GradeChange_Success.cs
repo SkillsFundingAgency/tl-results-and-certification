@@ -20,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ProfileId = 1,
                 AssessmentId = 2,
                 ResultId = 3,
+                ComponentType = ComponentType.Core,
                 ChangeRequestData = "Change grade"
             };
 

@@ -18,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             ProfileId = 11;
             AssessmentId = 1;
             ResultId = 1;
+            ComponentType = (int)Common.Enum.ComponentType.Core;
             IsResultJourney = true;
 
             _mockGradeChangeRequestViewModel = new PrsGradeChangeRequestViewModel
@@ -28,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Status = RegistrationPathwayStatus.Active,
                 PrsStatus = PrsStatus.Final
             };
-            Loader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_mockGradeChangeRequestViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, (ComponentType)ComponentType).Returns(_mockGradeChangeRequestViewModel);
         }
 
         [Fact]
