@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsGradeChangeRequestGet
 {
-    public class When_PrsStatus_IsNotFinal : TestSetup
+    public class When_PrsStatus_IsNotFinal_For_Specialism : TestSetup
     {
         private PrsGradeChangeRequestViewModel _mockGradeChangeRequestViewModel;
 
@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 11;
             AssessmentId = 1;
-            ComponentType = (int)Common.Enum.ComponentType.Core;
+            ComponentType = (int)Common.Enum.ComponentType.Specialism;
             ResultId = 1;
 
             _mockGradeChangeRequestViewModel = new PrsGradeChangeRequestViewModel

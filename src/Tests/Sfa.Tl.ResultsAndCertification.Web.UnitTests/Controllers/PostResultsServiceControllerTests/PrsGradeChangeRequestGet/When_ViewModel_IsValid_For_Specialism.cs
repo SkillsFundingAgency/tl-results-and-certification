@@ -11,7 +11,7 @@ using GradeChangeContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResult
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsGradeChangeRequestGet
 {
-    public class When_ViewModel_IsValid : TestSetup
+    public class When_ViewModel_IsValid_For_Specialism : TestSetup
     {
         private PrsGradeChangeRequestViewModel _mockGradeChangeRequestViewModel;
 
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 11;
             AssessmentId = 1;
-            ComponentType = (int)Common.Enum.ComponentType.Core;
+            ComponentType = (int)Common.Enum.ComponentType.Specialism;
             ResultId = 1;
 
             _mockGradeChangeRequestViewModel = new PrsGradeChangeRequestViewModel
@@ -35,8 +35,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
                 ProviderName = "Barsely College",
                 ProviderUkprn = 9876543210,
-                CoreName = "Childcare",
-                CoreLarId = "12121212",
+                SpecialismName = "Heating",
+                SpecialismLarId = "Z1234567",
                 TlevelTitle = "Tlevel in Childcare",
 
                 ExamPeriod = "Summer 2021",
@@ -69,11 +69,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.Firstname.Should().Be(_mockGradeChangeRequestViewModel.Firstname);
             model.Lastname.Should().Be(_mockGradeChangeRequestViewModel.Lastname);
             model.DateofBirth.Should().Be(_mockGradeChangeRequestViewModel.DateofBirth);
-            
-            model.CoreName.Should().Be(_mockGradeChangeRequestViewModel.CoreName);
-            model.CoreLarId.Should().Be(_mockGradeChangeRequestViewModel.CoreLarId);
-            model.CoreDisplayName.Should().Be($"{_mockGradeChangeRequestViewModel.CoreName} ({_mockGradeChangeRequestViewModel.CoreName})");
-
+            model.SpecialismName.Should().Be(_mockGradeChangeRequestViewModel.SpecialismName);
+            model.SpecialismLarId.Should().Be(_mockGradeChangeRequestViewModel.SpecialismLarId);
+            model.SpecialismDisplayName.Should().Be($"{_mockGradeChangeRequestViewModel.SpecialismName} ({_mockGradeChangeRequestViewModel.SpecialismLarId})");
             model.Status.Should().Be(_mockGradeChangeRequestViewModel.Status);
             model.PrsStatus.Should().Be(_mockGradeChangeRequestViewModel.PrsStatus);
             model.AppealEndDate.Should().Be(_mockGradeChangeRequestViewModel.AppealEndDate);

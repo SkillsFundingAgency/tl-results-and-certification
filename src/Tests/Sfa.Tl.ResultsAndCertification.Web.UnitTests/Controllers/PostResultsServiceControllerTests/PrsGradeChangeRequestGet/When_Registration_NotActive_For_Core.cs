@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsGradeChangeRequestGet
 {
-    public class When_Appeals_Allowed : TestSetup
+    public class When_Registration_NotActive_For_Core : TestSetup
     {
         private PrsGradeChangeRequestViewModel _mockGradeChangeRequestViewModel;
 
@@ -18,17 +18,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             ProfileId = 11;
             AssessmentId = 1;
             ComponentType = (int)Common.Enum.ComponentType.Core;
-            ResultId = 1;
 
             _mockGradeChangeRequestViewModel = new PrsGradeChangeRequestViewModel
             {
                 ProfileId = ProfileId,
                 AssessmentId = AssessmentId,
-                ResultId = ResultId,
-                Status = RegistrationPathwayStatus.Active,
-                PrsStatus = PrsStatus.Reviewed,
-                RommEndDate = DateTime.Now.AddDays(-1),
-                AppealEndDate = DateTime.Now.AddDays(10)
+                Status = RegistrationPathwayStatus.Withdrawn,
+                PrsStatus = PrsStatus.Final,
+                AppealEndDate = DateTime.Now.AddDays(1)
             };
 
             Loader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, (ComponentType)ComponentType).Returns(_mockGradeChangeRequestViewModel);

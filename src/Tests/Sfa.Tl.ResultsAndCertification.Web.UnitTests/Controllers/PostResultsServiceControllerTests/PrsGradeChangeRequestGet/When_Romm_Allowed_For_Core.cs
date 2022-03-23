@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsGradeChangeRequestGet
 {
-    public class When_Romm_Allowed : TestSetup
+    public class When_Romm_Allowed_For_Core : TestSetup
     {
         private PrsGradeChangeRequestViewModel _mockGradeChangeRequestViewModel;
 

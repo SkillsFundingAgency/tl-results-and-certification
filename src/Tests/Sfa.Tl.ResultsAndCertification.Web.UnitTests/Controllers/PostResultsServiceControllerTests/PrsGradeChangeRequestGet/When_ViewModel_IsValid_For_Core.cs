@@ -11,7 +11,7 @@ using GradeChangeContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResult
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsGradeChangeRequestGet
 {
-    public class When_PrsStatus_IsFinal : TestSetup
+    public class When_ViewModel_IsValid_For_Core : TestSetup
     {
         private PrsGradeChangeRequestViewModel _mockGradeChangeRequestViewModel;
 
@@ -41,8 +41,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
                 ExamPeriod = "Summer 2021",
                 Grade = "B",
-                PrsStatus = PrsStatus.Final,
-                AppealEndDate = DateTime.Now.AddDays(1)
+                PrsStatus = null,
+                RommEndDate = DateTime.Now.AddDays(-1),
+                AppealEndDate = DateTime.Now.AddDays(10)
             };
 
             Loader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, (ComponentType)ComponentType).Returns(_mockGradeChangeRequestViewModel);
@@ -70,6 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.DateofBirth.Should().Be(_mockGradeChangeRequestViewModel.DateofBirth);
             model.CoreName.Should().Be(_mockGradeChangeRequestViewModel.CoreName);
             model.CoreLarId.Should().Be(_mockGradeChangeRequestViewModel.CoreLarId);
+            model.CoreDisplayName.Should().Be($"{_mockGradeChangeRequestViewModel.CoreName} ({_mockGradeChangeRequestViewModel.CoreLarId})");
             model.Status.Should().Be(_mockGradeChangeRequestViewModel.Status);
             model.PrsStatus.Should().Be(_mockGradeChangeRequestViewModel.PrsStatus);
             model.AppealEndDate.Should().Be(_mockGradeChangeRequestViewModel.AppealEndDate);
