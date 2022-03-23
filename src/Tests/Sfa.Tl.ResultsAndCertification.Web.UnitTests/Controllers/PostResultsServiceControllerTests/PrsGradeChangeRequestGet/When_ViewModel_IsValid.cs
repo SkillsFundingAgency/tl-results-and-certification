@@ -69,8 +69,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.Firstname.Should().Be(_mockGradeChangeRequestViewModel.Firstname);
             model.Lastname.Should().Be(_mockGradeChangeRequestViewModel.Lastname);
             model.DateofBirth.Should().Be(_mockGradeChangeRequestViewModel.DateofBirth);
+            
             model.CoreName.Should().Be(_mockGradeChangeRequestViewModel.CoreName);
             model.CoreLarId.Should().Be(_mockGradeChangeRequestViewModel.CoreLarId);
+            model.CoreDisplayName.Should().Be($"{_mockGradeChangeRequestViewModel.CoreName} ({_mockGradeChangeRequestViewModel.CoreName})");
+
             model.Status.Should().Be(_mockGradeChangeRequestViewModel.Status);
             model.PrsStatus.Should().Be(_mockGradeChangeRequestViewModel.PrsStatus);
             model.AppealEndDate.Should().Be(_mockGradeChangeRequestViewModel.AppealEndDate);
