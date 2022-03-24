@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
     {
         public int ProfileId { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(ErrorResource.PrsCancelAppealUpdate), ErrorMessageResourceName = "Validation_Message")]
+        [Required(ErrorMessageResourceType = typeof(ErrorResource.PrsCancelRommUpdate), ErrorMessageResourceName = "Validation_Message")]
         public bool? AreYouSureToCancel { get; set; }
 
         public BackLinkModel BackLink => new() { RouteName = RouteConstants.PrsRommCheckAndSubmit };
