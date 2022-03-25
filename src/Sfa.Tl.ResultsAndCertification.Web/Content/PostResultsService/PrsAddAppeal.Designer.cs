@@ -19,17 +19,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class AppealCoreGrade {
+    public class PrsAddAppeal {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AppealCoreGrade() {
+        internal PrsAddAppeal() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.AppealCoreGrade", typeof(AppealCoreGrade).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsAddAppeal", typeof(PrsAddAppeal).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,52 +61,43 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Core (code): {0} is being appealed.
+        ///   Looks up a localized string similar to Learners details.
         /// </summary>
-        public static string Banner_Message {
+        public static string Aria_Label_Text_Learner_Details {
             get {
-                return ResourceManager.GetString("Banner_Message", resourceCulture);
+                return ResourceManager.GetString("Aria_Label_Text_Learner_Details", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Submit.
+        ///   Looks up a localized string similar to Continue.
         /// </summary>
-        public static string Button_Submit {
+        public static string Button_Continue {
             get {
-                return ResourceManager.GetString("Button_Submit", resourceCulture);
+                return ResourceManager.GetString("Button_Continue", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Appeal grade.
+        ///   Looks up a localized string similar to Has {0} raised an appeal against this grade?.
         /// </summary>
-        public static string Heading_Appeal_Grade {
+        public static string Has_Learner_Requested_Appeal {
             get {
-                return ResourceManager.GetString("Heading_Appeal_Grade", resourceCulture);
+                return ResourceManager.GetString("Has_Learner_Requested_Appeal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to While this grade is being appealed, we cannot calculate this learner’s overall T Level result.
+        ///   Looks up a localized string similar to Add an appeal.
         /// </summary>
-        public static string Inset_While_This_Grade_Is_Being_Appealed {
+        public static string Heading_Add_Appeal {
             get {
-                return ResourceManager.GetString("Inset_While_This_Grade_Is_Being_Appealed", resourceCulture);
+                return ResourceManager.GetString("Heading_Add_Appeal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Is this grade being appealed?.
-        /// </summary>
-        public static string Is_This_Grade_Being_Appealed {
-            get {
-                return ResourceManager.GetString("Is_This_Grade_Being_Appealed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Appeal grade.
+        ///   Looks up a localized string similar to Add an appeal - Post-results.
         /// </summary>
         public static string Page_Title {
             get {
@@ -115,7 +106,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No, leave it as it is.
+        ///   Looks up a localized string similar to Tell us that {0} has asked for an appeal of their {1}.
+        /// </summary>
+        public static string Para_Tell_Us_That_Learner_Has_Asked_For {
+            get {
+                return ResourceManager.GetString("Para_Tell_Us_That_Learner_Has_Asked_For", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
         /// </summary>
         public static string Radio_Button_No {
             get {
@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes, it is being appealed.
+        ///   Looks up a localized string similar to Yes.
         /// </summary>
         public static string Radio_Button_Yes {
             get {
@@ -133,7 +133,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Core &lt;br/&gt; (code).
+        ///   Looks up a localized string similar to Core.
         /// </summary>
         public static string Title_Core_Text {
             get {
@@ -151,7 +151,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exam Period.
+        ///   Looks up a localized string similar to Exam period.
         /// </summary>
         public static string Title_ExamPeriod_Text {
             get {
@@ -169,11 +169,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
+        ///   Looks up a localized string similar to T Level.
         /// </summary>
-        public static string Title_Name_Text {
+        public static string Title_TLevel_Text {
             get {
-                return ResourceManager.GetString("Title_Name_Text", resourceCulture);
+                return ResourceManager.GetString("Title_TLevel_Text", resourceCulture);
             }
         }
         
@@ -187,7 +187,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please select whether a grade is being appealed.
+        ///   Looks up a localized string similar to Select ‘yes’ if the learner has raised an appeal against this grade.
         /// </summary>
         public static string Validation_Message {
             get {

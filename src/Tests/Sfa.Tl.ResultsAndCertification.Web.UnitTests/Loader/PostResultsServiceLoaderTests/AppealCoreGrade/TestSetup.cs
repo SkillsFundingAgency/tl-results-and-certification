@@ -6,7 +6,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
     public abstract class TestSetup : PostResultsServiceLoaderTestBase
     {
         protected long AoUkprn;
-        protected AppealCoreGradeViewModel AppealCoreGradeViewModel;
+        protected PrsAddAppealViewModel AppealCoreGradeViewModel;
         protected bool ActualResult { get; set; }
 
         public async override Task When()

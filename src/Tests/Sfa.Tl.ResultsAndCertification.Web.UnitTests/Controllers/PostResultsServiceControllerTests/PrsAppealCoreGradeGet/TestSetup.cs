@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
         public async override Task When()
         {
-            Result = await Controller.PrsAppealCoreGradeAsync(ProfileId, AssessmentId, ResultId);
+            Result = await Controller.PrsAddAppealAsync(ProfileId, AssessmentId, Common.Enum.ComponentType.Core);
         }
     }
 }

@@ -10,11 +10,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         public int AssessmentId { get; set; }
         public int ResultId { get; set; }
         public IActionResult Result { get; private set; }
-        public AppealCoreGradeViewModel ViewModel { get; set; }
+        public PrsAddAppealViewModel ViewModel { get; set; }
 
         public async override Task When()
         {
-            Result = await Controller.PrsAppealCoreGradeAsync(ViewModel);
+            Result = await Controller.PrsAddAppealAsync(ViewModel);
         }
     }
 }

@@ -335,8 +335,8 @@
         public const string SubmitPrsRommCheckAndSubmit = "SubmitPrsRommCheckAndSubmit";
         public const string PrsCancelRommUpdate = "PrsCancelRommUpdate";
         public const string SubmitPrsCancelRommUpdate = "SubmitPrsCancelRommUpdate";
-        public const string PrsAppealCoreGrade = "PrsAppealCoreGrade";
-        public const string SubmitPrsAppealCoreGrade = "SubmitPrsAppealCoreGrade";
+        public const string PrsAddAppeal = "PrsAddAppeal";
+        public const string SubmitPrsAddAppeal = "SubmitPrsAddAppeal";
         public const string PrsAppealOutcomePathwayGrade = "PrsAppealOutcomePathwayGrade";
         public const string SubmitPrsAppealOutcomePathwayGrade = "SubmitPrsAppealOutcomePathwayGrade";
         public const string PrsPathwayGradeCheckAndSubmit = "PrsPathwayGradeCheckAndSubmit";
