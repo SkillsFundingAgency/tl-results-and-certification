@@ -17,23 +17,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 11;
             AssessmentId = 1;
+            ComponentType = (int)Common.Enum.ComponentType.Core;
 
             _mockCancelGradeChangeRequestViewModel = new PrsCancelGradeChangeRequestViewModel
             {
                 ProfileId = ProfileId,
                 AssessmentId = AssessmentId,
+                ComponentType = Common.Enum.ComponentType.Core,
                 Status = RegistrationPathwayStatus.Active,
                 PrsStatus = null,
                 AppealEndDate = DateTime.Now.AddDays(-5)
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsCancelGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_mockCancelGradeChangeRequestViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsCancelGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, (ComponentType)ComponentType).Returns(_mockCancelGradeChangeRequestViewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsCancelGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsCancelGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, (ComponentType)ComponentType);
         }
 
         [Fact]
@@ -53,10 +55,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             // Back link
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.PrsGradeChangeRequest);
-            model.BackLink.RouteAttributes.Count.Should().Be(2);
+            model.BackLink.RouteAttributes.Count.Should().Be(3);
             model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string profileId);
             profileId.Should().Be(_mockCancelGradeChangeRequestViewModel.ProfileId.ToString());
             model.BackLink.RouteAttributes.TryGetValue(Constants.AssessmentId, out string assessmentId);
+            model.BackLink.RouteAttributes[Constants.ComponentType].Should().Be(((int)_mockCancelGradeChangeRequestViewModel.ComponentType).ToString());
             assessmentId.Should().Be(_mockCancelGradeChangeRequestViewModel.AssessmentId.ToString());
         }
     }

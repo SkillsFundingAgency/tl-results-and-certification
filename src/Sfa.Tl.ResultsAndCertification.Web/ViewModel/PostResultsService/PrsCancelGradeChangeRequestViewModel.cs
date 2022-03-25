@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
@@ -13,6 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
     {
         public int ProfileId { get; set; }
         public int AssessmentId { get; set; }
+        public ComponentType ComponentType { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
         public PrsStatus? PrsStatus { get; set; }
         public DateTime AppealEndDate { get; set; }
@@ -35,7 +37,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             RouteName = RouteConstants.PrsGradeChangeRequest,
             RouteAttributes = IsResultJourney
                     ? new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, AssessmentId.ToString() }, { Constants.IsResultJourney, true.ToString() } }
-                    : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, AssessmentId.ToString() } }
+                    : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, AssessmentId.ToString() }, { Constants.ComponentType, ((int)ComponentType).ToString()} }
         };
+
+        public void SetComponentType(int? componentTypeId)
+        {
+            ComponentType = EnumExtensions.IsValidValue<ComponentType>(componentTypeId) ? (ComponentType)componentTypeId : ComponentType.NotSpecified;
+        }
     }
 }
