@@ -10,6 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
     public class When_Called_With_Valid_Data : TestSetup
     {
         private readonly bool _expectedApiResult = true;
+
         public override void Given()
         {
             //AppealCoreGradeViewModel = new PrsAddAppealViewModel

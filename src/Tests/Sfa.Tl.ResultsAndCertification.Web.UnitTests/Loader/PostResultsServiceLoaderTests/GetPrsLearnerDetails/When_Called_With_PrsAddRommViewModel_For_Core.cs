@@ -82,7 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                     SeriesName = "Summer 2021",
                                     RommEndDate = DateTime.UtcNow.AddDays(15),
                                     AppealEndDate = DateTime.UtcNow.AddDays(30),
-                                    ComponentType = ComponentType.Core,
+                                    ComponentType = ComponentType.Specialism,
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = DateTime.UtcNow,
                                     Result = new Result
@@ -126,6 +126,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.TlevelTitle.Should().Be(_expectedApiResult.Pathway.Title);
             ActualResult.ProviderName.Should().Be(_expectedApiResult.Pathway.Provider.Name);
             ActualResult.ProviderUkprn.Should().Be(_expectedApiResult.Pathway.Provider.Ukprn);
+            ActualResult.IsValid.Should().BeTrue();
 
             var expectedCoreAssessment = _expectedApiResult.Pathway.PathwayAssessments.FirstOrDefault(p => p.Id == AssessmentId);
             ActualResult.ProfileId.Should().Be(_expectedApiResult.ProfileId);
