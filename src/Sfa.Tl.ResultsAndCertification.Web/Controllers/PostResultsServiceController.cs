@@ -383,19 +383,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         // Appeals Process
 
         [HttpGet]
-        [Route("post-results-add-appeal/{profileId}/{assessmentId}/{componentType}", Name = RouteConstants.PrsAddAppeal)]
-        public async Task<IActionResult> PrsAddAppealAsync(int profileId, int assessmentId, ComponentType componentType)
+        [Route("post-results-add-appeal/{profileId}/{assessmentId}/{componentType}/{isBack:bool?}", Name = RouteConstants.PrsAddAppeal)]
+        public async Task<IActionResult> PrsAddAppealAsync(int profileId, int assessmentId, ComponentType componentType, bool? isBack)
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddAppealViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
 
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            viewModel.IsAppealRequested = isBack;
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("post-results-add-appeal/{profileId}/{assessmentId}/{componentType}", Name = RouteConstants.SubmitPrsAddAppeal)]
+        [Route("post-results-add-appeal/{profileId}/{assessmentId}/{componentType}/{isBack:bool?}", Name = RouteConstants.SubmitPrsAddAppeal)]
         public async Task<IActionResult> PrsAddAppealAsync(PrsAddAppealViewModel model)
         {
             var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddAppealViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);

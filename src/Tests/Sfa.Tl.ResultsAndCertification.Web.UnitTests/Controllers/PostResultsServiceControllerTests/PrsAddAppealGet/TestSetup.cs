@@ -10,10 +10,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         public int ProfileId { get; set; }
         public int AssessmentId { get; set; }
         public ComponentType ComponentType { get; set; }
+        public bool? IsBack { get; set; }
 
         public async override Task When()
         {
-            Result = await Controller.PrsAddAppealAsync(ProfileId, AssessmentId, ComponentType.Core);
+            Result = await Controller.PrsAddAppealAsync(ProfileId, AssessmentId, ComponentType, IsBack);
         }
     }
 }
