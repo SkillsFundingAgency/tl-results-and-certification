@@ -7,9 +7,9 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddAppealPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddAppealGet
 {
-    public class When_ModelState_Invalid_For_Core : TestSetup
+    public class When_Called_With_IsBack_True_For_Core : TestSetup
     {
         private PrsAddAppealViewModel _addAppealViewModel;
 
@@ -18,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             ProfileId = 1;
             AssessmentId = 7;
             ComponentType = ComponentType.Core;
+            IsBack = true;
 
             _addAppealViewModel = new PrsAddAppealViewModel
             {
@@ -37,45 +38,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 AppealEndDate = DateTime.UtcNow.AddDays(7)
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsAddAppealViewModel>(AoUkprn, _addAppealViewModel.ProfileId, _addAppealViewModel.AssessmentId, _addAppealViewModel.ComponentType)
-                  .Returns(_addAppealViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsAddAppealViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_addAppealViewModel);
+        }
 
-            ViewModel = new PrsAddAppealViewModel { ProfileId = 1, AssessmentId = AssessmentId, ComponentType = ComponentType, IsAppealRequested = null };
-            Controller.ModelState.AddModelError("IsAppealRequested", Content.PostResultsService.PrsAddRomm.Validation_Message);
+        [Fact]
+        public void Then_Expected_Methods_AreCalled()
+        {
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddAppealViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            Result.Should().BeOfType(typeof(ViewResult));
-
             var viewResult = Result as ViewResult;
-            viewResult.Model.Should().BeOfType(typeof(PrsAddAppealViewModel));
-
             var model = viewResult.Model as PrsAddAppealViewModel;
 
             model.Should().NotBeNull();
-
             model.ProfileId.Should().Be(_addAppealViewModel.ProfileId);
             model.AssessmentId.Should().Be(_addAppealViewModel.AssessmentId);
             model.Uln.Should().Be(_addAppealViewModel.Uln);
             model.LearnerName.Should().Be(_addAppealViewModel.LearnerName);
             model.DateofBirth.Should().Be(_addAppealViewModel.DateofBirth);
             model.TlevelTitle.Should().Be(_addAppealViewModel.TlevelTitle);
-            model.CoreName.Should().Be(_addAppealViewModel.CoreName);
-            model.CoreLarId.Should().Be(_addAppealViewModel.CoreLarId);
             model.CoreDisplayName.Should().Be($"{_addAppealViewModel.CoreName} ({_addAppealViewModel.CoreLarId})");
             model.ExamPeriod.Should().Be(_addAppealViewModel.ExamPeriod);
             model.Grade.Should().Be(_addAppealViewModel.Grade);
             model.AppealEndDate.Should().Be(_addAppealViewModel.AppealEndDate);
             model.ComponentType.Should().Be(_addAppealViewModel.ComponentType);
-            model.IsAppealRequested.Should().BeNull();
-
-            Controller.ViewData.ModelState.Should().ContainSingle();
-            Controller.ViewData.ModelState.ContainsKey(nameof(PrsAddAppealViewModel.IsAppealRequested)).Should().BeTrue();
-
-            var modelState = Controller.ViewData.ModelState[nameof(PrsAddAppealViewModel.IsAppealRequested)];
-            modelState.Errors[0].ErrorMessage.Should().Be(Content.PostResultsService.PrsAddRomm.Validation_Message);
+            model.IsAppealRequested.Should().BeTrue();
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.PrsLearnerDetails);

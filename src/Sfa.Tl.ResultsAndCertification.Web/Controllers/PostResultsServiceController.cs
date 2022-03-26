@@ -399,10 +399,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("post-results-add-appeal/{profileId}/{assessmentId}/{componentType}/{isBack:bool?}", Name = RouteConstants.SubmitPrsAddAppeal)]
         public async Task<IActionResult> PrsAddAppealAsync(PrsAddAppealViewModel model)
         {
-            var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddAppealViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
-            
             if (!ModelState.IsValid)
+            {
+                var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddAppealViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
                 return View(prsDetails);
+            }
 
             if (model.IsAppealRequested == true)
                 return RedirectToRoute(RouteConstants.PrsAddAppealOutcomeKnown, new { profileId = model.ProfileId, assessmentId = model.AssessmentId, componentType = (int)model.ComponentType });
