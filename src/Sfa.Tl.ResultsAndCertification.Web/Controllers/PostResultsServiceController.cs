@@ -380,6 +380,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
         }
 
+        // Appeals Process
+
         [HttpGet]
         [Route("post-results-add-appeal/{profileId}/{assessmentId}/{componentType}", Name = RouteConstants.PrsAddAppeal)]
         public async Task<IActionResult> PrsAddAppealAsync(int profileId, int assessmentId, ComponentType componentType)
@@ -401,20 +403,37 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(prsDetails);
 
-            //if (prsDetails == null || !prsDetails.IsValid) 
-            //    return RedirectToRoute(RouteConstants.PageNotFound);
+            if (model.IsAppealRequested == true)
+                return RedirectToRoute(RouteConstants.PrsAddAppealOutcomeKnown, new { profileId = model.ProfileId, assessmentId = model.AssessmentId, componentType = (int)model.ComponentType });
+            else
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+        }
 
-            //if (model.AppealGrade == false)
-            //    return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId });
+        [HttpGet]
+        [Route("post-results-appeal-outcome-known/{profileId}/{assessmentId}/{componentType}", Name = RouteConstants.PrsAddAppealOutcomeKnown)]
+        public async Task<IActionResult> PrsAddAppealOutcomeKnownAsync(int profileId, int assessmentId, ComponentType componentType)
+        {
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddAppealOutcomeKnownViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
 
-            //bool isSuccess = await _postResultsServiceLoader.AppealCoreGradeAsync(User.GetUkPrn(), model);
-            //if (!isSuccess)
-            //    return RedirectToRoute(RouteConstants.ProblemWithService);
+            if (viewModel == null || !viewModel.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            
+            return View(viewModel);
+        }
 
-            //var notificationBanner = new NotificationBannerModel { Message = prsDetails.SuccessBannerMessage };
-            //await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+        [HttpPost]
+        [Route("post-results-appeal-outcome-known/{profileId}/{assessmentId}/{componentType}", Name = RouteConstants.SubmitPrsAddAppealOutcomeKnown)]
+        public async Task<IActionResult> PrsAddAppealOutcomeKnownAsync(PrsAddAppealOutcomeKnownViewModel model)
+        {
+            var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddAppealOutcomeKnownViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
 
-            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId});
+            if (!ModelState.IsValid)
+                return View(prsDetails);
+
+            if (prsDetails == null || !prsDetails.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
         }
 
         [HttpGet]
