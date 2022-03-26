@@ -7,14 +7,15 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAppealCoreGradePost
 {
-    public class When_RommRequest_IsFalse_For_Core : TestSetup
+    public class When_AppealRequest_IsFalse_For_Core : TestSetup
     {
         public override void Given()
         {
-            ViewModel = new PrsAddRommViewModel { ProfileId = 1, AssessmentId = 11, ComponentType = ComponentType.Core, IsRommRequested = false, RommEndDate = DateTime.Today.AddDays(7) };
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType.Core).Returns(ViewModel);
+            ViewModel = new PrsAddAppealViewModel { ProfileId = 1, AssessmentId = 11, ComponentType = ComponentType.Core, IsAppealRequested = false, AppealEndDate = DateTime.Today.AddDays(7) };
+            Loader.GetPrsLearnerDetailsAsync<PrsAddAppealViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType.Core)
+                .Returns(ViewModel);
         }
 
         [Fact]
