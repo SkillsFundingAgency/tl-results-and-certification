@@ -120,6 +120,9 @@
   <data name="Action_Button_Add_Appeal" xml:space="preserve">
     <value>Add appeal</value>
   </data>
+  <data name="Action_Button_Add_Appeal_Outcome" xml:space="preserve">
+    <value>Add outcome</value>
+  </data>
   <data name="Action_Button_Add_Romm" xml:space="preserve">
     <value>Add ROMM</value>
   </data>
