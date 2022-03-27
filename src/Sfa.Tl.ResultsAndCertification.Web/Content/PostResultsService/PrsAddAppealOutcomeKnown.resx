@@ -120,6 +120,12 @@
   <data name="Aria_Label_Text_Learner_Details" xml:space="preserve">
     <value>Learners details</value>
   </data>
+  <data name="Banner_HeaderMessage_Appeal_Recorded" xml:space="preserve">
+    <value>Appeal recorded</value>
+  </data>
+  <data name="Banner_Message" xml:space="preserve">
+    <value>You have recorded that {0} raised an appeal for their {1} {2} grade</value>
+  </data>
   <data name="Button_Continue" xml:space="preserve">
     <value>Continue</value>
   </data>

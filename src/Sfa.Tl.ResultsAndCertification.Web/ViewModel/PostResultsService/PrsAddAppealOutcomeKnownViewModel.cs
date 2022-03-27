@@ -46,5 +46,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                 { Constants.IsBack, "true" }
             }
         };
+
+        public string SuccessBannerMessage => string.Format(PrsAddAppealOutcomeKnownContent.Banner_Message, LearnerName, ExamPeriod, ComponentType == ComponentType.Core ? CoreDisplayName : string.Empty);
+
+        public string Banner_HeaderMesage => PrsAddAppealOutcomeKnownContent.Banner_HeaderMessage_Appeal_Recorded;
     }
 }

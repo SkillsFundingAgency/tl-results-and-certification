@@ -225,7 +225,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return currentPrsStatus == null || currentPrsStatus == PrsStatus.NotSpecified || currentPrsStatus == PrsStatus.UnderReview;
 
             if (requestPrsStatus == PrsStatus.BeingAppealed)
-                return currentPrsStatus == null || currentPrsStatus == PrsStatus.NotSpecified;
+                return currentPrsStatus == PrsStatus.Reviewed;
 
             if (requestPrsStatus == PrsStatus.Final)
                 return currentPrsStatus == PrsStatus.BeingAppealed;
