@@ -49,15 +49,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         private string GetAppealOutcomeJourneyRoute => RouteConstants.PrsAddAppealOutcomeKnown;
 
         private Dictionary<string, string> GetRouteAttributes =>
-            IsAppealOutcomeJourney ?
             new Dictionary<string, string>
             {
                 { Constants.ProfileId, ProfileId.ToString() },
                 { Constants.AssessmentId, AssessmentId.ToString() },
                 { Constants.ComponentType, ((int)ComponentType).ToString() },
-                { Constants.AppealOutcomeTypeId, ((int)AppealOutcomeKnownType.GradeChanged).ToString() }
-            }
-            :
-            null;
+                { Constants.AppealOutcomeKnownTypeId, ((int)AppealOutcomeKnownType.GradeChanged).ToString() }
+            };
     }
 }

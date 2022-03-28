@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
@@ -46,6 +47,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                 { Constants.IsBack, "true" }
             }
         };
+
+        public void SetOutcomeType(int? outcomeKnownTypeId)
+        {
+            AppealOutcome = EnumExtensions.IsValidValue<AppealOutcomeKnownType>(outcomeKnownTypeId) ? (AppealOutcomeKnownType?)outcomeKnownTypeId : null;
+        }
 
         public string SuccessBannerMessage => string.Format(PrsAddAppealOutcomeKnownContent.Banner_Message, LearnerName, ExamPeriod, ComponentType == ComponentType.Core ? CoreDisplayName : SpecialismDisplayName);
 
