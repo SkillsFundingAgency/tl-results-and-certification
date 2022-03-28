@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             ProfileId = 11;
             AssessmentId = 1;
             ResultId = 1;
-            ComponentType = (int)Common.Enum.ComponentType.Core;
+            ComponentType = ComponentType.Core;
             IsResultJourney = true;
 
             _mockGradeChangeRequestViewModel = new PrsGradeChangeRequestViewModel
