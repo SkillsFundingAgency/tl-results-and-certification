@@ -108,7 +108,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                 return PathwayPrsStatus switch
                 {
                     PrsStatus.BeingAppealed => RouteConstants.PrsAppealOutcomePathwayGrade,                    
-                    _ => RouteConstants.PrsAppealCoreGrade,
+                    _ => RouteConstants.PrsAddAppeal,
                 };
             }
         }

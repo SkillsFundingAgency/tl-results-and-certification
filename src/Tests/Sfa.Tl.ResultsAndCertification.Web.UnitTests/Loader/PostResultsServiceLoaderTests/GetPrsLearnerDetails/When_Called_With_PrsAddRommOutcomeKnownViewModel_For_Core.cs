@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                     Id = 2,
                     LarId = "89564123",
                     Name = "Test Pathway",
-                    Title = "Test Pathwya title",
+                    Title = "Test Pathway title",
                     AcademicYear = 2020,
                     Status = RegistrationPathwayStatus.Active,
                     Provider = new Provider

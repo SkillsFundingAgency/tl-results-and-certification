@@ -9,17 +9,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
+
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.GetPrsLearnerDetails
 {
-    public class When_Called_With_PrsAddRommViewModel_For_Specialism : TestSetup
+    public class When_Called_With_PrsAddAppealOutcomeKnownViewModel_For_Core : TestSetup
     {
         private LearnerRecord _expectedApiResult;
-        protected PrsAddRommViewModel ActualResult { get; set; }
+        protected PrsAddAppealOutcomeKnownViewModel ActualResult { get; set; }
 
         public override void Given()
         {
             ProfileId = 1;
-            AssessmentId = 101;
+            AssessmentId = 11;
 
             _expectedApiResult = new LearnerRecord
             {
@@ -34,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                     Id = 2,
                     LarId = "89564123",
                     Name = "Test Pathway",
-                    Title = "Test Pathwya title",
+                    Title = "Test Pathway title",
                     AcademicYear = 2020,
                     Status = RegistrationPathwayStatus.Active,
                     Provider = new Provider
@@ -60,40 +61,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             {
                                 Id = 1,
                                 Grade = "C",
-                                PrsStatus = null,
+                                PrsStatus = PrsStatus.Reviewed,
                                 LastUpdatedBy = "System",
                                 LastUpdatedOn = DateTime.UtcNow
-                            }
-                        }
-                    },
-                    Specialisms = new List<Specialism>
-                    {
-                        new Specialism
-                        {
-                            Id = 20,
-                            LarId = "12345678",
-                            Name = "Plumbing",
-                            Assessments = new List<Assessment>
-                            {
-                                new Assessment
-                                {
-                                    Id = 101,
-                                    SeriesId = 2,
-                                    SeriesName = "Summer 2021",
-                                    RommEndDate = DateTime.UtcNow.AddDays(15),
-                                    AppealEndDate = DateTime.UtcNow.AddDays(30),
-                                    ComponentType = ComponentType.Specialism,
-                                    LastUpdatedBy = "System",
-                                    LastUpdatedOn = DateTime.UtcNow,
-                                    Result = new Result
-                                    {
-                                        Id = 1,
-                                        Grade = "Merit",
-                                        PrsStatus = null,
-                                        LastUpdatedBy = "System",
-                                        LastUpdatedOn = DateTime.UtcNow
-                                    }
-                                }
                             }
                         }
                     }
@@ -105,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsAddRommViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Specialism);
+            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsAddAppealOutcomeKnownViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
         }
 
         [Fact]
@@ -128,18 +98,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.ProviderUkprn.Should().Be(_expectedApiResult.Pathway.Provider.Ukprn);
             ActualResult.IsValid.Should().BeTrue();
 
-            var expectedSpecialism = _expectedApiResult.Pathway.Specialisms.FirstOrDefault(s => s.Assessments.Any(a => a.Id == AssessmentId));
-            var expectedAssessment = expectedSpecialism?.Assessments?.FirstOrDefault(sa => sa.Id == AssessmentId);
+            var expectedCoreAssessment = _expectedApiResult.Pathway.PathwayAssessments.FirstOrDefault(p => p.Id == AssessmentId);
             ActualResult.ProfileId.Should().Be(_expectedApiResult.ProfileId);
-            ActualResult.AssessmentId.Should().Be(expectedAssessment.Id);
-            ActualResult.RommEndDate.Should().Be(expectedAssessment.RommEndDate);
-            ActualResult.PrsStatus.Should().Be(expectedAssessment.Result.PrsStatus);
-            ActualResult.ComponentType.Should().Be(ComponentType.Specialism);
+            ActualResult.AssessmentId.Should().Be(expectedCoreAssessment.Id);
+            ActualResult.AppealEndDate.Should().Be(expectedCoreAssessment.AppealEndDate);
+            ActualResult.PrsStatus.Should().Be(expectedCoreAssessment.Result.PrsStatus);            
 
-            // Specialism Component 
-            ActualResult.SpecialismDisplayName.Should().Be($"{expectedSpecialism.Name} ({expectedSpecialism.LarId})");
-            ActualResult.ExamPeriod.Should().Be(expectedAssessment.SeriesName);
-            ActualResult.Grade.Should().Be(expectedAssessment.Result.Grade);
+            // Core Component 
+            ActualResult.CoreDisplayName.Should().Be($"{_expectedApiResult.Pathway.Name} ({_expectedApiResult.Pathway.LarId})");
+            ActualResult.ExamPeriod.Should().Be(expectedCoreAssessment.SeriesName);
+            ActualResult.Grade.Should().Be(expectedCoreAssessment.Result.Grade);
         }
     }
 }

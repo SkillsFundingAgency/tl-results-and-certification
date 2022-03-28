@@ -23,12 +23,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                                      && CommonHelper.IsRommAllowed(RommEndDate);
         public bool IsAddRommOutcomeAllowed => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.UnderReview;
         public bool IsAddAppealAllowed => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Reviewed && CommonHelper.IsAppealsAllowed(AppealEndDate);
+        public bool IsAddAppealOutcomeAllowed => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.BeingAppealed;
         public bool IsRequestChangeAllowed => ((PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified) && !CommonHelper.IsRommAllowed(RommEndDate))
                                            || (PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Reviewed && !CommonHelper.IsAppealsAllowed(AppealEndDate))
                                            || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Final;
 
         public string RommRouteName { get { return RouteConstants.PrsAddRomm; } }
         public string RommOutcomeRouteName { get { return RouteConstants.PrsAddRommOutcome; } }
+        public string AppealRouteName { get { return RouteConstants.PrsAddAppeal; } }        
         public string PrsGradeChangeRequestRouteName { get { return RouteConstants.PrsGradeChangeRequest; } }
 
         public Dictionary<string, string> RommRouteAttributes 

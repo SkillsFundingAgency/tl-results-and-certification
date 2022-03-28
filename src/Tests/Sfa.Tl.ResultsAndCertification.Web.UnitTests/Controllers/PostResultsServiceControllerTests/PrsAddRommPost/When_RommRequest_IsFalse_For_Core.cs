@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         public override void Given()
         {
             ViewModel = new PrsAddRommViewModel { ProfileId = 1, AssessmentId = 11, ComponentType = ComponentType.Core, IsRommRequested = false, RommEndDate = DateTime.Today.AddDays(7) };
-            Loader.GetPrsLearnerDetailsAsync<PrsAddRommViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(ViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsAddRommViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType.Core).Returns(ViewModel);
         }
 
         [Fact]
