@@ -435,7 +435,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (prsDetails == null || !prsDetails.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            if (model.AppealOutcome == AppealOutcomeKnownType.No)
+            if (model.AppealOutcome == AppealOutcomeKnownType.GradeChanged)
+            {                
+                return RedirectToRoute(RouteConstants.PrsAppealGradeChange, new { profileId = model.ProfileId, assessmentId = model.AssessmentId, componentType = (int)model.ComponentType });
+            }
+            else if (model.AppealOutcome == AppealOutcomeKnownType.No)
             {
                 bool isSuccess = await _postResultsServiceLoader.PrsAppealActivityAsync(User.GetUkPrn(), model);
                 if (!isSuccess)
