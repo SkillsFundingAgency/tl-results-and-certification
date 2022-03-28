@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
         public override void Given()
         {
             ProfileId = 1;
-            AssessmentId = 11;
+            AssessmentId = 101;
 
             _expectedApiResult = new LearnerRecord
             {
@@ -105,7 +105,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsAddAppealViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
+            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsAddAppealViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Specialism);
         }
 
         [Fact]
@@ -127,18 +127,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.ProviderName.Should().Be(_expectedApiResult.Pathway.Provider.Name);
             ActualResult.ProviderUkprn.Should().Be(_expectedApiResult.Pathway.Provider.Ukprn);
             ActualResult.IsValid.Should().BeTrue();
-
-            var expectedCoreAssessment = _expectedApiResult.Pathway.PathwayAssessments.FirstOrDefault(p => p.Id == AssessmentId);
-            ActualResult.ProfileId.Should().Be(_expectedApiResult.ProfileId);
-            ActualResult.AssessmentId.Should().Be(expectedCoreAssessment.Id);
-            ActualResult.AppealEndDate.Should().Be(expectedCoreAssessment.AppealEndDate);
-            ActualResult.PrsStatus.Should().Be(expectedCoreAssessment.Result.PrsStatus);
-            ActualResult.ComponentType.Should().Be(ComponentType.Core);
-
-            // Core Component 
-            ActualResult.CoreDisplayName.Should().Be($"{_expectedApiResult.Pathway.Name} ({_expectedApiResult.Pathway.LarId})");
-            ActualResult.ExamPeriod.Should().Be(expectedCoreAssessment.SeriesName);
-            ActualResult.Grade.Should().Be(expectedCoreAssessment.Result.Grade);
 
             var expectedSpecialism = _expectedApiResult.Pathway.Specialisms.FirstOrDefault(s => s.Assessments.Any(a => a.Id == AssessmentId));
             var expectedAssessment = expectedSpecialism?.Assessments?.FirstOrDefault(sa => sa.Id == AssessmentId);
