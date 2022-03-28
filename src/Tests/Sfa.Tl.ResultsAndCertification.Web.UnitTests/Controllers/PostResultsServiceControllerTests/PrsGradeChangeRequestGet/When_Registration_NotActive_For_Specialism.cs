@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 11;
             AssessmentId = 1;
-            ComponentType = (int)Common.Enum.ComponentType.Specialism;
+            ComponentType = ComponentType.Specialism;
 
             _mockGradeChangeRequestViewModel = new PrsGradeChangeRequestViewModel
             {
