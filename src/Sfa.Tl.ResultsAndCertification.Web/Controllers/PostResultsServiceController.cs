@@ -453,6 +453,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("post-results-appeal-change-grade/{profileId}/{assessmentId}/{componentType}/{isAppealOutcomeJourney:bool?}", Name = RouteConstants.PrsAppealGradeChange)]
+        public async Task<IActionResult> PrsAppealGradeChangeAsync(int profileId, int assessmentId, ComponentType componentType, bool? isAppealOutcomeJourney)
+        {
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAppealGradeChangeViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
+
+            if (viewModel == null || !viewModel.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            viewModel.IsAppealOutcomeJourney = isAppealOutcomeJourney ?? false;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("post-results-appeal-change-grade/{profileId}/{assessmentId}/{componentType}/{isAppealOutcomeJourney:bool?}", Name = RouteConstants.SubmitPrsAppealGradeChange)]
+        public async Task<IActionResult> PrsAppealGradeChangeAsync(PrsAppealGradeChangeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAppealGradeChangeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
+                prsDetails.IsAppealOutcomeJourney = model.IsAppealOutcomeJourney;
+                return View(prsDetails);
+            }
+
+            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+        }
+
+        [HttpGet]
         [Route("reviews-and-appeals-appeal-outcome-grade/{profileId}/{assessmentId}/{resultId}/{outcomeTypeId:int?}", Name = RouteConstants.PrsAppealOutcomePathwayGrade)]
         public async Task<IActionResult> PrsAppealOutcomePathwayGradeAsync(int profileId, int assessmentId, int resultId, int? outcomeTypeId)
         {

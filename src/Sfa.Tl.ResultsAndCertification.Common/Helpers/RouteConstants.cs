@@ -339,6 +339,9 @@
         public const string SubmitPrsAddAppeal = "SubmitPrsAddAppeal";
         public const string PrsAddAppealOutcomeKnown = "PrsAddAppealOutcomeKnown";
         public const string SubmitPrsAddAppealOutcomeKnown = "SubmitPrsAddAppealOutcomeKnown";
+        public const string PrsAppealGradeChange = "PrsAppealGradeChange";
+        public const string SubmitPrsAppealGradeChange = "SubmitPrsAppealGradeChange";
+
 
         public const string PrsAppealOutcomePathwayGrade = "PrsAppealOutcomePathwayGrade";
         public const string SubmitPrsAppealOutcomePathwayGrade = "SubmitPrsAppealOutcomePathwayGrade";
