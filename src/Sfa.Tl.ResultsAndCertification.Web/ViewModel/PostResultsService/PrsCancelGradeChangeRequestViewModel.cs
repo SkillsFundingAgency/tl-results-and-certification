@@ -39,10 +39,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                     ? new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, AssessmentId.ToString() }, { Constants.IsResultJourney, true.ToString() } }
                     : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, AssessmentId.ToString() }, { Constants.ComponentType, ((int)ComponentType).ToString()} }
         };
-
-        public void SetComponentType(int? componentTypeId)
-        {
-            ComponentType = EnumExtensions.IsValidValue<ComponentType>(componentTypeId) ? (ComponentType)componentTypeId : ComponentType.NotSpecified;
-        }
     }
 }
