@@ -11,10 +11,10 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.GetPrsLearnerDetails
 {
-    public class When_Called_With_PrsRommGradeChangeViewModel_For_Core : TestSetup
+    public class When_Called_With_PrsAppealGradeChangeViewModel_For_Core : TestSetup
     {
         private LearnerRecord _expectedApiResult;
-        protected PrsRommGradeChangeViewModel ActualResult { get; set; }
+        protected PrsAppealGradeChangeViewModel ActualResult { get; set; }
 
         public override void Given()
         {
@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             Id = 11,
                             SeriesId = 2,
                             SeriesName = "Summer 2022",
-                            RommEndDate = DateTime.UtcNow.AddDays(5),
+                            RommEndDate = DateTime.UtcNow.AddDays(-5),
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             ComponentType = ComponentType.Core,
                             LastUpdatedBy = "System",
@@ -60,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             {
                                 Id = 1,
                                 Grade = "C",
-                                PrsStatus = null,
+                                PrsStatus = PrsStatus.Reviewed,
                                 LastUpdatedBy = "System",
                                 LastUpdatedOn = DateTime.UtcNow
                             }
@@ -74,7 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
+            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsAppealGradeChangeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
         }
 
         [Fact]
@@ -100,7 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             var expectedCoreAssessment = _expectedApiResult.Pathway.PathwayAssessments.FirstOrDefault(p => p.Id == AssessmentId);
             ActualResult.ProfileId.Should().Be(_expectedApiResult.ProfileId);
             ActualResult.AssessmentId.Should().Be(expectedCoreAssessment.Id);
-            ActualResult.RommEndDate.Should().Be(expectedCoreAssessment.RommEndDate);
+            ActualResult.AppealEndDate.Should().Be(expectedCoreAssessment.AppealEndDate);
             ActualResult.PrsStatus.Should().Be(expectedCoreAssessment.Result.PrsStatus);
             ActualResult.ComponentType.Should().Be(expectedCoreAssessment.ComponentType);
 
