@@ -1,9 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             DateofBirthLabel = PrsAddAppealContent.Title_DateofBirth_Text;
             TlevelTitleLabel = PrsAddAppealContent.Title_TLevel_Text;
             CoreLabel = PrsAddAppealContent.Title_Core_Text;
+            SpecialismLabel = PrsAddAppealContent.Title_Specialism_Text;
             ExamPeriodLabel = PrsAddAppealContent.Title_ExamPeriod_Text;
             GradeLabel = PrsAddAppealContent.Title_Grade_Text;
         }
