@@ -44,28 +44,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                         Name = "Provider Name",
                         DisplayName = "Provider display name",
                     },
-                    PathwayAssessments = new List<Assessment>
-                    {
-                        new Assessment
-                        {
-                            Id = 11,
-                            SeriesId = 2,
-                            SeriesName = "Summer 2022",
-                            RommEndDate = DateTime.UtcNow.AddDays(-5),
-                            AppealEndDate = DateTime.UtcNow.AddDays(10),
-                            ComponentType = ComponentType.Core,
-                            LastUpdatedBy = "System",
-                            LastUpdatedOn = DateTime.UtcNow,
-                            Result = new Result
-                            {
-                                Id = 1,
-                                Grade = "C",
-                                PrsStatus = PrsStatus.Reviewed,
-                                LastUpdatedBy = "System",
-                                LastUpdatedOn = DateTime.UtcNow
-                            }
-                        }
-                    },
                     Specialisms = new List<Specialism>
                     {
                         new Specialism
