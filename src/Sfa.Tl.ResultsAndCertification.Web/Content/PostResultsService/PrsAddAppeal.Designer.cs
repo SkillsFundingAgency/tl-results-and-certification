@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell us that {0} has asked for an appeal of their {1}.
+        ///   Looks up a localized string similar to Tell us that {0} has asked for an appeal of their {1} grade.
         /// </summary>
         public static string Para_Tell_Us_That_Learner_Has_Asked_For {
             get {

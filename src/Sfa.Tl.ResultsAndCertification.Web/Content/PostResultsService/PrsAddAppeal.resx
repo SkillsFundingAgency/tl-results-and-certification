@@ -133,7 +133,7 @@
     <value>Add an appeal - Post-results</value>
   </data>
   <data name="Para_Tell_Us_That_Learner_Has_Asked_For" xml:space="preserve">
-    <value>Tell us that {0} has asked for an appeal of their {1}</value>
+    <value>Tell us that {0} has asked for an appeal of their {1} grade</value>
   </data>
   <data name="Radio_Button_No" xml:space="preserve">
     <value>No</value>
