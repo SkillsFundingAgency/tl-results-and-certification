@@ -433,7 +433,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(prsDetails);
 
-            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+            if (prsDetails == null || !prsDetails.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            if (model.AppealOutcome == AppealOutcomeType.GradeChanged)
+            {
+                await _cacheService.RemoveAsync<PrsAppealCheckAndSubmitViewModel>(CacheKey);
+                return RedirectToRoute(RouteConstants.PrsAppealGradeChange, new { profileId = model.ProfileId, assessmentId = model.AssessmentId, componentType = (int)model.ComponentType, isAppealOutcomeJourney = "true" });
+            }
+            else if (model.AppealOutcome == AppealOutcomeType.GradeNotChanged)
+            {
+                var checkAndSubmitViewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAppealCheckAndSubmitViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
+                checkAndSubmitViewModel.NewGrade = checkAndSubmitViewModel.OldGrade;
+                checkAndSubmitViewModel.IsGradeChanged = false;
+                await _cacheService.SetAsync(CacheKey, checkAndSubmitViewModel);
+
+                return RedirectToRoute(RouteConstants.PrsAppealCheckAndSubmit);
+            }
+            else
+            {
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+            }
         }
 
         [HttpGet]
@@ -450,7 +470,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("post-results-appeal-outcome-known/{profileId}/{assessmentId}/{componentType}", Name = RouteConstants.SubmitPrsAddAppealOutcomeKnown)]
+        [Route("post-results-appeal-outcome-known/{profileId}/{assessmentId}/{componentType}/{outcomeKnownTypeId:int?}", Name = RouteConstants.SubmitPrsAddAppealOutcomeKnown)]
         public async Task<IActionResult> PrsAddAppealOutcomeKnownAsync(PrsAddAppealOutcomeKnownViewModel model)
         {
             var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddAppealOutcomeKnownViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
@@ -462,8 +482,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             if (model.AppealOutcome == AppealOutcomeKnownType.GradeChanged)
-            {                
+            {
+                await _cacheService.RemoveAsync<PrsAppealCheckAndSubmitViewModel>(CacheKey);
                 return RedirectToRoute(RouteConstants.PrsAppealGradeChange, new { profileId = model.ProfileId, assessmentId = model.AssessmentId, componentType = (int)model.ComponentType });
+            }
+            else if (model.AppealOutcome == AppealOutcomeKnownType.GradeNotChanged)
+            {
+                var checkAndSubmitViewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAppealCheckAndSubmitViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
+                checkAndSubmitViewModel.NewGrade = checkAndSubmitViewModel.OldGrade;
+                checkAndSubmitViewModel.IsGradeChanged = false;
+                await _cacheService.SetAsync(CacheKey, checkAndSubmitViewModel);
+
+                return RedirectToRoute(RouteConstants.PrsAppealCheckAndSubmit);
             }
             else if (model.AppealOutcome == AppealOutcomeKnownType.No)
             {

@@ -69,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
            : GetAppealOutcomeRouteAttributes
         };
 
-        private bool IsAppealOutcomeJourney => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.UnderReview;
+        private bool IsAppealOutcomeJourney => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.BeingAppealed;
         private string GetAppealOutcomeRouteName => IsAppealOutcomeJourney ? RouteConstants.PrsAddAppealOutcome : RouteConstants.PrsAddAppealOutcomeKnown;
 
         private Dictionary<string, string> GetAppealOutcomeRouteAttributes

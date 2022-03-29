@@ -38,7 +38,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public bool IsChangeMode { get; set; }
 
-        public bool IsValid => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Reviewed && CommonHelper.IsAppealsAllowed(AppealEndDate);
+        public bool IsValid => (PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Reviewed && CommonHelper.IsAppealsAllowed(AppealEndDate))
+                             || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.BeingAppealed;
 
         public override BackLinkModel BackLink => new()
         {
