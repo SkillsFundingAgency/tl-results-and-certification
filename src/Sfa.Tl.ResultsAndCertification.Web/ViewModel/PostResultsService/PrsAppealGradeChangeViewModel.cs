@@ -36,6 +36,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public bool IsAppealOutcomeJourney { get; set; }
 
+        public bool IsChangeMode { get; set; }
+
         public bool IsValid => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Reviewed && CommonHelper.IsAppealsAllowed(AppealEndDate);
 
         public override BackLinkModel BackLink => new()
@@ -44,11 +46,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             RouteAttributes = GetRouteAttributes
         };
 
-        private string GetRouteName => GetAppealOutcomeJourneyRoute;
+        private string GetRouteName => IsChangeMode ? RouteConstants.PrsAppealCheckAndSubmit : GetAppealOutcomeJourneyRoute;
 
-        private string GetAppealOutcomeJourneyRoute => RouteConstants.PrsAddAppealOutcomeKnown;
+        private string GetAppealOutcomeJourneyRoute => IsAppealOutcomeJourney ? RouteConstants.PrsAddAppealOutcome : RouteConstants.PrsAddAppealOutcomeKnown;
 
         private Dictionary<string, string> GetRouteAttributes =>
+            IsChangeMode ? null :
+            IsAppealOutcomeJourney ?
+            new Dictionary<string, string>
+            {
+                { Constants.ProfileId, ProfileId.ToString() },
+                { Constants.AssessmentId, AssessmentId.ToString() },
+                { Constants.ComponentType, ((int)ComponentType).ToString() },
+                { Constants.AppealOutcomeTypeId, ((int)AppealOutcomeType.GradeChanged).ToString() }
+            }
+            :
             new Dictionary<string, string>
             {
                 { Constants.ProfileId, ProfileId.ToString() },

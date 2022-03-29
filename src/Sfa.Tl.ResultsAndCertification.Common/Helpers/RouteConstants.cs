@@ -343,7 +343,8 @@
         public const string SubmitPrsAddAppealOutcomeKnown = "SubmitPrsAddAppealOutcomeKnown";
         public const string PrsAppealGradeChange = "PrsAppealGradeChange";
         public const string SubmitPrsAppealGradeChange = "SubmitPrsAppealGradeChange";
-
+        public const string PrsAppealCheckAndSubmit = "PrsAppealCheckAndSubmit";
+        public const string SubmitPrsAppealCheckAndSubmit = "SubmitPrsAppealCheckAndSubmit";
 
         public const string PrsAppealOutcomePathwayGrade = "PrsAppealOutcomePathwayGrade";
         public const string SubmitPrsAppealOutcomePathwayGrade = "SubmitPrsAppealOutcomePathwayGrade";

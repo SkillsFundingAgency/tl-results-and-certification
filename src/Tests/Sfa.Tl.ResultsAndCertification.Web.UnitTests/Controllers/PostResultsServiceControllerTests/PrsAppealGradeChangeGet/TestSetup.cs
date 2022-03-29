@@ -11,10 +11,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         public int AssessmentId { get; set; }
         public ComponentType ComponentType { get; set; }
         public bool? IsAppealOutcomeJourney { get; set; }
+        public bool? IsChangeMode { get; set; }
 
         public async override Task When()
         {
-            Result = await Controller.PrsAppealGradeChangeAsync(ProfileId, AssessmentId, ComponentType, IsAppealOutcomeJourney);
+            Result = await Controller.PrsAppealGradeChangeAsync(ProfileId, AssessmentId, ComponentType, IsAppealOutcomeJourney, IsChangeMode);
         }
     }
 }

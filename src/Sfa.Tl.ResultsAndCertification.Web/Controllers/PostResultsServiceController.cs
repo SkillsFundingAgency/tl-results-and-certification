@@ -483,30 +483,59 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("post-results-appeal-change-grade/{profileId}/{assessmentId}/{componentType}/{isAppealOutcomeJourney:bool?}", Name = RouteConstants.PrsAppealGradeChange)]
-        public async Task<IActionResult> PrsAppealGradeChangeAsync(int profileId, int assessmentId, ComponentType componentType, bool? isAppealOutcomeJourney)
+        [Route("post-results-appeal-change-grade/{profileId}/{assessmentId}/{componentType}/{isAppealOutcomeJourney:bool?}/{isChangeMode:bool?}", Name = RouteConstants.PrsAppealGradeChange)]
+        public async Task<IActionResult> PrsAppealGradeChangeAsync(int profileId, int assessmentId, ComponentType componentType, bool? isAppealOutcomeJourney, bool? isChangeMode)
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAppealGradeChangeViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
 
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            var checkAndSubmitDetails = await _cacheService.GetAsync<PrsAppealCheckAndSubmitViewModel>(CacheKey);
+            if (checkAndSubmitDetails != null && (isChangeMode == null || isChangeMode.Value == false))
+                viewModel.SelectedGradeCode = viewModel.Grades?.FirstOrDefault(g => g.Value == checkAndSubmitDetails?.NewGrade)?.Code;
+
             viewModel.IsAppealOutcomeJourney = isAppealOutcomeJourney ?? false;
+            viewModel.IsChangeMode = isChangeMode ?? false;
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("post-results-appeal-change-grade/{profileId}/{assessmentId}/{componentType}/{isAppealOutcomeJourney:bool?}", Name = RouteConstants.SubmitPrsAppealGradeChange)]
+        [Route("post-results-appeal-change-grade/{profileId}/{assessmentId}/{componentType}/{isAppealOutcomeJourney:bool?}/{isChangeMode:bool?}", Name = RouteConstants.SubmitPrsAppealGradeChange)]
         public async Task<IActionResult> PrsAppealGradeChangeAsync(PrsAppealGradeChangeViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAppealGradeChangeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
                 prsDetails.IsAppealOutcomeJourney = model.IsAppealOutcomeJourney;
+                prsDetails.IsChangeMode = model.IsChangeMode;
                 return View(prsDetails);
             }
 
-            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+            var checkAndSubmitViewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAppealCheckAndSubmitViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
+            checkAndSubmitViewModel.NewGrade = model.Grades?.FirstOrDefault(x => x.Code == model.SelectedGradeCode)?.Value;
+
+            if (string.IsNullOrWhiteSpace(checkAndSubmitViewModel.NewGrade))
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            checkAndSubmitViewModel.IsGradeChanged = true;
+            await _cacheService.SetAsync(CacheKey, checkAndSubmitViewModel);
+
+            return RedirectToRoute(RouteConstants.PrsAppealCheckAndSubmit);
+        }
+
+        [HttpGet]
+        [Route("post-results-appeal-check", Name = RouteConstants.PrsAppealCheckAndSubmit)]
+        public async Task<IActionResult> PrsAppealCheckAndSubmitAsync()
+        {
+            var viewModel = await _cacheService.GetAsync<PrsAppealCheckAndSubmitViewModel>(CacheKey);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PrsAppealCheckAndSubmitViewModel from redis cache in Prs appeal outcome check and submit page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
         }
 
         [HttpGet]
