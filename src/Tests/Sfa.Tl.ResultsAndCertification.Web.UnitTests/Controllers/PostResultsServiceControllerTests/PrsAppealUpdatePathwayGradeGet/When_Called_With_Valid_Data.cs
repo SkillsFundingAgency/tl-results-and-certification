@@ -82,7 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.BackLink.RouteAttributes.TryGetValue(Constants.ResultId, out string resultIdRouteValue);
             resultIdRouteValue.Should().Be(ResultId.ToString());
             model.BackLink.RouteAttributes.TryGetValue(Constants.AppealOutcomeTypeId, out string outcomeTypeIdRouteValue);
-            outcomeTypeIdRouteValue.Should().Be(((int)AppealOutcomeType.UpdateGrade).ToString());
+            outcomeTypeIdRouteValue.Should().Be(((int)AppealOutcomeType.GradeChanged).ToString());
         }
     }
 }

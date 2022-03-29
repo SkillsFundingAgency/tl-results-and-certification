@@ -19,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             DateofBirthLabel = PrsAddRommOutcomeContent.Title_DateofBirth_Text;
             TlevelTitleLabel = PrsAddRommOutcomeContent.Title_TLevel_Text;
             CoreLabel = PrsAddRommOutcomeContent.Title_Core_Text;
+            SpecialismLabel = PrsAddRommOutcomeContent.Title_Specialism_Text;
             ExamPeriodLabel = PrsAddRommOutcomeContent.Title_ExamPeriod_Text;
             GradeLabel = PrsAddRommOutcomeContent.Title_Grade_Text;
         }
@@ -34,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public bool IsValid => (PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.UnderReview);
 
-        public override BackLinkModel BackLink => new BackLinkModel
+        public override BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.PrsLearnerDetails,
             RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
@@ -49,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         {
             get
             {
-                return string.Format(PrsAddRommOutcomeContent.Banner_Message, LearnerName, ExamPeriod, ComponentType == ComponentType.Core ? CoreDisplayName : string.Empty);
+                return string.Format(PrsAddRommOutcomeContent.Banner_Message, LearnerName, ExamPeriod, ComponentType == ComponentType.Core ? CoreDisplayName : SpecialismDisplayName);
             }
         }
 

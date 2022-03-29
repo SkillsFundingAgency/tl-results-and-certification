@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
         public override void Given()
         {
-            ViewModel = new AppealOutcomePathwayGradeViewModel { AppealOutcome = AppealOutcomeType.SameGrade };
+            ViewModel = new AppealOutcomePathwayGradeViewModel { AppealOutcome = AppealOutcomeType.GradeNotChanged };
 
             _checkAndSubmitViewModel = new PrsPathwayGradeCheckAndSubmitViewModel { OldGrade = "B" };
             Loader.GetPrsLearnerDetailsAsync<PrsPathwayGradeCheckAndSubmitViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_checkAndSubmitViewModel);

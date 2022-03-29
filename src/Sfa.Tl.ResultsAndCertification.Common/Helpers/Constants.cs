@@ -105,6 +105,8 @@
         public const string RommOutcomeTypeId = "outcomeTypeId";
         public const string RommOutcomeKnownTypeId = "outcomeKnownTypeId";
         public const string IsRommOutcomeJourney = "isRommOutcomeJourney";
+        public const string ComponentType = "componentType";
+        public const string AppealOutcomeKnownTypeId = "outcomeKnownTypeId";
 
         // Assessments
         public const int AssessmentEndInYears = 4;

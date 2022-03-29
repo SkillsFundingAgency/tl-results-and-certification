@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
@@ -30,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task<T> GetPrsLearnerDetailsAsync<T>(long aoUkprn, int profileId)
         {
             var response = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId, RegistrationPathwayStatus.Active);
-           
+
             var viewModel = _mapper.Map<T>(response, opt => opt.Items[Constants.ProfileId] = profileId);
 
             return viewModel;
@@ -41,23 +42,37 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var response = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId, RegistrationPathwayStatus.Active);
 
             if (response == null || componentType == ComponentType.NotSpecified)
-                return _mapper.Map<T>(response);
+                return default;
 
-            var assessment = response.Pathway.PathwayAssessments.FirstOrDefault(p => p.Id == assessmentId);
+            Specialism specialism = null;
+            Assessment assessment = null;
+
+            switch (componentType)
+            {
+                case ComponentType.Core:
+                    assessment = response.Pathway.PathwayAssessments.FirstOrDefault(p => p.Id == assessmentId);
+                    break;
+                case ComponentType.Specialism:
+                    specialism = response.Pathway.Specialisms.FirstOrDefault(s => s.Assessments.Any(a => a.Id == assessmentId));
+                    assessment = specialism?.Assessments?.FirstOrDefault(sa => sa.Id == assessmentId);
+                    break;
+            }
+
             var hasResult = assessment?.Result?.Id > 0;
 
             if (assessment == null || !hasResult)
-                return _mapper.Map<T>(null);
+                return default;
 
-            if (typeof(T) == typeof(PrsRommGradeChangeViewModel))
+            if (typeof(T) == typeof(PrsRommGradeChangeViewModel) || typeof(T) == typeof(PrsAppealGradeChangeViewModel))
             {
                 var grades = await _internalApiClient.GetLookupDataAsync(componentType == ComponentType.Core ? LookupCategory.PathwayComponentGrade : LookupCategory.SpecialismComponentGrade);
-                return _mapper.Map<T>(response, opt => { opt.Items["assessment"] = assessment; opt.Items["grades"] = grades; });
+                return _mapper.Map<T>(response, opt => { opt.Items["assessment"] = assessment; opt.Items["specialism"] = specialism; opt.Items["grades"] = grades; });
             }
             else
             {
                 return _mapper.Map<T>(response, opt =>
                 {
+                    opt.Items["specialism"] = specialism;
                     opt.Items["assessment"] = assessment;
                 });
             }
@@ -82,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.PrsActivityAsync(request);
         }
 
-        public async Task<bool> PrsRommActivityAsync(long aoUkprn, PrsAddRommOutcomeKnownCoreGradeViewModel model)
+        public async Task<bool> PrsRommActivityAsync(long aoUkprn, PrsAddRommOutcomeKnownViewModel model)
         {
             var request = _mapper.Map<PrsActivityRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
             return await _internalApiClient.PrsActivityAsync(request);
@@ -103,7 +118,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.PrsActivityAsync(request);
         }
 
-        public async Task<bool> AppealCoreGradeAsync(long aoUkprn, AppealCoreGradeViewModel model)
+        public async Task<bool> PrsAppealActivityAsync(long aoUkprn, PrsAddAppealOutcomeKnownViewModel model)
+        {
+            var request = _mapper.Map<PrsActivityRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.PrsActivityAsync(request);
+        }
+
+        public async Task<bool> AppealCoreGradeAsync(long aoUkprn, PrsAddAppealViewModel model)
         {
             var request = _mapper.Map<PrsActivityRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
             return await _internalApiClient.PrsActivityAsync(request);

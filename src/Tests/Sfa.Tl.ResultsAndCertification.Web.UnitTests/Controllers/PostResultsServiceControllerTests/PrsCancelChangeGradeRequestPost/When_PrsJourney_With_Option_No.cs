@@ -14,6 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             { 
                 ProfileId = 1, 
                 AssessmentId = 10, 
+                ComponentType = Common.Enum.ComponentType.Core,
                 AreYouSureToCancel = false,
                 IsResultJourney = false
             };
@@ -24,9 +25,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             var route = Result as RedirectToRouteResult;
             route.RouteName.Should().Be(RouteConstants.PrsGradeChangeRequest);
-            route.RouteValues.Count.Should().Be(2);
+            route.RouteValues.Count.Should().Be(3);
             route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
             route.RouteValues[Constants.AssessmentId].Should().Be(ViewModel.AssessmentId);
+            route.RouteValues[Constants.ComponentType].Should().Be((int)ViewModel.ComponentType);
         }
     }
 }

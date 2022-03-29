@@ -323,18 +323,28 @@
         public const string PrsUlnNotFound = "PrsUlnNotFound";
         public const string PrsUlnWithdrawn = "PrsUlnWithdrawn";
         public const string PrsLearnerDetails = "PrsLearnerDetails";
-        public const string PrsAddRommCoreGrade = "PrsAddRommCoreGrade";
-        public const string SubmitPrsAddRommCoreGrade = "SubmitPrsAddRommCoreGrade";
+        public const string PrsAddRomm = "PrsAddRomm";
+        public const string SubmitPrsAddRomm = "SubmitPrsAddRomm";
         public const string PrsAddRommOutcome = "PrsAddRommOutcome";
         public const string SubmitPrsAddRommOutcome = "SubmitPrsAddRommOutcome";
-        public const string PrsAddRommOutcomeKnownCoreGrade = "PrsAddRommOutcomeKnownCoreGrade";
-        public const string SubmitPrsAddRommOutcomeKnownCoreGrade = "SubmitPrsAddRommOutcomeKnownCoreGrade";
+        public const string PrsAddRommOutcomeKnown = "PrsAddRommOutcomeKnown";
+        public const string SubmitPrsAddRommOutcomeKnown = "SubmitPrsAddRommOutcomeKnown";
         public const string PrsRommGradeChange = "PrsRommGradeChange";
         public const string SubmitPrsRommGradeChange = "SubmitPrsRommGradeChange";
         public const string PrsRommCheckAndSubmit = "PrsRommCheckAndSubmit";
         public const string SubmitPrsRommCheckAndSubmit = "SubmitPrsRommCheckAndSubmit";
-        public const string PrsAppealCoreGrade = "PrsAppealCoreGrade";
-        public const string SubmitPrsAppealCoreGrade = "SubmitPrsAppealCoreGrade";
+        public const string PrsCancelRommUpdate = "PrsCancelRommUpdate";
+        public const string SubmitPrsCancelRommUpdate = "SubmitPrsCancelRommUpdate";
+        public const string PrsAddAppeal = "PrsAddAppeal";
+        public const string SubmitPrsAddAppeal = "SubmitPrsAddAppeal";
+        public const string PrsAddAppealOutcome = "PrsAddAppealOutcome";
+        public const string SubmitPrsAddAppealOutcome = "SubmitPrsAddAppealOutcome";
+        public const string PrsAddAppealOutcomeKnown = "PrsAddAppealOutcomeKnown";
+        public const string SubmitPrsAddAppealOutcomeKnown = "SubmitPrsAddAppealOutcomeKnown";
+        public const string PrsAppealGradeChange = "PrsAppealGradeChange";
+        public const string SubmitPrsAppealGradeChange = "SubmitPrsAppealGradeChange";
+
+
         public const string PrsAppealOutcomePathwayGrade = "PrsAppealOutcomePathwayGrade";
         public const string SubmitPrsAppealOutcomePathwayGrade = "SubmitPrsAppealOutcomePathwayGrade";
         public const string PrsPathwayGradeCheckAndSubmit = "PrsPathwayGradeCheckAndSubmit";

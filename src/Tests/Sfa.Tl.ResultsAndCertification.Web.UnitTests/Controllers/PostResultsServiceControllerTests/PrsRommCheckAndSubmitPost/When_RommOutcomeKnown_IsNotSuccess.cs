@@ -11,9 +11,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
     {
         public override void Given()
         {
-            var isAppealSuccess = false;
+            var isRommSuccess = false;
 
-            Loader.PrsRommActivityAsync(AoUkprn, Arg.Any<PrsRommCheckAndSubmitViewModel>()).Returns(isAppealSuccess);
+            Loader.PrsRommActivityAsync(AoUkprn, Arg.Any<PrsRommCheckAndSubmitViewModel>()).Returns(isRommSuccess);
         }
 
         [Fact]

@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             ProfileId = 1;
             AssessmentId = 7;
             ResultId = 9;
-            OutcomeTypeId = (int)AppealOutcomeType.UpdateGrade;
+            OutcomeTypeId = (int)AppealOutcomeType.GradeChanged;
 
             _appealOutcomePathwayGradeViewModel = new AppealOutcomePathwayGradeViewModel
             {
@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.PathwayAssessmentSeries.Should().Be(_appealOutcomePathwayGradeViewModel.PathwayAssessmentSeries);
             model.PathwayGrade.Should().Be(_appealOutcomePathwayGradeViewModel.PathwayGrade);
             model.PathwayPrsStatus.Should().Be(_appealOutcomePathwayGradeViewModel.PathwayPrsStatus);
-            model.AppealOutcome.Should().Be(AppealOutcomeType.UpdateGrade);
+            model.AppealOutcome.Should().Be(AppealOutcomeType.GradeChanged);
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.PrsLearnerDetails);

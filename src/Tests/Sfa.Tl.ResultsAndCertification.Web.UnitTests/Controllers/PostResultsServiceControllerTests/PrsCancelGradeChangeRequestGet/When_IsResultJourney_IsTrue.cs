@@ -18,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             // Input params
             ProfileId = 11;
             AssessmentId = 1;
+            ComponentType = ComponentType.Core;
             IsResultJourney = true;
 
             _mockCancelGradeChangeRequestViewModel = new PrsCancelGradeChangeRequestViewModel
@@ -28,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 PrsStatus = PrsStatus.Final,
                 AppealEndDate = DateTime.Now.AddDays(1)
             };
-            Loader.GetPrsLearnerDetailsAsync<PrsCancelGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core).Returns(_mockCancelGradeChangeRequestViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsCancelGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, (ComponentType)ComponentType).Returns(_mockCancelGradeChangeRequestViewModel);
         }
 
         [Fact]

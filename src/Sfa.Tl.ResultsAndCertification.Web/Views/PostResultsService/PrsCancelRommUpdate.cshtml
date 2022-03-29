@@ -1,0 +1,45 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsCancelRommUpdateViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = PrsCancelRommUpdate.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="@RouteConstants.SubmitPrsCancelRommUpdate">
+            <input type="hidden" asp-for="ProfileId" />
+            
+            <partial name="_ValidationSummary" />
+
+            <div class="govuk-form-group" sfa-validation-for="AreYouSureToCancel" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">@PrsCancelRommUpdate.Heading_Are_You_Sure_You_Want_To_Cancel</h1>
+                    </legend>
+                    <div class="govuk-radios">
+                        <span sfa-validation-for="AreYouSureToCancel"></span>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="areyousuretocancel" asp-for="AreYouSureToCancel" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="areyousuretocancel">
+                                @PrsCancelRommUpdate.Option_Yes
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="areyousuretocancel-no" asp-for="AreYouSureToCancel" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="areyousuretocancel-no">
+                                @PrsCancelRommUpdate.Option_No
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsCancelRommUpdate.Button_Continue</button>
+        </form>
+    </div>
+</div>

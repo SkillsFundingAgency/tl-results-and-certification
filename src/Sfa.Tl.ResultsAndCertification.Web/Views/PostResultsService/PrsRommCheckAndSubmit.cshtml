@@ -1,6 +1,7 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsRommCheckAndSubmitViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Common.Enum
 
 @{
     ViewData["Title"] = PrsRommCheckAndSubmit.Page_Title;
@@ -14,7 +15,7 @@
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l">@PrsRommCheckAndSubmit.Heading_Check_The_Romm_Outcome</h1>
 
-        <form class="form" asp-route="SubmitPrsRommCheckAndSubmit">
+        <form class="form" asp-route="@RouteConstants.SubmitPrsRommCheckAndSubmit">
             <input type="hidden" asp-for="@Model.ProfileId" />
             <input type="hidden" asp-for="@Model.AssessmentId" />
             <input type="hidden" asp-for="@Model.ResultId" />
@@ -22,7 +23,10 @@
             <input type="hidden" asp-for="@Model.Firstname" />
             <input type="hidden" asp-for="@Model.Lastname" />
             <input type="hidden" asp-for="@Model.ExamPeriod" />
-            <input type="hidden" asp-for="@Model.CoreDisplayName" />
+            <input type="hidden" asp-for="@Model.CoreName" />
+            <input type="hidden" asp-for="@Model.CoreLarId" />
+            <input type="hidden" asp-for="@Model.SpecialismName" />
+            <input type="hidden" asp-for="@Model.SpecialismLarId" />
             <input type="hidden" asp-for="@Model.ComponentType" />
 
             <h2 class="govuk-heading-m">@PrsRommCheckAndSubmit.Heading_Learner_Details </h2>
@@ -36,7 +40,11 @@
                 <vc:summary-item model=Model.SummaryExamPeriod></vc:summary-item>
             </dl>
 
-            <h2 class="govuk-heading-m">@string.Format(PrsRommCheckAndSubmit.Heading_Core_Component, Model.CoreDisplayName)</h2>
+            @{
+                var componentHeading = Model.ComponentType == ComponentType.Core ? PrsRommCheckAndSubmit.Heading_Core_Component : PrsRommCheckAndSubmit.Heading_Occupational_Specialism;
+                var componentDisplayName = Model.ComponentType == ComponentType.Core ? Model.CoreDisplayName : Model.SpecialismDisplayName;
+            }
+            <h2 class="govuk-heading-m">@string.Format(componentHeading, componentDisplayName)</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
                 <vc:summary-item model=Model.SummaryOldGrade></vc:summary-item>
                 <vc:summary-item model=Model.SummaryNewGrade></vc:summary-item>
@@ -45,7 +53,7 @@
             <p class="govuk-body">@string.Format(PrsRommCheckAndSubmit.Para_By_Submitting_This_Romm_Outcome, Model.LearnerName)</p>
             <div class="govuk-button-group">
                 <button id="submitButton" type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsRommCheckAndSubmit.Button_Submit</button>
-                <a id="cancelLink" class="govuk-link" asp-route="">@PrsRommCheckAndSubmit.Cancel_Link</a>
+                <a id="cancelLink" class="govuk-link" asp-route="@RouteConstants.PrsCancelRommUpdate">@PrsRommCheckAndSubmit.Cancel_Link</a>
             </div>
         </form>
     </div>

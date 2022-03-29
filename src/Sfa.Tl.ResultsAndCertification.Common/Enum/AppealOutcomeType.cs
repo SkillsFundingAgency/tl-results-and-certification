@@ -2,8 +2,8 @@
 {
     public enum AppealOutcomeType
     {
-        SameGrade = 1,
-        UpdateGrade = 2,
-        WithdrawAppeal = 3
+        GradeChanged = 1,
+        GradeNotChanged = 2,
+        Withdraw = 3
     }
 }

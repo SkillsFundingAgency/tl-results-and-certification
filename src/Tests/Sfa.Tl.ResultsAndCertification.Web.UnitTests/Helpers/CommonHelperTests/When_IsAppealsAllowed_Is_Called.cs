@@ -16,9 +16,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers.CommonHelperTests
                 {
                     // Object params { AppealEndDate, ExpectedResult}
                     new object[] { null, false},
-                    new object[] { DateTime.Today, true},
-                    new object[] { DateTime.Today.AddDays(1), true},
-                    new object[] { DateTime.Today.AddDays(-1), false},
+                    new object[] { DateTime.UtcNow, true},
+                    new object[] { DateTime.UtcNow.AddDays(1), true},
+                    new object[] { DateTime.UtcNow.AddDays(-1), false},
                 };
             }
         }

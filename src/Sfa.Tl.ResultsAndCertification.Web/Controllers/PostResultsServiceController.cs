@@ -137,10 +137,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("post-results-add-romm/{profileId}/{assessmentId}/{isBack:bool?}", Name = RouteConstants.PrsAddRommCoreGrade)]
-        public async Task<IActionResult> PrsAddRommCoreGradeAsync(int profileId, int assessmentId, bool? isBack)
+        [Route("post-results-add-romm/{profileId}/{assessmentId}/{componentType}/{isBack:bool?}", Name = RouteConstants.PrsAddRomm)]
+        public async Task<IActionResult> PrsAddRommAsync(int profileId, int assessmentId, ComponentType componentType, bool? isBack)
         {
-            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(User.GetUkPrn(), profileId, assessmentId, ComponentType.Core);
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
 
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -151,26 +151,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("post-results-add-romm/{profileId}/{assessmentId}/{isBack:bool?}", Name = RouteConstants.SubmitPrsAddRommCoreGrade)]
-        public async Task<IActionResult> PrsAddRommCoreGradeAsync(PrsAddRommCoreGradeViewModel model)
+        [Route("post-results-add-romm/{profileId}/{assessmentId}/{componentType}/{isBack:bool?}", Name = RouteConstants.SubmitPrsAddRomm)]
+        public async Task<IActionResult> PrsAddRommAsync(PrsAddRommViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommCoreGradeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, ComponentType.Core);
+                var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
                 return View(prsDetails);
             }      
 
             if(model.IsRommRequested == true)
-            return RedirectToRoute(RouteConstants.PrsAddRommOutcomeKnownCoreGrade, new { profileId = model.ProfileId, assessmentId = model.AssessmentId });
+            return RedirectToRoute(RouteConstants.PrsAddRommOutcomeKnown, new { profileId = model.ProfileId, assessmentId = model.AssessmentId, componentType = (int)model.ComponentType });
             else
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
         }
 
         [HttpGet]
-        [Route("post-results-add-romm-outcome/{profileId}/{assessmentId}/{outcomeTypeId:int?}", Name = RouteConstants.PrsAddRommOutcome)]
-        public async Task<IActionResult> PrsAddRommOutcomeAsync(int profileId, int assessmentId, int? outcomeTypeId)
+        [Route("post-results-add-romm-outcome/{profileId}/{assessmentId}/{componentType}/{outcomeTypeId:int?}", Name = RouteConstants.PrsAddRommOutcome)]
+        public async Task<IActionResult> PrsAddRommOutcomeAsync(int profileId, int assessmentId, ComponentType componentType, int? outcomeTypeId)
         {
-            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(User.GetUkPrn(), profileId, assessmentId, ComponentType.Core);
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
 
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -180,10 +180,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("post-results-add-romm-outcome/{profileId}/{assessmentId}/{outcomeTypeId:int?}", Name = RouteConstants.SubmitPrsAddRommOutcome)]
+        [Route("post-results-add-romm-outcome/{profileId}/{assessmentId}/{componentType}/{outcomeTypeId:int?}", Name = RouteConstants.SubmitPrsAddRommOutcome)]
         public async Task<IActionResult> PrsAddRommOutcomeAsync(PrsAddRommOutcomeViewModel model)
         {
-            var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, ComponentType.Core);
+            var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
 
             if (!ModelState.IsValid)
                 return View(prsDetails);
@@ -194,11 +194,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (model.RommOutcome == RommOutcomeType.GradeChanged)
             {
                 await _cacheService.RemoveAsync<PrsRommCheckAndSubmitViewModel>(CacheKey);
-                return RedirectToRoute(RouteConstants.PrsRommGradeChange, new { profileId = model.ProfileId, assessmentId = model.AssessmentId, isRommOutcomeJourney = "true" });
+                return RedirectToRoute(RouteConstants.PrsRommGradeChange, new { profileId = model.ProfileId, assessmentId = model.AssessmentId, componentType = (int)model.ComponentType, isRommOutcomeJourney = "true" });
             }
             else if (model.RommOutcome == RommOutcomeType.GradeNotChanged)
             {
-                var checkAndSubmitViewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, ComponentType.Core);
+                var checkAndSubmitViewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
                 checkAndSubmitViewModel.NewGrade = checkAndSubmitViewModel.OldGrade;
                 checkAndSubmitViewModel.IsGradeChanged = false;
                 await _cacheService.SetAsync(CacheKey, checkAndSubmitViewModel);
@@ -223,10 +223,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("post-results-romm-outcome-known/{profileId}/{assessmentId}/{outcomeKnownTypeId:int?}", Name = RouteConstants.PrsAddRommOutcomeKnownCoreGrade)]
-        public async Task<IActionResult> PrsAddRommOutcomeKnownCoreGradeAsync(int profileId, int assessmentId, int? outcomeKnownTypeId)
+        [Route("post-results-romm-outcome-known/{profileId}/{assessmentId}/{componentType}/{outcomeKnownTypeId:int?}", Name = RouteConstants.PrsAddRommOutcomeKnown)]
+        public async Task<IActionResult> PrsAddRommOutcomeKnownAsync(int profileId, int assessmentId, ComponentType componentType, int? outcomeKnownTypeId)
         {
-            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(User.GetUkPrn(), profileId, assessmentId, ComponentType.Core);
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
 
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -236,10 +236,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("post-results-romm-outcome-known/{profileId}/{assessmentId}/{outcomeKnownTypeId:int?}", Name = RouteConstants.SubmitPrsAddRommOutcomeKnownCoreGrade)]
-        public async Task<IActionResult> PrsAddRommOutcomeKnownCoreGradeAsync(PrsAddRommOutcomeKnownCoreGradeViewModel model)
+        [Route("post-results-romm-outcome-known/{profileId}/{assessmentId}/{componentType}/{outcomeKnownTypeId:int?}", Name = RouteConstants.SubmitPrsAddRommOutcomeKnown)]
+        public async Task<IActionResult> PrsAddRommOutcomeKnownAsync(PrsAddRommOutcomeKnownViewModel model)
         {
-            var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownCoreGradeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, ComponentType.Core);
+            var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
 
             if (!ModelState.IsValid)
                 return View(prsDetails);
@@ -250,11 +250,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (model.RommOutcome == RommOutcomeKnownType.GradeChanged)
             {
                 await _cacheService.RemoveAsync<PrsRommCheckAndSubmitViewModel>(CacheKey);
-                return RedirectToRoute(RouteConstants.PrsRommGradeChange, new { profileId = model.ProfileId, assessmentId = model.AssessmentId });
+                return RedirectToRoute(RouteConstants.PrsRommGradeChange, new { profileId = model.ProfileId, assessmentId = model.AssessmentId, componentType = (int)model.ComponentType });
             }
             else if (model.RommOutcome == RommOutcomeKnownType.GradeNotChanged)
             {
-                var checkAndSubmitViewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, ComponentType.Core);
+                var checkAndSubmitViewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
                 checkAndSubmitViewModel.NewGrade = checkAndSubmitViewModel.OldGrade;
                 checkAndSubmitViewModel.IsGradeChanged = false;
                 await _cacheService.SetAsync(CacheKey, checkAndSubmitViewModel);
@@ -279,10 +279,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("post-results-romm-change-grade/{profileId}/{assessmentId}/{isRommOutcomeJourney:bool?}/{isChangeMode:bool?}", Name = RouteConstants.PrsRommGradeChange)]
-        public async Task<IActionResult> PrsRommGradeChangeAsync(int profileId, int assessmentId, bool? isRommOutcomeJourney, bool? isChangeMode)
+        [Route("post-results-romm-change-grade/{profileId}/{assessmentId}/{componentType}/{isRommOutcomeJourney:bool?}/{isChangeMode:bool?}", Name = RouteConstants.PrsRommGradeChange)]
+        public async Task<IActionResult> PrsRommGradeChangeAsync(int profileId, int assessmentId, ComponentType componentType, bool? isRommOutcomeJourney, bool? isChangeMode)
         {
-            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(User.GetUkPrn(), profileId, assessmentId, ComponentType.Core);
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
 
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -297,18 +297,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("post-results-romm-change-grade/{profileId}/{assessmentId}/{isRommOutcomeJourney:bool?}/{isChangeMode:bool?}", Name = RouteConstants.SubmitPrsRommGradeChange)]
+        [Route("post-results-romm-change-grade/{profileId}/{assessmentId}/{componentType}/{isRommOutcomeJourney:bool?}/{isChangeMode:bool?}", Name = RouteConstants.SubmitPrsRommGradeChange)]
         public async Task<IActionResult> PrsRommGradeChangeAsync(PrsRommGradeChangeViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, ComponentType.Core);
+                var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsRommGradeChangeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
                 prsDetails.IsRommOutcomeJourney = model.IsRommOutcomeJourney;
                 prsDetails.IsChangeMode = model.IsChangeMode;
                 return View(prsDetails);
             }
 
-            var checkAndSubmitViewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, ComponentType.Core);
+            var checkAndSubmitViewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
             checkAndSubmitViewModel.NewGrade = model.Grades?.FirstOrDefault(x => x.Code == model.SelectedGradeCode)?.Value;
 
             if (string.IsNullOrWhiteSpace(checkAndSubmitViewModel.NewGrade))
@@ -342,6 +342,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!isSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
+            await _cacheService.RemoveAsync<PrsRommCheckAndSubmitViewModel>(CacheKey);
             var notificationBanner = new NotificationBannerModel { IsPrsJourney = true, HeaderMessage = model.Banner_HeaderMesage, Message = model.SuccessBannerMessage };
             await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
@@ -349,39 +350,163 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reviews-and-appeals-appeal-grade/{profileId}/{assessmentId}/{resultId}", Name = RouteConstants.PrsAppealCoreGrade)]
-        public async Task<IActionResult> PrsAppealCoreGradeAsync(int profileId, int assessmentId, int resultId)
+        [Route("post-results-cancel-ROMM-update", Name = RouteConstants.PrsCancelRommUpdate)]
+        public async Task<IActionResult> PrsCancelRommUpdateAsync()
         {
-            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(User.GetUkPrn(), profileId, assessmentId);
+            var cacheModel = await _cacheService.GetAsync<PrsRommCheckAndSubmitViewModel>(CacheKey);
 
-            if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.IsValid)
+            if (cacheModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            var viewModel = new PrsCancelRommUpdateViewModel { ProfileId = cacheModel.ProfileId };
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("reviews-and-appeals-appeal-grade", Name = RouteConstants.SubmitPrsAppealCoreGrade)]
-        public async Task<IActionResult> PrsAppealCoreGradeAsync(AppealCoreGradeViewModel model)
+        [Route("post-results-cancel-ROMM-update", Name = RouteConstants.SubmitPrsCancelRommUpdate)]
+        public async Task<IActionResult> PrsCancelRommUpdateAsync(PrsCancelRommUpdateViewModel model)
         {
-            var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(User.GetUkPrn(), model.ProfileId, model.PathwayAssessmentId);
+            if (!ModelState.IsValid)
+                return View(model);
+            
+            if (model.AreYouSureToCancel.Value)
+            {
+                await _cacheService.RemoveAsync<PrsRommCheckAndSubmitViewModel>(CacheKey);
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+            }
+            else
+            {
+                return RedirectToRoute(RouteConstants.PrsRommCheckAndSubmit);
+            }
+        }
+
+        // Appeals Process
+
+        [HttpGet]
+        [Route("post-results-add-appeal/{profileId}/{assessmentId}/{componentType}/{isBack:bool?}", Name = RouteConstants.PrsAddAppeal)]
+        public async Task<IActionResult> PrsAddAppealAsync(int profileId, int assessmentId, ComponentType componentType, bool? isBack)
+        {
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddAppealViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
+
+            if (viewModel == null || !viewModel.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            viewModel.IsAppealRequested = isBack;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("post-results-add-appeal/{profileId}/{assessmentId}/{componentType}/{isBack:bool?}", Name = RouteConstants.SubmitPrsAddAppeal)]
+        public async Task<IActionResult> PrsAddAppealAsync(PrsAddAppealViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddAppealViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
+                return View(prsDetails);
+            }
+
+            if (model.IsAppealRequested == true)
+                return RedirectToRoute(RouteConstants.PrsAddAppealOutcomeKnown, new { profileId = model.ProfileId, assessmentId = model.AssessmentId, componentType = (int)model.ComponentType });
+            else
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("post-results-add-appeal-outcome/{profileId}/{assessmentId}/{componentType}/{outcomeTypeId:int?}", Name = RouteConstants.PrsAddAppealOutcome)]
+        public async Task<IActionResult> PrsAddAppealOutcomeAsync(int profileId, int assessmentId, ComponentType componentType, int? outcomeTypeId)
+        {
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddAppealOutcomeViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
+
+            if (viewModel == null || !viewModel.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            viewModel.SetOutcomeType(outcomeTypeId);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("post-results-add-appeal-outcome/{profileId}/{assessmentId}/{componentType}/{outcomeTypeId:int?}", Name = RouteConstants.SubmitPrsAddAppealOutcome)]
+        public async Task<IActionResult> PrsAddAppealOutcomeAsync(PrsAddAppealOutcomeViewModel model)
+        {
+            var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddAppealOutcomeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
+
             if (!ModelState.IsValid)
                 return View(prsDetails);
 
-            if (prsDetails == null || !prsDetails.IsValid) 
+            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("post-results-appeal-outcome-known/{profileId}/{assessmentId}/{componentType}/{outcomeKnownTypeId:int?}", Name = RouteConstants.PrsAddAppealOutcomeKnown)]
+        public async Task<IActionResult> PrsAddAppealOutcomeKnownAsync(int profileId, int assessmentId, ComponentType componentType, int? outcomeKnownTypeId)
+        {
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddAppealOutcomeKnownViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
+
+            if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            if (model.AppealGrade == false)
-                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId });
+            viewModel.SetOutcomeType(outcomeKnownTypeId);
+            return View(viewModel);
+        }
 
-            bool isSuccess = await _postResultsServiceLoader.AppealCoreGradeAsync(User.GetUkPrn(), model);
-            if (!isSuccess)
-                return RedirectToRoute(RouteConstants.ProblemWithService);
+        [HttpPost]
+        [Route("post-results-appeal-outcome-known/{profileId}/{assessmentId}/{componentType}", Name = RouteConstants.SubmitPrsAddAppealOutcomeKnown)]
+        public async Task<IActionResult> PrsAddAppealOutcomeKnownAsync(PrsAddAppealOutcomeKnownViewModel model)
+        {
+            var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddAppealOutcomeKnownViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
 
-            var notificationBanner = new NotificationBannerModel { Message = prsDetails.SuccessBannerMessage };
-            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+            if (!ModelState.IsValid)
+                return View(prsDetails);
 
-            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId });
+            if (prsDetails == null || !prsDetails.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            if (model.AppealOutcome == AppealOutcomeKnownType.GradeChanged)
+            {                
+                return RedirectToRoute(RouteConstants.PrsAppealGradeChange, new { profileId = model.ProfileId, assessmentId = model.AssessmentId, componentType = (int)model.ComponentType });
+            }
+            else if (model.AppealOutcome == AppealOutcomeKnownType.No)
+            {
+                bool isSuccess = await _postResultsServiceLoader.PrsAppealActivityAsync(User.GetUkPrn(), model);
+                if (!isSuccess)
+                    return RedirectToRoute(RouteConstants.ProblemWithService);
+
+                var notificationBanner = new NotificationBannerModel { IsPrsJourney = true, HeaderMessage = prsDetails.Banner_HeaderMesage, Message = prsDetails.SuccessBannerMessage };
+                await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+            }
+            else
+            {
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+            }
+        }
+
+        [HttpGet]
+        [Route("post-results-appeal-change-grade/{profileId}/{assessmentId}/{componentType}/{isAppealOutcomeJourney:bool?}", Name = RouteConstants.PrsAppealGradeChange)]
+        public async Task<IActionResult> PrsAppealGradeChangeAsync(int profileId, int assessmentId, ComponentType componentType, bool? isAppealOutcomeJourney)
+        {
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAppealGradeChangeViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
+
+            if (viewModel == null || !viewModel.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            viewModel.IsAppealOutcomeJourney = isAppealOutcomeJourney ?? false;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("post-results-appeal-change-grade/{profileId}/{assessmentId}/{componentType}/{isAppealOutcomeJourney:bool?}", Name = RouteConstants.SubmitPrsAppealGradeChange)]
+        public async Task<IActionResult> PrsAppealGradeChangeAsync(PrsAppealGradeChangeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAppealGradeChangeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
+                prsDetails.IsAppealOutcomeJourney = model.IsAppealOutcomeJourney;
+                return View(prsDetails);
+            }
+
+            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
         }
 
         [HttpGet]
@@ -409,7 +534,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             await _cacheService.RemoveAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
 
-            if (model.AppealOutcome == AppealOutcomeType.SameGrade)
+            if (model.AppealOutcome == AppealOutcomeType.GradeNotChanged)
             {
                 var checkAndSubmitViewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsPathwayGradeCheckAndSubmitViewModel>(User.GetUkPrn(), model.ProfileId, model.PathwayAssessmentId);
                 checkAndSubmitViewModel.NewGrade = checkAndSubmitViewModel.OldGrade;
@@ -418,7 +543,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
                 return RedirectToRoute(RouteConstants.PrsPathwayGradeCheckAndSubmit);
             }
-            else if (model.AppealOutcome == AppealOutcomeType.WithdrawAppeal)
+            else if (model.AppealOutcome == AppealOutcomeType.Withdraw)
                 return await PrsWithdrawAppealAsync(model);
             else
                 return RedirectToRoute(RouteConstants.PrsAppealUpdatePathwayGrade, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId, resultId = model.PathwayResultId });
@@ -535,10 +660,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("post-results-final-grade-change-request/{profileId}/{assessmentId}/{isResultJourney:bool?}", Name = RouteConstants.PrsGradeChangeRequest)]
-        public async Task<IActionResult> PrsGradeChangeRequestAsync(int profileId, int assessmentId, bool? isResultJourney)
+        [Route("post-results-final-grade-change-request/{profileId}/{assessmentId}/{componentType}/{isResultJourney:bool?}", Name = RouteConstants.PrsGradeChangeRequest)]
+        public async Task<IActionResult> PrsGradeChangeRequestAsync(int profileId, int assessmentId, ComponentType componentType, bool? isResultJourney)
         {
-            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(User.GetUkPrn(), profileId, assessmentId, ComponentType.Core);
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
             if (viewModel == null || !viewModel.CanRequestFinalGradeChange)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
@@ -547,10 +672,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("post-results-final-grade-change-request/{profileId}/{assessmentId}/{isResultJourney:bool?}", Name = RouteConstants.SubmitPrsGradeChangeRequest)]
+        [Route("post-results-final-grade-change-request/{profileId}/{assessmentId}/{componentType}/{isResultJourney:bool?}", Name = RouteConstants.SubmitPrsGradeChangeRequest)]
         public async Task<IActionResult> PrsGradeChangeRequestAsync(PrsGradeChangeRequestViewModel viewModel)
         {
-            var learnerDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(User.GetUkPrn(), viewModel.ProfileId, viewModel.AssessmentId, ComponentType.Core);
+            var learnerDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(User.GetUkPrn(), viewModel.ProfileId, viewModel.AssessmentId, viewModel.ComponentType);
 
             if (learnerDetails == null || !learnerDetails.CanRequestFinalGradeChange)
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -573,19 +698,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("post-results-cancel-final-grade-change-request/{profileId}/{assessmentId}/{isResultJourney:bool?}", Name = RouteConstants.PrsCancelGradeChangeRequest)]
-        public async Task<IActionResult> PrsCancelGradeChangeRequestAsync(int profileId, int assessmentId, bool isResultJourney)
+        [Route("post-results-cancel-final-grade-change-request/{profileId}/{assessmentId}/{componentType}/{isResultJourney:bool?}", Name = RouteConstants.PrsCancelGradeChangeRequest)]
+        public async Task<IActionResult> PrsCancelGradeChangeRequestAsync(int profileId, int assessmentId, ComponentType componentType, bool isResultJourney)
         {
-            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsCancelGradeChangeRequestViewModel>(User.GetUkPrn(), profileId, assessmentId, ComponentType.Core);
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsCancelGradeChangeRequestViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             viewModel.IsResultJourney = isResultJourney;
+
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("post-results-cancel-final-grade-change-request/{profileId}/{assessmentId}/{isResultJourney:bool?}", Name = RouteConstants.SubmitPrsCancelGradeChangeRequest)]
+        [Route("post-results-cancel-final-grade-change-request/{profileId}/{assessmentId}/{componentType}/{isResultJourney:bool?}", Name = RouteConstants.SubmitPrsCancelGradeChangeRequest)]
         public IActionResult PrsCancelGradeChangeRequest(PrsCancelGradeChangeRequestViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -600,7 +726,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             if (!viewModel.AreYouSureToCancel.Value)
-                return RedirectToRoute(RouteConstants.PrsGradeChangeRequest, new { profileId = viewModel.ProfileId, assessmentId = viewModel.AssessmentId });
+                return RedirectToRoute(RouteConstants.PrsGradeChangeRequest, new { profileId = viewModel.ProfileId, assessmentId = viewModel.AssessmentId, componentType = (int)viewModel.ComponentType });
 
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = viewModel.ProfileId });
         }

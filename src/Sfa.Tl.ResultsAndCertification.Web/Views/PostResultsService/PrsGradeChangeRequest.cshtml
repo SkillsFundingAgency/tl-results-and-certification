@@ -17,6 +17,7 @@
             <input type="hidden" asp-for="ProfileId" />
             <input type="hidden" asp-for="AssessmentId" />
             <input type="hidden" asp-for="ResultId" />
+            <input type="hidden" asp-for="ComponentType" />
             <input type="hidden" asp-for="IsResultJourney" />
 
             <partial name="_ValidationSummary" />
@@ -28,7 +29,7 @@
                 <vc:summary-item model=Model.SummaryUln></vc:summary-item>
                 <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
                 <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
-                <vc:summary-item model=Model.SummaryCore></vc:summary-item>
+                <vc:summary-item model=Model.SummaryComponentDisplayName></vc:summary-item>
                 <vc:summary-item model=Model.SummaryExamPeriod></vc:summary-item>
                 <vc:summary-item model=Model.SummaryGrade></vc:summary-item>
             </dl>
@@ -48,11 +49,13 @@
                 </fieldset>
             </div>
 
+            @{ var componentType = (int)Model.ComponentType; }
             <div class="govuk-button-group">
                 <button id="sendButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsGradeChangeRequest.Button_Send</button>
                 <a id="cancelLink" class="govuk-link" asp-route="@RouteConstants.PrsCancelGradeChangeRequest"
                    asp-route-profileId="@Model.ProfileId"
                    asp-route-assessmentId="@Model.AssessmentId"
+                   asp-route-componentType="@componentType"
                    asp-route-isResultJourney="@Model.IsResultJourney">@PrsGradeChangeRequest.Link_Cancel</a>
             </div>
         </form>
