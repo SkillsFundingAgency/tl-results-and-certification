@@ -426,7 +426,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("post-results-add-appeal-outcome/{profileId}/{assessmentId}/{componentType}/{outcomeTypeId:int?}", Name = RouteConstants.SubmitPrsAddAppealOutcome)]
-        public async Task<IActionResult> PrsAddAppealOutcomeAsync(PrsAddRommOutcomeViewModel model)
+        public async Task<IActionResult> PrsAddAppealOutcomeAsync(PrsAddAppealOutcomeViewModel model)
         {
             var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsAddAppealOutcomeViewModel>(User.GetUkPrn(), model.ProfileId, model.AssessmentId, model.ComponentType);
 
