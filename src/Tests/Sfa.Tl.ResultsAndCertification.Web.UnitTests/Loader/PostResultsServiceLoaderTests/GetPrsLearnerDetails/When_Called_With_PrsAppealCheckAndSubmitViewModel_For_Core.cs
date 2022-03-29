@@ -11,10 +11,10 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.GetPrsLearnerDetails
 {
-    public class When_Called_With_PrsRommCheckAndSubmitViewModel : TestSetup
+    public class When_Called_With_PrsAppealCheckAndSubmitViewModel_For_Core : TestSetup
     {
         private LearnerRecord _expectedApiResult;
-        protected PrsRommCheckAndSubmitViewModel ActualResult { get; set; }
+        protected PrsAppealCheckAndSubmitViewModel ActualResult { get; set; }
 
         public override void Given()
         {
@@ -53,45 +53,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             SeriesName = "Summer 2022",
                             RommEndDate = DateTime.UtcNow.AddDays(5),
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
+                            ComponentType = ComponentType.Core,
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
                             Result = new Result
                             {
                                 Id = 1,
                                 Grade = "C",
-                                PrsStatus = null,
+                                PrsStatus = PrsStatus.Reviewed,
                                 LastUpdatedBy = "System",
                                 LastUpdatedOn = DateTime.UtcNow
-                            }
-                        }
-                    },
-                    Specialisms = new List<Specialism>
-                    {
-                        new Specialism
-                        {
-                            Id = 20,
-                            LarId = "12345678",
-                            Name = "Plumbing",
-                            Assessments = new List<Assessment>
-                            {
-                                new Assessment
-                                {
-                                    Id = 101,
-                                    SeriesId = 2,
-                                    SeriesName = "Summer 2021",
-                                    RommEndDate = DateTime.UtcNow.AddDays(15),
-                                    AppealEndDate = DateTime.UtcNow.AddDays(30),
-                                    LastUpdatedBy = "System",
-                                    LastUpdatedOn = DateTime.UtcNow,
-                                    Result = new Result
-                                    {
-                                        Id = 1,
-                                        Grade = "Merit",
-                                        PrsStatus = null,
-                                        LastUpdatedBy = "System",
-                                        LastUpdatedOn = DateTime.UtcNow
-                                    }
-                                }
                             }
                         }
                     }
@@ -103,7 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
+            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsAppealCheckAndSubmitViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType.Core);
         }
 
         [Fact]
