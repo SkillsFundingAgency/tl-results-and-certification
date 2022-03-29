@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ProfileId = 1,
                 PathwayAssessmentId = 2,
                 PathwayResultId = 3,
-                AppealOutcome = AppealOutcomeType.WithdrawAppeal,
+                AppealOutcome = AppealOutcomeType.Withdraw,
                 PathwayCode = "12345678",
                 PathwayName = "Design, Suervey and Planning"
             };

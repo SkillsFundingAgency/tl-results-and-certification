@@ -112,7 +112,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.BackLink.RouteAttributes.TryGetValue(Constants.ResultId, out string routeResultId);
             routeResultId.Should().Be(_mockCache.ResultId.ToString());
             model.BackLink.RouteAttributes.TryGetValue(Constants.AppealOutcomeTypeId, out string routeAppealOutcomeTypeId);
-            routeAppealOutcomeTypeId.Should().Be(((int)AppealOutcomeType.SameGrade).ToString());
+            routeAppealOutcomeTypeId.Should().Be(((int)AppealOutcomeType.GradeNotChanged).ToString());
         }
 
         [Fact]

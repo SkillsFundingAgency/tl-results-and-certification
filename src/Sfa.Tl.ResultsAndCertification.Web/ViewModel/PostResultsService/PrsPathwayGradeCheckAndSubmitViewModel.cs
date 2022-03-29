@@ -74,7 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                 { Constants.ProfileId, ProfileId.ToString() },
                 { Constants.AssessmentId, AssessmentId.ToString() },
                 { Constants.ResultId, ResultId.ToString() },
-                { Constants.AppealOutcomeTypeId, ((int)AppealOutcomeType.SameGrade).ToString() }
+                { Constants.AppealOutcomeTypeId, ((int)AppealOutcomeType.GradeNotChanged).ToString() }
             }
         };
     }
