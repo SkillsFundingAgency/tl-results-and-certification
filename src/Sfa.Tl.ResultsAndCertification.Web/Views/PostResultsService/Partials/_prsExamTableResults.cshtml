@@ -44,7 +44,7 @@
         }
         else if (Model.IsAddAppealOutcomeAllowed)
         {
-            <a class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0" role="button" asp-route="">@PrsLearnerDetails.Action_Button_Add_Appeal_Outcome</a>
+            <a class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0" role="button" asp-route="@Model.AppealOutcomeRouteName" asp-all-route-data="@Model.RommRouteAttributes">@PrsLearnerDetails.Action_Button_Add_Appeal_Outcome</a>
         }        
         else if (Model.IsRequestChangeAllowed)
         {

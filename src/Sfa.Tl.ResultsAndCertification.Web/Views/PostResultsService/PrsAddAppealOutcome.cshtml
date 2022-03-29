@@ -1,0 +1,68 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsAddAppealOutcomeViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Enum
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = PrsAddAppealOutcome.Page_Title;
+}
+
+@section NavigationBar {
+<vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="@RouteConstants.SubmitPrsAddAppealOutcome">
+            <input type="hidden" asp-for="ProfileId" />
+            <input type="hidden" asp-for="AssessmentId" />
+            <input type="hidden" asp-for="ResultId" />
+            <input type="hidden" asp-for="ComponentType" />
+
+            <partial name="_ValidationSummary" />
+
+            <h1 class="govuk-heading-l">@PrsAddAppealOutcome.Heading_Add_An_Appeal_Outcome</h1>
+
+            <dl class="govuk-summary-list govuk-summary-list--no-border" aria-label="@PrsAddAppealOutcome.Aria_Label_Text_Learner_Details">
+                <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+                <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+                <vc:summary-item model=Model.SummaryComponentDisplayName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryExamPeriod></vc:summary-item>
+                <vc:summary-item model=Model.SummaryGrade></vc:summary-item>
+            </dl>
+
+            <div class="govuk-form-group" sfa-validation-for="AppealOutcome" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h2 class="govuk-fieldset__heading">
+                            @PrsAddAppealOutcome.What_Is_The_Appeal_Outcome
+                        </h2>
+                    </legend>
+
+                    <span sfa-validation-for="AppealOutcome"></span>
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="appealoutcome" asp-for="AppealOutcome" type="radio" value="@AppealOutcomeType.GradeNotChanged">
+                        <label class="govuk-label govuk-radios__label" for="appealoutcome">
+                            @PrsAddAppealOutcome.Radio_Button_Yes_Grade_Is_Same
+                        </label>
+                    </div>
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="appealoutcome-gradechanged" asp-for="AppealOutcome" type="radio" value="@AppealOutcomeType.GradeChanged">
+                        <label class="govuk-label govuk-radios__label" for="appealoutcome-gradechanged">
+                            @PrsAddAppealOutcome.Radio_Button_Yes_Grade_Has_Changed
+                        </label>
+                    </div>
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="appealoutcome-withdraw" asp-for="AppealOutcome" type="radio" value="@AppealOutcomeType.Withdraw">
+                        <label class="govuk-label govuk-radios__label" for="appealoutcome-withdraw">
+                            @PrsAddAppealOutcome.Radio_Button_Withdrawn
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+            <button type="submit" id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsAddAppealOutcome.Button_Continue</button>
+        </form>
+    </div>
+</div>

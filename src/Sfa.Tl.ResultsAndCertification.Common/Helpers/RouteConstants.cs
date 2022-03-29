@@ -337,6 +337,8 @@
         public const string SubmitPrsCancelRommUpdate = "SubmitPrsCancelRommUpdate";
         public const string PrsAddAppeal = "PrsAddAppeal";
         public const string SubmitPrsAddAppeal = "SubmitPrsAddAppeal";
+        public const string PrsAddAppealOutcome = "PrsAddAppealOutcome";
+        public const string SubmitPrsAddAppealOutcome = "SubmitPrsAddAppealOutcome";
         public const string PrsAddAppealOutcomeKnown = "PrsAddAppealOutcomeKnown";
         public const string SubmitPrsAddAppealOutcomeKnown = "SubmitPrsAddAppealOutcomeKnown";
         public const string PrsAppealGradeChange = "PrsAppealGradeChange";

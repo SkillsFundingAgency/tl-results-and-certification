@@ -30,7 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public string RommRouteName { get { return RouteConstants.PrsAddRomm; } }
         public string RommOutcomeRouteName { get { return RouteConstants.PrsAddRommOutcome; } }
-        public string AppealRouteName { get { return RouteConstants.PrsAddAppeal; } }        
+        public string AppealRouteName { get { return RouteConstants.PrsAddAppeal; } }
+        public string AppealOutcomeRouteName { get { return RouteConstants.PrsAddAppealOutcome; } }
         public string PrsGradeChangeRequestRouteName { get { return RouteConstants.PrsGradeChangeRequest; } }
 
         public Dictionary<string, string> RommRouteAttributes 

@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
             Loader.GetPrsLearnerDetailsAsync<AppealOutcomePathwayGradeViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_appealOutcomePathwayGradeViewModel);
 
-            ViewModel = new AppealOutcomePathwayGradeViewModel { ProfileId = 1, PathwayAssessmentId = AssessmentId, PathwayResultId = ResultId, AppealOutcome = AppealOutcomeType.UpdateGrade };
+            ViewModel = new AppealOutcomePathwayGradeViewModel { ProfileId = 1, PathwayAssessmentId = AssessmentId, PathwayResultId = ResultId, AppealOutcome = AppealOutcomeType.GradeChanged };
         }
 
         [Fact]

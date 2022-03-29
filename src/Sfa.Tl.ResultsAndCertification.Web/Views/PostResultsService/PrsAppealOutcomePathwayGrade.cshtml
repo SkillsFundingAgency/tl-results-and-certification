@@ -43,19 +43,19 @@
                     <div class="govuk-radios">
                         <span sfa-validation-for="AppealOutcome"></span>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="appealoutcome" asp-for="AppealOutcome" type="radio" value="@AppealOutcomeType.SameGrade">
+                            <input class="govuk-radios__input" id="appealoutcome" asp-for="AppealOutcome" type="radio" value="@AppealOutcomeType.GradeNotChanged">
                             <label class="govuk-label govuk-radios__label" for="appealoutcome">
                                 @AppealOutcomePathwayGrade.Radio_Button_SameGrade
                             </label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="appealoutcome-updategrade" asp-for="AppealOutcome" type="radio" value="@AppealOutcomeType.UpdateGrade">
+                            <input class="govuk-radios__input" id="appealoutcome-updategrade" asp-for="AppealOutcome" type="radio" value="@AppealOutcomeType.GradeChanged">
                             <label class="govuk-label govuk-radios__label" for="appealoutcome-updategrade">
                                 @AppealOutcomePathwayGrade.Radio_Button_UpdateGrade
                             </label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="appealoutcome-withdraw" asp-for="AppealOutcome" type="radio" value="@AppealOutcomeType.WithdrawAppeal">
+                            <input class="govuk-radios__input" id="appealoutcome-withdraw" asp-for="AppealOutcome" type="radio" value="@AppealOutcomeType.Withdraw">
                             <label class="govuk-label govuk-radios__label" for="appealoutcome-withdraw">
                                 @AppealOutcomePathwayGrade.Radio_Button_WithdrawAppeal
                             </label>
