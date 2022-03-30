@@ -285,6 +285,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                     { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Withdraw, ResultLookupId = 0 },
                       true },
 
+                    // When componenttype = core - CurrentStatus is UnderReview -> Requesting Final
+                     new object[]
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
+                      false },                    
+
+                    // When componenttype = core - CurrentStatus is UnderReview -> Requesting Withdraw
+                    new object[]
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Withdraw, ResultLookupId = 0 },
+                      true },
+
                     // When componenttype = specialism - CurrentStatus is UnderReview -> Requesting Final
                     new object[]
                     { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Specialism, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
@@ -293,17 +303,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                     // When componenttype = specialism - CurrentStatus is UnderReview -> Requesting Withdraw
                     new object[]
                     { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Specialism, PrsStatus = PrsStatus.Withdraw, ResultLookupId = 0 },
-                      true },
-
-                    // When componenttype = Core - CurrentStatus is Reviewed -> Requesting Final
-                    new object[]
-                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 5, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
-                      false },
-
-                    // When componenttype = specialism - CurrentStatus is Reviewed -> Requesting Final
-                    new object[]
-                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 5, ComponentType = ComponentType.Specialism, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
-                      false },
+                      true }                    
                 };
             }
         }
