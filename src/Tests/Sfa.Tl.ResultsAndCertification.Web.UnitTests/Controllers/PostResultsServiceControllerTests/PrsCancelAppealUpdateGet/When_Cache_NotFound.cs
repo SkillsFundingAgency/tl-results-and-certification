@@ -9,18 +9,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 {
     public class When_Cache_NotFound : TestSetup
     {
-        private PrsPathwayGradeCheckAndSubmitViewModel _cacheResult;
+        private PrsAppealCheckAndSubmitViewModel _cacheResult;
 
         public override void Given()
         {
             _cacheResult = null;
-            CacheService.GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey).Returns(_cacheResult);
+            CacheService.GetAsync<PrsAppealCheckAndSubmitViewModel>(CacheKey).Returns(_cacheResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            CacheService.Received(1).GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
+            CacheService.Received(1).GetAsync<PrsAppealCheckAndSubmitViewModel>(CacheKey);
         }
 
         [Fact]

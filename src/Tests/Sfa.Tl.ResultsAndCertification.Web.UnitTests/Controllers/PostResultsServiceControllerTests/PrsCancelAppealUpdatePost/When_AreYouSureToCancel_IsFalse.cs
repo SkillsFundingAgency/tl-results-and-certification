@@ -6,18 +6,18 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsCancelAppealUpdatePost
 {
-    public class When_CancelRequest_IsFalse : TestSetup
+    public class When_AreYouSureToCancel_IsFalse : TestSetup
     {
         public override void Given()
         {
-            ViewModel = new PrsCancelAppealUpdateViewModel { ProfileId = 1, AssessmentId = 10, CancelRequest = false };
+            ViewModel = new PrsCancelAppealUpdateViewModel { ProfileId = 1, AreYouSureToCancel = false };
         }
 
         [Fact]
-        public void Then_Redirected_To_PrsPathwayGradeCheckAndSubmit()
+        public void Then_Redirected_To_PrsAppealCheckAndSubmit()
         {
             var route = Result as RedirectToRouteResult;
-            route.RouteName.Should().Be(RouteConstants.PrsPathwayGradeCheckAndSubmit);
+            route.RouteName.Should().Be(RouteConstants.PrsAppealCheckAndSubmit);
             route.RouteValues.Should().BeNull();
         }
     }

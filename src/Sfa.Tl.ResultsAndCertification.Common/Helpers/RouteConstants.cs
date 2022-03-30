@@ -345,6 +345,8 @@
         public const string SubmitPrsAppealGradeChange = "SubmitPrsAppealGradeChange";
         public const string PrsAppealCheckAndSubmit = "PrsAppealCheckAndSubmit";
         public const string SubmitPrsAppealCheckAndSubmit = "SubmitPrsAppealCheckAndSubmit";
+        public const string PrsCancelAppealUpdate = "PrsCancelAppealUpdate";
+        public const string SubmitPrsCancelAppealUpdate = "SubmitPrsCancelAppealUpdate";
 
         public const string PrsAppealOutcomePathwayGrade = "PrsAppealOutcomePathwayGrade";
         public const string SubmitPrsAppealOutcomePathwayGrade = "SubmitPrsAppealOutcomePathwayGrade";
@@ -352,9 +354,7 @@
         public const string SubmitPrsPathwayGradeCheckAndSubmit = "SubmitPrsPathwayGradeCheckAndSubmit";
         public const string PrsAppealUpdatePathwayGrade = "PrsAppealUpdatePathwayGrade";
         public const string SubmitPrsAppealUpdatePathwayGrade = "SubmitPrsAppealUpdatePathwayGrade";        
-        public const string PrsNoResults = "PrsNoResults";
-        public const string PrsCancelAppealUpdate = "PrsCancelAppealUpdate";
-        public const string SubmitPrsCancelAppealUpdate = "SubmitPrsCancelAppealUpdate";
+        public const string PrsNoResults = "PrsNoResults";        
         public const string PrsGradeChangeRequest = "PrsGradeChangeRequest";
         public const string SubmitPrsGradeChangeRequest = "SubmitPrsGradeChangeRequest";
         public const string PrsCancelGradeChangeRequest = "PrsCancelGradeChangeRequest";

@@ -10,8 +10,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
     {
         public override void Given()
         {
-            ViewModel = new PrsCancelAppealUpdateViewModel { ProfileId = 1, AssessmentId = 10, CancelRequest = null };
-            Controller.ModelState.AddModelError("CancelRequest", Content.PostResultsService.PrsCancelAppealUpdate.Validation_Message);
+            ViewModel = new PrsCancelAppealUpdateViewModel { ProfileId = 1, AreYouSureToCancel = null };
+            Controller.ModelState.AddModelError("AreYouSureToCancel", Content.PostResultsService.PrsCancelAppealUpdate.Validation_Message);
         }
 
         [Fact]
@@ -24,13 +24,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
             var model = viewResult.Model as PrsCancelAppealUpdateViewModel;
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.PrsPathwayGradeCheckAndSubmit);
+            model.BackLink.RouteName.Should().Be(RouteConstants.PrsAppealCheckAndSubmit);
             model.BackLink.RouteAttributes.Count.Should().Be(0);
-            
-            Controller.ViewData.ModelState.Should().ContainSingle();
-            Controller.ViewData.ModelState.ContainsKey(nameof(PrsCancelAppealUpdateViewModel.CancelRequest)).Should().BeTrue();
 
-            var modelState = Controller.ViewData.ModelState[nameof(PrsCancelAppealUpdateViewModel.CancelRequest)];
+            Controller.ViewData.ModelState.Should().ContainSingle();
+            Controller.ViewData.ModelState.ContainsKey(nameof(PrsCancelAppealUpdateViewModel.AreYouSureToCancel)).Should().BeTrue();
+
+            var modelState = Controller.ViewData.ModelState[nameof(PrsCancelAppealUpdateViewModel.AreYouSureToCancel)];
             modelState.Errors[0].ErrorMessage.Should().Be(Content.PostResultsService.PrsCancelAppealUpdate.Validation_Message);
         }
     }

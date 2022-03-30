@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
@@ -10,37 +11,42 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 {
     public class When_Cache_Found : TestSetup
     {
-        private PrsPathwayGradeCheckAndSubmitViewModel _cacheResult;
+        private PrsAppealCheckAndSubmitViewModel _cacheResult;
 
         public override void Given()
         {
+            var previousGrade = "A";
+            var newGrade = "A";
+            ComponentType = ComponentType.Specialism;
 
-            _cacheResult = new PrsPathwayGradeCheckAndSubmitViewModel
+            _cacheResult = new PrsAppealCheckAndSubmitViewModel
             {
                 Uln = 1234567890,
                 Firstname = "John",
                 Lastname = "Smith",
                 DateofBirth = DateTime.Today.AddYears(-20),
                 TlevelTitle = "Tlevel in Education",
-                PathwayTitle = "Educateion (1234455)",
                 ProviderName = "Barsley College",
                 ProviderUkprn = 87654321,
-                NewGrade = "A",
-                OldGrade = "B",
+                SpecialismName = "Education",
+                SpecialismLarId = "1234567",
+                ExamPeriod = "Summer 2021",
+                NewGrade = newGrade,
+                OldGrade = previousGrade,
                 IsGradeChanged = false,
+                ComponentType = ComponentType,
 
                 ProfileId = 1,
-                AssessmentId = 2,
-                ResultId = 3,
+                AssessmentId = 2
             };
 
-            CacheService.GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey).Returns(_cacheResult);
+            CacheService.GetAsync<PrsAppealCheckAndSubmitViewModel>(CacheKey).Returns(_cacheResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            CacheService.Received(1).GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
+            CacheService.Received(1).GetAsync<PrsAppealCheckAndSubmitViewModel>(CacheKey);
         }
 
         [Fact]
@@ -55,9 +61,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             var model = viewResult.Model as PrsCancelAppealUpdateViewModel;
             model.Should().NotBeNull();
             model.ProfileId.Should().Be(_cacheResult.ProfileId);
-            model.AssessmentId.Should().Be(_cacheResult.AssessmentId);
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.PrsPathwayGradeCheckAndSubmit);
+            model.BackLink.RouteName.Should().Be(RouteConstants.PrsAppealCheckAndSubmit);
             model.BackLink.RouteAttributes.Should().BeEmpty();
         }
     }
