@@ -396,16 +396,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.Id))
                 .ForMember(d => d.ResultId, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.Result?.Id))
                 .ForMember(d => d.ComponentType, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.ComponentType))
-                .ForMember(d => d.PrsStatus, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.Result?.PrsStatus));
-
-            CreateMap<PrsAddAppealOutcomeKnownViewModel, PrsActivityRequest>()
-               .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
-               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-               .ForMember(d => d.AssessentId, opts => opts.MapFrom(s => s.AssessmentId))
-               .ForMember(d => d.ResultId, opts => opts.MapFrom(s => s.ResultId))
-               .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => s.ComponentType))
-               .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => PrsStatus.BeingAppealed))
-               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<PrsAddAppealOutcomeKnownViewModel, PrsActivityRequest>>());
+                .ForMember(d => d.PrsStatus, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.Result?.PrsStatus));            
 
             CreateMap<LearnerRecord, PrsAppealGradeChangeViewModel>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
@@ -463,6 +454,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PrsStatus, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.Result?.PrsStatus))
                 .ForMember(d => d.ComponentType, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.ComponentType))
                 .ForMember(d => d.ResultId, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.Result?.Id));
+
+            CreateMap<PrsAddAppealOutcomeViewModel, PrsActivityRequest>()
+               .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.AssessentId, opts => opts.MapFrom(s => s.AssessmentId))
+               .ForMember(d => d.ResultId, opts => opts.MapFrom(s => s.ResultId))
+               .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => s.ComponentType))
+               .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => PrsStatus.Withdraw))
+               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<PrsAddAppealOutcomeViewModel, PrsActivityRequest>>());
+
+            CreateMap<PrsAddAppealOutcomeKnownViewModel, PrsActivityRequest>()
+               .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.AssessentId, opts => opts.MapFrom(s => s.AssessmentId))
+               .ForMember(d => d.ResultId, opts => opts.MapFrom(s => s.ResultId))
+               .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => s.ComponentType))
+               .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => PrsStatus.BeingAppealed))
+               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<PrsAddAppealOutcomeKnownViewModel, PrsActivityRequest>>());
 
             CreateMap<PrsAppealCheckAndSubmitViewModel, PrsActivityRequest>()
                .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))

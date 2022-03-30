@@ -71,6 +71,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Appeal withdrawn.
+        /// </summary>
+        public static string Banner_HeaderMessage_Appeal_Withdrawn {
+            get {
+                return ResourceManager.GetString("Banner_HeaderMessage_Appeal_Withdrawn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have withdrawn an appeal for {0}’s {1} {2} grade.
+        /// </summary>
+        public static string Banner_Message {
+            get {
+                return ResourceManager.GetString("Banner_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         public static string Button_Continue {

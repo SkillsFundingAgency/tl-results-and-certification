@@ -450,6 +450,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
                 return RedirectToRoute(RouteConstants.PrsAppealCheckAndSubmit);
             }
+            else if (model.AppealOutcome == AppealOutcomeType.Withdraw)
+            {
+                bool isSuccess = await _postResultsServiceLoader.PrsAppealActivityAsync(User.GetUkPrn(), model);
+                if (!isSuccess)
+                    return RedirectToRoute(RouteConstants.ProblemWithService);
+
+                var notificationBanner = new NotificationBannerModel { IsPrsJourney = true, HeaderMessage = prsDetails.Banner_HeaderMesage, Message = prsDetails.SuccessBannerMessage };
+                await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+            }
             else
             {
                 return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
