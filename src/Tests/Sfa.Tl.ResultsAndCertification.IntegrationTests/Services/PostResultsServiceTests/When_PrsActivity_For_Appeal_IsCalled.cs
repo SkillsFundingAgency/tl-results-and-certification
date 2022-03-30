@@ -37,7 +37,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                 { 1111111111, RegistrationPathwayStatus.Withdrawn },
                 { 1111111112, RegistrationPathwayStatus.Active },
                 { 1111111113, RegistrationPathwayStatus.Active },
-                { 1111111114, RegistrationPathwayStatus.Active }
+                { 1111111114, RegistrationPathwayStatus.Active },
+                { 1111111115, RegistrationPathwayStatus.Active }
             };
 
             // Registrations seed
@@ -59,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
 
                 // Results seed
                 var tqPathwayResultsSeedData = new List<TqPathwayResult>();
-                var profilesWithResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, PrsStatus.UnderReview), (1111111114, PrsStatus.Reviewed) };
+                var profilesWithResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, PrsStatus.UnderReview), (1111111114, PrsStatus.Reviewed), (1111111115, PrsStatus.BeingAppealed) };
                 foreach (var assessment in pathwayAssessments)
                 {
                     var inactiveResultUlns = new List<long> { 1111111112 };
@@ -203,14 +204,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                     { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
                       false },                    
 
-                    // CurrentStatus is Reviewed -> Requesting Final - returns false
-                    new object[]
-                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
-                      false },
-                    
                     // valid request with CurrentStatus is Reviewed -> Requesting BeingAppealed - returns true
                     new object[]
-                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.BeingAppealed },
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.BeingAppealed, ResultLookupId = 1 },
+                      true },
+
+                    // valid request with CurrentStatus is Reviewed -> Requesting Final - returns true
+                    new object[]
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
+                      true },
+
+                    // valid request with CurrentStatus is BeingAppealed -> Requesting Final - returns true
+                    new object[]
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 5, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
                       true },
                 };
             }
