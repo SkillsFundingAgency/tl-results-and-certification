@@ -44,28 +44,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                         Name = "Provider Name",
                         DisplayName = "Provider display name",
                     },
-                    PathwayAssessments = new List<Assessment>
-                    {
-                        new Assessment
-                        {
-                            Id = 11,
-                            SeriesId = 2,
-                            SeriesName = "Summer 2022",
-                            RommEndDate = DateTime.UtcNow.AddDays(5),
-                            AppealEndDate = DateTime.UtcNow.AddDays(10),
-                            ComponentType = ComponentType.Core,
-                            LastUpdatedBy = "System",
-                            LastUpdatedOn = DateTime.UtcNow,
-                            Result = new Result
-                            {
-                                Id = 1,
-                                Grade = "C",
-                                PrsStatus = null,
-                                LastUpdatedBy = "System",
-                                LastUpdatedOn = DateTime.UtcNow
-                            }
-                        }
-                    },
                     Specialisms = new List<Specialism>
                     {
                         new Specialism
@@ -89,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                     {
                                         Id = 1,
                                         Grade = "Merit",
-                                        PrsStatus = null,
+                                        PrsStatus = PrsStatus.UnderReview,
                                         LastUpdatedBy = "System",
                                         LastUpdatedOn = DateTime.UtcNow
                                     }
@@ -126,6 +104,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.TlevelTitle.Should().Be(_expectedApiResult.Pathway.Title);
             ActualResult.ProviderName.Should().Be(_expectedApiResult.Pathway.Provider.Name);
             ActualResult.ProviderUkprn.Should().Be(_expectedApiResult.Pathway.Provider.Ukprn);
+            ActualResult.IsValid.Should().BeTrue();
 
             var expectedSpecialism = _expectedApiResult.Pathway.Specialisms.FirstOrDefault(s => s.Assessments.Any(a => a.Id == AssessmentId));
             var expectedAssessment = expectedSpecialism?.Assessments?.FirstOrDefault(sa => sa.Id == AssessmentId);

@@ -60,40 +60,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             {
                                 Id = 1,
                                 Grade = "C",
-                                PrsStatus = null,
+                                PrsStatus = PrsStatus.UnderReview,
                                 LastUpdatedBy = "System",
                                 LastUpdatedOn = DateTime.UtcNow
-                            }
-                        }
-                    },
-                    Specialisms = new List<Specialism>
-                    {
-                        new Specialism
-                        {
-                            Id = 20,
-                            LarId = "12345678",
-                            Name = "Plumbing",
-                            Assessments = new List<Assessment>
-                            {
-                                new Assessment
-                                {
-                                    Id = 101,
-                                    SeriesId = 2,
-                                    SeriesName = "Summer 2021",
-                                    RommEndDate = DateTime.UtcNow.AddDays(15),
-                                    AppealEndDate = DateTime.UtcNow.AddDays(30),
-                                    ComponentType = ComponentType.Specialism,
-                                    LastUpdatedBy = "System",
-                                    LastUpdatedOn = DateTime.UtcNow,
-                                    Result = new Result
-                                    {
-                                        Id = 1,
-                                        Grade = "Merit",
-                                        PrsStatus = null,
-                                        LastUpdatedBy = "System",
-                                        LastUpdatedOn = DateTime.UtcNow
-                                    }
-                                }
                             }
                         }
                     }
@@ -126,6 +95,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.TlevelTitle.Should().Be(_expectedApiResult.Pathway.Title);
             ActualResult.ProviderName.Should().Be(_expectedApiResult.Pathway.Provider.Name);
             ActualResult.ProviderUkprn.Should().Be(_expectedApiResult.Pathway.Provider.Ukprn);
+            ActualResult.IsValid.Should().BeTrue();
 
             var expectedCoreAssessment = _expectedApiResult.Pathway.PathwayAssessments.FirstOrDefault(p => p.Id == AssessmentId);
             ActualResult.ProfileId.Should().Be(_expectedApiResult.ProfileId);
