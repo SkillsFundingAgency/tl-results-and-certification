@@ -71,6 +71,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Appeal outcome recorded.
+        /// </summary>
+        public static string Banner_HeaderMessage_Appeal_Recorded {
+            get {
+                return ResourceManager.GetString("Banner_HeaderMessage_Appeal_Recorded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have recorded an appeal outcome for {0}’s {1} {2} grade.
+        /// </summary>
+        public static string Banner_Message {
+            get {
+                return ResourceManager.GetString("Banner_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
         public static string Button_Submit {

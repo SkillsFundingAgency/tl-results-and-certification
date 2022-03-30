@@ -124,6 +124,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.PrsActivityAsync(request);
         }
 
+        public async Task<bool> PrsAppealActivityAsync(long aoUkprn, PrsAppealCheckAndSubmitViewModel model)
+        {
+            var request = _mapper.Map<PrsActivityRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
+
+            // Assign new grade lookup id
+            var lookupCategory = model.ComponentType == ComponentType.Core ? LookupCategory.PathwayComponentGrade : LookupCategory.SpecialismComponentGrade;
+            var grades = await _internalApiClient.GetLookupDataAsync(lookupCategory);
+            var newGrade = grades.FirstOrDefault(x => x.Value.Equals(model.NewGrade, StringComparison.InvariantCultureIgnoreCase));
+            if (newGrade == null)
+                return false;
+            request.ResultLookupId = newGrade.Id;
+
+            return await _internalApiClient.PrsActivityAsync(request);
+        }
+
         public async Task<bool> AppealCoreGradeAsync(long aoUkprn, PrsAddAppealViewModel model)
         {
             var request = _mapper.Map<PrsActivityRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);

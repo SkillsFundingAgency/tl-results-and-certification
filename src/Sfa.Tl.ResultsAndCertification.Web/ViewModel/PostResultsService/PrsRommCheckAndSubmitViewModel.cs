@@ -69,13 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
            : GetRommOutcomeRouteAttributes
         };
 
-        public string SuccessBannerMessage
-        {
-            get
-            {
-                return string.Format(PrsRommCheckAndSubmitContent.Banner_Message, LearnerName, ExamPeriod, ComponentType == ComponentType.Core ? CoreDisplayName : SpecialismDisplayName);
-            }
-        }
+        public string SuccessBannerMessage => string.Format(PrsRommCheckAndSubmitContent.Banner_Message, LearnerName, ExamPeriod, ComponentType == ComponentType.Core ? CoreDisplayName : SpecialismDisplayName);
 
         public string Banner_HeaderMesage => PrsRommCheckAndSubmitContent.Banner_HeaderMessage_Romm_Recorded;
 

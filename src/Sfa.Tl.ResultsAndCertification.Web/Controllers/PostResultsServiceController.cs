@@ -568,6 +568,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        [Route("post-results-appeal-check", Name = RouteConstants.SubmitPrsAppealCheckAndSubmit)]
+        public async Task<IActionResult> PrsAppealCheckAndSubmitAsync(PrsAppealCheckAndSubmitViewModel model)
+        {
+            bool isSuccess = await _postResultsServiceLoader.PrsAppealActivityAsync(User.GetUkPrn(), model);
+            if (!isSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            await _cacheService.RemoveAsync<PrsAppealCheckAndSubmitViewModel>(CacheKey);
+            var notificationBanner = new NotificationBannerModel { IsPrsJourney = true, HeaderMessage = model.Banner_HeaderMesage, Message = model.SuccessBannerMessage };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+        }
+
         [HttpGet]
         [Route("reviews-and-appeals-appeal-outcome-grade/{profileId}/{assessmentId}/{resultId}/{outcomeTypeId:int?}", Name = RouteConstants.PrsAppealOutcomePathwayGrade)]
         public async Task<IActionResult> PrsAppealOutcomePathwayGradeAsync(int profileId, int assessmentId, int resultId, int? outcomeTypeId)

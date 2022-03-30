@@ -69,6 +69,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
            : GetAppealOutcomeRouteAttributes
         };
 
+        public string SuccessBannerMessage => string.Format(PrsAppealCheckAndSubmitContent.Banner_Message, LearnerName, ExamPeriod, ComponentType == ComponentType.Core ? CoreDisplayName : string.Empty);
+
+        public string Banner_HeaderMesage => PrsAppealCheckAndSubmitContent.Banner_HeaderMessage_Appeal_Recorded;
+
         private bool IsAppealOutcomeJourney => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.BeingAppealed;
         private string GetAppealOutcomeRouteName => IsAppealOutcomeJourney ? RouteConstants.PrsAddAppealOutcome : RouteConstants.PrsAddAppealOutcomeKnown;
 
