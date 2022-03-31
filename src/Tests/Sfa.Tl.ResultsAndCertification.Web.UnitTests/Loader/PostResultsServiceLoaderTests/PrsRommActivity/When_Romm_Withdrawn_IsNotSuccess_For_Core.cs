@@ -7,10 +7,11 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.PrsRommActivity
 {
-    public class When_AddRomm_With_Invalid_Data : TestSetup
+    public class When_Romm_Withdrawn_IsNotSuccess_For_Core : TestSetup
     {
         private bool _expectedApiResult;
-        private PrsAddRommOutcomeKnownViewModel _model;
+        private PrsAddRommOutcomeViewModel _model;
+
         public override void Given()
         {
             _model = null;

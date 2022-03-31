@@ -9,18 +9,18 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.PrsRommActivity
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.PrsAppealActivity
 {
-    public class When_AddRomm_With_Valid_Data : TestSetup
+    public class When_AddAppeal_With_Valid_Data_For_Core : TestSetup
     {
-        private PrsAddRommOutcomeKnownViewModel _model;
+        private PrsAddAppealOutcomeKnownViewModel _model;
         private readonly bool _expectedApiResult = true;
 
         public override void Given()
         {
             CreateMapper();
 
-            _model = new PrsAddRommOutcomeKnownViewModel
+            _model = new PrsAddAppealOutcomeKnownViewModel
             {
                 ProfileId = 1,
                 AssessmentId = 2,
@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                 x.AssessentId == _model.AssessmentId &&
                                 x.ResultId == _model.ResultId &&
                                 x.ComponentType == _model.ComponentType &&
-                                x.PrsStatus == PrsStatus.UnderReview &&
+                                x.PrsStatus == PrsStatus.BeingAppealed &&
                                 x.AoUkprn == AoUkprn &&
                                 x.PerformedBy == $"{Givenname} {Surname}"
                                 ))
@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 
         public async override Task When()
         {
-            ActualResult = await Loader.PrsRommActivityAsync(AoUkprn, _model);
+            ActualResult = await Loader.PrsAppealActivityAsync(AoUkprn, _model);
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 c.AddMaps(typeof(PostResultsServiceMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<PrsAddRommOutcomeKnownViewModel, PrsActivityRequest>(HttpContextAccessor) : null);
+                                new UserNameResolver<PrsAddAppealOutcomeKnownViewModel, PrsActivityRequest>(HttpContextAccessor) : null);
             });
             Mapper = new AutoMapper.Mapper(mapperConfig);
         }

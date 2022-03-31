@@ -9,23 +9,23 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.PrsAppealActivity
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.PrsRommActivity
 {
-    public class When_AddAppeal_With_Valid_Data : TestSetup
+    public class When_Romm_Withdrawn_IsSuccess_For_Specialism : TestSetup
     {
-        private PrsAddAppealOutcomeKnownViewModel _model;
+        private PrsAddRommOutcomeViewModel _model;
         private readonly bool _expectedApiResult = true;
 
         public override void Given()
         {
             CreateMapper();
 
-            _model = new PrsAddAppealOutcomeKnownViewModel
+            _model = new PrsAddRommOutcomeViewModel
             {
                 ProfileId = 1,
                 AssessmentId = 2,
                 ResultId = 3,
-                ComponentType = ComponentType.Core
+                ComponentType = ComponentType.Specialism
             };
 
             InternalApiClient.PrsActivityAsync(Arg.Is<PrsActivityRequest>(x =>
@@ -33,16 +33,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                 x.AssessentId == _model.AssessmentId &&
                                 x.ResultId == _model.ResultId &&
                                 x.ComponentType == _model.ComponentType &&
-                                x.PrsStatus == PrsStatus.BeingAppealed &&
+                                x.PrsStatus == PrsStatus.Withdraw &&
                                 x.AoUkprn == AoUkprn &&
                                 x.PerformedBy == $"{Givenname} {Surname}"
                                 ))
-                .Returns(_expectedApiResult);
+                             .Returns(_expectedApiResult);
         }
 
         public async override Task When()
         {
-            ActualResult = await Loader.PrsAppealActivityAsync(AoUkprn, _model);
+            ActualResult = await Loader.PrsRommActivityAsync(AoUkprn, _model);
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 c.AddMaps(typeof(PostResultsServiceMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<PrsAddAppealOutcomeKnownViewModel, PrsActivityRequest>(HttpContextAccessor) : null);
+                                new UserNameResolver<PrsAddRommOutcomeViewModel, PrsActivityRequest>(HttpContextAccessor) : null);
             });
             Mapper = new AutoMapper.Mapper(mapperConfig);
         }
