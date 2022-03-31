@@ -41,8 +41,8 @@
             </dl>
 
             @{
-                var componentHeading = Model.ComponentType == ComponentType.Core ? PrsAppealCheckAndSubmit.Heading_Core_Component : string.Empty;
-                var componentDisplayName = Model.ComponentType == ComponentType.Core ? Model.CoreDisplayName : string.Empty;
+                var componentHeading = Model.ComponentType == ComponentType.Core ? PrsAppealCheckAndSubmit.Heading_Core_Component : PrsAppealCheckAndSubmit.Heading_Occupational_Specialism;
+                var componentDisplayName = Model.ComponentType == ComponentType.Core ? Model.CoreDisplayName : Model.SpecialismDisplayName;
             }
             <h2 class="govuk-heading-m">@string.Format(componentHeading, componentDisplayName)</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">

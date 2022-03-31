@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             ProviderNameLabel = PrsAppealCheckAndSubmitContent.Title_Provider_Name_Text;
             ProviderUkprnLabel = PrsAppealCheckAndSubmitContent.Title_Provider_Ukprn_Text;
             TlevelTitleLabel = PrsAppealCheckAndSubmitContent.Title_TLevel_Text;
-            CoreLabel = PrsAppealCheckAndSubmitContent.Title_Core_Text;
+            //CoreLabel = PrsAppealCheckAndSubmitContent.Title_Core_Text;
             ExamPeriodLabel = PrsAppealCheckAndSubmitContent.Title_ExamPeriod_Text;
         }
 
