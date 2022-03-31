@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                 x.AssessentId == _model.AssessmentId &&
                                 x.ResultId == _model.ResultId &&
                                 x.ComponentType == ComponentType.Core &&
-                                x.PrsStatus == PrsStatus.Reviewed &&
+                                x.PrsStatus == PrsStatus.Final &&
                                 x.ResultLookupId == _newGradeLookupId &&
                                 x.AoUkprn == AoUkprn &&
                                 x.PerformedBy == $"{Givenname} {Surname}"
@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                 x.AssessentId == _model.AssessmentId &&
                                 x.ResultId == _model.ResultId &&
                                 x.ComponentType == ComponentType.Core &&
-                                x.PrsStatus == PrsStatus.Reviewed &&
+                                x.PrsStatus == PrsStatus.Final &&
                                 x.ResultLookupId == _newGradeLookupId &&
                                 x.AoUkprn == AoUkprn &&
                                 x.PerformedBy == $"{Givenname} {Surname}"
