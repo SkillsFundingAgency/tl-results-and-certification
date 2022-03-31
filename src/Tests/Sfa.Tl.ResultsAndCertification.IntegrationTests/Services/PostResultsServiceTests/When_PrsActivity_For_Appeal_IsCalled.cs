@@ -145,9 +145,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                     {
                         if (request.PrsStatus == PrsStatus.Withdraw)
                         {
-                            var previousResult = DbContext.TqPathwayResult.FirstOrDefault(x => x.TqPathwayAssessmentId == assessmentId && !x.IsOptedin && x.EndDate != null && x.PrsStatus == PrsStatus.UnderReview);
+                            var previousResult = DbContext.TqPathwayResult.FirstOrDefault(x => x.TqPathwayAssessmentId == assessmentId && !x.IsOptedin && x.EndDate != null && x.PrsStatus == PrsStatus.BeingAppealed);
 
-                            latestResult.PrsStatus.Should().BeNull();
+                            latestResult.PrsStatus.Should().Be(PrsStatus.Reviewed);
                             latestResult.TlLookup.Value.Should().Be(previousResult.TlLookup.Value);
                             return;
                         }
@@ -217,6 +217,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                     // valid request with CurrentStatus is BeingAppealed -> Requesting Final - returns true
                     new object[]
                     { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 5, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
+                      true },
+
+                    // When componenttype = core - CurrentStatus is BeingAppealed -> Requesting Withdraw
+                    new object[]
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 5, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Withdraw, ResultLookupId = 3 },
                       true },
                 };
             }
