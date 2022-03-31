@@ -188,6 +188,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Specialism.
+        /// </summary>
+        public static string Title_Specialism_Text {
+            get {
+                return ResourceManager.GetString("Title_Specialism_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to T Level.
         /// </summary>
         public static string Title_TLevel_Text {
