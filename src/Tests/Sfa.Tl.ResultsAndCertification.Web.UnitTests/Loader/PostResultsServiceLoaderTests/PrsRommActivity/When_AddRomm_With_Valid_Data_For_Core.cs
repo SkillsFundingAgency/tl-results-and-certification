@@ -11,16 +11,16 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.PrsRommActivity
 {
-    public class When_Romm_Withdrawn_IsSuccess : TestSetup
+    public class When_AddRomm_With_Valid_Data_For_Core : TestSetup
     {
-        private PrsAddRommOutcomeViewModel _model;
+        private PrsAddRommOutcomeKnownViewModel _model;
         private readonly bool _expectedApiResult = true;
 
         public override void Given()
         {
             CreateMapper();
 
-            _model = new PrsAddRommOutcomeViewModel
+            _model = new PrsAddRommOutcomeKnownViewModel
             {
                 ProfileId = 1,
                 AssessmentId = 2,
@@ -33,11 +33,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                 x.AssessentId == _model.AssessmentId &&
                                 x.ResultId == _model.ResultId &&
                                 x.ComponentType == _model.ComponentType &&
-                                x.PrsStatus == PrsStatus.Withdraw &&
+                                x.PrsStatus == PrsStatus.UnderReview &&
                                 x.AoUkprn == AoUkprn &&
                                 x.PerformedBy == $"{Givenname} {Surname}"
                                 ))
-                             .Returns(_expectedApiResult);
+                .Returns(_expectedApiResult);
         }
 
         public async override Task When()
@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 c.AddMaps(typeof(PostResultsServiceMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<PrsAddRommOutcomeViewModel, PrsActivityRequest>(HttpContextAccessor) : null);
+                                new UserNameResolver<PrsAddRommOutcomeKnownViewModel, PrsActivityRequest>(HttpContextAccessor) : null);
             });
             Mapper = new AutoMapper.Mapper(mapperConfig);
         }

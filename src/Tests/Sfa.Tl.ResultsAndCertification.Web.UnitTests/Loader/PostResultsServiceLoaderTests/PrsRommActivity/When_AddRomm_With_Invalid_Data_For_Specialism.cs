@@ -5,13 +5,12 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.PrsAppealActivity
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.PrsRommActivity
 {
-    public class When_AddAppeal_With_Invalid_Data : TestSetup
+    public class When_AddRomm_With_Invalid_Data_For_Specialism : TestSetup
     {
         private bool _expectedApiResult;
-        private PrsAddAppealOutcomeKnownViewModel _model;
-
+        private PrsAddRommOutcomeKnownViewModel _model;
         public override void Given()
         {
             _model = null;
@@ -21,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 
         public async override Task When()
         {
-            ActualResult = await Loader.PrsAppealActivityAsync(AoUkprn, _model);
+            ActualResult = await Loader.PrsRommActivityAsync(AoUkprn, _model);
         }
 
         [Fact]
