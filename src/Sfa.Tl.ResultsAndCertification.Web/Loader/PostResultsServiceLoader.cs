@@ -118,6 +118,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.PrsActivityAsync(request);
         }
 
+        public async Task<bool> PrsAppealActivityAsync(long aoUkprn, PrsAddAppealOutcomeViewModel model)
+        {
+            var request = _mapper.Map<PrsActivityRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.PrsActivityAsync(request);
+        }
+
         public async Task<bool> PrsAppealActivityAsync(long aoUkprn, PrsAddAppealOutcomeKnownViewModel model)
         {
             var request = _mapper.Map<PrsActivityRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);

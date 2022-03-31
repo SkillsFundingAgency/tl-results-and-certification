@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel ROMM update - Post-results.
+        ///   Looks up a localized string similar to Cancel appeal update - Post-results.
         /// </summary>
         public static string Page_Title {
             get {
@@ -107,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please select whether you want to cancel the update to this ROMM.
+        ///   Looks up a localized string similar to Please select whether you want to cancel the update to this appeal.
         /// </summary>
         public static string Validation_Message {
             get {

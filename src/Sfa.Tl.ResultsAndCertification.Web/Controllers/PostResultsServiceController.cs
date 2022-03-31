@@ -450,6 +450,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
                 return RedirectToRoute(RouteConstants.PrsAppealCheckAndSubmit);
             }
+            else if (model.AppealOutcome == AppealOutcomeType.Withdraw)
+            {
+                bool isSuccess = await _postResultsServiceLoader.PrsAppealActivityAsync(User.GetUkPrn(), model);
+                if (!isSuccess)
+                    return RedirectToRoute(RouteConstants.ProblemWithService);
+
+                var notificationBanner = new NotificationBannerModel { IsPrsJourney = true, HeaderMessage = prsDetails.Banner_HeaderMesage, Message = prsDetails.SuccessBannerMessage };
+                await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+            }
             else
             {
                 return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
@@ -652,6 +663,37 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("post-results-cancel-appeal-update", Name = RouteConstants.PrsCancelAppealUpdate)]
+        public async Task<IActionResult> PrsCancelAppealUpdateAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<PrsAppealCheckAndSubmitViewModel>(CacheKey);
+
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = new PrsCancelAppealUpdateViewModel { ProfileId = cacheModel.ProfileId };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("post-results-cancel-appeal-update", Name = RouteConstants.SubmitPrsCancelAppealUpdate)]
+        public async Task<IActionResult> PrsCancelAppealUpdateAsync(PrsCancelAppealUpdateViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            if (model.AreYouSureToCancel.Value)
+            {
+                await _cacheService.RemoveAsync<PrsAppealCheckAndSubmitViewModel>(CacheKey);
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+            }
+            else
+            {
+                return RedirectToRoute(RouteConstants.PrsAppealCheckAndSubmit);
+            }
+        }
+
+        [HttpGet]
         [Route("reviews-and-appeals-appeal-update-grade/{profileId}/{assessmentId}/{resultId}/{isChangeMode:bool?}", Name = RouteConstants.PrsAppealUpdatePathwayGrade)]
         public async Task<IActionResult> PrsAppealUpdatePathwayGradeAsync(int profileId, int assessmentId, int resultId, bool isChangeMode = false)
         {
@@ -702,35 +744,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var notificationBanner = new NotificationBannerModel { Message = successMessage };
             await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId });
-        }
-
-        [HttpGet]
-        [Route("reviews-and-appeals-cancel-appeal-update", Name = RouteConstants.PrsCancelAppealUpdate)]
-        public async Task<IActionResult> PrsCancelAppealUpdateAsync()
-        {
-            var cacheModel = await _cacheService.GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
-
-            if (cacheModel == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            var viewModel = new PrsCancelAppealUpdateViewModel { ProfileId = cacheModel.ProfileId, AssessmentId = cacheModel.AssessmentId };
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("reviews-and-appeals-cancel-appeal-update", Name = RouteConstants.SubmitPrsCancelAppealUpdate)]
-        public async Task<IActionResult> PrsCancelAppealUpdateAsync(PrsCancelAppealUpdateViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-                return View(viewModel);
-
-            if (viewModel.CancelRequest.Value)
-            {
-                await _cacheService.RemoveAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
-                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = viewModel.ProfileId, assessmentId = viewModel.AssessmentId });
-            }
-            else
-                return RedirectToRoute(RouteConstants.PrsPathwayGradeCheckAndSubmit);
         }
 
         [HttpGet]

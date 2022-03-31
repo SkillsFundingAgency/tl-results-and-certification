@@ -44,5 +44,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         {
             AppealOutcome = EnumExtensions.IsValidValue<AppealOutcomeType>(outcomeTypeId) ? (AppealOutcomeType?)outcomeTypeId : null;
         }
+
+        public string SuccessBannerMessage => string.Format(PrsAddAppealOutcomeContent.Banner_Message, LearnerName, ExamPeriod, ComponentType == ComponentType.Core ? CoreDisplayName : string.Empty);
+
+        public string Banner_HeaderMesage => PrsAddAppealOutcomeContent.Banner_HeaderMessage_Appeal_Withdrawn;
     }
 }

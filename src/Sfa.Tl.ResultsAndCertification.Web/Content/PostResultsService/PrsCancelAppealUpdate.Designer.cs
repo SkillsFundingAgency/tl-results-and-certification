@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class PrsCancelAppealUpdate {
@@ -73,45 +73,36 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to cancel the update to this appeal?.
         /// </summary>
-        public static string Heading_Are_You_Sure_To_Cancel {
+        public static string Heading_Are_You_Sure_You_Want_To_Cancel {
             get {
-                return ResourceManager.GetString("Heading_Are_You_Sure_To_Cancel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Learner:.
-        /// </summary>
-        public static string Hint_Learner_Name {
-            get {
-                return ResourceManager.GetString("Hint_Learner_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cancel appeal update.
-        /// </summary>
-        public static string Page_Title {
-            get {
-                return ResourceManager.GetString("Page_Title", resourceCulture);
+                return ResourceManager.GetString("Heading_Are_You_Sure_You_Want_To_Cancel", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to No, I do not want to cancel.
         /// </summary>
-        public static string Radio_Button_No {
+        public static string Option_No {
             get {
-                return ResourceManager.GetString("Radio_Button_No", resourceCulture);
+                return ResourceManager.GetString("Option_No", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Yes, I want to cancel.
         /// </summary>
-        public static string Radio_Button_Yes {
+        public static string Option_Yes {
             get {
-                return ResourceManager.GetString("Radio_Button_Yes", resourceCulture);
+                return ResourceManager.GetString("Option_Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel appeal update - Post-results.
+        /// </summary>
+        public static string Page_Title {
+            get {
+                return ResourceManager.GetString("Page_Title", resourceCulture);
             }
         }
         

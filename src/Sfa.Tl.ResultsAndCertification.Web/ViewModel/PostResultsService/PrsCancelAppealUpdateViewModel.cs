@@ -9,20 +9,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
     {
         public int ProfileId { get; set; }
 
-        public int AssessmentId { get; set; }
-
         [Required(ErrorMessageResourceType = typeof(ErrorResource.PrsCancelAppealUpdate), ErrorMessageResourceName = "Validation_Message")]
-        public bool? CancelRequest { get; set; }
+        public bool? AreYouSureToCancel { get; set; }
 
-        public BackLinkModel BackLink
-        {
-            get
-            {
-                return new BackLinkModel
-                {
-                    RouteName = RouteConstants.PrsPathwayGradeCheckAndSubmit
-                };
-            }
-        }
+        public BackLinkModel BackLink => new() { RouteName = RouteConstants.PrsAppealCheckAndSubmit };
     }
 }
