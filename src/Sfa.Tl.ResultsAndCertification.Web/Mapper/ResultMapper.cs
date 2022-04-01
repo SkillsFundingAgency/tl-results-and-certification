@@ -126,6 +126,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.Id))
                 .ForMember(d => d.AssessmentSeries, opts => opts.MapFrom(s => s.SeriesName))
                 .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => s.ComponentType))
+                .ForMember(d => d.ResultEndDate, opts => opts.MapFrom(s => s.ResultEndDate))
                 .ForMember(d => d.RommEndDate, opts => opts.MapFrom(s => s.RommEndDate))
                 .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AppealEndDate))
                 .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.Result != null ? s.Result.Grade : null))

@@ -19,14 +19,18 @@
             {
                 if (string.IsNullOrWhiteSpace(Model.PrsDisplayText))
                 {
-                    <span class="govuk-!-margin-right-2">@Model.Grade</span><a class="govuk-link" asp-route="@Model.ResultRouteName" asp-all-route-data="@Model.ResultRouteAttributes">@ResultDetails.Change_Result_Action_Link_Text <span class="govuk-visually-hidden">@String.Format(ResultDetails.Hidden_Text_Component_Result, Model.HiddenActionText)</span></a>
+                    <span class="govuk-!-margin-right-2">@Model.Grade</span>
+                    if (@Model.IsResultChangeAllowed)
+                    {
+                        <a class="govuk-link" asp-route="@Model.ResultRouteName" asp-all-route-data="@Model.ResultRouteAttributes">@ResultDetails.Change_Result_Action_Link_Text <span class="govuk-visually-hidden">@String.Format(ResultDetails.Hidden_Text_Component_Result, Model.HiddenActionText)</span></a>
+                    }
                 }
                 else
                 {
                     @Html.Raw(string.Format("<span class='govuk-!-margin-right-2'>{0}</span>{1}", Model.Grade, Model.PrsDisplayText));
                 }
             }
-            
+
         </span>
     </td>
     <td class="govuk-table__cell">
