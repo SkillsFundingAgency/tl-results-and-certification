@@ -19,14 +19,14 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultServiceTests
 {
-    public class When_CompareAndProcessRegistrationsAsync_AppealDate_IsEnded : ResultServiceBaseTest
+    public class When_CompareAndProcessRegistrationsAsync_ResultDate_For_Specialism_IsEnded : ResultServiceBaseTest
     {
         private ResultProcessResponse _result;
         private List<TqRegistrationProfile> _registrations;
         private List<TqPathwayResult> _inputPathwayResultsData;
         private List<TqSpecialismResult> _inputSpecialismResultsData;
         private IList<BulkProcessValidationError> _expectedValidationErrors;
-        private readonly Dictionary<long, RegistrationPathwayStatus> _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Active } };
+        private readonly Dictionary<long, RegistrationPathwayStatus> _ulns = new() { { 1111111111, RegistrationPathwayStatus.Active } };
 
         public override void Given()
         {
@@ -34,20 +34,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             SeedTestData(EnumAwardingOrganisation.Pearson);
             _registrations = SeedRegistrationsData(_ulns, TqProvider);
 
-            // Assessments seed
-            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+            // Specialism Assessments seed
+            var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
             foreach (var registration in _registrations)
-                tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList()));
-            var pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
+                tqSpecialismAssessmentsSeedData.AddRange(GetSpecialismAssessmentsDataToProcess(registration.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList()));
+            var specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
 
-            // Results seed
-            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
-            foreach (var assessment in pathwayAssessments)
-                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(new List<TqPathwayAssessment> { assessment }));
-            SeedPathwayResultsData(tqPathwayResultsSeedData);
+            // Specialism Results seed
+            var tqSpecialismResultsSeedData = new List<TqSpecialismResult>();
+            foreach (var assessment in specialismAssessments)
+                tqSpecialismResultsSeedData.AddRange(GetSpecialismResultsDataToProcess(new List<TqSpecialismAssessment> { assessment }));
+            SeedSpecialismResultsData(tqSpecialismResultsSeedData);
 
-            EnsureAppealDateIsEnded(tqPathwayAssessmentsSeedData);
-            EnsureInputResultIsChanged(pathwayAssessments, tqPathwayResultsSeedData);
+            EnsureResultDateIsEnded(tqSpecialismAssessmentsSeedData);
+            EnsureInputResultForIsChanged(specialismAssessments, tqSpecialismResultsSeedData);
+
             SetupExpectedValidationErrors();
 
             // Dependencies 
@@ -87,28 +88,35 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             _result.ValidationErrors.Should().BeEquivalentTo(_expectedValidationErrors);
         }
 
-        private void EnsureAppealDateIsEnded(List<TqPathwayAssessment> tqPathwayAssessmentsSeedData)
+        private void EnsureResultDateIsEnded(List<TqSpecialismAssessment> tqSpecialismAssessmentsSeedData)
         {
-            var assesmentSeries = DbContext.AssessmentSeries.FirstOrDefault(x => x.Id == tqPathwayAssessmentsSeedData.FirstOrDefault().AssessmentSeriesId);
+            var assesmentSeries = DbContext.AssessmentSeries.FirstOrDefault(x => x.Id == tqSpecialismAssessmentsSeedData.FirstOrDefault().AssessmentSeriesId);
+            assesmentSeries.EndDate = DateTime.Today.AddDays(-1);
+            DbContext.SaveChanges();
+        }
+
+        private void EnsureAppealDateForIsEnded(List<TqSpecialismAssessment> tqSpecialismAssessmentsSeedData)
+        {
+            var assesmentSeries = DbContext.AssessmentSeries.FirstOrDefault(x => x.Id == tqSpecialismAssessmentsSeedData.FirstOrDefault().AssessmentSeriesId);
             assesmentSeries.AppealEndDate = DateTime.Today.AddDays(-1);
             DbContext.SaveChanges();
         }
-        private void EnsureInputResultIsChanged(List<TqPathwayAssessment> pathwayAssessments, List<TqPathwayResult> tqPathwayResultsSeedData)
+
+        private void EnsureInputResultForIsChanged(List<TqSpecialismAssessment> specialismAssessments, List<TqSpecialismResult> tqSpecialismResultsSeedData)
         {
-            var index = tqPathwayResultsSeedData.FirstOrDefault().TlLookupId + 1;
-            var pathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessments.FirstOrDefault(), PathwayComponentGrades[index]);
-            _inputPathwayResultsData = new List<TqPathwayResult> { TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, pathwayResult) };
-            _inputSpecialismResultsData = new List<TqSpecialismResult>();
+            var specialismResult = new TqSpecialismResultBuilder().Build(specialismAssessments.FirstOrDefault(), SpecialismComponentGrades[1]);
+            _inputSpecialismResultsData = new List<TqSpecialismResult> { TqSpecialismResultDataProvider.CreateTqSpecialismResult(DbContext, specialismResult) };
+            _inputPathwayResultsData = new List<TqPathwayResult>();
         }
 
         private void SetupExpectedValidationErrors()
         {
             _expectedValidationErrors = new List<BulkProcessValidationError>
-            {
+            {                
                 new BulkProcessValidationError
                 {
                     Uln = "1111111111",
-                    ErrorMessage = ValidationMessages.ResultIsInFinal
+                    ErrorMessage = ValidationMessages.ResultCannotBeChanged
                 }
             };
         }
