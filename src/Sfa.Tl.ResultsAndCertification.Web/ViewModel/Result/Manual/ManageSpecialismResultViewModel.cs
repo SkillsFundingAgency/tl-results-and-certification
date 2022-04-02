@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public int ProfileId { get; set; }
         public int AssessmentId { get; set; }
         public string AssessmentSeries { get; set; }
-        public DateTime? AppealEndDate { get; set; }
+        public DateTime? ResultEndDate { get; set; }
         public string SpecialismName { get; set; }
         public string SpecialismDisplayName { get; set; }
 
@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public PrsStatus? PrsStatus { get; set; }
 
         public List<LookupViewModel> Grades { get; set; }
-        public bool IsValid => (PrsStatus.HasValue == false || PrsStatus == EnumPrsStatus.NotSpecified) && CommonHelper.IsAppealsAllowed(AppealEndDate);
+        public bool IsValid => (PrsStatus.HasValue == false || PrsStatus == EnumPrsStatus.NotSpecified) && ResultEndDate.HasValue && DateTime.Today <= ResultEndDate;
         public string SuccessBannerMessage { get { return string.Format(ResultId.HasValue ? ManageSpecialismResultContent.Banner_Message_For_Result_Changed : ManageSpecialismResultContent.Banner_Message_For_Result_Added, AssessmentSeries, SpecialismName); } }
         
         public override BackLinkModel BackLink => new()

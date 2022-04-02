@@ -10,7 +10,7 @@ using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.ChangeCoreResultGet
 {
-    public class When_Result_Has_PrsStatus_BeingAppealed : TestSetup
+    public class When_Result_Has_PrsStatus_UnderReview : TestSetup
     {
         private ManageCoreResultViewModel _mockresult = null;
         private List<LookupViewModel> grades;
@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 SelectedGradeCode = string.Empty,
                 Grades = grades,
                 ResultEndDate = DateTime.Today.AddDays(7),
-                PathwayPrsStatus = Common.Enum.PrsStatus.BeingAppealed
+                PathwayPrsStatus = Common.Enum.PrsStatus.UnderReview
             };
 
             ResultLoader.GetManageCoreResultAsync(AoUkprn, ProfileId, AssessmentId, true).Returns(_mockresult);

@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 ResultId = 111,
                 SelectedGradeCode = string.Empty,
                 Grades = grades,
-                AppealEndDate = DateTime.Today.AddDays(7),
+                ResultEndDate = DateTime.Today.AddDays(7),
                 PrsStatus = Common.Enum.PrsStatus.BeingAppealed
             };
 
