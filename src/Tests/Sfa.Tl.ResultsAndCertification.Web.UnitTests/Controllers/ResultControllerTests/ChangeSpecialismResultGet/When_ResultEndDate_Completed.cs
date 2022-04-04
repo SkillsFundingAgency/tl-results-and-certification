@@ -6,27 +6,27 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using Xunit;
 using System;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.ChangeCoreResultGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.ChangeSpecialismResultGet
 {
-    public class When_AppealEndDate_Completed : TestSetup
+    public class When_ResultEndDate_Completed : TestSetup
     {
-        private ManageCoreResultViewModel _mockresult = null;
+        private ManageSpecialismResultViewModel _mockresult = null;
 
         public override void Given()
         {
-            _mockresult = new ManageCoreResultViewModel
+            _mockresult = new ManageSpecialismResultViewModel
             {
-                AppealEndDate = DateTime.Today.AddDays(-7),
-                PathwayPrsStatus = null
+                ResultEndDate = DateTime.Today.AddDays(-7),
+                PrsStatus = null
             };
 
-            ResultLoader.GetManageCoreResultAsync(AoUkprn, ProfileId, AssessmentId, true).Returns(_mockresult);
+            ResultLoader.GetManageSpecialismResultAsync(AoUkprn, ProfileId, AssessmentId, true).Returns(_mockresult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            ResultLoader.Received(1).GetManageCoreResultAsync(AoUkprn, ProfileId, AssessmentId, true);
+            ResultLoader.Received(1).GetManageSpecialismResultAsync(AoUkprn, ProfileId, AssessmentId, true);
         }
 
         [Fact]

@@ -55,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             Id = AssessmentId,
                             SeriesId = 1,
                             SeriesName = "Summer 2021",
-                            AppealEndDate = DateTime.UtcNow.AddDays(10),
+                            ResultEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
                             Result = null
@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                     Id = AssessmentId,
                                     SeriesId = 2,
                                     SeriesName = "Autumn 2021",
-                                    AppealEndDate = DateTime.UtcNow.AddDays(30),
+                                    ResultEndDate = DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = DateTime.UtcNow,
                                     Result = new Result
@@ -111,7 +111,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
             var expectedSpecialismAsssessment = expectedSpecialism.Assessments.FirstOrDefault(sa => sa.Id == AssessmentId);
             ActualResult.AssessmentId.Should().Be(expectedSpecialismAsssessment.Id);
             ActualResult.AssessmentSeries.Should().Be(expectedSpecialismAsssessment.SeriesName.ToLowerInvariant());
-            ActualResult.AppealEndDate.Should().Be(expectedSpecialismAsssessment.AppealEndDate);
+            ActualResult.ResultEndDate.Should().Be(expectedSpecialismAsssessment.ResultEndDate);
 
             var expectedResult = expectedSpecialismAsssessment.Result;
             ActualResult.SpecialismName.Should().Be(expectedSpecialism.Name);

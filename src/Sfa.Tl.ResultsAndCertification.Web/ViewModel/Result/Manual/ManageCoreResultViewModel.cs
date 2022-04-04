@@ -1,6 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using System;
@@ -24,8 +23,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 
         public int ProfileId { get; set; }
         public int AssessmentId { get; set; }
-        public string AssessmentSeries { get; set; }
-        public DateTime? AppealEndDate { get; set; }
+        public string AssessmentSeries { get; set; }        
+        public DateTime? ResultEndDate { get; set; }
         public string PathwayName { get; set; }
         public string PathwayDisplayName { get; set; }
         
@@ -37,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public PrsStatus? PathwayPrsStatus { get; set; }
 
         public List<LookupViewModel> Grades { get; set; }
-        public bool IsValid => (PathwayPrsStatus.HasValue == false || PathwayPrsStatus == PrsStatus.NotSpecified) && CommonHelper.IsAppealsAllowed(AppealEndDate);
+        public bool IsValid => (PathwayPrsStatus.HasValue == false || PathwayPrsStatus == PrsStatus.NotSpecified) && ResultEndDate.HasValue && DateTime.Today <= ResultEndDate;
 
         public string SuccessBannerMessage { get { return string.Format(ResultId.HasValue ? ManageCoreResultContent.Banner_Message_For_Result_Changed : ManageCoreResultContent.Banner_Message_For_Result_Added, AssessmentSeries, PathwayName); } }
 

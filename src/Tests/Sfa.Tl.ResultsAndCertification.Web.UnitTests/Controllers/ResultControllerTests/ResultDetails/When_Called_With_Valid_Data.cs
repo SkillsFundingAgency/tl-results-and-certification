@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                         SpecialismComponentExams = new List<ComponentExamViewModel>
                         {
                             new ComponentExamViewModel { AssessmentSeries = "Autumn 2022", Grade = null, PrsStatus = null, LastUpdated = null, UpdatedBy = null, AppealEndDate = DateTime.Today.AddDays(10), AssessmentId = 6 },
-                            new ComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "Merit", PrsStatus = null, LastUpdated = "6 June 2021", UpdatedBy = "User 1",AppealEndDate = System.DateTime.Today.AddDays(10), AssessmentId = 7 }
+                            new ComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "Merit", PrsStatus = null, LastUpdated = "6 June 2021", UpdatedBy = "User 1",AppealEndDate = DateTime.Today.AddDays(10), AssessmentId = 7 }
                         }
                     },
 
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                         SpecialismComponentExams = new List<ComponentExamViewModel>
                         {
                             new ComponentExamViewModel { AssessmentSeries = "Autumn 2022", Grade = null, PrsStatus = null, LastUpdated = "7 June 2021", UpdatedBy = "User 2", AppealEndDate = DateTime.Today.AddDays(10), AssessmentId = 8 },
-                            new ComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "Merit", PrsStatus = null, LastUpdated = "6 June 2021", UpdatedBy = "User 1", AppealEndDate = System.DateTime.Today.AddDays(10), AssessmentId = 9 }
+                            new ComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "Merit", PrsStatus = null, LastUpdated = "6 June 2021", UpdatedBy = "User 1", AppealEndDate = DateTime.Today.AddDays(10), AssessmentId = 9 }
                         }
                     }
                 }

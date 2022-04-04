@@ -15,6 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public string PrsDisplayText { get { return CommonHelper.GetPrsStatusDisplayText(PrsStatus, RommEndDate, AppealEndDate); } }
         public string LastUpdated { get; set; }
         public string UpdatedBy { get; set; }
+        public DateTime ResultEndDate { get; set; }
         public DateTime RommEndDate { get; set; }
         public DateTime AppealEndDate { get; set; }
         public PrsStatus? PrsStatus { get; set; }
@@ -22,7 +23,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         // Below properties are used to render the HiddenActionText in the page.
         public int ProfileId { get; set; }
         public ComponentType ComponentType { get; set; }
-        
+
+        public bool IsResultChangeAllowed => !string.IsNullOrEmpty(Grade) && DateTime.Today <= ResultEndDate;
+
         public string HiddenActionText { get { return ComponentType == ComponentType.Core ? ResultDetailsContent.Hidden_Text_Core : ResultDetailsContent.Hidden_Text_Specialism; } }
 
         public string ResultRouteName { get { return ComponentType == ComponentType.Core ? GetPathwayResultRouteName : GetSpecialismResultRouteName; } }

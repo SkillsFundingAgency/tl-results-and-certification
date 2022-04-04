@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             Id = AssessmentId,
                             SeriesId = 1,
                             SeriesName = "Summer 2021",
-                            AppealEndDate = DateTime.UtcNow.AddDays(10),
+                            ResultEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
                             Result = new Result
@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                     Id = 2,
                                     SeriesId = 2,
                                     SeriesName = "Autumn 2021",
-                                    AppealEndDate = DateTime.UtcNow.AddDays(30),
+                                    ResultEndDate = DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = DateTime.UtcNow,
                                     Result = null
@@ -111,7 +111,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
             var expectedPathwayAsssessment = expectedApiResultDetails.Pathway.PathwayAssessments.FirstOrDefault();
             ActualResult.AssessmentId.Should().Be(expectedPathwayAsssessment.Id);
             ActualResult.AssessmentSeries.Should().Be(expectedPathwayAsssessment.SeriesName.ToLowerInvariant());
-            ActualResult.AppealEndDate.Should().Be(expectedPathwayAsssessment.AppealEndDate);
+            ActualResult.ResultEndDate.Should().Be(expectedPathwayAsssessment.ResultEndDate);
             ActualResult.PathwayName.Should().Be(expectedApiResultDetails.Pathway.Name);
             ActualResult.PathwayDisplayName.Should().Be($"{expectedApiResultDetails.Pathway.Name} ({expectedApiResultDetails.Pathway.LarId})");
 
