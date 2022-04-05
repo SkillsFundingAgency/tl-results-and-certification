@@ -97,8 +97,8 @@
         public const string SpecialismSeriesNotCurrentlyOpen = "Incorrect Assessment series";
 
         // Results - Bulk stage 4 validations
-        public const string ResultCannotBeChanged = "This learner’s grade cannot be changed. Please remove this learner and try again.";
-        public const string ResultCannotBeInUnderReviewOrBeingAppealedStatus = "This learner’s grade cannot be changed because it is being reviewed or appealed. Please remove this row and try again.";
+        public const string ResultCannotBeChanged = "This learner's grade cannot be changed. Please remove this learner and try again.";
+        public const string ResultCannotBeInUnderReviewOrBeingAppealedStatus = "This learner's grade cannot be changed because it is being reviewed or appealed. Please remove this row and try again.";
         public const string ResultIsInFinal = "This learner's grade is now final. Please remove this learner and try again.";
     }
 }
