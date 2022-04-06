@@ -10,7 +10,7 @@ using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostRes
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAppealCheckAndSubmitPost
 {
-    public class When_AppealOutcomeKnown_IsSuccess_For_Core : TestSetup
+    public class When_Appeal_IsSuccess_For_Core : TestSetup
     {
         private string _expectedSuccessBannerMsg;
         private string _expectedBannerHeaderMsg;
