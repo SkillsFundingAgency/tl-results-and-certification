@@ -75,15 +75,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => PrsStatus.BeingAppealed))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<PrsAddAppealViewModel, PrsActivityRequest>>());
 
-            CreateMap<AppealOutcomePathwayGradeViewModel, PrsActivityRequest>()
-               .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
-                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-               .ForMember(d => d.AssessentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
-               .ForMember(d => d.ResultId, opts => opts.MapFrom(s => s.PathwayResultId))
-               .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Core))
-               .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => PrsStatus.Withdraw))
-               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AppealOutcomePathwayGradeViewModel, PrsActivityRequest>>());
-
             CreateMap<PrsPathwayGradeCheckAndSubmitViewModel, PrsActivityRequest>()
                .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
@@ -92,20 +83,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Core))
                .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => PrsStatus.Final))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<PrsPathwayGradeCheckAndSubmitViewModel, PrsActivityRequest>>());
-
-            CreateMap<PrsLearnerDetails, AppealOutcomePathwayGradeViewModel>()
-               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-               .ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))
-               .ForMember(d => d.PathwayAssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
-               .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
-               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
-               .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
-               .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.PathwayName))
-               .ForMember(d => d.PathwayCode, opts => opts.MapFrom(s => s.PathwayCode))
-               .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName}<br/>({s.PathwayCode})"))
-               .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
-               .ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => s.PathwayGrade))
-               .ForMember(d => d.PathwayPrsStatus, opts => opts.MapFrom(s => s.PathwayPrsStatus));
 
             CreateMap<PrsLearnerDetails, AppealUpdatePathwayGradeViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))

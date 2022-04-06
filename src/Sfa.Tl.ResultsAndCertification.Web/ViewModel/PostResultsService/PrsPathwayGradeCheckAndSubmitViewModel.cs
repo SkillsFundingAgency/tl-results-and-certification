@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public override BackLinkModel BackLink => new BackLinkModel
         {
-            RouteName = IsGradeChanged ? RouteConstants.PrsAppealUpdatePathwayGrade : RouteConstants.PrsAppealOutcomePathwayGrade,
+            //RouteName = IsGradeChanged ? RouteConstants.PrsAppealUpdatePathwayGrade : RouteConstants.PrsAppealOutcomePathwayGrade,
             RouteAttributes = IsGradeChanged ? new Dictionary<string, string>
             {
                 { Constants.ProfileId, ProfileId.ToString() },

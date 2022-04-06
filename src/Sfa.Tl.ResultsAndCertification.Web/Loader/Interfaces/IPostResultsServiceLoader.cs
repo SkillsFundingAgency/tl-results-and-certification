@@ -21,7 +21,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<bool> AppealCoreGradeAsync(long aoUkprn, PrsPathwayGradeCheckAndSubmitViewModel model);
         Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequestViewModel model);
         T TransformLearnerDetailsTo<T>(FindPrsLearnerRecord prsLearnerRecord);
-        Task<bool> WithdrawAppealCoreGradeAsync(long aoUkprn, AppealOutcomePathwayGradeViewModel model);
         Task<bool> AppealGradeAfterDeadlineRequestAsync(AppealGradeAfterDeadlineConfirmViewModel model);
     }
 }

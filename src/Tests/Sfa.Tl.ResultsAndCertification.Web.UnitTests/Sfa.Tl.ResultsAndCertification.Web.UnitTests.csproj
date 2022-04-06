@@ -7,8 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\PostResultsServiceControllerTests\PrsWithdrawAppealTests\**" />
     <Compile Remove="Loader\ResultLoaderTests\GetResultNoAssessmentEntryViewModel\**" />
+    <EmbeddedResource Remove="Controllers\PostResultsServiceControllerTests\PrsWithdrawAppealTests\**" />
     <EmbeddedResource Remove="Loader\ResultLoaderTests\GetResultNoAssessmentEntryViewModel\**" />
+    <None Remove="Controllers\PostResultsServiceControllerTests\PrsWithdrawAppealTests\**" />
     <None Remove="Loader\ResultLoaderTests\GetResultNoAssessmentEntryViewModel\**" />
   </ItemGroup>
 

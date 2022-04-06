@@ -348,7 +348,6 @@
         public const string PrsCancelAppealUpdate = "PrsCancelAppealUpdate";
         public const string SubmitPrsCancelAppealUpdate = "SubmitPrsCancelAppealUpdate";
 
-        public const string PrsAppealOutcomePathwayGrade = "PrsAppealOutcomePathwayGrade";
         public const string SubmitPrsAppealOutcomePathwayGrade = "SubmitPrsAppealOutcomePathwayGrade";
         public const string PrsPathwayGradeCheckAndSubmit = "PrsPathwayGradeCheckAndSubmit";
         public const string SubmitPrsPathwayGradeCheckAndSubmit = "SubmitPrsPathwayGradeCheckAndSubmit";
