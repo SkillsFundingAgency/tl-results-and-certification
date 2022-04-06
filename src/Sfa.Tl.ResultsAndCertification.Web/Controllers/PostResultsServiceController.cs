@@ -11,7 +11,6 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System.Linq;
 using System.Threading.Tasks;
-using WithdrawAppealContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsWithdrawAppeal;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -595,36 +594,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reviews-and-appeals-check-and-submit", Name = RouteConstants.PrsPathwayGradeCheckAndSubmit)]
-        // TODO: Not in user delete
-        public async Task<IActionResult> PrsPathwayGradeCheckAndSubmitAsync()
-        {
-            var viewModel = await _cacheService.GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PrsPathwayGradeCheckAndSubmitViewModel from redis cache in Prs outcome check and submit page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("reviews-and-appeals-check-and-submit", Name = RouteConstants.SubmitPrsPathwayGradeCheckAndSubmit)]
-        // TODO: Not in user delete
-        public async Task<IActionResult> PrsPathwayGradeCheckAndSubmitAsync(PrsPathwayGradeCheckAndSubmitViewModel model)
-        {
-            bool isSuccess = await _postResultsServiceLoader.AppealCoreGradeAsync(User.GetUkPrn(), model);
-            if (!isSuccess)
-                return RedirectToRoute(RouteConstants.ProblemWithService);
-
-            var notificationBanner = new NotificationBannerModel { Message = model.SuccessBannerMessage };
-            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
-
-            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.AssessmentId });
-        }
-
-        [HttpGet]
         [Route("post-results-cancel-appeal-update", Name = RouteConstants.PrsCancelAppealUpdate)]
         public async Task<IActionResult> PrsCancelAppealUpdateAsync()
         {
@@ -653,48 +622,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return RedirectToRoute(RouteConstants.PrsAppealCheckAndSubmit);
             }
-        }
-
-        [HttpGet]
-        [Route("reviews-and-appeals-appeal-update-grade/{profileId}/{assessmentId}/{resultId}/{isChangeMode:bool?}", Name = RouteConstants.PrsAppealUpdatePathwayGrade)]
-        // TODO: Not in user delete
-        public async Task<IActionResult> PrsAppealUpdatePathwayGradeAsync(int profileId, int assessmentId, int resultId, bool isChangeMode = false)
-        {
-            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealUpdatePathwayGradeViewModel>(User.GetUkPrn(), profileId, assessmentId);
-
-            if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.IsValid)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            var checkAndSubmitDetails = await _cacheService.GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
-            if (checkAndSubmitDetails != null && !isChangeMode)
-                viewModel.SelectedGradeCode = viewModel.Grades?.FirstOrDefault(g => g.Value == checkAndSubmitDetails?.NewGrade)?.Code;
-
-            viewModel.IsChangeMode = isChangeMode;
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("reviews-and-appeals-appeal-update-grade", Name = RouteConstants.SubmitPrsAppealUpdatePathwayGrade)]
-        // TODO: Not in user delete
-        public async Task<IActionResult> PrsAppealUpdatePathwayGradeAsync(AppealUpdatePathwayGradeViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealUpdatePathwayGradeViewModel>(User.GetUkPrn(), model.ProfileId, model.PathwayAssessmentId);
-                prsDetails.IsChangeMode = model.IsChangeMode;
-                return View(prsDetails);
-            }
-
-            var checkAndSubmitViewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsPathwayGradeCheckAndSubmitViewModel>(User.GetUkPrn(), model.ProfileId, model.PathwayAssessmentId);
-            checkAndSubmitViewModel.NewGrade = model.Grades?.FirstOrDefault(x => x.Code == model.SelectedGradeCode)?.Value;
-
-            if (string.IsNullOrWhiteSpace(checkAndSubmitViewModel.NewGrade))
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            checkAndSubmitViewModel.IsGradeChanged = true;
-            await _cacheService.SetAsync(CacheKey, checkAndSubmitViewModel);
-
-            return RedirectToRoute(RouteConstants.PrsPathwayGradeCheckAndSubmit);
         }
 
         //[NonAction]
