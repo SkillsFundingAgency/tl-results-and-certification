@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             
             // Update link
             ActionText = IsResultUpdateAllowed ? PrsLearnerDetailsContent.Action_Link_Update : null,
-            RouteName = IsResultUpdateAllowed ? GetUpdatePathwayGradeRouteName : null,
+            //RouteName = IsResultUpdateAllowed ? GetUpdatePathwayGradeRouteName : null,
             RouteAttributes = IsResultUpdateAllowed ? GetUpdatePathwayGradeRouteAttributes : null,
             HiddenActionText = IsResultUpdateAllowed ? "grade" : null
         };
@@ -101,17 +101,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         private bool IsValidPathwayPrsStatus => PathwayPrsStatus.HasValue && PathwayPrsStatus != PrsStatus.NotSpecified;
 
-        private string GetUpdatePathwayGradeRouteName
-        {
-            get
-            {
-                return PathwayPrsStatus switch
-                {
-                    PrsStatus.BeingAppealed => RouteConstants.PrsAppealOutcomePathwayGrade,                    
-                    _ => RouteConstants.PrsAddAppeal,
-                };
-            }
-        }
+        //private string GetUpdatePathwayGradeRouteName
+        //{
+        //    get
+        //    {
+        //        return PathwayPrsStatus switch
+        //        {
+        //            PrsStatus.BeingAppealed => RouteConstants.PrsAppealOutcomePathwayGrade,                    
+        //            _ => RouteConstants.PrsAddAppeal,
+        //        };
+        //    }
+        //}
 
         private Dictionary<string, string> GetUpdatePathwayGradeRouteAttributes
         {
