@@ -130,27 +130,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.RequestedMessage, opts => opts.MapFrom(s => s.ChangeRequestData))
                 .ForMember(d => d.RequestedUserEmailAddress, opts => opts.MapFrom<UserEmailResolver<PrsGradeChangeRequestViewModel, PrsGradeChangeRequest>>());
 
-            CreateMap<PrsLearnerDetails, AppealGradeAfterDeadlineConfirmViewModel>()
-                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-                .ForMember(d => d.PathwayAssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
-                .ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))
-                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
-                .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))
-                .ForMember(d => d.Lastname, opts => opts.MapFrom(s => s.Lastname))
-                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
-                .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName}<br/>({s.PathwayCode})"))
-                .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
-                .ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => s.PathwayGrade))
-                .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status))
-                .ForMember(d => d.PathwayPrsStatus, opts => opts.MapFrom(s => s.PathwayPrsStatus))
-                .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AppealEndDate));
-
-            CreateMap<AppealGradeAfterDeadlineConfirmViewModel, AppealGradeAfterDeadlineRequest>()
-                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-                .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
-                .ForMember(d => d.ResultId, opts => opts.MapFrom(s => s.PathwayResultId))
-                .ForMember(d => d.RequestedUserEmailAddress, opts => opts.MapFrom<UserEmailResolver<AppealGradeAfterDeadlineConfirmViewModel, AppealGradeAfterDeadlineRequest>>());
-
             // Add Romm
             CreateMap<LearnerRecord, PrsAddRommViewModel>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
