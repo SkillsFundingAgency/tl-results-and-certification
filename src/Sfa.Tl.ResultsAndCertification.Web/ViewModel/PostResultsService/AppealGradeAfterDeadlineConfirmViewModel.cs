@@ -10,6 +10,7 @@ using AppealGradeContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResult
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 {
+    // TODO: Ravi - To be deleted?
     public class AppealGradeAfterDeadlineConfirmViewModel : PrsBaseViewModel
     {
         public AppealGradeAfterDeadlineConfirmViewModel()
@@ -58,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public override BackLinkModel BackLink => new BackLinkModel
         {
-            RouteName = RouteConstants.PrsAppealGradeAfterDeadline,
+            //RouteName = RouteConstants.PrsAppealGradeAfterDeadline,
             RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, PathwayAssessmentId.ToString() } }
         };
 

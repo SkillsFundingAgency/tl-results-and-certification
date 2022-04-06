@@ -741,18 +741,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("appeal-grade-after-deadline/{profileId}/{assessmentId}", Name = RouteConstants.PrsAppealGradeAfterDeadline)]
-        // TODO: Not in user delete
-        public async Task<IActionResult> PrsAppealGradeAfterDeadlineAsync(int profileId, int assessmentId)
-        {
-            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealGradeAfterDeadlineViewModel>(User.GetUkPrn(), profileId, assessmentId);
-            if (viewModel == null || !viewModel.IsValid)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            return View(viewModel);
-        }
-
-        [HttpGet]
         [Route("confirm-appeal-after-deadline/{profileId}/{assessmentId}", Name = RouteConstants.PrsAppealAfterDeadlineConfirm)]
         // TODO: Not in user delete
         public async Task<IActionResult> PrsAppealGradeAfterDeadlineConfirmAsync(int profileId, int assessmentId)

@@ -355,7 +355,6 @@
         public const string SubmitPrsCancelGradeChangeRequest = "SubmitPrsCancelGradeChangeRequest";
         public const string PrsGradeChangeRequestConfirmation = "PrsGradeChangeRequestConfirmation";
         public const string SubmitPrsGradeChangeRequestConfirmation = "SubmitPrsGradeChangeRequestConfirmation";
-        public const string PrsAppealGradeAfterDeadline = "PrsAppealGradeAfterDeadline";
         public const string PrsAppealAfterDeadlineConfirm = "PrsAppealAfterDeadlineConfirm";
         public const string SubmitPrsAppealAfterDeadlineConfirm = "SubmitPrsAppealAfterDeadlineConfirm";
         public const string PrsAppealGradeAfterDeadlineRequestConfirmation = "PrsAppealGradeAfterDeadlineRequestConfirmation";        
