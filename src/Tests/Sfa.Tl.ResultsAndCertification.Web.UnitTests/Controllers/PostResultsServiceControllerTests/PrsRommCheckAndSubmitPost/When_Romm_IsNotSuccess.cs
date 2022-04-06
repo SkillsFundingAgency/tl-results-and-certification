@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsRommCheckAndSubmitPost
 {
-    public class When_RommOutcomeKnown_IsNotSuccess : TestSetup
+    public class When_Romm_IsNotSuccess : TestSetup
     {
         public override void Given()
         {
