@@ -86,7 +86,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId, int assessmentId);
         Task<bool> PrsActivityAsync(PrsActivityRequest request);
         Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request);
-        Task<bool> AppealGradeAfterDeadlineRequestAsync(AppealGradeAfterDeadlineRequest request);
 
         // Common
         Task<IList<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory);

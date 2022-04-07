@@ -51,12 +51,5 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _postResultsServiceService.PrsGradeChangeRequestAsync(request);
         }
-
-        [HttpPost]
-        [Route("AppealGradeAfterDeadlineRequest")]
-        public async Task<bool> AppealGradeAfterDeadlineRequestAsync(AppealGradeAfterDeadlineRequest request)
-        {
-            return await _postResultsServiceService.AppealGradeAfterDeadlineRequestAsync(request);
-        }
     }
 }
