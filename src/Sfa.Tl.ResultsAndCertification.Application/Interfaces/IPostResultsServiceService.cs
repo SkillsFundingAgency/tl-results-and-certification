@@ -9,6 +9,5 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkPrn, int profileId, int assessmentId);
         Task<bool> PrsActivityAsync(PrsActivityRequest request);
         Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request);
-        Task<bool> AppealGradeAfterDeadlineRequestAsync(AppealGradeAfterDeadlineRequest request);
     }
 }

@@ -187,34 +187,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return false;
         }
 
-        public async Task<bool> AppealGradeAfterDeadlineRequestAsync(AppealGradeAfterDeadlineRequest request)
-        {
-            var referenceNumber = Guid.NewGuid().ToString();
-            var technicalTeamTokens = new Dictionary<string, dynamic>
-                {
-                    { "reference_number", referenceNumber },
-                    { "sender_email_address", request.RequestedUserEmailAddress },
-                    { "profile_id", request.ProfileId },
-                    { "assessment_id", request.AssessmentId },
-                    { "result_id", request.ResultId }
-                };
-
-            // send email to technical team
-            var hasEmailSent = await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.AppealGradeAfterDeadlineRequestTechnicalTeamNotification.ToString(), _configuration.TechnicalSupportEmailAddress, technicalTeamTokens);
-
-            if (hasEmailSent)
-            {
-                var userTokens = new Dictionary<string, dynamic>
-                {
-                    { "reference_number", referenceNumber }
-                };
-
-                // send email to requested user
-                return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.AppealGradeAfterDeadlineRequestUserNotification.ToString(), request.RequestedUserEmailAddress, userTokens);
-            }
-            return false;
-        }
-        
         private static bool IsResultStatusValid(PrsStatus requestPrsStatus, PrsStatus? currentPrsStatus)
         {
             if (requestPrsStatus == PrsStatus.UnderReview)
