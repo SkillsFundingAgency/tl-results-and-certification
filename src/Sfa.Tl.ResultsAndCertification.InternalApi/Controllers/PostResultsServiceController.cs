@@ -31,13 +31,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             return await _postResultsServiceService.FindPrsLearnerRecordAsync(aoUkprn, null, profileId);
         }
 
-        [HttpGet]
-        [Route("GetPrsLearnerDetails/{aoUkprn}/{profileId}/{assessmentId}")]
-        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkPrn, int profileId, int assessmentId)
-        {
-            return await _postResultsServiceService.GetPrsLearnerDetailsAsync(aoUkPrn, profileId, assessmentId);
-        }
-
         [HttpPost]
         [Route("PrsActivity")]
         public async Task<bool> PrsActivityAsync(PrsActivityRequest request)

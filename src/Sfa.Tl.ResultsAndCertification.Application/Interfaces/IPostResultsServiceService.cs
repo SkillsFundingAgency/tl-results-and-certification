@@ -6,7 +6,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     public interface IPostResultsServiceService
     {
         Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null);
-        Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkPrn, int profileId, int assessmentId);
         Task<bool> PrsActivityAsync(PrsActivityRequest request);
         Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request);
     }
