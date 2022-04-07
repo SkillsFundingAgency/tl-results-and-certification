@@ -78,12 +78,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             }
         }
 
-        public async Task<T> GetPrsLearnerDetailsAsync<T>(long aoUkprn, int profileId, int assessementId)
-        {
-            var prsLearnerDetails = await _internalApiClient.GetPrsLearnerDetailsAsync(aoUkprn, profileId, assessementId);
-            return _mapper.Map<T>(prsLearnerDetails);
-        }
-
         public async Task<bool> PrsRommActivityAsync(long aoUkprn, PrsAddRommOutcomeViewModel model)
         {
             var request = _mapper.Map<PrsActivityRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
