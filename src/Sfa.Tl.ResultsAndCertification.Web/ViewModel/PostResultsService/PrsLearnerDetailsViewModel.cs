@@ -8,9 +8,9 @@ using PrsLearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Post
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 {
-    public class PrsLearnerDetailsViewModel1 : PrsBaseViewModel
+    public class PrsLearnerDetailsViewModel : PrsBaseViewModel
     {
-        public PrsLearnerDetailsViewModel1()
+        public PrsLearnerDetailsViewModel()
         {
             UlnLabel = PrsLearnerDetailsContent.Title_Uln_Text;
             LearnerNameLabel = PrsLearnerDetailsContent.Title_Name_Text;

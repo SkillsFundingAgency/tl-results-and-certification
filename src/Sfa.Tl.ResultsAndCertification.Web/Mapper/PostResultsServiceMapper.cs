@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
     {
         public PostResultsServiceMapper()
         {
-            CreateMap<LearnerRecord, PrsLearnerDetailsViewModel1>()
+            CreateMap<LearnerRecord, PrsLearnerDetailsViewModel>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
                 .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))

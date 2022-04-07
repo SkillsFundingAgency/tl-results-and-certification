@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
     {
         private LearnerRecord _expectedApiResult;
 
-        protected PrsLearnerDetailsViewModel1 ActualResult { get; set; }
+        protected PrsLearnerDetailsViewModel ActualResult { get; set; }
 
         public override void Given()
         {
@@ -244,7 +244,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel1>(AoUkprn, ProfileId);
+            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId);
         }
 
         [Fact]
