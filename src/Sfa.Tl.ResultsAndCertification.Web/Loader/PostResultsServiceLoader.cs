@@ -81,14 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task<T> GetPrsLearnerDetailsAsync<T>(long aoUkprn, int profileId, int assessementId)
         {
             var prsLearnerDetails = await _internalApiClient.GetPrsLearnerDetailsAsync(aoUkprn, profileId, assessementId);
-
-            if (typeof(T) == typeof(AppealUpdatePathwayGradeViewModel))
-            {
-                var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
-                return _mapper.Map<T>(prsLearnerDetails, opt => opt.Items["grades"] = grades);
-            }
-            else
-                return _mapper.Map<T>(prsLearnerDetails);
+            return _mapper.Map<T>(prsLearnerDetails);
         }
 
         public async Task<bool> PrsRommActivityAsync(long aoUkprn, PrsAddRommOutcomeViewModel model)
@@ -151,41 +144,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.PrsActivityAsync(request);
         }
 
-        public async Task<bool> AppealCoreGradeAsync(long aoUkprn, PrsPathwayGradeCheckAndSubmitViewModel model)
-        {
-            var request = _mapper.Map<PrsActivityRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
-
-            // Assign new grade lookup id
-            var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
-            var newGrade = grades.FirstOrDefault(x => x.Value.Equals(model.NewGrade, StringComparison.InvariantCultureIgnoreCase));
-            if (newGrade == null)
-                return false;
-            request.ResultLookupId = newGrade.Id;
-
-            return await _internalApiClient.PrsActivityAsync(request);
-        }
-
         public async Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequestViewModel model)
         {
             var request = _mapper.Map<PrsGradeChangeRequest>(model);
             return await _internalApiClient.PrsGradeChangeRequestAsync(request);
         }
 
-        public async Task<bool> AppealGradeAfterDeadlineRequestAsync(AppealGradeAfterDeadlineConfirmViewModel model)
-        {
-            var request = _mapper.Map<AppealGradeAfterDeadlineRequest>(model);
-            return await _internalApiClient.AppealGradeAfterDeadlineRequestAsync(request);
-        }
-
         public T TransformLearnerDetailsTo<T>(FindPrsLearnerRecord prsLearnerRecord)
         {
             return _mapper.Map<T>(prsLearnerRecord);
-        }
-
-        public async Task<bool> WithdrawAppealCoreGradeAsync(long aoUkprn, AppealOutcomePathwayGradeViewModel model)
-        {
-            var request = _mapper.Map<PrsActivityRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
-            return await _internalApiClient.PrsActivityAsync(request);
         }
     }
 }

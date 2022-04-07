@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAppealCheckAndSubmitPost
 {
-    public class When_AppealOutcomeKnown_IsNotSuccess : TestSetup
+    public class When_Appeal_IsNotSuccess : TestSetup
     {
         public override void Given()
         {

@@ -5,16 +5,15 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsPathwayGradeCheckAndSubmitPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsRommCheckAndSubmitPost
 {
-    public class When_AppealCoreGrade_IsNotSuccess : TestSetup
+    public class When_Romm_IsNotSuccess : TestSetup
     {
         public override void Given()
         {
-            var isAppealSuccess = false;
+            var isRommSuccess = false;
 
-            Loader.AppealCoreGradeAsync(AoUkprn, Arg.Any<PrsPathwayGradeCheckAndSubmitViewModel>())
-                .Returns(isAppealSuccess);
+            Loader.PrsRommActivityAsync(AoUkprn, Arg.Any<PrsRommCheckAndSubmitViewModel>()).Returns(isRommSuccess);
         }
 
         [Fact]
@@ -27,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         [Fact]
         public void Then_Expected_Method_Is_Called()
         {
-            Loader.Received(1).AppealCoreGradeAsync(AoUkprn, Arg.Any<PrsPathwayGradeCheckAndSubmitViewModel>());
+            Loader.Received(1).PrsRommActivityAsync(AoUkprn, Arg.Any<PrsRommCheckAndSubmitViewModel>());
         }
     }
 }

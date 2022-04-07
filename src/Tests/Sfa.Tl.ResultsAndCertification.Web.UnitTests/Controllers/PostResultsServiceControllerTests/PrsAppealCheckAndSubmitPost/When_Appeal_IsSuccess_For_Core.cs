@@ -6,19 +6,19 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using Xunit;
-using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsRommCheckAndSubmit;
+using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsAppealCheckAndSubmit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsRommCheckAndSubmitPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAppealCheckAndSubmitPost
 {
-    public class When_RommOutcomeKnown_IsSuccess_For_Core : TestSetup
+    public class When_Appeal_IsSuccess_For_Core : TestSetup
     {
         private string _expectedSuccessBannerMsg;
         private string _expectedBannerHeaderMsg;
 
         public override void Given()
         {
-            var isRommSuccess = true;
-            ViewModel = new PrsRommCheckAndSubmitViewModel
+            var isAppealSuccess = true;
+            ViewModel = new PrsAppealCheckAndSubmitViewModel
             {
                 ProfileId = 1,
                 AssessmentId = 11,
@@ -31,9 +31,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 CoreLarId = "12345678",
             };
 
-            Loader.PrsRommActivityAsync(AoUkprn, ViewModel).Returns(isRommSuccess);
+            Loader.PrsAppealActivityAsync(AoUkprn, ViewModel).Returns(isAppealSuccess);
             _expectedSuccessBannerMsg = string.Format(CheckAndSubmitContent.Banner_Message, ViewModel.LearnerName, ViewModel.ExamPeriod, ViewModel.CoreDisplayName);
-            _expectedBannerHeaderMsg = CheckAndSubmitContent.Banner_HeaderMessage_Romm_Recorded;
+            _expectedBannerHeaderMsg = CheckAndSubmitContent.Banner_HeaderMessage_Appeal_Recorded;
         }
 
         [Fact]
@@ -48,8 +48,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         [Fact]
         public void Then_Expected_Method_Are_Called()
         {
-            Loader.Received(1).PrsRommActivityAsync(AoUkprn, ViewModel);
-            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(x => x.IsPrsJourney == true && x.HeaderMessage.Equals(_expectedBannerHeaderMsg) &&  x.Message.Equals(_expectedSuccessBannerMsg)), CacheExpiryTime.XSmall);
+            Loader.Received(1).PrsAppealActivityAsync(AoUkprn, ViewModel);
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(x => x.IsPrsJourney == true && x.HeaderMessage.Equals(_expectedBannerHeaderMsg) && x.Message.Equals(_expectedSuccessBannerMsg)), CacheExpiryTime.XSmall);
         }
     }
 }

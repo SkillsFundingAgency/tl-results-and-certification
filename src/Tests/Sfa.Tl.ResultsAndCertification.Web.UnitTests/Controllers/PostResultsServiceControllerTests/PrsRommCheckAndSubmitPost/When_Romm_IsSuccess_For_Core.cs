@@ -10,7 +10,7 @@ using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostRes
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsRommCheckAndSubmitPost
 {
-    public class When_RommOutcomeKnown_IsSuccess_For_Specialism : TestSetup
+    public class When_Romm_IsSuccess_For_Core : TestSetup
     {
         private string _expectedSuccessBannerMsg;
         private string _expectedBannerHeaderMsg;
@@ -23,16 +23,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ProfileId = 1,
                 AssessmentId = 11,
                 ResultId = 12,
-                ComponentType = ComponentType.Specialism,
+                ComponentType = ComponentType.Core,
                 Firstname = "John",
                 Lastname = "Smith",
                 ExamPeriod = "Summer 2022",
-                SpecialismName = "Design and Education",
-                SpecialismLarId = "12345678",
+                CoreName = "Design and Education",
+                CoreLarId = "12345678",
             };
 
             Loader.PrsRommActivityAsync(AoUkprn, ViewModel).Returns(isRommSuccess);
-            _expectedSuccessBannerMsg = string.Format(CheckAndSubmitContent.Banner_Message, ViewModel.LearnerName, ViewModel.ExamPeriod, ViewModel.SpecialismDisplayName);
+            _expectedSuccessBannerMsg = string.Format(CheckAndSubmitContent.Banner_Message, ViewModel.LearnerName, ViewModel.ExamPeriod, ViewModel.CoreDisplayName);
             _expectedBannerHeaderMsg = CheckAndSubmitContent.Banner_HeaderMessage_Romm_Recorded;
         }
 
@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         public void Then_Expected_Method_Are_Called()
         {
             Loader.Received(1).PrsRommActivityAsync(AoUkprn, ViewModel);
-            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(x => x.IsPrsJourney == true && x.HeaderMessage.Equals(_expectedBannerHeaderMsg) && x.Message.Equals(_expectedSuccessBannerMsg)), CacheExpiryTime.XSmall);
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(x => x.IsPrsJourney == true && x.HeaderMessage.Equals(_expectedBannerHeaderMsg) &&  x.Message.Equals(_expectedSuccessBannerMsg)), CacheExpiryTime.XSmall);
         }
     }
 }
