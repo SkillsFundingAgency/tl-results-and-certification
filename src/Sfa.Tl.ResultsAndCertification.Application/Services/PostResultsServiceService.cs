@@ -44,11 +44,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _postResultsServiceRepository.FindPrsLearnerRecordAsync(aoUkprn, uln, profileId);
         }
 
-        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkPrn, int profileId, int assessmentId)
-        {
-            return await _postResultsServiceRepository.GetPrsLearnerDetailsAsync(aoUkPrn, profileId, assessmentId);
-        }
-
         public async Task<bool> PrsActivityAsync(PrsActivityRequest request)
         {
             if (request.PrsStatus == PrsStatus.NotSpecified)

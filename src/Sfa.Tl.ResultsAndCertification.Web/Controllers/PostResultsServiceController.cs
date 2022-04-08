@@ -127,7 +127,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("post-results-learners-grades/{profileId}", Name = RouteConstants.PrsLearnerDetails)]
         public async Task<IActionResult> PrsLearnerDetailsAsync(int profileId)
         {
-            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel1>(User.GetUkPrn(), profileId);
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(User.GetUkPrn(), profileId);
             if (viewModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 

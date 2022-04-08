@@ -8,7 +8,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
     public interface IPostResultsServiceLoader
     {
         Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null);
-        Task<T> GetPrsLearnerDetailsAsync<T>(long aoUkprn, int profileId, int assessmentId);
         Task<T> GetPrsLearnerDetailsAsync<T>(long aoUkprn, int profileId);
         Task<T> GetPrsLearnerDetailsAsync<T>(long aoUkprn, int profileId, int assessmentId, ComponentType componentType);
         Task<bool> PrsRommActivityAsync(long aoUkprn, PrsAddRommOutcomeViewModel model);

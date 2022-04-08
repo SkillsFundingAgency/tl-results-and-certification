@@ -15,13 +15,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 {
     public class When_Result_Is_Final : TestSetup
     {
-        private PrsLearnerDetailsViewModel1 _mockResult;
+        private PrsLearnerDetailsViewModel _mockResult;
 
         public override void Given()
         {
             ProfileId = 11;
 
-            _mockResult = new PrsLearnerDetailsViewModel1
+            _mockResult = new PrsLearnerDetailsViewModel
             {
                 Firstname = "John",
                 Lastname = "Smith",
@@ -61,20 +61,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 }
             };           
 
-            Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel1>(AoUkprn, ProfileId).Returns(_mockResult);
+            Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId).Returns(_mockResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel1>(AoUkprn, ProfileId);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
             var viewResult = Result as ViewResult;
-            var model = viewResult.Model as PrsLearnerDetailsViewModel1;
+            var model = viewResult.Model as PrsLearnerDetailsViewModel;
 
             model.Should().NotBeNull();
             model.ProfileId.Should().Be(_mockResult.ProfileId);

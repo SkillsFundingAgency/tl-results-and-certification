@@ -349,12 +349,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<FindPrsLearnerRecord>(requestUri);
         }
 
-        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId, int assessmentId)
-        {
-            var requestUri = string.Format(ApiConstants.GetPrsLearnerDetailsUri, aoUkprn, profileId, assessmentId);
-            return await GetAsync<PrsLearnerDetails>(requestUri);
-        }
-
         public async Task<bool> PrsActivityAsync(PrsActivityRequest request)
         {
             var requestUri = ApiConstants.PrsActivityUri;
