@@ -11,13 +11,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 {
     public class When_PrsStatus_Is_Reviewed_For_Core : TestSetup
     {
-        private PrsLearnerDetailsViewModel1 _mockResult;
+        private PrsLearnerDetailsViewModel _mockResult;
 
         public override void Given()
         {
             ProfileId = 11;
 
-            _mockResult = new PrsLearnerDetailsViewModel1
+            _mockResult = new PrsLearnerDetailsViewModel
             {
                 // Core
                 CoreComponentDisplayName = "Design, Surveying and Planning (123456)",
@@ -36,20 +36,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 }
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel1>(AoUkprn, ProfileId).Returns(_mockResult);
+            Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId).Returns(_mockResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel1>(AoUkprn, ProfileId);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
             var viewResult = Result as ViewResult;
-            var model = viewResult.Model as PrsLearnerDetailsViewModel1;
+            var model = viewResult.Model as PrsLearnerDetailsViewModel;
 
             model.HasCoreResults.Should().BeTrue();
             model.CoreComponentDisplayName.Should().Be(_mockResult.CoreComponentDisplayName);

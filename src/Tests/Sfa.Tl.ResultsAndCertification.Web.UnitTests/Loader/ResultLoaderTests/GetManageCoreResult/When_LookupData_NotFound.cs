@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             Id = AssessmentId,
                             SeriesId = 1,
                             SeriesName = "Summer 2021",
-                            AppealEndDate = DateTime.UtcNow.AddDays(10),
+                            ResultEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
                             Result = null
@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                     Id = 2,
                                     SeriesId = 2,
                                     SeriesName = "Autumn 2021",
-                                    AppealEndDate = DateTime.UtcNow.AddDays(30),
+                                    ResultEndDate = DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = DateTime.UtcNow,
                                     Result = null

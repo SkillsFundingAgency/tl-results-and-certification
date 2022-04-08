@@ -120,6 +120,12 @@
   <data name="Aria_Label_Text_Learner_Details" xml:space="preserve">
     <value>Learners details</value>
   </data>
+  <data name="Banner_HeaderMessage_Appeal_Withdrawn" xml:space="preserve">
+    <value>Appeal withdrawn</value>
+  </data>
+  <data name="Banner_Message" xml:space="preserve">
+    <value>You have withdrawn an appeal for {0}’s {1} {2} grade</value>
+  </data>
   <data name="Button_Continue" xml:space="preserve">
     <value>Continue</value>
   </data>
@@ -152,6 +158,9 @@
   </data>
   <data name="Title_Name_Text" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="Title_Specialism_Text" xml:space="preserve">
+    <value>Specialism</value>
   </data>
   <data name="Title_TLevel_Text" xml:space="preserve">
     <value>T Level</value>

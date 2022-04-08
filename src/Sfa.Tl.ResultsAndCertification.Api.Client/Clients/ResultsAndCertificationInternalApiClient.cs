@@ -349,12 +349,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<FindPrsLearnerRecord>(requestUri);
         }
 
-        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId, int assessmentId)
-        {
-            var requestUri = string.Format(ApiConstants.GetPrsLearnerDetailsUri, aoUkprn, profileId, assessmentId);
-            return await GetAsync<PrsLearnerDetails>(requestUri);
-        }
-
         public async Task<bool> PrsActivityAsync(PrsActivityRequest request)
         {
             var requestUri = ApiConstants.PrsActivityUri;
@@ -365,12 +359,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var requestUri = ApiConstants.PrsGradeChangeRequestUri;
             return await PostAsync<PrsGradeChangeRequest, bool>(requestUri, request);
-        }
-
-        public async Task<bool> AppealGradeAfterDeadlineRequestAsync(AppealGradeAfterDeadlineRequest request)
-        {
-            var requestUri = ApiConstants.AppealGradeAfterDeadlineRequestUri;
-            return await PostAsync<AppealGradeAfterDeadlineRequest, bool>(requestUri, request);
         }
 
         #endregion 

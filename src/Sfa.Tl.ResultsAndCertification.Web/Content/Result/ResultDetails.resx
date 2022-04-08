@@ -129,26 +129,29 @@
   <data name="Change_Result_Action_Link_Text" xml:space="preserve">
     <value>Change</value>
   </data>
-  <data name="Contactus_Link" xml:space="preserve">
-    <value>contact us</value>
+  <data name="Details_Summary_Text_Grades_Are_Marked_Final" xml:space="preserve">
+    <value>Grades are marked 'FINAL' once:</value>
   </data>
   <data name="Details_Summary_Text_Link_More_About" xml:space="preserve">
-    <value>More about grade statuses</value>
+    <value>More about grades and their statuses</value>
   </data>
-  <data name="Details_Summary_Text_Result_Final_Result_No_Longer_Changed_Here" xml:space="preserve">
-    <value>Once a grade has been entered after a review or an appeal it is marked as ‘final’ and can no longer be changed here. If you need to change a grade after entering a review or an appeal result, or change a grade after the deadline, please</value>
+  <data name="Details_Summary_Text_List_An_Appeal_Outcome_Has_Been_Added" xml:space="preserve">
+    <value>an appeal outcome has been added</value>
   </data>
-  <data name="Details_Summary_Text_Result_Overall_Results_Calculated_When_Final" xml:space="preserve">
-    <value>An overall T Level result cannot be calculated unless all assessments have grades marked 'final'.</value>
+  <data name="Details_Summary_Text_List_The_Romm_Or_Appeal_Deadline_Has_Passed" xml:space="preserve">
+    <value>the ROMM or appeal deadline has passed, or</value>
   </data>
-  <data name="Details_Summary_Text_Result_Pending_Result_Cannot_Be_Changed" xml:space="preserve">
-    <value>If a result is marked as ‘appeal’ the grade cannot be changed here. A review or an appeal outcome must be entered in the reviews and appeals section of this service.</value>
+  <data name="Details_Summary_Text_The_Highest_Grade_For_Each_Component" xml:space="preserve">
+    <value>The highest grade for each component will be used to calculate the overall T Level result for results day.</value>
   </data>
-  <data name="Email_Subject" xml:space="preserve">
-    <value>Request to change a grade marked final</value>
+  <data name="Details_Summay_Text_If_Grade_Status_Is_Romm_Or_Appeal_Then_OVerall_Result" xml:space="preserve">
+    <value>If a grade status is 'ROMM' or 'APPEAL' then the overall result will not be sent for certificate printing until an outcome has been added.</value>
   </data>
-  <data name="Fullstop" xml:space="preserve">
-    <value>.</value>
+  <data name="Details_Summay_Text_Outcomes_Can_Be_Added_In_The_Post_Results_Section" xml:space="preserve">
+    <value>Outcomes can be added in the post-results section of this service.</value>
+  </data>
+  <data name="Details_Summay_Text_You_Can_Requst_A_Change_To_Grade" xml:space="preserve">
+    <value>You can request a change to a grade marked 'FINAL' in the post-results section of this service.</value>
   </data>
   <data name="Heading_Core" xml:space="preserve">
     <value>Core component: {0}</value>

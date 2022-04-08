@@ -44,11 +44,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _postResultsServiceRepository.FindPrsLearnerRecordAsync(aoUkprn, uln, profileId);
         }
 
-        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkPrn, int profileId, int assessmentId)
-        {
-            return await _postResultsServiceRepository.GetPrsLearnerDetailsAsync(aoUkPrn, profileId, assessmentId);
-        }
-
         public async Task<bool> PrsActivityAsync(PrsActivityRequest request)
         {
             if (request.PrsStatus == PrsStatus.NotSpecified)
@@ -99,7 +94,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 TqPathwayAssessmentId = existingPathwayResult.TqPathwayAssessmentId,
                 TlLookupId = resultLookupId,
-                PrsStatus = request.PrsStatus == PrsStatus.Withdraw ? null : request.PrsStatus,
+                PrsStatus = GetPrsStatus(request.PrsStatus, existingPathwayResult.PrsStatus),
                 IsOptedin = true,
                 StartDate = DateTime.UtcNow,
                 EndDate = null,
@@ -147,7 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 TqSpecialismAssessmentId = existingSpecialismResult.TqSpecialismAssessmentId,
                 TlLookupId = resultLookupId,
-                PrsStatus = request.PrsStatus == PrsStatus.Withdraw ? null : request.PrsStatus,
+                PrsStatus = GetPrsStatus(request.PrsStatus, existingSpecialismResult.PrsStatus),
                 IsOptedin = true,
                 StartDate = DateTime.UtcNow,
                 EndDate = null,
@@ -187,36 +182,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return false;
         }
 
-        public async Task<bool> AppealGradeAfterDeadlineRequestAsync(AppealGradeAfterDeadlineRequest request)
-        {
-            var referenceNumber = Guid.NewGuid().ToString();
-            var technicalTeamTokens = new Dictionary<string, dynamic>
-                {
-                    { "reference_number", referenceNumber },
-                    { "sender_email_address", request.RequestedUserEmailAddress },
-                    { "profile_id", request.ProfileId },
-                    { "assessment_id", request.AssessmentId },
-                    { "result_id", request.ResultId }
-                };
-
-            // send email to technical team
-            var hasEmailSent = await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.AppealGradeAfterDeadlineRequestTechnicalTeamNotification.ToString(), _configuration.TechnicalSupportEmailAddress, technicalTeamTokens);
-
-            if (hasEmailSent)
-            {
-                var userTokens = new Dictionary<string, dynamic>
-                {
-                    { "reference_number", referenceNumber }
-                };
-
-                // send email to requested user
-                return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.AppealGradeAfterDeadlineRequestUserNotification.ToString(), request.RequestedUserEmailAddress, userTokens);
-            }
-            return false;
-        }
-        
-
-        private bool IsResultStatusValid(PrsStatus requestPrsStatus, PrsStatus? currentPrsStatus)
+        private static bool IsResultStatusValid(PrsStatus requestPrsStatus, PrsStatus? currentPrsStatus)
         {
             if (requestPrsStatus == PrsStatus.UnderReview)
                 return currentPrsStatus == null || currentPrsStatus == PrsStatus.NotSpecified;
@@ -228,12 +194,24 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return currentPrsStatus == PrsStatus.Reviewed;
 
             if (requestPrsStatus == PrsStatus.Final)
-                return currentPrsStatus == PrsStatus.BeingAppealed;
+                return currentPrsStatus == PrsStatus.Reviewed || currentPrsStatus == PrsStatus.BeingAppealed;
 
             if (requestPrsStatus == PrsStatus.Withdraw)
                 return currentPrsStatus == PrsStatus.UnderReview || currentPrsStatus == PrsStatus.BeingAppealed;
 
             return false;
+        }
+
+        private static PrsStatus? GetPrsStatus(PrsStatus requestPrsStatus, PrsStatus? currentPrsStatus)
+        {
+            if(requestPrsStatus == PrsStatus.Withdraw)
+            {
+                return currentPrsStatus == PrsStatus.BeingAppealed ? PrsStatus.Reviewed : null;
+            }
+            else
+            {
+                return requestPrsStatus;
+            }
         }
     }
 }

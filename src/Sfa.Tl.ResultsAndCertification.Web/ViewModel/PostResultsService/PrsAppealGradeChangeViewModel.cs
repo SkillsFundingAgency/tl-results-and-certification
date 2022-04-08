@@ -20,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             DateofBirthLabel = PrsAppealGradeChangeContent.Title_DateofBirth_Text;
             TlevelTitleLabel = PrsAppealGradeChangeContent.Title_TLevel_Text;
             CoreLabel = PrsAppealGradeChangeContent.Title_Core_Text;
+            SpecialismLabel = PrsAppealGradeChangeContent.Title_Specialism_Text;
             ExamPeriodLabel = PrsAppealGradeChangeContent.Title_ExamPeriod_Text;
             GradeLabel = PrsAppealGradeChangeContent.Title_Grade_Text;
         }
@@ -36,7 +37,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public bool IsAppealOutcomeJourney { get; set; }
 
-        public bool IsValid => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Reviewed && CommonHelper.IsAppealsAllowed(AppealEndDate);
+        public bool IsChangeMode { get; set; }
+
+        public bool IsValid => (PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Reviewed && CommonHelper.IsAppealsAllowed(AppealEndDate))
+                             || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.BeingAppealed;
 
         public override BackLinkModel BackLink => new()
         {
@@ -44,11 +48,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             RouteAttributes = GetRouteAttributes
         };
 
-        private string GetRouteName => GetAppealOutcomeJourneyRoute;
+        private string GetRouteName => IsChangeMode ? RouteConstants.PrsAppealCheckAndSubmit : GetAppealOutcomeJourneyRoute;
 
-        private string GetAppealOutcomeJourneyRoute => RouteConstants.PrsAddAppealOutcomeKnown;
+        private string GetAppealOutcomeJourneyRoute => IsAppealOutcomeJourney ? RouteConstants.PrsAddAppealOutcome : RouteConstants.PrsAddAppealOutcomeKnown;
 
         private Dictionary<string, string> GetRouteAttributes =>
+            IsChangeMode ? null :
+            IsAppealOutcomeJourney ?
+            new Dictionary<string, string>
+            {
+                { Constants.ProfileId, ProfileId.ToString() },
+                { Constants.AssessmentId, AssessmentId.ToString() },
+                { Constants.ComponentType, ((int)ComponentType).ToString() },
+                { Constants.AppealOutcomeTypeId, ((int)AppealOutcomeType.GradeChanged).ToString() }
+            }
+            :
             new Dictionary<string, string>
             {
                 { Constants.ProfileId, ProfileId.ToString() },

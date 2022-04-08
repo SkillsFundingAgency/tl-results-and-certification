@@ -99,13 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (response == null || response.Pathway.Status != RegistrationPathwayStatus.Active)
                 return null;
 
-            // Below code is to set the ComponentType property which is used to render the ActionText dependent information.
-            var viewModel = _mapper.Map<ResultDetailsViewModel>(response);
-            viewModel.CoreComponentExams.ToList().ForEach(x => { x.ComponentType = ComponentType.Core; x.ProfileId = viewModel.ProfileId; });
-            viewModel.SpecialismComponents.ToList().ForEach(x => { x.SpecialismComponentExams.ToList()
-                .ForEach(s => { s.ComponentType = ComponentType.Specialism; s.ProfileId = viewModel.ProfileId; }); });
-
-            return viewModel;
+            return _mapper.Map<ResultDetailsViewModel>(response, opt => opt.Items[Constants.ProfileId] = profileId);
         }
 
         public async Task<AddResultResponse> AddCoreResultAsync(long aoUkprn, ManageCoreResultViewModel viewModel)

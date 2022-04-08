@@ -9,19 +9,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 {
     public class When_ViewModel_IsNull : TestSetup
     {
-        private readonly PrsLearnerDetailsViewModel1 _mockLearnerDetails = null;
+        private readonly PrsLearnerDetailsViewModel _mockLearnerDetails = null;
 
         public override void Given()
         {
             ProfileId = 11;
 
-            Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel1>(AoUkprn, ProfileId).Returns(_mockLearnerDetails);
+            Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId).Returns(_mockLearnerDetails);
         }
 
         [Fact]
         public void Then_Expected_Method_IsCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel1>(AoUkprn, ProfileId);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId);
         }
 
         [Fact]

@@ -343,27 +343,18 @@
         public const string SubmitPrsAddAppealOutcomeKnown = "SubmitPrsAddAppealOutcomeKnown";
         public const string PrsAppealGradeChange = "PrsAppealGradeChange";
         public const string SubmitPrsAppealGradeChange = "SubmitPrsAppealGradeChange";
-
-
-        public const string PrsAppealOutcomePathwayGrade = "PrsAppealOutcomePathwayGrade";
-        public const string SubmitPrsAppealOutcomePathwayGrade = "SubmitPrsAppealOutcomePathwayGrade";
-        public const string PrsPathwayGradeCheckAndSubmit = "PrsPathwayGradeCheckAndSubmit";
-        public const string SubmitPrsPathwayGradeCheckAndSubmit = "SubmitPrsPathwayGradeCheckAndSubmit";
-        public const string PrsAppealUpdatePathwayGrade = "PrsAppealUpdatePathwayGrade";
-        public const string SubmitPrsAppealUpdatePathwayGrade = "SubmitPrsAppealUpdatePathwayGrade";        
-        public const string PrsNoResults = "PrsNoResults";
+        public const string PrsAppealCheckAndSubmit = "PrsAppealCheckAndSubmit";
+        public const string SubmitPrsAppealCheckAndSubmit = "SubmitPrsAppealCheckAndSubmit";
         public const string PrsCancelAppealUpdate = "PrsCancelAppealUpdate";
         public const string SubmitPrsCancelAppealUpdate = "SubmitPrsCancelAppealUpdate";
+
+        public const string PrsNoResults = "PrsNoResults";        
         public const string PrsGradeChangeRequest = "PrsGradeChangeRequest";
         public const string SubmitPrsGradeChangeRequest = "SubmitPrsGradeChangeRequest";
         public const string PrsCancelGradeChangeRequest = "PrsCancelGradeChangeRequest";
         public const string SubmitPrsCancelGradeChangeRequest = "SubmitPrsCancelGradeChangeRequest";
         public const string PrsGradeChangeRequestConfirmation = "PrsGradeChangeRequestConfirmation";
         public const string SubmitPrsGradeChangeRequestConfirmation = "SubmitPrsGradeChangeRequestConfirmation";
-        public const string PrsAppealGradeAfterDeadline = "PrsAppealGradeAfterDeadline";
-        public const string PrsAppealAfterDeadlineConfirm = "PrsAppealAfterDeadlineConfirm";
-        public const string SubmitPrsAppealAfterDeadlineConfirm = "SubmitPrsAppealAfterDeadlineConfirm";
-        public const string PrsAppealGradeAfterDeadlineRequestConfirmation = "PrsAppealGradeAfterDeadlineRequestConfirmation";        
 
         #endregion
     }
