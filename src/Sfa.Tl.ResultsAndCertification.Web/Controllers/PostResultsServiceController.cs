@@ -624,19 +624,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
         }
 
-        //[NonAction]
-        //public async Task<IActionResult> PrsWithdrawAppealAsync(AppealOutcomePathwayGradeViewModel model)
-        //{
-        //    bool isSuccess = await _postResultsServiceLoader.WithdrawAppealCoreGradeAsync(User.GetUkPrn(), model);
-        //    if (!isSuccess)
-        //        return RedirectToRoute(RouteConstants.ProblemWithService);
-
-        //    var successMessage = string.Format(WithdrawAppealContent.Success_Banner_Message, model.PathwayName, model.PathwayCode);
-        //    var notificationBanner = new NotificationBannerModel { Message = successMessage };
-        //    await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
-        //    return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId });
-        //}
-
         [HttpGet]
         [Route("post-results-final-grade-change-request/{profileId}/{assessmentId}/{componentType}", Name = RouteConstants.PrsGradeChangeRequest)]
         public async Task<IActionResult> PrsGradeChangeRequestAsync(int profileId, int assessmentId, ComponentType componentType)
