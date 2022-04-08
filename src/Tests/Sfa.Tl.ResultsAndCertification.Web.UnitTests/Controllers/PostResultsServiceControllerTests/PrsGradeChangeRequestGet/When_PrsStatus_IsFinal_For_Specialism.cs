@@ -76,7 +76,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.AppealEndDate.Should().Be(_mockGradeChangeRequestViewModel.AppealEndDate);
             model.CanRequestFinalGradeChange.Should().BeTrue();
             model.ChangeRequestData.Should().BeNull();
-            model.IsResultJourney.Should().BeFalse();
 
             model.ProviderName.Should().Be(_mockGradeChangeRequestViewModel.ProviderName);
             model.ProviderUkprn.Should().Be(_mockGradeChangeRequestViewModel.ProviderUkprn);

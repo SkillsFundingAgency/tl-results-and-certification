@@ -23,7 +23,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ProfileId = 1,
                 AssessmentId = 2,
                 ComponentType = ComponentType.Specialism,
-                IsResultJourney = false,
                 ChangeRequestData = string.Empty
             };
 
@@ -80,7 +79,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.Status.Should().Be(_mockGradeChangeRequestViewModel.Status);
             model.CanRequestFinalGradeChange.Should().BeTrue();
             model.ChangeRequestData.Should().BeNull();
-            model.IsResultJourney.Should().BeFalse();
 
             model.ProviderName.Should().Be(_mockGradeChangeRequestViewModel.ProviderName);
             model.ProviderUkprn.Should().Be(_mockGradeChangeRequestViewModel.ProviderUkprn);

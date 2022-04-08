@@ -638,19 +638,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         //}
 
         [HttpGet]
-        [Route("post-results-final-grade-change-request/{profileId}/{assessmentId}/{componentType}/{isResultJourney:bool?}", Name = RouteConstants.PrsGradeChangeRequest)]
-        public async Task<IActionResult> PrsGradeChangeRequestAsync(int profileId, int assessmentId, ComponentType componentType, bool? isResultJourney)
+        [Route("post-results-final-grade-change-request/{profileId}/{assessmentId}/{componentType}", Name = RouteConstants.PrsGradeChangeRequest)]
+        public async Task<IActionResult> PrsGradeChangeRequestAsync(int profileId, int assessmentId, ComponentType componentType)
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(User.GetUkPrn(), profileId, assessmentId, componentType);
             if (viewModel == null || !viewModel.CanRequestFinalGradeChange)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            viewModel.IsResultJourney = isResultJourney;
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("post-results-final-grade-change-request/{profileId}/{assessmentId}/{componentType}/{isResultJourney:bool?}", Name = RouteConstants.SubmitPrsGradeChangeRequest)]
+        [Route("post-results-final-grade-change-request/{profileId}/{assessmentId}/{componentType}", Name = RouteConstants.SubmitPrsGradeChangeRequest)]
         public async Task<IActionResult> PrsGradeChangeRequestAsync(PrsGradeChangeRequestViewModel viewModel)
         {
             var learnerDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(User.GetUkPrn(), viewModel.ProfileId, viewModel.AssessmentId, viewModel.ComponentType);
@@ -660,7 +659,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                learnerDetails.IsResultJourney = viewModel.IsResultJourney;
                 return View(learnerDetails);
             }
 

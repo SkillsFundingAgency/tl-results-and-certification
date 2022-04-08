@@ -134,7 +134,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.ExamPeriod.Should().Be(expectedCoreAssessment.SeriesName);
             ActualResult.Grade.Should().Be(expectedCoreAssessment.Result.Grade);
 
-            ActualResult.IsResultJourney.Should().BeNull();
             ActualResult.CanRequestFinalGradeChange.Should().BeTrue();
             ActualResult.ChangeRequestData.Should().BeNull();
         }
