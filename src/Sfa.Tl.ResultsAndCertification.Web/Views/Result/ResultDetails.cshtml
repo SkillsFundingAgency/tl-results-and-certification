@@ -4,8 +4,6 @@
 @using Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
-@inject IWebConfigurationService ConfigurationService
-
 @{
     ViewData["Title"] = @ResultDetails.Page_Title;
 }
@@ -96,17 +94,22 @@
                 <span class="govuk-details__summary-text">@ResultDetails.Details_Summary_Text_Link_More_About</span>
             </summary>
             <div class="govuk-details__text">
-                <p>@ResultDetails.Details_Summary_Text_Result_Overall_Results_Calculated_When_Final</p>
-                <p>@ResultDetails.Details_Summary_Text_Result_Pending_Result_Cannot_Be_Changed</p>
-                <p>
-                    @ResultDetails.Details_Summary_Text_Result_Final_Result_No_Longer_Changed_Here
-                    <a href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()?subject=@ResultDetails.Email_Subject" class="govuk-link">@ResultDetails.Contactus_Link</a>@ResultDetails.Fullstop
+                <p class="govuk-body">
+                    @ResultDetails.Details_Summary_Text_The_Highest_Grade_For_Each_Component
                 </p>
 
+                <p class="govuk-body">@ResultDetails.Details_Summary_Text_Grades_Are_Marked_Final</p>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>@ResultDetails.Details_Summary_Text_List_The_Romm_Or_Appeal_Deadline_Has_Passed</li>
+                    <li>@ResultDetails.Details_Summary_Text_List_An_Appeal_Outcome_Has_Been_Added</li>
+                </ul>
+
+                <p class="govuk-body">@ResultDetails.Details_Summay_Text_You_Can_Requst_A_Change_To_Grade</p>
+                <p class="govuk-body">@ResultDetails.Details_Summay_Text_If_Grade_Status_Is_Romm_Or_Appeal_Then_OVerall_Result</p>
+                <p class="govuk-body">@ResultDetails.Details_Summay_Text_Outcomes_Can_Be_Added_In_The_Post_Results_Section</p>
             </div>
         </details>
 
-        <a id="buttonSearchAgain" class="govuk-button" role="button" asp-route="SearchResults">@ResultDetails.Button_Search_Again</a>
+        <a id="buttonSearchAgain" class="govuk-button" role="button" asp-route="@RouteConstants.SearchResults">@ResultDetails.Button_Search_Again</a>
     </div>
-
 </div>
