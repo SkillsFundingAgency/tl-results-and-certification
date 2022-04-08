@@ -5,6 +5,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
 {
     public class PrsLearnerDetails
     {
+        //TODO: ravi - is this contract in use?
         // Registration
         public int ProfileId { get; set; }
         public long Uln { get; set; }
