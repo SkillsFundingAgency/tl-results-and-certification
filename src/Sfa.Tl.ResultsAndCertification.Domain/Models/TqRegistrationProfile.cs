@@ -16,11 +16,15 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public string Lastname { get; set; }
         public DateTime DateofBirth { get; set; }
         public string Gender { get; set; }
+        public bool? IsEnglishAchieved { get; set; }
+        public bool? IsMathsAchieved { get; set; }
+
+        // TODO: Assess following 4 prop to be removed?
         public bool? IsLearnerVerified { get; set; }
         public bool? IsEnglishAndMathsAchieved { get; set; }
         public bool? IsSendLearner { get; set; }
         public bool? IsRcFeed { get; set; }
-
+        
         public virtual ICollection<TqRegistrationPathway> TqRegistrationPathways { get; set; }
         public virtual ICollection<QualificationAchieved> QualificationAchieved { get; set; }
     }
