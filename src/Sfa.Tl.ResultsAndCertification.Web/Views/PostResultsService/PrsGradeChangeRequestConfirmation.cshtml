@@ -22,13 +22,12 @@
 
         <form asp-route="SubmitPrsGradeChangeRequestConfirmation">
             <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
-            <input type="hidden" asp-for="AssessmentId" value="@Model.AssessmentId" />
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                        <h1 class="govuk-fieldset__heading">
+                        <h2 class="govuk-fieldset__heading">
                             @PrsGradeChangeRequestConfirmation.What_Would_You_Like_To_Do_Next
-                        </h1>
+                        </h2>
                     </legend>
                     <div class="govuk-radios">
                         <div class="govuk-radios__item">

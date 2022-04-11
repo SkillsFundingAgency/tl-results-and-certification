@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsUlnNotFoundViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 @{
     ViewData["Title"] = @PrsUlnNotFound.Page_Title;
@@ -16,7 +17,7 @@
         <p class="govuk-body">@PrsUlnNotFound.Para_Check_You_Have_Entered_Correct</p>
 
         <div class="govuk-button-group govuk-!-margin-top-6">
-            <a id="buttonSearchAgain" class="govuk-button" role="button" data-module="govuk-button" asp-route="PrsSearchLearner">@PrsUlnNotFound.Button_Search_Again</a>
+            <a id="buttonSearchAgain" class="govuk-button" role="button" data-module="govuk-button" asp-route="@RouteConstants.PrsSearchLearner">@PrsUlnNotFound.Button_Search_Again</a>
             <a id="buttonBackToHome" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="Home">@PrsUlnNotFound.Button_Back_To_Home</a>
         </div>
     </div>

@@ -7,8 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\PostResultsServiceControllerTests\PrsWithdrawAppealTests\**" />
+    <Compile Remove="Loader\PostResultsServiceLoaderTests\AppealCoreGradeFinal\**" />
     <Compile Remove="Loader\ResultLoaderTests\GetResultNoAssessmentEntryViewModel\**" />
+    <EmbeddedResource Remove="Controllers\PostResultsServiceControllerTests\PrsWithdrawAppealTests\**" />
+    <EmbeddedResource Remove="Loader\PostResultsServiceLoaderTests\AppealCoreGradeFinal\**" />
     <EmbeddedResource Remove="Loader\ResultLoaderTests\GetResultNoAssessmentEntryViewModel\**" />
+    <None Remove="Controllers\PostResultsServiceControllerTests\PrsWithdrawAppealTests\**" />
+    <None Remove="Loader\PostResultsServiceLoaderTests\AppealCoreGradeFinal\**" />
     <None Remove="Loader\ResultLoaderTests\GetResultNoAssessmentEntryViewModel\**" />
   </ItemGroup>
 
@@ -16,7 +22,6 @@
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Called_With_Invalid_Data.cs" />
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Called_With_Valid_Data.cs" />
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Registration_HasResult.cs" />
-    <Compile Remove="Controllers\PostResultsServiceControllerTests\PrsGradeChangeRequestGet\When_PrsStatus_IsFinal.cs" />
     <Compile Remove="Controllers\PostResultsServiceControllerTests\PrsGradeChangeRequestGet\When_PrsStatus_Is_BeingAppealed.cs" />
     <Compile Remove="Controllers\PostResultsServiceControllerTests\PrsGradeChangeRequestGet\When_ViewModel_IsInvalid.cs" />
     <Compile Remove="Controllers\ResultControllerTests\AddCoreResultGet\When_Called_With_Withdrawn_Status_Data.cs" />
@@ -28,8 +33,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="6.5.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+    <PackageReference Include="FluentAssertions" Version="6.6.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>

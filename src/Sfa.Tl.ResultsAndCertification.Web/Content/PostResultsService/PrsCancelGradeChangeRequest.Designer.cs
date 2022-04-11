@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class PrsCancelGradeChangeRequest {
@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to cancel the request for a grade change?.
+        ///   Looks up a localized string similar to Are you sure you want to cancel the request to change the grade?.
         /// </summary>
         public static string Heading_Are_You_Sure_You_Want_To_Cancel {
             get {
@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel grade change request.
+        ///   Looks up a localized string similar to Cancel request to change a ‘final’ grade - Post-results.
         /// </summary>
         public static string Page_Title {
             get {
@@ -107,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please select whether you want to cancel the request for a grade change.
+        ///   Looks up a localized string similar to Please select whether you want to cancel the request to change the grade.
         /// </summary>
         public static string Validation_Message {
             get {

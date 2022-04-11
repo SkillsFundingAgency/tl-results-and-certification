@@ -10,9 +10,19 @@
             </h2>
         </div>
         <div class="govuk-notification-banner__content">
-            <h3 class="govuk-notification-banner__heading">
-                @Model.Message
-            </h3>
+            @if (Model.IsPrsJourney)
+            {
+                <h3 class="govuk-notification-banner__heading">
+                    @Model.HeaderMessage
+                </h3>
+                <p class="govuk-body">@Model.Message</p>
+            }
+            else
+            {
+                <h3 class="govuk-notification-banner__heading">
+                    @Model.Message
+                </h3>
+            }
         </div>
     </div>
 }

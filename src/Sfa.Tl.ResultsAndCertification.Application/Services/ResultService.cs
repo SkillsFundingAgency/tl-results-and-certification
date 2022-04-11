@@ -308,17 +308,25 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     var existingPathwayResult = existingPathwayResultsFromDb.FirstOrDefault(existingPathwayResult => existingPathwayResult.TqPathwayAssessmentId == amendedPathwayResult.TqPathwayAssessmentId);
                     if (existingPathwayResult != null)
                     {
-                        var isAppealDatePassed = DateTime.Today > existingPathwayResult.TqPathwayAssessment.AssessmentSeries.AppealEndDate.Date;
-                        if (isAppealDatePassed || existingPathwayResult.PrsStatus == PrsStatus.Final)
+                        // Validation: Result cannot be changed after assessment series enddata has passed.
+                        var isResultEndDatePassed = DateTime.Today > existingPathwayResult.TqPathwayAssessment.AssessmentSeries.EndDate.Date;
+                        if (isResultEndDatePassed)
+                        {
+                            response.ValidationErrors.Add(GetResultValidationError(existingPathwayResult.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.ResultCannotBeChanged));
+                            return;
+                        }
+
+                        // Validation: Result should not be in Final Status (If changing result).
+                        if (existingPathwayResult.PrsStatus == PrsStatus.Final)
                         {
                             response.ValidationErrors.Add(GetResultValidationError(existingPathwayResult.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.ResultIsInFinal));
                             return;
                         }
 
-                        // Validation: Result should not be in BeingAppealed Status.
-                        if (existingPathwayResult.PrsStatus == PrsStatus.BeingAppealed)
+                        // Validation: Result should not be in ROMM(UnderReview) or BeingAppealed Status.
+                        if (existingPathwayResult.PrsStatus == PrsStatus.UnderReview || existingPathwayResult.PrsStatus == PrsStatus.BeingAppealed)
                         {
-                            response.ValidationErrors.Add(GetResultValidationError(existingPathwayResult.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.ResultCannotBeInBeingAppealedStatus));
+                            response.ValidationErrors.Add(GetResultValidationError(existingPathwayResult.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.ResultCannotBeInUnderReviewOrBeingAppealedStatus));
                             return;
                         }
 
@@ -366,17 +374,25 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     var existingSpecialismResult = existingSpecialismResultsFromDb.FirstOrDefault(existingSpecialismResult => existingSpecialismResult.TqSpecialismAssessmentId == amendedSpecialismResult.TqSpecialismAssessmentId);
                     if (existingSpecialismResult != null)
                     {
-                        var isAppealDatePassed = DateTime.Today > existingSpecialismResult.TqSpecialismAssessment.AssessmentSeries.AppealEndDate.Date;
-                        if (isAppealDatePassed || existingSpecialismResult.PrsStatus == PrsStatus.Final)
+                        // Validation: Result cannot be changed after assessment series enddata has passed.
+                        var isResultEndDatePassed = DateTime.Today > existingSpecialismResult.TqSpecialismAssessment.AssessmentSeries.EndDate.Date;                                               
+                        if (isResultEndDatePassed)
+                        {
+                            response.ValidationErrors.Add(GetResultValidationError(existingSpecialismResult.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.ResultCannotBeChanged));
+                            return;
+                        }
+
+                        // Validation: Result should not be in Final Status (If changing result).
+                        if (existingSpecialismResult.PrsStatus == PrsStatus.Final)
                         {
                             response.ValidationErrors.Add(GetResultValidationError(existingSpecialismResult.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.ResultIsInFinal));
                             return;
                         }
 
-                        // Validation: Result should not be in BeingAppealed Status.
-                        if (existingSpecialismResult.PrsStatus == PrsStatus.BeingAppealed)
+                        // Validation: Result should not be in ROMM(UnderReview) or BeingAppealed Status.
+                        if (existingSpecialismResult.PrsStatus == PrsStatus.UnderReview || existingSpecialismResult.PrsStatus == PrsStatus.BeingAppealed)
                         {
-                            response.ValidationErrors.Add(GetResultValidationError(existingSpecialismResult.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.ResultCannotBeInBeingAppealedStatus));
+                            response.ValidationErrors.Add(GetResultValidationError(existingSpecialismResult.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.ResultCannotBeInUnderReviewOrBeingAppealedStatus));
                             return;
                         }
 

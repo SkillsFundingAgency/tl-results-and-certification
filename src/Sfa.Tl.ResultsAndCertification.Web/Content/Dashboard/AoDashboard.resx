@@ -144,15 +144,6 @@
   <data name="Tile_Account_Item_View_Profile_Permissions" xml:space="preserve">
     <value>View your profile and permissions</value>
   </data>
-  <data name="Tile_Appeals_Heading" xml:space="preserve">
-    <value>Appeals</value>
-  </data>
-  <data name="Tile_Appeals_Item_Tell_Us_Appealed_Grade" xml:space="preserve">
-    <value>Tell us when a learner has appealed a grade</value>
-  </data>
-  <data name="Tile_Appeals_Item_Tell_Us_Result_Of_Appeal" xml:space="preserve">
-    <value>Tell us the result of an appeal</value>
-  </data>
   <data name="Tile_Assessments_Heading" xml:space="preserve">
     <value>Assessments</value>
   </data>
@@ -179,6 +170,15 @@
   </data>
   <data name="Tile_Providers_Item_Select_Tlevel" xml:space="preserve">
     <value>Select the T Levels each provider offers</value>
+  </data>
+  <data name="Tile_Prs_Heading" xml:space="preserve">
+    <value>Post-results</value>
+  </data>
+  <data name="Tile_Prs_Outcome_ROMM_Or_Appeal" xml:space="preserve">
+    <value>Tell us the outcome of a ROMM or appeal</value>
+  </data>
+  <data name="Tile_Prs_When_ROMM_Or_Appeal_Requested" xml:space="preserve">
+    <value>Tell us when a learner has requested a ROMM or appeal</value>
   </data>
   <data name="Tile_Registrations_Heading" xml:space="preserve">
     <value>Registrations</value>

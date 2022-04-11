@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsSearchLearnerViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 @{
     ViewData["Title"] = PrsSearchLearner.Page_Title;
@@ -12,7 +13,7 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <partial name="_ValidationSummary" />
-        <form asp-route="SubmitPrsSearchLearner">
+        <form asp-route="@RouteConstants.SubmitPrsSearchLearner">
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">
@@ -27,7 +28,7 @@
                         </label>
                         <span class="govuk-hint">@PrsSearchLearner.Uln_Must_10_Digit_Hint</span>
                         <span sfa-validation-for="SearchUln"></span>
-                        <input id="searchuln" class="govuk-input govuk-input--width-10" asp-for="SearchUln" maxlength="10">
+                        <input id="searchuln" class="govuk-input govuk-input--width-10" asp-for="SearchUln" inputmode="numeric" maxlength="10">
                     </div>
                 </fieldset>
             </div>

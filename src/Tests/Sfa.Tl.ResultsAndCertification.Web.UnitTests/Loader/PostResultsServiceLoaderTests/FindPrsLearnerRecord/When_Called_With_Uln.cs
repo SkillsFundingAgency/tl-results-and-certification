@@ -54,9 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.TlevelTitle.Should().Be(_expectedApiResult.TlevelTitle);
             ActualResult.Status.Should().Be(_expectedApiResult.Status);
 
-            ActualResult.NoAssessmentEntryRegistered.Should().BeFalse();
-            ActualResult.SingleAssessmentWithNoGrade.Should().BeFalse();
-            ActualResult.HasMultipleAssessments.Should().BeTrue();
+            ActualResult.HasResults.Should().BeTrue();
             ActualResult.PathwayAssessments.Should().NotBeEmpty();
             ActualResult.PathwayAssessments.Count().Should().Be(_pathwayAssessments.Count());
 
@@ -66,6 +64,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 ActualResult.PathwayAssessments.ElementAt(i).SeriesName.Should().Be(_pathwayAssessments[i].SeriesName);
                 ActualResult.PathwayAssessments.ElementAt(i).HasResult.Should().Be(_pathwayAssessments[i].HasResult);
             }
+
+            ActualResult.SpecialismAssessments.Should().BeNullOrEmpty();
         }
 
         [Fact]

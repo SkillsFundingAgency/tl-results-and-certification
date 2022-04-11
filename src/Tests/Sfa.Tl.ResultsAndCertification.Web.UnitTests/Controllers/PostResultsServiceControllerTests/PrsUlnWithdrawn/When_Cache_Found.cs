@@ -40,17 +40,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.SummaryUln.Title.Should().Be(PrsUlnWithdrawnContent.Title_Uln_Text);
             model.SummaryUln.Value.Should().Be(_mockCache.Uln.ToString());
 
-            // LearnerName
-            model.SummaryLearnerName.Title.Should().Be(PrsUlnWithdrawnContent.Title_Name_Text);
-            model.SummaryLearnerName.Value.Should().Be($"{_mockCache.Firstname} {_mockCache.Lastname}");
 
             // DateofBirth
             model.SummaryDateofBirth.Title.Should().Be(PrsUlnWithdrawnContent.Title_DateofBirth_Text);
             model.SummaryDateofBirth.Value.Should().Be(_mockCache.DateofBirth.ToDobFormat());
 
             // ProviderName
-            model.SummaryProvider.Title.Should().Be(PrsUlnWithdrawnContent.Title_Provider_Text);
-            model.SummaryProvider.Value.Should().Be($"{_mockCache.ProviderName}<br/>({_mockCache.ProviderUkprn})");
+            model.SummaryProviderName.Title.Should().Be(PrsUlnWithdrawnContent.Title_Provider_Name_Text);
+            model.SummaryProviderName.Value.Should().Be(_mockCache.ProviderName);
+
+            // ProviderName
+            model.SummaryProviderUkprn.Title.Should().Be(PrsUlnWithdrawnContent.Title_Provider_Ukprn_Text);
+            model.SummaryProviderUkprn.Value.Should().Be(_mockCache.ProviderUkprn.ToString());
 
             // TLevelTitle
             model.SummaryTlevelTitle.Title.Should().Be(PrsUlnWithdrawnContent.Title_TLevel_Text);

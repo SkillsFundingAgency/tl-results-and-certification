@@ -97,16 +97,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to contact us.
+        ///   Looks up a localized string similar to Grades are marked &apos;FINAL&apos; once:.
         /// </summary>
-        public static string Contactus_Link {
+        public static string Details_Summary_Text_Grades_Are_Marked_Final {
             get {
-                return ResourceManager.GetString("Contactus_Link", resourceCulture);
+                return ResourceManager.GetString("Details_Summary_Text_Grades_Are_Marked_Final", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to More about grade statuses.
+        ///   Looks up a localized string similar to More about grades and their statuses.
         /// </summary>
         public static string Details_Summary_Text_Link_More_About {
             get {
@@ -115,47 +115,56 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Once a grade has been entered after a review or an appeal it is marked as ‘final’ and can no longer be changed here. If you need to change a grade after entering a review or an appeal result, or change a grade after the deadline, please.
+        ///   Looks up a localized string similar to an appeal outcome has been added.
         /// </summary>
-        public static string Details_Summary_Text_Result_Final_Result_No_Longer_Changed_Here {
+        public static string Details_Summary_Text_List_An_Appeal_Outcome_Has_Been_Added {
             get {
-                return ResourceManager.GetString("Details_Summary_Text_Result_Final_Result_No_Longer_Changed_Here", resourceCulture);
+                return ResourceManager.GetString("Details_Summary_Text_List_An_Appeal_Outcome_Has_Been_Added", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An overall T Level result cannot be calculated unless all assessments have grades marked &apos;final&apos;..
+        ///   Looks up a localized string similar to the ROMM or appeal deadline has passed, or.
         /// </summary>
-        public static string Details_Summary_Text_Result_Overall_Results_Calculated_When_Final {
+        public static string Details_Summary_Text_List_The_Romm_Or_Appeal_Deadline_Has_Passed {
             get {
-                return ResourceManager.GetString("Details_Summary_Text_Result_Overall_Results_Calculated_When_Final", resourceCulture);
+                return ResourceManager.GetString("Details_Summary_Text_List_The_Romm_Or_Appeal_Deadline_Has_Passed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If a result is marked as ‘appeal’ the grade cannot be changed here. A review or an appeal outcome must be entered in the reviews and appeals section of this service..
+        ///   Looks up a localized string similar to The highest grade for each component will be used to calculate the overall T Level result for results day..
         /// </summary>
-        public static string Details_Summary_Text_Result_Pending_Result_Cannot_Be_Changed {
+        public static string Details_Summary_Text_The_Highest_Grade_For_Each_Component {
             get {
-                return ResourceManager.GetString("Details_Summary_Text_Result_Pending_Result_Cannot_Be_Changed", resourceCulture);
+                return ResourceManager.GetString("Details_Summary_Text_The_Highest_Grade_For_Each_Component", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request to change a grade marked final.
+        ///   Looks up a localized string similar to If a grade status is &apos;ROMM&apos; or &apos;APPEAL&apos; then the overall result will not be sent for certificate printing until an outcome has been added..
         /// </summary>
-        public static string Email_Subject {
+        public static string Details_Summay_Text_If_Grade_Status_Is_Romm_Or_Appeal_Then_OVerall_Result {
             get {
-                return ResourceManager.GetString("Email_Subject", resourceCulture);
+                return ResourceManager.GetString("Details_Summay_Text_If_Grade_Status_Is_Romm_Or_Appeal_Then_OVerall_Result", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ..
+        ///   Looks up a localized string similar to Outcomes can be added in the post-results section of this service..
         /// </summary>
-        public static string Fullstop {
+        public static string Details_Summay_Text_Outcomes_Can_Be_Added_In_The_Post_Results_Section {
             get {
-                return ResourceManager.GetString("Fullstop", resourceCulture);
+                return ResourceManager.GetString("Details_Summay_Text_Outcomes_Can_Be_Added_In_The_Post_Results_Section", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can request a change to a grade marked &apos;FINAL&apos; in the post-results section of this service..
+        /// </summary>
+        public static string Details_Summay_Text_You_Can_Requst_A_Change_To_Grade {
+            get {
+                return ResourceManager.GetString("Details_Summay_Text_You_Can_Requst_A_Change_To_Grade", resourceCulture);
             }
         }
         

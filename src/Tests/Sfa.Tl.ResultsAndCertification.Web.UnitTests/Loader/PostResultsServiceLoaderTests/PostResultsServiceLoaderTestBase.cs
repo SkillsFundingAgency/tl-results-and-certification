@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 c.AddMaps(typeof(PostResultsServiceMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<AppealCoreGradeViewModel, AppealGradeRequest>(HttpContextAccessor) :
+                                new UserNameResolver<PrsAddAppealViewModel, PrsActivityRequest>(HttpContextAccessor) :
                                  type.Name.Contains("UserEmailResolver") ? (object)new UserEmailResolver<PrsGradeChangeRequestViewModel, Models.Contracts.PostResultsService.PrsGradeChangeRequest>(HttpContextAccessor) :
                                 null);
             });

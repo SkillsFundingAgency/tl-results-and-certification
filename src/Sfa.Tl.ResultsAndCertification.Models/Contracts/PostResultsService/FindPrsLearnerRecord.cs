@@ -10,6 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
         public FindPrsLearnerRecord()
         {
             PathwayAssessments = new List<PrsAssessment>();
+            SpecialismAssessments = new List<PrsAssessment>();
         }
 
         public int ProfileId { get; set; }
@@ -22,10 +23,10 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
         public string TlevelTitle { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
         public IEnumerable<PrsAssessment> PathwayAssessments { get; set; }
+        public IEnumerable<PrsAssessment> SpecialismAssessments { get; set; }
 
         public bool IsWithdrawn => Status == RegistrationPathwayStatus.Withdrawn;
-        public bool NoAssessmentEntryRegistered { get { return PathwayAssessments.Count() == 0; } }
-        public bool SingleAssessmentWithNoGrade { get { return PathwayAssessments.Count() == 1 && !PathwayAssessments.Any(x => x.HasResult); } }
-        public bool HasMultipleAssessments { get { return PathwayAssessments.Count() > 1; } }
+
+        public bool HasResults => PathwayAssessments.Any(pa => pa.HasResult) || SpecialismAssessments.Any(sa => sa.HasResult);
     }
 }

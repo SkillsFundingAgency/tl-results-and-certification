@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 SpecialismDisplayName = "Specialism (7654321)",
                 SpecialismName = "Specialism",
                 AssessmentSeries = "Summer 2022",
-                AppealEndDate = DateTime.Today.AddDays(7),
+                ResultEndDate = DateTime.Today.AddDays(7),
                 AssessmentId = 11,
                 ResultId = 111,
                 SelectedGradeCode = string.Empty,
@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.SpecialismName.Should().Be(_mockResult.SpecialismName);
             model.AssessmentId.Should().Be(_mockResult.AssessmentId);
             model.AssessmentSeries.Should().Be(_mockResult.AssessmentSeries);
-            model.AppealEndDate.Should().Be(_mockResult.AppealEndDate);
+            model.ResultEndDate.Should().Be(_mockResult.ResultEndDate);
             model.ResultId.Should().Be(_mockResult.ResultId);
             model.SelectedGradeCode.Should().Be(_mockResult.SelectedGradeCode);
 

@@ -8,11 +8,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         public IActionResult Result { get; private set; }
         public int ProfileId { get; set; }
         public int AssessmentId { get; set; }
+        public Common.Enum.ComponentType ComponentType { get; set; }
         public bool IsResultJourney { get; set; }
 
         public async override Task When()
         {
-            Result = await Controller.PrsCancelGradeChangeRequestAsync(ProfileId, AssessmentId, IsResultJourney);
+            Result = await Controller.PrsCancelGradeChangeRequestAsync(ProfileId, AssessmentId, ComponentType, IsResultJourney);
         }
     }
 }

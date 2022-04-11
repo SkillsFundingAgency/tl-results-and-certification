@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class PrsUlnNotFound {
@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unique Learner Number (ULN) {0} not found.
+        ///   Looks up a localized string similar to {0} not found.
         /// </summary>
         public static string Heading_Uln_Not_Found {
             get {
@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ULN not found.
+        ///   Looks up a localized string similar to ULN not found - Post-results.
         /// </summary>
         public static string Page_Title {
             get {
@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check that you’ve entered the correct ULN. If you have, you will need to contact your organisation’s registrations editor for help..
+        ///   Looks up a localized string similar to Check that you have entered the correct number. If you have, you will need to contact your organisation’s registrations editor for help..
         /// </summary>
         public static string Para_Check_You_Have_Entered_Correct {
             get {

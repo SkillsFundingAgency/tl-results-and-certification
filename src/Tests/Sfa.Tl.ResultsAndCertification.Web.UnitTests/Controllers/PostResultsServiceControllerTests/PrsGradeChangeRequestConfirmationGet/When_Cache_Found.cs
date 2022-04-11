@@ -11,9 +11,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         public override void Given()
         {
             ProfileId = 1;
-            AssessmentId = 10;
                 
-            ViewModel = new PrsGradeChangeRequestConfirmationViewModel { ProfileId = ProfileId, AssessmentId = AssessmentId };
+            ViewModel = new PrsGradeChangeRequestConfirmationViewModel { ProfileId = ProfileId };
             CacheService.GetAndRemoveAsync<PrsGradeChangeRequestConfirmationViewModel>(CacheKey).Returns(ViewModel);
         }
 
@@ -31,7 +30,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
             model.Should().NotBeNull();
             model.ProfileId.Should().Be(ViewModel.ProfileId);
-            model.AssessmentId.Should().Be(ViewModel.AssessmentId);
             model.NavigationOption.Should().BeNull();
         }
     }

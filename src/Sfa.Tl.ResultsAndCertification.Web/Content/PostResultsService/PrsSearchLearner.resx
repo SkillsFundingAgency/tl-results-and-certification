@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Enter_The_Unique_Learner_Number" xml:space="preserve">
-    <value>Enter the Unique Learner Number (ULN)</value>
+    <value>Enter the unique learner number (ULN)</value>
   </data>
   <data name="Heading_Search_For_A_Learner" xml:space="preserve">
     <value>Search for a learner</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Search for a learner</value>
+    <value>Search ULN - Post-results</value>
   </data>
   <data name="Search_Button" xml:space="preserve">
     <value>Search</value>

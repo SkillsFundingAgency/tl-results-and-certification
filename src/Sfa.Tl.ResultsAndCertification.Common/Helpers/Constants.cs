@@ -102,6 +102,12 @@
         public const string PopulateUln = "populateUln";
         public const string AppealOutcomeTypeId = "outcomeTypeId";
         public const string IsResultJourney = "isResultJourney";
+        public const string RommOutcomeTypeId = "outcomeTypeId";
+        public const string RommOutcomeKnownTypeId = "outcomeKnownTypeId";
+        public const string IsRommOutcomeJourney = "isRommOutcomeJourney";
+        public const string ComponentType = "componentType";
+        public const string AppealOutcomeKnownTypeId = "outcomeKnownTypeId";
+        public const string IsAppealOutcomeJourney = "isAppealOutcomeJourney";
 
         // Assessments
         public const int AssessmentEndInYears = 4;
@@ -123,6 +129,7 @@
 
         // Other constants
         public const string NoBorderBottomCssClassName = "tl-no-border-bottom";
+        public const string BlueTagClassName = "govuk-tag--blue";
         public const string PurpleTagClassName = "govuk-tag--purple";
         public const string RedTagClassName = "govuk-tag--red";
         public const string TagFloatRightClassName = "tag-float-right";

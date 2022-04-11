@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
     {
         public override void Given()
         {
-            ViewModel = new PrsCancelGradeChangeRequestViewModel { ProfileId = 1, AssessmentId = 10, AreYouSureToCancel = null };
+            ViewModel = new PrsCancelGradeChangeRequestViewModel { ProfileId = 1, AssessmentId = 10, ComponentType = Common.Enum.ComponentType.Core, AreYouSureToCancel = null };
             Controller.ModelState.AddModelError("AreYouSureToCancel", Content.PostResultsService.PrsCancelGradeChangeRequest.Validation_Message);
         }
 
@@ -25,9 +25,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             var model = viewResult.Model as PrsCancelGradeChangeRequestViewModel;
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.PrsGradeChangeRequest);
-            model.BackLink.RouteAttributes.Count.Should().Be(2);
+            model.BackLink.RouteAttributes.Count.Should().Be(3);
             model.BackLink.RouteAttributes[Constants.ProfileId].Should().Be(ViewModel.ProfileId.ToString());
             model.BackLink.RouteAttributes[Constants.AssessmentId].Should().Be(ViewModel.AssessmentId.ToString());
+            model.BackLink.RouteAttributes[Constants.ComponentType].Should().Be(((int)ViewModel.ComponentType).ToString());
 
             Controller.ViewData.ModelState.Should().ContainSingle();
             Controller.ViewData.ModelState.ContainsKey(nameof(PrsCancelGradeChangeRequestViewModel.AreYouSureToCancel)).Should().BeTrue();

@@ -4,10 +4,9 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
+using System.Collections.Generic;
 using Xunit;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using LearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsLearnerDetails;
@@ -16,44 +15,59 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 {
     public class When_Result_Is_Final : TestSetup
     {
-        private PrsLearnerDetailsViewModel _mockLearnerDetails;
+        private PrsLearnerDetailsViewModel _mockResult;
 
         public override void Given()
         {
             ProfileId = 11;
-            AssessmentId = 1;
 
-            _mockLearnerDetails = new PrsLearnerDetailsViewModel
+            _mockResult = new PrsLearnerDetailsViewModel
             {
-                ProfileId = ProfileId,
-                Uln = 1234567890,
                 Firstname = "John",
                 Lastname = "Smith",
-                DateofBirth = DateTime.Today.AddYears(-20),
-                Status = RegistrationPathwayStatus.Active,
+                Uln = 5647382910,
+                DateofBirth = DateTime.Today,
+                ProviderName = "Barnsley College",
+                ProviderUkprn = 100656,
+                TlevelTitle = "Design, Surveying and Planning for Construction",
 
-                ProviderName = "Barsely College",
-                ProviderUkprn = 9876543210,
+                // Core
+                CoreComponentDisplayName = "Design, Surveying and Planning (123456)",
+                PrsCoreComponentExams = new List<PrsComponentExamViewModel>
+                {
+                    new PrsComponentExamViewModel { AssessmentSeries = "Autumn 2021", Grade = "B", PrsStatus = PrsStatus.Final, LastUpdated = "5 June 2021", UpdatedBy = "User 2", RommEndDate = DateTime.Today.AddDays(-1), AppealEndDate = DateTime.Today.AddDays(10), AssessmentId = 1 },
+                },
 
-                TlevelTitle = "Tlevel in Childcare",
-                PathwayTitle = "Childcare (12121212)",
+                // Specialisms
+                PrsSpecialismComponents = new List<PrsSpecialismComponentViewModel>
+                {
+                    new PrsSpecialismComponentViewModel
+                    {
+                        SpecialismComponentDisplayName = "Plumbing (456789)",
+                        SpecialismComponentExams = new List<PrsComponentExamViewModel>
+                        {
+                            new PrsComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "Merit", PrsStatus = null, LastUpdated = "6 June 2022", UpdatedBy = "User 1", RommEndDate = DateTime.Today.AddDays(-1), AppealEndDate = DateTime.Today.AddDays(-10), AssessmentId = 7 }
+                        }
+                    },
 
-                PathwayAssessmentSeries = "Summer 2021",
-                PathwayResultId = 99,
-                PathwayGrade = "B",
-                PathwayPrsStatus = null,
-                AppealEndDate = DateTime.Today.AddDays(-7),
-                PathwayGradeLastUpdatedOn = DateTime.Today.AddDays(-5).ToString(),
-                PathwayGradeLastUpdatedBy = "Barsley User"
-            };
+                    new PrsSpecialismComponentViewModel
+                    {
+                        SpecialismComponentDisplayName = "Heating (123658)",
+                        SpecialismComponentExams = new List<PrsComponentExamViewModel>
+                        {
+                            new PrsComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "Merit", PrsStatus = null, LastUpdated = "6 June 2022", UpdatedBy = "User 1", RommEndDate = DateTime.Today.AddDays(-1), AppealEndDate = DateTime.Today.AddDays(-10), AssessmentId = 9 }
+                        }
+                    }
+                }
+            };           
 
-            Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_mockLearnerDetails);
+            Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId).Returns(_mockResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId, AssessmentId);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId);
         }
 
         [Fact]
@@ -63,95 +77,75 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             var model = viewResult.Model as PrsLearnerDetailsViewModel;
 
             model.Should().NotBeNull();
-            model.ProfileId.Should().Be(_mockLearnerDetails.ProfileId);
-            model.Uln.Should().Be(_mockLearnerDetails.Uln);
-            model.Firstname.Should().Be(_mockLearnerDetails.Firstname);
-            model.Lastname.Should().Be(_mockLearnerDetails.Lastname);
-            model.DateofBirth.Should().Be(_mockLearnerDetails.DateofBirth);
-            model.Status.Should().Be(_mockLearnerDetails.Status);
-
-            model.ProviderName.Should().Be(_mockLearnerDetails.ProviderName);
-            model.ProviderUkprn.Should().Be(_mockLearnerDetails.ProviderUkprn);
-            model.TlevelTitle.Should().Be(_mockLearnerDetails.TlevelTitle);
-            model.PathwayTitle.Should().Be(_mockLearnerDetails.PathwayTitle);
-
-            model.PathwayAssessmentSeries.Should().Be(_mockLearnerDetails.PathwayAssessmentSeries);
-            model.AppealEndDate.Should().Be(_mockLearnerDetails.AppealEndDate);
-            model.PathwayResultId.Should().Be(_mockLearnerDetails.PathwayResultId);
-            model.PathwayGrade.Should().Be(_mockLearnerDetails.PathwayGrade);
-            model.PathwayPrsStatus.Should().Be(_mockLearnerDetails.PathwayPrsStatus);
-            model.PathwayGradeLastUpdatedOn.Should().Be(_mockLearnerDetails.PathwayGradeLastUpdatedOn);
-            model.PathwayGradeLastUpdatedBy.Should().Be(_mockLearnerDetails.PathwayGradeLastUpdatedBy);
-            model.IsFinalOutcomeRegistered.Should().BeFalse();
-            model.IsAppealAllowedAfterDeadline.Should().BeTrue();
-            model.SuccessBanner.Should().BeNull();
-
+            model.ProfileId.Should().Be(_mockResult.ProfileId);
+            model.Uln.Should().Be(_mockResult.Uln);
+            model.Firstname.Should().Be(_mockResult.Firstname);
+            model.Lastname.Should().Be(_mockResult.Lastname);
+            model.LearnerName.Should().Be($"{_mockResult.Firstname} {_mockResult.Lastname}");
+            model.DateofBirth.Should().Be(_mockResult.DateofBirth);
+            model.ProviderName.Should().Be(_mockResult.ProviderName);
+            model.ProviderUkprn.Should().Be(_mockResult.ProviderUkprn);
+            model.TlevelTitle.Should().Be(_mockResult.TlevelTitle);
+            
             // Uln
             model.SummaryUln.Title.Should().Be(LearnerDetailsContent.Title_Uln_Text);
-            model.SummaryUln.Value.Should().Be(_mockLearnerDetails.Uln.ToString());
-
-            // LearnerName
-            model.SummaryLearnerName.Title.Should().Be(LearnerDetailsContent.Title_Name_Text);
-            model.SummaryLearnerName.Value.Should().Be(_mockLearnerDetails.LearnerName);
+            model.SummaryUln.Value.Should().Be(_mockResult.Uln.ToString());
 
             // DateofBirth
             model.SummaryDateofBirth.Title.Should().Be(LearnerDetailsContent.Title_DateofBirth_Text);
-            model.SummaryDateofBirth.Value.Should().Be(_mockLearnerDetails.DateofBirth.ToDobFormat());
+            model.SummaryDateofBirth.Value.Should().Be(_mockResult.DateofBirth.ToDobFormat());
 
             // ProviderName
-            model.SummaryProvider.Title.Should().Be(LearnerDetailsContent.Title_Provider_Text);
-            model.SummaryProvider.Value.Should().Be(_mockLearnerDetails.ProviderDisplayName);
+            model.SummaryProviderName.Title.Should().Be(LearnerDetailsContent.Title_Provider_Name_Text);
+            model.SummaryProviderName.Value.Should().Be(_mockResult.ProviderName);
+
+            // ProviderUkprn
+            model.SummaryProviderUkprn.Title.Should().Be(LearnerDetailsContent.Title_Provider_Ukprn_Text);
+            model.SummaryProviderUkprn.Value.Should().Be(_mockResult.ProviderUkprn.ToString());
 
             // TLevelTitle
             model.SummaryTlevelTitle.Title.Should().Be(LearnerDetailsContent.Title_TLevel_Text);
-            model.SummaryTlevelTitle.Value.Should().Be(_mockLearnerDetails.TlevelTitle);
+            model.SummaryTlevelTitle.Value.Should().Be(_mockResult.TlevelTitle);
+            model.SuccessBanner.Should().BeNull();
 
-            // Assessment Series
-            model.SummaryAssessmentSeries.Title.Should().Be(LearnerDetailsContent.Title_Assessment_Series);
-            model.SummaryAssessmentSeries.Value.Should().Be(_mockLearnerDetails.PathwayAssessmentSeries);
-            model.SummaryAssessmentSeries.NeedBorderBottomLine.Should().BeTrue();
-            model.SummaryAssessmentSeries.RenderEmptyRowForValue2.Should().Be(IsValidPathwayPrsStatus);
+            model.HasCoreResults.Should().BeTrue();
+            model.CoreComponentDisplayName.Should().Be(_mockResult.CoreComponentDisplayName);
+            model.PrsCoreComponentExams.Count.Should().Be(_mockResult.PrsCoreComponentExams.Count);
 
-            // Pathway Grade
-            model.SummaryPathwayGrade.Title.Should().Be(LearnerDetailsContent.Title_Pathway_Grade);
-            model.SummaryPathwayGrade.Value.Should().Be(_mockLearnerDetails.PathwayGrade);
-            model.SummaryPathwayGrade.Value2.Should().Be(CommonHelper.GetPrsStatusDisplayText(_mockLearnerDetails.PathwayPrsStatus, _mockLearnerDetails.AppealEndDate));
-            model.SummaryPathwayGrade.NeedBorderBottomLine.Should().BeTrue();
-            model.SummaryPathwayGrade.RenderEmptyRowForValue2.Should().Be(IsValidPathwayPrsStatus);
-            model.SummaryPathwayGrade.Value2CustomCssClass.Should().Be(Constants.TagFloatRightClassName);
-            model.SummaryPathwayGrade.RenderActionColumn.Should().BeFalse();
-            model.SummaryPathwayGrade.RenderHiddenActionText.Should().BeTrue();
-            model.SummaryPathwayGrade.ActionText.Should().BeNull();
-            model.SummaryPathwayGrade.RouteName.Should().BeNull();
-            model.SummaryPathwayGrade.RouteAttributes.Should().BeNull();
-            model.SummaryPathwayGrade.HiddenActionText.Should().BeNull();
+            foreach(var exam in model.PrsCoreComponentExams)
+            {
+                exam.IsAddRommAllowed.Should().BeFalse();
+                exam.IsAddRommOutcomeAllowed.Should().BeFalse();
+                exam.IsAddAppealAllowed.Should().BeFalse();
+                exam.IsRequestChangeAllowed.Should().BeTrue();
+            }
 
-            // Pathway grade last updated on
-            model.SummaryPathwayGradeLastUpdatedOn.Title.Should().Be(LearnerDetailsContent.Title_Pathway_Grade_LastUpdatedOn);
-            model.SummaryPathwayGradeLastUpdatedOn.Value.Should().Be(_mockLearnerDetails.PathwayGradeLastUpdatedOn);
-            model.SummaryPathwayGradeLastUpdatedOn.NeedBorderBottomLine.Should().BeTrue();
-            model.SummaryAssessmentSeries.RenderEmptyRowForValue2.Should().Be(IsValidPathwayPrsStatus);
+            model.PrsSpecialismComponents.Count.Should().Be(_mockResult.PrsSpecialismComponents.Count);
 
-            // Pathway grade last updated by
-            model.SummaryPathwayGradeLastUpdatedBy.Title.Should().Be(LearnerDetailsContent.Title_Pathway_Grade_LastUpdatedBy);
-            model.SummaryPathwayGradeLastUpdatedBy.Value.Should().Be(_mockLearnerDetails.PathwayGradeLastUpdatedBy);
-            model.SummaryPathwayGradeLastUpdatedBy.NeedBorderBottomLine.Should().BeTrue();
-            model.SummaryAssessmentSeries.RenderEmptyRowForValue2.Should().Be(IsValidPathwayPrsStatus);
+            foreach (var specialism in model.PrsSpecialismComponents)
+            {
+                specialism.SpecialismComponentExams.Count.Should().Be(1);
+                specialism.HasSpecialismResults.Should().BeTrue();
 
-            // Breadcrum 
+                foreach (var exam in specialism.SpecialismComponentExams)
+                {
+                    exam.IsAddRommAllowed.Should().BeFalse();
+                    exam.IsAddRommOutcomeAllowed.Should().BeFalse();
+                    exam.IsAddAppealAllowed.Should().BeFalse();
+                    exam.IsRequestChangeAllowed.Should().BeTrue();
+                }
+            }
+
+            // Breadcrumb 
             model.Breadcrumb.Should().NotBeNull();
-            model.Breadcrumb.BreadcrumbItems.Count.Should().Be(4);
+            model.Breadcrumb.BreadcrumbItems.Count.Should().Be(3);
 
             model.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(BreadcrumbContent.Home);
             model.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Home);
-            model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.StartReviewsAndAppeals);
+            model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.StartPostResultsService);
             model.Breadcrumb.BreadcrumbItems[1].RouteName.Should().Be(RouteConstants.StartReviewsAndAppeals);
             model.Breadcrumb.BreadcrumbItems[2].DisplayName.Should().Be(BreadcrumbContent.Search_For_Learner);
             model.Breadcrumb.BreadcrumbItems[2].RouteName.Should().Be(RouteConstants.PrsSearchLearner);
-            model.Breadcrumb.BreadcrumbItems[3].DisplayName.Should().Be(BreadcrumbContent.Prs_Learner_Component_Grade_Status);
-            model.Breadcrumb.BreadcrumbItems[3].RouteName.Should().BeNull();
         }
-
-        private bool IsValidPathwayPrsStatus => _mockLearnerDetails.PathwayPrsStatus.HasValue && _mockLearnerDetails.PathwayPrsStatus != PrsStatus.NotSpecified;
     }
 }

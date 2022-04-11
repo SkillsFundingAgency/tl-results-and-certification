@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsGradeChangeRequestViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 @{
     ViewData["Title"] = PrsGradeChangeRequest.Page_Title;
@@ -12,30 +13,34 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-        <form asp-route="SubmitPrsGradeChangeRequest">
+        <form asp-route="@RouteConstants.SubmitPrsGradeChangeRequest">
             <input type="hidden" asp-for="ProfileId" />
             <input type="hidden" asp-for="AssessmentId" />
             <input type="hidden" asp-for="ResultId" />
-            <input type="hidden" asp-for="IsResultJourney" />
+            <input type="hidden" asp-for="ComponentType" />
 
             <partial name="_ValidationSummary" />
 
             <h1 class="govuk-heading-l">@PrsGradeChangeRequest.Heading_Request_To_Change_Learners_Grade</h1>
 
-            <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-9 govuk-!-margin-top-7">
+            <dl class="govuk-summary-list govuk-summary-list--no-border" aria-label="@PrsGradeChangeRequest.Aria_Label_Text_Learner_Details">
                 <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
                 <vc:summary-item model=Model.SummaryUln></vc:summary-item>
                 <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
-                <vc:summary-item model=Model.SummaryCore></vc:summary-item>
-                <vc:summary-item model=Model.SummaryCoreExamPeriod></vc:summary-item>
-                <vc:summary-item model=Model.SummaryCoreGrade></vc:summary-item>
+                <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+                <vc:summary-item model=Model.SummaryComponentDisplayName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryExamPeriod></vc:summary-item>
+                <vc:summary-item model=Model.SummaryGrade></vc:summary-item>
             </dl>
+
+            <p class="govuk-body">@PrsGradeChangeRequest.Para_If_You_Need_To_Change_A_Grade</p>
+            <p class="govuk-body">@PrsGradeChangeRequest.Para_This_Change_Will_Take_Upto</p>
 
             <div class="govuk-form-group" sfa-validation-for="ChangeRequestData" sfa-validation-class="govuk-form-group--error">
                 <fieldset class="govuk-fieldset">
                     <h2 class="govuk-label-wrapper"><label class="govuk-label govuk-label--m" for="changerequestdata">@PrsGradeChangeRequest.Heading_Please_Tell_Us_Why</label></h2>
                     <div id="more-detail-hint" class="govuk-hint">
-                        @PrsGradeChangeRequest.Para_Please_Do_Not_Add_Any_Details
+                        @PrsGradeChangeRequest.Para_Hint_Text_Please_Do_Not_Add_Any_Details
                         <p>@PrsGradeChangeRequest.Hint_Your_Message_Must_Be_1000_Char_Or_Fewer</p>
                     </div>
                     <span sfa-validation-for="ChangeRequestData"></span>
@@ -43,12 +48,13 @@
                 </fieldset>
             </div>
 
+            @{ var componentType = (int)Model.ComponentType; }
             <div class="govuk-button-group">
                 <button id="sendButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsGradeChangeRequest.Button_Send</button>
-                <a id="cancelLink" class="govuk-link" asp-route="PrsCancelGradeChangeRequest"
+                <a id="cancelLink" class="govuk-link" asp-route="@RouteConstants.PrsCancelGradeChangeRequest"
                    asp-route-profileId="@Model.ProfileId"
                    asp-route-assessmentId="@Model.AssessmentId"
-                   asp-route-isResultJourney="@Model.IsResultJourney">@PrsGradeChangeRequest.Link_Cancel</a>
+                   asp-route-componentType="@componentType">@PrsGradeChangeRequest.Link_Cancel</a>
             </div>
         </form>
     </div>

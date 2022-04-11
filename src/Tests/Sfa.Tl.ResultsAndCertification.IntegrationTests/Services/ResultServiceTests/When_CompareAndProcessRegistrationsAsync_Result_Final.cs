@@ -135,11 +135,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         {
             _expectedValidationErrors = new List<BulkProcessValidationError>
             {
+                // Specialism entry validation message
                 new BulkProcessValidationError
                 {
                     Uln = "1111111114",
                     ErrorMessage = ValidationMessages.ResultIsInFinal
                 },
+
+                // Pathway entry validation message
                 new BulkProcessValidationError
                 {
                     Uln = "1111111115",

@@ -16,7 +16,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private IList<TqRegistrationProfile> _profiles;
         private FindPrsLearnerRecord _actualResult;
-        private List<TqPathwayAssessment> _tqPathwayAssessmentsSeedData;
 
         public override void Given()
         {
@@ -40,14 +39,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
             DbContext.SaveChanges();
 
             // Seed Assessments And Results
-            _tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+
+            var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
+            var tqSpecialismResultsSeedData = new List<TqSpecialismResult>();
 
             var profilesWithAssessment = new List<long> { 1111111112, 1111111113, 1111111114 };
             foreach (var profile in _profiles.Where(x => profilesWithAssessment.Contains(x.UniqueLearnerNumber)))
             {
                 var isLatestActive = _ulns[profile.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
                 var pathwayAssessments = GetPathwayAssessmentsDataToProcess(profile.TqRegistrationPathways.ToList(), isLatestActive);
-                _tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
+                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
 
                 // Seed Pathway results
                 var profilesWithResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, null), (1111111114, null) };
@@ -59,15 +62,35 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
                     var seedPathwayResultsAsActive = assessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber != 1111111112;
                     GetPathwayResultDataToProcess(assessment, seedPathwayResultsAsActive, hasHistoricResult, prsStatus);
                 }
+
+                var specialismAssessments = GetSpecialismAssessmentsDataToProcess(profile.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList(), isLatestActive);
+                tqSpecialismAssessmentsSeedData.AddRange(specialismAssessments);
+
+                foreach (var assessment in specialismAssessments.Where(x => profilesWithResults.Any(p => p.Item1 == x.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber)))
+                {
+                    var hasHitoricData = new List<long> { 1111111113 };
+                    var hasHistoricResult = hasHitoricData.Any(x => x == profile.UniqueLearnerNumber);
+                    var prsStatus = profilesWithResults.FirstOrDefault(p => p.Item1 == assessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber).Item2;
+                    var seedSpecialismResultsAsActive = assessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber != 1111111112;
+                    GetSpecialismResultsDataToProcess(new List<TqSpecialismAssessment> { assessment }, seedSpecialismResultsAsActive, hasHistoricResult, prsStatus);
+                }
             }
 
             // Additional assessment to 1111111114
             var prof =  _profiles.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111114);
             var asmnt = GetPathwayAssessmentsDataToProcess(prof.TqRegistrationPathways.ToList(), true);
-            _tqPathwayAssessmentsSeedData.AddRange(asmnt);
+            tqPathwayAssessmentsSeedData.AddRange(asmnt);
 
-            // Seed Assessments
-            SeedPathwayAssessmentsData(_tqPathwayAssessmentsSeedData, true);
+            var specialismAssessment = GetSpecialismAssessmentsDataToProcess(prof.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList(), true);
+            tqSpecialismAssessmentsSeedData.AddRange(specialismAssessment);
+
+            SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
+            SeedPathwayResultsData(tqPathwayResultsSeedData, false);
+
+            SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
+            SeedSpecialismResultsData(tqSpecialismResultsSeedData, false);
+
+            DbContext.SaveChanges();            
 
             // Test class.
             PostResultsServiceRepository = new PostResultsServiceRepository(DbContext);
@@ -130,19 +153,36 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
                 _actualResult.ProviderName.Should().Be(expctedProvider.Name);
             }
 
-            var expectedAssessments = _profiles.Where(x => x.UniqueLearnerNumber == uln)
+            // Assert Pathway Assessments
+            var expectedPathwayAssessments = _profiles.Where(x => x.UniqueLearnerNumber == uln)
                 .SelectMany(x => x.TqRegistrationPathways.Last().TqPathwayAssessments.Where(x => x.EndDate == null && x.IsOptedin))
                 .OrderBy(o => o.Id).ToList();
 
-            var actualAssessments = _actualResult.PathwayAssessments.OrderBy(o => o.AssessmentId);
-            actualAssessments.Count().Should().Be(expectedAssessments.Count());
+            var actualPathwayAssessments = _actualResult.PathwayAssessments.OrderBy(o => o.AssessmentId);
+            actualPathwayAssessments.Count().Should().Be(expectedPathwayAssessments.Count());
 
-            for (int i = 0; i < expectedAssessments.Count(); i++)
+            for (int i = 0; i < expectedPathwayAssessments.Count(); i++)
             {
-                var hasResult = expectedAssessments[i].TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null);
-                actualAssessments.ElementAt(i).AssessmentId.Should().Be(expectedAssessments[i].Id);
-                actualAssessments.ElementAt(i).SeriesName.Should().Be(expectedAssessments[i].AssessmentSeries.Name);
-                actualAssessments.ElementAt(i).HasResult.Should().Be(hasResult);
+                var hasResult = expectedPathwayAssessments[i].TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null);
+                actualPathwayAssessments.ElementAt(i).AssessmentId.Should().Be(expectedPathwayAssessments[i].Id);
+                actualPathwayAssessments.ElementAt(i).SeriesName.Should().Be(expectedPathwayAssessments[i].AssessmentSeries.Name);
+                actualPathwayAssessments.ElementAt(i).HasResult.Should().Be(hasResult);
+            }
+
+            // Assert Specialism Assessments
+            var expectedSpecialismAssessments = _profiles.Where(x => x.UniqueLearnerNumber == uln)
+                .SelectMany(x => x.TqRegistrationPathways.Last().TqRegistrationSpecialisms.Last().TqSpecialismAssessments.Where(x => x.EndDate == null && x.IsOptedin))
+                .OrderBy(o => o.Id).ToList();
+
+            var actualSpecialismAssessments = _actualResult.SpecialismAssessments.OrderBy(o => o.AssessmentId);
+            actualSpecialismAssessments.Count().Should().Be(expectedSpecialismAssessments.Count());
+
+            for (int i = 0; i < expectedSpecialismAssessments.Count(); i++)
+            {
+                var hasResult = expectedSpecialismAssessments[i].TqSpecialismResults.Any(x => x.IsOptedin && x.EndDate == null);
+                actualSpecialismAssessments.ElementAt(i).AssessmentId.Should().Be(expectedSpecialismAssessments[i].Id);
+                actualSpecialismAssessments.ElementAt(i).SeriesName.Should().Be(expectedSpecialismAssessments[i].AssessmentSeries.Name);
+                actualSpecialismAssessments.ElementAt(i).HasResult.Should().Be(hasResult);
             }
         }
 

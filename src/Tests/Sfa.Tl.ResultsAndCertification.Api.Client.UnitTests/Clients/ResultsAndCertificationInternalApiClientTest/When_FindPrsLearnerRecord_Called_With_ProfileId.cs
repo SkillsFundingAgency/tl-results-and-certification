@@ -84,18 +84,17 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.ProviderUkprn.Should().Be(_mockApiResponse.ProviderUkprn);
             _actualResult.TlevelTitle.Should().Be(_mockApiResponse.TlevelTitle);
             _actualResult.Status.Should().Be(_mockApiResponse.Status);
-            _actualResult.NoAssessmentEntryRegistered.Should().BeFalse();
-            _actualResult.SingleAssessmentWithNoGrade.Should().BeFalse();
-            _actualResult.HasMultipleAssessments.Should().BeTrue();
+            _actualResult.HasResults.Should().BeTrue();
             _actualResult.PathwayAssessments.Should().NotBeEmpty();
             _actualResult.PathwayAssessments.Count().Should().Be(_pathwayAssessments.Count());
+            _actualResult.SpecialismAssessments.Count().Should().Be(0);
 
             for (int i = 0; i < _pathwayAssessments.Count(); i++)
             {
                 _actualResult.PathwayAssessments.ElementAt(i).AssessmentId.Should().Be(_pathwayAssessments[i].AssessmentId);
                 _actualResult.PathwayAssessments.ElementAt(i).SeriesName.Should().Be(_pathwayAssessments[i].SeriesName);
                 _actualResult.PathwayAssessments.ElementAt(i).HasResult.Should().Be(_pathwayAssessments[i].HasResult);
-            }
+            }            
         }
     }
 }

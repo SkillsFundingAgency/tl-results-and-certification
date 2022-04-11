@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsCancelGradeChangeRequestViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 @{
     ViewData["Title"] = PrsCancelGradeChangeRequest.Page_Title;
@@ -11,9 +12,10 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form asp-route="SubmitPrsCancelGradeChangeRequest">
+        <form asp-route="@RouteConstants.SubmitPrsCancelGradeChangeRequest">
             <input type="hidden" asp-for="ProfileId" />
             <input type="hidden" asp-for="AssessmentId" />
+            <input type="hidden" asp-for="ComponentType" />
             <input type="hidden" asp-for="IsResultJourney" />
             <partial name="_ValidationSummary" />
 

@@ -44,6 +44,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             Id = 11,
                             SeriesId = 1,
                             SeriesName = "Autumn 2022",
+                            ComponentType = ComponentType.Core,
+                            ResultEndDate = DateTime.UtcNow.AddDays(1),
+                            RommEndDate = DateTime.UtcNow.AddDays(5),
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow
@@ -54,6 +57,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             Id = 12,
                             SeriesId = 2,
                             SeriesName = "Summer 2022",
+                            ComponentType = ComponentType.Core,
+                            ResultEndDate = DateTime.UtcNow.AddDays(-1),
+                            RommEndDate = DateTime.UtcNow.AddDays(5),
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
@@ -72,6 +78,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             Id = 13,
                             SeriesId = 3,
                             SeriesName = "Autumn 2021",
+                            ComponentType = ComponentType.Core,
+                            ResultEndDate = DateTime.UtcNow.AddDays(1),
+                            RommEndDate = DateTime.UtcNow.AddDays(5),
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
@@ -90,6 +99,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             Id = 14,
                             SeriesId = 4,
                             SeriesName = "Summer 2021",
+                            ComponentType = ComponentType.Core,
+                            ResultEndDate = DateTime.UtcNow.AddDays(1),
+                            RommEndDate = DateTime.UtcNow.AddDays(5),
                             AppealEndDate = DateTime.UtcNow.AddDays(10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
@@ -108,6 +120,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                             Id = 15,
                             SeriesId = 5,
                             SeriesName = "Autumn 2020",
+                            ComponentType = ComponentType.Core,
+                            ResultEndDate = DateTime.UtcNow.AddDays(-20),
+                            RommEndDate = DateTime.UtcNow.AddDays(-15),
                             AppealEndDate = DateTime.UtcNow.AddDays(-10),
                             LastUpdatedBy = "System",
                             LastUpdatedOn = DateTime.UtcNow,
@@ -135,6 +150,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                     Id = 100,
                                     SeriesId = 1,
                                     SeriesName = "Summer 2022",
+                                    ComponentType = ComponentType.Specialism,
+                                    ResultEndDate = DateTime.UtcNow.AddDays(-1),
+                                    RommEndDate = DateTime.UtcNow.AddDays(5),
                                     AppealEndDate = DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = DateTime.UtcNow,
@@ -144,6 +162,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                     Id = 101,
                                     SeriesId = 2,
                                     SeriesName = "Summer 2021",
+                                    ComponentType = ComponentType.Specialism,
+                                    ResultEndDate = DateTime.UtcNow.AddDays(1),
+                                    RommEndDate = DateTime.UtcNow.AddDays(5),
                                     AppealEndDate = DateTime.UtcNow.AddDays(30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = DateTime.UtcNow,
@@ -171,6 +192,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                     Id = 102,
                                     SeriesId = 2,
                                     SeriesName = "Summer 2021",
+                                    ComponentType = ComponentType.Specialism,
+                                    ResultEndDate = DateTime.UtcNow.AddDays(-40),
+                                    RommEndDate = DateTime.UtcNow.AddDays(-35),
                                     AppealEndDate = DateTime.UtcNow.AddDays(-30),
                                     LastUpdatedBy = "System",
                                     LastUpdatedOn = DateTime.UtcNow,
@@ -229,7 +253,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                 var actualExam = ActualResult.CoreComponentExams.FirstOrDefault(x => x.AssessmentId == expectedExam.Id);
                 actualExam.Should().NotBeNull();
                 actualExam.AssessmentSeries.Should().Be(expectedExam.SeriesName);
-                actualExam.AppealEndDate.Should().Be(expectedExam.AppealEndDate);
+                actualExam.ResultEndDate.Should().Be(expectedExam.ResultEndDate);
+                actualExam.RommEndDate.Should().Be(expectedExam.RommEndDate);
+                actualExam.AppealEndDate.Should().Be(expectedExam.AppealEndDate);               
 
                 var isResultAvailable = expectedExam.Result != null;
                 actualExam.Grade.Should().Be(!isResultAvailable ? null : expectedExam.Result.Grade);
@@ -238,6 +264,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                 actualExam.UpdatedBy.Should().Be(!isResultAvailable ? null : expectedExam.Result.LastUpdatedBy);
                 actualExam.ComponentType.Should().Be(ComponentType.Core);
                 actualExam.ProfileId.Should().Be(expectedApiResult.ProfileId);
+
+                var isResultChangeAllowed = isResultAvailable && DateTime.Today <= expectedExam.ResultEndDate;
+                actualExam.IsResultChangeAllowed.Should().Be(isResultChangeAllowed);
             }
 
             // Specialism Components
@@ -254,6 +283,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                     var actualExam = actualSpecialism.SpecialismComponentExams.FirstOrDefault(x => x.AssessmentId == expectedExam.Id);
                     actualExam.Should().NotBeNull();
                     actualExam.AssessmentSeries.Should().Be(expectedExam.SeriesName);
+                    actualExam.ResultEndDate.Should().Be(expectedExam.ResultEndDate);
+                    actualExam.RommEndDate.Should().Be(expectedExam.RommEndDate);
                     actualExam.AppealEndDate.Should().Be(expectedExam.AppealEndDate);
 
                     var isResultAvailable = expectedExam.Result != null;
@@ -263,6 +294,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                     actualExam.UpdatedBy.Should().Be(!isResultAvailable ? null : expectedExam.Result.LastUpdatedBy);
                     actualExam.ComponentType.Should().Be(ComponentType.Specialism);
                     actualExam.ProfileId.Should().Be(expectedApiResult.ProfileId);
+
+                    var isResultChangeAllowed = isResultAvailable && DateTime.Today <= expectedExam.ResultEndDate;
+                    actualExam.IsResultChangeAllowed.Should().Be(isResultChangeAllowed);
                 }
             }
         }

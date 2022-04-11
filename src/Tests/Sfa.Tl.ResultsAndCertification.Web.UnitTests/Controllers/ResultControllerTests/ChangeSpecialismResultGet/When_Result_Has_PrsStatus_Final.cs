@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         {
             _mockresult = new ManageSpecialismResultViewModel
             {
-                AppealEndDate = DateTime.Today.AddDays(7),
+                ResultEndDate = DateTime.Today.AddDays(7),
                 PrsStatus = Common.Enum.PrsStatus.Final
             };
 

@@ -7,6 +7,7 @@
 	[Year] INT NOT NULL,
 	[StartDate] DATETIME NOT NULL,
 	[EndDate] DATETIME NOT NULL,
+	[RommEndDate] DATETIME NOT NULL DEFAULT getutcdate(),
 	[AppealEndDate] DATETIME NOT NULL DEFAULT getutcdate(),
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 
     [CreatedBy] NVARCHAR(50) NULL, 

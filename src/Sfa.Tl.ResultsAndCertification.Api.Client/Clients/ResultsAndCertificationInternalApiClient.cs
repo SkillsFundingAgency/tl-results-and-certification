@@ -255,9 +255,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         }
 
         # region Common controller
-        public async Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade)
+        public async Task<IList<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory)
         {
-            var requestUri = string.Format(ApiConstants.GetLookupDataUri, (int)pathwayComponentGrade);
+            var requestUri = string.Format(ApiConstants.GetLookupDataUri, (int)lookupCategory);
             return await GetAsync<IList<LookupData>>(requestUri);
         }
 
@@ -349,28 +349,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<FindPrsLearnerRecord>(requestUri);
         }
 
-        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId, int assessmentId)
+        public async Task<bool> PrsActivityAsync(PrsActivityRequest request)
         {
-            var requestUri = string.Format(ApiConstants.GetPrsLearnerDetailsUri, aoUkprn, profileId, assessmentId);
-            return await GetAsync<PrsLearnerDetails>(requestUri);
-        }
-
-        public async Task<bool> AppealGradeAsync(AppealGradeRequest request)
-        {
-            var requestUri = ApiConstants.AppealGradeUri;
-            return await PostAsync<AppealGradeRequest, bool>(requestUri, request);
+            var requestUri = ApiConstants.PrsActivityUri;
+            return await PostAsync<PrsActivityRequest, bool>(requestUri, request);
         }
 
         public async Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request)
         {
             var requestUri = ApiConstants.PrsGradeChangeRequestUri;
             return await PostAsync<PrsGradeChangeRequest, bool>(requestUri, request);
-        }
-
-        public async Task<bool> AppealGradeAfterDeadlineRequestAsync(AppealGradeAfterDeadlineRequest request)
-        {
-            var requestUri = ApiConstants.AppealGradeAfterDeadlineRequestUri;
-            return await PostAsync<AppealGradeAfterDeadlineRequest, bool>(requestUri, request);
         }
 
         #endregion 

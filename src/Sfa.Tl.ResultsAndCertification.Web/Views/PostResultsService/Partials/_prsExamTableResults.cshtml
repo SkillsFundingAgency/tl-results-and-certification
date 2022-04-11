@@ -1,0 +1,54 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsComponentExamViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+<tr class="govuk-table__row">
+    <td class="govuk-table__cell">
+        <span class="responsive-table__heading" aria-hidden="true">@PrsLearnerDetails.Table_Column_Hidden_Exam_Period</span>
+        @Model.AssessmentSeries
+    </td>
+    <td class="govuk-table__cell">
+        <span class="responsive-table__heading" aria-hidden="true">@PrsLearnerDetails.Table_Column_Hidden_Grade</span>
+        <span>
+            @if (string.IsNullOrWhiteSpace(Model.PrsDisplayText))
+            {
+                @Model.Grade
+            }
+            else
+            {
+                @Html.Raw(string.Format("<span class='govuk-!-margin-right-2'>{0}</span>{1}", Model.Grade, Model.PrsDisplayText));
+            }
+        </span>
+    </td>
+    <td class="govuk-table__cell">
+        <span class="responsive-table__heading" aria-hidden="true">@PrsLearnerDetails.Table_Column_Hidden_Last_Updated</span>
+        @Model.LastUpdated
+    </td>
+    <td class="govuk-table__cell">
+        <span class="responsive-table__heading" aria-hidden="true">@PrsLearnerDetails.Table_Column_Hidden_Updated_By</span>
+        @Model.UpdatedBy
+    </td>
+    <td class="govuk-table__cell">
+        <span class="responsive-table__heading remove-class-mobile" aria-hidden="true">@PrsLearnerDetails.Table_Column_Hidden_Action</span>
+        @if (Model.IsAddRommAllowed)
+        {
+            <a class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0" role="button" asp-route="@Model.RommRouteName" asp-all-route-data="@Model.RommRouteAttributes">@PrsLearnerDetails.Action_Button_Add_Romm</a>
+        }
+        else if (Model.IsAddRommOutcomeAllowed)
+        {
+            <a class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0" role="button" asp-route="@Model.RommOutcomeRouteName" asp-all-route-data="@Model.RommRouteAttributes">@PrsLearnerDetails.Action_Button_Add_Romm_Outcome</a>
+        }
+        else if (Model.IsAddAppealAllowed)
+        {
+            <a class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0" role="button" asp-route="@Model.AppealRouteName" asp-all-route-data="@Model.RommRouteAttributes">@PrsLearnerDetails.Action_Button_Add_Appeal</a>
+        }
+        else if (Model.IsAddAppealOutcomeAllowed)
+        {
+            <a class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0" role="button" asp-route="@Model.AppealOutcomeRouteName" asp-all-route-data="@Model.RommRouteAttributes">@PrsLearnerDetails.Action_Button_Add_Appeal_Outcome</a>
+        }        
+        else if (Model.IsRequestChangeAllowed)
+        {
+            <a class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0" role="button" asp-route="@Model.PrsGradeChangeRequestRouteName" asp-all-route-data="@Model.RommRouteAttributes">@PrsLearnerDetails.Action_Button_Request_Change</a>            
+        }
+    </td> 
+</tr>

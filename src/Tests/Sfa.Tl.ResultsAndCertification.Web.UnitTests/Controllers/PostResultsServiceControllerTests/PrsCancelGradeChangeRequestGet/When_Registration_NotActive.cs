@@ -4,6 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
+using System;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsCancelGradeChangeRequestGet
@@ -16,16 +17,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 11;
             AssessmentId = 1;
+            ComponentType = ComponentType.Core;
 
             _mockCancelGradeChangeRequestViewModel = new PrsCancelGradeChangeRequestViewModel
             {
                 ProfileId = ProfileId,
                 AssessmentId = AssessmentId,
                 Status = RegistrationPathwayStatus.Withdrawn,
-                PathwayPrsStatus = PrsStatus.Final
+                PrsStatus = PrsStatus.Final,
+                AppealEndDate = DateTime.Now.AddDays(1)
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsCancelGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_mockCancelGradeChangeRequestViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsCancelGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId, (ComponentType)ComponentType).Returns(_mockCancelGradeChangeRequestViewModel);
         }
 
         [Fact]

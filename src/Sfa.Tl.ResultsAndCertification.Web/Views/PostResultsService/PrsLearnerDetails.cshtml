@@ -1,53 +1,96 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsLearnerDetailsViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 @{
     ViewData["Title"] = PrsLearnerDetails.Page_Title;
 }
 
 @section NavigationBar {
-    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+<vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
 }
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters">
+    <div class="govuk-grid-column-two-thirds">
         <vc:notification-banner model="@Model.SuccessBanner"></vc:notification-banner>
 
-        <h1 class="govuk-heading-l">@PrsLearnerDetails.Heading_Learner_Component_Grades_Status</h1>
-
-        @if (Model.IsFinalOutcomeRegistered)
-        {
-            <div class="govuk-inset-text">@PrsLearnerDetails.Inset_Result_Is_Final_Outcome_Registered 
-                <a id="contactusLink" class="govuk-link" asp-route="PrsGradeChangeRequest" asp-route-profileId="@Model.ProfileId" asp-route-assessmentId="@Model.PathwayAssessmentId">@PrsLearnerDetails.Link_Contactus</a>@PrsLearnerDetails.Fullstop
-            </div>
-        }
-        else if (Model.IsAppealAllowedAfterDeadline)
-        {
-            <div class="govuk-inset-text">@PrsLearnerDetails.Inset_Result_Is_Final 
-                <a id="raiseRequestLink" class="govuk-link" asp-route="PrsAppealGradeAfterDeadline" asp-route-profileId="@Model.ProfileId" asp-route-assessmentId="@Model.PathwayAssessmentId">@PrsLearnerDetails.Link_Raise_Request</a>@PrsLearnerDetails.Fullstop
-            </div>
-        }
-
-        <h2 class="govuk-heading-m govuk-!-margin-top-7">@PrsLearnerDetails.Heading_Learner_Details</h2>
-
-        <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border">
-            <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+        <h1 class="govuk-heading-l">@string.Format(@PrsLearnerDetails.Heading_Learners_Results, Model.LearnerName)</h1>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border" aria-label="@PrsLearnerDetails.Aria_Label_Text_Learner_Details">
             <vc:summary-item model=Model.SummaryUln></vc:summary-item>
             <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
-            <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+            <vc:summary-item model=Model.SummaryProviderName></vc:summary-item>
+            <vc:summary-item model=Model.SummaryProviderUkprn></vc:summary-item>
             <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
         </dl>
-
-        <section id="coreComponent">
-            <h2 class="govuk-heading-m">@string.Format(PrsLearnerDetails.Heading_Core, Model.PathwayTitle)</h2>
-            <dl class="govuk-summary-list">
-                <vc:summary-item model=Model.SummaryAssessmentSeries></vc:summary-item>
-                <vc:summary-item model=Model.SummaryPathwayGrade></vc:summary-item>
-                <vc:summary-item model=Model.SummaryPathwayGradeLastUpdatedOn></vc:summary-item>
-                <vc:summary-item model=Model.SummaryPathwayGradeLastUpdatedBy></vc:summary-item>
-            </dl>
-        </section>
-        <a id="buttonSearchAgain" class="govuk-button govuk-!-margin-top-7" role="button" asp-route="PrsSearchLearner">@PrsLearnerDetails.Button_Search_Again</a>
     </div>
 </div>
 
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full-column">
+
+        <!-- #region Core -->
+        @if (Model.HasCoreResults)
+        {
+            <section class="govuk-!-margin-bottom-9 govuk-!-padding-left-3">
+                <table class="govuk-table">
+                    <caption class="govuk-table__caption govuk-table__caption--m">
+                        @string.Format(PrsLearnerDetails.Heading_Core, Model.CoreComponentDisplayName)
+                    </caption>
+
+                    <partial name="Partials/_prsExamTableHeader.cshtml" />
+                    <tbody>
+                        @foreach (var exam in Model.PrsCoreComponentExams)
+                        {
+                            <partial name="Partials/_prsExamTableResults.cshtml" model="exam" />
+                        }
+                    </tbody>
+                </table>
+            </section>
+        }
+        <!-- #endregion -->
+        <!-- #region Specialisms -->
+        @foreach (var specialism in Model.PrsSpecialismComponents)
+        {
+            @if (specialism.HasSpecialismResults)
+            {
+                <section id="specialism-table" class="govuk-!-padding-left-3">
+                    <table class="govuk-table">
+                        <caption class="govuk-table__caption govuk-table__caption--m">
+                            @string.Format(PrsLearnerDetails.Heading_Specialism, specialism.SpecialismComponentDisplayName)
+                        </caption>
+
+                        <partial name="Partials/_prsExamTableHeader.cshtml" />
+                        <tbody>
+                            @foreach (var exam in specialism.SpecialismComponentExams)
+                            {
+                                <partial name="Partials/_prsExamTableResults.cshtml" model="exam" />
+                            }
+                        </tbody>
+                    </table>
+                </section>
+            }
+        }
+        <!-- #endregion -->
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">@PrsLearnerDetails.Details_Summary_Text_Link_More_About</span>
+            </summary>
+            <div class="govuk-details__text">
+                <p>@PrsLearnerDetails.Details_Summary_Text_The_Highest_Grade_For_Each_Component</p>
+                <p>@PrsLearnerDetails.Details_Summary_Text_Grades_Marked_Final_Can_No_Longer_Be_Changed</p>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>@PrsLearnerDetails.Details_Summary_Text_The_Room_Or_Appeal_deadline_Has_Passed</li>
+                    <li>@PrsLearnerDetails.Details_Summary_Text_An_Appeal_Outcome_Has_Been_Added</li>
+                </ul>
+                <p>@PrsLearnerDetails.Details_Summary_Text_If_Grade_Status</p>
+            </div>
+        </details>
+
+        <a id="buttonSearchAgain" class="govuk-button" role="button" data-prevent-double-click="true" asp-route="@RouteConstants.PrsSearchLearner">@PrsLearnerDetails.Button_Search_Again</a>
+    </div>
+</div>

@@ -48,56 +48,21 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                         AssessmentId = x.Id,
                                                         SeriesName = x.AssessmentSeries.Name,
                                                         HasResult = x.TqPathwayResults.Any(r => r.IsOptedin && r.EndDate == null)
-                                                    })
+                                                    }),
+                               SpecialismAssessments = tqPathway.TqRegistrationSpecialisms.SelectMany(s => s.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.EndDate == null))
+                                                       .OrderByDescending(o => o.AssessmentSeriesId)
+                                                       .Select(x => new PrsAssessment
+                                                       {
+                                                           AssessmentId = x.Id,
+                                                           SeriesName = x.AssessmentSeries.Name,
+                                                           HasResult = x.TqSpecialismResults.Any(r => r.IsOptedin && r.EndDate == null)
+                                                       })
                            };
 
             bool searchByUlnPredicate() => uln != null;
             prsQuery = searchByUlnPredicate() ? prsQuery.Where(x => x.Uln == uln) : prsQuery.Where(x => x.ProfileId == profileId);
 
             return await prsQuery.FirstOrDefaultAsync();
-        }
-
-        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId, int assessmentId)
-        {
-
-            var prsLearnerdetails = await (from tqPathway in _dbContext.TqRegistrationPathway
-                                           join tqProfile in _dbContext.TqRegistrationProfile on tqPathway.TqRegistrationProfileId equals tqProfile.Id
-                                           join tqProvider in _dbContext.TqProvider on tqPathway.TqProviderId equals tqProvider.Id
-                                           join tlProvider in _dbContext.TlProvider on tqProvider.TlProviderId equals tlProvider.Id
-                                           join tqAo in _dbContext.TqAwardingOrganisation on tqProvider.TqAwardingOrganisationId equals tqAo.Id
-                                           join tlAo in _dbContext.TlAwardingOrganisation on tqAo.TlAwardingOrganisatonId equals tlAo.Id
-                                           join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
-                                           join pAssessment in _dbContext.TqPathwayAssessment on tqPathway.Id equals pAssessment.TqRegistrationPathwayId
-                                           join pResult in _dbContext.TqPathwayResult on pAssessment.Id equals pResult.TqPathwayAssessmentId
-                                           orderby tqPathway.CreatedOn descending
-                                           where
-                                            tlAo.UkPrn == aoUkprn && tqProfile.Id == profileId && tqPathway.Status == RegistrationPathwayStatus.Active &&
-                                            pAssessment.Id == assessmentId && pAssessment.IsOptedin && pAssessment.EndDate == null &&
-                                            pResult.IsOptedin && pResult.EndDate == null
-                                           select new PrsLearnerDetails
-                                           {
-                                               ProfileId = tqProfile.Id,
-                                               Uln = tqProfile.UniqueLearnerNumber,
-                                               Firstname = tqProfile.Firstname,
-                                               Lastname = tqProfile.Lastname,
-                                               DateofBirth = tqProfile.DateofBirth,
-                                               ProviderName = tlProvider.Name,
-                                               ProviderUkprn = tlProvider.UkPrn,
-                                               TlevelTitle = tlPathway.TlevelTitle,
-                                               Status = tqPathway.Status,
-                                               PathwayName = tlPathway.Name,
-                                               PathwayCode = tlPathway.LarId,
-                                               PathwayAssessmentId = pAssessment.Id,
-                                               PathwayAssessmentSeries = pAssessment.AssessmentSeries.Name,
-                                               AppealEndDate = pAssessment.AssessmentSeries.AppealEndDate,
-                                               PathwayResultId = pResult.Id,
-                                               PathwayGrade = pResult.TlLookup.Value,
-                                               PathwayPrsStatus = pResult.PrsStatus,
-                                               PathwayGradeLastUpdatedBy = pResult.CreatedBy,
-                                               PathwayGradeLastUpdatedOn = pResult.CreatedOn
-                                           })
-                                          .FirstOrDefaultAsync();
-            return prsLearnerdetails;
         }
     }
 }

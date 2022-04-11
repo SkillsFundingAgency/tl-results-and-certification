@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         private List<TqPathwayResult> _inputPathwayResultsData;
         private List<TqSpecialismResult> _inputSpecialismResultsData;
         private IList<BulkProcessValidationError> _expectedValidationErrors;
-        private readonly Dictionary<long, RegistrationPathwayStatus> _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Withdrawn }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Active }, { 1111111114, RegistrationPathwayStatus.Active }, { 1111111115, RegistrationPathwayStatus.Active } };
+        private Dictionary<long, RegistrationPathwayStatus> _ulns;
 
         public override void Given()
         {
@@ -31,13 +31,23 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
 
             SetupExpectedValidationErrors();
 
+            _ulns = new Dictionary<long, RegistrationPathwayStatus> 
+            { 
+                { 1111111111, RegistrationPathwayStatus.Withdrawn },
+                { 1111111112, RegistrationPathwayStatus.Active },
+                { 1111111113, RegistrationPathwayStatus.Active },
+                { 1111111114, RegistrationPathwayStatus.Active },
+                { 1111111115, RegistrationPathwayStatus.Active },
+                { 1111111116, RegistrationPathwayStatus.Active }
+            };
+            
             // Data seed
             SeedTestData(EnumAwardingOrganisation.Pearson);
             _registrations = SeedRegistrationsData(_ulns, TqProvider);
 
             // Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
-            foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111 && x.UniqueLearnerNumber != 1111111114))
+            foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111))
             {
                 var hasHitoricData = new List<long> { 1111111112 };
                 var isHistoricAssessent = hasHitoricData.Any(x => x == registration.UniqueLearnerNumber);
@@ -51,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             _inputSpecialismResultsData = new List<TqSpecialismResult>();
             _inputPathwayResultsData = new List<TqPathwayResult>();
             var tqPathwayResultsSeedData = new List<TqPathwayResult>();
-            var profilesWithResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, null), (1111111114, null), (1111111115, PrsStatus.BeingAppealed) };
+            var profilesWithResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, PrsStatus.UnderReview), (1111111114, PrsStatus.BeingAppealed), (1111111115, null), (1111111116, null) };
             foreach (var assessment in pathwayAssessments)
             {
                 var inactiveResultUlns = new List<long> { 1111111112 };
@@ -77,7 +87,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
 
             var ulnsToAddResults = new List<long> { 1111111113, 1111111114 };
             var tqSpecialismResultsSeedData = new List<TqSpecialismResult>();
-            var profilesWithSpecialismResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, null), (1111111114, PrsStatus.BeingAppealed), (1111111115, null) };
+            var profilesWithSpecialismResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, null), (1111111114, null), (1111111115, PrsStatus.UnderReview), (1111111116, PrsStatus.BeingAppealed) };
             
             foreach (var assessment in specialismAssessments)
             {
@@ -135,15 +145,29 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         {
             _expectedValidationErrors = new List<BulkProcessValidationError>
             {
+                // Pathway validation result (UnderReview)
+                new BulkProcessValidationError
+                {
+                    Uln = "1111111113",
+                    ErrorMessage = ValidationMessages.ResultCannotBeInUnderReviewOrBeingAppealedStatus
+                },
+                // Pathway validation result (BeingAppealed)
                 new BulkProcessValidationError
                 {
                     Uln = "1111111114",
-                    ErrorMessage = ValidationMessages.ResultCannotBeInBeingAppealedStatus
+                    ErrorMessage = ValidationMessages.ResultCannotBeInUnderReviewOrBeingAppealedStatus
                 },
+                // Specialism validation result (UnderReview)
                 new BulkProcessValidationError
                 {
                     Uln = "1111111115",
-                    ErrorMessage = ValidationMessages.ResultCannotBeInBeingAppealedStatus
+                    ErrorMessage = ValidationMessages.ResultCannotBeInUnderReviewOrBeingAppealedStatus
+                },
+                // Specialism validation result (BeingAppealed)
+                new BulkProcessValidationError
+                {
+                    Uln = "1111111116",
+                    ErrorMessage = ValidationMessages.ResultCannotBeInUnderReviewOrBeingAppealedStatus
                 }
             };
         }
