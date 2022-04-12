@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ProviderDashboard {
@@ -97,15 +97,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exam boards, also known as awarding organisations, are responsible for registering each learner onto a T Level course and recording their technical qualification results..
-        /// </summary>
-        public static string Exams_Board_Text {
-            get {
-                return ResourceManager.GetString("Exams_Board_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ..
         /// </summary>
         public static string FullStop {
@@ -115,52 +106,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to On Monday 15 November, at the Second Reading of the Skills Bill, the Secretary of State announced changes to the English and maths requirements for T Levels. We have removed the exit requirement with immediate effect for all T Level students..
+        ///   Looks up a localized string similar to Manage T Level results.
         /// </summary>
-        public static string Inset_Maths_And_English_Requirement_Changes_Info {
+        public static string Heading_Manage_Tlevel_Results {
             get {
-                return ResourceManager.GetString("Inset_Maths_And_English_Requirement_Changes_Info", resourceCulture);
+                return ResourceManager.GetString("Heading_Manage_Tlevel_Results", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to More about the changes to T Level exit requirements and the timeline for level 3 qualifications reform.
-        /// </summary>
-        public static string Inset_More_About_The_Changes_To_TLevel_Exit_Requirements {
-            get {
-                return ResourceManager.GetString("Inset_More_About_The_Changes_To_TLevel_Exit_Requirements", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to We expect for the service to fully reflect current policy in spring 2022..
-        /// </summary>
-        public static string Inset_We_Expect_For_The_Service_To_Fully_Reflect_Current_Policy_Info {
-            get {
-                return ResourceManager.GetString("Inset_We_Expect_For_The_Service_To_Fully_Reflect_Current_Policy_Info", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The wording in this service has not yet been updated to reflect the policy changes.
-        /// </summary>
-        public static string List_The_Wording_In_This_Service_Has_Not_Yet_Been_Updated {
-            get {
-                return ResourceManager.GetString("List_The_Wording_In_This_Service_Has_Not_Yet_Been_Updated", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You must still provide us with English and maths attainment information.
-        /// </summary>
-        public static string List_You_Must_Still_Provide_Us_English_And_Maths_Attainment_Info {
-            get {
-                return ResourceManager.GetString("List_You_Must_Still_Provide_Us_English_And_Maths_Attainment_Info", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add or change your learners&apos; English and maths achievements and industry placement completion status.
+        ///   Looks up a localized string similar to Add or change your learners&apos; English and maths achievements and industry placement status.
         /// </summary>
         public static string Manage_Learner_TLevel_Records_Description_Text {
             get {
@@ -250,15 +205,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Providers, for example, schools and colleges, can use this service to record a T Level learner&apos;s English and maths achievements and industry placement completion. These records will be added to the learner&apos;s T Level registration..
-        /// </summary>
-        public static string Providers_Schools_And_Colleges_Text {
-            get {
-                return ResourceManager.GetString("Providers_Schools_And_Colleges_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Providers.
         /// </summary>
         public static string Providers_Text {
@@ -322,11 +268,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage T Level results.
+        ///   Looks up a localized string similar to T Level results, certificates and statements of achievement for your learners.
         /// </summary>
-        public static string Section_Heading_Text {
+        public static string Text_Tlevel_Results_Certificates_Soa {
             get {
-                return ResourceManager.GetString("Section_Heading_Text", resourceCulture);
+                return ResourceManager.GetString("Text_Tlevel_Results_Certificates_Soa", resourceCulture);
             }
         }
         

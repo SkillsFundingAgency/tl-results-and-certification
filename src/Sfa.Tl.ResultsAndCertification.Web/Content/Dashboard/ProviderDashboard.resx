@@ -129,29 +129,14 @@
   <data name="Assessment_Entries_Text" xml:space="preserve">
     <value>Assessment entries</value>
   </data>
-  <data name="Exams_Board_Text" xml:space="preserve">
-    <value>Exam boards, also known as awarding organisations, are responsible for registering each learner onto a T Level course and recording their technical qualification results.</value>
-  </data>
   <data name="FullStop" xml:space="preserve">
     <value>.</value>
   </data>
-  <data name="Inset_Maths_And_English_Requirement_Changes_Info" xml:space="preserve">
-    <value>On Monday 15 November, at the Second Reading of the Skills Bill, the Secretary of State announced changes to the English and maths requirements for T Levels. We have removed the exit requirement with immediate effect for all T Level students.</value>
-  </data>
-  <data name="Inset_More_About_The_Changes_To_TLevel_Exit_Requirements" xml:space="preserve">
-    <value>More about the changes to T Level exit requirements and the timeline for level 3 qualifications reform</value>
-  </data>
-  <data name="Inset_We_Expect_For_The_Service_To_Fully_Reflect_Current_Policy_Info" xml:space="preserve">
-    <value>We expect for the service to fully reflect current policy in spring 2022.</value>
-  </data>
-  <data name="List_The_Wording_In_This_Service_Has_Not_Yet_Been_Updated" xml:space="preserve">
-    <value>The wording in this service has not yet been updated to reflect the policy changes</value>
-  </data>
-  <data name="List_You_Must_Still_Provide_Us_English_And_Maths_Attainment_Info" xml:space="preserve">
-    <value>You must still provide us with English and maths attainment information</value>
+  <data name="Heading_Manage_Tlevel_Results" xml:space="preserve">
+    <value>Manage T Level results</value>
   </data>
   <data name="Manage_Learner_TLevel_Records_Description_Text" xml:space="preserve">
-    <value>Add or change your learners' English and maths achievements and industry placement completion status</value>
+    <value>Add or change your learners' English and maths achievements and industry placement status</value>
   </data>
   <data name="Manage_Learner_TLevel_Records_Text" xml:space="preserve">
     <value>Manage learner T Level records</value>
@@ -180,9 +165,6 @@
   <data name="Providers_Request_Statement_Of_Achievement_Text" xml:space="preserve">
     <value>Learners who withdraw from their T Level course must be issued with a statement of achievement</value>
   </data>
-  <data name="Providers_Schools_And_Colleges_Text" xml:space="preserve">
-    <value>Providers, for example, schools and colleges, can use this service to record a T Level learner's English and maths achievements and industry placement completion. These records will be added to the learner's T Level registration.</value>
-  </data>
   <data name="Providers_Text" xml:space="preserve">
     <value>Providers</value>
   </data>
@@ -204,8 +186,8 @@
   <data name="Reviews_And_Appeals_Text" xml:space="preserve">
     <value>Reviews and appeals</value>
   </data>
-  <data name="Section_Heading_Text" xml:space="preserve">
-    <value>Manage T Level results</value>
+  <data name="Text_Tlevel_Results_Certificates_Soa" xml:space="preserve">
+    <value>T Level results, certificates and statements of achievement for your learners</value>
   </data>
   <data name="Tlevels_Description_Text" xml:space="preserve">
     <value>Review T Level details and tell us if they are correct</value>
