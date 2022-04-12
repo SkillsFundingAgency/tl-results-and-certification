@@ -7,8 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
     public class EnterUlnViewModel
     {
-        [Required(ErrorMessageResourceType = typeof(ErrorResource.EnterUniqueLearnerReference), ErrorMessageResourceName = "Uln_Required_Validation_Message")]
-        [RegularExpression(Constants.UlnValidationRegex, ErrorMessageResourceType = typeof(ErrorResource.EnterUniqueLearnerReference), ErrorMessageResourceName = "Uln_Not_Valid_Validation_Message")]
+        // TODO: Delete
         public string EnterUln { get; set; }
         public bool IsNavigatedFromSearchLearnerRecordNotAdded { get; set; }
         public BackLinkModel BackLink => new BackLinkModel { RouteName = IsNavigatedFromSearchLearnerRecordNotAdded ? RouteConstants.SearchLearnerRecordNotAdded : RouteConstants.ManageLearnerRecordsDashboard };

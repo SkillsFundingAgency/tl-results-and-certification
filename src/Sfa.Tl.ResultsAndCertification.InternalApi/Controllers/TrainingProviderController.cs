@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         [Route("FindLearnerRecord/{providerUkprn}/{uln}/{evaluateSendConfirmation:bool?}")]
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation)
         {
+            // TODO: This endpoint will be removed soon after implementing the ProviderSearchResult Page.
             return await _trainingProviderService.FindLearnerRecordAsync(providerUkprn, uln, evaluateSendConfirmation);
         }
 

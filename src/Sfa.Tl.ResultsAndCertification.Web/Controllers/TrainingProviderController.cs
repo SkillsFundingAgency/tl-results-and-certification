@@ -31,69 +31,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("manage-learner-records", Name = RouteConstants.ManageLearnerRecordsDashboard)]
-        public IActionResult Index()
-        {
-            return View(new DashboardViewModel());
-        }
-
-        [HttpGet]
-        [Route("add-learner-record-unique-learner", Name = RouteConstants.AddLearnerRecord)]
-        public async Task<IActionResult> AddLearnerRecordAsync()
-        {
-            await _cacheService.RemoveAsync<AddLearnerRecordViewModel>(CacheKey);
-            return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumber);
-        }
-
-        [HttpGet]
-        [Route("add-learner-record-unique-learner-number/{isNavigationFromSearch:bool?}", Name = RouteConstants.EnterUniqueLearnerNumber)]
-        public async Task<IActionResult> EnterUniqueLearnerReferenceAsync(bool isNavigationFromSearch)
-        {
-            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
-            var viewModel = cacheModel?.Uln != null ? cacheModel.Uln : new EnterUlnViewModel();
-
-            if (isNavigationFromSearch)
-            {
-                viewModel.IsNavigatedFromSearchLearnerRecordNotAdded = isNavigationFromSearch;
-                var searchCacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey);
-
-                if (searchCacheModel != null)
-                    viewModel.EnterUln = searchCacheModel.SearchUln;
-            }
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("add-learner-record-unique-learner-number", Name = RouteConstants.SubmitEnterUniqueLearnerNumber)]
-        public async Task<IActionResult> EnterUniqueLearnerReferenceAsync(EnterUlnViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            var learnerRecord = await _trainingProviderLoader.FindLearnerRecordAsync(User.GetUkPrn(), model.EnterUln.ToLong(), evaluateSendConfirmation: true);
-            if (learnerRecord == null || !learnerRecord.IsLearnerRegistered || learnerRecord.IsLearnerRecordAdded)
-            {
-                await SyncCacheUln(model, learnerRecord);
-
-                if (learnerRecord == null || learnerRecord.IsLearnerRegistered == false)
-                    return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumberNotFound);
-                else
-                    return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumberAddedAlready, new { profileId = learnerRecord.ProfileId });
-            }
-
-            await SyncCacheUln(model, learnerRecord);
-
-            if (learnerRecord.HasLrsEnglishAndMaths)
-                return RedirectToRoute(learnerRecord.IsSendConfirmationRequired ? RouteConstants.AddEnglishAndMathsLrsQuestion : RouteConstants.AddIndustryPlacementQuestion);
-            else
-                return RedirectToRoute(RouteConstants.AddEnglishAndMathsQuestion);
-        }
-
-        [HttpGet]
         [Route("add-learner-record-ULN-already-added/{profileId}", Name = RouteConstants.EnterUniqueLearnerNumberAddedAlready)]
         public async Task<IActionResult> EnterUniqueLearnerNumberAddedAlreadyAsync(int profileId)
         {
+            // TODO: Delete
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
             if (cacheModel == null)
             {
@@ -108,6 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-learner-record-ULN-not-registered", Name = RouteConstants.EnterUniqueLearnerNumberNotFound)]
         public async Task<IActionResult> EnterUniqueLearnerNumberNotFoundAsync()
         {
+            // TODO: Delete
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
             if (cacheModel == null)
             {
@@ -334,6 +276,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         #region Update-Learner
 
+        // TODO: Remove
         [HttpGet]
         [Route("update-learner-record", Name = RouteConstants.UpdateLearnerRecord)]
         public async Task<IActionResult> UpdateLearnerRecordAsync()
@@ -355,17 +298,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("search-learner-record-unique-learner-number", Name = RouteConstants.SubmitSearchLearnerRecord)]
         public async Task<IActionResult> SearchLearnerRecordAsync(SearchLearnerRecordViewModel model)
         {
+            // Note: Please note this is intrim search page, we have another stories coming up will replace this method. 
             if (!ModelState.IsValid)
                 return View(model);
 
             var learnerRecord = await _trainingProviderLoader.FindLearnerRecordAsync(User.GetUkPrn(), model.SearchUln.ToLong());
-            if (learnerRecord == null || !learnerRecord.IsLearnerRegistered || !learnerRecord.IsLearnerRecordAdded)
+            if (learnerRecord == null || !learnerRecord.IsLearnerRegistered)
             {
                 model.IsLearnerRegistered = learnerRecord?.IsLearnerRegistered ?? false;
-                model.IsLearnerRecordAdded = learnerRecord?.IsLearnerRecordAdded ?? false;
 
                 await _cacheService.SetAsync(CacheKey, model);
-                return RedirectToRoute(learnerRecord == null || learnerRecord.IsLearnerRegistered == false ? RouteConstants.SearchLearnerRecordNotFound : RouteConstants.SearchLearnerRecordNotAdded);
+                return RedirectToRoute(RouteConstants.SearchLearnerRecordNotFound);
             }
             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = learnerRecord.ProfileId });
         }

@@ -243,10 +243,10 @@
 
         # region TrainingProvider specific constants
 
-        public const string ManageLearnerRecordsDashboard = "ManageLearnerRecordsDashboard";
-        public const string AddLearnerRecord = "AddLearnerRecord";
-        public const string EnterUniqueLearnerNumber = "EnterUniqueLearnerNumber";
-        public const string SubmitEnterUniqueLearnerNumber = "SubmitEnterUniqueLearnerNumber";
+        public const string ManageLearnerRecordsDashboard = "ManageLearnerRecordsDashboard"; // TODO: Delete
+        public const string AddLearnerRecord = "AddLearnerRecord";// TODO: Delete
+        public const string EnterUniqueLearnerNumber = "EnterUniqueLearnerNumber"; // TODO: Delete
+
         public const string EnterUniqueLearnerNumberNotFound = "EnterUniqueLearnerNumberNotFound";
         public const string EnterUniqueLearnerNumberAddedAlready = "EnterUniqueLearnerNumberAddedAlready";
         public const string AddEnglishAndMathsQuestion = "AddEnglishAndMathsQuestion";
