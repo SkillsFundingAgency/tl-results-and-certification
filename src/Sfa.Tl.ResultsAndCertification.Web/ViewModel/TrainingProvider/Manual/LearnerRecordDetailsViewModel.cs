@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public string ProviderName { get; set; }
         public string PathwayName { get; set; }
         public bool IsLearnerRegistered { get; set; }
-        public bool IsLearnerRecordAdded { get; set; }
+        public bool IsLearnerRecordAdded { get; set; } // TODO: Delete this pro
         public bool IsEnglishAndMathsAchieved { get; set; }
         public bool HasLrsEnglishAndMaths { get; set; }
         public bool? IsSendLearner { get; set; }

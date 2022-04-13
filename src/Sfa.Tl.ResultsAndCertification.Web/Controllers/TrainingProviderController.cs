@@ -347,7 +347,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(User.GetUkPrn(), profileId);
 
-            if (viewModel == null || !viewModel.IsLearnerRegistered || !viewModel.IsLearnerRecordAdded)
+            if (viewModel == null || !viewModel.IsLearnerRegistered) // TODO: check if IsLearnerRegistered can be deleted as well?
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
