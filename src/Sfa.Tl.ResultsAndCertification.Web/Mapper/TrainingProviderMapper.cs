@@ -10,6 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
     {
         public TrainingProviderMapper()
         {
+            // TODO: This mapping should be deleted.
             CreateMap<LearnerRecordDetails, LearnerRecordDetailsViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
@@ -25,6 +26,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IsSendLearner, opts => opts.MapFrom(s => s.IsSendLearner))
                .ForMember(d => d.IndustryPlacementId, opts => opts.MapFrom(s => s.IndustryPlacementId))
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
+
+            CreateMap<LearnerRecordDetails, LearnerRecordDetailsViewModel1>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+               .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name))
+               .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
+               .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
+               .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => 12345678)) // TODO
+               .ForMember(d => d.CoreName, opts => opts.MapFrom(s => s.PathwayName)) //tDOO
+               .ForMember(d => d.StartYear, opts => opts.MapFrom(s => 2020)) //tDOO
+               .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => "NCFE")) //tDOO
+               .ForMember(d => d.MathsStatus, opts => opts.MapFrom(s => SubjectStatus.AchievedByLrs)) //tDOO
+               .ForMember(d => d.EnglishStatus, opts => opts.MapFrom(s => SubjectStatus.Achieved)); //tDOO
+
 
             CreateMap<LearnerRecordDetails, UpdateIndustryPlacementQuestionViewModel>()
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))

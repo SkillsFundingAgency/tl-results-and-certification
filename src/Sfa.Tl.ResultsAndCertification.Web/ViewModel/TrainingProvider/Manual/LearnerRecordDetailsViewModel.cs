@@ -14,6 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
     public class LearnerRecordDetailsViewModel
     {
+        // TODO: To be deleted.
         public int ProfileId { get; set; }
         public int RegistrationPathwayId { get; set; }
         public long Uln { get; set; }

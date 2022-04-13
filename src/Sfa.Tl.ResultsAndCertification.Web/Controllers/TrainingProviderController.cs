@@ -344,9 +344,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("learner-record-page/{profileId}", Name = RouteConstants.LearnerRecordDetails)]
         public async Task<IActionResult> LearnerRecordDetailsAsync(int profileId)
         {
-            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(User.GetUkPrn(), profileId);
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel1>(User.GetUkPrn(), profileId);
 
-            if (viewModel == null || !viewModel.IsLearnerRegistered) // TODO: check if IsLearnerRegistered can be deleted as well?
+            if (viewModel == null) // TODO: check if IsLearnerRegistered can be deleted as well?  || !viewModel.IsLearnerRegistered
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
