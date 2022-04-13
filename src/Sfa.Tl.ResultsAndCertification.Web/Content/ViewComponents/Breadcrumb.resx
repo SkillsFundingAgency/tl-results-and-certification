@@ -138,6 +138,9 @@
   <data name="Learner_TLevel_Record" xml:space="preserve">
     <value>Learner T Level record</value>
   </data>
+  <data name="Manage_Learner_Records" xml:space="preserve">
+    <value>Manage learner records</value>
+  </data>
   <data name="Manage_Learner_TLevel_Records" xml:space="preserve">
     <value>Manage learner T Level records</value>
   </data>
