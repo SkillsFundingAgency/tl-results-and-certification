@@ -118,10 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Enter_UniqueLearnerNumber_Label" xml:space="preserve">
-    <value>Enter the Unique Learner Number (ULN)</value>
+    <value>Enter the unique learner number (ULN)</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Search for a learner - Enter Unique Learner Number page</value>
+    <value>Search ULN - Manage learner</value>
+  </data>
+  <data name="Para_Search_For_The_Learner_You_Want_To_Manage" xml:space="preserve">
+    <value>Search for the learner you want to manage</value>
   </data>
   <data name="Search_Button" xml:space="preserve">
     <value>Search</value>
@@ -137,8 +140,5 @@
   </data>
   <data name="Uln_Required_Validation_Message" xml:space="preserve">
     <value>Enter a ULN with 10 digits</value>
-  </data>
-  <data name="You_Can_View_Update_ParaText" xml:space="preserve">
-    <value>You can view and update learner T Level records you’ve already added.</value>
   </data>
 </root>

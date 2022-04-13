@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class SearchLearnerRecord {
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter the Unique Learner Number (ULN).
+        ///   Looks up a localized string similar to Enter the unique learner number (ULN).
         /// </summary>
         public static string Enter_UniqueLearnerNumber_Label {
             get {
@@ -70,11 +70,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for a learner - Enter Unique Learner Number page.
+        ///   Looks up a localized string similar to Search ULN - Manage learner.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for the learner you want to manage.
+        /// </summary>
+        public static string Para_Search_For_The_Learner_You_Want_To_Manage {
+            get {
+                return ResourceManager.GetString("Para_Search_For_The_Learner_You_Want_To_Manage", resourceCulture);
             }
         }
         
@@ -120,15 +129,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Uln_Required_Validation_Message {
             get {
                 return ResourceManager.GetString("Uln_Required_Validation_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You can view and update learner T Level records you’ve already added..
-        /// </summary>
-        public static string You_Can_View_Update_ParaText {
-            get {
-                return ResourceManager.GetString("You_Can_View_Update_ParaText", resourceCulture);
             }
         }
     }
