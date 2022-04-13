@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage learner T Level records.
+        ///   Looks up a localized string similar to Manage learner records.
         /// </summary>
         public static string Manage_Learner_TLevel_Records_Text {
             get {

@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("statements-of-achievement-not-available", Name = RouteConstants.StatementsOfAchievementNotAvailable)]
+        [Route("SoA-unavailable", Name = RouteConstants.StatementsOfAchievementNotAvailable)]
         public IActionResult StatementsOfAchievementNotAvailable()
         {
             return View(new NotAvailableViewModel { SoaAvailableDate = _configuration.SoaAvailableDate });
