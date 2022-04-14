@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to We expect statements of achievement to be available again from May 2022..
+        ///   Looks up a localized string similar to We expect statements of achievement to be available again from {0}..
         /// </summary>
         public static string Para2_Text {
             get {
