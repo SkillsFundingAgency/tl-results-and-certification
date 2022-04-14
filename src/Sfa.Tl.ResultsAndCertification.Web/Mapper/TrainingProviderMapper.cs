@@ -33,13 +33,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
-               .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => 12345678)) // TODO
-               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.PathwayName)) //tDOO
-               .ForMember(d => d.StartYear, opts => opts.MapFrom(s => $"{2020} to {2021}")) //tDOO
-               .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => "NCFE")) //tDOO
-               .ForMember(d => d.MathsStatus, opts => opts.MapFrom(s => SubjectStatus.AchievedByLrs)) //tDOO
-               .ForMember(d => d.EnglishStatus, opts => opts.MapFrom(s => SubjectStatus.Achieved)); //tDOO
-
+               .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
+               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
+               .ForMember(d => d.StartYear, opts => opts.MapFrom(s => $"{s.AcademicYear} to {s.AcademicYear + 1}"))
+               .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => s.AwardingOrganisationName))
+               .ForMember(d => d.MathsStatus, opts => opts.MapFrom(s => s.MathsStatus))
+               .ForMember(d => d.EnglishStatus, opts => opts.MapFrom(s => s.EnglishStatus));
 
             CreateMap<LearnerRecordDetails, UpdateIndustryPlacementQuestionViewModel>()
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))

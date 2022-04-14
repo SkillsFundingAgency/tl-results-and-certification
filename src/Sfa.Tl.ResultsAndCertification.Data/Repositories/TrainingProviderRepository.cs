@@ -66,12 +66,19 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         select new LearnerRecordDetails
                                         {
                                             ProfileId = tqProfile.Id,
-                                            RegistrationPathwayId = tqPathway.Id,
+                                            //RegistrationPathwayId = tqPathway.Id,
                                             Uln = tqProfile.UniqueLearnerNumber,
                                             Name = tqProfile.Firstname + " " + tqProfile.Lastname,
                                             DateofBirth = tqProfile.DateofBirth,
-                                            ProviderName = tlProvider.Name + " (" + tlProvider.UkPrn + ")",
-                                            PathwayName = tlPathway.Name + " (" + tlPathway.LarId + ")",
+                                            ProviderName = tlProvider.Name,
+                                            ProviderUkprn = tlProvider.UkPrn,
+                                            //PathwayName = tlPathway.Name + " (" + tlPathway.LarId + ")",
+                                            TlevelTitle = tlPathway.TlevelTitle,
+                                            AcademicYear = tqPathway.AcademicYear,
+                                            AwardingOrganisationName= tqAo.TlAwardingOrganisaton.Name, // TODO: Check if this works?
+                                            MathsStatus = SubjectStatus.Achieved, //TODO
+                                            EnglishStatus = SubjectStatus.AchievedByLrs, //TODO
+
                                             IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn,
                                             IsLearnerRecordAdded = tqProfile.IsEnglishAndMathsAchieved.HasValue && ipRecord != null,
                                             IsEnglishAndMathsAchieved = tqProfile.IsEnglishAndMathsAchieved ?? false,
