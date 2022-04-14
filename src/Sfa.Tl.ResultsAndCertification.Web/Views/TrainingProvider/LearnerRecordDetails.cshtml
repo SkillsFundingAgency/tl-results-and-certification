@@ -2,7 +2,7 @@
 @using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
 
 @{
-    ViewData["Title"] = "TODO";
+    ViewData["Title"] = LearnerRecordDetails.Page_Title;
 }
 
 @section NavigationBar
@@ -10,109 +10,33 @@
     <vc:back-link model=Model.BackLink></vc:back-link>
 }
 
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters">
-        <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-            <div class="govuk-notification-banner__header">
-                <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-                    Important
-                </h2>
-            </div>
-            <div class="govuk-notification-banner__content">
-                <p class="govuk-notification-banner__heading">
-                    Additional information needed for this learner
-                </p>
-                <ul class="govuk-list">
-                    <li> <a class="govuk-notification-banner__link" href="change-ip-result">Add industry placement details</a> </li>
-                    <li> <a class="govuk-notification-banner__link" href="add-maths-status">Add maths level details</a></li>
-                    <li> <a class="govuk-notification-banner__link" href="add-english-status">Add English level details</a></li>
-                </ul>
-                <p></p>
-            </div>
-        </div>
-    </div>
-</div>
+<partial name="Partials/_notificationBanner.cshtml" model="Model" />
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
     <div class="record-header">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
-        Danny Waldron
-
+          @Model.LearnerName
         <span style="display: inline-block;">
-          
-          <strong class="govuk-tag govuk-tag--red">
-            Incomplete
-          </strong>
-          
+            @Html.Raw(Model.StatusTag)
         </span>
-
       </h1>
 
-      <span class="govuk-caption-l">ULN: 1987654321
-      </span>
-
+      <span class="govuk-caption-l">@string.Format(LearnerRecordDetails.Uln_Text, @Model.Uln)</span>
     </div>
 
-
-    <h2 class="govuk-heading-m">Personal details</h2>
-
+    <h2 class="govuk-heading-m">@LearnerRecordDetails.Personal_Details_Text</h2>
     <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border">
-
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Date of birth
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <p class="govuk-body">3 August 2004</p>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Provider
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <p class="govuk-body">Barnsley College
-          </p>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          UKPRN
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <p class="govuk-body">100656</p>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          T Level
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <p class="govuk-body">Design, Surveying and Planning for Construction</p>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Start year
-        </dt>
-        <dd class="govuk-summary-list__value">
-          2020 to 2021
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Awarding organisation
-        </dt>
-        <dd class="govuk-summary-list__value">
-          Pearson
-        </dd>
-      </div>
+        <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+        <vc:summary-item model=Model.SummaryProviderName></vc:summary-item>
+        <vc:summary-item model=Model.SummaryProviderUkprn></vc:summary-item>
+        <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+        <vc:summary-item model=Model.SummaryStartYear></vc:summary-item>
+        <vc:summary-item model=Model.SummaryAoName></vc:summary-item>
     </dl>
 
-    
-    <h2 class="govuk-heading-m">Industry placement</h2>
+    <h2 class="govuk-heading-m">@LearnerRecordDetails.Section_Heading_Industry_Placement</h2>
     <dl class="govuk-summary-list govuk-!-margin-bottom-9">
       <div class="govuk-summary-list__row">
         <dd class="govuk-summary-list__key">
@@ -129,12 +53,11 @@
       </div>
     </dl>
 
-    <h2 class="govuk-heading-m">Level 2 maths and English</h2>
-
+    <h2 class="govuk-heading-m">@LearnerRecordDetails.Section_Heading_Level2_Maths_English</h2>
     <dl class="govuk-summary-list govuk-!-margin-bottom-9">
             <vc:summary-item model=Model.SummaryMathsStatus></vc:summary-item>
             <vc:summary-item model=Model.SummaryEnglishStatus></vc:summary-item>
     </dl>
-
   </div>
+
 </div>
