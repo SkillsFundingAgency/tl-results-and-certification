@@ -129,4 +129,7 @@
   <data name="Not_Achieved_Lrs_Display_Text" xml:space="preserve">
     <value>Not achieved level 2 (Data from the Learning Records Service - LRS)</value>
   </data>
+  <data name="Not_Yet_Recevied_Display_Text" xml:space="preserve">
+    <value>Not yet received</value>
+  </data>
 </root>

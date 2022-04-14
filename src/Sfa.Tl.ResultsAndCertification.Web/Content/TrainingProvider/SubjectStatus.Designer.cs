@@ -95,5 +95,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
                 return ResourceManager.GetString("Not_Achieved_Lrs_Display_Text", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not yet received.
+        /// </summary>
+        public static string Not_Yet_Recevied_Display_Text {
+            get {
+                return ResourceManager.GetString("Not_Yet_Recevied_Display_Text", resourceCulture);
+            }
+        }
     }
 }

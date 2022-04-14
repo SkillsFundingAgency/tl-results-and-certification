@@ -76,8 +76,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             TlevelTitle = tlPathway.TlevelTitle,
                                             AcademicYear = tqPathway.AcademicYear,
                                             AwardingOrganisationName= tqAo.TlAwardingOrganisaton.Name, // TODO: Check if this works?
-                                            MathsStatus = SubjectStatus.Achieved, //TODO
-                                            EnglishStatus = SubjectStatus.AchievedByLrs, //TODO
+                                            MathsStatus = tqProfile.MathsStatus,
+                                            EnglishStatus = tqProfile.EnglishStatus,
 
                                             IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn,
                                             IsLearnerRecordAdded = tqProfile.IsEnglishAndMathsAchieved.HasValue && ipRecord != null,

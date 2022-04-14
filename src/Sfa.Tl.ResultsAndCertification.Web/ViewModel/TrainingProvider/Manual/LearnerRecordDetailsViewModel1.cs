@@ -125,7 +125,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
                 case SubjectStatus.NotAchievedByLrs:
                     return SubjectStatusContent.Not_Achieved_Lrs_Display_Text;
                 default:
-                    return null;
+                    return SubjectStatusContent.Not_Yet_Recevied_Display_Text;
             }
         }
     }
