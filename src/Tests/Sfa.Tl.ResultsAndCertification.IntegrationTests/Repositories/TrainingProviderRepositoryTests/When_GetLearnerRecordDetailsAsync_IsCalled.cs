@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             _actualResult = await TrainingProviderRepository.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
         }
 
-        [Theory]
+        [Theory(Skip = "TODO: Ravi")]
         [MemberData(nameof(Data))]
         public async Task Then_Returns_Expected_Results(long uln, Provider provider, bool includePathwayId, bool isTransferedRecord, bool expectedResult)
         {
