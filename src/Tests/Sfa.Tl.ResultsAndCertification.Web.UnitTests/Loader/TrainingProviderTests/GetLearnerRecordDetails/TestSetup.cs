@@ -7,11 +7,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
     {
         protected long ProviderUkprn;
         protected int ProfileId;
-        protected LearnerRecordDetailsViewModel ActualResult { get; set; }
+        protected LearnerRecordDetailsViewModel1 ActualResult { get; set; }
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId);
+            ActualResult = await Loader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel1>(ProviderUkprn, ProfileId);
         }        
     }
 }

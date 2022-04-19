@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
+namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class NotAvailable {
+    public class SubjectStatus {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal NotAvailable() {
+        internal SubjectStatus() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.NotAvailable", typeof(NotAvailable).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus", typeof(SubjectStatus).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,47 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to Home.
+        ///   Looks up a localized string similar to Achieved.
         /// </summary>
-        public static string Back_To_Home_Button {
+        public static string Achieved_Display_Text {
             get {
-                return ResourceManager.GetString("Back_To_Home_Button", resourceCulture);
+                return ResourceManager.GetString("Achieved_Display_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Statements of achievement not available.
+        ///   Looks up a localized string similar to Achieved level 2 (Data from the Learning Records Service - LRS).
         /// </summary>
-        public static string Heading_Text {
+        public static string Achieved_Lrs_Display_Text {
             get {
-                return ResourceManager.GetString("Heading_Text", resourceCulture);
+                return ResourceManager.GetString("Achieved_Lrs_Display_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SoA unavailable - Request SoA.
+        ///   Looks up a localized string similar to Not achieved.
         /// </summary>
-        public static string Page_Title {
+        public static string Not_Achieved_Display_Text {
             get {
-                return ResourceManager.GetString("Page_Title", resourceCulture);
+                return ResourceManager.GetString("Not_Achieved_Display_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The statement of achievement design is in the process of being changed. This is because maths and English requirements have changed..
+        ///   Looks up a localized string similar to Not achieved level 2 (Data from the Learning Records Service - LRS).
         /// </summary>
-        public static string Para1_Text {
+        public static string Not_Achieved_Lrs_Display_Text {
             get {
-                return ResourceManager.GetString("Para1_Text", resourceCulture);
+                return ResourceManager.GetString("Not_Achieved_Lrs_Display_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to We expect statements of achievement to be available again from {0}..
+        ///   Looks up a localized string similar to Not yet received.
         /// </summary>
-        public static string Para2_Text {
+        public static string Not_Yet_Recevied_Display_Text {
             get {
-                return ResourceManager.GetString("Para2_Text", resourceCulture);
+                return ResourceManager.GetString("Not_Yet_Recevied_Display_Text", resourceCulture);
             }
         }
     }

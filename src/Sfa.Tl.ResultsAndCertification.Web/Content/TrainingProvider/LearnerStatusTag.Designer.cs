@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
+namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class NotAvailable {
+    public class LearnerStatusTag {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal NotAvailable() {
+        internal LearnerStatusTag() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.NotAvailable", typeof(NotAvailable).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerStatusTag", typeof(LearnerStatusTag).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to Home.
+        ///   Looks up a localized string similar to &lt;strong class=&quot;govuk-tag govuk-tag--green&quot;&gt;Complete&lt;/strong&gt;.
         /// </summary>
-        public static string Back_To_Home_Button {
+        public static string Tag_Complete {
             get {
-                return ResourceManager.GetString("Back_To_Home_Button", resourceCulture);
+                return ResourceManager.GetString("Tag_Complete", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Statements of achievement not available.
+        ///   Looks up a localized string similar to &lt;strong class=&quot;govuk-tag govuk-tag--red&quot;&gt;Incomplete&lt;/strong&gt;.
         /// </summary>
-        public static string Heading_Text {
+        public static string Tag_Incomplete {
             get {
-                return ResourceManager.GetString("Heading_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SoA unavailable - Request SoA.
-        /// </summary>
-        public static string Page_Title {
-            get {
-                return ResourceManager.GetString("Page_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The statement of achievement design is in the process of being changed. This is because maths and English requirements have changed..
-        /// </summary>
-        public static string Para1_Text {
-            get {
-                return ResourceManager.GetString("Para1_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to We expect statements of achievement to be available again from {0}..
-        /// </summary>
-        public static string Para2_Text {
-            get {
-                return ResourceManager.GetString("Para2_Text", resourceCulture);
+                return ResourceManager.GetString("Tag_Incomplete", resourceCulture);
             }
         }
     }

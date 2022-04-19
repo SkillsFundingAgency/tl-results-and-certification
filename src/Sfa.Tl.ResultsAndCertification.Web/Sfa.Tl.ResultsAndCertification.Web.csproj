@@ -909,6 +909,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ManagePostalAddress.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\TrainingProvider\LearnerStatusTag.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LearnerStatusTag.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\TrainingProvider\QueryEnglishAndMathsStatus.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -928,6 +933,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>SearchLearnerRecordNotFound.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\SubjectStatus.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SubjectStatus.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\ViewComponents\NotificationBanner.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -1647,6 +1657,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ManagePostalAddress.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\LearnerStatusTag.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LearnerStatusTag.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\QueryEnglishAndMathsStatus.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>QueryEnglishAndMathsStatus.Designer.cs</LastGenOutput>
@@ -1662,6 +1676,10 @@
     <EmbeddedResource Update="Content\TrainingProvider\SearchLearnerRecordNotFound.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SearchLearnerRecordNotFound.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\SubjectStatus.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SubjectStatus.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\ViewComponents\NotificationBanner.resx">
       <LastGenOutput>NotificationBanner.Designer.cs</LastGenOutput>
