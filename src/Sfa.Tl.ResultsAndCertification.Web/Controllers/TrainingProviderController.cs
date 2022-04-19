@@ -65,10 +65,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<AddMathsStatusViewModel>(User.GetUkPrn(), profileId);
 
-            if (viewModel == null)
+            if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("manage-learner-maths-level/{profileId}", Name = RouteConstants.SubmitAddMathsStatus)]
+        public async Task<IActionResult> AddMathsStatusAsync(AddMathsStatusViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            return View(model);
         }
 
         [HttpGet]

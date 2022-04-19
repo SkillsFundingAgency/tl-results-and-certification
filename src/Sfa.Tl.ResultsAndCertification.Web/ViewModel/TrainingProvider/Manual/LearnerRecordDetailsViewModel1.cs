@@ -5,7 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
-
+using System.Collections.Generic;
 using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
 using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
 
@@ -93,6 +93,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             Title = LearnerRecordDetailsContent.Title_Maths_Text,
             Value = GetSubjectStatus(MathsStatus),
             ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
+            RouteName = IsMathsAdded ? string.Empty : RouteConstants.AddMathsStatus,
+            RouteAttributes = IsMathsAdded ? null : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
             HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Maths
         };
 
