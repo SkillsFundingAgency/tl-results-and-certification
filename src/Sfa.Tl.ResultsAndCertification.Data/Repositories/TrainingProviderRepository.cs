@@ -66,9 +66,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         select new LearnerRecordDetails
                                         {
                                             ProfileId = tqProfile.Id,
-                                            //RegistrationPathwayId = tqPathway.Id,
+                                            RegistrationPathwayId = tqPathway.Id,
                                             Uln = tqProfile.UniqueLearnerNumber,
-                                            Name = tqProfile.Firstname + " " + tqProfile.Lastname,
+                                            Name = tqProfile.Firstname + " " + tqProfile.Lastname, // TODO: Separate prop
                                             DateofBirth = tqProfile.DateofBirth,
                                             ProviderName = tlProvider.Name,
                                             ProviderUkprn = tlProvider.UkPrn,
@@ -78,8 +78,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             AwardingOrganisationName= tqAo.TlAwardingOrganisaton.Name, // TODO: Check if this works?
                                             MathsStatus = tqProfile.MathsStatus,
                                             EnglishStatus = tqProfile.EnglishStatus,
-
                                             IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn,
+                                            
                                             IsLearnerRecordAdded = tqProfile.IsEnglishAndMathsAchieved.HasValue && ipRecord != null,
                                             IsEnglishAndMathsAchieved = tqProfile.IsEnglishAndMathsAchieved ?? false,
                                             IsSendLearner = tqProfile.IsSendLearner,

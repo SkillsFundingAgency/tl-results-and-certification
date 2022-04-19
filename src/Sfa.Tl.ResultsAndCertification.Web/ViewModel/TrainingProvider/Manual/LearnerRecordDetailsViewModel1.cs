@@ -15,6 +15,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
     {
         // Header
         public int ProfileId { get; set; }
+        public int RegistrationPathwayId { get; set; }
+
         public long Uln { get; set; }
         public string LearnerName { get; set; }
         public DateTime DateofBirth { get; set; }
@@ -25,7 +27,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public string AwardingOrganisationName { get; set; }
         public SubjectStatus MathsStatus { get; set; }
         public SubjectStatus EnglishStatus { get; set; }
+        
+        public int IndustryPlacementId { get; set; } // TODO: upcoming story
+        public IndustryPlacementStatus IndustryPlacementStatus { get; set; } // TODO: upcoming story
 
+        /// <summary>
+        /// True when status is Active or Withdrawn
+        /// </summary>
+        public bool IsLearnerRegistered { get; set; }
         public bool IsStatusCompleted => IsMathsAdded && IsEnglishAdded && IsIndustryPlacementAdded;
         public bool IsIndustryPlacementAdded => false; // TODO: upcoming story
         public bool IsMathsAdded => MathsStatus != SubjectStatus.NotSpecified;

@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         public SubjectStatus? MathsStatus { get;set; }
         public SubjectStatus? EnglishStatus { get; set; }
 
-        public bool IsLearnerRegistered { get; set; } // TODO: Delete?
+        public bool IsLearnerRegistered { get; set; }
         public bool IsLearnerRecordAdded { get; set; } // TODO: Delete?
         public bool IsEnglishAndMathsAchieved { get; set; } // TODO: Delete?
         public bool HasLrsEnglishAndMaths { get; set; } // TODO: Delete?
