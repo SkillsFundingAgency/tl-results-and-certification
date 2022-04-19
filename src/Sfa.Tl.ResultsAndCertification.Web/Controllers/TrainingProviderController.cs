@@ -60,6 +60,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("manage-learner-maths-level/{profileId}", Name = RouteConstants.AddMathsStatus)]
+        public async Task<IActionResult> AddMathsStatusAsync(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<AddMathsStatusViewModel>(User.GetUkPrn(), profileId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
         [Route("add-learner-record-english-and-maths-achievement/{isChangeMode:bool?}", Name = RouteConstants.AddEnglishAndMathsQuestion)]
         public async Task<IActionResult> AddEnglishAndMathsQuestionAsync(bool isChangeMode)
         {

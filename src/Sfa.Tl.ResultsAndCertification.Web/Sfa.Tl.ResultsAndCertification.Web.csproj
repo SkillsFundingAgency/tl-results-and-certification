@@ -829,6 +829,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ViewAll.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\TrainingProvider\AddMathsStatus.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AddMathsStatus.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\TrainingProvider\CheckAndSubmit.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1569,6 +1574,10 @@
     <EmbeddedResource Update="Content\Tlevel\ViewAll.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ViewAll.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\AddMathsStatus.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AddMathsStatus.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\CheckAndSubmit.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
