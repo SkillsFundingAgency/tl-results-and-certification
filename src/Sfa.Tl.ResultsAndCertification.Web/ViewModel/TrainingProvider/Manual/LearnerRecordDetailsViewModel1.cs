@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         /// </summary>
         public bool IsLearnerRegistered { get; set; }
         public bool IsStatusCompleted => IsMathsAdded && IsEnglishAdded && IsIndustryPlacementAdded;
-        public bool IsIndustryPlacementAdded => false; // TODO: upcoming story
+        public bool IsIndustryPlacementAdded => IndustryPlacementStatus != IndustryPlacementStatus.NotSpecified; // TODO: upcoming story
         public bool IsMathsAdded => MathsStatus != SubjectStatus.NotSpecified;
         public bool IsEnglishAdded => EnglishStatus != SubjectStatus.NotSpecified;
         public string StatusTag => CommonHelper.GetLearnerStatusTag(IsStatusCompleted);
@@ -45,42 +45,42 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public SummaryItemModel SummaryDateofBirth => new SummaryItemModel
         {
             Id = "dateofbirth",
-            Title = LearnerRecordDetailsContent.DateofBirthLabel,
+            Title = LearnerRecordDetailsContent.Title_DateofBirth_Text,
             Value = DateofBirth.ToDobFormat()
         };
 
         public SummaryItemModel SummaryProviderName => new SummaryItemModel
         {
             Id = "providername",
-            Title = LearnerRecordDetailsContent.ProviderNameLabel,
+            Title = LearnerRecordDetailsContent.Title_Provider_Name_Text,
             Value = ProviderName,
         };
-
+        
         public SummaryItemModel SummaryProviderUkprn => new SummaryItemModel
         {
             Id = "providerukprn",
-            Title = LearnerRecordDetailsContent.ProviderUkprnLabel,
+            Title = LearnerRecordDetailsContent.Title_Provider_Ukprn_Text,
             Value = ProviderUkprn.ToString(),
         };
 
         public SummaryItemModel SummaryTlevelTitle => new SummaryItemModel
         {
             Id = "tleveltitle",
-            Title = LearnerRecordDetailsContent.TlevelTitleLabel,
+            Title = LearnerRecordDetailsContent.Title_TLevel_Text,
             Value = TlevelTitle
         };
 
         public SummaryItemModel SummaryStartYear => new SummaryItemModel
         {
             Id = "startyear",
-            Title = LearnerRecordDetailsContent.StartYearLabel,
+            Title = LearnerRecordDetailsContent.Title_StartYear_Text,
             Value = StartYear
         };
 
         public SummaryItemModel SummaryAoName => new SummaryItemModel
         {
             Id = "aoname",
-            Title = LearnerRecordDetailsContent.AoNameLabel,
+            Title = LearnerRecordDetailsContent.Title_AoName_Text,
             Value = AwardingOrganisationName
         };
 
@@ -90,7 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public SummaryItemModel SummaryMathsStatus => new SummaryItemModel
         {
             Id = "mathsstatus",
-            Title = LearnerRecordDetailsContent.MathsLabel,
+            Title = LearnerRecordDetailsContent.Title_Maths_Text,
             Value = GetSubjectStatus(MathsStatus),
             ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
             HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Maths
@@ -99,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public SummaryItemModel SummaryEnglishStatus => new SummaryItemModel
         {
             Id = "englishstatus",
-            Title = LearnerRecordDetailsContent.EnglishLabel,
+            Title = LearnerRecordDetailsContent.Title_English_Text,
             Value = GetSubjectStatus(EnglishStatus),
             ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
             HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_English

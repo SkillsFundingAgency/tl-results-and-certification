@@ -76,32 +76,32 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.IsStatusCompleted.Should().BeFalse();
 
             // DateofBirth
-            model.SummaryDateofBirth.Title.Should().Be(LearnerRecordDetailsContent.DateofBirthLabel);
+            model.SummaryDateofBirth.Title.Should().Be(LearnerRecordDetailsContent.Title_DateofBirth_Text);
             model.SummaryDateofBirth.Value.Should().Be(Mockresult.DateofBirth.ToDobFormat());
 
             // ProviderName
-            model.SummaryProviderName.Title.Should().Be(LearnerRecordDetailsContent.ProviderNameLabel);
+            model.SummaryProviderName.Title.Should().Be(LearnerRecordDetailsContent.Title_Provider_Name_Text);
             model.SummaryProviderName.Value.Should().Be(Mockresult.ProviderName);
 
             // ProviderUkprn
-            model.SummaryProviderUkprn.Title.Should().Be(LearnerRecordDetailsContent.ProviderUkprnLabel);
+            model.SummaryProviderUkprn.Title.Should().Be(LearnerRecordDetailsContent.Title_Provider_Ukprn_Text);
             model.SummaryProviderUkprn.Value.Should().Be(Mockresult.ProviderUkprn.ToString());
 
             // TLevelTitle
-            model.SummaryTlevelTitle.Title.Should().Be(LearnerRecordDetailsContent.TlevelTitleLabel);
+            model.SummaryTlevelTitle.Title.Should().Be(LearnerRecordDetailsContent.Title_TLevel_Text);
             model.SummaryTlevelTitle.Value.Should().Be(Mockresult.TlevelTitle);
             
             // Start Year
-            model.SummaryStartYear.Title.Should().Be(LearnerRecordDetailsContent.StartYearLabel);
+            model.SummaryStartYear.Title.Should().Be(LearnerRecordDetailsContent.Title_StartYear_Text);
             model.SummaryStartYear.Value.Should().Be(Mockresult.StartYear);
 
             // AO Name
-            model.SummaryAoName.Title.Should().Be(LearnerRecordDetailsContent.AoNameLabel);
+            model.SummaryAoName.Title.Should().Be(LearnerRecordDetailsContent.Title_AoName_Text);
             model.SummaryAoName.Value.Should().Be(Mockresult.AwardingOrganisationName);
 
             // Summary Maths StatusHidden_Action_Text_Maths
             model.SummaryMathsStatus.Should().NotBeNull();
-            model.SummaryMathsStatus.Title.Should().Be(LearnerRecordDetailsContent.MathsLabel);
+            model.SummaryMathsStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_Maths_Text);
             model.SummaryMathsStatus.Value.Should().Be(SubjectStatusContent.Achieved_Display_Text);
             model.SummaryMathsStatus.NeedBorderBottomLine.Should().BeTrue();
             model.SummaryMathsStatus.HiddenActionText.Should().Be(LearnerRecordDetailsContent.Hidden_Action_Text_Maths);
@@ -109,7 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             // Summary English Status
             model.SummaryEnglishStatus.Should().NotBeNull();
-            model.SummaryEnglishStatus.Title.Should().Be(LearnerRecordDetailsContent.EnglishLabel);
+            model.SummaryEnglishStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_English_Text);
             model.SummaryMathsStatus.Value.Should().Be(SubjectStatusContent.Achieved_Display_Text);
             model.SummaryEnglishStatus.NeedBorderBottomLine.Should().BeTrue();
             model.SummaryEnglishStatus.HiddenActionText.Should().Be(LearnerRecordDetailsContent.Hidden_Action_Text_English);

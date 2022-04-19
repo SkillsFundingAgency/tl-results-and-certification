@@ -70,24 +70,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Awarding organisation.
-        /// </summary>
-        public static string AoNameLabel {
-            get {
-                return ResourceManager.GetString("AoNameLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Date of birth.
-        /// </summary>
-        public static string DateofBirthLabel {
-            get {
-                return ResourceManager.GetString("DateofBirthLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         public static string English_And_Maths_Achieved_Lrs_Text {
@@ -124,15 +106,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to English.
-        /// </summary>
-        public static string EnglishLabel {
-            get {
-                return ResourceManager.GetString("EnglishLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to  english status.
         /// </summary>
         public static string Hidden_Action_Text_English {
@@ -156,15 +129,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Industry_Placement_Action_Hidden_Text {
             get {
                 return ResourceManager.GetString("Industry_Placement_Action_Hidden_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Maths.
-        /// </summary>
-        public static string MathsLabel {
-            get {
-                return ResourceManager.GetString("MathsLabel", resourceCulture);
             }
         }
         
@@ -232,24 +196,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Provider.
-        /// </summary>
-        public static string ProviderNameLabel {
-            get {
-                return ResourceManager.GetString("ProviderNameLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UKPRN.
-        /// </summary>
-        public static string ProviderUkprnLabel {
-            get {
-                return ResourceManager.GetString("ProviderUkprnLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         public static string Query_Action_Link_Text {
@@ -277,11 +223,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start year.
+        ///   Looks up a localized string similar to Awarding organisation.
         /// </summary>
-        public static string StartYearLabel {
+        public static string Title_AoName_Text {
             get {
-                return ResourceManager.GetString("StartYearLabel", resourceCulture);
+                return ResourceManager.GetString("Title_AoName_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of birth.
+        /// </summary>
+        public static string Title_DateofBirth_Text {
+            get {
+                return ResourceManager.GetString("Title_DateofBirth_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string Title_English_Text {
+            get {
+                return ResourceManager.GetString("Title_English_Text", resourceCulture);
             }
         }
         
@@ -304,11 +268,47 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maths.
+        /// </summary>
+        public static string Title_Maths_Text {
+            get {
+                return ResourceManager.GetString("Title_Maths_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provider.
+        /// </summary>
+        public static string Title_Provider_Name_Text {
+            get {
+                return ResourceManager.GetString("Title_Provider_Name_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UKPRN.
+        /// </summary>
+        public static string Title_Provider_Ukprn_Text {
+            get {
+                return ResourceManager.GetString("Title_Provider_Ukprn_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start year.
+        /// </summary>
+        public static string Title_StartYear_Text {
+            get {
+                return ResourceManager.GetString("Title_StartYear_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to T Level.
         /// </summary>
-        public static string TlevelTitleLabel {
+        public static string Title_TLevel_Text {
             get {
-                return ResourceManager.GetString("TlevelTitleLabel", resourceCulture);
+                return ResourceManager.GetString("Title_TLevel_Text", resourceCulture);
             }
         }
         
