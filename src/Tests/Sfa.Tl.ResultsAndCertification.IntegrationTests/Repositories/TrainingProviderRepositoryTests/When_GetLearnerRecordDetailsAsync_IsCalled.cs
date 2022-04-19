@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             _actualResult = await TrainingProviderRepository.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
         }
 
-        [Theory(Skip = "TODO: Ravi")]
+        [Theory]
         [MemberData(nameof(Data))]
         public async Task Then_Returns_Expected_Results(long uln, Provider provider, bool includePathwayId, bool isTransferedRecord, bool expectedResult)
         {
@@ -97,7 +97,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             var expectedProvider = TlProviders.FirstOrDefault(p => p.UkPrn == (long)provider);
             expectedProvider.Should().NotBeNull();
 
-            var expectedProviderName = expectedProvider != null ? $"{expectedProvider.Name} ({expectedProvider.UkPrn})" : null;
+            var expectedProviderName = expectedProvider != null ? expectedProvider.Name : null;
+            var expectedProviderUkprn = expectedProvider != null ? expectedProvider.UkPrn : 0;
             var expectedProfile = _profiles.FirstOrDefault(p => p.Id == profileId);
             expectedProfile.Should().NotBeNull();
 
@@ -109,10 +110,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             var tlpathway = expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway;
             tlpathway.Should().NotBeNull();
 
-            var expectedPathwayName = $"{tlpathway.Name} ({tlpathway.LarId})";
             var expectedIsLearnerRegistered = expectedPathway.Status == RegistrationPathwayStatus.Active || expectedPathway.Status == RegistrationPathwayStatus.Withdrawn;
-            var expectedHasLrsEnglishAndMaths = expectedProfile.IsRcFeed == false && expectedProfile.QualificationAchieved.Any();
-            var expectedIsLearnerRecordAdded = expectedPathway.TqRegistrationProfile.IsEnglishAndMathsAchieved.HasValue && expectedPathway.IndustryPlacements.Any();
             var expectedIndustryPlacementId = expectedPathway.IndustryPlacements.FirstOrDefault()?.Id ?? 0;
             var expectedIndustryPlacementStatus = expectedPathway.IndustryPlacements.FirstOrDefault()?.Status ?? null;
 
@@ -122,12 +120,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             _actualResult.Name.Should().Be($"{expectedProfile.Firstname} {expectedProfile.Lastname}");
             _actualResult.DateofBirth.Should().Be(expectedProfile.DateofBirth);
             _actualResult.ProviderName.Should().Be(expectedProviderName);
-            _actualResult.PathwayName.Should().Be(expectedPathwayName);
+            _actualResult.ProviderUkprn.Should().Be(expectedProviderUkprn);
+            _actualResult.TlevelTitle.Should().Be(tlpathway.TlevelTitle);
+            _actualResult.AcademicYear.Should().Be(expectedPathway.AcademicYear);
+            _actualResult.AwardingOrganisationName.Should().Be(expectedPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.DisplayName);
+            _actualResult.MathsStatus.Should().Be(expectedProfile.MathsStatus);
+            _actualResult.EnglishStatus.Should().Be(expectedProfile.EnglishStatus);
+
             _actualResult.IsLearnerRegistered.Should().Be(expectedIsLearnerRegistered);
-            _actualResult.IsLearnerRecordAdded.Should().Be(expectedIsLearnerRecordAdded);
-            _actualResult.IsEnglishAndMathsAchieved.Should().Be(expectedProfile.IsEnglishAndMathsAchieved ?? false);
-            _actualResult.HasLrsEnglishAndMaths.Should().Be(expectedHasLrsEnglishAndMaths);
-            _actualResult.IsSendLearner.Should().Be(expectedProfile.IsSendLearner);
             _actualResult.IndustryPlacementId.Should().Be(expectedIndustryPlacementId);
             _actualResult.IndustryPlacementStatus.Should().Be(expectedIndustryPlacementStatus);
 

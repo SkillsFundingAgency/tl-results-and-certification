@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 IsLearnerRegistered = true,
                 
                 IndustryPlacementId = 10,
-                IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted
+                IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified
             };
             TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel1>(ProviderUkprn, ProfileId).Returns(Mockresult);
         }

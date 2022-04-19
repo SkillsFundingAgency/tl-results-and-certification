@@ -1,7 +1,7 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.LearnerRecordDetailsViewModel1
 @using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
 
-@if (Model.IsStatusCompleted)
+@if (!Model.IsStatusCompleted)
 {
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-three-quarters">

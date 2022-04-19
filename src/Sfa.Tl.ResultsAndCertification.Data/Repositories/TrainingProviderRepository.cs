@@ -68,22 +68,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             ProfileId = tqProfile.Id,
                                             RegistrationPathwayId = tqPathway.Id,
                                             Uln = tqProfile.UniqueLearnerNumber,
-                                            Name = tqProfile.Firstname + " " + tqProfile.Lastname, // TODO: Separate prop
+                                            Name = tqProfile.Firstname + " " + tqProfile.Lastname,
                                             DateofBirth = tqProfile.DateofBirth,
                                             ProviderName = tlProvider.Name,
                                             ProviderUkprn = tlProvider.UkPrn,
-                                            //PathwayName = tlPathway.Name + " (" + tlPathway.LarId + ")",
                                             TlevelTitle = tlPathway.TlevelTitle,
                                             AcademicYear = tqPathway.AcademicYear,
-                                            AwardingOrganisationName= tqAo.TlAwardingOrganisaton.Name, // TODO: Check if this works?
+                                            AwardingOrganisationName= tqAo.TlAwardingOrganisaton.DisplayName,
                                             MathsStatus = tqProfile.MathsStatus,
                                             EnglishStatus = tqProfile.EnglishStatus,
                                             IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn,
-                                            
-                                            IsLearnerRecordAdded = tqProfile.IsEnglishAndMathsAchieved.HasValue && ipRecord != null,
-                                            IsEnglishAndMathsAchieved = tqProfile.IsEnglishAndMathsAchieved ?? false,
-                                            IsSendLearner = tqProfile.IsSendLearner,
-                                            HasLrsEnglishAndMaths = tqProfile.IsRcFeed == false && tqProfile.QualificationAchieved.Any(),
                                             IndustryPlacementId = ipRecord != null ? ipRecord.Id : 0,
                                             IndustryPlacementStatus = ipRecord != null ? ipRecord.Status : null
                                         };

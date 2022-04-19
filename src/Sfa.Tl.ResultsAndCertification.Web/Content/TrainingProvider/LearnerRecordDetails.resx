@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="1Update_Action_Link_Text" xml:space="preserve">
+    <value />
+    <comment>delete</comment>
+  </data>
   <data name="Action_Text_Link_Add" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -176,6 +180,9 @@
   </data>
   <data name="Section_Heading_Level2_Maths_English" xml:space="preserve">
     <value>Level 2 maths and English</value>
+  </data>
+  <data name="Start_Year_Value" xml:space="preserve">
+    <value>{0} to {1}</value>
   </data>
   <data name="Title_AoName_Text" xml:space="preserve">
     <value>Awarding organisation</value>

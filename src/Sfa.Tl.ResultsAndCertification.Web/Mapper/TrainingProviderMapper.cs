@@ -4,6 +4,8 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 
+using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
+
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 {
     public class TrainingProviderMapper : Profile
@@ -36,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
-               .ForMember(d => d.StartYear, opts => opts.MapFrom(s => $"{s.AcademicYear} to {s.AcademicYear + 1}"))
+               .ForMember(d => d.StartYear, opts => opts.MapFrom(s => string.Format(LearnerRecordDetailsContent.Start_Year_Value, s.AcademicYear, s.AcademicYear + 1)))
                .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => s.AwardingOrganisationName))
                .ForMember(d => d.MathsStatus, opts => opts.MapFrom(s => s.MathsStatus))
                .ForMember(d => d.EnglishStatus, opts => opts.MapFrom(s => s.EnglishStatus))

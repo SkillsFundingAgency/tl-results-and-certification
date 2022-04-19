@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string _1Update_Action_Link_Text {
+            get {
+                return ResourceManager.GetString("1Update_Action_Link_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string Action_Text_Link_Add {
@@ -219,6 +228,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Section_Heading_Level2_Maths_English {
             get {
                 return ResourceManager.GetString("Section_Heading_Level2_Maths_English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} to {1}.
+        /// </summary>
+        public static string Start_Year_Value {
+            get {
+                return ResourceManager.GetString("Start_Year_Value", resourceCulture);
             }
         }
         
