@@ -303,6 +303,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PutAsync<UpdateLearnerRecordRequest, bool>(ApiConstants.UpdateLearnerRecordUri, model);
         }
 
+        public async Task<bool> UpdateLearnerSubjectRecordAsync(UpdateLearnerSubjectRecordRequest request)
+        {
+            return await PutAsync<UpdateLearnerSubjectRecordRequest, bool>(ApiConstants.UpdateLearnerRecordUri, request);
+        }
+
         // Provider Address endpoints
         public async Task<bool> AddAddressAsync(AddAddressRequest request)
         {
