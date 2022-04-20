@@ -30,21 +30,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-learner-record-ULN-not-registered", Name = RouteConstants.EnterUniqueLearnerNumberNotFound)]
-        public async Task<IActionResult> EnterUniqueLearnerNumberNotFoundAsync()
-        {
-            // TODO: Delete
-            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
-            if (cacheModel == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read AddLearnerRecordViewModel from redis cache in enter uln not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(new LearnerRecordNotFoundViewModel { Uln = cacheModel.Uln?.EnterUln?.ToString() });
-        }
-
-        [HttpGet]
         [Route("manage-learner-maths-level/{profileId}", Name = RouteConstants.AddMathsStatus)]
         public async Task<IActionResult> AddMathsStatusAsync(int profileId)
         {
