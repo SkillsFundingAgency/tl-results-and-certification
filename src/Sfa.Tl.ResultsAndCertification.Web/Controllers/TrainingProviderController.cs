@@ -52,38 +52,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-learner-record-english-and-maths-achievement/{isChangeMode:bool?}", Name = RouteConstants.AddEnglishAndMathsQuestion)]
-        public async Task<IActionResult> AddEnglishAndMathsQuestionAsync(bool isChangeMode)
-        {
-            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
-
-            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false || cacheModel?.LearnerRecord?.HasLrsEnglishAndMaths == true)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            var viewModel = cacheModel?.EnglishAndMathsQuestion == null ? new EnglishAndMathsQuestionViewModel() : cacheModel.EnglishAndMathsQuestion;
-            viewModel.LearnerName = cacheModel.LearnerRecord.Name;
-            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowed;
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("add-learner-record-english-and-maths-achievement", Name = RouteConstants.SubmitAddEnglishAndMathsQuestion)]
-        public async Task<IActionResult> AddEnglishAndMathsQuestionAsync(EnglishAndMathsQuestionViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
-            if (cacheModel?.Uln == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            cacheModel.EnglishAndMathsQuestion = model;
-            await _cacheService.SetAsync(CacheKey, cacheModel);
-
-            return RedirectToRoute(model.IsChangeMode ? RouteConstants.AddLearnerRecordCheckAndSubmit : RouteConstants.AddIndustryPlacementQuestion);
-        }
-
-        [HttpGet]
         [Route("add-learner-record-english-and-maths-achievement-lrs", Name = RouteConstants.AddEnglishAndMathsLrsQuestion)]
         public async Task<IActionResult> AddEnglishAndMathsLrsQuestionAsync()
         {
@@ -152,7 +120,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
 
             if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false ||
-                (cacheModel?.LearnerRecord?.HasLrsEnglishAndMaths == false && cacheModel?.EnglishAndMathsQuestion == null))
+                (cacheModel?.LearnerRecord?.HasLrsEnglishAndMaths == false))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = cacheModel?.IndustryPlacementQuestion == null ? new IndustryPlacementQuestionViewModel() : cacheModel.IndustryPlacementQuestion;
@@ -406,56 +374,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read UpdateLearnerRecordResponseViewModel from redis cache in industry placement updated confirmation page. Method: IndustryPlacementUpdatedConfirmationAsync(), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(viewModel);
-        }
-
-        [HttpGet]
-        [Route("update-learner-record-english-and-maths-achievement/{profileId}", Name = RouteConstants.UpdateEnglisAndMathsAchievement)]
-        public async Task<IActionResult> UpdateEnglisAndMathsAchievementAsync(int profileId)
-        {
-            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<UpdateEnglishAndMathsQuestionViewModel>(User.GetUkPrn(), profileId);
-            if (viewModel == null || !viewModel.IsLearnerRecordAdded || viewModel.HasLrsEnglishAndMaths || viewModel.EnglishAndMathsStatus == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner record not added or invalid record to show. Method: UpdateEnglisAndMathsAchievementAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("update-learner-record-english-and-maths-achievement", Name = RouteConstants.SubmitUpdateEnglisAndMathsAchievement)]
-        public async Task<IActionResult> UpdateEnglisAndMathsAchievementAsync(UpdateEnglishAndMathsQuestionViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-                return View(viewModel);
-
-            var response = await _trainingProviderLoader.ProcessEnglishAndMathsQuestionUpdateAsync(User.GetUkPrn(), viewModel);
-
-            if (response == null)
-                return RedirectToRoute(RouteConstants.ProblemWithService);
-
-            if (!response.IsModified)
-                return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { viewModel.ProfileId });
-
-            if (!response.IsSuccess)
-                return RedirectToRoute(RouteConstants.ProblemWithService);
-
-            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.EnglishAndMathsAchievementUpdatedConfirmation), response, CacheExpiryTime.XSmall);
-            return RedirectToRoute(RouteConstants.EnglishAndMathsAchievementUpdatedConfirmation);
-        }
-
-        [HttpGet]
-        [Route("english-and-maths-achievement-updated-confirmation", Name = RouteConstants.EnglishAndMathsAchievementUpdatedConfirmation)]
-        public async Task<IActionResult> EnglishAndMathsAchievementUpdatedConfirmationAsync()
-        {
-            var viewModel = await _cacheService.GetAndRemoveAsync<UpdateLearnerRecordResponseViewModel>(string.Concat(CacheKey, Constants.EnglishAndMathsAchievementUpdatedConfirmation));
-
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read UpdateLearnerRecordResponseViewModel from redis cache in english and maths achievement updated confirmation page. Method: EnglishAndMathsAchievementUpdatedConfirmationAsync(), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 

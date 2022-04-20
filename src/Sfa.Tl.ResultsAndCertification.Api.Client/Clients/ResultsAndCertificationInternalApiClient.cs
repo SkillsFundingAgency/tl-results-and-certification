@@ -300,6 +300,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public async Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest model)
         {
+            // TODO: To be deleted after new industry placement implemented. - Ravi
             return await PutAsync<UpdateLearnerRecordRequest, bool>(ApiConstants.UpdateLearnerRecordUri, model);
         }
 

@@ -52,25 +52,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return new UpdateLearnerRecordResponseViewModel { ProfileId = learnerRecordDetails.ProfileId, Uln = learnerRecordDetails.Uln, Name = learnerRecordDetails.Name, IsModified = true, IsSuccess = isSuccess };
         }
 
-        public async Task<UpdateLearnerRecordResponseViewModel> ProcessEnglishAndMathsQuestionUpdateAsync(long providerUkprn, UpdateEnglishAndMathsQuestionViewModel viewModel)
-        {
-            var response = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, viewModel.ProfileId);
-
-            if (response == null || !response.IsLearnerRecordAdded || response.HasLrsEnglishAndMaths) return null;
-
-            var englishAndMathsStatus = GetEnglishAndMathsStatus(response);
-
-            if (englishAndMathsStatus == viewModel.EnglishAndMathsStatus)
-            {
-                return new UpdateLearnerRecordResponseViewModel { IsModified = false };
-            }
-                        
-            viewModel.HasLrsEnglishAndMaths = response.HasLrsEnglishAndMaths;
-            var request = _mapper.Map<UpdateLearnerRecordRequest>(viewModel, opt => { opt.Items["providerUkprn"] = providerUkprn; opt.Items["uln"] = response.Uln; });
-            var isSuccess = await _internalApiClient.UpdateLearnerRecordAsync(request);
-            return new UpdateLearnerRecordResponseViewModel { ProfileId = response.ProfileId, Uln = response.Uln, Name = response.Name, IsModified = true, IsSuccess = isSuccess };
-        }
-
         private EnglishAndMathsStatus? GetEnglishAndMathsStatus(LearnerRecordDetails model)
         {
             if (model.HasLrsEnglishAndMaths)

@@ -8,14 +8,29 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\PostResultsServiceControllerTests\PrsWithdrawAppealTests\**" />
+    <Compile Remove="Controllers\TrainingProviderControllerTests\AddIndustryPlacementQuestionGet\**" />
+    <Compile Remove="Controllers\TrainingProviderControllerTests\AddIndustryPlacementQuestionPost\**" />
+    <Compile Remove="Controllers\TrainingProviderControllerTests\AddLearnerRecordCheckAndSubmitGet\**" />
+    <Compile Remove="Controllers\TrainingProviderControllerTests\AddLearnerRecordCheckAndSubmitPost\**" />
     <Compile Remove="Loader\PostResultsServiceLoaderTests\AppealCoreGradeFinal\**" />
     <Compile Remove="Loader\ResultLoaderTests\GetResultNoAssessmentEntryViewModel\**" />
+    <Compile Remove="Loader\TrainingProviderTests\AddLearnerRecord\**" />
     <EmbeddedResource Remove="Controllers\PostResultsServiceControllerTests\PrsWithdrawAppealTests\**" />
+    <EmbeddedResource Remove="Controllers\TrainingProviderControllerTests\AddIndustryPlacementQuestionGet\**" />
+    <EmbeddedResource Remove="Controllers\TrainingProviderControllerTests\AddIndustryPlacementQuestionPost\**" />
+    <EmbeddedResource Remove="Controllers\TrainingProviderControllerTests\AddLearnerRecordCheckAndSubmitGet\**" />
+    <EmbeddedResource Remove="Controllers\TrainingProviderControllerTests\AddLearnerRecordCheckAndSubmitPost\**" />
     <EmbeddedResource Remove="Loader\PostResultsServiceLoaderTests\AppealCoreGradeFinal\**" />
     <EmbeddedResource Remove="Loader\ResultLoaderTests\GetResultNoAssessmentEntryViewModel\**" />
+    <EmbeddedResource Remove="Loader\TrainingProviderTests\AddLearnerRecord\**" />
     <None Remove="Controllers\PostResultsServiceControllerTests\PrsWithdrawAppealTests\**" />
+    <None Remove="Controllers\TrainingProviderControllerTests\AddIndustryPlacementQuestionGet\**" />
+    <None Remove="Controllers\TrainingProviderControllerTests\AddIndustryPlacementQuestionPost\**" />
+    <None Remove="Controllers\TrainingProviderControllerTests\AddLearnerRecordCheckAndSubmitGet\**" />
+    <None Remove="Controllers\TrainingProviderControllerTests\AddLearnerRecordCheckAndSubmitPost\**" />
     <None Remove="Loader\PostResultsServiceLoaderTests\AppealCoreGradeFinal\**" />
     <None Remove="Loader\ResultLoaderTests\GetResultNoAssessmentEntryViewModel\**" />
+    <None Remove="Loader\TrainingProviderTests\AddLearnerRecord\**" />
   </ItemGroup>
 
   <ItemGroup>

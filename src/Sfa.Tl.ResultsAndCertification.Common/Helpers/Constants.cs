@@ -64,8 +64,7 @@
         public const string AddLearnerRecordConfirmation = "AddLearnerRecordConfirmation";
         public const string SearchLearnerRecordViewModel = "SearchLearnerRecordViewModel";
         public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
-        public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";
-        public const string AddEnglishAndMathsSendDataConfirmation = "AddEnglishAndMathsSendDataConfirmation";
+        public const string AddEnglishAndMathsSendDataConfirmation = "AddEnglishAndMathsSendDataConfirmation"; // TODO: Delete?
         public const string AddAddressConfirmation = "AddAddressConfirmation";
         public const string RequestSoaConfirmation = "RequestSoaConfirmation";
         public const string UserSessionActivityId = "UserSessionActivityId";        
