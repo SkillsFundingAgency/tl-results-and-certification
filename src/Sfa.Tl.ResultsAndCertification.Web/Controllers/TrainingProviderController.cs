@@ -30,21 +30,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-learner-record-ULN-already-added/{profileId}", Name = RouteConstants.EnterUniqueLearnerNumberAddedAlready)]
-        public async Task<IActionResult> EnterUniqueLearnerNumberAddedAlreadyAsync(int profileId)
-        {
-            // TODO: Delete
-            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
-            if (cacheModel == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read AddLearnerRecordViewModel from redis cache in Uln already added page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(new LearnerRecordAddedAlreadyViewModel { ProfileId = profileId, Uln = cacheModel.Uln?.EnterUln?.ToString(), LearnerName = cacheModel?.LearnerRecord?.Name });
-        }
-
-        [HttpGet]
         [Route("add-learner-record-ULN-not-registered", Name = RouteConstants.EnterUniqueLearnerNumberNotFound)]
         public async Task<IActionResult> EnterUniqueLearnerNumberNotFoundAsync()
         {
