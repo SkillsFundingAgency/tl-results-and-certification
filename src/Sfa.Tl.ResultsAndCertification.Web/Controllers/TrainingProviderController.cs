@@ -60,6 +60,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("manage-learner-maths-level/{profileId}", Name = RouteConstants.AddMathsStatus)]
+        public async Task<IActionResult> AddMathsStatusAsync(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<AddMathsStatusViewModel>(User.GetUkPrn(), profileId);
+
+            if (viewModel == null || !viewModel.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("manage-learner-maths-level/{profileId}", Name = RouteConstants.SubmitAddMathsStatus)]
+        public async Task<IActionResult> AddMathsStatusAsync(AddMathsStatusViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            return View(model);
+        }
+
+        [HttpGet]
         [Route("add-learner-record-english-and-maths-achievement/{isChangeMode:bool?}", Name = RouteConstants.AddEnglishAndMathsQuestion)]
         public async Task<IActionResult> AddEnglishAndMathsQuestionAsync(bool isChangeMode)
         {
@@ -346,7 +368,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel1>(User.GetUkPrn(), profileId);
 
-            if (viewModel == null) // TODO: check if IsLearnerRegistered can be deleted as well?  || !viewModel.IsLearnerRegistered
+            if (viewModel == null || !viewModel.IsLearnerRegistered)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);

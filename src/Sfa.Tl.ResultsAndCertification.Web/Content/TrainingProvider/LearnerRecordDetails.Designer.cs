@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class LearnerRecordDetails {
@@ -61,16 +61,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date of birth: {0}.
+        ///   Looks up a localized string similar to .
         /// </summary>
-        public static string DateofBirth_Text {
+        public static string _1Update_Action_Link_Text {
             get {
-                return ResourceManager.GetString("DateofBirth_Text", resourceCulture);
+                return ResourceManager.GetString("1Update_Action_Link_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Achieved minimum standard (Data from the Learning Records Service - LRS).
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Action_Text_Link_Add {
+            get {
+                return ResourceManager.GetString("Action_Text_Link_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string English_And_Maths_Achieved_Lrs_Text {
             get {
@@ -79,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Achieved minimum standard for learners with SEND (Data from the Learning Records Service - LRS and provider declaration).
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string English_And_Maths_Achieved_With_Send_Lrs_Text {
             get {
@@ -88,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  English and maths achievement status.
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string English_And_Maths_Action_Hidden_Text {
             get {
@@ -97,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Not achieved minimum standard (Data from the Learning Records Service - LRS).
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string English_And_Maths_Not_Achieved_Lrs_Text {
             get {
@@ -106,7 +115,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  industry placement completion status.
+        ///   Looks up a localized string similar to  english status.
+        /// </summary>
+        public static string Hidden_Action_Text_English {
+            get {
+                return ResourceManager.GetString("Hidden_Action_Text_English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  maths status.
+        /// </summary>
+        public static string Hidden_Action_Text_Maths {
+            get {
+                return ResourceManager.GetString("Hidden_Action_Text_Maths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string Industry_Placement_Action_Hidden_Text {
             get {
@@ -115,61 +142,70 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner T Level record.
+        ///   Looks up a localized string similar to Additional information needed for this learner.
         /// </summary>
-        public static string Learner_TLevel_Record_Heading_Text {
+        public static string Notification_Heading {
             get {
-                return ResourceManager.GetString("Learner_TLevel_Record_Heading_Text", resourceCulture);
+                return ResourceManager.GetString("Notification_Heading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner’s English and maths achievement.
+        ///   Looks up a localized string similar to Add English level details.
         /// </summary>
-        public static string Learners_English_And_Maths_Achievement_Text {
+        public static string Notification_Link_Add_English {
             get {
-                return ResourceManager.GetString("Learners_English_And_Maths_Achievement_Text", resourceCulture);
+                return ResourceManager.GetString("Notification_Link_Add_English", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner’s industry placement completion.
+        ///   Looks up a localized string similar to Add industry placement details.
         /// </summary>
-        public static string Learners_Industry_Placement_Completion_Text {
+        public static string Notification_Link_Add_Ip {
             get {
-                return ResourceManager.GetString("Learners_Industry_Placement_Completion_Text", resourceCulture);
+                return ResourceManager.GetString("Notification_Link_Add_Ip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name: {0}.
+        ///   Looks up a localized string similar to Add maths level details.
         /// </summary>
-        public static string Name_Text {
+        public static string Notification_Link_Add_Maths {
             get {
-                return ResourceManager.GetString("Name_Text", resourceCulture);
+                return ResourceManager.GetString("Notification_Link_Add_Maths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Important.
+        /// </summary>
+        public static string Notification_Title {
+            get {
+                return ResourceManager.GetString("Notification_Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Learner T Level record page.
         /// </summary>
-        public static string Page_Title_Text {
+        public static string Page_Title {
             get {
-                return ResourceManager.GetString("Page_Title_Text", resourceCulture);
+                return ResourceManager.GetString("Page_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Provider (UKPRN): {0}.
+        ///   Looks up a localized string similar to Personal details.
         /// </summary>
-        public static string Provider_Text {
+        public static string Personal_Details_Text {
             get {
-                return ResourceManager.GetString("Provider_Text", resourceCulture);
+                return ResourceManager.GetString("Personal_Details_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Query.
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string Query_Action_Link_Text {
             get {
@@ -178,16 +214,61 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search again.
+        ///   Looks up a localized string similar to Industry placement.
         /// </summary>
-        public static string Search_Again_Link_Text {
+        public static string Section_Heading_Industry_Placement {
             get {
-                return ResourceManager.GetString("Search_Again_Link_Text", resourceCulture);
+                return ResourceManager.GetString("Section_Heading_Industry_Placement", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Status.
+        ///   Looks up a localized string similar to Level 2 maths and English.
+        /// </summary>
+        public static string Section_Heading_Level2_Maths_English {
+            get {
+                return ResourceManager.GetString("Section_Heading_Level2_Maths_English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} to {1}.
+        /// </summary>
+        public static string Start_Year_Value {
+            get {
+                return ResourceManager.GetString("Start_Year_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Awarding organisation.
+        /// </summary>
+        public static string Title_AoName_Text {
+            get {
+                return ResourceManager.GetString("Title_AoName_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of birth.
+        /// </summary>
+        public static string Title_DateofBirth_Text {
+            get {
+                return ResourceManager.GetString("Title_DateofBirth_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string Title_English_Text {
+            get {
+                return ResourceManager.GetString("Title_English_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string Title_EnglishAndMaths_Status_Text {
             get {
@@ -196,7 +277,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Status.
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string Title_IP_Status_Text {
             get {
@@ -205,11 +286,47 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T Level core: {0}.
+        ///   Looks up a localized string similar to Maths.
         /// </summary>
-        public static string TLevel_Core_Text {
+        public static string Title_Maths_Text {
             get {
-                return ResourceManager.GetString("TLevel_Core_Text", resourceCulture);
+                return ResourceManager.GetString("Title_Maths_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provider.
+        /// </summary>
+        public static string Title_Provider_Name_Text {
+            get {
+                return ResourceManager.GetString("Title_Provider_Name_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UKPRN.
+        /// </summary>
+        public static string Title_Provider_Ukprn_Text {
+            get {
+                return ResourceManager.GetString("Title_Provider_Ukprn_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start year.
+        /// </summary>
+        public static string Title_StartYear_Text {
+            get {
+                return ResourceManager.GetString("Title_StartYear_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Level.
+        /// </summary>
+        public static string Title_TLevel_Text {
+            get {
+                return ResourceManager.GetString("Title_TLevel_Text", resourceCulture);
             }
         }
         
@@ -223,7 +340,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update.
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string Update_Action_Link_Text {
             get {
@@ -232,15 +349,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;details class=&quot;govuk-details govuk-!-padding-top-4&quot; closed&gt;
-        ///	  &lt;summary class=&quot;govuk-details__summary&quot;&gt;
-        ///		  &lt;span class=&quot;govuk-details__summary-text&quot;&gt;
-        ///			  What&apos;s LRS?
-        ///		  &lt;/span&gt;
-        ///	  &lt;/summary&gt;
-        ///	  &lt;div class=&quot;govuk-details__text&quot;&gt;
-        ///		&lt;p class=&quot;govuk-body&quot;&gt;The Learning Records Service (LRS) collects data relating to learners&apos; post-14 qualifications, for example, GCSEs.&lt;/p&gt;
-        ///		&lt;p class=&quot;govuk-body&quot;&gt;If you think the LRS data is wrong, you must contact the exam board responsible for issuing the learner&apos;s [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string Whats_Lrs_Text {
             get {

@@ -11,9 +11,15 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         public string Name { get; set; }
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
-        public string PathwayName { get; set; }
+        public long ProviderUkprn { get; set; }
+        public string PathwayName { get; set; }  // TODO: Delete this
+        public string TlevelTitle { get; set; }
+        public int AcademicYear { get; set; }
+        public string AwardingOrganisationName { get; set; }
+        public SubjectStatus? MathsStatus { get;set; }
+        public SubjectStatus? EnglishStatus { get; set; }
 
-        public bool IsLearnerRegistered { get; set; } // TODO: Delete?
+        public bool IsLearnerRegistered { get; set; }
         public bool IsLearnerRecordAdded { get; set; } // TODO: Delete?
         public bool IsEnglishAndMathsAchieved { get; set; } // TODO: Delete?
         public bool HasLrsEnglishAndMaths { get; set; } // TODO: Delete?

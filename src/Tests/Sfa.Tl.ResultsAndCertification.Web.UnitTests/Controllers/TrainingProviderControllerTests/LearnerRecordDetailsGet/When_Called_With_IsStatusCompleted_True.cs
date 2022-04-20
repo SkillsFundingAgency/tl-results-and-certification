@@ -1,21 +1,24 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.LearnerRecordDetailsGet
 {
-    public class When_Called_With_IsLearnerNotRegistered_False : TestSetup
+    public class When_Called_With_IsStatusCompleted_True : TestSetup
     {
         public override void Given()
         {
             ProfileId = 10;
             Mockresult = new LearnerRecordDetailsViewModel1
             {
-                ProfileId = 10,
-                IsLearnerRegistered = false
+                MathsStatus = SubjectStatus.Achieved,
+                EnglishStatus = SubjectStatus.Achieved,
+                IsLearnerRegistered = true,
+                
+                IndustryPlacementStatus = IndustryPlacementStatus.Completed
             };
             TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel1>(ProviderUkprn, ProfileId).Returns(Mockresult);
         }
@@ -27,10 +30,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         }
 
         [Fact]
-        public void Then_Redirected_To_PageNotFound()
+        public void Then_IsStatusCompleted_IsTrue()
         {
-            var actualRouteName = (Result as RedirectToRouteResult).RouteName;
-            actualRouteName.Should().Be(RouteConstants.PageNotFound);
+            Result.Should().NotBeNull();
+            (Result as ViewResult).Model.Should().NotBeNull();
+
+            var model = (Result as ViewResult).Model as LearnerRecordDetailsViewModel1;
+
+            model.IsMathsAdded.Should().BeTrue();
+            model.IsEnglishAdded.Should().BeTrue();
+            model.IsStatusCompleted.Should().BeTrue();
         }
     }
 }

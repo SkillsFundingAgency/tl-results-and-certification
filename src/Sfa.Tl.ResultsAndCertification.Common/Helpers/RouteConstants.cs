@@ -262,6 +262,9 @@
         public const string LearnerRecordAddedConfirmation = "LearnerRecordAddedConfirmation";
         public const string AddEnglishAndMathsSendDataConfirmation = "AddEnglishAndMathsSendDataConfirmation";
 
+        public const string AddMathsStatus = "AddMathsStatus";
+        public const string SubmitAddMathsStatus = "SubmitAddMathsStatus";
+
         public const string UpdateLearnerRecord = "UpdateLearnerRecord";
         public const string SearchLearnerRecord = "SearchLearnerRecord";
         public const string SubmitSearchLearnerRecord = "SubmitSearchLearnerRecord";
