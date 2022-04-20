@@ -127,6 +127,36 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return isSuccess;
         }
 
+        public async Task<bool> UpdateLearnerSubjectRecordAsync(UpdateLearnerSubjectRecordRequest request)
+        {
+
+            return request.SubjectType switch
+            {
+                SubjectType.Math => await ProcessMathStatusRecord(request),
+                SubjectType.English => await ProcessEnglishStatusRecord(request),
+                _ => false,
+            };
+        }
+
+        private async Task<bool> ProcessMathStatusRecord(UpdateLearnerSubjectRecordRequest request)
+        {
+            var profile = await _tqRegistrationProfile.GetFirstOrDefaultAsync(p => p.Id == request.ProfileId);
+               
+            if (profile == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to update Maths for ProfileId = {request.ProfileId}. Method: ProcessMathStatusRecord({request})");
+                return false;
+            }
+
+            _mapper.Map(request, profile);
+            return await _tqRegistrationProfile.UpdateWithSpecifedColumnsOnlyAsync(profile, p => p.MathsStatus, p => p.ModifiedOn, p => p.ModifiedBy) > 0;
+        }
+
+        private async Task<bool> ProcessEnglishStatusRecord(UpdateLearnerSubjectRecordRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
         private async Task<bool> HandleEnglishAndMathsChanges(UpdateLearnerRecordRequest request)
         {
             var profile = await _tqRegistrationProfile.GetFirstOrDefaultAsync(p => p.Id == request.ProfileId && p.UniqueLearnerNumber == request.Uln
@@ -206,5 +236,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.EnglishAndMathsLrsDataQueried.ToString(), _resultsAndCertificationConfiguration.TlevelQueriedSupportEmailAddress, tokens);
         }
+
+        
     }
 }

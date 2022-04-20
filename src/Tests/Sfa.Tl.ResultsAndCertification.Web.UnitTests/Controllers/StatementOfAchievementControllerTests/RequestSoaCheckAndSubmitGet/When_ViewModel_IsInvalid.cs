@@ -17,6 +17,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
         public override void Given()
         {
             ProfileId = 11;
+            ResultsAndCertificationConfiguration.SoaAvailableDate = null;
+
             _mockLearnerDetails = new SoaLearnerRecordDetailsViewModel
             {
                 ProfileId = ProfileId,

@@ -55,6 +55,7 @@
         public const string GetLearnerRecordDetailsUri = "/api/trainingprovider/GetLearnerRecordDetails/{0}/{1}/{2}";
         public const string AddLearnerRecordUri = "/api/trainingprovider/AddLearnerRecord";
         public const string UpdateLearnerRecordUri = "/api/trainingprovider/UpdateLearnerRecord";
+        public const string UpdateLearnerSubjectRecordUri = "/api/trainingprovider/UpdateLearnerSubjectRecord";
 
         // Ordinance Survery Uri's
         public const string SearchAddressByPostcodeUri = "/postcode?postcode={0}&key={1}";
