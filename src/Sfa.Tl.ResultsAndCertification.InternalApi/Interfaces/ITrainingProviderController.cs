@@ -8,6 +8,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
         Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation);
         Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null);
         Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest model);
-        Task<bool> UpdateLearnerSubjectRecordAsync(UpdateLearnerSubjectRecordRequest request);
+        Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request);
     }
 }

@@ -2,7 +2,7 @@
 {
     public enum SubjectType
     {
-        Math = 0,
+        Maths = 0,
         English = 1
     }
 }

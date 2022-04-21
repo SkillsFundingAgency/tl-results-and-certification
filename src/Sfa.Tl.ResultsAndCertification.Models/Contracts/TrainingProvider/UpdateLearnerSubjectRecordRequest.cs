@@ -2,7 +2,7 @@
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
 {
-    public class UpdateLearnerSubjectRecordRequest
+    public class UpdateLearnerSubjectRequest
     {
         public int ProfileId { get; set; }
         public SubjectStatus? SubjectStatus { get; set; }

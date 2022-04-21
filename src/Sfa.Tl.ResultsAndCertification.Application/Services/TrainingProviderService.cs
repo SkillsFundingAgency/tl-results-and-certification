@@ -127,18 +127,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return isSuccess;
         }
 
-        public async Task<bool> UpdateLearnerSubjectRecordAsync(UpdateLearnerSubjectRecordRequest request)
+        public async Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request)
         {
 
             return request.SubjectType switch
             {
-                SubjectType.Math => await ProcessMathStatusRecord(request),
-                SubjectType.English => await ProcessEnglishStatusRecord(request),
+                SubjectType.Maths => await ProcessMathStatus(request),
+                SubjectType.English => await ProcessEnglishStatus(request),
                 _ => false,
             };
         }
 
-        private async Task<bool> ProcessMathStatusRecord(UpdateLearnerSubjectRecordRequest request)
+        private async Task<bool> ProcessMathStatus(UpdateLearnerSubjectRequest request)
         {
             var profile = await _tqRegistrationProfile.GetFirstOrDefaultAsync(p => p.Id == request.ProfileId);
                
@@ -152,7 +152,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _tqRegistrationProfile.UpdateWithSpecifedColumnsOnlyAsync(profile, p => p.MathsStatus, p => p.ModifiedOn, p => p.ModifiedBy) > 0;
         }
 
-        private async Task<bool> ProcessEnglishStatusRecord(UpdateLearnerSubjectRecordRequest request)
+        private async Task<bool> ProcessEnglishStatus(UpdateLearnerSubjectRequest request)
         {
             throw new NotImplementedException();
         }

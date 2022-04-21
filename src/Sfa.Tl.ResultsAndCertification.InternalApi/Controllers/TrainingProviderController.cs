@@ -47,10 +47,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpPut]
-        [Route("UpdateLearnerSubjectRecord")]
-        public async Task<bool> UpdateLearnerSubjectRecordAsync(UpdateLearnerSubjectRecordRequest request)
+        [Route("UpdateLearnerSubject")]
+        public async Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request)
         {
-            return await _trainingProviderService.UpdateLearnerSubjectRecordAsync(request);
+            return await _trainingProviderService.UpdateLearnerSubjectAsync(request);
         }
 
     }

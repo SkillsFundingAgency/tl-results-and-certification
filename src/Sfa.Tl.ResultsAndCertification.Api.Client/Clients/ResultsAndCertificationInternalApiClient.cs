@@ -304,9 +304,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PutAsync<UpdateLearnerRecordRequest, bool>(ApiConstants.UpdateLearnerRecordUri, model);
         }
 
-        public async Task<bool> UpdateLearnerSubjectRecordAsync(UpdateLearnerSubjectRecordRequest request)
+        public async Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request)
         {
-            return await PutAsync<UpdateLearnerSubjectRecordRequest, bool>(ApiConstants.UpdateLearnerRecordUri, request);
+            return await PutAsync<UpdateLearnerSubjectRequest, bool>(ApiConstants.UpdateLearnerSubjectUri, request);
         }
 
         // Provider Address endpoints
