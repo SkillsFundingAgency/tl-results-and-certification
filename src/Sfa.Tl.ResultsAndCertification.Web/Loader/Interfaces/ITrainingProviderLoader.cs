@@ -11,5 +11,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<AddLearnerRecordResponse> AddLearnerRecordAsync(long providerUkprn, AddLearnerRecordViewModel viewModel);
         Task<UpdateLearnerRecordResponseViewModel> ProcessIndustryPlacementQuestionUpdateAsync(long providerUkprn, UpdateIndustryPlacementQuestionViewModel viewModel);
         Task<bool> UpdateLearnerSubjectAsync(long providerUkprn, AddMathsStatusViewModel model);
+        Task<bool> UpdateLearnerSubjectAsync(long providerUkprn, AddEnglishStatusViewModel model);
     }
 }

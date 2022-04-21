@@ -241,11 +241,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to English status added.
+        /// </summary>
+        public static string Success_Header_English_Status_Added {
+            get {
+                return ResourceManager.GetString("Success_Header_English_Status_Added", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maths status added.
         /// </summary>
         public static string Success_Header_Maths_Status_Added {
             get {
                 return ResourceManager.GetString("Success_Header_Maths_Status_Added", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p class=&quot;govuk-body&quot;&gt;Contact &lt;a class=&quot;govuk-notification-banner__link&quot; href=&quot;mailto:Tlevel.resultsandcertification@education.gov.uk?subject=T Level provider reporting learner English status issue&quot;&gt;Tlevel.resultsandcertification@education.gov.uk&lt;/a&gt; if the English status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;.
+        /// </summary>
+        public static string Success_Message_English_Status_Added {
+            get {
+                return ResourceManager.GetString("Success_Message_English_Status_Added", resourceCulture);
             }
         }
         

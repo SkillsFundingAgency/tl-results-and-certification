@@ -184,8 +184,14 @@
   <data name="Start_Year_Value" xml:space="preserve">
     <value>{0} to {1}</value>
   </data>
+  <data name="Success_Header_English_Status_Added" xml:space="preserve">
+    <value>English status added</value>
+  </data>
   <data name="Success_Header_Maths_Status_Added" xml:space="preserve">
     <value>Maths status added</value>
+  </data>
+  <data name="Success_Message_English_Status_Added" xml:space="preserve">
+    <value>&lt;p class="govuk-body"&gt;Contact &lt;a class="govuk-notification-banner__link" href="mailto:Tlevel.resultsandcertification@education.gov.uk?subject=T Level provider reporting learner English status issue"&gt;Tlevel.resultsandcertification@education.gov.uk&lt;/a&gt; if the English status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;</value>
   </data>
   <data name="Success_Message_Maths_Status_Added" xml:space="preserve">
     <value>&lt;p class="govuk-body"&gt;Contact &lt;a class="govuk-notification-banner__link" href="mailto:Tlevel.resultsandcertification@education.gov.uk?subject=T Level provider reporting learner maths status issue"&gt;Tlevel.resultsandcertification@education.gov.uk&lt;/a&gt; if the maths status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;</value>

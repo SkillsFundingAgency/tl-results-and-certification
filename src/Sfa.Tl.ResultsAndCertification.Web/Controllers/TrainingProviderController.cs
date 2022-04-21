@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 
 using LearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
 
-
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
     [Authorize(Policy = RolesExtensions.RequireLearnerRecordsEditorAccess)]
@@ -57,6 +56,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
             var notificationBanner = new NotificationBannerModel { HeaderMessage = LearnerDetailsContent.Success_Header_Maths_Status_Added, Message = LearnerDetailsContent.Success_Message_Maths_Status_Added, DisplayMessageBody = true, IsRawHtml = true };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
+        }
+
+        // Note: Please use the below method to update as required for the English
+        [HttpPost]
+        public async Task<IActionResult> AddEnglishStatusAsync(AddEnglishStatusViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var isSuccess = await _trainingProviderLoader.UpdateLearnerSubjectAsync(User.GetUkPrn(), model);
+            if (!isSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            var notificationBanner = new NotificationBannerModel { HeaderMessage = LearnerDetailsContent.Success_Header_English_Status_Added, Message = LearnerDetailsContent.Success_Message_English_Status_Added, DisplayMessageBody = true, IsRawHtml = true };
             await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });

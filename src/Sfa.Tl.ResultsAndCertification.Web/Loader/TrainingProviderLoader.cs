@@ -58,5 +58,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var learnerSubjectRequest = _mapper.Map<UpdateLearnerSubjectRequest>(model, opt => opt.Items["providerUkprn"] = providerUkprn);
             return await _internalApiClient.UpdateLearnerSubjectAsync(learnerSubjectRequest);
         }
+        public async Task<bool> UpdateLearnerSubjectAsync(long providerUkprn, AddEnglishStatusViewModel model)
+        {
+            var learnerSubjectRequest = _mapper.Map<UpdateLearnerSubjectRequest>(model, opt => opt.Items["providerUkprn"] = providerUkprn);
+            return await _internalApiClient.UpdateLearnerSubjectAsync(learnerSubjectRequest);
+        }
     }
 }
