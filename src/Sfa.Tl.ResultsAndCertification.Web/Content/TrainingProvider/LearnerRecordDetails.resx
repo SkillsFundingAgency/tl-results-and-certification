@@ -188,7 +188,7 @@
     <value>Maths status added</value>
   </data>
   <data name="Success_Message_Maths_Status_Added" xml:space="preserve">
-    <value>Contact Tlevel.resultsandcertification@education.gov.uk if the maths status is incorrect. We aim to respond within 3 working days.</value>
+    <value>&lt;p class="govuk-body"&gt;Contact &lt;a class="govuk-notification-banner__link" href="mailto:Tlevel.resultsandcertification@education.gov.uk?subject=T Level provider reporting learner maths status issue"&gt;Tlevel.resultsandcertification@education.gov.uk&lt;/a&gt; if the maths status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;</value>
   </data>
   <data name="Title_AoName_Text" xml:space="preserve">
     <value>Awarding organisation</value>

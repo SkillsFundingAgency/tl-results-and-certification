@@ -250,7 +250,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contact Tlevel.resultsandcertification@education.gov.uk if the maths status is incorrect. We aim to respond within 3 working days..
+        ///   Looks up a localized string similar to &lt;p class=&quot;govuk-body&quot;&gt;Contact &lt;a class=&quot;govuk-notification-banner__link&quot; href=&quot;mailto:Tlevel.resultsandcertification@education.gov.uk?subject=T Level provider reporting learner maths status issue&quot;&gt;Tlevel.resultsandcertification@education.gov.uk&lt;/a&gt; if the maths status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;.
         /// </summary>
         public static string Success_Message_Maths_Status_Added {
             get {

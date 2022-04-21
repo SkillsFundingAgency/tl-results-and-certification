@@ -15,7 +15,15 @@
                 <h3 class="govuk-notification-banner__heading">
                     @Model.HeaderMessage
                 </h3>
-                <p class="govuk-body">@Model.Message</p>
+
+                @if (Model.IsRawHtml)
+                {
+                    @Html.Raw(Model.Message)
+                }
+                else
+                {
+                    <p class="govuk-body">@Model.Message</p>
+                }
             }
             else
             {
