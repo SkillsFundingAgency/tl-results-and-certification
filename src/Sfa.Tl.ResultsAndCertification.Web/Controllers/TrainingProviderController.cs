@@ -8,8 +8,12 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System.Threading.Tasks;
+
+using LearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
+
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -48,9 +52,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
             
-            var success = await _trainingProviderLoader.UpdateLearnerSubjectAsync(User.GetUkPrn(), model);
-            if (!success)
+            var isSuccess = await _trainingProviderLoader.UpdateLearnerSubjectAsync(User.GetUkPrn(), model);
+            if (!isSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            var notificationBanner = new NotificationBannerModel { HeaderMessage = LearnerDetailsContent.Success_Header_Maths_Status_Added, Message = LearnerDetailsContent.Success_Message_Maths_Status_Added, IsPrsJourney = true };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
         }
@@ -269,6 +276,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
+            viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
             return View(viewModel);
         }
 

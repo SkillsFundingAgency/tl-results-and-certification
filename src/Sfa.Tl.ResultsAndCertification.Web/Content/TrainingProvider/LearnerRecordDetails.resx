@@ -184,6 +184,12 @@
   <data name="Start_Year_Value" xml:space="preserve">
     <value>{0} to {1}</value>
   </data>
+  <data name="Success_Header_Maths_Status_Added" xml:space="preserve">
+    <value>Maths status added</value>
+  </data>
+  <data name="Success_Message_Maths_Status_Added" xml:space="preserve">
+    <value>Contact Tlevel.resultsandcertification@education.gov.uk if the maths status is incorrect. We aim to respond within 3 working days.</value>
+  </data>
   <data name="Title_AoName_Text" xml:space="preserve">
     <value>Awarding organisation</value>
   </data>

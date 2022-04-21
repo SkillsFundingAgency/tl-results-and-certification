@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public bool IsMathsAdded => MathsStatus != SubjectStatus.NotSpecified;
         public bool IsEnglishAdded => EnglishStatus != SubjectStatus.NotSpecified;
         public string StatusTag => CommonHelper.GetLearnerStatusTag(IsStatusCompleted);
+        public NotificationBannerModel SuccessBanner { get; set; }
 
         #region Summary Header
         public SummaryItemModel SummaryDateofBirth => new SummaryItemModel
@@ -87,25 +89,39 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         #endregion
 
         # region Summary English & Maths
-        public SummaryItemModel SummaryMathsStatus => new SummaryItemModel
-        {
-            Id = "mathsstatus",
-            Title = LearnerRecordDetailsContent.Title_Maths_Text,
-            Value = GetSubjectStatus(MathsStatus),
-            ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
-            RouteName = IsMathsAdded ? string.Empty : RouteConstants.AddMathsStatus,
-            RouteAttributes = IsMathsAdded ? null : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
-            HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Maths
-        };
+        public SummaryItemModel SummaryMathsStatus => IsMathsAdded ?
+            new SummaryItemModel
+            {
+                Id = "mathsstatus",
+                Title = LearnerRecordDetailsContent.Title_Maths_Text,
+                Value = GetSubjectStatus(MathsStatus),
+            }
+            : new SummaryItemModel
+            {
+                Id = "mathsstatus",
+                Title = LearnerRecordDetailsContent.Title_Maths_Text,
+                Value = GetSubjectStatus(MathsStatus),
+                ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
+                RouteName = IsMathsAdded ? string.Empty : RouteConstants.AddMathsStatus,
+                RouteAttributes = IsMathsAdded ? null : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
+                HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Maths
+            };
 
-        public SummaryItemModel SummaryEnglishStatus => new SummaryItemModel
-        {
-            Id = "englishstatus",
-            Title = LearnerRecordDetailsContent.Title_English_Text,
-            Value = GetSubjectStatus(EnglishStatus),
-            ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
-            HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_English
-        };
+        public SummaryItemModel SummaryEnglishStatus => IsEnglishAdded ?
+            new SummaryItemModel
+            {
+                Id = "englishstatus",
+                Title = LearnerRecordDetailsContent.Title_English_Text,
+                Value = GetSubjectStatus(EnglishStatus),
+            }
+            : new SummaryItemModel
+            {
+                Id = "englishstatus",
+                Title = LearnerRecordDetailsContent.Title_English_Text,
+                Value = GetSubjectStatus(EnglishStatus),
+                ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
+                HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_English
+            };
 
         #endregion
 

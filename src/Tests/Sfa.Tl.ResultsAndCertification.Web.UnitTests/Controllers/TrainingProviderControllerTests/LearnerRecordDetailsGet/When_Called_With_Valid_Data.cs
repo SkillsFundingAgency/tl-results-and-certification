@@ -29,8 +29,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 TlevelTitle = "Tlevel in Test Pathway Name",
                 StartYear = "2020 to 2021",
                 AwardingOrganisationName = "Pearson",
-                MathsStatus = SubjectStatus.Achieved,
-                EnglishStatus = SubjectStatus.Achieved,
+                MathsStatus = SubjectStatus.NotSpecified,
+                EnglishStatus = SubjectStatus.NotSpecified,
                 IsLearnerRegistered = true,
                 
                 IndustryPlacementId = 10,
@@ -70,8 +70,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.IndustryPlacementId.Should().Be(Mockresult.IndustryPlacementId);
             model.IndustryPlacementStatus.Should().Be(Mockresult.IndustryPlacementStatus);
 
-            model.IsMathsAdded.Should().BeTrue();
-            model.IsEnglishAdded.Should().BeTrue();
+            model.IsMathsAdded.Should().BeFalse();
+            model.IsEnglishAdded.Should().BeFalse();
             model.IsIndustryPlacementAdded.Should().BeFalse();
             model.IsStatusCompleted.Should().BeFalse();
 
@@ -102,7 +102,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             // Summary Maths StatusHidden_Action_Text_Maths
             model.SummaryMathsStatus.Should().NotBeNull();
             model.SummaryMathsStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_Maths_Text);
-            model.SummaryMathsStatus.Value.Should().Be(SubjectStatusContent.Achieved_Display_Text);
+            model.SummaryMathsStatus.Value.Should().Be(SubjectStatusContent.Not_Yet_Recevied_Display_Text);
             model.SummaryMathsStatus.NeedBorderBottomLine.Should().BeTrue();
             model.SummaryMathsStatus.HiddenActionText.Should().Be(LearnerRecordDetailsContent.Hidden_Action_Text_Maths);
             model.SummaryMathsStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Action_Text_Link_Add);
@@ -110,7 +110,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             // Summary English Status
             model.SummaryEnglishStatus.Should().NotBeNull();
             model.SummaryEnglishStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_English_Text);
-            model.SummaryMathsStatus.Value.Should().Be(SubjectStatusContent.Achieved_Display_Text);
+            model.SummaryMathsStatus.Value.Should().Be(SubjectStatusContent.Not_Yet_Recevied_Display_Text);
             model.SummaryEnglishStatus.NeedBorderBottomLine.Should().BeTrue();
             model.SummaryEnglishStatus.HiddenActionText.Should().Be(LearnerRecordDetailsContent.Hidden_Action_Text_English);
             model.SummaryEnglishStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Action_Text_Link_Add);

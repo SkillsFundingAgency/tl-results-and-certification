@@ -241,6 +241,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maths status added.
+        /// </summary>
+        public static string Success_Header_Maths_Status_Added {
+            get {
+                return ResourceManager.GetString("Success_Header_Maths_Status_Added", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact Tlevel.resultsandcertification@education.gov.uk if the maths status is incorrect. We aim to respond within 3 working days..
+        /// </summary>
+        public static string Success_Message_Maths_Status_Added {
+            get {
+                return ResourceManager.GetString("Success_Message_Maths_Status_Added", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Awarding organisation.
         /// </summary>
         public static string Title_AoName_Text {

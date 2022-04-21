@@ -10,11 +10,16 @@
     <vc:back-link model=Model.BackLink></vc:back-link>
 }
 
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <vc:notification-banner model="@Model.SuccessBanner"></vc:notification-banner>
+    </div>
+</div>
+
 <partial name="Partials/_notificationBanner.cshtml" model="Model" />
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-
+  <div class="govuk-grid-column-two-thirds">   
     <div class="record-header">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
           @Model.LearnerName
