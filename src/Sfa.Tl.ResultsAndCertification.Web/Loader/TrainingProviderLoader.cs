@@ -52,23 +52,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return new UpdateLearnerRecordResponseViewModel { ProfileId = learnerRecordDetails.ProfileId, Uln = learnerRecordDetails.Uln, Name = learnerRecordDetails.Name, IsModified = true, IsSuccess = isSuccess };
         }
 
-        private EnglishAndMathsStatus? GetEnglishAndMathsStatus(LearnerRecordDetails model)
-        {
-            if (model.HasLrsEnglishAndMaths)
-                return null;
 
-            if (model.IsEnglishAndMathsAchieved && model.IsSendLearner == true)
-            {
-                return EnglishAndMathsStatus.AchievedWithSend;
-            }
-            else if (model.IsEnglishAndMathsAchieved)
-            {
-                return EnglishAndMathsStatus.Achieved;
-            }
-            else
-            {
-                return !model.IsEnglishAndMathsAchieved ? (EnglishAndMathsStatus?)EnglishAndMathsStatus.NotAchieved : null;
-            }
+        public async Task<bool> UpdateLearnerSubjectAsync(long providerUkprn, AddMathsStatusViewModel model)
+        {
+            var learnerSubjectRequest = _mapper.Map<UpdateLearnerSubjectRequest>(model, opt => opt.Items["providerUkprn"] = providerUkprn);
+            return await _internalApiClient.UpdateLearnerSubjectAsync(learnerSubjectRequest);
         }
     }
 }

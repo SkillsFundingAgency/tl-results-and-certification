@@ -78,6 +78,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
                .ForMember(d => d.SubjectStatus, opts => opts.MapFrom(s => s.IsMathsAchieved));
+
+            CreateMap<AddMathsStatusViewModel, UpdateLearnerSubjectRequest>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.SubjectStatus, opts => opts.MapFrom(s => s.IsAchieved == null ? SubjectStatus.NotSpecified : (s.IsAchieved.Value ? SubjectStatus.Achieved : SubjectStatus.NotAchieved)))
+               .ForMember(d => d.SubjectType, opts => opts.MapFrom(s => SubjectType.Maths))
+               .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))
+               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AddMathsStatusViewModel, UpdateLearnerSubjectRequest>>());
         }
     }
 }

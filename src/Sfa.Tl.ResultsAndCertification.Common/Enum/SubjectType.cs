@@ -2,7 +2,8 @@
 {
     public enum SubjectType
     {
-        Maths = 0,
-        English = 1
+        NotSpecified = 0,
+        Maths = 1,
+        English = 2
     }
 }

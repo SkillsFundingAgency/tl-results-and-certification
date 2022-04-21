@@ -20,11 +20,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.IsSendLearner, opts => opts.MapFrom(s => s.EnglishAndMathsStatus.Value == EnglishAndMathsStatus.AchievedWithSend ? true : (bool?)null))
                 .ForMember(d => d.ModifiedBy, opts => opts.MapFrom(s => s.PerformedBy))
                 .ForMember(d => d.ModifiedOn, opts => opts.MapFrom<DateTimeResolver<UpdateLearnerRecordRequest, TqRegistrationProfile>>());
-
-            CreateMap<UpdateLearnerSubjectRequest, TqRegistrationProfile>()
-               .ForMember(d => d.MathsStatus, opts => opts.MapFrom(s => s.SubjectStatus))
-               .ForMember(d => d.ModifiedBy, opts => opts.MapFrom(s => s.PerformedBy))
-               .ForMember(d => d.ModifiedOn, opts => opts.MapFrom<DateTimeResolver<UpdateLearnerSubjectRequest, TqRegistrationProfile>>());
         }
     }
 }

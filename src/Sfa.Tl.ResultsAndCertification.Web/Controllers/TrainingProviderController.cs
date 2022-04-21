@@ -47,8 +47,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
+            
+            var success = await _trainingProviderLoader.UpdateLearnerSubjectAsync(User.GetUkPrn(), model);
+            if (!success)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
 
-            return View(model);
+            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
         }
 
         [HttpGet]

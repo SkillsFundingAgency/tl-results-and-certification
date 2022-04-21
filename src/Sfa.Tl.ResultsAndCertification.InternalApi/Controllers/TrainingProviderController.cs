@@ -52,6 +52,5 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _trainingProviderService.UpdateLearnerSubjectAsync(request);
         }
-
     }
 }

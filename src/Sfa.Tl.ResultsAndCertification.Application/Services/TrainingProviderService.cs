@@ -129,32 +129,27 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request)
         {
-
-            return request.SubjectType switch
-            {
-                SubjectType.Maths => await ProcessMathStatus(request),
-                SubjectType.English => await ProcessEnglishStatus(request),
-                _ => false,
-            };
-        }
-
-        private async Task<bool> ProcessMathStatus(UpdateLearnerSubjectRequest request)
-        {
-            var profile = await _tqRegistrationProfile.GetFirstOrDefaultAsync(p => p.Id == request.ProfileId);
-               
+            var profile = await _tqRegistrationProfile.GetFirstOrDefaultAsync(p => p.Id == request.ProfileId
+                                                                    && p.TqRegistrationPathways.Any(pa => pa.TqProvider.TlProvider.UkPrn == request.ProviderUkprn
+                                                                    && (pa.Status == RegistrationPathwayStatus.Active || pa.Status == RegistrationPathwayStatus.Withdrawn)));
             if (profile == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to update Maths for ProfileId = {request.ProfileId}. Method: ProcessMathStatusRecord({request})");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to for ProfileId = {request.ProfileId}. Method: UpdateLearnerSubjectAsync({request})");
                 return false;
             }
 
-            _mapper.Map(request, profile);
-            return await _tqRegistrationProfile.UpdateWithSpecifedColumnsOnlyAsync(profile, p => p.MathsStatus, p => p.ModifiedOn, p => p.ModifiedBy) > 0;
-        }
+            if (request.SubjectType == SubjectType.NotSpecified)
+                return false;
 
-        private async Task<bool> ProcessEnglishStatus(UpdateLearnerSubjectRequest request)
-        {
-            throw new NotImplementedException();
+            if (request.SubjectType == SubjectType.Maths)
+                profile.MathsStatus = request.SubjectStatus;
+            if (request.SubjectType == SubjectType.English)
+                profile.EnglishStatus = request.SubjectStatus;
+
+            profile.ModifiedOn = DateTime.UtcNow;
+            profile.ModifiedBy = request.PerformedBy;
+            
+            return await _tqRegistrationProfile.UpdateAsync(profile) > 0;
         }
 
         private async Task<bool> HandleEnglishAndMathsChanges(UpdateLearnerRecordRequest request)
