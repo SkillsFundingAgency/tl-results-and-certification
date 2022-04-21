@@ -6,9 +6,8 @@ using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvide
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
-    public class EnglishAndMathsQuestionViewModel
+    public class EnglishAndMathsQuestionViewModel1
     {
-        [Required(ErrorMessageResourceType = typeof(ErrorResource.EnglishAndMathsQuestion), ErrorMessageResourceName = "Validation_Select_Is_EnglishMaths_Achieved_Required_Message")]
         public EnglishAndMathsStatus? EnglishAndMathsStatus { get; set; }
         public string LearnerName { get; set; }
         public bool IsChangeMode { get; set; }

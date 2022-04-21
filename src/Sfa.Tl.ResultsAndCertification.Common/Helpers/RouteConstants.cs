@@ -247,12 +247,6 @@
         public const string AddLearnerRecord = "AddLearnerRecord";// TODO: Delete
         public const string EnterUniqueLearnerNumber = "EnterUniqueLearnerNumber"; // TODO: Delete
 
-        public const string EnterUniqueLearnerNumberNotFound = "EnterUniqueLearnerNumberNotFound";
-        public const string EnterUniqueLearnerNumberAddedAlready = "EnterUniqueLearnerNumberAddedAlready";
-        public const string AddEnglishAndMathsQuestion = "AddEnglishAndMathsQuestion";
-        public const string SubmitAddEnglishAndMathsQuestion = "SubmitAddEnglishAndMathsQuestion";
-        public const string AddEnglishAndMathsLrsQuestion = "AddEnglishAndMathsLrsQuestion";
-        public const string SubmitAddEnglishAndMathsLrsQuestion = "SubmitAddEnglishAndMathsLrsQuestion";
         public const string AddIndustryPlacementQuestion = "AddIndustryPlacementQuestion";
         public const string SubmitIndustryPlacementQuestion = "SubmitIndustryPlacementQuestion";
         public const string AddLearnerRecordCheckAndSubmit = "AddLearnerRecordCheckAndSubmit";
@@ -275,9 +269,6 @@
         public const string UpdateIndustryPlacementQuestion = "UpdateIndustryPlacementQuestion";
         public const string SubmitUpdateIndustryPlacementQuestion = "SubmitUpdateIndustryPlacementQuestion";
         public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
-        public const string UpdateEnglisAndMathsAchievement = "UpdateEnglisAndMathsAchievement";
-        public const string SubmitUpdateEnglisAndMathsAchievement = "SubmitUpdateEnglisAndMathsAchievement";
-        public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";
         public const string ManagePostalAddress = "ManagePostalAddress";
         public const string AddAddress = "AddAddress";
         public const string AddAddressPostcode = "AddAddressPostcode";

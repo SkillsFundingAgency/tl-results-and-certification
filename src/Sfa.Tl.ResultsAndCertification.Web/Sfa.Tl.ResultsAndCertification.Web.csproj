@@ -839,21 +839,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CheckAndSubmit.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\TrainingProvider\EnglishAndMathsAchievementUpdatedConfirmation.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EnglishAndMathsAchievementUpdatedConfirmation.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\TrainingProvider\EnglishAndMathsLrsQuestion.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EnglishAndMathsLrsQuestion.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\TrainingProvider\EnglishAndMathsQuestion.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EnglishAndMathsQuestion.resx</DependentUpon>
-    </Compile>
     <Compile Update="Content\TrainingProvider\EnglishAndMathsSendDataConfirmation.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -863,16 +848,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>EnglishAndMathsStatus.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\TrainingProvider\EnterUniqueLearnerReferenceAlreadyAdded.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EnterUniqueLearnerReferenceAlreadyAdded.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\TrainingProvider\EnterUniqueLearnerReferenceNotFound.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EnterUniqueLearnerReferenceNotFound.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\TrainingProvider\IndustryPlacementQuestion.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -1593,21 +1568,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CheckAndSubmit.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsAchievementUpdatedConfirmation.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>EnglishAndMathsAchievementUpdatedConfirmation.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsLrsQuestion.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>EnglishAndMathsLrsQuestion.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsQuestion - Copy.resx">
       <LastGenOutput>EnglishAndMathsQuestion.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsQuestion.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>EnglishAndMathsQuestion.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsSendDataConfirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1620,14 +1583,6 @@
     <EmbeddedResource Update="Content\TrainingProvider\EnterUniqueLearnerReferenceAddedAlready.resx">
       <LastGenOutput>EnterUniqueLearnerReferenceNotFound.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\EnterUniqueLearnerReferenceAlreadyAdded.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>EnterUniqueLearnerReferenceAlreadyAdded.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\EnterUniqueLearnerReferenceNotFound.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>EnterUniqueLearnerReferenceNotFound.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\IndustryPlacementQuestion.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -14,14 +14,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         private Dictionary<string, string> ChangeLinkRouteAttributes => new Dictionary<string, string> { { Constants.IsChangeMode, "true" } };
         private bool IsValidLearnerRecord => LearnerRecordModel?.LearnerRecord != null && LearnerRecordModel.LearnerRecord.IsLearnerRegistered == true
             && LearnerRecordModel.LearnerRecord.IsLearnerRecordAdded == false;
-        private bool IsValidEnglishAndMaths => LearnerRecordModel?.LearnerRecord != null && ((LearnerRecordModel.LearnerRecord.HasLrsEnglishAndMaths == true
-            && LearnerRecordModel.EnglishAndMathsQuestion == null)
-            || (LearnerRecordModel.LearnerRecord.HasLrsEnglishAndMaths == false && LearnerRecordModel.EnglishAndMathsQuestion != null));
+        private bool IsValidEnglishAndMaths => true;
         private bool IsValidUln => LearnerRecordModel?.Uln != null;
         private bool IsValidIndustryPlacement => LearnerRecordModel?.IndustryPlacementQuestion != null;
         private string GetEnglishAndMathsActionText => HasLrsEnglishAndMaths ? string.Empty : CheckAndSubmitContent.Change_Action_Link_Text;
         private string GetEnglishAndMathsStatusText => HasLrsEnglishAndMaths ? GetLrsEnglishAndMathsStatusDisplayText : GetEnglishAndMathsStatusDisplayText;
-        private string GetEnglishAndMathsRouteName => HasLrsEnglishAndMaths ? string.Empty : RouteConstants.AddEnglishAndMathsQuestion;
+        private string GetEnglishAndMathsRouteName => "sdf";
         private Dictionary<string, string> GetEnglishAndMathsRouteAttributes => HasLrsEnglishAndMaths ? null : ChangeLinkRouteAttributes;
         private string GetLrsEnglishAndMathsStatusDisplayText
         {
@@ -46,13 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         {
             get
             {
-                return (LearnerRecordModel?.EnglishAndMathsQuestion?.EnglishAndMathsStatus) switch
-                {
-                    EnglishAndMathsStatus.Achieved => EnglishAndMathsStatusContent.Achieved_Display_Text,
-                    EnglishAndMathsStatus.AchievedWithSend => EnglishAndMathsStatusContent.Achieved_With_Send_Display_Text,
-                    EnglishAndMathsStatus.NotAchieved => EnglishAndMathsStatusContent.Not_Achieved_Display_Text,
-                    _ => string.Empty,
-                };
+                return "asdf";
             }
         }
         private string GetIndustryPlacementDisplayText
@@ -157,8 +149,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 
         public AddLearnerRecordViewModel ResetChangeMode()
         {
-            if (LearnerRecordModel.EnglishAndMathsQuestion != null)
-                LearnerRecordModel.EnglishAndMathsQuestion.IsChangeMode = false;
 
             LearnerRecordModel.IndustryPlacementQuestion.IsChangeMode = false;
             return LearnerRecordModel;

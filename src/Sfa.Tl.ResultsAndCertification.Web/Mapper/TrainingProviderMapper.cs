@@ -54,21 +54,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus))
                .ForMember(d => d.IsLearnerRecordAdded, opts => opts.MapFrom(s => s.IsLearnerRecordAdded));
 
-            CreateMap<LearnerRecordDetails, UpdateEnglishAndMathsQuestionViewModel>()
-               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
-               .ForMember(d => d.IsLearnerRecordAdded, opts => opts.MapFrom(s => s.IsLearnerRecordAdded))
-               .ForMember(d => d.HasLrsEnglishAndMaths, opts => opts.MapFrom(s => s.HasLrsEnglishAndMaths))
-               .ForMember(d => d.EnglishAndMathsStatus, opts => opts.MapFrom(s => (s.HasLrsEnglishAndMaths || s.IsLearnerRecordAdded == false) ? (EnglishAndMathsStatus?)null :
-                                                                                    (s.IsEnglishAndMathsAchieved && s.IsSendLearner == true ? EnglishAndMathsStatus.AchievedWithSend :
-                                                                                    (s.IsEnglishAndMathsAchieved ? EnglishAndMathsStatus.Achieved : EnglishAndMathsStatus.NotAchieved))
-                                                                            ));
-
-            CreateMap<AddLearnerRecordViewModel, AddLearnerRecordRequest>()
+            CreateMap<AddLearnerRecordViewModel, AddLearnerRecordRequest>() // TODO: Delete this?
                .ForMember(d => d.Ukprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))
                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln.EnterUln))
                .ForMember(d => d.HasLrsEnglishAndMaths, opts => opts.MapFrom(s => s.LearnerRecord.HasLrsEnglishAndMaths))
-               .ForMember(d => d.EnglishAndMathsStatus, opts => opts.MapFrom(s => s.LearnerRecord.HasLrsEnglishAndMaths ? null : s.EnglishAndMathsQuestion.EnglishAndMathsStatus))
+               .ForMember(d => d.EnglishAndMathsStatus, opts => opts.MapFrom(s => EnglishAndMathsStatus.Achieved))
                .ForMember(d => d.EnglishAndMathsLrsStatus, opts => opts.MapFrom(s => s.LearnerRecord.HasLrsEnglishAndMaths && s.EnglishAndMathsLrsQuestion != null ? s.EnglishAndMathsLrsQuestion.EnglishAndMathsLrsStatus : null))
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementQuestion.IndustryPlacementStatus))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AddLearnerRecordViewModel, AddLearnerRecordRequest>>())
@@ -83,14 +73,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus))
                .ForMember(d => d.HasIndustryPlacementChanged, opts => opts.MapFrom(s => true))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<UpdateIndustryPlacementQuestionViewModel, UpdateLearnerRecordRequest>>());
-
-            CreateMap<UpdateEnglishAndMathsQuestionViewModel, UpdateLearnerRecordRequest>()
-               .ForMember(d => d.Ukprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))
-               .ForMember(d => d.Uln, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["uln"]))
-               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-               .ForMember(d => d.EnglishAndMathsStatus, opts => opts.MapFrom(s => s.EnglishAndMathsStatus))
-               .ForMember(d => d.HasEnglishAndMathsChanged, opts => opts.MapFrom(s => true))
-               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<UpdateEnglishAndMathsQuestionViewModel, UpdateLearnerRecordRequest>>());
 
             CreateMap<LearnerRecordDetails, AddMathsStatusViewModel>()               
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
