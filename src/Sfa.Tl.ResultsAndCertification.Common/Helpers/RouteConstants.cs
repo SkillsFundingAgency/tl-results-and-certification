@@ -247,8 +247,6 @@
         public const string AddLearnerRecord = "AddLearnerRecord";// TODO: Delete
         public const string EnterUniqueLearnerNumber = "EnterUniqueLearnerNumber"; // TODO: Delete
 
-        public const string AddEnglishAndMathsLrsQuestion = "AddEnglishAndMathsLrsQuestion";
-        public const string SubmitAddEnglishAndMathsLrsQuestion = "SubmitAddEnglishAndMathsLrsQuestion";
         public const string AddIndustryPlacementQuestion = "AddIndustryPlacementQuestion";
         public const string SubmitIndustryPlacementQuestion = "SubmitIndustryPlacementQuestion";
         public const string AddLearnerRecordCheckAndSubmit = "AddLearnerRecordCheckAndSubmit";

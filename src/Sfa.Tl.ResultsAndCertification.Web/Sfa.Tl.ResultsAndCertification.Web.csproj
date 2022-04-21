@@ -839,11 +839,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CheckAndSubmit.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\TrainingProvider\EnglishAndMathsLrsQuestion.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EnglishAndMathsLrsQuestion.resx</DependentUpon>
-    </Compile>
     <Compile Update="Content\TrainingProvider\EnglishAndMathsSendDataConfirmation.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1572,10 +1567,6 @@
     <EmbeddedResource Update="Content\TrainingProvider\CheckAndSubmit.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CheckAndSubmit.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsLrsQuestion.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>EnglishAndMathsLrsQuestion.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsQuestion - Copy.resx">
       <LastGenOutput>EnglishAndMathsQuestion.Designer.cs</LastGenOutput>

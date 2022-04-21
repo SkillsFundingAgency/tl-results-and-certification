@@ -8,7 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
     public class EnglishAndMathsLrsQuestionViewModel
     {
-        [Required(ErrorMessageResourceType = typeof(ErrorResource.EnglishAndMathsLrsQuestion), ErrorMessageResourceName = "Validation_Select_Is_EnglishMaths_Achieved_Required_Message")]
+        // TODO: Delete this. 
         public EnglishAndMathsLrsStatus? EnglishAndMathsLrsStatus { get; set; }
         public string LearnerName { get; set; }
         public virtual BackLinkModel BackLink => new BackLinkModel { RouteName = RouteConstants.EnterUniqueLearnerNumber };
