@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!isSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
-            var notificationBanner = new NotificationBannerModel { HeaderMessage = LearnerDetailsContent.Success_Header_Maths_Status_Added, Message = LearnerDetailsContent.Success_Message_Maths_Status_Added, IsPrsJourney = true };
+            var notificationBanner = new NotificationBannerModel { HeaderMessage = LearnerDetailsContent.Success_Header_Maths_Status_Added, Message = LearnerDetailsContent.Success_Message_Maths_Status_Added, DisplayMessageBody = true };
             await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });

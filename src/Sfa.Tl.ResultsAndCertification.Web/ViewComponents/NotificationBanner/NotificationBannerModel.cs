@@ -4,6 +4,6 @@
     {
         public string HeaderMessage { get; set; }
         public string Message { get; set; }
-        public bool IsPrsJourney { get; set; } // TODO: Ravi rename this to ShowMessageBody
+        public bool DisplayMessageBody { get; set; }
     }
 }
