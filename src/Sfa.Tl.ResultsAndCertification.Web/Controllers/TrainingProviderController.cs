@@ -79,21 +79,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-learner-record-english-and-maths-data-confirmation", Name = RouteConstants.AddEnglishAndMathsSendDataConfirmation)]
-        public async Task<IActionResult> AddEnglishAndMathsSendDataConfirmationAsync()
-        {
-            var viewModel = await _cacheService.GetAndRemoveAsync<LearnerRecordConfirmationViewModel>(string.Concat(CacheKey, Constants.AddEnglishAndMathsSendDataConfirmation));
-
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read LearnerRecordConfirmationViewModel from redis cache in add english and maths send data confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(viewModel);
-        }
-
-        [HttpGet]
         [Route("has-learner-completed-industry-placement/{isChangeMode:bool?}", Name = RouteConstants.AddIndustryPlacementQuestion)]
         public async Task<IActionResult> AddIndustryPlacementQuestionAsync(bool isChangeMode)
         {
@@ -162,29 +147,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                     await _cacheService.RemoveAsync<SearchLearnerRecordViewModel>(CacheKey);
 
                 await _cacheService.RemoveAsync<AddLearnerRecordViewModel>(CacheKey);
-                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddLearnerRecordConfirmation), new LearnerRecordConfirmationViewModel { Uln = response.Uln, Name = response.Name }, CacheExpiryTime.XSmall);
-                return RedirectToRoute(RouteConstants.LearnerRecordAddedConfirmation);
+                //await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddLearnerRecordConfirmation), new LearnerRecordConfirmationViewModel { Uln = response.Uln, Name = response.Name }, CacheExpiryTime.XSmall);  DELETE
+                return RedirectToRoute("DELETE");
             }
             else
             {
                 _logger.LogWarning(LogEvent.AddLearnerRecordFailed, $"Unable to add learner record for UniqueLearnerNumber: {cacheModel.Uln}. Method: SubmitLearnerRecordCheckAndSubmitAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
-        }
-
-        [HttpGet]
-        [Route("learner-record-added-confirmation", Name = RouteConstants.LearnerRecordAddedConfirmation)]
-        public async Task<IActionResult> AddLearnerRecordConfirmationAsync()
-        {
-            var viewModel = await _cacheService.GetAndRemoveAsync<LearnerRecordConfirmationViewModel>(string.Concat(CacheKey, Constants.AddLearnerRecordConfirmation));
-
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read LearnerRecordConfirmationViewModel from redis cache in add learner record confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(viewModel);
         }
 
         [HttpGet]
