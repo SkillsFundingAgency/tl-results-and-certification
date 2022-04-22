@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.LearnerRecordDetailsViewModel1
 @using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 @if (!Model.IsStatusCompleted)
 {
@@ -22,7 +23,7 @@
                         }
                         @if (!Model.IsMathsAdded)
                         {
-                            <li> <a class="govuk-notification-banner__link" asp-route="">@LearnerRecordDetails.Notification_Link_Add_Maths</a></li>
+                            <li> <a class="govuk-notification-banner__link" asp-route="@RouteConstants.AddMathsStatus" asp-route-profileId="@Model.ProfileId">@LearnerRecordDetails.Notification_Link_Add_Maths</a></li>
                         }
                         @if (!Model.IsEnglishAdded)
                         {

@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to page.
+        ///   Looks up a localized string similar to Add maths level details.
         /// </summary>
         public static string Page_Title {
             get {
