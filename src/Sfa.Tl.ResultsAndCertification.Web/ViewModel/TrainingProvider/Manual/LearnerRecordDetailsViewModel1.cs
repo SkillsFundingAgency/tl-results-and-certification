@@ -119,7 +119,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
                 Title = LearnerRecordDetailsContent.Title_English_Text,
                 Value = GetSubjectStatus(EnglishStatus),
                 ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
-                HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_English
+                HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_English,
+                RouteName = IsEnglishAdded ? string.Empty : RouteConstants.AddEnglishStatus,
+                RouteAttributes = IsEnglishAdded ? null : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
             };
 
         #endregion

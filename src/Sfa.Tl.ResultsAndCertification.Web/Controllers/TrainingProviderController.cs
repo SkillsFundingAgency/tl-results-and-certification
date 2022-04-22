@@ -61,8 +61,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
         }
 
-        // Note: Please use the below method to update as required for the English
+        [HttpGet]
+        [Route("manage-learner-english-level/{profileId}", Name = RouteConstants.AddEnglishStatus)]
+        public async Task<IActionResult> AddEnglishStatusAsync(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<AddEnglishStatusViewModel>(User.GetUkPrn(), profileId);
+
+            if (viewModel == null || !viewModel.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
         [HttpPost]
+        [Route("manage-learner-english-level/{profileId}", Name = RouteConstants.SubmitAddEnglishStatus)]
         public async Task<IActionResult> AddEnglishStatusAsync(AddEnglishStatusViewModel model)
         {
             if (!ModelState.IsValid)

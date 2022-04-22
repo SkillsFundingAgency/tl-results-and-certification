@@ -254,6 +254,8 @@
 
         public const string AddMathsStatus = "AddMathsStatus";
         public const string SubmitAddMathsStatus = "SubmitAddMathsStatus";
+        public const string AddEnglishStatus = "AddEnglishStatus";
+        public const string SubmitAddEnglishStatus = "SubmitAddEnglishStatus";
 
         public const string SearchLearnerRecord = "SearchLearnerRecord";
         public const string SubmitSearchLearnerRecord = "SubmitSearchLearnerRecord";
