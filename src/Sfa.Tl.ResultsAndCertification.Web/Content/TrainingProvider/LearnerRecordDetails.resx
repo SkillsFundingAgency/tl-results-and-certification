@@ -150,9 +150,6 @@
     <value />
     <comment>del</comment>
   </data>
-  <data name="LearnerRecordDetails.Status_Tag_Incomplete" xml:space="preserve">
-    <value>Incomplete</value>
-  </data>
   <data name="Notification_Heading" xml:space="preserve">
     <value>Additional information needed for this learner</value>
   </data>
@@ -186,6 +183,9 @@
   </data>
   <data name="Start_Year_Value" xml:space="preserve">
     <value>{0} to {1}</value>
+  </data>
+  <data name="Status_Tag_Incomplete" xml:space="preserve">
+    <value>Incomplete</value>
   </data>
   <data name="Success_Header_English_Status_Added" xml:space="preserve">
     <value>English status added</value>

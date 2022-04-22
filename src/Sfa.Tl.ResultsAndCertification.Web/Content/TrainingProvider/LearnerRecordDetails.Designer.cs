@@ -142,15 +142,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Incomplete.
-        /// </summary>
-        public static string LearnerRecordDetails_Status_Tag_Incomplete {
-            get {
-                return ResourceManager.GetString("LearnerRecordDetails.Status_Tag_Incomplete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Additional information needed for this learner.
         /// </summary>
         public static string Notification_Heading {
@@ -246,6 +237,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Start_Year_Value {
             get {
                 return ResourceManager.GetString("Start_Year_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incomplete.
+        /// </summary>
+        public static string Status_Tag_Incomplete {
+            get {
+                return ResourceManager.GetString("Status_Tag_Incomplete", resourceCulture);
             }
         }
         

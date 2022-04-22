@@ -23,10 +23,10 @@
     <div class="record-header">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
           @Model.LearnerName
-          @if (Model.IsStatusCompleted)
+          @if (!Model.IsStatusCompleted)
            {
               <span style="display: inline-block;">
-                <strong class="govuk-tag govuk-tag--red">LearnerRecordDetails.Status_Tag_Incomplete</strong>              
+                <strong class="govuk-tag govuk-tag--red">@LearnerRecordDetails.Status_Tag_Incomplete</strong>              
               </span>
            }
       </h1>
