@@ -23,9 +23,12 @@
     <div class="record-header">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
           @Model.LearnerName
-        <span style="display: inline-block;">
-            @Html.Raw(Model.StatusTag)
-        </span>
+          @if (!Model.IsStatusCompleted)
+           {
+              <span style="display: inline-block;">
+                <strong class="govuk-tag govuk-tag--red">@LearnerRecordDetails.Status_Tag_Incomplete</strong>              
+              </span>
+           }
       </h1>
 
       <span class="govuk-caption-l">@string.Format(LearnerRecordDetails.Uln_Text, @Model.Uln)</span>

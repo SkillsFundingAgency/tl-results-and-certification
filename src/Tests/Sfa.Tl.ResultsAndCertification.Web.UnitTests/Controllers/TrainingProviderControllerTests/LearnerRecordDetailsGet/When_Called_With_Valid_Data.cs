@@ -117,7 +117,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             // Back link
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.Home);
+            model.BackLink.RouteName.Should().Be(RouteConstants.SearchLearnerRecord);
         }
     }
 }

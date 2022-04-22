@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
@@ -51,7 +50,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var isSuccess = await _internalApiClient.UpdateLearnerRecordAsync(request);
             return new UpdateLearnerRecordResponseViewModel { ProfileId = learnerRecordDetails.ProfileId, Uln = learnerRecordDetails.Uln, Name = learnerRecordDetails.Name, IsModified = true, IsSuccess = isSuccess };
         }
-
 
         public async Task<bool> UpdateLearnerSubjectAsync(long providerUkprn, AddMathsStatusViewModel model)
         {

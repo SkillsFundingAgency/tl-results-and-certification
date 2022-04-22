@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PrsStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsStatus;
-using LearnerStatusTagContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerStatusTag;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
 {
@@ -83,14 +82,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
                                 ? (isTlevelStartYearSameAsAcademicYear ? Constants.SpecialismAssessmentStartInYears : 0) 
                                 : Constants.CoreAssessmentStartInYears;
             return startYearOffset;
-        }
-
-        public static string GetLearnerStatusTag(bool statusCompleted)
-        {
-            if (statusCompleted)
-                return LearnerStatusTagContent.Tag_Complete;
-            else
-                return LearnerStatusTagContent.Tag_Incomplete;
         }
     }
 }

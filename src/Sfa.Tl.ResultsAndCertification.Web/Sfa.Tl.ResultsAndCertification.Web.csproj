@@ -844,11 +844,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CheckAndSubmit.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\TrainingProvider\EnglishAndMathsSendDataConfirmation.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EnglishAndMathsSendDataConfirmation.resx</DependentUpon>
-    </Compile>
     <Compile Update="Content\TrainingProvider\EnglishAndMathsStatus.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -869,16 +864,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>IndustryPlacementUpdatedConfirmation.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\TrainingProvider\LearnerRecordCancel.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LearnerRecordCancel.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\TrainingProvider\LearnerRecordConfirmation.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LearnerRecordConfirmation.resx</DependentUpon>
-    </Compile>
     <Compile Update="Content\TrainingProvider\LearnerRecordDetails.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -888,16 +873,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ManagePostalAddress.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\TrainingProvider\LearnerStatusTag.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LearnerStatusTag.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\TrainingProvider\QueryEnglishAndMathsStatus.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>QueryEnglishAndMathsStatus.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\TrainingProvider\SearchLearnerRecord.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -1581,10 +1556,6 @@
       <LastGenOutput>EnglishAndMathsQuestion.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsSendDataConfirmation.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>EnglishAndMathsSendDataConfirmation.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsStatus.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EnglishAndMathsStatus.Designer.cs</LastGenOutput>
@@ -1605,14 +1576,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IndustryPlacementUpdatedConfirmation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\LearnerRecordCancel.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LearnerRecordCancel.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\LearnerRecordConfirmation.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LearnerRecordConfirmation.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\LearnerRecordDetails.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LearnerRecordDetails.Designer.cs</LastGenOutput>
@@ -1620,14 +1583,6 @@
     <EmbeddedResource Update="Content\ProviderAddress\ManagePostalAddress.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ManagePostalAddress.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\LearnerStatusTag.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LearnerStatusTag.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\QueryEnglishAndMathsStatus.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>QueryEnglishAndMathsStatus.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\SearchLearnerRecord.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

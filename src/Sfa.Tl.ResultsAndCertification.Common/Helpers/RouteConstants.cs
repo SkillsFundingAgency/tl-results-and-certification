@@ -251,10 +251,6 @@
         public const string SubmitIndustryPlacementQuestion = "SubmitIndustryPlacementQuestion";
         public const string AddLearnerRecordCheckAndSubmit = "AddLearnerRecordCheckAndSubmit";
         public const string SubmitLearnerRecordCheckAndSubmit = "SubmitLearnerRecordCheckAndSubmit";
-        public const string AddLearnerRecordCancel = "AddLearnerRecordCancel";
-        public const string SubmitLearnerRecordCancel = "SubmitLearnerRecordCancel";
-        public const string LearnerRecordAddedConfirmation = "LearnerRecordAddedConfirmation";
-        public const string AddEnglishAndMathsSendDataConfirmation = "AddEnglishAndMathsSendDataConfirmation";
 
         public const string AddMathsStatus = "AddMathsStatus";
         public const string SubmitAddMathsStatus = "SubmitAddMathsStatus";
@@ -267,7 +263,6 @@
         public const string SearchLearnerRecordNotAdded = "SearchLearnerRecordNotAdded";
         public const string SearchLearnerRecordNotFound = "SearchLearnerRecordNotFound";
         public const string LearnerRecordDetails = "LearnerRecordDetails";
-        public const string QueryEnglishAndMathsStatus = "QueryEnglishAndMathsStatus";
         public const string UpdateIndustryPlacementQuestion = "UpdateIndustryPlacementQuestion";
         public const string SubmitUpdateIndustryPlacementQuestion = "SubmitUpdateIndustryPlacementQuestion";
         public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";

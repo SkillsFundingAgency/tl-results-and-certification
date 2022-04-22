@@ -241,6 +241,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incomplete.
+        /// </summary>
+        public static string Status_Tag_Incomplete {
+            get {
+                return ResourceManager.GetString("Status_Tag_Incomplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English status added.
         /// </summary>
         public static string Success_Header_English_Status_Added {
@@ -259,7 +268,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p class=&quot;govuk-body&quot;&gt;Contact &lt;a class=&quot;govuk-notification-banner__link&quot; href=&quot;mailto:Tlevel.resultsandcertification@education.gov.uk?subject=T Level provider reporting learner English status issue&quot;&gt;Tlevel.resultsandcertification@education.gov.uk&lt;/a&gt; if the English status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;.
+        ///   Looks up a localized string similar to &lt;p class=&quot;govuk-body&quot;&gt;&lt;a class=&quot;govuk-notification-banner__link&quot; href=&quot;/contact-us&quot;&gt;Contact us&lt;/a&gt; if the English status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;.
         /// </summary>
         public static string Success_Message_English_Status_Added {
             get {
@@ -268,7 +277,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p class=&quot;govuk-body&quot;&gt;Contact &lt;a class=&quot;govuk-notification-banner__link&quot; href=&quot;mailto:Tlevel.resultsandcertification@education.gov.uk?subject=T Level provider reporting learner maths status issue&quot;&gt;Tlevel.resultsandcertification@education.gov.uk&lt;/a&gt; if the maths status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;.
+        ///   Looks up a localized string similar to &lt;p class=&quot;govuk-body&quot;&gt;&lt;a class=&quot;govuk-notification-banner__link&quot; href=&quot;/contact-us&quot;&gt;Contact us&lt;/a&gt; if the maths status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;.
         /// </summary>
         public static string Success_Message_Maths_Status_Added {
             get {

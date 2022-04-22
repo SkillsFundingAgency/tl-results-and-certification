@@ -132,14 +132,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var profile = await _tqRegistrationProfile.GetFirstOrDefaultAsync(p => p.Id == request.ProfileId
                                                                     && p.TqRegistrationPathways.Any(pa => pa.TqProvider.TlProvider.UkPrn == request.ProviderUkprn
                                                                     && (pa.Status == RegistrationPathwayStatus.Active || pa.Status == RegistrationPathwayStatus.Withdrawn)));
-            if (profile == null)
+            if (profile == null ||
+                (request.SubjectType == SubjectType.Maths && profile.MathsStatus != null) ||
+                (request.SubjectType == SubjectType.English && profile.EnglishStatus != null) ||
+                (request.SubjectType == SubjectType.NotSpecified) ||
+                (request.SubjectStatus == SubjectStatus.NotSpecified))
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to for ProfileId = {request.ProfileId}. Method: UpdateLearnerSubjectAsync({request})");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No valid record found to for ProfileId = {request.ProfileId}. Method: UpdateLearnerSubjectAsync({request})");
                 return false;
             }
-
-            if (request.SubjectType == SubjectType.NotSpecified)
-                return false;
 
             if (request.SubjectType == SubjectType.Maths)
                 profile.MathsStatus = request.SubjectStatus;
