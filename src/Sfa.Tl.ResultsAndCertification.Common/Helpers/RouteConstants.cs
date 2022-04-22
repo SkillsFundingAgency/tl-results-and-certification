@@ -251,8 +251,6 @@
         public const string SubmitIndustryPlacementQuestion = "SubmitIndustryPlacementQuestion";
         public const string AddLearnerRecordCheckAndSubmit = "AddLearnerRecordCheckAndSubmit";
         public const string SubmitLearnerRecordCheckAndSubmit = "SubmitLearnerRecordCheckAndSubmit";
-        public const string AddLearnerRecordCancel = "AddLearnerRecordCancel";
-        public const string SubmitLearnerRecordCancel = "SubmitLearnerRecordCancel";
 
         public const string AddMathsStatus = "AddMathsStatus";
         public const string SubmitAddMathsStatus = "SubmitAddMathsStatus";

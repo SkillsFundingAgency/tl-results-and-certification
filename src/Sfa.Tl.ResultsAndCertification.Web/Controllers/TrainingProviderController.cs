@@ -157,32 +157,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("add-learner-record-cancel", Name = RouteConstants.AddLearnerRecordCancel)]
-        public async Task<IActionResult> AddLearnerRecordCancelAsync()
-        {
-            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
-
-            if (cacheModel?.LearnerRecord == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            var viewModel = new LearnerRecordCancelViewModel { LearnerName = cacheModel.LearnerRecord.Name, CancelLearnerRecord = true };
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("add-learner-record-cancel", Name = RouteConstants.SubmitLearnerRecordCancel)]
-        public async Task<IActionResult> AddLearnerRecordCancelAsync(LearnerRecordCancelViewModel viewModel)
-        {
-            if (viewModel.CancelLearnerRecord)
-            {
-                await _cacheService.RemoveAsync<AddLearnerRecordViewModel>(CacheKey);
-                return RedirectToRoute(RouteConstants.ManageLearnerRecordsDashboard);
-            }
-            else
-                return RedirectToRoute(RouteConstants.AddLearnerRecordCheckAndSubmit);
-        }
-
         #region Update-Learner
 
         // TODO: Remove
