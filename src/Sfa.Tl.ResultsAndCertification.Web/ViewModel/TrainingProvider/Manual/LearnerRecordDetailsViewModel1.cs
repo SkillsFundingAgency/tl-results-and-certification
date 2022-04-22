@@ -40,7 +40,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public bool IsIndustryPlacementAdded => IndustryPlacementStatus != IndustryPlacementStatus.NotSpecified; // TODO: upcoming story
         public bool IsMathsAdded => MathsStatus != SubjectStatus.NotSpecified;
         public bool IsEnglishAdded => EnglishStatus != SubjectStatus.NotSpecified;
-        public string StatusTag => CommonHelper.GetLearnerStatusTag(IsStatusCompleted);
         public NotificationBannerModel SuccessBanner { get; set; }
 
         #region Summary Header

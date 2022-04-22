@@ -150,6 +150,9 @@
     <value />
     <comment>del</comment>
   </data>
+  <data name="LearnerRecordDetails.Status_Tag_Incomplete" xml:space="preserve">
+    <value>Incomplete</value>
+  </data>
   <data name="Notification_Heading" xml:space="preserve">
     <value>Additional information needed for this learner</value>
   </data>

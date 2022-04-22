@@ -142,6 +142,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incomplete.
+        /// </summary>
+        public static string LearnerRecordDetails_Status_Tag_Incomplete {
+            get {
+                return ResourceManager.GetString("LearnerRecordDetails.Status_Tag_Incomplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Additional information needed for this learner.
         /// </summary>
         public static string Notification_Heading {

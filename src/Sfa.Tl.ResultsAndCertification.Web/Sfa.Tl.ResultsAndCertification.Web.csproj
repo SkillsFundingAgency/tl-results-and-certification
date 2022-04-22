@@ -869,11 +869,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ManagePostalAddress.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\TrainingProvider\LearnerStatusTag.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LearnerStatusTag.resx</DependentUpon>
-    </Compile>
     <Compile Update="Content\TrainingProvider\SearchLearnerRecord.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1579,10 +1574,6 @@
     <EmbeddedResource Update="Content\ProviderAddress\ManagePostalAddress.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ManagePostalAddress.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\LearnerStatusTag.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LearnerStatusTag.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\SearchLearnerRecord.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
