@@ -134,7 +134,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             {
                 return new BackLinkModel
                 {
-                    RouteName = RouteConstants.Home
+                    RouteName = RouteConstants.SearchLearnerRecord
                 };
             }
         }
