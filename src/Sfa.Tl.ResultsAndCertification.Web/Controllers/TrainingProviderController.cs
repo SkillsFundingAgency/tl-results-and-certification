@@ -119,6 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-learner-record-check-and-submit", Name = RouteConstants.AddLearnerRecordCheckAndSubmit)]
         public async Task<IActionResult> AddLearnerRecordCheckAndSubmitAsync()
         {
+            // DELETE
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
 
             var viewModel = new CheckAndSubmitViewModel { LearnerRecordModel = cacheModel };
@@ -158,15 +159,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         #region Update-Learner
-
-        // TODO: Remove
-        [HttpGet]
-        [Route("update-learner-record", Name = RouteConstants.UpdateLearnerRecord)]
-        public async Task<IActionResult> UpdateLearnerRecordAsync()
-        {
-            await _cacheService.RemoveAsync<SearchLearnerRecordViewModel>(CacheKey);
-            return RedirectToRoute(RouteConstants.SearchLearnerRecord);
-        }
 
         [HttpGet]
         [Route("search-learner-record-unique-learner-number", Name = RouteConstants.SearchLearnerRecord)]
@@ -208,20 +200,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return View(new SearchLearnerRecordNotFoundViewModel { Uln = cacheModel.SearchUln?.ToString() });
-        }
-
-        [HttpGet]
-        [Route("search-learner-record-ULN-not-added", Name = RouteConstants.SearchLearnerRecordNotAdded)]
-        public async Task<IActionResult> SearchLearnerRecordNotAddedAsync()
-        {
-            var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey);
-
-            if (cacheModel == null || cacheModel.IsLearnerRecordAdded)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchLearnerRecordViewModel from redis cache or IsLearnerRecord already added in search learner record not added page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-            return View(new LearnerRecordNotAddedViewModel { Uln = cacheModel.SearchUln.ToString() });
         }
 
         [HttpGet]

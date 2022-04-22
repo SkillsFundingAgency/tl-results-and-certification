@@ -10,6 +10,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         // TODO: Delete
         public string EnterUln { get; set; }
         public bool IsNavigatedFromSearchLearnerRecordNotAdded { get; set; }
-        public BackLinkModel BackLink => new BackLinkModel { RouteName = IsNavigatedFromSearchLearnerRecordNotAdded ? RouteConstants.SearchLearnerRecordNotAdded : RouteConstants.ManageLearnerRecordsDashboard };
+        public BackLinkModel BackLink => new BackLinkModel { RouteName = IsNavigatedFromSearchLearnerRecordNotAdded ? "DELETE" : RouteConstants.ManageLearnerRecordsDashboard };
     }
 }
