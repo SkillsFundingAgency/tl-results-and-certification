@@ -874,11 +874,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>LearnerStatusTag.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\TrainingProvider\QueryEnglishAndMathsStatus.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>QueryEnglishAndMathsStatus.resx</DependentUpon>
-    </Compile>
     <Compile Update="Content\TrainingProvider\SearchLearnerRecord.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1588,10 +1583,6 @@
     <EmbeddedResource Update="Content\TrainingProvider\LearnerStatusTag.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LearnerStatusTag.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\QueryEnglishAndMathsStatus.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>QueryEnglishAndMathsStatus.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\SearchLearnerRecord.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

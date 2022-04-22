@@ -241,21 +241,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("query-english-and-maths-status/{profileId}", Name = RouteConstants.QueryEnglishAndMathsStatus)]
-        public async Task<IActionResult> QueryEnglishAndMathsStatusAsync(int profileId)
-        {
-            var learnerDetails = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(User.GetUkPrn(), profileId);
-            if (learnerDetails == null || !learnerDetails.HasLrsEnglishAndMaths)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No learner details are found or no LRS data available. Method: GetLearnerRecordDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            var viewModel = new QueryEnglishAndMathsViewModel { ProfileId = learnerDetails.ProfileId, Name = learnerDetails.Name };
-            return View(viewModel);
-        }
-
-        [HttpGet]
         [Route("update-learner-record-industry-placement-status/{profileId}/{pathwayId}", Name = RouteConstants.UpdateIndustryPlacementQuestion)]
         public async Task<IActionResult> UpdateIndustryPlacementQuestionAsync(int profileId, int pathwayId)
         {
@@ -306,20 +291,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         #endregion
-
-        private async Task SyncCacheUln(EnterUlnViewModel model, FindLearnerRecord learnerRecord = null)
-        {
-            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
-
-            if (cacheModel?.Uln != null && cacheModel?.Uln?.EnterUln == model.EnterUln)
-            {
-                cacheModel.LearnerRecord = learnerRecord;
-                cacheModel.Uln = model;
-            }
-            else
-                cacheModel = new AddLearnerRecordViewModel { LearnerRecord = learnerRecord, Uln = model };
-
-            await _cacheService.SetAsync(CacheKey, cacheModel);
-        }
     }
 }

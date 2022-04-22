@@ -261,7 +261,6 @@
         public const string SearchLearnerRecordNotAdded = "SearchLearnerRecordNotAdded";
         public const string SearchLearnerRecordNotFound = "SearchLearnerRecordNotFound";
         public const string LearnerRecordDetails = "LearnerRecordDetails";
-        public const string QueryEnglishAndMathsStatus = "QueryEnglishAndMathsStatus";
         public const string UpdateIndustryPlacementQuestion = "UpdateIndustryPlacementQuestion";
         public const string SubmitUpdateIndustryPlacementQuestion = "SubmitUpdateIndustryPlacementQuestion";
         public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
