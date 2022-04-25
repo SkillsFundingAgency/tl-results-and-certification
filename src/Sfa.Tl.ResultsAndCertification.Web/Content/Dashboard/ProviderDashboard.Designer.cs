@@ -115,6 +115,51 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check what data you need to provide and when you need to provide it.
+        /// </summary>
+        public static string Link_Check_Data_You_Need_To_Provide {
+            get {
+                return ResourceManager.GetString("Link_Check_Data_You_Need_To_Provide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Events (opens in a new tab).
+        /// </summary>
+        public static string Link_Events {
+            get {
+                return ResourceManager.GetString("Link_Events", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find out about Manage T Level results.
+        /// </summary>
+        public static string Link_Find_About_Mange_Tlevel_Results {
+            get {
+                return ResourceManager.GetString("Link_Find_About_Mange_Tlevel_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Industry placements delivery guidance (opens in a new tab).
+        /// </summary>
+        public static string Link_Ip_Delivery_Guidance {
+            get {
+                return ResourceManager.GetString("Link_Ip_Delivery_Guidance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View news and updates (opens in a new tab).
+        /// </summary>
+        public static string Link_View_News_And_Updates {
+            get {
+                return ResourceManager.GetString("Link_View_News_And_Updates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add or change your learners&apos; English and maths achievements and industry placement status.
         /// </summary>
         public static string Manage_Learner_TLevel_Records_Description_Text {

@@ -135,6 +135,21 @@
   <data name="Heading_Manage_Tlevel_Results" xml:space="preserve">
     <value>Manage T Level results</value>
   </data>
+  <data name="Link_Check_Data_You_Need_To_Provide" xml:space="preserve">
+    <value>Check what data you need to provide and when you need to provide it</value>
+  </data>
+  <data name="Link_Events" xml:space="preserve">
+    <value>Events (opens in a new tab)</value>
+  </data>
+  <data name="Link_Find_About_Mange_Tlevel_Results" xml:space="preserve">
+    <value>Find out about Manage T Level results</value>
+  </data>
+  <data name="Link_Ip_Delivery_Guidance" xml:space="preserve">
+    <value>Industry placements delivery guidance (opens in a new tab)</value>
+  </data>
+  <data name="Link_View_News_And_Updates" xml:space="preserve">
+    <value>View news and updates (opens in a new tab)</value>
+  </data>
   <data name="Manage_Learner_TLevel_Records_Description_Text" xml:space="preserve">
     <value>Add or change your learners' English and maths achievements and industry placement status</value>
   </data>
