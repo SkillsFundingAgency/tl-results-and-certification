@@ -18,13 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         {
             ProfileId = 1;
 
-            _addMathsStatusViewModel = new AddMathsStatusViewModel
-            {
-                ProfileId = ProfileId,
-                LearnerName = "John Smith",
-                IsAchieved = true
-            };
-
             _expectedSuccessBannerMsg = string.Format(LearnerDetailsContent.Success_Message_Maths_Status_Added);
 
 
