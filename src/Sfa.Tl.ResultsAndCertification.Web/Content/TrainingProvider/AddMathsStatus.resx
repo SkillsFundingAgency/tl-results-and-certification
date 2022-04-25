@@ -133,7 +133,7 @@
     <value>Yes</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Add maths level details</value>
+    <value>Add maths level details - Manage learner</value>
   </data>
   <data name="Validation_Message" xml:space="preserve">
     <value>Select yes if this learner achieved a level 2 or equivalent in maths</value>

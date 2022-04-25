@@ -15,7 +15,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_UpdateLearnerSubject_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_UpdateLearnerSubjectMaths_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         private bool _result;
         protected bool _mockHttpResult;
@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 ProfileId = 1,
                 ProviderUkprn = 12345678,
                 SubjectStatus = SubjectStatus.Achieved,
-                SubjectType = SubjectType.English,
+                SubjectType = SubjectType.Maths,
                 PerformedBy = "Test User"
             };
         }
@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            _result.Should().BeTrue();              
+            _result.Should().BeTrue();             
         }
     }
 }
