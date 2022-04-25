@@ -135,6 +135,9 @@
   <data name="Heading_Manage_Tlevel_Results" xml:space="preserve">
     <value>Manage T Level results</value>
   </data>
+  <data name="Heading_News_Guidance_Events" xml:space="preserve">
+    <value>News, guidance and events</value>
+  </data>
   <data name="Link_Check_Data_You_Need_To_Provide" xml:space="preserve">
     <value>Check what data you need to provide and when you need to provide it</value>
   </data>

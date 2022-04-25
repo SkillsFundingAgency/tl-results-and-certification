@@ -115,6 +115,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to News, guidance and events.
+        /// </summary>
+        public static string Heading_News_Guidance_Events {
+            get {
+                return ResourceManager.GetString("Heading_News_Guidance_Events", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check what data you need to provide and when you need to provide it.
         /// </summary>
         public static string Link_Check_Data_You_Need_To_Provide {
