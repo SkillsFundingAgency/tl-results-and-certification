@@ -5,25 +5,25 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.AddMathsStatusGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.AddEnglishStatusGet
 {
     public class When_Called_With_Invalid_Data : TestSetup
     {
-        private AddMathsStatusViewModel _addMathsStatusViewModel;
+        private AddEnglishStatusViewModel _addEnglishStatusViewModel;
 
         public override void Given()
         {
             ProfileId = 0;
 
-            _addMathsStatusViewModel = null;
+            _addEnglishStatusViewModel = null;
 
-            TrainingProviderLoader.GetLearnerRecordDetailsAsync<AddMathsStatusViewModel>(ProviderUkprn, ProfileId).Returns(_addMathsStatusViewModel);
+            TrainingProviderLoader.GetLearnerRecordDetailsAsync<AddEnglishStatusViewModel>(ProviderUkprn, ProfileId).Returns(_addEnglishStatusViewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            TrainingProviderLoader.Received(1).GetLearnerRecordDetailsAsync<AddMathsStatusViewModel>(ProviderUkprn, ProfileId);
+            TrainingProviderLoader.Received(1).GetLearnerRecordDetailsAsync<AddEnglishStatusViewModel>(ProviderUkprn, ProfileId);
         }
 
         [Fact]
