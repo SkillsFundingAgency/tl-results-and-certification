@@ -12,13 +12,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 {
     public class When_Success : TestSetup
     {
-        private string _expectedSuccessBannerMsg;
+        private NotificationBannerModel _expectedSuccessBannerMsg;
 
         public override void Given()
         {
             ProfileId = 1;
 
-            _expectedSuccessBannerMsg = string.Format(LearnerDetailsContent.Success_Message_Maths_Status_Added);
+            _expectedSuccessBannerMsg = new NotificationBannerModel { HeaderMessage = LearnerDetailsContent.Success_Header_Maths_Status_Added, Message = LearnerDetailsContent.Success_Message_Maths_Status_Added, DisplayMessageBody = true, IsRawHtml = true };
 
 
             ViewModel = new AddMathsStatusViewModel { ProfileId = 1, LearnerName = "John Smith", IsAchieved = true };
@@ -31,7 +31,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public void Then_Expected_Methods_Called()
         {
             TrainingProviderLoader.Received(1).UpdateLearnerSubjectAsync(ProviderUkprn, ViewModel);
-            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(x => x.Message.Equals(_expectedSuccessBannerMsg)), CacheExpiryTime.XSmall);
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(x =>
+                x.HeaderMessage.Equals(_expectedSuccessBannerMsg.HeaderMessage, System.StringComparison.InvariantCultureIgnoreCase) &&
+                x.Message.Equals(_expectedSuccessBannerMsg.Message, System.StringComparison.InvariantCultureIgnoreCase) &&
+                x.DisplayMessageBody == true &&
+                x.IsRawHtml == true),
+                CacheExpiryTime.XSmall);
         }
 
         [Fact]
