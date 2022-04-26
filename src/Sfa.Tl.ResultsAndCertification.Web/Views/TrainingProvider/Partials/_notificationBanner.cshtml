@@ -27,7 +27,7 @@
                         }
                         @if (!Model.IsEnglishAdded)
                         {
-                             <li> <a class="govuk-notification-banner__link" asp-route="">@LearnerRecordDetails.Notification_Link_Add_English</a></li>
+                             <li> <a class="govuk-notification-banner__link" asp-route="@RouteConstants.AddEnglishStatus" asp-route-profileId="@Model.ProfileId">@LearnerRecordDetails.Notification_Link_Add_English</a></li>
                         }
                     </ul>
                 </div>
