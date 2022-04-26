@@ -121,13 +121,13 @@
     <value>Achieved</value>
   </data>
   <data name="Achieved_Lrs_Display_Text" xml:space="preserve">
-    <value>Achieved level 2 (Data from the Learning Records Service - LRS)</value>
+    <value>Achieved (LRS)</value>
   </data>
   <data name="Not_Achieved_Display_Text" xml:space="preserve">
     <value>Not achieved</value>
   </data>
   <data name="Not_Achieved_Lrs_Display_Text" xml:space="preserve">
-    <value>Not achieved level 2 (Data from the Learning Records Service - LRS)</value>
+    <value>Not achieved (LRS)</value>
   </data>
   <data name="Not_Yet_Recevied_Display_Text" xml:space="preserve">
     <value>Not yet received</value>
