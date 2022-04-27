@@ -41,6 +41,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<PrintBatchItem> PrintBatchItem { get; set; }
         public virtual DbSet<PrintCertificate> PrintCertificate { get; set; }
         public virtual DbSet<AcademicYear> AcademicYear { get; set; }
+        public virtual DbSet<IpLookup> IpLookup { get; set; }
+        public virtual DbSet<IpModelTlevelCombination> IpModelTlevelCombination { get; set; }
+        public virtual DbSet<IpTempFlexTlevelCombination> IpTempFlexTlevelCombination { get; set; }
+        public virtual DbSet<IpAchieved> IpAchieved { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

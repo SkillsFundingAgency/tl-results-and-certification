@@ -346,5 +346,11 @@
         public const string SubmitPrsGradeChangeRequestConfirmation = "SubmitPrsGradeChangeRequestConfirmation";
 
         #endregion
+
+        #region Industry Placement Question
+
+        public const string IndustryPlacementCompletion = "IndustryPlacementCompletion";
+
+        #endregion
     }
 }
