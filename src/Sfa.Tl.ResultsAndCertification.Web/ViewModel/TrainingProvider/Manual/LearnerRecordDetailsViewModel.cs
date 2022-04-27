@@ -14,6 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
     public class LearnerRecordDetailsViewModel
     {
+        // TODO: To be deleted.
         public int ProfileId { get; set; }
         public int RegistrationPathwayId { get; set; }
         public long Uln { get; set; }
@@ -22,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public string ProviderName { get; set; }
         public string PathwayName { get; set; }
         public bool IsLearnerRegistered { get; set; }
-        public bool IsLearnerRecordAdded { get; set; }
+        public bool IsLearnerRecordAdded { get; set; } // TODO: Delete this pro
         public bool IsEnglishAndMathsAchieved { get; set; }
         public bool HasLrsEnglishAndMaths { get; set; }
         public bool? IsSendLearner { get; set; }
@@ -60,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 
         private string GetEnglishAndMathsActionText => HasLrsEnglishAndMaths ? LearnerRecordDetailsContent.Query_Action_Link_Text : LearnerRecordDetailsContent.Update_Action_Link_Text;
 
-        private string GetEnglishAndMathsRouteName => HasLrsEnglishAndMaths ? RouteConstants.QueryEnglishAndMathsStatus : RouteConstants.UpdateEnglisAndMathsAchievement;
+        private string GetEnglishAndMathsRouteName => "";
 
         private Dictionary<string, string> GetEnglishAndMathsRouteAttributes => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } };
 

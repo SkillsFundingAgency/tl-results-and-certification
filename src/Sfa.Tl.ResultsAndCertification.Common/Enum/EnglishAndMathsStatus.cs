@@ -2,6 +2,7 @@
 {
     public enum EnglishAndMathsStatus
     {
+        // TODO: Delete
         NotSpecified = 0,
         Achieved = 1,
         AchievedWithSend = 2,

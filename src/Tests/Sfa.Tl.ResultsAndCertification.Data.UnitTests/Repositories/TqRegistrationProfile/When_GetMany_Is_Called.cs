@@ -44,6 +44,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrat
             result.DateofBirth.Should().Be(testData.DateofBirth);
             result.Gender.Should().Be(testData.Gender);
             result.IsLearnerVerified.Should().Be(testData.IsLearnerVerified);
+            result.EnglishStatus.Should().Be(testData.EnglishStatus);
+            result.MathsStatus.Should().Be(testData.MathsStatus);
             result.IsEnglishAndMathsAchieved.Should().Be(testData.IsEnglishAndMathsAchieved);
             result.IsSendLearner.Should().Be(testData.IsSendLearner);
             result.IsRcFeed.Should().Be(testData.IsRcFeed);

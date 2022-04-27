@@ -70,6 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null);
         Task<AddLearnerRecordResponse> AddLearnerRecordAsync(AddLearnerRecordRequest request);
         Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest model);
+        Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request);
 
         // ProviderAddress
         Task<bool> AddAddressAsync(AddAddressRequest request);

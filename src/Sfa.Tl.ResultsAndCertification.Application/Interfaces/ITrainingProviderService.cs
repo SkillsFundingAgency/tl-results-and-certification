@@ -9,5 +9,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId);
         Task<AddLearnerRecordResponse> AddLearnerRecordAsync(AddLearnerRecordRequest request);
         Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest model);
+        Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request);
     }
 }
