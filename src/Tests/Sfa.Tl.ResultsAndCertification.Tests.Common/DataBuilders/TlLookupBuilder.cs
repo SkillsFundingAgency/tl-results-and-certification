@@ -212,5 +212,59 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 ModifiedOn = Constants.ModifiedOn
             }
         };
+
+        public TlLookup BuildIpType() => new TlLookup
+        {
+            Category = "IpType",
+            Code = "SC",
+            Value = "SpecialConsideration",
+            IsActive = true,
+            SortOrder = 1,
+            CreatedBy = Constants.CreatedByUser,
+            CreatedOn = Constants.CreatedOn,
+            ModifiedBy = Constants.ModifiedByUser,
+            ModifiedOn = Constants.ModifiedOn
+        };
+
+        public IList<TlLookup> BuildIpTypeList() => new List<TlLookup>
+        {
+            new TlLookup
+            {
+                Category = "IpType",
+                Code = "SC",
+                Value = "Special Considerations",
+                IsActive = true,
+                SortOrder = 1,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "IpType",
+                Code = "IPM",
+                Value = "Ip Models",
+                IsActive = true,
+                SortOrder = 1,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "IpType",
+                Code = "TF",
+                Value = "Temporary Flexibilities",
+                IsActive = true,
+                SortOrder = 1,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            }
+        };
+
     }
 }

@@ -31,6 +31,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.IndustryPla
             _result.Id.Should().Be(1);
             _result.TqRegistrationPathwayId.Should().Be(_data.TqRegistrationPathwayId);            
             _result.Status.Should().Be(_data.Status);
+            _result.Hours.Should().Be(_data.Hours);
+            _result.IsMultiEmployer.Should().Be(_data.IsMultiEmployer);
+            _result.IsBlended.Should().Be(_data.IsBlended);
             _result.CreatedBy.Should().Be(Constants.CreatedByUser);
             _result.CreatedOn.Should().Be(Constants.CreatedOn);
             _result.ModifiedBy.Should().Be(Constants.ModifiedByUser);

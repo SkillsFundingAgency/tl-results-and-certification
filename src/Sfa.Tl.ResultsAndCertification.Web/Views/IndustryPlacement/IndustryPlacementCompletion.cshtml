@@ -1,0 +1,61 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual.IndustryPlacementCompletionViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
+@using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum
+
+@{
+    ViewData["Title"] = IndustryPlacementCompletion.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="">
+            <partial name="_ValidationSummary" />
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <div class="govuk-form-group">
+                <span class="govuk-caption-l">@IndustryPlacementCompletion.Industry_Placement_Caption</span>
+                <div class="govuk-form-group" sfa-validation-for="IndustryPlacementStatus" sfa-validation-class="govuk-form-group--error">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
+                                @IndustryPlacementCompletion.Has_Completed_Industry_Placement_Heading
+                            </h1>
+                        </legend>
+                        <div class="govuk-radios">
+                            <span sfa-validation-for="IndustryPlacementStatus"></span>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="industryplacementstatus" asp-for="IndustryPlacementStatus" type="radio" value="@IpStatus.IndustryPlacementStatus.StillToBeCompleted">
+                                <label class="govuk-label govuk-radios__label" for="industryplacementstatus">
+                                    @IndustryPlacementCompletion.No_Still_To_Be_Completed_Option_Text
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="industryplacementstatus-completed" asp-for="IndustryPlacementStatus" type="radio" value="@IpStatus.IndustryPlacementStatus.Completed">
+                                <label class="govuk-label govuk-radios__label" for="industryplacementstatus-completed">
+                                    @IndustryPlacementCompletion.Yes_Completed_Option_Text
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="industryplacementstatus-cwspc" asp-for="IndustryPlacementStatus" type="radio" value="@IpStatus.IndustryPlacementStatus.CompletedWithSpecialConsideration">
+                                <label class="govuk-label govuk-radios__label" for="industryplacementstatus-cwspc">
+                                    @IndustryPlacementCompletion.Yes_Completed_With_Special_Consideration_Option_Text
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="govuk-inset-text">
+                            @IndustryPlacementCompletion.By_Selecting_Hint_Text <a href="https://www.gov.uk/government/publications/t-level-industry-placements-delivery-guidance/t-level-industry-placements-delivery-guidance#signed-declaration-of-student-completion" class="govuk-link" rel="noreferrer noopener" target="_blank">
+                                @IndustryPlacementCompletion.Signed_Declaration_Hint_Text
+                            </a> @IndustryPlacementCompletion.For_This_Learner_Hint_Text
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@IndustryPlacementCompletion.Continue_Button_Text</button>
+        </form>
+    </div>
+    <partial name="Partials/_ipGuidanceNavigation.cshtml" />
+</div>

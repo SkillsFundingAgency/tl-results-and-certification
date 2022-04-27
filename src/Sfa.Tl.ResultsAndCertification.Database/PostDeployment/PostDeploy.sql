@@ -20,6 +20,9 @@ BEGIN
 :r ".\SeedQualificationType.sql"
 :r ".\SeedQualificationGrade.sql"
 :r ".\SeedQualification.sql"
+:r ".\SeedIpLookup.sql"
+:r ".\SeedIpModelTlevelCombination.sql"
+:r ".\SeedIpTempFlexTlevelCombination.sql"
 END
 ELSE IF ('$(environment)' <> 'DevIntegration')
 BEGIN
@@ -38,4 +41,7 @@ BEGIN
 :r ".\SeedQualificationType.sql"
 :r ".\SeedQualificationGrade.sql"
 :r ".\SeedQualification.sql"
+:r ".\SeedIpLookup.sql"
+:r ".\SeedIpModelTlevelCombination.sql"
+:r ".\SeedIpTempFlexTlevelCombination.sql"
 END
