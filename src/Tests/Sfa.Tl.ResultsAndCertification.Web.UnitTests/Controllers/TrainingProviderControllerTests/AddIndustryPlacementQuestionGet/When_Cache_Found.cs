@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         private AddLearnerRecordViewModel _cacheResult;
         private EnterUlnViewModel _ulnViewModel;
         private FindLearnerRecord _learnerRecord;
-        private EnglishAndMathsQuestionViewModel _englishAndMathsQuestionViewModel; 
+        //private EnglishAndMathsQuestionViewModel _englishAndMathsQuestionViewModel; 
         private IndustryPlacementQuestionViewModel _industryPlacementQuestionViewModel;
 
         public override void Given()

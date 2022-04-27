@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 }                
             };
 
-            _notificationBanner = new NotificationBannerModel { IsPrsJourney = true, HeaderMessage = "Header", Message = "Updated Successfully." };
+            _notificationBanner = new NotificationBannerModel { DisplayMessageBody = true, HeaderMessage = "Header", Message = "Updated Successfully." };
 
             Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId).Returns(_mockResult);
             CacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey).Returns(_notificationBanner);

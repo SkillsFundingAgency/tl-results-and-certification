@@ -28,10 +28,10 @@ USING (VALUES
   (20, N'QCF', N'British Sign Language', 1),
   (21, N'Vocationally-Related Qualification', N'Level 3 Math', 1),
   (22, N'Vocationally-Related Qualification', N'British Sign Language', 1), 
-  (23, N'Functional Skills', N'Entry 3', 1),
-  (24, N'Functional Skills (QCF)', N'Entry 3', 1) ,
-  (25, N'Functional Skills', N'Level 1', 1),
-  (26, N'Functional Skills (QCF)', N'Level 1', 1) 
+  (23, N'Functional Skills', N'Entry 3', 0),
+  (24, N'Functional Skills (QCF)', N'Entry 3', 0) ,
+  (25, N'Functional Skills', N'Level 1', 0),
+  (26, N'Functional Skills (QCF)', N'Level 1', 0) 
   )
   AS Source ([Id], [Name], [SubTitle], [IsActive]) 
 ON Target.[Id] = Source.[Id] 

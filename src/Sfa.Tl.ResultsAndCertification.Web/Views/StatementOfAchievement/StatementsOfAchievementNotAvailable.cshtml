@@ -14,7 +14,8 @@
     <div class="govuk-grid-column-three-quarters">
         <h1 class="govuk-heading-l">@NotAvailable.Heading_Text</h1>
 
-        <p class="govuk-body govuk-!-margin-top-3">@string.Format(NotAvailable.It_Is_Too_Early_To_Request_Text, Model.SoaAvailableDate?.ToString("dd MMMM yyyy"))</p>
+        <p class="govuk-body govuk-!-margin-top-3">@NotAvailable.Para1_Text</p>
+        <p class="govuk-body govuk-!-margin-top-3">@string.Format(NotAvailable.Para2_Text, Model.SoaAvailableDate?.ToString("MMMM yyyy"))</p>
 
         <p><a id="backButton" class="govuk-button" role="button" data-module="govuk-button" asp-route="Home">@NotAvailable.Back_To_Home_Button</a></p>
     </div>

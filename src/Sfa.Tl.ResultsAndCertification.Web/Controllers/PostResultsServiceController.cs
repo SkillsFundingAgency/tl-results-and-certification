@@ -210,7 +210,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 if (!isSuccess)
                     return RedirectToRoute(RouteConstants.ProblemWithService);
 
-                var notificationBanner = new NotificationBannerModel { IsPrsJourney = true, HeaderMessage = prsDetails.Banner_HeaderMesage, Message = prsDetails.SuccessBannerMessage };
+                var notificationBanner = new NotificationBannerModel { DisplayMessageBody = true, HeaderMessage = prsDetails.Banner_HeaderMesage, Message = prsDetails.SuccessBannerMessage };
                 await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
                 return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
@@ -266,7 +266,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 if (!isSuccess)
                     return RedirectToRoute(RouteConstants.ProblemWithService);
 
-                var notificationBanner = new NotificationBannerModel { IsPrsJourney = true, HeaderMessage = prsDetails.Banner_HeaderMesage, Message = prsDetails.SuccessBannerMessage };
+                var notificationBanner = new NotificationBannerModel { DisplayMessageBody = true, HeaderMessage = prsDetails.Banner_HeaderMesage, Message = prsDetails.SuccessBannerMessage };
                 await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
                 return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
@@ -342,7 +342,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
             await _cacheService.RemoveAsync<PrsRommCheckAndSubmitViewModel>(CacheKey);
-            var notificationBanner = new NotificationBannerModel { IsPrsJourney = true, HeaderMessage = model.Banner_HeaderMesage, Message = model.SuccessBannerMessage };
+            var notificationBanner = new NotificationBannerModel { DisplayMessageBody = true, HeaderMessage = model.Banner_HeaderMesage, Message = model.SuccessBannerMessage };
             await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
@@ -455,7 +455,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 if (!isSuccess)
                     return RedirectToRoute(RouteConstants.ProblemWithService);
 
-                var notificationBanner = new NotificationBannerModel { IsPrsJourney = true, HeaderMessage = prsDetails.Banner_HeaderMesage, Message = prsDetails.SuccessBannerMessage };
+                var notificationBanner = new NotificationBannerModel { DisplayMessageBody = true, HeaderMessage = prsDetails.Banner_HeaderMesage, Message = prsDetails.SuccessBannerMessage };
                 await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
                 return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
@@ -511,7 +511,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 if (!isSuccess)
                     return RedirectToRoute(RouteConstants.ProblemWithService);
 
-                var notificationBanner = new NotificationBannerModel { IsPrsJourney = true, HeaderMessage = prsDetails.Banner_HeaderMesage, Message = prsDetails.SuccessBannerMessage };
+                var notificationBanner = new NotificationBannerModel { DisplayMessageBody = true, HeaderMessage = prsDetails.Banner_HeaderMesage, Message = prsDetails.SuccessBannerMessage };
                 await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
                 return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
@@ -587,7 +587,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
             await _cacheService.RemoveAsync<PrsAppealCheckAndSubmitViewModel>(CacheKey);
-            var notificationBanner = new NotificationBannerModel { IsPrsJourney = true, HeaderMessage = model.Banner_HeaderMesage, Message = model.SuccessBannerMessage };
+            var notificationBanner = new NotificationBannerModel { DisplayMessageBody = true, HeaderMessage = model.Banner_HeaderMesage, Message = model.SuccessBannerMessage };
             await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });

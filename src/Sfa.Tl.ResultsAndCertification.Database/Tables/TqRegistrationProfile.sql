@@ -10,6 +10,8 @@
 	[IsEnglishAndMathsAchieved] BIT NULL,
 	[IsSendLearner] BIT NULL,
 	[IsRcFeed] BIT NULL,
+	[MathsStatus] INT NULL,
+	[EnglishStatus] INT NULL,
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 
     [CreatedBy] NVARCHAR(50) NULL, 
     [ModifiedOn] DATETIME2 NULL, 

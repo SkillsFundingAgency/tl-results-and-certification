@@ -121,12 +121,15 @@
     <value>Back to Home</value>
   </data>
   <data name="Heading_Text" xml:space="preserve">
-    <value>Statements of achievement are not yet available</value>
-  </data>
-  <data name="It_Is_Too_Early_To_Request_Text" xml:space="preserve">
-    <value>It is too early to request a statement of achievement. Printing will be available from {0}.</value>
+    <value>Statements of achievement not available</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Statements of achievement not available page</value>
+    <value>SoA unavailable - Request SoA</value>
+  </data>
+  <data name="Para1_Text" xml:space="preserve">
+    <value>The statement of achievement design is in the process of being changed. This is because maths and English requirements have changed.</value>
+  </data>
+  <data name="Para2_Text" xml:space="preserve">
+    <value>We expect statements of achievement to be available again from {0}.</value>
   </data>
 </root>

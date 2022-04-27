@@ -159,6 +159,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, IndustryPlacementStatus.Completed);
             }
         }
+
+        public void BuildLearnerSubjectCriteria(TqRegistrationProfile profile, SubjectStatus? mathsStatus = null, SubjectStatus? englishStatus = null)
+        {
+            if (profile == null) return;
+
+            profile.MathsStatus = mathsStatus; 
+            profile.EnglishStatus = englishStatus;
+        }
     }
 
     public enum Provider

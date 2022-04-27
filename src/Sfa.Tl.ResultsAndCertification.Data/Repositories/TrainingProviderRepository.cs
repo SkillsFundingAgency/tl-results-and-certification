@@ -53,6 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null)
         {
+            // TODO: can an optional param pathwayId can be removed?
             var learnerRecordQuerable = from tqPathway in _dbContext.TqRegistrationPathway
                                         join tqProfile in _dbContext.TqRegistrationProfile on tqPathway.TqRegistrationProfileId equals tqProfile.Id
                                         join tqProvider in _dbContext.TqProvider on tqPathway.TqProviderId equals tqProvider.Id
@@ -69,13 +70,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             Uln = tqProfile.UniqueLearnerNumber,
                                             Name = tqProfile.Firstname + " " + tqProfile.Lastname,
                                             DateofBirth = tqProfile.DateofBirth,
-                                            ProviderName = tlProvider.Name + " (" + tlProvider.UkPrn + ")",
-                                            PathwayName = tlPathway.Name + " (" + tlPathway.LarId + ")",
+                                            ProviderName = tlProvider.Name,
+                                            ProviderUkprn = tlProvider.UkPrn,
+                                            TlevelTitle = tlPathway.TlevelTitle,
+                                            AcademicYear = tqPathway.AcademicYear,
+                                            AwardingOrganisationName= tqAo.TlAwardingOrganisaton.DisplayName,
+                                            MathsStatus = tqProfile.MathsStatus,
+                                            EnglishStatus = tqProfile.EnglishStatus,
                                             IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn,
-                                            IsLearnerRecordAdded = tqProfile.IsEnglishAndMathsAchieved.HasValue && ipRecord != null,
-                                            IsEnglishAndMathsAchieved = tqProfile.IsEnglishAndMathsAchieved ?? false,
-                                            IsSendLearner = tqProfile.IsSendLearner,
-                                            HasLrsEnglishAndMaths = tqProfile.IsRcFeed == false && tqProfile.QualificationAchieved.Any(),
                                             IndustryPlacementId = ipRecord != null ? ipRecord.Id : 0,
                                             IndustryPlacementStatus = ipRecord != null ? ipRecord.Status : null
                                         };

@@ -127,6 +127,32 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return isSuccess;
         }
 
+        public async Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request)
+        {
+            var profile = await _tqRegistrationProfile.GetFirstOrDefaultAsync(p => p.Id == request.ProfileId
+                                                                    && p.TqRegistrationPathways.Any(pa => pa.TqProvider.TlProvider.UkPrn == request.ProviderUkprn
+                                                                    && (pa.Status == RegistrationPathwayStatus.Active || pa.Status == RegistrationPathwayStatus.Withdrawn)));
+            if (profile == null ||
+                (request.SubjectType == SubjectType.Maths && profile.MathsStatus != null) ||
+                (request.SubjectType == SubjectType.English && profile.EnglishStatus != null) ||
+                (request.SubjectType == SubjectType.NotSpecified) ||
+                (request.SubjectStatus == SubjectStatus.NotSpecified))
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No valid record found to for ProfileId = {request.ProfileId}. Method: UpdateLearnerSubjectAsync({request})");
+                return false;
+            }
+
+            if (request.SubjectType == SubjectType.Maths)
+                profile.MathsStatus = request.SubjectStatus;
+            if (request.SubjectType == SubjectType.English)
+                profile.EnglishStatus = request.SubjectStatus;
+
+            profile.ModifiedOn = DateTime.UtcNow;
+            profile.ModifiedBy = request.PerformedBy;
+            
+            return await _tqRegistrationProfile.UpdateAsync(profile) > 0;
+        }
+
         private async Task<bool> HandleEnglishAndMathsChanges(UpdateLearnerRecordRequest request)
         {
             var profile = await _tqRegistrationProfile.GetFirstOrDefaultAsync(p => p.Id == request.ProfileId && p.UniqueLearnerNumber == request.Uln
@@ -206,5 +232,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.EnglishAndMathsLrsDataQueried.ToString(), _resultsAndCertificationConfiguration.TlevelQueriedSupportEmailAddress, tokens);
         }
+
+        
     }
 }

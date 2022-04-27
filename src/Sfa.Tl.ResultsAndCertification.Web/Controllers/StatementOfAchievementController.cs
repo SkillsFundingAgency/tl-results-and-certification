@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("statements-of-achievement-not-available", Name = RouteConstants.StatementsOfAchievementNotAvailable)]
+        [Route("SoA-unavailable", Name = RouteConstants.StatementsOfAchievementNotAvailable)]
         public IActionResult StatementsOfAchievementNotAvailable()
         {
             return View(new NotAvailableViewModel { SoaAvailableDate = _configuration.SoaAvailableDate });
@@ -173,6 +173,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("request-statement-of-achievement-check-and-submit/{profileId}", Name = RouteConstants.RequestSoaCheckAndSubmit)]
         public async Task<IActionResult> RequestSoaCheckAndSubmitAsync(int profileId)
         {
+            if (!IsSoaAvailable())
+                return RedirectToRoute(RouteConstants.StatementsOfAchievementNotAvailable);
+
             var viewModel = await _statementOfAchievementLoader.GetSoaLearnerRecordDetailsAsync(User.GetUkPrn(), profileId);
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -187,6 +190,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("request-statement-of-achievement-check-and-submit", Name = RouteConstants.SubmitRequestSoaCheckAndSubmit)]
         public async Task<IActionResult> SubmitRequestSoaCheckAndSubmitAsync(SoaLearnerRecordDetailsViewModel viewModel)
         {
+            if (!IsSoaAvailable())
+                return RedirectToRoute(RouteConstants.StatementsOfAchievementNotAvailable);
+
             var soaDetails = await _statementOfAchievementLoader.GetSoaLearnerRecordDetailsAsync(User.GetUkPrn(), viewModel.ProfileId);
             if (soaDetails == null || !soaDetails.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
