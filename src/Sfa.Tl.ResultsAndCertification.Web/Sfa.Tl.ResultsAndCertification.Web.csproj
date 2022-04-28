@@ -149,6 +149,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>IpCompletion.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\IndustryPlacement\IndustryPlacementModelUsedQuestion.Designer.cs">
+      <DependentUpon>IndustryPlacementModelUsedQuestion.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Content\IndustryPlacement\IpGuidanceNavigation.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1014,6 +1019,10 @@
     <EmbeddedResource Update="Content\IndustryPlacement\IpCompletion.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IpCompletion.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IndustryPlacementModelUsedQuestion.resx">
+      <LastGenOutput>IndustryPlacementModelUsedQuestion.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\IndustryPlacement\IpGuidanceNavigation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

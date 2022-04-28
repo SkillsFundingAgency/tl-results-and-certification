@@ -355,6 +355,9 @@
         public const string IpCompletion = "IpCompletion";
         public const string SubmitIpCompletion = "SubmitIpCompletion";
 
+        public const string IndustryPlacementModelUsedQuestion = "IndustryPlacementModelUsedQuestion";
+        public const string SubmitIndustryPlacementModelUsedQuestion = "SubmitIndustryPlacementModelUsedQuestion";
+
         #endregion
     }
 }
