@@ -358,6 +358,9 @@
         public const string IndustryPlacementModelUsedQuestion = "IndustryPlacementModelUsedQuestion";
         public const string SubmitIndustryPlacementModelUsedQuestion = "SubmitIndustryPlacementModelUsedQuestion";
 
+        public const string IpSpecialConsiderationHours = "IpSpecialConsiderationHours";
+        public const string SubmitIpSpecialConsiderationHours = "SubmitIpSpecialConsiderationHours";
+
         #endregion
     }
 }

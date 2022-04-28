@@ -1,0 +1,37 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual.IpSpecialConsiderationHoursViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = IpSpecialConsiderationHours.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <partial name="_ValidationSummary" />
+        <form asp-route="@RouteConstants.SubmitIpSpecialConsiderationHours">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                <span class="govuk-caption-l">@IpSpecialConsiderationHours.Caption_Ip_Special_Consideration</span>
+                <h1 class="govuk-fieldset__heading" for="total-placement-hours">
+                    @IpSpecialConsiderationHours.Heading_How_Many_Hours_Did_Complete
+                </h1>
+            </legend>
+            <div id="total-placement-hours-hint" class="govuk-hint">
+                @IpSpecialConsiderationHours.Hint_Must_Between_1_999
+            </div>
+
+            <div class="govuk-form-group">
+                <span sfa-validation-for="Hours"></span>
+                <input id="hours" class="govuk-input govuk-input--width-3" asp-for="Hours" maxlength="3">
+                <div class="govuk-input__suffix" aria-hidden="true">@IpSpecialConsiderationHours.Input_Suffix_Hours</div>
+            </div>
+
+            <button id="ContinueButton" class="govuk-button" data-module="govuk-button">@IpSpecialConsiderationHours.Button_Continue</button>
+        </form>
+    </div>
+    @*TODO: Common Guidance*@
+</div>
