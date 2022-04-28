@@ -243,6 +243,9 @@
 
         # region TrainingProvider specific constants
 
+        public const string ProviderGuidance = "ProviderGuidance";
+        public const string ProviderTimeline = "ProviderTimeline";
+
         public const string ManageLearnerRecordsDashboard = "ManageLearnerRecordsDashboard"; // TODO: Delete
         public const string AddLearnerRecord = "AddLearnerRecord";// TODO: Delete
         public const string EnterUniqueLearnerNumber = "EnterUniqueLearnerNumber"; // TODO: Delete
@@ -347,8 +350,8 @@
 
         #endregion
 
-        #region Industry Placement Question
-
+        #region Industry Placement
+        
         public const string IndustryPlacementCompletion = "IndustryPlacementCompletion";
 
         #endregion

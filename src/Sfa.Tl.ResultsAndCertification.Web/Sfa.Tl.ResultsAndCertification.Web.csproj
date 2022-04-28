@@ -884,6 +884,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ManagePostalAddress.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\TrainingProvider\ProviderGuidance.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProviderGuidance.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\ProviderTimeline.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProviderTimeline.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\TrainingProvider\SearchLearnerRecord.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1596,6 +1606,14 @@
     <EmbeddedResource Update="Content\ProviderAddress\ManagePostalAddress.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ManagePostalAddress.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\ProviderGuidance.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProviderGuidance.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\ProviderTimeline.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProviderTimeline.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\SearchLearnerRecord.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

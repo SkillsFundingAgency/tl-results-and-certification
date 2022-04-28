@@ -280,5 +280,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         #endregion
+
+        #region Guidance
+
+        [HttpGet]
+        [Route("provider-guidance", Name = RouteConstants.ProviderGuidance)]
+        public IActionResult ProviderGuidance()
+        {           
+            return View();
+        }
+
+        [HttpGet]
+        [Route("provider-timeline", Name = RouteConstants.ProviderTimeline)]
+        public IActionResult ProviderTimeline()
+        {
+            return View();
+        }
+
+        #endregion
     }
 }

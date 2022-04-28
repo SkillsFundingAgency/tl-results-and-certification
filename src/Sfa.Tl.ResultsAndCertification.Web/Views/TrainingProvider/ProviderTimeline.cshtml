@@ -1,0 +1,37 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+@using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb
+@using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb
+
+@{
+    ViewData["Title"] = ProviderTimeline.Page_Title;
+}
+
+@section NavigationBar {
+<vc:breadcrumb model="new BreadcrumbModel { BreadcrumbItems = new List<BreadcrumbItem> { new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home } }}"></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-9">@ProviderTimeline.Page_Heading</h1>
+
+        <h2 class="govuk-heading-m">@ProviderTimeline.Industry_Placement_Deadline_Date<br>@ProviderTimeline.Industry_Placement_Tlevel_Grade_Deadline</h2>
+
+        <p class="govuk-body">@ProviderTimeline.You_Must_Tell_Us_Wheather_A_Learner_Has_Completed_Their_Industry_Placement</p>
+        <p class="govuk-body">@ProviderTimeline.You_Can_Tell_Us_This_Information_As_Soon_As_You_Have_It</p>
+        <p class="govuk-body">@ProviderTimeline.Find_Out_More_About <a class="govuk-link" asp-route="@RouteConstants.ProviderGuidance"asp-fragment="industry-placement">@ProviderTimeline.The_Industry_Placement_Information_We_Will_Ask_You_For</a>.</p>
+
+        <h3 class="govuk-heading-m">@ProviderTimeline.Tlevel_Results_Issued_Date<br>@ProviderTimeline.Tlevel_Results_Issued</h3>
+
+        <p class="govuk-body">@ProviderTimeline.We_Publish_The_Results_For_Learners</p>
+        <p class="govuk-body">@ProviderTimeline.See_An <a class="govuk-link" asp-route="">@ProviderTimeline.Example_Tlevel_Results_File_Opens_In_A_New_Tab</a>.</p>
+
+        <h3 class="govuk-heading-m">@ProviderTimeline.Industry_Placement_Certificate_Deadline_Date<br>@ProviderTimeline.Industry_Placement_Certificate_Deadline</h3>
+
+        <p class="govuk-body">@ProviderTimeline.You_Must_Tell_Us_Any_Outstanding_Industry_Placement_Information</p>
+
+        <h3 class="govuk-heading-m">@ProviderTimeline.English_And_Maths_Certificate_Deadline_Date<br>@ProviderTimeline.English_And_Maths_Certificate_Deadline</h3>
+
+        <p class="govuk-body">@ProviderTimeline.For_Most_Learners_We_Get_English_And_Maths_Information_From_The_Lrs</p>
+    </div>
+</div>
