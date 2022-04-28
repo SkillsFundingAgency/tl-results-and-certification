@@ -18,6 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         public IndustryPlacementModelUsedStatus IndustryPlacementModelUsedStatus { get; set; }
 
         public bool IsValid => IndustryPlacementModelUsedStatus == IndustryPlacementModelUsedStatus.NotSpecified;
-        public virtual BackLinkModel BackLink => new() { RouteName = RouteConstants.IndustryPlacementCompletion, RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } };
+        public virtual BackLinkModel BackLink => new() { RouteName = RouteConstants.IpCompletion, RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } };
     }
 }
