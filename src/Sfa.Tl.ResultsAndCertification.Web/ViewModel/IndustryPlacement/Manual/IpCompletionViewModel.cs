@@ -7,7 +7,7 @@ using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvide
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
 {
-    public class IndustryPlacementCompletionViewModel
+    public class IpCompletionViewModel
     {
         public int ProfileId { get; set; }
 

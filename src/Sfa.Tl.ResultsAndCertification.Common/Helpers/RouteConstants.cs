@@ -352,8 +352,8 @@
 
         #region Industry Placement
         
-        public const string IndustryPlacementCompletion = "IndustryPlacementCompletion";
-        public const string SubmitIndustryPlacementCompletion = "SubmitIndustryPlacementCompletion";
+        public const string IpCompletion = "IpCompletion";
+        public const string SubmitIpCompletion = "SubmitIpCompletion";
 
         #endregion
     }

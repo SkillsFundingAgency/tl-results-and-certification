@@ -25,10 +25,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("industry-placement-completion/{profileId}", Name = RouteConstants.IndustryPlacementCompletion)]
-        public async Task<IActionResult> IndustryPlacementCompletionAsync(int profileId)
+        [Route("industry-placement-completion/{profileId}", Name = RouteConstants.IpCompletion)]
+        public async Task<IActionResult> IpCompletionAsync(int profileId)
         {
-            var viewModel = await _industryPlacementLoader.GetLearnerRecordDetailsAsync<IndustryPlacementCompletionViewModel>(User.GetUkPrn(), profileId);
+            var viewModel = await _industryPlacementLoader.GetLearnerRecordDetailsAsync<IpCompletionViewModel>(User.GetUkPrn(), profileId);
 
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -37,8 +37,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("industry-placement-completion/{profileId}", Name = RouteConstants.SubmitIndustryPlacementCompletion)]
-        public async Task<IActionResult> IndustryPlacementCompletionAsync(IndustryPlacementCompletionViewModel model)
+        [Route("industry-placement-completion/{profileId}", Name = RouteConstants.SubmitIpCompletion)]
+        public async Task<IActionResult> IpCompletionAsync(IpCompletionViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
