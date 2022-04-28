@@ -13,5 +13,6 @@
         public const string ProviderAddressCacheKey = "ProviderAddress";
         public const string SoaCacheKey = "StatementOfAchievement";
         public const string PrsCacheKey = "PostResultsService";
+        public const string IpCacheKey = "IndustryPlacement";
     }
 }

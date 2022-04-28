@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
@@ -16,6 +17,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly IIndustryPlacementLoader _industryPlacementLoader;
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
+
+        private string CacheKey
+        {
+            get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.IpCacheKey); }
+        }
 
         public IndustryPlacementController(IIndustryPlacementLoader industryPlacementLoader, ICacheService cacheService, ILogger<TrainingProviderController> logger)
         {
@@ -43,7 +49,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            await Task.CompletedTask;
+            await SyncCacheIp(model);
+
             return RedirectToRoute(RouteConstants.IndustryPlacementModelUsedQuestion, new { profileId = model.ProfileId });
         }
 
@@ -69,5 +76,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(model);
         }
 
+        private async Task SyncCacheIp(IpCompletionViewModel model)
+        {
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+            if (cacheModel?.IpCompletion != null)
+                cacheModel.IpCompletion = model;
+            else
+                cacheModel = new IndustryPlacementViewModel { IpCompletion = model };
+
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+        }
     }
 }
