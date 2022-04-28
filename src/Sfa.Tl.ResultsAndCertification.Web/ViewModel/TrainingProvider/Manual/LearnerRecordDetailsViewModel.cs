@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             RouteAttributes = GetIPLinkRouteAttributes,
             NeedBorderBottomLine = false,
             RenderHiddenActionText = true,
-            HiddenActionText = LearnerRecordDetailsContent.Industry_Placement_Action_Hidden_Text
+            HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement
         };
 
         private string GetEnglishAndMathsStatusText => HasLrsEnglishAndMaths ? string.Concat(GetLrsEnglishAndMathsStatusDisplayText, LearnerRecordDetailsContent.Whats_Lrs_Text) : GetEnglishAndMathsStatusDisplayText;

@@ -14,9 +14,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         [Required(ErrorMessageResourceType = typeof(ErrorResource.IndustryPlacementQuestion), ErrorMessageResourceName = "Validation_Select_Industry_Placement_Required_Message")]
         public IndustryPlacementStatus? IndustryPlacementStatus { get; set; }
 
-        public bool IsValid => IndustryPlacementStatus == null || IndustryPlacementStatus == ResultsAndCertification.Common.Enum.IndustryPlacementStatus.NotSpecified;
+        public bool IsValid => IndustryPlacementStatus != ResultsAndCertification.Common.Enum.IndustryPlacementStatus.Completed || IndustryPlacementStatus == ResultsAndCertification.Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration;
         
-        public virtual BackLinkModel BackLink => new BackLinkModel
+        public virtual BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.LearnerRecordDetails,
             RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }

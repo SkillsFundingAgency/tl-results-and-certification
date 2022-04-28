@@ -124,20 +124,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  industry placement information.
+        /// </summary>
+        public static string Hidden_Action_Text_Industry_Placement {
+            get {
+                return ResourceManager.GetString("Hidden_Action_Text_Industry_Placement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  maths status.
         /// </summary>
         public static string Hidden_Action_Text_Maths {
             get {
                 return ResourceManager.GetString("Hidden_Action_Text_Maths", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string Industry_Placement_Action_Hidden_Text {
-            get {
-                return ResourceManager.GetString("Industry_Placement_Action_Hidden_Text", resourceCulture);
             }
         }
         
@@ -322,7 +322,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Status.
         /// </summary>
         public static string Title_IP_Status_Text {
             get {

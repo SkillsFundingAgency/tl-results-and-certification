@@ -13,13 +13,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     [Authorize(Policy = RolesExtensions.RequireLearnerRecordsEditorAccess)]
     public class IndustryPlacementController : Controller
     {
-        private readonly ITrainingProviderLoader _trainingProviderLoader;
+        private readonly IIndustryPlacementLoader _industryPlacementLoader;
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
 
-        public IndustryPlacementController(ITrainingProviderLoader trainingProviderLoader, ICacheService cacheService, ILogger<TrainingProviderController> logger)
+        public IndustryPlacementController(IIndustryPlacementLoader industryPlacementLoader, ICacheService cacheService, ILogger<TrainingProviderController> logger)
         {
-            _trainingProviderLoader = trainingProviderLoader;
+            _industryPlacementLoader = industryPlacementLoader;
             _cacheService = cacheService;
             _logger = logger;
         }
@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("industry-placement-completion/{profileId}", Name = RouteConstants.IndustryPlacementCompletion)]
         public async Task<IActionResult> IndustryPlacementCompletionAsync(int profileId)
         {
-            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<IndustryPlacementCompletionViewModel>(User.GetUkPrn(), profileId);
+            var viewModel = await _industryPlacementLoader.GetLearnerRecordDetailsAsync<IndustryPlacementCompletionViewModel>(User.GetUkPrn(), profileId);
 
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);

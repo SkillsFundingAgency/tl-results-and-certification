@@ -25,16 +25,10 @@
                             </h1>
                         </legend>
                         <div class="govuk-radios">
-                            <span sfa-validation-for="IndustryPlacementStatus"></span>
+                            <span sfa-validation-for="IndustryPlacementStatus"></span>                            
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="industryplacementstatus" asp-for="IndustryPlacementStatus" type="radio" value="@IpStatus.IndustryPlacementStatus.StillToBeCompleted">
+                                <input class="govuk-radios__input" id="industryplacementstatus" asp-for="IndustryPlacementStatus" type="radio" value="@IpStatus.IndustryPlacementStatus.Completed">
                                 <label class="govuk-label govuk-radios__label" for="industryplacementstatus">
-                                    @IndustryPlacementCompletion.No_Still_To_Be_Completed_Option_Text
-                                </label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="industryplacementstatus-completed" asp-for="IndustryPlacementStatus" type="radio" value="@IpStatus.IndustryPlacementStatus.Completed">
-                                <label class="govuk-label govuk-radios__label" for="industryplacementstatus-completed">
                                     @IndustryPlacementCompletion.Yes_Completed_Option_Text
                                 </label>
                             </div>
@@ -42,6 +36,13 @@
                                 <input class="govuk-radios__input" id="industryplacementstatus-cwspc" asp-for="IndustryPlacementStatus" type="radio" value="@IpStatus.IndustryPlacementStatus.CompletedWithSpecialConsideration">
                                 <label class="govuk-label govuk-radios__label" for="industryplacementstatus-cwspc">
                                     @IndustryPlacementCompletion.Yes_Completed_With_Special_Consideration_Option_Text
+                                </label>
+                                <div class="govuk-hint govuk-radios__hint">@IndustryPlacementCompletion.We_Will_Ask_You_To_Declare_Hint_Text</div>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="industryplacementstatus-stilltobecompleted" asp-for="IndustryPlacementStatus" type="radio" value="@IpStatus.IndustryPlacementStatus.StillToBeCompleted">
+                                <label class="govuk-label govuk-radios__label" for="industryplacementstatus-stilltobecompleted">
+                                    @IndustryPlacementCompletion.No_Still_To_Be_Completed_Option_Text
                                 </label>
                             </div>
                         </div>
