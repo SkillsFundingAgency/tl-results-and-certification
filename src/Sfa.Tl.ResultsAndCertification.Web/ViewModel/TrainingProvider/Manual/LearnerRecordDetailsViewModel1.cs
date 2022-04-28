@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public string AwardingOrganisationName { get; set; }
         public SubjectStatus MathsStatus { get; set; }
         public SubjectStatus EnglishStatus { get; set; }
-        
+
         public int IndustryPlacementId { get; set; } // TODO: upcoming story
         public IpStatus IndustryPlacementStatus { get; set; }
 
@@ -39,9 +39,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         /// </summary>
         public bool IsLearnerRegistered { get; set; }
         public bool IsStatusCompleted => IsMathsAdded && IsEnglishAdded && IsIndustryPlacementAdded;
-        public bool IsIndustryPlacementAdded => IndustryPlacementStatus == IpStatus.Completed || IndustryPlacementStatus == IpStatus.CompletedWithSpecialConsideration;
+        public bool IsIndustryPlacementAdded => IndustryPlacementStatus != IpStatus.NotSpecified;
         public bool IsMathsAdded => MathsStatus != SubjectStatus.NotSpecified;
         public bool IsEnglishAdded => EnglishStatus != SubjectStatus.NotSpecified;
+
+        public bool CanAddIndustryPlacement => IndustryPlacementStatus == IpStatus.NotSpecified || IndustryPlacementStatus == IpStatus.NotCompleted;
+
         public NotificationBannerModel SuccessBanner { get; set; }
 
         #region Summary Header
@@ -58,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             Title = LearnerRecordDetailsContent.Title_Provider_Name_Text,
             Value = ProviderName,
         };
-        
+
         public SummaryItemModel SummaryProviderUkprn => new SummaryItemModel
         {
             Id = "providerukprn",
@@ -129,22 +132,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         #endregion
 
         // Industry Placement
-        public SummaryItemModel SummaryIndustryPlacementStatus => IsIndustryPlacementAdded ?
+        public SummaryItemModel SummaryIndustryPlacementStatus => CanAddIndustryPlacement ?
             new SummaryItemModel
             {
                 Id = "industryplacement",
                 Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
                 Value = GetIndustryPlacementDisplayText,
+                ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
+                RouteName = CanAddIndustryPlacement ? string.Empty : RouteConstants.IpCompletion,
+                RouteAttributes = CanAddIndustryPlacement ? null : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
+                HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement
             }
-            : new SummaryItemModel
+            :
+            new SummaryItemModel
             {
                 Id = "industryplacement",
                 Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
                 Value = GetIndustryPlacementDisplayText,
-                ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
-                RouteName = IsIndustryPlacementAdded ? string.Empty : RouteConstants.IpCompletion,
-                RouteAttributes = IsIndustryPlacementAdded ? null : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
-                HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement
             };
 
         public BackLinkModel BackLink => new()
