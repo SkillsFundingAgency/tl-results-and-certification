@@ -354,6 +354,8 @@
         
         public const string IndustryPlacementCompletion = "IndustryPlacementCompletion";
         public const string SubmitIndustryPlacementCompletion = "SubmitIndustryPlacementCompletion";
+        public const string IndustryPlacementModelUsedQuestion = "IndustryPlacementModelUsedQuestion";
+        public const string SubmitIndustryPlacementModelUsedQuestion = "SubmitIndustryPlacementModelUsedQuestion";
 
         #endregion
     }

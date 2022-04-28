@@ -44,7 +44,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
 
             await Task.CompletedTask;
-            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
+            return RedirectToRoute(RouteConstants.IndustryPlacementModelUsedQuestion, new { profileId = model.ProfileId });
         }
+
+        [HttpGet]
+        [Route("industry-placement-model-used-question/{profileId}", Name = RouteConstants.IndustryPlacementModelUsedQuestion)]
+        public async Task<IActionResult> IndustryPlacementModelUsedQuestionAsync(int profileId)
+        {
+            var viewModel = await _industryPlacementLoader.GetLearnerRecordDetailsAsync<IndustryPlacementModelUsedViewModel>(User.GetUkPrn(), profileId);
+            if (viewModel == null || !viewModel.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("industry-placement-model-used-question/{profileId}", Name = RouteConstants.SubmitIndustryPlacementModelUsedQuestion)]
+        public async Task<IActionResult> IndustryPlacementModelUsedQuestionAsync(IndustryPlacementModelUsedViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            await Task.CompletedTask;
+            return View(model);
+        }
+
     }
 }
