@@ -10,6 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
         {
             CreateMap<LearnerRecordDetails, IndustryPlacementCompletionViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
         }
     }

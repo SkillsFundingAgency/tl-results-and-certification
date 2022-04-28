@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class IndustryPlacementCompletion {
@@ -89,11 +89,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Has completed their industry placement?.
+        ///   Looks up a localized string similar to Has {0} completed their industry placement?.
         /// </summary>
-        public static string Has_Completed_Industry_Placement_Heading {
+        public static string Has_Learner_Completed_Industry_Placement_Heading {
             get {
-                return ResourceManager.GetString("Has_Completed_Industry_Placement_Heading", resourceCulture);
+                return ResourceManager.GetString("Has_Learner_Completed_Industry_Placement_Heading", resourceCulture);
             }
         }
         
@@ -116,7 +116,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Industry placement completion.
+        ///   Looks up a localized string similar to Industry placement completion - Manage learner.
         /// </summary>
         public static string Page_Title {
             get {

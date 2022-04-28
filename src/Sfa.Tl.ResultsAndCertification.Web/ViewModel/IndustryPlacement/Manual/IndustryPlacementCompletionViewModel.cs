@@ -11,6 +11,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
     {
         public int ProfileId { get; set; }
 
+        public string LearnerName { get; set; }
+
         [Required(ErrorMessageResourceType = typeof(ErrorResource.IndustryPlacementQuestion), ErrorMessageResourceName = "Validation_Select_Industry_Placement_Required_Message")]
         public IndustryPlacementStatus? IndustryPlacementStatus { get; set; }
 

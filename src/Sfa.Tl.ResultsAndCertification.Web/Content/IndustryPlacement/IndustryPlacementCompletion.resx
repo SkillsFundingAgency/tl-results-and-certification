@@ -126,8 +126,8 @@
   <data name="For_This_Learner_Hint_Text" xml:space="preserve">
     <value>for this learner.</value>
   </data>
-  <data name="Has_Completed_Industry_Placement_Heading" xml:space="preserve">
-    <value>Has completed their industry placement?</value>
+  <data name="Has_Learner_Completed_Industry_Placement_Heading" xml:space="preserve">
+    <value>Has {0} completed their industry placement?</value>
   </data>
   <data name="Industry_Placement_Caption" xml:space="preserve">
     <value>Industry placement</value>
@@ -136,7 +136,7 @@
     <value>No, still to be completed</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Industry placement completion</value>
+    <value>Industry placement completion - Manage learner</value>
   </data>
   <data name="Signed_Declaration_Hint_Text" xml:space="preserve">
     <value>signed declaration of student completion (opens in a new tab)</value>

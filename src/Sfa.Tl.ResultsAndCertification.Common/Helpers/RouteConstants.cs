@@ -353,6 +353,7 @@
         #region Industry Placement
         
         public const string IndustryPlacementCompletion = "IndustryPlacementCompletion";
+        public const string SubmitIndustryPlacementCompletion = "SubmitIndustryPlacementCompletion";
 
         #endregion
     }

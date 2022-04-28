@@ -35,5 +35,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return View(viewModel);
         }
+
+        [HttpPost]
+        [Route("industry-placement-completion/{profileId}", Name = RouteConstants.SubmitIndustryPlacementCompletion)]
+        public async Task<IActionResult> IndustryPlacementCompletionAsync(IndustryPlacementCompletionViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            await Task.CompletedTask;
+            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
+        }
     }
 }
