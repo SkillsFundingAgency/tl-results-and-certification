@@ -355,8 +355,8 @@
         public const string IpCompletion = "IpCompletion";
         public const string SubmitIpCompletion = "SubmitIpCompletion";
 
-        public const string IndustryPlacementModelUsedQuestion = "IndustryPlacementModelUsedQuestion";
-        public const string SubmitIndustryPlacementModelUsedQuestion = "SubmitIndustryPlacementModelUsedQuestion";
+        public const string IpModelUsed = "IpModelUsed";
+        public const string SubmitIpModelUsed = "SubmitIpModelUsed";
 
         public const string IpSpecialConsiderationHours = "IpSpecialConsiderationHours";
         public const string SubmitIpSpecialConsiderationHours = "SubmitIpSpecialConsiderationHours";
