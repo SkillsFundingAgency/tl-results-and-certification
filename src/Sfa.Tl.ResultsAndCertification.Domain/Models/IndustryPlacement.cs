@@ -13,8 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public int TqRegistrationPathwayId { get; set; }
         public IndustryPlacementStatus Status { get; set; }
         public int? Hours { get; set; }
-        public bool? IsMultiEmployer { get; set; }
-        public bool? IsBlended { get; set; }
 
         public virtual TqRegistrationPathway TqRegistrationPathway { get; set; }
         public virtual ICollection<IpAchieved> IpAchieved { get; set; }        
