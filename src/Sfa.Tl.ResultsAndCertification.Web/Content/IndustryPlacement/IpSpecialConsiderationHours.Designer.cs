@@ -98,6 +98,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hours spent on placement must be between 0 and 1000.
+        /// </summary>
+        public static string Hours_Must_Be_Between_0_1000 {
+            get {
+                return ResourceManager.GetString("Hours_Must_Be_Between_0_1000", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter number of hours the learner spent on placement.
+        /// </summary>
+        public static string Hours_Required_Validation_Message {
+            get {
+                return ResourceManager.GetString("Hours_Required_Validation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to hours.
         /// </summary>
         public static string Input_Suffix_Hours {
