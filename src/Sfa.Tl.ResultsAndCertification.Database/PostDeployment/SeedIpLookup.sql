@@ -23,14 +23,14 @@ USING (VALUES
   (14, 15, N'Commercial, charitable or community projects', N'2020-09-01', NULL, NULL, 5),
   (15, 15, N'One lead employer facilitating the required hours', N'2020-09-01',NULL, 0, 6),
   (16, 15, N'Use of skills hubs or employer training centres', N'2020-09-01', NULL, 0, 7),
+  (17, 15, N'Multiple employer', N'2020-09-01', NULL, 0, 8),
 
-  (17, 16, N'JABQG risk-rated approach', N'2020-01-01', NULL, 1, 1),
-  (18, 16, N'Reduction in hours', N'2020-01-01', NULL, 1, 2),
-  (19, 16, N'Employer led activities/projects', N'2020-01-01', N'2020-12-31', NULL, 3),
-  (20, 16, N'Up to 100% remote', N'2020-01-01', N'2020-12-31', 0, 4),
-  (21, 16, N'No other flexibility used', N'2020-01-01', N'2020-12-31', 1, 5),  
-  (22, 16, N'Pathway level placements', N'2021-01-01', NULL, 1, 6),
-  (23, 16, N'Blended placements', N'2021-01-01', NULL, 1, 7)
+  (18, 16, N'JABQG risk-rated approach', N'2020-01-01', NULL, 1, 1),
+  (19, 16, N'Reduction in hours', N'2020-01-01', NULL, 1, 2),
+  (20, 16, N'Employer led activities/projects', N'2020-01-01', N'2020-12-31', NULL, 3),
+  (21, 16, N'Up to 100% remote', N'2020-01-01', N'2020-12-31', 0, 4),
+  (22, 16, N'Pathway level placements', N'2021-01-01', NULL, 1, 5),
+  (23, 16, N'Blended placements', N'2020-01-01', NULL, 1, 6)
   )
   AS Source ([Id], [TlLookupId], [Name], [StartDate], [EndDate], [ShowOption], [SortOrder]) 
 ON Target.[Id] = Source.[Id] 
