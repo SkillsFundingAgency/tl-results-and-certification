@@ -2,11 +2,9 @@
 @using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
 
 <div class="govuk-grid-column-one-third">
-    <div class="app-step-nav-related app-step-nav-related--singular">
-        <h2 class="app-step-nav-related__heading">
-            @IpGuidanceNavigation.Guidance_Heading
-        </h2>
-    </div>
+    <h2 class="govuk-heading-m">
+        @IpGuidanceNavigation.Guidance_Heading
+    </h2>
     <ul class="govuk-list">
         <li>
             <a class="govuk-link" asp-route="@RouteConstants.ProviderGuidance" asp-fragment="special-consideration">@IpGuidanceNavigation.SpecialConsideration_Text</a>

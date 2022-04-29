@@ -133,6 +133,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tell us whether this learner has completed their industry placement.
+        /// </summary>
+        public static string Validation_Message {
+            get {
+                return ResourceManager.GetString("Validation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to We will ask you to declare that you have documentary evidence on file before you can submit this learner&apos;s industry placement details.
         /// </summary>
         public static string We_Will_Ask_You_To_Declare_Hint_Text {
