@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -20,6 +21,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var response = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
             return _mapper.Map<T>(response);
+        }
+
+        public async Task<T> TransformFromLearnerDetailsTo<T>(IpCompletionViewModel model)
+        {
+            return await Task.FromResult(_mapper.Map<T>(model));
         }
     }
 }
