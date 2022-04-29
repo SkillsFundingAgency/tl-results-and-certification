@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using Xunit;
@@ -10,20 +11,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
     public class When_Called_With_Valid_Data : TestSetup
     {
         private IpModelUsedViewModel _ipModelUsedViewModel;
+        private IpCompletionViewModel _ipCompletionViewModel;
 
         public override void Given()
         {
-            ProfileId = 1;
 
-            _ipModelUsedViewModel = new IpModelUsedViewModel { ProfileId = ProfileId, LearnerName = "Test Test"};
-
-            IndustryPlacementLoader.GetLearnerRecordDetailsAsync<IpModelUsedViewModel>(ProviderUkprn, ProfileId).Returns(_ipModelUsedViewModel);
+            _ipCompletionViewModel = new IpCompletionViewModel
+            {
+                ProfileId = 1,
+                LearnerName = "John Smith",
+                IndustryPlacementStatus = IndustryPlacementStatus.Completed
+            };
+            _ipModelUsedViewModel = new IpModelUsedViewModel { ProfileId = 1, LearnerName = "John Smith", IndustryPlacementStatus = IndustryPlacementStatus.Completed };
+            IndustryPlacementLoader.TransformFromLearnerDetailsTo<IpModelUsedViewModel>(_ipCompletionViewModel).Returns(_ipModelUsedViewModel);
+            CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(new IndustryPlacementViewModel()
+            {
+                IpCompletion = _ipCompletionViewModel
+            });
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            IndustryPlacementLoader.Received(1).GetLearnerRecordDetailsAsync<IpModelUsedViewModel>(ProviderUkprn, ProfileId);
+            CacheService.Received(1).GetAsync<IndustryPlacementViewModel>(CacheKey);
+            IndustryPlacementLoader.Received(1).TransformFromLearnerDetailsTo<IpModelUsedViewModel>(_ipCompletionViewModel);
         }
 
         [Fact]
@@ -42,7 +53,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.BackLink.RouteName.Should().Be(RouteConstants.IpCompletion);
             model.BackLink.RouteAttributes.Count.Should().Be(1);
             model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string profileIdRouteValue);
-            profileIdRouteValue.Should().Be(ProfileId.ToString());
         }
     }
 }

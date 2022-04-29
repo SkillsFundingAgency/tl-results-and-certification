@@ -3,7 +3,7 @@
     public class IndustryPlacementViewModel
     {
         public IpCompletionViewModel IpCompletion { get; set; }
-        public IpModelUsedViewModel IpModelUsed { get; set; }
+        public IpModelViewModel IpModelViewModel { get; set; }
         public SpecialConsiderationViewModel SpecialConsideration { get; set; }
     }
 
