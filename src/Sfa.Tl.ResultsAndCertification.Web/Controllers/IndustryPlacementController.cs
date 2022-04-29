@@ -97,23 +97,32 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> IpSpecialConsiderationHoursAsync()
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
-            if (cacheModel == null || cacheModel.IpCompletion.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration)
+            if (cacheModel == null || cacheModel.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var viewModel = cacheModel?.SpecialConsideration == null ? new SpecialConsiderationViewModel().PlacementHours : cacheModel.SpecialConsideration.PlacementHours;
+            var viewModel = cacheModel?.SpecialConsideration == null ? new SpecialConsiderationHoursViewModel() : cacheModel.SpecialConsideration.Hours;
 
             return View(viewModel);
         }
 
         [HttpPost]
         [Route("industry-placement-special-consideration-hours", Name = RouteConstants.SubmitIpSpecialConsiderationHours)]
-        public async Task<IActionResult> IpSpecialConsiderationHoursAsync(PlacementHoursViewModel model)
+        public async Task<IActionResult> IpSpecialConsiderationHoursAsync(SpecialConsiderationHoursViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
-            await Task.CompletedTask;
-            return View(model);
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+            if (cacheModel == null || cacheModel.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            if (cacheModel?.SpecialConsideration == null)
+                cacheModel.SpecialConsideration = new SpecialConsiderationViewModel();
+
+            cacheModel.SpecialConsideration.Hours = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            return RedirectToRoute(RouteConstants.IpSpecialConsiderationHours); // TODO:
         }
 
         #endregion
