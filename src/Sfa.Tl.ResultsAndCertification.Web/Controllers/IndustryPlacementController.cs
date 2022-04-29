@@ -82,9 +82,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
             if (cacheModel == null)
-                return RedirectToRoute(RouteConstants.PageNotFound); 
+                return RedirectToRoute(RouteConstants.PageNotFound);
 
-            cacheModel.IpModelViewModel = new IpModelViewModel { IpModelUsed = model };
+            if (cacheModel?.IpModelViewModel == null)
+                cacheModel.IpModelViewModel = new IpModelViewModel();
+
+            cacheModel.IpModelViewModel.IpModelUsed = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
             return View(model);
