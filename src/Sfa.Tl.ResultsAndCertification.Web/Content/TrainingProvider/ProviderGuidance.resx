@@ -141,9 +141,6 @@
   <data name="Downloading_Tlevel_Results_On_Results_Day" xml:space="preserve">
     <value>downloading T Level results on results day</value>
   </data>
-  <data name="Example_Tlevel_Results_File_Opens_In_A_New_Tab" xml:space="preserve">
-    <value>example T Level results file (opens in a new tab)</value>
-  </data>
   <data name="For_The_First_Two_Waves_Of_Tlevel_Students" xml:space="preserve">
     <value>For the first two waves of T Level students, starting in 2020 to 2021 and 2021 to 2022, we have specified some temporary flexibilities that can be applied by exception and as a last resort.</value>
   </data>
@@ -182,9 +179,6 @@
   </data>
   <data name="Requesting_Statements_Of_Achievement_For_Withdrawn_Learners" xml:space="preserve">
     <value>requesting statements of achievement for withdrawn learners</value>
-  </data>
-  <data name="See_An" xml:space="preserve">
-    <value>See an</value>
   </data>
   <data name="Special_Consideration" xml:space="preserve">
     <value>Special consideration</value>

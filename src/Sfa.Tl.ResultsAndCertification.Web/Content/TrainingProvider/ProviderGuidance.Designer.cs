@@ -133,15 +133,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to example T Level results file (opens in a new tab).
-        /// </summary>
-        public static string Example_Tlevel_Results_File_Opens_In_A_New_Tab {
-            get {
-                return ResourceManager.GetString("Example_Tlevel_Results_File_Opens_In_A_New_Tab", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to For the first two waves of T Level students, starting in 2020 to 2021 and 2021 to 2022, we have specified some temporary flexibilities that can be applied by exception and as a last resort..
         /// </summary>
         public static string For_The_First_Two_Waves_Of_Tlevel_Students {
@@ -255,15 +246,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Requesting_Statements_Of_Achievement_For_Withdrawn_Learners {
             get {
                 return ResourceManager.GetString("Requesting_Statements_Of_Achievement_For_Withdrawn_Learners", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to See an.
-        /// </summary>
-        public static string See_An {
-            get {
-                return ResourceManager.GetString("See_An", resourceCulture);
             }
         }
         
