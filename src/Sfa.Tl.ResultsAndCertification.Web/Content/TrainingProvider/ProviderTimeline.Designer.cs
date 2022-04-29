@@ -79,15 +79,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to example T Level results file (opens in a new tab).
-        /// </summary>
-        public static string Example_Tlevel_Results_File_Opens_In_A_New_Tab {
-            get {
-                return ResourceManager.GetString("Example_Tlevel_Results_File_Opens_In_A_New_Tab", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Find out more about.
         /// </summary>
         public static string Find_Out_More_About {
@@ -156,15 +147,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to See an.
-        /// </summary>
-        public static string See_An {
-            get {
-                return ResourceManager.GetString("See_An", resourceCulture);
             }
         }
         
