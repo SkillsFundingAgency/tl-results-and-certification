@@ -29,5 +29,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var response = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
             return _mapper.Map<T>(response);
         }
+
+        public async Task<T> TransformFromLearnerDetailsTo<T>(IpCompletionViewModel model)
+        {
+            return await Task.FromResult(_mapper.Map<T>(model));
+        }
     }
 }

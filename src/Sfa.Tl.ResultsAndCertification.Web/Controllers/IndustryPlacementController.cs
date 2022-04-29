@@ -62,24 +62,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("industry-placement-model-used/{profileId}", Name = RouteConstants.IpModelUsed)]
-        public async Task<IActionResult> IpModelUsedAsync(int profileId)
+        [Route("industry-placement-model-used", Name = RouteConstants.IpModelUsed)]
+        public async Task<IActionResult> IpModelUsedAsync()
         {
-            var viewModel = await _industryPlacementLoader.GetLearnerRecordDetailsAsync<IpModelUsedViewModel>(User.GetUkPrn(), profileId);
-            if (viewModel == null || !viewModel.IsValid)
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+            if (cacheModel?.IpCompletion?.IndustryPlacementStatus == null || cacheModel.IpCompletion.IndustryPlacementStatus != IndustryPlacementStatus.Completed)//todo - second entry point requires CompletedWithSpecialConsideration
                 return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = await _industryPlacementLoader.TransformFromLearnerDetailsTo<IpModelUsedViewModel>(cacheModel.IpCompletion);
 
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("industry-placement-model-used/{profileId}", Name = RouteConstants.SubmitIpModelUsed)]
+        [Route("industry-placement-model-used", Name = RouteConstants.SubmitIpModelUsed)]
         public async Task<IActionResult> IpModelUsedAsync(IpModelUsedViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
-            await SyncCacheIp(model);
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            if (cacheModel?.IpModelViewModel == null)
+                cacheModel.IpModelViewModel = new IpModelViewModel();
+
+            cacheModel.IpModelViewModel.IpModelUsed = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
 
             return View(model);
         }
@@ -162,18 +172,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel?.IpCompletion != null)
                 cacheModel.IpCompletion = model;
             else
-                cacheModel = new IndustryPlacementViewModel { IpCompletion = model };
-
-            await _cacheService.SetAsync(CacheKey, cacheModel);
-        }
-
-        private async Task SyncCacheIp(IpModelUsedViewModel model)
-        {
-            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
-            if (cacheModel?.IpModelUsed != null)
-                cacheModel.IpModelUsed = model;
-            else
-                cacheModel = new IndustryPlacementViewModel { IpModelUsed = model };
+                cacheModel = new IndustryPlacementViewModel { 
+                    IpCompletion = model 
+                };
 
             await _cacheService.SetAsync(CacheKey, cacheModel);
         }
