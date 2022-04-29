@@ -358,8 +358,11 @@
         public const string IpModelUsed = "IpModelUsed";
         public const string SubmitIpModelUsed = "SubmitIpModelUsed";
 
+        // Special Considerations
         public const string IpSpecialConsiderationHours = "IpSpecialConsiderationHours";
         public const string SubmitIpSpecialConsiderationHours = "SubmitIpSpecialConsiderationHours";
+        public const string IpSpecialConsiderationReasons = "IpSpecialConsiderationReasons";
+        public const string SubmitIpSpecialConsiderationReasons = "SubmitIpSpecialConsiderationReasons";
 
         #endregion
     }

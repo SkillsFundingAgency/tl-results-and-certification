@@ -3,5 +3,6 @@
     public class SpecialConsiderationViewModel
     {
         public SpecialConsiderationHoursViewModel Hours { get; set; }
+        public SpecialConsiderationReasonsViewModel Reasons { get; set; }
     }
 }

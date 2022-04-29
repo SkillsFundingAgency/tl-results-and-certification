@@ -181,6 +181,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IDataExportLoader, DataExportLoader>();
             services.AddTransient<IDataExportService, DataExportService>();
             services.AddTransient<IDataExportRepository, DataExportRepository>();
+
+            // IndustryPlacement
+            services.AddTransient<IIndustryPlacementService, IndustryPlacementService>();
         }
     }
 }

@@ -1,0 +1,46 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual.SpecialConsiderationReasonsViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = IpSpecialConsiderationReasons.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <partial name="_ValidationSummary" />
+        <form asp-route="@RouteConstants.SubmitIpSpecialConsiderationReasons">
+            <span class="govuk-caption-l">Industry placement: Special consideration</span>
+
+            <div class="govuk-form-group" sfa-validation-for="IsReasonSelected" sfa-validation-class="govuk-form-group--error">
+
+                <fieldset class="govuk-fieldset" aria-describedby="special-consideration-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">@IpSpecialConsiderationReasons.Question_Why_Was_SC_For_Their_Industry_Placement</h1>
+                    </legend>
+                    <div id="special-consideration-hint" class="govuk-hint">@IpSpecialConsiderationReasons.Hint_We_Will_Ask_You_To_Declare</div>
+
+                    <div class="govuk-form-group">
+                        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                            @*TODO: Loop here*@
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="special-consideration" name="special-consideration" type="checkbox" value="Learner's medical reasons">
+                                <label class="govuk-label govuk-checkboxes__label" for="special-consideration">
+                                    Learner's medical reasons
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </div>
+
+            <button id="ContinueButton" class="govuk-button" data-module="govuk-button">@IpSpecialConsiderationReasons.Button_Continue</button>
+        </form>
+    </div>
+
+</div>

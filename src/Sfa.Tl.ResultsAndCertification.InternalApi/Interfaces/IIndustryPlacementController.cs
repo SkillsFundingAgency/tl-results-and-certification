@@ -3,11 +3,11 @@ using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
+namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
 {
-    public interface IIndustryPlacementLoader
+    public interface IIndustryPlacementController
     {
-        Task<T> GetLearnerRecordDetailsAsync<T>(long providerUkprn, int profileId, int? pathwayId = null);
         Task<IList<IpLookupData>> GetIpLookupDataAsync(IpLookupType ipLookupType, int? pathwayId = null);
+
     }
 }

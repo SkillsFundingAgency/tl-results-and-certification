@@ -97,6 +97,9 @@
         public const string UcasTokenUri = "/token";
         public const string UcasFileUri = "/folders/{0}/files";
 
+        // Industry Placement 
+        public const string GetIpLookupDataUri = "api/industryplacement/GetIpLookupData/{0}/{1}";
+
         // Common Api Uri's
         public const string GetLookupDataUri = "/api/common/GetLookupData/{0}";
         public const string GetLoggedInUserTypeInfoUri = "/api/common/GetLoggedInUserTypeInfo/{0}";
