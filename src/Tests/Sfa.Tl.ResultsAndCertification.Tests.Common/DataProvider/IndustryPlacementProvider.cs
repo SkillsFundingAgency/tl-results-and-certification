@@ -33,15 +33,13 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return industryPlacement;
         }
 
-        public static IndustryPlacement CreateIndustryPlacement(ResultsAndCertificationDbContext _dbContext, int tqRegistrationPathwayId, IndustryPlacementStatus status, int? hours = null, bool? isMultiEmployer = null, bool? isBlended = null, bool addToDbContext = true)
+        public static IndustryPlacement CreateIndustryPlacement(ResultsAndCertificationDbContext _dbContext, int tqRegistrationPathwayId, IndustryPlacementStatus status, int? hours = null, bool addToDbContext = true)
         {
             var qualificationAchieved = new IndustryPlacement
             {
                 TqRegistrationPathwayId = tqRegistrationPathwayId,
                 Status = status,
-                Hours = hours,
-                IsMultiEmployer = isMultiEmployer,
-                IsBlended = isBlended
+                Hours = hours
             };
 
             if (addToDbContext)
