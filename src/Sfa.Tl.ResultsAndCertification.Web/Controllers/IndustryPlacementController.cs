@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
@@ -81,6 +82,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return View(model);
         }
+
+        #region SpecialConsideration
+
+        [HttpGet]
+        [Route("industry-placement-special-consideration-hours", Name = RouteConstants.IpSpecialConsiderationHours)]
+        public async Task<IActionResult> IpSpecialConsiderationHoursAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+            if (cacheModel == null || cacheModel.IpCompletion.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = cacheModel?.SpecialConsideration == null ? new SpecialConsiderationViewModel().PlacementHours : cacheModel.SpecialConsideration.PlacementHours;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("industry-placement-special-consideration-hours", Name = RouteConstants.SubmitIpSpecialConsiderationHours)]
+        public async Task<IActionResult> IpSpecialConsiderationHoursAsync(PlacementHoursViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            await Task.CompletedTask;
+            return View(model);
+        }
+
+        #endregion
 
         private async Task SyncCacheIp(IpCompletionViewModel model)
         {

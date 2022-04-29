@@ -129,6 +129,12 @@
   <data name="Hint_Must_Between_1_999" xml:space="preserve">
     <value>Must be between 1 and 999</value>
   </data>
+  <data name="Hours_Must_Be_Between_0_1000" xml:space="preserve">
+    <value>Hours spent on placement must be between 0 and 1000</value>
+  </data>
+  <data name="Hours_Required_Validation_Message" xml:space="preserve">
+    <value>Enter number of hours the learner spent on placement</value>
+  </data>
   <data name="Input_Suffix_Hours" xml:space="preserve">
     <value>hours</value>
   </data>
