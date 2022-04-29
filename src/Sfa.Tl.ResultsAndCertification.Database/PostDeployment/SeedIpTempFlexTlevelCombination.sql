@@ -8,43 +8,41 @@ MERGE INTO [dbo].[IpTempFlexTlevelCombination] AS Target
 USING (VALUES 
 
 	-- Design, Surveying and Planning for Construction
-	(1, 1, 19, 1),
-	(2, 1, 20, 1),
-	(3, 1, 21, 1),
-	(4, 1, 23, 1),
+	(1, 1, 20, 1),
+	(2, 1, 21, 1),
+	(3, 1, 23, 1),
 
 	-- Onsite Construction
-	(5, 2, 23, 1),
+	(4, 2, 23, 1),
 	
 	-- Building Services Engineering for Construction
-	(6, 3, 23, 1),
+	(5, 3, 23, 1),
 	
 	-- Education and Childcare
-	(7, 4, 17, 1),
-	(8, 4, 18, 1),
+	(6, 4, 18, 1),
+	(7, 4, 19, 1),
 
 	-- Digital production, design and development
-	(9, 5, 19, 1),
-	(10, 5, 20, 1),
-	(11, 5, 21, 1),
-	(12, 5, 23, 1),
+	(8, 5, 20, 1),
+	(9, 5, 21, 1),
+	(10, 5, 23, 1),
 
 	-- Digital Support Services
-	(13, 6, 23, 1),
+	(11, 6, 23, 1),
 
 	-- Digital Business Services
-	(14, 7, 23, 1),
+	(12, 7, 23, 1),
 
 	-- Health
-	(15, 8, 22, 1),
-	(16, 8, 23, 1),
+	(13, 8, 22, 1),
+	(14, 8, 23, 1),
 
 	-- Healthcare Science
-	(17, 9, 23, 1),
+	(15, 9, 23, 1),
 
 	-- Science
-	(18, 10, 22, 1),
-	(19, 10, 23, 1)	
+	(16, 10, 22, 1),
+	(17, 10, 23, 1)	
   )
   AS Source ([Id], [TlPathwayId], [IpLookupId], [IsActive]) 
 ON Target.[Id] = Source.[Id] 
