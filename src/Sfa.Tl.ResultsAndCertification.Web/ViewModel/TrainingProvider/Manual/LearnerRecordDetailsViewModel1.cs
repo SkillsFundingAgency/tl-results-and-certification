@@ -139,8 +139,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
                 Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
                 Value = GetIndustryPlacementDisplayText,
                 ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
-                RouteName = CanAddIndustryPlacement ? string.Empty : RouteConstants.IpCompletion,
-                RouteAttributes = CanAddIndustryPlacement ? null : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
+                RouteName = CanAddIndustryPlacement ? RouteConstants.IpCompletion : string.Empty,
+                RouteAttributes = CanAddIndustryPlacement ? new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } : null,
                 HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement
             }
             :

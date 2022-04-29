@@ -9,11 +9,14 @@ using Xunit;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
 using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.LearnerRecordDetailsGet
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
+        private Dictionary<string, string> _routeAttributes;
+
         public override void Given()
         {
             ProfileId = 10;
@@ -36,6 +39,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 IndustryPlacementId = 10,
                 IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified
             };
+
+            _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, Mockresult.ProfileId.ToString() } };
+
             TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel1>(ProviderUkprn, ProfileId).Returns(Mockresult);
         }
 
@@ -73,6 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.IsMathsAdded.Should().BeFalse();
             model.IsEnglishAdded.Should().BeFalse();
             model.IsIndustryPlacementAdded.Should().BeFalse();
+            model.CanAddIndustryPlacement.Should().BeTrue();
             model.IsStatusCompleted.Should().BeFalse();
 
             // DateofBirth
@@ -99,6 +106,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryAoName.Title.Should().Be(LearnerRecordDetailsContent.Title_AoName_Text);
             model.SummaryAoName.Value.Should().Be(Mockresult.AwardingOrganisationName);
 
+            // Summary Industry Placement
+            model.SummaryIndustryPlacementStatus.Should().NotBeNull();
+            model.SummaryIndustryPlacementStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_IP_Status_Text);
+            model.SummaryIndustryPlacementStatus.Value.Should().Be(SubjectStatusContent.Not_Yet_Recevied_Display_Text);
+            model.SummaryIndustryPlacementStatus.HiddenActionText.Should().Be(LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement);
+            model.SummaryIndustryPlacementStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Action_Text_Link_Add);
+            model.SummaryIndustryPlacementStatus.RouteName.Should().Be(RouteConstants.IpCompletion);
+            model.SummaryIndustryPlacementStatus.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
+
             // Summary Maths StatusHidden_Action_Text_Maths
             model.SummaryMathsStatus.Should().NotBeNull();
             model.SummaryMathsStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_Maths_Text);
@@ -106,6 +122,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryMathsStatus.NeedBorderBottomLine.Should().BeTrue();
             model.SummaryMathsStatus.HiddenActionText.Should().Be(LearnerRecordDetailsContent.Hidden_Action_Text_Maths);
             model.SummaryMathsStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Action_Text_Link_Add);
+            model.SummaryMathsStatus.RouteName.Should().Be(RouteConstants.AddMathsStatus);
+            model.SummaryMathsStatus.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             // Summary English Status
             model.SummaryEnglishStatus.Should().NotBeNull();
@@ -114,6 +132,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryEnglishStatus.NeedBorderBottomLine.Should().BeTrue();
             model.SummaryEnglishStatus.HiddenActionText.Should().Be(LearnerRecordDetailsContent.Hidden_Action_Text_English);
             model.SummaryEnglishStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Action_Text_Link_Add);
+            model.SummaryEnglishStatus.RouteName.Should().Be(RouteConstants.AddEnglishStatus);
+            model.SummaryEnglishStatus.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             // Back link
             model.BackLink.Should().NotBeNull();

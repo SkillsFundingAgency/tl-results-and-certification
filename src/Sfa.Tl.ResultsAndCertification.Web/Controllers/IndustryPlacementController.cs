@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.IpCacheKey); }
         }
 
-        public IndustryPlacementController(IIndustryPlacementLoader industryPlacementLoader, ICacheService cacheService, ILogger<TrainingProviderController> logger)
+        public IndustryPlacementController(IIndustryPlacementLoader industryPlacementLoader, ICacheService cacheService, ILogger<IndustryPlacementController> logger)
         {
             _industryPlacementLoader = industryPlacementLoader;
             _cacheService = cacheService;
