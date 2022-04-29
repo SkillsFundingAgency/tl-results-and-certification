@@ -3,7 +3,7 @@
 	[Id] INT IDENTITY(1,1) NOT NULL,
 	[TlPathwayId] INT NOT NULL,
 	[IpLookupId] INT NOT NULL,
-	[IsActive] BIT,	
+	[IsActive] BIT NOT NULL,	
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 
     [CreatedBy] NVARCHAR(50) NULL, 
     [ModifiedOn] DATETIME2 NULL, 
