@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
@@ -9,6 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper;
 using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests
@@ -16,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
     public abstract class IndustryPlacementControllerTestBase : BaseTest<IndustryPlacementController>
     {
         // Dependencies
+        protected IMapper Mapper;
         protected IIndustryPlacementLoader IndustryPlacementLoader;
         protected ICacheService CacheService;
         protected ILogger<IndustryPlacementController> Logger;
@@ -43,6 +46,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             HttpContextAccessor.HttpContext.Returns(httpContext);
+
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(IndustryPlacementMapper).Assembly));
+            Mapper = new AutoMapper.Mapper(mapperConfig);
 
             CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.IpCacheKey);
         }

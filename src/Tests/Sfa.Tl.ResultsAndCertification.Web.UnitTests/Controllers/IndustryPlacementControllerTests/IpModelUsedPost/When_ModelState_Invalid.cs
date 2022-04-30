@@ -8,21 +8,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 {
     public class When_ModelState_Invalid : TestSetup
     {
-        private IpModelUsedViewModel _ipModelUsedViewModel;
-
         public override void Given()
         {
             ProfileId = 1;
-
-            _ipModelUsedViewModel = new IpModelUsedViewModel
-            {
-                ProfileId = ProfileId,
-                LearnerName = "John Smith",
-                IsIpModelUsed = null
-            };
-
-
-            viewModel = new IpModelUsedViewModel { ProfileId = 1, LearnerName = "John Smith", IsIpModelUsed = null };
+            ViewModel = new IpModelUsedViewModel { ProfileId = ProfileId, LearnerName = "John Smith", IsIpModelUsed = null };
             Controller.ModelState.AddModelError("IsIpModelUsed", Content.IndustryPlacement.IpModelUsed.Validation_Message);
         }
 
@@ -38,8 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
             model.Should().NotBeNull();
 
-            model.ProfileId.Should().Be(_ipModelUsedViewModel.ProfileId);
-            model.LearnerName.Should().Be(_ipModelUsedViewModel.LearnerName);
+            model.ProfileId.Should().Be(ViewModel.ProfileId);
+            model.LearnerName.Should().Be(ViewModel.LearnerName);
             model.IsIpModelUsed.Should().BeNull();
 
             Controller.ViewData.ModelState.Should().ContainSingle();
