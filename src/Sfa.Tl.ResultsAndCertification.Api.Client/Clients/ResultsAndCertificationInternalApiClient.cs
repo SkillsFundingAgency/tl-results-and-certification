@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
+using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -367,7 +368,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<PrsGradeChangeRequest, bool>(requestUri, request);
         }
 
-        #endregion 
+        #endregion
+
+        #region IndustryPlacement
+        public async Task<IList<IpLookupData>> GetIpLookupDataAsync(IpLookupType ipLookupType, int? pathwayId = null)
+        {
+            var requestUri = string.Format(ApiConstants.GetIpLookupDataUri, (int)ipLookupType, pathwayId);
+            return await GetAsync<IList<IpLookupData>>(requestUri);
+        }
+
+        #endregion
 
         public async Task<LearnerRecord> GetLearnerRecordAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {

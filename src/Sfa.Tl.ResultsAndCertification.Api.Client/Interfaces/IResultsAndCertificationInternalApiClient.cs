@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
+using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -86,6 +87,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null);
         Task<bool> PrsActivityAsync(PrsActivityRequest request);
         Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request);
+
+        #region IndustryPlacement
+        Task<IList<IpLookupData>> GetIpLookupDataAsync(IpLookupType ipLookupType, int? pathwayId = null);
+
+        #endregion
 
         // Common
         Task<IList<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory);
