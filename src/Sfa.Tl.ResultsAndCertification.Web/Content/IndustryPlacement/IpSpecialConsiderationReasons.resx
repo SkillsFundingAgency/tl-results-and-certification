@@ -130,6 +130,9 @@
     <value>Special consideration reasons - Industry placement</value>
   </data>
   <data name="Question_Why_Was_SC_For_Their_Industry_Placement" xml:space="preserve">
-    <value>Why was Max Payne granted special consideration for their industry placement?</value>
+    <value>Why was {0} granted special consideration for their industry placement?</value>
+  </data>
+  <data name="Validation_Message_Select_One_Or_More_Reasons" xml:space="preserve">
+    <value>Select one or more reasons for granting special consideration</value>
   </data>
 </root>

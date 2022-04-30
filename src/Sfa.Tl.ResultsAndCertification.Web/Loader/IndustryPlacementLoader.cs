@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -34,6 +35,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task<T> TransformIpCompletionDetailsTo<T>(IpCompletionViewModel model)
         {
             return await Task.FromResult(_mapper.Map<T>(model));
+        }
+
+        public async Task<IList<IpLookupDataViewModel>> GetSpecialConsiderationReasonsListAsync(int academicYear)
+        {
+            var scReasons = await GetIpLookupDataAsync(IpLookupType.SpecialConsideration);
+            return _mapper.Map<IList<IpLookupDataViewModel>>(scReasons.Where(x => academicYear >= x.StartDate.Year && (x.EndDate == null || academicYear <= x.EndDate.Value.Year)));
         }
     }
 }
