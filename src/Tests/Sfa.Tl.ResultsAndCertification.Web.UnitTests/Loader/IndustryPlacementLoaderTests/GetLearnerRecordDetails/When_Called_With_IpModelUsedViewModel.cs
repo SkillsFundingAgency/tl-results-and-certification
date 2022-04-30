@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
 
         public async override Task When()
         {
-            ActualResult = await Loader.TransformFromLearnerDetailsTo<IpModelUsedViewModel>(_ipCompletionViewModel);
+            ActualResult = await Loader.TransformIpCompletionDetailsTo<IpModelUsedViewModel>(_ipCompletionViewModel);
         }
 
         [Fact]

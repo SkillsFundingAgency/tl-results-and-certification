@@ -52,13 +52,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             await SyncCacheIp(model);
 
-            if (model.IndustryPlacementStatus == Common.Enum.IndustryPlacementStatus.Completed)
+            if (model.IndustryPlacementStatus == IndustryPlacementStatus.Completed)
             {
                 return RedirectToRoute(RouteConstants.IpModelUsed, new { profileId = model.ProfileId });
             }
 
             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
         }
+
+        #region Ip Models
 
         [HttpGet]
         [Route("industry-placement-model-used", Name = RouteConstants.IpModelUsed)]
@@ -68,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel?.IpCompletion?.IndustryPlacementStatus == null || cacheModel.IpCompletion.IndustryPlacementStatus != IndustryPlacementStatus.Completed)//todo - second entry point requires CompletedWithSpecialConsideration
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var viewModel = await _industryPlacementLoader.TransformFromLearnerDetailsTo<IpModelUsedViewModel>(cacheModel.IpCompletion);
+            var viewModel = (cacheModel?.IpModelViewModel?.IpModelUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpModelUsedViewModel>(cacheModel.IpCompletion);
 
             return View(viewModel);
         }
@@ -90,8 +92,41 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.IpModelViewModel.IpModelUsed = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
+            return RedirectToRoute(RouteConstants.IpMultiEmployerUsed);
+        }
+
+        [HttpGet]
+        [Route("industry-placement-multiple-employer-model", Name = RouteConstants.IpMultiEmployerUsed)]
+        public async Task<IActionResult> IpMultiEmployerUsedAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);           
+
+            if (cacheModel?.IpModelViewModel?.IpModelUsed?.IsIpModelUsed == null || cacheModel.IpModelViewModel.IpModelUsed.IsIpModelUsed == false)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpMultiEmployerUsedViewModel>(cacheModel?.IpCompletion);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("industry-placement-multiple-employer-model", Name = RouteConstants.SubmitIpMultiEmployerUsed)]
+        public async Task<IActionResult> IpMultiEmployerUsedAsync(IpMultiEmployerUsedViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            
+            cacheModel.IpModelViewModel.IpMultiEmployerUsed = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
             return View(model);
         }
+
+        #endregion
 
         #region SpecialConsideration
 

@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<T>(response);
         }
 
-        public async Task<T> TransformFromLearnerDetailsTo<T>(IpCompletionViewModel model)
+        public async Task<T> TransformIpCompletionDetailsTo<T>(IpCompletionViewModel model)
         {
             return await Task.FromResult(_mapper.Map<T>(model));
         }

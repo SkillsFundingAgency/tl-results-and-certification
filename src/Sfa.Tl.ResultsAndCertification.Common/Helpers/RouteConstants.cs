@@ -358,6 +358,9 @@
         public const string IpModelUsed = "IpModelUsed";
         public const string SubmitIpModelUsed = "SubmitIpModelUsed";
 
+        public const string IpMultiEmployerUsed = "IpMultiEmployerUsed";
+        public const string SubmitIpMultiEmployerUsed = "SubmitIpMultiEmployerUsed";
+
         public const string IpSpecialConsiderationHours = "IpSpecialConsiderationHours";
         public const string SubmitIpSpecialConsiderationHours = "SubmitIpSpecialConsiderationHours";
 

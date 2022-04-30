@@ -3,5 +3,7 @@
     public class IpModelViewModel
 	{
 		public IpModelUsedViewModel IpModelUsed { get; set; }
+
+		public IpMultiEmployerUsedViewModel IpMultiEmployerUsed { get; set; }
 	}
 }
