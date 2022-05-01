@@ -6,12 +6,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 {
     public abstract class TestSetup : IndustryPlacementControllerTestBase
     {
-        public IpMultiEmployerUsedViewModel viewModel;
+        public IpMultiEmployerUsedViewModel ViewModel;
         public IActionResult Result { get; private set; }
 
         public async override Task When()
         {
-            Result = await Controller.IpMultiEmployerUsedAsync(viewModel);
+            Result = await Controller.IpMultiEmployerUsedAsync(ViewModel);
         }
     }
 }

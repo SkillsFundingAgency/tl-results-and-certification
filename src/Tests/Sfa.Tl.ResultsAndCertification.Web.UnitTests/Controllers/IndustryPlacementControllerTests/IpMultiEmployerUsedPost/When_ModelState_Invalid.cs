@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 IsMultiEmployerModelUsed = null
             };
 
-            viewModel = new IpMultiEmployerUsedViewModel { LearnerName = "John Smith", IsMultiEmployerModelUsed = null };
+            ViewModel = new IpMultiEmployerUsedViewModel { LearnerName = "John Smith", IsMultiEmployerModelUsed = null };
             Controller.ModelState.AddModelError("IsMultiEmployerModelUsed", Content.IndustryPlacement.IpMultiEmployerUsed.Validation_Message);
         }
 
@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
             model.Should().NotBeNull();
 
-            model.LearnerName.Should().Be(viewModel.LearnerName);
+            model.LearnerName.Should().Be(ViewModel.LearnerName);
             model.IsMultiEmployerModelUsed.Should().BeNull();
 
             Controller.ViewData.ModelState.Should().ContainSingle();
