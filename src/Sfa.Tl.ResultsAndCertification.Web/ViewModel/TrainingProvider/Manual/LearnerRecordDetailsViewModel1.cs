@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         // Header
         public int ProfileId { get; set; }
         public int RegistrationPathwayId { get; set; }
-
+        public int TlPathwayId { get; set; }
         public long Uln { get; set; }
         public string LearnerName { get; set; }
         public DateTime DateofBirth { get; set; }

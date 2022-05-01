@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -29,6 +30,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var response = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
             return _mapper.Map<T>(response);
+        }
+
+        public async Task<T> GetIpLookupDataAsync<T>(IpLookupType ipLookupType, string learnerName = null, int? pathwayId = null, bool showOption = false)
+        {
+            var lookupData = await _internalApiClient.GetIpLookupDataAsync(ipLookupType, pathwayId);
+
+            if (lookupData == null)
+                return default;
+
+            lookupData = lookupData.Where(lkp => lkp.ShowOption == showOption || lkp.ShowOption == null).ToList();
+
+            return _mapper.Map<T>(lookupData, opt => opt.Items["learnerName"] = learnerName);
         }
 
         public async Task<T> TransformIpCompletionDetailsTo<T>(IpCompletionViewModel model)

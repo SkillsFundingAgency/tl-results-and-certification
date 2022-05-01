@@ -32,6 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<LearnerRecordDetails, LearnerRecordDetailsViewModel1>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+               .ForMember(d => d.TlPathwayId, opts => opts.MapFrom(s => s.TlPathwayId))
                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))

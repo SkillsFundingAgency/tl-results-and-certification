@@ -14,31 +14,39 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     public class IndustryPlacementService : IIndustryPlacementService
     {
         private readonly IRepository<IpLookup> _ipLookupRepository;
+        private readonly IRepository<IpModelTlevelCombination> _ipModelTlevelCombinationRepository;
+
         private readonly IMapper _mapper;
 
-        public IndustryPlacementService(IRepository<IpLookup> ipLookupRepository, IMapper mapper)
+        public IndustryPlacementService(IRepository<IpLookup> ipLookupRepository, IRepository<IpModelTlevelCombination> ipModelTlevelCombinationRepository, IMapper mapper)
         {
             _ipLookupRepository = ipLookupRepository;
+            _ipModelTlevelCombinationRepository = ipModelTlevelCombinationRepository;
             _mapper = mapper;
         }
 
         public async Task<IList<IpLookupData>> GetIpLookupDataAsync(IpLookupType ipLookupType, int? pathwayId)
         {
-
-            if (ipLookupType == IpLookupType.SpecialConsideration)
-                return await SpecialConsiderationReasonsAsync();
-
-            return new List<IpLookupData>
+            return ipLookupType switch
             {
-                new IpLookupData { Id =1, Name = "Test1" },
-                new IpLookupData { Id = 1, Name = "Test2" },
-                new IpLookupData { Id = 1, Name = "Test3" },
+                IpLookupType.SpecialConsideration => await SpecialConsiderationReasonsAsync(),
+                IpLookupType.IndustryPlacementModel => await IndustryPlacementModelsAsync(pathwayId),
+                _ => null
             };
         }
 
         private async Task<IList<IpLookupData>> SpecialConsiderationReasonsAsync()
         {
             var lookupData = await _ipLookupRepository.GetManyAsync(x => x.TlLookup.Category == IpLookupType.SpecialConsideration.ToString()).OrderByDescending(x => x.SortOrder).ToListAsync();
+            return _mapper.Map<IList<IpLookupData>>(lookupData);
+        }
+
+        private async Task<IList<IpLookupData>> IndustryPlacementModelsAsync(int? pathwayId)
+        {
+            var lookupData = await _ipModelTlevelCombinationRepository
+                                   .GetManyAsync(x => x.TlPathwayId == pathwayId && x.IpLookup.TlLookup.Category == IpLookupType.IndustryPlacementModel.ToString())
+                                   .Select(x => x.IpLookup)
+                                   .OrderBy(x => x.SortOrder).ToListAsync();
             return _mapper.Map<IList<IpLookupData>>(lookupData);
         }
     }

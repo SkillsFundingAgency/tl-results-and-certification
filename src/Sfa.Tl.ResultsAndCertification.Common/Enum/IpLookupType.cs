@@ -4,7 +4,7 @@
     {
         NotSpecified = 0,
         SpecialConsideration = 1,
-        IpModel = 2,
+        IndustryPlacementModel = 2,
         TemporaryFlexibility = 3
     }
 }
