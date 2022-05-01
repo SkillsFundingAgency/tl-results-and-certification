@@ -32,6 +32,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<T>(response);
         }
 
+        public async Task<T> GetIpLookupDataAsync<T>(IpLookupType ipLookupType, string learnerName = null, int? pathwayId = null, bool showOption = false)
+        {
+            var lookupData = await _internalApiClient.GetIpLookupDataAsync(ipLookupType, pathwayId);
+
+            if (lookupData == null)
+                return default;
+
+            lookupData = lookupData.Where(lkp => lkp.ShowOption == showOption || lkp.ShowOption == null).ToList();
+
+            return _mapper.Map<T>(lookupData, opt => opt.Items["learnerName"] = learnerName);
+        }
+
         public async Task<T> TransformIpCompletionDetailsTo<T>(IpCompletionViewModel model)
         {
             return await Task.FromResult(_mapper.Map<T>(model));

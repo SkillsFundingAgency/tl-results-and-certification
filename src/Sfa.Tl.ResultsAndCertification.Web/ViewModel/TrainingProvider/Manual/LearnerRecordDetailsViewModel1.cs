@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         // Header
         public int ProfileId { get; set; }
         public int RegistrationPathwayId { get; set; }
-
+        public int TlPathwayId { get; set; }
         public long Uln { get; set; }
         public string LearnerName { get; set; }
         public DateTime DateofBirth { get; set; }
@@ -139,7 +139,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
                 Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
                 Value = GetIndustryPlacementDisplayText,
                 ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
-                RouteName = CanAddIndustryPlacement ? RouteConstants.IpCompletion : string.Empty,
+                RouteName = CanAddIndustryPlacement ? RouteConstants.AddIndustryPlacement : string.Empty,
                 RouteAttributes = CanAddIndustryPlacement ? new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } : null,
                 HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement
             }

@@ -32,6 +32,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("add-industry-placement/{profileId}", Name = RouteConstants.AddIndustryPlacement)]
+        public async Task<IActionResult> AddIndustryPlacementAsync(int profileId)
+        {
+            await _cacheService.RemoveAsync<IndustryPlacementViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.IpCompletion, new { profileId });
+        }
+
+        [HttpGet]
         [Route("industry-placement-completion/{profileId}", Name = RouteConstants.IpCompletion)]
         public async Task<IActionResult> IpCompletionAsync(int profileId)
         {
@@ -107,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel?.IpModelViewModel?.IpModelUsed?.IsIpModelUsed == null || cacheModel.IpModelViewModel.IpModelUsed.IsIpModelUsed == false)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var viewModel = await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpMultiEmployerUsedViewModel>(cacheModel?.IpCompletion);
+            var viewModel = (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpMultiEmployerUsedViewModel>(cacheModel?.IpCompletion);
 
             return View(viewModel);
         }
@@ -126,7 +134,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.IpModelViewModel.IpMultiEmployerUsed = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
+            if(model.IsMultiEmployerModelUsed.Value)
+            {
+                return RedirectToRoute(RouteConstants.IpMultiEmployerOther);
+            }
             return View(model);
+        }
+
+        [HttpGet]
+        [Route("industry-placement-other-models", Name = RouteConstants.IpMultiEmployerOther)]
+        public async Task<IActionResult> IpMultiEmployerOtherAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+
+            if (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == null || cacheModel.IpModelViewModel.IpMultiEmployerUsed.IsMultiEmployerModelUsed == false)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = await _industryPlacementLoader.GetIpLookupDataAsync<IpMultiEmployerOtherViewModel>(IpLookupType.IndustryPlacementModel, cacheModel.IpCompletion.LearnerName, cacheModel.IpCompletion.PathwayId, true);
+
+            return View(viewModel);
         }
 
         #endregion

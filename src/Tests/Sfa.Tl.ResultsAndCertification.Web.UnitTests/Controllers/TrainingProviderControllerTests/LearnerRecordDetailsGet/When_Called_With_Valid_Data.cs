@@ -112,7 +112,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryIndustryPlacementStatus.Value.Should().Be(SubjectStatusContent.Not_Yet_Recevied_Display_Text);
             model.SummaryIndustryPlacementStatus.HiddenActionText.Should().Be(LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement);
             model.SummaryIndustryPlacementStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Action_Text_Link_Add);
-            model.SummaryIndustryPlacementStatus.RouteName.Should().Be(RouteConstants.IpCompletion);
+            model.SummaryIndustryPlacementStatus.RouteName.Should().Be(RouteConstants.AddIndustryPlacement);
             model.SummaryIndustryPlacementStatus.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             // Summary Maths StatusHidden_Action_Text_Maths

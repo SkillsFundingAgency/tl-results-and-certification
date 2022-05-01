@@ -160,6 +160,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>IpGuidanceNavigation.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\IndustryPlacement\IpMultiEmployerOther.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpMultiEmployerOther.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\IndustryPlacement\IpMultiEmployerUsed.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1043,6 +1048,10 @@
     <EmbeddedResource Update="Content\IndustryPlacement\IpGuidanceNavigation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IpGuidanceNavigation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpMultiEmployerOther.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpMultiEmployerOther.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\IndustryPlacement\IpMultiEmployerUsed.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -351,7 +351,9 @@
         #endregion
 
         #region Industry Placement
-        
+
+        public const string AddIndustryPlacement = "AddIndustryPlacement";
+
         public const string IpCompletion = "IpCompletion";
         public const string SubmitIpCompletion = "SubmitIpCompletion";
 
@@ -360,6 +362,9 @@
 
         public const string IpMultiEmployerUsed = "IpMultiEmployerUsed";
         public const string SubmitIpMultiEmployerUsed = "SubmitIpMultiEmployerUsed";
+
+        public const string IpMultiEmployerOther = "IpMultiEmployerOther";
+        public const string SubmitIpMultiEmployerOther = "SubmitIpMultiEmployerOther";
 
         public const string IpSpecialConsiderationHours = "IpSpecialConsiderationHours";
         public const string SubmitIpSpecialConsiderationHours = "SubmitIpSpecialConsiderationHours";

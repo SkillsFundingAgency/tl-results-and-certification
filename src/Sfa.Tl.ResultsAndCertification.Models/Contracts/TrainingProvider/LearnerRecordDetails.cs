@@ -7,6 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
     {
         public int ProfileId { get; set; }
         public int RegistrationPathwayId { get; set; }
+        public int TlPathwayId { get; set; }
         public long Uln { get; set; }
         public string Name { get; set; }
         public DateTime DateofBirth { get; set; }
