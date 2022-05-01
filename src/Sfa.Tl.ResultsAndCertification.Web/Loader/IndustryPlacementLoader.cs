@@ -48,5 +48,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             return await Task.FromResult(_mapper.Map<T>(model));
         }
+
+        public async Task<IList<IpLookupDataViewModel>> GetSpecialConsiderationReasonsListAsync(int academicYear)
+        {
+            var scReasons = await GetIpLookupDataAsync(IpLookupType.SpecialConsideration);
+            return _mapper.Map<IList<IpLookupDataViewModel>>(scReasons.Where(x => academicYear >= x.StartDate.Year && (x.EndDate == null || academicYear <= x.EndDate.Value.Year)));
+        }
     }
 }

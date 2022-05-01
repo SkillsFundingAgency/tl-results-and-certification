@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to How many industry placement hours did  complete?.
+        ///   Looks up a localized string similar to How many industry placement hours did {0} complete?.
         /// </summary>
         public static string Heading_How_Many_Hours_Did_Complete {
             get {

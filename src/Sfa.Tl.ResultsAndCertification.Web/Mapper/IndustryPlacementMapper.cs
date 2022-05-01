@@ -17,11 +17,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
 
+
+            CreateMap<IpLookupData, IpLookupDataViewModel>()
+               .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
+               .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name))
+               .ForMember(d => d.IsSelected, opts => opts.MapFrom(s => false));
+
+            // Transformations from IpCompletionViewModel
             CreateMap<IpCompletionViewModel, IpModelUsedViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName))
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
-
             CreateMap<IpCompletionViewModel, IpMultiEmployerUsedViewModel>()
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));
 
@@ -32,6 +38,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<IpLookupData, IpLookupDataViewModel>()
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name));
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));
+            CreateMap<IpCompletionViewModel, SpecialConsiderationHoursViewModel>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));
+            CreateMap<IpCompletionViewModel, SpecialConsiderationReasonsViewModel>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));
         }
     }
 }

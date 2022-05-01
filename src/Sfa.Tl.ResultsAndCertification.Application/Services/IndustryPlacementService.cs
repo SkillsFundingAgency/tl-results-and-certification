@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private async Task<IList<IpLookupData>> SpecialConsiderationReasonsAsync()
         {
-            var lookupData = await _ipLookupRepository.GetManyAsync(x => x.TlLookup.Category == IpLookupType.SpecialConsideration.ToString()).OrderByDescending(x => x.SortOrder).ToListAsync();
+            var lookupData = await _ipLookupRepository.GetManyAsync(x => x.TlLookup.Category == IpLookupType.SpecialConsideration.ToString()).OrderBy(x => x.SortOrder).ToListAsync();
             return _mapper.Map<IList<IpLookupData>>(lookupData);
         }
 

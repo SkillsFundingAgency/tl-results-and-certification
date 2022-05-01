@@ -98,11 +98,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Why was Max Payne granted special consideration for their industry placement?.
+        ///   Looks up a localized string similar to Why was {0} granted special consideration for their industry placement?.
         /// </summary>
         public static string Question_Why_Was_SC_For_Their_Industry_Placement {
             get {
                 return ResourceManager.GetString("Question_Why_Was_SC_For_Their_Industry_Placement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select one or more reasons for granting special consideration.
+        /// </summary>
+        public static string Validation_Message_Select_One_Or_More_Reasons {
+            get {
+                return ResourceManager.GetString("Validation_Message_Select_One_Or_More_Reasons", resourceCulture);
             }
         }
     }

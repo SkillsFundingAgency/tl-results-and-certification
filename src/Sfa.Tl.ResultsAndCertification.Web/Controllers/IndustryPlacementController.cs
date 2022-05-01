@@ -57,6 +57,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.IpModelUsed, new { profileId = model.ProfileId });
             }
 
+            if (model.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
+                return RedirectToRoute(RouteConstants.IpSpecialConsiderationHours);
+
             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
         }
 
@@ -149,14 +152,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         #region SpecialConsideration
 
         [HttpGet]
+        [Route("clearcache")]
+        public async Task<JsonResult> ClearCache()
+        {
+            await _cacheService.RemoveAsync<IndustryPlacementViewModel>(CacheKey);
+            return Json("Deleted");
+        }
+
+        [HttpGet]
         [Route("industry-placement-special-consideration-hours", Name = RouteConstants.IpSpecialConsiderationHours)]
         public async Task<IActionResult> IpSpecialConsiderationHoursAsync()
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
-            if (cacheModel == null || cacheModel.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration)
+            if (cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var viewModel = cacheModel?.SpecialConsideration == null ? new SpecialConsiderationHoursViewModel() : cacheModel.SpecialConsideration.Hours;
+            var viewModel = (cacheModel?.SpecialConsideration?.Hours) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<SpecialConsiderationHoursViewModel>(cacheModel.IpCompletion);
 
             return View(viewModel);
         }
@@ -169,7 +180,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
 
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
-            if (cacheModel == null || cacheModel.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration)
+            if (cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             if (cacheModel?.SpecialConsideration == null)
@@ -189,17 +200,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel == null || cacheModel.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration || cacheModel.SpecialConsideration?.Hours == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var viewModel = cacheModel?.SpecialConsideration?.Reasons == null ? new SpecialConsiderationReasonsViewModel() : cacheModel.SpecialConsideration.Reasons;
-            // TODO: Assigin viewMoel with List of Reasons. 
-
-            viewModel.ReasonsList = await _industryPlacementLoader.GetIpLookupDataAsync(IpLookupType.SpecialConsideration);
+            var viewModel = (cacheModel?.SpecialConsideration?.Reasons) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<SpecialConsiderationReasonsViewModel>(cacheModel.IpCompletion);
+            viewModel.ReasonsList = await _industryPlacementLoader.GetSpecialConsiderationReasonsListAsync(2020); // TODO: viewModel.AcademicYear
 
             return View(viewModel);
         }
 
         [HttpPost]
         [Route("industry-placement-special-consideration-reasons", Name = RouteConstants.SubmitIpSpecialConsiderationReasons)]
-        public async Task<IActionResult> SubmitIpSpecialConsiderationReasonsAsync(SpecialConsiderationReasonsViewModel model)
+        public async Task<IActionResult> IpSpecialConsiderationReasonsAsync(SpecialConsiderationReasonsViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
@@ -207,8 +216,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
             if (cacheModel == null || cacheModel.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration || cacheModel.SpecialConsideration?.Hours == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
-
-            // TODO: We might need to Assigin model with List of Reasons. 
 
             cacheModel.SpecialConsideration.Reasons = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);

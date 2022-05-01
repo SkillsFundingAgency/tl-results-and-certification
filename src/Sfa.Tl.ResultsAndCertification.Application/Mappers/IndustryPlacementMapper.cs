@@ -11,7 +11,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
             CreateMap<IpLookup, IpLookupData>()
                 .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name))
-                .ForMember(d => d.SortOrder, opts => opts.MapFrom(s => s.SortOrder))
                 .ForMember(d => d.StartDate, opts => opts.MapFrom(s => s.StartDate))
                 .ForMember(d => d.EndDate, opts => opts.MapFrom(s => s.EndDate))
                 .ForMember(d => d.ShowOption, opts => opts.MapFrom(s => s.ShowOption));

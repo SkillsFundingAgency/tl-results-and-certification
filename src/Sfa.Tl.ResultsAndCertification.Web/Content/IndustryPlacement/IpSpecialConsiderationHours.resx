@@ -124,7 +124,7 @@
     <value>Industry placement: Special consideration</value>
   </data>
   <data name="Heading_How_Many_Hours_Did_Complete" xml:space="preserve">
-    <value>How many industry placement hours did  complete?</value>
+    <value>How many industry placement hours did {0} complete?</value>
   </data>
   <data name="Hint_Must_Between_1_999" xml:space="preserve">
     <value>Must be between 1 and 999</value>
