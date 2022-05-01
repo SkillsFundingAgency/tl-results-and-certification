@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
             _expectedApiResult = new Models.Contracts.TrainingProvider.LearnerRecordDetails
             {
                 ProfileId = ProfileId,
-                RegistrationPathwayId = PathwayId,
+                TlPathwayId = PathwayId,
                 Uln = 123456789,
                 Name = "Test user",
                 DateofBirth = DateTime.UtcNow.AddYears(-20),
@@ -55,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
         {
             ActualResult.Should().NotBeNull();
             ActualResult.ProfileId.Should().Be(_expectedApiResult.ProfileId);
-            ActualResult.PathwayId.Should().Be(_expectedApiResult.RegistrationPathwayId);
+            ActualResult.PathwayId.Should().Be(_expectedApiResult.TlPathwayId);
             ActualResult.AcademicYear.Should().Be(_expectedApiResult.AcademicYear);
             ActualResult.LearnerName.Should().Be(_expectedApiResult.Name);
             ActualResult.IndustryPlacementStatus.Should().BeNull();

@@ -351,7 +351,9 @@
         #endregion
 
         #region Industry Placement
-        
+
+        public const string AddIndustryPlacement = "AddIndustryPlacement";
+
         public const string IpCompletion = "IpCompletion";
         public const string SubmitIpCompletion = "SubmitIpCompletion";
 
