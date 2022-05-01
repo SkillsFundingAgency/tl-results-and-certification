@@ -215,7 +215,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 
         public TlLookup BuildIpType() => new TlLookup
         {
-            Category = "IpType",
+            Category = "SpecialConsideration",
             Code = "SC",
             Value = "SpecialConsideration",
             IsActive = true,
@@ -230,9 +230,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
         {
             new TlLookup
             {
-                Category = "IpType",
+                Category = "SpecialConsideration",
                 Code = "SC",
-                Value = "Special Considerations",
+                Value = "SpecialConsideration",
                 IsActive = true,
                 SortOrder = 1,
                 CreatedBy = Constants.CreatedByUser,

@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Data;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using System;
@@ -54,10 +55,10 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return ipLookup;
         }
 
-        public static IList<IpLookup> CreateIpLookupList(ResultsAndCertificationDbContext _dbContext, IList<IpLookup> ipLookup = null, bool addToDbContext = true)
+        public static IList<IpLookup> CreateIpLookupList(ResultsAndCertificationDbContext _dbContext, IList<IpLookup> ipLookup = null, IpLookupType? ipLookupType = null, bool addToDbContext = true)
         {
             if (ipLookup == null)
-                ipLookup = new IpLookupBuilder().BuildList();
+                ipLookup = new IpLookupBuilder().BuildList(ipLookupType);
 
             if (addToDbContext)
             {

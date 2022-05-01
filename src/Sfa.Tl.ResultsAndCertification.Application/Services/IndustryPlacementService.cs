@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -44,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private async Task<IList<IpLookupData>> IndustryPlacementModelsAsync(int? pathwayId)
         {
             var lookupData = await _ipModelTlevelCombinationRepository
-                                   .GetManyAsync(x => x.TlPathwayId == pathwayId && x.IpLookup.TlLookup.Category == IpLookupType.IndustryPlacementModel.ToString())
+                                   .GetManyAsync(x => x.TlPathwayId == pathwayId && x.IpLookup.TlLookup.Category.Equals(IpLookupType.IndustryPlacementModel.ToString(), StringComparison.InvariantCultureIgnoreCase))
                                    .Select(x => x.IpLookup)
                                    .OrderBy(x => x.SortOrder).ToListAsync();
             return _mapper.Map<IList<IpLookupData>>(lookupData);
