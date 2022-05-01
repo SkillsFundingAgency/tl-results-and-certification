@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 }
             };
             CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(_cacheResult);
-            IndustryPlacementLoader.TransformIpCompletionDetailsTo<IpMultiEmployerUsedViewModel>(_cacheResult.IpCompletion).Returns(_ipMultiEmployerUsedViewModel);
+            IndustryPlacementLoader.GetIpLookupDataAsync<IpMultiEmployerOtherViewModel>(IpLookupType.IndustryPlacementModel, _ipCompletionViewModel.LearnerName, _ipCompletionViewModel.PathwayId, true).Returns(_ipMultiEmployerOtherViewModel);
         }
 
         [Fact]
