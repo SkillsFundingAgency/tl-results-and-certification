@@ -1,0 +1,54 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual.IpMultiEmployerSelectViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = IpMultiEmployerSelect.Page_Title;
+}
+
+@section NavigationBar {
+<vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="@RouteConstants.SubmitIpMultiEmployerSelect">
+            <input type="hidden" asp-for="LearnerName" value="@Model.LearnerName" />
+
+            <partial name="_ValidationSummary" />
+
+            <span class="govuk-caption-l">@IpMultiEmployerSelect.Caption_Ip_Models</span>
+
+            <div class="govuk-form-group" sfa-validation-for="IsIpModelSelected" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset" aria-describedby="model-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">@string.Format(IpMultiEmployerSelect.Heading_Which_Industry_Placement_Models_Were_Used_By, Model.LearnerName)</h1>
+                    </legend>
+                    <div id="model-hint" class="govuk-hint">@IpMultiEmployerSelect.Hint_Select_Any_That_Apply</div>
+
+                    <div class="govuk-form-group">
+                        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                            <span sfa-validation-for="IsIpModelSelected"></span>
+                            @if (Model?.PlacementModels != null)
+                            {
+                                @foreach (var placement in Model?.PlacementModels?.Select((value, i) => (value, i)))
+                                {
+                                    var elementId = (placement.i > 0) ? "isipmodelselected-" + placement.i : "isipmodelselected";
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.PlacementModels[@placement.i].IsSelected">
+                                        <label class="govuk-label govuk-checkboxes__label" for="@elementId">
+                                            @placement.value.Name
+                                        </label>
+                                    </div>
+                                    <input type="hidden" asp-for="@Model.PlacementModels[@placement.i].Id" />
+                                    <input type="hidden" asp-for="@Model.PlacementModels[@placement.i].Name" />
+                                }
+                            }
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button id="continueButton" class="govuk-button" data-module="govuk-button">@IpMultiEmployerOther.Button_Continue</button>
+        </form>
+    </div>
+</div>
