@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
-using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using System.Collections.Generic;
 
@@ -30,6 +30,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
 
             CreateMap<IpCompletionViewModel, IpMultiEmployerUsedViewModel>()
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));
+
+            CreateMap<IpCompletionViewModel, IpTempFlexibilityUsedViewModel>()
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));
 
             CreateMap< IList<IpLookupData>, IpMultiEmployerOtherViewModel>()

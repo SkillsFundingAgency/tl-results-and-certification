@@ -5,5 +5,6 @@
         public IpCompletionViewModel IpCompletion { get; set; }
         public IpModelViewModel IpModelViewModel { get; set; }
         public SpecialConsiderationViewModel SpecialConsideration { get; set; }
+        public IpTempFlexibilityViewModel TempFlexibility { get; set; }
     }
 }

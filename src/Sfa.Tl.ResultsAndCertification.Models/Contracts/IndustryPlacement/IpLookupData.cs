@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement
+namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement
 {
     public class IpLookupData
     {

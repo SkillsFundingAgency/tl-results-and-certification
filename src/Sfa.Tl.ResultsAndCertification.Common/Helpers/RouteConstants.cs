@@ -371,6 +371,9 @@
         public const string IpSpecialConsiderationReasons = "IpSpecialConsiderationReasons";
         public const string SubmitIpSpecialConsiderationReasons = "SubmitIpSpecialConsiderationReasons";
 
+        public const string IpTempFlexibilityUsed = "IpTempFlexibilityUsed";
+        public const string SubmitIpTempFlexibilityUsed = "SubmitIpTempFlexibilityUsed";
+
         #endregion
     }
 }
