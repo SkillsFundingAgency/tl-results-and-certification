@@ -14,6 +14,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.StartDate, opts => opts.MapFrom(s => s.StartDate))
                 .ForMember(d => d.EndDate, opts => opts.MapFrom(s => s.EndDate))
                 .ForMember(d => d.ShowOption, opts => opts.MapFrom(s => s.ShowOption));
+
+            CreateMap<IpTempFlexNavigation, Models.Contracts.IndustryPlacement.IpTempFlexNavigation>()
+                .ForMember(d => d.AskTempFlexibility, opts => opts.MapFrom(s => s.AskTempFlexibility))
+                .ForMember(d => d.AskBlendedPlacement, opts => opts.MapFrom(s => s.AskBlendedPlacement));
         }
     }
 }

@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
@@ -375,6 +376,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var requestUri = string.Format(ApiConstants.GetIpLookupDataUri, (int)ipLookupType, pathwayId);
             return await GetAsync<IList<IpLookupData>>(requestUri);
+        }
+
+        public async Task<IpTempFlexNavigation> GetTempFlexNavigationAsync(int pathwayId, int academicYear)
+        {
+            var requestUri = string.Format(ApiConstants.GetTempFlexNavigationUri, pathwayId, academicYear);
+            return await GetAsync<IpTempFlexNavigation>(requestUri);
         }
 
         #endregion

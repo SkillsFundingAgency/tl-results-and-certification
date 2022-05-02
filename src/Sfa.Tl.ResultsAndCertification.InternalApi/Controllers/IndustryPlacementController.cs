@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,6 +25,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public async Task<IList<IpLookupData>> GetIpLookupDataAsync(IpLookupType ipLookupType, int? pathwayId = null)
         {
             return await _industryPlacementService.GetIpLookupDataAsync(ipLookupType, pathwayId);
+        }
+
+        [HttpGet]
+        [Route("GetTempFlexNavigation/{pathwayId}/{academicYear}")]
+        public async Task<IpTempFlexNavigation> GetTempFlexNavigationAsync(int pathwayId, int academicYear)
+        {
+            return await _industryPlacementService.GetTempFlexNavigationAsync(pathwayId, academicYear);
         }
     }
 }
