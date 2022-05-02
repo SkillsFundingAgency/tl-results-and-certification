@@ -306,11 +306,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel?.IpModelViewModel?.IpModelUsed == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            if (cacheModel?.TempFlexibility == null)
+                cacheModel.TempFlexibility = new IpTempFlexibilityViewModel();
+
             cacheModel.TempFlexibility.IpTempFlexibilityUsed = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
             if (cacheModel.TempFlexibility.IpTempFlexibilityUsed.IsTempFlexibilityUsed == true)
-                return RedirectToRoute(RouteConstants.IpTempFlexibilityUsed);
+                return RedirectToRoute(RouteConstants.IpBlendedPlacementUsed);
 
             return View(model);
         }
@@ -344,6 +347,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel?.IpModelViewModel?.IpModelUsed == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            if (cacheModel?.TempFlexibility == null)
+                cacheModel.TempFlexibility = new IpTempFlexibilityViewModel();
+            
             cacheModel.TempFlexibility.IpBlendedPlacementUsed = model;
 
             return View(model);
