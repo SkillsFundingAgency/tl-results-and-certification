@@ -4,8 +4,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,13 +24,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
 
             PathwayId = 1;
 
-            IpLookupRepositoryLogger = new Logger<GenericRepository<IpLookup>>(new NullLoggerFactory());
-            IpLookupRepository = new GenericRepository<IpLookup>(IpLookupRepositoryLogger, DbContext);
+            IpLookupRepositoryLogger = new Logger<GenericRepository<Domain.Models.IpLookup>>(new NullLoggerFactory());
+            IpLookupRepository = new GenericRepository<Domain.Models.IpLookup>(IpLookupRepositoryLogger, DbContext);
 
-            IpModelTlevelCombinationLogger = new Logger<GenericRepository<IpModelTlevelCombination>>(new NullLoggerFactory());
-            IpModelTlevelCombinationRepository = new GenericRepository<IpModelTlevelCombination>(IpModelTlevelCombinationLogger, DbContext);
+            IpModelTlevelCombinationLogger = new Logger<GenericRepository<Domain.Models.IpModelTlevelCombination>>(new NullLoggerFactory());
+            IpModelTlevelCombinationRepository = new GenericRepository<Domain.Models.IpModelTlevelCombination>(IpModelTlevelCombinationLogger, DbContext);
 
-            IndustryPlacementService = new IndustryPlacementService(IpLookupRepository, IpModelTlevelCombinationRepository, Mapper);
+            IpTempFlexNavigationLogger = new Logger<GenericRepository<Domain.Models.IpTempFlexNavigation>>(new NullLoggerFactory());
+            IpTempFlexNavigationRepository = new GenericRepository<Domain.Models.IpTempFlexNavigation>(IpTempFlexNavigationLogger, DbContext);
+
+            IndustryPlacementService = new IndustryPlacementService(IpLookupRepository, IpModelTlevelCombinationRepository, IpTempFlexNavigationRepository, Mapper);
         }
 
         public override Task When()
