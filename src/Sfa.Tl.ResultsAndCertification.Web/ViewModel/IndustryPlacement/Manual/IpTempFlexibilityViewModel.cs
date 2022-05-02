@@ -3,5 +3,7 @@
     public class IpTempFlexibilityViewModel
     {
         public IpTempFlexibilityUsedViewModel IpTempFlexibilityUsed { get; set; }
+        public IpBlendedPlacementUsedViewModel IpBlendedPlacementUsed { get; set; }
+
     }
 }
