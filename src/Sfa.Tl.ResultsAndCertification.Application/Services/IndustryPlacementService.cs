@@ -50,9 +50,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private async Task<IList<IpLookupData>> IndustryPlacementModelsAsync(int? pathwayId)
         {
             var lookupData = await _ipModelTlevelCombinationRepository
-                                   .GetManyAsync(x => x.IsActive && x.TlPathwayId == pathwayId && x.IpLookup.TlLookup.Category.Equals(IpLookupType.IndustryPlacementModel.ToString(), StringComparison.InvariantCultureIgnoreCase))
-                                   .Select(x => x.IpLookup)
-                                   .OrderBy(x => x.SortOrder).ToListAsync();
+                                    .GetManyAsync(x => x.IsActive && x.TlPathwayId == pathwayId && x.IpLookup.TlLookup.Category == IpLookupType.IndustryPlacementModel.ToString())
+                                    .Select(x => x.IpLookup)
+                                    .OrderBy(x => x.SortOrder).ToListAsync();
 
             return _mapper.Map<IList<IpLookupData>>(lookupData);
         }
