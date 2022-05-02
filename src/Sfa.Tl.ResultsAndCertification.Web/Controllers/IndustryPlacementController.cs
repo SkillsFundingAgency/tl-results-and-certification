@@ -249,7 +249,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpTempFlexibilityUsedViewModel>(cacheModel?.IpCompletion);
 
             var navigation = await _industryPlacementLoader.GetTempFlexNavigationAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear);
-            if (!navigation.AskTempFlexibility)
+            if (navigation == null || !navigation.AskTempFlexibility)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);

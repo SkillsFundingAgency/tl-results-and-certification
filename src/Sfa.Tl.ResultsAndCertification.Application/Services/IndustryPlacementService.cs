@@ -4,11 +4,14 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DbModel = Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Contract = Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
+
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
@@ -16,11 +19,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     {
         private readonly IRepository<IpLookup> _ipLookupRepository;
         private readonly IRepository<IpModelTlevelCombination> _ipModelTlevelCombinationRepository;
-        private readonly IRepository<IpTempFlexNavigation> _ipTempFlexNavigationRepository;
+        private readonly IRepository<DbModel.IpTempFlexNavigation> _ipTempFlexNavigationRepository;
 
         private readonly IMapper _mapper;
 
-        public IndustryPlacementService(IRepository<IpLookup> ipLookupRepository, IRepository<IpModelTlevelCombination> ipModelTlevelCombinationRepository, IRepository<IpTempFlexNavigation> ipTempFlexNavigationRepository, IMapper mapper)
+        public IndustryPlacementService(IRepository<IpLookup> ipLookupRepository, IRepository<IpModelTlevelCombination> ipModelTlevelCombinationRepository, IRepository<DbModel.IpTempFlexNavigation> ipTempFlexNavigationRepository, IMapper mapper)
         {
             _ipLookupRepository = ipLookupRepository;
             _ipModelTlevelCombinationRepository = ipModelTlevelCombinationRepository;
@@ -54,10 +57,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<IList<IpLookupData>>(lookupData);
         }
 
-        public async Task<Models.Contracts.IndustryPlacement.IpTempFlexNavigation> GetTempFlexNavigationAsync(int pathwayId, int academicYear)
+        public async Task<Contract.IpTempFlexNavigation> GetTempFlexNavigationAsync(int pathwayId, int academicYear)
         {
             var navigation = await _ipTempFlexNavigationRepository.GetFirstOrDefaultAsync(x => x.TlPathwayId == pathwayId && x.AcademicYear == academicYear);
-            return _mapper.Map<Models.Contracts.IndustryPlacement.IpTempFlexNavigation>(navigation);
+            return _mapper.Map<Contract.IpTempFlexNavigation>(navigation);
         }
     }
 }

@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement
+namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement
 {
     public class IpLookupData
     {
-        // TODO: Change namepsace
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
