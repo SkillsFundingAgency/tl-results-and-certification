@@ -6,25 +6,25 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpMultiEmployerOtherGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpMultiEmployerSelectGet
 {
-    public class When_Cache_Found_For_IpMultiEmployerOther : TestSetup
+    public class When_Cache_Found_For_IpMultiEmployerSelect : TestSetup
     {
         private IndustryPlacementViewModel _cacheResult;
         private IpCompletionViewModel _ipCompletionViewModel;
         private IpModelUsedViewModel _ipModelUsedViewModel;
         private IpMultiEmployerUsedViewModel _ipMultiEmployerUsedViewModel;
-        private IpMultiEmployerOtherViewModel _ipMultiEmployerOtherViewModel;
+        private IpMultiEmployerSelectViewModel _ipMultiEmployerSelectViewModel;
 
         public override void Given()
         {
             _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = 1, AcademicYear = 2020, LearnerName = "First Last", IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed };
             _ipModelUsedViewModel = new IpModelUsedViewModel { ProfileId = 1, IsIpModelUsed = true };
-            _ipMultiEmployerUsedViewModel = new IpMultiEmployerUsedViewModel { LearnerName = "First Last", IsMultiEmployerModelUsed = true };
-            _ipMultiEmployerOtherViewModel = new IpMultiEmployerOtherViewModel
+            _ipMultiEmployerUsedViewModel = new IpMultiEmployerUsedViewModel { LearnerName = "First Last", IsMultiEmployerModelUsed = false };
+            _ipMultiEmployerSelectViewModel = new IpMultiEmployerSelectViewModel
             {
                 LearnerName = "First Last",
-                OtherIpPlacementModels = new List<IpLookupDataViewModel>
+                PlacementModels = new List<IpLookupDataViewModel>
                 {
                     new IpLookupDataViewModel { Id = 1, Name = "Test", IsSelected = true },
                     new IpLookupDataViewModel { Id = 2, Name = "New", IsSelected = true }
@@ -34,11 +34,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             _cacheResult = new IndustryPlacementViewModel
             {
                 IpCompletion = _ipCompletionViewModel,
-                IpModelViewModel = new IpModelViewModel 
-                { 
+                IpModelViewModel = new IpModelViewModel
+                {
                     IpModelUsed = _ipModelUsedViewModel,
                     IpMultiEmployerUsed = _ipMultiEmployerUsedViewModel,
-                    IpMultiEmployerOther = _ipMultiEmployerOtherViewModel
+                    IpMultiEmployerSelect = _ipMultiEmployerSelectViewModel
                 }
             };
 
@@ -58,12 +58,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             Result.Should().BeOfType(typeof(ViewResult));
 
             var viewResult = Result as ViewResult;
-            viewResult.Model.Should().BeOfType(typeof(IpMultiEmployerOtherViewModel));
-            var model = viewResult.Model as IpMultiEmployerOtherViewModel;
+            viewResult.Model.Should().BeOfType(typeof(IpMultiEmployerSelectViewModel));
+            var model = viewResult.Model as IpMultiEmployerSelectViewModel;
 
             model.Should().NotBeNull();
-            model.LearnerName.Should().Be(_ipMultiEmployerUsedViewModel.LearnerName);
-            model.OtherIpPlacementModels.Should().BeEquivalentTo(_ipMultiEmployerOtherViewModel.OtherIpPlacementModels);
+            model.LearnerName.Should().Be(_ipMultiEmployerSelectViewModel.LearnerName);
+            model.PlacementModels.Should().BeEquivalentTo(_ipMultiEmployerSelectViewModel.PlacementModels);
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.IpMultiEmployerUsed);
