@@ -103,6 +103,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.IpModelViewModel.IpModelUsed = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
+            if (cacheModel.IpModelViewModel.IpModelUsed.IsIpModelUsed == false)
+                return RedirectToRoute(RouteConstants.IpTempFlexibilityUsed);
+
             return RedirectToRoute(RouteConstants.IpMultiEmployerUsed);
         }
 
@@ -231,6 +234,39 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(RouteConstants.IpModelUsed);
         }
 
+        #endregion
+
+        #region TemporaryFlexibility
+        [HttpGet]
+        [Route("industry-placement-temporary-flexibility", Name = RouteConstants.IpTempFlexibilityUsed)]
+        public async Task<IActionResult> IpTempFlexibilityUsedAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+
+            if (cacheModel?.IpModelViewModel?.IpModelUsed == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpTempFlexibilityUsedViewModel>(cacheModel?.IpCompletion);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("industry-placement-temporary-flexibility", Name = RouteConstants.SubmitIpTempFlexibilityUsed)]
+        public async Task<IActionResult> IpTempFlexibilityUsedAsync(IpTempFlexibilityUsedViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+            if (cacheModel?.IpModelViewModel?.IpModelUsed == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.TempFlexibility.IpTempFlexibilityUsed = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            return View(model);
+        }
         #endregion
 
         private async Task SyncCacheIp(IpCompletionViewModel model)
