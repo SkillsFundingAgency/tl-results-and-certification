@@ -137,11 +137,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.IpModelViewModel.IpMultiEmployerUsed = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
-            if (model.IsMultiEmployerModelUsed.Value)
-            {
-                return RedirectToRoute(RouteConstants.IpMultiEmployerOther);
-            }
-            return View(model);
+            return model.IsMultiEmployerModelUsed.Value
+                ? RedirectToRoute(RouteConstants.IpMultiEmployerOther)
+                : RedirectToRoute(RouteConstants.IpMultiEmployerSelect);
         }
 
         [HttpGet]
@@ -153,9 +151,51 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == null || cacheModel.IpModelViewModel.IpMultiEmployerUsed.IsMultiEmployerModelUsed == false)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var viewModel = await _industryPlacementLoader.GetIpLookupDataAsync<IpMultiEmployerOtherViewModel>(IpLookupType.IndustryPlacementModel, cacheModel.IpCompletion.LearnerName, cacheModel.IpCompletion.PathwayId, true);
+            var viewModel = (cacheModel?.IpModelViewModel?.IpMultiEmployerOther) ?? await _industryPlacementLoader.GetIpLookupDataAsync<IpMultiEmployerOtherViewModel>(IpLookupType.IndustryPlacementModel, cacheModel.IpCompletion.LearnerName, cacheModel.IpCompletion.PathwayId, true);
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("industry-placement-other-models", Name = RouteConstants.SubmitIpMultiEmployerOther)]
+        public async Task<IActionResult> IpMultiEmployerOtherAsync(IpMultiEmployerOtherViewModel model)
+        {
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.IpModelViewModel.IpMultiEmployerOther = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            return View(model);
+        }
+
+        [HttpGet]
+        [Route("industry-placement-models", Name = RouteConstants.IpMultiEmployerSelect)]
+        public async Task<IActionResult> IpMultiEmployerSelectAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+
+            if (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == null || cacheModel.IpModelViewModel.IpMultiEmployerUsed.IsMultiEmployerModelUsed == true)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = (cacheModel?.IpModelViewModel?.IpMultiEmployerSelect) ?? await _industryPlacementLoader.GetIpLookupDataAsync<IpMultiEmployerSelectViewModel>(IpLookupType.IndustryPlacementModel, cacheModel.IpCompletion.LearnerName, cacheModel.IpCompletion.PathwayId, false);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("industry-placement-models", Name = RouteConstants.SubmitIpMultiEmployerSelect)]
+        public async Task<IActionResult> IpMultiEmployerSelectAsync(IpMultiEmployerSelectViewModel model)
+        {
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.IpModelViewModel.IpMultiEmployerSelect = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            return View(model);
         }
 
         #endregion

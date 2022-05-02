@@ -5,5 +5,7 @@
 		public IpModelUsedViewModel IpModelUsed { get; set; }
 
 		public IpMultiEmployerUsedViewModel IpMultiEmployerUsed { get; set; }
+		public IpMultiEmployerOtherViewModel IpMultiEmployerOther { get; set; }
+		public IpMultiEmployerSelectViewModel IpMultiEmployerSelect { get; set; }
 	}
 }

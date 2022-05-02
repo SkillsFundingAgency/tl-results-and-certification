@@ -31,6 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
         {
             if (ipLookupType == IpLookupType.SpecialConsideration)
                 return BuildSpecialConsiderationsList();
+            else if (ipLookupType == IpLookupType.IndustryPlacementModel)
+                return BuildIpModelsList();
 
             var tlLookup = new TlLookupBuilder().Build();
 
@@ -285,6 +287,129 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     EndDate = null,
                     ShowOption = null,
                     SortOrder = 9,
+                    CreatedBy = Constants.CreatedByUser,
+                    CreatedOn = Constants.CreatedOn,
+                    ModifiedBy = Constants.ModifiedByUser,
+                    ModifiedOn = Constants.ModifiedOn
+                }
+            };
+            return ipLookupValues;
+        }
+
+        public IList<Domain.Models.IpLookup> BuildIpModelsList()
+        {
+            var lookupList = new TlLookupBuilder().BuildIpTypeList();
+            var tlLookup = lookupList.FirstOrDefault(x => x.Category.Equals(IpLookupType.IndustryPlacementModel.ToString(), StringComparison.InvariantCultureIgnoreCase));
+
+            var ipLookupValues = new List<Domain.Models.IpLookup>()
+            {
+                new Domain.Models.IpLookup
+                {
+                    TlLookupId = tlLookup.Id,
+                    TlLookup = tlLookup,
+                    Name = "Relevant part-time work",
+                    StartDate = DateTime.Today,
+                    EndDate = null,
+                    ShowOption = null,
+                    SortOrder = 1,
+                    CreatedBy = Constants.CreatedByUser,
+                    CreatedOn = Constants.CreatedOn,
+                    ModifiedBy = Constants.ModifiedByUser,
+                    ModifiedOn = Constants.ModifiedOn
+                },
+                new Domain.Models.IpLookup
+                {
+                    TlLookupId = tlLookup.Id,
+                    TlLookup = tlLookup,
+                    Name = "On-site facilities for SEND students",
+                    StartDate = DateTime.Today,
+                    EndDate = null,
+                    ShowOption = null,
+                    SortOrder = 2,
+                    CreatedBy = Constants.CreatedByUser,
+                    CreatedOn = Constants.CreatedOn,
+                    ModifiedBy = Constants.ModifiedByUser,
+                    ModifiedOn = Constants.ModifiedOn
+                },
+                new Domain.Models.IpLookup
+                {
+                    TlLookupId = tlLookup.Id,
+                    TlLookup = tlLookup,
+                    Name = "On-site facilities for young people in young offender institutions",
+                    StartDate = DateTime.Today,
+                    EndDate = null,
+                    ShowOption = null,
+                    SortOrder = 3,
+                    CreatedBy = Constants.CreatedByUser,
+                    CreatedOn = Constants.CreatedOn,
+                    ModifiedBy = Constants.ModifiedByUser,
+                    ModifiedOn = Constants.ModifiedOn
+                },
+                new Domain.Models.IpLookup
+                {
+                    TlLookupId = tlLookup.Id,
+                    TlLookup = tlLookup,
+                    Name = "Route-level placements",
+                    StartDate = DateTime.Today,
+                    EndDate = null,
+                    ShowOption = null,
+                    SortOrder = 4,
+                    CreatedBy = Constants.CreatedByUser,
+                    CreatedOn = Constants.CreatedOn,
+                    ModifiedBy = Constants.ModifiedByUser,
+                    ModifiedOn = Constants.ModifiedOn
+                },
+                new Domain.Models.IpLookup
+                {
+                    TlLookupId = tlLookup.Id,
+                    TlLookup = tlLookup,
+                    Name = "Commercial, charitable or community projects",
+                    StartDate = DateTime.Today,
+                    EndDate = null,
+                    ShowOption = null,
+                    SortOrder = 5,
+                    CreatedBy = Constants.CreatedByUser,
+                    CreatedOn = Constants.CreatedOn,
+                    ModifiedBy = Constants.ModifiedByUser,
+                    ModifiedOn = Constants.ModifiedOn
+                },
+                new Domain.Models.IpLookup
+                {
+                    TlLookupId = tlLookup.Id,
+                    TlLookup = tlLookup,
+                    Name = "One lead employer facilitating the required hours",
+                    StartDate = DateTime.Today,
+                    EndDate = null,
+                    ShowOption = null,
+                    SortOrder = 6,
+                    CreatedBy = Constants.CreatedByUser,
+                    CreatedOn = Constants.CreatedOn,
+                    ModifiedBy = Constants.ModifiedByUser,
+                    ModifiedOn = Constants.ModifiedOn
+                },
+                new Domain.Models.IpLookup
+                {
+                    TlLookupId = tlLookup.Id,
+                    TlLookup = tlLookup,
+                    Name = "Use of skills hubs or employer training centres",
+                    StartDate = DateTime.Today,
+                    EndDate = null,
+                    ShowOption = null,
+                    SortOrder = 7,
+                    CreatedBy = Constants.CreatedByUser,
+                    CreatedOn = Constants.CreatedOn,
+                    ModifiedBy = Constants.ModifiedByUser,
+                    ModifiedOn = Constants.ModifiedOn
+                },
+                new Domain.Models.IpLookup
+                {
+                    TlLookupId = tlLookup.Id,
+                    TlLookup = tlLookup,
+                    Name = "Multiple employer",
+                    StartDate = DateTime.Today,
+                    EndDate = null,
+                    ShowOption = null,
+                    SortOrder = 8,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
                     ModifiedBy = Constants.ModifiedByUser,

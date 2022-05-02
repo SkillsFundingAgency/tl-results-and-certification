@@ -366,6 +366,9 @@
         public const string IpMultiEmployerOther = "IpMultiEmployerOther";
         public const string SubmitIpMultiEmployerOther = "SubmitIpMultiEmployerOther";
 
+        public const string IpMultiEmployerSelect = "IpMultiEmployerSelect";
+        public const string SubmitIpMultiEmployerSelect = "SubmitIpMultiEmployerSelect";
+
         // Special Consideration
         public const string IpSpecialConsiderationHours = "IpSpecialConsiderationHours";
         public const string SubmitIpSpecialConsiderationHours = "SubmitIpSpecialConsiderationHours";

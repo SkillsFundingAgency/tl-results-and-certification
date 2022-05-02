@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -23,6 +24,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.IpModelTlev
         }
 
         [Fact]
-        public void Then_Expected_Records_Should_Have_Been_Created() => _result.Should().Be(_data.Count);
+        public void Then_Expected_Records_Should_Have_Been_Created()
+        {
+            var result = Repository.GetManyAsync();
+            result.Count().Should().Be(_data.Count);
+        }
     }
 }

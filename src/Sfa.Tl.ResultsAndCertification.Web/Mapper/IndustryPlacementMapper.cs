@@ -39,6 +39,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.LearnerName, opts => opts.MapFrom((src, dest, destMember, context) => (string)context.Items["learnerName"]))
                .ForMember(d => d.OtherIpPlacementModels, opts => opts.MapFrom(s => s));
 
+            CreateMap<IList<IpLookupData>, IpMultiEmployerSelectViewModel>()
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom((src, dest, destMember, context) => (string)context.Items["learnerName"]))
+               .ForMember(d => d.PlacementModels, opts => opts.MapFrom(s => s));            
+
             CreateMap<IpLookupData, IpLookupDataViewModel>()
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name));

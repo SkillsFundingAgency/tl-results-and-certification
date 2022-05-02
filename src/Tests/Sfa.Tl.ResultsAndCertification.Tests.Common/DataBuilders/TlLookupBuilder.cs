@@ -242,9 +242,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new TlLookup
             {
-                Category = "IpType",
+                Category = "IndustryPlacementModel",
                 Code = "IPM",
-                Value = "Ip Models",
+                Value = "IndustryPlacementModel",
                 IsActive = true,
                 SortOrder = 1,
                 CreatedBy = Constants.CreatedByUser,
