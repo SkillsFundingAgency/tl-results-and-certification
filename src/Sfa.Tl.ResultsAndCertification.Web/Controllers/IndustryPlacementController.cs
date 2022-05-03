@@ -101,12 +101,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 cacheModel.IpModelViewModel = new IpModelViewModel();
 
             cacheModel.IpModelViewModel.IpModelUsed = model;
+
+            string redirectRouteName;
+
+            if (model.IsIpModelUsed == false)
+            {
+                cacheModel.IpModelViewModel.IpMultiEmployerUsed = null;
+                cacheModel.IpModelViewModel.IpMultiEmployerOther = null;
+                cacheModel.IpModelViewModel.IpMultiEmployerSelect = null;
+                redirectRouteName = RouteConstants.IpTempFlexibilityUsed;
+            }
+            else
+            {
+                redirectRouteName = RouteConstants.IpMultiEmployerUsed;
+            }
+
             await _cacheService.SetAsync(CacheKey, cacheModel);
-
-            if (cacheModel.IpModelViewModel.IpModelUsed.IsIpModelUsed == false)
-                return RedirectToRoute(RouteConstants.IpTempFlexibilityUsed);
-
-            return RedirectToRoute(RouteConstants.IpMultiEmployerUsed);
+            return RedirectToRoute(redirectRouteName);
         }
 
         [HttpGet]
@@ -134,12 +145,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
             
-            cacheModel.IpModelViewModel.IpMultiEmployerUsed = model;
-            await _cacheService.SetAsync(CacheKey, cacheModel);
+            cacheModel.IpModelViewModel.IpMultiEmployerUsed = model;            
 
-            return model.IsMultiEmployerModelUsed.Value
-                ? RedirectToRoute(RouteConstants.IpMultiEmployerOther)
-                : RedirectToRoute(RouteConstants.IpMultiEmployerSelect);
+            string redirectRouteName;
+
+            if (model.IsMultiEmployerModelUsed.Value)
+            {
+                cacheModel.IpModelViewModel.IpMultiEmployerSelect = null;
+                redirectRouteName = RouteConstants.IpMultiEmployerOther;
+            }
+            else
+            {
+                cacheModel.IpModelViewModel.IpMultiEmployerOther = null;
+                redirectRouteName = RouteConstants.IpMultiEmployerSelect;
+            }
+
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+            return RedirectToRoute(redirectRouteName);
         }
 
         [HttpGet]
