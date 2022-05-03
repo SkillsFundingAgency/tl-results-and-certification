@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult = await _apiClient.GetIpLookupDataAsync(_ipLookupType, _pathwayId);
         }
 
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void Then_Returns_Expected_Results()
         {
             _actualResult.Should().NotBeNullOrEmpty();
