@@ -1,0 +1,47 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual.IpBlendedPlacementUsedViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
+
+@{
+    ViewData["Title"] = IpBlendedPlacementUsed.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="@RouteConstants.SubmitIpBlendedPlacementUsed">            
+            <input type="hidden" asp-for="LearnerName" />
+
+            <partial name="_ValidationSummary" />
+
+            <span class="govuk-caption-l">@IpBlendedPlacementUsed.Caption_Ip_Models</span>
+            <div class="govuk-form-group" sfa-validation-for="IsBlendedPlacementUsed" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">@string.Format(IpBlendedPlacementUsed.Heading_Did_Blended_Placement_Used, Model.LearnerName)</h1>
+                    </legend>
+                    <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                        <span sfa-validation-for="IsBlendedPlacementUsed"></span>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="isblendedplacementused" asp-for="IsBlendedPlacementUsed" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="isblendedplacementused">
+                                @IpBlendedPlacementUsed.Option_Yes
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="isblendedplacementused-no" asp-for="IsBlendedPlacementUsed" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="isblendedplacementused-no">
+                                @IpBlendedPlacementUsed.Option_No
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@IpBlendedPlacementUsed.Button_Continue</button>
+        </form>
+    </div>
+     <partial name="Partials/_ipGuidanceNavigation.cshtml" />
+</div>

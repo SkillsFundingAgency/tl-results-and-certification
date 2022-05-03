@@ -145,6 +145,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Contact.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\IndustryPlacement\IpBlendedPlacementUsed.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpBlendedPlacementUsed.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\IndustryPlacement\IpCompletion.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1046,6 +1051,10 @@
     <EmbeddedResource Update="Content\Help\Contact.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Contact.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpBlendedPlacementUsed.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpBlendedPlacementUsed.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\IndustryPlacement\IpCompletion.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

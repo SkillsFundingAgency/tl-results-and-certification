@@ -369,13 +369,17 @@
         public const string IpMultiEmployerSelect = "IpMultiEmployerSelect";
         public const string SubmitIpMultiEmployerSelect = "SubmitIpMultiEmployerSelect";
 
+        // Special Consideration
         public const string IpSpecialConsiderationHours = "IpSpecialConsiderationHours";
         public const string SubmitIpSpecialConsiderationHours = "SubmitIpSpecialConsiderationHours";
         public const string IpSpecialConsiderationReasons = "IpSpecialConsiderationReasons";
         public const string SubmitIpSpecialConsiderationReasons = "SubmitIpSpecialConsiderationReasons";
 
+        // Temp Flexibility
         public const string IpTempFlexibilityUsed = "IpTempFlexibilityUsed";
         public const string SubmitIpTempFlexibilityUsed = "SubmitIpTempFlexibilityUsed";
+        public const string IpBlendedPlacementUsed = "IpBlendedPlacementUsed";
+        public const string SubmitIpBlendedPlacementUsed = "SubmitIpBlendedPlacementUsed";
 
         #endregion
     }
