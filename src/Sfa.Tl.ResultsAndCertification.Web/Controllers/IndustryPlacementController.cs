@@ -78,9 +78,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> IpModelUsedAsync()
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
-            if (cacheModel?.IpCompletion?.IndustryPlacementStatus == null || cacheModel.IpCompletion.IndustryPlacementStatus != IndustryPlacementStatus.Completed)//todo - second entry point requires CompletedWithSpecialConsideration
+            if (cacheModel?.IpCompletion?.IndustryPlacementStatus == null ||
+                cacheModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted ||
+                cacheModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotSpecified)
+            {
                 return RedirectToRoute(RouteConstants.PageNotFound);
-
+            }
             var viewModel = (cacheModel?.IpModelViewModel?.IpModelUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpModelUsedViewModel>(cacheModel.IpCompletion);
 
             return View(viewModel);
@@ -94,7 +97,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
 
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
-            if (cacheModel == null)
+            if (cacheModel == null || 
+                cacheModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted ||
+                cacheModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotSpecified)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             if (cacheModel?.IpModelViewModel == null)
