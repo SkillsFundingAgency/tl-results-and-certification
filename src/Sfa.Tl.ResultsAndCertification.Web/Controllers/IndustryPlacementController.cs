@@ -43,10 +43,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("industry-placement-completion/{profileId}", Name = RouteConstants.IpCompletion)]
         public async Task<IActionResult> IpCompletionAsync(int profileId)
         {
-            var viewModel = await _industryPlacementLoader.GetLearnerRecordDetailsAsync<IpCompletionViewModel>(User.GetUkPrn(), profileId);
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
 
-            if (viewModel == null || !viewModel.IsValid)
-                return RedirectToRoute(RouteConstants.PageNotFound);
+            var viewModel = (cacheModel?.IpCompletion) ?? await _industryPlacementLoader.GetLearnerRecordDetailsAsync<IpCompletionViewModel>(User.GetUkPrn(), profileId);
+            //var viewModel = await _industryPlacementLoader.GetLearnerRecordDetailsAsync<IpCompletionViewModel>(User.GetUkPrn(), profileId);
+
+            //if (viewModel == null || !viewModel.IsValid)
+            //    return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
         }
