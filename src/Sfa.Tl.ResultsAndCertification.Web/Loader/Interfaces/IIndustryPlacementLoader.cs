@@ -13,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<T> GetIpLookupDataAsync<T>(IpLookupType ipLookupType, string learnerName = null, int? pathwayId = null, bool showOption = false);
         Task<T> TransformIpCompletionDetailsTo<T>(IpCompletionViewModel model);
         Task<IList<IpLookupDataViewModel>> GetSpecialConsiderationReasonsListAsync(int academicYear);
+        Task<IList<IpLookupDataViewModel>> GetTemporaryFlexibilitiesAsync(int pathwayId, int academicYear);
         Task<IpTempFlexNavigation> GetTempFlexNavigationAsync(int pathwayId, int academicYear);
     }
 }

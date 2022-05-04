@@ -5,13 +5,11 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DbModel = Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Contract = Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
-
+using DbModel = Sfa.Tl.ResultsAndCertification.Domain.Models;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
@@ -19,14 +17,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     {
         private readonly IRepository<IpLookup> _ipLookupRepository;
         private readonly IRepository<IpModelTlevelCombination> _ipModelTlevelCombinationRepository;
+        private readonly IRepository<IpTempFlexTlevelCombination> _ipTempFlexTlevelCombinationRepository;
         private readonly IRepository<DbModel.IpTempFlexNavigation> _ipTempFlexNavigationRepository;
 
         private readonly IMapper _mapper;
 
-        public IndustryPlacementService(IRepository<IpLookup> ipLookupRepository, IRepository<IpModelTlevelCombination> ipModelTlevelCombinationRepository, IRepository<DbModel.IpTempFlexNavigation> ipTempFlexNavigationRepository, IMapper mapper)
+        public IndustryPlacementService(
+            IRepository<IpLookup> ipLookupRepository,
+            IRepository<IpModelTlevelCombination> ipModelTlevelCombinationRepository,
+            IRepository<IpTempFlexTlevelCombination> ipTempFlexTlevelCombinationRepository,
+            IRepository<DbModel.IpTempFlexNavigation> ipTempFlexNavigationRepository,
+            IMapper mapper)
         {
             _ipLookupRepository = ipLookupRepository;
             _ipModelTlevelCombinationRepository = ipModelTlevelCombinationRepository;
+            _ipTempFlexTlevelCombinationRepository = ipTempFlexTlevelCombinationRepository;
             _ipTempFlexNavigationRepository = ipTempFlexNavigationRepository;
             _mapper = mapper;
         }
@@ -37,6 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 IpLookupType.SpecialConsideration => await SpecialConsiderationReasonsAsync(),
                 IpLookupType.IndustryPlacementModel => await IndustryPlacementModelsAsync(pathwayId),
+                IpLookupType.TemporaryFlexibility => await TemporaryFlexibilitiesAsync(pathwayId),
                 _ => null
             };
         }
@@ -51,6 +57,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var lookupData = await _ipModelTlevelCombinationRepository
                                     .GetManyAsync(x => x.IsActive && x.TlPathwayId == pathwayId && x.IpLookup.TlLookup.Category == IpLookupType.IndustryPlacementModel.ToString())
+                                    .Select(x => x.IpLookup)
+                                    .OrderBy(x => x.SortOrder).ToListAsync();
+
+            return _mapper.Map<IList<IpLookupData>>(lookupData);
+        }
+
+        private async Task<IList<IpLookupData>> TemporaryFlexibilitiesAsync(int? pathwayId)
+        {
+            var lookupData = await _ipTempFlexTlevelCombinationRepository
+                                    .GetManyAsync(x => x.IsActive && x.TlPathwayId == pathwayId && x.IpLookup.TlLookup.Category == IpLookupType.TemporaryFlexibility.ToString())
                                     .Select(x => x.IpLookup)
                                     .OrderBy(x => x.SortOrder).ToListAsync();
 

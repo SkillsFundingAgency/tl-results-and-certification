@@ -380,6 +380,8 @@
         public const string SubmitIpTempFlexibilityUsed = "SubmitIpTempFlexibilityUsed";
         public const string IpBlendedPlacementUsed = "IpBlendedPlacementUsed";
         public const string SubmitIpBlendedPlacementUsed = "SubmitIpBlendedPlacementUsed";
+        public const string IpEmployerLedUsed = "IpEmployerLedUsed";
+        public const string SubmitIpEmployerLedUsed = "SubmitIpEmployerLedUsed";
 
         #endregion
     }

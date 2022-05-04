@@ -401,6 +401,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        [Route(" industry-placement-temporary-flexibility-employer-led", Name = RouteConstants.IpEmployerLedUsed)]
+        public async Task<IActionResult> IpEmployerLedUsedAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+
+            if (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == null
+                || cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == false 
+                || cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == null
+                || cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value == false)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = (cacheModel?.TempFlexibility?.IpEmployerLedUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpEmployerLedUsedViewModel>(cacheModel.IpCompletion);
+            viewModel.TemporaryFlexibilities = await _industryPlacementLoader.GetTemporaryFlexibilitiesAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear);
+
+            if(viewModel.TemporaryFlexibilities == null || viewModel.TemporaryFlexibilities.Count == 0)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
         #endregion
 
         private async Task SyncCacheIp(IpCompletionViewModel model)
