@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual.IpModelUsedViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 @{
     ViewData["Title"] = IpModelUsed.Page_Title;
@@ -11,29 +12,30 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form asp-route="">
+        <form class="form" asp-route="@RouteConstants.IpModelUsed">
+            <partial name="_ValidationSummary" />
             <input type="hidden" asp-for="ProfileId" />
             <input type="hidden" asp-for="LearnerName" />
 
-            <partial name="_ValidationSummary" />
-
+            <span class="govuk-caption-l">@IpModelUsed.Industry_Placement_Caption</span>
             <div class="govuk-form-group" sfa-validation-for="IsIpModelUsed" sfa-validation-class="govuk-form-group--error">
-                <span class="govuk-caption-l">@IpModelUsed.Industry_Placement_Models</span>
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                        <h1 class="govuk-fieldset__heading">@string.Format(IpModelUsed.Was_an_industry_placement_model_used_for, Model.LearnerName)</h1>
+                        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
+                            @string.Format(IpModelUsed.Was_an_industry_placement_model_used_for, Model.LearnerName)
+                        </h1>
                     </legend>
                     <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
                         <span sfa-validation-for="IsIpModelUsed"></span>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="isachieved" asp-for="IsIpModelUsed" type="radio" value="true">
-                            <label class="govuk-label govuk-radios__label" for="isachieved">
+                            <input class="govuk-radios__input" id="isipmodelused" asp-for="IsIpModelUsed" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="IsIpModelUsed">
                                 @IpModelUsed.Option_Yes
                             </label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="isachieved-no" asp-for="IsIpModelUsed" type="radio" value="false">
-                            <label class="govuk-label govuk-radios__label" for="isachieved-no">
+                            <input class="govuk-radios__input" id="isipmodelused-no" asp-for="IsIpModelUsed" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="isipmodelused-no">
                                 @IpModelUsed.Option_No
                             </label>
                         </div>

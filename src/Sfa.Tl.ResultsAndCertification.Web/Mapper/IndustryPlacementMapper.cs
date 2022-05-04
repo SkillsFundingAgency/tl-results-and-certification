@@ -25,8 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             // Transformations from IpCompletionViewModel
             CreateMap<IpCompletionViewModel, IpModelUsedViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName))
-               .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));
 
             CreateMap<IpCompletionViewModel, IpMultiEmployerUsedViewModel>()
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));

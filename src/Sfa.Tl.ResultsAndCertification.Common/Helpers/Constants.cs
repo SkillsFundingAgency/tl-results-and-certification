@@ -116,6 +116,10 @@
 
         public const int MaxFileSizeInMb = 5;
 
+        // Industry placements
+        public const string EmployerLedActivities = "Employer led activities/projects";
+        public const string BlendedPlacements = "Blended placements";
+
         // Printing Constants
         public const string Completed = "Completed";
         public const string NotCompleted = "Not completed";
