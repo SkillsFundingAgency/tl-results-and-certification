@@ -47,9 +47,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
 
-            var viewModel = (cacheModel?.IpCompletion) ?? await _industryPlacementLoader.GetLearnerRecordDetailsAsync<IpCompletionViewModel>(User.GetUkPrn(), profileId);
-            if (viewModel == null || !viewModel.IsValid)
-                return RedirectToRoute(RouteConstants.PageNotFound);
+            var viewModel = cacheModel?.IpCompletion;
+            if (viewModel == null)
+            {
+                viewModel = await _industryPlacementLoader.GetLearnerRecordDetailsAsync<IpCompletionViewModel>(User.GetUkPrn(), profileId);
+                if (viewModel == null || !viewModel.IsValid)
+                    return RedirectToRoute(RouteConstants.PageNotFound);
+            }
 
             return View(viewModel);
         }
@@ -341,13 +345,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("industry-placement-temporary-flexibility", Name = RouteConstants.SubmitIpTempFlexibilityUsed)]
         public async Task<IActionResult> IpTempFlexibilityUsedAsync(IpTempFlexibilityUsedViewModel model)
         {
-            if (!ModelState.IsValid)
-                return View(model);
-
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
             if (cacheModel?.IpModelViewModel?.IpModelUsed == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
-
+            
+            if (!ModelState.IsValid)
+            {
+                model.SetBackLink(cacheModel.IpModelViewModel);
+                return View(model);
+            }
+            
             if (cacheModel?.TempFlexibility == null)
                 cacheModel.TempFlexibility = new IpTempFlexibilityViewModel();
 
@@ -355,7 +362,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
             if (cacheModel.TempFlexibility.IpTempFlexibilityUsed.IsTempFlexibilityUsed == false)
-                return RedirectToRoute(RouteConstants.IpBlendedPlacementUsed);  // TODO: Send to check and submit later.
+                return RedirectToRoute(RouteConstants.PageNotFound);  // TODO: Send to check and submit later.
 
             return RedirectToRoute(RouteConstants.IpBlendedPlacementUsed);
         }
