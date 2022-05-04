@@ -57,6 +57,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));
+
+            CreateMap<IpCompletionViewModel, IpEmployerLedUsedViewModel>()
+              .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));            
         }
     }
 }

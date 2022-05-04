@@ -30,10 +30,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
             IpModelTlevelCombinationLogger = new Logger<GenericRepository<Domain.Models.IpModelTlevelCombination>>(new NullLoggerFactory());
             IpModelTlevelCombinationRepository = new GenericRepository<Domain.Models.IpModelTlevelCombination>(IpModelTlevelCombinationLogger, DbContext);
 
+            IpTempFlexTlevelCombinationLogger = new Logger<GenericRepository<Domain.Models.IpTempFlexTlevelCombination>>(new NullLoggerFactory());
+            IpTempFlexTlevelCombinationRepository = new GenericRepository<Domain.Models.IpTempFlexTlevelCombination>(IpTempFlexTlevelCombinationLogger, DbContext);
+
             IpTempFlexNavigationLogger = new Logger<GenericRepository<Domain.Models.IpTempFlexNavigation>>(new NullLoggerFactory());
             IpTempFlexNavigationRepository = new GenericRepository<Domain.Models.IpTempFlexNavigation>(IpTempFlexNavigationLogger, DbContext);
 
-            IndustryPlacementService = new IndustryPlacementService(IpLookupRepository, IpModelTlevelCombinationRepository, IpTempFlexNavigationRepository, Mapper);
+            IndustryPlacementService = new IndustryPlacementService(IpLookupRepository, IpModelTlevelCombinationRepository, IpTempFlexTlevelCombinationRepository, IpTempFlexNavigationRepository, Mapper);
         }
 
         public override Task When()
