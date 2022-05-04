@@ -44,7 +44,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
             ActualResult.ProfileId.Should().Be(_ipCompletionViewModel.ProfileId);
             ActualResult.LearnerName.Should().Be(_ipCompletionViewModel.LearnerName);
             ActualResult.IsIpModelUsed.Should().BeNull();
-            ActualResult.IsValid.Should().BeTrue();
         }
     }
 }

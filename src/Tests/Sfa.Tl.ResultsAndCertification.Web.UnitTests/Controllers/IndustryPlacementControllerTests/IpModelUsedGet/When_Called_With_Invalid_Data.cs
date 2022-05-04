@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 LearnerName = "John Smith",
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed
             };
-            _ipModelUsedViewModel = new IpModelUsedViewModel { ProfileId = 1, LearnerName = "John Smith", IndustryPlacementStatus = IndustryPlacementStatus.Completed };
+            _ipModelUsedViewModel = new IpModelUsedViewModel { ProfileId = 1, LearnerName = "John Smith"};
             IndustryPlacementLoader.TransformIpCompletionDetailsTo<IpModelUsedViewModel>(_ipCompletionViewModel).Returns(_ipModelUsedViewModel);
             CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(new IndustryPlacementViewModel());
         }

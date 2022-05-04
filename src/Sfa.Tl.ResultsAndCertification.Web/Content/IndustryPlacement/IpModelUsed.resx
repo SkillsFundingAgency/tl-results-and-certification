@@ -120,7 +120,7 @@
   <data name="Button_Continue" xml:space="preserve">
     <value>Continue</value>
   </data>
-  <data name="Industry_Placement_Models" xml:space="preserve">
+  <data name="Industry_Placement_Caption" xml:space="preserve">
     <value>Industry placement: Model(s)</value>
   </data>
   <data name="Option_No" xml:space="preserve">

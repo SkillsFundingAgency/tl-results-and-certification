@@ -72,9 +72,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         /// <summary>
         ///   Looks up a localized string similar to Industry placement: Model(s).
         /// </summary>
-        public static string Industry_Placement_Models {
+        public static string Industry_Placement_Caption {
             get {
-                return ResourceManager.GetString("Industry_Placement_Models", resourceCulture);
+                return ResourceManager.GetString("Industry_Placement_Caption", resourceCulture);
             }
         }
         
