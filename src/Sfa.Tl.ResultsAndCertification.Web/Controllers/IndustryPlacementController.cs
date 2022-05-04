@@ -45,9 +45,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
 
-            var viewModel = (cacheModel?.IpCompletion) ?? await _industryPlacementLoader.GetLearnerRecordDetailsAsync<IpCompletionViewModel>(User.GetUkPrn(), profileId);
-            if (viewModel == null || !viewModel.IsValid)
-                return RedirectToRoute(RouteConstants.PageNotFound);
+            var viewModel = cacheModel?.IpCompletion;
+            if (viewModel == null)
+            {
+                viewModel = await _industryPlacementLoader.GetLearnerRecordDetailsAsync<IpCompletionViewModel>(User.GetUkPrn(), profileId);
+                if (viewModel == null || !viewModel.IsValid)
+                    return RedirectToRoute(RouteConstants.PageNotFound);
+            }
 
             return View(viewModel);
         }

@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         [Required(ErrorMessageResourceType = typeof(ErrorResource.IpCompletion), ErrorMessageResourceName = "Validation_Message")]
         public IndustryPlacementStatus? IndustryPlacementStatus { get; set; }
 
-        public bool IsValid => IndustryPlacementStatus != ResultsAndCertification.Common.Enum.IndustryPlacementStatus.Completed || IndustryPlacementStatus == ResultsAndCertification.Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration;
+        public bool IsValid => IndustryPlacementStatus != ResultsAndCertification.Common.Enum.IndustryPlacementStatus.Completed && IndustryPlacementStatus != ResultsAndCertification.Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration;
         
         public virtual BackLinkModel BackLink => new()
         {
