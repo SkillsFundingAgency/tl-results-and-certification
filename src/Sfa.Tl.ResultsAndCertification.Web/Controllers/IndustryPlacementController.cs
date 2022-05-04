@@ -452,7 +452,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
             
-            var tempFlexibilities = await _industryPlacementLoader.GetTemporaryFlexibilitiesAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear);
+            var tempFlexibilities = await _industryPlacementLoader.GetTemporaryFlexibilitiesAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear, true);
 
             model.TemporaryFlexibilities = tempFlexibilities?.Where(t => t.Name.Equals(Constants.EmployerLedActivities, StringComparison.InvariantCultureIgnoreCase) || t.Name.Equals(Constants.BlendedPlacements, StringComparison.InvariantCultureIgnoreCase))?.ToList();
 
