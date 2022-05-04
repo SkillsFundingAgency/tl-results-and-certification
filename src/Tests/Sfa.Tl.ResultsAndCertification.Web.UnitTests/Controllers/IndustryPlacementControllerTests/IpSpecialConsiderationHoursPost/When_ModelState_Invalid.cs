@@ -45,7 +45,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.IpCompletion);
             model.BackLink.RouteAttributes.Count.Should().Be(1);
-            // TODO Backloink
+            model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string routeValue);
+            routeValue.Should().Be(ViewModel.ProfileId.ToString());
         }
     }
 }
