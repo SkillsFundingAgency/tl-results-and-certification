@@ -45,6 +45,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
             DbContext.SaveChangesAsync();
         }
 
+        public void SeedTempFlexNavigation()
+        {
+            var navigations = new IpTempFlexNavigationBuilder().BuildList(EnumAwardingOrganisation.Pearson);
+            DbContext.AddRange(navigations);
+            DbContext.SaveChanges();
+        }
+
         public void SeedIpModelTlevelCombinationsData()
         {
             var ipModelTlevelCombinations = new IpModelTlevelCombinationBuilder().BuildList(EnumAwardingOrganisation.Ncfe, IpLookupType.IndustryPlacementModel);
