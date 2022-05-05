@@ -11,7 +11,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.IpModelTlev
     public class When_CreateMany_Is_Called : BaseTest<Domain.Models.IpModelTlevelCombination>
     {
         private IList<Domain.Models.IpModelTlevelCombination> _data;
-        private int _result;
 
         public override void Given()
         {
@@ -20,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.IpModelTlev
 
         public async override Task When()
         {
-            _result = await Repository.CreateManyAsync(_data);
+            await Repository.CreateManyAsync(_data);
         }
 
         [Fact]

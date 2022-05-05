@@ -33,6 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 new Domain.Models.IpTempFlexNavigation
                 {
                     TlPathwayId = pathway.Id,
+                    TlPathway = pathway,
                     AcademicYear = 2020,
                     AskTempFlexibility = true,
                     AskBlendedPlacement = true,
@@ -45,6 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 new Domain.Models.IpTempFlexNavigation
                 {
                     TlPathwayId = pathway.Id,
+                    TlPathway = pathway,
                     AcademicYear = 2021,
                     AskTempFlexibility = false,
                     AskBlendedPlacement = true,
@@ -57,7 +59,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 new Domain.Models.IpTempFlexNavigation
                 {
                     TlPathwayId = pathway.Id,
-                    AcademicYear = 2021,
+                    TlPathway = pathway,
+                    AcademicYear = 2022,
                     AskTempFlexibility = true,
                     AskBlendedPlacement = false,
                     IsActive = true,

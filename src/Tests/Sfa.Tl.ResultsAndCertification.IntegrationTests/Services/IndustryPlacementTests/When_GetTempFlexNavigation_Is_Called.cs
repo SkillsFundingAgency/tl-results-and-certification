@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
             _actualResult = await IndustryPlacementService.GetTempFlexNavigationAsync(pathwayId, academicYear);
         }
 
-        [Theory(Skip = "TODO")]
+        [Theory]
         [MemberData(nameof(Data))]
         public async Task Then_Returns_Expected_Results(int pathwayId, int academicYear, Contract.IpTempFlexNavigation expectedTempFlexNavigation)
         {
@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                     new object[] { 99, 1999, null },
                     new object[] { 1, 2020,  new Contract.IpTempFlexNavigation { AskTempFlexibility = true, AskBlendedPlacement = true } },
                     new object[] { 1, 2021,  new Contract.IpTempFlexNavigation { AskTempFlexibility = false, AskBlendedPlacement = true } },
-                    new object[] { 1, 2021,  new Contract.IpTempFlexNavigation { AskTempFlexibility = true, AskBlendedPlacement = false } },
+                    new object[] { 1, 2022,  new Contract.IpTempFlexNavigation { AskTempFlexibility = true, AskBlendedPlacement = false } },
                 };
             }
         }
