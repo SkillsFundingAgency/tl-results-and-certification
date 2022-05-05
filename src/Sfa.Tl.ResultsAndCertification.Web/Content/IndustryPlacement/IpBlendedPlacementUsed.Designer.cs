@@ -116,7 +116,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Blended placement - Temporary flexibility.
+        ///   Looks up a localized string similar to Blended placement - Temporary flexibility - Industry placement.
         /// </summary>
         public static string Page_Title {
             get {
