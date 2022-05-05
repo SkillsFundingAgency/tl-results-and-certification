@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Special consideration reasons - Industry placement.
+        ///   Looks up a localized string similar to Special consideration reasons - Industry placement - Manage learner.
         /// </summary>
         public static string Page_Title {
             get {

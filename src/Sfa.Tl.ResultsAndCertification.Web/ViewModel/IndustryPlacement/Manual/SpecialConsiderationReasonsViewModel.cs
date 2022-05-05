@@ -14,7 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
             ReasonsList = new List<IpLookupDataViewModel>();
         }
 
-        public int ProfileId { get; set; }
         public string LearnerName { get; set; }
         public int AcademicYear { get; set; }
         

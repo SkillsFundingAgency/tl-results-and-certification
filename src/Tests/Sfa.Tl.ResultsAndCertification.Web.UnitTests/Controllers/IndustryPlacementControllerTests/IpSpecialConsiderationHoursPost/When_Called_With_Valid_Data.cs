@@ -10,8 +10,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
     public class When_Called_With_Valid_Data : TestSetup
     {
         private IndustryPlacementViewModel _cacheResult;
-        private IpCompletionViewModel _ipCompletionViewModel;
-        private SpecialConsiderationViewModel _specialConsiderationViewModel;
         private SpecialConsiderationHoursViewModel _specialConsiderationHoursViewModel;
 
         public override void Given()

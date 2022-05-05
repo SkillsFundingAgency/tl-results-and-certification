@@ -237,14 +237,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         #region SpecialConsideration
 
         [HttpGet]
-        [Route("clearcache")]
-        public async Task<JsonResult> ClearCache()
-        {
-            await _cacheService.RemoveAsync<IndustryPlacementViewModel>(CacheKey);
-            return Json("Deleted");
-        }
-
-        [HttpGet]
         [Route("industry-placement-special-consideration-hours", Name = RouteConstants.IpSpecialConsiderationHours)]
         public async Task<IActionResult> IpSpecialConsiderationHoursAsync()
         {

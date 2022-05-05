@@ -35,7 +35,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             _specialConsiderationReasonsViewModel = new SpecialConsiderationReasonsViewModel
             {
                 AcademicYear = _ipCompletionViewModel.AcademicYear,
-                ProfileId = _ipCompletionViewModel.ProfileId,
                 LearnerName = _ipCompletionViewModel.LearnerName,
                 ReasonsList = new List<IpLookupDataViewModel> { new IpLookupDataViewModel { Id = 1, Name = "Medical", IsSelected = false }, new IpLookupDataViewModel { Id = 2, Name = "Withdrawn", IsSelected = false } }
             };
@@ -62,7 +61,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
             var model = viewResult.Model as SpecialConsiderationReasonsViewModel;
             model.Should().NotBeNull();
-            model.ProfileId.Should().Be(_ipCompletionViewModel.ProfileId);
             model.LearnerName.Should().Be(_ipCompletionViewModel.LearnerName);
             model.AcademicYear.Should().Be(_ipCompletionViewModel.AcademicYear);
             model.IsReasonSelected.Should().BeNull();

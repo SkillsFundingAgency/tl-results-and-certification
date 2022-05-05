@@ -13,7 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
         {
             ViewModel = new SpecialConsiderationReasonsViewModel
             {
-                ProfileId = 1,
                 LearnerName = "Test User",
                 AcademicYear = 2020,
                 ReasonsList = new List<IpLookupDataViewModel> { new IpLookupDataViewModel { Id = 1, Name = "Medical", IsSelected = false }, new IpLookupDataViewModel { Id = 2, Name = "Withdrawn", IsSelected = false } }
@@ -34,7 +33,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
             model.Should().NotBeNull();
 
-            model.ProfileId.Should().Be(ViewModel.ProfileId);
             model.LearnerName.Should().Be(ViewModel.LearnerName);
             model.AcademicYear.Should().Be(ViewModel.AcademicYear);
             model.IsReasonSelected.Should().BeNull();
