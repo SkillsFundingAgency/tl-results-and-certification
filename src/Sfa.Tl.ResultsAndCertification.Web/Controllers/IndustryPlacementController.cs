@@ -384,6 +384,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = (cacheModel?.TempFlexibility?.IpBlendedPlacementUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpBlendedPlacementUsedViewModel>(cacheModel?.IpCompletion);
+            viewModel.SetBackLink(cacheModel.IpModelViewModel, navigation.AskTempFlexibility);
 
             return View(viewModel);
         }
@@ -392,16 +393,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("industry-placement-temporary-flexibility-blended", Name = RouteConstants.SubmitIpBlendedPlacementUsed)]
         public async Task<IActionResult> IpBlendedPlacementUsedAsync(IpBlendedPlacementUsedViewModel model)
         {
-            if (!ModelState.IsValid)
-                return View(model);
-
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
             if (cacheModel?.IpModelViewModel?.IpModelUsed == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            if (!ModelState.IsValid)
+            {
+                var navigation = await _industryPlacementLoader.GetTempFlexNavigationAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear);
+                model.SetBackLink(cacheModel.IpModelViewModel, navigation.AskTempFlexibility);
+                return View(model);
+            }
+                
             if (cacheModel?.TempFlexibility == null)
                 cacheModel.TempFlexibility = new IpTempFlexibilityViewModel();
-            
+
             cacheModel.TempFlexibility.IpBlendedPlacementUsed = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
             return RedirectToRoute(RouteConstants.IpEmployerLedUsed);
