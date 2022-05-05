@@ -26,6 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
         protected IMapper Mapper;
         protected IList<IpLookup> IpLookup;
         protected IList<IpModelTlevelCombination> IpModelTlevelCombination;
+        protected IList<IpTempFlexTlevelCombination> IpTempFlexTlevelCombination;
 
         // Dependencies
         protected ILogger<GenericRepository<IpLookup>> IpLookupRepositoryLogger;
@@ -57,6 +58,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
             var ipModelTlevelCombinations = new IpModelTlevelCombinationBuilder().BuildList(EnumAwardingOrganisation.Ncfe, IpLookupType.IndustryPlacementModel);
 
             IpModelTlevelCombination = IpModelTlevelCombinationProvider.CreateIpModelTlevelCombinationsList(DbContext, EnumAwardingOrganisation.Ncfe, ipModelTlevelCombinations, true);
+
+            DbContext.SaveChangesAsync();
+        }
+
+        public void SeedIpTempFlexTlevelCombinationsData()
+        {
+            var ipTempFlexTlevelCombinations = new IpTempFlexTlevelCombinationBuilder().BuildList(EnumAwardingOrganisation.Ncfe, IpLookupType.TemporaryFlexibility);
+
+            IpTempFlexTlevelCombination = IpTempFlexTlevelCombinationProvider.CreateIpTempFlexTlevelCombinationsList(DbContext, EnumAwardingOrganisation.Ncfe, ipTempFlexTlevelCombinations, true);
 
             DbContext.SaveChangesAsync();
         }

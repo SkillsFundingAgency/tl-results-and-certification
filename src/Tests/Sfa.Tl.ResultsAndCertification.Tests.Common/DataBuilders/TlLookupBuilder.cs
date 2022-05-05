@@ -254,9 +254,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new TlLookup
             {
-                Category = "IpType",
+                Category = "TemporaryFlexibility",
                 Code = "TF",
-                Value = "Temporary Flexibilities",
+                Value = "TemporaryFlexibility",
                 IsActive = true,
                 SortOrder = 1,
                 CreatedBy = Constants.CreatedByUser,
