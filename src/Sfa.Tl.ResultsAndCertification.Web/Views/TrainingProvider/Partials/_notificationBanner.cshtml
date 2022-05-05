@@ -19,7 +19,7 @@
                     <ul class="govuk-list">
                         @if (!Model.IsIndustryPlacementAdded)
                         {
-                            <li> <a class="govuk-notification-banner__link" asp-route="">@LearnerRecordDetails.Notification_Link_Add_Ip</a> </li>
+                            <li> <a class="govuk-notification-banner__link" asp-route="@RouteConstants.AddIndustryPlacement" asp-route-profileId="@Model.ProfileId">@LearnerRecordDetails.Notification_Link_Add_Ip</a> </li>
                         }
                         @if (!Model.IsMathsAdded)
                         {
