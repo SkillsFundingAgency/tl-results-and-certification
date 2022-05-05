@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using System.Collections.Generic;
 
@@ -23,17 +24,19 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             };
         }
 
-        public IList<Domain.Models.IpTempFlexTlevelCombination> BuildList(EnumAwardingOrganisation awardingOrganisation)
+        public IList<Domain.Models.IpTempFlexTlevelCombination> BuildList(EnumAwardingOrganisation awardingOrganisation, IpLookupType? lookupType = null)
         {
             var pathway = new TlPathwayBuilder().Build(awardingOrganisation);
-            var ipLookup = new IpLookupBuilder().BuildList();
+            var ipLookup = new IpLookupBuilder().BuildList(lookupType);
 
             var ipTempFlexCombinations = new List<Domain.Models.IpTempFlexTlevelCombination>()
             {
                 new Domain.Models.IpTempFlexTlevelCombination
                 {
                     TlPathwayId = pathway.Id,
+                    TlPathway = pathway,
                     IpLookupId = ipLookup[0].Id,
+                    IpLookup = ipLookup[0],
                     IsActive = true,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
@@ -43,7 +46,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 new Domain.Models.IpTempFlexTlevelCombination
                 {
                     TlPathwayId = pathway.Id,
-                    IpLookupId = ipLookup[1].Id,
+                    TlPathway = pathway,
+                    IpLookupId = ipLookup[0].Id,
+                    IpLookup = ipLookup[0],
                     IsActive = true,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
@@ -53,7 +58,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 new Domain.Models.IpTempFlexTlevelCombination
                 {
                     TlPathwayId = pathway.Id,
-                    IpLookupId = ipLookup[2].Id,
+                    TlPathway = pathway,
+                    IpLookupId = ipLookup[0].Id,
+                    IpLookup = ipLookup[0],
                     IsActive = true,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
@@ -63,7 +70,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 new Domain.Models.IpTempFlexTlevelCombination
                 {
                     TlPathwayId = pathway.Id,
-                    IpLookupId = ipLookup[3].Id,
+                    TlPathway = pathway,
+                    IpLookupId = ipLookup[0].Id,
+                    IpLookup = ipLookup[0],
                     IsActive = false,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
