@@ -18,7 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             ViewModel = new SpecialConsiderationReasonsViewModel
             {
                 AcademicYear = 2020,
-                ProfileId = 1,
                 LearnerName = "Test User",
                 ReasonsList = new List<IpLookupDataViewModel> { new IpLookupDataViewModel { Id = 1, Name = "Medical", IsSelected = true }, new IpLookupDataViewModel { Id = 2, Name = "Withdrawn", IsSelected = true } }
             };
