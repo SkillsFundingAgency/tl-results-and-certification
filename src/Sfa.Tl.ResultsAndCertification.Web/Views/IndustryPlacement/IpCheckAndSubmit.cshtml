@@ -1,0 +1,241 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual.IpCheckAndSubmitViewModel
+
+@{
+    ViewData["Title"] = "TODO";
+}
+
+<div class="govuk-width-container">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+            <h1 class="govuk-heading-l">Check your answers</h1>
+
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Learner
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <p class="govuk-body">Max Payne</p>
+                </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                ULN
+            </dt>
+            <dd class="govuk-summary-list__value">
+                <p class="govuk-body">1162334257</p>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Date of birth
+            </dt>
+            <dd class="govuk-summary-list__value">
+                <p class="govuk-body">11 August 2004</p>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                T Level
+            </dt>
+            <dd class="govuk-summary-list__value">
+                <p class="govuk-body">Education and childcare</p>
+            </dd>
+        </div>
+        </dl>
+
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+            <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Industry placement completed
+            </dt>
+            <dd class="govuk-summary-list__value">
+                Yes, completed with special consideration
+            </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="change-ip-result">
+                    Change<span class="govuk-visually-hidden"> industry placement completed</span>
+                </a>
+            </dd>
+    </div>
+
+
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            Hours spent on placement
+        </dt>
+        <dd class="govuk-summary-list__value">
+            99
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="total-placement-hours?change-answer=yes">
+                Change<span class="govuk-visually-hidden"> total placement hours</span>
+            </a>
+        </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            Special consideration reason
+        </dt>
+        <dd class="govuk-summary-list__value">
+
+
+            <p>Learner's family medical reasons</p>
+
+            <p>Bereavement</p>
+
+            <p>Domestic crisis</p>
+
+
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="special-consideration-reason?change-answer=yes">
+                Change<span class="govuk-visually-hidden"> special consideration reason</span>
+            </a>
+        </dd>
+    </div>
+
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            Industry placement model
+        </dt>
+        <dd class="govuk-summary-list__value" style="text-transform: capitalize">
+
+            yes
+
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="did-you-use-an-industry-placement">
+                Change<span class="govuk-visually-hidden"> whether industry placement model used</span>
+            </a>
+        </dd>
+    </div>
+
+
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            Multiple employer model
+        </dt>
+        <dd class="govuk-summary-list__value" style="text-transform: capitalize">
+            yes
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="multiple-employer-model">
+                Change<span class="govuk-visually-hidden"> whether multiple employer model was used</span>
+            </a>
+        </dd>
+    </div>
+
+
+
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+
+            Other industry placement model(s) used
+
+        </dt>
+        <dd class="govuk-summary-list__value">
+
+
+
+            <p>Relevant part-time work</p>
+
+            <p>On-site facilities for SEND students</p>
+
+            <p>On-site facilities for young people in young offender institutions)</p>
+
+
+
+
+
+
+
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="industry-placement-model-selection?change-answer=yes">
+                Change<span class="govuk-visually-hidden"> which industry placement models were used</span>
+            </a>
+        </dd>
+    </div>
+
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+
+            Temporary flexibility
+
+        </dt>
+        <dd class="govuk-summary-list__value" style="text-transform: capitalize">
+            yes
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="did-you-use-a-flexibility">
+                Change<span class="govuk-visually-hidden"> whether temporary flexibility was granted</span>
+            </a>
+        </dd>
+    </div>
+
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            Blended placement
+        </dt>
+        <dd class="govuk-summary-list__value" style="text-transform: capitalize">
+            yes
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="blended-placements">
+                Change<span class="govuk-visually-hidden"> whether temporary flexibility was granted</span>
+            </a>
+        </dd>
+    </div>
+
+
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            Temporary flexibilities used
+        </dt>
+        <dd class="govuk-summary-list__value">
+
+            <p> Employer led activities/projects</p>
+
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="temporary-flexibilities">
+                Change<span class="govuk-visually-hidden"> which temporary flexibilities were used</span>
+            </a>
+        </dd>
+    </div>
+
+    </dl>
+
+
+    <p class="govuk-body">
+        I confirm that Max Payne has
+        completed their
+        T Level industry placement and that all relevant supporting documentation is held on record.
+    </p>
+
+
+    <form action="special-consideration-check-answers-status" method="post" novalidate="">
+
+        <input type="hidden" name="answers-checked" value="true">
+
+        <div class="govuk-button-group">
+            <button class="govuk-button" data-module="govuk-button">
+                Submit
+            </button>
+
+            <a class="govuk-link" href="update-t-level-record?1162334257">Cancel</a>
+        </div>
+
+    </form>
+</div>
+        </div>
+    </div>

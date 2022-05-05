@@ -104,7 +104,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
 
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
-            if (cacheModel == null || 
+            if (cacheModel == null ||
                 cacheModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted ||
                 cacheModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotSpecified)
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -156,8 +156,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
             if (cacheModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
-            
-            cacheModel.IpModelViewModel.IpMultiEmployerUsed = model;            
+
+            cacheModel.IpModelViewModel.IpMultiEmployerUsed = model;
 
             string redirectRouteName;
 
@@ -314,7 +314,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var navigation = await _industryPlacementLoader.GetTempFlexNavigationAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear);
             if (navigation == null)
-                return RedirectToRoute(RouteConstants.PageNotFound); // TODO: This must be Check&Submit later
+                return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
 
             if (cacheModel.IpModelViewModel.IpModelUsed.IsIpModelUsed == false)
             {
@@ -340,13 +340,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
             if (cacheModel?.IpModelViewModel?.IpModelUsed == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
-            
+
             if (!ModelState.IsValid)
             {
                 model.SetBackLink(cacheModel.IpModelViewModel);
                 return View(model);
             }
-            
+
             if (cacheModel?.TempFlexibility == null)
                 cacheModel.TempFlexibility = new IpTempFlexibilityViewModel();
 
@@ -354,7 +354,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
             if (cacheModel.TempFlexibility.IpTempFlexibilityUsed.IsTempFlexibilityUsed == false)
-                return RedirectToRoute(RouteConstants.PageNotFound);  // TODO: Send to check and submit later.
+                return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
 
             return RedirectToRoute(RouteConstants.IpBlendedPlacementUsed);
         }
@@ -370,7 +370,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var navigation = await _industryPlacementLoader.GetTempFlexNavigationAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear);
             if (navigation == null)
-                return RedirectToRoute(RouteConstants.PageNotFound); // TODO: This must be Check&Submit later
+                return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
 
             if (!navigation.AskBlendedPlacement)
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -395,7 +395,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 model.SetBackLink(cacheModel.IpModelViewModel, navigation.AskTempFlexibility);
                 return View(model);
             }
-                
+
             if (cacheModel?.TempFlexibility == null)
                 cacheModel.TempFlexibility = new IpTempFlexibilityViewModel();
 
@@ -411,7 +411,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
 
             if (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == null
-                || cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == false 
+                || cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == false
                 || cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == null
                 || cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value == false)
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -443,17 +443,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
-            
+
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
 
             if (cacheModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
-            
+
             var tempFlexibilities = await _industryPlacementLoader.GetTemporaryFlexibilitiesAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear, true);
 
             model.TemporaryFlexibilities = tempFlexibilities?.Where(t => t.Name.Equals(Constants.EmployerLedActivities, StringComparison.InvariantCultureIgnoreCase) || t.Name.Equals(Constants.BlendedPlacements, StringComparison.InvariantCultureIgnoreCase))?.ToList();
 
-            if(model.TemporaryFlexibilities == null || !model.TemporaryFlexibilities.Any())
+            if (model.TemporaryFlexibilities == null || !model.TemporaryFlexibilities.Any())
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             if (model.IsEmployerLedUsed.Value)
@@ -464,7 +464,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 model.TemporaryFlexibilities.ToList().ForEach(tf =>
                 {
-                    tf.IsSelected = tf.Name.Equals(Constants.BlendedPlacements, StringComparison.InvariantCultureIgnoreCase);                    
+                    tf.IsSelected = tf.Name.Equals(Constants.BlendedPlacements, StringComparison.InvariantCultureIgnoreCase);
                 });
             }
 
@@ -472,6 +472,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
             return View(model);
+        }
+
+        #endregion
+
+        #region CheckAndSubmit
+
+        [HttpGet]
+        [Route("industry-placement-check-your-answers", Name = RouteConstants.IpCheckAndSubmit)]
+        public async Task<IActionResult> IpCheckAndSubmitAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+            if (cacheModel?.IpModelViewModel?.IpModelUsed == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = new IpCheckAndSubmitViewModel();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("industry-placement-check-your-answers", Name = RouteConstants.SubmitIpCheckAndSubmit)]
+        public IActionResult IpCheckAndSubmitSave()
+        {
+            return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
         }
 
         #endregion

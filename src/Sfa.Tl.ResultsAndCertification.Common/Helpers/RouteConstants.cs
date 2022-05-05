@@ -382,6 +382,8 @@
         public const string SubmitIpBlendedPlacementUsed = "SubmitIpBlendedPlacementUsed";
         public const string IpEmployerLedUsed = "IpEmployerLedUsed";
         public const string SubmitIpEmployerLedUsed = "SubmitIpEmployerLedUsed";
+        public const string IpCheckAndSubmit = "IpCheckAndSubmit";
+        public const string SubmitIpCheckAndSubmit = "SubmitIpCheckAndSubmit";
 
         #endregion
     }

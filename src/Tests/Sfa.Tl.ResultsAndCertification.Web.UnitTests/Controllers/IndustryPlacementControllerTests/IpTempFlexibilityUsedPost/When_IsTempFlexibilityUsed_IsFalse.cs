@@ -17,7 +17,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             _cacheResult = new IndustryPlacementViewModel
             {
                 IpModelViewModel = new IpModelViewModel { IpModelUsed = new IpModelUsedViewModel() },
-                //TempFlexibility = new IpTempFlexibilityViewModel { IpTempFlexibilityUsed = new IpTempFlexibilityUsedViewModel { IsTempFlexibilityUsed = false } }
             };
             CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(_cacheResult);
 
@@ -31,11 +30,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
         }
 
         [Fact]
-        public void Then_Redirected_To_PageNotFound()
+        public void Then_Redirected_To_IpCheckAndSubmit()
         {
-            // TODO: This should go Check And Submit later.
             var actualRouteName = (Result as RedirectToRouteResult).RouteName;
-            actualRouteName.Should().Be(RouteConstants.PageNotFound);
+            actualRouteName.Should().Be(RouteConstants.IpCheckAndSubmit);
         }
     }
 }
