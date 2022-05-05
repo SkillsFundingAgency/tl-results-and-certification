@@ -18,7 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
         public override void Given()
         {
-            
             // Cache object
             _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = 1, AcademicYear = 2020, LearnerName = "First Last", IndustryPlacementStatus = IndustryPlacementStatus.Completed };
             _ipTempFlexibilityUsedViewModel = new IpTempFlexibilityUsedViewModel { LearnerName = _ipCompletionViewModel.LearnerName };
@@ -26,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             {
                 IpCompletion = _ipCompletionViewModel,
                 IpModelViewModel = new IpModelViewModel { IpModelUsed = new IpModelUsedViewModel { IsIpModelUsed = false } },
-                TempFlexibility = new IpTempFlexibilityViewModel { IpTempFlexibilityUsed = _ipTempFlexibilityUsedViewModel } 
+                TempFlexibility = new IpTempFlexibilityViewModel { IpTempFlexibilityUsed = _ipTempFlexibilityUsedViewModel, IpBlendedPlacementUsed = new IpBlendedPlacementUsedViewModel { IsBlendedPlacementUsed = true } } 
             };
             CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(_cacheResult);
 
@@ -49,15 +48,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             Result.Should().BeOfType(typeof(ViewResult));
 
             var viewResult = Result as ViewResult;
-            viewResult.Model.Should().BeOfType(typeof(IpTempFlexibilityUsedViewModel));
+            viewResult.Model.Should().BeOfType(typeof(IpBlendedPlacementUsedViewModel));
 
-            var model = viewResult.Model as IpTempFlexibilityUsedViewModel;
+            var model = viewResult.Model as IpBlendedPlacementUsedViewModel;
             model.Should().NotBeNull();
-            model.LearnerName.Should().Be(_ipTempFlexibilityUsedViewModel.LearnerName);
-            model.IsTempFlexibilityUsed.Should().BeNull();
+            model.LearnerName.Should().Be(_cacheResult.TempFlexibility.IpBlendedPlacementUsed.LearnerName);
+            model.IsBlendedPlacementUsed.Should().Be(_cacheResult.TempFlexibility.IpBlendedPlacementUsed.IsBlendedPlacementUsed);
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.IpModelUsed);
+            model.BackLink.RouteName.Should().Be(RouteConstants.IpTempFlexibilityUsed);
             model.BackLink.RouteAttributes.Count.Should().Be(0);
         }
     }
