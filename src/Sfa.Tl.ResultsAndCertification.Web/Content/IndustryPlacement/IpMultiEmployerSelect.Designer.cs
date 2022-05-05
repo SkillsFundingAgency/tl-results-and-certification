@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Industry placement: Model(s).
+        ///   Looks up a localized string similar to Industry placement: Model.
         /// </summary>
         public static string Caption_Ip_Models {
             get {
