@@ -483,10 +483,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> IpCheckAndSubmitAsync()
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
-            if (cacheModel?.IpModelViewModel?.IpModelUsed == null)
+            if (cacheModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var viewModel = new IpCheckAndSubmitViewModel();
+            var viewModel = await _industryPlacementLoader.GetLearnerRecordDetailsAsync<IpCheckAndSubmitViewModel>(User.GetUkPrn(), cacheModel.IpCompletion.PathwayId);
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
         }
