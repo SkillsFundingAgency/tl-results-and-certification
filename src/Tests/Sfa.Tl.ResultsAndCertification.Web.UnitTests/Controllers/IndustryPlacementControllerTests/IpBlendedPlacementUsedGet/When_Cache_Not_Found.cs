@@ -5,7 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpTempFlexibilityUsedPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpBlendedPlacementUsedGet
 {
     public class When_Cache_Not_Found : TestSetup
     {
@@ -21,8 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
         public void Then_Expected_Methods_AreCalled()
         {
             IndustryPlacementLoader.DidNotReceive().GetTempFlexNavigationAsync(Arg.Any<int>(), Arg.Any<int>());
-            IndustryPlacementLoader.DidNotReceive().TransformIpCompletionDetailsTo<IpTempFlexibilityUsedViewModel>(Arg.Any<IpCompletionViewModel>());
-            CacheService.DidNotReceive().SetAsync(CacheKey, _cacheResult);
+            IndustryPlacementLoader.DidNotReceive().TransformIpCompletionDetailsTo<IpBlendedPlacementUsedViewModel>(Arg.Any<IpCompletionViewModel>());
         }
 
         [Fact]
