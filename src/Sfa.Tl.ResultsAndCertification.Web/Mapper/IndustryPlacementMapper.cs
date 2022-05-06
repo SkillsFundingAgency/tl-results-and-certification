@@ -22,6 +22,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle));
+               //.ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.TlPathwayId))
+               //.ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear));
 
             CreateMap<IpLookupData, IpLookupDataViewModel>()
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))

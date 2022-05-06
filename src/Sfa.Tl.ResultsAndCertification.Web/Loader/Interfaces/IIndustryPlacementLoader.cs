@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,5 +16,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<IList<IpLookupDataViewModel>> GetSpecialConsiderationReasonsListAsync(int academicYear);
         Task<IList<IpLookupDataViewModel>> GetTemporaryFlexibilitiesAsync(int pathwayId, int academicYear, bool showOption = false);
         Task<IpTempFlexNavigation> GetTempFlexNavigationAsync(int pathwayId, int academicYear);
+        Task<(List<SummaryItemModel>, bool)> GetIpSummaryDetailsListAsync(IndustryPlacementViewModel cacheModel, int pathwayId, int academicYear);
     }
 }

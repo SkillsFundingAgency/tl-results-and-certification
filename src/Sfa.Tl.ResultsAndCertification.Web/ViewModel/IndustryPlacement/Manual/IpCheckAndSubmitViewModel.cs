@@ -2,47 +2,56 @@
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
-
-using Content = Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement.IpCheckAndSubmit;
+using System.Collections.Generic;
+using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement.IpCheckAndSubmit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
 {
     public class IpCheckAndSubmitViewModel
     {
+        public IpCheckAndSubmitViewModel()
+        {
+            IpDetailsList = new List<SummaryItemModel>();
+        }
+
+        //public int PathwayId { get; set; }
+        //public int AcademicYear { get; set; }
+
         public long Uln { get; set; }
         public string LearnerName { get; set; }
         public DateTime DateofBirth { get; set; }
-
+        
         public string TlevelTitle { get; set; } // TODO: Tlevel or TlevelTitle?
 
         public SummaryItemModel SummaryUln => new()
         {
             Id = "uln",
-            Title = Content.IndustryPlacement.IpCheckAndSubmit.Title_Uln_Text,
+            Title = CheckAndSubmitContent.Title_Uln_Text,
             Value = Uln.ToString()
         };
 
          public SummaryItemModel SummaryLearnerName => new()
          {
              Id = "learnername",
-             Title = Content.IndustryPlacement.IpCheckAndSubmit.Title_Name_Text,
+             Title = CheckAndSubmitContent.Title_Name_Text,
              Value = LearnerName
          };
 
         public SummaryItemModel SummaryDateofBirth => new()
         {
             Id = "dateofbirth",
-            Title = Content.IndustryPlacement.IpCheckAndSubmit.Title_DateofBirth_Text,
+            Title = CheckAndSubmitContent.Title_DateofBirth_Text,
             Value = DateofBirth.ToDobFormat()
         };
 
         public SummaryItemModel SummaryTlevelTitle => new()
         {
             Id = "tleveltitle",
-            Title = Content.IndustryPlacement.IpCheckAndSubmit.Title_TLevel_Text,
+            Title = CheckAndSubmitContent.Title_TLevel_Text,
             Value = TlevelTitle
         };
 
+        public IList<SummaryItemModel> IpDetailsList { get; set; }
 
         public virtual BackLinkModel BackLink { get; set; }
 
@@ -53,6 +62,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         // Tempflex (NO)
         // Blended
         // Q3-led
-        // Q4
+        // Q4-non-led
     }
 }
