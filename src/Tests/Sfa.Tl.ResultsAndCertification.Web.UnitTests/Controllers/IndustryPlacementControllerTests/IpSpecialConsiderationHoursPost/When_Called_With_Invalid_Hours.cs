@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpSpecialConsiderationHoursPost
 {
-    public class When_ModelState_Invalid : TestSetup
+    public class When_Called_With_Invalid_Hours : TestSetup
     {
         public override void Given()
         {

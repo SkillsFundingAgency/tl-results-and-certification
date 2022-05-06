@@ -98,11 +98,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hours spent on placement must be between 0 and 1000.
+        ///   Looks up a localized string similar to The placement duration must be a whole number between 1 and 999 hours.
         /// </summary>
-        public static string Hours_Must_Be_Between_0_1000 {
+        public static string Hours_Must_Be_Between_1_999 {
             get {
-                return ResourceManager.GetString("Hours_Must_Be_Between_0_1000", resourceCulture);
+                return ResourceManager.GetString("Hours_Must_Be_Between_1_999", resourceCulture);
             }
         }
         
