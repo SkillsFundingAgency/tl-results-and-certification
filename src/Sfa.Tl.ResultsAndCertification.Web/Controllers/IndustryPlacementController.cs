@@ -198,6 +198,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            if (cacheModel.IpModelViewModel.IpMultiEmployerUsed.IsMultiEmployerModelUsed == true)
+            {
+                model.OtherIpPlacementModels.Where(ip => ip.Name.Equals(Constants.MultipleEmployer, StringComparison.InvariantCultureIgnoreCase)).ToList().ForEach(ip =>
+                {
+                    ip.IsSelected = true;
+                });                
+            }
+
             cacheModel.IpModelViewModel.IpMultiEmployerOther = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 

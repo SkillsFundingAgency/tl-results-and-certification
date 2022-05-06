@@ -23,7 +23,7 @@ USING (VALUES
   (14, 15, N'Commercial, charitable or community projects', N'2020-09-01', NULL, NULL, 5),
   (15, 15, N'One lead employer facilitating the required hours', N'2020-09-01',NULL, 0, 6),
   (16, 15, N'Use of skills hubs or employer training centres', N'2020-09-01', NULL, 0, 7),
-  (17, 15, N'Multiple employer', N'2020-09-01', NULL, 0, 8),
+  (17, 15, N'Multiple employer', N'2020-09-01', NULL, 1, 8),
 
   (18, 16, N'JABQG risk-rated approach', N'2020-01-01', NULL, 1, 1),
   (19, 16, N'Reduction in hours', N'2020-01-01', NULL, 1, 2),
