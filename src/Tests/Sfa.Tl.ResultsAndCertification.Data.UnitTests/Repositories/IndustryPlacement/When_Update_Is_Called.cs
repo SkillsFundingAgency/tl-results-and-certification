@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.IndustryPla
             DbContext.SaveChanges();
 
             _data.Status =  IndustryPlacementStatus.CompletedWithSpecialConsideration;
-            _data.Hours = 750;
+            _data.Details = "Hello";
             _data.ModifiedOn = DateTime.UtcNow;
             _data.ModifiedBy = ModifiedUserName;
         }
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.IndustryPla
             _result.Id.Should().Be(1);
             _result.TqRegistrationPathwayId.Should().Be(_data.TqRegistrationPathwayId);
             _result.Status.Should().Be(_data.Status);
-            _result.Hours.Should().Be(_data.Hours);
+            _result.Details.Should().Be(_data.Details);
             _result.CreatedBy.Should().Be(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().Be(_data.ModifiedBy);
