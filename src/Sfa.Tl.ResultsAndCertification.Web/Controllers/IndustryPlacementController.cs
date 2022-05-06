@@ -203,7 +203,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 model.OtherIpPlacementModels.Where(ip => ip.Name.Equals(Constants.MultipleEmployer, StringComparison.InvariantCultureIgnoreCase)).ToList().ForEach(ip =>
                 {
                     ip.IsSelected = true;
-                });                
+                });
             }
 
             cacheModel.IpModelViewModel.IpMultiEmployerOther = model;
@@ -409,7 +409,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 cacheModel.TempFlexibility = new IpTempFlexibilityViewModel();
 
             cacheModel.TempFlexibility.IpBlendedPlacementUsed = model;
-            
+
 
             string redirectRouteName;
 
@@ -539,13 +539,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("industry-placement-temporary-flexibilities", Name = RouteConstants.SubmitIpGrantedTempFlexibility)]
         public async Task<IActionResult> IpGrantedTempFlexibilityAsync(IpGrantedTempFlexibilityViewModel model)
         {
-            if (!ModelState.IsValid)
-                return View(model);
-
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
-
             if (cacheModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
+
+            if (!ModelState.IsValid)
+            {
+                model.SetBackLink(cacheModel.TempFlexibility);
+                return View(model);
+            }
 
             cacheModel.TempFlexibility.IpGrantedTempFlexibility = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
