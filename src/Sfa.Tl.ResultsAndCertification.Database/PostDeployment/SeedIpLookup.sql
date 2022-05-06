@@ -26,9 +26,9 @@ USING (VALUES
   (17, 15, N'Multiple employer', N'2020-09-01', NULL, 1, 8),
 
   (18, 16, N'JABQG risk-rated approach', N'2020-01-01', NULL, 1, 1),
-  (19, 16, N'Reduction in hours', N'2020-01-01', NULL, 1, 2),
-  (20, 16, N'Employer led activities/projects', N'2020-01-01', N'2020-12-31', NULL, 3),
-  (21, 16, N'Up to 100% remote', N'2020-01-01', N'2020-12-31', 0, 4),
+  (19, 16, N'Reduction in hours', N'2020-01-01', NULL, 1, 2),  
+  (20, 16, N'Up to 100% remote', N'2020-01-01', N'2020-12-31', 0, 3),
+  (21, 16, N'Employer led activities/projects', N'2020-01-01', N'2020-12-31', NULL, 4),
   (22, 16, N'Pathway level placements', N'2021-01-01', NULL, 1, 5),
   (23, 16, N'Blended placements', N'2020-01-01', NULL, 1, 6)
   )

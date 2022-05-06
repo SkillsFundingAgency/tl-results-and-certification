@@ -381,7 +381,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
 
             if (!navigation.AskBlendedPlacement)
-                return RedirectToRoute(RouteConstants.PageNotFound);
+                return RedirectToRoute(RouteConstants.IpGrantedTempFlexibility);
 
             var viewModel = (cacheModel?.TempFlexibility?.IpBlendedPlacementUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpBlendedPlacementUsedViewModel>(cacheModel?.IpCompletion);
             viewModel.SetBackLink(cacheModel.IpModelViewModel, navigation.AskTempFlexibility);
