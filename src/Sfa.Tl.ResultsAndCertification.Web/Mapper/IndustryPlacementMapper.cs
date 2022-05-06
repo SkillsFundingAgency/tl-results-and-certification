@@ -63,7 +63,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));
 
             CreateMap<IpCompletionViewModel, IpEmployerLedUsedViewModel>()
-              .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));            
+              .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));
+
+            CreateMap<IpCompletionViewModel, IpGrantedTempFlexibilityViewModel>()
+              .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));
         }
     }
 }

@@ -27,7 +27,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
             else
             {
                 BackLink = new BackLinkModel { RouteName = RouteConstants.IpTempFlexibilityUsed };
-
             }
         }
     }

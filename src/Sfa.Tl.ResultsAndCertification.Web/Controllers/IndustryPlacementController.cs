@@ -409,17 +409,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 cacheModel.TempFlexibility = new IpTempFlexibilityViewModel();
 
             cacheModel.TempFlexibility.IpBlendedPlacementUsed = model;
-            await _cacheService.SetAsync(CacheKey, cacheModel);
+            
 
             string redirectRouteName;
 
             if (cacheModel.TempFlexibility.IpTempFlexibilityUsed == null)
+            {
                 redirectRouteName = RouteConstants.IpCheckAndSubmit;
-            else if(model.IsBlendedPlacementUsed.Value)
+            }
+            else if (model.IsBlendedPlacementUsed.Value)
+            {
+                cacheModel.TempFlexibility.IpGrantedTempFlexibility = null;
                 redirectRouteName = RouteConstants.IpEmployerLedUsed;
+            }
             else
+            {
+                cacheModel.TempFlexibility.IpEmployerLedUsed = null;
                 redirectRouteName = RouteConstants.IpGrantedTempFlexibility;
-            
+            }
+
+            await _cacheService.SetAsync(CacheKey, cacheModel);
             return RedirectToRoute(redirectRouteName);
         }
 
@@ -507,7 +516,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             IpGrantedTempFlexibilityViewModel viewModel;
 
-            if (cacheModel?.TempFlexibility?.IpEmployerLedUsed == null)
+            if (cacheModel?.TempFlexibility?.IpGrantedTempFlexibility == null)
             {
                 viewModel = await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpGrantedTempFlexibilityViewModel>(cacheModel.IpCompletion);
 
@@ -524,6 +533,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             viewModel.SetBackLink(cacheModel.TempFlexibility);
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("industry-placement-temporary-flexibilities", Name = RouteConstants.SubmitIpGrantedTempFlexibility)]
+        public async Task<IActionResult> IpGrantedTempFlexibilityAsync(IpGrantedTempFlexibilityViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.TempFlexibility.IpGrantedTempFlexibility = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
         }
 
         #endregion
