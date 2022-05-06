@@ -121,7 +121,7 @@
     <value>Continue</value>
   </data>
   <data name="Caption_Ip_Models" xml:space="preserve">
-    <value>Industry placement: Model</value>
+    <value>Industry placement: Models</value>
   </data>
   <data name="Heading_Which_Industry_Placement_Models_Were_Used_By" xml:space="preserve">
     <value>Which industry placement models were used by {0}?</value>
