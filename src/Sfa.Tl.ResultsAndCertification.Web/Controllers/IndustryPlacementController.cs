@@ -520,7 +520,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 viewModel = await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpGrantedTempFlexibilityViewModel>(cacheModel.IpCompletion);
 
-                viewModel.TemporaryFlexibilities = await _industryPlacementLoader.GetTemporaryFlexibilitiesAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear, false);
+                var showOption = cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == null;
+                viewModel.TemporaryFlexibilities = await _industryPlacementLoader.GetTemporaryFlexibilitiesAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear, showOption);
 
                 if (viewModel.TemporaryFlexibilities == null || viewModel.TemporaryFlexibilities.Count == 0)
                     return RedirectToRoute(RouteConstants.PageNotFound);
