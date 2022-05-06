@@ -389,9 +389,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel?.IpModelViewModel?.IpModelUsed == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            var navigation = await _industryPlacementLoader.GetTempFlexNavigationAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear);
+
             if (!ModelState.IsValid)
             {
-                var navigation = await _industryPlacementLoader.GetTempFlexNavigationAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear);
                 model.SetBackLink(cacheModel.IpModelViewModel, navigation.AskTempFlexibility);
                 return View(model);
             }
@@ -401,7 +402,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             cacheModel.TempFlexibility.IpBlendedPlacementUsed = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
-            return RedirectToRoute(RouteConstants.IpEmployerLedUsed);
+
+            string redirectRouteName;
+
+            if (cacheModel.TempFlexibility.IpTempFlexibilityUsed == null)
+                redirectRouteName = RouteConstants.IpCheckAndSubmit;
+            else if(model.IsBlendedPlacementUsed.Value)
+                redirectRouteName = RouteConstants.IpEmployerLedUsed;
+            else
+                redirectRouteName = RouteConstants.IpGrantedTempFlexibility;
+            
+            return RedirectToRoute(redirectRouteName);
         }
 
         [HttpGet]
@@ -472,6 +483,39 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
             return View(model);
+        }
+
+        [HttpGet]
+        [Route("industry-placement-temporary-flexibilities", Name = RouteConstants.IpGrantedTempFlexibility)]
+        public async Task<IActionResult> IpGrantedTempFlexibilityAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+
+            if (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == null
+                || cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == false
+                || (cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed != null
+                && cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value == true))
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            IpGrantedTempFlexibilityViewModel viewModel;
+
+            if (cacheModel?.TempFlexibility?.IpEmployerLedUsed == null)
+            {
+                viewModel = await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpGrantedTempFlexibilityViewModel>(cacheModel.IpCompletion);
+
+                viewModel.TemporaryFlexibilities = await _industryPlacementLoader.GetTemporaryFlexibilitiesAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear, false);
+
+                if (viewModel.TemporaryFlexibilities == null || viewModel.TemporaryFlexibilities.Count == 0)
+                    return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            else
+            {
+                viewModel = cacheModel?.TempFlexibility?.IpGrantedTempFlexibility;
+            }
+
+            viewModel.SetBackLink(cacheModel.TempFlexibility);
+
+            return View(viewModel);
         }
 
         #endregion

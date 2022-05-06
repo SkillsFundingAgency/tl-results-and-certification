@@ -165,6 +165,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>IpEmployerLedUsed.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\IndustryPlacement\IpGrantedTempFlexibility.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpGrantedTempFlexibility.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\IndustryPlacement\IpModelUsed.Designer.cs">
       <DependentUpon>IpModelUsed.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -1077,6 +1082,10 @@
     <EmbeddedResource Update="Content\IndustryPlacement\IpEmployerLedUsed.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IpEmployerLedUsed.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpGrantedTempFlexibility.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpGrantedTempFlexibility.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\IndustryPlacement\IpModelUsed.resx">
       <LastGenOutput>IpModelUsed.Designer.cs</LastGenOutput>

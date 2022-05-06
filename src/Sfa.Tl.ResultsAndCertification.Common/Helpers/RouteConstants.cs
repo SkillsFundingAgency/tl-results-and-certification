@@ -382,6 +382,8 @@
         public const string SubmitIpBlendedPlacementUsed = "SubmitIpBlendedPlacementUsed";
         public const string IpEmployerLedUsed = "IpEmployerLedUsed";
         public const string SubmitIpEmployerLedUsed = "SubmitIpEmployerLedUsed";
+        public const string IpGrantedTempFlexibility = "IpGrantedTempFlexibility";
+        public const string SubmitIpGrantedTempFlexibility = "SubmitIpGrantedTempFlexibility";        
         public const string IpCheckAndSubmit = "IpCheckAndSubmit";
         public const string SubmitIpCheckAndSubmit = "SubmitIpCheckAndSubmit";
 
