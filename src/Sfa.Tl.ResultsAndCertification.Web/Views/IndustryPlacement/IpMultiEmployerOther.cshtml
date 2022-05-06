@@ -28,13 +28,16 @@
                             {
                                 @foreach (var otherPlacement in Model?.OtherIpPlacementModels?.Select((value, i) => (value, i)))
                                 {
-                                    var elementId = (otherPlacement.i > 0) ? "otherplacement-" + otherPlacement.i : "otherplacement";
-                                    <div class="govuk-checkboxes__item">
-                                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.OtherIpPlacementModels[@otherPlacement.i].IsSelected">
-                                        <label class="govuk-label govuk-checkboxes__label" for="@elementId">
-                                            @otherPlacement.value.Name
-                                        </label>
-                                    </div>
+                                    if (otherPlacement.value.Name.Equals(Constants.MultipleEmployer, StringComparison.InvariantCultureIgnoreCase) == false)
+                                    {
+                                        var elementId = (otherPlacement.i > 0) ? "otherplacement-" + otherPlacement.i : "otherplacement";
+                                        <div class="govuk-checkboxes__item">
+                                            <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.OtherIpPlacementModels[@otherPlacement.i].IsSelected">
+                                            <label class="govuk-label govuk-checkboxes__label" for="@elementId">
+                                                @otherPlacement.value.Name
+                                            </label>
+                                        </div>
+                                    }
                                     <input type="hidden" asp-for="@Model.OtherIpPlacementModels[@otherPlacement.i].Id" />
                                     <input type="hidden" asp-for="@Model.OtherIpPlacementModels[@otherPlacement.i].Name" />
                                 }
