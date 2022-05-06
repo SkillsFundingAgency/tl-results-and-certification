@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Industry placement: Temporary flexibility.
+        ///   Looks up a localized string similar to Industry placement: Temporary flexibilities.
         /// </summary>
         public static string Caption_Ip_Temporary_Flexibility {
             get {
@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select Yes if a blended placement was used for this learner&apos;s industry placement..
+        ///   Looks up a localized string similar to Select whether the learner has used the blended placement temporary flexibility.
         /// </summary>
         public static string Hint_Select_Yes_If_Blended_Placement_Used {
             get {
@@ -116,7 +116,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Blended placement - Temporary flexibility - Industry placement.
+        ///   Looks up a localized string similar to Blended placement - Temporary flexibility - Industry placement - Manage learner.
         /// </summary>
         public static string Page_Title {
             get {

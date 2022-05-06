@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Industry placement: Temporary flexibility.
+        ///   Looks up a localized string similar to Industry placement: Temporary flexibilities.
         /// </summary>
         public static string Caption_Ip_Temporary_Flexibility {
             get {
