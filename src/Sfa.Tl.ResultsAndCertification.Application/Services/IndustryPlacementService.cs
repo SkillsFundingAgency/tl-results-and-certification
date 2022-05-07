@@ -43,11 +43,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> ProcessIndustryPlacementDetailsAsync(IndustryPlacementRequest request)
         {
-            var industryPlacement = await _industryPlacementRepository.GetFirstOrDefaultAsync(ip => ip.TqRegistrationPathwayId == request.RegistrationPathwayId
+            var industryPlacement = await _industryPlacementRepository.GetManyAsync(ip => ip.TqRegistrationPathwayId == request.RegistrationPathwayId
                                                                                     && ip.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId
                                                                                     && ip.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == request.ProviderUkprn
                                                                                     && (ip.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
-                                                                                    || ip.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn));
+                                                                                    || ip.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn))
+                                                                       .OrderByDescending(ip => ip.CreatedOn)
+                                                                       .FirstOrDefaultAsync();
 
             if (industryPlacement != null && (industryPlacement.Status == IndustryPlacementStatus.Completed || industryPlacement.Status == IndustryPlacementStatus.CompletedWithSpecialConsideration))
                 return false;
@@ -60,14 +62,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     TqRegistrationPathwayId = request.RegistrationPathwayId,
                     Status = request.IndustryPlacementStatus,
-                    Details = JsonConvert.SerializeObject(request.IndustryPlacementDetails),
+                    Details = request.IndustryPlacementDetails != null ? JsonConvert.SerializeObject(request.IndustryPlacementDetails) : null,
                     CreatedBy = request.PerformedBy
                 });
             }
             else
             {
                 industryPlacement.Status = request.IndustryPlacementStatus;
-                industryPlacement.Details = JsonConvert.SerializeObject(request.IndustryPlacementDetails);
+                industryPlacement.Details = request.IndustryPlacementDetails != null ? JsonConvert.SerializeObject(request.IndustryPlacementDetails) : null;
                 industryPlacement.ModifiedBy = request.PerformedBy;
                 industryPlacement.ModifiedOn = DateTime.UtcNow;                
 

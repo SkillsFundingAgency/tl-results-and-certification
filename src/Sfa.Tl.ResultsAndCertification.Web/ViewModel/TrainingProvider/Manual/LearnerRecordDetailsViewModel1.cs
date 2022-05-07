@@ -172,8 +172,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         {
             IpStatus.Completed => IndustryPlacementStatusContent.Completed_Display_Text,
             IpStatus.CompletedWithSpecialConsideration => IndustryPlacementStatusContent.CompletedWithSpecialConsideration_Display_Text,
-            IpStatus.NotCompleted => IndustryPlacementStatusContent.NotCompleted_Display_Text,
-            _ => IndustryPlacementStatusContent.Not_Yet_Received_Text,
+            IpStatus.NotCompleted => IndustryPlacementStatusContent.Still_To_Be_Completed_Display_Text,
+            _ => IndustryPlacementStatusContent.Not_Yet_Received_Display_Text,
         };
     }
 }

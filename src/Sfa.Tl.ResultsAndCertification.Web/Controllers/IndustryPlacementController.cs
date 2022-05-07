@@ -23,10 +23,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
 
-        private string CacheKey
-        {
-            get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.IpCacheKey); }
-        }
+        private string CacheKey => CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.IpCacheKey);
+
+        private string TrainingProviderCacheKey => CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TrainingProviderCacheKey);
 
         public IndustryPlacementController(IIndustryPlacementLoader industryPlacementLoader, ICacheService cacheService, ILogger<IndustryPlacementController> logger)
         {
@@ -72,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             switch (model.IndustryPlacementStatus)
             {
                 case IndustryPlacementStatus.Completed:
-                    return RedirectToRoute(RouteConstants.IpModelUsed, new { profileId = model.ProfileId });
+                    return RedirectToRoute(RouteConstants.IpModelUsed);
                 case IndustryPlacementStatus.CompletedWithSpecialConsideration:
                     return RedirectToRoute(RouteConstants.IpSpecialConsiderationHours);
                 case IndustryPlacementStatus.NotCompleted:
@@ -83,8 +82,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                         {
                             await _cacheService.RemoveAsync<IndustryPlacementViewModel>(CacheKey);
 
-                            var notificationBanner = new NotificationBannerModel { DisplayMessageBody = true, HeaderMessage = IndustryPlacementBanner.Banner_HeaderMesage, Message = string.Format(IndustryPlacementBanner.Success_Message, RouteConstants.Contact) };
-                            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+                            var notificationBanner = new NotificationBannerModel 
+                            {                                 
+                                HeaderMessage = IndustryPlacementBanner.Banner_HeaderMesage,
+                                Message = IndustryPlacementBanner.Success_Message,
+                                DisplayMessageBody = true,
+                                IsRawHtml = true
+                            };
+
+                            await _cacheService.SetAsync(TrainingProviderCacheKey, notificationBanner, CacheExpiryTime.XSmall);
                             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
                         }
                         else
@@ -93,7 +99,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                             return RedirectToRoute(RouteConstants.ProblemWithService);
                         }
                     }
-
                 default:
                     return RedirectToRoute(RouteConstants.PageNotFound);
             }

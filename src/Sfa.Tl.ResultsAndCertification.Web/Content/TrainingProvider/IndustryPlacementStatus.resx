@@ -118,15 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CompletedWithSpecialConsideration_Display_Text" xml:space="preserve">
-    <value>Placement completed with special consideration</value>
+    <value>Completed with special consideration</value>
   </data>
   <data name="Completed_Display_Text" xml:space="preserve">
-    <value>Placement completed</value>
+    <value>Completed</value>
   </data>
   <data name="NotCompleted_Display_Text" xml:space="preserve">
     <value>Placement still to be completed</value>
   </data>
-  <data name="Not_Yet_Received_Text" xml:space="preserve">
+  <data name="Not_Yet_Received_Display_Text" xml:space="preserve">
     <value>Not yet received</value>
+  </data>
+  <data name="Still_To_Be_Completed_Display_Text" xml:space="preserve">
+    <value>Not completed</value>
   </data>
 </root>

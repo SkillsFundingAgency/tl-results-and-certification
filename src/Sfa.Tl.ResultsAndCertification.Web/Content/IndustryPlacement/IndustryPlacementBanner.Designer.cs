@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p class=&quot;govuk-body&quot;&gt;&lt;a class=&quot;govuk-notification-banner__link&quot; asp-route=&quot;{0}&quot;&gt;Contact us&lt;/a&gt; if the industry placement status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;.
+        ///   Looks up a localized string similar to &lt;p class=&quot;govuk-body&quot;&gt;&lt;a class=&quot;govuk-notification-banner__link&quot; href=&quot;/contact-us&quot;&gt;Contact us&lt;/a&gt; if the industry placement status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;.
         /// </summary>
         public static string Success_Message {
             get {

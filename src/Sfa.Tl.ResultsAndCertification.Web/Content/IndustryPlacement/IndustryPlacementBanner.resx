@@ -121,6 +121,6 @@
     <value>Industry placement status added</value>
   </data>
   <data name="Success_Message" xml:space="preserve">
-    <value>&lt;p class="govuk-body"&gt;&lt;a class="govuk-notification-banner__link" asp-route="{0}"&gt;Contact us&lt;/a&gt; if the industry placement status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;</value>
+    <value>&lt;p class="govuk-body"&gt;&lt;a class="govuk-notification-banner__link" href="/contact-us"&gt;Contact us&lt;/a&gt; if the industry placement status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;</value>
   </data>
 </root>
