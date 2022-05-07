@@ -133,6 +133,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Blended placement temporary flexibility used.
+        /// </summary>
+        public static string Title_BlendedPlacement_Used_Text {
+            get {
+                return ResourceManager.GetString("Title_BlendedPlacement_Used_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date of birth.
         /// </summary>
         public static string Title_DateofBirth_Text {
@@ -210,6 +219,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         public static string Title_SpecialConsideration_Reasons_Text {
             get {
                 return ResourceManager.GetString("Title_SpecialConsideration_Reasons_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to employer-led activities/projects temporary flexibility used.
+        /// </summary>
+        public static string Title_TempFlex_Emp_Led_Text {
+            get {
+                return ResourceManager.GetString("Title_TempFlex_Emp_Led_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected temporary flexibilities.
+        /// </summary>
+        public static string Title_TempFlex_Selected_Text {
+            get {
+                return ResourceManager.GetString("Title_TempFlex_Selected_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temporary flexibilities used.
+        /// </summary>
+        public static string Title_TempFlex_Used_Text {
+            get {
+                return ResourceManager.GetString("Title_TempFlex_Used_Text", resourceCulture);
             }
         }
         

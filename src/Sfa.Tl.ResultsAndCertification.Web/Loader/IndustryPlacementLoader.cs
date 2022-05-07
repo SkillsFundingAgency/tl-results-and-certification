@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
@@ -84,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             // Validate Ip status
             if (cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.Completed &&
                 cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration)
-                return (detailsList, false);
+                return (null, false);
 
             // Status Row
             var statusValue = GetIpStatusValue(cacheModel.IpCompletion.IndustryPlacementStatus);
@@ -93,35 +92,59 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             // SpecialConsideration Rows
             if (cacheModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
             {
-                // Load SpecialConsideration questions
-                if (cacheModel.SpecialConsideration?.Hours == null && cacheModel.SpecialConsideration?.Reasons == null)
-                    return (detailsList, false);
-
-                // Hours Row
-                detailsList.Add(new SummaryItemModel { Id = "hours", Title = CheckAndSubmitContent.Title_SpecialConsideration_Hours_Text, Value = cacheModel.SpecialConsideration.Hours.Hours, ActionText = CheckAndSubmitContent.Link_Change });
-
-                // Reasons Row
-                var selectedReasons = cacheModel.SpecialConsideration.Reasons.ReasonsList.Where(x => x.IsSelected).Select(x => x.Name);
-                detailsList.Add(new SummaryItemModel { Id = "specialreasons", Title = CheckAndSubmitContent.Title_SpecialConsideration_Reasons_Text, Value = ConvertListToRawHtmlString(selectedReasons), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true });
+                var isScAdded = AddSummaryItemForSpecialConsideration(cacheModel, detailsList);
+                if (!isScAdded)
+                    return (null, false);
             }
 
             // IPModel Rows 
+            var isIpModelAdded = AddSummaryItemForIpModel(cacheModel, detailsList);
+            if (!isIpModelAdded)
+                return (null, false);
+
+            // Temp Flexibilities
+            var isTempFlexAdded = await AddSummaryItemForTempFlexbilities(cacheModel, detailsList, pathwayId, academicYear);
+            if (!isTempFlexAdded)
+                return (null, false);
+
+            return (detailsList, true);
+        }
+
+        private bool AddSummaryItemForSpecialConsideration(IndustryPlacementViewModel cacheModel, List<SummaryItemModel> detailsList)
+        {
+            // Load SpecialConsideration questions
+            if (cacheModel.SpecialConsideration?.Hours == null && cacheModel.SpecialConsideration?.Reasons == null)
+                return false;
+
+            // Hours Row
+            detailsList.Add(new SummaryItemModel { Id = "hours", Title = CheckAndSubmitContent.Title_SpecialConsideration_Hours_Text, Value = cacheModel.SpecialConsideration.Hours.Hours, ActionText = CheckAndSubmitContent.Link_Change });
+
+            // Reasons Row
+            var selectedReasons = cacheModel.SpecialConsideration.Reasons.ReasonsList.Where(x => x.IsSelected).Select(x => x.Name);
+            detailsList.Add(new SummaryItemModel { Id = "specialreasons", Title = CheckAndSubmitContent.Title_SpecialConsideration_Reasons_Text, Value = ConvertListToRawHtmlString(selectedReasons), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true });
+
+            return true;
+        }
+
+        private bool AddSummaryItemForIpModel(IndustryPlacementViewModel cacheModel, List<SummaryItemModel> detailsList)
+        {
             if (cacheModel.IpModelViewModel?.IpModelUsed?.IsIpModelUsed == null)
-                return (detailsList, false);
+                return false;
+            // IpModelUsed Row
             detailsList.Add(new SummaryItemModel { Id = "isipmodelused", Title = CheckAndSubmitContent.Title_IpModel_Text, Value = cacheModel.IpModelViewModel.IpModelUsed.IsIpModelUsed.Value.ToString(), ActionText = CheckAndSubmitContent.Link_Change });
 
             if (cacheModel.IpModelViewModel.IpModelUsed.IsIpModelUsed == true)
             {
                 // MultiEmp Row
                 if (cacheModel.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == null)
-                    return (detailsList, false);
+                    return false;
                 detailsList.Add(new SummaryItemModel { Id = "ismultiempmodel", Title = CheckAndSubmitContent.Title_IpModel_Multi_Emp_Text, Value = cacheModel.IpModelViewModel.IpMultiEmployerUsed.IsMultiEmployerModelUsed.Value.ToString(), ActionText = CheckAndSubmitContent.Link_Change });
 
                 // OtherIpModelList Row
                 if (cacheModel.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == true)
                 {
                     if (cacheModel.IpModelViewModel?.IpMultiEmployerOther?.OtherIpPlacementModels.Any(x => x.IsSelected) == false)
-                        return (detailsList, false);
+                        return false;
 
                     var selectedOtherModels = cacheModel.IpModelViewModel?.IpMultiEmployerOther?.OtherIpPlacementModels.Where(x => x.IsSelected).Select(x => x.Name);
                     detailsList.Add(new SummaryItemModel { Id = "selectedothermodellist", Title = CheckAndSubmitContent.Title_IpModel_Selected_Other_List_Text, Value = ConvertListToRawHtmlString(selectedOtherModels), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true });
@@ -130,17 +153,57 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 {
                     // IpModelList Row
                     if (cacheModel.IpModelViewModel?.IpMultiEmployerSelect?.PlacementModels.Any(x => x.IsSelected) == false)
-                        return (detailsList, false);
+                        return false;
 
                     var selectedPlacementModels = cacheModel.IpModelViewModel?.IpMultiEmployerSelect?.PlacementModels.Where(x => x.IsSelected).Select(x => x.Name);
                     detailsList.Add(new SummaryItemModel { Id = "selectedplacementmodellist", Title = CheckAndSubmitContent.Title_IpModels_Selected_List_Text, Value = ConvertListToRawHtmlString(selectedPlacementModels), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true });
                 }
             }
-
-            // TODO: TempFlexibilities Rows
+            return true;
+        }
+        
+        private async Task<bool> AddSummaryItemForTempFlexbilities(IndustryPlacementViewModel cacheModel, List<SummaryItemModel> detailsList, int pathwayId, int academicYear)
+        {
             var navigation = await GetTempFlexNavigationAsync(pathwayId, academicYear);
+            if (navigation == null)
+                return true; // return here for Academic years starting from 2022.
 
-            return (detailsList, true);
+            if (navigation.AskTempFlexibility)
+            {
+                // IsTempFlexUsed Row
+                if (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == null)
+                    return false;
+                detailsList.Add(new SummaryItemModel { Id = "istempflexused", Title = CheckAndSubmitContent.Title_TempFlex_Used_Text, Value = cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed.Value.ToString(), ActionText = CheckAndSubmitContent.Link_Change });
+            }
+
+            if ((navigation.AskTempFlexibility && cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == true) || // Coming from AskTempFlex
+                (!navigation.AskTempFlexibility && navigation.AskBlendedPlacement))  // came directly to blended.
+            {
+                // IsBlendedPlacementUsed Row
+                if (cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == null)
+                    return false;
+                detailsList.Add(new SummaryItemModel { Id = "isblendedplacementused", Title = CheckAndSubmitContent.Title_BlendedPlacement_Used_Text, Value = cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value.ToString(), ActionText = CheckAndSubmitContent.Link_Change });
+
+                // AnyOtherTempFlex Row (applies only for academicyear-2020 +  Tlevels 'Design,Surveying..' and 'Digital Production..' 
+                if (cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == true)
+                {
+                    var selectedTfList = cacheModel?.TempFlexibility?.IpEmployerLedUsed?.TemporaryFlexibilities.Where(x => x.IsSelected).Select(x => x.Name);
+                    detailsList.Add(new SummaryItemModel { Id = "anyothertempflexlist", Title = CheckAndSubmitContent.Title_TempFlex_Selected_Text, Value = ConvertListToRawHtmlString(selectedTfList), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true });
+                }
+                else
+                    TempFlexUsedList(cacheModel, detailsList);
+            }
+
+            if (navigation.AskTempFlexibility && !navigation.AskBlendedPlacement)
+                TempFlexUsedList(cacheModel, detailsList);
+
+            return true;
+        }
+
+        private static void TempFlexUsedList(IndustryPlacementViewModel cacheModel, List<SummaryItemModel> detailsList)
+        {
+            var selectedTfList = cacheModel?.TempFlexibility?.IpGrantedTempFlexibility?.TemporaryFlexibilities.Where(x => x.IsSelected).Select(x => x.Name);
+            detailsList.Add(new SummaryItemModel { Id = "tempflexusedlist", Title = CheckAndSubmitContent.Title_TempFlex_Emp_Led_Text, Value = ConvertListToRawHtmlString(selectedTfList), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true });
         }
 
         private static string ConvertListToRawHtmlString(IEnumerable<string> selectedList)
