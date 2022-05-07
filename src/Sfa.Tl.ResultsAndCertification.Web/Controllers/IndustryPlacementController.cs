@@ -7,10 +7,12 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -65,17 +67,36 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            await SyncCacheIp(model);
+            var cacheModel = await SyncCacheIp(model);
 
-            if (model.IndustryPlacementStatus == IndustryPlacementStatus.Completed)
+            switch (model.IndustryPlacementStatus)
             {
-                return RedirectToRoute(RouteConstants.IpModelUsed, new { profileId = model.ProfileId });
+                case IndustryPlacementStatus.Completed:
+                    return RedirectToRoute(RouteConstants.IpModelUsed, new { profileId = model.ProfileId });
+                case IndustryPlacementStatus.CompletedWithSpecialConsideration:
+                    return RedirectToRoute(RouteConstants.IpSpecialConsiderationHours);
+                case IndustryPlacementStatus.NotCompleted:
+                    {
+                        var isSuccess = await _industryPlacementLoader.ProcessIndustryPlacementDetailsAsync(User.GetUkPrn(), cacheModel);
+
+                        if (isSuccess)
+                        {
+                            await _cacheService.RemoveAsync<IndustryPlacementViewModel>(CacheKey);
+
+                            var notificationBanner = new NotificationBannerModel { DisplayMessageBody = true, HeaderMessage = IndustryPlacementBanner.Banner_HeaderMesage, Message = string.Format(IndustryPlacementBanner.Success_Message, RouteConstants.Contact) };
+                            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+                            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
+                        }
+                        else
+                        {
+                            _logger.LogWarning(LogEvent.ManualIndustryPlacementDetailsProcessFailed, $"Unable to add industry placement status for ProfileId = {cacheModel.IpCompletion.ProfileId}. Method: IpCompletionAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                            return RedirectToRoute(RouteConstants.ProblemWithService);
+                        }
+                    }
+
+                default:
+                    return RedirectToRoute(RouteConstants.PageNotFound);
             }
-
-            if (model.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
-                return RedirectToRoute(RouteConstants.IpSpecialConsiderationHours);
-
-            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
         }
 
         #region Ip Models
@@ -590,7 +611,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         #endregion
 
-        private async Task SyncCacheIp(IpCompletionViewModel model)
+        private async Task<IndustryPlacementViewModel> SyncCacheIp(IpCompletionViewModel model)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
             if (cacheModel?.IpCompletion != null)
@@ -602,6 +623,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 };
 
             await _cacheService.SetAsync(CacheKey, cacheModel);
+            return cacheModel;
         }
     }
 }

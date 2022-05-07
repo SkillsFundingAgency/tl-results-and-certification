@@ -5,7 +5,6 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -69,12 +68,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.GetTempFlexNavigationAsync(pathwayId, academicYear);
         }
 
-        public async Task<bool> ProcessIndustryPlacementDetailsAsync(IpCheckAndSubmitViewModel viewModel)
-        {
-            var request = _mapper.Map<IndustryPlacementRequest>(viewModel);
+        public async Task<bool> ProcessIndustryPlacementDetailsAsync(long providerUkprn, IndustryPlacementViewModel viewModel)
+        {            
+            var request = _mapper.Map<IndustryPlacementRequest>(viewModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted ? viewModel.IpCompletion : viewModel, opt => opt.Items["providerUkprn"] = providerUkprn);
             return await _internalApiClient.ProcessIndustryPlacementDetailsAsync(request);
         }
-
 
         public async Task<(List<SummaryItemModel>, bool)> GetIpSummaryDetailsListAsync(IndustryPlacementViewModel cacheModel, int pathwayId, int academicYear)
         {

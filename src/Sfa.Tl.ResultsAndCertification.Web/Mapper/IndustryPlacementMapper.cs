@@ -74,6 +74,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<IpCompletionViewModel, IpGrantedTempFlexibilityViewModel>()
               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));
 
+            CreateMap<IpCompletionViewModel, IndustryPlacementRequest>()
+                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus))
+                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<IpCompletionViewModel, IndustryPlacementRequest>>());
+
             CreateMap<IndustryPlacementViewModel, IndustryPlacementRequest>()
                 .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.IpCompletion.ProfileId))
