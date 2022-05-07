@@ -371,6 +371,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         #endregion
 
         #region IndustryPlacement
+
         public async Task<IList<IpLookupData>> GetIpLookupDataAsync(IpLookupType ipLookupType, int? pathwayId = null)
         {
             var requestUri = string.Format(ApiConstants.GetIpLookupDataUri, (int)ipLookupType, pathwayId);
@@ -382,6 +383,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             var requestUri = string.Format(ApiConstants.GetTempFlexNavigationUri, pathwayId, academicYear);
             return await GetAsync<IpTempFlexNavigation>(requestUri);
         }
+
+        public async Task<bool> ProcessIndustryPlacementDetailsAsync(IndustryPlacementRequest request)
+        {
+            return await PostAsync<IndustryPlacementRequest, bool>(ApiConstants.ProcessIndustryPlacementDetailsAsync, request);
+        }        
 
         #endregion
 

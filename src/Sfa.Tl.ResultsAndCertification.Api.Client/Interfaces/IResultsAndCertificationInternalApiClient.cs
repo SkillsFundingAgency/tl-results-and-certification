@@ -91,6 +91,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         #region IndustryPlacement
         Task<IList<IpLookupData>> GetIpLookupDataAsync(IpLookupType ipLookupType, int? pathwayId = null);
         Task<IpTempFlexNavigation> GetTempFlexNavigationAsync(int pathwayId, int academicYear);
+        Task<bool> ProcessIndustryPlacementDetailsAsync(IndustryPlacementRequest request);
 
         #endregion
 
