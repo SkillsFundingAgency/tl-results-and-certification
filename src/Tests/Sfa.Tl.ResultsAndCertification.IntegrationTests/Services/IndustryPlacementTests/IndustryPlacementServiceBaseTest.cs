@@ -22,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
         protected IRepository<IpModelTlevelCombination> IpModelTlevelCombinationRepository;
         protected IRepository<IpTempFlexTlevelCombination> IpTempFlexTlevelCombinationRepository;
         protected IRepository<IpTempFlexNavigation> IpTempFlexNavigationRepository;
+        protected IRepository<IndustryPlacement> IndustryPlacementRepository;
 
         protected IMapper Mapper;
         protected IList<IpLookup> IpLookup;
@@ -33,6 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
         protected ILogger<GenericRepository<IpModelTlevelCombination>> IpModelTlevelCombinationLogger;
         protected ILogger<GenericRepository<IpTempFlexTlevelCombination>> IpTempFlexTlevelCombinationLogger;
         protected ILogger<GenericRepository<IpTempFlexNavigation>> IpTempFlexNavigationLogger;
+        protected ILogger<GenericRepository<IndustryPlacement>> IndustryPlacementLogger;
 
         protected virtual void CreateMapper()
         {

@@ -7,6 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 {
     public interface IIndustryPlacementService
     {
+        Task<bool> ProcessIndustryPlacementDetailsAsync(IndustryPlacementRequest request);
         Task<IList<IpLookupData>> GetIpLookupDataAsync(IpLookupType ipLookupType, int? pathwayId);
         Task<IpTempFlexNavigation> GetTempFlexNavigationAsync(int pathwayId, int academicYear);
     }

@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IRepository<IpModelTlevelCombination> _ipModelTlevelCombinationRepository;
         private readonly IRepository<IpTempFlexTlevelCombination> _ipTempFlexTlevelCombinationRepository;
         private readonly IRepository<DbModel.IpTempFlexNavigation> _ipTempFlexNavigationRepository;
+        private readonly IRepository<IndustryPlacement> _industryPlacementRepository;
 
         private readonly IMapper _mapper;
 
@@ -27,13 +30,51 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             IRepository<IpModelTlevelCombination> ipModelTlevelCombinationRepository,
             IRepository<IpTempFlexTlevelCombination> ipTempFlexTlevelCombinationRepository,
             IRepository<DbModel.IpTempFlexNavigation> ipTempFlexNavigationRepository,
+            IRepository<IndustryPlacement> industryPlacementRepository,
             IMapper mapper)
         {
             _ipLookupRepository = ipLookupRepository;
             _ipModelTlevelCombinationRepository = ipModelTlevelCombinationRepository;
             _ipTempFlexTlevelCombinationRepository = ipTempFlexTlevelCombinationRepository;
             _ipTempFlexNavigationRepository = ipTempFlexNavigationRepository;
+            _industryPlacementRepository = industryPlacementRepository;
             _mapper = mapper;
+        }
+
+        public async Task<bool> ProcessIndustryPlacementDetailsAsync(IndustryPlacementRequest request)
+        {
+            var industryPlacement = await _industryPlacementRepository.GetFirstOrDefaultAsync(ip => ip.TqRegistrationPathwayId == request.RegistrationPathwayId
+                                                                                    && ip.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId
+                                                                                    && ip.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == request.ProviderUkprn
+                                                                                    && (ip.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
+                                                                                    || ip.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn));
+
+            if (industryPlacement != null && (industryPlacement.Status == IndustryPlacementStatus.Completed || industryPlacement.Status == IndustryPlacementStatus.CompletedWithSpecialConsideration))
+                return false;
+
+            int status = 0;
+
+            if (industryPlacement == null)
+            {
+                status = await _industryPlacementRepository.CreateAsync(new IndustryPlacement
+                {
+                    TqRegistrationPathwayId = request.RegistrationPathwayId,
+                    Status = request.IndustryPlacementStatus,
+                    Details = JsonConvert.SerializeObject(request.IndustryPlacementDetails),
+                    CreatedBy = request.PerformedBy
+                });
+            }
+            else
+            {
+                industryPlacement.Status = request.IndustryPlacementStatus;
+                industryPlacement.Details = JsonConvert.SerializeObject(request.IndustryPlacementDetails);
+                industryPlacement.ModifiedBy = request.PerformedBy;
+                industryPlacement.ModifiedOn = DateTime.UtcNow;                
+
+                status = await _industryPlacementRepository.UpdateWithSpecifedColumnsOnlyAsync(industryPlacement, u => u.Status, u => u.Details, u => u.ModifiedBy, u => u.ModifiedOn);
+            }
+
+            return status > 0;
         }
 
         public async Task<IList<IpLookupData>> GetIpLookupDataAsync(IpLookupType ipLookupType, int? pathwayId)
