@@ -572,6 +572,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            // Item1 contain - Questions List & Item2 contain IsValid
+            var ipDetailsList  = await _industryPlacementLoader.GetIpSummaryDetailsListAsync(cacheModel, cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear);
+            if (!ipDetailsList.Item1.Any() || !ipDetailsList.Item2)  
+            return RedirectToRoute(RouteConstants.PageNotFound);
+
+            viewModel.IpDetailsList = ipDetailsList.Item1;
             return View(viewModel);
         }
 

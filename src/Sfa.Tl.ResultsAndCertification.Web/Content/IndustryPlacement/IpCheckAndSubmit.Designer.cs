@@ -61,11 +61,47 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string Button_Submit {
+            get {
+                return ResourceManager.GetString("Button_Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I confirm that {0} has completed their T Level industry placement and that all relevant supporting documentation is held on record..
+        /// </summary>
+        public static string Declaration_I_Confirm_Supporting_Docs_Held_On_Records {
+            get {
+                return ResourceManager.GetString("Declaration_I_Confirm_Supporting_Docs_Held_On_Records", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check your answers.
         /// </summary>
         public static string Heading_Check_Your_Answers {
             get {
                 return ResourceManager.GetString("Heading_Check_Your_Answers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Link_Cancel {
+            get {
+                return ResourceManager.GetString("Link_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string Link_Change {
+            get {
+                return ResourceManager.GetString("Link_Change", resourceCulture);
             }
         }
         
@@ -79,6 +115,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to completed.
+        /// </summary>
+        public static string Status_Completed {
+            get {
+                return ResourceManager.GetString("Status_Completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to completed with special consideration.
+        /// </summary>
+        public static string Status_Completed_With_Special_Consideration {
+            get {
+                return ResourceManager.GetString("Status_Completed_With_Special_Consideration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date of birth.
         /// </summary>
         public static string Title_DateofBirth_Text {
@@ -88,11 +142,74 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Industry placement status.
+        /// </summary>
+        public static string Title_IP_Status_Text {
+            get {
+                return ResourceManager.GetString("Title_IP_Status_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multiple employer model used.
+        /// </summary>
+        public static string Title_IpModel_Multi_Emp_Text {
+            get {
+                return ResourceManager.GetString("Title_IpModel_Multi_Emp_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected other industrial placement models.
+        /// </summary>
+        public static string Title_IpModel_Selected_Other_List_Text {
+            get {
+                return ResourceManager.GetString("Title_IpModel_Selected_Other_List_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Industry placement models used.
+        /// </summary>
+        public static string Title_IpModel_Text {
+            get {
+                return ResourceManager.GetString("Title_IpModel_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected Industrial placement models.
+        /// </summary>
+        public static string Title_IpModels_Selected_List_Text {
+            get {
+                return ResourceManager.GetString("Title_IpModels_Selected_List_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Learner.
         /// </summary>
         public static string Title_Name_Text {
             get {
                 return ResourceManager.GetString("Title_Name_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hours spent on placement.
+        /// </summary>
+        public static string Title_SpecialConsideration_Hours_Text {
+            get {
+                return ResourceManager.GetString("Title_SpecialConsideration_Hours_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Special consideration reasons.
+        /// </summary>
+        public static string Title_SpecialConsideration_Reasons_Text {
+            get {
+                return ResourceManager.GetString("Title_SpecialConsideration_Reasons_Text", resourceCulture);
             }
         }
         
