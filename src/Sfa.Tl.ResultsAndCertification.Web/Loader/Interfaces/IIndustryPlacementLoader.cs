@@ -15,5 +15,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<IList<IpLookupDataViewModel>> GetSpecialConsiderationReasonsListAsync(int academicYear);
         Task<IList<IpLookupDataViewModel>> GetTemporaryFlexibilitiesAsync(int pathwayId, int academicYear, bool showOption = false);
         Task<IpTempFlexNavigation> GetTempFlexNavigationAsync(int pathwayId, int academicYear);
+        Task<bool> ProcessIndustryPlacementDetailsAsync(IpCheckAndSubmitViewModel viewModel);
     }
 }

@@ -10,6 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
     public class IpCompletionViewModel
     {
         public int ProfileId { get; set; }
+        public int RegistrationPathwayId { get; set; }
         public int PathwayId { get; set; }
         public int AcademicYear { get; set; }
         public string LearnerName { get; set; }
