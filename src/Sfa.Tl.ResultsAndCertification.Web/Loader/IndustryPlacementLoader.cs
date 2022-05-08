@@ -72,12 +72,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task<bool> ProcessIndustryPlacementDetailsAsync(long providerUkprn, IndustryPlacementViewModel viewModel)
         {
             var request = _mapper.Map<IndustryPlacementRequest>(viewModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted
-                                                                  ? viewModel.IpCompletion
-                                                                  : viewModel, opt => opt.Items["providerUkprn"] = providerUkprn);
+                                                                  ? viewModel.IpCompletion : viewModel, opt => opt.Items["providerUkprn"] = providerUkprn);
             return await _internalApiClient.ProcessIndustryPlacementDetailsAsync(request);
         }
 
-        public async Task<(List<SummaryItemModel>, bool)> GetIpSummaryDetailsListAsync(IndustryPlacementViewModel cacheModel, IpTempFlexNavigation ipTempFlexNavigation)
+        public (List<SummaryItemModel>, bool) GetIpSummaryDetailsListAsync(IndustryPlacementViewModel cacheModel, IpTempFlexNavigation ipTempFlexNavigation)
         {
             var detailsList = new List<SummaryItemModel>();
 

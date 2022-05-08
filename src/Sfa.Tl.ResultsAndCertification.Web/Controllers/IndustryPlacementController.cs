@@ -607,7 +607,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var navigation = await _industryPlacementLoader.GetTempFlexNavigationAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear);
 
             // Item1 contain - Questions List & Item2 contain IsValid
-            var ipDetailsList = await _industryPlacementLoader.GetIpSummaryDetailsListAsync(cacheModel, navigation);
+            var ipDetailsList = _industryPlacementLoader.GetIpSummaryDetailsListAsync(cacheModel, navigation);
             if (!ipDetailsList.Item1.Any() || !ipDetailsList.Item2)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
