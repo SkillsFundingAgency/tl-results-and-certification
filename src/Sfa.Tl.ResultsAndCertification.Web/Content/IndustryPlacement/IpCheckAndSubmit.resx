@@ -135,6 +135,9 @@
   <data name="Page_Title" xml:space="preserve">
     <value>Check your answers - Industry placement</value>
   </data>
+  <data name="Para_Item" xml:space="preserve">
+    <value>&lt;p&gt;{0}&lt;/p&gt;</value>
+  </data>
   <data name="Status_Completed" xml:space="preserve">
     <value>completed</value>
   </data>
@@ -172,7 +175,7 @@
     <value>Special consideration reasons</value>
   </data>
   <data name="Title_TempFlex_Emp_Led_Text" xml:space="preserve">
-    <value>employer-led activities/projects temporary flexibility used</value>
+    <value>Employer-led activities/projects temporary flexibility used</value>
   </data>
   <data name="Title_TempFlex_Selected_Text" xml:space="preserve">
     <value>Selected temporary flexibilities</value>

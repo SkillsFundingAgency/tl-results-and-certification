@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
@@ -69,14 +70,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         }
 
         public async Task<bool> ProcessIndustryPlacementDetailsAsync(long providerUkprn, IndustryPlacementViewModel viewModel)
-        {            
-            var request = _mapper.Map<IndustryPlacementRequest>(viewModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted 
-                                                                  ? viewModel.IpCompletion 
+        {
+            var request = _mapper.Map<IndustryPlacementRequest>(viewModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted
+                                                                  ? viewModel.IpCompletion
                                                                   : viewModel, opt => opt.Items["providerUkprn"] = providerUkprn);
             return await _internalApiClient.ProcessIndustryPlacementDetailsAsync(request);
         }
 
-        public async Task<(List<SummaryItemModel>, bool)> GetIpSummaryDetailsListAsync(IndustryPlacementViewModel cacheModel, int pathwayId, int academicYear)
+        public async Task<(List<SummaryItemModel>, bool)> GetIpSummaryDetailsListAsync(IndustryPlacementViewModel cacheModel, IpTempFlexNavigation ipTempFlexNavigation)
         {
             var detailsList = new List<SummaryItemModel>();
 
@@ -103,7 +104,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 return (null, false);
 
             // Temp Flexibilities
-            var isTempFlexAdded = await AddSummaryItemForTempFlexbilities(cacheModel, detailsList, pathwayId, academicYear);
+            var isTempFlexAdded = AddSummaryItemForTempFlexbilities(cacheModel, detailsList, ipTempFlexNavigation);
             if (!isTempFlexAdded)
                 return (null, false);
 
@@ -131,14 +132,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (cacheModel.IpModelViewModel?.IpModelUsed?.IsIpModelUsed == null)
                 return false;
             // IpModelUsed Row
-            detailsList.Add(new SummaryItemModel { Id = "isipmodelused", Title = CheckAndSubmitContent.Title_IpModel_Text, Value = cacheModel.IpModelViewModel.IpModelUsed.IsIpModelUsed.Value.ToString(), ActionText = CheckAndSubmitContent.Link_Change });
+            detailsList.Add(new SummaryItemModel { Id = "isipmodelused", Title = CheckAndSubmitContent.Title_IpModel_Text, Value = cacheModel.IpModelViewModel.IpModelUsed.IsIpModelUsed.Value.ToYesOrNoString() , ActionText = CheckAndSubmitContent.Link_Change });
 
             if (cacheModel.IpModelViewModel.IpModelUsed.IsIpModelUsed == true)
             {
                 // MultiEmp Row
                 if (cacheModel.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == null)
                     return false;
-                detailsList.Add(new SummaryItemModel { Id = "ismultiempmodel", Title = CheckAndSubmitContent.Title_IpModel_Multi_Emp_Text, Value = cacheModel.IpModelViewModel.IpMultiEmployerUsed.IsMultiEmployerModelUsed.Value.ToString(), ActionText = CheckAndSubmitContent.Link_Change });
+                detailsList.Add(new SummaryItemModel { Id = "ismultiempmodel", Title = CheckAndSubmitContent.Title_IpModel_Multi_Emp_Text, Value = cacheModel.IpModelViewModel.IpMultiEmployerUsed.IsMultiEmployerModelUsed.Value.ToYesOrNoString(), ActionText = CheckAndSubmitContent.Link_Change });
 
                 // OtherIpModelList Row
                 if (cacheModel.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == true)
@@ -161,10 +162,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             }
             return true;
         }
-        
-        private async Task<bool> AddSummaryItemForTempFlexbilities(IndustryPlacementViewModel cacheModel, List<SummaryItemModel> detailsList, int pathwayId, int academicYear)
+
+        private bool AddSummaryItemForTempFlexbilities(IndustryPlacementViewModel cacheModel, List<SummaryItemModel> detailsList, IpTempFlexNavigation navigation)
         {
-            var navigation = await GetTempFlexNavigationAsync(pathwayId, academicYear);
             if (navigation == null)
                 return true; // return here for Academic years starting from 2022.
 
@@ -173,7 +173,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 // IsTempFlexUsed Row
                 if (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == null)
                     return false;
-                detailsList.Add(new SummaryItemModel { Id = "istempflexused", Title = CheckAndSubmitContent.Title_TempFlex_Used_Text, Value = cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed.Value.ToString(), ActionText = CheckAndSubmitContent.Link_Change });
+                detailsList.Add(new SummaryItemModel { Id = "istempflexused", Title = CheckAndSubmitContent.Title_TempFlex_Used_Text, Value = cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed.Value.ToYesOrNoString(), ActionText = CheckAndSubmitContent.Link_Change });
             }
 
             if ((navigation.AskTempFlexibility && cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == true) || // Coming from AskTempFlex
@@ -182,13 +182,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 // IsBlendedPlacementUsed Row
                 if (cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == null)
                     return false;
-                detailsList.Add(new SummaryItemModel { Id = "isblendedplacementused", Title = CheckAndSubmitContent.Title_BlendedPlacement_Used_Text, Value = cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value.ToString(), ActionText = CheckAndSubmitContent.Link_Change });
+                detailsList.Add(new SummaryItemModel { Id = "isblendedplacementused", Title = CheckAndSubmitContent.Title_BlendedPlacement_Used_Text, Value = cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value.ToYesOrNoString(), ActionText = CheckAndSubmitContent.Link_Change });
 
                 // AnyOtherTempFlex Row (applies only for academicyear-2020 +  Tlevels 'Design,Surveying..' and 'Digital Production..' 
                 if (cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == true)
                 {
                     var selectedTfList = cacheModel?.TempFlexibility?.IpEmployerLedUsed?.TemporaryFlexibilities.Where(x => x.IsSelected).Select(x => x.Name);
-                    detailsList.Add(new SummaryItemModel { Id = "anyothertempflexlist", Title = CheckAndSubmitContent.Title_TempFlex_Selected_Text, Value = ConvertListToRawHtmlString(selectedTfList), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true });
+                    if (selectedTfList != null && selectedTfList.Any())
+                        detailsList.Add(new SummaryItemModel { Id = "anyothertempflexlist", Title = CheckAndSubmitContent.Title_TempFlex_Selected_Text, Value = ConvertListToRawHtmlString(selectedTfList), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true });
                 }
                 else
                     TempFlexUsedList(cacheModel, detailsList);
@@ -203,12 +204,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         private static void TempFlexUsedList(IndustryPlacementViewModel cacheModel, List<SummaryItemModel> detailsList)
         {
             var selectedTfList = cacheModel?.TempFlexibility?.IpGrantedTempFlexibility?.TemporaryFlexibilities.Where(x => x.IsSelected).Select(x => x.Name);
-            detailsList.Add(new SummaryItemModel { Id = "tempflexusedlist", Title = CheckAndSubmitContent.Title_TempFlex_Emp_Led_Text, Value = ConvertListToRawHtmlString(selectedTfList), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true });
+            if (selectedTfList != null && selectedTfList.Any())
+                detailsList.Add(new SummaryItemModel { Id = "tempflexusedlist", Title = CheckAndSubmitContent.Title_TempFlex_Emp_Led_Text, Value = ConvertListToRawHtmlString(selectedTfList), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true });
         }
 
         private static string ConvertListToRawHtmlString(IEnumerable<string> selectedList)
         {
-            var htmlRawList = selectedList.Select(x => $"<p>{x}</p>");
+            var htmlRawList = selectedList.Select(x => string.Format(CheckAndSubmitContent.Para_Item, x));
             return string.Join(string.Empty, htmlRawList);
         }
 

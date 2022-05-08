@@ -115,6 +115,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;{0}&lt;/p&gt;.
+        /// </summary>
+        public static string Para_Item {
+            get {
+                return ResourceManager.GetString("Para_Item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to completed.
         /// </summary>
         public static string Status_Completed {
@@ -223,7 +232,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to employer-led activities/projects temporary flexibility used.
+        ///   Looks up a localized string similar to Employer-led activities/projects temporary flexibility used.
         /// </summary>
         public static string Title_TempFlex_Emp_Led_Text {
             get {

@@ -532,7 +532,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.TempFlexibility.IpEmployerLedUsed = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
-            return View(model);
+            return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
         }
 
         [HttpGet]
@@ -605,12 +605,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            var navigation = await _industryPlacementLoader.GetTempFlexNavigationAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear);
+
             // Item1 contain - Questions List & Item2 contain IsValid
-            var ipDetailsList  = await _industryPlacementLoader.GetIpSummaryDetailsListAsync(cacheModel, cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear);
-            if (!ipDetailsList.Item1.Any() || !ipDetailsList.Item2)  
-            return RedirectToRoute(RouteConstants.PageNotFound);
+            var ipDetailsList = await _industryPlacementLoader.GetIpSummaryDetailsListAsync(cacheModel, navigation);
+            if (!ipDetailsList.Item1.Any() || !ipDetailsList.Item2)
+                return RedirectToRoute(RouteConstants.PageNotFound);
 
             viewModel.IpDetailsList = ipDetailsList.Item1;
+
+            viewModel.SetBackLink(cacheModel, navigation);
+
             return View(viewModel);
         }
 
