@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -8,25 +9,43 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpModelUsedGet
 {
-    public class When_Called_With_Valid_Data : TestSetup
+    public class When_Called_With_Status_CompletedWithSpecialConsideration : TestSetup
     {
         private IpModelUsedViewModel _ipModelUsedViewModel;
         private IpCompletionViewModel _ipCompletionViewModel;
+        private SpecialConsiderationViewModel _specialConsiderationViewModel;
+        private SpecialConsiderationReasonsViewModel _specialConsiderationReasonsViewModel;
 
         public override void Given()
         {
-
             _ipCompletionViewModel = new IpCompletionViewModel
             {
                 ProfileId = 1,
                 LearnerName = "John Smith",
-                IndustryPlacementStatus = IndustryPlacementStatus.Completed
+                AcademicYear = 2020,
+                IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration
             };
+
+            _specialConsiderationReasonsViewModel = new SpecialConsiderationReasonsViewModel
+            {
+                AcademicYear = _ipCompletionViewModel.AcademicYear,
+                LearnerName = _ipCompletionViewModel.LearnerName,
+                ReasonsList = new List<IpLookupDataViewModel> { new() { Id = 1, Name = "Medical", IsSelected = true }, new() { Id = 2, Name = "Withdrawn", IsSelected = true } }
+            };
+
+            _specialConsiderationViewModel = new SpecialConsiderationViewModel
+            {
+                Hours = new SpecialConsiderationHoursViewModel(),
+                Reasons = _specialConsiderationReasonsViewModel
+            };
+            
             _ipModelUsedViewModel = new IpModelUsedViewModel { ProfileId = 1, LearnerName = "John Smith" };
             IndustryPlacementLoader.TransformIpCompletionDetailsTo<IpModelUsedViewModel>(_ipCompletionViewModel).Returns(_ipModelUsedViewModel);
             CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(new IndustryPlacementViewModel()
             {
-                IpCompletion = _ipCompletionViewModel
+                IpCompletion = _ipCompletionViewModel,
+                SpecialConsideration = _specialConsiderationViewModel
+
             });
         }
 
@@ -49,10 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.IsIpModelUsed.Should().BeNull();
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.IpCompletion);
-            model.BackLink.RouteAttributes.Count.Should().Be(1);
-            model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string profileIdRouteValue);
-            profileIdRouteValue.Should().Be(_ipCompletionViewModel.ProfileId.ToString());
+            model.BackLink.RouteName.Should().Be(RouteConstants.IpSpecialConsiderationReasons);
         }
     }
 }

@@ -117,7 +117,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-            var viewModel = (cacheModel?.IpModelViewModel?.IpModelUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpModelUsedViewModel>(cacheModel.IpCompletion);
+            var viewModel = cacheModel.IpModelViewModel?.IpModelUsed ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpModelUsedViewModel>(cacheModel.IpCompletion);
+            
+            viewModel.SetBackLink(cacheModel.SpecialConsideration);
 
             return View(viewModel);
         }
@@ -126,10 +128,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("industry-placement-model-used", Name = RouteConstants.SubmitIpModelUsed)]
         public async Task<IActionResult> IpModelUsedAsync(IpModelUsedViewModel model)
         {
-            if (!ModelState.IsValid)
-                return View(model);
-
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+
+            if (!ModelState.IsValid)
+            {
+                model.SetBackLink(cacheModel?.SpecialConsideration);
+                return View(model);
+            }
+                
+
             if (cacheModel == null ||
                 cacheModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted ||
                 cacheModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotSpecified)
@@ -620,7 +627,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
             if (cacheModel?.IpCompletion != null)
+            {
                 cacheModel.IpCompletion = model;
+                cacheModel.SpecialConsideration = null;
+            }   
             else
                 cacheModel = new IndustryPlacementViewModel
                 {
