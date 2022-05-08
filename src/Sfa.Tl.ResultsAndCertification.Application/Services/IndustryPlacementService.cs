@@ -68,7 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                                                       .OrderByDescending(ip => ip.CreatedOn)
                                                                       .FirstOrDefaultAsync();
 
-            if (industryPlacement != null && (industryPlacement.Status == IndustryPlacementStatus.Completed || industryPlacement.Status == IndustryPlacementStatus.CompletedWithSpecialConsideration))
+            if (request.IndustryPlacementStatus == IndustryPlacementStatus.NotSpecified || (industryPlacement != null && (industryPlacement.Status == IndustryPlacementStatus.Completed || industryPlacement.Status == IndustryPlacementStatus.CompletedWithSpecialConsideration)))
                 return false;
 
             int status = 0;

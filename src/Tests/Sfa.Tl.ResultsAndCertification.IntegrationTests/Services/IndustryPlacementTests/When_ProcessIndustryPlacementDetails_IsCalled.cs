@@ -146,6 +146,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                         PerformedBy = "Test User"
                     }, false },
 
+                    // Ip Status - NotSpecified - return false
+                    new object[] { new IndustryPlacementRequest
+                    {
+                        ProviderUkprn = (long)Provider.BarsleyCollege,
+                        ProfileId = 1,
+                        RegistrationPathwayId = 1,
+                        IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified,
+                        IndustryPlacementDetails = null,
+                        PerformedBy = "Test User"
+                    }, false },
+
                     // Ip Status - NotCompleted - return true
                     new object[] { new IndustryPlacementRequest
                     {
