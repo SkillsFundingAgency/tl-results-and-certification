@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpModelUsedGet
 {
-    public class When_Status_Not_Completed : TestSetup
+    public class When_Called_With_Status_Not_Specified : TestSetup
     {
         private IndustryPlacementViewModel _cacheResult;
 
@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
         {
             _cacheResult = new IndustryPlacementViewModel 
             {
-                IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted }
+                IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified }
             };
 
             CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(_cacheResult);
