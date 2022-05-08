@@ -29,7 +29,7 @@
             </dl>
             
             <p class="govuk-body">@string.Format(@IpCheckAndSubmit.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, Model.LearnerName)</p>
-            <form asp-action="">
+            <form asp-route="@RouteConstants.SubmitIpCheckAndSubmit">
                 <div class="govuk-button-group">
                     <button class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@IpCheckAndSubmit.Button_Submit</button>
                     <a class="govuk-link" href="#">@IpCheckAndSubmit.Link_Cancel</a>

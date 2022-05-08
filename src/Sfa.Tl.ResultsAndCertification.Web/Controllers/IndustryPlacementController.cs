@@ -24,7 +24,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly ILogger _logger;
 
         private string CacheKey => CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.IpCacheKey);
-
         private string TrainingProviderCacheKey => CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TrainingProviderCacheKey);
 
         public IndustryPlacementController(IIndustryPlacementLoader industryPlacementLoader, ICacheService cacheService, ILogger<IndustryPlacementController> logger)
@@ -621,9 +620,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("industry-placement-check-your-answers", Name = RouteConstants.SubmitIpCheckAndSubmit)]
-        public IActionResult IpCheckAndSubmitSave()
+        public async Task<IActionResult> IpCheckAndSubmitSaveAsync()
         {
-            return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
+            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var isSuccess = await _industryPlacementLoader.ProcessIndustryPlacementDetailsAsync(User.GetUkPrn(), cacheModel);
+
+            if (isSuccess)
+            {
+                await _cacheService.RemoveAsync<IndustryPlacementViewModel>(CacheKey);
+
+                var notificationBanner = new NotificationBannerModel
+                {
+                    HeaderMessage = IndustryPlacementBanner.Banner_HeaderMesage,
+                    Message = IndustryPlacementBanner.Success_Message,
+                    DisplayMessageBody = true,
+                    IsRawHtml = true
+                };
+
+                await _cacheService.SetAsync(TrainingProviderCacheKey, notificationBanner, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = cacheModel.IpCompletion.ProfileId });
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.ManualIndustryPlacementDetailsProcessFailed, $"Unable to add industry placement status for ProfileId = {cacheModel.IpCompletion.ProfileId}. Method: IpCheckAndSubmitSave, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+            }
         }
 
         #endregion
