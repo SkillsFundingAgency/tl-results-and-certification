@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
@@ -22,8 +24,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IRepository<IpTempFlexTlevelCombination> _ipTempFlexTlevelCombinationRepository;
         private readonly IRepository<DbModel.IpTempFlexNavigation> _ipTempFlexNavigationRepository;
         private readonly IRepository<IndustryPlacement> _industryPlacementRepository;
+        private readonly IRepository<TqRegistrationPathway> _tqRegistrationPathwayRepository;
 
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
         public IndustryPlacementService(
             IRepository<IpLookup> ipLookupRepository,
@@ -31,25 +35,38 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             IRepository<IpTempFlexTlevelCombination> ipTempFlexTlevelCombinationRepository,
             IRepository<DbModel.IpTempFlexNavigation> ipTempFlexNavigationRepository,
             IRepository<IndustryPlacement> industryPlacementRepository,
-            IMapper mapper)
+            IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
+            IMapper mapper, ILogger<IndustryPlacementService> logger)
         {
             _ipLookupRepository = ipLookupRepository;
             _ipModelTlevelCombinationRepository = ipModelTlevelCombinationRepository;
             _ipTempFlexTlevelCombinationRepository = ipTempFlexTlevelCombinationRepository;
             _ipTempFlexNavigationRepository = ipTempFlexNavigationRepository;
             _industryPlacementRepository = industryPlacementRepository;
+            _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<bool> ProcessIndustryPlacementDetailsAsync(IndustryPlacementRequest request)
         {
-            var industryPlacement = await _industryPlacementRepository.GetManyAsync(ip => ip.TqRegistrationPathwayId == request.RegistrationPathwayId
-                                                                                    && ip.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId
-                                                                                    && ip.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == request.ProviderUkprn
-                                                                                    && (ip.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
-                                                                                    || ip.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn))
-                                                                       .OrderByDescending(ip => ip.CreatedOn)
-                                                                       .FirstOrDefaultAsync();
+            var pathway = await _tqRegistrationPathwayRepository.GetManyAsync(p => p.Id == request.RegistrationPathwayId
+                                                                              && p.TqRegistrationProfileId == request.ProfileId
+                                                                              && p.TqProvider.TlProvider.UkPrn == request.ProviderUkprn
+                                                                              && (p.Status == RegistrationPathwayStatus.Active
+                                                                              || p.Status == RegistrationPathwayStatus.Withdrawn))
+                                                                 .OrderByDescending(ip => ip.CreatedOn)
+                                                                 .FirstOrDefaultAsync();
+
+            if (pathway == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to update industry placement for profielId = {request.ProfileId}. Method: ProcessIndustryPlacementDetailsAsync({request})");
+                return false;
+            }
+
+            var industryPlacement = await _industryPlacementRepository.GetManyAsync(ip => ip.TqRegistrationPathwayId == pathway.Id)
+                                                                      .OrderByDescending(ip => ip.CreatedOn)
+                                                                      .FirstOrDefaultAsync();
 
             if (industryPlacement != null && (industryPlacement.Status == IndustryPlacementStatus.Completed || industryPlacement.Status == IndustryPlacementStatus.CompletedWithSpecialConsideration))
                 return false;

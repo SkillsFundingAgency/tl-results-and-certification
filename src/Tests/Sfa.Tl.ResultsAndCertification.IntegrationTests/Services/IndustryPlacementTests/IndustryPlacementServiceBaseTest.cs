@@ -38,7 +38,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
         protected IRepository<IpModelTlevelCombination> IpModelTlevelCombinationRepository;
         protected IRepository<IpTempFlexTlevelCombination> IpTempFlexTlevelCombinationRepository;
         protected IRepository<IpTempFlexNavigation> IpTempFlexNavigationRepository;
-        protected IRepository<IndustryPlacement> IndustryPlacementRepository;
+        protected IRepository<IndustryPlacement> IndustryPlacementRepository;        
+        protected IRepository<TqRegistrationPathway> RegistrationPathwayRepository;
 
         protected IMapper Mapper;
         protected IList<IpLookup> IpLookup;
@@ -51,6 +52,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
         protected ILogger<GenericRepository<IpTempFlexTlevelCombination>> IpTempFlexTlevelCombinationLogger;
         protected ILogger<GenericRepository<IpTempFlexNavigation>> IpTempFlexNavigationLogger;
         protected ILogger<GenericRepository<IndustryPlacement>> IndustryPlacementLogger;
+        protected ILogger<GenericRepository<TqRegistrationPathway>> RegistrationPathwayRepositoryLogger;
+        protected ILogger<IndustryPlacementService> IndustryPlacementServiceLogger;
 
         protected virtual void CreateMapper()
         {
@@ -132,5 +135,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
 
             DbContext.SaveChanges();
         }
+    }
+
+    public enum Provider
+    {
+        BarsleyCollege = 10000536,
+        WalsallCollege = 10007315
     }
 }

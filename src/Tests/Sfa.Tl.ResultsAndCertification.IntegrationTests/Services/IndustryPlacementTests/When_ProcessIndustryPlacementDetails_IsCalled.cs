@@ -56,10 +56,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
             IpTempFlexNavigationLogger = new Logger<GenericRepository<Domain.Models.IpTempFlexNavigation>>(new NullLoggerFactory());
             IpTempFlexNavigationRepository = new GenericRepository<Domain.Models.IpTempFlexNavigation>(IpTempFlexNavigationLogger, DbContext);
 
-            IndustryPlacementLogger = new Logger<GenericRepository<Domain.Models.IndustryPlacement>>(new NullLoggerFactory());
-            IndustryPlacementRepository = new GenericRepository<Domain.Models.IndustryPlacement>(IndustryPlacementLogger, DbContext);
+            IndustryPlacementLogger = new Logger<GenericRepository<IndustryPlacement>>(new NullLoggerFactory());
+            IndustryPlacementRepository = new GenericRepository<IndustryPlacement>(IndustryPlacementLogger, DbContext);
 
-            IndustryPlacementService = new IndustryPlacementService(IpLookupRepository, IpModelTlevelCombinationRepository, IpTempFlexTlevelCombinationRepository, IpTempFlexNavigationRepository, IndustryPlacementRepository, Mapper);
+            RegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
+            RegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(RegistrationPathwayRepositoryLogger, DbContext);
+
+            IndustryPlacementServiceLogger = new Logger<IndustryPlacementService>(new NullLoggerFactory());
+
+            IndustryPlacementService = new IndustryPlacementService(IpLookupRepository, IpModelTlevelCombinationRepository, IpTempFlexTlevelCombinationRepository, IpTempFlexNavigationRepository, IndustryPlacementRepository, RegistrationPathwayRepository, Mapper, IndustryPlacementServiceLogger);
         }
 
         public override Task When()
@@ -72,13 +77,43 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
             _actualResult = await IndustryPlacementService.ProcessIndustryPlacementDetailsAsync(request);
         }
 
+        [Theory]
+        [MemberData(nameof(Data))]
+        public async Task Then_Returns_Expected_Results(IndustryPlacementRequest request, bool expectedResult)
+        {
+            await WhenAsync(request);
+
+            if (expectedResult == false)
+            {
+                _actualResult.Should().BeFalse();
+                return;
+            }
+
+            var expectedProfile = _profiles.FirstOrDefault(p => p.Id == request.ProfileId);
+
+            expectedProfile.Should().NotBeNull();
+
+            _actualResult.Should().BeTrue();
+
+            var actualIndustryPlacement = DbContext.IndustryPlacement.FirstOrDefault(ip => ip.TqRegistrationPathwayId == request.RegistrationPathwayId);
+
+            actualIndustryPlacement.Should().NotBeNull();
+                        
+            actualIndustryPlacement.Status.Should().Be(request.IndustryPlacementStatus);
+
+            if (request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted)
+            {
+                actualIndustryPlacement.Details.Should().BeNull();
+            }            
+        }
+
         public static IEnumerable<object[]> Data
         {
             get
             {
                 return new[]
                 {
-                     // Invalid Provider Ukprn - return false
+                    // Invalid Provider Ukprn - return false
                     new object[] { new IndustryPlacementRequest 
                     { 
                         ProviderUkprn = 0000000000,
@@ -88,6 +123,39 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                         IndustryPlacementDetails = null,
                         PerformedBy = "Test User" 
                     }, false },
+
+                    // Invalid ProfileID - return false
+                    new object[] { new IndustryPlacementRequest
+                    {
+                        ProviderUkprn = (long)Provider.BarsleyCollege,
+                        ProfileId = 0,
+                        RegistrationPathwayId = 1,
+                        IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
+                        IndustryPlacementDetails = null,
+                        PerformedBy = "Test User"
+                    }, false },
+
+                    // Invalid RegistrationPathwayId - return false
+                    new object[] { new IndustryPlacementRequest
+                    {
+                        ProviderUkprn = (long)Provider.BarsleyCollege,
+                        ProfileId = 1,
+                        RegistrationPathwayId = 0,
+                        IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
+                        IndustryPlacementDetails = null,
+                        PerformedBy = "Test User"
+                    }, false },
+
+                    // Ip Status - NotCompleted - return true
+                    new object[] { new IndustryPlacementRequest
+                    {
+                        ProviderUkprn = (long)Provider.BarsleyCollege,
+                        ProfileId = 1,
+                        RegistrationPathwayId = 1,
+                        IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
+                        IndustryPlacementDetails = null,
+                        PerformedBy = "Test User"
+                    }, true }
                 };
             }
         }
