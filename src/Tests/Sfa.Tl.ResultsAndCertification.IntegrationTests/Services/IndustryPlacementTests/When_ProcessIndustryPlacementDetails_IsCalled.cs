@@ -1,15 +1,11 @@
 ﻿using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
-using Notify.Interfaces;
-using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
@@ -38,6 +34,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
 
             // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
+            SeedSpecialConsiderationsLookupData();
+            SeedIpModelTlevelCombinationsData(Pathway);
+            SeedIpTempFlexTlevelCombinationsData(Pathway);
+
             _profiles = SeedRegistrationsData(_ulns, TqProvider);
 
             DbContext.SaveChanges();
@@ -126,6 +126,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                     {
                         ProviderUkprn = 0000000000,
                         ProfileId = 1,
+                        PathwayId = 1,
                         RegistrationPathwayId = 1,
                         IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
                         IndustryPlacementDetails = null,
@@ -137,6 +138,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                     {
                         ProviderUkprn = (long)Provider.BarsleyCollege,
                         ProfileId = 0,
+                        PathwayId = 1,
                         RegistrationPathwayId = 1,
                         IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
                         IndustryPlacementDetails = null,
@@ -148,6 +150,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                     {
                         ProviderUkprn = (long)Provider.BarsleyCollege,
                         ProfileId = 1,
+                        PathwayId = 1,
                         RegistrationPathwayId = 0,
                         IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
                         IndustryPlacementDetails = null,
@@ -159,6 +162,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                     {
                         ProviderUkprn = (long)Provider.BarsleyCollege,
                         ProfileId = 1,
+                        PathwayId = 1,
                         RegistrationPathwayId = 1,
                         IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified,
                         IndustryPlacementDetails = null,
@@ -170,17 +174,91 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                     {
                         ProviderUkprn = (long)Provider.BarsleyCollege,
                         ProfileId = 1,
+                        PathwayId = 1,
                         RegistrationPathwayId = 1,
                         IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
                         IndustryPlacementDetails = null,
                         PerformedBy = "Test User"
                     }, true },
 
-                    // Ip Status - CompletedWithSpecialConsideration - return true
+                    // Ip Status - Completed - but populated with special considerations data - return false
                     new object[] { new IndustryPlacementRequest
                     {
                         ProviderUkprn = (long)Provider.BarsleyCollege,
                         ProfileId = 1,
+                        PathwayId = 1,
+                        RegistrationPathwayId = 1,
+                        IndustryPlacementStatus = IndustryPlacementStatus.Completed,
+                        IndustryPlacementDetails = new IndustryPlacementDetails
+                        {
+                            IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString(),
+                            HoursSpentOnPlacement = 50,
+                            SpecialConsiderationReasons = new List<int?> { 1, 2 },
+                            IndustryPlacementModelsUsed = true,
+                            MultipleEmployerModelsUsed = true,
+                            OtherIndustryPlacementModels = new List<int?> { 10, 11 },
+                            IndustryPlacementModels = new List<int?>(),
+                            TemporaryFlexibilitiesUsed = true,
+                            BlendedTemporaryFlexibilityUsed = false,
+                            TemporaryFlexibilities = new List<int?> { 14, 15 }
+                        },
+                        PerformedBy = "Test User"
+                    }, false },
+
+                    // Ip Status - Completed - when MultipleEmployerModelsUsed = false then OtherIndustryPlacementModels should not have values - return false
+                    new object[] { new IndustryPlacementRequest
+                    {
+                        ProviderUkprn = (long)Provider.BarsleyCollege,
+                        ProfileId = 1,
+                        PathwayId = 1,
+                        RegistrationPathwayId = 1,
+                        IndustryPlacementStatus = IndustryPlacementStatus.Completed,
+                        IndustryPlacementDetails = new IndustryPlacementDetails
+                        {
+                            IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString(),
+                            HoursSpentOnPlacement = null,
+                            SpecialConsiderationReasons = new List<int?>(),
+                            IndustryPlacementModelsUsed = true,
+                            MultipleEmployerModelsUsed = false,
+                            OtherIndustryPlacementModels = new List<int?> { 10, 11 },
+                            IndustryPlacementModels = new List<int?>(),
+                            TemporaryFlexibilitiesUsed = true,
+                            BlendedTemporaryFlexibilityUsed = false,
+                            TemporaryFlexibilities = new List<int?> { 14, 15 }
+                        },
+                        PerformedBy = "Test User"
+                    }, false },
+
+                    // Ip Status - Completed - when IndustryPlacementModelsUsed = false then MultipleEmployerModelsUsed & OtherIndustryPlacementModels should not have values - return false
+                    new object[] { new IndustryPlacementRequest
+                    {
+                        ProviderUkprn = (long)Provider.BarsleyCollege,
+                        ProfileId = 1,
+                        PathwayId = 1,
+                        RegistrationPathwayId = 1,
+                        IndustryPlacementStatus = IndustryPlacementStatus.Completed,
+                        IndustryPlacementDetails = new IndustryPlacementDetails
+                        {
+                            IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString(),
+                            HoursSpentOnPlacement = null,
+                            SpecialConsiderationReasons = new List<int?>(),
+                            IndustryPlacementModelsUsed = false,
+                            MultipleEmployerModelsUsed = true,
+                            OtherIndustryPlacementModels = new List<int?> { 10, 11 },
+                            IndustryPlacementModels = new List<int?>(),
+                            TemporaryFlexibilitiesUsed = true,
+                            BlendedTemporaryFlexibilityUsed = false,
+                            TemporaryFlexibilities = new List<int?> { 14, 15 }
+                        },
+                        PerformedBy = "Test User"
+                    }, false },
+
+                    // Ip Status - Completed - when TemporaryFlexibilitiesUsed = false then BlendedTemporaryFlexibilityUsed & TemporaryFlexibilities should not have values - return false
+                    new object[] { new IndustryPlacementRequest
+                    {
+                        ProviderUkprn = (long)Provider.BarsleyCollege,
+                        ProfileId = 1,
+                        PathwayId = 1,
                         RegistrationPathwayId = 1,
                         IndustryPlacementStatus = IndustryPlacementStatus.Completed,
                         IndustryPlacementDetails = new IndustryPlacementDetails
@@ -190,11 +268,131 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                             SpecialConsiderationReasons = new List<int?>(),
                             IndustryPlacementModelsUsed = true,
                             MultipleEmployerModelsUsed = true,
-                            OtherIndustryPlacementModels = new List<int?> { 1, 2 },
+                            OtherIndustryPlacementModels = new List<int?> { 10, 11 },
+                            IndustryPlacementModels = new List<int?>(),
+                            TemporaryFlexibilitiesUsed = false,
+                            BlendedTemporaryFlexibilityUsed = false,
+                            TemporaryFlexibilities = new List<int?> { 14, 15 }
+                        },
+                        PerformedBy = "Test User"
+                    }, false },
+
+                     // Ip Status - CompletedWithSpecialConsideration - HoursSpentOnPlacement && SpecialConsiderationReasons should have values - return false
+                    new object[] { new IndustryPlacementRequest
+                    {
+                        ProviderUkprn = (long)Provider.BarsleyCollege,
+                        ProfileId = 1,
+                        PathwayId = 1,
+                        RegistrationPathwayId = 1,
+                        IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration,
+                        IndustryPlacementDetails = new IndustryPlacementDetails
+                        {
+                            IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration.ToString(),
+                            HoursSpentOnPlacement = null,
+                            SpecialConsiderationReasons = new List<int?>(),
+                            IndustryPlacementModelsUsed = true,
+                            MultipleEmployerModelsUsed = true,
+                            OtherIndustryPlacementModels = new List<int?> { 10, 12 },
                             IndustryPlacementModels = new List<int?>(),
                             TemporaryFlexibilitiesUsed = true,
                             BlendedTemporaryFlexibilityUsed = false,
-                            TemporaryFlexibilities = new List<int?> { 4, 5 }
+                            TemporaryFlexibilities = new List<int?> { 14, 16 }
+                        },
+                        PerformedBy = "Test User"
+                    }, false },
+
+                    // Ip Status - CompletedWithSpecialConsideration - SpecialConsiderationReasons values should be matched with IpLookup table - return false
+                    new object[] { new IndustryPlacementRequest
+                    {
+                        ProviderUkprn = (long)Provider.BarsleyCollege,
+                        ProfileId = 1,
+                        PathwayId = 1,
+                        RegistrationPathwayId = 1,
+                        IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration,
+                        IndustryPlacementDetails = new IndustryPlacementDetails
+                        {
+                            IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration.ToString(),
+                            HoursSpentOnPlacement = 50,
+                            SpecialConsiderationReasons = new List<int?> { 0, 2, 3, 4, 7 },
+                            IndustryPlacementModelsUsed = true,
+                            MultipleEmployerModelsUsed = true,
+                            OtherIndustryPlacementModels = new List<int?> { 10, 12 },
+                            IndustryPlacementModels = new List<int?>(),
+                            TemporaryFlexibilitiesUsed = true,
+                            BlendedTemporaryFlexibilityUsed = false,
+                            TemporaryFlexibilities = new List<int?> { 14, 16 }
+                        },
+                        PerformedBy = "Test User"
+                    }, false },
+
+                    // Ip Status - Completed - OtherIndustryPlacementModels values should be matched with IpLookup table - return false
+                    new object[] { new IndustryPlacementRequest
+                    {
+                        ProviderUkprn = (long)Provider.BarsleyCollege,
+                        ProfileId = 1,
+                        PathwayId = 1,
+                        RegistrationPathwayId = 1,
+                        IndustryPlacementStatus = IndustryPlacementStatus.Completed,
+                        IndustryPlacementDetails = new IndustryPlacementDetails
+                        {
+                            IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString(),
+                            HoursSpentOnPlacement = null,
+                            SpecialConsiderationReasons = new List<int?>(),
+                            IndustryPlacementModelsUsed = true,
+                            MultipleEmployerModelsUsed = true,
+                            OtherIndustryPlacementModels = new List<int?> { 0, 11 },
+                            IndustryPlacementModels = new List<int?>(),
+                            TemporaryFlexibilitiesUsed = true,
+                            BlendedTemporaryFlexibilityUsed = false,
+                            TemporaryFlexibilities = new List<int?> { 14, 15 }
+                        },
+                        PerformedBy = "Test User"
+                    }, false },
+
+                    // Ip Status - Completed - TemporaryFlexibilities values should be matched with IpLookup table return false
+                    new object[] { new IndustryPlacementRequest
+                    {
+                        ProviderUkprn = (long)Provider.BarsleyCollege,
+                        ProfileId = 1,
+                        PathwayId = 1,
+                        RegistrationPathwayId = 1,
+                        IndustryPlacementStatus = IndustryPlacementStatus.Completed,
+                        IndustryPlacementDetails = new IndustryPlacementDetails
+                        {
+                            IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString(),
+                            HoursSpentOnPlacement = null,
+                            SpecialConsiderationReasons = new List<int?>(),
+                            IndustryPlacementModelsUsed = true,
+                            MultipleEmployerModelsUsed = true,
+                            OtherIndustryPlacementModels = new List<int?> { 10, 11 },
+                            IndustryPlacementModels = new List<int?>(),
+                            TemporaryFlexibilitiesUsed = true,
+                            BlendedTemporaryFlexibilityUsed = false,
+                            TemporaryFlexibilities = new List<int?> { 14, 0 }
+                        },
+                        PerformedBy = "Test User"
+                    }, false },
+
+                    // Ip Status - Completed - return true
+                    new object[] { new IndustryPlacementRequest
+                    {
+                        ProviderUkprn = (long)Provider.BarsleyCollege,
+                        ProfileId = 1,
+                        PathwayId = 1,
+                        RegistrationPathwayId = 1,
+                        IndustryPlacementStatus = IndustryPlacementStatus.Completed,
+                        IndustryPlacementDetails = new IndustryPlacementDetails
+                        {
+                            IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString(),
+                            HoursSpentOnPlacement = null,
+                            SpecialConsiderationReasons = new List<int?>(),
+                            IndustryPlacementModelsUsed = true,
+                            MultipleEmployerModelsUsed = true,
+                            OtherIndustryPlacementModels = new List<int?> { 10, 11 },
+                            IndustryPlacementModels = new List<int?>(),
+                            TemporaryFlexibilitiesUsed = true,
+                            BlendedTemporaryFlexibilityUsed = false,
+                            TemporaryFlexibilities = new List<int?> { 14, 15 }
                         },
                         PerformedBy = "Test User"
                     }, true },
@@ -204,20 +402,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                     {
                         ProviderUkprn = (long)Provider.BarsleyCollege,
                         ProfileId = 1,
+                        PathwayId = 1,
                         RegistrationPathwayId = 1,
                         IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration,
                         IndustryPlacementDetails = new IndustryPlacementDetails
                         {
                             IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration.ToString(),
                             HoursSpentOnPlacement = 50,
-                            SpecialConsiderationReasons = new List<int?> { 10 },
+                            SpecialConsiderationReasons = new List<int?> { 1, 2, 3, 4, 7 },
                             IndustryPlacementModelsUsed = true,
                             MultipleEmployerModelsUsed = true,
-                            OtherIndustryPlacementModels = new List<int?> { 1, 2 },
+                            OtherIndustryPlacementModels = new List<int?> { 10, 12 },
                             IndustryPlacementModels = new List<int?>(),
                             TemporaryFlexibilitiesUsed = true,
                             BlendedTemporaryFlexibilityUsed = false,
-                            TemporaryFlexibilities = new List<int?> { 4, 5 }
+                            TemporaryFlexibilities = new List<int?> { 14, 16 }
                         },
                         PerformedBy = "Test User"
                     }, true }

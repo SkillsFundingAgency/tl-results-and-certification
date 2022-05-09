@@ -104,6 +104,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (request == null || request.IndustryPlacementStatus == IndustryPlacementStatus.NotSpecified)
                 return false;
 
+            if (request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted && request.IndustryPlacementDetails != null)
+                return false;
+
+            if (request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted && request.IndustryPlacementDetails == null)
+                return true;
+
             if (request.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
             {
                 if (request.IndustryPlacementDetails.HoursSpentOnPlacement == null || request.IndustryPlacementDetails.HoursSpentOnPlacement <= 0
@@ -129,8 +135,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 // special considerations objects should not be populated
                 if (request.IndustryPlacementDetails.HoursSpentOnPlacement != null 
-                    || request.IndustryPlacementDetails.SpecialConsiderationReasons != null 
-                    || request.IndustryPlacementDetails.SpecialConsiderationReasons.Any())
+                    || (request.IndustryPlacementDetails.SpecialConsiderationReasons != null && request.IndustryPlacementDetails.SpecialConsiderationReasons.Any()))
                     return false;                
             }
 
@@ -172,15 +177,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 // If IndustryPlacementModels not used then IP models should not be populated
                 if (request.IndustryPlacementDetails.MultipleEmployerModelsUsed.HasValue 
-                    || request.IndustryPlacementDetails.OtherIndustryPlacementModels.Any()
-                    || request.IndustryPlacementDetails.IndustryPlacementModels.Any())
+                    || (request.IndustryPlacementDetails.OtherIndustryPlacementModels != null &&request.IndustryPlacementDetails.OtherIndustryPlacementModels.Any())
+                    || (request.IndustryPlacementDetails.IndustryPlacementModels != null && request.IndustryPlacementDetails.IndustryPlacementModels.Any()))
                     return false;
             }
 
             // Temporary flexibility
             if (!request.IndustryPlacementDetails.TemporaryFlexibilitiesUsed.HasValue || !request.IndustryPlacementDetails.TemporaryFlexibilitiesUsed.Value)
             {
-                if (request.IndustryPlacementDetails.TemporaryFlexibilities.Any())
+                if (request.IndustryPlacementDetails.TemporaryFlexibilities != null && request.IndustryPlacementDetails.TemporaryFlexibilities.Any())
                     return false;
             }
 
