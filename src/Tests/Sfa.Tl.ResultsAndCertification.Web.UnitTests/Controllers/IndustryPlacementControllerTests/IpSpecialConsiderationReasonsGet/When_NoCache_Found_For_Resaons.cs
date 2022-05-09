@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpSpecialConsiderationReasonsGet
 {
-    public class When_Called_With_Valid_Data1 : TestSetup
+    public class When_NoCache_Found_For_Resaons : TestSetup
     {
         private IndustryPlacementViewModel _cacheResult;
         private IpCompletionViewModel _ipCompletionViewModel;
@@ -27,10 +27,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 ReasonsList = new List<IpLookupDataViewModel> { new IpLookupDataViewModel { Id = 1, Name = "Medical", IsSelected = true }, new IpLookupDataViewModel { Id = 2, Name = "Withdrawn", IsSelected = true } }
             };
 
-            _specialConsiderationViewModel = new SpecialConsiderationViewModel 
-            { 
+            _specialConsiderationViewModel = new SpecialConsiderationViewModel
+            {
                 Hours = new SpecialConsiderationHoursViewModel(),
-                Reasons = _specialConsiderationReasonsViewModel
+                Reasons = null
             };
 
             _cacheResult = new IndustryPlacementViewModel
@@ -41,14 +41,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
             CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(_cacheResult);
 
+            IndustryPlacementLoader.TransformIpCompletionDetailsTo<SpecialConsiderationReasonsViewModel>(_cacheResult.IpCompletion).Returns(_specialConsiderationReasonsViewModel);
             IndustryPlacementLoader.GetSpecialConsiderationReasonsListAsync(2020).Returns(_specialConsiderationReasonsViewModel.ReasonsList);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            IndustryPlacementLoader.DidNotReceive().TransformIpCompletionDetailsTo<SpecialConsiderationReasonsViewModel>(Arg.Any<IpCompletionViewModel>());
-            IndustryPlacementLoader.DidNotReceive().GetSpecialConsiderationReasonsListAsync(2020);
+            IndustryPlacementLoader.Received(1).TransformIpCompletionDetailsTo<SpecialConsiderationReasonsViewModel>(_cacheResult.IpCompletion);
+            IndustryPlacementLoader.Received(1).GetSpecialConsiderationReasonsListAsync(2020);
         }
 
         [Fact]
