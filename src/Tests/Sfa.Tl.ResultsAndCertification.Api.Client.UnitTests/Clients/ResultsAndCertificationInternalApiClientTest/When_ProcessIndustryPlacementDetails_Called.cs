@@ -46,12 +46,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 IndustryPlacementDetails = new IndustryPlacementDetails
                 {
                     IndustryPlacementStatus = "Completed",
-                    IndustryPlacementModels = new List<int> { 1,2},
+                    IndustryPlacementModels = new List<int?> { 1,2},
                     MultipleEmployerModelsUsed = true,
-                    OtherIndustryPlacementModels = new List<int> { 3, 4},
+                    OtherIndustryPlacementModels = new List<int?> { 3, 4},
                     TemporaryFlexibilitiesUsed = true,
                     BlendedTemporaryFlexibilityUsed = true,
-                    TemporaryFlexibilities = new List<int> { 5, 6 }
+                    TemporaryFlexibilities = new List<int?> { 5, 6 }
                 },
                 PerformedBy = "John Smith"
             };

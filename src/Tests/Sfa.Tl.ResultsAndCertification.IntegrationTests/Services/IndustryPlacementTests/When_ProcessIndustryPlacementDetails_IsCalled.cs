@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Newtonsoft.Json;
 using Notify.Interfaces;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
@@ -34,11 +35,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                 { 1111111114, RegistrationPathwayStatus.Active },
                 { 1111111115, RegistrationPathwayStatus.Active }
             };
-           
+
             // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _profiles = SeedRegistrationsData(_ulns, TqProvider);
-            
+
             DbContext.SaveChanges();
 
             // Create Service
@@ -98,13 +99,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
             var actualIndustryPlacement = DbContext.IndustryPlacement.FirstOrDefault(ip => ip.TqRegistrationPathwayId == request.RegistrationPathwayId);
 
             actualIndustryPlacement.Should().NotBeNull();
-                        
+
             actualIndustryPlacement.Status.Should().Be(request.IndustryPlacementStatus);
 
             if (request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted)
             {
                 actualIndustryPlacement.Details.Should().BeNull();
-            }            
+            }
+            else if (request.IndustryPlacementStatus == IndustryPlacementStatus.Completed || request.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
+            {
+                var actualDetails = JsonConvert.DeserializeObject<IndustryPlacementDetails>(actualIndustryPlacement.Details);
+                actualDetails.Should().NotBeNull();
+
+                actualDetails.Should().BeEquivalentTo(request.IndustryPlacementDetails);
+            }
         }
 
         public static IEnumerable<object[]> Data
@@ -114,14 +122,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                 return new[]
                 {
                     // Invalid Provider Ukprn - return false
-                    new object[] { new IndustryPlacementRequest 
-                    { 
+                    new object[] { new IndustryPlacementRequest
+                    {
                         ProviderUkprn = 0000000000,
                         ProfileId = 1,
                         RegistrationPathwayId = 1,
                         IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
                         IndustryPlacementDetails = null,
-                        PerformedBy = "Test User" 
+                        PerformedBy = "Test User"
                     }, false },
 
                     // Invalid ProfileID - return false
@@ -165,6 +173,52 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                         RegistrationPathwayId = 1,
                         IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
                         IndustryPlacementDetails = null,
+                        PerformedBy = "Test User"
+                    }, true },
+
+                    // Ip Status - CompletedWithSpecialConsideration - return true
+                    new object[] { new IndustryPlacementRequest
+                    {
+                        ProviderUkprn = (long)Provider.BarsleyCollege,
+                        ProfileId = 1,
+                        RegistrationPathwayId = 1,
+                        IndustryPlacementStatus = IndustryPlacementStatus.Completed,
+                        IndustryPlacementDetails = new IndustryPlacementDetails
+                        {
+                            IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString(),
+                            HoursSpentOnPlacement = null,
+                            SpecialConsiderationReasons = new List<int?>(),
+                            IndustryPlacementModelsUsed = true,
+                            MultipleEmployerModelsUsed = true,
+                            OtherIndustryPlacementModels = new List<int?> { 1, 2 },
+                            IndustryPlacementModels = new List<int?>(),
+                            TemporaryFlexibilitiesUsed = true,
+                            BlendedTemporaryFlexibilityUsed = false,
+                            TemporaryFlexibilities = new List<int?> { 4, 5 }
+                        },
+                        PerformedBy = "Test User"
+                    }, true },
+
+                    // Ip Status - CompletedWithSpecialConsideration - return true
+                    new object[] { new IndustryPlacementRequest
+                    {
+                        ProviderUkprn = (long)Provider.BarsleyCollege,
+                        ProfileId = 1,
+                        RegistrationPathwayId = 1,
+                        IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration,
+                        IndustryPlacementDetails = new IndustryPlacementDetails
+                        {
+                            IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration.ToString(),
+                            HoursSpentOnPlacement = 50,
+                            SpecialConsiderationReasons = new List<int?> { 10 },
+                            IndustryPlacementModelsUsed = true,
+                            MultipleEmployerModelsUsed = true,
+                            OtherIndustryPlacementModels = new List<int?> { 1, 2 },
+                            IndustryPlacementModels = new List<int?>(),
+                            TemporaryFlexibilitiesUsed = true,
+                            BlendedTemporaryFlexibilityUsed = false,
+                            TemporaryFlexibilities = new List<int?> { 4, 5 }
+                        },
                         PerformedBy = "Test User"
                     }, true }
                 };
