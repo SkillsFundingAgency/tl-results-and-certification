@@ -262,6 +262,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("industry-placement-models", Name = RouteConstants.SubmitIpMultiEmployerSelect)]
         public async Task<IActionResult> IpMultiEmployerSelectAsync(IpMultiEmployerSelectViewModel model)
         {
+            if (!ModelState.IsValid)
+                return View(model);
+
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
             if (cacheModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
