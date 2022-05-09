@@ -650,6 +650,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("industry-placement-check-your-answers-cancel/{profileId}", Name = RouteConstants.IpCheckAndSubmitCancel)]
+        public async Task<IActionResult> IpCheckAndSubmitCancelAsync(int profileId)
+        {
+            await _cacheService.RemoveAsync<IndustryPlacementViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId });
+        }
+
         #endregion
 
         private async Task<IndustryPlacementViewModel> SyncCacheIp(IpCompletionViewModel model)

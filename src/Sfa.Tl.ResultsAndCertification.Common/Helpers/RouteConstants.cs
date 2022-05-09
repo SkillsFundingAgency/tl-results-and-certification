@@ -386,6 +386,7 @@
         public const string SubmitIpGrantedTempFlexibility = "SubmitIpGrantedTempFlexibility";        
         public const string IpCheckAndSubmit = "IpCheckAndSubmit";
         public const string SubmitIpCheckAndSubmit = "SubmitIpCheckAndSubmit";
+        public const string IpCheckAndSubmitCancel = "IpCheckAndSubmitCancel";
 
         #endregion
     }

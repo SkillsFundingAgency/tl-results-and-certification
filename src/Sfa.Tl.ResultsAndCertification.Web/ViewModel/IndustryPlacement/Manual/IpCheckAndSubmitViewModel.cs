@@ -16,9 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
             IpDetailsList = new List<SummaryItemModel>();
         }
 
-        //public int PathwayId { get; set; }
-        //public int AcademicYear { get; set; }
-
+        public int ProfileId { get; set; }
         public long Uln { get; set; }
         public string LearnerName { get; set; }
         public DateTime DateofBirth { get; set; }

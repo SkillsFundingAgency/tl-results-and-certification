@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(_cacheModel);
 
             // LearnerDetails
-            _learnerDetails = new IpCheckAndSubmitViewModel { Uln = 1234567890, LearnerName = "John Smith", DateofBirth = DateTime.Today.AddYears(-18) };
+            _learnerDetails = new IpCheckAndSubmitViewModel { ProfileId = 1, Uln = 1234567890, LearnerName = "John Smith", DateofBirth = DateTime.Today.AddYears(-18) };
             IndustryPlacementLoader.GetLearnerRecordDetailsAsync<IpCheckAndSubmitViewModel>(ProviderUkprn, _cacheModel.IpCompletion.PathwayId).Returns(_learnerDetails);
 
             // TempFlexNavigation
@@ -63,6 +63,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
             var model = viewResult.Model as IpCheckAndSubmitViewModel;
             model.Should().NotBeNull();
+
+            model.ProfileId.Should().Be(_learnerDetails.ProfileId);
 
             // Learner Name
             model.SummaryLearnerName.Title.Should().Be(CheckAndSubmitContent.Title_Name_Text);
