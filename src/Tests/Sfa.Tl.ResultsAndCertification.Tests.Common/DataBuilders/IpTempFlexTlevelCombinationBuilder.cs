@@ -24,9 +24,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             };
         }
 
-        public IList<Domain.Models.IpTempFlexTlevelCombination> BuildList(EnumAwardingOrganisation awardingOrganisation, IpLookupType? lookupType = null)
+        public IList<Domain.Models.IpTempFlexTlevelCombination> BuildList(EnumAwardingOrganisation awardingOrganisation, IpLookupType? lookupType = null, Domain.Models.TlPathway pathway = null)
         {
-            var pathway = new TlPathwayBuilder().Build(awardingOrganisation);
+            pathway = pathway ?? new TlPathwayBuilder().Build(awardingOrganisation);
             var ipLookup = new IpLookupBuilder().BuildList(lookupType);
 
             var ipTempFlexCombinations = new List<Domain.Models.IpTempFlexTlevelCombination>()
@@ -47,8 +47,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 {
                     TlPathwayId = pathway.Id,
                     TlPathway = pathway,
-                    IpLookupId = ipLookup[0].Id,
-                    IpLookup = ipLookup[0],
+                    IpLookupId = ipLookup[1].Id,
+                    IpLookup = ipLookup[1],
                     IsActive = true,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
@@ -59,8 +59,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 {
                     TlPathwayId = pathway.Id,
                     TlPathway = pathway,
-                    IpLookupId = ipLookup[0].Id,
-                    IpLookup = ipLookup[0],
+                    IpLookupId = ipLookup[2].Id,
+                    IpLookup = ipLookup[2],
                     IsActive = true,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
@@ -71,8 +71,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 {
                     TlPathwayId = pathway.Id,
                     TlPathway = pathway,
-                    IpLookupId = ipLookup[0].Id,
-                    IpLookup = ipLookup[0],
+                    IpLookupId = ipLookup[3].Id,
+                    IpLookup = ipLookup[3],
                     IsActive = false,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,

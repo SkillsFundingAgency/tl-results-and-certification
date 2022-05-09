@@ -7,6 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement
         public long ProviderUkprn { get; set; }
         public int ProfileId { get; set; }
         public int RegistrationPathwayId { get; set; }
+        public int PathwayId { get; set; }
         public IndustryPlacementStatus IndustryPlacementStatus { get; set; }
         public IndustryPlacementDetails IndustryPlacementDetails { get; set; }
 

@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
             TqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, Pathway, TlAwardingOrganisation);
             TlProviders = ProviderDataProvider.CreateTlProviders(DbContext);
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProviders.First());
-            TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
+            //TlLookup = TlLookupDataProvider.CreateIpLookupList(DbContext, null, true);
 
             DbContext.SaveChanges();
         }
@@ -111,6 +111,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
             DbContext.SaveChanges();
         }
 
+        public void SeedSpecialConsiderationsLookupData()
+        {
+            IpLookup = IpLookupDataProvider.CreateIpLookupList(DbContext, null, IpLookupType.SpecialConsideration, true);
+            DbContext.SaveChanges();
+        }
+
         public void SeedTempFlexNavigation()
         {
             var navigations = new IpTempFlexNavigationBuilder().BuildList(EnumAwardingOrganisation.Pearson);
@@ -118,20 +124,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
             DbContext.SaveChanges();
         }
 
-        public void SeedIpModelTlevelCombinationsData()
+        public void SeedIpModelTlevelCombinationsData(TlPathway pathway = null)
         {
-            var ipModelTlevelCombinations = new IpModelTlevelCombinationBuilder().BuildList(EnumAwardingOrganisation.Ncfe, IpLookupType.IndustryPlacementModel);
+            var ipModelTlevelCombinations = new IpModelTlevelCombinationBuilder().BuildList(EnumAwardingOrganisation.Pearson, IpLookupType.IndustryPlacementModel, pathway);
 
             IpModelTlevelCombination = IpModelTlevelCombinationProvider.CreateIpModelTlevelCombinationsList(DbContext, EnumAwardingOrganisation.Ncfe, ipModelTlevelCombinations, true);
 
             DbContext.SaveChanges();
         }
 
-        public void SeedIpTempFlexTlevelCombinationsData()
+        public void SeedIpTempFlexTlevelCombinationsData(TlPathway pathway = null)
         {
-            var ipTempFlexTlevelCombinations = new IpTempFlexTlevelCombinationBuilder().BuildList(EnumAwardingOrganisation.Ncfe, IpLookupType.TemporaryFlexibility);
+            var ipTempFlexTlevelCombinations = new IpTempFlexTlevelCombinationBuilder().BuildList(EnumAwardingOrganisation.Pearson, IpLookupType.TemporaryFlexibility, pathway);
 
-            IpTempFlexTlevelCombination = IpTempFlexTlevelCombinationProvider.CreateIpTempFlexTlevelCombinationsList(DbContext, EnumAwardingOrganisation.Ncfe, ipTempFlexTlevelCombinations, true);
+            IpTempFlexTlevelCombination = IpTempFlexTlevelCombinationProvider.CreateIpTempFlexTlevelCombinationsList(DbContext, EnumAwardingOrganisation.Pearson, ipTempFlexTlevelCombinations, true);
 
             DbContext.SaveChanges();
         }

@@ -24,9 +24,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             };
         }
 
-        public IList<Domain.Models.IpModelTlevelCombination> BuildList(EnumAwardingOrganisation awardingOrganisation, IpLookupType? lookupType = null)
+        public IList<Domain.Models.IpModelTlevelCombination> BuildList(EnumAwardingOrganisation awardingOrganisation, IpLookupType? lookupType = null, Domain.Models.TlPathway pathway = null)
         {
-            var pathway = new TlPathwayBuilder().Build(awardingOrganisation);
+            pathway = pathway ?? new TlPathwayBuilder().Build(awardingOrganisation);
             var ipLookup = new IpLookupBuilder().BuildList(lookupType);
 
             var ipModelCombinations = new List<Domain.Models.IpModelTlevelCombination>()

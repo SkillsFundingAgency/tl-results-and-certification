@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
         public override void Given()
         {
             CreateMapper();
-            SeedIpLookupData();
+            SeedSpecialConsiderationsLookupData();
 
             IpLookupRepositoryLogger = new Logger<GenericRepository<IpLookup>>(new NullLoggerFactory());
             IpLookupRepository = new GenericRepository<IpLookup>(IpLookupRepositoryLogger, DbContext);

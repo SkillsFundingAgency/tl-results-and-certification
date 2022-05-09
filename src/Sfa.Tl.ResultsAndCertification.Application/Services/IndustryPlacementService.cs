@@ -53,6 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var pathway = await _tqRegistrationPathwayRepository.GetManyAsync(p => p.Id == request.RegistrationPathwayId
                                                                               && p.TqRegistrationProfileId == request.ProfileId
                                                                               && p.TqProvider.TlProvider.UkPrn == request.ProviderUkprn
+                                                                              && p.TqProvider.TqAwardingOrganisation.TlPathway.Id == request.PathwayId
                                                                               && (p.Status == RegistrationPathwayStatus.Active
                                                                               || p.Status == RegistrationPathwayStatus.Withdrawn))
                                                                  .OrderByDescending(ip => ip.CreatedOn)
@@ -68,7 +69,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                                                       .OrderByDescending(ip => ip.CreatedOn)
                                                                       .FirstOrDefaultAsync();
 
-            if (request.IndustryPlacementStatus == IndustryPlacementStatus.NotSpecified || (industryPlacement != null && (industryPlacement.Status == IndustryPlacementStatus.Completed || industryPlacement.Status == IndustryPlacementStatus.CompletedWithSpecialConsideration)))
+            var isValidData = await IsValidIndustryPlacementData(request, request.PathwayId, pathway.AcademicYear);
+
+            if (!isValidData || (industryPlacement != null && (industryPlacement.Status == IndustryPlacementStatus.Completed || industryPlacement.Status == IndustryPlacementStatus.CompletedWithSpecialConsideration)))
                 return false;
 
             int status = 0;
@@ -94,6 +97,114 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
 
             return status > 0;
+        }
+
+        private async Task<bool> IsValidIndustryPlacementData(IndustryPlacementRequest request, int? pathwayId, int academicYear)
+        {
+            if (request == null || request.IndustryPlacementStatus == IndustryPlacementStatus.NotSpecified)
+                return false;
+
+            if (request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted && request.IndustryPlacementDetails != null)
+                return false;
+
+            if (request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted && request.IndustryPlacementDetails == null)
+                return true;
+
+            if (request.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
+            {
+                if (request.IndustryPlacementDetails.HoursSpentOnPlacement == null || request.IndustryPlacementDetails.HoursSpentOnPlacement <= 0
+                    || request.IndustryPlacementDetails.SpecialConsiderationReasons == null || !request.IndustryPlacementDetails.SpecialConsiderationReasons.Any())
+                    return false;
+
+                var specialConsiderations = await GetIpLookupDataAsync(IpLookupType.SpecialConsideration, pathwayId);
+
+                specialConsiderations = specialConsiderations?.Where(x => academicYear >= x.StartDate.Year && (x.EndDate == null || academicYear <= x.EndDate.Value.Year))?.ToList();
+
+                if (specialConsiderations == null || !specialConsiderations.Any())
+                    return false;
+
+                var specialConsiderationIds = specialConsiderations.Select(s => s.Id).ToList();
+
+                var isValidSpecialConsiderations = request.IndustryPlacementDetails.SpecialConsiderationReasons.All(x => specialConsiderationIds.Contains(x.Value));
+
+                if (!isValidSpecialConsiderations)
+                    return false;
+            }
+
+            if (request.IndustryPlacementStatus == IndustryPlacementStatus.Completed)
+            {
+                // special considerations objects should not be populated
+                if (request.IndustryPlacementDetails.HoursSpentOnPlacement != null 
+                    || (request.IndustryPlacementDetails.SpecialConsiderationReasons != null && request.IndustryPlacementDetails.SpecialConsiderationReasons.Any()))
+                    return false;                
+            }
+
+            // Ip Models
+            if (request.IndustryPlacementDetails.IndustryPlacementModelsUsed)
+            {
+                if (!request.IndustryPlacementDetails.MultipleEmployerModelsUsed.HasValue)
+                    return false;
+
+                var ipModels = await GetIpLookupDataAsync(IpLookupType.IndustryPlacementModel, pathwayId);
+
+                if (ipModels == null || !ipModels.Any())
+                    return false;
+
+                var ipModelIds = ipModels.Select(i => i.Id);
+
+                if (request.IndustryPlacementDetails.MultipleEmployerModelsUsed.Value)
+                {
+                    if (request.IndustryPlacementDetails.OtherIndustryPlacementModels == null || !request.IndustryPlacementDetails.OtherIndustryPlacementModels.Any())
+                        return false;
+
+                    var isValidOtherIpModels = request.IndustryPlacementDetails.OtherIndustryPlacementModels.All(x => ipModelIds.Contains(x.Value));
+
+                    if (!isValidOtherIpModels)
+                        return false;
+                }
+                else
+                {
+                    if (request.IndustryPlacementDetails.IndustryPlacementModels == null || !request.IndustryPlacementDetails.IndustryPlacementModels.Any())
+                        return false;
+
+                    var isValidIpModels = request.IndustryPlacementDetails.IndustryPlacementModels.All(x => ipModelIds.Contains(x.Value));
+
+                    if (!isValidIpModels)
+                        return false;
+                }
+            }
+            else
+            {
+                // If IndustryPlacementModels not used then IP models should not be populated
+                if (request.IndustryPlacementDetails.MultipleEmployerModelsUsed.HasValue 
+                    || (request.IndustryPlacementDetails.OtherIndustryPlacementModels != null &&request.IndustryPlacementDetails.OtherIndustryPlacementModels.Any())
+                    || (request.IndustryPlacementDetails.IndustryPlacementModels != null && request.IndustryPlacementDetails.IndustryPlacementModels.Any()))
+                    return false;
+            }
+
+            // Temporary flexibility
+            if (!request.IndustryPlacementDetails.TemporaryFlexibilitiesUsed.HasValue || !request.IndustryPlacementDetails.TemporaryFlexibilitiesUsed.Value)
+            {
+                if (request.IndustryPlacementDetails.TemporaryFlexibilities != null && request.IndustryPlacementDetails.TemporaryFlexibilities.Any())
+                    return false;
+            }
+
+            if (request.IndustryPlacementDetails.TemporaryFlexibilitiesUsed.HasValue)
+            {
+                var tempFlexibilities = await GetIpLookupDataAsync(IpLookupType.TemporaryFlexibility, pathwayId);
+
+                if (tempFlexibilities == null || !tempFlexibilities.Any() || !request.IndustryPlacementDetails.TemporaryFlexibilities.Any())
+                    return false;
+
+                // check if temp flex options are valid
+                var tempFlexIds = tempFlexibilities.Select(i => i.Id).ToList();
+                var isValidTempFlexibilities = request.IndustryPlacementDetails.TemporaryFlexibilities.All(x => tempFlexIds.Contains(x.Value));
+
+                if (!isValidTempFlexibilities)
+                    return false;
+            }
+
+            return true;
         }
 
         public async Task<IList<IpLookupData>> GetIpLookupDataAsync(IpLookupType ipLookupType, int? pathwayId)

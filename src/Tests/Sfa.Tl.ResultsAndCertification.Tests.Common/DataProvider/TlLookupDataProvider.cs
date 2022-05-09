@@ -74,5 +74,17 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             }
             return tlLookup;
         }
+
+        public static IList<TlLookup> CreateIpLookupList(ResultsAndCertificationDbContext _dbContext, IList<TlLookup> tlLookup = null, bool addToDbContext = true)
+        {
+            if (tlLookup == null)
+                tlLookup = new TlLookupBuilder().BuildIpTypeList();
+
+            if (addToDbContext)
+            {
+                _dbContext.AddRange(tlLookup);
+            }
+            return tlLookup;
+        }
     }
 }
