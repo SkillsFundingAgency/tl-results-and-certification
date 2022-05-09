@@ -82,6 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<IndustryPlacementViewModel, IndustryPlacementRequest>()
                 .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.IpCompletion.ProfileId))
+                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.IpCompletion.PathwayId))
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.IpCompletion.RegistrationPathwayId))
                 .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IpCompletion.IndustryPlacementStatus))
                 .ForMember(d => d.IndustryPlacementDetails, opts => opts.MapFrom(s => s))
