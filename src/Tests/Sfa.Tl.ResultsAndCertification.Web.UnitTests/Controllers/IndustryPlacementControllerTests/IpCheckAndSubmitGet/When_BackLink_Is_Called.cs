@@ -17,21 +17,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 {
                     new object[]
                     {
-                        new IndustryPlacementViewModel { IpModelViewModel = new IpModelViewModel { IpModelUsed = new IpModelUsedViewModel { IsIpModelUsed = true } } },
+                        new IndustryPlacementViewModel { IpModelViewModel = new IpModelViewModel { IpModelUsed = new IpModelUsedViewModel { IsIpModelUsed = false } } },
                         null, // navigation
                         RouteConstants.IpModelUsed
                     },
 
                     new object[]
                     {
-                        new IndustryPlacementViewModel { IpModelViewModel = new IpModelViewModel { IpModelUsed = new IpModelUsedViewModel { IsIpModelUsed = false }, IpMultiEmployerUsed = new IpMultiEmployerUsedViewModel { IsMultiEmployerModelUsed = true  } } },
+                        new IndustryPlacementViewModel { IpModelViewModel = new IpModelViewModel { IpModelUsed = new IpModelUsedViewModel { IsIpModelUsed = true }, IpMultiEmployerUsed = new IpMultiEmployerUsedViewModel { IsMultiEmployerModelUsed = true  } } },
                         null, // navigation
                         RouteConstants.IpMultiEmployerOther
                     },
 
                     new object[]
                     {
-                        new IndustryPlacementViewModel { IpModelViewModel = new IpModelViewModel { IpModelUsed = new IpModelUsedViewModel { IsIpModelUsed = false }, IpMultiEmployerUsed = new IpMultiEmployerUsedViewModel { IsMultiEmployerModelUsed = false  } } },
+                        new IndustryPlacementViewModel { IpModelViewModel = new IpModelViewModel { IpModelUsed = new IpModelUsedViewModel { IsIpModelUsed = true }, IpMultiEmployerUsed = new IpMultiEmployerUsedViewModel { IsMultiEmployerModelUsed = false  } } },
                         null, // navigation
                         RouteConstants.IpMultiEmployerSelect
                     },

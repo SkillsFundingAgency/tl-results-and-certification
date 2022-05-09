@@ -16,17 +16,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
         public override void Given()
         {
             // Cache object
-            _cacheResult = new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { PathwayId = 1 } };
+            _cacheResult = new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { ProfileId = 1, PathwayId = 11  } };
             CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(_cacheResult);
 
             // LearnerDetails
-            IndustryPlacementLoader.GetLearnerRecordDetailsAsync<IpCheckAndSubmitViewModel>(ProviderUkprn, _cacheResult.IpCompletion.PathwayId).Returns(_learnerDetails);
+            IndustryPlacementLoader.GetLearnerRecordDetailsAsync<IpCheckAndSubmitViewModel>(ProviderUkprn, _cacheResult.IpCompletion.ProfileId).Returns(_learnerDetails);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            IndustryPlacementLoader.Received(1).GetLearnerRecordDetailsAsync<IpCheckAndSubmitViewModel>(ProviderUkprn, _cacheResult.IpCompletion.PathwayId);
+            IndustryPlacementLoader.Received(1).GetLearnerRecordDetailsAsync<IpCheckAndSubmitViewModel>(ProviderUkprn, _cacheResult.IpCompletion.ProfileId);
             IndustryPlacementLoader.DidNotReceive().GetTempFlexNavigationAsync(Arg.Any<int>(), Arg.Any<int>());
             IndustryPlacementLoader.DidNotReceive().GetIpSummaryDetailsListAsync(Arg.Any<IndustryPlacementViewModel>(), Arg.Any<IpTempFlexNavigation>());
         }

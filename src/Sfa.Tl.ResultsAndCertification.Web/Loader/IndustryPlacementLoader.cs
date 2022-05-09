@@ -179,9 +179,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 detailsList.Add(new SummaryItemModel { Id = "istempflexused", Title = CheckAndSubmitContent.Title_TempFlex_Used_Text, Value = cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed.Value.ToYesOrNoString(), ActionText = CheckAndSubmitContent.Link_Change });
             }
 
-            if ((navigation.AskTempFlexibility && cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == true) || // Coming from AskTempFlex
+            if ((navigation.AskTempFlexibility && navigation.AskBlendedPlacement && cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == true) || // Coming from AskTempFlex
                 (!navigation.AskTempFlexibility && navigation.AskBlendedPlacement))  // came directly to blended.
-            //if (navigation.AskBlendedPlacement)
             {
                 // IsBlendedPlacementUsed Row
                 if (cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == null)

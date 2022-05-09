@@ -60,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
             if (navigation == null)
             {
                 // Then Back link is one of the IpModel page. 
-                if (cacheModel?.IpModelViewModel?.IpModelUsed?.IsIpModelUsed == false)
+                if (cacheModel?.IpModelViewModel?.IpModelUsed?.IsIpModelUsed == true)
                 {
                     // Pattern future.
                     if (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed.IsMultiEmployerModelUsed == true)

@@ -9,6 +9,10 @@ using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.Industr
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementLoaderTests.GetIpSummaryDetailsList
 {
+    // Pattern 1: TempFlexUsed  --> BlendUsed   --> TF List --> Check&Submit
+    // Pattern 2: TempFlexUsed  --> TFList      --> Check&Submit
+    // Pattern 3: BlendUsed     --> Check&Submit
+    // Pattern 4: Check&Submit
     public class When_Called_With_Valid_Pattern4_Data : TestSetup
     {
         public List<SummaryItemModel> _expectedSummaryDetails;

@@ -402,7 +402,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
             if (cacheModel.TempFlexibility.IpTempFlexibilityUsed.IsTempFlexibilityUsed == false)
+            {
+                cacheModel.TempFlexibility.IpEmployerLedUsed = null;
+                cacheModel.TempFlexibility.IpGrantedTempFlexibility = null;
+                await _cacheService.SetAsync(CacheKey, cacheModel);
                 return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
+            }
 
             return RedirectToRoute(RouteConstants.IpBlendedPlacementUsed);
         }
@@ -608,7 +613,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var viewModel = await _industryPlacementLoader.GetLearnerRecordDetailsAsync<IpCheckAndSubmitViewModel>(User.GetUkPrn(), cacheModel.IpCompletion.PathwayId);
+            var viewModel = await _industryPlacementLoader.GetLearnerRecordDetailsAsync<IpCheckAndSubmitViewModel>(User.GetUkPrn(), cacheModel.IpCompletion.ProfileId);
             if (viewModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
