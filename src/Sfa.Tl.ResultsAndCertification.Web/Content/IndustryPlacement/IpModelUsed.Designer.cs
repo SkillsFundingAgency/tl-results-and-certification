@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Industry placement model - Manage learner - Manage T Levels service - GOV.UK.
+        ///   Looks up a localized string similar to Industry placement model - Manage learner.
         /// </summary>
         public static string Page_Title {
             get {
