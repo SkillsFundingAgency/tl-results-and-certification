@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         public string LearnerName { get; set; }
         public DateTime DateofBirth { get; set; }
 
-        public string TlevelTitle { get; set; } // TODO: Tlevel or TlevelTitle?
+        public string TlevelTitle { get; set; }
 
         public SummaryItemModel SummaryUln => new()
         {
