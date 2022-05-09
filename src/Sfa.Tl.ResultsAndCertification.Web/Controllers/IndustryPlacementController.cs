@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         #region Ip Models
 
         [HttpGet]
-        [Route("industry-placement-model-used", Name = RouteConstants.IpModelUsed)]
+        [Route("industry-placement-model", Name = RouteConstants.IpModelUsed)]
         public async Task<IActionResult> IpModelUsedAsync()
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("industry-placement-model-used", Name = RouteConstants.SubmitIpModelUsed)]
+        [Route("industry-placement-model", Name = RouteConstants.SubmitIpModelUsed)]
         public async Task<IActionResult> IpModelUsedAsync(IpModelUsedViewModel model)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
@@ -317,8 +317,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration || cacheModel.SpecialConsideration?.Hours == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var viewModel = (cacheModel?.SpecialConsideration?.Reasons) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<SpecialConsiderationReasonsViewModel>(cacheModel.IpCompletion);
+            var viewModel = cacheModel.SpecialConsideration?.Reasons;
+            if (viewModel != null) return View(viewModel);
+
+            viewModel = await _industryPlacementLoader
+                .TransformIpCompletionDetailsTo<SpecialConsiderationReasonsViewModel>(cacheModel.IpCompletion);
             viewModel.ReasonsList = await _industryPlacementLoader.GetSpecialConsiderationReasonsListAsync(viewModel.AcademicYear);
+            
 
             return View(viewModel);
         }

@@ -1,0 +1,77 @@
+﻿using FluentAssertions;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
+using System.Collections.Generic;
+using Xunit;
+using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement.IpCheckAndSubmit;
+
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementLoaderTests.GetIpSummaryDetailsList
+{
+    public class When_Called_With_Valid_Pattern4_Data : TestSetup
+    {
+        public List<SummaryItemModel> _expectedSummaryDetails;
+
+        public override void Given()
+        {
+            CacheModel = new IndustryPlacementViewModel
+            {
+                IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration },
+                SpecialConsideration = new SpecialConsiderationViewModel
+                {
+                    Hours = new SpecialConsiderationHoursViewModel { Hours = "500" },
+                    Reasons = new SpecialConsiderationReasonsViewModel
+                    {
+                        ReasonsList = new List<IpLookupDataViewModel>
+                        {
+                            new IpLookupDataViewModel { Name = "Reason 1", IsSelected = true },
+                            new IpLookupDataViewModel { Name = "Reason 2", IsSelected = true },
+                            new IpLookupDataViewModel { Name = "Reason 3", IsSelected = false }
+                        }
+                    }
+                },
+                IpModelViewModel = new IpModelViewModel
+                {
+                    IpModelUsed = new IpModelUsedViewModel { IsIpModelUsed = true },
+                    IpMultiEmployerUsed = new IpMultiEmployerUsedViewModel { IsMultiEmployerModelUsed = true },
+                    IpMultiEmployerOther = new IpMultiEmployerOtherViewModel
+                    {
+                        OtherIpPlacementModels = new List<IpLookupDataViewModel>
+                        {
+                            new IpLookupDataViewModel { Name = "IpModel 1", IsSelected = true },
+                            new IpLookupDataViewModel { Name = Constants.MultipleEmployer, IsSelected = true },
+                            new IpLookupDataViewModel { Name = "IpModel 3", IsSelected = false }
+                        }
+                    }
+                }
+            };
+
+            IpTempFlexNavigation = null;
+
+            _expectedSummaryDetails = new List<SummaryItemModel>
+            {
+                new SummaryItemModel { Id = "ipstatus", Title = CheckAndSubmitContent.Title_IP_Status_Text, Value = CheckAndSubmitContent.Status_Completed_With_Special_Consideration, ActionText = CheckAndSubmitContent.Link_Change },
+                
+                // SC
+                new SummaryItemModel { Id = "hours", Title = CheckAndSubmitContent.Title_SpecialConsideration_Hours_Text, Value = CacheModel.SpecialConsideration.Hours.Hours, ActionText = CheckAndSubmitContent.Link_Change },
+                new SummaryItemModel { Id = "specialreasons", Title = CheckAndSubmitContent.Title_SpecialConsideration_Reasons_Text, Value = "<p>Reason 1</p><p>Reason 2</p>", ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true },
+                
+                // Ip Model
+                new SummaryItemModel { Id = "isipmodelused", Title = CheckAndSubmitContent.Title_IpModel_Text, Value = "Yes", ActionText = CheckAndSubmitContent.Link_Change },
+                new SummaryItemModel { Id = "ismultiempmodel", Title = CheckAndSubmitContent.Title_IpModel_Multi_Emp_Text, Value = "Yes", ActionText = CheckAndSubmitContent.Link_Change },
+                new SummaryItemModel { Id = "selectedothermodellist", Title = CheckAndSubmitContent.Title_IpModel_Selected_Other_List_Text, Value = "<p>IpModel 1</p>", ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true },
+            };
+        }
+
+        [Fact]
+        public void Then_Expected_Results_Are_Returned()
+        {
+            var actualSummaryDetails = ActualResult.Item1;
+            var actualIsValid = ActualResult.Item2;
+
+            actualIsValid.Should().BeTrue();
+            actualSummaryDetails.Should().BeEquivalentTo(_expectedSummaryDetails);
+        }
+    }
+}
