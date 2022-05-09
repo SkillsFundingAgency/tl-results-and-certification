@@ -6,9 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementLoaderTests.ProcessIndustryPlacementDetails
@@ -39,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
                                 x.RegistrationPathwayId == ViewModel.IpCompletion.RegistrationPathwayId &&
                                 x.IndustryPlacementStatus == ViewModel.IpCompletion.IndustryPlacementStatus &&
                                 x.ProviderUkprn == ProviderUkprn &&
-                                x.PerformedBy == $"{Givenname} {Surname}"
+                                x.PerformedBy.Equals($"{Givenname} {Surname}")
                                 ))
                              .Returns(_expectedApiResult);
 

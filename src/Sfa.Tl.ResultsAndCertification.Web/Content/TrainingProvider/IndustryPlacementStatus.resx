@@ -125,6 +125,7 @@
   </data>
   <data name="NotCompleted_Display_Text" xml:space="preserve">
     <value>Placement still to be completed</value>
+    <comment>To delete when cleaning up old Industry placement journeys</comment>
   </data>
   <data name="Not_Yet_Received_Display_Text" xml:space="preserve">
     <value>Not yet received</value>
