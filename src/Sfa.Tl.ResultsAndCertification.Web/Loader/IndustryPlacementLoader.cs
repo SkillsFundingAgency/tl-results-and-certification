@@ -2,10 +2,12 @@
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -146,7 +148,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                     if (cacheModel.IpModelViewModel?.IpMultiEmployerOther?.OtherIpPlacementModels.Any(x => x.IsSelected) == false)
                         return false;
 
-                    var selectedOtherModels = cacheModel.IpModelViewModel?.IpMultiEmployerOther?.OtherIpPlacementModels.Where(x => x.IsSelected).Select(x => x.Name);
+                    var selectedOtherModels = cacheModel.IpModelViewModel?.IpMultiEmployerOther?.OtherIpPlacementModels
+                        .Where(x => x.IsSelected && !x.Name.Equals(Constants.MultipleEmployer, StringComparison.InvariantCultureIgnoreCase))
+                        .Select(x => x.Name);
                     detailsList.Add(new SummaryItemModel { Id = "selectedothermodellist", Title = CheckAndSubmitContent.Title_IpModel_Selected_Other_List_Text, Value = ConvertListToRawHtmlString(selectedOtherModels), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true });
                 }
                 else
@@ -175,8 +179,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 detailsList.Add(new SummaryItemModel { Id = "istempflexused", Title = CheckAndSubmitContent.Title_TempFlex_Used_Text, Value = cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed.Value.ToYesOrNoString(), ActionText = CheckAndSubmitContent.Link_Change });
             }
 
-            if ((navigation.AskTempFlexibility && cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == true) || // Coming from AskTempFlex
-                (!navigation.AskTempFlexibility && navigation.AskBlendedPlacement))  // came directly to blended.
+            //if ((navigation.AskTempFlexibility && cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == true) || // Coming from AskTempFlex
+            //    (!navigation.AskTempFlexibility && navigation.AskBlendedPlacement))  // came directly to blended.
+            if (navigation.AskBlendedPlacement)
             {
                 // IsBlendedPlacementUsed Row
                 if (cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == null)
@@ -186,7 +191,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 // AnyOtherTempFlex Row (applies only for academicyear-2020 +  Tlevels 'Design,Surveying..' and 'Digital Production..' 
                 if (cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == true)
                 {
-                    var selectedTfList = cacheModel?.TempFlexibility?.IpEmployerLedUsed?.TemporaryFlexibilities.Where(x => x.IsSelected).Select(x => x.Name);
+                    var selectedTfList = cacheModel?.TempFlexibility?.IpEmployerLedUsed?.TemporaryFlexibilities
+                        .Where(x => x.IsSelected && !x.Name.Equals(Constants.BlendedPlacements, StringComparison.InvariantCultureIgnoreCase))
+                        .Select(x => x.Name);
+
                     if (selectedTfList != null && selectedTfList.Any())
                         detailsList.Add(new SummaryItemModel { Id = "anyothertempflexlist", Title = CheckAndSubmitContent.Title_TempFlex_Selected_Text, Value = ConvertListToRawHtmlString(selectedTfList), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true });
                 }
