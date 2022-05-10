@@ -1,4 +1,6 @@
-﻿using NSubstitute;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
@@ -43,6 +45,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             CacheService.Received(1).SetAsync(CacheKey, _cacheResult);
         }
 
-        //TODO: Assert redirect to check and submit page
+        [Fact]
+        public void Then_Redirected_To_Expected_Route()
+        {
+            var actualRouteName = (Result as RedirectToRouteResult).RouteName;
+            actualRouteName.Should().Be(RouteConstants.IpCheckAndSubmit);
+        }
     }
 }
