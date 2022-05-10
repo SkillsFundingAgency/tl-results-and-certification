@@ -215,7 +215,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 
         public TlLookup BuildIpType() => new TlLookup
         {
-            Category = "IpType",
+            Category = "SpecialConsideration",
             Code = "SC",
             Value = "SpecialConsideration",
             IsActive = true,
@@ -230,9 +230,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
         {
             new TlLookup
             {
-                Category = "IpType",
+                Category = "SpecialConsideration",
                 Code = "SC",
-                Value = "Special Considerations",
+                Value = "SpecialConsideration",
                 IsActive = true,
                 SortOrder = 1,
                 CreatedBy = Constants.CreatedByUser,
@@ -242,9 +242,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new TlLookup
             {
-                Category = "IpType",
+                Category = "IndustryPlacementModel",
                 Code = "IPM",
-                Value = "Ip Models",
+                Value = "IndustryPlacementModel",
                 IsActive = true,
                 SortOrder = 1,
                 CreatedBy = Constants.CreatedByUser,
@@ -254,9 +254,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new TlLookup
             {
-                Category = "IpType",
+                Category = "TemporaryFlexibility",
                 Code = "TF",
-                Value = "Temporary Flexibilities",
+                Value = "TemporaryFlexibility",
                 IsActive = true,
                 SortOrder = 1,
                 CreatedBy = Constants.CreatedByUser,

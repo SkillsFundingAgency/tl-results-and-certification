@@ -116,6 +116,11 @@
 
         public const int MaxFileSizeInMb = 5;
 
+        // Industry placements
+        public const string MultipleEmployer = "Multiple employer";
+        public const string EmployerLedActivities = "Employer led activities/projects";
+        public const string BlendedPlacements = "Blended placements";
+
         // Printing Constants
         public const string Completed = "Completed";
         public const string NotCompleted = "Not completed";
@@ -135,6 +140,7 @@
         public const string TagFloatRightClassName = "tag-float-right";
         public const string PostcodeValidationRegex = "^(([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))(\\s?)?[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}$";
         public const string UlnValidationRegex = @"^\d{10}$";
+        public const string IpSpecialConsiderationHoursRegex = @"^([1-9][0-9]{0,2})$";
         public const string PipeSeperator = "|";
         public const string AndSeperator = " and ";
         public const string CommaSeperator = ",";

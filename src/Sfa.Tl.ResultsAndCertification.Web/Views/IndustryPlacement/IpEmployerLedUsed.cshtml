@@ -1,0 +1,49 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual.IpEmployerLedUsedViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
+
+@{
+    ViewData["Title"] = IpEmployerLedUsed.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="@RouteConstants.SubmitIpEmployerLedUsed">            
+            <input type="hidden" asp-for="LearnerName" />
+
+            <partial name="_ValidationSummary" />
+
+            <span class="govuk-caption-l">@IpEmployerLedUsed.Caption_Ip_Temporary_Flexibility</span>
+
+            <div class="govuk-form-group" sfa-validation-for="IsEmployerLedUsed" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset" aria-describedby="employer-led-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">@string.Format(IpEmployerLedUsed.Heading_Did_Learner_Use_The_Employer_Led_Temporary_Flexibility, Model.LearnerName)</h1>
+                    </legend>
+                    <div id="employer-led-hint" class="govuk-hint">@IpEmployerLedUsed.Hint_Select_Yes_If_Employer_Led_Used</div>
+                    <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                        <span sfa-validation-for="IsEmployerLedUsed"></span>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="isemployerledused" asp-for="IsEmployerLedUsed" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="isemployerledused">
+                                @IpEmployerLedUsed.Option_Yes
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="isemployerledused-no" asp-for="IsEmployerLedUsed" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="isemployerledused-no">
+                                @IpEmployerLedUsed.Option_No
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@IpEmployerLedUsed.Button_Continue</button>
+        </form>
+    </div>
+     <partial name="Partials/_ipGuidanceNavigation.cshtml" />
+</div>

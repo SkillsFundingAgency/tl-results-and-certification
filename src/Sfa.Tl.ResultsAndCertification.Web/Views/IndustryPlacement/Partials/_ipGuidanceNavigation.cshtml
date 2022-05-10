@@ -1,20 +1,19 @@
-﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
+﻿@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
 
 <div class="govuk-grid-column-one-third">
-    <div class="app-step-nav-related app-step-nav-related--singular">
-        <h2 class="app-step-nav-related__heading">
-            @IpGuidanceNavigation.Guidance_Heading
-        </h2>
-    </div>
+    <h2 class="govuk-heading-m">
+        @IpGuidanceNavigation.Guidance_Heading
+    </h2>
     <ul class="govuk-list">
         <li>
-            <a class="govuk-link" href="/guidance#special-consideration">@IpGuidanceNavigation.SpecialConsideration_Text</a>
+            <a class="govuk-link" asp-route="@RouteConstants.ProviderGuidance" asp-fragment="special-consideration">@IpGuidanceNavigation.SpecialConsideration_Text</a>
         </li>
         <li>
-            <a class="govuk-link" href="/guidance#industry-placement-models">@IpGuidanceNavigation.IndustryPlacementModels_Text</a>
+            <a class="govuk-link" asp-route="@RouteConstants.ProviderGuidance" asp-fragment="industry-placement-models">@IpGuidanceNavigation.IndustryPlacementModels_Text</a>
         </li>
         <li>
-            <a class="govuk-link" href="/guidance#temporary-flexibilities">@IpGuidanceNavigation.Temporary_Flexibilities_Text</a>
+            <a class="govuk-link" asp-route="@RouteConstants.ProviderGuidance" asp-fragment="temporary-flexibilities">@IpGuidanceNavigation.Temporary_Flexibilities_Text</a>
         </li>
     </ul>
 </div>

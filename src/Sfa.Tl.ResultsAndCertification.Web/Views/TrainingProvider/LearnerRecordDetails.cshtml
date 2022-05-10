@@ -7,7 +7,7 @@
 
 @section NavigationBar
 {
-    <vc:back-link model=Model.BackLink></vc:back-link>
+<vc:back-link model=Model.BackLink></vc:back-link>
 }
 
 <div class="govuk-grid-row">
@@ -19,53 +19,39 @@
 <partial name="Partials/_notificationBanner.cshtml" model="Model" />
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">   
-    <div class="record-header">
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
-          @Model.LearnerName
-          @if (!Model.IsStatusCompleted)
-           {
-              <span style="display: inline-block;">
-                <strong class="govuk-tag govuk-tag--red">@LearnerRecordDetails.Status_Tag_Incomplete</strong>              
-              </span>
-           }
-      </h1>
+    <div class="govuk-grid-column-two-thirds">
+        <div class="record-header">
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+                @Model.LearnerName
+                @if (!Model.IsStatusCompleted)
+                {
+                    <span style="display: inline-block;">
+                        <strong class="govuk-tag govuk-tag--red">@LearnerRecordDetails.Status_Tag_Incomplete</strong>
+                    </span>
+                }
+            </h1>
+            <span class="govuk-caption-l">@string.Format(LearnerRecordDetails.Uln_Text, @Model.Uln)</span>
+        </div>
 
-      <span class="govuk-caption-l">@string.Format(LearnerRecordDetails.Uln_Text, @Model.Uln)</span>
-    </div>
+        <h2 class="govuk-heading-m">@LearnerRecordDetails.Personal_Details_Text</h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border">
+            <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+            <vc:summary-item model=Model.SummaryProviderName></vc:summary-item>
+            <vc:summary-item model=Model.SummaryProviderUkprn></vc:summary-item>
+            <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+            <vc:summary-item model=Model.SummaryStartYear></vc:summary-item>
+            <vc:summary-item model=Model.SummaryAoName></vc:summary-item>
+        </dl>
 
-    <h2 class="govuk-heading-m">@LearnerRecordDetails.Personal_Details_Text</h2>
-    <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border">
-        <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
-        <vc:summary-item model=Model.SummaryProviderName></vc:summary-item>
-        <vc:summary-item model=Model.SummaryProviderUkprn></vc:summary-item>
-        <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
-        <vc:summary-item model=Model.SummaryStartYear></vc:summary-item>
-        <vc:summary-item model=Model.SummaryAoName></vc:summary-item>
-    </dl>
+        <h2 class="govuk-heading-m">@LearnerRecordDetails.Section_Heading_Industry_Placement</h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+            <vc:summary-item model=Model.SummaryIndustryPlacementStatus></vc:summary-item>
+        </dl>
 
-    <h2 class="govuk-heading-m">@LearnerRecordDetails.Section_Heading_Industry_Placement</h2>
-    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-      <div class="govuk-summary-list__row">
-        <dd class="govuk-summary-list__key">
-          Status
-        </dd>
-        <dd class="govuk-summary-list__value">
-          Not yet received
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="change-ip-result">
-            Add <span class="govuk-visually-hidden"> industry placement information</span>
-          </a>
-        </dd>
-      </div>
-    </dl>
-
-    <h2 class="govuk-heading-m">@LearnerRecordDetails.Section_Heading_Level2_Maths_English</h2>
-    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <h2 class="govuk-heading-m">@LearnerRecordDetails.Section_Heading_Level2_Maths_English</h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
             <vc:summary-item model=Model.SummaryMathsStatus></vc:summary-item>
             <vc:summary-item model=Model.SummaryEnglishStatus></vc:summary-item>
-    </dl>
-  </div>
-
+        </dl>
+    </div>
 </div>

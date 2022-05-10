@@ -44,6 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<IpLookup> IpLookup { get; set; }
         public virtual DbSet<IpModelTlevelCombination> IpModelTlevelCombination { get; set; }
         public virtual DbSet<IpTempFlexTlevelCombination> IpTempFlexTlevelCombination { get; set; }
+        public virtual DbSet<IpTempFlexNavigation> IpTempFlexNavigation { get; set; }
         public virtual DbSet<IpAchieved> IpAchieved { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class IndustryPlacementStatus {
@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Placement completed.
+        ///   Looks up a localized string similar to Completed.
         /// </summary>
         public static string Completed_Display_Text {
             get {
@@ -71,11 +71,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Placement completed with special consideration.
+        ///   Looks up a localized string similar to Completed with special consideration.
         /// </summary>
         public static string CompletedWithSpecialConsideration_Display_Text {
             get {
                 return ResourceManager.GetString("CompletedWithSpecialConsideration_Display_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not yet received.
+        /// </summary>
+        public static string Not_Yet_Received_Display_Text {
+            get {
+                return ResourceManager.GetString("Not_Yet_Received_Display_Text", resourceCulture);
             }
         }
         
@@ -85,6 +94,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string NotCompleted_Display_Text {
             get {
                 return ResourceManager.GetString("NotCompleted_Display_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not completed.
+        /// </summary>
+        public static string Still_To_Be_Completed_Display_Text {
+            get {
+                return ResourceManager.GetString("Still_To_Be_Completed_Display_Text", resourceCulture);
             }
         }
     }

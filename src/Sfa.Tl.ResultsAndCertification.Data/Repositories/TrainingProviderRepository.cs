@@ -67,6 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         {
                                             ProfileId = tqProfile.Id,
                                             RegistrationPathwayId = tqPathway.Id,
+                                            TlPathwayId = tlPathway.Id,
                                             Uln = tqProfile.UniqueLearnerNumber,
                                             Name = tqProfile.Firstname + " " + tqProfile.Lastname,
                                             DateofBirth = tqProfile.DateofBirth,

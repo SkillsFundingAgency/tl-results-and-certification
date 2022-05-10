@@ -1,0 +1,40 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual.IpCheckAndSubmitViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = IpCheckAndSubmit.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-width-container">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">@IpCheckAndSubmit.Heading_Check_Your_Answers</h1>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border">
+                <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+                <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+            </dl>
+
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                @foreach (var rowItem in Model.IpDetailsList)
+                {
+                    <vc:summary-item model=rowItem></vc:summary-item>
+                }
+            </dl>
+            
+            <p class="govuk-body">@string.Format(@IpCheckAndSubmit.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, Model.LearnerName)</p>
+            <form asp-route="@RouteConstants.SubmitIpCheckAndSubmit">
+                <div class="govuk-button-group">
+                    <button class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@IpCheckAndSubmit.Button_Submit</button>
+                    <a class="govuk-link" asp-route="@RouteConstants.IpCheckAndSubmitCancel" asp-route-profileId="@Model.ProfileId">@IpCheckAndSubmit.Link_Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

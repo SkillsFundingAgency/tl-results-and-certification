@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
@@ -367,7 +368,28 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<PrsGradeChangeRequest, bool>(requestUri, request);
         }
 
-        #endregion 
+        #endregion
+
+        #region IndustryPlacement
+
+        public async Task<IList<IpLookupData>> GetIpLookupDataAsync(IpLookupType ipLookupType, int? pathwayId = null)
+        {
+            var requestUri = string.Format(ApiConstants.GetIpLookupDataUri, (int)ipLookupType, pathwayId);
+            return await GetAsync<IList<IpLookupData>>(requestUri);
+        }
+
+        public async Task<IpTempFlexNavigation> GetTempFlexNavigationAsync(int pathwayId, int academicYear)
+        {
+            var requestUri = string.Format(ApiConstants.GetTempFlexNavigationUri, pathwayId, academicYear);
+            return await GetAsync<IpTempFlexNavigation>(requestUri);
+        }
+
+        public async Task<bool> ProcessIndustryPlacementDetailsAsync(IndustryPlacementRequest request)
+        {
+            return await PostAsync<IndustryPlacementRequest, bool>(ApiConstants.ProcessIndustryPlacementDetailsUri, request);
+        }        
+
+        #endregion
 
         public async Task<LearnerRecord> GetLearnerRecordAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {

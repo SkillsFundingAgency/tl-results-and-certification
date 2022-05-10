@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
 using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
+using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
+using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
@@ -17,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         // Header
         public int ProfileId { get; set; }
         public int RegistrationPathwayId { get; set; }
-
+        public int TlPathwayId { get; set; }
         public long Uln { get; set; }
         public string LearnerName { get; set; }
         public DateTime DateofBirth { get; set; }
@@ -28,18 +30,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public string AwardingOrganisationName { get; set; }
         public SubjectStatus MathsStatus { get; set; }
         public SubjectStatus EnglishStatus { get; set; }
-        
+
         public int IndustryPlacementId { get; set; } // TODO: upcoming story
-        public IndustryPlacementStatus IndustryPlacementStatus { get; set; } // TODO: upcoming story
+        public IpStatus IndustryPlacementStatus { get; set; }
 
         /// <summary>
         /// True when status is Active or Withdrawn
         /// </summary>
         public bool IsLearnerRegistered { get; set; }
         public bool IsStatusCompleted => IsMathsAdded && IsEnglishAdded && IsIndustryPlacementAdded;
-        public bool IsIndustryPlacementAdded => IndustryPlacementStatus != IndustryPlacementStatus.NotSpecified; // TODO: upcoming story
+        public bool IsIndustryPlacementAdded => IndustryPlacementStatus != IpStatus.NotSpecified;
         public bool IsMathsAdded => MathsStatus != SubjectStatus.NotSpecified;
         public bool IsEnglishAdded => EnglishStatus != SubjectStatus.NotSpecified;
+
+        public bool CanAddIndustryPlacement => IndustryPlacementStatus == IpStatus.NotSpecified || IndustryPlacementStatus == IpStatus.NotCompleted;
+
         public NotificationBannerModel SuccessBanner { get; set; }
 
         #region Summary Header
@@ -56,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             Title = LearnerRecordDetailsContent.Title_Provider_Name_Text,
             Value = ProviderName,
         };
-        
+
         public SummaryItemModel SummaryProviderUkprn => new SummaryItemModel
         {
             Id = "providerukprn",
@@ -127,34 +132,48 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         #endregion
 
         // Industry Placement
-        // Todo: Next Story. 
-
-        public BackLinkModel BackLink
-        {
-            get
+        public SummaryItemModel SummaryIndustryPlacementStatus => CanAddIndustryPlacement ?
+            new SummaryItemModel
             {
-                return new BackLinkModel
-                {
-                    RouteName = RouteConstants.SearchLearnerRecord
-                };
+                Id = "industryplacement",
+                Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
+                Value = GetIndustryPlacementDisplayText,
+                ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
+                RouteName = CanAddIndustryPlacement ? RouteConstants.AddIndustryPlacement : string.Empty,
+                RouteAttributes = CanAddIndustryPlacement ? new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } : null,
+                HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement
             }
-        }
+            :
+            new SummaryItemModel
+            {
+                Id = "industryplacement",
+                Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
+                Value = GetIndustryPlacementDisplayText,
+            };
+
+        public BackLinkModel BackLink => new()
+        {
+            RouteName = RouteConstants.SearchLearnerRecord
+        };
 
         private static string GetSubjectStatus(SubjectStatus subjectStatus)
         {
-            switch (subjectStatus)
+            return subjectStatus switch
             {
-                case SubjectStatus.Achieved:
-                    return SubjectStatusContent.Achieved_Display_Text;
-                case SubjectStatus.NotAchieved:
-                    return SubjectStatusContent.Not_Achieved_Display_Text;
-                case SubjectStatus.AchievedByLrs:
-                    return SubjectStatusContent.Achieved_Lrs_Display_Text;
-                case SubjectStatus.NotAchievedByLrs:
-                    return SubjectStatusContent.Not_Achieved_Lrs_Display_Text;
-                default:
-                    return SubjectStatusContent.Not_Yet_Recevied_Display_Text;
-            }
+                SubjectStatus.Achieved => SubjectStatusContent.Achieved_Display_Text,
+                SubjectStatus.NotAchieved => SubjectStatusContent.Not_Achieved_Display_Text,
+                SubjectStatus.AchievedByLrs => SubjectStatusContent.Achieved_Lrs_Display_Text,
+                SubjectStatus.NotAchievedByLrs => SubjectStatusContent.Not_Achieved_Lrs_Display_Text,
+                _ => SubjectStatusContent.Not_Yet_Recevied_Display_Text,
+            };
         }
+
+        private string GetIndustryPlacementDisplayText => IndustryPlacementStatus switch
+        {
+            IpStatus.Completed => IndustryPlacementStatusContent.Completed_Display_Text,
+            IpStatus.CompletedWithSpecialConsideration => IndustryPlacementStatusContent.CompletedWithSpecialConsideration_Display_Text,
+            IpStatus.NotCompleted => IndustryPlacementStatusContent.Still_To_Be_Completed_Display_Text,
+            _ => IndustryPlacementStatusContent.Not_Yet_Received_Display_Text,
+        };
     }
 }

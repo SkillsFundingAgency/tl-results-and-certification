@@ -1,0 +1,45 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual.SpecialConsiderationHoursViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = IpSpecialConsiderationHours.Page_Title;
+}
+
+@section NavigationBar {
+<vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="@RouteConstants.SubmitIpSpecialConsiderationHours">
+            <input type="hidden" asp-for="ProfileId" />
+            <input type="hidden" asp-for="LearnerName" />
+
+            <partial name="_ValidationSummary" />
+            
+            <span class="govuk-caption-l">@IpSpecialConsiderationHours.Caption_Ip_Special_Consideration</span>
+            <div class="govuk-form-group" sfa-validation-for="Hours" sfa-validation-class="govuk-form-group--error">
+
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading" for="total-placement-hours">
+                            @string.Format(IpSpecialConsiderationHours.Heading_How_Many_Hours_Did_Complete, Model.LearnerName)
+                        </h1>
+                    </legend>
+                    <div id="total-placement-hours-hint" class="govuk-hint">
+                        @IpSpecialConsiderationHours.Hint_Must_Between_1_999
+                    </div>
+
+                    <span sfa-validation-for="Hours"></span>
+                    <input id="hours" class="govuk-input govuk-input--width-3" asp-for="Hours" maxlength="3">
+                    <div class="govuk-input__suffix margin-left-4" aria-hidden="true">@IpSpecialConsiderationHours.Input_Suffix_Hours</div>
+
+                </fieldset>
+            </div>
+
+            <button id="ContinueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@IpSpecialConsiderationHours.Button_Continue</button>
+        </form>
+    </div>
+    <partial name="Partials/_ipGuidanceNavigation.cshtml" />
+</div>

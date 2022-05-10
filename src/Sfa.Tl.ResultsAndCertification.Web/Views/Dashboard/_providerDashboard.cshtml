@@ -1,4 +1,5 @@
-﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard
+﻿@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard
 
 <!-- MAIN HEADING -->
 <div class="govuk-grid-row">
@@ -88,8 +89,8 @@
         <h2 class="govuk-heading-l">@ProviderDashboard.Heading_News_Guidance_Events</h2>
 
         <ul class="govuk-list govuk-list--spaced">
-            <li><a class="govuk-link" href="#">@ProviderDashboard.Link_Find_About_Mange_Tlevel_Results</a></li>
-            <li><a class="govuk-link" href="#">@ProviderDashboard.Link_Check_Data_You_Need_To_Provide </a></li>
+            <li><a class="govuk-link" asp-route="@RouteConstants.ProviderGuidance">@ProviderDashboard.Link_Find_About_Mange_Tlevel_Results</a></li>
+            <li><a class="govuk-link" asp-route="@RouteConstants.ProviderTimeline">@ProviderDashboard.Link_Check_Data_You_Need_To_Provide </a></li>
             <li><a class="govuk-link" href="https://www.gov.uk/government/publications/t-level-industry-placements-delivery-guidance" target="_blank">@ProviderDashboard.Link_Ip_Delivery_Guidance</a></li>
             <li><a class="govuk-link" href="https://support.tlevels.gov.uk/hc/en-gb/categories/360002675019-T-Level-news" target="_blank">@ProviderDashboard.Link_View_News_And_Updates</a></li>
             <li><a class="govuk-link" href="https://support.tlevels.gov.uk/hc/en-gb/sections/4517469957522-T-Level-events" target="_blank">@ProviderDashboard.Link_Events</a></li>

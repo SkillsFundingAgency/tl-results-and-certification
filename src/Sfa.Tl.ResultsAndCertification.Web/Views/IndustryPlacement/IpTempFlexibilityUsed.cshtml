@@ -1,0 +1,47 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual.IpTempFlexibilityUsedViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
+
+@{
+    ViewData["Title"] = IpTempFlexibilityUsed.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="@RouteConstants.SubmitIpTempFlexibilityUsed">            
+            <input type="hidden" asp-for="LearnerName" />
+
+            <partial name="_ValidationSummary" />
+
+            <span class="govuk-caption-l">@IpTempFlexibilityUsed.Caption_Ip_Temporary_Flexibility</span>
+            <div class="govuk-form-group" sfa-validation-for="IsTempFlexibilityUsed" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">@string.Format(IpTempFlexibilityUsed.Heading_Was_Granted_Temp_Flexibility, Model.LearnerName)</h1>
+                    </legend>
+                    <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                        <span sfa-validation-for="IsTempFlexibilityUsed"></span>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="istempflexibilityused" asp-for="IsTempFlexibilityUsed" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="istempflexibilityused">
+                                @IpTempFlexibilityUsed.Option_Yes
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="istempflexibilityused-no" asp-for="IsTempFlexibilityUsed" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="istempflexibilityused-no">
+                                @IpTempFlexibilityUsed.Option_No
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@IpTempFlexibilityUsed.Button_Continue</button>
+        </form>
+    </div>
+     <partial name="Partials/_ipGuidanceNavigation.cshtml" />
+</div>

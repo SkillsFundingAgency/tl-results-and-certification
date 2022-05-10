@@ -110,6 +110,7 @@
     <Build Include="Tables\IpModelTlevelCombination.sql" />
     <Build Include="Tables\IpTempFlexTlevelCombination.sql" />
     <Build Include="Tables\IpAchieved.sql" />
+    <Build Include="Tables\IpTempFlexNavigation.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sfa.Tl.ResultsAndCertification.Database.refactorlog" />
@@ -134,6 +135,7 @@
     <None Include="PostDeployment\SeedIpLookup.sql" />
     <None Include="PostDeployment\SeedIpModelTlevelCombination.sql" />
     <None Include="PostDeployment\SeedIpTempFlexTlevelCombination.sql" />
+    <None Include="PostDeployment\SeedIpTempFlexNavigation.sql" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="environment">

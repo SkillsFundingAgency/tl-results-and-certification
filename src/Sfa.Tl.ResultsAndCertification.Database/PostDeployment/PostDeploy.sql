@@ -23,6 +23,7 @@ BEGIN
 :r ".\SeedIpLookup.sql"
 :r ".\SeedIpModelTlevelCombination.sql"
 :r ".\SeedIpTempFlexTlevelCombination.sql"
+:r ".\SeedIpTempFlexNavigation.sql"
 END
 ELSE IF ('$(environment)' <> 'DevIntegration')
 BEGIN
@@ -44,4 +45,5 @@ BEGIN
 :r ".\SeedIpLookup.sql"
 :r ".\SeedIpModelTlevelCombination.sql"
 :r ".\SeedIpTempFlexTlevelCombination.sql"
+:r ".\SeedIpTempFlexNavigation.sql"
 END

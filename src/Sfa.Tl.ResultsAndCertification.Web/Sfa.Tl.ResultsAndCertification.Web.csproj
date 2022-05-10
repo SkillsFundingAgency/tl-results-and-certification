@@ -19,9 +19,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.3" />
     <PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="6.0.3" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.3" />
     <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
     <PackageReference Include="NWebsec.AspNetCore.Mvc.TagHelpers" Version="3.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
   </ItemGroup>
 
 
@@ -144,15 +145,75 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Contact.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\IndustryPlacement\IndustryPlacementCompletion.Designer.cs">
+    <Compile Update="Content\IndustryPlacement\IndustryPlacementBanner.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>IndustryPlacementCompletion.resx</DependentUpon>
+      <DependentUpon>IndustryPlacementBanner.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpBlendedPlacementUsed.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpBlendedPlacementUsed.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpCheckAndSubmit.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpCheckAndSubmit.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpCompletion.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpCompletion.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpEmployerLedUsed.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpEmployerLedUsed.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpGrantedTempFlexibility.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpGrantedTempFlexibility.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpModelUsed.Designer.cs">
+      <DependentUpon>IpModelUsed.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Content\IndustryPlacement\IpGuidanceNavigation.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>IpGuidanceNavigation.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpMultiEmployerOther.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpMultiEmployerOther.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpMultiEmployerSelect.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpMultiEmployerSelect.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpMultiEmployerUsed.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpMultiEmployerUsed.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpSpecialConsiderationHours.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpSpecialConsiderationHours.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpSpecialConsiderationReasons.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpSpecialConsiderationReasons.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpTempFlexibilityUsed.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpTempFlexibilityUsed.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\PostResultsService\PrsAddAppeal.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -884,6 +945,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ManagePostalAddress.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\TrainingProvider\ProviderGuidance.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProviderGuidance.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\ProviderTimeline.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProviderTimeline.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\TrainingProvider\SearchLearnerRecord.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1001,13 +1072,61 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Contact.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\IndustryPlacement\IndustryPlacementCompletion.resx">
+    <EmbeddedResource Update="Content\IndustryPlacement\IndustryPlacementBanner.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>IndustryPlacementCompletion.Designer.cs</LastGenOutput>
+      <LastGenOutput>IndustryPlacementBanner.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpBlendedPlacementUsed.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpBlendedPlacementUsed.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpCheckAndSubmit.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpCheckAndSubmit.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpCompletion.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpCompletion.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpEmployerLedUsed.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpEmployerLedUsed.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpGrantedTempFlexibility.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpGrantedTempFlexibility.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpModelUsed.resx">
+      <LastGenOutput>IpModelUsed.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\IndustryPlacement\IpGuidanceNavigation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IpGuidanceNavigation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpMultiEmployerOther.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpMultiEmployerOther.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpMultiEmployerSelect.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpMultiEmployerSelect.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpMultiEmployerUsed.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpMultiEmployerUsed.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpSpecialConsiderationHours.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpSpecialConsiderationHours.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpSpecialConsiderationReasons.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpSpecialConsiderationReasons.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpTempFlexibilityUsed.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpTempFlexibilityUsed.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\PostResultsService\PrsAddAppeal.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1596,6 +1715,14 @@
     <EmbeddedResource Update="Content\ProviderAddress\ManagePostalAddress.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ManagePostalAddress.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\ProviderGuidance.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProviderGuidance.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\ProviderTimeline.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProviderTimeline.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\SearchLearnerRecord.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -143,12 +143,11 @@
   <data name="Hidden_Action_Text_English" xml:space="preserve">
     <value> english status</value>
   </data>
+  <data name="Hidden_Action_Text_Industry_Placement" xml:space="preserve">
+    <value> industry placement information</value>
+  </data>
   <data name="Hidden_Action_Text_Maths" xml:space="preserve">
     <value> maths status</value>
-  </data>
-  <data name="Industry_Placement_Action_Hidden_Text" xml:space="preserve">
-    <value />
-    <comment>del</comment>
   </data>
   <data name="Notification_Heading" xml:space="preserve">
     <value>Additional information needed for this learner</value>
@@ -213,8 +212,7 @@
     <value>English</value>
   </data>
   <data name="Title_IP_Status_Text" xml:space="preserve">
-    <value />
-    <comment>del</comment>
+    <value>Status</value>
   </data>
   <data name="Title_Maths_Text" xml:space="preserve">
     <value>Maths</value>
