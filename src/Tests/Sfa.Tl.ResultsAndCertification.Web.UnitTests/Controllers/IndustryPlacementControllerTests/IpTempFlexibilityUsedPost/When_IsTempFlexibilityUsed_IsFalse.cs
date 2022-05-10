@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            CacheService.Received(1).SetAsync(CacheKey, _cacheResult);
+            CacheService.Received(2).SetAsync(CacheKey, _cacheResult);
         }
 
         [Fact]

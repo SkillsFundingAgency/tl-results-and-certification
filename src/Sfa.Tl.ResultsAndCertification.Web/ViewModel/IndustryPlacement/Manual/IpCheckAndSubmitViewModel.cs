@@ -16,9 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
             IpDetailsList = new List<SummaryItemModel>();
         }
 
-        //public int PathwayId { get; set; }
-        //public int AcademicYear { get; set; }
-
+        public int ProfileId { get; set; }
         public long Uln { get; set; }
         public string LearnerName { get; set; }
         public DateTime DateofBirth { get; set; }
@@ -62,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
             if (navigation == null)
             {
                 // Then Back link is one of the IpModel page. 
-                if (cacheModel?.IpModelViewModel?.IpModelUsed?.IsIpModelUsed == false)
+                if (cacheModel?.IpModelViewModel?.IpModelUsed?.IsIpModelUsed == true)
                 {
                     // Pattern future.
                     if (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed.IsMultiEmployerModelUsed == true)

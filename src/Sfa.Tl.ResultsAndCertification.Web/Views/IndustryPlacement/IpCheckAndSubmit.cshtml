@@ -32,7 +32,7 @@
             <form asp-route="@RouteConstants.SubmitIpCheckAndSubmit">
                 <div class="govuk-button-group">
                     <button class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@IpCheckAndSubmit.Button_Submit</button>
-                    <a class="govuk-link" href="#">@IpCheckAndSubmit.Link_Cancel</a>
+                    <a class="govuk-link" asp-route="@RouteConstants.IpCheckAndSubmitCancel" asp-route-profileId="@Model.ProfileId">@IpCheckAndSubmit.Link_Cancel</a>
                 </div>
             </form>
         </div>
