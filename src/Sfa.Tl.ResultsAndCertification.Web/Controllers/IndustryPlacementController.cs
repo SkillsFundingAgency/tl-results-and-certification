@@ -453,11 +453,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             string redirectRouteName;
 
-            if (cacheModel.TempFlexibility.IpTempFlexibilityUsed == null)
+            if (cacheModel.TempFlexibility.IpTempFlexibilityUsed == null || cacheModel.TempFlexibility.IpTempFlexibilityUsed.IsTempFlexibilityUsed == false)
             {
                 redirectRouteName = RouteConstants.IpCheckAndSubmit;
             }
-            else if (model.IsBlendedPlacementUsed.Value)
+            else if (cacheModel.TempFlexibility.IpTempFlexibilityUsed.IsTempFlexibilityUsed.Value && model.IsBlendedPlacementUsed.Value)
             {
                 cacheModel.TempFlexibility.IpGrantedTempFlexibility = null;
                 redirectRouteName = RouteConstants.IpEmployerLedUsed;
