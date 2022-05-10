@@ -126,6 +126,39 @@
   <data name="Heading_Check_Your_Answers" xml:space="preserve">
     <value>Check your answers</value>
   </data>
+  <data name="Hidden_Text_Ipmodel_List" xml:space="preserve">
+    <value> which industry placement models were used</value>
+  </data>
+  <data name="Hidden_Text_Ipmodel_Others_list" xml:space="preserve">
+    <value> which other industry placement models were used</value>
+  </data>
+  <data name="Hidden_Text_IpModel_Used" xml:space="preserve">
+    <value> whether industry placement models were used</value>
+  </data>
+  <data name="Hidden_Text_Ip_Status" xml:space="preserve">
+    <value> industry placement status</value>
+  </data>
+  <data name="Hidden_Text_MultiEmp_Used" xml:space="preserve">
+    <value> whether multiple employer model was used</value>
+  </data>
+  <data name="Hidden_Text_Special_Consideration_Hours" xml:space="preserve">
+    <value> total placement hours</value>
+  </data>
+  <data name="Hidden_Text_Special_Consideration_Reasons" xml:space="preserve">
+    <value> special consideration reasons</value>
+  </data>
+  <data name="Hidden_Text_Tf_Blended_Used" xml:space="preserve">
+    <value> whether a blended placement temporary flexibility was used</value>
+  </data>
+  <data name="Hidden_Text_Tf_Employer_Led_List" xml:space="preserve">
+    <value> whether an employer-led activities/projects temporary flexibility was used</value>
+  </data>
+  <data name="Hidden_Text_Tf_Granted_List" xml:space="preserve">
+    <value> which temporary flexibilities were used</value>
+  </data>
+  <data name="Hidden_Text_Tf_TempFlex_Used" xml:space="preserve">
+    <value> whether temporary flexibilities were used</value>
+  </data>
   <data name="Link_Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>

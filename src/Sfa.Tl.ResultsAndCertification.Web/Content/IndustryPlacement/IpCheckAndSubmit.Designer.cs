@@ -88,6 +88,105 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  industry placement status.
+        /// </summary>
+        public static string Hidden_Text_Ip_Status {
+            get {
+                return ResourceManager.GetString("Hidden_Text_Ip_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  which industry placement models were used.
+        /// </summary>
+        public static string Hidden_Text_Ipmodel_List {
+            get {
+                return ResourceManager.GetString("Hidden_Text_Ipmodel_List", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  which other industry placement models were used.
+        /// </summary>
+        public static string Hidden_Text_Ipmodel_Others_list {
+            get {
+                return ResourceManager.GetString("Hidden_Text_Ipmodel_Others_list", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  whether industry placement models were used.
+        /// </summary>
+        public static string Hidden_Text_IpModel_Used {
+            get {
+                return ResourceManager.GetString("Hidden_Text_IpModel_Used", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  whether multiple employer model was used.
+        /// </summary>
+        public static string Hidden_Text_MultiEmp_Used {
+            get {
+                return ResourceManager.GetString("Hidden_Text_MultiEmp_Used", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  total placement hours.
+        /// </summary>
+        public static string Hidden_Text_Special_Consideration_Hours {
+            get {
+                return ResourceManager.GetString("Hidden_Text_Special_Consideration_Hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  special consideration reasons.
+        /// </summary>
+        public static string Hidden_Text_Special_Consideration_Reasons {
+            get {
+                return ResourceManager.GetString("Hidden_Text_Special_Consideration_Reasons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  whether a blended placement temporary flexibility was used.
+        /// </summary>
+        public static string Hidden_Text_Tf_Blended_Used {
+            get {
+                return ResourceManager.GetString("Hidden_Text_Tf_Blended_Used", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  whether an employer-led activities/projects temporary flexibility was used.
+        /// </summary>
+        public static string Hidden_Text_Tf_Employer_Led_List {
+            get {
+                return ResourceManager.GetString("Hidden_Text_Tf_Employer_Led_List", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  which temporary flexibilities were used.
+        /// </summary>
+        public static string Hidden_Text_Tf_Granted_List {
+            get {
+                return ResourceManager.GetString("Hidden_Text_Tf_Granted_List", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  whether temporary flexibilities were used.
+        /// </summary>
+        public static string Hidden_Text_Tf_TempFlex_Used {
+            get {
+                return ResourceManager.GetString("Hidden_Text_Tf_TempFlex_Used", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Link_Cancel {
