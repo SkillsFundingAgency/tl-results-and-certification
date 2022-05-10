@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select whether the learner was granted a temporary flexibility.
+        ///   Looks up a localized string similar to Select whether the learner used the employer-led activities/projects temporary flexibility.
         /// </summary>
         public static string Validation_Message {
             get {

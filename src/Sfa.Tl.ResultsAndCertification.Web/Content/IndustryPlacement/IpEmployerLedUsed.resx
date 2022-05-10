@@ -139,6 +139,6 @@
     <value>Employer-led activities or projects - Temporary flexibility - Industry placement - Manage learner</value>
   </data>
   <data name="Validation_Message" xml:space="preserve">
-    <value>Select whether the learner was granted a temporary flexibility</value>
+    <value>Select whether the learner used the employer-led activities/projects temporary flexibility</value>
   </data>
 </root>
