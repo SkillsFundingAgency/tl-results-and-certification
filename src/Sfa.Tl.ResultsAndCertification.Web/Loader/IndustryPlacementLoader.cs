@@ -156,7 +156,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 else
                 {
                     // IpModelList Row
-                    if (cacheModel.IpModelViewModel?.IpMultiEmployerSelect?.PlacementModels.Any(x => x.IsSelected) == false)
+                    if (cacheModel.IpModelViewModel?.IpMultiEmployerSelect?.PlacementModels?.Any(x => x.IsSelected) == false)
                         return false;
 
                     var selectedPlacementModels = cacheModel.IpModelViewModel?.IpMultiEmployerSelect?.PlacementModels.Where(x => x.IsSelected).Select(x => x.Name);

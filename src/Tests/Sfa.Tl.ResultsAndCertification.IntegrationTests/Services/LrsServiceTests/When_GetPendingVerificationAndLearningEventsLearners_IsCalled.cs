@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using FluentAssertions;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LrsServiceTests
 {
@@ -50,8 +51,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LrsServiceTes
 
             // Expected result
             var expectedProfiles = _profilesData.Where(p => p.IsLearnerVerified == null || p.IsLearnerVerified.Value == false ||
-                                                      ((p.IsEnglishAndMathsAchieved == null || p.IsEnglishAndMathsAchieved.Value == false) &&
-                                                      (p.IsRcFeed == null || p.IsRcFeed.Value == false))).ToList();
+                                                                     (p.MathsStatus == null || p.MathsStatus == SubjectStatus.NotSpecified || p.MathsStatus == SubjectStatus.NotAchievedByLrs) ||    
+                                                                     (p.EnglishStatus == null || p.EnglishStatus == SubjectStatus.NotSpecified || p.EnglishStatus == SubjectStatus.NotAchievedByLrs) ||
+                                                                     (p.IsRcFeed == null || p.IsRcFeed.Value == false)).ToList();
 
             expectedProfiles.Should().NotBeNullOrEmpty();
 
@@ -73,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LrsServiceTes
                 actualProfile.Lastname.Should().Be(expectedProfile.Lastname);
                 actualProfile.DateofBirth.Should().Be(expectedProfile.DateofBirth);
                 actualProfile.IsLearnerVerified.Should().Be(expectedProfile.IsLearnerVerified);
-                actualProfile.IsEnglishAndMathsAchieved.Should().Be(expectedProfile.IsEnglishAndMathsAchieved);
+
                 actualProfile.IsSendLearner.Should().Be(expectedProfile.IsSendLearner);
                 actualProfile.IsRcFeed.Should().Be(expectedProfile.IsRcFeed);
             }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
@@ -91,7 +92,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LrsServiceTes
 
                 var expectedUln = uln;
                 var expectedIsLearnerVerified = expectedLearnerRecord.IsLearnerVerified;
-                bool? expectedIsMathsAndEnglishedAchieved = seedLearnignEvents == false ? (bool?)null : (isEnglishAchieved && isMathsAchieved);
+                SubjectStatus? expectedMathsStatus = seedLearnignEvents == false ? null : isMathsAchieved ? SubjectStatus.AchievedByLrs : SubjectStatus.NotAchievedByLrs;
+                SubjectStatus? expectedEnglishStatus = seedLearnignEvents == false ? null : isEnglishAchieved ? SubjectStatus.AchievedByLrs : SubjectStatus.NotAchievedByLrs;
+
                 bool? expectedIsRcFeed = seedLearnignEvents == false ? (bool?)null : false;
 
                 var actualRegistrationProfile = actualRegistrations.FirstOrDefault(r => r.UniqueLearnerNumber == expectedUln);
@@ -99,7 +102,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LrsServiceTes
                 actualRegistrationProfile.Should().NotBeNull();
 
                 actualRegistrationProfile.IsLearnerVerified.Should().Be(expectedIsLearnerVerified);
-                actualRegistrationProfile.IsEnglishAndMathsAchieved.Should().Be(expectedIsMathsAndEnglishedAchieved);
+                actualRegistrationProfile.EnglishStatus.Should().Be(expectedEnglishStatus);
+                actualRegistrationProfile.MathsStatus.Should().Be(expectedMathsStatus);
+
                 actualRegistrationProfile.IsRcFeed.Should().Be(expectedIsRcFeed);
 
                 // assert qualifications achieved
