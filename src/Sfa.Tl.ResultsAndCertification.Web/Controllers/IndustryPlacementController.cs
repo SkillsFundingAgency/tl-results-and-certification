@@ -77,10 +77,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 if (model.IndustryPlacementStatus == existingCacheModel.IpCompletion.IndustryPlacementStatus.Value)
                 {
                     // check based on selection to see if it is valid to redirect to check and submit page
-                    if(model.IndustryPlacementStatus == IndustryPlacementStatus.Completed || 
+                    if(model.IndustryPlacementStatus == IndustryPlacementStatus.Completed ||
                         (model.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration &&
                             existingCacheModel?.SpecialConsideration?.Hours != null && existingCacheModel?.SpecialConsideration?.Reasons != null))
-                    return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
+                        return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
                 }
             }
 
@@ -100,8 +100,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                         {
                             await _cacheService.RemoveAsync<IndustryPlacementViewModel>(CacheKey);
 
-                            var notificationBanner = new NotificationBannerModel 
-                            {                                 
+                            var notificationBanner = new NotificationBannerModel
+                            {
                                 HeaderMessage = IndustryPlacementBanner.Banner_HeaderMesage,
                                 Message = IndustryPlacementBanner.Success_Message,
                                 DisplayMessageBody = true,
@@ -137,6 +137,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             var viewModel = cacheModel.IpModelViewModel?.IpModelUsed ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpModelUsedViewModel>(cacheModel.IpCompletion);
             viewModel.IsChangeMode = isChangeMode || (cacheModel.IpModelViewModel?.IpModelUsed?.IsChangeMode ??  false) && cacheModel?.IsChangeModeAllowed == true;
+            viewModel.IsChangeMode = isChangeMode || (cacheModel.IpModelViewModel?.IpModelUsed.IsChangeMode ?? false) && cacheModel?.IsChangeModeAllowed == true;
 
             viewModel.SetBackLink(cacheModel.SpecialConsideration);
 
@@ -154,15 +155,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 model.SetBackLink(cacheModel?.SpecialConsideration);
                 return View(model);
             }
-                
+
             if (cacheModel == null ||
                 cacheModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted ||
                 cacheModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotSpecified)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             if (model.IsChangeMode && //option not changed in changemode
-                (cacheModel?.IpModelViewModel?.IpModelUsed.IsIpModelUsed == model.IsIpModelUsed))  
-                    return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
+                (cacheModel?.IpModelViewModel?.IpModelUsed.IsIpModelUsed == model.IsIpModelUsed))
+                return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
 
             if (cacheModel?.IpModelViewModel == null)
                 cacheModel.IpModelViewModel = new IpModelViewModel();
@@ -314,34 +315,41 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         #region SpecialConsideration
 
         [HttpGet]
-        [Route("industry-placement-special-consideration-hours", Name = RouteConstants.IpSpecialConsiderationHours)]
-        public async Task<IActionResult> IpSpecialConsiderationHoursAsync()
+        [Route("industry-placement-special-consideration-hours/{isChangeMode:bool?}", Name = RouteConstants.IpSpecialConsiderationHours)]
+        public async Task<IActionResult> IpSpecialConsiderationHoursAsync(bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
             if (cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = (cacheModel?.SpecialConsideration?.Hours) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<SpecialConsiderationHoursViewModel>(cacheModel.IpCompletion);
-
+            viewModel.IsChangeMode = (isChangeMode || (cacheModel?.SpecialConsideration?.Hours.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("industry-placement-special-consideration-hours", Name = RouteConstants.SubmitIpSpecialConsiderationHours)]
+        [Route("industry-placement-special-consideration-hours/{isChangeMode:bool?}", Name = RouteConstants.SubmitIpSpecialConsiderationHours)]
         public async Task<IActionResult> IpSpecialConsiderationHoursAsync(SpecialConsiderationHoursViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
+
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
-            if (cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration)
+            if (cacheModel?.IpCompletion?.IndustryPlacementStatus !=
+                IndustryPlacementStatus.CompletedWithSpecialConsideration)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             if (cacheModel?.SpecialConsideration == null)
                 cacheModel.SpecialConsideration = new SpecialConsiderationViewModel();
-
+            
             cacheModel.SpecialConsideration.Hours = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            if (model.IsChangeMode)
+            {
+                return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
+            }
 
             return RedirectToRoute(RouteConstants.IpSpecialConsiderationReasons);
         }
@@ -654,7 +662,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             // Item1 contain - Questions List & Item2 contain IsValid flag
             var ipDetailsList = _industryPlacementLoader.GetIpSummaryDetailsListAsync(cacheModel, navigation);
             if (!ipDetailsList.Item2 || ipDetailsList.Item1 == null || !ipDetailsList.Item1.Any())
-                return RedirectToRoute(RouteConstants.PageNotFound);            
+                return RedirectToRoute(RouteConstants.PageNotFound);
 
             viewModel.IpDetailsList = ipDetailsList.Item1;
 
@@ -662,6 +670,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             cacheModel.IsChangeModeAllowed = true;
             await _cacheService.SetAsync(CacheKey, cacheModel);
+
 
             return View(viewModel);
         }
@@ -717,7 +726,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
                 if (model.IndustryPlacementStatus == IndustryPlacementStatus.Completed)
                     cacheModel.SpecialConsideration = null;
-            }   
+            }
             else
                 cacheModel = new IndustryPlacementViewModel
                 {

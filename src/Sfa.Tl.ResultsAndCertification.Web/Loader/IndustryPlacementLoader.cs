@@ -120,7 +120,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 return false;
 
             // Hours Row
-            detailsList.Add(new SummaryItemModel { Id = "hours", Title = CheckAndSubmitContent.Title_SpecialConsideration_Hours_Text, Value = cacheModel.SpecialConsideration.Hours.Hours, ActionText = CheckAndSubmitContent.Link_Change, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Special_Consideration_Hours });
+            detailsList.Add(new SummaryItemModel { Id = "hours", Title = CheckAndSubmitContent.Title_SpecialConsideration_Hours_Text, Value = cacheModel.SpecialConsideration.Hours.Hours, 
+                ActionText = CheckAndSubmitContent.Link_Change, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Special_Consideration_Hours, RouteName = RouteConstants.IpSpecialConsiderationHours, RouteAttributes = new Dictionary<string, string> { { Constants.IsChangeMode, "true" } } });
 
             // Reasons Row
             var selectedReasons = cacheModel.SpecialConsideration?.Reasons?.ReasonsList.Where(x => x.IsSelected).Select(x => x.Name);

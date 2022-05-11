@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpSpecialConsiderationHoursGet
 {
-    public class When_Called_With_Valid_Data1 : TestSetup
+    public class When_Cache_Found_IsChangeMode_IsTrue : TestSetup
     {
         private IndustryPlacementViewModel _cacheResult;
         private IpCompletionViewModel _ipCompletionViewModel;
@@ -16,15 +16,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
         public override void Given()
         {
-            _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = 1, AcademicYear = 2020, LearnerName = "First Last", IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration };
+            IsChangeMode = true;
 
+            _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = 1, AcademicYear = 2020, LearnerName = "First Last", IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration };
             _specialConsiderationViewModel = new SpecialConsiderationViewModel
             {
-                Hours = new SpecialConsiderationHoursViewModel { Hours = "300", ProfileId = _ipCompletionViewModel.ProfileId, LearnerName = _ipCompletionViewModel.LearnerName },
+                Hours = new SpecialConsiderationHoursViewModel { ProfileId = _ipCompletionViewModel.ProfileId, Hours = "999", LearnerName = _ipCompletionViewModel.LearnerName }
             };
 
             _cacheResult = new IndustryPlacementViewModel
             {
+                IsChangeModeAllowed = true,
                 IpCompletion = _ipCompletionViewModel,
                 SpecialConsideration = _specialConsiderationViewModel
             };
@@ -35,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            IndustryPlacementLoader.DidNotReceive().TransformIpCompletionDetailsTo<SpecialConsiderationHoursViewModel>(Arg.Any<IpCompletionViewModel>());
+            CacheService.Received(1).GetAsync<IndustryPlacementViewModel>(CacheKey);
         }
 
         [Fact]
@@ -51,14 +53,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.Should().NotBeNull();
             model.ProfileId.Should().Be(_ipCompletionViewModel.ProfileId);
             model.LearnerName.Should().Be(_ipCompletionViewModel.LearnerName);
-            model.Hours.Should().Be(_specialConsiderationViewModel.Hours.Hours);
-            model.IsChangeMode.Should().BeFalse();
+            model.Hours.Should().NotBeNull();
+            model.IsChangeMode.Should().BeTrue();
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.IpCompletion);
-            model.BackLink.RouteAttributes.Count.Should().Be(1);
-            model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string routeValue);
-            routeValue.Should().Be(_ipCompletionViewModel.ProfileId.ToString());
+            model.BackLink.RouteName.Should().Be(RouteConstants.IpCheckAndSubmit);
+            model.BackLink.RouteAttributes.Count.Should().Be(0);
         }
     }
 }
