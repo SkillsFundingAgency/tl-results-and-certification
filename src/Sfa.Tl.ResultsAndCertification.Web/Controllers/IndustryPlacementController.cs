@@ -42,8 +42,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("industry-placement-completion/{profileId}", Name = RouteConstants.IpCompletion)]
-        public async Task<IActionResult> IpCompletionAsync(int profileId)
+        [Route("industry-placement-completion/{profileId}/{isChangeMode:bool?}", Name = RouteConstants.IpCompletion)]
+        public async Task<IActionResult> IpCompletionAsync(int profileId, bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
 
@@ -55,22 +55,41 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                     return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
+            viewModel.IsChangeMode = isChangeMode || (cacheModel?.IpCompletion?.IsChangeMode ?? false);
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("industry-placement-completion/{profileId}", Name = RouteConstants.SubmitIpCompletion)]
+        [Route("industry-placement-completion/{profileId}/{isChangeMode:bool?}", Name = RouteConstants.SubmitIpCompletion)]
         public async Task<IActionResult> IpCompletionAsync(IpCompletionViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
+
+            if (model.IsChangeMode)
+            {
+                var existingCacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
+
+                if (existingCacheModel == null || existingCacheModel.IpCompletion?.IndustryPlacementStatus == null)
+                    return RedirectToRoute(RouteConstants.PageNotFound);
+
+                // if selection doesn't change then redirect to Ip check and submit page
+                if (model.IndustryPlacementStatus == existingCacheModel.IpCompletion.IndustryPlacementStatus.Value)
+                {
+                    // check based on selection to see if it is valid to redirect to check and submit page
+                    if(model.IndustryPlacementStatus == IndustryPlacementStatus.Completed || 
+                        (model.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration &&
+                            existingCacheModel?.SpecialConsideration?.Hours != null && existingCacheModel?.SpecialConsideration?.Reasons != null))
+                    return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
+                }
+            }
 
             var cacheModel = await SyncCacheIp(model);
 
             switch (model.IndustryPlacementStatus)
             {
                 case IndustryPlacementStatus.Completed:
-                    return RedirectToRoute(RouteConstants.IpModelUsed);
+                    return RedirectToRoute(model.IsChangeMode ? RouteConstants.IpCheckAndSubmit : RouteConstants.IpModelUsed);
                 case IndustryPlacementStatus.CompletedWithSpecialConsideration:
                     return RedirectToRoute(RouteConstants.IpSpecialConsiderationHours);
                 case IndustryPlacementStatus.NotCompleted:
@@ -683,7 +702,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel?.IpCompletion != null)
             {
                 cacheModel.IpCompletion = model;
-                cacheModel.SpecialConsideration = null;
+
+                if (model.IndustryPlacementStatus == IndustryPlacementStatus.Completed)
+                    cacheModel.SpecialConsideration = null;
             }   
             else
                 cacheModel = new IndustryPlacementViewModel
