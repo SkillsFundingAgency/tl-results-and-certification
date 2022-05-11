@@ -6,5 +6,7 @@
         public IpModelViewModel IpModelViewModel { get; set; }
         public SpecialConsiderationViewModel SpecialConsideration { get; set; }
         public IpTempFlexibilityViewModel TempFlexibility { get; set; }
+
+        public bool IsChangeModeAllowed { get; set; }
     }
 }

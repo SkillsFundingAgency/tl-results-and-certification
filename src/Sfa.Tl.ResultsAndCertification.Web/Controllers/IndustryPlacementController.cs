@@ -55,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                     return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            viewModel.IsChangeMode = isChangeMode || (cacheModel?.IpCompletion?.IsChangeMode ?? false);
+            viewModel.IsChangeMode = (isChangeMode || (cacheModel?.IpCompletion?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
             return View(viewModel);
         }
 
@@ -641,11 +641,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             // Item1 contain - Questions List & Item2 contain IsValid flag
             var ipDetailsList = _industryPlacementLoader.GetIpSummaryDetailsListAsync(cacheModel, navigation);
             if (!ipDetailsList.Item2 || ipDetailsList.Item1 == null || !ipDetailsList.Item1.Any())
-                return RedirectToRoute(RouteConstants.PageNotFound);
+                return RedirectToRoute(RouteConstants.PageNotFound);            
 
             viewModel.IpDetailsList = ipDetailsList.Item1;
 
             viewModel.SetBackLink(cacheModel, navigation);
+
+            cacheModel.IsChangeModeAllowed = true;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
 
             return View(viewModel);
         }
