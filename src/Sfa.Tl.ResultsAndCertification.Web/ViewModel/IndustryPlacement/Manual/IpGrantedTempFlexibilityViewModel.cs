@@ -9,6 +9,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
 {
     public class IpGrantedTempFlexibilityViewModel
     {
+        public IpGrantedTempFlexibilityViewModel()
+        {
+            TemporaryFlexibilities = new List<IpLookupDataViewModel>();
+        }
+
         public string LearnerName { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ErrorResource.IpGrantedTempFlexibility), ErrorMessageResourceName = "Validation_Message")]
