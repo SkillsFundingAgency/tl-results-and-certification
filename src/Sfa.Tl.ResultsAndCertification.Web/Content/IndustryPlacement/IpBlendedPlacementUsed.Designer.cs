@@ -125,7 +125,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select whether the learner was used the blended placement temporary flexibility.
+        ///   Looks up a localized string similar to Select whether the learner has used the blended placement temporary flexibility.
         /// </summary>
         public static string Validation_Message {
             get {
