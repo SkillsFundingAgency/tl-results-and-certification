@@ -126,6 +126,9 @@
   <data name="Heading_Did_Blended_Placement_Used" xml:space="preserve">
     <value>Did {0} use the blended placement temporary flexibility?</value>
   </data>
+  <data name="Hint_Select_Yes_If_Blended" xml:space="preserve">
+    <value>Select Yes if a blended placement was used for this learner's industry placement.</value>
+  </data>
   <data name="Hint_Select_Yes_If_Blended_Placement_Used" xml:space="preserve">
     <value>Select whether the learner has used the blended placement temporary flexibility</value>
   </data>
@@ -139,6 +142,6 @@
     <value>Blended placement - Temporary flexibility - Industry placement - Manage learner</value>
   </data>
   <data name="Validation_Message" xml:space="preserve">
-    <value>Select whether the learner was used the blended placement temporary flexibility</value>
+    <value>Select whether the learner has used the blended placement temporary flexibility</value>
   </data>
 </root>
