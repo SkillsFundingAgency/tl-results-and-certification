@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 var existingCacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
 
-                if (existingCacheModel == null || existingCacheModel.IpCompletion?.IndustryPlacementStatus == null)
+                if (existingCacheModel == null)
                     return RedirectToRoute(RouteConstants.PageNotFound);
 
                 // if selection doesn't change then redirect to Ip check and submit page

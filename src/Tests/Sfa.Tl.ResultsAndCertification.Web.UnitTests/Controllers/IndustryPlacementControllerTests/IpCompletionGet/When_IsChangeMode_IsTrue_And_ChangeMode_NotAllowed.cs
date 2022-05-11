@@ -8,17 +8,20 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpCompletionGet
 {
-    public class When_Cache_Found : TestSetup
+    public class When_IsChangeMode_IsTrue_And_ChangeMode_NotAllowed : TestSetup
     {
         private IndustryPlacementViewModel _cacheResult;
         private IpCompletionViewModel _ipCompletionViewModel;
 
         public override void Given()
         {
+            IsChangeMode = true;
+
             _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = 1, AcademicYear = 2020, LearnerName = "First Last", IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted };
             _cacheResult = new IndustryPlacementViewModel
             {
-                IpCompletion = _ipCompletionViewModel
+                IpCompletion = _ipCompletionViewModel,
+                IsChangeModeAllowed = false
             };
 
             CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(_cacheResult);
@@ -43,6 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.LearnerName.Should().Be(_cacheResult.IpCompletion.LearnerName);
             model.IndustryPlacementStatus.Should().Be(_cacheResult.IpCompletion.IndustryPlacementStatus);
             model.IsValid.Should().BeTrue();
+            model.IsChangeMode.Should().BeFalse();
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.LearnerRecordDetails);
