@@ -14,12 +14,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         [Required(ErrorMessageResourceType = typeof(ErrorResource.IpModelUsed), ErrorMessageResourceName = "Validation_Message")]
         public bool? IsIpModelUsed { get; set; }
         public BackLinkModel BackLink { get; set; }
+        public bool IsChangeMode { get; set; }
 
         public void SetBackLink(SpecialConsiderationViewModel specialConsiderationViewModel = null)
         {
-            BackLink = specialConsiderationViewModel?.Reasons?.IsReasonSelected == null
-                ? new BackLinkModel { RouteName = RouteConstants.IpCompletion, RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } }
-                : new BackLinkModel { RouteName = RouteConstants.IpSpecialConsiderationReasons };
+            if (IsChangeMode)
+                BackLink = new BackLinkModel { RouteName = RouteConstants.IpCheckAndSubmit };
+            else
+                BackLink = specialConsiderationViewModel?.Reasons?.IsReasonSelected == null
+                    ? new BackLinkModel { RouteName = RouteConstants.IpCompletion, RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } }
+                    : new BackLinkModel { RouteName = RouteConstants.IpSpecialConsiderationReasons };
         }
     }
 }

@@ -205,7 +205,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check your answers - Industry placement.
+        ///   Looks up a localized string similar to Check your answers - Industry placement - Manage learner.
         /// </summary>
         public static string Page_Title {
             get {

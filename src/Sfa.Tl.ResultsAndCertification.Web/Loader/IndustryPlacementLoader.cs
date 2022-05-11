@@ -116,14 +116,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         private bool AddSummaryItemForSpecialConsideration(IndustryPlacementViewModel cacheModel, List<SummaryItemModel> detailsList)
         {
             // Load SpecialConsideration questions
-            if (cacheModel.SpecialConsideration?.Hours == null && cacheModel.SpecialConsideration?.Reasons == null)
+            if (cacheModel.SpecialConsideration?.Hours == null || cacheModel.SpecialConsideration?.Reasons == null)
                 return false;
 
             // Hours Row
             detailsList.Add(new SummaryItemModel { Id = "hours", Title = CheckAndSubmitContent.Title_SpecialConsideration_Hours_Text, Value = cacheModel.SpecialConsideration.Hours.Hours, ActionText = CheckAndSubmitContent.Link_Change, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Special_Consideration_Hours });
 
             // Reasons Row
-            var selectedReasons = cacheModel.SpecialConsideration.Reasons.ReasonsList.Where(x => x.IsSelected).Select(x => x.Name);
+            var selectedReasons = cacheModel.SpecialConsideration?.Reasons?.ReasonsList.Where(x => x.IsSelected).Select(x => x.Name);
             detailsList.Add(new SummaryItemModel { Id = "specialreasons", Title = CheckAndSubmitContent.Title_SpecialConsideration_Reasons_Text, Value = ConvertListToRawHtmlString(selectedReasons), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Special_Consideration_Reasons });
 
             return true;
@@ -134,7 +134,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (cacheModel.IpModelViewModel?.IpModelUsed?.IsIpModelUsed == null)
                 return false;
             // IpModelUsed Row
-            detailsList.Add(new SummaryItemModel { Id = "isipmodelused", Title = CheckAndSubmitContent.Title_IpModel_Text, Value = cacheModel.IpModelViewModel.IpModelUsed.IsIpModelUsed.Value.ToYesOrNoString(), ActionText = CheckAndSubmitContent.Link_Change, HiddenActionText = CheckAndSubmitContent.Hidden_Text_IpModel_Used });
+            detailsList.Add(new SummaryItemModel { Id = "isipmodelused", Title = CheckAndSubmitContent.Title_IpModel_Text, Value = cacheModel.IpModelViewModel.IpModelUsed.IsIpModelUsed.Value.ToYesOrNoString() , 
+                ActionText = CheckAndSubmitContent.Link_Change, HiddenActionText = CheckAndSubmitContent.Hidden_Text_IpModel_Used, RouteName = RouteConstants.IpModelUsed, RouteAttributes = new Dictionary<string, string> { { Constants.IsChangeMode, "true" } } });
 
             if (cacheModel.IpModelViewModel.IpModelUsed.IsIpModelUsed == true)
             {
@@ -146,7 +147,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 // OtherIpModelList Row
                 if (cacheModel.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == true)
                 {
-                    if (cacheModel.IpModelViewModel?.IpMultiEmployerOther?.OtherIpPlacementModels.Any(x => x.IsSelected) == false)
+                    if (cacheModel.IpModelViewModel?.IpMultiEmployerOther?.OtherIpPlacementModels?.Any(x => x.IsSelected) == false)
                         return false;
 
                     var selectedOtherModels = cacheModel.IpModelViewModel?.IpMultiEmployerOther?.OtherIpPlacementModels

@@ -125,8 +125,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         #region Ip Models
 
         [HttpGet]
-        [Route("industry-placement-model", Name = RouteConstants.IpModelUsed)]
-        public async Task<IActionResult> IpModelUsedAsync()
+        [Route("industry-placement-model/{isChangeMode:bool?}", Name = RouteConstants.IpModelUsed)]
+        public async Task<IActionResult> IpModelUsedAsync(bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
             if (cacheModel?.IpCompletion?.IndustryPlacementStatus == null ||
@@ -136,14 +136,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             var viewModel = cacheModel.IpModelViewModel?.IpModelUsed ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpModelUsedViewModel>(cacheModel.IpCompletion);
-            
+            viewModel.IsChangeMode = isChangeMode || (cacheModel.IpModelViewModel?.IpModelUsed.IsChangeMode ??  false);
+
             viewModel.SetBackLink(cacheModel.SpecialConsideration);
 
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("industry-placement-model", Name = RouteConstants.SubmitIpModelUsed)]
+        [Route("industry-placement-model/{isChangeMode:bool?}", Name = RouteConstants.SubmitIpModelUsed)]
         public async Task<IActionResult> IpModelUsedAsync(IpModelUsedViewModel model)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
@@ -154,11 +155,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
                 
-
             if (cacheModel == null ||
                 cacheModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted ||
                 cacheModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotSpecified)
                 return RedirectToRoute(RouteConstants.PageNotFound);
+
+            if (model.IsChangeMode && //option not changed in changemode
+                (cacheModel?.IpModelViewModel?.IpModelUsed.IsIpModelUsed == model.IsIpModelUsed))  
+                    return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
 
             if (cacheModel?.IpModelViewModel == null)
                 cacheModel.IpModelViewModel = new IpModelViewModel();
@@ -172,7 +176,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 cacheModel.IpModelViewModel.IpMultiEmployerUsed = null;
                 cacheModel.IpModelViewModel.IpMultiEmployerOther = null;
                 cacheModel.IpModelViewModel.IpMultiEmployerSelect = null;
-                redirectRouteName = RouteConstants.IpTempFlexibilityUsed;
+                redirectRouteName = model.IsChangeMode ? RouteConstants.IpCheckAndSubmit : RouteConstants.IpTempFlexibilityUsed;
             }
             else
             {

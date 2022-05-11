@@ -8,6 +8,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
 {
     public class IpEmployerLedUsedViewModel
     {
+        public IpEmployerLedUsedViewModel()
+        {
+            TemporaryFlexibilities = new List<IpLookupDataViewModel>();
+        }
+
         public string LearnerName { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ErrorResource.IpEmployerLedUsed), ErrorMessageResourceName = "Validation_Message")]

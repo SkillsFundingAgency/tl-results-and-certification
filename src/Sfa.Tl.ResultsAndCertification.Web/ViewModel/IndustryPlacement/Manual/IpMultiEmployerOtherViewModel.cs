@@ -6,6 +6,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
 {
     public class IpMultiEmployerOtherViewModel
     {
+        public IpMultiEmployerOtherViewModel()
+        {
+            OtherIpPlacementModels = new List<IpLookupDataViewModel>();
+        }
+
         public string LearnerName { get; set; }
 
         public IList<IpLookupDataViewModel> OtherIpPlacementModels { get; set; }
