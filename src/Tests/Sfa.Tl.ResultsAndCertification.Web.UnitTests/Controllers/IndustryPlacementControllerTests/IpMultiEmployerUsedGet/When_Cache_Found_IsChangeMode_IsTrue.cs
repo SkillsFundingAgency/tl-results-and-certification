@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpMultiEmployerUsedGet
 {
-    public class When_Cache_Found_For_IpMultiEmployerUsed : TestSetup
+    public class When_Cache_Found_IsChangeMode_IsTrue : TestSetup
     {
         private IndustryPlacementViewModel _cacheResult;
         private IpCompletionViewModel _ipCompletionViewModel;
@@ -16,12 +16,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
         public override void Given()
         {
+            IsChangeMode = true;
             _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = 1, AcademicYear = 2020, LearnerName = "First Last", IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed };
             _ipModelUsedViewModel = new IpModelUsedViewModel { ProfileId = 1, IsIpModelUsed = true };
             _ipMultiEmployerUsedViewModel = new IpMultiEmployerUsedViewModel { LearnerName = "First Last", IsMultiEmployerModelUsed = true };
 
             _cacheResult = new IndustryPlacementViewModel
             {
+                IsChangeModeAllowed = true,
                 IpCompletion = _ipCompletionViewModel,
                 IpModelViewModel = new IpModelViewModel { IpModelUsed = _ipModelUsedViewModel, IpMultiEmployerUsed = _ipMultiEmployerUsedViewModel }
             };
@@ -48,10 +50,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.Should().NotBeNull();
             model.LearnerName.Should().Be(_ipMultiEmployerUsedViewModel.LearnerName);
             model.IsMultiEmployerModelUsed.Should().BeTrue();
-            model.IsChangeMode.Should().BeFalse();
+            model.IsChangeMode.Should().BeTrue();
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.IpModelUsed);
+            model.BackLink.RouteName.Should().Be(RouteConstants.IpCheckAndSubmit);
             model.BackLink.RouteAttributes.Count.Should().Be(0);
         }
     }
