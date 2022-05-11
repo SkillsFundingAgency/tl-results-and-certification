@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -32,9 +33,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<IList<RegisteredLearnerDetails>> GetPendingVerificationAndLearningEventsLearnersAsync()
         {
-            var registrationLearners = await _tqRegistrationRepository.GetManyAsync(r => r.IsLearnerVerified == null || r.IsLearnerVerified.Value == false ||
-                                                                     ((r.IsEnglishAndMathsAchieved == null || r.IsEnglishAndMathsAchieved.Value == false) &&
-                                                                     (r.IsRcFeed == null || r.IsRcFeed.Value == false))).ToListAsync();
+            var registrationLearners = await _tqRegistrationRepository.GetManyAsync(r =>
+                                                                     (r.IsRcFeed == false) || // To be removed in later release.
+                                                                     (r.IsLearnerVerified == null || r.IsLearnerVerified.Value == false) ||                                                           //IsLearnerVerifyRequired
+                                                                     (r.MathsStatus == null || r.MathsStatus == SubjectStatus.NotSpecified || r.MathsStatus == SubjectStatus.NotAchievedByLrs) ||     //IsSubjectStatusUpdateRequired(r.MathsStatus)
+                                                                     (r.EnglishStatus == null || r.EnglishStatus == SubjectStatus.NotSpecified || r.EnglishStatus == SubjectStatus.NotAchievedByLrs))   //IsSubjectStatusUpdateRequired(r.EnglishStatus)
+                                                                    .ToListAsync();
 
             if (registrationLearners == null) return null;
 
@@ -67,9 +71,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 var registrationProfile = registrationProfiles.FirstOrDefault(p => p.Id == learnerRecord.ProfileId);
 
-                if (IsValidLearner(registrationProfile))
-                {
-                    ProcessLearningEvents(qualifications, learnerRecord);
+            if (IsValidLearner(registrationProfile))
+            {
+                ProcessLearningEvents(qualifications, learnerRecord);
 
                     var modifiedProfile = ProcessProfileAndQualificationsAchieved(qualifications, learnerRecord, registrationProfile);
 
@@ -163,66 +167,80 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 isProfileChanged = true;
             }
 
-            if (!profile.IsEnglishAndMathsAchieved.HasValue || !profile.IsEnglishAndMathsAchieved.Value)
+            if (learnerLearningEvents.Any() &&
+                (IsSubjectStatusUpdateRequired(profile.MathsStatus) || IsSubjectStatusUpdateRequired(profile.EnglishStatus)))
             {
-                if (learnerLearningEvents.Any())
+                var isQualificationAchievedChanged = false;
+
+                foreach (var learnerLearningEvent in learnerLearningEvents)
                 {
-                    var isQualificationAchievedChanged = false;
+                    var existingQualificationAchieved = profile.QualificationAchieved.FirstOrDefault(q => q.QualificationId == learnerLearningEvent.QualificationId);
 
-                    foreach (var learnerLearningEvent in learnerLearningEvents)
+                    if (existingQualificationAchieved != null)
                     {
-                        var existingQualificationAchieved = profile.QualificationAchieved.FirstOrDefault(q => q.QualificationId == learnerLearningEvent.QualificationId);
+                        var existingQualification = qualifications.FirstOrDefault(q => q.Id == existingQualificationAchieved.QualificationId);
+                        var existingQualificationGrade = existingQualification?.QualificationType?.QualificationGrades?.FirstOrDefault(g => g.Id == existingQualificationAchieved.QualificationGradeId);
+                        var existingQualificationGradeRank = existingQualificationGrade?.GradeRank ?? 0;
 
-                        if (existingQualificationAchieved != null)
+                        if (learnerLearningEvent.QualificationGradeId != existingQualificationAchieved.QualificationGradeId && learnerLearningEvent.GradeRank < existingQualificationGradeRank)
                         {
-                            var existingQualification = qualifications.FirstOrDefault(q => q.Id == existingQualificationAchieved.QualificationId);
-                            var existingQualificationGrade = existingQualification?.QualificationType?.QualificationGrades?.FirstOrDefault(g => g.Id == existingQualificationAchieved.QualificationGradeId);
-                            var existingQualificationGradeRank = existingQualificationGrade?.GradeRank ?? 0;
+                            existingQualificationAchieved.QualificationGradeId = learnerLearningEvent.QualificationGradeId;
+                            existingQualificationAchieved.IsAchieved = learnerLearningEvent.IsAchieved;
 
-                            if (learnerLearningEvent.QualificationGradeId != existingQualificationAchieved.QualificationGradeId && learnerLearningEvent.GradeRank < existingQualificationGradeRank)
+                            if (existingQualificationAchieved.Id > 0)
                             {
-                                existingQualificationAchieved.QualificationGradeId = learnerLearningEvent.QualificationGradeId;
-                                existingQualificationAchieved.IsAchieved = learnerLearningEvent.IsAchieved;
-                                
-                                if (existingQualificationAchieved.Id > 0)
-                                {
-                                    existingQualificationAchieved.ModifiedBy = learnerRecord.PerformedBy;
-                                    existingQualificationAchieved.ModifiedOn = DateTime.UtcNow;
-                                }
-                                isQualificationAchievedChanged = true;
+                                existingQualificationAchieved.ModifiedBy = learnerRecord.PerformedBy;
+                                existingQualificationAchieved.ModifiedOn = DateTime.UtcNow;
                             }
-                        }
-                        else
-                        {
-                            profile.QualificationAchieved.Add(new QualificationAchieved
-                            {
-                                TqRegistrationProfileId = profile.Id,
-                                QualificationId = learnerLearningEvent.QualificationId,
-                                QualificationGradeId = learnerLearningEvent.QualificationGradeId,
-                                IsAchieved = learnerLearningEvent.IsAchieved,
-                                CreatedBy = learnerRecord.PerformedBy
-                            });
                             isQualificationAchievedChanged = true;
                         }
                     }
-
-                    if (isQualificationAchievedChanged)
+                    else
                     {
-                        profile.IsEnglishAndMathsAchieved = learnerLearningEvents.Any(e => e.IsAchieved && e.IsEnglishSubject) && learnerLearningEvents.Any(e => e.IsAchieved && e.IsMathsSubject);
-                        profile.IsRcFeed = false;
-                        profile.ModifiedOn = DateTime.UtcNow;
-                        profile.ModifiedBy = learnerRecord.PerformedBy;
-                        isProfileChanged = true;
+                        profile.QualificationAchieved.Add(new QualificationAchieved
+                        {
+                            TqRegistrationProfileId = profile.Id,
+                            QualificationId = learnerLearningEvent.QualificationId,
+                            QualificationGradeId = learnerLearningEvent.QualificationGradeId,
+                            IsAchieved = learnerLearningEvent.IsAchieved,
+                            CreatedBy = learnerRecord.PerformedBy
+                        });
+                        isQualificationAchievedChanged = true;
                     }
                 }
-            }
 
+                if (isQualificationAchievedChanged)
+                {
+                    if (IsSubjectStatusUpdateRequired(profile.MathsStatus) &&
+                        learnerLearningEvents.Any(e => e.IsMathsSubject))
+                    {
+                        profile.MathsStatus = learnerLearningEvents.Any(e => e.IsMathsSubject && e.IsAchieved) ? SubjectStatus.AchievedByLrs : SubjectStatus.NotAchievedByLrs;
+                    }
+
+                    if (IsSubjectStatusUpdateRequired(profile.EnglishStatus) &&
+                        learnerLearningEvents.Any(e => e.IsEnglishSubject))
+                    {
+                        profile.EnglishStatus = learnerLearningEvents.Any(e => e.IsEnglishSubject && e.IsAchieved) ? SubjectStatus.AchievedByLrs : SubjectStatus.NotAchievedByLrs;
+                    }
+
+                    profile.IsRcFeed = false;
+                    profile.ModifiedOn = DateTime.UtcNow;
+                    profile.ModifiedBy = learnerRecord.PerformedBy;
+                    isProfileChanged = true;
+                }
+            }
+            
             return isProfileChanged ? profile : null;
         }
 
         private bool IsValidLearner(TqRegistrationProfile profile)
         {
             return profile != null && (profile.IsRcFeed == null || profile.IsRcFeed.Value == false);
+        }
+
+        private static bool IsSubjectStatusUpdateRequired(SubjectStatus? subjectStatus)
+        {
+            return subjectStatus == null || subjectStatus == SubjectStatus.NotSpecified || subjectStatus == SubjectStatus.NotAchievedByLrs;
         }
 
         private async Task<List<Qualification>> GetAllQualifications()

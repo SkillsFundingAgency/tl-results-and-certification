@@ -18,7 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
                 .ForMember(d => d.Gender, opts => opts.MapFrom(s => s.Gender))
                 .ForMember(d => d.IsLearnerVerified, opts => opts.MapFrom(s => s.IsLearnerVerified))
-                .ForMember(d => d.IsEnglishAndMathsAchieved, opts => opts.MapFrom(s => s.IsEnglishAndMathsAchieved))
                 .ForMember(d => d.IsSendLearner, opts => opts.MapFrom(s => s.IsSendLearner))
                 .ForMember(d => d.IsRcFeed, opts => opts.MapFrom(s => s.IsRcFeed));
         }
