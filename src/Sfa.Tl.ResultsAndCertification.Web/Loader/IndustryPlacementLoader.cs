@@ -153,6 +153,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                     var selectedOtherModels = cacheModel.IpModelViewModel?.IpMultiEmployerOther?.OtherIpPlacementModels
                         .Where(x => x.IsSelected && !x.Name.Equals(Constants.MultipleEmployer, StringComparison.InvariantCultureIgnoreCase))
                         .Select(x => x.Name);
+                    if (selectedOtherModels == null)
+                        return false;
+
                     detailsList.Add(new SummaryItemModel { Id = "selectedothermodellist", Title = CheckAndSubmitContent.Title_IpModel_Selected_Other_List_Text, Value = ConvertListToRawHtmlString(selectedOtherModels), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Ipmodel_Others_list });
                 }
                 else
@@ -162,6 +165,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                         return false;
 
                     var selectedPlacementModels = cacheModel.IpModelViewModel?.IpMultiEmployerSelect?.PlacementModels.Where(x => x.IsSelected).Select(x => x.Name);
+                    if (selectedPlacementModels == null)
+                        return false;
+
                     detailsList.Add(new SummaryItemModel { Id = "selectedplacementmodellist", Title = CheckAndSubmitContent.Title_IpModels_Selected_List_Text, Value = ConvertListToRawHtmlString(selectedPlacementModels), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Ipmodel_List });
                 }
             }

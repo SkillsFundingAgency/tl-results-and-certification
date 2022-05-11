@@ -136,7 +136,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             var viewModel = cacheModel.IpModelViewModel?.IpModelUsed ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpModelUsedViewModel>(cacheModel.IpCompletion);
-            viewModel.IsChangeMode = isChangeMode || (cacheModel.IpModelViewModel?.IpModelUsed.IsChangeMode ??  false);
+            viewModel.IsChangeMode = isChangeMode || (cacheModel.IpModelViewModel?.IpModelUsed.IsChangeMode ??  false) && cacheModel?.IsChangeModeAllowed == true;
 
             viewModel.SetBackLink(cacheModel.SpecialConsideration);
 
@@ -264,6 +264,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.IpModelViewModel.IpMultiEmployerOther = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
+            if (cacheModel.IsChangeModeAllowed)
+                return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
+
             return RedirectToRoute(RouteConstants.IpTempFlexibilityUsed);
         }
 
@@ -294,6 +297,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             cacheModel.IpModelViewModel.IpMultiEmployerSelect = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            if (cacheModel.IsChangeModeAllowed)
+                return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
 
             return RedirectToRoute(RouteConstants.IpTempFlexibilityUsed);
         }
