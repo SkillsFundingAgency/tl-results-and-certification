@@ -13,9 +13,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
 
         [Required(ErrorMessageResourceType = typeof(ErrorResource.IpModelUsed), ErrorMessageResourceName = "Validation_Message")]
         public bool? IsIpModelUsed { get; set; }
-        public BackLinkModel BackLink { get; set; }
         public bool IsChangeMode { get; set; }
-
+        public BackLinkModel BackLink { get; set; }
+       
         public void SetBackLink(SpecialConsiderationViewModel specialConsiderationViewModel = null)
         {
             if (IsChangeMode)

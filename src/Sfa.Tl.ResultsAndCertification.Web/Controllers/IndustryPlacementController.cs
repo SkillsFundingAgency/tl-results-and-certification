@@ -136,7 +136,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             var viewModel = cacheModel.IpModelViewModel?.IpModelUsed ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpModelUsedViewModel>(cacheModel.IpCompletion);
-            viewModel.IsChangeMode = isChangeMode || (cacheModel.IpModelViewModel?.IpModelUsed.IsChangeMode ??  false);
+            viewModel.IsChangeMode = isChangeMode || (cacheModel.IpModelViewModel?.IpModelUsed?.IsChangeMode ??  false) && cacheModel?.IsChangeModeAllowed == true;
 
             viewModel.SetBackLink(cacheModel.SpecialConsideration);
 
@@ -188,8 +188,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("industry-placement-multiple-employer-model", Name = RouteConstants.IpMultiEmployerUsed)]
-        public async Task<IActionResult> IpMultiEmployerUsedAsync()
+        [Route("industry-placement-multiple-employer-model/{isChangeMode:bool?}", Name = RouteConstants.IpMultiEmployerUsed)]
+        public async Task<IActionResult> IpMultiEmployerUsedAsync(bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
 
@@ -197,6 +197,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpMultiEmployerUsedViewModel>(cacheModel?.IpCompletion);
+            viewModel.IsChangeMode = isChangeMode || (cacheModel.IpModelViewModel?.IpMultiEmployerUsed?.IsChangeMode ?? false) && cacheModel?.IsChangeModeAllowed == true;
 
             return View(viewModel);
         }
@@ -212,6 +213,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            if (model.IsChangeMode && //option not changed in changemode
+                (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed.IsMultiEmployerModelUsed == model.IsMultiEmployerModelUsed))
+                return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
+            
             cacheModel.IpModelViewModel.IpMultiEmployerUsed = model;
 
             string redirectRouteName;
@@ -264,6 +269,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.IpModelViewModel.IpMultiEmployerOther = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
+            if (cacheModel.IsChangeModeAllowed)
+                return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
+
             return RedirectToRoute(RouteConstants.IpTempFlexibilityUsed);
         }
 
@@ -294,6 +302,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             cacheModel.IpModelViewModel.IpMultiEmployerSelect = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            if (cacheModel.IsChangeModeAllowed)
+                return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
 
             return RedirectToRoute(RouteConstants.IpTempFlexibilityUsed);
         }

@@ -20,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
             _cacheResult = new IndustryPlacementViewModel
             {
+                IsChangeModeAllowed = true,
                 IpCompletion = _ipCompletionViewModel,
                 IpModelViewModel = new IpModelViewModel { IpModelUsed = _ipModelUsedViewModel }
             };
