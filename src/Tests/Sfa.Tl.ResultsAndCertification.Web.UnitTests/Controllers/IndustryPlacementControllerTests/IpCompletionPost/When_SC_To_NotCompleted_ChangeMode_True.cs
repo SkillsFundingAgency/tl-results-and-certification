@@ -3,21 +3,24 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
-using System.Collections.Generic;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpCompletionPost
 {
-    // Cache modified and IpStatus = CompletedWithSpecialConsideration and it should have valid data to go to chek and submit
-    // If not then it will go to SpecialConsiderations hours page
-    public class When_Cache_Modified_IsChangeMode_IsTrue_And_Invalid_Data : TestSetup
+    public class When_SC_To_NotCompleted_ChangeMode_True : TestSetup
     {
         private IpCompletionViewModel _ipCompletionViewModel;
         private IndustryPlacementViewModel _cacheResult;
+        private string _expectedSuccessBannerMsg;
+        private string _expectedBannerHeaderMsg;
 
         public override void Given()
         {
+            var isSuccess = true;
+
             _ipCompletionViewModel = new IpCompletionViewModel
             {
                 ProfileId = 1,
@@ -25,7 +28,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 PathwayId = 7,
                 AcademicYear = 2020,
                 LearnerName = "First Last",
-                IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration
+                IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration,
+                IsChangeMode = true
             };
 
             ViewModel = new IpCompletionViewModel
@@ -35,8 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 PathwayId = 7,
                 AcademicYear = 2020,
                 LearnerName = "First Last",
-                IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration,
-                IsChangeMode = true
+                IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted
             };
 
             _cacheResult = new IndustryPlacementViewModel
@@ -54,20 +57,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             };
 
             CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(_cacheResult);
+
+            IndustryPlacementLoader.ProcessIndustryPlacementDetailsAsync(ProviderUkprn, _cacheResult).Returns(isSuccess);
+            _expectedSuccessBannerMsg = IndustryPlacementBanner.Success_Message;
+            _expectedBannerHeaderMsg = IndustryPlacementBanner.Banner_HeaderMesage;
         }
 
         [Fact]
         public void Then_Redirected_To_Expected_Route()
         {
             var route = Result as RedirectToRouteResult;
-            route.RouteName.Should().Be(RouteConstants.IpSpecialConsiderationHours);
-            route.RouteValues.Should().BeNullOrEmpty();
+            route.RouteName.Should().Be(RouteConstants.LearnerRecordDetails);
+            route.RouteValues.Count.Should().Be(1);
+            route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
         }
 
         [Fact]
         public void Then_Expected_Method_Are_Called()
         {
-            CacheService.Received(2).GetAsync<IndustryPlacementViewModel>(CacheKey);
+            IndustryPlacementLoader.Received(1).ProcessIndustryPlacementDetailsAsync(ProviderUkprn, _cacheResult);
+            CacheService.Received(1).RemoveAsync<IndustryPlacementViewModel>(CacheKey);
+            CacheService.Received(1).SetAsync(TrainingProviderCacheKey, Arg.Is<NotificationBannerModel>(x => x.HeaderMessage.Equals(_expectedBannerHeaderMsg) && x.Message.Equals(_expectedSuccessBannerMsg) && x.DisplayMessageBody == true && x.IsRawHtml == true), CacheExpiryTime.XSmall);
         }
     }
 }

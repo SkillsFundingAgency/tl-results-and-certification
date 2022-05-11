@@ -4,12 +4,11 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
-using System.Collections.Generic;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpCompletionPost
 {
-    public class When_Cache_Modified_IsChangeMode_IsTrue_And_Valid_Data : TestSetup
+    public class When_No_Selection_Changed_ChangeMode_True : TestSetup
     {
         private IpCompletionViewModel _ipCompletionViewModel;
         private IndustryPlacementViewModel _cacheResult;
@@ -23,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 PathwayId = 7,
                 AcademicYear = 2020,
                 LearnerName = "First Last",
-                IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration
+                IndustryPlacementStatus = IndustryPlacementStatus.Completed
             };
 
             ViewModel = new IpCompletionViewModel
@@ -33,27 +32,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 PathwayId = 7,
                 AcademicYear = 2020,
                 LearnerName = "First Last",
-                IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration,
+                IndustryPlacementStatus = IndustryPlacementStatus.Completed,
                 IsChangeMode = true
             };
 
             _cacheResult = new IndustryPlacementViewModel
             {
                 IpCompletion = _ipCompletionViewModel,
-                SpecialConsideration = new SpecialConsiderationViewModel 
-                { 
-                    Hours = new SpecialConsiderationHoursViewModel 
-                    { 
-                        Hours = "50" 
-                    },
-                    Reasons = new SpecialConsiderationReasonsViewModel 
-                    {
-                        ReasonsList = new List<IpLookupDataViewModel> 
-                        { 
-                            new IpLookupDataViewModel { Id = 1, Name = "Test 1" }
-                        }
-                    }
-                },
                 IsChangeModeAllowed = true
             };
 

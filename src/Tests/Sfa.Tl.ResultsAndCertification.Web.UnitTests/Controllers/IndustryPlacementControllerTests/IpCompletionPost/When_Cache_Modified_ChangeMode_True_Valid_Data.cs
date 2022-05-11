@@ -4,11 +4,12 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpCompletionPost
 {
-    public class When_Cache_NotFound_And_IsChangeMode_IsTrue : TestSetup
+    public class When_Cache_Modified_ChangeMode_True_Valid_Data : TestSetup
     {
         private IpCompletionViewModel _ipCompletionViewModel;
         private IndustryPlacementViewModel _cacheResult;
@@ -22,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 PathwayId = 7,
                 AcademicYear = 2020,
                 LearnerName = "First Last",
-                IndustryPlacementStatus = null
+                IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration
             };
 
             ViewModel = new IpCompletionViewModel
@@ -32,10 +33,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 PathwayId = 7,
                 AcademicYear = 2020,
                 LearnerName = "First Last",
-                IndustryPlacementStatus = IndustryPlacementStatus.Completed,
+                IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration,
                 IsChangeMode = true
             };
-            
+
+            _cacheResult = new IndustryPlacementViewModel
+            {
+                IpCompletion = _ipCompletionViewModel,
+                SpecialConsideration = new SpecialConsiderationViewModel 
+                { 
+                    Hours = new SpecialConsiderationHoursViewModel 
+                    { 
+                        Hours = "50" 
+                    },
+                    Reasons = new SpecialConsiderationReasonsViewModel 
+                    {
+                        ReasonsList = new List<IpLookupDataViewModel> 
+                        { 
+                            new IpLookupDataViewModel { Id = 1, Name = "Test 1" }
+                        }
+                    }
+                },
+                IsChangeModeAllowed = true
+            };
 
             CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(_cacheResult);
         }
@@ -44,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
         public void Then_Redirected_To_Expected_Route()
         {
             var route = Result as RedirectToRouteResult;
-            route.RouteName.Should().Be(RouteConstants.PageNotFound);
+            route.RouteName.Should().Be(RouteConstants.IpCheckAndSubmit);
             route.RouteValues.Should().BeNullOrEmpty();
         }
 

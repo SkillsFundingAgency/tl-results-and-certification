@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpCompletionPost
 {
-    public class When_No_Selection_Changed_And_IsChangeMode_IsTrue : TestSetup
+    public class When_Cache_NotFound_ChangeMode_True : TestSetup
     {
         private IpCompletionViewModel _ipCompletionViewModel;
         private IndustryPlacementViewModel _cacheResult;
@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 PathwayId = 7,
                 AcademicYear = 2020,
                 LearnerName = "First Last",
-                IndustryPlacementStatus = IndustryPlacementStatus.Completed
+                IndustryPlacementStatus = null
             };
 
             ViewModel = new IpCompletionViewModel
@@ -35,12 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed,
                 IsChangeMode = true
             };
-
-            _cacheResult = new IndustryPlacementViewModel
-            {
-                IpCompletion = _ipCompletionViewModel,
-                IsChangeModeAllowed = true
-            };
+            
 
             CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(_cacheResult);
         }
@@ -49,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
         public void Then_Redirected_To_Expected_Route()
         {
             var route = Result as RedirectToRouteResult;
-            route.RouteName.Should().Be(RouteConstants.IpCheckAndSubmit);
+            route.RouteName.Should().Be(RouteConstants.PageNotFound);
             route.RouteValues.Should().BeNullOrEmpty();
         }
 

@@ -1,16 +1,16 @@
-﻿using NSubstitute;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using Xunit;
-using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement;
-using Microsoft.AspNetCore.Mvc;
-using FluentAssertions;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpCompletionPost
 {
-    public class When_IpStatus_CompletedWithSC_And_IsChangeMode_IsTrue : TestSetup
+    public class When_Completed_To_NotCompleted_ChangeMode_True : TestSetup
     {
         private IpCompletionViewModel _ipCompletionViewModel;
         private IndustryPlacementViewModel _cacheResult;
@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 PathwayId = 7,
                 AcademicYear = 2020,
                 LearnerName = "First Last",
-                IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration,
+                IndustryPlacementStatus = IndustryPlacementStatus.Completed,
                 IsChangeMode = true
             };
 
