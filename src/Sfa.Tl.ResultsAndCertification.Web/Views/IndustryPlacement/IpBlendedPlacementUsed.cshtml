@@ -23,6 +23,8 @@
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                         <h1 class="govuk-fieldset__heading">@string.Format(IpBlendedPlacementUsed.Heading_Did_Blended_Placement_Used, Model.LearnerName)</h1>
                     </legend>
+                    <div id="model-hint" class="govuk-hint">@IpBlendedPlacementUsed.Hint_Select_Yes_If_Blended</div>
+
                     <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
                         <span sfa-validation-for="IsBlendedPlacementUsed"></span>
                         <div class="govuk-radios__item">
