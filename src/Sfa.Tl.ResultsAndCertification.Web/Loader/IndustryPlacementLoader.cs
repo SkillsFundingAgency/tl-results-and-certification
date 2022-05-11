@@ -122,7 +122,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             detailsList.Add(new SummaryItemModel { Id = "hours", Title = CheckAndSubmitContent.Title_SpecialConsideration_Hours_Text, Value = cacheModel.SpecialConsideration.Hours.Hours, ActionText = CheckAndSubmitContent.Link_Change, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Special_Consideration_Hours });
 
             // Reasons Row
-            var selectedReasons = cacheModel.SpecialConsideration.Reasons.ReasonsList.Where(x => x.IsSelected).Select(x => x.Name);
+            var selectedReasons = cacheModel.SpecialConsideration?.Reasons?.ReasonsList.Where(x => x.IsSelected).Select(x => x.Name);
             detailsList.Add(new SummaryItemModel { Id = "specialreasons", Title = CheckAndSubmitContent.Title_SpecialConsideration_Reasons_Text, Value = ConvertListToRawHtmlString(selectedReasons), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Special_Consideration_Reasons });
 
             return true;
