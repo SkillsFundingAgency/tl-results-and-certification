@@ -346,10 +346,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = cacheModel.SpecialConsideration?.Reasons;
             if (viewModel != null) return View(viewModel);
 
-            viewModel = await _industryPlacementLoader
-                .TransformIpCompletionDetailsTo<SpecialConsiderationReasonsViewModel>(cacheModel.IpCompletion);
+            viewModel = await _industryPlacementLoader.TransformIpCompletionDetailsTo<SpecialConsiderationReasonsViewModel>(cacheModel.IpCompletion);
             viewModel.ReasonsList = await _industryPlacementLoader.GetSpecialConsiderationReasonsListAsync(viewModel.AcademicYear);
-            
 
             return View(viewModel);
         }
@@ -368,7 +366,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.SpecialConsideration.Reasons = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
-            return RedirectToRoute(RouteConstants.IpModelUsed);
+            return RedirectToRoute(cacheModel.IpCompletion.IsChangeMode ? RouteConstants.IpCheckAndSubmit : RouteConstants.IpModelUsed);
         }
 
         #endregion
