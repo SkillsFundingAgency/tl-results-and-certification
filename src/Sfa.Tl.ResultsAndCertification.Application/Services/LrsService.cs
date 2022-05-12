@@ -33,12 +33,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<IList<RegisteredLearnerDetails>> GetPendingVerificationAndLearningEventsLearnersAsync()
         {
-            var registrationLearners = await _tqRegistrationRepository.GetManyAsync(r =>
-                                                                     (r.IsRcFeed == false) || // To be removed in later release.
-                                                                     (r.IsLearnerVerified == null || r.IsLearnerVerified.Value == false) ||                                                           //IsLearnerVerifyRequired
-                                                                     (r.MathsStatus == null || r.MathsStatus == SubjectStatus.NotSpecified || r.MathsStatus == SubjectStatus.NotAchievedByLrs) ||     //IsSubjectStatusUpdateRequired(r.MathsStatus)
-                                                                     (r.EnglishStatus == null || r.EnglishStatus == SubjectStatus.NotSpecified || r.EnglishStatus == SubjectStatus.NotAchievedByLrs))   //IsSubjectStatusUpdateRequired(r.EnglishStatus)
-                                                                    .ToListAsync();
+            // Get Learners pending for either 'Verification' or 'Maths status' or 'English status' 
+            var registrationLearners = await _tqRegistrationRepository.GetManyAsync(r => r.IsLearnerVerified == null || r.IsLearnerVerified.Value == false ||                                                             //IsLearnerVerifyRequired
+                                                                                         (((r.MathsStatus == null || r.MathsStatus == SubjectStatus.NotSpecified || r.MathsStatus == SubjectStatus.NotAchievedByLrs) ||    //IsSubjectStatusUpdateRequired(r.MathsStatus)
+                                                                                           (r.EnglishStatus == null || r.EnglishStatus == SubjectStatus.NotSpecified || r.EnglishStatus == SubjectStatus.NotAchievedByLrs)) //IsSubjectStatusUpdateRequired(r.EnglishStatus)
+                                                                                          && (r.IsRcFeed == null || r.IsRcFeed.Value == false)))
+                                                                                        .ToListAsync();
 
             if (registrationLearners == null) return null;
 
@@ -71,15 +71,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 var registrationProfile = registrationProfiles.FirstOrDefault(p => p.Id == learnerRecord.ProfileId);
 
-            if (IsValidLearner(registrationProfile))
-            {
+                // Populate Learner Events into learnerRecord object.
                 ProcessLearningEvents(qualifications, learnerRecord);
 
-                    var modifiedProfile = ProcessProfileAndQualificationsAchieved(qualifications, learnerRecord, registrationProfile);
+                // 1. Update TqRegistrationProfile with 'Verification, Maths & Eng Status' and
+                // 2. Update QualificationAchievements with LrsAchievements
+                var modifiedProfile = ProcessProfileAndQualificationsAchieved(qualifications, learnerRecord, registrationProfile);
 
-                    if (modifiedProfile != null)
-                        profilesAndQualsToUpdate.Add(modifiedProfile);
-                }
+                if (modifiedProfile != null)
+                    profilesAndQualsToUpdate.Add(modifiedProfile);
             });
 
             if (profilesAndQualsToUpdate.Any())
@@ -157,8 +157,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return null;
 
             var isProfileChanged = false;
-            var learnerLearningEvents = learnerRecord.LearningEventDetails.Where(x => x.IsQualificationAllowed);
 
+            // 1. Update Profile with IsLearnerVerified
             if (learnerRecord.IsLearnerVerified != profile.IsLearnerVerified)
             {
                 profile.IsLearnerVerified = learnerRecord.IsLearnerVerified;
@@ -167,6 +167,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 isProfileChanged = true;
             }
 
+            // 2. Update Qualifacation achievements
+            var learnerLearningEvents = learnerRecord.LearningEventDetails.Where(x => x.IsQualificationAllowed);
             if (learnerLearningEvents.Any() &&
                 (IsSubjectStatusUpdateRequired(profile.MathsStatus) || IsSubjectStatusUpdateRequired(profile.EnglishStatus)))
             {
@@ -182,16 +184,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         var existingQualificationGrade = existingQualification?.QualificationType?.QualificationGrades?.FirstOrDefault(g => g.Id == existingQualificationAchieved.QualificationGradeId);
                         var existingQualificationGradeRank = existingQualificationGrade?.GradeRank ?? 0;
 
+                        // If Lrs send same qualification again but with higher grade then update our Db record. 
                         if (learnerLearningEvent.QualificationGradeId != existingQualificationAchieved.QualificationGradeId && learnerLearningEvent.GradeRank < existingQualificationGradeRank)
                         {
                             existingQualificationAchieved.QualificationGradeId = learnerLearningEvent.QualificationGradeId;
                             existingQualificationAchieved.IsAchieved = learnerLearningEvent.IsAchieved;
-
-                            if (existingQualificationAchieved.Id > 0)
-                            {
-                                existingQualificationAchieved.ModifiedBy = learnerRecord.PerformedBy;
-                                existingQualificationAchieved.ModifiedOn = DateTime.UtcNow;
-                            }
+                            existingQualificationAchieved.ModifiedBy = learnerRecord.PerformedBy;
+                            existingQualificationAchieved.ModifiedOn = DateTime.UtcNow;
+                            
                             isQualificationAchievedChanged = true;
                         }
                     }
@@ -231,11 +231,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
             
             return isProfileChanged ? profile : null;
-        }
-
-        private bool IsValidLearner(TqRegistrationProfile profile)
-        {
-            return profile != null && (profile.IsRcFeed == null || profile.IsRcFeed.Value == false);
         }
 
         private static bool IsSubjectStatusUpdateRequired(SubjectStatus? subjectStatus)
