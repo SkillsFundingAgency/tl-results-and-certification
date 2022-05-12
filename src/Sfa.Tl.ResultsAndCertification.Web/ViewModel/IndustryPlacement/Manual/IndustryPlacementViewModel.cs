@@ -8,5 +8,17 @@
         public IpTempFlexibilityViewModel TempFlexibility { get; set; }
 
         public bool IsChangeModeAllowed { get; set; }
+
+
+        public void ResetChangeMode()
+        {
+            IpCompletion.IsChangeMode = false;
+
+            if(SpecialConsideration != null)
+            {
+                SpecialConsideration.Hours.IsChangeMode = false;
+                SpecialConsideration.Reasons.IsChangeMode = false;
+            }
+        }
     }
 }

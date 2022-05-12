@@ -666,9 +666,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             viewModel.SetBackLink(cacheModel, navigation);
 
+            cacheModel.ResetChangeMode();
             cacheModel.IsChangeModeAllowed = true;
             await _cacheService.SetAsync(CacheKey, cacheModel);
-
 
             return View(viewModel);
         }
