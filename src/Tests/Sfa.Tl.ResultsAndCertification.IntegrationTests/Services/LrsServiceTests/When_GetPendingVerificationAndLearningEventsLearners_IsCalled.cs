@@ -51,9 +51,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LrsServiceTes
 
             // Expected result
             var expectedProfiles = _profilesData.Where(p => p.IsLearnerVerified == null || p.IsLearnerVerified.Value == false ||
-                                                                     (p.MathsStatus == null || p.MathsStatus == SubjectStatus.NotSpecified || p.MathsStatus == SubjectStatus.NotAchievedByLrs) ||    
-                                                                     (p.EnglishStatus == null || p.EnglishStatus == SubjectStatus.NotSpecified || p.EnglishStatus == SubjectStatus.NotAchievedByLrs) ||
-                                                                     (p.IsRcFeed == null || p.IsRcFeed.Value == false)).ToList();
+                                                                     (((p.MathsStatus == null || p.MathsStatus == SubjectStatus.NotSpecified || p.MathsStatus == SubjectStatus.NotAchievedByLrs) ||      //IsSubjectStatusUpdateRequired(p.MathsStatus)
+                                                                        (p.EnglishStatus == null || p.EnglishStatus == SubjectStatus.NotSpecified || p.EnglishStatus == SubjectStatus.NotAchievedByLrs)) //IsSubjectStatusUpdateRequired(p.EnglishStatus)
+                                                                        && (p.IsRcFeed == null || p.IsRcFeed.Value == false))).ToList();
 
             expectedProfiles.Should().NotBeNullOrEmpty();
 
