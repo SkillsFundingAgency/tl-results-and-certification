@@ -14,7 +14,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
         private IpModelUsedViewModel _ipModelUsedViewModel;
 
         public override void Given()
-        {            
+        {       
+            IsChangeMode = true;
             _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = 1, AcademicYear = 2020, LearnerName = "First Last", IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed };
             _ipModelUsedViewModel = new IpModelUsedViewModel { ProfileId = 1, IsIpModelUsed = true, IsChangeMode = true };
 

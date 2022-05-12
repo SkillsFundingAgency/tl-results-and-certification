@@ -136,8 +136,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             var viewModel = cacheModel.IpModelViewModel?.IpModelUsed ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpModelUsedViewModel>(cacheModel.IpCompletion);
-            viewModel.IsChangeMode = isChangeMode || (cacheModel.IpModelViewModel?.IpModelUsed?.IsChangeMode ??  false) && cacheModel?.IsChangeModeAllowed == true;
-            viewModel.IsChangeMode = isChangeMode || (cacheModel.IpModelViewModel?.IpModelUsed.IsChangeMode ?? false) && cacheModel?.IsChangeModeAllowed == true;
+            viewModel.IsChangeMode = (isChangeMode || (cacheModel.IpModelViewModel?.IpModelUsed?.IsChangeMode ??  false)) && cacheModel?.IsChangeModeAllowed == true;
 
             viewModel.SetBackLink(cacheModel.SpecialConsideration);
 
@@ -198,13 +197,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpMultiEmployerUsedViewModel>(cacheModel?.IpCompletion);
-            viewModel.IsChangeMode = isChangeMode || (cacheModel.IpModelViewModel?.IpMultiEmployerUsed?.IsChangeMode ?? false) && cacheModel?.IsChangeModeAllowed == true;
+            viewModel.IsChangeMode = (isChangeMode || (cacheModel.IpModelViewModel?.IpMultiEmployerUsed?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
 
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("industry-placement-multiple-employer-model", Name = RouteConstants.SubmitIpMultiEmployerUsed)]
+        [Route("industry-placement-multiple-employer-model/{isChangeMode:bool?}", Name = RouteConstants.SubmitIpMultiEmployerUsed)]
         public async Task<IActionResult> IpMultiEmployerUsedAsync(IpMultiEmployerUsedViewModel model)
         {
             if (!ModelState.IsValid)
