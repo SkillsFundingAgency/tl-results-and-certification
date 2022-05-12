@@ -345,33 +345,32 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.SpecialConsideration.Hours = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
-            if (model.IsChangeMode)
-            {
-                return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
-            }
-
-            return RedirectToRoute(RouteConstants.IpSpecialConsiderationReasons);
+            return RedirectToRoute(model.IsChangeMode ? RouteConstants.IpCheckAndSubmit : RouteConstants.IpSpecialConsiderationReasons);
         }
 
         [HttpGet]
-        [Route("industry-placement-special-consideration-reasons", Name = RouteConstants.IpSpecialConsiderationReasons)]
-        public async Task<IActionResult> IpSpecialConsiderationReasonsAsync()
+        [Route("industry-placement-special-consideration-reasons/{isChangeMode:bool?}", Name = RouteConstants.IpSpecialConsiderationReasons)]
+        public async Task<IActionResult> IpSpecialConsiderationReasonsAsync(bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
             if (cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration || cacheModel.SpecialConsideration?.Hours == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = cacheModel.SpecialConsideration?.Reasons;
-            if (viewModel != null) return View(viewModel);
 
-            viewModel = await _industryPlacementLoader.TransformIpCompletionDetailsTo<SpecialConsiderationReasonsViewModel>(cacheModel.IpCompletion);
-            viewModel.ReasonsList = await _industryPlacementLoader.GetSpecialConsiderationReasonsListAsync(viewModel.AcademicYear);
+            if (viewModel == null)
+            {
+                viewModel = await _industryPlacementLoader.TransformIpCompletionDetailsTo<SpecialConsiderationReasonsViewModel>(cacheModel.IpCompletion);
+                viewModel.ReasonsList = await _industryPlacementLoader.GetSpecialConsiderationReasonsListAsync(viewModel.AcademicYear);
+            }
+
+            viewModel.IsChangeMode = (isChangeMode || (cacheModel?.SpecialConsideration?.Reasons?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
 
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("industry-placement-special-consideration-reasons", Name = RouteConstants.SubmitIpSpecialConsiderationReasons)]
+        [Route("industry-placement-special-consideration-reasons/{isChangeMode:bool?}", Name = RouteConstants.SubmitIpSpecialConsiderationReasons)]
         public async Task<IActionResult> IpSpecialConsiderationReasonsAsync(SpecialConsiderationReasonsViewModel model)
         {
             if (!ModelState.IsValid)
@@ -384,7 +383,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.SpecialConsideration.Reasons = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
-            return RedirectToRoute(cacheModel.IpCompletion.IsChangeMode ? RouteConstants.IpCheckAndSubmit : RouteConstants.IpModelUsed);
+            return RedirectToRoute((model.IsChangeMode || cacheModel.IpCompletion.IsChangeMode) ? RouteConstants.IpCheckAndSubmit : RouteConstants.IpModelUsed);
         }
 
         #endregion

@@ -119,13 +119,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (cacheModel.SpecialConsideration?.Hours == null || cacheModel.SpecialConsideration?.Reasons == null)
                 return false;
 
+            var routeAttributes = new Dictionary<string, string> { { Constants.IsChangeMode, "true" } };
+
             // Hours Row
             detailsList.Add(new SummaryItemModel { Id = "hours", Title = CheckAndSubmitContent.Title_SpecialConsideration_Hours_Text, Value = cacheModel.SpecialConsideration.Hours.Hours, 
-                ActionText = CheckAndSubmitContent.Link_Change, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Special_Consideration_Hours, RouteName = RouteConstants.IpSpecialConsiderationHours, RouteAttributes = new Dictionary<string, string> { { Constants.IsChangeMode, "true" } } });
+                ActionText = CheckAndSubmitContent.Link_Change, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Special_Consideration_Hours, RouteName = RouteConstants.IpSpecialConsiderationHours, RouteAttributes = routeAttributes
+            });
 
             // Reasons Row
             var selectedReasons = cacheModel.SpecialConsideration?.Reasons?.ReasonsList.Where(x => x.IsSelected).Select(x => x.Name);
-            detailsList.Add(new SummaryItemModel { Id = "specialreasons", Title = CheckAndSubmitContent.Title_SpecialConsideration_Reasons_Text, Value = ConvertListToRawHtmlString(selectedReasons), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Special_Consideration_Reasons });
+            detailsList.Add(new SummaryItemModel 
+            { 
+                Id = "specialreasons",
+                Title = CheckAndSubmitContent.Title_SpecialConsideration_Reasons_Text,
+                Value = ConvertListToRawHtmlString(selectedReasons),
+                ActionText = CheckAndSubmitContent.Link_Change,
+                IsRawHtml = true,
+                HiddenActionText = CheckAndSubmitContent.Hidden_Text_Special_Consideration_Reasons,
+                RouteName = RouteConstants.IpSpecialConsiderationReasons,
+                RouteAttributes = routeAttributes
+            });
 
             return true;
         }
