@@ -136,8 +136,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             var viewModel = cacheModel.IpModelViewModel?.IpModelUsed ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpModelUsedViewModel>(cacheModel.IpCompletion);
-            viewModel.IsChangeMode = isChangeMode || (cacheModel.IpModelViewModel?.IpModelUsed?.IsChangeMode ??  false) && cacheModel?.IsChangeModeAllowed == true;
-            viewModel.IsChangeMode = isChangeMode || (cacheModel.IpModelViewModel?.IpModelUsed.IsChangeMode ?? false) && cacheModel?.IsChangeModeAllowed == true;
+            viewModel.IsChangeMode = (isChangeMode || (cacheModel.IpModelViewModel?.IpModelUsed?.IsChangeMode ??  false)) && cacheModel?.IsChangeModeAllowed == true;
 
             viewModel.SetBackLink(cacheModel.SpecialConsideration);
 
@@ -198,7 +197,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpMultiEmployerUsedViewModel>(cacheModel?.IpCompletion);
-            viewModel.IsChangeMode = isChangeMode || (cacheModel.IpModelViewModel?.IpMultiEmployerUsed?.IsChangeMode ?? false) && cacheModel?.IsChangeModeAllowed == true;
+            viewModel.IsChangeMode = (isChangeMode || (cacheModel.IpModelViewModel?.IpMultiEmployerUsed?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
 
             return View(viewModel);
         }
