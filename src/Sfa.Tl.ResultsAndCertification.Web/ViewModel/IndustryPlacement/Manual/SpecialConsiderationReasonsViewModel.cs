@@ -21,7 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         public bool? IsReasonSelected => (ReasonsList.Any(x => x.IsSelected) == true) ? true : (bool?)null;
 
         public IList<IpLookupDataViewModel> ReasonsList { get; set; }
+        public bool IsChangeMode { get; set; }
 
-        public virtual BackLinkModel BackLink => new() { RouteName = RouteConstants.IpSpecialConsiderationHours };
+        public virtual BackLinkModel BackLink => new() { RouteName = IsChangeMode ? RouteConstants.IpCheckAndSubmit : RouteConstants.IpSpecialConsiderationHours };
     }
 }

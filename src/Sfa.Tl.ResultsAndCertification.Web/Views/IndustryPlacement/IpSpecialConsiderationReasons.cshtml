@@ -15,6 +15,7 @@
         <form asp-route="@RouteConstants.SubmitIpSpecialConsiderationReasons">
             <input type="hidden" asp-for="LearnerName" />
             <input type="hidden" asp-for="@Model.AcademicYear" />
+            <input type="hidden" asp-for="IsChangeMode" />
 
             <partial name="_ValidationSummary" />
 
