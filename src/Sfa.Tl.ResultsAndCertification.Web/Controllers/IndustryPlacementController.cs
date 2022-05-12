@@ -204,7 +204,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("industry-placement-multiple-employer-model", Name = RouteConstants.SubmitIpMultiEmployerUsed)]
+        [Route("industry-placement-multiple-employer-model/{isChangeMode:bool?}", Name = RouteConstants.SubmitIpMultiEmployerUsed)]
         public async Task<IActionResult> IpMultiEmployerUsedAsync(IpMultiEmployerUsedViewModel model)
         {
             if (!ModelState.IsValid)
