@@ -201,12 +201,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (navigation == null)
                 return true; // return here for Academic years starting from 2022.
 
+            var routeAttributes = new Dictionary<string, string> { { Constants.IsChangeMode, "true" } };
+
             if (navigation.AskTempFlexibility)
             {
                 // IsTempFlexUsed Row
                 if (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == null)
                     return false;
-                detailsList.Add(new SummaryItemModel { Id = "istempflexused", Title = CheckAndSubmitContent.Title_TempFlex_Used_Text, Value = cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed.Value.ToYesOrNoString(), ActionText = CheckAndSubmitContent.Link_Change, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Tf_TempFlex_Used });
+                detailsList.Add(new SummaryItemModel { Id = "istempflexused", Title = CheckAndSubmitContent.Title_TempFlex_Used_Text, Value = cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed.Value.ToYesOrNoString(), ActionText = CheckAndSubmitContent.Link_Change, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Tf_TempFlex_Used, RouteName = RouteConstants.IpTempFlexibilityUsed, RouteAttributes = routeAttributes });
             }
 
             if ((navigation.AskTempFlexibility && navigation.AskBlendedPlacement && cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == true) || // Coming from AskTempFlex

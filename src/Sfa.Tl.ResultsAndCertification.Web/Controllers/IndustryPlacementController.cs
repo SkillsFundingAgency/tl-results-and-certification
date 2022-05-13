@@ -390,8 +390,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         #region TemporaryFlexibility
         [HttpGet]
-        [Route("industry-placement-temporary-flexibility", Name = RouteConstants.IpTempFlexibilityUsed)]
-        public async Task<IActionResult> IpTempFlexibilityUsedAsync()
+        [Route("industry-placement-temporary-flexibility/{isChangeMode:bool?}", Name = RouteConstants.IpTempFlexibilityUsed)]
+        public async Task<IActionResult> IpTempFlexibilityUsedAsync(bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
 
@@ -415,12 +415,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var viewModel = (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpTempFlexibilityUsedViewModel>(cacheModel?.IpCompletion);
 
-            viewModel.SetBackLink(cacheModel.IpModelViewModel);
+            viewModel.IsChangeMode = (isChangeMode || (cacheModel.IpModelViewModel?.IpModelUsed?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
+            viewModel.SetBackLink(cacheModel.IpModelViewModel);            
+
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("industry-placement-temporary-flexibility", Name = RouteConstants.SubmitIpTempFlexibilityUsed)]
+        [Route("industry-placement-temporary-flexibility/{isChangeMode:bool?}", Name = RouteConstants.SubmitIpTempFlexibilityUsed)]
         public async Task<IActionResult> IpTempFlexibilityUsedAsync(IpTempFlexibilityUsedViewModel model)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
@@ -431,6 +433,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 model.SetBackLink(cacheModel.IpModelViewModel);
                 return View(model);
+            }
+
+            if (model.IsChangeMode)
+            {
+                // if selection doesn't change then redirect to Ip check and submit page
+                if (model.IsTempFlexibilityUsed == cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed)
+                {
+                    // check based on selection to see if it is valid to redirect to check and submit page
+                    if (model.IsTempFlexibilityUsed != true)
+                        return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
+                    else
+                    {
+                        if (IsValidToRedirectToCheckAndSubmit(cacheModel))
+                            return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
+                    }
+                }
             }
 
             if (cacheModel?.TempFlexibility == null)
@@ -448,7 +466,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return RedirectToRoute(RouteConstants.IpBlendedPlacementUsed);
-        }
+        }        
 
         [HttpGet]
         [Route("industry-placement-temporary-flexibility-blended", Name = RouteConstants.IpBlendedPlacementUsed)]
@@ -733,6 +751,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             await _cacheService.SetAsync(CacheKey, cacheModel);
             return cacheModel;
+        }
+
+        private static bool IsValidToRedirectToCheckAndSubmit(IndustryPlacementViewModel cacheModel)
+        {
+            return (cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == null && cacheModel.TempFlexibility.IpGrantedTempFlexibility != null) ||
+                   (cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed != null && cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value == true && cacheModel.TempFlexibility.IpEmployerLedUsed != null) ||
+                   (cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed != null && cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value == false && cacheModel.TempFlexibility.IpEmployerLedUsed != null);
         }
     }
 }
