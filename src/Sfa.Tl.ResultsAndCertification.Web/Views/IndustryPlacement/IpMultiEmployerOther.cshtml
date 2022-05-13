@@ -14,6 +14,7 @@
     <div class="govuk-grid-column-two-thirds">
         <form asp-route="@RouteConstants.SubmitIpMultiEmployerOther">
             <input type="hidden" asp-for="LearnerName" />
+            <input type="hidden" asp-for="IsChangeMode" />
 
             <span class="govuk-caption-l">@IpMultiEmployerOther.Caption_Ip_Models</span>
             <div class="govuk-form-group">

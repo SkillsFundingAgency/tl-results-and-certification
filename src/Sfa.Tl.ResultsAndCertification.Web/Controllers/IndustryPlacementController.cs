@@ -237,8 +237,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("industry-placement-other-models", Name = RouteConstants.IpMultiEmployerOther)]
-        public async Task<IActionResult> IpMultiEmployerOtherAsync()
+        [Route("industry-placement-other-models/{isChangeMode:bool?}", Name = RouteConstants.IpMultiEmployerOther)]
+        public async Task<IActionResult> IpMultiEmployerOtherAsync(bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
 
@@ -246,12 +246,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = (cacheModel?.IpModelViewModel?.IpMultiEmployerOther) ?? await _industryPlacementLoader.GetIpLookupDataAsync<IpMultiEmployerOtherViewModel>(IpLookupType.IndustryPlacementModel, cacheModel.IpCompletion.LearnerName, cacheModel.IpCompletion.PathwayId, true);
+            viewModel.IsChangeMode = (isChangeMode || (cacheModel.IpModelViewModel?.IpMultiEmployerOther?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
 
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("industry-placement-other-models", Name = RouteConstants.SubmitIpMultiEmployerOther)]
+        [Route("industry-placement-other-models/{isChangeMode:bool?}", Name = RouteConstants.SubmitIpMultiEmployerOther)]
         public async Task<IActionResult> IpMultiEmployerOtherAsync(IpMultiEmployerOtherViewModel model)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
@@ -276,8 +277,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("industry-placement-models", Name = RouteConstants.IpMultiEmployerSelect)]
-        public async Task<IActionResult> IpMultiEmployerSelectAsync()
+        [Route("industry-placement-models/{isChangeMode:bool?}", Name = RouteConstants.IpMultiEmployerSelect)]
+        public async Task<IActionResult> IpMultiEmployerSelectAsync(bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
 
@@ -285,12 +286,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = (cacheModel?.IpModelViewModel?.IpMultiEmployerSelect) ?? await _industryPlacementLoader.GetIpLookupDataAsync<IpMultiEmployerSelectViewModel>(IpLookupType.IndustryPlacementModel, cacheModel.IpCompletion.LearnerName, cacheModel.IpCompletion.PathwayId, false);
+            viewModel.IsChangeMode = (isChangeMode || (cacheModel.IpModelViewModel?.IpMultiEmployerSelect?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
 
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("industry-placement-models", Name = RouteConstants.SubmitIpMultiEmployerSelect)]
+        [Route("industry-placement-models/{isChangeMode:bool?}", Name = RouteConstants.SubmitIpMultiEmployerSelect)]
         public async Task<IActionResult> IpMultiEmployerSelectAsync(IpMultiEmployerSelectViewModel model)
         {
             if (!ModelState.IsValid)

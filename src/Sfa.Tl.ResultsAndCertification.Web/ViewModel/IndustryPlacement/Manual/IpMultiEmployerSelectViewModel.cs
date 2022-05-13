@@ -20,7 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         public bool? IsIpModelSelected => (PlacementModels.Any(x => x.IsSelected) == true) ? true : null;
 
         public IList<IpLookupDataViewModel> PlacementModels { get; set; }
+        public bool IsChangeMode { get; set; }
 
-        public virtual BackLinkModel BackLink => new() { RouteName = RouteConstants.IpMultiEmployerUsed };
+        public virtual BackLinkModel BackLink => IsChangeMode ? new() { RouteName = RouteConstants.IpCheckAndSubmit } : new() { RouteName = RouteConstants.IpMultiEmployerUsed };
     }
 }
