@@ -160,11 +160,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 cacheModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotSpecified)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            if (model.IsChangeMode && //option not changed in changemode
-                (cacheModel?.IpModelViewModel?.IpModelUsed.IsIpModelUsed == model.IsIpModelUsed))
+            if (model.IsChangeMode)
             {
                 // If subsequent journey already been populated then goto CheckAndSubmit
-                if (IsIpModelJourneyAlreadyPopulated(cacheModel))
+                if (cacheModel?.IpModelViewModel?.IpModelUsed.IsIpModelUsed == model.IsIpModelUsed)
+                //if (IsIpModelJourneyAlreadyPopulated(model, cacheModel))
                     return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
             }
 
@@ -274,7 +274,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.IpModelViewModel.IpMultiEmployerOther = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
-            if (IsIpModelChangeJourney(cacheModel))
+            if (cacheModel.IpModelViewModel?.IpModelUsed?.IsChangeMode == true ||
+                cacheModel.IpModelViewModel?.IpMultiEmployerUsed?.IsChangeMode == true ||
+                cacheModel.IpModelViewModel?.IpMultiEmployerOther?.IsChangeMode == true)
                 return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
 
             return RedirectToRoute(RouteConstants.IpTempFlexibilityUsed);
@@ -309,7 +311,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.IpModelViewModel.IpMultiEmployerSelect = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
-            if (IsIpModelChangeJourney(cacheModel))
+            if (cacheModel.IpModelViewModel?.IpModelUsed?.IsChangeMode == true ||
+                cacheModel.IpModelViewModel?.IpMultiEmployerUsed?.IsChangeMode == true ||
+                cacheModel.IpModelViewModel?.IpMultiEmployerSelect?.IsChangeMode == true)
                 return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
 
             return RedirectToRoute(RouteConstants.IpTempFlexibilityUsed);
@@ -759,19 +763,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return cacheModel;
         }
 
-        private static bool IsIpModelJourneyAlreadyPopulated(IndustryPlacementViewModel cacheModel)
+        private static bool IsIpModelJourneyAlreadyPopulated(IpModelUsedViewModel currentModel, IndustryPlacementViewModel cacheModel)
         {
-            return cacheModel?.IpModelViewModel?.IpMultiEmployerUsed != null &&
-                    (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == true && cacheModel.IpModelViewModel.IpMultiEmployerSelect != null ||
-                     cacheModel?.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == false && cacheModel.IpModelViewModel.IpMultiEmployerOther != null);
-        }
-
-        private static bool IsIpModelChangeJourney(IndustryPlacementViewModel cacheModel)
-        {
-            return cacheModel.IpModelViewModel?.IpModelUsed?.IsChangeMode == true ||
-                    cacheModel.IpModelViewModel?.IpMultiEmployerUsed?.IsChangeMode == true ||
-                    (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == true && cacheModel.IpModelViewModel?.IpMultiEmployerSelect?.IsChangeMode == true) ||
-                    (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == false && cacheModel.IpModelViewModel?.IpMultiEmployerOther?.IsChangeMode == true);
+            return cacheModel?.IpModelViewModel?.IpModelUsed.IsIpModelUsed == currentModel.IsIpModelUsed; // || //option not changed from prev selected
+                    //(cacheModel?.IpModelViewModel?.IpMultiEmployerUsed != null &&
+                    //(cacheModel?.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == true && cacheModel.IpModelViewModel.IpMultiEmployerOther != null ||
+                    // cacheModel?.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == false && cacheModel.IpModelViewModel.IpMultiEmployerSelect != null));
         }
 
         private static bool IsValidToRedirectToCheckAndSubmit(IndustryPlacementViewModel cacheModel)
