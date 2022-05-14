@@ -14,11 +14,21 @@
         {
             IpCompletion.IsChangeMode = false;
 
-            if(SpecialConsideration != null)
+            if (SpecialConsideration != null)
             {
                 SpecialConsideration.Hours.IsChangeMode = false;
                 SpecialConsideration.Reasons.IsChangeMode = false;
             }
+
+            IpModelViewModel.IpModelUsed.IsChangeMode = false;
+            if (IpModelViewModel.IpMultiEmployerUsed != null)
+                IpModelViewModel.IpMultiEmployerUsed.IsChangeMode = false;
+
+            if (IpModelViewModel.IpMultiEmployerOther != null)
+                IpModelViewModel.IpMultiEmployerOther.IsChangeMode = false;
+
+            if (IpModelViewModel.IpMultiEmployerSelect != null)
+                IpModelViewModel.IpMultiEmployerSelect.IsChangeMode = false;
 
             if(TempFlexibility != null)
             {
