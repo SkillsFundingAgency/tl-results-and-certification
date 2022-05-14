@@ -465,6 +465,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (cacheModel.TempFlexibility.IpTempFlexibilityUsed.IsTempFlexibilityUsed == false)
             {
+                cacheModel.TempFlexibility.IpBlendedPlacementUsed = null;
                 cacheModel.TempFlexibility.IpEmployerLedUsed = null;
                 cacheModel.TempFlexibility.IpGrantedTempFlexibility = null;
                 await _cacheService.SetAsync(CacheKey, cacheModel);
@@ -778,7 +779,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             return (cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == null && cacheModel.TempFlexibility.IpGrantedTempFlexibility != null) ||
                    (cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed != null && cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value == true && cacheModel.TempFlexibility.IpEmployerLedUsed != null) ||
-                   (cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed != null && cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value == false && cacheModel.TempFlexibility.IpEmployerLedUsed != null);
+                   (cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed != null && cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value == false && cacheModel.TempFlexibility.IpGrantedTempFlexibility != null);
         }
     }
 }
