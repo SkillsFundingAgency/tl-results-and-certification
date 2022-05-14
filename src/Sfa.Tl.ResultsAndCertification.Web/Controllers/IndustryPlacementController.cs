@@ -425,7 +425,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var viewModel = (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpTempFlexibilityUsedViewModel>(cacheModel?.IpCompletion);
 
-            viewModel.IsChangeMode = (isChangeMode || (cacheModel.IpModelViewModel?.IpModelUsed?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
+            viewModel.IsChangeMode = (isChangeMode || (cacheModel.TempFlexibility?.IpTempFlexibilityUsed?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
             viewModel.SetBackLink(cacheModel.IpModelViewModel);            
 
             return View(viewModel);

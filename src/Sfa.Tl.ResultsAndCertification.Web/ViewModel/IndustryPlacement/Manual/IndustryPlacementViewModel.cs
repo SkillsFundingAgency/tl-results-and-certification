@@ -29,6 +29,12 @@
 
             if (IpModelViewModel.IpMultiEmployerSelect != null)
                 IpModelViewModel.IpMultiEmployerSelect.IsChangeMode = false;
+
+            if(TempFlexibility != null)
+            {
+                if(TempFlexibility.IpTempFlexibilityUsed != null)
+                    TempFlexibility.IpTempFlexibilityUsed.IsChangeMode = false;
+            }
         }
     }
 }
