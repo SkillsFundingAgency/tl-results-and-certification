@@ -19,6 +19,12 @@
                 SpecialConsideration.Hours.IsChangeMode = false;
                 SpecialConsideration.Reasons.IsChangeMode = false;
             }
+
+            if(TempFlexibility != null)
+            {
+                if(TempFlexibility.IpTempFlexibilityUsed != null)
+                    TempFlexibility.IpTempFlexibilityUsed.IsChangeMode = false;
+            }
         }
     }
 }
