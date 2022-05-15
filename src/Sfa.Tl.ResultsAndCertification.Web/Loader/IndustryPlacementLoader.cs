@@ -217,7 +217,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 // IsBlendedPlacementUsed Row
                 if (cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == null)
                     return false;
-                detailsList.Add(new SummaryItemModel { Id = "isblendedplacementused", Title = CheckAndSubmitContent.Title_BlendedPlacement_Used_Text, Value = cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value.ToYesOrNoString(), ActionText = CheckAndSubmitContent.Link_Change, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Tf_Blended_Used });
+                detailsList.Add(new SummaryItemModel { Id = "isblendedplacementused", Title = CheckAndSubmitContent.Title_BlendedPlacement_Used_Text, Value = cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value.ToYesOrNoString(), ActionText = CheckAndSubmitContent.Link_Change, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Tf_Blended_Used, RouteName = RouteConstants.IpBlendedPlacementUsed, RouteAttributes = routeAttributes });
 
                 // AnyOtherTempFlex Row (applies only for academicyear-2020 +  Tlevels 'Design,Surveying..' and 'Digital Production..' 
                 if (cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == true)

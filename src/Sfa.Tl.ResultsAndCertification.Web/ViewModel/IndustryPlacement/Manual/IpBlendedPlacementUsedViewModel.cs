@@ -13,11 +13,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         [Required(ErrorMessageResourceType = typeof(ErrorResource.IpBlendedPlacementUsed), ErrorMessageResourceName = "Validation_Message")]
         public bool? IsBlendedPlacementUsed { get; set; }
 
+        public bool IsChangeMode { get; set; }
         public virtual BackLinkModel BackLink { get; set; }
 
         public void SetBackLink(IpModelViewModel ipModel, bool isTempFlexApplicable)
         {
-            if (isTempFlexApplicable)
+            if(IsChangeMode)
+                BackLink = new BackLinkModel { RouteName = RouteConstants.IpCheckAndSubmit };
+            else if (isTempFlexApplicable)
                 BackLink = new BackLinkModel { RouteName = RouteConstants.IpTempFlexibilityUsed };
             else
             {

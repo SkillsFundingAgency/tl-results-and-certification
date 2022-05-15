@@ -480,8 +480,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }        
 
         [HttpGet]
-        [Route("industry-placement-temporary-flexibility-blended", Name = RouteConstants.IpBlendedPlacementUsed)]
-        public async Task<IActionResult> IpBlendedPlacementUsedAsync()
+        [Route("industry-placement-temporary-flexibility-blended/{isChangeMode:bool?}", Name = RouteConstants.IpBlendedPlacementUsed)]
+        public async Task<IActionResult> IpBlendedPlacementUsedAsync(bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
 
@@ -496,13 +496,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.IpGrantedTempFlexibility);
 
             var viewModel = (cacheModel?.TempFlexibility?.IpBlendedPlacementUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpBlendedPlacementUsedViewModel>(cacheModel?.IpCompletion);
-            viewModel.SetBackLink(cacheModel.IpModelViewModel, navigation.AskTempFlexibility);
+            viewModel.IsChangeMode = (isChangeMode || (cacheModel.TempFlexibility?.IpBlendedPlacementUsed?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
+            viewModel.SetBackLink(cacheModel.IpModelViewModel, navigation.AskTempFlexibility);            
 
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("industry-placement-temporary-flexibility-blended", Name = RouteConstants.SubmitIpBlendedPlacementUsed)]
+        [Route("industry-placement-temporary-flexibility-blended/{isChangeMode:bool?}", Name = RouteConstants.SubmitIpBlendedPlacementUsed)]
         public async Task<IActionResult> IpBlendedPlacementUsedAsync(IpBlendedPlacementUsedViewModel model)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
@@ -515,6 +516,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 model.SetBackLink(cacheModel.IpModelViewModel, navigation.AskTempFlexibility);
                 return View(model);
+            }
+
+            if (model.IsChangeMode)
+            {
+                // if selection doesn't change then redirect to Ip check and submit page
+                if (model.IsBlendedPlacementUsed == cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed)
+                {
+                    if (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed == null ||
+                        (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == true && model.IsBlendedPlacementUsed == true && cacheModel?.TempFlexibility.IpEmployerLedUsed != null) ||
+                        (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == true && model.IsBlendedPlacementUsed == false && cacheModel?.TempFlexibility.IpGrantedTempFlexibility != null))
+                        return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
+                }
             }
 
             if (cacheModel?.TempFlexibility == null)
