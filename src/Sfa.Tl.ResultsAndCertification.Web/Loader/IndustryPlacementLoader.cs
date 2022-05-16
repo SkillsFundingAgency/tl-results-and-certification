@@ -222,15 +222,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 // AnyOtherTempFlex Row (applies only for academicyear-2020 +  Tlevels 'Design,Surveying..' and 'Digital Production..' 
                 if (cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == true)
                 {
-                    var selectedTfList = cacheModel?.TempFlexibility?.IpEmployerLedUsed?.TemporaryFlexibilities
+                    // Coming from AskTempFlex - If IsTempFlexibilityUsed == true then IpEmployerLedUsed should have value. If not return false
+                    if (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == true && cacheModel?.TempFlexibility?.IpEmployerLedUsed == null)
+                        return false;
+                    else if (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == true && cacheModel?.TempFlexibility?.IpEmployerLedUsed != null)
+                    {
+                        var selectedTfList = cacheModel?.TempFlexibility?.IpEmployerLedUsed?.TemporaryFlexibilities
                         .Where(x => x.IsSelected && !x.Name.Equals(Constants.BlendedPlacements, StringComparison.InvariantCultureIgnoreCase))
                         .Select(x => x.Name);
 
-                    if (selectedTfList != null && selectedTfList.Any())
-                        detailsList.Add(new SummaryItemModel { Id = "anyothertempflexlist", Title = CheckAndSubmitContent.Title_TempFlex_Emp_Led_Text, Value = true.ToYesOrNoString(), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Tf_Employer_Led_List });
+                        if (selectedTfList != null && selectedTfList.Any())
+                            detailsList.Add(new SummaryItemModel { Id = "anyothertempflexlist", Title = CheckAndSubmitContent.Title_TempFlex_Emp_Led_Text, Value = true.ToYesOrNoString(), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Tf_Employer_Led_List });
+                    }
                 }
                 else
+                {
+                    // If IsBlendedPlacementUsed == false, we need to check if coming from AsTempFlex then IpGrantedTempFlexibility should not be null. If so return false
+                    if (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == true && cacheModel?.TempFlexibility?.IpGrantedTempFlexibility == null)
+                        return false;
+
                     TempFlexUsedList(cacheModel, detailsList);
+                }                    
             }
 
             if (navigation.AskTempFlexibility && !navigation.AskBlendedPlacement)
