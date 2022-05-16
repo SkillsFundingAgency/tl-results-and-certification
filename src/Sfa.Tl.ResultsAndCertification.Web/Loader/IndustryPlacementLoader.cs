@@ -174,7 +174,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                     if (selectedOtherModels == null)
                         return false;
 
-                    detailsList.Add(new SummaryItemModel { Id = "selectedothermodellist", Title = CheckAndSubmitContent.Title_IpModel_Selected_Other_List_Text, Value = ConvertListToRawHtmlString(selectedOtherModels), 
+                    var selectedOtherModelsValue = selectedOtherModels.Any() ? ConvertListToRawHtmlString(selectedOtherModels) : false.ToYesOrNoString();
+                    detailsList.Add(new SummaryItemModel { Id = "selectedothermodellist", Title = CheckAndSubmitContent.Title_IpModel_Selected_Other_List_Text, Value = selectedOtherModelsValue, 
                         ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Ipmodel_Others_list, RouteName = RouteConstants.IpMultiEmployerOther, RouteAttributes = routeAttribute
                     });
                 }
@@ -231,8 +232,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                         .Where(x => x.IsSelected && !x.Name.Equals(Constants.BlendedPlacements, StringComparison.InvariantCultureIgnoreCase))
                         .Select(x => x.Name);
 
-                        if (selectedTfList != null && selectedTfList.Any())
-                            detailsList.Add(new SummaryItemModel { Id = "anyothertempflexlist", Title = CheckAndSubmitContent.Title_TempFlex_Emp_Led_Text, Value = true.ToYesOrNoString(), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Tf_Employer_Led_List });
+                        if (selectedTfList == null)
+                            return false;
+
+                        detailsList.Add(new SummaryItemModel { Id = "anyothertempflexlist", Title = CheckAndSubmitContent.Title_TempFlex_Emp_Led_Text, Value = selectedTfList.Any().ToYesOrNoString(), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Tf_Employer_Led_List });
                     }
                 }
                 else
