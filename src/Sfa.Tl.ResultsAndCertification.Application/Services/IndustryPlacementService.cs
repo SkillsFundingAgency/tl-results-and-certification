@@ -182,14 +182,72 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     return false;
             }
 
-            // Temporary flexibility
-            if (!request.IndustryPlacementDetails.TemporaryFlexibilitiesUsed.HasValue || !request.IndustryPlacementDetails.TemporaryFlexibilitiesUsed.Value)
+            // Temporary Flexibilities Validation
+
+            // If TemporaryFlexibilitiesUsed is null And BlendedTemporaryFlexibilityUsed is null then TemporaryFlexibilities list should not have any values. If so return false
+            if (request.IndustryPlacementDetails.TemporaryFlexibilitiesUsed == null && request.IndustryPlacementDetails.BlendedTemporaryFlexibilityUsed == null)
+            {
+                if (request.IndustryPlacementDetails.TemporaryFlexibilities != null && request.IndustryPlacementDetails.TemporaryFlexibilities.Any())
+                    return false;
+            }            
+
+            // If TemporaryFlexibilitiesUsed is used then TemporaryFlexibilities list should have values. If not return false
+            if (request.IndustryPlacementDetails.TemporaryFlexibilitiesUsed != null && request.IndustryPlacementDetails.TemporaryFlexibilitiesUsed.Value)
+            {
+                if (request.IndustryPlacementDetails.TemporaryFlexibilities == null || !request.IndustryPlacementDetails.TemporaryFlexibilities.Any())
+                    return false;
+            }
+
+            // If TemporaryFlexibilitiesUsed is not used then TemporaryFlexibilities list should not have any values. If so return false
+            if (request.IndustryPlacementDetails.TemporaryFlexibilitiesUsed != null && request.IndustryPlacementDetails.TemporaryFlexibilitiesUsed.Value == false)
             {
                 if (request.IndustryPlacementDetails.TemporaryFlexibilities != null && request.IndustryPlacementDetails.TemporaryFlexibilities.Any())
                     return false;
             }
 
-            if (request.IndustryPlacementDetails.TemporaryFlexibilitiesUsed.HasValue)
+            // Temporary flexibility not exists and BlendedTemporaryFlexibilityUsed is false then TemporaryFlexibilities list should not have any values. If so return false
+            if (request.IndustryPlacementDetails.TemporaryFlexibilitiesUsed == null &&
+                request.IndustryPlacementDetails.BlendedTemporaryFlexibilityUsed.HasValue && request.IndustryPlacementDetails.BlendedTemporaryFlexibilityUsed.Value == false)
+            {
+                if (request.IndustryPlacementDetails.TemporaryFlexibilities != null && request.IndustryPlacementDetails.TemporaryFlexibilities.Any())
+                    return false;
+            }
+
+            // Temporary flexibility not exists and BlendedTemporaryFlexibilityUsed is true then we need to add BlendedPlacement Temp Flex Id to TemporaryFlexibilities list. Then if validation fails return false
+            if (request.IndustryPlacementDetails.TemporaryFlexibilitiesUsed == null &&
+                request.IndustryPlacementDetails.BlendedTemporaryFlexibilityUsed.HasValue && request.IndustryPlacementDetails.BlendedTemporaryFlexibilityUsed.Value)
+            {
+                var tempFlexibilities = await GetIpLookupDataAsync(IpLookupType.TemporaryFlexibility, pathwayId);
+
+                if (tempFlexibilities != null && tempFlexibilities.Any())
+                {
+                    var blendedPlacementTempFlex = tempFlexibilities.FirstOrDefault(t => t.Name.Equals(Constants.BlendedPlacements, StringComparison.InvariantCultureIgnoreCase));
+
+                    if (blendedPlacementTempFlex != null)
+                    {
+                        if (request.IndustryPlacementDetails.TemporaryFlexibilities != null)
+                        {
+                            // If blended placement Id do not exist's then add it
+                            if(!request.IndustryPlacementDetails.TemporaryFlexibilities.Any(tfId => tfId == blendedPlacementTempFlex.Id))
+                            {
+                                request.IndustryPlacementDetails.TemporaryFlexibilities.Add(blendedPlacementTempFlex.Id);
+                            }
+                        }
+                        else
+                        {
+                            // If Temporary Flexibilites is null then add new List with blended placement id
+                            request.IndustryPlacementDetails.TemporaryFlexibilities = new List<int?> { blendedPlacementTempFlex.Id };
+                        }
+                    }
+                }
+
+                // Perform check to see if TemporaryFlexibilities has values. If not return false
+                if (request.IndustryPlacementDetails.TemporaryFlexibilities == null || !request.IndustryPlacementDetails.TemporaryFlexibilities.Any())
+                    return false;
+            }
+
+            //if (request.IndustryPlacementDetails.TemporaryFlexibilitiesUsed.HasValue)
+            if (request.IndustryPlacementDetails.TemporaryFlexibilities != null && request.IndustryPlacementDetails.TemporaryFlexibilities.Any())
             {
                 var tempFlexibilities = await GetIpLookupDataAsync(IpLookupType.TemporaryFlexibility, pathwayId);
 
