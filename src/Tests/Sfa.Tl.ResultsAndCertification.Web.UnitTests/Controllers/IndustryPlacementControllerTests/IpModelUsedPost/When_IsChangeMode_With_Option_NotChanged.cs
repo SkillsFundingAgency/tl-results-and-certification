@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 IpModelViewModel = new IpModelViewModel
                 {
                     IpModelUsed = new IpModelUsedViewModel { IsIpModelUsed = true },
-                    IpMultiEmployerUsed = new IpMultiEmployerUsedViewModel { IsMultiEmployerModelUsed = true },
+                    IpMultiEmployerUsed = new IpMultiEmployerUsedViewModel { IsMultiEmployerModelUsed = false },
                     IpMultiEmployerSelect = new IpMultiEmployerSelectViewModel { PlacementModels = new List<IpLookupDataViewModel> { new IpLookupDataViewModel { Name = "Item1", IsSelected = true } } }
                 }
             };

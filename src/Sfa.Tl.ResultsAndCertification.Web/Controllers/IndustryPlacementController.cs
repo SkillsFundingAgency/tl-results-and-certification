@@ -160,11 +160,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 cacheModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotSpecified)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            if (model.IsChangeMode)
+            if (model.IsChangeMode && //option not changed in changemode
+                (cacheModel?.IpModelViewModel?.IpModelUsed.IsIpModelUsed == model.IsIpModelUsed))
             {
                 // If subsequent journey already been populated then goto CheckAndSubmit
-                if (cacheModel?.IpModelViewModel?.IpModelUsed.IsIpModelUsed == model.IsIpModelUsed)
-                //if (IsIpModelJourneyAlreadyPopulated(model, cacheModel))
+                if (IsIpModelJourneyAlreadyPopulated(cacheModel))
                     return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
             }
 
@@ -219,7 +219,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (model.IsChangeMode && //option not changed in changemode
                 (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed.IsMultiEmployerModelUsed == model.IsMultiEmployerModelUsed))
-                return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
+            {
+                // If subsequent journey already been populated then goto CheckAndSubmit
+                if (IsMultiEmpModelJourneyAlreadyPopulated(cacheModel))
+                    return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
+            }
 
             cacheModel.IpModelViewModel.IpMultiEmployerUsed = model;
 
@@ -426,7 +430,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpTempFlexibilityUsedViewModel>(cacheModel?.IpCompletion);
 
             viewModel.IsChangeMode = (isChangeMode || (cacheModel.TempFlexibility?.IpTempFlexibilityUsed?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
-            viewModel.SetBackLink(cacheModel.IpModelViewModel);            
+            viewModel.SetBackLink(cacheModel.IpModelViewModel);
 
             return View(viewModel);
         }
@@ -477,7 +481,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return RedirectToRoute(RouteConstants.IpBlendedPlacementUsed);
-        }        
+        }
 
         [HttpGet]
         [Route("industry-placement-temporary-flexibility-blended/{isChangeMode:bool?}", Name = RouteConstants.IpBlendedPlacementUsed)]
@@ -497,7 +501,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var viewModel = (cacheModel?.TempFlexibility?.IpBlendedPlacementUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpBlendedPlacementUsedViewModel>(cacheModel?.IpCompletion);
             viewModel.IsChangeMode = (isChangeMode || (cacheModel.TempFlexibility?.IpBlendedPlacementUsed?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
-            viewModel.SetBackLink(cacheModel.IpModelViewModel, navigation.AskTempFlexibility);            
+            viewModel.SetBackLink(cacheModel.IpModelViewModel, navigation.AskTempFlexibility);
 
             return View(viewModel);
         }
@@ -777,19 +781,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return cacheModel;
         }
 
-        private static bool IsIpModelJourneyAlreadyPopulated(IpModelUsedViewModel currentModel, IndustryPlacementViewModel cacheModel)
-        {
-            return cacheModel?.IpModelViewModel?.IpModelUsed.IsIpModelUsed == currentModel.IsIpModelUsed; // || //option not changed from prev selected
-                    //(cacheModel?.IpModelViewModel?.IpMultiEmployerUsed != null &&
-                    //(cacheModel?.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == true && cacheModel.IpModelViewModel.IpMultiEmployerOther != null ||
-                    // cacheModel?.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == false && cacheModel.IpModelViewModel.IpMultiEmployerSelect != null));
-        }
-
         private static bool IsValidToRedirectToCheckAndSubmit(IndustryPlacementViewModel cacheModel)
         {
             return (cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == null && cacheModel.TempFlexibility.IpGrantedTempFlexibility != null) ||
                    (cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed != null && cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value == true && cacheModel.TempFlexibility.IpEmployerLedUsed != null) ||
                    (cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed != null && cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value == false && cacheModel.TempFlexibility.IpGrantedTempFlexibility != null);
+        }
+
+        private static bool IsIpModelJourneyAlreadyPopulated(IndustryPlacementViewModel cacheModel)
+        {
+            return cacheModel?.IpModelViewModel?.IpMultiEmployerUsed != null &&
+                    ((cacheModel?.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == true && cacheModel.IpModelViewModel.IpMultiEmployerOther != null) ||
+                     (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == false && cacheModel.IpModelViewModel.IpMultiEmployerSelect != null));
+        }
+
+        private static bool IsMultiEmpModelJourneyAlreadyPopulated(IndustryPlacementViewModel cacheModel)
+        {
+            return (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == true && cacheModel.IpModelViewModel.IpMultiEmployerOther != null) ||
+                     (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == false && cacheModel.IpModelViewModel.IpMultiEmployerSelect != null);
         }
     }
 }

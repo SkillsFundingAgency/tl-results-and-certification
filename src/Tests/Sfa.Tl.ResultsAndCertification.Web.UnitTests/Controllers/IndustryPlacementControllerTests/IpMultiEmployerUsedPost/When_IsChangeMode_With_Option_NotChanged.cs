@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpMultiEmployerUsedPost
@@ -21,7 +22,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             _cacheResult = new IndustryPlacementViewModel
             {
                 IpCompletion = _ipCompletionViewModel,
-                IpModelViewModel = new IpModelViewModel { IpModelUsed = _ipModelUsedViewModel, IpMultiEmployerUsed = new IpMultiEmployerUsedViewModel { IsMultiEmployerModelUsed = true } },
+                IpModelViewModel = new IpModelViewModel 
+                { 
+                    IpModelUsed = _ipModelUsedViewModel, 
+                    IpMultiEmployerUsed = new IpMultiEmployerUsedViewModel { IsMultiEmployerModelUsed = true },
+                    IpMultiEmployerOther = new IpMultiEmployerOtherViewModel { OtherIpPlacementModels = new List<IpLookupDataViewModel> { new IpLookupDataViewModel { Name = "Item 1", IsSelected = true } } }
+                },
             };
 
             ViewModel = new IpMultiEmployerUsedViewModel { IsMultiEmployerModelUsed = true, IsChangeMode = true };
