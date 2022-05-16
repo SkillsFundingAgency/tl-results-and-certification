@@ -227,7 +227,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                         .Select(x => x.Name);
 
                     if (selectedTfList != null && selectedTfList.Any())
-                        detailsList.Add(new SummaryItemModel { Id = "anyothertempflexlist", Title = CheckAndSubmitContent.Title_TempFlex_Selected_Text, Value = ConvertListToRawHtmlString(selectedTfList), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Tf_Employer_Led_List });
+                        detailsList.Add(new SummaryItemModel { Id = "anyothertempflexlist", Title = CheckAndSubmitContent.Title_TempFlex_Emp_Led_Text, Value = true.ToYesOrNoString(), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Tf_Employer_Led_List });
                 }
                 else
                     TempFlexUsedList(cacheModel, detailsList);
@@ -243,7 +243,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var selectedTfList = cacheModel?.TempFlexibility?.IpGrantedTempFlexibility?.TemporaryFlexibilities.Where(x => x.IsSelected).Select(x => x.Name);
             if (selectedTfList != null && selectedTfList.Any())
-                detailsList.Add(new SummaryItemModel { Id = "tempflexusedlist", Title = CheckAndSubmitContent.Title_TempFlex_Emp_Led_Text, Value = ConvertListToRawHtmlString(selectedTfList), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Tf_Granted_List });
+                detailsList.Add(new SummaryItemModel { Id = "tempflexusedlist", Title = CheckAndSubmitContent.Title_TempFlex_Selected_Text, Value = ConvertListToRawHtmlString(selectedTfList), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Tf_Granted_List });
         }
 
         private static string ConvertListToRawHtmlString(IEnumerable<string> selectedList)
