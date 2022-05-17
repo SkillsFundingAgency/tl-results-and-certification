@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpMultiEmployerOtherGet
 {
-    public class When_Cache_Found_For_IpMultiEmployerOther : TestSetup
+    public class When_Cache_Found_IsCacheMode_IsTrue : TestSetup
     {
         private IndustryPlacementViewModel _cacheResult;
         private IpCompletionViewModel _ipCompletionViewModel;
@@ -23,6 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             _ipMultiEmployerUsedViewModel = new IpMultiEmployerUsedViewModel { LearnerName = "First Last", IsMultiEmployerModelUsed = true };
             _ipMultiEmployerOtherViewModel = new IpMultiEmployerOtherViewModel
             {
+                IsChangeMode = true,
                 LearnerName = "First Last",
                 OtherIpPlacementModels = new List<IpLookupDataViewModel>
                 {

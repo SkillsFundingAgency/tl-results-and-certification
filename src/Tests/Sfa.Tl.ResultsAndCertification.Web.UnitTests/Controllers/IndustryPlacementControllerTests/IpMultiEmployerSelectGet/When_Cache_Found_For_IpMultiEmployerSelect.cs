@@ -64,6 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.Should().NotBeNull();
             model.LearnerName.Should().Be(_ipMultiEmployerSelectViewModel.LearnerName);
             model.PlacementModels.Should().BeEquivalentTo(_ipMultiEmployerSelectViewModel.PlacementModels);
+            model.IsChangeMode.Should().BeFalse();
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.IpMultiEmployerUsed);

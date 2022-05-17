@@ -7,9 +7,9 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpMultiEmployerSelectPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpMultiEmployerOtherPost
 {
-    public class When_IsChangeMode_IsTrue : TestSetup
+    public class When_Called_With_Valid_Data_IsChangeMode_IsTrue : TestSetup
     {
         private IndustryPlacementViewModel _cacheResult;
         private IpCompletionViewModel _ipCompletionViewModel;
@@ -18,21 +18,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
         public override void Given()
         {
-            _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = 1, PathwayId = 1, AcademicYear = 2020, LearnerName = "First Last", IndustryPlacementStatus = IndustryPlacementStatus.Completed };
+            _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = 1, PathwayId = 1, AcademicYear = 2020, LearnerName = "First Last", IndustryPlacementStatus =IndustryPlacementStatus.Completed };
             _ipModelUsedViewModel = new IpModelUsedViewModel { IsIpModelUsed = true };
-            _ipMultiEmployerUsedViewModel = new IpMultiEmployerUsedViewModel { LearnerName = _ipCompletionViewModel.LearnerName, IsMultiEmployerModelUsed = false, IsChangeMode = true };
+            _ipMultiEmployerUsedViewModel = new IpMultiEmployerUsedViewModel { LearnerName = _ipCompletionViewModel.LearnerName, IsMultiEmployerModelUsed = true };
 
             _cacheResult = new IndustryPlacementViewModel
             {
-                IsChangeModeAllowed = true,
                 IpCompletion = _ipCompletionViewModel,
-                IpModelViewModel = new IpModelViewModel { IpModelUsed = _ipModelUsedViewModel, IpMultiEmployerUsed = _ipMultiEmployerUsedViewModel }
+                IpModelViewModel = new IpModelViewModel 
+                { 
+                    IpModelUsed = _ipModelUsedViewModel, IpMultiEmployerUsed = _ipMultiEmployerUsedViewModel
+                },
+                IsChangeModeAllowed = true
             };
 
-            ViewModel = new IpMultiEmployerSelectViewModel
+            ViewModel = new IpMultiEmployerOtherViewModel
             {
+                IsChangeMode = true,
                 LearnerName = _ipCompletionViewModel.LearnerName,
-                PlacementModels = new List<IpLookupDataViewModel>
+                OtherIpPlacementModels = new List<IpLookupDataViewModel>
                 {
                     new IpLookupDataViewModel { Id = 1, Name = "Test 1", IsSelected = false },
                     new IpLookupDataViewModel { Id = 2, Name = "Test 2", IsSelected = true }
@@ -49,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
         }
 
         [Fact]
-        public void Then_Redirected_To_Expected_IpCheckAndSubmit()
+        public void Then_Redirected_To_Expected_Route()
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.IpCheckAndSubmit);

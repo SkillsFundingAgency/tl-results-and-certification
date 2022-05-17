@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpMultiEmployerOtherGet
 {
-    public class When_Cache_Found_For_IpMultiEmployerOther : TestSetup
+    public class When_Cache_Found_For_IpMultiEmployerOther_IsChanged_IsTrue : TestSetup
     {
         private IndustryPlacementViewModel _cacheResult;
         private IpCompletionViewModel _ipCompletionViewModel;
@@ -18,6 +18,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
         public override void Given()
         {
+            IsChangeMode = true;
+
             _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = 1, AcademicYear = 2020, LearnerName = "First Last", IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed };
             _ipModelUsedViewModel = new IpModelUsedViewModel { ProfileId = 1, IsIpModelUsed = true };
             _ipMultiEmployerUsedViewModel = new IpMultiEmployerUsedViewModel { LearnerName = "First Last", IsMultiEmployerModelUsed = true };
@@ -33,9 +35,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
             _cacheResult = new IndustryPlacementViewModel
             {
+                IsChangeModeAllowed = true,
                 IpCompletion = _ipCompletionViewModel,
-                IpModelViewModel = new IpModelViewModel 
-                { 
+                IpModelViewModel = new IpModelViewModel
+                {
                     IpModelUsed = _ipModelUsedViewModel,
                     IpMultiEmployerUsed = _ipMultiEmployerUsedViewModel,
                     IpMultiEmployerOther = _ipMultiEmployerOtherViewModel
@@ -64,10 +67,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.Should().NotBeNull();
             model.LearnerName.Should().Be(_ipMultiEmployerUsedViewModel.LearnerName);
             model.OtherIpPlacementModels.Should().BeEquivalentTo(_ipMultiEmployerOtherViewModel.OtherIpPlacementModels);
-            model.IsChangeMode.Should().BeFalse();
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.IpMultiEmployerUsed);
+            model.BackLink.RouteName.Should().Be(RouteConstants.IpCheckAndSubmit);
             model.BackLink.RouteAttributes.Count.Should().Be(0);
         }
     }
