@@ -913,6 +913,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return tqRegistrationPathway.IndustryPlacements.Select(x => new IndustryPlacement
             {
                 Status = x.Status,
+                Details = x.Details,
                 CreatedBy = performedBy
             }).ToList();
         }

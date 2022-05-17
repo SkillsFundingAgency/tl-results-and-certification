@@ -143,8 +143,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 // Assert Active Pathway
                 var activePathway = actualRegistrationProfile.TqRegistrationPathways.FirstOrDefault(x => expectedPathwayAfterTransfer.Any(y => y.TqProviderId == x.TqProviderId));
                 var expectedActivePathway = expectedPathwayAfterTransfer.FirstOrDefault(x => actualRegistrationProfile.TqRegistrationPathways.Any(y => y.TqProviderId == x.TqProviderId));
-                //var activePathway = actualRegistrationProfile.TqRegistrationPathways.FirstOrDefault(x => x.EndDate == null && x.Status == RegistrationPathwayStatus.Active);
-                //var expectedActivePathway = expectedRegistrationProfile.TqRegistrationPathways.FirstOrDefault(x => actualRegistrationProfile.TqRegistrationPathways.Any(y => y.TqProviderId == x.TqProviderId && x.Status == RegistrationPathwayStatus.Transferred));
                 AssertRegistrationPathway(activePathway, expectedActivePathway, isTransferred: true);
 
                 // Assert Active PathwayAssessment
@@ -197,14 +195,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                     AssertSpecialismResult(actualTransferredSpecialismResult, expectedTransferredSpecialismResult, isTransferred: true);
                 }
 
-                //var activeSpecialism = activePathway.TqRegistrationSpecialisms.FirstOrDefault(x => x.EndDate == null);
-                
-
                 // Assert IndustryPlacement Data
                 var actualActiveIndustryPlacement = activePathway.IndustryPlacements.FirstOrDefault();
                 var expectedPreviousIndustryPlacement = expectedTransferredPathway.IndustryPlacements.FirstOrDefault();
 
                 actualActiveIndustryPlacement.Status.Should().Be(expectedPreviousIndustryPlacement.Status);
+                actualActiveIndustryPlacement.Details.Should().Be(expectedPreviousIndustryPlacement.Details);
             }
         }
 
@@ -250,7 +246,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             if (seedIndustryPlacement)
             {
-                var industryPlacement = IndustryPlacementProvider.CreateIndustryPlacement(DbContext, new IndustryPlacement { Status = IndustryPlacementStatus.Completed, CreatedBy = "Test User" });
+                var industryPlacement = IndustryPlacementProvider.CreateIndustryPlacement(DbContext, new IndustryPlacement { Status = IndustryPlacementStatus.Completed, Details = "{'industryPlacementStatus': 'Completed'}", CreatedBy = "Test User" });
                 tqRegistrationPathway.IndustryPlacements.Add(industryPlacement);
             }
 
