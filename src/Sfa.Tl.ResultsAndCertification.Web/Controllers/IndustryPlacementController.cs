@@ -562,8 +562,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("industry-placement-temporary-flexibility-employer-led", Name = RouteConstants.IpEmployerLedUsed)]
-        public async Task<IActionResult> IpEmployerLedUsedAsync()
+        [Route("industry-placement-temporary-flexibility-employer-led/{isChangeMode:bool?}", Name = RouteConstants.IpEmployerLedUsed)]
+        public async Task<IActionResult> IpEmployerLedUsedAsync(bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
 
@@ -591,11 +591,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 viewModel = cacheModel?.TempFlexibility?.IpEmployerLedUsed;
             }
 
+            viewModel.IsChangeMode = (isChangeMode || (cacheModel.TempFlexibility?.IpEmployerLedUsed?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
+            
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("industry-placement-temporary-flexibility-employer-led", Name = RouteConstants.SubmitIpEmployerLedUsed)]
+        [Route("industry-placement-temporary-flexibility-employer-led/{isChangeMode:bool?}", Name = RouteConstants.SubmitIpEmployerLedUsed)]
         public async Task<IActionResult> IpEmployerLedUsedAsync(IpEmployerLedUsedViewModel model)
         {
             if (!ModelState.IsValid)
