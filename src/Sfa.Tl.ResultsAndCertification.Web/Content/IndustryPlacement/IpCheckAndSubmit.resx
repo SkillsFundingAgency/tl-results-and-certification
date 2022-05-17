@@ -184,13 +184,13 @@
     <value>Date of birth</value>
   </data>
   <data name="Title_IpModels_Selected_List_Text" xml:space="preserve">
-    <value>Selected Industrial placement models</value>
+    <value>Selected industry placement models</value>
   </data>
   <data name="Title_IpModel_Multi_Emp_Text" xml:space="preserve">
     <value>Multiple employer model used</value>
   </data>
   <data name="Title_IpModel_Selected_Other_List_Text" xml:space="preserve">
-    <value>Selected other industrial placement models</value>
+    <value>Selected other industry placement models</value>
   </data>
   <data name="Title_IpModel_Text" xml:space="preserve">
     <value>Industry placement models used</value>
