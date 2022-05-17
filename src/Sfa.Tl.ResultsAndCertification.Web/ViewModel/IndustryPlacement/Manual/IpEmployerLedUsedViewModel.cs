@@ -20,6 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
 
         public IList<IpLookupDataViewModel> TemporaryFlexibilities { get; set; }
 
-        public virtual BackLinkModel BackLink => new() { RouteName = RouteConstants.IpBlendedPlacementUsed };
+        public bool IsChangeMode { get; set; }
+
+        public virtual BackLinkModel BackLink => new() { RouteName = IsChangeMode ? RouteConstants.IpCheckAndSubmit : RouteConstants.IpBlendedPlacementUsed };
     }
 }

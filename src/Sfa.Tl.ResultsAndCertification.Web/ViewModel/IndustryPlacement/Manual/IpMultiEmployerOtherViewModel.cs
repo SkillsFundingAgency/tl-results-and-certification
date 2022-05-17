@@ -16,6 +16,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         public IList<IpLookupDataViewModel> OtherIpPlacementModels { get; set; }
         public bool IsChangeMode { get; set; }
 
-        public virtual BackLinkModel BackLink => IsChangeMode ? new() { RouteName = RouteConstants.IpCheckAndSubmit } : new() { RouteName = RouteConstants.IpMultiEmployerUsed };
+        public virtual BackLinkModel BackLink => new() { RouteName = IsChangeMode ? RouteConstants.IpCheckAndSubmit : RouteConstants.IpMultiEmployerUsed };
     }
 }
