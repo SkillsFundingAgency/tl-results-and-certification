@@ -166,6 +166,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var expectedPreviousIndustryPlacement = expectedTransferredPathway.IndustryPlacements.FirstOrDefault();
 
             actualActiveIndustryPlacement.Status.Should().Be(expectedPreviousIndustryPlacement.Status);
+            actualActiveIndustryPlacement.Details.Should().Be(expectedPreviousIndustryPlacement.Details);
         }
 
         private static void AssertRegistrationPathway(TqRegistrationPathway actualPathway, TqRegistrationPathway expectedPathway)
