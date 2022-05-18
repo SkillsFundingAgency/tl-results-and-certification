@@ -38,6 +38,9 @@
 
                 if (TempFlexibility.IpBlendedPlacementUsed != null)
                     TempFlexibility.IpBlendedPlacementUsed.IsChangeMode = false;
+
+                if (TempFlexibility.IpEmployerLedUsed != null)
+                    TempFlexibility.IpEmployerLedUsed.IsChangeMode = false;
             }
         }
     }
