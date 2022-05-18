@@ -135,6 +135,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
+
             var viewModel = cacheModel.IpModelViewModel?.IpModelUsed ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpModelUsedViewModel>(cacheModel.IpCompletion);
             viewModel.IsChangeMode = (isChangeMode || (cacheModel.IpModelViewModel?.IpModelUsed?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
 
@@ -168,7 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                     return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
             }
 
-            if (cacheModel?.IpModelViewModel == null)
+            if (cacheModel?.IpModelViewModel == null)   
                 cacheModel.IpModelViewModel = new IpModelViewModel();
 
             cacheModel.IpModelViewModel.IpModelUsed = model;
@@ -254,9 +255,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = (cacheModel.IpModelViewModel?.IpMultiEmployerOther) ?? await _industryPlacementLoader.GetIpLookupDataAsync<IpMultiEmployerOtherViewModel>(IpLookupType.IndustryPlacementModel, cacheModel.IpCompletion.LearnerName, cacheModel.IpCompletion.PathwayId, true);
-            viewModel.IsChangeMode =
-                (isChangeMode || (cacheModel.IpModelViewModel?.IpMultiEmployerOther?.IsChangeMode ?? false)) &&
-                cacheModel.IsChangeModeAllowed == true;
+            viewModel.IsChangeMode = (isChangeMode || (cacheModel.IpModelViewModel?.IpMultiEmployerOther?.IsChangeMode ?? false)) && cacheModel.IsChangeModeAllowed == true;
 
             return View(viewModel);
         }
@@ -285,7 +284,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 cacheModel.IpModelViewModel?.IpMultiEmployerOther?.IsChangeMode == true)
                 return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
 
-            return RedirectToRoute((model.IsChangeMode || cacheModel.IpModelViewModel.IpMultiEmployerOther.IsChangeMode) ? RouteConstants.IpCheckAndSubmit : RouteConstants.IpTempFlexibilityUsed);
+            return RedirectToRoute(RouteConstants.IpTempFlexibilityUsed);
         }
 
         [HttpGet]

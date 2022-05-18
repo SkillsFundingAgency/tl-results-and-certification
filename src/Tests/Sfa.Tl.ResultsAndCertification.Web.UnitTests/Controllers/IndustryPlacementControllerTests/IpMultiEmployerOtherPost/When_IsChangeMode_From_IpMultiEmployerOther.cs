@@ -28,7 +28,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 IpModelViewModel = new IpModelViewModel 
                 { 
                     IpModelUsed = _ipModelUsedViewModel, IpMultiEmployerUsed = _ipMultiEmployerUsedViewModel
-                }
+                },
+                IsChangeModeAllowed = true
             };
 
             ViewModel = new IpMultiEmployerOtherViewModel
