@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
@@ -28,6 +29,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IsSendLearner, opts => opts.MapFrom(s => s.IsSendLearner))
                .ForMember(d => d.IndustryPlacementId, opts => opts.MapFrom(s => s.IndustryPlacementId))
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
+
+            CreateMap<PagedResponse<SearchLearnerDetail>, SearchLearnerDetailsListViewModel>()
+               .ForMember(d => d.TotalRecords, opts => opts.MapFrom(s => s.TotalRecords))
+               .ForMember(d => d.SearchLearnerDetailsList, opts => opts.MapFrom(s => s.Records));
+
+            CreateMap<SearchLearnerDetail, SearchLearnerDetailsViewModel>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName))
+               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
+               .ForMember(d => d.StartYear, opts => opts.MapFrom(s => $"{s.AcademicYear} to {s.AcademicYear + 1}"))
+               .ForMember(d => d.IsMathsAdded, opts => opts.MapFrom(s => s.MathsStatus != null && s.MathsStatus != SubjectStatus.NotSpecified))
+               .ForMember(d => d.IsEnglishAdded, opts => opts.MapFrom(s => s.EnglishStatus != null && s.EnglishStatus != SubjectStatus.NotSpecified))
+               .ForMember(d => d.IsIndustryPlacementAdded, opts => opts.MapFrom(s => s.IndustryPlacementStatus != null && s.IndustryPlacementStatus != IndustryPlacementStatus.NotSpecified));
 
             CreateMap<LearnerRecordDetails, LearnerRecordDetailsViewModel1>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))

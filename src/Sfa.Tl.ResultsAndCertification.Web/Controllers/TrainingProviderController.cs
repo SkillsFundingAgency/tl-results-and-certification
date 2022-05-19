@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("manage-learners/{academicYear}")]
+        [Route("manage-learners/{academicYear}", Name = RouteConstants.SearchLearnerDetails)]
         public async Task<IActionResult> SearchLearnerDetailsAsync(int academicYear)
         {
             var viewmodel = await _trainingProviderLoader.SearchLearnerDetailsAsync(User.GetUkPrn(), academicYear);
