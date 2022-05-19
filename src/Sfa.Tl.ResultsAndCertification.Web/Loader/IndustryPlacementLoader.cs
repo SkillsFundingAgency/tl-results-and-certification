@@ -256,9 +256,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         private static void TempFlexUsedList(IndustryPlacementViewModel cacheModel, List<SummaryItemModel> detailsList)
         {
+            var routeAttributes = new Dictionary<string, string> { { Constants.IsChangeMode, "true" } };
             var selectedTfList = cacheModel?.TempFlexibility?.IpGrantedTempFlexibility?.TemporaryFlexibilities.Where(x => x.IsSelected).Select(x => x.Name);
             if (selectedTfList != null && selectedTfList.Any())
-                detailsList.Add(new SummaryItemModel { Id = "tempflexusedlist", Title = CheckAndSubmitContent.Title_TempFlex_Selected_Text, Value = ConvertListToRawHtmlString(selectedTfList), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Tf_Granted_List });
+                detailsList.Add(new SummaryItemModel { Id = "tempflexusedlist", Title = CheckAndSubmitContent.Title_TempFlex_Selected_Text, Value = ConvertListToRawHtmlString(selectedTfList), ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Tf_Granted_List, RouteName = RouteConstants.IpGrantedTempFlexibility, RouteAttributes = routeAttributes });
         }
 
         private static string ConvertListToRawHtmlString(IEnumerable<string> selectedList)

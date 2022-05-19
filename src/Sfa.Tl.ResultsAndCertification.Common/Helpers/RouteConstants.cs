@@ -260,6 +260,7 @@
         public const string AddEnglishStatus = "AddEnglishStatus";
         public const string SubmitAddEnglishStatus = "SubmitAddEnglishStatus";
 
+        public const string SearchLearnerDetails = "SearchLearnerDetails";
         public const string SearchLearnerRecord = "SearchLearnerRecord";
         public const string SubmitSearchLearnerRecord = "SubmitSearchLearnerRecord";
         public const string SearchLearnerRecordNotFound = "SearchLearnerRecordNotFound";
