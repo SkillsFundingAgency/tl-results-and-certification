@@ -19,7 +19,7 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <div>
-            @foreach (var learner in Model.ManageLearners)
+            @foreach (var learner in Model.SearchLearnerDetailsList)
             {
                 <partial name="Partials/_learnerDetailsCard.cshtml" model="learner" />
             }

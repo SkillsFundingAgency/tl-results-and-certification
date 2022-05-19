@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
     public class SearchLearnerDetailsListViewModel
     {
-        public IList<SearchLearnerDetailsViewModel> ManageLearners;
+        public IList<SearchLearnerDetailsViewModel> SearchLearnerDetailsList;
         public int TotalRecords { get; set; }
 
         public BreadcrumbModel Breadcrumb

@@ -21,41 +21,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<SearchLearnerDetailsListViewModel> SearchLearnerDetailsAsync(long providerUkprn, int academicYear)
         {
-            // TODO: Call-Api
-            await Task.CompletedTask;
+            var apiRequest = new SearchLearnerRequest { Ukprn = providerUkprn, AcademicYear = new List<int> { academicYear } };
+            var apiResponse = await _internalApiClient.SearchLearnerDetailsAsync(apiRequest);
 
-            return new SearchLearnerDetailsListViewModel
-            {
-                ManageLearners = new List<SearchLearnerDetailsViewModel> 
-                {
-                    new SearchLearnerDetailsViewModel
-                    {
-                        ProfileId = 1,
-                        LearnerName = "John Smith",
-                        Uln = 1234567890,
-                        StartYear = "2020 to 2021",
-                        TlevelTitle = "Design, Surveying and Planning for Construction"
-                    },
-
-                    new SearchLearnerDetailsViewModel
-                    {
-                        ProfileId = 2,
-                        LearnerName = "Hello World",
-                        Uln = 9994567890,
-                        StartYear = "2020 to 2021",
-                        TlevelTitle = "Education and childcare"
-                    },
-
-                    new SearchLearnerDetailsViewModel
-                    {
-                        ProfileId = 3,
-                        LearnerName = "Micky Mouse",
-                        Uln = 8884567890,
-                        StartYear = "2020 to 2021",
-                        TlevelTitle = "Education and childcare"
-                    }
-                }
-            };
+            var viewModel = _mapper.Map<SearchLearnerDetailsListViewModel>(apiResponse);
+            return viewModel;
         }
 
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation = false)
