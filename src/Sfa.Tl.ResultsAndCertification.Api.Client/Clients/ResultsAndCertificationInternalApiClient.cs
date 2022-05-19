@@ -284,49 +284,49 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         // Training Provider endpoints
         public async Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request)
         {
-            await Task.CompletedTask;
-            return new PagedResponse<SearchLearnerDetail>
-            {
-                TotalRecords = 80,
-                Records = new List<SearchLearnerDetail>
-                {
-                    new SearchLearnerDetail
-                    {
-                        ProfileId = 1,
-                        Uln = 1234567890,
-                        LearnerName = "John Smith1",
-                        TlevelTitle = "T level in Education and childcare",
-                        AcademicYear = 2020,
-                        EnglishStatus = SubjectStatus.Achieved,
-                        MathsStatus = SubjectStatus.Achieved,
-                        IndustryPlacementStatus = IndustryPlacementStatus.Completed
-                    },
-                    new SearchLearnerDetail
-                    {
-                        ProfileId = 2,
-                        Uln = 2222267890,
-                        LearnerName = "John Smith2",
-                        TlevelTitle = "T level in Design and Survey",
-                        AcademicYear = 2020,
-                        EnglishStatus = SubjectStatus.NotSpecified,
-                        MathsStatus = SubjectStatus.Achieved,
-                        IndustryPlacementStatus = IndustryPlacementStatus.Completed
-                    },
-                    new SearchLearnerDetail
-                    {
-                        ProfileId = 3,
-                        Uln = 2222267890,
-                        LearnerName = "John Smith3",
-                        TlevelTitle = "T level in Design and Survey",
-                        AcademicYear = 2020,
-                        EnglishStatus = null,
-                        MathsStatus = SubjectStatus.Achieved,
-                        IndustryPlacementStatus = IndustryPlacementStatus.Completed
-                    }
-                }
-            };
+            //await Task.CompletedTask;
+            //return new PagedResponse<SearchLearnerDetail>
+            //{
+            //    TotalRecords = 80,
+            //    Records = new List<SearchLearnerDetail>
+            //    {
+            //        new SearchLearnerDetail
+            //        {
+            //            ProfileId = 1,
+            //            Uln = 1234567890,
+            //            LearnerName = "John Smith1",
+            //            TlevelTitle = "T level in Education and childcare",
+            //            AcademicYear = 2020,
+            //            EnglishStatus = SubjectStatus.Achieved,
+            //            MathsStatus = SubjectStatus.Achieved,
+            //            IndustryPlacementStatus = IndustryPlacementStatus.Completed
+            //        },
+            //        new SearchLearnerDetail
+            //        {
+            //            ProfileId = 2,
+            //            Uln = 2222267890,
+            //            LearnerName = "John Smith2",
+            //            TlevelTitle = "T level in Design and Survey",
+            //            AcademicYear = 2020,
+            //            EnglishStatus = SubjectStatus.NotSpecified,
+            //            MathsStatus = SubjectStatus.Achieved,
+            //            IndustryPlacementStatus = IndustryPlacementStatus.Completed
+            //        },
+            //        new SearchLearnerDetail
+            //        {
+            //            ProfileId = 3,
+            //            Uln = 2222267890,
+            //            LearnerName = "John Smith3",
+            //            TlevelTitle = "T level in Design and Survey",
+            //            AcademicYear = 2020,
+            //            EnglishStatus = null,
+            //            MathsStatus = SubjectStatus.Achieved,
+            //            IndustryPlacementStatus = IndustryPlacementStatus.Completed
+            //        }
+            //    }
+            //};
 
-            //return await PostAsync<SearchLearnerRequest, PagedResponse<SearchLearnerDetail>>(ApiConstants.SearchLearnerDetailsUri, request);
+            return await PostAsync<SearchLearnerRequest, PagedResponse<SearchLearnerDetail>>(ApiConstants.SearchLearnerDetailsUri, request);
         }
 
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation = false)
