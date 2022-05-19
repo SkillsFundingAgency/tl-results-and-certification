@@ -79,15 +79,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start year: .
-        /// </summary>
-        public static string Card_Text_Start_year {
-            get {
-                return ResourceManager.GetString("Card_Text_Start_year", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Registered learners ({0}).
         /// </summary>
         public static string Heading_Registered_Learners {
@@ -111,6 +102,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start year: .
+        /// </summary>
+        public static string Start_Year_Text {
+            get {
+                return ResourceManager.GetString("Start_Year_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} to {1}.
+        /// </summary>
+        public static string Start_Year_Value {
+            get {
+                return ResourceManager.GetString("Start_Year_Value", resourceCulture);
             }
         }
     }
