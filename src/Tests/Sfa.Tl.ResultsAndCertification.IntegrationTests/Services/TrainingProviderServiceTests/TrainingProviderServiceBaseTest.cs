@@ -128,6 +128,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             profile.IsEnglishAndMathsAchieved = isEngishAndMathsAchieved;
             profile.IsSendLearner = isSendLearner;
 
+            if (isRcFeed != null && isRcFeed == false)
+            {
+                profile.EnglishStatus = isEngishAndMathsAchieved == true ? SubjectStatus.AchievedByLrs : SubjectStatus.NotAchievedByLrs;
+                profile.MathsStatus = isEngishAndMathsAchieved == true ? SubjectStatus.AchievedByLrs : SubjectStatus.NotAchievedByLrs;
+            }
+            else if (isRcFeed == true)
+            {
+                profile.EnglishStatus = isEngishAndMathsAchieved == true ? SubjectStatus.Achieved : SubjectStatus.NotAchieved;
+                profile.MathsStatus = isEngishAndMathsAchieved == true ? SubjectStatus.Achieved : SubjectStatus.NotAchieved;
+            }
+
             if (seedQualificationAchieved)
             {
                 var engQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Eng" && e.IsSendQualification == isSendQualification);
@@ -171,7 +182,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
     public enum Provider
     {
-        BarsleyCollege = 10000536,
+        TestCollege = 11111111,
+        BarnsleyCollege = 10000536,
         WalsallCollege = 10007315
     }
 }

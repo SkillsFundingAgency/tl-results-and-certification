@@ -83,6 +83,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
                 profile.EnglishStatus = isEngishAndMathsAchieved == true ? SubjectStatus.AchievedByLrs : SubjectStatus.NotAchievedByLrs;
                 profile.MathsStatus = isEngishAndMathsAchieved == true ? SubjectStatus.AchievedByLrs : SubjectStatus.NotAchievedByLrs;
             }
+            else if(isRcFeed == true)
+            {
+                profile.EnglishStatus = isEngishAndMathsAchieved == true ? SubjectStatus.Achieved : SubjectStatus.NotAchieved;
+                profile.MathsStatus = isEngishAndMathsAchieved == true ? SubjectStatus.Achieved : SubjectStatus.NotAchieved;
+            }
 
             if (seedQualificationAchieved)
             {

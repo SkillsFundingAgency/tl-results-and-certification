@@ -1,18 +1,26 @@
 ﻿using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using Notify.Interfaces;
+using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingProviderRepositoryTests
+namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProviderServiceTests
 {
-    public class When_SearchLearnerDetailsAsync_IsCalled : TrainingProviderRepositoryBaseTest
+    public class When_SearchLearnerDetailsAsync_IsCalled : TrainingProviderServiceBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, bool? isSendLearner)> _testCriteriaData;
@@ -40,15 +48,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
                 (1111111115, true, false, false, false, true, null), // from provider
             };
 
+            // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
-            Qualifications = SeedQualificationData();
-
-            foreach (var uln in _ulns)
-            {
-                _profiles.Add(SeedRegistrationDataByStatus(uln.Key, uln.Value, TqProvider));
-            }
-
-            TransferRegistration(_profiles.FirstOrDefault(p => p.UniqueLearnerNumber == 1111111113), Provider.WalsallCollege);
+            _profiles = SeedRegistrationsData(_ulns, TqProvider);
+            TransferRegistration(1111111113, Provider.WalsallCollege);
 
             foreach (var (uln, isRcFeed, seedQualificationAchieved, isSendQualification, isEngishAndMathsAchieved, seedIndustryPlacement, isSendLearner) in _testCriteriaData)
             {
@@ -58,8 +61,34 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
 
             DbContext.SaveChanges();
 
-            // Test class.
-            TrainingProviderRepository = new TrainingProviderRepository(DbContext, TraningProviderRepositoryLogger);
+            // Create Service
+            CreateMapper();
+            RegistrationProfileRepositoryLogger = new Logger<GenericRepository<TqRegistrationProfile>>(new NullLoggerFactory());
+            RegistrationProfileRepository = new GenericRepository<TqRegistrationProfile>(RegistrationProfileRepositoryLogger, DbContext);
+
+            RegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
+            RegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(RegistrationPathwayRepositoryLogger, DbContext);
+
+            IndustryPlacementRepositoryLogger = new Logger<GenericRepository<IndustryPlacement>>(new NullLoggerFactory());
+            IndustryPlacementRepository = new GenericRepository<IndustryPlacement>(IndustryPlacementRepositoryLogger, DbContext);
+
+            TrainingProviderRepositoryLogger = new Logger<TrainingProviderRepository>(new NullLoggerFactory());
+            TrainingProviderRepository = new TrainingProviderRepository(DbContext, TrainingProviderRepositoryLogger);
+
+            TrainingProviderServiceLogger = new Logger<TrainingProviderService>(new NullLoggerFactory());
+
+            NotificationsClient = Substitute.For<IAsyncNotificationClient>();
+            NotificationLogger = new Logger<NotificationService>(new NullLoggerFactory());
+            NotificationTemplateRepositoryLogger = new Logger<GenericRepository<NotificationTemplate>>(new NullLoggerFactory());
+            NotificationTemplateRepository = new GenericRepository<NotificationTemplate>(NotificationTemplateRepositoryLogger, DbContext);
+            NotificationService = new NotificationService(NotificationTemplateRepository, NotificationsClient, NotificationLogger);
+
+            ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
+            {
+                TlevelQueriedSupportEmailAddress = "test@test.com"
+            };
+
+            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, RegistrationPathwayRepository, IndustryPlacementRepository, TrainingProviderRepository, NotificationService, ResultsAndCertificationConfiguration, TrainingProviderMapper, TrainingProviderServiceLogger);
         }
 
         public override Task When()
@@ -120,6 +149,30 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
                     new object[] { new SearchLearnerRequest { AcademicYear = new List<int>(), Ukprn = (int)Provider.BarnsleyCollege } }, // Learners registered for Barnsley college for 2020 but not passing academic year
                 };
             }
+        }
+
+        private void TransferRegistration(long uln, Provider transferTo)
+        {
+            var toProvider = DbContext.TlProvider.FirstOrDefault(x => x.UkPrn == (long)transferTo);
+            var transferToTqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, toProvider, true);
+
+            var profile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
+
+            foreach (var pathway in profile.TqRegistrationPathways)
+            {
+                pathway.Status = RegistrationPathwayStatus.Transferred;
+                pathway.EndDate = DateTime.UtcNow;
+
+                foreach (var specialism in pathway.TqRegistrationSpecialisms)
+                {
+                    specialism.IsOptedin = true;
+                    specialism.EndDate = DateTime.UtcNow;
+                }
+            }
+
+            var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, profile, transferToTqProvider);
+            var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialism);
+            DbContext.SaveChanges();
         }
     }
 }

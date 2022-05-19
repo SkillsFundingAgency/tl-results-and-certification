@@ -140,14 +140,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 {
                     new object[] { 9999999999, Provider.WalsallCollege, false, null }, // Invalid Uln
 
-                    new object[] { 1111111111, Provider.BarsleyCollege, false, new FindLearnerRecord { Uln = 1111111111, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = true } }, // Active
+                    new object[] { 1111111111, Provider.BarnsleyCollege, false, new FindLearnerRecord { Uln = 1111111111, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = true } }, // Active
                     new object[] { 1111111111, Provider.WalsallCollege, false, null }, // Uln not from WalsallCollege
 
-                    new object[] { 1111111112, Provider.BarsleyCollege, false, new FindLearnerRecord { Uln = 1111111112, IsLearnerRegistered = true, HasLrsEnglishAndMaths = false, IsEnglishAndMathsAchieved = false, IsLearnerRecordAdded = false } }, // Withdrawn
-                    new object[] { 1111111113, Provider.BarsleyCollege, false, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = false, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false } }, // Transferred
+                    new object[] { 1111111112, Provider.BarnsleyCollege, false, new FindLearnerRecord { Uln = 1111111112, IsLearnerRegistered = true, HasLrsEnglishAndMaths = false, IsEnglishAndMathsAchieved = false, IsLearnerRecordAdded = false } }, // Withdrawn
+                    new object[] { 1111111113, Provider.BarnsleyCollege, false, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = false, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false } }, // Transferred
                     new object[] { 1111111113, Provider.WalsallCollege, false, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false } }, // Active
                     
-                    new object[] { 1111111114, Provider.BarsleyCollege, true, new FindLearnerRecord { Uln = 1111111114, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false, IsSendConfirmationRequired = true } }
+                    new object[] { 1111111114, Provider.BarnsleyCollege, true, new FindLearnerRecord { Uln = 1111111114, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false, IsSendConfirmationRequired = true } }
                 };
             }
         }

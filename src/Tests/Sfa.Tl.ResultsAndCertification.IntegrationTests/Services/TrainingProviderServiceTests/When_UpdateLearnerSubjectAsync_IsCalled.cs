@@ -148,23 +148,23 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
                     // Invalid Subject status - return false
                     new object[]
-                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarsleyCollege, ProfileId = 1, SubjectStatus = SubjectStatus.NotSpecified, SubjectType = SubjectType.Maths, PerformedBy = "Test User" }, false },
+                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarnsleyCollege, ProfileId = 1, SubjectStatus = SubjectStatus.NotSpecified, SubjectType = SubjectType.Maths, PerformedBy = "Test User" }, false },
 
                     // Invalid Subject type - return false
                     new object[]
-                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarsleyCollege, ProfileId = 1, SubjectStatus = SubjectStatus.Achieved, SubjectType = SubjectType.NotSpecified, PerformedBy = "Test User" }, false },
+                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarnsleyCollege, ProfileId = 1, SubjectStatus = SubjectStatus.Achieved, SubjectType = SubjectType.NotSpecified, PerformedBy = "Test User" }, false },
 
                     // Invalid when status already present - return false
                     new object[]
-                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarsleyCollege, ProfileId = 2, SubjectStatus = SubjectStatus.Achieved, SubjectType = SubjectType.Maths, PerformedBy = "Test User" }, false },
+                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarnsleyCollege, ProfileId = 2, SubjectStatus = SubjectStatus.Achieved, SubjectType = SubjectType.Maths, PerformedBy = "Test User" }, false },
 
                     // Valid Maths status - return true
                     new object[]
-                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarsleyCollege, ProfileId = 1, SubjectStatus = SubjectStatus.Achieved, SubjectType = SubjectType.Maths, PerformedBy = "Test User" }, true },
+                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarnsleyCollege, ProfileId = 1, SubjectStatus = SubjectStatus.Achieved, SubjectType = SubjectType.Maths, PerformedBy = "Test User" }, true },
 
                     // Valid English status - return true
                     new object[]
-                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarsleyCollege, ProfileId = 1, SubjectStatus = SubjectStatus.NotAchieved, SubjectType = SubjectType.English, PerformedBy = "Test User" }, true },
+                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarnsleyCollege, ProfileId = 1, SubjectStatus = SubjectStatus.NotAchieved, SubjectType = SubjectType.English, PerformedBy = "Test User" }, true },
                 };
             }
         }
