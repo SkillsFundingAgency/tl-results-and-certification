@@ -20,12 +20,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         public bool? IsTempFlexibilitySelected => (TemporaryFlexibilities.Any(x => x.IsSelected) == true) ? true : null;
 
         public IList<IpLookupDataViewModel> TemporaryFlexibilities { get; set; }
-
+        public bool IsChangeMode { get; set; }
         public virtual BackLinkModel BackLink { get; set; }
 
         public void SetBackLink(IpTempFlexibilityViewModel tempFlexibilityModel)
         {
-            if (tempFlexibilityModel?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == false)
+            if(IsChangeMode)
+            {
+                BackLink = new BackLinkModel { RouteName = RouteConstants.IpCheckAndSubmit };
+            }
+            else if (tempFlexibilityModel?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == false)
             {
                 BackLink = new BackLinkModel { RouteName = RouteConstants.IpBlendedPlacementUsed };
             }
