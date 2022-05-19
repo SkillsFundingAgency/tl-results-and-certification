@@ -635,8 +635,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("industry-placement-temporary-flexibilities", Name = RouteConstants.IpGrantedTempFlexibility)]
-        public async Task<IActionResult> IpGrantedTempFlexibilityAsync()
+        [Route("industry-placement-temporary-flexibilities/{isChangeMode:bool?}", Name = RouteConstants.IpGrantedTempFlexibility)]
+        public async Task<IActionResult> IpGrantedTempFlexibilityAsync(bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
 
@@ -663,13 +663,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 viewModel = cacheModel?.TempFlexibility?.IpGrantedTempFlexibility;
             }
 
+            viewModel.IsChangeMode = (isChangeMode || (cacheModel.TempFlexibility?.IpGrantedTempFlexibility?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
             viewModel.SetBackLink(cacheModel.TempFlexibility);
 
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("industry-placement-temporary-flexibilities", Name = RouteConstants.SubmitIpGrantedTempFlexibility)]
+        [Route("industry-placement-temporary-flexibilities/{isChangeMode:bool?}", Name = RouteConstants.SubmitIpGrantedTempFlexibility)]
         public async Task<IActionResult> IpGrantedTempFlexibilityAsync(IpGrantedTempFlexibilityViewModel model)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
