@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
@@ -25,27 +26,24 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request)
         {
-            var learnerRecords = await (from tqPathway in _dbContext.TqRegistrationPathway
-                                        join tqProfile in _dbContext.TqRegistrationProfile on tqPathway.TqRegistrationProfileId equals tqProfile.Id
-                                        join tqProvider in _dbContext.TqProvider on tqPathway.TqProviderId equals tqProvider.Id
-                                        join tlProvider in _dbContext.TlProvider on tqProvider.TlProviderId equals tlProvider.Id
-                                        join tqAo in _dbContext.TqAwardingOrganisation on tqProvider.TqAwardingOrganisationId equals tqAo.Id
-                                        join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
-                                        orderby tqPathway.CreatedOn descending
-                                        let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()
-                                        where tlProvider.UkPrn == request.Ukprn
-                                        select new SearchLearnerDetail
-                                        {
-                                            ProfileId = tqProfile.Id,
-                                            Uln = tqProfile.UniqueLearnerNumber,
-                                            LearnerName = tqProfile.Firstname + " " + tqProfile.Lastname,
-                                            AcademicYear = tqPathway.AcademicYear,
-                                            TlevelTitle = tlPathway.TlevelTitle,
-                                            EnglishStatus = tqProfile.EnglishStatus,
-                                            MathsStatus = tqProfile.MathsStatus,
-                                            IndustryPlacementStatus = ipRecord != null ? ipRecord.Status : null
-                                        })
-                                .ToListAsync();
+            Func<TqRegistrationPathway, bool> predicate = e => e.TqProvider.TlProvider.UkPrn == request.Ukprn;
+
+            if (request.AcademicYear.Any())
+                predicate = e => request.AcademicYear.Contains(e.AcademicYear) && e.TqProvider.TlProvider.UkPrn == request.Ukprn;
+
+            var learnerRecords = await _dbContext.TqRegistrationPathway
+                   .Where(x => predicate(x))
+                   .Select(x => new SearchLearnerDetail
+                   {
+                       ProfileId = x.TqRegistrationProfile.Id,
+                       Uln = x.TqRegistrationProfile.UniqueLearnerNumber,
+                       LearnerName = x.TqRegistrationProfile.Firstname + " " + x.TqRegistrationProfile.Lastname,
+                       AcademicYear = x.AcademicYear,
+                       TlevelTitle = x.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
+                       EnglishStatus = x.TqRegistrationProfile.EnglishStatus,
+                       MathsStatus = x.TqRegistrationProfile.MathsStatus,
+                       IndustryPlacementStatus = x.IndustryPlacements.Any() ? x.IndustryPlacements.FirstOrDefault().Status : null
+                   }).ToListAsync();
 
             var response = new PagedResponse<SearchLearnerDetail> { Records = learnerRecords, TotalRecords = learnerRecords.Count };
             return response;
