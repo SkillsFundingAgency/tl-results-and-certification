@@ -1,0 +1,40 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.SearchLearnerDetailsViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+<div class="app-application-card">
+    <div class="app-application-card_row app-application-card_row--header">
+        <h3 class="app-application-card__trainee-name govuk-heading-m govuk-!-margin-bottom-0">
+            <a asp-route="@RouteConstants.LearnerRecordDetails" asp-route-profileId="@Model.ProfileId" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-2">@Model.LearnerName</a>
+            <span class="govuk-body">@Model.Uln</span>
+        </h3>
+
+        @if (!Model.IsStatusCompleted)
+        {
+            <span class="app-application-card_tag-container">
+                <span style="display: inline-block;">
+                    <strong class="govuk-tag govuk-tag--red">
+                        @LearnerRecordDetails.Status_Tag_Incomplete
+                    </strong>
+                </span>
+            </span>
+        }
+    </div>
+
+    <div class="app-application-card_row app-application-card_row--body">
+        <div class="app-application-card_col">
+            <div>
+                <p class="govuk-body-s">
+                    <span class="govuk-visually-hidden">@SearchLearnerDetails.Hidden_Text_Course</span>
+                    @Model.TlevelTitle
+                </p>
+            </div>
+            <div>
+                <p class="govuk-body-s">
+                    @SearchLearnerDetails.Card_Text_Start_year
+                    <span class="app-nowrap">@Model.StartYear</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -183,17 +183,17 @@ tbody tr td {
     text-align: right;
 }
 
-@media all and (-ms-high-contrast: none) { /* IE11 flex fix */
-    tbody tr td {
-        display: block;
-    }
-}
-
 .responsive-table__heading {
     font-weight: 700;
     padding-right: 1em;
     text-align: left;
     word-break: initial;
+}
+
+@media all and (-ms-high-contrast: none) { /* IE11 flex fix */
+    tbody tr td {
+        display: block;
+    }
 }
 
 @media (max-width: 768px) {

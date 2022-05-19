@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _resultsAndCertificationConfiguration = resultsAndCertificationConfiguration;
             _mapper = mapper;
             _logger = logger;
+        }
+
+        public async Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request)
+        {
+            await Task.CompletedTask;
+            return new PagedResponse<SearchLearnerDetail> { };
         }
 
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation = false)

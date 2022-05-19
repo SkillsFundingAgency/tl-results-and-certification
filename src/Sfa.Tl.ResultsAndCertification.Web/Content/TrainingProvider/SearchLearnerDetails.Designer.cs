@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class SearchLearnerRecordNotFound {
+    public class SearchLearnerDetails {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SearchLearnerRecordNotFound() {
+        internal SearchLearnerDetails() {
         }
         
         /// <summary>
@@ -39,8 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SearchLearnerRecordNo" +
-                            "tFound", typeof(SearchLearnerRecordNotFound).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SearchLearnerDetails", typeof(SearchLearnerDetails).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -62,47 +61,56 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to search.
+        ///   Looks up a localized string similar to Back to home.
         /// </summary>
-        public static string Button_Back_To_Search {
+        public static string Button_Back_To_Home {
             get {
-                return ResourceManager.GetString("Button_Back_To_Search", resourceCulture);
+                return ResourceManager.GetString("Button_Back_To_Home", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ULN ({0}) has not been registered in this service by an exam board.
+        ///   Looks up a localized string similar to Search again.
         /// </summary>
-        public static string Heading_Uln_Not_Registered {
+        public static string Button_Search_Again {
             get {
-                return ResourceManager.GetString("Heading_Uln_Not_Registered", resourceCulture);
+                return ResourceManager.GetString("Button_Search_Again", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for a learner - ULN not registered page.
+        ///   Looks up a localized string similar to Start year: .
+        /// </summary>
+        public static string Card_Text_Start_year {
+            get {
+                return ResourceManager.GetString("Card_Text_Start_year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registered learners ({0}).
+        /// </summary>
+        public static string Heading_Registered_Learners {
+            get {
+                return ResourceManager.GetString("Heading_Registered_Learners", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Course: .
+        /// </summary>
+        public static string Hidden_Text_Course {
+            get {
+                return ResourceManager.GetString("Hidden_Text_Course", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage learners.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to If you think this learner should be registered, please contact the exam board responsible for delivering the T Level..
-        /// </summary>
-        public static string Para_Please_Contact_ExamBoard {
-            get {
-                return ResourceManager.GetString("Para_Please_Contact_ExamBoard", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You can only update records for learners registered on a T Level course by an exam board (also known as an awarding organisation)..
-        /// </summary>
-        public static string Para_You_Can_Only_Update_Registered_Learners {
-            get {
-                return ResourceManager.GetString("Para_You_Can_Only_Update_Registered_Learners", resourceCulture);
             }
         }
     }
