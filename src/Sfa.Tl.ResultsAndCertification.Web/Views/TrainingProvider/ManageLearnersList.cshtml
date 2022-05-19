@@ -1,0 +1,34 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.ManageLearnersListViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = ManageLearners.Page_Title;
+}
+
+@section NavigationBar {
+<vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-l">@string.Format(ManageLearners.Heading_Registered_Learners, Model.TotalRecords)</h1>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div>
+            @foreach (var learner in Model.ManageLearners)
+            {
+                <partial name="Partials/_manageLearner.cshtml" model="learner" />
+            }
+        </div>
+    </div>
+</div>
+
+<div class="govuk-button-group govuk-!-margin-bottom-6">
+    <a id="searchAgainButton" class="govuk-button" role="button" asp-route="@RouteConstants.SearchLearnerRecord">@ManageLearners.Button_Search_Again</a>
+    <a id="backToHomeButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.Home">@ManageLearners.Button_Back_To_Home</a>
+</div>
+
