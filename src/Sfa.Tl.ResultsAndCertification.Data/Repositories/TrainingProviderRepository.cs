@@ -28,8 +28,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         public async Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request)
         {
             var pathwayQueryable = _dbContext.TqRegistrationPathway
-                                             .Where(p => p.TqProvider.TlProvider.UkPrn == request.Ukprn && (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))
-                                             .AsQueryable();
+                                            .Include(x => x.TqRegistrationProfile)
+                                               .Include(x => x.TqProvider)
+                                                   .ThenInclude(x => x.TqAwardingOrganisation)
+                                                       .ThenInclude(x => x.TlPathway)
+                                            .Include(x => x.IndustryPlacements)
+                                            .Where(p => p.TqProvider.TlProvider.UkPrn == request.Ukprn && (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))
+                                            .AsQueryable();
 
             if (request.AcademicYear.Any())
                 pathwayQueryable = pathwayQueryable.Where(p => request.AcademicYear.Contains(p.AcademicYear));
