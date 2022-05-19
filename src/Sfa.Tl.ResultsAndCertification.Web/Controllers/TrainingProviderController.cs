@@ -33,9 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("manage-learners/{academicYear}")]
-        public async Task<IActionResult> ManageLearnersListAsync(int academicYear)
+        public async Task<IActionResult> SearchLearnerDetailsAsync(int academicYear)
         {
-            var viewmodel = await _trainingProviderLoader.GetManageLearnersListAsync(User.GetUkPrn(), academicYear);
+            var viewmodel = await _trainingProviderLoader.SearchLearnerDetailsAsync(User.GetUkPrn(), academicYear);
             return View(viewmodel);
         } 
 

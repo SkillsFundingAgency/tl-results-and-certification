@@ -19,16 +19,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _mapper = mapper;
         }
 
-        public async Task<ManageLearnersListViewModel> GetManageLearnersListAsync(long providerUkprn, int academicYear)
+        public async Task<SearchLearnerDetailsListViewModel> SearchLearnerDetailsAsync(long providerUkprn, int academicYear)
         {
             // TODO: Call-Api
             await Task.CompletedTask;
 
-            return new ManageLearnersListViewModel
+            return new SearchLearnerDetailsListViewModel
             {
-                ManageLearners = new List<ManageLearnerViewModel> 
+                ManageLearners = new List<SearchLearnerDetailsViewModel> 
                 {
-                    new ManageLearnerViewModel
+                    new SearchLearnerDetailsViewModel
                     {
                         ProfileId = 1,
                         LearnerName = "John Smith",
@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                         TlevelTitle = "Design, Surveying and Planning for Construction"
                     },
 
-                    new ManageLearnerViewModel
+                    new SearchLearnerDetailsViewModel
                     {
                         ProfileId = 2,
                         LearnerName = "Hello World",
@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                         TlevelTitle = "Education and childcare"
                     },
 
-                    new ManageLearnerViewModel
+                    new SearchLearnerDetailsViewModel
                     {
                         ProfileId = 3,
                         LearnerName = "Micky Mouse",

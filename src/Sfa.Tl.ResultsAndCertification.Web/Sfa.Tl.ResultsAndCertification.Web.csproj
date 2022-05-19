@@ -945,10 +945,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ManagePostalAddress.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\TrainingProvider\ManageLearners.Designer.cs">
+    <Compile Update="Content\TrainingProvider\SearchLearnerDetails.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ManageLearners.resx</DependentUpon>
+      <DependentUpon>SearchLearnerDetails.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\TrainingProvider\ProviderGuidance.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -1721,9 +1721,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ManagePostalAddress.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\ManageLearners.resx">
+    <EmbeddedResource Update="Content\TrainingProvider\SearchLearnerDetails.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ManageLearners.Designer.cs</LastGenOutput>
+      <LastGenOutput>SearchLearnerDetails.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\ProviderGuidance.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

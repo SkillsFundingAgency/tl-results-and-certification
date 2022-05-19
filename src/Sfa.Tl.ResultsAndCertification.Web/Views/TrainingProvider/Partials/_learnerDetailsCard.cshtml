@@ -1,4 +1,4 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.ManageLearnerViewModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.SearchLearnerDetailsViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
@@ -25,13 +25,13 @@
         <div class="app-application-card_col">
             <div>
                 <p class="govuk-body-s">
-                    <span class="govuk-visually-hidden">@ManageLearners.Hidden_Text_Course</span>
+                    <span class="govuk-visually-hidden">@SearchLearnerDetails.Hidden_Text_Course</span>
                     @Model.TlevelTitle
                 </p>
             </div>
             <div>
                 <p class="govuk-body-s">
-                    @ManageLearners.Card_Text_Start_year
+                    @SearchLearnerDetails.Card_Text_Start_year
                     <span class="app-nowrap">@Model.StartYear</span>
                 </p>
             </div>

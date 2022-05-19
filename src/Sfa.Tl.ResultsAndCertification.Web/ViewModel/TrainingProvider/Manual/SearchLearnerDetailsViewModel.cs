@@ -1,6 +1,6 @@
 ﻿namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
-    public class ManageLearnerViewModel
+    public class SearchLearnerDetailsViewModel
     {
         public int ProfileId { get; set; }
         public string LearnerName { get; set; }

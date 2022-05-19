@@ -5,9 +5,9 @@ using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewCompone
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
-    public class ManageLearnersListViewModel
+    public class SearchLearnerDetailsListViewModel
     {
-        public IList<ManageLearnerViewModel> ManageLearners;
+        public IList<SearchLearnerDetailsViewModel> ManageLearners;
         public int TotalRecords { get; set; }
 
         public BreadcrumbModel Breadcrumb
