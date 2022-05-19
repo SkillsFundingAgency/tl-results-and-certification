@@ -53,7 +53,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null)
         {
-            // TODO: can an optional param pathwayId can be removed?
             var learnerRecordQuerable = from tqPathway in _dbContext.TqRegistrationPathway
                                         join tqProfile in _dbContext.TqRegistrationProfile on tqPathway.TqRegistrationProfileId equals tqProfile.Id
                                         join tqProvider in _dbContext.TqProvider on tqPathway.TqProviderId equals tqProvider.Id

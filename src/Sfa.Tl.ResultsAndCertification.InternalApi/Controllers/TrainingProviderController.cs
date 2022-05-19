@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System.Threading.Tasks;
 
@@ -51,6 +52,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public async Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request)
         {
             return await _trainingProviderService.UpdateLearnerSubjectAsync(request);
+        }
+
+        [HttpPost]
+        [Route("SearchLearnerDetails")]
+        public async Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request)
+        {
+            return await _trainingProviderService.SearchLearnerDetailsAsync(request);
         }
     }
 }
