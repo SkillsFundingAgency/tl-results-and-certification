@@ -24,8 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var apiRequest = new SearchLearnerRequest { Ukprn = providerUkprn, AcademicYear = new List<int> { academicYear } };
             var apiResponse = await _internalApiClient.SearchLearnerDetailsAsync(apiRequest);
 
-            var viewModel = _mapper.Map<SearchLearnerDetailsListViewModel>(apiResponse);
-            return viewModel;
+            return _mapper.Map<SearchLearnerDetailsListViewModel>(apiResponse);
         }
 
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation = false)
