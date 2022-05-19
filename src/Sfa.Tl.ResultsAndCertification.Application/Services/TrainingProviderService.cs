@@ -48,8 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request)
         {
-            await Task.CompletedTask;
-            return new PagedResponse<SearchLearnerDetail> { };
+            return await _trainingProviderRepository.SearchLearnerDetailsAsync(request);
         }
 
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation = false)
