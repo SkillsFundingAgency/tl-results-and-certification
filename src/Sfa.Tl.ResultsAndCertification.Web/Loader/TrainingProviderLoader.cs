@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -16,6 +17,45 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             _internalApiClient = internalApiClient;
             _mapper = mapper;
+        }
+
+        public async Task<SearchLearnerDetailsListViewModel> SearchLearnerDetailsAsync(long providerUkprn, int academicYear)
+        {
+            // TODO: Call-Api
+            await Task.CompletedTask;
+
+            return new SearchLearnerDetailsListViewModel
+            {
+                ManageLearners = new List<SearchLearnerDetailsViewModel> 
+                {
+                    new SearchLearnerDetailsViewModel
+                    {
+                        ProfileId = 1,
+                        LearnerName = "John Smith",
+                        Uln = 1234567890,
+                        StartYear = "2020 to 2021",
+                        TlevelTitle = "Design, Surveying and Planning for Construction"
+                    },
+
+                    new SearchLearnerDetailsViewModel
+                    {
+                        ProfileId = 2,
+                        LearnerName = "Hello World",
+                        Uln = 9994567890,
+                        StartYear = "2020 to 2021",
+                        TlevelTitle = "Education and childcare"
+                    },
+
+                    new SearchLearnerDetailsViewModel
+                    {
+                        ProfileId = 3,
+                        LearnerName = "Micky Mouse",
+                        Uln = 8884567890,
+                        StartYear = "2020 to 2021",
+                        TlevelTitle = "Education and childcare"
+                    }
+                }
+            };
         }
 
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation = false)
