@@ -124,6 +124,12 @@
   <data name="Action_Text_Link_Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="Back_To_Home_Text" xml:space="preserve">
+    <value>Back to home</value>
+  </data>
+  <data name="Back_To_List_Of_Learners_Text" xml:space="preserve">
+    <value>Back to list of learners</value>
+  </data>
   <data name="English_And_Maths_Achieved_Lrs_Text" xml:space="preserve">
     <value />
     <comment>de</comment>

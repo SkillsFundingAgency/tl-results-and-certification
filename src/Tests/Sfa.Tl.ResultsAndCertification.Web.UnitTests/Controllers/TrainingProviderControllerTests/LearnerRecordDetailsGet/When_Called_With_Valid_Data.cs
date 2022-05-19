@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 ProviderName = "Barsley College",
                 ProviderUkprn = 58794528,
                 TlevelTitle = "Tlevel in Test Pathway Name",
-                StartYear = "2020 to 2021",
+                AcademicYear = 2020,
                 AwardingOrganisationName = "Pearson",
                 MathsStatus = SubjectStatus.NotSpecified,
                 EnglishStatus = SubjectStatus.NotSpecified,
@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.ProviderName.Should().Be(Mockresult.ProviderName);
             model.ProviderUkprn.Should().Be(Mockresult.ProviderUkprn);
             model.TlevelTitle.Should().Be(Mockresult.TlevelTitle);
-            model.StartYear.Should().Be(Mockresult.StartYear);
+            model.StartYear.Should().Be("2020 to 2021");
             model.AwardingOrganisationName.Should().Be(Mockresult.AwardingOrganisationName);
             model.MathsStatus.Should().Be(Mockresult.MathsStatus);
             model.EnglishStatus.Should().Be(Mockresult.EnglishStatus);
