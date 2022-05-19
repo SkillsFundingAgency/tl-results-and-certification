@@ -75,8 +75,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             if (profile == null) return;
 
             profile.IsRcFeed = isRcFeed;
-            profile.IsEnglishAndMathsAchieved = isEngishAndMathsAchieved;
+            profile.IsEnglishAndMathsAchieved = isEngishAndMathsAchieved;            
             profile.IsSendLearner = isSendLearner;
+
+            if(isRcFeed != null && isRcFeed == false)
+            {
+                profile.EnglishStatus = isEngishAndMathsAchieved == true ? SubjectStatus.AchievedByLrs : SubjectStatus.NotAchievedByLrs;
+                profile.MathsStatus = isEngishAndMathsAchieved == true ? SubjectStatus.AchievedByLrs : SubjectStatus.NotAchievedByLrs;
+            }
 
             if (seedQualificationAchieved)
             {
@@ -191,7 +197,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
 
     public enum Provider
     {
-        BarsleyCollege = 10000536,
-        WalsallCollege = 10007315
+        BarnsleyCollege = 10000536,
+        WalsallCollege = 10007315,
+        TestCollege = 11111111,
     }
 }
