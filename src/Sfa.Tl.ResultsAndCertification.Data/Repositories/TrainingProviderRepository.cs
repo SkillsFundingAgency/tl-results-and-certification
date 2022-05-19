@@ -28,30 +28,26 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         public async Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request)
         {
             var pathwayQueryable = _dbContext.TqRegistrationPathway
-                                            .Include(x => x.TqRegistrationProfile)
-                                               .Include(x => x.TqProvider)
-                                                   .ThenInclude(x => x.TqAwardingOrganisation)
-                                                       .ThenInclude(x => x.TlPathway)
-                                            .Include(x => x.IndustryPlacements)
-                                            .Where(p => p.TqProvider.TlProvider.UkPrn == request.Ukprn && (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))
-                                            .AsQueryable();
+                                             .Where(p => p.TqProvider.TlProvider.UkPrn == request.Ukprn && (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))
+                                             .AsQueryable();
 
             if (request.AcademicYear.Any())
                 pathwayQueryable = pathwayQueryable.Where(p => request.AcademicYear.Contains(p.AcademicYear));
 
-            var pathways = await pathwayQueryable.GroupBy(x => x.TqRegistrationProfileId).Select(x => x.OrderByDescending(o => o.CreatedOn).First()).ToListAsync();
-
-            var learnerRecords = pathways.Select(x => new SearchLearnerDetail
-            {
-                ProfileId = x.TqRegistrationProfile.Id,
-                Uln = x.TqRegistrationProfile.UniqueLearnerNumber,
-                LearnerName = x.TqRegistrationProfile.Firstname + " " + x.TqRegistrationProfile.Lastname,
-                AcademicYear = x.AcademicYear,
-                TlevelTitle = x.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
-                EnglishStatus = x.TqRegistrationProfile.EnglishStatus,
-                MathsStatus = x.TqRegistrationProfile.MathsStatus,
-                IndustryPlacementStatus = x.IndustryPlacements.Any() ? x.IndustryPlacements.FirstOrDefault().Status : null
-            }).ToList();
+            var learnerRecords = await pathwayQueryable
+                .Select(x => new SearchLearnerDetail
+                {
+                    ProfileId = x.TqRegistrationProfile.Id,
+                    Uln = x.TqRegistrationProfile.UniqueLearnerNumber,
+                    LearnerName = x.TqRegistrationProfile.Firstname + " " + x.TqRegistrationProfile.Lastname,
+                    AcademicYear = x.AcademicYear,
+                    TlevelTitle = x.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
+                    EnglishStatus = x.TqRegistrationProfile.EnglishStatus,
+                    MathsStatus = x.TqRegistrationProfile.MathsStatus,
+                    IndustryPlacementStatus = x.IndustryPlacements.Any() ? x.IndustryPlacements.FirstOrDefault().Status : null,
+                    CreatedOn = x.CreatedOn
+                })
+                .GroupBy(x => x.ProfileId).Select(x => x.OrderByDescending(o => o.CreatedOn).First()).ToListAsync();
 
             return new PagedResponse<SearchLearnerDetail> { Records = learnerRecords, TotalRecords = learnerRecords.Count };
         }
