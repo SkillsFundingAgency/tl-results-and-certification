@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
             Value = GetIndustryPlacementDisplayText,
             ActionText = LearnerRecordDetailsContent.Update_Action_Link_Text,
-            RouteName = RouteConstants.UpdateIndustryPlacementQuestion,
+            //RouteName = RouteConstants.UpdateIndustryPlacementQuestion,
             RouteAttributes = GetIPLinkRouteAttributes,
             NeedBorderBottomLine = false,
             RenderHiddenActionText = true,

@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             && LearnerRecordModel.LearnerRecord.IsLearnerRecordAdded == false;
         private bool IsValidEnglishAndMaths => true;
         private bool IsValidUln => LearnerRecordModel?.Uln != null;
-        private bool IsValidIndustryPlacement => LearnerRecordModel?.IndustryPlacementQuestion != null;
+        private bool IsValidIndustryPlacement => false;
         private string GetEnglishAndMathsActionText => HasLrsEnglishAndMaths ? string.Empty : CheckAndSubmitContent.Change_Action_Link_Text;
         private string GetEnglishAndMathsStatusText => HasLrsEnglishAndMaths ? GetLrsEnglishAndMathsStatusDisplayText : GetEnglishAndMathsStatusDisplayText;
         private string GetEnglishAndMathsRouteName => "sdf";
@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         {
             get
             {
-                return (LearnerRecordModel?.IndustryPlacementQuestion?.IndustryPlacementStatus) switch
+                return (IndustryPlacementStatus.Completed) switch
                 {
                     IndustryPlacementStatus.Completed => IndustryPlacementStatusContent.Completed_Display_Text,
                     IndustryPlacementStatus.CompletedWithSpecialConsideration => IndustryPlacementStatusContent.CompletedWithSpecialConsideration_Display_Text,
@@ -135,14 +135,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             Title = CheckAndSubmitContent.Title_IP_Status_Text,
             Value = GetIndustryPlacementDisplayText,
             ActionText = CheckAndSubmitContent.Change_Action_Link_Text,
-            RouteName = RouteConstants.AddIndustryPlacementQuestion,
             RouteAttributes = ChangeLinkRouteAttributes,
             NeedBorderBottomLine = false,
             RenderHiddenActionText = true,
             HiddenActionText = CheckAndSubmitContent.Industry_Placement_Action_Hidden_Text
         };
 
-        public BackLinkModel BackLink => new BackLinkModel { RouteName = RouteConstants.AddIndustryPlacementQuestion };
+        public BackLinkModel BackLink => new BackLinkModel { RouteName = "" };
 
 
         public bool HasLrsEnglishAndMaths => LearnerRecordModel?.LearnerRecord != null && LearnerRecordModel.LearnerRecord.HasLrsEnglishAndMaths;
@@ -150,7 +149,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public AddLearnerRecordViewModel ResetChangeMode()
         {
 
-            LearnerRecordModel.IndustryPlacementQuestion.IsChangeMode = false;
             return LearnerRecordModel;
         }
     }
