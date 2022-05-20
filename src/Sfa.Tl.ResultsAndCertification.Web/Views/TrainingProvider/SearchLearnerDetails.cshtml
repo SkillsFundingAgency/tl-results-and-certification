@@ -11,18 +11,20 @@
 }
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
+    <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l">@string.Format(SearchLearnerDetails.Heading_Registered_Learners, Model.TotalRecords)</h1>
     </div>
 </div>
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-        <div>
-            @foreach (var learner in Model.SearchLearnerDetailsList)
-            {
-                <partial name="Partials/_learnerDetailsCard.cshtml" model="learner" />
-            }
+    <div class="govuk-grid-column-full">
+        <div class="learner-records">
+            <dl class="govuk-summary-list">
+                @foreach (var learner in Model.SearchLearnerDetailsList)
+                {
+                    <partial name="Partials/_learnerDetailsCard.cshtml" model="learner" />
+                }
+            </dl>
         </div>
     </div>
 </div>
