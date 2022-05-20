@@ -44,22 +44,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.AddLearnerRecordAsync(learnerRecordModel);
         }
 
-        public async Task<UpdateLearnerRecordResponseViewModel> ProcessIndustryPlacementQuestionUpdateAsync(long providerUkprn, UpdateIndustryPlacementQuestionViewModel viewModel)
-        {
-            var learnerRecordDetails = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, viewModel.ProfileId, viewModel.RegistrationPathwayId);
-
-            if (learnerRecordDetails == null || !learnerRecordDetails.IsLearnerRecordAdded) return null;
-
-            if (learnerRecordDetails.IndustryPlacementStatus == viewModel.IndustryPlacementStatus)
-            {
-                return new UpdateLearnerRecordResponseViewModel { IsModified = false };
-            }
-
-            var request = _mapper.Map<UpdateLearnerRecordRequest>(viewModel, opt => { opt.Items["providerUkprn"] = providerUkprn; opt.Items["uln"] = learnerRecordDetails.Uln; });
-            var isSuccess = await _internalApiClient.UpdateLearnerRecordAsync(request);
-            return new UpdateLearnerRecordResponseViewModel { ProfileId = learnerRecordDetails.ProfileId, Uln = learnerRecordDetails.Uln, Name = learnerRecordDetails.Name, IsModified = true, IsSuccess = isSuccess };
-        }
-
         public async Task<bool> UpdateLearnerSubjectAsync(long providerUkprn, AddMathsStatusViewModel model)
         {
             var learnerSubjectRequest = _mapper.Map<UpdateLearnerSubjectRequest>(model, opt => opt.Items["providerUkprn"] = providerUkprn);

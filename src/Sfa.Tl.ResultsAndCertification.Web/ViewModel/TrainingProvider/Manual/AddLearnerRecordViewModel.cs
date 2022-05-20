@@ -9,7 +9,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public EnterUlnViewModel Uln { get; set; }
         //public EnglishAndMathsQuestionViewModel EnglishAndMathsQuestion { get; set; }
         public EnglishAndMathsLrsQuestionViewModel EnglishAndMathsLrsQuestion { get; set; }
-        public IndustryPlacementQuestionViewModel IndustryPlacementQuestion { get; set; }
 
         public bool IsChangeModeAllowed => true;
     }
