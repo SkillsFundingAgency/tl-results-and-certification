@@ -61,15 +61,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string _1Update_Action_Link_Text {
-            get {
-                return ResourceManager.GetString("1Update_Action_Link_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string Action_Text_Link_Add {
@@ -93,42 +84,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Back_To_List_Of_Learners_Text {
             get {
                 return ResourceManager.GetString("Back_To_List_Of_Learners_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string English_And_Maths_Achieved_Lrs_Text {
-            get {
-                return ResourceManager.GetString("English_And_Maths_Achieved_Lrs_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string English_And_Maths_Achieved_With_Send_Lrs_Text {
-            get {
-                return ResourceManager.GetString("English_And_Maths_Achieved_With_Send_Lrs_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string English_And_Maths_Action_Hidden_Text {
-            get {
-                return ResourceManager.GetString("English_And_Maths_Action_Hidden_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string English_And_Maths_Not_Achieved_Lrs_Text {
-            get {
-                return ResourceManager.GetString("English_And_Maths_Not_Achieved_Lrs_Text", resourceCulture);
             }
         }
         
@@ -219,15 +174,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Personal_Details_Text {
             get {
                 return ResourceManager.GetString("Personal_Details_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string Query_Action_Link_Text {
-            get {
-                return ResourceManager.GetString("Query_Action_Link_Text", resourceCulture);
             }
         }
         
@@ -331,15 +277,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string Title_EnglishAndMaths_Status_Text {
-            get {
-                return ResourceManager.GetString("Title_EnglishAndMaths_Status_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
         public static string Title_IP_Status_Text {
@@ -399,24 +336,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Uln_Text {
             get {
                 return ResourceManager.GetString("Uln_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string Update_Action_Link_Text {
-            get {
-                return ResourceManager.GetString("Update_Action_Link_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string Whats_Lrs_Text {
-            get {
-                return ResourceManager.GetString("Whats_Lrs_Text", resourceCulture);
             }
         }
     }

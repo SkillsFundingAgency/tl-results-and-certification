@@ -117,10 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="1Update_Action_Link_Text" xml:space="preserve">
-    <value />
-    <comment>delete</comment>
-  </data>
   <data name="Action_Text_Link_Add" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -129,22 +125,6 @@
   </data>
   <data name="Back_To_List_Of_Learners_Text" xml:space="preserve">
     <value>Back to list of learners</value>
-  </data>
-  <data name="English_And_Maths_Achieved_Lrs_Text" xml:space="preserve">
-    <value />
-    <comment>de</comment>
-  </data>
-  <data name="English_And_Maths_Achieved_With_Send_Lrs_Text" xml:space="preserve">
-    <value />
-    <comment>de</comment>
-  </data>
-  <data name="English_And_Maths_Action_Hidden_Text" xml:space="preserve">
-    <value />
-    <comment>delete</comment>
-  </data>
-  <data name="English_And_Maths_Not_Achieved_Lrs_Text" xml:space="preserve">
-    <value />
-    <comment>del</comment>
   </data>
   <data name="Hidden_Action_Text_English" xml:space="preserve">
     <value> english status</value>
@@ -176,10 +156,6 @@
   <data name="Personal_Details_Text" xml:space="preserve">
     <value>Personal details</value>
   </data>
-  <data name="Query_Action_Link_Text" xml:space="preserve">
-    <value />
-    <comment>delete</comment>
-  </data>
   <data name="Section_Heading_Industry_Placement" xml:space="preserve">
     <value>Industry placement</value>
   </data>
@@ -210,10 +186,6 @@
   <data name="Title_DateofBirth_Text" xml:space="preserve">
     <value>Date of birth</value>
   </data>
-  <data name="Title_EnglishAndMaths_Status_Text" xml:space="preserve">
-    <value />
-    <comment>delete</comment>
-  </data>
   <data name="Title_English_Text" xml:space="preserve">
     <value>English</value>
   </data>
@@ -237,13 +209,5 @@
   </data>
   <data name="Uln_Text" xml:space="preserve">
     <value>ULN: {0}</value>
-  </data>
-  <data name="Update_Action_Link_Text" xml:space="preserve">
-    <value />
-    <comment>delete</comment>
-  </data>
-  <data name="Whats_Lrs_Text" xml:space="preserve">
-    <value />
-    <comment>delete</comment>
   </data>
 </root>
