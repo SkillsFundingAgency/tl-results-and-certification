@@ -161,37 +161,37 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
                     // Learner Record Already Added (Lrs data) - return false
                     new object[]
-                    { new AddLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111111, HasLrsEnglishAndMaths = true, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" },
+                    { new AddLearnerRecordRequest { Ukprn = (long)Provider.BarnsleyCollege, Uln = 1111111111, HasLrsEnglishAndMaths = true, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" },
                       new AddLearnerRecordResponse { IsSuccess = false } },
 
                     // Learner Record not Added (LRS data with no industry placement) but sent EnglishAndMathsStatus - return false
                     new object[]
-                    { new AddLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111112, HasLrsEnglishAndMaths = true, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" },
+                    { new AddLearnerRecordRequest { Ukprn = (long)Provider.BarnsleyCollege, Uln = 1111111112, HasLrsEnglishAndMaths = true, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" },
                       new AddLearnerRecordResponse { IsSuccess = false, Uln = 1111111112 } },
 
                     // Learner Record not Added (LRS data with no industry placement) - return true
                     new object[]
-                    { new AddLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111112, HasLrsEnglishAndMaths = true, EnglishAndMathsStatus = null, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" },
+                    { new AddLearnerRecordRequest { Ukprn = (long)Provider.BarnsleyCollege, Uln = 1111111112, HasLrsEnglishAndMaths = true, EnglishAndMathsStatus = null, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" },
                       new AddLearnerRecordResponse { IsSuccess = true, Uln = 1111111112 } },
 
                     // Not from Lrs and Learner Record added already - return false
                     new object[]
-                    { new AddLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111113, HasLrsEnglishAndMaths = false, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" },
+                    { new AddLearnerRecordRequest { Ukprn = (long)Provider.BarnsleyCollege, Uln = 1111111113, HasLrsEnglishAndMaths = false, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" },
                       new AddLearnerRecordResponse { IsSuccess = false } },
 
                     // Not from Lrs and Learner Record not added but HasLrsEnglishAndMaths set to true - return false
                     new object[]
-                    { new AddLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111114, HasLrsEnglishAndMaths = true, EnglishAndMathsStatus = EnglishAndMathsStatus.AchievedWithSend, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" },
+                    { new AddLearnerRecordRequest { Ukprn = (long)Provider.BarnsleyCollege, Uln = 1111111114, HasLrsEnglishAndMaths = true, EnglishAndMathsStatus = EnglishAndMathsStatus.AchievedWithSend, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" },
                       new AddLearnerRecordResponse { IsSuccess = false, Uln = 1111111114 } },
 
                     // Not from Lrs and Learner Record not added - return true
                     new object[]
-                    { new AddLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111114, HasLrsEnglishAndMaths = false, EnglishAndMathsStatus = EnglishAndMathsStatus.AchievedWithSend, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" },
+                    { new AddLearnerRecordRequest { Ukprn = (long)Provider.BarnsleyCollege, Uln = 1111111114, HasLrsEnglishAndMaths = false, EnglishAndMathsStatus = EnglishAndMathsStatus.AchievedWithSend, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" },
                       new AddLearnerRecordResponse { IsSuccess = true, Uln = 1111111114 } },
 
                     // Not from Lrs and Learner Record not added - return true
                     new object[]
-                    { new AddLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111115, HasLrsEnglishAndMaths = true, EnglishAndMathsLrsStatus = EnglishAndMathsLrsStatus.AchievedWithSend, PerformedBy = "Test User" },
+                    { new AddLearnerRecordRequest { Ukprn = (long)Provider.BarnsleyCollege, Uln = 1111111115, HasLrsEnglishAndMaths = true, EnglishAndMathsLrsStatus = EnglishAndMathsLrsStatus.AchievedWithSend, PerformedBy = "Test User" },
                       new AddLearnerRecordResponse { IsSuccess = true, Uln = 1111111115 } }
                 };
             }

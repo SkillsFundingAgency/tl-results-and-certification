@@ -1,55 +1,23 @@
-.app-application-card {
-    margin-bottom: govuk-spacing(3);
-    padding-bottom: govuk-spacing(3);
-    border-bottom: 1px solid govuk-colour('mid-grey');
-}
-
-.app-application-card:first-of-type {
-    border-top: 1px solid govuk-colour('mid-grey');
-    padding-top: govuk-spacing(3);
-}
-
-.app-application-card_row {
-    min-width: 100%;
-}
-
-.app-application-card_row--header {
-    display: flex;
-    justify-content: space-between;
-
-    .app-application-card_tag-container {
-        display: flex;
-        justify-content: right;
-        flex-direction: column;
-
-        @include govuk-media-query($from: tablet) {
-            flex-direction: row;
-        }
-
-        .govuk-tag {
-            display: inline-block;
-            float: right;
-            margin-left: govuk-spacing(3);
-
-            &:first-child {
-                margin-bottom: govuk-spacing(1);
-            }
-
-            @include govuk-media-query($from: tablet) {
-                &:first-child {
-                    margin-bottom: govuk-spacing(0);
-                }
-            }
-        }
+.learner-records {
+    .govuk-grid-row {
+        padding: 15px 0;
     }
-}
 
-.app-application-card_row--body {
-    margin-top: govuk-spacing(2);
+    .govuk-summary-list {
+        &__key, &__value {
+            padding: 0;
+            width: 100%;
+            border-bottom: none;
+        }
 
-    @include govuk-media-query($from: 401px) {
-        display: flex;
-        // Ensure columns evenly distributed, with no gap at the start or end
-        justify-content: space-between;
+        &__actions {
+            padding: 0;
+            border-bottom: none;
+        }
+
+        .govuk-summary-list__row {
+            display: block;
+            border-bottom: 1px solid #B1B4B6;
+        }
     }
 }

@@ -149,19 +149,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
                     // Learner Record not Added (LRS data) - return false
                     new object[]
-                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111112, HasEnglishAndMathsChanged = true, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved, PerformedBy = "Test User" }, false },
+                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarnsleyCollege, Uln = 1111111112, HasEnglishAndMathsChanged = true, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved, PerformedBy = "Test User" }, false },
 
                     // Not from Lrs and Learner Record not added - return false
                     new object[]
-                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111113, HasEnglishAndMathsChanged = true, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved, PerformedBy = "Test User" }, false },
+                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarnsleyCollege, Uln = 1111111113, HasEnglishAndMathsChanged = true, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved, PerformedBy = "Test User" }, false },
 
                     // Not from Lrs and Learner Record added but HasEnglishAndMathsChanged set to false - return false
                     new object[]
-                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111114, HasEnglishAndMathsChanged = false, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved, PerformedBy = "Test User" }, false },
+                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarnsleyCollege, Uln = 1111111114, HasEnglishAndMathsChanged = false, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved, PerformedBy = "Test User" }, false },
 
                     // Not from Lrs and Learner Record added - return true
                     new object[]
-                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111114, HasEnglishAndMathsChanged = true, EnglishAndMathsStatus = EnglishAndMathsStatus.AchievedWithSend, PerformedBy = "Test User" }, true }
+                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarnsleyCollege, Uln = 1111111114, HasEnglishAndMathsChanged = true, EnglishAndMathsStatus = EnglishAndMathsStatus.AchievedWithSend, PerformedBy = "Test User" }, true }
                 };
             }
         }

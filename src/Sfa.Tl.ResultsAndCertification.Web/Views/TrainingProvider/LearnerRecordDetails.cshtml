@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.LearnerRecordDetailsViewModel1
 @using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 @{
     ViewData["Title"] = LearnerRecordDetails.Page_Title;
@@ -53,5 +54,10 @@
             <vc:summary-item model=Model.SummaryMathsStatus></vc:summary-item>
             <vc:summary-item model=Model.SummaryEnglishStatus></vc:summary-item>
         </dl>
+
+        <div class="govuk-button-group">
+            <a id="backToLearnersListButton" class="govuk-button" role="button" asp-route="@RouteConstants.SearchLearnerDetails" asp-route-academicYear="@Model.AcademicYear">@LearnerRecordDetails.Back_To_List_Of_Learners_Text</a>
+            <a id="backToHomeButton" class="govuk-button govuk-button--secondary" role="button" asp-route="@RouteConstants.Home">@LearnerRecordDetails.Back_To_Home_Text</a>
+        </div>
     </div>
 </div>

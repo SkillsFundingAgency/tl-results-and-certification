@@ -168,11 +168,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 {
                     new object[] { 9999999999, Provider.WalsallCollege, false, false, false }, // Invalid Uln
 
-                    new object[] { 1111111111, Provider.BarsleyCollege, true, false, true }, // Active
+                    new object[] { 1111111111, Provider.BarnsleyCollege, true, false, true }, // Active
                     new object[] { 1111111111, Provider.WalsallCollege, false, false, false }, // Uln not from WalsallCollege
 
-                    new object[] { 1111111112, Provider.BarsleyCollege, true, false, true }, // Withdrawn
-                    new object[] { 1111111113, Provider.BarsleyCollege, false, true, true }, // Transferred
+                    new object[] { 1111111112, Provider.BarnsleyCollege, true, false, true }, // Withdrawn
+                    new object[] { 1111111113, Provider.BarnsleyCollege, false, true, true }, // Transferred
                     new object[] { 1111111113, Provider.WalsallCollege, true, false, true } // Active
                 };
             }

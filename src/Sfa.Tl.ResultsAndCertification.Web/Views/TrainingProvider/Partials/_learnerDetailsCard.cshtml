@@ -2,39 +2,32 @@
 @using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
-<div class="app-application-card">
-    <div class="app-application-card_row app-application-card_row--header">
-        <h3 class="app-application-card__trainee-name govuk-heading-m govuk-!-margin-bottom-0">
-            <a asp-route="@RouteConstants.LearnerRecordDetails" asp-route-profileId="@Model.ProfileId" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-2">@Model.LearnerName</a>
-            <span class="govuk-body">@Model.Uln</span>
-        </h3>
-
-        @if (!Model.IsStatusCompleted)
-        {
-            <span class="app-application-card_tag-container">
-                <span style="display: inline-block;">
-                    <strong class="govuk-tag govuk-tag--red">
-                        @LearnerRecordDetails.Status_Tag_Incomplete
-                    </strong>
-                </span>
-            </span>
-        }
-    </div>
-
-    <div class="app-application-card_row app-application-card_row--body">
-        <div class="app-application-card_col">
-            <div>
+<div class="govuk-summary-list__row">
+    <div class="govuk-grid-row govuk-padding-1">
+        <div class="govuk-grid-column-two-thirds">
+            <dt class="govuk-summary-list__key govuk-grid-column-full">
+                <h3 class="govuk-heading-m govuk-!-margin-bottom-0">
+                    <a asp-route="@RouteConstants.LearnerRecordDetails" asp-route-profileId="@Model.ProfileId" class="govuk-link govuk-link--no-visited-state">@Model.LearnerName</a>
+                </h3>
+            </dt>
+            <dd class="govuk-summary-list__value govuk-grid-column-full">
+                <p class="govuk-body-m">@Model.Uln</p>
                 <p class="govuk-body-s">
                     <span class="govuk-visually-hidden">@SearchLearnerDetails.Hidden_Text_Course</span>
-                    @Model.TlevelTitle
+                    Design, Surveying and Planning for Construction
                 </p>
-            </div>
-            <div>
                 <p class="govuk-body-s">
-                    @SearchLearnerDetails.Card_Text_Start_year
-                    <span class="app-nowrap">@Model.StartYear</span>
+                    @SearchLearnerDetails.Start_Year_Text<span class="app-nowrap">@Model.StartYear</span>
                 </p>
-            </div>
+            </dd>
+        </div>
+        <div class="govuk-grid-column-one-third">
+            <dd class="govuk-summary-list__actions">
+                @if (!Model.IsStatusCompleted)
+                {
+                    <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-1">Incomplete</strong>
+                }
+            </dd>
         </div>
     </div>
 </div>

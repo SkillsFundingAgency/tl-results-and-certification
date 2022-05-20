@@ -25,14 +25,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
         public long ProviderUkprn { get; set; }
-        public string TlevelTitle { get; set; }
-        public string StartYear { get; set; }
+        public string TlevelTitle { get; set; }        
+        public int AcademicYear { get; set; }
         public string AwardingOrganisationName { get; set; }
         public SubjectStatus MathsStatus { get; set; }
         public SubjectStatus EnglishStatus { get; set; }
 
         public int IndustryPlacementId { get; set; } // TODO: upcoming story
         public IpStatus IndustryPlacementStatus { get; set; }
+
+        public string StartYear => string.Format(LearnerRecordDetailsContent.Start_Year_Value, AcademicYear, AcademicYear + 1);
 
         /// <summary>
         /// True when status is Active or Withdrawn

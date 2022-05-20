@@ -158,19 +158,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
                     // Learner Record Added but HasIndustryPlacementChanged set to False - returs false
                     new object[]
-                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111111, HasIndustryPlacementChanged = false, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" }, false },
+                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarnsleyCollege, Uln = 1111111111, HasIndustryPlacementChanged = false, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" }, false },
 
                     // Learner Record not Added (LRS data with no industry placement) - return false
                     new object[]
-                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111112, HasIndustryPlacementChanged = true, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" }, false },
+                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarnsleyCollege, Uln = 1111111112, HasIndustryPlacementChanged = true, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" }, false },
 
                     // Not from Lrs and Learner Record not added - return false
                     new object[]
-                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111113, HasIndustryPlacementChanged = true, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" }, false },
+                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarnsleyCollege, Uln = 1111111113, HasIndustryPlacementChanged = true, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" }, false },
 
                     // Not from Lrs and Learner Record added - return true
                     new object[]
-                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111114, HasIndustryPlacementChanged = true, IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration, PerformedBy = "Test User" }, true }
+                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarnsleyCollege, Uln = 1111111114, HasIndustryPlacementChanged = true, IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration, PerformedBy = "Test User" }, true }
                 };
             }
         }

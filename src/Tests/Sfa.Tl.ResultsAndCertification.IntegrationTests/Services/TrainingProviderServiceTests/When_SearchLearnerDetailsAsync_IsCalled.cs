@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -19,29 +20,32 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProviderServiceTests
 {
-    public class When_FindLearnerRecord_IsCalled : TrainingProviderServiceBaseTest
+    public class When_SearchLearnerDetailsAsync_IsCalled : TrainingProviderServiceBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, bool? isSendLearner)> _testCriteriaData;
         private IList<TqRegistrationProfile> _profiles;
-        private FindLearnerRecord _actualResult;
+        private PagedResponse<SearchLearnerDetail> _actualResult;
 
         public override void Given()
         {
+            _profiles = new List<TqRegistrationProfile>();
             _ulns = new Dictionary<long, RegistrationPathwayStatus>
             {
                 { 1111111111, RegistrationPathwayStatus.Active },
                 { 1111111112, RegistrationPathwayStatus.Withdrawn },
                 { 1111111113, RegistrationPathwayStatus.Active },
-                { 1111111114, RegistrationPathwayStatus.Active }
+                { 1111111114, RegistrationPathwayStatus.Active },
+                { 1111111115, RegistrationPathwayStatus.Active }
             };
 
             _testCriteriaData = new List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, bool? isSendLearner)>
             {
                 (1111111111, false, true, true, true, true, true), // Lrs data with Send Qualification + IP
                 (1111111112, true, false, false, false, false, null), // Not from Lrs
-                (1111111113, false, true, false, true, false, null), // Lrs data without Send Qualification
-                (1111111114, false, true, true, true, false, null), // Lrs data with Send Qualification
+                (1111111113, false, true, false, true, false, false), // Lrs data without Send Qualification
+                (1111111114, true, false, false, true, false, null), // from provider
+                (1111111115, true, false, false, false, true, null), // from provider
             };
 
             // Registrations seed
@@ -65,11 +69,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             RegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
             RegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(RegistrationPathwayRepositoryLogger, DbContext);
 
-            TrainingProviderRepositoryLogger = new Logger<TrainingProviderRepository>(new NullLoggerFactory());
-            TrainingProviderRepository = new TrainingProviderRepository(DbContext, TrainingProviderRepositoryLogger);
-            
             IndustryPlacementRepositoryLogger = new Logger<GenericRepository<IndustryPlacement>>(new NullLoggerFactory());
             IndustryPlacementRepository = new GenericRepository<IndustryPlacement>(IndustryPlacementRepositoryLogger, DbContext);
+
+            TrainingProviderRepositoryLogger = new Logger<TrainingProviderRepository>(new NullLoggerFactory());
+            TrainingProviderRepository = new TrainingProviderRepository(DbContext, TrainingProviderRepositoryLogger);
 
             TrainingProviderServiceLogger = new Logger<TrainingProviderService>(new NullLoggerFactory());
 
@@ -78,7 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             NotificationTemplateRepositoryLogger = new Logger<GenericRepository<NotificationTemplate>>(new NullLoggerFactory());
             NotificationTemplateRepository = new GenericRepository<NotificationTemplate>(NotificationTemplateRepositoryLogger, DbContext);
             NotificationService = new NotificationService(NotificationTemplateRepository, NotificationsClient, NotificationLogger);
-            
+
             ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
             {
                 TlevelQueriedSupportEmailAddress = "test@test.com"
@@ -92,44 +96,44 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             return Task.CompletedTask;
         }
 
-        public async Task WhenAsync(long providerUkprn, long uln, bool isSendConfirmationRequired)
+        public async Task WhenAsync(SearchLearnerRequest request)
         {
             if (_actualResult != null)
                 return;
 
-            _actualResult = await TrainingProviderService.FindLearnerRecordAsync(providerUkprn, uln, isSendConfirmationRequired);
+            _actualResult = await TrainingProviderRepository.SearchLearnerDetailsAsync(request);
         }
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Returns_Expected_Results(long uln, Provider provider, bool isSendConfirmationRequired, FindLearnerRecord expectedResult)
+        public async Task Then_Returns_Expected_Results(SearchLearnerRequest request)
         {
-            await WhenAsync((long)provider, uln, isSendConfirmationRequired);
+            await WhenAsync(request);
 
-            if (expectedResult == null)
+            var pathways = request.AcademicYear.Any()
+                ? _profiles.SelectMany(p => p.TqRegistrationPathways.Where(p => request.AcademicYear.Contains(p.AcademicYear) && p.TqProvider.TlProvider.UkPrn == request.Ukprn && (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))).ToList()
+                : _profiles.SelectMany(p => p.TqRegistrationPathways.Where(p => p.TqProvider.TlProvider.UkPrn == request.Ukprn && (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))).ToList();
+
+            var expectedLearnerDeails = pathways.Select(x => new SearchLearnerDetail
             {
-                _actualResult.Should().BeNull();
-                return;
-            }
+                ProfileId = x.TqRegistrationProfile.Id,
+                Uln = x.TqRegistrationProfile.UniqueLearnerNumber,
+                LearnerName = x.TqRegistrationProfile.Firstname + " " + x.TqRegistrationProfile.Lastname,
+                AcademicYear = x.AcademicYear,
+                TlevelTitle = x.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
+                EnglishStatus = x.TqRegistrationProfile.EnglishStatus,
+                MathsStatus = x.TqRegistrationProfile.MathsStatus,
+                IndustryPlacementStatus = x.IndustryPlacements.Any() ? x.IndustryPlacements.FirstOrDefault().Status : null,
+                CreatedOn = x.CreatedOn
+            }).ToList();
 
-            var expectedProvider = TlProviders.FirstOrDefault(p => p.UkPrn == (long)provider);
-            var expectedProviderName = expectedProvider != null ? $"{expectedProvider.Name} ({expectedProvider.UkPrn})" : null;
-            var expectedPathwayName = $"{Pathway.Name} ({Pathway.LarId})";
-            var expectedProfile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
+            var expectedPagedResponse = new PagedResponse<SearchLearnerDetail>
+            {
+                TotalRecords = expectedLearnerDeails.Count(),
+                Records = expectedLearnerDeails
+            };
 
-            expectedProfile.Should().NotBeNull();
-            _actualResult.Should().NotBeNull();
-            _actualResult.Uln.Should().Be(expectedResult.Uln);
-            _actualResult.Name.Should().Be($"{expectedProfile.Firstname} {expectedProfile.Lastname}");
-            _actualResult.DateofBirth.Should().Be(expectedProfile.DateofBirth);
-            _actualResult.ProviderName.Should().Be(expectedProviderName);
-            _actualResult.PathwayName.Should().Be(expectedPathwayName);
-            _actualResult.IsLearnerRegistered.Should().Be(expectedResult.IsLearnerRegistered);
-            _actualResult.IsEnglishAndMathsAchieved.Should().Be(expectedResult.IsEnglishAndMathsAchieved);
-            _actualResult.HasLrsEnglishAndMaths.Should().Be(expectedResult.HasLrsEnglishAndMaths);
-            _actualResult.IsSendLearner.Should().Be(expectedProfile.IsSendLearner);
-            _actualResult.IsLearnerRecordAdded.Should().Be(expectedResult.IsLearnerRecordAdded);
-            _actualResult.IsSendConfirmationRequired.Should().Be(expectedResult.IsSendConfirmationRequired);
+            _actualResult.Should().BeEquivalentTo(expectedPagedResponse);
         }
 
         public static IEnumerable<object[]> Data
@@ -138,16 +142,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             {
                 return new[]
                 {
-                    new object[] { 9999999999, Provider.WalsallCollege, false, null }, // Invalid Uln
-
-                    new object[] { 1111111111, Provider.BarnsleyCollege, false, new FindLearnerRecord { Uln = 1111111111, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = true } }, // Active
-                    new object[] { 1111111111, Provider.WalsallCollege, false, null }, // Uln not from WalsallCollege
-
-                    new object[] { 1111111112, Provider.BarnsleyCollege, false, new FindLearnerRecord { Uln = 1111111112, IsLearnerRegistered = true, HasLrsEnglishAndMaths = false, IsEnglishAndMathsAchieved = false, IsLearnerRecordAdded = false } }, // Withdrawn
-                    new object[] { 1111111113, Provider.BarnsleyCollege, false, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = false, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false } }, // Transferred
-                    new object[] { 1111111113, Provider.WalsallCollege, false, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false } }, // Active
-                    
-                    new object[] { 1111111114, Provider.BarnsleyCollege, true, new FindLearnerRecord { Uln = 1111111114, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false, IsSendConfirmationRequired = true } }
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Ukprn = (int)Provider.TestCollege } }, // No learners registered for test college
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Ukprn = (int)Provider.WalsallCollege } }, // learner transfered to walsall college
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2021 }, Ukprn = (int)Provider.BarnsleyCollege } }, // No learners registered for Barnsley college for 2021
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Ukprn = (int)Provider.BarnsleyCollege } }, // Learners registered for Barnsley college for 2020
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int>(), Ukprn = (int)Provider.BarnsleyCollege } }, // Learners registered for Barnsley college for 2020 but not passing academic year
                 };
             }
         }
@@ -159,12 +158,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
             var profile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
 
-            foreach(var pathway in profile.TqRegistrationPathways)
+            foreach (var pathway in profile.TqRegistrationPathways)
             {
                 pathway.Status = RegistrationPathwayStatus.Transferred;
                 pathway.EndDate = DateTime.UtcNow;
 
-                foreach(var specialism in pathway.TqRegistrationSpecialisms)
+                foreach (var specialism in pathway.TqRegistrationSpecialisms)
                 {
                     specialism.IsOptedin = true;
                     specialism.EndDate = DateTime.UtcNow;
@@ -175,5 +174,5 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialism);
             DbContext.SaveChanges();
         }
-    }    
+    }
 }
