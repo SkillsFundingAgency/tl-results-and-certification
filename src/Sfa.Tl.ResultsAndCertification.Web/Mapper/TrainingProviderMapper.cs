@@ -4,8 +4,6 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
-
-using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
 using SearchLearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SearchLearnerDetails;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
@@ -14,23 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
     {
         public TrainingProviderMapper()
         {
-            // TODO: This mapping should be deleted.
-            CreateMap<LearnerRecordDetails, LearnerRecordDetailsViewModel>()
-               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-               .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
-               .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
-               .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name))
-               .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
-               .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
-               .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.PathwayName))
-               .ForMember(d => d.IsLearnerRegistered, opts => opts.MapFrom(s => s.IsLearnerRegistered))
-               .ForMember(d => d.IsLearnerRecordAdded, opts => opts.MapFrom(s => s.IsLearnerRecordAdded))
-               .ForMember(d => d.IsEnglishAndMathsAchieved, opts => opts.MapFrom(s => s.IsEnglishAndMathsAchieved))
-               .ForMember(d => d.HasLrsEnglishAndMaths, opts => opts.MapFrom(s => s.HasLrsEnglishAndMaths))
-               .ForMember(d => d.IsSendLearner, opts => opts.MapFrom(s => s.IsSendLearner))
-               .ForMember(d => d.IndustryPlacementId, opts => opts.MapFrom(s => s.IndustryPlacementId))
-               .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
-
             CreateMap<PagedResponse<SearchLearnerDetail>, SearchLearnerDetailsListViewModel>()
                .ForMember(d => d.TotalRecords, opts => opts.MapFrom(s => s.TotalRecords))
                .ForMember(d => d.SearchLearnerDetailsList, opts => opts.MapFrom(s => s.Records));
@@ -62,15 +43,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IsLearnerRegistered, opts => opts.MapFrom(s => s.IsLearnerRegistered))
                .ForMember(d => d.IndustryPlacementId, opts => opts.MapFrom(s => s.IndustryPlacementId))
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
-
-            CreateMap<AddLearnerRecordViewModel, AddLearnerRecordRequest>() // TODO: Delete this?
-               .ForMember(d => d.Ukprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))
-               .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln.EnterUln))
-               .ForMember(d => d.HasLrsEnglishAndMaths, opts => opts.MapFrom(s => s.LearnerRecord.HasLrsEnglishAndMaths))
-               .ForMember(d => d.EnglishAndMathsStatus, opts => opts.MapFrom(s => EnglishAndMathsStatus.Achieved))
-               .ForMember(d => d.EnglishAndMathsLrsStatus, opts => opts.MapFrom(s => s.LearnerRecord.HasLrsEnglishAndMaths && s.EnglishAndMathsLrsQuestion != null ? s.EnglishAndMathsLrsQuestion.EnglishAndMathsLrsStatus : null))
-               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AddLearnerRecordViewModel, AddLearnerRecordRequest>>())
-               .ForMember(d => d.PerformedUserEmail, opts => opts.MapFrom<UserEmailResolver<AddLearnerRecordViewModel, AddLearnerRecordRequest>>());
 
             CreateMap<LearnerRecordDetails, AddMathsStatusViewModel>()               
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))

@@ -171,13 +171,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
         protected override void CreateMapper()
         {
+            // TODO: Config not in use anymore.
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddMaps(typeof(TrainingProviderMapper).Assembly);                
-                c.ConstructServicesUsing(type =>
-                            type.Name.Contains("DateTimeResolver") ?
-                                new DateTimeResolver<UpdateLearnerRecordRequest, TqRegistrationProfile>(new DateTimeProvider()) :
-                                null);
             });
             TrainingProviderMapper = new Mapper(mapperConfig);
         }

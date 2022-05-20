@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Enum
         [Description("Tlevel Details Queried")]
         TlevelDetailsQueriedUserNotification,
         TlevelDetailsQueriedTechnicalTeamNotification,
-        EnglishAndMathsLrsDataQueried,
+        EnglishAndMathsLrsDataQueried, // TODO: To be removed
         FunctionJobFailedNotification,
         PrintingJobFailedNotification,
         GradeChangeRequestUserNotification,
