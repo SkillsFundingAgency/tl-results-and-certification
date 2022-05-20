@@ -82,8 +82,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             await WhenAsync(request);
 
             var pathways = request.AcademicYear.Any()
-                ? _profiles.SelectMany(p => p.TqRegistrationPathways.Where(p => request.AcademicYear.Contains(p.AcademicYear) && p.TqProvider.TlProvider.UkPrn == request.Ukprn && (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))).ToList()
-                : _profiles.SelectMany(p => p.TqRegistrationPathways.Where(p => p.TqProvider.TlProvider.UkPrn == request.Ukprn && (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))).ToList();
+                ? _profiles.SelectMany(p => p.TqRegistrationPathways.Where(p => request.AcademicYear.Contains(p.AcademicYear) && p.TqProvider.TlProvider.UkPrn == request.Ukprn && (p.Status == RegistrationPathwayStatus.Active))).ToList()
+                : _profiles.SelectMany(p => p.TqRegistrationPathways.Where(p => p.TqProvider.TlProvider.UkPrn == request.Ukprn && (p.Status == RegistrationPathwayStatus.Active))).ToList();
 
             var expectedLearnerDeails = pathways.Select(x => new SearchLearnerDetail
             {
