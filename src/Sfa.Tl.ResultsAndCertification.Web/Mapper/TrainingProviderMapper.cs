@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName))
-               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
+               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelName))
                .ForMember(d => d.StartYear, opts => opts.MapFrom(s => string.Format(SearchLearnerDetailsContent.Start_Year_Value, s.AcademicYear, s.AcademicYear + 1)))
                .ForMember(d => d.IsMathsAdded, opts => opts.MapFrom(s => s.MathsStatus != null && s.MathsStatus != SubjectStatus.NotSpecified))
                .ForMember(d => d.IsEnglishAdded, opts => opts.MapFrom(s => s.EnglishStatus != null && s.EnglishStatus != SubjectStatus.NotSpecified))
