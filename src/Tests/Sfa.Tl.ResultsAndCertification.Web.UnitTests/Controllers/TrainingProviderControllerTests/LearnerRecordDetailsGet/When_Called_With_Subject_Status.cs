@@ -17,18 +17,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             {
                 return new[]
                 {
-                    new object[] { new LearnerRecordDetailsViewModel1 { MathsStatus = SubjectStatus.NotSpecified, EnglishStatus = SubjectStatus.NotSpecified }, SubjectStatusContent.Not_Yet_Recevied_Display_Text },
-                    new object[] { new LearnerRecordDetailsViewModel1 { MathsStatus = SubjectStatus.Achieved, EnglishStatus = SubjectStatus.Achieved }, SubjectStatusContent.Achieved_Display_Text },
-                    new object[] { new LearnerRecordDetailsViewModel1 { MathsStatus = SubjectStatus.NotAchieved, EnglishStatus = SubjectStatus.NotAchieved }, SubjectStatusContent.Not_Achieved_Display_Text},
-                    new object[] { new LearnerRecordDetailsViewModel1 { MathsStatus = SubjectStatus.AchievedByLrs, EnglishStatus = SubjectStatus.AchievedByLrs }, SubjectStatusContent.Achieved_Lrs_Display_Text},
-                    new object[] { new LearnerRecordDetailsViewModel1 { MathsStatus = SubjectStatus.NotAchievedByLrs, EnglishStatus = SubjectStatus.NotAchievedByLrs }, SubjectStatusContent.Not_Achieved_Lrs_Display_Text}
+                    new object[] { new LearnerRecordDetailsViewModel { MathsStatus = SubjectStatus.NotSpecified, EnglishStatus = SubjectStatus.NotSpecified }, SubjectStatusContent.Not_Yet_Recevied_Display_Text },
+                    new object[] { new LearnerRecordDetailsViewModel { MathsStatus = SubjectStatus.Achieved, EnglishStatus = SubjectStatus.Achieved }, SubjectStatusContent.Achieved_Display_Text },
+                    new object[] { new LearnerRecordDetailsViewModel { MathsStatus = SubjectStatus.NotAchieved, EnglishStatus = SubjectStatus.NotAchieved }, SubjectStatusContent.Not_Achieved_Display_Text},
+                    new object[] { new LearnerRecordDetailsViewModel { MathsStatus = SubjectStatus.AchievedByLrs, EnglishStatus = SubjectStatus.AchievedByLrs }, SubjectStatusContent.Achieved_Lrs_Display_Text},
+                    new object[] { new LearnerRecordDetailsViewModel { MathsStatus = SubjectStatus.NotAchievedByLrs, EnglishStatus = SubjectStatus.NotAchievedByLrs }, SubjectStatusContent.Not_Achieved_Lrs_Display_Text}
                 };
             }
         }
 
         [Theory]
         [MemberData(nameof(Data))]
-        public void Then_Returns_Expected_Results(LearnerRecordDetailsViewModel1 viewModel, string expectedDisplayStatus)
+        public void Then_Returns_Expected_Results(LearnerRecordDetailsViewModel viewModel, string expectedDisplayStatus)
         {
             viewModel.SummaryMathsStatus.Value.Should().Be(expectedDisplayStatus);
             viewModel.SummaryEnglishStatus.Value.Should().Be(expectedDisplayStatus);

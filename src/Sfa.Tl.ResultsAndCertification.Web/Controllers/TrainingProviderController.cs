@@ -148,7 +148,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("learner-record-page/{profileId}", Name = RouteConstants.LearnerRecordDetails)]
         public async Task<IActionResult> LearnerRecordDetailsAsync(int profileId)
         {
-            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel1>(User.GetUkPrn(), profileId);
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(User.GetUkPrn(), profileId);
 
             if (viewModel == null || !viewModel.IsLearnerRegistered)
             {

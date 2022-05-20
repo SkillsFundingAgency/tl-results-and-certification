@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public override void Given()
         {
             ProfileId = 10;
-            Mockresult = new LearnerRecordDetailsViewModel1
+            Mockresult = new LearnerRecordDetailsViewModel
             {
                 ProfileId = 10,
                 RegistrationPathwayId = 15,
@@ -42,13 +42,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, Mockresult.ProfileId.ToString() } };
 
-            TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel1>(ProviderUkprn, ProfileId).Returns(Mockresult);
+            TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId).Returns(Mockresult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            TrainingProviderLoader.Received(1).GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel1>(ProviderUkprn, ProfileId);
+            TrainingProviderLoader.Received(1).GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId);
         }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             Result.Should().NotBeNull();
             (Result as ViewResult).Model.Should().NotBeNull();
 
-            var model = (Result as ViewResult).Model as LearnerRecordDetailsViewModel1;
+            var model = (Result as ViewResult).Model as LearnerRecordDetailsViewModel;
 
             model.ProfileId.Should().Be(Mockresult.ProfileId);
             model.RegistrationPathwayId.Should().Be(Mockresult.RegistrationPathwayId);

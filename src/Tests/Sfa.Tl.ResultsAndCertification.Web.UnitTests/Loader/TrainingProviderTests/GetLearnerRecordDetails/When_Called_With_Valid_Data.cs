@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
     public class When_Called_With_Valid_Data : TestSetup
     {
         private Models.Contracts.TrainingProvider.LearnerRecordDetails _expectedApiResult;
-        protected LearnerRecordDetailsViewModel1 ActualResult { get; set; }
+        protected LearnerRecordDetailsViewModel ActualResult { get; set; }
 
         public override void Given()
         {
@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel1>(ProviderUkprn, ProfileId);
+            ActualResult = await Loader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId);
         }
 
         [Fact]

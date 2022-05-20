@@ -9,8 +9,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
     {
         public int ProfileId { get; set; }
         public IActionResult Result { get; private set; }
-        public LearnerRecordDetailsViewModel1 LearnerRecordDetailsViewModel;
-        protected LearnerRecordDetailsViewModel1 Mockresult = null;
+        public LearnerRecordDetailsViewModel LearnerRecordDetailsViewModel;
+        protected LearnerRecordDetailsViewModel Mockresult = null;
 
         public async override Task When()
         {

@@ -13,7 +13,7 @@ using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Conten
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
-    public class LearnerRecordDetailsViewModel1
+    public class LearnerRecordDetailsViewModel
     {
         // Header
         public int ProfileId { get; set; }
@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public SubjectStatus MathsStatus { get; set; }
         public SubjectStatus EnglishStatus { get; set; }
 
-        public int IndustryPlacementId { get; set; } // TODO: upcoming story
+        public int IndustryPlacementId { get; set; }
         public IpStatus IndustryPlacementStatus { get; set; }
 
         public string StartYear => string.Format(LearnerRecordDetailsContent.Start_Year_Value, AcademicYear, AcademicYear + 1);
