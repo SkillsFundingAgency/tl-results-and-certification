@@ -7,17 +7,17 @@
         <div class="govuk-grid-column-two-thirds">
             <dt class="govuk-summary-list__key govuk-grid-column-full">
                 <h3 class="govuk-heading-m govuk-!-margin-bottom-0">
-                    <a asp-route="@RouteConstants.LearnerRecordDetails" asp-route-profileId="@Model.ProfileId" class="govuk-link govuk-link--no-visited-state">@Model.LearnerName</a>
+                    <a asp-route="@RouteConstants.LearnerRecordDetails" asp-route-profileId="@Model.ProfileId" class="govuk-link">@Model.LearnerName</a>
                 </h3>
             </dt>
             <dd class="govuk-summary-list__value govuk-grid-column-full">
                 <p class="govuk-body-m">@Model.Uln</p>
                 <p class="govuk-body-s">
                     <span class="govuk-visually-hidden">@SearchLearnerDetails.Hidden_Text_Course</span>
-                    Design, Surveying and Planning for Construction
+                    @Model.TlevelName
                 </p>
                 <p class="govuk-body-s">
-                    @SearchLearnerDetails.Start_Year_Text<span class="app-nowrap">@Model.StartYear</span>
+                    @SearchLearnerDetails.Start_Year_Text<span>@Model.StartYear</span>
                 </p>
             </dd>
         </div>
@@ -25,7 +25,7 @@
             <dd class="govuk-summary-list__actions">
                 @if (!Model.IsStatusCompleted)
                 {
-                    <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-1">Incomplete</strong>
+                    <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-1">@LearnerRecordDetails.Status_Tag_Incomplete</strong>
                 }
             </dd>
         </div>
