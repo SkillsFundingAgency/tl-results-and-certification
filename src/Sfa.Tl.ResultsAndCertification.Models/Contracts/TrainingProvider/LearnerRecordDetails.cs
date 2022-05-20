@@ -13,7 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
         public long ProviderUkprn { get; set; }
-        public string PathwayName { get; set; }  // TODO: Delete this
         public string TlevelTitle { get; set; }
         public int AcademicYear { get; set; }
         public string AwardingOrganisationName { get; set; }
@@ -21,10 +20,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         public SubjectStatus? EnglishStatus { get; set; }
 
         public bool IsLearnerRegistered { get; set; }
-        public bool IsLearnerRecordAdded { get; set; } // TODO: Delete?
-        public bool IsEnglishAndMathsAchieved { get; set; } // TODO: Delete?
-        public bool HasLrsEnglishAndMaths { get; set; } // TODO: Delete?
-        public bool? IsSendLearner { get; set; } // TODO: Delete?
 
         // English and Maths
         public SubjectStatus IsEnglishAchieved { get; set; }

@@ -1,18 +1,13 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
@@ -20,29 +15,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     public class TrainingProviderService : ITrainingProviderService
     {
         private readonly IRepository<TqRegistrationProfile> _tqRegistrationProfile;
-        private readonly IRepository<TqRegistrationPathway> _tqRegistrationPathwayRepository;
-        private readonly IRepository<IndustryPlacement> _industryPlacementRepository;
         private readonly ITrainingProviderRepository _trainingProviderRepository;
-        private readonly INotificationService _notificationService;
-        private readonly ResultsAndCertificationConfiguration _resultsAndCertificationConfiguration;
-        private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
         public TrainingProviderService(IRepository<TqRegistrationProfile> tqRegistrationProfile,
-            IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
-            IRepository<IndustryPlacement> industryPlacementRepository,
             ITrainingProviderRepository trainingProviderRepository,
-            INotificationService notificationService,
-            ResultsAndCertificationConfiguration resultsAndCertificationConfiguration,
-            IMapper mapper, ILogger<TrainingProviderService> logger)
+            ILogger<TrainingProviderService> logger)
         {
             _tqRegistrationProfile = tqRegistrationProfile;
-            _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
-            _industryPlacementRepository = industryPlacementRepository;
             _trainingProviderRepository = trainingProviderRepository;
-            _notificationService = notificationService;
-            _resultsAndCertificationConfiguration = resultsAndCertificationConfiguration;
-            _mapper = mapper;
             _logger = logger;
         }
 

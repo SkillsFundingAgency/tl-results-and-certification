@@ -46,12 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 Name = "Test User",
                 DateofBirth = DateTime.UtcNow.AddYears(30),
                 ProviderName = "Barnsley College (123456789)",
-                PathwayName = "Course name (5689745)",
                 IsLearnerRegistered = true,
-                IsLearnerRecordAdded = false,
-                IsEnglishAndMathsAchieved = true,
-                HasLrsEnglishAndMaths = true,
-                IsSendLearner = false,
                 IndustryPlacementId = 7,
                 IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration
             };
@@ -77,12 +72,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.Name.Should().Be(_mockApiResponse.Name);
             _actualResult.DateofBirth.Should().Be(_mockApiResponse.DateofBirth);
             _actualResult.ProviderName.Should().Be(_mockApiResponse.ProviderName);
-            _actualResult.PathwayName.Should().Be(_mockApiResponse.PathwayName);
             _actualResult.IsLearnerRegistered.Should().Be(_mockApiResponse.IsLearnerRegistered);
-            _actualResult.IsLearnerRecordAdded.Should().Be(_mockApiResponse.IsLearnerRecordAdded);
-            _actualResult.IsEnglishAndMathsAchieved.Should().Be(_mockApiResponse.IsEnglishAndMathsAchieved);            
-            _actualResult.HasLrsEnglishAndMaths.Should().Be(_mockApiResponse.HasLrsEnglishAndMaths);
-            _actualResult.IsSendLearner.Should().Be(_mockApiResponse.IsSendLearner);
             _actualResult.IndustryPlacementId.Should().Be(_mockApiResponse.IndustryPlacementId);
             _actualResult.IndustryPlacementStatus.Should().Be(_mockApiResponse.IndustryPlacementStatus);
         }
