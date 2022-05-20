@@ -36,6 +36,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> SearchLearnerDetailsAsync(int academicYear)
         {
             var viewmodel = await _trainingProviderLoader.SearchLearnerDetailsAsync(User.GetUkPrn(), academicYear);
+            if (viewmodel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            
             return View(viewmodel);
         } 
 
