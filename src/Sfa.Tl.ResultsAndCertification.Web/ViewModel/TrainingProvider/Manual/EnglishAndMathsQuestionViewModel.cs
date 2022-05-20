@@ -11,6 +11,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public EnglishAndMathsStatus? EnglishAndMathsStatus { get; set; }
         public string LearnerName { get; set; }
         public bool IsChangeMode { get; set; }
-        public virtual BackLinkModel BackLink => new BackLinkModel { RouteName = IsChangeMode ? RouteConstants.AddLearnerRecordCheckAndSubmit :  RouteConstants.EnterUniqueLearnerNumber };
+        public virtual BackLinkModel BackLink => new BackLinkModel { RouteName = "sf"};
     }
 }

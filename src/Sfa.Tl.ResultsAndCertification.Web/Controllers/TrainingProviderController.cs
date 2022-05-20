@@ -100,49 +100,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
         }
 
-        [HttpGet]
-        [Route("add-learner-record-check-and-submit", Name = RouteConstants.AddLearnerRecordCheckAndSubmit)]
-        public async Task<IActionResult> AddLearnerRecordCheckAndSubmitAsync()
-        {
-            // DELETE
-            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
-
-            var viewModel = new CheckAndSubmitViewModel { LearnerRecordModel = cacheModel };
-
-            if (!viewModel.IsCheckAndSubmitPageValid)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            await _cacheService.SetAsync(CacheKey, viewModel.ResetChangeMode());
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("add-learner-record-check-and-submit", Name = RouteConstants.SubmitLearnerRecordCheckAndSubmit)]
-        public async Task<IActionResult> SubmitLearnerRecordCheckAndSubmitAsync()
-        {
-            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
-
-            if (cacheModel == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            var response = await _trainingProviderLoader.AddLearnerRecordAsync(User.GetUkPrn(), cacheModel);
-
-            if (response.IsSuccess)
-            {
-                if (cacheModel.Uln.IsNavigatedFromSearchLearnerRecordNotAdded)
-                    await _cacheService.RemoveAsync<SearchLearnerRecordViewModel>(CacheKey);
-
-                await _cacheService.RemoveAsync<AddLearnerRecordViewModel>(CacheKey);
-                //await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddLearnerRecordConfirmation), new LearnerRecordConfirmationViewModel { Uln = response.Uln, Name = response.Name }, CacheExpiryTime.XSmall);  DELETE
-                return RedirectToRoute("DELETE");
-            }
-            else
-            {
-                _logger.LogWarning(LogEvent.AddLearnerRecordFailed, $"Unable to add learner record for UniqueLearnerNumber: {cacheModel.Uln}. Method: SubmitLearnerRecordCheckAndSubmitAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
-            }
-        }
-
         #region Update-Learner
 
         [HttpGet]

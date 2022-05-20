@@ -250,9 +250,6 @@
         public const string AddLearnerRecord = "AddLearnerRecord";// TODO: Delete
         public const string EnterUniqueLearnerNumber = "EnterUniqueLearnerNumber"; // TODO: Delete
 
-        public const string AddLearnerRecordCheckAndSubmit = "AddLearnerRecordCheckAndSubmit";
-        public const string SubmitLearnerRecordCheckAndSubmit = "SubmitLearnerRecordCheckAndSubmit";
-
         public const string AddMathsStatus = "AddMathsStatus";
         public const string SubmitAddMathsStatus = "SubmitAddMathsStatus";
         public const string AddEnglishStatus = "AddEnglishStatus";
