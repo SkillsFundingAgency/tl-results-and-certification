@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-    <PackageReference Include="GovukNotify" Version="4.0.1" />
-    <PackageReference Include="JWT" Version="7.3.1" />
+    <PackageReference Include="GovukNotify" Version="6.0.0" />
+    <PackageReference Include="JWT" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
