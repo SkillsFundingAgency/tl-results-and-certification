@@ -127,7 +127,7 @@
     <value>2021 to 2022</value>
   </data>
   <data name="List_All_Learners_By_Start_Year" xml:space="preserve">
-    <value>List all learners by start year</value>
+    <value>List all active learners by start year</value>
   </data>
   <data name="Manage_Learner_Records_Heading" xml:space="preserve">
     <value>Manage learner records</value>
