@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                         LearnerName = "John Smith",
                         Uln = 1234567890,
                         StartYear = "2020 to 2021",
-                        TlevelTitle = "Design, Surveying and Planning for Construction",
+                        TlevelName = "Design, Surveying and Planning for Construction",
                         IsEnglishAdded = true,
                         IsMathsAdded = true,
                         IsIndustryPlacementAdded = true
@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             actualLearner.ProfileId.Should().Be(expectedLearner.ProfileId);
             actualLearner.LearnerName.Should().Be(expectedLearner.LearnerName);
             actualLearner.StartYear.Should().Be(expectedLearner.StartYear);
-            actualLearner.TlevelTitle.Should().Be(expectedLearner.TlevelTitle);
+            actualLearner.TlevelName.Should().Be(expectedLearner.TlevelName);
             actualLearner.IsEnglishAdded.Should().Be(expectedLearner.IsEnglishAdded);
             actualLearner.IsMathsAdded.Should().Be(expectedLearner.IsMathsAdded);
             actualLearner.IsIndustryPlacementAdded.Should().Be(expectedLearner.IsIndustryPlacementAdded);

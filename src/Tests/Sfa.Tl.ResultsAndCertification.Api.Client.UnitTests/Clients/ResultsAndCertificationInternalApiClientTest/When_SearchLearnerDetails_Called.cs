@@ -48,7 +48,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                     {
                         ProfileId = 1,
                         Uln = 1234567890,
-                        LearnerName = "John Smith1",
+                        Firstname = "John",
+                        Lastname = "Smith1",
                         TlevelName = "T level in Education and childcare",
                         AcademicYear = 2020,
                         EnglishStatus = SubjectStatus.Achieved,
@@ -59,7 +60,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                     {
                         ProfileId = 2,
                         Uln = 2222267890,
-                        LearnerName = "John Smith2",
+                        Firstname = "John",
+                        Lastname = "Smith2",
                         TlevelName = "T level in Design and Survey",
                         AcademicYear = 2021,
                         EnglishStatus = null,

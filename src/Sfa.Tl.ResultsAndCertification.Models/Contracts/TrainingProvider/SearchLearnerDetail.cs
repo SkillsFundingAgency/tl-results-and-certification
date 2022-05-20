@@ -7,7 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
     {
         public int ProfileId { get; set; }
         public long Uln { get; set; }
-        public string LearnerName { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string TlevelName { get; set; }

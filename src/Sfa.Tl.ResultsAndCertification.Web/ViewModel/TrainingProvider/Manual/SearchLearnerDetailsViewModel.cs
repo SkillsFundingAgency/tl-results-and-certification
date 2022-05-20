@@ -5,7 +5,7 @@
         public int ProfileId { get; set; }
         public string LearnerName { get; set; }
         public long Uln { get; set; }
-        public string TlevelTitle { get; set; }
+        public string TlevelName { get; set; }
         public string StartYear { get; set; }
 
         public bool IsStatusCompleted => IsMathsAdded && IsEnglishAdded && IsIndustryPlacementAdded;
