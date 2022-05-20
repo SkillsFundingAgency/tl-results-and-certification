@@ -79,6 +79,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Back to home.
+        /// </summary>
+        public static string Back_To_Home_Text {
+            get {
+                return ResourceManager.GetString("Back_To_Home_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back to list of learners.
+        /// </summary>
+        public static string Back_To_List_Of_Learners_Text {
+            get {
+                return ResourceManager.GetString("Back_To_List_Of_Learners_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         public static string English_And_Maths_Achieved_Lrs_Text {
