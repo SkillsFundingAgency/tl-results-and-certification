@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                         ProfileId = 1,
                         Uln = 1234567890,
                         LearnerName = "John Smith1",
-                        TlevelTitle = "T level in Education and childcare",
+                        TlevelName = "T level in Education and childcare",
                         AcademicYear = 2020,
                         EnglishStatus = SubjectStatus.Achieved,
                         MathsStatus = SubjectStatus.Achieved,
@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                         ProfileId = 2,
                         Uln = 2222267890,
                         LearnerName = "John Smith2",
-                        TlevelTitle = "T level in Design and Survey",
+                        TlevelName = "T level in Design and Survey",
                         AcademicYear = 2021,
                         EnglishStatus = null,
                         MathsStatus = null,
@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             ActualResult.SearchLearnerDetailsList[0].ProfileId.Should().Be(_expectedApiResult.Records[0].ProfileId);
             ActualResult.SearchLearnerDetailsList[0].LearnerName.Should().Be(_expectedApiResult.Records[0].LearnerName);
             ActualResult.SearchLearnerDetailsList[0].StartYear.Should().Be(string.Format(SearchLearnerDetailsContent.Start_Year_Value, _expectedApiResult.Records[0].AcademicYear, _expectedApiResult.Records[0].AcademicYear + 1));
-            ActualResult.SearchLearnerDetailsList[0].TlevelTitle.Should().Be(_expectedApiResult.Records[0].TlevelTitle);
+            ActualResult.SearchLearnerDetailsList[0].TlevelTitle.Should().Be(_expectedApiResult.Records[0].TlevelName);
             ActualResult.SearchLearnerDetailsList[0].IsEnglishAdded.Should().BeTrue();
             ActualResult.SearchLearnerDetailsList[0].IsMathsAdded.Should().BeTrue();
             ActualResult.SearchLearnerDetailsList[0].IsIndustryPlacementAdded.Should().BeTrue();
@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             ActualResult.SearchLearnerDetailsList[1].ProfileId.Should().Be(_expectedApiResult.Records[1].ProfileId);
             ActualResult.SearchLearnerDetailsList[1].LearnerName.Should().Be(_expectedApiResult.Records[1].LearnerName);
             ActualResult.SearchLearnerDetailsList[1].StartYear.Should().Be(string.Format(SearchLearnerDetailsContent.Start_Year_Value, _expectedApiResult.Records[1].AcademicYear, _expectedApiResult.Records[1].AcademicYear + 1));
-            ActualResult.SearchLearnerDetailsList[1].TlevelTitle.Should().Be(_expectedApiResult.Records[1].TlevelTitle);
+            ActualResult.SearchLearnerDetailsList[1].TlevelTitle.Should().Be(_expectedApiResult.Records[1].TlevelName);
             ActualResult.SearchLearnerDetailsList[1].IsEnglishAdded.Should().BeFalse();
             ActualResult.SearchLearnerDetailsList[1].IsMathsAdded.Should().BeFalse();
             ActualResult.SearchLearnerDetailsList[1].IsIndustryPlacementAdded.Should().BeFalse();

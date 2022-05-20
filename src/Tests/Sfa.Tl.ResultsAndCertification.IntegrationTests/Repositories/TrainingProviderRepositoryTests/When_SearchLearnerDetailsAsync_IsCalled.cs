@@ -89,9 +89,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             {
                 ProfileId = x.TqRegistrationProfile.Id,
                 Uln = x.TqRegistrationProfile.UniqueLearnerNumber,
-                LearnerName = x.TqRegistrationProfile.Firstname + " " + x.TqRegistrationProfile.Lastname,
+                Firstname = x.TqRegistrationProfile.Firstname,
+                Lastname = x.TqRegistrationProfile.Lastname,
                 AcademicYear = x.AcademicYear,
-                TlevelTitle = x.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
+                TlevelName = x.TqProvider.TqAwardingOrganisation.TlPathway.Name,
                 EnglishStatus = x.TqRegistrationProfile.EnglishStatus,
                 MathsStatus = x.TqRegistrationProfile.MathsStatus,
                 IndustryPlacementStatus = x.IndustryPlacements.Any() ? x.IndustryPlacements.FirstOrDefault().Status : null,

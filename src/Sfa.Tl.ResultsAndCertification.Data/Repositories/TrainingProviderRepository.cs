@@ -39,17 +39,20 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 {
                     ProfileId = x.TqRegistrationProfile.Id,
                     Uln = x.TqRegistrationProfile.UniqueLearnerNumber,
-                    LearnerName = x.TqRegistrationProfile.Firstname + " " + x.TqRegistrationProfile.Lastname,
+                    Firstname = x.TqRegistrationProfile.Firstname,
+                    Lastname = x.TqRegistrationProfile.Lastname,
                     AcademicYear = x.AcademicYear,
-                    TlevelTitle = x.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
+                    TlevelName = x.TqProvider.TqAwardingOrganisation.TlPathway.Name,
                     EnglishStatus = x.TqRegistrationProfile.EnglishStatus,
                     MathsStatus = x.TqRegistrationProfile.MathsStatus,
                     IndustryPlacementStatus = x.IndustryPlacements.Any() ? x.IndustryPlacements.FirstOrDefault().Status : null,
                     CreatedOn = x.CreatedOn
                 })
-                .GroupBy(x => x.ProfileId).Select(x => x.OrderByDescending(o => o.CreatedOn).First()).ToListAsync();
+                .GroupBy(x => x.ProfileId)
+                .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
+                .ToListAsync();
 
-            return new PagedResponse<SearchLearnerDetail> { Records = learnerRecords, TotalRecords = learnerRecords.Count };
+            return new PagedResponse<SearchLearnerDetail> { Records = learnerRecords.OrderBy(l => l.Lastname).ToList(), TotalRecords = learnerRecords.Count };
         }
 
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
