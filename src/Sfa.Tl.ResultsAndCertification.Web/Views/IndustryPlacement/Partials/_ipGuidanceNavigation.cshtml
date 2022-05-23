@@ -1,0 +1,19 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
+
+<div class="govuk-grid-column-one-third">
+    <h2 class="govuk-heading-m">
+        @IpGuidanceNavigation.Guidance_Heading
+    </h2>
+    <ul class="govuk-list">
+        <li>
+            <a class="govuk-link" asp-route="@RouteConstants.ProviderGuidance" asp-fragment="special-consideration">@IpGuidanceNavigation.SpecialConsideration_Text</a>
+        </li>
+        <li>
+            <a class="govuk-link" asp-route="@RouteConstants.ProviderGuidance" asp-fragment="industry-placement-models">@IpGuidanceNavigation.IndustryPlacementModels_Text</a>
+        </li>
+        <li>
+            <a class="govuk-link" asp-route="@RouteConstants.ProviderGuidance" asp-fragment="temporary-flexibilities">@IpGuidanceNavigation.Temporary_Flexibilities_Text</a>
+        </li>
+    </ul>
+</div>

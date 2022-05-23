@@ -64,8 +64,7 @@
         public const string AddLearnerRecordConfirmation = "AddLearnerRecordConfirmation";
         public const string SearchLearnerRecordViewModel = "SearchLearnerRecordViewModel";
         public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
-        public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";
-        public const string AddEnglishAndMathsSendDataConfirmation = "AddEnglishAndMathsSendDataConfirmation";
+        public const string AddEnglishAndMathsSendDataConfirmation = "AddEnglishAndMathsSendDataConfirmation"; // TODO: Delete?
         public const string AddAddressConfirmation = "AddAddressConfirmation";
         public const string RequestSoaConfirmation = "RequestSoaConfirmation";
         public const string UserSessionActivityId = "UserSessionActivityId";        
@@ -117,6 +116,11 @@
 
         public const int MaxFileSizeInMb = 5;
 
+        // Industry placements
+        public const string MultipleEmployer = "Multiple employer";
+        public const string EmployerLedActivities = "Employer led activities/projects";
+        public const string BlendedPlacements = "Blended placements";
+
         // Printing Constants
         public const string Completed = "Completed";
         public const string NotCompleted = "Not completed";
@@ -132,9 +136,11 @@
         public const string BlueTagClassName = "govuk-tag--blue";
         public const string PurpleTagClassName = "govuk-tag--purple";
         public const string RedTagClassName = "govuk-tag--red";
+        public const string GreenTagClassName = "govuk-tag govuk-tag--green";
         public const string TagFloatRightClassName = "tag-float-right";
         public const string PostcodeValidationRegex = "^(([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))(\\s?)?[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}$";
         public const string UlnValidationRegex = @"^\d{10}$";
+        public const string IpSpecialConsiderationHoursRegex = @"^([1-9][0-9]{0,2})$";
         public const string PipeSeperator = "|";
         public const string AndSeperator = " and ";
         public const string CommaSeperator = ",";

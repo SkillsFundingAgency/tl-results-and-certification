@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class SearchLearnerRecord {
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter the Unique Learner Number (ULN).
+        ///   Looks up a localized string similar to Enter the unique learner number (ULN).
         /// </summary>
         public static string Enter_UniqueLearnerNumber_Label {
             get {
@@ -70,7 +70,43 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for a learner - Enter Unique Learner Number page.
+        ///   Looks up a localized string similar to 2020 to 2021.
+        /// </summary>
+        public static string Link_2020_To_2021 {
+            get {
+                return ResourceManager.GetString("Link_2020_To_2021", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2021 to 2022.
+        /// </summary>
+        public static string Link_2021_To_2022 {
+            get {
+                return ResourceManager.GetString("Link_2021_To_2022", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List all active learners by start year.
+        /// </summary>
+        public static string List_All_Learners_By_Start_Year {
+            get {
+                return ResourceManager.GetString("List_All_Learners_By_Start_Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage learner records.
+        /// </summary>
+        public static string Manage_Learner_Records_Heading {
+            get {
+                return ResourceManager.GetString("Manage_Learner_Records_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search ULN - Manage learner.
         /// </summary>
         public static string Page_Title {
             get {
@@ -88,11 +124,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for a learner.
+        ///   Looks up a localized string similar to Or search for the learner you want to manage.
         /// </summary>
-        public static string Search_UniqueLearnerNumber_Heading {
+        public static string Search_For_The_Learner_You_Want_To_Manage {
             get {
-                return ResourceManager.GetString("Search_UniqueLearnerNumber_Heading", resourceCulture);
+                return ResourceManager.GetString("Search_For_The_Learner_You_Want_To_Manage", resourceCulture);
             }
         }
         
@@ -120,15 +156,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Uln_Required_Validation_Message {
             get {
                 return ResourceManager.GetString("Uln_Required_Validation_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You can view and update learner T Level records you’ve already added..
-        /// </summary>
-        public static string You_Can_View_Update_ParaText {
-            get {
-                return ResourceManager.GetString("You_Can_View_Update_ParaText", resourceCulture);
             }
         }
     }

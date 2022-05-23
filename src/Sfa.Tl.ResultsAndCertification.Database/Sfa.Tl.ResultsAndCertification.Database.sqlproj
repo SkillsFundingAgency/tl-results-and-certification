@@ -106,6 +106,11 @@
     <Build Include="Tables\TlPathwaySpecialismCombination.sql" />
     <Build Include="Tables\TqSpecialismResult.sql" />
     <Build Include="Indexes\IX_Unique_TqSpecialismResult.sql" />
+    <Build Include="Tables\IpLookup.sql" />
+    <Build Include="Tables\IpModelTlevelCombination.sql" />
+    <Build Include="Tables\IpTempFlexTlevelCombination.sql" />
+    <Build Include="Tables\IpAchieved.sql" />
+    <Build Include="Tables\IpTempFlexNavigation.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sfa.Tl.ResultsAndCertification.Database.refactorlog" />
@@ -127,6 +132,11 @@
     <None Include="PostDeployment\SeedQualification.sql" />
     <None Include="PostDeployment\SeedAcademicYear.sql" />
     <None Include="PostDeployment\SeedTlPathwaySpecialismCombinations.sql" />
+    <None Include="PostDeployment\SeedIpLookup.sql" />
+    <None Include="PostDeployment\SeedIpModelTlevelCombination.sql" />
+    <None Include="PostDeployment\SeedIpTempFlexTlevelCombination.sql" />
+    <None Include="PostDeployment\SeedIpTempFlexNavigation.sql" />
+    <None Include="PostDeployment\LrsEnglishAndMathsSplitUpdate.sql" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="environment">

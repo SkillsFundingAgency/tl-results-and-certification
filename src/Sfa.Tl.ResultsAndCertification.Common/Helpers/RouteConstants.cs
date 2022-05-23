@@ -243,38 +243,19 @@
 
         # region TrainingProvider specific constants
 
-        public const string ManageLearnerRecordsDashboard = "ManageLearnerRecordsDashboard";
-        public const string AddLearnerRecord = "AddLearnerRecord";
-        public const string EnterUniqueLearnerNumber = "EnterUniqueLearnerNumber";
-        public const string SubmitEnterUniqueLearnerNumber = "SubmitEnterUniqueLearnerNumber";
-        public const string EnterUniqueLearnerNumberNotFound = "EnterUniqueLearnerNumberNotFound";
-        public const string EnterUniqueLearnerNumberAddedAlready = "EnterUniqueLearnerNumberAddedAlready";
-        public const string AddEnglishAndMathsQuestion = "AddEnglishAndMathsQuestion";
-        public const string SubmitAddEnglishAndMathsQuestion = "SubmitAddEnglishAndMathsQuestion";
-        public const string AddEnglishAndMathsLrsQuestion = "AddEnglishAndMathsLrsQuestion";
-        public const string SubmitAddEnglishAndMathsLrsQuestion = "SubmitAddEnglishAndMathsLrsQuestion";
-        public const string AddIndustryPlacementQuestion = "AddIndustryPlacementQuestion";
-        public const string SubmitIndustryPlacementQuestion = "SubmitIndustryPlacementQuestion";
-        public const string AddLearnerRecordCheckAndSubmit = "AddLearnerRecordCheckAndSubmit";
-        public const string SubmitLearnerRecordCheckAndSubmit = "SubmitLearnerRecordCheckAndSubmit";
-        public const string AddLearnerRecordCancel = "AddLearnerRecordCancel";
-        public const string SubmitLearnerRecordCancel = "SubmitLearnerRecordCancel";
-        public const string LearnerRecordAddedConfirmation = "LearnerRecordAddedConfirmation";
-        public const string AddEnglishAndMathsSendDataConfirmation = "AddEnglishAndMathsSendDataConfirmation";
+        public const string ProviderGuidance = "ProviderGuidance";
+        public const string ProviderTimeline = "ProviderTimeline";
 
-        public const string UpdateLearnerRecord = "UpdateLearnerRecord";
+        public const string AddMathsStatus = "AddMathsStatus";
+        public const string SubmitAddMathsStatus = "SubmitAddMathsStatus";
+        public const string AddEnglishStatus = "AddEnglishStatus";
+        public const string SubmitAddEnglishStatus = "SubmitAddEnglishStatus";
+
+        public const string SearchLearnerDetails = "SearchLearnerDetails";
         public const string SearchLearnerRecord = "SearchLearnerRecord";
         public const string SubmitSearchLearnerRecord = "SubmitSearchLearnerRecord";
-        public const string SearchLearnerRecordNotAdded = "SearchLearnerRecordNotAdded";
         public const string SearchLearnerRecordNotFound = "SearchLearnerRecordNotFound";
         public const string LearnerRecordDetails = "LearnerRecordDetails";
-        public const string QueryEnglishAndMathsStatus = "QueryEnglishAndMathsStatus";
-        public const string UpdateIndustryPlacementQuestion = "UpdateIndustryPlacementQuestion";
-        public const string SubmitUpdateIndustryPlacementQuestion = "SubmitUpdateIndustryPlacementQuestion";
-        public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
-        public const string UpdateEnglisAndMathsAchievement = "UpdateEnglisAndMathsAchievement";
-        public const string SubmitUpdateEnglisAndMathsAchievement = "SubmitUpdateEnglisAndMathsAchievement";
-        public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";
         public const string ManagePostalAddress = "ManagePostalAddress";
         public const string AddAddress = "AddAddress";
         public const string AddAddressPostcode = "AddAddressPostcode";
@@ -355,6 +336,46 @@
         public const string SubmitPrsCancelGradeChangeRequest = "SubmitPrsCancelGradeChangeRequest";
         public const string PrsGradeChangeRequestConfirmation = "PrsGradeChangeRequestConfirmation";
         public const string SubmitPrsGradeChangeRequestConfirmation = "SubmitPrsGradeChangeRequestConfirmation";
+
+        #endregion
+
+        #region Industry Placement
+
+        public const string AddIndustryPlacement = "AddIndustryPlacement";
+
+        public const string IpCompletion = "IpCompletion";
+        public const string SubmitIpCompletion = "SubmitIpCompletion";
+
+        public const string IpModelUsed = "IpModelUsed";
+        public const string SubmitIpModelUsed = "SubmitIpModelUsed";
+
+        public const string IpMultiEmployerUsed = "IpMultiEmployerUsed";
+        public const string SubmitIpMultiEmployerUsed = "SubmitIpMultiEmployerUsed";
+
+        public const string IpMultiEmployerOther = "IpMultiEmployerOther";
+        public const string SubmitIpMultiEmployerOther = "SubmitIpMultiEmployerOther";
+
+        public const string IpMultiEmployerSelect = "IpMultiEmployerSelect";
+        public const string SubmitIpMultiEmployerSelect = "SubmitIpMultiEmployerSelect";
+
+        // Special Consideration
+        public const string IpSpecialConsiderationHours = "IpSpecialConsiderationHours";
+        public const string SubmitIpSpecialConsiderationHours = "SubmitIpSpecialConsiderationHours";
+        public const string IpSpecialConsiderationReasons = "IpSpecialConsiderationReasons";
+        public const string SubmitIpSpecialConsiderationReasons = "SubmitIpSpecialConsiderationReasons";
+
+        // Temp Flexibility
+        public const string IpTempFlexibilityUsed = "IpTempFlexibilityUsed";
+        public const string SubmitIpTempFlexibilityUsed = "SubmitIpTempFlexibilityUsed";
+        public const string IpBlendedPlacementUsed = "IpBlendedPlacementUsed";
+        public const string SubmitIpBlendedPlacementUsed = "SubmitIpBlendedPlacementUsed";
+        public const string IpEmployerLedUsed = "IpEmployerLedUsed";
+        public const string SubmitIpEmployerLedUsed = "SubmitIpEmployerLedUsed";
+        public const string IpGrantedTempFlexibility = "IpGrantedTempFlexibility";
+        public const string SubmitIpGrantedTempFlexibility = "SubmitIpGrantedTempFlexibility";        
+        public const string IpCheckAndSubmit = "IpCheckAndSubmit";
+        public const string SubmitIpCheckAndSubmit = "SubmitIpCheckAndSubmit";
+        public const string IpCheckAndSubmitCancel = "IpCheckAndSubmitCancel";
 
         #endregion
     }

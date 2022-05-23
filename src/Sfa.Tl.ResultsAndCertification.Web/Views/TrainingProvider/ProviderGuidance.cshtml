@@ -1,0 +1,76 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+@using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb
+@using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb
+
+@{
+    ViewData["Title"] = ProviderGuidance.Page_Title;
+}
+
+@section NavigationBar {
+<vc:breadcrumb model="new BreadcrumbModel { BreadcrumbItems = new List<BreadcrumbItem> { new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home } }}"></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-9">@ProviderGuidance.Page_Heading</h1>
+        <p class="govuk-body">@ProviderGuidance.Manage_Tlevel_Results_Is_The_Service_That_Exam_Boards</p>
+
+        <p class="govuk-body">@ProviderGuidance.Tasks_You_Can_Complete</p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>@ProviderGuidance.Adding_Industry_Pacement_Information</li>
+            <li>@ProviderGuidance.Adding_Maths_And_English_Details</li>
+            <li>@ProviderGuidance.Requesting_Statements_Of_Achievement_For_Withdrawn_Learners</li>
+            <li>@ProviderGuidance.Downloading_Tlevel_Results_On_Results_Day</li>
+        </ul>
+        <h2 class="govuk-heading-m" id="adding-information">@ProviderGuidance.Adding_Learner_Information</h2>
+
+        <p class="govuk-body">@ProviderGuidance.You_Can_Add_Learner_Information_Manually</p>
+
+        <p class="govuk-body">@ProviderGuidance.Get_Prepared_For_Adding_Learner_Information <a class="govuk-link" asp-route="@RouteConstants.ProviderTimeline">@ProviderGuidance.Checking_What_Data_You_Need_To_Provide</a>.</p>
+
+        <h3 class="govuk-heading-m" id="soa">@ProviderGuidance.Statement_Of_Achievement</h3>
+
+        <p class="govuk-body">@ProviderGuidance.Statement_Of_Achievement_Are_Used_To_SHow_Which_Components</p>
+
+        <h4 class="govuk-heading-s">@ProviderGuidance.Who_Is_Entitled_To_A_Statemnet_Of_Achievement</h4>
+        
+        <ul class="govuk-list govuk-list--bullet">
+            <li>@ProviderGuidance.A_Learner_Who_Has_Not_Achieved_All_The_Components</li>
+            <li>@ProviderGuidance.A_Learner_Who_Has_Withdrawn_From_Their_Tlevel_Course</li>
+        </ul>
+
+        <p class="govuk-body">@ProviderGuidance.More_About <a href="https://support.tlevels.gov.uk/hc/en-gb/articles/4403394599698-Request-a-statement-of-achievement" class="govuk-link" rel="noreferrer noopener" target="_blank">@ProviderGuidance.Requesting_A_Statement_Of_Achievement_Opens_In_A_New_Tab</a>.</p>
+
+        <h3 class="govuk-heading-m" id="industry-placement">@ProviderGuidance.Industry_Placement_Information_We_Ask_For</h3>
+        <h4 class="govuk-heading-s" id="special-consideration">@ProviderGuidance.Special_Consideration</h4>
+
+        <p class="govuk-body">@ProviderGuidance.Learners_May_Experience_Difficult_Circumstances_During_Their_Placement</p>
+        <p class="govuk-body">@ProviderGuidance.You_Have_The_Discretion_To_Apply_Special_Consideration</p>
+        <p class="govuk-body">@ProviderGuidance.We_Will_Ask_You_For_The_Total_Number_Of_Hours_Completed</p>
+        <p class="govuk-body">@ProviderGuidance.More_About <a href="https://www.gov.uk/government/publications/t-level-industry-placements-delivery-guidance/t-level-industry-placements-delivery-guidance#section5" class="govuk-link" rel="noreferrer noopener" target="_blank">@ProviderGuidance.Industry_Placement_Completion_Exceptions_Opens_In_A_New_Tab</a>.</p>
+
+        <h4 class="govuk-heading-s" id="temporary-flexibilities">@ProviderGuidance.Temporary_Flexibilities</h4>
+
+        <p class="govuk-body">@ProviderGuidance.We_Understand_That_Covid_May_Have_Made_It_Particulary_Hard_To_Deliver_Placements</p>
+
+        <p class="govuk-body">@ProviderGuidance.For_The_First_Two_Waves_Of_Tlevel_Students</p>
+
+        <p class="govuk-body">@ProviderGuidance.We_Will_Ask_You_To_Specify_For_Each_Learner</p>
+
+        <p class="govuk-body">@ProviderGuidance.Temporary_Flexibilities_Will_Be_Withdrawn</p>
+
+        <p class="govuk-body">@ProviderGuidance.You_Can_Read_More_About_Temporary_Flexibilities <a href="https://www.gov.uk/government/publications/t-level-industry-placements-delivery-guidance" class="govuk-link" rel="noreferrer noopener" target="_blank">@ProviderGuidance.Tlevel_Delivery_Guidance_Page_Opens_In_A_New_Tab</a>.</p>
+
+        <h4 class="govuk-heading-s" id="industry-placement-models">@ProviderGuidance.Industry_Placement_Models</h4>
+
+        <p class="govuk-body">@ProviderGuidance.Although_Not_Mandatory</p>
+
+        <p class="govuk-body">@ProviderGuidance.We_Will_Ask_You_To_Specify_For_Each_Learner_Wheather_One_Or_More_Industry_Placement_Models_Were_Used</p>
+        <p class="govuk-body">@ProviderGuidance.You_Can_Read_More_About_Industry_Placement_Models_In_Annex_A <a href="https://www.gov.uk/government/publications/t-level-industry-placements-delivery-guidance" class="govuk-link" rel="noreferrer noopener" target="_blank">@ProviderGuidance.Tlevel_Delivery_Guidance_Page_Opens_In_A_New_Tab</a>.</p>
+
+        <h3 class="govuk-heading-m" id="2020-to-2021-learner-results">@ProviderGuidance.Learner_Results</h3>
+        <p class="govuk-body">@ProviderGuidance.Tlevel_Results_For_Learners_Starting_Their_Tlevels</p>
+        <p class="govuk-body">@ProviderGuidance.The_Results_Are_Provided_In_Csv_Format</p>        
+    </div>
+</div>

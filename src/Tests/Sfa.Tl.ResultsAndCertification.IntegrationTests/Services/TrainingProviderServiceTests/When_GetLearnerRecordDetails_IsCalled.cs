@@ -1,13 +1,10 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Notify.Interfaces;
-using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -56,33 +53,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             DbContext.SaveChanges();
 
             // Create Service
-            CreateMapper();
             RegistrationProfileRepositoryLogger = new Logger<GenericRepository<TqRegistrationProfile>>(new NullLoggerFactory());
             RegistrationProfileRepository = new GenericRepository<TqRegistrationProfile>(RegistrationProfileRepositoryLogger, DbContext);
-
-            RegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
-            RegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(RegistrationPathwayRepositoryLogger, DbContext);
-            
-            IndustryPlacementRepositoryLogger = new Logger<GenericRepository<IndustryPlacement>>(new NullLoggerFactory());
-            IndustryPlacementRepository = new GenericRepository<IndustryPlacement>(IndustryPlacementRepositoryLogger, DbContext);
 
             TrainingProviderRepositoryLogger = new Logger<TrainingProviderRepository>(new NullLoggerFactory());
             TrainingProviderRepository = new TrainingProviderRepository(DbContext, TrainingProviderRepositoryLogger);
 
             TrainingProviderServiceLogger = new Logger<TrainingProviderService>(new NullLoggerFactory());
 
-            NotificationsClient = Substitute.For<IAsyncNotificationClient>();
-            NotificationLogger = new Logger<NotificationService>(new NullLoggerFactory());
-            NotificationTemplateRepositoryLogger = new Logger<GenericRepository<NotificationTemplate>>(new NullLoggerFactory());
-            NotificationTemplateRepository = new GenericRepository<NotificationTemplate>(NotificationTemplateRepositoryLogger, DbContext);
-            NotificationService = new NotificationService(NotificationTemplateRepository, NotificationsClient, NotificationLogger);
-
-            ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
-            {
-                TlevelQueriedSupportEmailAddress = "test@test.com"
-            };
-
-            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, RegistrationPathwayRepository, IndustryPlacementRepository, TrainingProviderRepository, NotificationService, ResultsAndCertificationConfiguration, TrainingProviderMapper, TrainingProviderServiceLogger);
+            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, TrainingProviderRepository, TrainingProviderServiceLogger);
         }
 
         public override Task When()
@@ -125,7 +104,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             var expectedProvider = TlProviders.FirstOrDefault(p => p.UkPrn == (long)provider);
             expectedProvider.Should().NotBeNull();
 
-            var expectedProviderName = expectedProvider != null ? $"{expectedProvider.Name} ({expectedProvider.UkPrn})" : null;
+            var expectedProviderName = expectedProvider != null ? expectedProvider.Name : null;
+            var expectedProviderUkprn = expectedProvider != null ? expectedProvider.UkPrn : 0;
             var expectedProfile = _profiles.FirstOrDefault(p => p.Id == profileId);
             expectedProfile.Should().NotBeNull();
 
@@ -137,10 +117,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             var tlpathway = expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway;
             tlpathway.Should().NotBeNull();
 
-            var expectedPathwayName = $"{tlpathway.Name} ({tlpathway.LarId})";
             var expectedIsLearnerRegistered = expectedPathway.Status == RegistrationPathwayStatus.Active || expectedPathway.Status == RegistrationPathwayStatus.Withdrawn;
-            var expectedHasLrsEnglishAndMaths = expectedProfile.IsRcFeed == false && expectedProfile.QualificationAchieved.Any();
-            var expectedIsLearnerRecordAdded = expectedPathway.TqRegistrationProfile.IsEnglishAndMathsAchieved.HasValue && expectedPathway.IndustryPlacements.Any();
             var expectedIndustryPlacementId = expectedPathway.IndustryPlacements.FirstOrDefault()?.Id ?? 0;
             var expectedIndustryPlacementStatus = expectedPathway.IndustryPlacements.FirstOrDefault()?.Status ?? null;
 
@@ -150,15 +127,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             _actualResult.Name.Should().Be($"{expectedProfile.Firstname} {expectedProfile.Lastname}");
             _actualResult.DateofBirth.Should().Be(expectedProfile.DateofBirth);
             _actualResult.ProviderName.Should().Be(expectedProviderName);
-            _actualResult.PathwayName.Should().Be(expectedPathwayName);
+            _actualResult.ProviderUkprn.Should().Be(expectedProviderUkprn);
+            _actualResult.TlevelTitle.Should().Be(tlpathway.TlevelTitle);
+            _actualResult.AcademicYear.Should().Be(expectedPathway.AcademicYear);
+            _actualResult.AwardingOrganisationName.Should().Be(expectedPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.DisplayName);
+            _actualResult.MathsStatus.Should().Be(expectedProfile.MathsStatus);
+            _actualResult.EnglishStatus.Should().Be(expectedProfile.EnglishStatus);
+
             _actualResult.IsLearnerRegistered.Should().Be(expectedIsLearnerRegistered);
-            _actualResult.IsLearnerRecordAdded.Should().Be(expectedIsLearnerRecordAdded);
-            _actualResult.IsEnglishAndMathsAchieved.Should().Be(expectedProfile.IsEnglishAndMathsAchieved ?? false);
-            _actualResult.HasLrsEnglishAndMaths.Should().Be(expectedHasLrsEnglishAndMaths);
-            _actualResult.IsSendLearner.Should().Be(expectedProfile.IsSendLearner);
             _actualResult.IndustryPlacementId.Should().Be(expectedIndustryPlacementId);
             _actualResult.IndustryPlacementStatus.Should().Be(expectedIndustryPlacementStatus);
-
         }
 
         public static IEnumerable<object[]> Data
@@ -169,11 +147,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 {
                     new object[] { 9999999999, Provider.WalsallCollege, false, false, false }, // Invalid Uln
 
-                    new object[] { 1111111111, Provider.BarsleyCollege, true, false, true }, // Active
+                    new object[] { 1111111111, Provider.BarnsleyCollege, true, false, true }, // Active
                     new object[] { 1111111111, Provider.WalsallCollege, false, false, false }, // Uln not from WalsallCollege
 
-                    new object[] { 1111111112, Provider.BarsleyCollege, true, false, true }, // Withdrawn
-                    new object[] { 1111111113, Provider.BarsleyCollege, false, true, true }, // Transferred
+                    new object[] { 1111111112, Provider.BarnsleyCollege, true, false, true }, // Withdrawn
+                    new object[] { 1111111113, Provider.BarnsleyCollege, false, true, true }, // Transferred
                     new object[] { 1111111113, Provider.WalsallCollege, true, false, true } // Active
                 };
             }

@@ -913,6 +913,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return tqRegistrationPathway.IndustryPlacements.Select(x => new IndustryPlacement
             {
                 Status = x.Status,
+                Details = x.Details,
                 CreatedBy = performedBy
             }).ToList();
         }
@@ -1057,6 +1058,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         {
                             Id = idx - ipStartIndex,
                             Status = industryPlacement.Status,
+                            Details = industryPlacement.Details,
                             CreatedOn = DateTime.UtcNow,
                             CreatedBy = amendedRegistration.CreatedBy
                         });

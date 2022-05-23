@@ -163,6 +163,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var expectedPreviousIndustryPlacement = expectedActivePathway.IndustryPlacements.FirstOrDefault();
 
             actualActiveIndustryPlacement.Status.Should().Be(expectedPreviousIndustryPlacement.Status);
+            actualActiveIndustryPlacement.Details.Should().Be(expectedPreviousIndustryPlacement.Details);
         }
 
         public static IEnumerable<object[]> Data
@@ -206,7 +207,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             if(seedIndustryPlacement)
             {
-                var industryPlacement = IndustryPlacementProvider.CreateIndustryPlacement(DbContext, new IndustryPlacement { Status = IndustryPlacementStatus.Completed, CreatedBy = "Test User" });
+                var industryPlacement = IndustryPlacementProvider.CreateIndustryPlacement(DbContext, new IndustryPlacement { Status = IndustryPlacementStatus.Completed, Details = "{'industryPlacementStatus': 'Completed'}", CreatedBy = "Test User" });
                 tqRegistrationPathway.IndustryPlacements.Add(industryPlacement);
             }
 

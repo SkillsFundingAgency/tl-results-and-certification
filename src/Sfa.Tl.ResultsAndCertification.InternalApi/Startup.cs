@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.Azure.Documents;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -181,6 +180,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IDataExportLoader, DataExportLoader>();
             services.AddTransient<IDataExportService, DataExportService>();
             services.AddTransient<IDataExportRepository, DataExportRepository>();
+
+            // IndustryPlacement
+            services.AddTransient<IIndustryPlacementService, IndustryPlacementService>();
         }
     }
 }

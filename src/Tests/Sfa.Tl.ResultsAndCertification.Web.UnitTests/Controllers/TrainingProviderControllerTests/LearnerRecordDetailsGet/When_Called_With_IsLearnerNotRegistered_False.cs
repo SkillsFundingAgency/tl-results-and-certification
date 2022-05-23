@@ -15,8 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             Mockresult = new LearnerRecordDetailsViewModel
             {
                 ProfileId = 10,
-                IsLearnerRegistered = false,
-                IsLearnerRecordAdded = false
+                IsLearnerRegistered = false
             };
             TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId).Returns(Mockresult);
         }

@@ -1,35 +1,14 @@
-﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard
+﻿@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard
 
 <!-- MAIN HEADING -->
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-        <div class="govuk-form-group">
-            <h1 class="govuk-heading-l">
-                @ProviderDashboard.Section_Heading_Text
-            </h1>
-        </div>
-
-        <div class="govuk-inset-text">
-            <p class="govuk-body">
-                @ProviderDashboard.Inset_Maths_And_English_Requirement_Changes_Info
-            </p>
-
-            <ul class="govuk-list govuk-list--bullet">
-                <li>@ProviderDashboard.List_You_Must_Still_Provide_Us_English_And_Maths_Attainment_Info</li>
-                <li>@ProviderDashboard.List_The_Wording_In_This_Service_Has_Not_Yet_Been_Updated</li>
-            </ul>
-            <p class="govuk-body">
-                @ProviderDashboard.Inset_We_Expect_For_The_Service_To_Fully_Reflect_Current_Policy_Info <a class="govuk-link" target="_blank" href="https://support.tlevels.gov.uk/hc/en-gb/articles/4410238120722-November-2021-Changes-to-T-Level-exit-requirements-and-the-timeline-for-level-3-qualifications-reform">
-                    @ProviderDashboard.Inset_More_About_The_Changes_To_TLevel_Exit_Requirements
-                </a>@ProviderDashboard.FullStop
-            </p>
-        </div>
-
+        <h1 class="govuk-heading-l">
+            @ProviderDashboard.Heading_Manage_Tlevel_Results
+        </h1>
         <p class="govuk-body">
-            @ProviderDashboard.Providers_Schools_And_Colleges_Text
-        </p>
-        <p class="govuk-body">
-            @ProviderDashboard.Exams_Board_Text
+            @ProviderDashboard.Text_Tlevel_Results_Certificates_Soa
         </p>
     </div>
 </div>
@@ -43,7 +22,7 @@
         <div class="govuk-form-group training-provider-card">
             <p class="govuk-body">
                 <h2 class="govuk-heading-m">
-                    <a class="govuk-link" asp-route="ManageLearnerRecordsDashboard">
+                    <a class="govuk-link" asp-route="SearchLearnerRecord">
                         @ProviderDashboard.Manage_Learner_TLevel_Records_Text
                     </a>
                 </h2>
@@ -101,5 +80,20 @@
                 @ProviderDashboard.Manage_Your_Account_Description_Text
             </p>
         </div>
+    </div>
+</div>
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+        <h2 class="govuk-heading-l">@ProviderDashboard.Heading_News_Guidance_Events</h2>
+
+        <ul class="govuk-list govuk-list--spaced">
+            <li><a class="govuk-link" asp-route="@RouteConstants.ProviderGuidance">@ProviderDashboard.Link_Find_About_Mange_Tlevel_Results</a></li>
+            <li><a class="govuk-link" asp-route="@RouteConstants.ProviderTimeline">@ProviderDashboard.Link_Check_Data_You_Need_To_Provide </a></li>
+            <li><a class="govuk-link" href="https://www.gov.uk/government/publications/t-level-industry-placements-delivery-guidance" target="_blank">@ProviderDashboard.Link_Ip_Delivery_Guidance</a></li>
+            <li><a class="govuk-link" href="https://support.tlevels.gov.uk/hc/en-gb/categories/360002675019-T-Level-news" target="_blank">@ProviderDashboard.Link_View_News_And_Updates</a></li>
+            <li><a class="govuk-link" href="https://support.tlevels.gov.uk/hc/en-gb/sections/4517469957522-T-Level-events" target="_blank">@ProviderDashboard.Link_Events</a></li>
+        </ul>
     </div>
 </div>

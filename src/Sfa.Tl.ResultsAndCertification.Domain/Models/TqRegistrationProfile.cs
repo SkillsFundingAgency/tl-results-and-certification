@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using System;
 using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Domain.Models
@@ -16,11 +17,15 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public string Lastname { get; set; }
         public DateTime DateofBirth { get; set; }
         public string Gender { get; set; }
+        public SubjectStatus? MathsStatus { get; set; }
+        public SubjectStatus? EnglishStatus { get; set; }
+        
+        // TODO: Assess following 4 prop to be removed?
         public bool? IsLearnerVerified { get; set; }
         public bool? IsEnglishAndMathsAchieved { get; set; }
         public bool? IsSendLearner { get; set; }
         public bool? IsRcFeed { get; set; }
-
+        
         public virtual ICollection<TqRegistrationPathway> TqRegistrationPathways { get; set; }
         public virtual ICollection<QualificationAchieved> QualificationAchieved { get; set; }
     }

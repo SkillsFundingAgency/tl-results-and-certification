@@ -51,10 +51,12 @@
         public const string GetDocumentUploadHistoryDetailsAsyncUri = "/api/DocumentUploadHistory/GetDocumentUploadHistoryDetails/{0}/{1}";
 
         // TrainingProvider
-        public const string FindLearnerRecordUri = "/api/trainingprovider/FindLearnerRecord/{0}/{1}/{2}";
+        public const string SearchLearnerDetailsUri = "/api/trainingprovider/SearchLearnerDetails";
+        public const string FindLearnerRecordUri = "/api/trainingprovider/FindLearnerRecord/{0}/{1}";
         public const string GetLearnerRecordDetailsUri = "/api/trainingprovider/GetLearnerRecordDetails/{0}/{1}/{2}";
         public const string AddLearnerRecordUri = "/api/trainingprovider/AddLearnerRecord";
         public const string UpdateLearnerRecordUri = "/api/trainingprovider/UpdateLearnerRecord";
+        public const string UpdateLearnerSubjectUri = "/api/trainingprovider/UpdateLearnerSubject";
 
         // Ordinance Survery Uri's
         public const string SearchAddressByPostcodeUri = "/postcode?postcode={0}&key={1}";
@@ -95,6 +97,11 @@
         public const string UcasBaseUri = "/api/v{0}";
         public const string UcasTokenUri = "/token";
         public const string UcasFileUri = "/folders/{0}/files";
+
+        // Industry Placement 
+        public const string GetIpLookupDataUri = "/api/industryplacement/GetIpLookupData/{0}/{1}";
+        public const string GetTempFlexNavigationUri = "/api/industryplacement/GetTempFlexNavigation/{0}/{1}";
+        public const string ProcessIndustryPlacementDetailsUri = "/api/industryplacement/ProcessIndustryPlacementDetails";
 
         // Common Api Uri's
         public const string GetLookupDataUri = "/api/common/GetLookupData/{0}";

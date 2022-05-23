@@ -19,7 +19,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
         public override void Given()
         {
             _profileId = 11;
-            
+            ResultsAndCertificationConfiguration.SoaAvailableDate = DateTime.UtcNow.AddDays(-30);
+
             _mockLearnerDetails = new SoaLearnerRecordDetailsViewModel
             {
                 ProfileId = _profileId,

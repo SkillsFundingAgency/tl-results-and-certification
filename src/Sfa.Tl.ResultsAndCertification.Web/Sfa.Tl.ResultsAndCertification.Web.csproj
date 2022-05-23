@@ -13,15 +13,16 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Azure.Extensions.AspNetCore.DataProtection.Blobs" Version="1.2.1" />
     <PackageReference Include="IdentityModel" Version="6.0.0" />
-    <PackageReference Include="JWT" Version="8.9.0" />
+    <PackageReference Include="JWT" Version="9.0.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.3" />
-    <PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="6.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="6.0.5" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.5" />
     <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
     <PackageReference Include="NWebsec.AspNetCore.Mvc.TagHelpers" Version="3.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
   </ItemGroup>
 
 
@@ -143,6 +144,76 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Contact.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IndustryPlacementBanner.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IndustryPlacementBanner.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpBlendedPlacementUsed.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpBlendedPlacementUsed.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpCheckAndSubmit.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpCheckAndSubmit.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpCompletion.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpCompletion.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpEmployerLedUsed.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpEmployerLedUsed.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpGrantedTempFlexibility.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpGrantedTempFlexibility.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpModelUsed.Designer.cs">
+      <DependentUpon>IpModelUsed.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpGuidanceNavigation.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpGuidanceNavigation.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpMultiEmployerOther.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpMultiEmployerOther.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpMultiEmployerSelect.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpMultiEmployerSelect.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpMultiEmployerUsed.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpMultiEmployerUsed.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpSpecialConsiderationHours.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpSpecialConsiderationHours.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpSpecialConsiderationReasons.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpSpecialConsiderationReasons.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\IpTempFlexibilityUsed.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IpTempFlexibilityUsed.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\PostResultsService\PrsAddAppeal.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -829,80 +900,25 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ViewAll.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\TrainingProvider\CheckAndSubmit.Designer.cs">
+    <Compile Update="Content\TrainingProvider\AddEnglishStatus.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>CheckAndSubmit.resx</DependentUpon>
+      <DependentUpon>AddEnglishStatus.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\TrainingProvider\EnglishAndMathsAchievementUpdatedConfirmation.Designer.cs">
+    <Compile Update="Content\TrainingProvider\AddMathsStatus.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>EnglishAndMathsAchievementUpdatedConfirmation.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\TrainingProvider\EnglishAndMathsLrsQuestion.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EnglishAndMathsLrsQuestion.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\TrainingProvider\EnglishAndMathsQuestion.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EnglishAndMathsQuestion.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\TrainingProvider\EnglishAndMathsSendDataConfirmation.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EnglishAndMathsSendDataConfirmation.resx</DependentUpon>
+      <DependentUpon>AddMathsStatus.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\TrainingProvider\EnglishAndMathsStatus.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>EnglishAndMathsStatus.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\TrainingProvider\EnterUniqueLearnerReference.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EnterUniqueLearnerReference.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\TrainingProvider\Dashboard.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Dashboard.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\TrainingProvider\EnterUniqueLearnerReferenceAlreadyAdded.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EnterUniqueLearnerReferenceAlreadyAdded.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\TrainingProvider\EnterUniqueLearnerReferenceNotFound.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EnterUniqueLearnerReferenceNotFound.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\TrainingProvider\IndustryPlacementQuestion.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>IndustryPlacementQuestion.resx</DependentUpon>
-    </Compile>
     <Compile Update="Content\TrainingProvider\IndustryPlacementStatus.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>IndustryPlacementStatus.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\TrainingProvider\IndustryPlacementUpdatedConfirmation.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>IndustryPlacementUpdatedConfirmation.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\TrainingProvider\LearnerRecordCancel.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LearnerRecordCancel.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\TrainingProvider\LearnerRecordConfirmation.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LearnerRecordConfirmation.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\TrainingProvider\LearnerRecordDetails.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -914,25 +930,35 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ManagePostalAddress.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\TrainingProvider\QueryEnglishAndMathsStatus.Designer.cs">
+    <Compile Update="Content\TrainingProvider\SearchLearnerDetails.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>QueryEnglishAndMathsStatus.resx</DependentUpon>
+      <DependentUpon>SearchLearnerDetails.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\ProviderGuidance.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProviderGuidance.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\ProviderTimeline.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProviderTimeline.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\TrainingProvider\SearchLearnerRecord.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>SearchLearnerRecord.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\TrainingProvider\SearchLearnerRecordNotAdded.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>SearchLearnerRecordNotAdded.resx</DependentUpon>
-    </Compile>
     <Compile Update="Content\TrainingProvider\SearchLearnerRecordNotFound.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>SearchLearnerRecordNotFound.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\SubjectStatus.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SubjectStatus.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\ViewComponents\NotificationBanner.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -1035,6 +1061,62 @@
     <EmbeddedResource Update="Content\Help\Contact.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Contact.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IndustryPlacementBanner.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IndustryPlacementBanner.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpBlendedPlacementUsed.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpBlendedPlacementUsed.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpCheckAndSubmit.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpCheckAndSubmit.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpCompletion.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpCompletion.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpEmployerLedUsed.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpEmployerLedUsed.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpGrantedTempFlexibility.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpGrantedTempFlexibility.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpModelUsed.resx">
+      <LastGenOutput>IpModelUsed.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpGuidanceNavigation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpGuidanceNavigation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpMultiEmployerOther.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpMultiEmployerOther.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpMultiEmployerSelect.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpMultiEmployerSelect.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpMultiEmployerUsed.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpMultiEmployerUsed.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpSpecialConsiderationHours.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpSpecialConsiderationHours.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpSpecialConsiderationReasons.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpSpecialConsiderationReasons.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\IpTempFlexibilityUsed.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IpTempFlexibilityUsed.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\PostResultsService\PrsAddAppeal.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1580,33 +1662,17 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ViewAll.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\CheckAndSubmit.resx">
+    <EmbeddedResource Update="Content\TrainingProvider\AddEnglishStatus.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>CheckAndSubmit.Designer.cs</LastGenOutput>
+      <LastGenOutput>AddEnglishStatus.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\Dashboard.resx">
+    <EmbeddedResource Update="Content\TrainingProvider\AddMathsStatus.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsAchievementUpdatedConfirmation.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>EnglishAndMathsAchievementUpdatedConfirmation.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsLrsQuestion.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>EnglishAndMathsLrsQuestion.Designer.cs</LastGenOutput>
+      <LastGenOutput>AddMathsStatus.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsQuestion - Copy.resx">
       <LastGenOutput>EnglishAndMathsQuestion.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsQuestion.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>EnglishAndMathsQuestion.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsSendDataConfirmation.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>EnglishAndMathsSendDataConfirmation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsStatus.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1616,33 +1682,9 @@
       <LastGenOutput>EnterUniqueLearnerReferenceNotFound.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\EnterUniqueLearnerReferenceAlreadyAdded.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>EnterUniqueLearnerReferenceAlreadyAdded.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\EnterUniqueLearnerReferenceNotFound.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>EnterUniqueLearnerReferenceNotFound.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\IndustryPlacementQuestion.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>IndustryPlacementQuestion.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\IndustryPlacementStatus.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IndustryPlacementStatus.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\IndustryPlacementUpdatedConfirmation.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>IndustryPlacementUpdatedConfirmation.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\LearnerRecordCancel.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LearnerRecordCancel.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\LearnerRecordConfirmation.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LearnerRecordConfirmation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\LearnerRecordDetails.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1652,21 +1694,29 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ManagePostalAddress.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\QueryEnglishAndMathsStatus.resx">
+    <EmbeddedResource Update="Content\TrainingProvider\SearchLearnerDetails.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>QueryEnglishAndMathsStatus.Designer.cs</LastGenOutput>
+      <LastGenOutput>SearchLearnerDetails.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\ProviderGuidance.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProviderGuidance.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\ProviderTimeline.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProviderTimeline.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\SearchLearnerRecord.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SearchLearnerRecord.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\SearchLearnerRecordNotAdded.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SearchLearnerRecordNotAdded.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\SearchLearnerRecordNotFound.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SearchLearnerRecordNotFound.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\SubjectStatus.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SubjectStatus.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\ViewComponents\NotificationBanner.resx">
       <LastGenOutput>NotificationBanner.Designer.cs</LastGenOutput>

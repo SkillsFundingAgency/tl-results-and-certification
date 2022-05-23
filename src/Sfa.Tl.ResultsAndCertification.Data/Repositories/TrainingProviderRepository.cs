@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,6 +19,36 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         {
             _dbContext = dbContext;
             _logger = logger;
+        }
+
+        public async Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request)
+        {
+            var pathwayQueryable = _dbContext.TqRegistrationPathway
+                                             .Where(p => p.TqProvider.TlProvider.UkPrn == request.Ukprn && p.Status == RegistrationPathwayStatus.Active)
+                                             .AsQueryable();
+
+            if (request.AcademicYear.Any())
+                pathwayQueryable = pathwayQueryable.Where(p => request.AcademicYear.Contains(p.AcademicYear));
+
+            var learnerRecords = await pathwayQueryable
+                .Select(x => new SearchLearnerDetail
+                {
+                    ProfileId = x.TqRegistrationProfile.Id,
+                    Uln = x.TqRegistrationProfile.UniqueLearnerNumber,
+                    Firstname = x.TqRegistrationProfile.Firstname,
+                    Lastname = x.TqRegistrationProfile.Lastname,
+                    AcademicYear = x.AcademicYear,
+                    TlevelName = x.TqProvider.TqAwardingOrganisation.TlPathway.Name,
+                    EnglishStatus = x.TqRegistrationProfile.EnglishStatus,
+                    MathsStatus = x.TqRegistrationProfile.MathsStatus,
+                    IndustryPlacementStatus = x.IndustryPlacements.Any() ? x.IndustryPlacements.FirstOrDefault().Status : null,
+                    CreatedOn = x.CreatedOn
+                })
+                .GroupBy(x => x.ProfileId)
+                .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
+                .ToListAsync();
+
+            return new PagedResponse<SearchLearnerDetail> { Records = learnerRecords.OrderBy(l => l.Lastname).ToList(), TotalRecords = learnerRecords.Count };
         }
 
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
@@ -39,13 +68,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                            Name = tqProfile.Firstname + " " + tqProfile.Lastname,
                                            DateofBirth = tqProfile.DateofBirth,
                                            ProviderName = tlProvider.Name + " (" + tlProvider.UkPrn + ")",
-                                           PathwayName = tlPathway.Name + " (" + tlPathway.LarId + ")",                                           
-                                           IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn,
-                                           IsLearnerRecordAdded = tqProfile.IsEnglishAndMathsAchieved.HasValue && tqPathway.IndustryPlacements.Any(),
-                                           IsEnglishAndMathsAchieved = tqProfile.IsEnglishAndMathsAchieved ?? false,
-                                           IsSendLearner = tqProfile.IsSendLearner,
-                                           HasLrsEnglishAndMaths = tqProfile.IsRcFeed == false && tqProfile.QualificationAchieved.Any(),
-                                           IsRcFeed = tqProfile.IsRcFeed
+                                           PathwayName = tlPathway.Name + " (" + tlPathway.LarId + ")",
+                                           IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn
                                        })
                                 .FirstOrDefaultAsync();
             return learnerRecord;
@@ -66,16 +90,18 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         {
                                             ProfileId = tqProfile.Id,
                                             RegistrationPathwayId = tqPathway.Id,
+                                            TlPathwayId = tlPathway.Id,
                                             Uln = tqProfile.UniqueLearnerNumber,
                                             Name = tqProfile.Firstname + " " + tqProfile.Lastname,
                                             DateofBirth = tqProfile.DateofBirth,
-                                            ProviderName = tlProvider.Name + " (" + tlProvider.UkPrn + ")",
-                                            PathwayName = tlPathway.Name + " (" + tlPathway.LarId + ")",
+                                            ProviderName = tlProvider.Name,
+                                            ProviderUkprn = tlProvider.UkPrn,
+                                            TlevelTitle = tlPathway.TlevelTitle,
+                                            AcademicYear = tqPathway.AcademicYear,
+                                            AwardingOrganisationName = tqAo.TlAwardingOrganisaton.DisplayName,
+                                            MathsStatus = tqProfile.MathsStatus,
+                                            EnglishStatus = tqProfile.EnglishStatus,
                                             IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn,
-                                            IsLearnerRecordAdded = tqProfile.IsEnglishAndMathsAchieved.HasValue && ipRecord != null,
-                                            IsEnglishAndMathsAchieved = tqProfile.IsEnglishAndMathsAchieved ?? false,
-                                            IsSendLearner = tqProfile.IsSendLearner,
-                                            HasLrsEnglishAndMaths = tqProfile.IsRcFeed == false && tqProfile.QualificationAchieved.Any(),
                                             IndustryPlacementId = ipRecord != null ? ipRecord.Id : 0,
                                             IndustryPlacementStatus = ipRecord != null ? ipRecord.Status : null
                                         };
@@ -83,32 +109,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             var learnerRecordDetails = pathwayId.HasValue ? await learnerRecordQuerable.FirstOrDefaultAsync(p => p.RegistrationPathwayId == pathwayId) : await learnerRecordQuerable.FirstOrDefaultAsync();
 
             return learnerRecordDetails;
-        }
-
-        public async Task<bool> IsSendConfirmationRequiredAsync(int profileId)
-        {
-            var achievemnts = await (from qualAchieved in _dbContext.QualificationAchieved
-                                     join qual in _dbContext.Qualification on qualAchieved.QualificationId equals qual.Id
-                                     join qualGrade in _dbContext.QualificationGrade on qualAchieved.QualificationGradeId equals qualGrade.Id
-                                     join lookup in _dbContext.TlLookup on qual.TlLookupId equals lookup.Id
-                                     where qualAchieved.TqRegistrationProfileId == profileId && qualAchieved.IsAchieved 
-                                     select new { Subject = lookup.Value, IsSend = qual.IsSendQualification || qualGrade.IsSendGrade })
-                                     .ToListAsync();
-
-            var englishAchievements = achievemnts?.Where(x => x.Subject == QualificationSubject.English.ToString());
-            var mathsAchievements = achievemnts?.Where(x => x.Subject == QualificationSubject.Maths.ToString());
-
-            if (!englishAchievements.Any() || !mathsAchievements.Any())
-            {
-                var message = $"Data not supported - both English and Maths achievements are expected. Method: IsSendConfirmationRequiredAsync({profileId}), EnglishAchieved: {englishAchievements.Count()}, MathsAchieved: {mathsAchievements.Count()}";
-                _logger.LogInformation(LogEvent.UnSupportedMethod, message);
-                throw new Exception(message);
-            }
-
-            var isEngSendConfirmationRequired = englishAchievements.All(x => x.IsSend);
-            var isMathsSendConfirmationRequired = mathsAchievements.All(x => x.IsSend);
-
-            return isEngSendConfirmationRequired || isMathsSendConfirmationRequired;
         }
     }
 }

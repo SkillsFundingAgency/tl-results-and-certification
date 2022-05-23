@@ -117,74 +117,97 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DateofBirth_Text" xml:space="preserve">
-    <value>Date of birth: {0}</value>
+  <data name="Action_Text_Link_Add" xml:space="preserve">
+    <value>Add</value>
   </data>
-  <data name="English_And_Maths_Achieved_Lrs_Text" xml:space="preserve">
-    <value>Achieved minimum standard (Data from the Learning Records Service - LRS)</value>
+  <data name="Back_To_Home_Text" xml:space="preserve">
+    <value>Back to home</value>
   </data>
-  <data name="English_And_Maths_Achieved_With_Send_Lrs_Text" xml:space="preserve">
-    <value>Achieved minimum standard for learners with SEND (Data from the Learning Records Service - LRS and provider declaration)</value>
+  <data name="Back_To_List_Of_Learners_Text" xml:space="preserve">
+    <value>Back to list of learners</value>
   </data>
-  <data name="English_And_Maths_Action_Hidden_Text" xml:space="preserve">
-    <value> English and maths achievement status</value>
+  <data name="Hidden_Action_Text_English" xml:space="preserve">
+    <value> english status</value>
   </data>
-  <data name="English_And_Maths_Not_Achieved_Lrs_Text" xml:space="preserve">
-    <value>Not achieved minimum standard (Data from the Learning Records Service - LRS)</value>
+  <data name="Hidden_Action_Text_Industry_Placement" xml:space="preserve">
+    <value> industry placement information</value>
   </data>
-  <data name="Industry_Placement_Action_Hidden_Text" xml:space="preserve">
-    <value> industry placement completion status</value>
+  <data name="Hidden_Action_Text_Maths" xml:space="preserve">
+    <value> maths status</value>
   </data>
-  <data name="Learners_English_And_Maths_Achievement_Text" xml:space="preserve">
-    <value>Learner’s English and maths achievement</value>
+  <data name="Notification_Heading" xml:space="preserve">
+    <value>Additional information needed for this learner</value>
   </data>
-  <data name="Learners_Industry_Placement_Completion_Text" xml:space="preserve">
-    <value>Learner’s industry placement completion</value>
+  <data name="Notification_Link_Add_English" xml:space="preserve">
+    <value>Add English level details</value>
   </data>
-  <data name="Learner_TLevel_Record_Heading_Text" xml:space="preserve">
-    <value>Learner T Level record</value>
+  <data name="Notification_Link_Add_Ip" xml:space="preserve">
+    <value>Add industry placement details</value>
   </data>
-  <data name="Name_Text" xml:space="preserve">
-    <value>Name: {0}</value>
+  <data name="Notification_Link_Add_Maths" xml:space="preserve">
+    <value>Add maths level details</value>
   </data>
-  <data name="Page_Title_Text" xml:space="preserve">
+  <data name="Notification_Title" xml:space="preserve">
+    <value>Important</value>
+  </data>
+  <data name="Page_Title" xml:space="preserve">
     <value>Learner T Level record page</value>
   </data>
-  <data name="Provider_Text" xml:space="preserve">
-    <value>Provider (UKPRN): {0}</value>
+  <data name="Personal_Details_Text" xml:space="preserve">
+    <value>Personal details</value>
   </data>
-  <data name="Query_Action_Link_Text" xml:space="preserve">
-    <value>Query</value>
+  <data name="Section_Heading_Industry_Placement" xml:space="preserve">
+    <value>Industry placement</value>
   </data>
-  <data name="Search_Again_Link_Text" xml:space="preserve">
-    <value>Search again</value>
+  <data name="Section_Heading_Level2_Maths_English" xml:space="preserve">
+    <value>Level 2 maths and English</value>
   </data>
-  <data name="Title_EnglishAndMaths_Status_Text" xml:space="preserve">
-    <value>Status</value>
+  <data name="Start_Year_Value" xml:space="preserve">
+    <value>{0} to {1}</value>
+  </data>
+  <data name="Status_Tag_Incomplete" xml:space="preserve">
+    <value>Incomplete</value>
+  </data>
+  <data name="Success_Header_English_Status_Added" xml:space="preserve">
+    <value>English status added</value>
+  </data>
+  <data name="Success_Header_Maths_Status_Added" xml:space="preserve">
+    <value>Maths status added</value>
+  </data>
+  <data name="Success_Message_English_Status_Added" xml:space="preserve">
+    <value>&lt;p class="govuk-body"&gt;&lt;a class="govuk-notification-banner__link" href="/contact-us"&gt;Contact us&lt;/a&gt; if the English status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;</value>
+  </data>
+  <data name="Success_Message_Maths_Status_Added" xml:space="preserve">
+    <value>&lt;p class="govuk-body"&gt;&lt;a class="govuk-notification-banner__link" href="/contact-us"&gt;Contact us&lt;/a&gt; if the maths status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;</value>
+  </data>
+  <data name="Title_AoName_Text" xml:space="preserve">
+    <value>Awarding organisation</value>
+  </data>
+  <data name="Title_DateofBirth_Text" xml:space="preserve">
+    <value>Date of birth</value>
+  </data>
+  <data name="Title_English_Text" xml:space="preserve">
+    <value>English</value>
   </data>
   <data name="Title_IP_Status_Text" xml:space="preserve">
     <value>Status</value>
   </data>
-  <data name="TLevel_Core_Text" xml:space="preserve">
-    <value>T Level core: {0}</value>
+  <data name="Title_Maths_Text" xml:space="preserve">
+    <value>Maths</value>
+  </data>
+  <data name="Title_Provider_Name_Text" xml:space="preserve">
+    <value>Provider</value>
+  </data>
+  <data name="Title_Provider_Ukprn_Text" xml:space="preserve">
+    <value>UKPRN</value>
+  </data>
+  <data name="Title_StartYear_Text" xml:space="preserve">
+    <value>Start year</value>
+  </data>
+  <data name="Title_TLevel_Text" xml:space="preserve">
+    <value>T Level</value>
   </data>
   <data name="Uln_Text" xml:space="preserve">
     <value>ULN: {0}</value>
-  </data>
-  <data name="Update_Action_Link_Text" xml:space="preserve">
-    <value>Update</value>
-  </data>
-  <data name="Whats_Lrs_Text" xml:space="preserve">
-    <value>&lt;details class="govuk-details govuk-!-padding-top-4" closed&gt;
-	  &lt;summary class="govuk-details__summary"&gt;
-		  &lt;span class="govuk-details__summary-text"&gt;
-			  What's LRS?
-		  &lt;/span&gt;
-	  &lt;/summary&gt;
-	  &lt;div class="govuk-details__text"&gt;
-		&lt;p class="govuk-body"&gt;The Learning Records Service (LRS) collects data relating to learners' post-14 qualifications, for example, GCSEs.&lt;/p&gt;
-		&lt;p class="govuk-body"&gt;If you think the LRS data is wrong, you must contact the exam board responsible for issuing the learner's English and maths qualifications. Your organisation's Exams Officer may be able to help.&lt;/p&gt;
-	  &lt;/div&gt;
-	&lt;/details&gt;</value>
   </data>
 </root>

@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
@@ -40,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln);
         Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
         Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId);
-
+        
         // Manage registrations
         Task<bool> UpdateRegistrationAsync(ManageRegistration model);
         Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model);
@@ -66,10 +67,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request);
 
         // TraningProvider
-        Task<FindLearnerRecord> FindLearnerRecordAsync(long aoUkprn, long uln, bool? evaluateSendConfirmation = false);
+        Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest apiRequest);
+        Task<FindLearnerRecord> FindLearnerRecordAsync(long aoUkprn, long uln);
         Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null);
-        Task<AddLearnerRecordResponse> AddLearnerRecordAsync(AddLearnerRecordRequest request);
-        Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest model);
+        Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request);
 
         // ProviderAddress
         Task<bool> AddAddressAsync(AddAddressRequest request);
@@ -85,6 +86,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null);
         Task<bool> PrsActivityAsync(PrsActivityRequest request);
         Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request);
+
+        #region IndustryPlacement
+        Task<IList<IpLookupData>> GetIpLookupDataAsync(IpLookupType ipLookupType, int? pathwayId = null);
+        Task<IpTempFlexNavigation> GetTempFlexNavigationAsync(int pathwayId, int academicYear);
+        Task<bool> ProcessIndustryPlacementDetailsAsync(IndustryPlacementRequest request);
+
+        #endregion
 
         // Common
         Task<IList<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory);

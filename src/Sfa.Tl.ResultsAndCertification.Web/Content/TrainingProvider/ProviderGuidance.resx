@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Adding_Industry_Pacement_Information" xml:space="preserve">
+    <value>adding industry placement information</value>
+  </data>
+  <data name="Adding_Learner_Information" xml:space="preserve">
+    <value>Adding learner information</value>
+  </data>
+  <data name="Adding_Maths_And_English_Details" xml:space="preserve">
+    <value>adding maths and English details where it is not already provided</value>
+  </data>
+  <data name="Although_Not_Mandatory" xml:space="preserve">
+    <value>Although not mandatory, a series of allowable general and route-specific models and approaches for industry placements can be adopted to make sure that placements are accessible and meaningful for all students. The route-specific models and approaches are tailored to the requirements of specialist industries so that placements are deliverable across all T Level provision.</value>
+  </data>
+  <data name="A_Learner_Who_Has_Not_Achieved_All_The_Components" xml:space="preserve">
+    <value>a learner who has not achieved all the components of their T Level</value>
+  </data>
+  <data name="A_Learner_Who_Has_Withdrawn_From_Their_Tlevel_Course" xml:space="preserve">
+    <value>a learner who has withdrawn from their T Level course</value>
+  </data>
+  <data name="Checking_What_Data_You_Need_To_Provide" xml:space="preserve">
+    <value>checking what data you need to provide and by when</value>
+  </data>
+  <data name="Downloading_Tlevel_Results_On_Results_Day" xml:space="preserve">
+    <value>downloading T Level results on results day</value>
+  </data>
+  <data name="For_The_First_Two_Waves_Of_Tlevel_Students" xml:space="preserve">
+    <value>For the first two waves of T Level students, starting in 2020 to 2021 and 2021 to 2022, we have specified some temporary flexibilities that can be applied by exception and as a last resort.</value>
+  </data>
+  <data name="Get_Prepared_For_Adding_Learner_Information" xml:space="preserve">
+    <value>Get prepared for adding a learner information manually by</value>
+  </data>
+  <data name="Industry_Placement_Completion_Exceptions_Opens_In_A_New_Tab" xml:space="preserve">
+    <value>industry placement completion exceptions (opens in a new tab)</value>
+  </data>
+  <data name="Industry_Placement_Information_We_Ask_For" xml:space="preserve">
+    <value>Industry placement information we ask for</value>
+  </data>
+  <data name="Industry_Placement_Models" xml:space="preserve">
+    <value>Industry placement models</value>
+  </data>
+  <data name="Learners_May_Experience_Difficult_Circumstances_During_Their_Placement" xml:space="preserve">
+    <value>Learners may experience difficult circumstances during their placement, which means they are unable to complete the minimum placement hours before the end of the second year.</value>
+  </data>
+  <data name="Learner_Results" xml:space="preserve">
+    <value>2020 to 2021 learner results</value>
+  </data>
+  <data name="Manage_Tlevel_Results_Is_The_Service_That_Exam_Boards" xml:space="preserve">
+    <value>Manage T Level results is the service that exam boards and education providers use to provide DfE with the data needed to calculate overall T Level grades and issue certificates.</value>
+  </data>
+  <data name="More_About" xml:space="preserve">
+    <value>More about</value>
+  </data>
+  <data name="Page_Heading" xml:space="preserve">
+    <value>About Manage T Level results</value>
+  </data>
+  <data name="Page_Title" xml:space="preserve">
+    <value>About Manage T Level results</value>
+  </data>
+  <data name="Requesting_A_Statement_Of_Achievement_Opens_In_A_New_Tab" xml:space="preserve">
+    <value>requesting a statement of achievement (opens in a new tab)</value>
+  </data>
+  <data name="Requesting_Statements_Of_Achievement_For_Withdrawn_Learners" xml:space="preserve">
+    <value>requesting statements of achievement for withdrawn learners</value>
+  </data>
+  <data name="Special_Consideration" xml:space="preserve">
+    <value>Special consideration</value>
+  </data>
+  <data name="Statement_Of_Achievement" xml:space="preserve">
+    <value>Statements of achievement</value>
+  </data>
+  <data name="Statement_Of_Achievement_Are_Used_To_SHow_Which_Components" xml:space="preserve">
+    <value>Statements of achievement are used to show which components of a T Level have been completed by a learner.</value>
+  </data>
+  <data name="Tasks_You_Can_Complete" xml:space="preserve">
+    <value>Tasks you can complete here include:</value>
+  </data>
+  <data name="Temporary_Flexibilities" xml:space="preserve">
+    <value>Temporary flexibilities</value>
+  </data>
+  <data name="Temporary_Flexibilities_Will_Be_Withdrawn" xml:space="preserve">
+    <value>Temporary flexibilities will be withdrawn in July 2023.</value>
+  </data>
+  <data name="The_Results_Are_Provided_In_Csv_Format" xml:space="preserve">
+    <value>The results are provided in csv format.</value>
+  </data>
+  <data name="Tlevel_Delivery_Guidance_Page_Opens_In_A_New_Tab" xml:space="preserve">
+    <value>T Levels delivery guidance page (opens in a new tab)</value>
+  </data>
+  <data name="Tlevel_Results_For_Learners_Starting_Their_Tlevels" xml:space="preserve">
+    <value>T Level results for learners starting their T Levels in 2020 to 2021 is published in line with A level results.</value>
+  </data>
+  <data name="We_Understand_That_Covid_May_Have_Made_It_Particulary_Hard_To_Deliver_Placements" xml:space="preserve">
+    <value>We understand that Covid-19 may have made it particularly hard to deliver placements against the core principles set out in the industry placement delivery guidance.</value>
+  </data>
+  <data name="We_Will_Ask_You_For_The_Total_Number_Of_Hours_Completed" xml:space="preserve">
+    <value>We will ask you for the total number of hours completed and the reason for granting special consideration. You should hold supporting documentation in your own files.</value>
+  </data>
+  <data name="We_Will_Ask_You_To_Specify_For_Each_Learner" xml:space="preserve">
+    <value>We will ask you to specify for each learner whether any temporary flexibilities were used.</value>
+  </data>
+  <data name="We_Will_Ask_You_To_Specify_For_Each_Learner_Wheather_One_Or_More_Industry_Placement_Models_Were_Used" xml:space="preserve">
+    <value>We will ask you to specify for each learner whether one or more of these industry placement models were used.</value>
+  </data>
+  <data name="Who_Is_Entitled_To_A_Statemnet_Of_Achievement" xml:space="preserve">
+    <value>Who is entitled to a statement of achievement?</value>
+  </data>
+  <data name="You_Can_Add_Learner_Information_Manually" xml:space="preserve">
+    <value>You can add learner information manually, which means that you input all of the required data from your own records.</value>
+  </data>
+  <data name="You_Can_Read_More_About_Industry_Placement_Models_In_Annex_A" xml:space="preserve">
+    <value>You can read more about industry placement models in 'Annex A: Different models and approaches to delivery' (PDF), available to download from the</value>
+  </data>
+  <data name="You_Can_Read_More_About_Temporary_Flexibilities" xml:space="preserve">
+    <value>You can read more about temporary flexibilities in 'Temporary flexibilities for 2020 and 2021 students' (PDF), available to download from the</value>
+  </data>
+  <data name="You_Have_The_Discretion_To_Apply_Special_Consideration" xml:space="preserve">
+    <value>You have the discretion to apply special consideration in some exceptional circumstances where students have demonstrated sufficient progress towards their learning goals but have not completed the minimum placement hours.</value>
+  </data>
+</root>

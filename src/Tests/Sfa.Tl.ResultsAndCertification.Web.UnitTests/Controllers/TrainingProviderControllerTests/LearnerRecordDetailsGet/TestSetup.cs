@@ -21,19 +21,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         {
             get
             {
-                if (!Mockresult.HasLrsEnglishAndMaths)
-                    return null;
+                return string.Empty;
 
-                if (Mockresult.IsEnglishAndMathsAchieved && Mockresult.IsSendLearner == true)
-                {
-                    return LearnerRecordDetailsContent.English_And_Maths_Achieved_With_Send_Lrs_Text;
-                }
-                else
-                {
-                    return Mockresult.IsEnglishAndMathsAchieved && !Mockresult.IsSendLearner.HasValue
-                        ? LearnerRecordDetailsContent.English_And_Maths_Achieved_Lrs_Text
-                        : LearnerRecordDetailsContent.English_And_Maths_Not_Achieved_Lrs_Text;
-                }
+                //if (!Mockresult.HasLrsEnglishAndMaths)
+                //    return null;
+
+                //if (Mockresult.IsEnglishAndMathsAchieved && Mockresult.IsSendLearner == true)
+                //{
+                //    return LearnerRecordDetailsContent.English_And_Maths_Achieved_With_Send_Lrs_Text;
+                //}
+                //else
+                //{
+                //    return Mockresult.IsEnglishAndMathsAchieved && !Mockresult.IsSendLearner.HasValue
+                //        ? LearnerRecordDetailsContent.English_And_Maths_Achieved_Lrs_Text
+                //        : LearnerRecordDetailsContent.English_And_Maths_Not_Achieved_Lrs_Text;
+                //}
             }
         }
     }

@@ -18,10 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                 Name = "Test user",
                 DateofBirth = DateTime.UtcNow.AddYears(-20),
                 ProviderName = "Barsley College",
-                IsLearnerRegistered = true,
-                IsLearnerRecordAdded = true,
-                IsEnglishAndMathsAchieved = true,
-                HasLrsEnglishAndMaths = true
+                IsLearnerRegistered = true
             };
 
             InternalApiClient.FindLearnerRecordAsync(ProviderUkprn, Uln).Returns(expectedApiResult);
@@ -37,9 +34,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             ActualResult.DateofBirth.Should().Be(expectedApiResult.DateofBirth);
             ActualResult.ProviderName.Should().Be(expectedApiResult.ProviderName);
             ActualResult.IsLearnerRegistered.Should().Be(expectedApiResult.IsLearnerRegistered);
-            ActualResult.IsLearnerRecordAdded.Should().Be(expectedApiResult.IsLearnerRecordAdded);
-            ActualResult.IsEnglishAndMathsAchieved.Should().Be(expectedApiResult.IsEnglishAndMathsAchieved);
-            ActualResult.HasLrsEnglishAndMaths.Should().Be(expectedApiResult.HasLrsEnglishAndMaths);
         }
     }
 }

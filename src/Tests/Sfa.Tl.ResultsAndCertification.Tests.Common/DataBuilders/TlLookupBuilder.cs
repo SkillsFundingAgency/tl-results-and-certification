@@ -212,5 +212,59 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 ModifiedOn = Constants.ModifiedOn
             }
         };
+
+        public TlLookup BuildIpType() => new TlLookup
+        {
+            Category = "SpecialConsideration",
+            Code = "SC",
+            Value = "SpecialConsideration",
+            IsActive = true,
+            SortOrder = 1,
+            CreatedBy = Constants.CreatedByUser,
+            CreatedOn = Constants.CreatedOn,
+            ModifiedBy = Constants.ModifiedByUser,
+            ModifiedOn = Constants.ModifiedOn
+        };
+
+        public IList<TlLookup> BuildIpTypeList() => new List<TlLookup>
+        {
+            new TlLookup
+            {
+                Category = "SpecialConsideration",
+                Code = "SC",
+                Value = "SpecialConsideration",
+                IsActive = true,
+                SortOrder = 1,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "IndustryPlacementModel",
+                Code = "IPM",
+                Value = "IndustryPlacementModel",
+                IsActive = true,
+                SortOrder = 1,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "TemporaryFlexibility",
+                Code = "TF",
+                Value = "TemporaryFlexibility",
+                IsActive = true,
+                SortOrder = 1,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            }
+        };
+
     }
 }

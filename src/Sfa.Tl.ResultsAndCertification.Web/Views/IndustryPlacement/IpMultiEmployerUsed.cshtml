@@ -1,0 +1,50 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual.IpMultiEmployerUsedViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
+
+@{
+    ViewData["Title"] = IpMultiEmployerUsed.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="@RouteConstants.SubmitIpMultiEmployerUsed">            
+            <input type="hidden" asp-for="LearnerName" />
+            <input type="hidden" asp-for="IsChangeMode" />
+
+
+            <partial name="_ValidationSummary" />
+
+            <span class="govuk-caption-l">@IpMultiEmployerUsed.Caption_Ip_Models</span>
+            <div class="govuk-form-group" sfa-validation-for="IsMultiEmployerModelUsed" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">@string.Format(IpMultiEmployerUsed.Heading_Was_Multiple_Employer_Model_Used_For, Model.LearnerName)</h1>
+                    </legend>
+                    <div class="govuk-hint">@IpMultiEmployerUsed.Hint_Select_Yes_If_Multiple_Employer_Model_Was_Used</div>
+                    <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                        <span sfa-validation-for="IsMultiEmployerModelUsed"></span>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="ismultiemployermodelused" asp-for="IsMultiEmployerModelUsed" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="ismultiemployermodelused">
+                                @IpMultiEmployerUsed.Option_Yes
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="ismultiemployermodelused-no" asp-for="IsMultiEmployerModelUsed" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="ismultiemployermodelused-no">
+                                @IpMultiEmployerUsed.Option_No
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@IpMultiEmployerUsed.Button_Continue</button>
+        </form>
+    </div>
+     <partial name="Partials/_ipGuidanceNavigation.cshtml" />
+</div>

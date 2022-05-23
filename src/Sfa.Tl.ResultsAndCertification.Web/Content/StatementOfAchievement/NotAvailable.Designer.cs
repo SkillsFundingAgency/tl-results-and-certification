@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class NotAvailable {
@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Statements of achievement are not yet available.
+        ///   Looks up a localized string similar to Statements of achievement not available.
         /// </summary>
         public static string Heading_Text {
             get {
@@ -79,20 +79,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to It is too early to request a statement of achievement. Printing will be available from {0}..
-        /// </summary>
-        public static string It_Is_Too_Early_To_Request_Text {
-            get {
-                return ResourceManager.GetString("It_Is_Too_Early_To_Request_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Statements of achievement not available page.
+        ///   Looks up a localized string similar to SoA unavailable - Request SoA.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The statement of achievement design is in the process of being changed. This is because maths and English requirements have changed..
+        /// </summary>
+        public static string Para1_Text {
+            get {
+                return ResourceManager.GetString("Para1_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We expect statements of achievement to be available again from {0}..
+        /// </summary>
+        public static string Para2_Text {
+            get {
+                return ResourceManager.GetString("Para2_Text", resourceCulture);
             }
         }
     }

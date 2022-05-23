@@ -123,9 +123,6 @@
   <data name="Heading_Uln_Not_Registered" xml:space="preserve">
     <value>ULN ({0}) has not been registered in this service by an exam board</value>
   </data>
-  <data name="Link_Back_To_Manage_Learner" xml:space="preserve">
-    <value>Back to manage learner T Level records</value>
-  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Search for a learner - ULN not registered page</value>
   </data>

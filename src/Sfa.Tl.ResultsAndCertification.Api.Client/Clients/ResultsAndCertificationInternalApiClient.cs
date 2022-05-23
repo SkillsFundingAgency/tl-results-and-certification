@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
@@ -281,9 +282,14 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         #endregion
 
         // Training Provider endpoints
-        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation = false)
+        public async Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request)
         {
-            var requestUri = string.Format(ApiConstants.FindLearnerRecordUri, providerUkprn, uln, evaluateSendConfirmation);
+            return await PostAsync<SearchLearnerRequest, PagedResponse<SearchLearnerDetail>>(ApiConstants.SearchLearnerDetailsUri, request);
+        }
+
+        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
+        {
+            var requestUri = string.Format(ApiConstants.FindLearnerRecordUri, providerUkprn, uln);
             return await GetAsync<FindLearnerRecord>(requestUri);
         }
 
@@ -292,15 +298,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             var requestUri = string.Format(ApiConstants.GetLearnerRecordDetailsUri, providerUkprn, profileId, pathwayId);
             return await GetAsync<LearnerRecordDetails>(requestUri);
         }
-
-        public async Task<AddLearnerRecordResponse> AddLearnerRecordAsync(AddLearnerRecordRequest request)
+        
+        public async Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request)
         {
-            return await PostAsync<AddLearnerRecordRequest, AddLearnerRecordResponse>(ApiConstants.AddLearnerRecordUri, request);
-        }
-
-        public async Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest model)
-        {
-            return await PutAsync<UpdateLearnerRecordRequest, bool>(ApiConstants.UpdateLearnerRecordUri, model);
+            return await PutAsync<UpdateLearnerSubjectRequest, bool>(ApiConstants.UpdateLearnerSubjectUri, request);
         }
 
         // Provider Address endpoints
@@ -361,7 +362,28 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<PrsGradeChangeRequest, bool>(requestUri, request);
         }
 
-        #endregion 
+        #endregion
+
+        #region IndustryPlacement
+
+        public async Task<IList<IpLookupData>> GetIpLookupDataAsync(IpLookupType ipLookupType, int? pathwayId = null)
+        {
+            var requestUri = string.Format(ApiConstants.GetIpLookupDataUri, (int)ipLookupType, pathwayId);
+            return await GetAsync<IList<IpLookupData>>(requestUri);
+        }
+
+        public async Task<IpTempFlexNavigation> GetTempFlexNavigationAsync(int pathwayId, int academicYear)
+        {
+            var requestUri = string.Format(ApiConstants.GetTempFlexNavigationUri, pathwayId, academicYear);
+            return await GetAsync<IpTempFlexNavigation>(requestUri);
+        }
+
+        public async Task<bool> ProcessIndustryPlacementDetailsAsync(IndustryPlacementRequest request)
+        {
+            return await PostAsync<IndustryPlacementRequest, bool>(ApiConstants.ProcessIndustryPlacementDetailsUri, request);
+        }        
+
+        #endregion
 
         public async Task<LearnerRecord> GetLearnerRecordAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {

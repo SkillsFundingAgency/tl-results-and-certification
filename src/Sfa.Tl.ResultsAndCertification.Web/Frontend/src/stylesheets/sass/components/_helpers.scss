@@ -68,7 +68,9 @@
     margin-top: 0px !important;
 }
 
-
+.margin-left-4 {
+    margin-left: -4px;
+}
 // Generic float classes
 
 .tl-float-left {
@@ -143,6 +145,9 @@ input[type="radio"] {
     }
  }
 
+.record-header {
+    margin-bottom: govuk-spacing(6);
+}
 
 /* Responsive table styling */
 .responsive-table {
@@ -178,17 +183,17 @@ tbody tr td {
     text-align: right;
 }
 
-@media all and (-ms-high-contrast: none) { /* IE11 flex fix */
-    tbody tr td {
-        display: block;
-    }
-}
-
 .responsive-table__heading {
     font-weight: 700;
     padding-right: 1em;
     text-align: left;
     word-break: initial;
+}
+
+@media all and (-ms-high-contrast: none) { /* IE11 flex fix */
+    tbody tr td {
+        display: block;
+    }
 }
 
 @media (max-width: 768px) {

@@ -25,6 +25,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
         public override void Given()
         {
             ProfileId = 11;
+            ResultsAndCertificationConfiguration.SoaAvailableDate = DateTime.UtcNow.AddDays(-30);
+
             _address = new AddressViewModel { AddressId = 1, DepartmentName = "Operations", OrganisationName = "College Ltd", AddressLine1 = "10, House", AddressLine2 = "Street", Town = "Birmingham", Postcode = "B1 1AA" };
             _mockLearnerDetails = new SoaLearnerRecordDetailsViewModel
             {

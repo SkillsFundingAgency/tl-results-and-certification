@@ -1,0 +1,56 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual.IpGrantedTempFlexibilityViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = IpGrantedTempFlexibility.Page_Title;
+}
+
+@section NavigationBar {
+<vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="@RouteConstants.SubmitIpGrantedTempFlexibility">
+            <input type="hidden" asp-for="LearnerName" />
+            <input type="hidden" asp-for="IsChangeMode" />
+
+            <partial name="_ValidationSummary" />
+
+            <span class="govuk-caption-l">@IpGrantedTempFlexibility.Caption_Ip_Temporary_Flexibility</span>
+
+            <div class="govuk-form-group" sfa-validation-for="IsTempFlexibilitySelected" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset" aria-describedby="granted_temp-flex-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">@string.Format(IpGrantedTempFlexibility.Heading_Which_Temporary_Flexibilities_Were_Granted_To, Model.LearnerName)</h1>
+                    </legend>
+                    <div id="granted_temp-flex-hint" class="govuk-hint">@IpGrantedTempFlexibility.Hint_Select_All_That_Apply</div>
+
+                    <div class="govuk-form-group">
+                        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                            <span sfa-validation-for="IsTempFlexibilitySelected"></span>
+                            @if (Model?.TemporaryFlexibilities != null)
+                            {
+                                @foreach (var temFlexibility in Model?.TemporaryFlexibilities?.Select((value, i) => (value, i)))
+                                {
+                                    var elementId = (temFlexibility.i > 0) ? "istempflexibilityselected-" + temFlexibility.i : "istempflexibilityselected";
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.TemporaryFlexibilities[@temFlexibility.i].IsSelected">
+                                        <label class="govuk-label govuk-checkboxes__label" for="@elementId">
+                                            @temFlexibility.value.Name
+                                        </label>
+                                    </div>
+                                    <input type="hidden" asp-for="@Model.TemporaryFlexibilities[@temFlexibility.i].Id" />
+                                    <input type="hidden" asp-for="@Model.TemporaryFlexibilities[@temFlexibility.i].Name" />
+                                }
+                            }
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@IpGrantedTempFlexibility.Button_Continue</button>
+        </form>
+    </div>
+    <partial name="Partials/_ipGuidanceNavigation.cshtml" />
+</div>

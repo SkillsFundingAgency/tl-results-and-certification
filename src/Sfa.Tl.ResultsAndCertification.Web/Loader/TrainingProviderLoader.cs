@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -19,9 +19,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _mapper = mapper;
         }
 
-        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation = false)
+        public async Task<SearchLearnerDetailsListViewModel> SearchLearnerDetailsAsync(long providerUkprn, int academicYear)
         {
-            return await _internalApiClient.FindLearnerRecordAsync(providerUkprn, uln, evaluateSendConfirmation);
+            var apiRequest = new SearchLearnerRequest { Ukprn = providerUkprn, AcademicYear = new List<int> { academicYear } };
+            var apiResponse = await _internalApiClient.SearchLearnerDetailsAsync(apiRequest);
+
+            return _mapper.Map<SearchLearnerDetailsListViewModel>(apiResponse);
+        }
+
+        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
+        {
+            return await _internalApiClient.FindLearnerRecordAsync(providerUkprn, uln);
         }
 
         public async Task<T> GetLearnerRecordDetailsAsync<T>(long providerUkprn, int profileId, int? pathwayId = null)
@@ -29,65 +37,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var response = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
             return _mapper.Map<T>(response);
         }
-
-        public async Task<AddLearnerRecordResponse> AddLearnerRecordAsync(long providerUkprn, AddLearnerRecordViewModel viewModel)
+        
+        public async Task<bool> UpdateLearnerSubjectAsync(long providerUkprn, AddMathsStatusViewModel model)
         {
-            var learnerRecordModel = _mapper.Map<AddLearnerRecordRequest>(viewModel, opt => opt.Items["providerUkprn"] = providerUkprn);
-            return await _internalApiClient.AddLearnerRecordAsync(learnerRecordModel);
+            var learnerSubjectRequest = _mapper.Map<UpdateLearnerSubjectRequest>(model, opt => opt.Items["providerUkprn"] = providerUkprn);
+            return await _internalApiClient.UpdateLearnerSubjectAsync(learnerSubjectRequest);
         }
-
-        public async Task<UpdateLearnerRecordResponseViewModel> ProcessIndustryPlacementQuestionUpdateAsync(long providerUkprn, UpdateIndustryPlacementQuestionViewModel viewModel)
+        
+        public async Task<bool> UpdateLearnerSubjectAsync(long providerUkprn, AddEnglishStatusViewModel model)
         {
-            var learnerRecordDetails = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, viewModel.ProfileId, viewModel.RegistrationPathwayId);
-
-            if (learnerRecordDetails == null || !learnerRecordDetails.IsLearnerRecordAdded) return null;
-
-            if (learnerRecordDetails.IndustryPlacementStatus == viewModel.IndustryPlacementStatus)
-            {
-                return new UpdateLearnerRecordResponseViewModel { IsModified = false };
-            }
-
-            var request = _mapper.Map<UpdateLearnerRecordRequest>(viewModel, opt => { opt.Items["providerUkprn"] = providerUkprn; opt.Items["uln"] = learnerRecordDetails.Uln; });
-            var isSuccess = await _internalApiClient.UpdateLearnerRecordAsync(request);
-            return new UpdateLearnerRecordResponseViewModel { ProfileId = learnerRecordDetails.ProfileId, Uln = learnerRecordDetails.Uln, Name = learnerRecordDetails.Name, IsModified = true, IsSuccess = isSuccess };
-        }
-
-        public async Task<UpdateLearnerRecordResponseViewModel> ProcessEnglishAndMathsQuestionUpdateAsync(long providerUkprn, UpdateEnglishAndMathsQuestionViewModel viewModel)
-        {
-            var response = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, viewModel.ProfileId);
-
-            if (response == null || !response.IsLearnerRecordAdded || response.HasLrsEnglishAndMaths) return null;
-
-            var englishAndMathsStatus = GetEnglishAndMathsStatus(response);
-
-            if (englishAndMathsStatus == viewModel.EnglishAndMathsStatus)
-            {
-                return new UpdateLearnerRecordResponseViewModel { IsModified = false };
-            }
-                        
-            viewModel.HasLrsEnglishAndMaths = response.HasLrsEnglishAndMaths;
-            var request = _mapper.Map<UpdateLearnerRecordRequest>(viewModel, opt => { opt.Items["providerUkprn"] = providerUkprn; opt.Items["uln"] = response.Uln; });
-            var isSuccess = await _internalApiClient.UpdateLearnerRecordAsync(request);
-            return new UpdateLearnerRecordResponseViewModel { ProfileId = response.ProfileId, Uln = response.Uln, Name = response.Name, IsModified = true, IsSuccess = isSuccess };
-        }
-
-        private EnglishAndMathsStatus? GetEnglishAndMathsStatus(LearnerRecordDetails model)
-        {
-            if (model.HasLrsEnglishAndMaths)
-                return null;
-
-            if (model.IsEnglishAndMathsAchieved && model.IsSendLearner == true)
-            {
-                return EnglishAndMathsStatus.AchievedWithSend;
-            }
-            else if (model.IsEnglishAndMathsAchieved)
-            {
-                return EnglishAndMathsStatus.Achieved;
-            }
-            else
-            {
-                return !model.IsEnglishAndMathsAchieved ? (EnglishAndMathsStatus?)EnglishAndMathsStatus.NotAchieved : null;
-            }
+            var learnerSubjectRequest = _mapper.Map<UpdateLearnerSubjectRequest>(model, opt => opt.Items["providerUkprn"] = providerUkprn);
+            return await _internalApiClient.UpdateLearnerSubjectAsync(learnerSubjectRequest);
         }
     }
 }

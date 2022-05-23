@@ -1,0 +1,56 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual.SpecialConsiderationReasonsViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = IpSpecialConsiderationReasons.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="@RouteConstants.SubmitIpSpecialConsiderationReasons">
+            <input type="hidden" asp-for="LearnerName" />
+            <input type="hidden" asp-for="@Model.AcademicYear" />
+            <input type="hidden" asp-for="IsChangeMode" />
+
+            <partial name="_ValidationSummary" />
+
+            <span class="govuk-caption-l">Industry placement: Special consideration</span>
+            <div class="govuk-form-group" sfa-validation-for="IsReasonSelected" sfa-validation-class="govuk-form-group--error">
+
+                <fieldset class="govuk-fieldset" aria-describedby="special-consideration-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">@string.Format(IpSpecialConsiderationReasons.Question_Why_Was_SC_For_Their_Industry_Placement, Model.LearnerName)</h1>
+                    </legend>
+                    <div id="special-consideration-hint" class="govuk-hint">@IpSpecialConsiderationReasons.Hint_We_Will_Ask_You_To_Declare</div>
+
+                    <div class="govuk-form-group">
+                        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+
+                            @foreach (var reason in Model.ReasonsList.Select((value, i) => (value, i)))
+                            {
+                                var elementId = (reason.i > 0) ? "isreasonselected-" + reason.i : "isreasonselected";
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.ReasonsList[@reason.i].IsSelected">
+                                    <label class="govuk-label govuk-checkboxes__label" for="@elementId">
+                                        @reason.value.Name
+                                    </label>
+                                </div>
+                                <input type="hidden" asp-for="@Model.ReasonsList[@reason.i].Id" />
+                                <input type="hidden" asp-for="@Model.ReasonsList[@reason.i].Name" />
+                            }
+                        </div>
+                    </div>
+
+                </fieldset>
+            </div>
+
+            <button id="ContinueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@IpSpecialConsiderationReasons.Button_Continue</button>
+        </form>
+    </div>
+    <partial name="Partials/_ipGuidanceNavigation.cshtml" />
+</div>
