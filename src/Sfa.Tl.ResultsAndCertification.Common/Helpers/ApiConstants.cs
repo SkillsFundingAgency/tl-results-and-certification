@@ -52,7 +52,7 @@
 
         // TrainingProvider
         public const string SearchLearnerDetailsUri = "/api/trainingprovider/SearchLearnerDetails";
-        public const string FindLearnerRecordUri = "/api/trainingprovider/FindLearnerRecord/{0}/{1}/{2}";
+        public const string FindLearnerRecordUri = "/api/trainingprovider/FindLearnerRecord/{0}/{1}";
         public const string GetLearnerRecordDetailsUri = "/api/trainingprovider/GetLearnerRecordDetails/{0}/{1}/{2}";
         public const string AddLearnerRecordUri = "/api/trainingprovider/AddLearnerRecord";
         public const string UpdateLearnerRecordUri = "/api/trainingprovider/UpdateLearnerRecord";

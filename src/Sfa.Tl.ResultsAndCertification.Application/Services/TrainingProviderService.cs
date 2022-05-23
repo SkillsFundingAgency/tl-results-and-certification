@@ -32,14 +32,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _trainingProviderRepository.SearchLearnerDetailsAsync(request);
         }
 
-        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation = false)
-        {            
-            var latestPathway = await _trainingProviderRepository.FindLearnerRecordAsync(providerUkprn, uln);
-
-            if (latestPathway != null && evaluateSendConfirmation == true && latestPathway.IsRcFeed == false && latestPathway.IsEnglishAndMathsAchieved == true && latestPathway.IsSendLearner == null)
-                latestPathway.IsSendConfirmationRequired = await _trainingProviderRepository.IsSendConfirmationRequiredAsync(latestPathway.ProfileId);
-
-            return latestPathway;
+        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
+        {
+            return await _trainingProviderRepository.FindLearnerRecordAsync(providerUkprn, uln);
         }
 
         public async Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null)

@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -71,12 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                            DateofBirth = tqProfile.DateofBirth,
                                            ProviderName = tlProvider.Name + " (" + tlProvider.UkPrn + ")",
                                            PathwayName = tlPathway.Name + " (" + tlPathway.LarId + ")",
-                                           IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn,
-                                           IsLearnerRecordAdded = tqProfile.IsEnglishAndMathsAchieved.HasValue && tqPathway.IndustryPlacements.Any(),
-                                           IsEnglishAndMathsAchieved = tqProfile.IsEnglishAndMathsAchieved ?? false,
-                                           IsSendLearner = tqProfile.IsSendLearner,
-                                           HasLrsEnglishAndMaths = tqProfile.IsRcFeed == false && tqProfile.QualificationAchieved.Any(),
-                                           IsRcFeed = tqProfile.IsRcFeed
+                                           IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn
                                        })
                                 .FirstOrDefaultAsync();
             return learnerRecord;
@@ -116,32 +109,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             var learnerRecordDetails = pathwayId.HasValue ? await learnerRecordQuerable.FirstOrDefaultAsync(p => p.RegistrationPathwayId == pathwayId) : await learnerRecordQuerable.FirstOrDefaultAsync();
 
             return learnerRecordDetails;
-        }
-
-        public async Task<bool> IsSendConfirmationRequiredAsync(int profileId)
-        {
-            var achievemnts = await (from qualAchieved in _dbContext.QualificationAchieved
-                                     join qual in _dbContext.Qualification on qualAchieved.QualificationId equals qual.Id
-                                     join qualGrade in _dbContext.QualificationGrade on qualAchieved.QualificationGradeId equals qualGrade.Id
-                                     join lookup in _dbContext.TlLookup on qual.TlLookupId equals lookup.Id
-                                     where qualAchieved.TqRegistrationProfileId == profileId && qualAchieved.IsAchieved
-                                     select new { Subject = lookup.Value, IsSend = qual.IsSendQualification || qualGrade.IsSendGrade })
-                                     .ToListAsync();
-
-            var englishAchievements = achievemnts?.Where(x => x.Subject == QualificationSubject.English.ToString());
-            var mathsAchievements = achievemnts?.Where(x => x.Subject == QualificationSubject.Maths.ToString());
-
-            if (!englishAchievements.Any() || !mathsAchievements.Any())
-            {
-                var message = $"Data not supported - both English and Maths achievements are expected. Method: IsSendConfirmationRequiredAsync({profileId}), EnglishAchieved: {englishAchievements.Count()}, MathsAchieved: {mathsAchievements.Count()}";
-                _logger.LogInformation(LogEvent.UnSupportedMethod, message);
-                throw new Exception(message);
-            }
-
-            var isEngSendConfirmationRequired = englishAchievements.All(x => x.IsSend);
-            var isMathsSendConfirmationRequired = mathsAchievements.All(x => x.IsSend);
-
-            return isEngSendConfirmationRequired || isMathsSendConfirmationRequired;
         }
     }
 }

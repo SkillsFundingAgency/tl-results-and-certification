@@ -27,9 +27,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<SearchLearnerDetailsListViewModel>(apiResponse);
         }
 
-        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation = false)
+        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
         {
-            return await _internalApiClient.FindLearnerRecordAsync(providerUkprn, uln, evaluateSendConfirmation);
+            return await _internalApiClient.FindLearnerRecordAsync(providerUkprn, uln);
         }
 
         public async Task<T> GetLearnerRecordDetailsAsync<T>(long providerUkprn, int profileId, int? pathwayId = null)

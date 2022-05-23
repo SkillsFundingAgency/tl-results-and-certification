@@ -287,9 +287,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<SearchLearnerRequest, PagedResponse<SearchLearnerDetail>>(ApiConstants.SearchLearnerDetailsUri, request);
         }
 
-        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation = false)
+        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
         {
-            var requestUri = string.Format(ApiConstants.FindLearnerRecordUri, providerUkprn, uln, evaluateSendConfirmation);
+            var requestUri = string.Format(ApiConstants.FindLearnerRecordUri, providerUkprn, uln);
             return await GetAsync<FindLearnerRecord>(requestUri);
         }
 

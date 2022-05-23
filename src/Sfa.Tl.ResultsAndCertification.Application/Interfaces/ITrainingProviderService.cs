@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     public interface ITrainingProviderService
     {
         Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request);
-        Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation = false);
+        Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln);
         Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId);
         Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request);
     }
