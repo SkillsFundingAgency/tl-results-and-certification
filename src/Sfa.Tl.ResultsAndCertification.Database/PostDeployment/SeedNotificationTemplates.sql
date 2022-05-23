@@ -6,7 +6,6 @@ MERGE INTO [dbo].[NotificationTemplate] AS Target
 USING (VALUES 
 (N'99a03bd6-89e5-4fc7-9248-e8c695245d3f', N'TlevelDetailsQueriedUserNotification'),
 (N'52baea90-8784-418a-8134-b1d9ac891b6f', N'TlevelDetailsQueriedTechnicalTeamNotification'),
-(N'a1b21a18-8555-45b8-9739-f18a902282dc', N'EnglishAndMathsLrsDataQueried'),
 (N'9a033adb-cc33-461c-8a77-e3fc15582dfb', N'FunctionJobFailedNotification'),
 (N'bc76d0c9-c92f-4cdb-8b7e-00fab2e7e046', N'PrintingJobFailedNotification'),
 (N'6b28c163-1730-4627-9120-2ae4510c4066', N'GradeChangeRequestUserNotification'),
