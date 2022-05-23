@@ -18,12 +18,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         [Required(ErrorMessageResourceType = typeof(ErrorResource.IpCompletion), ErrorMessageResourceName = "Validation_Message")]
         public IndustryPlacementStatus? IndustryPlacementStatus { get; set; }
 
+        public bool IsChangeMode { get; set; }
+
         public bool IsValid => IndustryPlacementStatus != ResultsAndCertification.Common.Enum.IndustryPlacementStatus.Completed && IndustryPlacementStatus != ResultsAndCertification.Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration;
         
         public virtual BackLinkModel BackLink => new()
         {
-            RouteName = RouteConstants.LearnerRecordDetails,
-            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
+            RouteName = IsChangeMode ? RouteConstants.IpCheckAndSubmit : RouteConstants.LearnerRecordDetails,
+            RouteAttributes = IsChangeMode ? null : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
         };
     }
 }

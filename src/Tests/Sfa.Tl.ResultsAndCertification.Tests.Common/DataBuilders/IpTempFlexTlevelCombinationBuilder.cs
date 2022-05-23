@@ -78,6 +78,30 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     CreatedOn = Constants.CreatedOn,
                     ModifiedBy = Constants.ModifiedByUser,
                     ModifiedOn = Constants.ModifiedOn
+                },                
+                new Domain.Models.IpTempFlexTlevelCombination
+                {
+                    TlPathwayId = pathway.Id,
+                    TlPathway = pathway,
+                    IpLookupId = ipLookup[4].Id,
+                    IpLookup = ipLookup[4],
+                    IsActive = true,
+                    CreatedBy = Constants.CreatedByUser,
+                    CreatedOn = Constants.CreatedOn,
+                    ModifiedBy = Constants.ModifiedByUser,
+                    ModifiedOn = Constants.ModifiedOn
+                },
+                new Domain.Models.IpTempFlexTlevelCombination
+                {
+                    TlPathwayId = pathway.Id,
+                    TlPathway = pathway,
+                    IpLookupId = ipLookup[5].Id,
+                    IpLookup = ipLookup[5],
+                    IsActive = true,
+                    CreatedBy = Constants.CreatedByUser,
+                    CreatedOn = Constants.CreatedOn,
+                    ModifiedBy = Constants.ModifiedByUser,
+                    ModifiedOn = Constants.ModifiedOn
                 },
             };
             return ipTempFlexCombinations;

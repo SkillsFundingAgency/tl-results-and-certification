@@ -30,8 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
         public async Task<LrsLearnerVerificationAndLearningEventsResponse> ProcessLearnerVerificationAndLearningEventsAsync()
         {
+            // Step 1: Get Learners pending for either 'Verification' or 'Maths status' or 'English status' 
             var pendingLearners = await _learnerRecordService.GetPendingVerificationAndLearningEventsLearnersAsync();
-
             if (pendingLearners == null || !pendingLearners.Any())
             {
                 var message = $"No pending learners found to process learner verification and learning events. Method: ProcessLearnerVerificationAndLearningEventsAsync()";
@@ -39,8 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
                 return new LrsLearnerVerificationAndLearningEventsResponse { IsSuccess = true, Message = message };
             }
 
+            // Step 2: Call LrsApi get LearnerEvents
             var learnerRecordDetailsList = new List<LrsLearnerRecordDetails>();
-
             foreach (var pendingLearner in pendingLearners)
             {
                 var plrResult = await _personalLearningRecordApiClient.GetLearnerEventsAsync(pendingLearner);
@@ -49,9 +49,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
                     learnerRecordDetailsList.Add(_mapper.Map<LrsLearnerRecordDetails>(plrResult, opt => opt.Items[Constants.LrsProfileId] = pendingLearner.ProfileId));
             }
 
-            // process learner records
+            // Step 3: Process the Api results
             var response = await _learnerRecordService.ProcessLearnerRecordsAsync(learnerRecordDetailsList);
-            response.TotalCount = pendingLearners.Count();
+            response.TotalCount = pendingLearners.Count;
             return response;
         }
     }

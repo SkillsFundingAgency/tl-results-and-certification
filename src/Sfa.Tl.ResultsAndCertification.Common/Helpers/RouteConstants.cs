@@ -246,27 +246,16 @@
         public const string ProviderGuidance = "ProviderGuidance";
         public const string ProviderTimeline = "ProviderTimeline";
 
-        public const string ManageLearnerRecordsDashboard = "ManageLearnerRecordsDashboard"; // TODO: Delete
-        public const string AddLearnerRecord = "AddLearnerRecord";// TODO: Delete
-        public const string EnterUniqueLearnerNumber = "EnterUniqueLearnerNumber"; // TODO: Delete
-
-        public const string AddIndustryPlacementQuestion = "AddIndustryPlacementQuestion";
-        public const string SubmitIndustryPlacementQuestion = "SubmitIndustryPlacementQuestion";
-        public const string AddLearnerRecordCheckAndSubmit = "AddLearnerRecordCheckAndSubmit";
-        public const string SubmitLearnerRecordCheckAndSubmit = "SubmitLearnerRecordCheckAndSubmit";
-
         public const string AddMathsStatus = "AddMathsStatus";
         public const string SubmitAddMathsStatus = "SubmitAddMathsStatus";
         public const string AddEnglishStatus = "AddEnglishStatus";
         public const string SubmitAddEnglishStatus = "SubmitAddEnglishStatus";
 
+        public const string SearchLearnerDetails = "SearchLearnerDetails";
         public const string SearchLearnerRecord = "SearchLearnerRecord";
         public const string SubmitSearchLearnerRecord = "SubmitSearchLearnerRecord";
         public const string SearchLearnerRecordNotFound = "SearchLearnerRecordNotFound";
         public const string LearnerRecordDetails = "LearnerRecordDetails";
-        public const string UpdateIndustryPlacementQuestion = "UpdateIndustryPlacementQuestion";
-        public const string SubmitUpdateIndustryPlacementQuestion = "SubmitUpdateIndustryPlacementQuestion";
-        public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
         public const string ManagePostalAddress = "ManagePostalAddress";
         public const string AddAddress = "AddAddress";
         public const string AddAddressPostcode = "AddAddressPostcode";

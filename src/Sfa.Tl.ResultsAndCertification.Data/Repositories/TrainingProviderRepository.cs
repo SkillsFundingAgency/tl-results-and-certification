@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,36 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _logger = logger;
         }
 
+        public async Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request)
+        {
+            var pathwayQueryable = _dbContext.TqRegistrationPathway
+                                             .Where(p => p.TqProvider.TlProvider.UkPrn == request.Ukprn && p.Status == RegistrationPathwayStatus.Active)
+                                             .AsQueryable();
+
+            if (request.AcademicYear.Any())
+                pathwayQueryable = pathwayQueryable.Where(p => request.AcademicYear.Contains(p.AcademicYear));
+
+            var learnerRecords = await pathwayQueryable
+                .Select(x => new SearchLearnerDetail
+                {
+                    ProfileId = x.TqRegistrationProfile.Id,
+                    Uln = x.TqRegistrationProfile.UniqueLearnerNumber,
+                    Firstname = x.TqRegistrationProfile.Firstname,
+                    Lastname = x.TqRegistrationProfile.Lastname,
+                    AcademicYear = x.AcademicYear,
+                    TlevelName = x.TqProvider.TqAwardingOrganisation.TlPathway.Name,
+                    EnglishStatus = x.TqRegistrationProfile.EnglishStatus,
+                    MathsStatus = x.TqRegistrationProfile.MathsStatus,
+                    IndustryPlacementStatus = x.IndustryPlacements.Any() ? x.IndustryPlacements.FirstOrDefault().Status : null,
+                    CreatedOn = x.CreatedOn
+                })
+                .GroupBy(x => x.ProfileId)
+                .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
+                .ToListAsync();
+
+            return new PagedResponse<SearchLearnerDetail> { Records = learnerRecords.OrderBy(l => l.Lastname).ToList(), TotalRecords = learnerRecords.Count };
+        }
+
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
         {
             var learnerRecord = await (from tqPathway in _dbContext.TqRegistrationPathway
@@ -39,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                            Name = tqProfile.Firstname + " " + tqProfile.Lastname,
                                            DateofBirth = tqProfile.DateofBirth,
                                            ProviderName = tlProvider.Name + " (" + tlProvider.UkPrn + ")",
-                                           PathwayName = tlPathway.Name + " (" + tlPathway.LarId + ")",                                           
+                                           PathwayName = tlPathway.Name + " (" + tlPathway.LarId + ")",
                                            IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn,
                                            IsLearnerRecordAdded = tqProfile.IsEnglishAndMathsAchieved.HasValue && tqPathway.IndustryPlacements.Any(),
                                            IsEnglishAndMathsAchieved = tqProfile.IsEnglishAndMathsAchieved ?? false,
@@ -53,7 +84,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null)
         {
-            // TODO: can an optional param pathwayId can be removed?
             var learnerRecordQuerable = from tqPathway in _dbContext.TqRegistrationPathway
                                         join tqProfile in _dbContext.TqRegistrationProfile on tqPathway.TqRegistrationProfileId equals tqProfile.Id
                                         join tqProvider in _dbContext.TqProvider on tqPathway.TqProviderId equals tqProvider.Id
@@ -75,7 +105,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             ProviderUkprn = tlProvider.UkPrn,
                                             TlevelTitle = tlPathway.TlevelTitle,
                                             AcademicYear = tqPathway.AcademicYear,
-                                            AwardingOrganisationName= tqAo.TlAwardingOrganisaton.DisplayName,
+                                            AwardingOrganisationName = tqAo.TlAwardingOrganisaton.DisplayName,
                                             MathsStatus = tqProfile.MathsStatus,
                                             EnglishStatus = tqProfile.EnglishStatus,
                                             IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn,
@@ -94,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                      join qual in _dbContext.Qualification on qualAchieved.QualificationId equals qual.Id
                                      join qualGrade in _dbContext.QualificationGrade on qualAchieved.QualificationGradeId equals qualGrade.Id
                                      join lookup in _dbContext.TlLookup on qual.TlLookupId equals lookup.Id
-                                     where qualAchieved.TqRegistrationProfileId == profileId && qualAchieved.IsAchieved 
+                                     where qualAchieved.TqRegistrationProfileId == profileId && qualAchieved.IsAchieved
                                      select new { Subject = lookup.Value, IsSend = qual.IsSendQualification || qualGrade.IsSendGrade })
                                      .ToListAsync();
 

@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public override void Given()
         {
             ProfileId = 10;
-            Mockresult = new LearnerRecordDetailsViewModel1
+            Mockresult = new LearnerRecordDetailsViewModel
             {
                 ProfileId = 10,
                 RegistrationPathwayId = 15,
@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 ProviderName = "Barsley College",
                 ProviderUkprn = 58794528,
                 TlevelTitle = "Tlevel in Test Pathway Name",
-                StartYear = "2020 to 2021",
+                AcademicYear = 2020,
                 AwardingOrganisationName = "Pearson",
                 MathsStatus = SubjectStatus.NotSpecified,
                 EnglishStatus = SubjectStatus.NotSpecified,
@@ -42,13 +42,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, Mockresult.ProfileId.ToString() } };
 
-            TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel1>(ProviderUkprn, ProfileId).Returns(Mockresult);
+            TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId).Returns(Mockresult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            TrainingProviderLoader.Received(1).GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel1>(ProviderUkprn, ProfileId);
+            TrainingProviderLoader.Received(1).GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId);
         }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             Result.Should().NotBeNull();
             (Result as ViewResult).Model.Should().NotBeNull();
 
-            var model = (Result as ViewResult).Model as LearnerRecordDetailsViewModel1;
+            var model = (Result as ViewResult).Model as LearnerRecordDetailsViewModel;
 
             model.ProfileId.Should().Be(Mockresult.ProfileId);
             model.RegistrationPathwayId.Should().Be(Mockresult.RegistrationPathwayId);
@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.ProviderName.Should().Be(Mockresult.ProviderName);
             model.ProviderUkprn.Should().Be(Mockresult.ProviderUkprn);
             model.TlevelTitle.Should().Be(Mockresult.TlevelTitle);
-            model.StartYear.Should().Be(Mockresult.StartYear);
+            model.StartYear.Should().Be("2020 to 2021");
             model.AwardingOrganisationName.Should().Be(Mockresult.AwardingOrganisationName);
             model.MathsStatus.Should().Be(Mockresult.MathsStatus);
             model.EnglishStatus.Should().Be(Mockresult.EnglishStatus);

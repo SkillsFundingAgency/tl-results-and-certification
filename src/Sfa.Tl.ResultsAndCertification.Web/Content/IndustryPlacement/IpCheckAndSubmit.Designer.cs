@@ -205,7 +205,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check your answers - Industry placement.
+        ///   Looks up a localized string similar to Check your answers - Industry placement - Manage learner.
         /// </summary>
         public static string Page_Title {
             get {
@@ -277,7 +277,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Selected other industrial placement models.
+        ///   Looks up a localized string similar to Selected other industry placement models.
         /// </summary>
         public static string Title_IpModel_Selected_Other_List_Text {
             get {
@@ -295,7 +295,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Selected Industrial placement models.
+        ///   Looks up a localized string similar to Selected industry placement models.
         /// </summary>
         public static string Title_IpModels_Selected_List_Text {
             get {

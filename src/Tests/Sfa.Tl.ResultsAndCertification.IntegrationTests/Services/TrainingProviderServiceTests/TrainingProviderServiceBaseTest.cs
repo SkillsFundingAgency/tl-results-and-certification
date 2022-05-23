@@ -1,13 +1,9 @@
-﻿using AutoMapper;
-using Microsoft.Extensions.Logging;
-using Notify.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers;
+﻿using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -22,20 +18,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         protected TrainingProviderService TrainingProviderService;
         protected ILogger<GenericRepository<TqRegistrationProfile>> RegistrationProfileRepositoryLogger;
         protected IRepository<TqRegistrationProfile> RegistrationProfileRepository;
-        protected ILogger<GenericRepository<TqRegistrationPathway>> RegistrationPathwayRepositoryLogger;
-        protected IRepository<TqRegistrationPathway> RegistrationPathwayRepository;
-        protected ILogger<GenericRepository<IndustryPlacement>> IndustryPlacementRepositoryLogger;
-        protected IRepository<IndustryPlacement> IndustryPlacementRepository;
-        protected IMapper TrainingProviderMapper;
         protected ILogger<TrainingProviderService> TrainingProviderServiceLogger;
         protected ITrainingProviderRepository TrainingProviderRepository;
         protected ILogger<TrainingProviderRepository> TrainingProviderRepositoryLogger;
-        protected NotificationService NotificationService;
-        protected IAsyncNotificationClient NotificationsClient;
-        protected ILogger<NotificationService> NotificationLogger;
-        protected IRepository<NotificationTemplate> NotificationTemplateRepository;
-        protected ILogger<GenericRepository<NotificationTemplate>> NotificationTemplateRepositoryLogger;
-        protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
 
         // Data Seed variables
         protected TlAwardingOrganisation TlAwardingOrganisation;
@@ -51,12 +36,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         protected IList<TlLookup> PathwayComponentGrades;
         protected IList<Qualification> Qualifications;
 
-        protected virtual void CreateMapper()
-        {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(TrainingProviderMapper).Assembly));
-            TrainingProviderMapper = new Mapper(mapperConfig);
-        }
-
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
         {
             TlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, awardingOrganisation);
@@ -69,7 +48,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
             PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
-            NotificationDataProvider.CreateNotificationTemplate(DbContext, NotificationTemplateName.EnglishAndMathsLrsDataQueried);
 
             DbContext.SaveChangesAsync();
 
@@ -128,6 +106,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             profile.IsEnglishAndMathsAchieved = isEngishAndMathsAchieved;
             profile.IsSendLearner = isSendLearner;
 
+            if (isRcFeed != null && isRcFeed == false)
+            {
+                profile.EnglishStatus = isEngishAndMathsAchieved == true ? SubjectStatus.AchievedByLrs : SubjectStatus.NotAchievedByLrs;
+                profile.MathsStatus = isEngishAndMathsAchieved == true ? SubjectStatus.AchievedByLrs : SubjectStatus.NotAchievedByLrs;
+            }
+            else if (isRcFeed == true)
+            {
+                profile.EnglishStatus = isEngishAndMathsAchieved == true ? SubjectStatus.Achieved : SubjectStatus.NotAchieved;
+                profile.MathsStatus = isEngishAndMathsAchieved == true ? SubjectStatus.Achieved : SubjectStatus.NotAchieved;
+            }
+
             if (seedQualificationAchieved)
             {
                 var engQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Eng" && e.IsSendQualification == isSendQualification);
@@ -168,10 +157,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             profile.EnglishStatus = englishStatus;
         }
     }
-
+    
     public enum Provider
     {
-        BarsleyCollege = 10000536,
+        TestCollege = 11111111,
+        BarnsleyCollege = 10000536,
         WalsallCollege = 10007315
     }
 }

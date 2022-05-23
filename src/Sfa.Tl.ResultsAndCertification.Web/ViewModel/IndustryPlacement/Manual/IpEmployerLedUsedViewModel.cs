@@ -8,6 +8,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
 {
     public class IpEmployerLedUsedViewModel
     {
+        public IpEmployerLedUsedViewModel()
+        {
+            TemporaryFlexibilities = new List<IpLookupDataViewModel>();
+        }
+
         public string LearnerName { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ErrorResource.IpEmployerLedUsed), ErrorMessageResourceName = "Validation_Message")]
@@ -15,6 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
 
         public IList<IpLookupDataViewModel> TemporaryFlexibilities { get; set; }
 
-        public virtual BackLinkModel BackLink => new() { RouteName = RouteConstants.IpBlendedPlacementUsed };
+        public bool IsChangeMode { get; set; }
+
+        public virtual BackLinkModel BackLink => new() { RouteName = IsChangeMode ? RouteConstants.IpCheckAndSubmit : RouteConstants.IpBlendedPlacementUsed };
     }
 }

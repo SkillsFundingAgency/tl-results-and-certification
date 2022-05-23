@@ -25,7 +25,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             _cacheResult = new IndustryPlacementViewModel
             {
                 IpCompletion = _ipCompletionViewModel,
-                IpModelViewModel = new IpModelViewModel { IpModelUsed = _ipModelUsedViewModel, IpMultiEmployerUsed = _ipMultiEmployerUsedViewModel }
+                IpModelViewModel = new IpModelViewModel 
+                { 
+                    IpModelUsed = _ipModelUsedViewModel, IpMultiEmployerUsed = _ipMultiEmployerUsedViewModel
+                }
             };
 
             ViewModel = new IpMultiEmployerOtherViewModel

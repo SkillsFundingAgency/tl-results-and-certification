@@ -1,12 +1,12 @@
-﻿using NSubstitute;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using Xunit;
-using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement;
-using Microsoft.AspNetCore.Mvc;
-using FluentAssertions;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpCompletionPost
 {

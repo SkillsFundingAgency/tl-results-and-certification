@@ -1,17 +1,11 @@
-﻿using AutoMapper;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Notify.Interfaces;
-using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers.Resolver;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
@@ -58,34 +52,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
             DbContext.SaveChanges();
 
-            CreateMapper();
-
             RegistrationProfileRepositoryLogger = new Logger<GenericRepository<TqRegistrationProfile>>(new NullLoggerFactory());
             RegistrationProfileRepository = new GenericRepository<TqRegistrationProfile>(RegistrationProfileRepositoryLogger, DbContext);
-
-            RegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
-            RegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(RegistrationPathwayRepositoryLogger, DbContext);
-
-            IndustryPlacementRepositoryLogger = new Logger<GenericRepository<IndustryPlacement>>(new NullLoggerFactory());
-            IndustryPlacementRepository = new GenericRepository<IndustryPlacement>(IndustryPlacementRepositoryLogger, DbContext);
 
             TrainingProviderRepositoryLogger = new Logger<TrainingProviderRepository>(new NullLoggerFactory());
             TrainingProviderRepository = new TrainingProviderRepository(DbContext, TrainingProviderRepositoryLogger);
 
             TrainingProviderServiceLogger = new Logger<TrainingProviderService>(new NullLoggerFactory());
 
-            NotificationsClient = Substitute.For<IAsyncNotificationClient>();
-            NotificationLogger = new Logger<NotificationService>(new NullLoggerFactory());
-            NotificationTemplateRepositoryLogger = new Logger<GenericRepository<NotificationTemplate>>(new NullLoggerFactory());
-            NotificationTemplateRepository = new GenericRepository<NotificationTemplate>(NotificationTemplateRepositoryLogger, DbContext);
-            NotificationService = new NotificationService(NotificationTemplateRepository, NotificationsClient, NotificationLogger);
-
-            ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
-            {
-                TlevelQueriedSupportEmailAddress = "test@test.com"
-            };
-
-            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, RegistrationPathwayRepository, IndustryPlacementRepository, TrainingProviderRepository, NotificationService, ResultsAndCertificationConfiguration, TrainingProviderMapper, TrainingProviderServiceLogger);
+            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, TrainingProviderRepository, TrainingProviderServiceLogger);
         }
 
         public override Task When()
@@ -148,38 +123,25 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
                     // Invalid Subject status - return false
                     new object[]
-                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarsleyCollege, ProfileId = 1, SubjectStatus = SubjectStatus.NotSpecified, SubjectType = SubjectType.Maths, PerformedBy = "Test User" }, false },
+                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarnsleyCollege, ProfileId = 1, SubjectStatus = SubjectStatus.NotSpecified, SubjectType = SubjectType.Maths, PerformedBy = "Test User" }, false },
 
                     // Invalid Subject type - return false
                     new object[]
-                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarsleyCollege, ProfileId = 1, SubjectStatus = SubjectStatus.Achieved, SubjectType = SubjectType.NotSpecified, PerformedBy = "Test User" }, false },
+                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarnsleyCollege, ProfileId = 1, SubjectStatus = SubjectStatus.Achieved, SubjectType = SubjectType.NotSpecified, PerformedBy = "Test User" }, false },
 
                     // Invalid when status already present - return false
                     new object[]
-                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarsleyCollege, ProfileId = 2, SubjectStatus = SubjectStatus.Achieved, SubjectType = SubjectType.Maths, PerformedBy = "Test User" }, false },
+                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarnsleyCollege, ProfileId = 2, SubjectStatus = SubjectStatus.Achieved, SubjectType = SubjectType.Maths, PerformedBy = "Test User" }, false },
 
                     // Valid Maths status - return true
                     new object[]
-                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarsleyCollege, ProfileId = 1, SubjectStatus = SubjectStatus.Achieved, SubjectType = SubjectType.Maths, PerformedBy = "Test User" }, true },
+                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarnsleyCollege, ProfileId = 1, SubjectStatus = SubjectStatus.Achieved, SubjectType = SubjectType.Maths, PerformedBy = "Test User" }, true },
 
                     // Valid English status - return true
                     new object[]
-                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarsleyCollege, ProfileId = 1, SubjectStatus = SubjectStatus.NotAchieved, SubjectType = SubjectType.English, PerformedBy = "Test User" }, true },
+                    { new UpdateLearnerSubjectRequest { ProviderUkprn = (long)Provider.BarnsleyCollege, ProfileId = 1, SubjectStatus = SubjectStatus.NotAchieved, SubjectType = SubjectType.English, PerformedBy = "Test User" }, true },
                 };
             }
-        }
-
-        protected override void CreateMapper()
-        {
-            var mapperConfig = new MapperConfiguration(c =>
-            {
-                c.AddMaps(typeof(TrainingProviderMapper).Assembly);                
-                c.ConstructServicesUsing(type =>
-                            type.Name.Contains("DateTimeResolver") ?
-                                new DateTimeResolver<UpdateLearnerRecordRequest, TqRegistrationProfile>(new DateTimeProvider()) :
-                                null);
-            });
-            TrainingProviderMapper = new Mapper(mapperConfig);
         }
     }
 }

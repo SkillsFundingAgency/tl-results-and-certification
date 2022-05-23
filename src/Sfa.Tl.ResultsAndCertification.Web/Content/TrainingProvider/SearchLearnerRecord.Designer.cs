@@ -70,20 +70,47 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 2020 to 2021.
+        /// </summary>
+        public static string Link_2020_To_2021 {
+            get {
+                return ResourceManager.GetString("Link_2020_To_2021", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2021 to 2022.
+        /// </summary>
+        public static string Link_2021_To_2022 {
+            get {
+                return ResourceManager.GetString("Link_2021_To_2022", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List all active learners by start year.
+        /// </summary>
+        public static string List_All_Learners_By_Start_Year {
+            get {
+                return ResourceManager.GetString("List_All_Learners_By_Start_Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage learner records.
+        /// </summary>
+        public static string Manage_Learner_Records_Heading {
+            get {
+                return ResourceManager.GetString("Manage_Learner_Records_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search ULN - Manage learner.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search for the learner you want to manage.
-        /// </summary>
-        public static string Para_Search_For_The_Learner_You_Want_To_Manage {
-            get {
-                return ResourceManager.GetString("Para_Search_For_The_Learner_You_Want_To_Manage", resourceCulture);
             }
         }
         
@@ -97,11 +124,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for a learner.
+        ///   Looks up a localized string similar to Or search for the learner you want to manage.
         /// </summary>
-        public static string Search_UniqueLearnerNumber_Heading {
+        public static string Search_For_The_Learner_You_Want_To_Manage {
             get {
-                return ResourceManager.GetString("Search_UniqueLearnerNumber_Heading", resourceCulture);
+                return ResourceManager.GetString("Search_For_The_Learner_You_Want_To_Manage", resourceCulture);
             }
         }
         

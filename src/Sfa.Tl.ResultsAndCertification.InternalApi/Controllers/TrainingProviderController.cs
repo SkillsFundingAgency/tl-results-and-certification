@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System.Threading.Tasks;
 
@@ -21,7 +22,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         [Route("FindLearnerRecord/{providerUkprn}/{uln}/{evaluateSendConfirmation:bool?}")]
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation)
         {
-            // TODO: This endpoint will be removed soon after implementing the ProviderSearchResult Page.
             return await _trainingProviderService.FindLearnerRecordAsync(providerUkprn, uln, evaluateSendConfirmation);
         }
 
@@ -31,26 +31,19 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _trainingProviderService.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
         }
-
-        [HttpPost]
-        [Route("AddLearnerRecord")]
-        public async Task<AddLearnerRecordResponse> AddLearnerRecordAsync(AddLearnerRecordRequest request)
-        {
-            return await _trainingProviderService.AddLearnerRecordAsync(request);
-        }
-
-        [HttpPut]
-        [Route("UpdateLearnerRecord")]
-        public async Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest model)
-        {
-            return await _trainingProviderService.UpdateLearnerRecordAsync(model);
-        }
-
+        
         [HttpPut]
         [Route("UpdateLearnerSubject")]
         public async Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request)
         {
             return await _trainingProviderService.UpdateLearnerSubjectAsync(request);
+        }
+
+        [HttpPost]
+        [Route("SearchLearnerDetails")]
+        public async Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request)
+        {
+            return await _trainingProviderService.SearchLearnerDetailsAsync(request);
         }
     }
 }

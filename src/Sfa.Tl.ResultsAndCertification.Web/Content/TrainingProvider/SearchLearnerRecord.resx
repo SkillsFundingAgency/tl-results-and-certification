@@ -120,17 +120,26 @@
   <data name="Enter_UniqueLearnerNumber_Label" xml:space="preserve">
     <value>Enter the unique learner number (ULN)</value>
   </data>
+  <data name="Link_2020_To_2021" xml:space="preserve">
+    <value>2020 to 2021</value>
+  </data>
+  <data name="Link_2021_To_2022" xml:space="preserve">
+    <value>2021 to 2022</value>
+  </data>
+  <data name="List_All_Learners_By_Start_Year" xml:space="preserve">
+    <value>List all active learners by start year</value>
+  </data>
+  <data name="Manage_Learner_Records_Heading" xml:space="preserve">
+    <value>Manage learner records</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Search ULN - Manage learner</value>
-  </data>
-  <data name="Para_Search_For_The_Learner_You_Want_To_Manage" xml:space="preserve">
-    <value>Search for the learner you want to manage</value>
   </data>
   <data name="Search_Button" xml:space="preserve">
     <value>Search</value>
   </data>
-  <data name="Search_UniqueLearnerNumber_Heading" xml:space="preserve">
-    <value>Search for a learner</value>
+  <data name="Search_For_The_Learner_You_Want_To_Manage" xml:space="preserve">
+    <value>Or search for the learner you want to manage</value>
   </data>
   <data name="Uln_Must_10_Digit_Hint" xml:space="preserve">
     <value>ULN must be 10 digits long</value>

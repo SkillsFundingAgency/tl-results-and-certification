@@ -89,6 +89,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Yes if a blended placement was used for this learner&apos;s industry placement..
+        /// </summary>
+        public static string Hint_Select_Yes_If_Blended {
+            get {
+                return ResourceManager.GetString("Hint_Select_Yes_If_Blended", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select whether the learner has used the blended placement temporary flexibility.
         /// </summary>
         public static string Hint_Select_Yes_If_Blended_Placement_Used {
@@ -125,7 +134,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select whether the learner was used the blended placement temporary flexibility.
+        ///   Looks up a localized string similar to Select whether the learner has used the blended placement temporary flexibility.
         /// </summary>
         public static string Validation_Message {
             get {

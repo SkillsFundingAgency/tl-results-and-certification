@@ -18,10 +18,17 @@
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">
                         <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-5">
-                            @SearchLearnerRecord.Search_UniqueLearnerNumber_Heading
+                            @SearchLearnerRecord.Manage_Learner_Records_Heading
                         </h1>
                     </legend>
-                    <p class="govuk-body">@SearchLearnerRecord.Para_Search_For_The_Learner_You_Want_To_Manage</p>
+                                        
+                    <h2 class="govuk-heading-m">@SearchLearnerRecord.List_All_Learners_By_Start_Year</h2>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li><a class="govuk-link" asp-route="@RouteConstants.SearchLearnerDetails" asp-route-academicYear="2020">@SearchLearnerRecord.Link_2020_To_2021</a></li>
+                        <li><a class="govuk-link" asp-route="@RouteConstants.SearchLearnerDetails" asp-route-academicYear="2021">@SearchLearnerRecord.Link_2021_To_2022</a></li>
+                    </ul>
+
+                    <h2 class="govuk-heading-m">@SearchLearnerRecord.Search_For_The_Learner_You_Want_To_Manage</h2>
                     <div class="govuk-form-group" sfa-validation-for="SearchUln" sfa-validation-class="govuk-form-group--error">
                         <label class="govuk-label" for="searchuln">
                             @SearchLearnerRecord.Enter_UniqueLearnerNumber_Label

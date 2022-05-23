@@ -52,6 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.ProfileId.Should().Be(_ipCompletionViewModel.ProfileId);
             model.LearnerName.Should().Be(_ipCompletionViewModel.LearnerName);
             model.Hours.Should().Be(_specialConsiderationViewModel.Hours.Hours);
+            model.IsChangeMode.Should().BeFalse();
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.IpCompletion);

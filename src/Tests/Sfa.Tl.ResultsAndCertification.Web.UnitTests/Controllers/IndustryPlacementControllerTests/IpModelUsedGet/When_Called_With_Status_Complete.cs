@@ -47,6 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.ProfileId.Should().Be(_ipModelUsedViewModel.ProfileId);
             model.LearnerName.Should().Be(_ipModelUsedViewModel.LearnerName);
             model.IsIpModelUsed.Should().BeNull();
+            model.IsChangeMode.Should().BeFalse();
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.IpCompletion);

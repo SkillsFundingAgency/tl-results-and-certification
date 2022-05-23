@@ -1,13 +1,10 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Notify.Interfaces;
-using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -58,33 +55,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             DbContext.SaveChanges();
 
             // Create Service
-            CreateMapper();
             RegistrationProfileRepositoryLogger = new Logger<GenericRepository<TqRegistrationProfile>>(new NullLoggerFactory());
             RegistrationProfileRepository = new GenericRepository<TqRegistrationProfile>(RegistrationProfileRepositoryLogger, DbContext);
-
-            RegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
-            RegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(RegistrationPathwayRepositoryLogger, DbContext);
-
+            
             TrainingProviderRepositoryLogger = new Logger<TrainingProviderRepository>(new NullLoggerFactory());
             TrainingProviderRepository = new TrainingProviderRepository(DbContext, TrainingProviderRepositoryLogger);
-            
-            IndustryPlacementRepositoryLogger = new Logger<GenericRepository<IndustryPlacement>>(new NullLoggerFactory());
-            IndustryPlacementRepository = new GenericRepository<IndustryPlacement>(IndustryPlacementRepositoryLogger, DbContext);
-
             TrainingProviderServiceLogger = new Logger<TrainingProviderService>(new NullLoggerFactory());
 
-            NotificationsClient = Substitute.For<IAsyncNotificationClient>();
-            NotificationLogger = new Logger<NotificationService>(new NullLoggerFactory());
-            NotificationTemplateRepositoryLogger = new Logger<GenericRepository<NotificationTemplate>>(new NullLoggerFactory());
-            NotificationTemplateRepository = new GenericRepository<NotificationTemplate>(NotificationTemplateRepositoryLogger, DbContext);
-            NotificationService = new NotificationService(NotificationTemplateRepository, NotificationsClient, NotificationLogger);
-            
-            ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
-            {
-                TlevelQueriedSupportEmailAddress = "test@test.com"
-            };
-
-            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, RegistrationPathwayRepository, IndustryPlacementRepository, TrainingProviderRepository, NotificationService, ResultsAndCertificationConfiguration, TrainingProviderMapper, TrainingProviderServiceLogger);
+            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, TrainingProviderRepository, TrainingProviderServiceLogger);
         }
 
         public override Task When()
@@ -140,14 +118,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 {
                     new object[] { 9999999999, Provider.WalsallCollege, false, null }, // Invalid Uln
 
-                    new object[] { 1111111111, Provider.BarsleyCollege, false, new FindLearnerRecord { Uln = 1111111111, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = true } }, // Active
+                    new object[] { 1111111111, Provider.BarnsleyCollege, false, new FindLearnerRecord { Uln = 1111111111, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = true } }, // Active
                     new object[] { 1111111111, Provider.WalsallCollege, false, null }, // Uln not from WalsallCollege
 
-                    new object[] { 1111111112, Provider.BarsleyCollege, false, new FindLearnerRecord { Uln = 1111111112, IsLearnerRegistered = true, HasLrsEnglishAndMaths = false, IsEnglishAndMathsAchieved = false, IsLearnerRecordAdded = false } }, // Withdrawn
-                    new object[] { 1111111113, Provider.BarsleyCollege, false, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = false, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false } }, // Transferred
+                    new object[] { 1111111112, Provider.BarnsleyCollege, false, new FindLearnerRecord { Uln = 1111111112, IsLearnerRegistered = true, HasLrsEnglishAndMaths = false, IsEnglishAndMathsAchieved = false, IsLearnerRecordAdded = false } }, // Withdrawn
+                    new object[] { 1111111113, Provider.BarnsleyCollege, false, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = false, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false } }, // Transferred
                     new object[] { 1111111113, Provider.WalsallCollege, false, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false } }, // Active
                     
-                    new object[] { 1111111114, Provider.BarsleyCollege, true, new FindLearnerRecord { Uln = 1111111114, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false, IsSendConfirmationRequired = true } }
+                    new object[] { 1111111114, Provider.BarnsleyCollege, true, new FindLearnerRecord { Uln = 1111111114, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false, IsSendConfirmationRequired = true } }
                 };
             }
         }

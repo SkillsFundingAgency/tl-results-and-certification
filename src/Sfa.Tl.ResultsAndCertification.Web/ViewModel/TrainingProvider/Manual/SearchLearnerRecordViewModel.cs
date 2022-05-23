@@ -17,19 +17,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 
         public bool IsLearnerRecordAdded { get; set; }
 
-        public BreadcrumbModel Breadcrumb
+        public BreadcrumbModel Breadcrumb => new()
         {
-            get
-            {
-                return new BreadcrumbModel
-                {
-                    BreadcrumbItems = new List<BreadcrumbItem>
-                    {
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Manage_Learner_Records }
-                    }
-                };
-            }
-        }
+            BreadcrumbItems = new List<BreadcrumbItem> { new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home } }
+        };
     }
 }

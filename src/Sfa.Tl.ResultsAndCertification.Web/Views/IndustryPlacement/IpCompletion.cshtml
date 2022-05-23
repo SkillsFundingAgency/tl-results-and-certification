@@ -15,11 +15,12 @@
     <div class="govuk-grid-column-two-thirds">
         <form class="form" asp-route="@RouteConstants.SubmitIpCompletion">
             <partial name="_ValidationSummary" />
-            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
-            <input type="hidden" asp-for="RegistrationPathwayId" value="@Model.RegistrationPathwayId" />
-            <input type="hidden" asp-for="PathwayId" value="@Model.PathwayId" />
-            <input type="hidden" asp-for="AcademicYear" value="@Model.AcademicYear" />
-            <input type="hidden" asp-for="LearnerName" value="@Model.LearnerName" />
+            <input type="hidden" asp-for="ProfileId" />
+            <input type="hidden" asp-for="RegistrationPathwayId" />
+            <input type="hidden" asp-for="PathwayId" />
+            <input type="hidden" asp-for="AcademicYear" />
+            <input type="hidden" asp-for="LearnerName" />
+            <input type="hidden" asp-for="IsChangeMode" />
 
             <span class="govuk-caption-l">@IpCompletion.Industry_Placement_Caption</span>
             <div class="govuk-form-group" sfa-validation-for="IndustryPlacementStatus" sfa-validation-class="govuk-form-group--error">

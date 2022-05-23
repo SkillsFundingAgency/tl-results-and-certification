@@ -1,157 +1,180 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
 using System.Collections.Generic;
-using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
-using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
-using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
-using EnglishStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.EnglishAndMathsStatus;
 using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
-using EnglishAndMathsStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.EnglishAndMathsStatus;
+using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
+using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
+using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
     public class LearnerRecordDetailsViewModel
     {
-        // TODO: To be deleted.
+        // Header
         public int ProfileId { get; set; }
         public int RegistrationPathwayId { get; set; }
+        public int TlPathwayId { get; set; }
         public long Uln { get; set; }
-        public string Name { get; set; }
+        public string LearnerName { get; set; }
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
-        public string PathwayName { get; set; }
-        public bool IsLearnerRegistered { get; set; }
-        public bool IsLearnerRecordAdded { get; set; } // TODO: Delete this pro
-        public bool IsEnglishAndMathsAchieved { get; set; }
-        public bool HasLrsEnglishAndMaths { get; set; }
-        public bool? IsSendLearner { get; set; }
+        public long ProviderUkprn { get; set; }
+        public string TlevelTitle { get; set; }        
+        public int AcademicYear { get; set; }
+        public string AwardingOrganisationName { get; set; }
+        public SubjectStatus MathsStatus { get; set; }
+        public SubjectStatus EnglishStatus { get; set; }
+
         public int IndustryPlacementId { get; set; }
-        public IpStatus? IndustryPlacementStatus { get; set; }
+        public IpStatus IndustryPlacementStatus { get; set; }
 
-        public SummaryItemModel SummaryEnglishAndMathsStatus => new SummaryItemModel
+        public string StartYear => string.Format(LearnerRecordDetailsContent.Start_Year_Value, AcademicYear, AcademicYear + 1);
+
+        /// <summary>
+        /// True when status is Active or Withdrawn
+        /// </summary>
+        public bool IsLearnerRegistered { get; set; }
+        public bool IsStatusCompleted => IsMathsAdded && IsEnglishAdded && IsIndustryPlacementAdded;
+        public bool IsIndustryPlacementAdded => IndustryPlacementStatus != IpStatus.NotSpecified;
+        public bool IsMathsAdded => MathsStatus != SubjectStatus.NotSpecified;
+        public bool IsEnglishAdded => EnglishStatus != SubjectStatus.NotSpecified;
+
+        public bool CanAddIndustryPlacement => IndustryPlacementStatus == IpStatus.NotSpecified || IndustryPlacementStatus == IpStatus.NotCompleted;
+
+        public NotificationBannerModel SuccessBanner { get; set; }
+
+        #region Summary Header
+        public SummaryItemModel SummaryDateofBirth => new SummaryItemModel
         {
-            Id = "englishmathsstatus",
-            Title = LearnerRecordDetailsContent.Title_EnglishAndMaths_Status_Text,
-            Value = GetEnglishAndMathsStatusText,
-            ActionText = GetEnglishAndMathsActionText,
-            RouteName = GetEnglishAndMathsRouteName,
-            RouteAttributes = GetEnglishAndMathsRouteAttributes,
-            NeedBorderBottomLine = false,
-            RenderHiddenActionText = true,
-            HiddenActionText = LearnerRecordDetailsContent.English_And_Maths_Action_Hidden_Text,
-            IsRawHtml = true
+            Id = "dateofbirth",
+            Title = LearnerRecordDetailsContent.Title_DateofBirth_Text,
+            Value = DateofBirth.ToDobFormat()
         };
 
-        public SummaryItemModel SummaryIndustryPlacementStatus => new SummaryItemModel
+        public SummaryItemModel SummaryProviderName => new SummaryItemModel
         {
-            Id = "industryplacementstatus",
-            Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
-            Value = GetIndustryPlacementDisplayText,
-            ActionText = LearnerRecordDetailsContent.Update_Action_Link_Text,
-            RouteName = RouteConstants.UpdateIndustryPlacementQuestion,
-            RouteAttributes = GetIPLinkRouteAttributes,
-            NeedBorderBottomLine = false,
-            RenderHiddenActionText = true,
-            HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement
+            Id = "providername",
+            Title = LearnerRecordDetailsContent.Title_Provider_Name_Text,
+            Value = ProviderName,
         };
 
-        private string GetEnglishAndMathsStatusText => HasLrsEnglishAndMaths ? string.Concat(GetLrsEnglishAndMathsStatusDisplayText, LearnerRecordDetailsContent.Whats_Lrs_Text) : GetEnglishAndMathsStatusDisplayText;
-
-        private string GetEnglishAndMathsActionText => HasLrsEnglishAndMaths ? LearnerRecordDetailsContent.Query_Action_Link_Text : LearnerRecordDetailsContent.Update_Action_Link_Text;
-
-        private string GetEnglishAndMathsRouteName => "";
-
-        private Dictionary<string, string> GetEnglishAndMathsRouteAttributes => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } };
-
-        private Dictionary<string, string> GetIPLinkRouteAttributes => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.PathwayId, RegistrationPathwayId.ToString() } };
-
-        private EnglishStatus? GetEnglishAndMathsStatus
+        public SummaryItemModel SummaryProviderUkprn => new SummaryItemModel
         {
-            get
-            {
-                if (HasLrsEnglishAndMaths)
-                    return null;
+            Id = "providerukprn",
+            Title = LearnerRecordDetailsContent.Title_Provider_Ukprn_Text,
+            Value = ProviderUkprn.ToString(),
+        };
 
-                if (IsEnglishAndMathsAchieved && IsSendLearner == true)
-                {
-                    return EnglishStatus.AchievedWithSend;
-                }
-                else if (IsEnglishAndMathsAchieved)
-                {
-                    return EnglishStatus.Achieved;
-                }
-                else
-                {
-                    return !IsEnglishAndMathsAchieved ? (EnglishStatus?)EnglishStatus.NotAchieved : null;
-                }
+        public SummaryItemModel SummaryTlevelTitle => new SummaryItemModel
+        {
+            Id = "tleveltitle",
+            Title = LearnerRecordDetailsContent.Title_TLevel_Text,
+            Value = TlevelTitle
+        };
+
+        public SummaryItemModel SummaryStartYear => new SummaryItemModel
+        {
+            Id = "startyear",
+            Title = LearnerRecordDetailsContent.Title_StartYear_Text,
+            Value = StartYear
+        };
+
+        public SummaryItemModel SummaryAoName => new SummaryItemModel
+        {
+            Id = "aoname",
+            Title = LearnerRecordDetailsContent.Title_AoName_Text,
+            Value = AwardingOrganisationName
+        };
+
+        #endregion
+
+        # region Summary English & Maths
+        public SummaryItemModel SummaryMathsStatus => IsMathsAdded ?
+            new SummaryItemModel
+            {
+                Id = "mathsstatus",
+                Title = LearnerRecordDetailsContent.Title_Maths_Text,
+                Value = GetSubjectStatus(MathsStatus),
             }
+            : new SummaryItemModel
+            {
+                Id = "mathsstatus",
+                Title = LearnerRecordDetailsContent.Title_Maths_Text,
+                Value = GetSubjectStatus(MathsStatus),
+                ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
+                RouteName = IsMathsAdded ? string.Empty : RouteConstants.AddMathsStatus,
+                RouteAttributes = IsMathsAdded ? null : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
+                HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Maths
+            };
+
+        public SummaryItemModel SummaryEnglishStatus => IsEnglishAdded ?
+            new SummaryItemModel
+            {
+                Id = "englishstatus",
+                Title = LearnerRecordDetailsContent.Title_English_Text,
+                Value = GetSubjectStatus(EnglishStatus),
+            }
+            : new SummaryItemModel
+            {
+                Id = "englishstatus",
+                Title = LearnerRecordDetailsContent.Title_English_Text,
+                Value = GetSubjectStatus(EnglishStatus),
+                ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
+                HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_English,
+                RouteName = IsEnglishAdded ? string.Empty : RouteConstants.AddEnglishStatus,
+                RouteAttributes = IsEnglishAdded ? null : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
+            };
+
+        #endregion
+
+        // Industry Placement
+        public SummaryItemModel SummaryIndustryPlacementStatus => CanAddIndustryPlacement ?
+            new SummaryItemModel
+            {
+                Id = "industryplacement",
+                Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
+                Value = GetIndustryPlacementDisplayText,
+                ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
+                RouteName = CanAddIndustryPlacement ? RouteConstants.AddIndustryPlacement : string.Empty,
+                RouteAttributes = CanAddIndustryPlacement ? new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } : null,
+                HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement
+            }
+            :
+            new SummaryItemModel
+            {
+                Id = "industryplacement",
+                Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
+                Value = GetIndustryPlacementDisplayText,
+            };
+
+        public BackLinkModel BackLink => new()
+        {
+            RouteName = RouteConstants.SearchLearnerRecord
+        };
+
+        private static string GetSubjectStatus(SubjectStatus subjectStatus)
+        {
+            return subjectStatus switch
+            {
+                SubjectStatus.Achieved => SubjectStatusContent.Achieved_Display_Text,
+                SubjectStatus.NotAchieved => SubjectStatusContent.Not_Achieved_Display_Text,
+                SubjectStatus.AchievedByLrs => SubjectStatusContent.Achieved_Lrs_Display_Text,
+                SubjectStatus.NotAchievedByLrs => SubjectStatusContent.Not_Achieved_Lrs_Display_Text,
+                _ => SubjectStatusContent.Not_Yet_Recevied_Display_Text,
+            };
         }
 
-        private string GetLrsEnglishAndMathsStatusDisplayText
+        private string GetIndustryPlacementDisplayText => IndustryPlacementStatus switch
         {
-            get
-            {
-                if (!HasLrsEnglishAndMaths)
-                    return null;
-
-                if (IsEnglishAndMathsAchieved && IsSendLearner == true)
-                {
-                    return LearnerRecordDetailsContent.English_And_Maths_Achieved_With_Send_Lrs_Text;
-                }
-                else
-                {
-                    return IsEnglishAndMathsAchieved && !IsSendLearner.HasValue
-                        ? LearnerRecordDetailsContent.English_And_Maths_Achieved_Lrs_Text
-                        : LearnerRecordDetailsContent.English_And_Maths_Not_Achieved_Lrs_Text;
-                }
-            }
-        }
-
-        private string GetEnglishAndMathsStatusDisplayText
-        {
-            get
-            {
-                return GetEnglishAndMathsStatus switch
-                {
-                    EnglishStatus.Achieved => EnglishAndMathsStatusContent.Achieved_Display_Text,
-                    EnglishStatus.AchievedWithSend => EnglishAndMathsStatusContent.Achieved_With_Send_Display_Text,
-                    EnglishStatus.NotAchieved => EnglishAndMathsStatusContent.Not_Achieved_Display_Text,
-                    _ => string.Empty,
-                };
-            }
-        }
-
-        private string GetIndustryPlacementDisplayText
-        {
-            get
-            {
-                return IndustryPlacementStatus switch
-                {
-                    IpStatus.Completed => IndustryPlacementStatusContent.Completed_Display_Text,
-                    IpStatus.CompletedWithSpecialConsideration => IndustryPlacementStatusContent.CompletedWithSpecialConsideration_Display_Text,
-                    IpStatus.NotCompleted => IndustryPlacementStatusContent.NotCompleted_Display_Text,
-                    _ => string.Empty,
-                };
-            }
-        }
-
-        public BreadcrumbModel Breadcrumb
-        {
-            get
-            {
-                return new BreadcrumbModel
-                {
-                    BreadcrumbItems = new List<BreadcrumbItem>
-                    {
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Manage_Learner_TLevel_Records, RouteName = RouteConstants.ManageLearnerRecordsDashboard },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Search_For_Learner, RouteName = RouteConstants.SearchLearnerRecord },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Learner_TLevel_Record }
-                    }
-                };
-            }
-        }
+            IpStatus.Completed => IndustryPlacementStatusContent.Completed_Display_Text,
+            IpStatus.CompletedWithSpecialConsideration => IndustryPlacementStatusContent.CompletedWithSpecialConsideration_Display_Text,
+            IpStatus.NotCompleted => IndustryPlacementStatusContent.Still_To_Be_Completed_Display_Text,
+            _ => IndustryPlacementStatusContent.Not_Yet_Received_Display_Text,
+        };
     }
 }

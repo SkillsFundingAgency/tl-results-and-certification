@@ -9,13 +9,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
 {
     public class IpMultiEmployerSelectViewModel
     {
+        public IpMultiEmployerSelectViewModel()
+        {
+            PlacementModels = new List<IpLookupDataViewModel>();
+        }
+
         public string LearnerName { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ErrorResource.IpMultiEmployerSelect), ErrorMessageResourceName = "Validation_Message")]
         public bool? IsIpModelSelected => (PlacementModels.Any(x => x.IsSelected) == true) ? true : null;
 
         public IList<IpLookupDataViewModel> PlacementModels { get; set; }
+        public bool IsChangeMode { get; set; }
 
-        public virtual BackLinkModel BackLink => new() { RouteName = RouteConstants.IpMultiEmployerUsed };
+        public virtual BackLinkModel BackLink => IsChangeMode ? new() { RouteName = RouteConstants.IpCheckAndSubmit } : new() { RouteName = RouteConstants.IpMultiEmployerUsed };
     }
 }

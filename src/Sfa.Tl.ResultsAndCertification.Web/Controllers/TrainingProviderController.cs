@@ -32,6 +32,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("manage-learners/{academicYear}", Name = RouteConstants.SearchLearnerDetails)]
+        public async Task<IActionResult> SearchLearnerDetailsAsync(int academicYear)
+        {
+            var viewmodel = await _trainingProviderLoader.SearchLearnerDetailsAsync(User.GetUkPrn(), academicYear);
+            if (viewmodel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            
+            return View(viewmodel);
+        } 
+
+        [HttpGet]
         [Route("manage-learner-maths-level/{profileId}", Name = RouteConstants.AddMathsStatus)]
         public async Task<IActionResult> AddMathsStatusAsync(int profileId)
         {
@@ -89,86 +100,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
         }
 
-        [HttpGet]
-        [Route("has-learner-completed-industry-placement/{isChangeMode:bool?}", Name = RouteConstants.AddIndustryPlacementQuestion)]
-        public async Task<IActionResult> AddIndustryPlacementQuestionAsync(bool isChangeMode)
-        {
-            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
-
-            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false ||
-                (cacheModel?.LearnerRecord?.HasLrsEnglishAndMaths == false))
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            var viewModel = cacheModel?.IndustryPlacementQuestion == null ? new IndustryPlacementQuestionViewModel() : cacheModel.IndustryPlacementQuestion;
-            viewModel.LearnerName = cacheModel.LearnerRecord.Name;
-            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowed;
-
-            if (cacheModel?.LearnerRecord.HasLrsEnglishAndMaths == true)
-                viewModel.IsBackLinkToEnterUln = true;
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("has-learner-completed-industry-placement", Name = RouteConstants.SubmitIndustryPlacementQuestion)]
-        public async Task<IActionResult> AddIndustryPlacementQuestionAsync(IndustryPlacementQuestionViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
-            if (cacheModel?.Uln == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            cacheModel.IndustryPlacementQuestion = model;
-            await _cacheService.SetAsync(CacheKey, cacheModel);
-
-            return RedirectToRoute(RouteConstants.AddLearnerRecordCheckAndSubmit);
-        }
-
-        [HttpGet]
-        [Route("add-learner-record-check-and-submit", Name = RouteConstants.AddLearnerRecordCheckAndSubmit)]
-        public async Task<IActionResult> AddLearnerRecordCheckAndSubmitAsync()
-        {
-            // DELETE
-            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
-
-            var viewModel = new CheckAndSubmitViewModel { LearnerRecordModel = cacheModel };
-
-            if (!viewModel.IsCheckAndSubmitPageValid)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            await _cacheService.SetAsync(CacheKey, viewModel.ResetChangeMode());
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("add-learner-record-check-and-submit", Name = RouteConstants.SubmitLearnerRecordCheckAndSubmit)]
-        public async Task<IActionResult> SubmitLearnerRecordCheckAndSubmitAsync()
-        {
-            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
-
-            if (cacheModel == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            var response = await _trainingProviderLoader.AddLearnerRecordAsync(User.GetUkPrn(), cacheModel);
-
-            if (response.IsSuccess)
-            {
-                if (cacheModel.Uln.IsNavigatedFromSearchLearnerRecordNotAdded)
-                    await _cacheService.RemoveAsync<SearchLearnerRecordViewModel>(CacheKey);
-
-                await _cacheService.RemoveAsync<AddLearnerRecordViewModel>(CacheKey);
-                //await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddLearnerRecordConfirmation), new LearnerRecordConfirmationViewModel { Uln = response.Uln, Name = response.Name }, CacheExpiryTime.XSmall);  DELETE
-                return RedirectToRoute("DELETE");
-            }
-            else
-            {
-                _logger.LogWarning(LogEvent.AddLearnerRecordFailed, $"Unable to add learner record for UniqueLearnerNumber: {cacheModel.Uln}. Method: SubmitLearnerRecordCheckAndSubmitAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
-            }
-        }
-
         #region Update-Learner
 
         [HttpGet]
@@ -217,7 +148,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("learner-record-page/{profileId}", Name = RouteConstants.LearnerRecordDetails)]
         public async Task<IActionResult> LearnerRecordDetailsAsync(int profileId)
         {
-            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel1>(User.GetUkPrn(), profileId);
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(User.GetUkPrn(), profileId);
 
             if (viewModel == null || !viewModel.IsLearnerRegistered)
             {
@@ -226,56 +157,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
-            return View(viewModel);
-        }
-
-        [HttpGet]
-        [Route("update-learner-record-industry-placement-status/{profileId}/{pathwayId}", Name = RouteConstants.UpdateIndustryPlacementQuestion)]
-        public async Task<IActionResult> UpdateIndustryPlacementQuestionAsync(int profileId, int pathwayId)
-        {
-            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<UpdateIndustryPlacementQuestionViewModel>(User.GetUkPrn(), profileId, pathwayId);
-            if (viewModel == null || !viewModel.IsLearnerRecordAdded)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner record not added. Method: UpdateIndustryPlacementAsync({User.GetUkPrn()}, {profileId}, {pathwayId}), User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("update-learner-record-industry-placement-status", Name = RouteConstants.SubmitUpdateIndustryPlacementQuestion)]
-        public async Task<IActionResult> UpdateIndustryPlacementQuestionAsync(UpdateIndustryPlacementQuestionViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-                return View(viewModel);
-
-            var response = await _trainingProviderLoader.ProcessIndustryPlacementQuestionUpdateAsync(User.GetUkPrn(), viewModel);
-
-            if (response == null)
-                return RedirectToRoute(RouteConstants.ProblemWithService);
-
-            if (!response.IsModified)
-                return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { viewModel.ProfileId });
-
-            if (!response.IsSuccess)
-                return RedirectToRoute(RouteConstants.ProblemWithService);
-
-            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.IndustryPlacementUpdatedConfirmation), response, CacheExpiryTime.XSmall);
-            return RedirectToRoute(RouteConstants.IndustryPlacementUpdatedConfirmation);
-        }
-
-        [HttpGet]
-        [Route("industry-placement-updated-confirmation", Name = RouteConstants.IndustryPlacementUpdatedConfirmation)]
-        public async Task<IActionResult> IndustryPlacementUpdatedConfirmationAsync()
-        {
-            var viewModel = await _cacheService.GetAndRemoveAsync<UpdateLearnerRecordResponseViewModel>(string.Concat(CacheKey, Constants.IndustryPlacementUpdatedConfirmation));
-
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read UpdateLearnerRecordResponseViewModel from redis cache in industry placement updated confirmation page. Method: IndustryPlacementUpdatedConfirmationAsync(), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
             return View(viewModel);
         }
 

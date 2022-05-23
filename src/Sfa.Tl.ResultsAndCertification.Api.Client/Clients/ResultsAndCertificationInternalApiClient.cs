@@ -282,6 +282,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         #endregion
 
         // Training Provider endpoints
+        public async Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request)
+        {
+            return await PostAsync<SearchLearnerRequest, PagedResponse<SearchLearnerDetail>>(ApiConstants.SearchLearnerDetailsUri, request);
+        }
+
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation = false)
         {
             var requestUri = string.Format(ApiConstants.FindLearnerRecordUri, providerUkprn, uln, evaluateSendConfirmation);
@@ -293,18 +298,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             var requestUri = string.Format(ApiConstants.GetLearnerRecordDetailsUri, providerUkprn, profileId, pathwayId);
             return await GetAsync<LearnerRecordDetails>(requestUri);
         }
-
-        public async Task<AddLearnerRecordResponse> AddLearnerRecordAsync(AddLearnerRecordRequest request)
-        {
-            return await PostAsync<AddLearnerRecordRequest, AddLearnerRecordResponse>(ApiConstants.AddLearnerRecordUri, request);
-        }
-
-        public async Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest model)
-        {
-            // TODO: To be deleted after new industry placement implemented. - Ravi
-            return await PutAsync<UpdateLearnerRecordRequest, bool>(ApiConstants.UpdateLearnerRecordUri, model);
-        }
-
+        
         public async Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request)
         {
             return await PutAsync<UpdateLearnerSubjectRequest, bool>(ApiConstants.UpdateLearnerSubjectUri, request);
