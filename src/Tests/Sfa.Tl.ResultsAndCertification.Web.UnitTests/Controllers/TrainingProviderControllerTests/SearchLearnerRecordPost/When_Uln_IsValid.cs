@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public override void Given()
         {
             SearchLearnerRecordViewModel = new SearchLearnerRecordViewModel { SearchUln = uln.ToString() };
-            mockResult = new FindLearnerRecord { ProfileId = 1, IsLearnerRegistered = true, IsLearnerRecordAdded = true };
+            mockResult = new FindLearnerRecord { ProfileId = 1, IsLearnerRegistered = true };
             TrainingProviderLoader.FindLearnerRecordAsync(ProviderUkprn, SearchLearnerRecordViewModel.SearchUln.ToLong()).Returns(mockResult);
         }
 

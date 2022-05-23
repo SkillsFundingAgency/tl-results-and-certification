@@ -9,6 +9,5 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
         Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request);
         Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln);
         Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null);
-        Task<bool> IsSendConfirmationRequiredAsync(int profileId);
     }
 }

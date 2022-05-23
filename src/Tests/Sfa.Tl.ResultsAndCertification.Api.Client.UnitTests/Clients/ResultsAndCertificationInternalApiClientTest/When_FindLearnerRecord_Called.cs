@@ -44,10 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 Name = "Test User",
                 DateofBirth = DateTime.UtcNow.AddYears(30),
                 ProviderName = "Barnsley College (123456789)",
-                IsLearnerRegistered = true,
-                IsLearnerRecordAdded = false,
-                IsEnglishAndMathsAchieved = true,
-                HasLrsEnglishAndMaths = true
+                IsLearnerRegistered = true
             };
         }
 
@@ -71,9 +68,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.DateofBirth.Should().Be(_mockApiResponse.DateofBirth);
             _actualResult.ProviderName.Should().Be(_mockApiResponse.ProviderName);
             _actualResult.IsLearnerRegistered.Should().Be(_mockApiResponse.IsLearnerRegistered);
-            _actualResult.IsLearnerRecordAdded.Should().Be(_mockApiResponse.IsLearnerRecordAdded);
-            _actualResult.IsEnglishAndMathsAchieved.Should().Be(_mockApiResponse.IsEnglishAndMathsAchieved);
-            _actualResult.HasLrsEnglishAndMaths.Should().Be(_mockApiResponse.HasLrsEnglishAndMaths);
         }
     }
 }
