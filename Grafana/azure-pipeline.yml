@@ -14,6 +14,7 @@ resources:
       type: github
       endpoint: DFE-Digital
       name: DFE-Digital/operations-devops-pipeline-templates
+      ref: feature/TLD-14-GrafanaPipeline
 
     - repository: devopsTools
       type: github
