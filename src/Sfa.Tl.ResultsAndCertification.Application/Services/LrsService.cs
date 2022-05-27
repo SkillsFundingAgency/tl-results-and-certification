@@ -42,6 +42,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (registrationLearners == null) return null;
 
+            if (registrationLearners.Any())
+                registrationLearners = registrationLearners.Take(1000).ToList(); // added this to fix timeout issues and need to be removed
+
             return _mapper.Map<IList<RegisteredLearnerDetails>>(registrationLearners);
         }
 
