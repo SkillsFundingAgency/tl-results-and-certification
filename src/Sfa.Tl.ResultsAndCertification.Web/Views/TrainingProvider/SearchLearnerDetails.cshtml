@@ -20,9 +20,16 @@
     <div class="govuk-grid-column-full">
         <div class="learner-records">
             <dl class="govuk-summary-list">
-                @foreach (var learner in Model.SearchLearnerDetailsList)
+                @if (Model.SearchLearnerDetailsList.Count > 0)
                 {
-                    <partial name="Partials/_learnerDetailsCard.cshtml" model="learner" />
+                    @foreach (var learner in Model.SearchLearnerDetailsList)
+                    {
+                        <partial name="Partials/_learnerDetailsCard.cshtml" model="learner" />
+                    }
+                }
+                else
+                {
+                    <partial name="Partials/_noMatchingSearchResults.cshtml" />
                 }
             </dl>
         </div>
