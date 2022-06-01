@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -66,6 +67,22 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             profile.ModifiedBy = request.PerformedBy;
             
             return await _tqRegistrationProfile.UpdateAsync(profile) > 0;
+        }
+
+        public async Task<SearchLearnerFilters> GetSearchLearnerFiltersAsync(long providerUkprn)
+        {
+            await Task.CompletedTask;
+            // TODO: List of <AcademicYears> =  Get the CommonRepository.GetAcademicYears()
+            // TODO: Max AcademicYears - 4.
+            return new SearchLearnerFilters
+            {
+                AcademicYears = new List<FilterLookupData>
+                {
+                    new FilterLookupData { Id = 1, Name = "2020 to 2021", IsSelected = false },
+                    new FilterLookupData { Id = 1, Name = "2021 to 2022", IsSelected = false },
+                    new FilterLookupData { Id = 1, Name = "2022 to 2023", IsSelected = false }
+                }
+            };
         }
     }
 }
