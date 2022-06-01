@@ -26,6 +26,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IsEnglishAdded, opts => opts.MapFrom(s => s.EnglishStatus != null && s.EnglishStatus != SubjectStatus.NotSpecified))
                .ForMember(d => d.IsIndustryPlacementAdded, opts => opts.MapFrom(s => s.IndustryPlacementStatus != null && s.IndustryPlacementStatus != IndustryPlacementStatus.NotSpecified));
 
+            CreateMap<SearchLearnerFilters, SearchLearnerFiltersViewModel>()
+                .ForMember(d => d.AcademicYears, opts => opts.MapFrom(s => s.AcademicYears))
+                .ForMember(d => d.Tlevels, opts => opts.MapFrom(s => s.Tlevels))
+                .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status));
+
             CreateMap<LearnerRecordDetails, LearnerRecordDetailsViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
