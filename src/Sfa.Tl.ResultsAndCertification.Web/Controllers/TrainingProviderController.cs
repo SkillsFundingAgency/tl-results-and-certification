@@ -40,7 +40,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             
             return View(viewmodel);
-        } 
+        }
+
+        [HttpGet]
+        [Route("manage-registered-learners", Name = "ManageRegisteredLearners")]
+        public async Task<IActionResult> ManageRegisteredLearnersAsync()
+        {
+            await _cacheService.RemoveAsync<object>(CacheKey);  // TODO: viewModel.
+            return RedirectToRoute(RouteConstants.GetRegisteredLearners);
+        }
+
+        [HttpGet]
+        [Route("manage-learners-new", Name = RouteConstants.GetRegisteredLearners)]
+        public async Task<IActionResult> GetRegisteredLearnersAsync()
+        {
+            // 1. Build SearchCriteria
+            //      1.1 CacheFound      --> GetLookupData + SelectedValues
+            //      1.2 CacheNotFound   --> AskApi get FilterLookups and update Cache. 
+            // 2. Request api 
+            // 3. Build ViewModel 
+            // 4. return View();
+
+            await Task.CompletedTask;
+            return View();
+        }
 
         [HttpGet]
         [Route("manage-learner-maths-level/{profileId}", Name = RouteConstants.AddMathsStatus)]

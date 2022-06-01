@@ -252,6 +252,8 @@
         public const string SubmitAddEnglishStatus = "SubmitAddEnglishStatus";
 
         public const string SearchLearnerDetails = "SearchLearnerDetails";
+        public const string GetRegisteredLearners = "ProviderRegisteredLearners";
+        public const string SubmitProviderRegisteredLearners = "SubmitProviderRegisteredLearners";
         public const string SearchLearnerRecord = "SearchLearnerRecord";
         public const string SubmitSearchLearnerRecord = "SubmitSearchLearnerRecord";
         public const string SearchLearnerRecordNotFound = "SearchLearnerRecordNotFound";
