@@ -253,6 +253,7 @@
 
         public const string SearchLearnerDetails = "SearchLearnerDetails";
         public const string GetRegisteredLearners = "ProviderRegisteredLearners";
+        public const string SubmitGetRegisteredLearners = "SubmitGetRegisteredLearners";
         public const string SubmitProviderRegisteredLearners = "SubmitProviderRegisteredLearners";
         public const string SearchLearnerRecord = "SearchLearnerRecord";
         public const string SubmitSearchLearnerRecord = "SubmitSearchLearnerRecord";

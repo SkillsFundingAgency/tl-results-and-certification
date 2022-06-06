@@ -61,7 +61,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             // 3. Build ViewModel 
             // 4. return View();
 
-            
             // Step 1.2 from below. 
             var searchFilters = await _cacheService.GetAsync<SearchLearnerFiltersViewModel>(CacheKey);
             if (searchFilters == null)
@@ -73,6 +72,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 SearchLearnerDetailsList = await _trainingProviderLoader.SearchLearnerDetailsAsync(User.GetUkPrn(), 2020) // TODO: ApplyFiter Story.
             };
 
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("manage-learners-new", Name = RouteConstants.SubmitGetRegisteredLearners)]
+        public async Task<IActionResult> GetRegisteredLearnersAsync(RegisteredLearnersViewModel viewModel)
+        {
             return View(viewModel);
         }
 
