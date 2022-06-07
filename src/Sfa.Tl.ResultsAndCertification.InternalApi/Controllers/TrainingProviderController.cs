@@ -45,5 +45,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _trainingProviderService.SearchLearnerDetailsAsync(request);
         }
+
+        [HttpGet]
+        [Route("GetSearchLearnerFilters/{providerukprn}")]
+        public async Task<SearchLearnerFilters> GetSearchLearnerFiltersAsync(long providerUkprn)
+        {
+            return await _trainingProviderService.GetSearchLearnerFiltersAsync(providerUkprn);
+        }
     }
 }

@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,6 +50,25 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .ToListAsync();
 
             return new PagedResponse<SearchLearnerDetail> { Records = learnerRecords.OrderBy(l => l.Lastname).ToList(), TotalRecords = learnerRecords.Count };
+        }
+
+        public async Task<IList<FilterLookupData>> GetSearchAcademicYearFilters()
+        {
+            var currentAcademicYear = await _dbContext.AcademicYear
+                .Where(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate)
+                .OrderByDescending(x => x.Year)
+                .FirstOrDefaultAsync();
+
+            if (currentAcademicYear == null)
+                return null;
+
+            var academicYearTo = currentAcademicYear.Year;
+            var academicYearFrom = academicYearTo - 4;
+
+            return await _dbContext.AcademicYear
+                .Where(x => x.Year >= academicYearFrom && x.Year <= academicYearTo)
+                .Select(x => new FilterLookupData { Id = x.Id, Name = $"{x.Year} to {x.Year + 1}", IsSelected = false })
+                .ToListAsync();
         }
 
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)

@@ -40,7 +40,47 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             
             return View(viewmodel);
-        } 
+        }
+
+        [HttpGet]
+        [Route("manage-registered-learners", Name = "ManageRegisteredLearners")]
+        public async Task<IActionResult> ManageRegisteredLearnersAsync()
+        {
+            await _cacheService.RemoveAsync<SearchLearnerFiltersViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.GetRegisteredLearners);
+        }
+
+        [HttpGet]
+        [Route("manage-learners-new", Name = RouteConstants.GetRegisteredLearners)]
+        public async Task<IActionResult> GetRegisteredLearnersAsync()
+        {
+            // 1. Build SearchCriteria
+            //      1.1 CacheFound      --> GetLookupData + SelectedValues
+            //      1.2 CacheNotFound   --> AskApi get FilterLookups and update Cache. 
+            // 2. Request api 
+            // 3. Build ViewModel 
+            // 4. return View();
+
+            // Step 1.2 from below. 
+            var searchFilters = await _cacheService.GetAsync<SearchLearnerFiltersViewModel>(CacheKey);
+            if (searchFilters == null)
+                searchFilters = await _trainingProviderLoader.GetSearchLearnerFiltersAsync(User.GetUkPrn());
+
+            var viewModel = new RegisteredLearnersViewModel
+            {
+                SearchLearnerFilters = searchFilters,
+                SearchLearnerDetailsList = await _trainingProviderLoader.SearchLearnerDetailsAsync(User.GetUkPrn(), 2020) // TODO: ApplyFiter Story.
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("manage-learners-new", Name = RouteConstants.SubmitGetRegisteredLearners)]
+        public async Task<IActionResult> GetRegisteredLearnersAsync(RegisteredLearnersViewModel viewModel)
+        {
+            return View(viewModel);
+        }
 
         [HttpGet]
         [Route("manage-learner-maths-level/{profileId}", Name = RouteConstants.AddMathsStatus)]
