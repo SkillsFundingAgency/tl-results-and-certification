@@ -129,6 +129,15 @@
   <data name="Hidden_Text_Course" xml:space="preserve">
     <value>Course: </value>
   </data>
+  <data name="Link_Add_English" xml:space="preserve">
+    <value>Add English level details</value>
+  </data>
+  <data name="Link_Add_Ip" xml:space="preserve">
+    <value>Add industry placement details</value>
+  </data>
+  <data name="Link_Add_Maths" xml:space="preserve">
+    <value>Add maths level details</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Manage learners</value>
   </data>

@@ -97,6 +97,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add English level details.
+        /// </summary>
+        public static string Link_Add_English {
+            get {
+                return ResourceManager.GetString("Link_Add_English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add industry placement details.
+        /// </summary>
+        public static string Link_Add_Ip {
+            get {
+                return ResourceManager.GetString("Link_Add_Ip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add maths level details.
+        /// </summary>
+        public static string Link_Add_Maths {
+            get {
+                return ResourceManager.GetString("Link_Add_Maths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage learners.
         /// </summary>
         public static string Page_Title {
