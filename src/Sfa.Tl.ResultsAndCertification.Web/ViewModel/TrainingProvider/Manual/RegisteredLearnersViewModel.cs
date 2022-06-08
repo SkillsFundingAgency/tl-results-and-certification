@@ -11,9 +11,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public SearchCriteriaViewModel SearchCriteria { get; set; }
         public SearchLearnerDetailsListViewModel SearchLearnerDetailsList { get; set; }
 
-        public BreadcrumbModel Breadcrumb => new()
+        public BreadcrumbModel Breadcrumb
         {
-            BreadcrumbItems = new List<BreadcrumbItem> { new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home } }
-        };
+            get
+            {
+                return new BreadcrumbModel
+                {
+                    BreadcrumbItems = new List<BreadcrumbItem>
+                    {
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Manage_Learner_Records, RouteName = RouteConstants.SearchLearnerRecord }
+                    }
+                };
+            }
+        }
     }
 }
