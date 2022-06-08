@@ -28,6 +28,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _logger = logger;
         }
 
+        public async Task<SearchLearnerFilters> GetSearchLearnerFiltersAsync(long providerUkprn)
+        {
+            return new SearchLearnerFilters
+            {
+                AcademicYears = await _trainingProviderRepository.GetSearchAcademicYearFiltersAsync(DateTime.UtcNow)
+            };
+        }
+
         public async Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request)
         {
             return await _trainingProviderRepository.SearchLearnerDetailsAsync(request);
@@ -67,14 +75,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             profile.ModifiedBy = request.PerformedBy;
             
             return await _tqRegistrationProfile.UpdateAsync(profile) > 0;
-        }
-
-        public async Task<SearchLearnerFilters> GetSearchLearnerFiltersAsync(long providerUkprn)
-        {
-            return new SearchLearnerFilters
-            {
-                AcademicYears = await _trainingProviderRepository.GetSearchAcademicYearFiltersAsync(DateTime.UtcNow)
-            };
         }
     }
 }
