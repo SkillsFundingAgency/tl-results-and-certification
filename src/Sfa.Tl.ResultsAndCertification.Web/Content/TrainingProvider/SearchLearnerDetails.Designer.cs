@@ -79,6 +79,69 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incomplete.
+        /// </summary>
+        public static string Filter_Incomplete {
+            get {
+                return ResourceManager.GetString("Filter_Incomplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start year.
+        /// </summary>
+        public static string Filter_Start_Year {
+            get {
+                return ResourceManager.GetString("Filter_Start_Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Level.
+        /// </summary>
+        public static string Filter_Tlevel {
+            get {
+                return ResourceManager.GetString("Filter_Tlevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply filters.
+        /// </summary>
+        public static string Filters_Button_Apply_Filters {
+            get {
+                return ResourceManager.GetString("Filters_Button_Apply_Filters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear filters.
+        /// </summary>
+        public static string Filters_Clear_All {
+            get {
+                return ResourceManager.GetString("Filters_Clear_All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filters.
+        /// </summary>
+        public static string Filters_Heading {
+            get {
+                return ResourceManager.GetString("Filters_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected filters.
+        /// </summary>
+        public static string Filters_Selected_Filters {
+            get {
+                return ResourceManager.GetString("Filters_Selected_Filters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registered learners ({0}).
         /// </summary>
         public static string Heading_Registered_Learners {

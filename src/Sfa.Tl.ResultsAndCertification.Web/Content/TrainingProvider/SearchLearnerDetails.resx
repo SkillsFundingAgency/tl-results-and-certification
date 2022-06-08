@@ -123,6 +123,27 @@
   <data name="Button_Search_Again" xml:space="preserve">
     <value>Search again</value>
   </data>
+  <data name="Filters_Button_Apply_Filters" xml:space="preserve">
+    <value>Apply filters</value>
+  </data>
+  <data name="Filters_Clear_All" xml:space="preserve">
+    <value>Clear filters</value>
+  </data>
+  <data name="Filters_Heading" xml:space="preserve">
+    <value>Filters</value>
+  </data>
+  <data name="Filters_Selected_Filters" xml:space="preserve">
+    <value>Selected filters</value>
+  </data>
+  <data name="Filter_Incomplete" xml:space="preserve">
+    <value>Incomplete</value>
+  </data>
+  <data name="Filter_Start_Year" xml:space="preserve">
+    <value>Start year</value>
+  </data>
+  <data name="Filter_Tlevel" xml:space="preserve">
+    <value>T Level</value>
+  </data>
   <data name="Heading_Registered_Learners" xml:space="preserve">
     <value>Registered learners ({0})</value>
   </data>
