@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     .Where(x => searchDate >= x.EndDate || (searchDate >= x.StartDate && searchDate <= x.EndDate))
                     .OrderBy(x => x.Year)
                     .Take(4)
-                    .Select(x => new FilterLookupData { Id = x.Id, Name = $"{x.Year} to {x.Year + 1}", IsSelected = false })
+                    .Select(x => new FilterLookupData { Id = x.Year, Name = $"{x.Year} to {x.Year + 1}", IsSelected = false })
                     .ToListAsync();
         }
 

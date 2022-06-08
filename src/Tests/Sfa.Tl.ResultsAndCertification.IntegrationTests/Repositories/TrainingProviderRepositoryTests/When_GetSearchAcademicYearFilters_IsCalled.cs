@@ -51,34 +51,34 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
                     new object[] { "05/02/2021".ToDateTime(),
                         new List<FilterLookupData>
                         {
-                            new FilterLookupData { Id = 1, Name = "2020 to 2021", IsSelected = false },
+                            new FilterLookupData { Id = 2020, Name = "2020 to 2021", IsSelected = false },
                         }
                     },
 
                     new object[] { "05/02/2022".ToDateTime(),
                         new List<FilterLookupData>
                         {
-                            new FilterLookupData { Id = 1, Name = "2020 to 2021", IsSelected = false },
-                            new FilterLookupData { Id = 2, Name = "2021 to 2022", IsSelected = false }
+                            new FilterLookupData { Id = 2020, Name = "2020 to 2021", IsSelected = false },
+                            new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false }
                         }
                     },
 
                     new object[] { "05/02/2023".ToDateTime(),
                         new List<FilterLookupData>
                         {
-                            new FilterLookupData { Id = 1, Name = "2020 to 2021", IsSelected = false },
-                            new FilterLookupData { Id = 2, Name = "2021 to 2022", IsSelected = false },
-                            new FilterLookupData { Id = 3, Name = "2022 to 2023", IsSelected = false }
+                            new FilterLookupData { Id = 2020, Name = "2020 to 2021", IsSelected = false },
+                            new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false },
+                            new FilterLookupData { Id = 2022, Name = "2022 to 2023", IsSelected = false }
                         }
                     },
 
                     new object[] { "05/02/2024".ToDateTime(),
                         new List<FilterLookupData>
                         {
-                            new FilterLookupData { Id = 1, Name = "2020 to 2021", IsSelected = false },
-                            new FilterLookupData { Id = 2, Name = "2021 to 2022", IsSelected = false },
-                            new FilterLookupData { Id = 3, Name = "2022 to 2023", IsSelected = false },
-                            new FilterLookupData { Id = 4, Name = "2023 to 2024", IsSelected = false }
+                            new FilterLookupData { Id = 2020, Name = "2020 to 2021", IsSelected = false },
+                            new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false },
+                            new FilterLookupData { Id = 2022, Name = "2022 to 2023", IsSelected = false },
+                            new FilterLookupData { Id = 2023, Name = "2023 to 2024", IsSelected = false }
                         }
                     },
                 };

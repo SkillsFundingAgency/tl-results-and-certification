@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, TrainingProviderRepository, TrainingProviderServiceLogger);
 
             // Mock data 
-            _mockAcademicYears = new List<FilterLookupData> { new FilterLookupData { Id = 2, Name = "2021 to 2022", IsSelected = false }, new FilterLookupData { Id = 3, Name = "2022 to 2023", IsSelected = false } };
+            _mockAcademicYears = new List<FilterLookupData> { new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false }, new FilterLookupData { Id = 2022, Name = "2022 to 2023", IsSelected = false } };
             TrainingProviderRepository.GetSearchAcademicYearFiltersAsync(Arg.Any<DateTime>()).Returns(_mockAcademicYears);
         }
 
