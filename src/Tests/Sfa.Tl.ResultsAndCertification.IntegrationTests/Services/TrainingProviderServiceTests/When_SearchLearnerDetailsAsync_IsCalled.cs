@@ -5,7 +5,6 @@ using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
@@ -81,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             if (_actualResult != null)
                 return;
 
-            _actualResult = await TrainingProviderRepository.SearchLearnerDetailsAsync(request);
+            _actualResult = await TrainingProviderService.SearchLearnerDetailsAsync(request);
         }
 
         [Theory]
