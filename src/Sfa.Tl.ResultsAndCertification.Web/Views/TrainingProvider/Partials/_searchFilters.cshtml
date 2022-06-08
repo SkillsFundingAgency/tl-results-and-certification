@@ -1,4 +1,4 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.SearchLearnerFiltersViewModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.RegisteredLearnersViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
@@ -21,17 +21,17 @@
                 Start year
             </legend>
             <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                @foreach (var academicYear in Model.AcademicYears.Select((value, i) => (value, i)))
+                @foreach (var academicYear in Model?.SearchCriteria?.SearchLearnerFilters?.AcademicYears?.Select((value, i) => (value, i)))
                 {
                     var elementId = (academicYear.i > 0) ? "selectedacademicyear-" + academicYear.i : "selectedacademicyear";
                     <div class="govuk-checkboxes__item govuk-checkboxes--small">
-                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.AcademicYears[@academicYear.i].IsSelected">
+                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchCriteria.SearchLearnerFilters.AcademicYears[@academicYear.i].IsSelected">
                         <label class="govuk-label govuk-checkboxes__label" for="@elementId">
                             @academicYear.value.Name
                         </label>
                     </div>
-                    <input type="hidden" asp-for="@Model.AcademicYears[academicYear.i].Id" />
-                    <input type="hidden" asp-for="@Model.AcademicYears[academicYear.i].Name" />
+                    <input type="hidden" asp-for="@Model.SearchCriteria.SearchLearnerFilters.AcademicYears[@academicYear.i].Id" />
+                    <input type="hidden" asp-for="@Model.SearchCriteria.SearchLearnerFilters.AcademicYears[@academicYear.i].Name" />
                 }
             </div>
         </fieldset>
