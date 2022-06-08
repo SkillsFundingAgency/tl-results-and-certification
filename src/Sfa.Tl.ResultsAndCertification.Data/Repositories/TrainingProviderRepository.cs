@@ -55,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         public async Task<IList<FilterLookupData>> GetSearchAcademicYearFiltersAsync(DateTime searchDate)
         {
             return await _dbContext.AcademicYear
-                    .Where(x => searchDate >= x.EndDate || (searchDate >= x.StartDate && DateTime.Today <= x.EndDate))
+                    .Where(x => searchDate >= x.EndDate || (searchDate >= x.StartDate && searchDate <= x.EndDate))
                     .OrderBy(x => x.Year)
                     .Take(4)
                     .Select(x => new FilterLookupData { Id = x.Id, Name = $"{x.Year} to {x.Year + 1}", IsSelected = false })

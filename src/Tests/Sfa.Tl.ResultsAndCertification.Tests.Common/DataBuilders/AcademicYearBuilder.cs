@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             new AcademicYear
             {
                 Name = "2020/21",                
-                Year = 2021,
+                Year = 2020,
                 StartDate = "2020/09/01".ToDateTime(),
                 EndDate = "2021/08/31".ToDateTime(),
                 CreatedBy = Constants.CreatedByUser,
