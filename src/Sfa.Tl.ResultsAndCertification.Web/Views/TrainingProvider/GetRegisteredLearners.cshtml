@@ -10,6 +10,7 @@
 <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
 }
 
+@*TODO: Delete this view*@
 <form asp-route="SubmitGetRegisteredLearners">
 
     <div class="govuk-grid-row">
@@ -20,7 +21,7 @@
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-third">
-            <partial name="Partials/_searchFilters.cshtml" model="Model.SearchLearnerFilters" />
+            <partial name="Partials/_searchFilters.cshtml" model="Model?.SearchCriteria?.SearchLearnerFilters" />
         </div>
         <div class="govuk-grid-column-two-thirds">
             <div class="learner-records">

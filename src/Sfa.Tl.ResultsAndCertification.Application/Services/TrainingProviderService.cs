@@ -73,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return new SearchLearnerFilters
             {
-                AcademicYears = await _trainingProviderRepository.GetSearchAcademicYearFilters()
+                AcademicYears = await _trainingProviderRepository.GetSearchAcademicYearFiltersAsync(DateTime.UtcNow)
             };
         }
     }

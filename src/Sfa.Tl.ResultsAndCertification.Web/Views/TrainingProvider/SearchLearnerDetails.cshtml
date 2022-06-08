@@ -1,4 +1,4 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.SearchLearnerDetailsListViewModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.RegisteredLearnersViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
@@ -10,31 +10,36 @@
 <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
 }
 
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l">@string.Format(SearchLearnerDetails.Heading_Registered_Learners, Model.TotalRecords)</h1>
-    </div>
-</div>
-
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-        <div class="learner-records">
-            <dl class="govuk-summary-list">
-                @if (Model.SearchLearnerDetailsList.Count > 0)
-                {
-                    @foreach (var learner in Model.SearchLearnerDetailsList)
-                    {
-                        <partial name="Partials/_learnerDetailsCard.cshtml" model="learner" />
-                    }
-                }
-                else
-                {
-                    <partial name="Partials/_noMatchingSearchResults.cshtml" />
-                }
-            </dl>
+<form asp-route="TODO">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">@string.Format(SearchLearnerDetails.Heading_Registered_Learners, Model.SearchLearnerDetailsList?.TotalRecords)</h1>
         </div>
     </div>
-</div>
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+            <partial name="Partials/_searchFilters.cshtml" model="Model?.SearchCriteria?.SearchLearnerFilters" />
+        </div>
+        <div class="govuk-grid-column-two-thirds">
+            <div class="learner-records">
+                <dl class="govuk-summary-list">
+                    @if (Model.SearchLearnerDetailsList.SearchLearnerDetailsList.Count > 0)
+                    {
+                        @foreach (var learner in Model.SearchLearnerDetailsList.SearchLearnerDetailsList)
+                        {
+                            <partial name="Partials/_learnerDetailsCard.cshtml" model="learner" />
+                        }
+                    }
+                    else
+                    {
+                        <partial name="Partials/_noMatchingSearchResults.cshtml" />
+                    }
+                </dl>
+            </div>
+        </div>
+    </div>
+</form>
 
 <div class="govuk-button-group govuk-!-margin-bottom-6">
     <a id="searchAgainButton" class="govuk-button" role="button" asp-route="@RouteConstants.SearchLearnerRecord">@SearchLearnerDetails.Button_Search_Again</a>
