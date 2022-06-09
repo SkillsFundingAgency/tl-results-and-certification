@@ -37,7 +37,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
 
-            var searchFilters = (searchCriteria == null || searchCriteria.SearchLearnerFilters == null) ? await _trainingProviderLoader.GetSearchLearnerFiltersAsync(User.GetUkPrn()) : searchCriteria.SearchLearnerFilters;
+            var searchFilters = (searchCriteria == null || searchCriteria.SearchLearnerFilters == null) 
+                                ? await _trainingProviderLoader.GetSearchLearnerFiltersAsync(User.GetUkPrn()) 
+                                : searchCriteria.SearchLearnerFilters;
 
             if (searchFilters == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -56,17 +58,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
-        [HttpPost]
-        [Route("manage-learners/{academicYear}", Name = RouteConstants.SubmitSearchLearnerDetails)]
-        public async Task<IActionResult> SearchLearnerDetailsAsync(RegisteredLearnersViewModel viewModel)
-        {
-            await _cacheService.SetAsync(CacheKey, viewModel.SearchCriteria);
-            return RedirectToRoute(RouteConstants.SearchLearnerDetails, new { academicYear = viewModel.SearchCriteria.AcademicYear });
-        }
+        //[HttpPost]
+        //[Route("manage-learners/{academicYear}", Name = RouteConstants.SubmitSearchLearnerDetails)]
+        //public async Task<IActionResult> SearchLearnerDetailsAsync(RegisteredLearnersViewModel viewModel)
+        //{
+        //    await _cacheService.SetAsync(CacheKey, viewModel.SearchCriteria);
+        //    return RedirectToRoute(RouteConstants.SearchLearnerDetails, new { academicYear = viewModel.SearchCriteria.AcademicYear });
+        //}
 
         [HttpPost]
         [Route("manage-learners-applyfilters", Name = RouteConstants.SubmitSearchLearnerApplyFilters)]
-        public async Task<IActionResult> SubmitSearchLearnerApplyFilters(SearchCriteriaViewModel viewModel)
+        public async Task<IActionResult> SubmitSearchLearnerApplyFiltersAsync(SearchCriteriaViewModel viewModel)
         {
             viewModel.SearchLearnerFilters.IsApplyFiltersSelected = true;
             await _cacheService.SetAsync(CacheKey, viewModel);
@@ -75,7 +77,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("manage-learners-clearfilters/{academicYear}", Name = RouteConstants.SearchLearnerClearFilters)]
-        public async Task<IActionResult> SearchLearnerClearFilters(int academicYear)
+        public async Task<IActionResult> SearchLearnerClearFiltersAsync(int academicYear)
         {
             var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
 

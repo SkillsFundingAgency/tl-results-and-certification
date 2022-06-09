@@ -4,12 +4,19 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using Xunit;
+using NSubstitute;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.SearchLearnerRecordGet
 {
     public class When_Cache_NotFound : TestSetup
     {
         public override void Given() { }
+
+        [Fact]
+        public void Then_Expected_Methods_AreCalled()
+        {
+            CacheService.Received(1).RemoveAsync<SearchCriteriaViewModel>(CacheKey);
+        }
 
         [Fact]
         public void Then_Returns_Expected_Results()
