@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
     {
         Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request);
         Task<IList<FilterLookupData>> GetSearchAcademicYearFiltersAsync(DateTime searchDate);
-        Task<IList<FilterLookupData>> GetSearchTlevelFiltersAsync(long providerUkprn);
+        Task<IList<FilterLookupData>> GetSearchTlevelFiltersAsync();
         Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln);
         Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null);
     }

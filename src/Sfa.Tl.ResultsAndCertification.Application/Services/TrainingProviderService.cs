@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return new SearchLearnerFilters
             {
                 AcademicYears = await _trainingProviderRepository.GetSearchAcademicYearFiltersAsync(DateTime.UtcNow),
-                Tlevels = await _trainingProviderRepository.GetSearchTlevelFiltersAsync(providerUkprn)
+                Tlevels = await _trainingProviderRepository.GetSearchTlevelFiltersAsync()
             };
         }
 

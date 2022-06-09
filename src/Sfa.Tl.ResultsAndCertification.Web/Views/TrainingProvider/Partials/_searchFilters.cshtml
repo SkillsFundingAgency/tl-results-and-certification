@@ -17,25 +17,25 @@
 
     @*<div class="govuk-form-group">
         <fieldset class="govuk-fieldset">
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                @SearchLearnerDetails.Filter_Start_Year
-            </legend>
-            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                @foreach (var academicYear in Model?.SearchCriteria?.SearchLearnerFilters?.AcademicYears?.Select((value, i) => (value, i)))
-                {
-                    var elementId = (academicYear.i > 0) ? "selectedacademicyear-" + academicYear.i : "selectedacademicyear";
-                    <div class="govuk-checkboxes__item govuk-checkboxes--small">
-                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchCriteria.SearchLearnerFilters.AcademicYears[@academicYear.i].IsSelected">
-                        <label class="govuk-label govuk-checkboxes__label" for="@elementId">
-                            @academicYear.value.Name
-                        </label>
-                    </div>
-                    <input type="hidden" asp-for="@Model.SearchCriteria.SearchLearnerFilters.AcademicYears[@academicYear.i].Id" />
-                    <input type="hidden" asp-for="@Model.SearchCriteria.SearchLearnerFilters.AcademicYears[@academicYear.i].Name" />
-                }
-            </div>
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+        @SearchLearnerDetails.Filter_Start_Year
+        </legend>
+        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+        @foreach (var academicYear in Model?.SearchCriteria?.SearchLearnerFilters?.AcademicYears?.Select((value, i) => (value, i)))
+        {
+        var elementId = (academicYear.i > 0) ? "selectedacademicyear-" + academicYear.i : "selectedacademicyear";
+        <div class="govuk-checkboxes__item govuk-checkboxes--small">
+        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchCriteria.SearchLearnerFilters.AcademicYears[@academicYear.i].IsSelected">
+        <label class="govuk-label govuk-checkboxes__label" for="@elementId">
+        @academicYear.value.Name
+        </label>
+        </div>
+        <input type="hidden" asp-for="@Model.SearchCriteria.SearchLearnerFilters.AcademicYears[@academicYear.i].Id" />
+        <input type="hidden" asp-for="@Model.SearchCriteria.SearchLearnerFilters.AcademicYears[@academicYear.i].Name" />
+        }
+        </div>
         </fieldset>
-    </div>*@
+        </div>*@
     <div class="govuk-form-group">
         <fieldset class="govuk-fieldset">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
@@ -75,66 +75,16 @@
                 T Level
             </legend>
             <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                <div class="govuk-checkboxes__item govuk-checkboxes--small">
-                    <input class="govuk-checkboxes__input" id="building-services-engineering" name="t-level" type="checkbox" value="Building Services Engineering">
-                    <label class="govuk-label govuk-checkboxes__label" for="building-services-engineering">
-                        Building Services Engineering
-                    </label>
-                </div>
-                <div class="govuk-checkboxes__item govuk-checkboxes--small">
-                    <input class="govuk-checkboxes__input" id="design-surveying-and-planning" name="t-level" type="checkbox" value="Design, Surveying and Planning">
-                    <label class="govuk-label govuk-checkboxes__label" for="design-surveying-and-planning">
-                        Design, Surveying and Planning
-                    </label>
-                </div>
-                <div class="govuk-checkboxes__item govuk-checkboxes--small">
-                    <input class="govuk-checkboxes__input" id="digital-business-services" name="t-level" type="checkbox" value="Digital Business Services">
-                    <label class="govuk-label govuk-checkboxes__label" for="digital-business-services">
-                        Digital Business Services
-                    </label>
-                </div>
-                <div class="govuk-checkboxes__item govuk-checkboxes--small">
-                    <input class="govuk-checkboxes__input" id="digital-production-design-and-development" name="t-level" type="checkbox" value="Digital Production Design and Development">
-                    <label class="govuk-label govuk-checkboxes__label" for="digital-production-design-and-development">
-                        Digital Production, Design and Development
-                    </label>
-                </div>
-                <div class="govuk-checkboxes__item govuk-checkboxes--small">
-                    <input class="govuk-checkboxes__input" id="digital-support-services" name="t-level" type="checkbox" value="Digital Support Services">
-                    <label class="govuk-label govuk-checkboxes__label" for="digital-support-services">
-                        Digital Support Services
-                    </label>
-                </div>
-                <div class="govuk-checkboxes__item govuk-checkboxes--small">
-                    <input class="govuk-checkboxes__input" id="education-and-childcare" name="t-level" type="checkbox" value="Education and Childcare">
-                    <label class="govuk-label govuk-checkboxes__label" for="education-and-childcare">
-                        Education and Childcare
-                    </label>
-                </div>
-                <div class="govuk-checkboxes__item govuk-checkboxes--small">
-                    <input class="govuk-checkboxes__input" id="health" name="t-level" type="checkbox" value="Health">
-                    <label class="govuk-label govuk-checkboxes__label" for="health">
-                        Health
-                    </label>
-                </div>
-                <div class="govuk-checkboxes__item govuk-checkboxes--small">
-                    <input class="govuk-checkboxes__input" id="healthcare-science" name="t-level" type="checkbox" value="Healthcare Science">
-                    <label class="govuk-label govuk-checkboxes__label" for="healthcare-science">
-                        Healthcare Science
-                    </label>
-                </div>
-                <div class="govuk-checkboxes__item govuk-checkboxes--small">
-                    <input class="govuk-checkboxes__input" id="onsite-construction" name="t-level" type="checkbox" value="Onsite Construction">
-                    <label class="govuk-label govuk-checkboxes__label" for="onsite-construction">
-                        Onsite Construction
-                    </label>
-                </div>
-                <div class="govuk-checkboxes__item govuk-checkboxes--small">
-                    <input class="govuk-checkboxes__input" id="science" name="t-level" type="checkbox" value="Science">
-                    <label class="govuk-label govuk-checkboxes__label" for="science">
-                        Science
-                    </label>
-                </div>
+                @foreach (var tlevel in Model?.SearchCriteria?.SearchLearnerFilters?.Tlevels?.Select((value, i) => (value, i)))
+                {
+                    var elementId = (tlevel.i > 0) ? "selectedtlevel-" + tlevel.i : "selectedtlevel";
+                    <div class="govuk-checkboxes__item govuk-checkboxes--small">
+                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchCriteria.SearchLearnerFilters.Tlevels[tlevel.i].IsSelected">
+                        <label class="govuk-label govuk-checkboxes__label" for="@elementId">
+                                    @tlevel.value.Name
+                        </label>
+                    </div>
+                }
             </div>
         </fieldset>
     </div>
