@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply filters.
+        /// </summary>
+        public static string Button_Apply_Filters {
+            get {
+                return ResourceManager.GetString("Button_Apply_Filters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back to home.
         /// </summary>
         public static string Button_Back_To_Home {

@@ -64,6 +64,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(RouteConstants.SearchLearnerDetails, new { academicYear = viewModel.SearchCriteria.AcademicYear });
         }
 
+        [HttpPost]
+        [Route("manage-learners-applyfilters", Name = RouteConstants.SubmitSearchLearnerApplyFilters)]
+        public async Task<IActionResult> SubmitSearchLearnerApplyFilters(SearchCriteriaViewModel viewModel)
+        {
+            viewModel.SearchLearnerFilters.IsApplyFiltersSelected = true;
+            await _cacheService.SetAsync(CacheKey, viewModel);
+            return RedirectToRoute(RouteConstants.SearchLearnerDetails, new { academicYear = viewModel.AcademicYear });
+        }
+
+        [HttpGet]
+        [Route("manage-learners-clearfilters/{academicYear}", Name = RouteConstants.SearchLearnerClearFilters)]
+        public async Task<IActionResult> SearchLearnerClearFilters(int academicYear)
+        {
+            var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
+
+            if(searchCriteria != null)
+            {
+                searchCriteria.SearchLearnerFilters = null;
+                await _cacheService.SetAsync(CacheKey, searchCriteria);
+            }
+            
+            return RedirectToRoute(RouteConstants.SearchLearnerDetails, new { academicYear });
+        }
+
         //[HttpGet]
         //[Route("manage-registered-learners", Name = "ManageRegisteredLearners")]
         //public async Task<IActionResult> ManageRegisteredLearnersAsync()
