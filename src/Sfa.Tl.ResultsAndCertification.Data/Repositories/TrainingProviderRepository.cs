@@ -1,12 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
@@ -28,8 +31,46 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                              .Where(p => p.TqProvider.TlProvider.UkPrn == request.Ukprn && p.Status == RegistrationPathwayStatus.Active)
                                              .AsQueryable();
 
-            if (request.AcademicYear.Any())
+            if (request.AcademicYear != null && request.AcademicYear.Any())
                 pathwayQueryable = pathwayQueryable.Where(p => request.AcademicYear.Contains(p.AcademicYear));
+
+            if (request.Tlevels != null && request.Tlevels.Any())
+                pathwayQueryable = pathwayQueryable.Where(p => request.Tlevels.Contains(p.TqProvider.TqAwardingOrganisation.TlPathway.Id));
+
+            if (request.Statuses != null && request.Statuses.Any())
+            {
+                var expressions = new List<Expression<Func<TqRegistrationPathway, bool>>>();
+
+                foreach (var statusId in request.Statuses)
+                {
+                    switch (statusId)
+                    {
+                        case (int)LearnerStatusFilter.EnglishIncompleted:
+                            expressions.Add(p => p.TqRegistrationProfile.EnglishStatus == null);
+                            break;
+                        case (int)LearnerStatusFilter.MathsIncompleted:
+                            expressions.Add(p => p.TqRegistrationProfile.MathsStatus == null);
+                            break;
+                        case (int)LearnerStatusFilter.IndustryPlacementIncompleted:
+                            expressions.Add(p => !p.IndustryPlacements.Any());
+                            break;
+                        case (int)LearnerStatusFilter.AllIncomplemented:
+                            expressions.Clear();
+                            expressions.Add(p => p.TqRegistrationProfile.EnglishStatus == null || p.TqRegistrationProfile.MathsStatus == null || !p.IndustryPlacements.Any());
+                            break;
+                    }
+                }
+
+                Expression<Func<TqRegistrationPathway, bool>> criteria = null;
+
+                expressions.ForEach(exp =>
+                {
+                    criteria = LinqExpressionExtensions.OrCombine(criteria, exp);
+                });
+
+                if (criteria != null)
+                    pathwayQueryable = pathwayQueryable.Where(criteria);
+            }
 
             var learnerRecords = await pathwayQueryable
                 .Select(x => new SearchLearnerDetail
@@ -42,14 +83,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     TlevelName = x.TqProvider.TqAwardingOrganisation.TlPathway.Name,
                     EnglishStatus = x.TqRegistrationProfile.EnglishStatus,
                     MathsStatus = x.TqRegistrationProfile.MathsStatus,
-                    IndustryPlacementStatus = x.IndustryPlacements.Any() ? x.IndustryPlacements.FirstOrDefault().Status : null,
-                    CreatedOn = x.CreatedOn
+                    IndustryPlacementStatus = x.IndustryPlacements.Any() ? x.IndustryPlacements.FirstOrDefault().Status : null
                 })
-                .GroupBy(x => x.ProfileId)
-                .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
+                .OrderBy(x => x.Lastname)
                 .ToListAsync();
 
-            return new PagedResponse<SearchLearnerDetail> { Records = learnerRecords.OrderBy(l => l.Lastname).ToList(), TotalRecords = learnerRecords.Count };
+            return new PagedResponse<SearchLearnerDetail> { Records = learnerRecords, TotalRecords = learnerRecords.Count };
         }
 
         public async Task<IList<FilterLookupData>> GetSearchAcademicYearFiltersAsync(DateTime searchDate)

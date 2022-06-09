@@ -14,7 +14,5 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         public SubjectStatus? EnglishStatus { get; set; }
         public SubjectStatus? MathsStatus { get; set; }
         public IndustryPlacementStatus? IndustryPlacementStatus { get; set; }
-
-        public DateTime CreatedOn { get; set; }
     }
 }

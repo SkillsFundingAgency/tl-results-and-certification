@@ -103,8 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 TlevelName = x.TqProvider.TqAwardingOrganisation.TlPathway.Name,
                 EnglishStatus = x.TqRegistrationProfile.EnglishStatus,
                 MathsStatus = x.TqRegistrationProfile.MathsStatus,
-                IndustryPlacementStatus = x.IndustryPlacements.Any() ? x.IndustryPlacements.FirstOrDefault().Status : null,
-                CreatedOn = x.CreatedOn
+                IndustryPlacementStatus = x.IndustryPlacements.Any() ? x.IndustryPlacements.FirstOrDefault().Status : null
             }).ToList();
 
             var expectedPagedResponse = new PagedResponse<SearchLearnerDetail>
