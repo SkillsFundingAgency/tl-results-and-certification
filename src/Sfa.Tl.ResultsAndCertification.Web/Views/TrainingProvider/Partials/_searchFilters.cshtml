@@ -72,7 +72,7 @@
     <div class="govuk-form-group">
         <fieldset class="govuk-fieldset">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                T Level
+                @SearchLearnerDetails.Filters_Tlevel
             </legend>
             <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                 @foreach (var tlevel in Model?.SearchCriteria?.SearchLearnerFilters?.Tlevels?.Select((value, i) => (value, i)))
@@ -81,7 +81,7 @@
                     <div class="govuk-checkboxes__item govuk-checkboxes--small">
                         <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchCriteria.SearchLearnerFilters.Tlevels[tlevel.i].IsSelected">
                         <label class="govuk-label govuk-checkboxes__label" for="@elementId">
-                                    @tlevel.value.Name
+                            @tlevel.value.Name
                         </label>
                     </div>
                 }

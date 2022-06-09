@@ -142,6 +142,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to T Level.
+        /// </summary>
+        public static string Filters_Tlevel {
+            get {
+                return ResourceManager.GetString("Filters_Tlevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registered learners ({0}).
         /// </summary>
         public static string Heading_Registered_Learners {
