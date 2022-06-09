@@ -101,6 +101,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     .ToListAsync();
         }
 
+        public async Task<IList<FilterLookupData>> GetSearchTlevelFiltersAsync(long providerUkprn)
+        {
+            await Task.CompletedTask;
+            return null;
+        }
+
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
         {
             var learnerRecord = await (from tqPathway in _dbContext.TqRegistrationPathway

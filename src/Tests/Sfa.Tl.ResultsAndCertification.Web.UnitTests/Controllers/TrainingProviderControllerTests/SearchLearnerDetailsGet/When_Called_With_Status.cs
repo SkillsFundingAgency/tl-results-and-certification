@@ -3,7 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.SearchLearnerDetails
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.SearchLearnerDetailsGet
 {
     public class When_Called_With_Status
     {

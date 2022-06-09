@@ -7,7 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,7 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return new SearchLearnerFilters
             {
-                AcademicYears = await _trainingProviderRepository.GetSearchAcademicYearFiltersAsync(DateTime.UtcNow)
+                AcademicYears = await _trainingProviderRepository.GetSearchAcademicYearFiltersAsync(DateTime.UtcNow),
+                Tlevels = await _trainingProviderRepository.GetSearchTlevelFiltersAsync(providerUkprn)
             };
         }
 
