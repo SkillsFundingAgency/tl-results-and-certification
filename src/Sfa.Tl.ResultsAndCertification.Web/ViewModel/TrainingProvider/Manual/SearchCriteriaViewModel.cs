@@ -7,5 +7,7 @@
         public string SearchKey { get; set; }
 
         public string SortOrder { get; set; }
+
+        public int AcademicYear { get; set; }
     }
 }

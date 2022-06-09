@@ -35,21 +35,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("manage-learners/{academicYear}", Name = RouteConstants.SearchLearnerDetails)]
         public async Task<IActionResult> SearchLearnerDetailsAsync(int academicYear)
         {
-            var searchFilters = await _trainingProviderLoader.GetSearchLearnerFiltersAsync(User.GetUkPrn());
+            var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
+
+            var searchFilters = (searchCriteria == null || searchCriteria.SearchLearnerFilters == null) ? await _trainingProviderLoader.GetSearchLearnerFiltersAsync(User.GetUkPrn()) : searchCriteria.SearchLearnerFilters;
+
             if (searchFilters == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var learnersList = await _trainingProviderLoader.SearchLearnerDetailsAsync(User.GetUkPrn(), academicYear);
+            var learnersList = await _trainingProviderLoader.SearchLearnerDetailsAsync(User.GetUkPrn(), academicYear, searchCriteria);
+
             if (learnersList == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = new RegisteredLearnersViewModel
             {
-                SearchCriteria = new SearchCriteriaViewModel { SearchLearnerFilters = searchFilters },
+                SearchCriteria = new SearchCriteriaViewModel { SearchLearnerFilters = searchFilters, AcademicYear = academicYear },
                 SearchLearnerDetailsList = learnersList
             };
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("manage-learners/{academicYear}", Name = RouteConstants.SubmitSearchLearnerDetails)]
+        public async Task<IActionResult> SearchLearnerDetailsAsync(RegisteredLearnersViewModel viewModel)
+        {
+            await _cacheService.SetAsync(CacheKey, viewModel.SearchCriteria);
+            return RedirectToRoute(RouteConstants.SearchLearnerDetails, new { academicYear = viewModel.SearchCriteria.AcademicYear });
         }
 
         //[HttpGet]
@@ -156,6 +168,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("search-learner-record-unique-learner-number", Name = RouteConstants.SearchLearnerRecord)]
         public async Task<IActionResult> SearchLearnerRecordAsync()
         {
+            await _cacheService.RemoveAsync<SearchCriteriaViewModel>(CacheKey);
             var cacheModel = await _cacheService.GetAndRemoveAsync<SearchLearnerRecordViewModel>(CacheKey);
             var viewModel = cacheModel ?? new SearchLearnerRecordViewModel();
             return View(viewModel);
