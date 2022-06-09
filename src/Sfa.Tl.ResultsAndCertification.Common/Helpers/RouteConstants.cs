@@ -252,6 +252,7 @@
         public const string SubmitAddEnglishStatus = "SubmitAddEnglishStatus";
 
         public const string SearchLearnerDetails = "SearchLearnerDetails";
+        public const string SubmitSearchLearnerDetails = "SubmitSearchLearnerDetails";
         //public const string GetRegisteredLearners = "ProviderRegisteredLearners";
         //public const string SubmitGetRegisteredLearners = "SubmitGetRegisteredLearners";
         public const string SubmitProviderRegisteredLearners = "SubmitProviderRegisteredLearners";

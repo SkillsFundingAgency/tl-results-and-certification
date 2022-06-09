@@ -6,7 +6,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 {
     public interface ITrainingProviderLoader
     {
-        Task<SearchLearnerDetailsListViewModel> SearchLearnerDetailsAsync(long providerUkprn, int academicYear);
+        Task<SearchLearnerDetailsListViewModel> SearchLearnerDetailsAsync(long providerUkprn, int academicYear, SearchCriteriaViewModel searchCriteriaViewModel);
         Task<SearchLearnerFiltersViewModel> GetSearchLearnerFiltersAsync(long providerUkprn);
         Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln);
         Task<T> GetLearnerRecordDetailsAsync<T>(long providerUkprn, int profileId, int? pathwayId = null);
