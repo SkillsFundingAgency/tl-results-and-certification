@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
+        private SearchLearnerFiltersViewModel _searchFilters;
         private SearchLearnerDetailsListViewModel _searchLearnersList;
 
         public override void Given()
         {
             AcademicYear = 2020;
+
+            _searchFilters = new SearchLearnerFiltersViewModel
+            {
+                AcademicYears = new List<FilterLookupData> 
+                { 
+                    new FilterLookupData { Id = 2020, Name = "2020 to 2021", IsSelected = false },
+                    new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false }
+                }
+            };
+            TrainingProviderLoader.GetSearchLearnerFiltersAsync(ProviderUkprn).Returns(_searchFilters);
 
             _searchLearnersList = new SearchLearnerDetailsListViewModel
             {
@@ -37,13 +49,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                     }
                 }
             };
-
             TrainingProviderLoader.SearchLearnerDetailsAsync(ProviderUkprn, AcademicYear).Returns(_searchLearnersList);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
+            TrainingProviderLoader.Received(1).GetSearchLearnerFiltersAsync(ProviderUkprn);
             TrainingProviderLoader.Received(1).SearchLearnerDetailsAsync(ProviderUkprn, AcademicYear);
         }
 
@@ -51,13 +63,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public void Then_Returns_Expected_Results()
         {
             var viewResult = Result as ViewResult;
-            var model = viewResult.Model as SearchLearnerDetailsListViewModel;
+            var model = viewResult.Model as RegisteredLearnersViewModel;
 
             model.Should().NotBeNull();
-            model.TotalRecords.Should().Be(_searchLearnersList.TotalRecords);
-            model.SearchLearnerDetailsList.Count.Should().Be(1);
+            model.SearchCriteria.Should().NotBeNull();
 
-            var actualLearner = model.SearchLearnerDetailsList.First();
+            var searchFilters = model.SearchCriteria.SearchLearnerFilters;
+            searchFilters.Should().NotBeNull();
+            searchFilters.AcademicYears.Should().NotBeNull();
+            searchFilters.AcademicYears.Should().HaveCount(_searchFilters.AcademicYears.Count);
+            searchFilters.AcademicYears.Should().BeEquivalentTo(_searchFilters.AcademicYears);
+
+            model.SearchLearnerDetailsList.TotalRecords.Should().Be(_searchLearnersList.TotalRecords);
+            model.SearchLearnerDetailsList.SearchLearnerDetailsList.Count.Should().Be(1);
+
+            var actualLearner = model.SearchLearnerDetailsList.SearchLearnerDetailsList.First();
             var expectedLearner = _searchLearnersList.SearchLearnerDetailsList.First();
             actualLearner.ProfileId.Should().Be(expectedLearner.ProfileId);
             actualLearner.LearnerName.Should().Be(expectedLearner.LearnerName);
