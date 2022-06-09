@@ -101,10 +101,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     .ToListAsync();
         }
 
-        public async Task<IList<FilterLookupData>> GetSearchTlevelFiltersAsync(long providerUkprn)
+        public async Task<IList<FilterLookupData>> GetSearchTlevelFiltersAsync()
         {
-            await Task.CompletedTask;
-            return null;
+            return await _dbContext.TlPathway
+                    .OrderBy(x => x.Name)
+                    .Select(x => new FilterLookupData { Id = x.Id, Name = x.Name, IsSelected = false })
+                    .ToListAsync();
+
         }
 
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
