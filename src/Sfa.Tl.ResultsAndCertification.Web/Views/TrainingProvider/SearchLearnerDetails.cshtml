@@ -23,6 +23,10 @@
     </div>
     <div class="govuk-grid-column-two-thirds">
         <div class="learner-records">
+            @if (Model.Pagination.PagerInfo.TotalPages > 0)
+            {
+                <div class="govuk-body">@string.Format(Model.Pagination.PaginationSummary, @Model.Pagination.PagerInfo.RecordFrom, @Model.Pagination.PagerInfo.RecordTo, @Model.Pagination.PagerInfo.TotalItems)</div>
+            }
             <dl class="govuk-summary-list">
                 @if (Model.SearchLearnerDetailsList.SearchLearnerDetailsList.Count > 0)
                 {

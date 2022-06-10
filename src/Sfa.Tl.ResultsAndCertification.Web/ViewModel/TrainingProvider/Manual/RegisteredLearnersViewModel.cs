@@ -12,7 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public SearchCriteriaViewModel SearchCriteria { get; set; }
         public SearchLearnerDetailsListViewModel SearchLearnerDetailsList { get; set; }
 
-        //public PaginationModel Pagination { get; set; }
         public BreadcrumbModel Breadcrumb
         {
             get

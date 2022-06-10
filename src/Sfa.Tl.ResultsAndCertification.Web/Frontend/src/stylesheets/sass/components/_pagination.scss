@@ -1,38 +1,34 @@
-﻿.pagination .pagination__list-items {
-    text-align: center;
-}
-
-.pagination {
+﻿.pagination {
     padding: 0;
-}
 
-.pagination__item {
-    display: inline-block;
-    list-style: none;
-}
-
-.pagination__link {
-    display: block;
-    padding: 5px 10px;
-    text-decoration: none;
-
-    &:hover,
-    &:focus {
-        background: #F8F8F8;
-        outline: 3px solid #FFBF47;
+    &__item {
+        display: inline-block;
+        list-style: none;
     }
 
-    &.current {
-        color: #0B0C0C;
-        font-weight: 700;
-        border: none;
-        pointer-events: none;
-        cursor: default;
+    &__link {
+        display: block;
+        padding: 5px 10px;
+        text-decoration: none;
 
         &:hover,
         &:focus {
-            color: #0B0C0C;
-            background: none;
+            background: govuk-colour("light-grey");
+            outline: 3px solid $govuk-focus-colour;
+        }
+
+        &__current-page {
+            color: $govuk-text-colour;
+            font-weight: 700;
+            border: none;
+            pointer-events: none;
+            cursor: default;
+
+            &:hover,
+            &:focus {
+                color: $govuk-text-colour;
+                background: none;
+            }
         }
     }
 }
