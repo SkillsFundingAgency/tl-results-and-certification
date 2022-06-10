@@ -42,6 +42,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 {
                     new FilterLookupData { Id = 1, Name = "2020 to 2021", IsSelected = false },
                     new FilterLookupData { Id = 2, Name = "2021 to 2022", IsSelected = false }
+                },
+                Tlevels = new List<FilterLookupData>
+                {
+                    new FilterLookupData { Id = 1, Name = "Design, Survey and Planning", IsSelected = false },
+                    new FilterLookupData { Id = 2, Name = "Health", IsSelected = false }
                 }
             };
         }
@@ -65,6 +70,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             // Assert AcademicYears
             _actualResult.AcademicYears.Should().HaveCount(_mockApiResponse.AcademicYears.Count);
             _actualResult.AcademicYears.Should().BeEquivalentTo(_mockApiResponse.AcademicYears);
+
+            // Tlevels
+            _actualResult.Tlevels.Should().HaveCount(_mockApiResponse.Tlevels.Count);
+            _actualResult.Tlevels.Should().BeEquivalentTo(_mockApiResponse.Tlevels);
         }
     }
 }
