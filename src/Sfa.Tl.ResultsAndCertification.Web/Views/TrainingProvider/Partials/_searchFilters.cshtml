@@ -55,15 +55,17 @@
                     @SearchLearnerDetails.Filters_Incomplete
                 </legend>
                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                @foreach (var tlevel in Model?.SearchLearnerFilters?.Status?.Select((value, i) => (value, i)))
+                @foreach (var status in Model?.SearchLearnerFilters?.Status?.Select((value, i) => (value, i)))
                 {
-                    var elementId = (tlevel.i > 0) ? "selectedtstatus-" + tlevel.i : "selectedtstatus";
+                    var elementId = (status.i > 0) ? "selectedtstatus-" + status.i : "selectedtstatus";
                     <div class="govuk-checkboxes__item govuk-checkboxes--small">
-                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchLearnerFilters.Status[tlevel.i].IsSelected">
+                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchLearnerFilters.Status[status.i].IsSelected">
                         <label class="govuk-label govuk-checkboxes__label" for="@elementId">
-                            @tlevel.value.Name
+                            @status.value.Name
                         </label>
                     </div>
+                    <input type="hidden" asp-for="@Model.SearchLearnerFilters.Status[status.i].Id" />
+                    <input type="hidden" asp-for="@Model.SearchLearnerFilters.Status[status.i].Name" />
                 }
                 </div>
             </fieldset>
@@ -83,6 +85,8 @@
                                 @tlevel.value.Name
                             </label>
                         </div>
+                        <input type="hidden" asp-for="@Model.SearchLearnerFilters.Tlevels[@tlevel.i].Id" />
+                        <input type="hidden" asp-for="@Model.SearchLearnerFilters.Tlevels[@tlevel.i].Name" />
                     }
                 </div>
             </fieldset>
