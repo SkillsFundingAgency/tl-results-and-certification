@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             {
                 var expressions = new List<Expression<Func<TqRegistrationPathway, bool>>>();
 
-                foreach (var statusId in request.Statuses)
+                foreach (var statusId in request.Statuses.OrderBy(s => s))
                 {
                     switch (statusId)
                     {
