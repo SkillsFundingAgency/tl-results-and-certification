@@ -123,8 +123,8 @@
   <data name="Button_Back_To_Home" xml:space="preserve">
     <value>Back to home</value>
   </data>
-  <data name="Button_Search_Again" xml:space="preserve">
-    <value>Search again</value>
+  <data name="Button_Search_Learner_Records" xml:space="preserve">
+    <value>Search learner records</value>
   </data>
   <data name="Filters_Button_Apply_Filters" xml:space="preserve">
     <value>Apply filters</value>

@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
                     BreadcrumbItems = new List<BreadcrumbItem>
                     {
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Manage_Learner_Records, RouteName = RouteConstants.SearchLearnerRecord }
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Search_Learner_Records, RouteName = RouteConstants.SearchLearnerRecord }
                     }
                 };
             }

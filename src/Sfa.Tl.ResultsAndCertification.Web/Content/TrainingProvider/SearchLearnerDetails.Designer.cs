@@ -79,11 +79,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search again.
+        ///   Looks up a localized string similar to Search learner records.
         /// </summary>
-        public static string Button_Search_Again {
+        public static string Button_Search_Learner_Records {
             get {
-                return ResourceManager.GetString("Button_Search_Again", resourceCulture);
+                return ResourceManager.GetString("Button_Search_Learner_Records", resourceCulture);
             }
         }
         
