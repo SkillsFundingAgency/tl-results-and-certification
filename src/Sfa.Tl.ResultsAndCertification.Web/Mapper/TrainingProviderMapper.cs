@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using SearchLearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SearchLearnerDetails;
 
@@ -14,7 +15,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
         {
             CreateMap<PagedResponse<SearchLearnerDetail>, SearchLearnerDetailsListViewModel>()
                .ForMember(d => d.TotalRecords, opts => opts.MapFrom(s => s.TotalRecords))
-               .ForMember(d => d.SearchLearnerDetailsList, opts => opts.MapFrom(s => s.Records));
+               .ForMember(d => d.SearchLearnerDetailsList, opts => opts.MapFrom(s => s.Records))
+               .ForMember(d => d.PagerInfo, opts => opts.MapFrom(s => s.PagerInfo));
+
+            CreateMap<Pager, PagerViewModel>()
+                .ForMember(d => d.TotalItems, opts => opts.MapFrom(s => s.TotalItems))
+                .ForMember(d => d.CurrentPage, opts => opts.MapFrom(s => s.CurrentPage))
+                .ForMember(d => d.PageSize, opts => opts.MapFrom(s => s.PageSize))
+                .ForMember(d => d.TotalPages, opts => opts.MapFrom(s => s.TotalPages))
+                .ForMember(d => d.StartPage, opts => opts.MapFrom(s => s.StartPage))
+                .ForMember(d => d.RecordFrom, opts => opts.MapFrom(s => s.RecordFrom))
+                .ForMember(d => d.RecordTo, opts => opts.MapFrom(s => s.RecordTo));
 
             CreateMap<SearchLearnerDetail, SearchLearnerDetailsViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
@@ -49,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IndustryPlacementId, opts => opts.MapFrom(s => s.IndustryPlacementId))
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
 
-            CreateMap<LearnerRecordDetails, AddMathsStatusViewModel>()               
+            CreateMap<LearnerRecordDetails, AddMathsStatusViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
                .ForMember(d => d.SubjectStatus, opts => opts.MapFrom(s => s.IsMathsAchieved));

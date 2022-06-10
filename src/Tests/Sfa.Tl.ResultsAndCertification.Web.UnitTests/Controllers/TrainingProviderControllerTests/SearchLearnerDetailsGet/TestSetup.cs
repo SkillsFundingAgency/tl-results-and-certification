@@ -6,11 +6,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
     public abstract class TestSetup : TrainingProviderControllerTestBase
     {
         public int AcademicYear { get; set; }
+        public int? PageNumber { get; set; }
         public IActionResult Result { get; private set; }
 
         public async override Task When()
         {
-            Result = await Controller.SearchLearnerDetailsAsync(AcademicYear);
+            Result = await Controller.SearchLearnerDetailsAsync(AcademicYear, PageNumber);
         }
     }
 }

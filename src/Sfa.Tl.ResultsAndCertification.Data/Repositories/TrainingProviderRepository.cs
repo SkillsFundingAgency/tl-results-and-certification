@@ -31,6 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                              .Where(p => p.TqProvider.TlProvider.UkPrn == request.Ukprn && p.Status == RegistrationPathwayStatus.Active)
                                              .AsQueryable();
 
+            var totalCount = pathwayQueryable.Count();
+
             if (request.AcademicYear != null && request.AcademicYear.Any())
                 pathwayQueryable = pathwayQueryable.Where(p => request.AcademicYear.Contains(p.AcademicYear));
 
@@ -72,6 +74,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     pathwayQueryable = pathwayQueryable.Where(criteria);
             }
 
+            var filteredRecordsCount = await pathwayQueryable.CountAsync();
+
+            var pager = new Pager(filteredRecordsCount, request.PageNumber, 10);
+
             var learnerRecords = await pathwayQueryable
                 .Select(x => new SearchLearnerDetail
                 {
@@ -86,9 +92,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     IndustryPlacementStatus = x.IndustryPlacements.Any() ? x.IndustryPlacements.FirstOrDefault().Status : null
                 })
                 .OrderBy(x => x.Lastname)
+                .Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize)
                 .ToListAsync();
 
-            return new PagedResponse<SearchLearnerDetail> { Records = learnerRecords, TotalRecords = learnerRecords.Count };
+            return new PagedResponse<SearchLearnerDetail> { Records = learnerRecords, TotalRecords = totalCount, PagerInfo = pager };
         }
 
         public async Task<IList<FilterLookupData>> GetSearchAcademicYearFiltersAsync(DateTime searchDate)

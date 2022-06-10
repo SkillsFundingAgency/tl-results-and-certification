@@ -32,8 +32,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("manage-learners/{academicYear}", Name = RouteConstants.SearchLearnerDetails)]
-        public async Task<IActionResult> SearchLearnerDetailsAsync(int academicYear)
+        [Route("manage-learners/{academicYear}/{pageNumber:int?}", Name = RouteConstants.SearchLearnerDetails)]
+        public async Task<IActionResult> SearchLearnerDetailsAsync(int academicYear, int? pageNumber)
         {
             var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
 
@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (searchFilters == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var learnersList = await _trainingProviderLoader.SearchLearnerDetailsAsync(User.GetUkPrn(), academicYear, searchCriteria);
+            var learnersList = await _trainingProviderLoader.SearchLearnerDetailsAsync(User.GetUkPrn(), academicYear, pageNumber, searchCriteria);
 
             if (learnersList == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);

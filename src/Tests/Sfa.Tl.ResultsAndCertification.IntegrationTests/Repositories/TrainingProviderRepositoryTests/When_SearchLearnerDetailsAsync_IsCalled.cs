@@ -88,6 +88,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
                 ? _profiles.SelectMany(p => p.TqRegistrationPathways.Where(p => request.AcademicYear.Contains(p.AcademicYear) && p.TqProvider.TlProvider.UkPrn == request.Ukprn && (p.Status == RegistrationPathwayStatus.Active))).ToList()
                 : _profiles.SelectMany(p => p.TqRegistrationPathways.Where(p => p.TqProvider.TlProvider.UkPrn == request.Ukprn && (p.Status == RegistrationPathwayStatus.Active))).ToList();
 
+            var totalCount = _profiles.SelectMany(p => p.TqRegistrationPathways.Where(p => p.TqProvider.TlProvider.UkPrn == request.Ukprn && (p.Status == RegistrationPathwayStatus.Active))).Count();
+
             if (request.Tlevels != null && request.Tlevels.Any())
                 pathways = pathways.Where(p => request.Tlevels.Contains(p.TqProvider.TqAwardingOrganisation.TlPathway.Id)).ToList();
 
@@ -125,6 +127,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
                 pathways = pathways.AsQueryable().Where(criteria).ToList();
             }
 
+            var pager = new Pager(pathways.Count, request.PageNumber, 10);
+
             var expectedLearnerDeails = pathways.Select(x => new SearchLearnerDetail
             {
                 ProfileId = x.TqRegistrationProfile.Id,
@@ -140,8 +144,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
 
             var expectedPagedResponse = new PagedResponse<SearchLearnerDetail>
             {
-                TotalRecords = expectedLearnerDeails.Count(),
-                Records = expectedLearnerDeails
+                TotalRecords = totalCount,
+                Records = expectedLearnerDeails,
+                PagerInfo = pager
             };
 
             _actualResult.Should().BeEquivalentTo(expectedPagedResponse);

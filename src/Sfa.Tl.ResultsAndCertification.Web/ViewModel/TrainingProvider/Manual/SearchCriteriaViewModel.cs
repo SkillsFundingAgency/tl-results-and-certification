@@ -7,5 +7,6 @@
         public string SearchKey { get; set; }        
 
         public int AcademicYear { get; set; }
+        public int? PageNumber { get; set; }
     }
 }

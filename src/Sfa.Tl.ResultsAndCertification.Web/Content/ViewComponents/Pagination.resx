@@ -117,61 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Button_Apply_Filters" xml:space="preserve">
-    <value>Apply filters</value>
+  <data name="Left_Double_Arrow" xml:space="preserve">
+    <value>«</value>
   </data>
-  <data name="Button_Back_To_Home" xml:space="preserve">
-    <value>Back to home</value>
+  <data name="Next_Page" xml:space="preserve">
+    <value>Next page</value>
   </data>
-  <data name="Button_Search_Again" xml:space="preserve">
-    <value>Search again</value>
+  <data name="Previous_Page" xml:space="preserve">
+    <value>Previous page</value>
   </data>
-  <data name="Filters_Button_Apply_Filters" xml:space="preserve">
-    <value>Apply filters</value>
-  </data>
-  <data name="Filters_Clear_All" xml:space="preserve">
-    <value>Clear filters</value>
-  </data>
-  <data name="Filters_Heading" xml:space="preserve">
-    <value>Filters</value>
-  </data>
-  <data name="Filters_Incomplete" xml:space="preserve">
-    <value>Incomplete</value>
-  </data>
-  <data name="Filters_Selected_Filters" xml:space="preserve">
-    <value>Selected filters</value>
-  </data>
-  <data name="Filters_Start_Year" xml:space="preserve">
-    <value>Start year</value>
-  </data>
-  <data name="Filters_Tlevel" xml:space="preserve">
-    <value>T Level</value>
-  </data>
-  <data name="Heading_Registered_Learners" xml:space="preserve">
-    <value>Registered learners ({0})</value>
-  </data>
-  <data name="Hidden_Text_Course" xml:space="preserve">
-    <value>Course: </value>
-  </data>
-  <data name="Link_Add_English" xml:space="preserve">
-    <value>Add English level details</value>
-  </data>
-  <data name="Link_Add_Ip" xml:space="preserve">
-    <value>Add industry placement details</value>
-  </data>
-  <data name="Link_Add_Maths" xml:space="preserve">
-    <value>Add maths level details</value>
-  </data>
-  <data name="Page_Title" xml:space="preserve">
-    <value>Manage learners</value>
-  </data>
-  <data name="PaginationSummary_Text" xml:space="preserve">
-    <value>Viewing {0} - {1} of {2} learners</value>
-  </data>
-  <data name="Start_Year_Text" xml:space="preserve">
-    <value>Start year: </value>
-  </data>
-  <data name="Start_Year_Value" xml:space="preserve">
-    <value>{0} to {1}</value>
+  <data name="Right_Double_Arrow" xml:space="preserve">
+    <value>»</value>
   </data>
 </root>
