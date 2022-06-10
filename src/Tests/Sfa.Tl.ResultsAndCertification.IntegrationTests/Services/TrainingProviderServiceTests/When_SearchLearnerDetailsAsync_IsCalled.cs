@@ -121,7 +121,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                             break;
                         case 4:
                             expressions.Clear();
-                            expressions.Add(p => p.TqRegistrationProfile.EnglishStatus == null || p.TqRegistrationProfile.MathsStatus == null || !p.IndustryPlacements.Any());
+                            expressions.Add(p => p.TqRegistrationProfile.EnglishStatus == null && p.TqRegistrationProfile.MathsStatus == null && !p.IndustryPlacements.Any());
                             break;
                     }
                 }
@@ -147,7 +147,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 EnglishStatus = x.TqRegistrationProfile.EnglishStatus,
                 MathsStatus = x.TqRegistrationProfile.MathsStatus,
                 IndustryPlacementStatus = x.IndustryPlacements.Any() ? x.IndustryPlacements.FirstOrDefault().Status : null
-            }).OrderBy(x => x.Lastname).ToList();
+            }).OrderBy(x => x.Lastname)
+            .Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize)
+            .ToList();
 
             var expectedPagedResponse = new PagedResponse<SearchLearnerDetail>
             {
@@ -179,6 +181,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
                     new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.AllIncomplemented }, Tlevels = new List<int> { 1 }, Ukprn = (int)Provider.BarnsleyCollege } }, // Valid Tlevel filter
                     new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.AllIncomplemented }, Tlevels = new List<int> { 2 }, Ukprn = (int)Provider.BarnsleyCollege } }, // not Valid Tlevel filter
+
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, PageNumber = 1, Ukprn = (int)Provider.BarnsleyCollege } }, // Pagination
                 };
             }
         }

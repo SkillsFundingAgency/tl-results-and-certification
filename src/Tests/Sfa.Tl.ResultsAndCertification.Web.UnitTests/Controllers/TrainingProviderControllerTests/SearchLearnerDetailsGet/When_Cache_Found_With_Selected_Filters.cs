@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using SearchLearnerDetailContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SearchLearnerDetails;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.SearchLearnerDetailsGet
@@ -60,6 +61,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                         IsMathsAdded = true,
                         IsIndustryPlacementAdded = true
                     }
+                },
+                PagerInfo = new ViewModel.Common.PagerViewModel
+                {
+                    CurrentPage = 1,
+                    StartPage = 1,
+                    TotalPages = 1,
+                    PageSize = 10,
+                    RecordFrom = 1,
+                    RecordTo = 0,
+                    TotalItems = 1
                 }
             };
 
@@ -124,6 +135,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Home);
             model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Manage_Learner_Records);
             model.Breadcrumb.BreadcrumbItems[1].RouteName.Should().Be(RouteConstants.SearchLearnerRecord);
+
+            model.Pagination.Should().NotBeNull();
+            model.Pagination.PagerInfo.Should().BeEquivalentTo(_searchLearnersList.PagerInfo);
+            model.Pagination.PaginationSummary.Should().Be(SearchLearnerDetailContent.PaginationSummary_Text);
+            model.Pagination.RouteName.Should().Be(RouteConstants.SearchLearnerDetails);
+
+            model.Pagination.RouteAttributes.Count.Should().Be(1);
+            model.Pagination.RouteAttributes.TryGetValue(Constants.AcademicYear, out string routeValue);
+            routeValue.Should().Be(AcademicYear.ToString());
         }
     }
 }

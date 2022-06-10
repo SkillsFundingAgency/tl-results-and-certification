@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                             break;
                         case (int)LearnerStatusFilter.AllIncomplemented:
                             expressions.Clear();
-                            expressions.Add(p => p.TqRegistrationProfile.EnglishStatus == null || p.TqRegistrationProfile.MathsStatus == null || !p.IndustryPlacements.Any());
+                            expressions.Add(p => p.TqRegistrationProfile.EnglishStatus == null && p.TqRegistrationProfile.MathsStatus == null && !p.IndustryPlacements.Any());
                             break;
                     }
                 }

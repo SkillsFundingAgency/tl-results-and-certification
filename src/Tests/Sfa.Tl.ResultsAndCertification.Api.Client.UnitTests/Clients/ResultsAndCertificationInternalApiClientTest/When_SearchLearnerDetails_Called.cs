@@ -68,14 +68,17 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                         MathsStatus = null,
                         IndustryPlacementStatus = null
                     }
-                }
+                },
+                PagerInfo = new Pager(2, 1, 10)      
             };
 
             _apiRequest = new SearchLearnerRequest
             {
                 AcademicYear = new List<int> { 2020 },
                 Statuses = new List<int> { (int)LearnerStatusFilter.IndustryPlacementIncompleted },
-                Tlevels = new List<int> { 1, 2 }
+                Tlevels = new List<int> { 1, 2 },
+                PageNumber = 1,
+                Ukprn = 2568974
             };
         }
 

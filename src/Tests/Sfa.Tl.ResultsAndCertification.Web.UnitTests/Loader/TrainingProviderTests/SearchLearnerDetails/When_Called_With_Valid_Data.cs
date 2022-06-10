@@ -16,9 +16,36 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
 
         public override void Given()
         {
+            PageNumber = null;
+
+            SearchCriteriaViewModel = new ViewModel.TrainingProvider.Manual.SearchCriteriaViewModel
+            {
+                AcademicYear = 2020,
+                PageNumber = null,
+                SearchLearnerFilters = new ViewModel.TrainingProvider.Manual.SearchLearnerFiltersViewModel
+                {
+                    AcademicYears = new List<FilterLookupData>
+                    {
+                        new FilterLookupData { Id = 2020, Name = "2020 to 2021", IsSelected = true },
+                        new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false }
+                    },
+                    Status = new List<FilterLookupData>
+                    {
+                        new FilterLookupData { Id = 1, Name = "English", IsSelected = false },
+                        new FilterLookupData { Id = 2, Name = "Maths", IsSelected = true }
+                    },
+                    Tlevels = new List<FilterLookupData>
+                    {
+                        new FilterLookupData { Id = 1, Name = "Education", IsSelected = true },
+                        new FilterLookupData { Id = 2, Name = "Construction", IsSelected = true }
+                    },
+                    IsApplyFiltersSelected = true
+                }
+            };
+
             _expectedApiResult = new PagedResponse<SearchLearnerDetail>
             {
-                TotalRecords = 2,
+                TotalRecords = 10,
                 Records = new List<SearchLearnerDetail>
                 {
                     new SearchLearnerDetail
@@ -45,7 +72,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                         MathsStatus = null,
                         IndustryPlacementStatus = null
                     }
-                }
+                },
+                PagerInfo = new Pager(2, 1, 10)
             };
 
             InternalApiClient.SearchLearnerDetailsAsync(Arg.Any<SearchLearnerRequest>()).Returns(_expectedApiResult);
@@ -57,6 +85,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             ActualResult.Should().NotBeNull();
             ActualResult.TotalRecords.Should().Be(_expectedApiResult.TotalRecords);
             ActualResult.SearchLearnerDetailsList.Count.Should().Be(2);
+
+            ActualResult.PagerInfo.Should().BeEquivalentTo(_expectedApiResult.PagerInfo);
 
             ActualResult.SearchLearnerDetailsList[0].ProfileId.Should().Be(_expectedApiResult.Records[0].ProfileId);
             ActualResult.SearchLearnerDetailsList[0].LearnerName.Should().Be(_expectedApiResult.Records[0].Firstname + " " + _expectedApiResult.Records[0].Lastname);
