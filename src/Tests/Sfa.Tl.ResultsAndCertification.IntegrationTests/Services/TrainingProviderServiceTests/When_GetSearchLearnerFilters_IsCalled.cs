@@ -18,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
     {
         private SearchLearnerFilters _actualResult;
         private IList<FilterLookupData> _mockAcademicYears;
+        private IList<FilterLookupData> _mockTlevels;
 
         public override void Given()
         {
@@ -32,6 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             // Mock data 
             _mockAcademicYears = new List<FilterLookupData> { new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false }, new FilterLookupData { Id = 2022, Name = "2022 to 2023", IsSelected = false } };
             TrainingProviderRepository.GetSearchAcademicYearFiltersAsync(Arg.Any<DateTime>()).Returns(_mockAcademicYears);
+
+            _mockTlevels = new List<FilterLookupData> { new FilterLookupData { Id = 1, Name = "Design, Survey and Planning", IsSelected = false }, new FilterLookupData { Id = 2, Name = "Health", IsSelected = false } };
+            TrainingProviderRepository.GetSearchTlevelFiltersAsync().Returns(_mockTlevels);
         }
 
         public override Task When()
@@ -54,6 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
             _actualResult.Should().NotBeNull();
             _actualResult.AcademicYears.Should().BeEquivalentTo(_mockAcademicYears);
+            _actualResult.Tlevels.Should().BeEquivalentTo(_mockTlevels);
         }
     }
 }
