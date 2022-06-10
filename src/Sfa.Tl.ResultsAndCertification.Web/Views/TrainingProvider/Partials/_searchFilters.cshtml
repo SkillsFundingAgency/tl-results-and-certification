@@ -52,7 +52,7 @@
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                    Incomplete
+                    @SearchLearnerDetails.Filters_Incomplete
                 </legend>
                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                 @foreach (var tlevel in Model?.SearchLearnerFilters?.Status?.Select((value, i) => (value, i)))
