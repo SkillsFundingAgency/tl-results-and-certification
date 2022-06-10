@@ -975,6 +975,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Breadcrumb.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\ViewComponents\Pagination.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Pagination.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 
@@ -1738,6 +1743,10 @@
     <EmbeddedResource Update="Content\ViewComponents\Breadcrumb.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Breadcrumb.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\ViewComponents\Pagination.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Pagination.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

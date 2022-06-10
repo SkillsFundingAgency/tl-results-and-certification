@@ -214,6 +214,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Viewing {0} - {1} of {2} learners.
+        /// </summary>
+        public static string PaginationSummary_Text {
+            get {
+                return ResourceManager.GetString("PaginationSummary_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start year: .
         /// </summary>
         public static string Start_Year_Text {

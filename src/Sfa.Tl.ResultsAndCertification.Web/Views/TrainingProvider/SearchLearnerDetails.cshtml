@@ -29,7 +29,7 @@
                     @foreach (var learner in Model.SearchLearnerDetailsList.SearchLearnerDetailsList)
                     {
                         <partial name="Partials/_learnerDetailsCard.cshtml" model="learner" />
-                    }
+                    }                    
                 }
                 else
                 {
@@ -37,6 +37,7 @@
                 }
             </dl>
         </div>
+        <vc:pagination model=@Model.Pagination></vc:pagination>
         <div class="govuk-button-group govuk-!-margin-bottom-6">
             <a id="searchAgainButton" class="govuk-button" role="button" asp-route="@RouteConstants.SearchLearnerRecord">@SearchLearnerDetails.Button_Search_Again</a>
             <a id="backToHomeButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.Home">@SearchLearnerDetails.Button_Back_To_Home</a>

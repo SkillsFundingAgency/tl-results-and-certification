@@ -8,5 +8,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         public IList<int> Statuses { get; set; }
         public IList<int> Tlevels { get; set; }
         public long Ukprn { get; set; }
+        public int? PageNumber { get; set; }
     }
 }

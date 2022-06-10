@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
@@ -10,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         }
 
         public IList<SearchLearnerDetailsViewModel> SearchLearnerDetailsList;
+        public PagerViewModel PagerInfo { get; set; }
         public int TotalRecords { get; set; }
     }
 }
