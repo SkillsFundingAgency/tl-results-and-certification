@@ -7,15 +7,13 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.Common
         public Pager(int totalItems, int? currentPage, int pageSize)
         {
             var totalPages = (int)Math.Ceiling(totalItems / (decimal)pageSize);
-            var currentPageNumber = currentPage != null ? (int)currentPage : 1;
+            var currentPageNumber = currentPage != null && currentPage > 0 ? (int)currentPage : 1;
             var startPage = 1;
 
-            if (currentPageNumber > totalPages)
+            if (totalPages > 0 && currentPageNumber > totalPages)
                 currentPageNumber = totalPages;
 
             var currentPageItemsCount = currentPageNumber * pageSize;
-            //var showingRecordFrom = currentPage <= 1 ? 1 : ((currentPage - 1) * pageSize) + 1;
-            //var showingRecordTo = currentPageItemsCount > totalItems ? totalItems : currentPageItemsCount;
 
             TotalItems = totalItems;
             CurrentPage = currentPageNumber;

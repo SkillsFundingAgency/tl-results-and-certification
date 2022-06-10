@@ -28,7 +28,7 @@
             @for (var pageNumber = @pagerStartPage; pageNumber <= @pagerEndPage; pageNumber++)
             {
                 <li class="pagination__item">
-                    <a class="govuk-link pagination__link @(pageNumber == Model.PagerInfo.CurrentPage ? "pagination__link__current-page govuk-!-font-weight-bold" : "")" asp-route="@Model.RouteName" asp-all-route-data="@Model.RouteAttributes" asp-route-pageNumber="@pageNumber">@pageNumber</a>
+                    <a class="pagination__link @(pageNumber == Model.PagerInfo.CurrentPage ? "pagination__link__current-page govuk-!-font-weight-bold" : "govuk-link")" asp-route="@Model.RouteName" asp-all-route-data="@Model.RouteAttributes" asp-route-pageNumber="@pageNumber">@pageNumber</a>
                 </li>
             }
 
