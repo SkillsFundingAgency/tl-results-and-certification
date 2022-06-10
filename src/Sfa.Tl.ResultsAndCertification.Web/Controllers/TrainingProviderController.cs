@@ -191,7 +191,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         #region Update-Learner
 
         [HttpGet]
-        [Route("search-learner-record-unique-learner-number", Name = RouteConstants.SearchLearnerRecord)]
+        [Route("search-learner-records", Name = RouteConstants.SearchLearnerRecord)]
         public async Task<IActionResult> SearchLearnerRecordAsync()
         {
             await _cacheService.RemoveAsync<SearchCriteriaViewModel>(CacheKey);
@@ -201,7 +201,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("search-learner-record-unique-learner-number", Name = RouteConstants.SubmitSearchLearnerRecord)]
+        [Route("search-learner-records", Name = RouteConstants.SubmitSearchLearnerRecord)]
         public async Task<IActionResult> SearchLearnerRecordAsync(SearchLearnerRecordViewModel model)
         {
             // Note: Please note this is intrim search page, we have another stories coming up will replace this method. 
