@@ -135,19 +135,16 @@
   <data name="Filters_Heading" xml:space="preserve">
     <value>Filters</value>
   </data>
+  <data name="Filters_Incomplete" xml:space="preserve">
+    <value>Incomplete</value>
+  </data>
   <data name="Filters_Selected_Filters" xml:space="preserve">
     <value>Selected filters</value>
   </data>
-  <data name="Filters_Tlevel" xml:space="preserve">
-    <value>T Level</value>
-  </data>
-  <data name="Filter_Incomplete" xml:space="preserve">
-    <value>Incomplete</value>
-  </data>
-  <data name="Filter_Start_Year" xml:space="preserve">
+  <data name="Filters_Start_Year" xml:space="preserve">
     <value>Start year</value>
   </data>
-  <data name="Filter_Tlevel" xml:space="preserve">
+  <data name="Filters_Tlevel" xml:space="preserve">
     <value>T Level</value>
   </data>
   <data name="Heading_Registered_Learners" xml:space="preserve">

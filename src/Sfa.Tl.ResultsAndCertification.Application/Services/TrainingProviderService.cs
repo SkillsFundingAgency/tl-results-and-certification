@@ -1,12 +1,14 @@
 ﻿using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,10 +31,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<SearchLearnerFilters> GetSearchLearnerFiltersAsync(long providerUkprn)
         {
+            var statusFiltersList = new List<FilterLookupData>();
+            foreach (var status in EnumExtensions.GetEnumDisplayNameAndValue<SearchLearnerFilterStatus>())
+                statusFiltersList.Add(new FilterLookupData { Id = (int)status.Key, Name = status.Value, IsSelected = false });
+
             return new SearchLearnerFilters
             {
                 AcademicYears = await _trainingProviderRepository.GetSearchAcademicYearFiltersAsync(DateTime.UtcNow),
-                Tlevels = await _trainingProviderRepository.GetSearchTlevelFiltersAsync()
+                Tlevels = await _trainingProviderRepository.GetSearchTlevelFiltersAsync(),
+                Status = statusFiltersList
             };
         }
 
@@ -73,8 +80,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             profile.ModifiedOn = DateTime.UtcNow;
             profile.ModifiedBy = request.PerformedBy;
-            
+
             return await _tqRegistrationProfile.UpdateAsync(profile) > 0;
         }
+
+
     }
 }

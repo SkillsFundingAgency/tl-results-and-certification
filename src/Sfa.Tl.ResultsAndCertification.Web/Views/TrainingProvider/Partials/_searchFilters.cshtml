@@ -52,33 +52,19 @@
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                    Incomplete
+                    @SearchLearnerDetails.Filters_Incomplete
                 </legend>
                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                @foreach (var tlevel in Model?.SearchLearnerFilters?.Status?.Select((value, i) => (value, i)))
+                {
+                    var elementId = (tlevel.i > 0) ? "selectedtstatus-" + tlevel.i : "selectedtstatus";
                     <div class="govuk-checkboxes__item govuk-checkboxes--small">
-                        <input class="govuk-checkboxes__input" id="english-level" name="status" type="checkbox" value="English">
-                        <label class="govuk-label govuk-checkboxes__label" for="english-level">
-                            English level
+                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchLearnerFilters.Status[tlevel.i].IsSelected">
+                        <label class="govuk-label govuk-checkboxes__label" for="@elementId">
+                            @tlevel.value.Name
                         </label>
                     </div>
-                    <div class="govuk-checkboxes__item govuk-checkboxes--small">
-                        <input class="govuk-checkboxes__input" id="maths-level" name="status" type="checkbox" value="Maths">
-                        <label class="govuk-label govuk-checkboxes__label" for="maths-level">
-                            Maths level
-                        </label>
-                    </div>
-                    <div class="govuk-checkboxes__item govuk-checkboxes--small">
-                        <input class="govuk-checkboxes__input" id="industry-placement" name="status" type="checkbox" value="Industry placement">
-                        <label class="govuk-label govuk-checkboxes__label" for="industry-placement">
-                            Industry placement
-                        </label>
-                    </div>
-                    <div class="govuk-checkboxes__item govuk-checkboxes--small">
-                        <input class="govuk-checkboxes__input" id="all-incomplete" name="status" type="checkbox" value="All incomplete">
-                        <label class="govuk-label govuk-checkboxes__label" for="all-incomplete">
-                            All incomplete records
-                        </label>
-                    </div>
+                }
                 </div>
             </fieldset>
         </div>
