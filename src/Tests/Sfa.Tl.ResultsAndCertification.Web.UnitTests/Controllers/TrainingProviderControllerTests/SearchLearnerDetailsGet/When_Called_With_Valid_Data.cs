@@ -14,12 +14,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
+        private SearchCriteriaViewModel _searchCriteria;
         private SearchLearnerFiltersViewModel _searchFilters;
         private SearchLearnerDetailsListViewModel _searchLearnersList;
 
         public override void Given()
         {
             AcademicYear = 2020;
+            _searchCriteria = null;
 
             _searchFilters = new SearchLearnerFiltersViewModel
             {
@@ -54,14 +56,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                     }
                 }
             };
-            TrainingProviderLoader.SearchLearnerDetailsAsync(ProviderUkprn, AcademicYear).Returns(_searchLearnersList);
+
+            CacheService.GetAsync<SearchCriteriaViewModel>(CacheKey).Returns(_searchCriteria);
+
+            _searchCriteria = new SearchCriteriaViewModel
+            {
+                AcademicYear = AcademicYear,
+                PageNumber = PageNumber,
+                SearchLearnerFilters = null
+            };
+                        
+            TrainingProviderLoader.SearchLearnerDetailsAsync(ProviderUkprn, Arg.Is<SearchCriteriaViewModel>(x => x.AcademicYear == _searchCriteria.AcademicYear && x.PageNumber == _searchCriteria.PageNumber && x.IsSearchKeyApplied == _searchCriteria.IsSearchKeyApplied)).Returns(_searchLearnersList);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
+            CacheService.Received(1).GetAsync<SearchCriteriaViewModel>(CacheKey);
             TrainingProviderLoader.Received(1).GetSearchLearnerFiltersAsync(ProviderUkprn);
-            TrainingProviderLoader.Received(1).SearchLearnerDetailsAsync(ProviderUkprn, AcademicYear);
+            TrainingProviderLoader.Received(1).SearchLearnerDetailsAsync(ProviderUkprn, Arg.Is<SearchCriteriaViewModel>(x => x.AcademicYear == _searchCriteria.AcademicYear && x.PageNumber == _searchCriteria.PageNumber && x.IsSearchKeyApplied == _searchCriteria.IsSearchKeyApplied));
         }
 
         [Fact]

@@ -7,6 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         public IList<int> AcademicYear { get; set; }
         public IList<int> Statuses { get; set; }
         public IList<int> Tlevels { get; set; }
+        public string SearchKey { get; set; }
         public long Ukprn { get; set; }
         public int? PageNumber { get; set; }
     }

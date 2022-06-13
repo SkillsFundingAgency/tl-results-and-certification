@@ -33,6 +33,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
             var totalCount = pathwayQueryable.Count();
 
+            if(!string.IsNullOrWhiteSpace(request.SearchKey))
+            {
+                pathwayQueryable = request.SearchKey.IsLong()
+                    ? pathwayQueryable.Where(p => p.TqRegistrationProfile.UniqueLearnerNumber == request.SearchKey.ToLong())
+                    : pathwayQueryable.Where(p => EF.Functions.Like(p.TqRegistrationProfile.Lastname, $"{request.SearchKey.ToLower()}"));
+            }
+
             if (request.AcademicYear != null && request.AcademicYear.Any())
                 pathwayQueryable = pathwayQueryable.Where(p => request.AcademicYear.Contains(p.AcademicYear));
 

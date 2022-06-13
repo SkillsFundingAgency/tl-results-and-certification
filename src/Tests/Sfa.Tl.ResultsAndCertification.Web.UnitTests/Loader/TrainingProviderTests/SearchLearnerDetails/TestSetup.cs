@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
 
         public async override Task When()
         {
-            ActualResult = await Loader.SearchLearnerDetailsAsync(ProviderUkprn, AcademicYear, PageNumber, SearchCriteriaViewModel);
+            ActualResult = await Loader.SearchLearnerDetailsAsync(ProviderUkprn, SearchCriteriaViewModel);
         }
     }
 }

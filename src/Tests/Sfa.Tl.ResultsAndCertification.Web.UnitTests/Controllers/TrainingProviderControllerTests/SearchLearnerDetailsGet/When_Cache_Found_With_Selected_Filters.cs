@@ -76,9 +76,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             _expectedSelectedFilters = new List<string> { "2020 to 2021", "Maths", "Education", "Construction" };
 
-            _searchCriteria = new SearchCriteriaViewModel { SearchLearnerFilters = _searchFilters, AcademicYear = AcademicYear };
+            _searchCriteria = new SearchCriteriaViewModel { SearchLearnerFilters = _searchFilters, AcademicYear = AcademicYear, PageNumber = PageNumber };
             CacheService.GetAsync<SearchCriteriaViewModel>(CacheKey).Returns(_searchCriteria);
-            TrainingProviderLoader.SearchLearnerDetailsAsync(ProviderUkprn, AcademicYear, PageNumber, _searchCriteria).Returns(_searchLearnersList);
+            TrainingProviderLoader.SearchLearnerDetailsAsync(ProviderUkprn, _searchCriteria).Returns(_searchLearnersList);
         }
 
         [Fact]
@@ -86,7 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         {
             CacheService.Received(1).GetAsync<SearchCriteriaViewModel>(CacheKey);
             TrainingProviderLoader.DidNotReceive().GetSearchLearnerFiltersAsync(ProviderUkprn);
-            TrainingProviderLoader.Received(1).SearchLearnerDetailsAsync(ProviderUkprn, AcademicYear, PageNumber, _searchCriteria);
+            TrainingProviderLoader.Received(1).SearchLearnerDetailsAsync(ProviderUkprn, _searchCriteria);
         }
 
         [Fact]

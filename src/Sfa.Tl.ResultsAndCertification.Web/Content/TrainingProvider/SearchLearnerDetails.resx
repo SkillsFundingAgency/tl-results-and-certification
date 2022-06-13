@@ -123,8 +123,14 @@
   <data name="Button_Back_To_Home" xml:space="preserve">
     <value>Back to home</value>
   </data>
+  <data name="Button_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
   <data name="Button_Search_Learner_Records" xml:space="preserve">
     <value>Search learner records</value>
+  </data>
+  <data name="Clear_Search" xml:space="preserve">
+    <value>Clear search</value>
   </data>
   <data name="Filters_Button_Apply_Filters" xml:space="preserve">
     <value>Apply filters</value>
@@ -167,6 +173,9 @@
   </data>
   <data name="PaginationSummary_Text" xml:space="preserve">
     <value>Viewing {0} - {1} of {2} learners</value>
+  </data>
+  <data name="Search_By_Learner_Lastname_Or_Uln" xml:space="preserve">
+    <value>Search by learner last name or ULN</value>
   </data>
   <data name="Start_Year_Text" xml:space="preserve">
     <value>Start year: </value>
