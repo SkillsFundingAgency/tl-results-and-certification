@@ -32,6 +32,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 {
                     new FilterLookupData { Id = 1, Name = "Design, Survey and Planning", IsSelected = false }, 
                     new FilterLookupData { Id = 2, Name = "Health", IsSelected = false }
+                },
+                Status = new List<FilterLookupData>
+                {
+                    new FilterLookupData { Id = 1, Name = "English level", IsSelected = false },
+                    new FilterLookupData { Id = 2, Name = "Maths level", IsSelected = false },
+                    new FilterLookupData { Id = 3, Name = "Industry placement", IsSelected = false },
+                    new FilterLookupData { Id = 4, Name = "All incomplete records", IsSelected = false }
                 }
             };
             TrainingProviderLoader.GetSearchLearnerFiltersAsync(ProviderUkprn).Returns(_searchFilters);
@@ -75,13 +82,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             var searchFilters = model.SearchCriteria.SearchLearnerFilters;
             searchFilters.Should().NotBeNull();
+            
+            // Academic Year
             searchFilters.AcademicYears.Should().NotBeNull();
             searchFilters.AcademicYears.Should().HaveCount(_searchFilters.AcademicYears.Count);
             searchFilters.AcademicYears.Should().BeEquivalentTo(_searchFilters.AcademicYears);
 
+            // Tlevels
             searchFilters.Tlevels.Should().NotBeNull();
             searchFilters.Tlevels.Should().HaveCount(_searchFilters.Tlevels.Count);
             searchFilters.Tlevels.Should().BeEquivalentTo(_searchFilters.Tlevels);
+
+            // Status
+            searchFilters.Status.Should().NotBeNull();
+            searchFilters.Status.Should().HaveCount(_searchFilters.Status.Count);
+            searchFilters.Status.Should().BeEquivalentTo(_searchFilters.Status);
 
             model.SearchLearnerDetailsList.TotalRecords.Should().Be(_searchLearnersList.TotalRecords);
             model.SearchLearnerDetailsList.SearchLearnerDetailsList.Count.Should().Be(1);
