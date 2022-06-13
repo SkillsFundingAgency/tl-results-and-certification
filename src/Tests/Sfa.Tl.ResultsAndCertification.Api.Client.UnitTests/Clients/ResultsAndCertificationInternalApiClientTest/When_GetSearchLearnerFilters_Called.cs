@@ -47,6 +47,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 {
                     new FilterLookupData { Id = 1, Name = "Design, Survey and Planning", IsSelected = false },
                     new FilterLookupData { Id = 2, Name = "Health", IsSelected = false }
+                },
+                Status = new List<FilterLookupData>
+                {
+                    new FilterLookupData { Id = 1, Name = "English level", IsSelected = false },
+                    new FilterLookupData { Id = 2, Name = "Maths level", IsSelected = false },
+                    new FilterLookupData { Id = 3, Name = "Industry placement", IsSelected = false },
+                    new FilterLookupData { Id = 4, Name = "All incomplete records", IsSelected = false }
                 }
             };
         }
@@ -74,6 +81,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             // Tlevels
             _actualResult.Tlevels.Should().HaveCount(_mockApiResponse.Tlevels.Count);
             _actualResult.Tlevels.Should().BeEquivalentTo(_mockApiResponse.Tlevels);
+
+            // Status
+            _actualResult.Status.Should().HaveCount(_mockApiResponse.Status.Count);
+            _actualResult.Status.Should().BeEquivalentTo(_mockApiResponse.Status);
         }
     }
 }
