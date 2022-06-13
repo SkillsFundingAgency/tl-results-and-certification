@@ -55,9 +55,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var learnersList = await _trainingProviderLoader.SearchLearnerDetailsAsync(User.GetUkPrn(), searchCriteria);
 
-            //if (learnersList == null)
-            //    return RedirectToRoute(RouteConstants.PageNotFound);
-
             if (searchCriteria.SearchLearnerFilters == null)
                 searchCriteria.SearchLearnerFilters = searchFilters;
 

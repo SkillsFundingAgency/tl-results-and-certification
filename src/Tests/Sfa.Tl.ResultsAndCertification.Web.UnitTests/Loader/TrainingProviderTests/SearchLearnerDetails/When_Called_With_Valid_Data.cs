@@ -40,7 +40,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                         new FilterLookupData { Id = 2, Name = "Construction", IsSelected = true }
                     },
                     IsApplyFiltersSelected = true
-                }
+                },
+                SearchKey = "Smith",
+                IsSearchKeyApplied = true
             };
 
             _expectedApiResult = new PagedResponse<SearchLearnerDetail>

@@ -7,11 +7,10 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.SubmitSearchLearnerApplyFilters
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.SearchLearnerDetailsPost
 {
     public class When_Called : TestSetup
     {
-        private SearchCriteriaViewModel _searchCriteria;
         private SearchLearnerFiltersViewModel _searchFilters;
         private int _academicYear;
 
@@ -25,16 +24,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                     new FilterLookupData { Id = 2020, Name = "2020 to 2021", IsSelected = true },
                     new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false }
                 },
-                IsApplyFiltersSelected = true
+                IsApplyFiltersSelected = false
             };
 
-            SearchCriteriaViewModel = new SearchCriteriaViewModel { SearchLearnerFilters = _searchFilters, AcademicYear = _academicYear };
+            SearchCriteriaViewModel = new SearchCriteriaViewModel { SearchLearnerFilters = _searchFilters, AcademicYear = _academicYear, SearchKey = "test" };
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            CacheService.Received(1).SetAsync(CacheKey, Arg.Any<SearchCriteriaViewModel>());
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<SearchCriteriaViewModel>(x => x.AcademicYear == _academicYear && x.SearchKey == "test" && x.IsSearchKeyApplied == true));
         }
 
         [Fact]
