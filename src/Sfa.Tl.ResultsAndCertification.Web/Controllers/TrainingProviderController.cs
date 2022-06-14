@@ -71,6 +71,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("manage-learners/{academicYear}", Name = RouteConstants.SubmitSearchLearnerDetails)]
         public async Task<IActionResult> SearchLearnerDetailsAsync(SearchCriteriaViewModel viewModel)
         {
+            var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
+
+            // populate if any filter are applied from cache
+            if(searchCriteria != null)
+                viewModel.SearchLearnerFilters = searchCriteria.SearchLearnerFilters;
+
             viewModel.IsSearchKeyApplied = true;
             await _cacheService.SetAsync(CacheKey, viewModel);
             return RedirectToRoute(RouteConstants.SearchLearnerDetails, new { academicYear = viewModel.AcademicYear });
@@ -96,6 +102,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("manage-learners-applyfilters", Name = RouteConstants.SubmitSearchLearnerApplyFilters)]
         public async Task<IActionResult> SubmitSearchLearnerApplyFiltersAsync(SearchCriteriaViewModel viewModel)
         {
+            var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
+
+            // populate searchKey and IsSerchKeyApplied from cache
+            if (searchCriteria != null)
+            {
+                viewModel.SearchKey = searchCriteria.SearchKey;
+                viewModel.IsSearchKeyApplied = searchCriteria.IsSearchKeyApplied;
+            }
+
             viewModel.SearchLearnerFilters.IsApplyFiltersSelected = true;
             await _cacheService.SetAsync(CacheKey, viewModel);
             return RedirectToRoute(RouteConstants.SearchLearnerDetails, new { academicYear = viewModel.AcademicYear });
