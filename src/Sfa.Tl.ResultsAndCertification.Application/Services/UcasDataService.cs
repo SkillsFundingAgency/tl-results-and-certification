@@ -42,14 +42,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 // Add Specialisms
                 foreach (var specialism in pathway.TqRegistrationSpecialisms)
                 {
-                    foreach (var assessment in specialism.TqSpecialismAssessments)
-                        ucasDataComponents.Add(new UcasDataComponent
-                        {
-                            SubjectCode = specialism.TlSpecialism.LarId,
-                            Grade = string.Empty, // TODO: need to be implmented once Occupations Specialisms is implemented.
-                            PreviousGrade = string.Empty
-                            // Dev note: above PreviousGrade will be empty if UcasDataType is Entries or Results. This need to be populated as part of 'Amendments'
-                        });
+                    var ucasSpecialismComponent = GetSpecialismComponentData(includeResults, specialism);
+                    if (ucasSpecialismComponent != null)
+                        ucasDataComponents.Add(ucasSpecialismComponent);
                 }
 
                 if (ucasDataComponents.Any())
@@ -134,6 +129,24 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 SubjectCode = pathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                 Grade = pathwayHigherResult != null ? pathwayHigherResult.TlLookup.Value : string.Empty,
+                PreviousGrade = string.Empty
+            };
+        }
+
+
+        private static UcasDataComponent GetSpecialismComponentData(bool includeResults, TqRegistrationSpecialism specialism)
+        {
+            if (!specialism.TqSpecialismAssessments.Any())
+                return null;
+
+            TqSpecialismResult specialismHigherResult = null;
+            if (includeResults)
+                specialismHigherResult = specialism.TqSpecialismAssessments.SelectMany(x => x.TqSpecialismResults).OrderBy(x => x.TlLookup.SortOrder).FirstOrDefault();
+
+            return new UcasDataComponent
+            {
+                SubjectCode = specialism.TlSpecialism.LarId,
+                Grade = specialismHigherResult != null ? specialismHigherResult.TlLookup.Value : string.Empty,
                 PreviousGrade = string.Empty
             };
         }
