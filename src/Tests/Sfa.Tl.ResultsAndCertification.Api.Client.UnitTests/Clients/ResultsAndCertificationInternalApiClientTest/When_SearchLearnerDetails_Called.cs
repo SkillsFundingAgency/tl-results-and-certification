@@ -77,6 +77,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 AcademicYear = new List<int> { 2020 },
                 Statuses = new List<int> { (int)LearnerStatusFilter.IndustryPlacementIncompleted },
                 Tlevels = new List<int> { 1, 2 },
+                SearchKey = "Smith1",
                 PageNumber = 1,
                 Ukprn = 2568974
             };

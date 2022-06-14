@@ -20,13 +20,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _mapper = mapper;
         }
 
-        public async Task<SearchLearnerDetailsListViewModel> SearchLearnerDetailsAsync(long providerUkprn, int academicYear, int? pageNumber = null, SearchCriteriaViewModel searchCriteriaViewModel = null)
+        public async Task<SearchLearnerDetailsListViewModel> SearchLearnerDetailsAsync(long providerUkprn, SearchCriteriaViewModel searchCriteriaViewModel)
         {
             var apiRequest = new SearchLearnerRequest
             {
                 Ukprn = providerUkprn,
-                PageNumber = pageNumber,
-                AcademicYear = new List<int> { academicYear },
+                PageNumber = searchCriteriaViewModel?.PageNumber,
+                SearchKey = searchCriteriaViewModel?.SearchKey,
+                AcademicYear = new List<int> { searchCriteriaViewModel?.AcademicYear ?? 0 },
                 Statuses = searchCriteriaViewModel?.SearchLearnerFilters?.Status?.Where(a => a.IsSelected)?.Select(a => a.Id)?.ToList() ?? new List<int>(),
                 Tlevels = searchCriteriaViewModel?.SearchLearnerFilters?.Tlevels?.Where(a => a.IsSelected)?.Select(a => a.Id)?.ToList() ?? new List<int>(),
             };

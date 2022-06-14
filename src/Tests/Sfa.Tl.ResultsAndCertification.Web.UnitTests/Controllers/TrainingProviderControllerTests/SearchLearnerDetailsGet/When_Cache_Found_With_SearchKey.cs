@@ -12,7 +12,7 @@ using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewCompone
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.SearchLearnerDetailsGet
 {
-    public class When_Cache_Found_With_Selected_Filters : TestSetup
+    public class When_Cache_Found_With_SearchKey : TestSetup
     {
         private SearchCriteriaViewModel _searchCriteria;
         private SearchLearnerFiltersViewModel _searchFilters;
@@ -76,7 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             _expectedSelectedFilters = new List<string> { "2020 to 2021", "Maths", "Education", "Construction" };
 
-            _searchCriteria = new SearchCriteriaViewModel { SearchLearnerFilters = _searchFilters, AcademicYear = AcademicYear, PageNumber = PageNumber };
+            _searchCriteria = new SearchCriteriaViewModel { SearchLearnerFilters = _searchFilters, AcademicYear = AcademicYear, PageNumber = PageNumber, SearchKey = "Smith", IsSearchKeyApplied = true };
             CacheService.GetAsync<SearchCriteriaViewModel>(CacheKey).Returns(_searchCriteria);
             TrainingProviderLoader.SearchLearnerDetailsAsync(ProviderUkprn, _searchCriteria).Returns(_searchLearnersList);
         }
@@ -114,6 +114,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             searchFilters.IsApplyFiltersSelected.Should().BeTrue();
             searchFilters.SelectedFilters.Should().BeEquivalentTo(_expectedSelectedFilters);
+
+            model.SearchCriteria.SearchKey.Should().Be("Smith");
+            model.SearchCriteria.IsSearchKeyApplied.Should().BeTrue();
 
             model.SearchLearnerDetailsList.TotalRecords.Should().Be(_searchLearnersList.TotalRecords);
             model.SearchLearnerDetailsList.SearchLearnerDetailsList.Count.Should().Be(1);

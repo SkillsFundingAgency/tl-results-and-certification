@@ -45,3 +45,17 @@
     padding: 5px;
     text-decoration: none;
 }
+
+@media only screen and (max-width: 810px) {
+    .learner-search__input {
+        width: auto;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .learner-search__input {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 10px;
+    }
+}

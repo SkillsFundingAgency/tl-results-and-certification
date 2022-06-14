@@ -79,11 +79,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Button_Search {
+            get {
+                return ResourceManager.GetString("Button_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search learner records.
         /// </summary>
         public static string Button_Search_Learner_Records {
             get {
                 return ResourceManager.GetString("Button_Search_Learner_Records", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear search.
+        /// </summary>
+        public static string Clear_Search {
+            get {
+                return ResourceManager.GetString("Clear_Search", resourceCulture);
             }
         }
         
@@ -210,6 +228,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string PaginationSummary_Text {
             get {
                 return ResourceManager.GetString("PaginationSummary_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search by learner last name or ULN.
+        /// </summary>
+        public static string Search_By_Learner_Lastname_Or_Uln {
+            get {
+                return ResourceManager.GetString("Search_By_Learner_Lastname_Or_Uln", resourceCulture);
             }
         }
         

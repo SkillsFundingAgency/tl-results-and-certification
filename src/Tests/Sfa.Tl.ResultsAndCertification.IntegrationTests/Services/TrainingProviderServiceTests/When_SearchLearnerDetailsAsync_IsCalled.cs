@@ -97,6 +97,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
             var totalCount = _profiles.SelectMany(p => p.TqRegistrationPathways.Where(p => p.TqProvider.TlProvider.UkPrn == request.Ukprn && (p.Status == RegistrationPathwayStatus.Active))).Count();
 
+            if (!string.IsNullOrWhiteSpace(request.SearchKey))
+            {
+                pathways = request.SearchKey.IsLong()
+                    ? pathways.Where(p => p.TqRegistrationProfile.UniqueLearnerNumber == request.SearchKey.ToLong()).ToList()
+                    : pathways.Where(p => p.TqRegistrationProfile.Lastname == request.SearchKey).ToList();
+            }
+
             if (request.Tlevels != null && request.Tlevels.Any())
                 pathways = pathways.Where(p => request.Tlevels.Contains(p.TqProvider.TqAwardingOrganisation.TlPathway.Id)).ToList();
 
@@ -183,6 +190,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                     new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.AllIncomplemented }, Tlevels = new List<int> { 2 }, Ukprn = (int)Provider.BarnsleyCollege } }, // not Valid Tlevel filter
 
                     new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, PageNumber = 1, Ukprn = (int)Provider.BarnsleyCollege } }, // Pagination
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, SearchKey = "Last 1", Ukprn = (int)Provider.BarnsleyCollege } }, // Search by Lastname
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, SearchKey = "1111111111", Ukprn = (int)Provider.BarnsleyCollege } }, // Search by ULN    
                 };
             }
         }

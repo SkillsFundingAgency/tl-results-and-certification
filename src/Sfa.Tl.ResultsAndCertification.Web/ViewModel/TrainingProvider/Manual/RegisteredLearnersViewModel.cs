@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
                 {
                     PagerInfo = SearchLearnerDetailsList?.PagerInfo,
                     RouteName = RouteConstants.SearchLearnerDetails,
-                    RouteAttributes = new Dictionary<string, string> { { Constants.AcademicYear, SearchCriteria.AcademicYear.ToString() } },
+                    RouteAttributes = new Dictionary<string, string> { { Constants.AcademicYear, SearchCriteria?.AcademicYear.ToString() } },
                     PaginationSummary = SearchLearnerDetails.PaginationSummary_Text
                 };
             }
