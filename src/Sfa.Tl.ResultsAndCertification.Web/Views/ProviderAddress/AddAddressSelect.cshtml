@@ -19,16 +19,16 @@
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                            <h1 class="govuk-fieldset__heading">
+                            <h2 class="govuk-fieldset__heading">
                                 @AddAddressSelect.Heading_What_Is_Your_Address
-                            </h1>
+                            </h2>
                         </legend>
 
-                        <p class="govuk-body-l govuk-!-font-weight-bold govuk-!-margin-top-3 govuk-!-margin-bottom-3">@AddAddressSelect.Postcode_Label</p>
+                        <h2 class="govuk-body-l govuk-!-font-weight-bold govuk-!-margin-top-3 govuk-!-margin-bottom-3">@AddAddressSelect.Postcode_Label</h2>
                         <p class="govuk-body"><strong>@Model.Postcode</strong><a class="govuk-link govuk-!-margin-left-3" asp-route="AddAddressPostcode" asp-route-showPostcode="false">@AddAddressSelect.Change_Link_Text</a></p>
 
                         <div class="govuk-form-group govuk-!-margin-top-6" sfa-validation-for="SelectedAddressUprn" sfa-validation-class="govuk-form-group--error">
-                            <label class="govuk-label govuk-label--m" for="selectedaddressuprn">@AddAddressSelect.Select_An_Address_Label</label>
+                            <h2 class="govuk-label govuk-label--m" for="selectedaddressuprn">@AddAddressSelect.Select_An_Address_Label</h2>
                             <span sfa-validation-for="SelectedAddressUprn"></span>
                             <select class="govuk-select" id="selectedaddressuprn" asp-for="SelectedAddressUprn" asp-items="@Model.AddressSelectList">
                                 <option value="">@string.Format(@AddAddressSelect.Address_Found_Text, Model.AddressSelectList?.Count ?? 0)</option>
