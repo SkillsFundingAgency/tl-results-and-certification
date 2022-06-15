@@ -9,9 +9,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.DateTimeExtensions
     {
         [Theory]
         [MemberData(nameof(Data))]
-        public void Then_Returns_Expected_Results(string inputDate, DayOfWeek dayOfWeek, bool isValid)
+        public void Then_Returns_Expected_Results(DateTime inputDate, DayOfWeek dayOfWeek, bool isValid)
         {
-            var result = inputDate.ToDateTime().IsLastWeekdayOfMonth(dayOfWeek);
+            var result = inputDate.IsLastWeekdayOfMonth(dayOfWeek);
 
             result.Should().Be(isValid);
         }

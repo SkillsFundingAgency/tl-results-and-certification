@@ -12,13 +12,13 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.DateTimeExtensions
                 return new[]
                 {
                     // Valid
-                    new object[] { "07/06/2022", DayOfWeek.Wednesday, false },
-                    new object[] { "17/06/2022", DayOfWeek.Wednesday, false },
-                    new object[] { "24/06/2022", DayOfWeek.Wednesday, false },
-                    new object[] { "08/06/2022", DayOfWeek.Wednesday, false },
-                    new object[] { "15/06/2022", DayOfWeek.Wednesday, false },
-                    new object[] { "22/06/2022", DayOfWeek.Wednesday, false },
-                    new object[] { "29/06/2022", DayOfWeek.Wednesday, true },
+                    new object[] { new DateTime(2022,06,07), DayOfWeek.Wednesday, false },
+                    new object[] { new DateTime(2022, 06, 17), DayOfWeek.Wednesday, false },
+                    new object[] { new DateTime(2022, 06, 24), DayOfWeek.Wednesday, false },
+                    new object[] { new DateTime(2022, 06, 08), DayOfWeek.Wednesday, false },
+                    new object[] { new DateTime(2022, 06, 15), DayOfWeek.Wednesday, false },
+                    new object[] { new DateTime(2022, 06, 22), DayOfWeek.Wednesday, false },
+                    new object[] { new DateTime(2022, 06, 29), DayOfWeek.Wednesday, true },
                 };
             }
         }
