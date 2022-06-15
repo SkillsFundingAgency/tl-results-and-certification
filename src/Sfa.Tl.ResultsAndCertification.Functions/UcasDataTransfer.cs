@@ -23,7 +23,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _commonService = commonService;
         }
 
-        //[Disable]
         [FunctionName(Constants.UcasTransferEntries)]
         public async Task UcasTransferEntriesAsync([TimerTrigger("%UcasTransferEntriesTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
