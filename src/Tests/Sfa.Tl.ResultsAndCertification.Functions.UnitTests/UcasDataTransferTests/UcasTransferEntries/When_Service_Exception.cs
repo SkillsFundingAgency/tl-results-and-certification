@@ -1,5 +1,6 @@
 ﻿using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Threading.Tasks;
@@ -16,13 +17,16 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }
 
-        [Fact(Skip = "As this will run on specific day")]
+        [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            CommonService.Received(2).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            UcasDataTransferService.Received(1).ProcessUcasDataRecordsAsync(UcasDataType.Entries);
-            CommonService.DidNotReceive().UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
-            CommonService.Received(1).SendFunctionJobFailedNotification(Arg.Any<string>(), Arg.Any<string>());
+            if (DateTime.UtcNow.IsLastWeekdayOfMonth(DayOfWeek.Wednesday))
+            {
+                CommonService.Received(2).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
+                UcasDataTransferService.Received(1).ProcessUcasDataRecordsAsync(UcasDataType.Entries);
+                CommonService.DidNotReceive().UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
+                CommonService.Received(1).SendFunctionJobFailedNotification(Arg.Any<string>(), Arg.Any<string>());
+            }
         }
     }
 }
