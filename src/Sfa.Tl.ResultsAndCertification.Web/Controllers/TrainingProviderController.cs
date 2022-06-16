@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
+using System.Linq;
 using System.Threading.Tasks;
 
 using LearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
@@ -35,15 +36,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("manage-learners/{academicYear}/{pageNumber:int?}", Name = RouteConstants.SearchLearnerDetails)]
         public async Task<IActionResult> SearchLearnerDetailsAsync(int academicYear, int? pageNumber)
         {
-            var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
-
-            var searchFilters = (searchCriteria == null || searchCriteria.SearchLearnerFilters == null) 
-                                ? await _trainingProviderLoader.GetSearchLearnerFiltersAsync(User.GetUkPrn()) 
-                                : searchCriteria.SearchLearnerFilters;
-
+            var searchFilters = await _trainingProviderLoader.GetSearchLearnerFiltersAsync(User.GetUkPrn());
             if (searchFilters == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
-                       
+
+            var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
 
             if (searchCriteria == null)
                 searchCriteria = new SearchCriteriaViewModel { AcademicYear = academicYear, PageNumber = pageNumber };
@@ -51,6 +48,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 searchCriteria.AcademicYear = academicYear;
                 searchCriteria.PageNumber = pageNumber;
+
+                if (searchCriteria.SearchLearnerFilters != null)
+                {
+                    searchCriteria.SearchLearnerFilters.Tlevels?.ToList().ForEach(tl => tl.Name = searchFilters.Tlevels.FirstOrDefault(x => x.Id == tl.Id)?.Name);
+                    searchCriteria.SearchLearnerFilters.Status?.ToList().ForEach(s => s.Name = searchFilters.Status.FirstOrDefault(x => x.Id == s.Id)?.Name);
+                }
             }
 
             var learnersList = await _trainingProviderLoader.SearchLearnerDetailsAsync(User.GetUkPrn(), searchCriteria);

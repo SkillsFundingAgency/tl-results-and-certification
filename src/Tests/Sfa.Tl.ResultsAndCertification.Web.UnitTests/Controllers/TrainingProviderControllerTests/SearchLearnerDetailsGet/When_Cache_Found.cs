@@ -27,6 +27,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 {
                     new FilterLookupData { Id = 2020, Name = "2020 to 2021", IsSelected = true },
                     new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false }
+                },
+                Status = new List<FilterLookupData>
+                {
+                    new FilterLookupData { Id = 1, Name = "Maths level", IsSelected = true },
+                    new FilterLookupData { Id = 2, Name = "English level", IsSelected = false }
+                },
+                Tlevels = new List<FilterLookupData>
+                {
+                    new FilterLookupData { Id = 1, Name = "Education", IsSelected = true },
+                    new FilterLookupData { Id = 2, Name = "Construction", IsSelected = false }
                 }
             };
             TrainingProviderLoader.GetSearchLearnerFiltersAsync(ProviderUkprn).Returns(_searchFilters);
@@ -52,6 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             _searchCriteria = new SearchCriteriaViewModel { SearchLearnerFilters = _searchFilters, AcademicYear = AcademicYear, PageNumber = PageNumber };
             CacheService.GetAsync<SearchCriteriaViewModel>(CacheKey).Returns(_searchCriteria);
+            TrainingProviderLoader.GetSearchLearnerFiltersAsync(ProviderUkprn).Returns(_searchFilters);
             TrainingProviderLoader.SearchLearnerDetailsAsync(ProviderUkprn, _searchCriteria).Returns(_searchLearnersList);
         }
 
@@ -59,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public void Then_Expected_Methods_AreCalled()
         {
             CacheService.Received(1).GetAsync<SearchCriteriaViewModel>(CacheKey);
-            TrainingProviderLoader.DidNotReceive().GetSearchLearnerFiltersAsync(ProviderUkprn);
+            TrainingProviderLoader.Received(1).GetSearchLearnerFiltersAsync(ProviderUkprn);
             TrainingProviderLoader.Received(1).SearchLearnerDetailsAsync(ProviderUkprn, _searchCriteria);
         }
 
@@ -77,6 +88,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             searchFilters.AcademicYears.Should().NotBeNull();
             searchFilters.AcademicYears.Should().HaveCount(_searchFilters.AcademicYears.Count);
             searchFilters.AcademicYears.Should().BeEquivalentTo(_searchFilters.AcademicYears);
+
+            searchFilters.Status.Should().NotBeNull();
+            searchFilters.Status.Should().HaveCount(_searchFilters.Status.Count);
+            searchFilters.Status.Should().BeEquivalentTo(_searchFilters.Status);
+
+            searchFilters.Tlevels.Should().NotBeNull();
+            searchFilters.Tlevels.Should().HaveCount(_searchFilters.Tlevels.Count);
+            searchFilters.Tlevels.Should().BeEquivalentTo(_searchFilters.Tlevels);
 
             model.SearchLearnerDetailsList.TotalRecords.Should().Be(_searchLearnersList.TotalRecords);
             model.SearchLearnerDetailsList.SearchLearnerDetailsList.Count.Should().Be(1);

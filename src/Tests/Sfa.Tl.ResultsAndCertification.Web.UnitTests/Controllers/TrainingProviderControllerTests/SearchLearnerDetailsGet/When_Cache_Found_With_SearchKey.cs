@@ -78,6 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             _searchCriteria = new SearchCriteriaViewModel { SearchLearnerFilters = _searchFilters, AcademicYear = AcademicYear, PageNumber = PageNumber, SearchKey = "Smith", IsSearchKeyApplied = true };
             CacheService.GetAsync<SearchCriteriaViewModel>(CacheKey).Returns(_searchCriteria);
+            TrainingProviderLoader.GetSearchLearnerFiltersAsync(ProviderUkprn).Returns(_searchFilters);
             TrainingProviderLoader.SearchLearnerDetailsAsync(ProviderUkprn, _searchCriteria).Returns(_searchLearnersList);
         }
 
@@ -85,7 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public void Then_Expected_Methods_AreCalled()
         {
             CacheService.Received(1).GetAsync<SearchCriteriaViewModel>(CacheKey);
-            TrainingProviderLoader.DidNotReceive().GetSearchLearnerFiltersAsync(ProviderUkprn);
+            TrainingProviderLoader.Received(1).GetSearchLearnerFiltersAsync(ProviderUkprn);
             TrainingProviderLoader.Received(1).SearchLearnerDetailsAsync(ProviderUkprn, _searchCriteria);
         }
 
