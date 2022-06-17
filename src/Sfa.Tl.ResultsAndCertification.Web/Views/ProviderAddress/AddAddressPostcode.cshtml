@@ -19,13 +19,13 @@
                 <div class="govuk-form-group" sfa-validation-for="Postcode" sfa-validation-class="govuk-form-group--error">
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                            <h2 class="govuk-fieldset__heading">
+                            <h1 class="govuk-fieldset__heading">
                                 @AddAddressPostcode.Heading_What_Is_Your_Address
-                            </h2>
+                            </h1>
                         </legend>
                         <div class="govuk-form-group">
-                            <label class="govuk-label govuk-!-font-size-24 govuk-!-font-weight-bold govuk-!-margin-top-3" for="postcode">
-                                @AddAddressPostcode.Label_Enter_Postcode
+                            <label for="postcode">
+                                <h2 class="govuk-body-l govuk-!-font-weight-bold govuk-!-margin-top-3 govuk-!-margin-bottom-3">@AddAddressPostcode.Label_Enter_Postcode</h2>
                             </label>
                             <span sfa-validation-for="Postcode"></span>
                             <input class="govuk-input govuk-input--width-10" id="postcode" asp-for="Postcode" maxlength="8" aria-required="true"/>
