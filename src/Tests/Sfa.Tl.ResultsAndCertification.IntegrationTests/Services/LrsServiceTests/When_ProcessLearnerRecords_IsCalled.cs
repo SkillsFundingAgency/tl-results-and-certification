@@ -95,8 +95,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LrsServiceTes
                 SubjectStatus? expectedMathsStatus = seedLearnignEvents == false ? null : isMathsAchieved ? SubjectStatus.AchievedByLrs : SubjectStatus.NotAchievedByLrs;
                 SubjectStatus? expectedEnglishStatus = seedLearnignEvents == false ? null : isEnglishAchieved ? SubjectStatus.AchievedByLrs : SubjectStatus.NotAchievedByLrs;
 
-                bool? expectedIsRcFeed = seedLearnignEvents == false ? (bool?)null : false;
-
                 var actualRegistrationProfile = actualRegistrations.FirstOrDefault(r => r.UniqueLearnerNumber == expectedUln);
 
                 actualRegistrationProfile.Should().NotBeNull();
@@ -104,8 +102,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LrsServiceTes
                 actualRegistrationProfile.IsLearnerVerified.Should().Be(expectedIsLearnerVerified);
                 actualRegistrationProfile.EnglishStatus.Should().Be(expectedEnglishStatus);
                 actualRegistrationProfile.MathsStatus.Should().Be(expectedMathsStatus);
-
-                actualRegistrationProfile.IsRcFeed.Should().Be(expectedIsRcFeed);
 
                 // assert qualifications achieved
                 actualRegistrationProfile.QualificationAchieved.Count().Should().Be(expectedLearnerRecord.LearningEventDetails.Count);
