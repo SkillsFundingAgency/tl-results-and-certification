@@ -33,9 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                             .ThenInclude(x => x.TqAwardingOrganisation)
                             .ThenInclude(x => x.TlPathway)
                         .Include(x => x.TqRegistrationProfile)
-                        .Include(x => x.TqPathwayAssessments)
-                        .Include(x => x.TqRegistrationSpecialisms)
-                            .ThenInclude(x => x.TqSpecialismAssessments)
+                        .Include(x => x.TqPathwayAssessments.Where(a => a.IsOptedin && a.EndDate == null))
+                        .Include(x => x.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null))
+                            .ThenInclude(x => x.TqSpecialismAssessments.Where(a => a.IsOptedin && a.EndDate == null))
                         .Include(x => x.TqRegistrationSpecialisms)
                             .ThenInclude(x => x.TlSpecialism)
                         .Where(x => x.Status == RegistrationPathwayStatus.Active && x.EndDate == null &&
@@ -45,102 +45,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             if (inclResults)
             {
                 pathwayQueryable = pathwayQueryable
-                    .Include(x => x.TqPathwayAssessments)
-                        .ThenInclude(x => x.TqPathwayResults)
+                    .Include(x => x.TqPathwayAssessments.Where(a => a.IsOptedin && a.EndDate == null))
+                        .ThenInclude(x => x.TqPathwayResults.Where(r => r.IsOptedin && r.EndDate == null))
                             .ThenInclude(x => x.TlLookup)
-                    .Include(x => x.TqRegistrationSpecialisms)
-                        .ThenInclude(x => x.TqSpecialismAssessments)
-                            .ThenInclude(x => x.TqSpecialismResults)
+                    .Include(x => x.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null))
+                        .ThenInclude(x => x.TqSpecialismAssessments.Where(a => a.IsOptedin && a.EndDate == null))
+                            .ThenInclude(x => x.TqSpecialismResults.Where(r => r.IsOptedin && r.EndDate == null))
                                 .ThenInclude(x => x.TlLookup);
             }
 
-            var regPatways = await pathwayQueryable.ToListAsync();
-            foreach (var regPathway in regPatways)
-            {
-                if (inclResults)
-                {
-                    BuildPathwayAssessmentAndResultsPredicate(regPathway);
-                    BuildSpecialismAssessmentAndResultsPredicate(regPathway);
-                }
-                else
-                {
-                    BuildPathwayAssessmentPredicate(regPathway);
-                    BuildSpecialismsAssessmentPredicate(regPathway);
-                }
-            }
-
-            return regPatways;
-        }
-
-        private static void BuildPathwayAssessmentAndResultsPredicate(TqRegistrationPathway regPathway)
-        {
-            Func<TqPathwayAssessment, bool> pathwayAssessmentPredicate = e => e.IsOptedin && e.EndDate == null;
-            // Note: We may have more than one active assessment entry for each AssessmentSeries, if so latest assessment entry is considered below. 
-
-            regPathway.TqPathwayAssessments = regPathway.TqPathwayAssessments.Where(pathwayAssessmentPredicate).ToList();
-
-            foreach (var pathwayAssessment in regPathway.TqPathwayAssessments)
-            {
-                // TODO: For Amendments we need to consider PrsStatus flag to record the previous result. 
-                Func<TqPathwayResult, bool> pathwayResultPredicate = e => e.IsOptedin && e.EndDate == null;
-                var pathwayResult = pathwayAssessment.TqPathwayResults.FirstOrDefault(pathwayResultPredicate);
-                if (pathwayResult != null)
-                    pathwayAssessment.TqPathwayResults = new List<TqPathwayResult> { pathwayResult };
-                else
-                    pathwayAssessment.TqPathwayResults.Clear();
-            }
-        }
-
-        private static void BuildPathwayAssessmentPredicate(TqRegistrationPathway regPathway)
-        {
-            Func<TqPathwayAssessment, bool> pathwayAssessmentPredicate = e => e.IsOptedin && e.EndDate == null;
-            // Note: We may have more than one active assessment entry for each AssessmentSeries, if so latest assessment entry is considered below. 
-
-            var activeAssessment = regPathway.TqPathwayAssessments.OrderByDescending(x => x.CreatedOn).FirstOrDefault(pathwayAssessmentPredicate);
-
-            if (activeAssessment != null)
-                regPathway.TqPathwayAssessments = new List<TqPathwayAssessment> { activeAssessment };
-            else
-                regPathway.TqPathwayAssessments.Clear();
-        }
-
-        private static void BuildSpecialismAssessmentAndResultsPredicate(TqRegistrationPathway regPathway)
-        {
-            Func<TqRegistrationSpecialism, bool> specialismPredicate = e => e.IsOptedin && e.EndDate == null;
-            regPathway.TqRegistrationSpecialisms = regPathway.TqRegistrationSpecialisms.Where(specialismPredicate).ToList();
-
-            foreach (var pathwaySpecialism in regPathway.TqRegistrationSpecialisms)
-            {
-
-                foreach (var specialismAssessment in pathwaySpecialism.TqSpecialismAssessments)
-                {
-                    Func<TqSpecialismResult, bool> specialismResultPredicate = e => e.IsOptedin && e.EndDate == null;
-                    var specialismResult = specialismAssessment.TqSpecialismResults.FirstOrDefault(specialismResultPredicate);
-                    if (specialismResult != null)
-                        specialismAssessment.TqSpecialismResults = new List<TqSpecialismResult> { specialismResult };
-                    else
-                        specialismAssessment.TqSpecialismResults.Clear();
-                }
-            }
-        }
-
-        private static void BuildSpecialismsAssessmentPredicate(TqRegistrationPathway regPathway)
-        {
-            Func<TqRegistrationSpecialism, bool> specialismPredicate = e => e.IsOptedin && e.EndDate == null;
-            regPathway.TqRegistrationSpecialisms = regPathway.TqRegistrationSpecialisms.Where(specialismPredicate).ToList();
-
-            foreach (var pathwaySpecialism in regPathway.TqRegistrationSpecialisms)
-            {
-                Func<TqSpecialismAssessment, bool> specialismAssessmentPredicate = e => e.IsOptedin && e.EndDate == null;
-
-                var activeAssessment = pathwaySpecialism.TqSpecialismAssessments.OrderByDescending(x => x.CreatedOn).FirstOrDefault(specialismAssessmentPredicate);
-
-                // Note: We may have more than one active assessment entry for each AssessmentSeries, if so latest assessment entry is considered below. 
-                if (activeAssessment != null)
-                    pathwaySpecialism.TqSpecialismAssessments = new List<TqSpecialismAssessment> { activeAssessment };
-                else
-                    pathwaySpecialism.TqSpecialismAssessments.Clear();
-            }
+            return await pathwayQueryable.ToListAsync();
         }
     }
 }

@@ -103,9 +103,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             {
                 return new[]
                 {
-                    new object[] { 1111111111, 1, 1 },
-                    new object[] { 1111111112, 1, 1 },
-                    new object[] { 1111111113, 1, 1 },
+                    new object[] { 1111111111, 2, 2 },
+                    new object[] { 1111111112, 2, 2 },
+                    new object[] { 1111111113, 2, 2 },
                     new object[] { 1111111114, 1, 1 },
                     new object[] { 1111111115, 1, 1 },
                     new object[] { 1111111116, 0, 0 },
