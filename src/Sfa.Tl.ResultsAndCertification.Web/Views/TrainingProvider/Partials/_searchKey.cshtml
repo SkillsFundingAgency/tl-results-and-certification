@@ -8,7 +8,7 @@
         <label class="govuk-label govuk-label--m" for="searchkey">
             @SearchLearnerDetails.Search_By_Learner_Lastname_Or_Uln
         </label>
-        <input id="searchkey" class="govuk-input govuk-input--width-20 learner-search__input" type="search" asp-for="@Model.SearchKey">
+        <input id="searchkey" class="govuk-input govuk-input--width-20 learner-search__input" type="search" asp-for="@Model.SearchKey" maxlength="100">
 
         <button id="searchButton" class="govuk-button govuk-!-margin-bottom-2" data-module="govuk-button" data-prevent-double-click="true">@SearchLearnerDetails.Button_Search</button>
 
