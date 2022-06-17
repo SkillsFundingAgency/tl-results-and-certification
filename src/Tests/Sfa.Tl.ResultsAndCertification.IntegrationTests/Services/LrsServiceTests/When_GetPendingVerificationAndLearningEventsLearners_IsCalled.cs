@@ -51,9 +51,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LrsServiceTes
 
             // Expected result
             var expectedProfiles = _profilesData.Where(p => p.IsLearnerVerified == null || p.IsLearnerVerified.Value == false ||
-                                                                     (((p.MathsStatus == null || p.MathsStatus == SubjectStatus.NotSpecified || p.MathsStatus == SubjectStatus.NotAchievedByLrs) ||      //IsSubjectStatusUpdateRequired(p.MathsStatus)
-                                                                        (p.EnglishStatus == null || p.EnglishStatus == SubjectStatus.NotSpecified || p.EnglishStatus == SubjectStatus.NotAchievedByLrs)) //IsSubjectStatusUpdateRequired(p.EnglishStatus)
-                                                                        && (p.IsRcFeed == null || p.IsRcFeed.Value == false))).ToList();
+                                                            p.MathsStatus == null || p.MathsStatus == SubjectStatus.NotSpecified || p.MathsStatus == SubjectStatus.NotAchievedByLrs ||      //IsSubjectStatusUpdateRequired(p.MathsStatus)
+                                                            p.EnglishStatus == null || p.EnglishStatus == SubjectStatus.NotSpecified || p.EnglishStatus == SubjectStatus.NotAchievedByLrs //IsSubjectStatusUpdateRequired(p.EnglishStatus)
+                                                      ).ToList();
 
             expectedProfiles.Should().NotBeNullOrEmpty();
 
@@ -75,9 +75,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LrsServiceTes
                 actualProfile.Lastname.Should().Be(expectedProfile.Lastname);
                 actualProfile.DateofBirth.Should().Be(expectedProfile.DateofBirth);
                 actualProfile.IsLearnerVerified.Should().Be(expectedProfile.IsLearnerVerified);
-
-                actualProfile.IsSendLearner.Should().Be(expectedProfile.IsSendLearner);
-                actualProfile.IsRcFeed.Should().Be(expectedProfile.IsRcFeed);
             }
         }
     }
