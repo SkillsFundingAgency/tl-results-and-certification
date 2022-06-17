@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                         .Include(x => x.TqPathwayAssessments.Where(a => a.IsOptedin && a.EndDate == null))
                         .Include(x => x.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null))
                             .ThenInclude(x => x.TqSpecialismAssessments.Where(a => a.IsOptedin && a.EndDate == null))
-                        .Include(x => x.TqRegistrationSpecialisms)
+                        .Include(x => x.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null))
                             .ThenInclude(x => x.TlSpecialism)
                         .Where(x => x.Status == RegistrationPathwayStatus.Active && x.EndDate == null &&
                                     x.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1)
