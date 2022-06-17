@@ -43,8 +43,7 @@
             @academicYear.value.Name
             </label>
             </div>
-            <input type="hidden" asp-for="@Model.SearchLearnerFilters.AcademicYears[@academicYear.i].Id" />
-            <input type="hidden" asp-for="@Model.SearchLearnerFilters.AcademicYears[@academicYear.i].Name" />
+            <input type="hidden" asp-for="@Model.SearchLearnerFilters.AcademicYears[@academicYear.i].Id" />            
             }
             </div>
             </fieldset>
@@ -64,8 +63,7 @@
                             @status.value.Name
                         </label>
                     </div>
-                    <input type="hidden" asp-for="@Model.SearchLearnerFilters.Status[status.i].Id" />
-                    <input type="hidden" asp-for="@Model.SearchLearnerFilters.Status[status.i].Name" />
+                    <input type="hidden" asp-for="@Model.SearchLearnerFilters.Status[status.i].Id" />                    
                 }
                 </div>
             </fieldset>
@@ -85,8 +83,7 @@
                                 @tlevel.value.Name
                             </label>
                         </div>
-                        <input type="hidden" asp-for="@Model.SearchLearnerFilters.Tlevels[@tlevel.i].Id" />
-                        <input type="hidden" asp-for="@Model.SearchLearnerFilters.Tlevels[@tlevel.i].Name" />
+                        <input type="hidden" asp-for="@Model.SearchLearnerFilters.Tlevels[@tlevel.i].Id" />                        
                     }
                 </div>
             </fieldset>

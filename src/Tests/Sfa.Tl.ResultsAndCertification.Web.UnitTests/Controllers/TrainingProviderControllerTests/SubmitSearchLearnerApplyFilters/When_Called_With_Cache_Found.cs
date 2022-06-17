@@ -7,10 +7,11 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.SearchLearnerDetailsPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.SubmitSearchLearnerApplyFilters
 {
-    public class When_Called : TestSetup
+    public class When_Called_With_Cache_Found : TestSetup
     {
+        private SearchCriteriaViewModel _searchCriteria;
         private SearchLearnerFiltersViewModel _searchFilters;
         private int _academicYear;
 
@@ -24,16 +25,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                     new FilterLookupData { Id = 2020, Name = "2020 to 2021", IsSelected = true },
                     new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false }
                 },
-                IsApplyFiltersSelected = false
+                IsApplyFiltersSelected = true
             };
 
-            SearchCriteriaViewModel = new SearchCriteriaViewModel { SearchLearnerFilters = _searchFilters, AcademicYear = _academicYear, SearchKey = "test" };
+            SearchCriteriaViewModel = new SearchCriteriaViewModel { SearchLearnerFilters = _searchFilters, AcademicYear = _academicYear };
+
+            _searchCriteria = new SearchCriteriaViewModel { AcademicYear = _academicYear, SearchKey = "test", IsSearchKeyApplied = true };
+
+            CacheService.GetAsync<SearchCriteriaViewModel>(CacheKey).Returns(_searchCriteria);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<SearchCriteriaViewModel>(x => x.AcademicYear == _academicYear && x.SearchKey == "test" && x.IsSearchKeyApplied == true));
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<SearchCriteriaViewModel>(x => x.AcademicYear == SearchCriteriaViewModel.AcademicYear &&
+                                                                                        x.SearchLearnerFilters.Equals(SearchCriteriaViewModel.SearchLearnerFilters) &&
+                                                                                        x.SearchKey == _searchCriteria.SearchKey &&
+                                                                                        x.IsSearchKeyApplied == _searchCriteria.IsSearchKeyApplied));
         }
 
         [Fact]

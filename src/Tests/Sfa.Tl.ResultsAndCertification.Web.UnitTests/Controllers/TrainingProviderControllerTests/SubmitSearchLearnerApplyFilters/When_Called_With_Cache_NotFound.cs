@@ -9,9 +9,8 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.SubmitSearchLearnerApplyFilters
 {
-    public class When_Called : TestSetup
+    public class When_Called_With_Cache_NotFound : TestSetup
     {
-        private SearchCriteriaViewModel _searchCriteria;
         private SearchLearnerFiltersViewModel _searchFilters;
         private int _academicYear;
 
@@ -34,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            CacheService.Received(1).SetAsync(CacheKey, Arg.Any<SearchCriteriaViewModel>());
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<SearchCriteriaViewModel>(x => x.AcademicYear == SearchCriteriaViewModel.AcademicYear && x.SearchLearnerFilters.Equals(SearchCriteriaViewModel.SearchLearnerFilters)));
         }
 
         [Fact]

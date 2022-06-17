@@ -24,7 +24,7 @@
                     <div class="govuk-form-group" sfa-validation-for="SearchUln" sfa-validation-class="govuk-form-group--error">
                         <span class="govuk-hint">@RequestSoaUniqueLearnerNumber.Uln_Must_10_Digit_Hint</span>
                         <span sfa-validation-for="SearchUln"></span>
-                        <input id="searchuln" class="govuk-input govuk-input--width-10" asp-for="SearchUln" maxlength="10" aria-required="true">
+                        <input id="searchuln" class="govuk-input govuk-input--width-10" asp-for="SearchUln" maxlength="10" inputmode="numeric" aria-required="true">
                     </div>
                 </fieldset>
             </div>
