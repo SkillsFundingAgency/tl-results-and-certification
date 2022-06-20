@@ -29,8 +29,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
             // Check if it is the last Wednesday in June and run the function if it is true
-            if (DateTime.UtcNow.IsLastWeekdayOfMonth(DayOfWeek.Wednesday))
-            {
+            //if (DateTime.UtcNow.IsLastWeekdayOfMonth(DayOfWeek.Wednesday))
+            //{
                 var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName);
 
                 try
@@ -65,7 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                     await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
                 }
-            }
+            //}
         }
 
         [Disable]
