@@ -34,7 +34,7 @@
                         @Upload.Upload_File_Text
                     </label>
                     <span sfa-validation-for="File"></span>
-                    <input class="govuk-file-upload" id="file" asp-for="File" type="file" accept=".csv">
+                    <input class="govuk-file-upload" id="file" asp-for="File" type="file" accept=".csv" aria-required="true">
                 </div>
                 <button id="uploadResultsButton" class="govuk-button tl-show-on-js-only" data-module="govuk-button" type="submit" data-prevent-double-click="true">@Upload.Upload_File_Button_Text</button>
                 <partial name="~/Views/Result/Partials/_uploadResultNoScriptSubmit.cshtml" model="new PathwaySpecialismsViewModel { }" />

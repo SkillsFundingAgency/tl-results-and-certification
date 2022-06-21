@@ -2,26 +2,38 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.SearchLearnerDetails
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.SearchLearnerDetailsGet
 {
-    public class When_Called_With_Valid_Data : TestSetup
+    public class When_Cache_Found_With_Clear_Filters : TestSetup
     {
+        private SearchCriteriaViewModel _searchCriteria;
+        private SearchLearnerFiltersViewModel _searchFilters;
         private SearchLearnerDetailsListViewModel _searchLearnersList;
 
         public override void Given()
         {
             AcademicYear = 2020;
 
+            _searchFilters = new SearchLearnerFiltersViewModel
+            {
+                AcademicYears = new List<FilterLookupData>
+                {
+                    new FilterLookupData { Id = 2020, Name = "2020 to 2021", IsSelected = false },
+                    new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false }
+                }
+            };
+            TrainingProviderLoader.GetSearchLearnerFiltersAsync(ProviderUkprn).Returns(_searchFilters);
+
             _searchLearnersList = new SearchLearnerDetailsListViewModel
             {
-                TotalRecords = 2,
+                TotalRecords = 1,
                 SearchLearnerDetailsList = new List<SearchLearnerDetailsViewModel>
                 {
                     new SearchLearnerDetailsViewModel
@@ -38,26 +50,41 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 }
             };
 
-            TrainingProviderLoader.SearchLearnerDetailsAsync(ProviderUkprn, AcademicYear).Returns(_searchLearnersList);
+            _searchCriteria = new SearchCriteriaViewModel { SearchLearnerFilters = null, AcademicYear = AcademicYear, PageNumber = PageNumber };
+            CacheService.GetAsync<SearchCriteriaViewModel>(CacheKey).Returns(_searchCriteria);
+            TrainingProviderLoader.SearchLearnerDetailsAsync(ProviderUkprn, _searchCriteria).Returns(_searchLearnersList);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            TrainingProviderLoader.Received(1).SearchLearnerDetailsAsync(ProviderUkprn, AcademicYear);
+            CacheService.Received(1).GetAsync<SearchCriteriaViewModel>(CacheKey);
+            TrainingProviderLoader.Received(1).GetSearchLearnerFiltersAsync(ProviderUkprn);
+            TrainingProviderLoader.Received(1).SearchLearnerDetailsAsync(ProviderUkprn, _searchCriteria);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
             var viewResult = Result as ViewResult;
-            var model = viewResult.Model as SearchLearnerDetailsListViewModel;
+            var model = viewResult.Model as RegisteredLearnersViewModel;
 
             model.Should().NotBeNull();
-            model.TotalRecords.Should().Be(_searchLearnersList.TotalRecords);
-            model.SearchLearnerDetailsList.Count.Should().Be(1);
+            model.SearchCriteria.Should().NotBeNull();
 
-            var actualLearner = model.SearchLearnerDetailsList.First();
+            var searchFilters = model.SearchCriteria.SearchLearnerFilters;
+            searchFilters.Should().NotBeNull();
+            searchFilters.AcademicYears.Should().NotBeNull();
+            searchFilters.AcademicYears.Should().HaveCount(_searchFilters.AcademicYears.Count);
+            searchFilters.AcademicYears.Should().BeEquivalentTo(_searchFilters.AcademicYears);
+
+            searchFilters.IsApplyFiltersSelected.Should().BeFalse();
+            searchFilters.SelectedFilters.Should().BeNullOrEmpty();
+
+            model.SearchLearnerDetailsList.TotalRecords.Should().Be(_searchLearnersList.TotalRecords);
+            model.SearchLearnerDetailsList.SearchLearnerDetailsList.Count.Should().Be(1);
+
+            var actualLearner = model.SearchLearnerDetailsList.SearchLearnerDetailsList.First();
             var expectedLearner = _searchLearnersList.SearchLearnerDetailsList.First();
             actualLearner.ProfileId.Should().Be(expectedLearner.ProfileId);
             actualLearner.LearnerName.Should().Be(expectedLearner.LearnerName);
@@ -72,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.Breadcrumb.BreadcrumbItems.Count.Should().Be(2);
             model.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(BreadcrumbContent.Home);
             model.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Home);
-            model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Manage_Learner_Records);
+            model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Search_Learner_Records);
             model.Breadcrumb.BreadcrumbItems[1].RouteName.Should().Be(RouteConstants.SearchLearnerRecord);
         }
     }

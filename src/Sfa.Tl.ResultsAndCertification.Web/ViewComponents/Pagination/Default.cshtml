@@ -1,0 +1,51 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Pagination.PaginationModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@if (Model != null && Model.PagerInfo.TotalPages > 0)
+{
+    var startFrom = Model.PagerInfo.CurrentPage - 2;
+    var endBy = Model.PagerInfo.CurrentPage + 2;
+    var pagerStartPage = startFrom <= 1 ? Model.PagerInfo.StartPage : Model.PagerInfo.CurrentPage - 2;
+    var pagesToShow = Model.PagerInfo.CurrentPage + 2;
+    var pagerEndPage = Model.PagerInfo.TotalPages < pagesToShow ? Model.PagerInfo.TotalPages : pagesToShow;
+
+    <div class="pagination govuk-body">
+        <ul class="govuk-!-padding-left-0 text--center">
+
+            @if (Model.PagerInfo.CurrentPage > 1)
+            {
+                <li class="pagination__item float--left" id="previousButton">
+                    <a class="govuk-link pagination__link" asp-route="@Model.RouteName" asp-all-route-data="@Model.RouteAttributes" asp-route-pageNumber="@(Model.PagerInfo.CurrentPage - 1)">
+                        <span aria-hidden="true" role="presentation">
+                            @Pagination.Left_Double_Arrow
+                        </span>
+                        @Pagination.Previous_Page
+                    </a>
+                </li>
+            }
+
+            @for (var pageNumber = @pagerStartPage; pageNumber <= @pagerEndPage; pageNumber++)
+            {
+                <li class="pagination__item">
+                    <a class="pagination__link @(pageNumber == Model.PagerInfo.CurrentPage ? "pagination__link__current-page govuk-!-font-weight-bold" : "govuk-link")" asp-route="@Model.RouteName" asp-all-route-data="@Model.RouteAttributes" asp-route-pageNumber="@pageNumber">@pageNumber</a>
+                </li>
+            }
+
+            @if (Model.PagerInfo.CurrentPage < Model.PagerInfo.TotalPages)
+            {
+                <li class="pagination__item float--right" id="nextButton">
+                    <a class="govuk-link pagination__link" asp-route="@Model.RouteName" asp-all-route-data="@Model.RouteAttributes" asp-route-pageNumber="@(Model.PagerInfo.CurrentPage + 1)">
+                        @Pagination.Next_Page
+                        <span aria-hidden="true" role="presentation">
+                            @Pagination.Right_Double_Arrow
+                        </span>
+                    </a>
+                </li>
+            }
+        </ul>
+        <div class="govuk-body govuk-!-display-inline">
+            @string.Format(Model.PaginationSummary, @Model.PagerInfo.RecordFrom, @Model.PagerInfo.RecordTo, @Model.PagerInfo.TotalItems)
+        </div>
+    </div>
+}

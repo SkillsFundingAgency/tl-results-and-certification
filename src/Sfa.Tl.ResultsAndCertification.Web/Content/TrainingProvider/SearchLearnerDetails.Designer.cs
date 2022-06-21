@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply filters.
+        /// </summary>
+        public static string Button_Apply_Filters {
+            get {
+                return ResourceManager.GetString("Button_Apply_Filters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back to home.
         /// </summary>
         public static string Button_Back_To_Home {
@@ -70,11 +79,92 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search again.
+        ///   Looks up a localized string similar to Search.
         /// </summary>
-        public static string Button_Search_Again {
+        public static string Button_Search {
             get {
-                return ResourceManager.GetString("Button_Search_Again", resourceCulture);
+                return ResourceManager.GetString("Button_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search learner records.
+        /// </summary>
+        public static string Button_Search_Learner_Records {
+            get {
+                return ResourceManager.GetString("Button_Search_Learner_Records", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear search.
+        /// </summary>
+        public static string Clear_Search {
+            get {
+                return ResourceManager.GetString("Clear_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply filters.
+        /// </summary>
+        public static string Filters_Button_Apply_Filters {
+            get {
+                return ResourceManager.GetString("Filters_Button_Apply_Filters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear filters.
+        /// </summary>
+        public static string Filters_Clear_All {
+            get {
+                return ResourceManager.GetString("Filters_Clear_All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filters.
+        /// </summary>
+        public static string Filters_Heading {
+            get {
+                return ResourceManager.GetString("Filters_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incomplete.
+        /// </summary>
+        public static string Filters_Incomplete {
+            get {
+                return ResourceManager.GetString("Filters_Incomplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected filters.
+        /// </summary>
+        public static string Filters_Selected_Filters {
+            get {
+                return ResourceManager.GetString("Filters_Selected_Filters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start year.
+        /// </summary>
+        public static string Filters_Start_Year {
+            get {
+                return ResourceManager.GetString("Filters_Start_Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Level.
+        /// </summary>
+        public static string Filters_Tlevel {
+            get {
+                return ResourceManager.GetString("Filters_Tlevel", resourceCulture);
             }
         }
         
@@ -97,11 +187,56 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add English level details.
+        /// </summary>
+        public static string Link_Add_English {
+            get {
+                return ResourceManager.GetString("Link_Add_English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add industry placement details.
+        /// </summary>
+        public static string Link_Add_Ip {
+            get {
+                return ResourceManager.GetString("Link_Add_Ip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add maths level details.
+        /// </summary>
+        public static string Link_Add_Maths {
+            get {
+                return ResourceManager.GetString("Link_Add_Maths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage learners.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Viewing {0} - {1} of {2} learners.
+        /// </summary>
+        public static string PaginationSummary_Text {
+            get {
+                return ResourceManager.GetString("PaginationSummary_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search by learner last name or ULN.
+        /// </summary>
+        public static string Search_By_Learner_Lastname_Or_Uln {
+            get {
+                return ResourceManager.GetString("Search_By_Learner_Lastname_Or_Uln", resourceCulture);
             }
         }
         

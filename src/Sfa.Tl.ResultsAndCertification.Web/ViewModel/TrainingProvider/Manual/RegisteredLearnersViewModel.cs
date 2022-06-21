@@ -1,32 +1,44 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Pagination;
 using System.Collections.Generic;
-
+using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
     public class RegisteredLearnersViewModel
     {
-        public SearchLearnerFiltersViewModel SearchLearnerFilters { get; set; }
-
+        public SearchCriteriaViewModel SearchCriteria { get; set; }
         public SearchLearnerDetailsListViewModel SearchLearnerDetailsList { get; set; }
 
-        public string SearchKey { get; set; }
-
-        public string SortOrder { get; set; }
-
-        public BreadcrumbModel Breadcrumb => new()
+        public BreadcrumbModel Breadcrumb
         {
-            BreadcrumbItems = new List<BreadcrumbItem> { new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home } }
-        };
-    }
+            get
+            {
+                return new BreadcrumbModel
+                {
+                    BreadcrumbItems = new List<BreadcrumbItem>
+                    {
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Search_Learner_Records, RouteName = RouteConstants.SearchLearnerRecord }
+                    }
+                };
+            }
+        }
 
-    public class SearchLearnerFiltersViewModel
-    {
-        public IList<FilterLookupData> AcademicYears { get; set; }
-        public IList<FilterLookupData> Tlevels { get; set; }
-        public IList<FilterLookupData> Status { get; set; }
+        public PaginationModel Pagination
+        {
+            get
+            {
+                return new PaginationModel
+                {
+                    PagerInfo = SearchLearnerDetailsList?.PagerInfo,
+                    RouteName = RouteConstants.SearchLearnerDetails,
+                    RouteAttributes = new Dictionary<string, string> { { Constants.AcademicYear, SearchCriteria?.AcademicYear.ToString() } },
+                    PaginationSummary = SearchLearnerDetails.PaginationSummary_Text
+                };
+            }
+        }
     }
 }

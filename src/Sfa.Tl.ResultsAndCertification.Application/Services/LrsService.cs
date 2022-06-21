@@ -35,15 +35,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             // Get Learners pending for either 'Verification' or 'Maths status' or 'English status' 
             var registrationLearners = await _tqRegistrationRepository.GetManyAsync(r => r.IsLearnerVerified == null || r.IsLearnerVerified.Value == false ||                                                             //IsLearnerVerifyRequired
-                                                                                         (((r.MathsStatus == null || r.MathsStatus == SubjectStatus.NotSpecified || r.MathsStatus == SubjectStatus.NotAchievedByLrs) ||    //IsSubjectStatusUpdateRequired(r.MathsStatus)
-                                                                                           (r.EnglishStatus == null || r.EnglishStatus == SubjectStatus.NotSpecified || r.EnglishStatus == SubjectStatus.NotAchievedByLrs)) //IsSubjectStatusUpdateRequired(r.EnglishStatus)
-                                                                                          && (r.IsRcFeed == null || r.IsRcFeed.Value == false)))
-                                                                                        .ToListAsync();
+                                                                                         r.MathsStatus == null || r.MathsStatus == SubjectStatus.NotSpecified || r.MathsStatus == SubjectStatus.NotAchievedByLrs ||    //IsSubjectStatusUpdateRequired(r.MathsStatus)
+                                                                                         r.EnglishStatus == null || r.EnglishStatus == SubjectStatus.NotSpecified || r.EnglishStatus == SubjectStatus.NotAchievedByLrs //IsSubjectStatusUpdateRequired(r.EnglishStatus)
+                                                                                   ).ToListAsync();
 
             if (registrationLearners == null) return null;
-
-            if (registrationLearners.Any())
-                registrationLearners = registrationLearners.Take(1000).ToList(); // added this to fix timeout issues and need to be removed
 
             return _mapper.Map<IList<RegisteredLearnerDetails>>(registrationLearners);
         }
@@ -192,8 +188,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         {
                             existingQualificationAchieved.QualificationGradeId = learnerLearningEvent.QualificationGradeId;
                             existingQualificationAchieved.IsAchieved = learnerLearningEvent.IsAchieved;
-                            existingQualificationAchieved.ModifiedBy = learnerRecord.PerformedBy;
-                            existingQualificationAchieved.ModifiedOn = DateTime.UtcNow;
+
+                            if (existingQualificationAchieved.Id > 0) // If record existing in database then update modified
+                            {
+                                existingQualificationAchieved.ModifiedBy = learnerRecord.PerformedBy;
+                                existingQualificationAchieved.ModifiedOn = DateTime.UtcNow;
+                            }
                             
                             isQualificationAchievedChanged = true;
                         }
@@ -225,8 +225,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         profile.EnglishStatus = learnerLearningEvents.Any(e => e.IsEnglishSubject && e.IsAchieved) ? SubjectStatus.AchievedByLrs : SubjectStatus.NotAchievedByLrs;
                     }
-
-                    profile.IsRcFeed = false;
+                                        
                     profile.ModifiedOn = DateTime.UtcNow;
                     profile.ModifiedBy = learnerRecord.PerformedBy;
                     isProfileChanged = true;

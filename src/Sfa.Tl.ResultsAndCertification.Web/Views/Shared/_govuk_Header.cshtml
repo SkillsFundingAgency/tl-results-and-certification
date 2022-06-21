@@ -1,5 +1,6 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Layout
 @using Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 @inject IWebConfigurationService ConfigurationService
 
 <header class="govuk-header" role="banner" data-module="govuk-header">
@@ -23,9 +24,10 @@
         </div>
 
         <div class="govuk-header__content">
+
             @if (Context.User.Identity.IsAuthenticated)
             {
-                <a asp-route="Home" class="govuk-header__link govuk-header__link--service-name">
+                <a asp-route="@RouteConstants.Home" class="govuk-header__link govuk-header__link--service-name">
                     @Header.Service_Name_Title
                 </a>
                 <button type="button" role="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">@Header.Menu_Text</button>
@@ -34,6 +36,12 @@
                         <a class="govuk-header__link" asp-route="@ConfigurationService.GetSignOutPath()">@Header.Signout_Link_Text</a>
                     </li>
                 </ul>
+            }
+            else
+            {
+                <a href="/" class="govuk-header__link govuk-header__link--service-name">
+                    @Header.Service_Name_Title
+                </a>
             }
         </div>
     </div>

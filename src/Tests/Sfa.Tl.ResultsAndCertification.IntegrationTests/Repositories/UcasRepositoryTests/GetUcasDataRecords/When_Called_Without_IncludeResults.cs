@@ -36,13 +36,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
                 x.TqRegistrationPathways.ToList().ForEach(p => p.AcademicYear = currentAcademicYear - 1);
             });
 
-            var pathwaysWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113, 1111111114, 1111111115 };
-            var pathwaysWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
-            SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, $"Summer {currentAcademicYear}");
+            var componentWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113, 1111111114, 1111111115 };
+            var componentWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
+            SeedAssessmentsAndResults(_registrations, componentWithAssessments, componentWithResults, $"Summer {currentAcademicYear}");
 
-            pathwaysWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113 };
-            pathwaysWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
-            SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, $"Autumn {currentAcademicYear}");
+            componentWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113 };
+            componentWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
+            SeedAssessmentsAndResults(_registrations, componentWithAssessments, componentWithResults, $"Autumn {currentAcademicYear}");
 
             SetAssessmentResult(1111111111, $"Summer {currentAcademicYear}", "B");
             SetAssessmentResult(1111111112, $"Autumn {currentAcademicYear}", "B");
@@ -68,7 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
 
         [Theory()]
         [MemberData(nameof(Data))]
-        public async Task Then_Expected_Results_Are_Returned(long uln, int expectedAssessmentsCount)
+        public async Task Then_Expected_Results_Are_Returned(long uln, int expectedPathwayAssessmentsCount, int expectedSpecialismAssessmentsCount)
         {
             await WhenAsync();
             _result.Should().NotBeNull();
@@ -77,9 +77,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             actualPathwayRegistration.Should().NotBeNull();
 
             var actualPathwayAssessments = actualPathwayRegistration.TqPathwayAssessments;
-            actualPathwayAssessments.Count().Should().Be(expectedAssessmentsCount);
+            actualPathwayAssessments.Count().Should().Be(expectedPathwayAssessmentsCount);
 
             var actualResults = actualPathwayAssessments.SelectMany(x => x.TqPathwayResults);
+            actualResults.Count().Should().Be(0);
+
+            // Specialism Assessments
+            var actualSpecialismAssessments = actualPathwayRegistration.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments);
+            actualSpecialismAssessments.Count().Should().Be(expectedSpecialismAssessmentsCount);
+
+            var actualSpecialismResults = actualSpecialismAssessments.SelectMany(x => x.TqSpecialismResults);
             actualResults.Count().Should().Be(0);
         }
 
@@ -96,12 +103,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             {
                 return new[]
                 {
-                    new object[] { 1111111111, 1 },
-                    new object[] { 1111111112, 1 },
-                    new object[] { 1111111113, 1 },
-                    new object[] { 1111111114, 1 },
-                    new object[] { 1111111115, 1 },
-                    new object[] { 1111111116, 0 },
+                    new object[] { 1111111111, 2, 2 },
+                    new object[] { 1111111112, 2, 2 },
+                    new object[] { 1111111113, 2, 2 },
+                    new object[] { 1111111114, 1, 1 },
+                    new object[] { 1111111115, 1, 1 },
+                    new object[] { 1111111116, 0, 0 },
                 };
             }
         }

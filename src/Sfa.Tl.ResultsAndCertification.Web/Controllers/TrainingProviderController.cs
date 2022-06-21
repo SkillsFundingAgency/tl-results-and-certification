@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
+using System.Linq;
 using System.Threading.Tasks;
 
 using LearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
@@ -32,55 +33,146 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("manage-learners/{academicYear}", Name = RouteConstants.SearchLearnerDetails)]
-        public async Task<IActionResult> SearchLearnerDetailsAsync(int academicYear)
+        [Route("manage-learners/{academicYear}/{pageNumber:int?}", Name = RouteConstants.SearchLearnerDetails)]
+        public async Task<IActionResult> SearchLearnerDetailsAsync(int academicYear, int? pageNumber)
         {
-            var viewmodel = await _trainingProviderLoader.SearchLearnerDetailsAsync(User.GetUkPrn(), academicYear);
-            if (viewmodel == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            
-            return View(viewmodel);
-        }
-
-        [HttpGet]
-        [Route("manage-registered-learners", Name = "ManageRegisteredLearners")]
-        public async Task<IActionResult> ManageRegisteredLearnersAsync()
-        {
-            await _cacheService.RemoveAsync<SearchLearnerFiltersViewModel>(CacheKey);
-            return RedirectToRoute(RouteConstants.GetRegisteredLearners);
-        }
-
-        [HttpGet]
-        [Route("manage-learners-new", Name = RouteConstants.GetRegisteredLearners)]
-        public async Task<IActionResult> GetRegisteredLearnersAsync()
-        {
-            // 1. Build SearchCriteria
-            //      1.1 CacheFound      --> GetLookupData + SelectedValues
-            //      1.2 CacheNotFound   --> AskApi get FilterLookups and update Cache. 
-            // 2. Request api 
-            // 3. Build ViewModel 
-            // 4. return View();
-
-            // Step 1.2 from below. 
-            var searchFilters = await _cacheService.GetAsync<SearchLearnerFiltersViewModel>(CacheKey);
+            var searchFilters = await _trainingProviderLoader.GetSearchLearnerFiltersAsync(User.GetUkPrn());
             if (searchFilters == null)
-                searchFilters = await _trainingProviderLoader.GetSearchLearnerFiltersAsync(User.GetUkPrn());
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
+
+            if (searchCriteria == null)
+                searchCriteria = new SearchCriteriaViewModel { AcademicYear = academicYear, PageNumber = pageNumber };
+            else
+            {
+                searchCriteria.AcademicYear = academicYear;
+                searchCriteria.PageNumber = pageNumber;
+
+                if (searchCriteria.SearchLearnerFilters != null)
+                {
+                    searchCriteria.SearchLearnerFilters.Tlevels?.ToList().ForEach(tl => tl.Name = searchFilters.Tlevels.FirstOrDefault(x => x.Id == tl.Id)?.Name);
+                    searchCriteria.SearchLearnerFilters.Status?.ToList().ForEach(s => s.Name = searchFilters.Status.FirstOrDefault(x => x.Id == s.Id)?.Name);
+                }
+            }
+
+            var learnersList = await _trainingProviderLoader.SearchLearnerDetailsAsync(User.GetUkPrn(), searchCriteria);
+
+            if (searchCriteria.SearchLearnerFilters == null)
+                searchCriteria.SearchLearnerFilters = searchFilters;
 
             var viewModel = new RegisteredLearnersViewModel
             {
-                SearchLearnerFilters = searchFilters,
-                SearchLearnerDetailsList = await _trainingProviderLoader.SearchLearnerDetailsAsync(User.GetUkPrn(), 2020) // TODO: ApplyFiter Story.
+                SearchCriteria = searchCriteria,
+                SearchLearnerDetailsList = learnersList
             };
 
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("manage-learners-new", Name = RouteConstants.SubmitGetRegisteredLearners)]
-        public async Task<IActionResult> GetRegisteredLearnersAsync(RegisteredLearnersViewModel viewModel)
+        [Route("manage-learners/{academicYear}", Name = RouteConstants.SubmitSearchLearnerDetails)]
+        public async Task<IActionResult> SearchLearnerDetailsAsync(SearchCriteriaViewModel viewModel)
         {
-            return View(viewModel);
+            var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
+
+            // populate if any filter are applied from cache
+            if(searchCriteria != null)
+                viewModel.SearchLearnerFilters = searchCriteria.SearchLearnerFilters;
+
+            viewModel.IsSearchKeyApplied = true;
+            await _cacheService.SetAsync(CacheKey, viewModel);
+            return RedirectToRoute(RouteConstants.SearchLearnerDetails, new { academicYear = viewModel.AcademicYear });
         }
+
+        [HttpGet]
+        [Route("manage-learners-clearsearchkey/{academicYear}", Name = RouteConstants.SearchLearnerClearKey)]
+        public async Task<IActionResult> SearchLearnerClearKeyAsync(int academicYear)
+        {
+            var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
+
+            if (searchCriteria != null)
+            {
+                searchCriteria.SearchKey = null;
+                searchCriteria.IsSearchKeyApplied = false;
+                await _cacheService.SetAsync(CacheKey, searchCriteria);
+            }
+
+            return RedirectToRoute(RouteConstants.SearchLearnerDetails, new { academicYear });
+        }
+
+        [HttpPost]
+        [Route("manage-learners-applyfilters", Name = RouteConstants.SubmitSearchLearnerApplyFilters)]
+        public async Task<IActionResult> SubmitSearchLearnerApplyFiltersAsync(SearchCriteriaViewModel viewModel)
+        {
+            var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
+
+            // populate searchKey and IsSerchKeyApplied from cache
+            if (searchCriteria != null)
+            {
+                viewModel.SearchKey = searchCriteria.SearchKey;
+                viewModel.IsSearchKeyApplied = searchCriteria.IsSearchKeyApplied;
+            }
+
+            viewModel.SearchLearnerFilters.IsApplyFiltersSelected = true;
+            await _cacheService.SetAsync(CacheKey, viewModel);
+            return RedirectToRoute(RouteConstants.SearchLearnerDetails, new { academicYear = viewModel.AcademicYear });
+        }
+
+        [HttpGet]
+        [Route("manage-learners-clearfilters/{academicYear}", Name = RouteConstants.SearchLearnerClearFilters)]
+        public async Task<IActionResult> SearchLearnerClearFiltersAsync(int academicYear)
+        {
+            var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
+
+            if(searchCriteria != null)
+            {
+                searchCriteria.SearchLearnerFilters = null;
+                await _cacheService.SetAsync(CacheKey, searchCriteria);
+            }
+            
+            return RedirectToRoute(RouteConstants.SearchLearnerDetails, new { academicYear });
+        }
+
+        //[HttpGet]
+        //[Route("manage-registered-learners", Name = "ManageRegisteredLearners")]
+        //public async Task<IActionResult> ManageRegisteredLearnersAsync()
+        //{
+        //    await _cacheService.RemoveAsync<SearchLearnerFiltersViewModel>(CacheKey);
+        //    return RedirectToRoute(RouteConstants.GetRegisteredLearners);
+        //}
+
+        //[HttpGet]
+        //[Route("manage-learners-new", Name = RouteConstants.GetRegisteredLearners)]
+        //public async Task<IActionResult> GetRegisteredLearnersAsync()
+        //{
+        //    // 1. Build SearchCriteria
+        //    //      1.1 CacheFound      --> GetLookupData + SelectedValues
+        //    //      1.2 CacheNotFound   --> AskApi get FilterLookups and update Cache. 
+        //    // 2. Request api 
+        //    // 3. Build ViewModel 
+        //    // 4. return View();
+
+        //    // Step 1.2 from below. 
+        //    var searchFilters = await _cacheService.GetAsync<SearchLearnerFiltersViewModel>(CacheKey);
+        //    if (searchFilters == null)
+        //        searchFilters = await _trainingProviderLoader.GetSearchLearnerFiltersAsync(User.GetUkPrn());
+
+        //    var viewModel = new RegisteredLearnersViewModel
+        //    {
+        //        SearchCriteria = new SearchCriteriaViewModel { SearchLearnerFilters = searchFilters },
+        //        SearchLearnerDetailsList = await _trainingProviderLoader.SearchLearnerDetailsAsync(User.GetUkPrn(), 2020) // TODO: ApplyFiter Story.
+        //    };
+
+        //    return View(viewModel);
+        //}
+
+        //[HttpPost]
+        //[Route("manage-learners-new", Name = RouteConstants.SubmitGetRegisteredLearners)]
+        //public async Task<IActionResult> GetRegisteredLearnersAsync(RegisteredLearnersViewModel viewModel)
+        //{
+        //    return View(viewModel);
+        //}
 
         [HttpGet]
         [Route("manage-learner-maths-level/{profileId}", Name = RouteConstants.AddMathsStatus)]
@@ -143,16 +235,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         #region Update-Learner
 
         [HttpGet]
-        [Route("search-learner-record-unique-learner-number", Name = RouteConstants.SearchLearnerRecord)]
+        [Route("search-learner-records", Name = RouteConstants.SearchLearnerRecord)]
         public async Task<IActionResult> SearchLearnerRecordAsync()
         {
+            await _cacheService.RemoveAsync<SearchCriteriaViewModel>(CacheKey);
             var cacheModel = await _cacheService.GetAndRemoveAsync<SearchLearnerRecordViewModel>(CacheKey);
             var viewModel = cacheModel ?? new SearchLearnerRecordViewModel();
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("search-learner-record-unique-learner-number", Name = RouteConstants.SubmitSearchLearnerRecord)]
+        [Route("search-learner-records", Name = RouteConstants.SubmitSearchLearnerRecord)]
         public async Task<IActionResult> SearchLearnerRecordAsync(SearchLearnerRecordViewModel model)
         {
             // Note: Please note this is intrim search page, we have another stories coming up will replace this method. 

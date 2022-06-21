@@ -6,7 +6,7 @@ $(document).ready(function () {
     var currentGetProviderSearchXhr = null;
 
     $("#search").each(function () {
-        var selectElement = $('<select></select>', { html: $(this).html() });
+        var selectElement = $('<select aria-required="true"></select>', { html: $(this).html() });
         $.each(this.attributes, function () {
             selectElement.attr(this.name, this.value);
         });
@@ -62,4 +62,5 @@ $(document).ready(function () {
     });
 
     $("#search").attr('maxlength', '400');
+    $("#search").attr('aria-required', 'true');
 });

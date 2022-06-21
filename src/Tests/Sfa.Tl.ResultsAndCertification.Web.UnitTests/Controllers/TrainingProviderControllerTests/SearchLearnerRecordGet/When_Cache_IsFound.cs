@@ -19,6 +19,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         }
 
         [Fact]
+        public void Then_Expected_Methods_AreCalled()
+        {
+            CacheService.Received(1).RemoveAsync<SearchCriteriaViewModel>(CacheKey);
+        }
+
+        [Fact]
         public void Then_Returns_Expected_Results()
         {
             Result.Should().NotBeNull();

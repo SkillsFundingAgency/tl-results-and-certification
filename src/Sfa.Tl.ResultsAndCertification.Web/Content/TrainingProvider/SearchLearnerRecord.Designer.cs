@@ -97,16 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage learner records.
-        /// </summary>
-        public static string Manage_Learner_Records_Heading {
-            get {
-                return ResourceManager.GetString("Manage_Learner_Records_Heading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search ULN - Manage learner.
+        ///   Looks up a localized string similar to Search learner records.
         /// </summary>
         public static string Page_Title {
             get {
@@ -129,6 +120,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Search_For_The_Learner_You_Want_To_Manage {
             get {
                 return ResourceManager.GetString("Search_For_The_Learner_You_Want_To_Manage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search learner records.
+        /// </summary>
+        public static string Search_Learner_Records_Heading {
+            get {
+                return ResourceManager.GetString("Search_Learner_Records_Heading", resourceCulture);
             }
         }
         

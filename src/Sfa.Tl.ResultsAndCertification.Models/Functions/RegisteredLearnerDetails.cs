@@ -11,7 +11,5 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Functions
         public DateTime DateofBirth { get; set; }
         public string Gender { get; set; }
         public bool? IsLearnerVerified { get; set; }
-        public bool? IsSendLearner { get; set; }
-        public bool? IsRcFeed { get; set; }
     }
 }

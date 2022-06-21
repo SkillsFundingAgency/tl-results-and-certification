@@ -1,12 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
@@ -28,8 +31,59 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                              .Where(p => p.TqProvider.TlProvider.UkPrn == request.Ukprn && p.Status == RegistrationPathwayStatus.Active)
                                              .AsQueryable();
 
-            if (request.AcademicYear.Any())
+            var totalCount = pathwayQueryable.Count();
+
+            if(!string.IsNullOrWhiteSpace(request.SearchKey))
+            {
+                pathwayQueryable = request.SearchKey.IsLong()
+                    ? pathwayQueryable.Where(p => p.TqRegistrationProfile.UniqueLearnerNumber == request.SearchKey.ToLong())
+                    : pathwayQueryable.Where(p => EF.Functions.Like(p.TqRegistrationProfile.Lastname, $"{request.SearchKey.ToLower()}"));
+            }
+
+            if (request.AcademicYear != null && request.AcademicYear.Any())
                 pathwayQueryable = pathwayQueryable.Where(p => request.AcademicYear.Contains(p.AcademicYear));
+
+            if (request.Tlevels != null && request.Tlevels.Any())
+                pathwayQueryable = pathwayQueryable.Where(p => request.Tlevels.Contains(p.TqProvider.TqAwardingOrganisation.TlPathway.Id));
+
+            if (request.Statuses != null && request.Statuses.Any())
+            {
+                var expressions = new List<Expression<Func<TqRegistrationPathway, bool>>>();
+
+                foreach (var statusId in request.Statuses.OrderBy(s => s))
+                {
+                    switch (statusId)
+                    {
+                        case (int)LearnerStatusFilter.EnglishIncompleted:
+                            expressions.Add(p => p.TqRegistrationProfile.EnglishStatus == null);
+                            break;
+                        case (int)LearnerStatusFilter.MathsIncompleted:
+                            expressions.Add(p => p.TqRegistrationProfile.MathsStatus == null);
+                            break;
+                        case (int)LearnerStatusFilter.IndustryPlacementIncompleted:
+                            expressions.Add(p => !p.IndustryPlacements.Any());
+                            break;
+                        case (int)LearnerStatusFilter.AllIncomplemented:
+                            expressions.Clear();
+                            expressions.Add(p => p.TqRegistrationProfile.EnglishStatus == null && p.TqRegistrationProfile.MathsStatus == null && !p.IndustryPlacements.Any());
+                            break;
+                    }
+                }
+
+                Expression<Func<TqRegistrationPathway, bool>> criteria = null;
+
+                expressions.ForEach(exp =>
+                {
+                    criteria = LinqExpressionExtensions.OrCombine(criteria, exp);
+                });
+
+                if (criteria != null)
+                    pathwayQueryable = pathwayQueryable.Where(criteria);
+            }
+
+            var filteredRecordsCount = await pathwayQueryable.CountAsync();
+
+            var pager = new Pager(filteredRecordsCount, request.PageNumber, 10);
 
             var learnerRecords = await pathwayQueryable
                 .Select(x => new SearchLearnerDetail
@@ -42,33 +96,32 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     TlevelName = x.TqProvider.TqAwardingOrganisation.TlPathway.Name,
                     EnglishStatus = x.TqRegistrationProfile.EnglishStatus,
                     MathsStatus = x.TqRegistrationProfile.MathsStatus,
-                    IndustryPlacementStatus = x.IndustryPlacements.Any() ? x.IndustryPlacements.FirstOrDefault().Status : null,
-                    CreatedOn = x.CreatedOn
+                    IndustryPlacementStatus = x.IndustryPlacements.Any() ? x.IndustryPlacements.FirstOrDefault().Status : null
                 })
-                .GroupBy(x => x.ProfileId)
-                .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
+                .OrderBy(x => x.Lastname)
+                .Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize)
                 .ToListAsync();
 
-            return new PagedResponse<SearchLearnerDetail> { Records = learnerRecords.OrderBy(l => l.Lastname).ToList(), TotalRecords = learnerRecords.Count };
+            return new PagedResponse<SearchLearnerDetail> { Records = learnerRecords, TotalRecords = totalCount, PagerInfo = pager };
         }
 
-        public async Task<IList<FilterLookupData>> GetSearchAcademicYearFilters()
+        public async Task<IList<FilterLookupData>> GetSearchAcademicYearFiltersAsync(DateTime searchDate)
         {
-            var currentAcademicYear = await _dbContext.AcademicYear
-                .Where(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate)
-                .OrderByDescending(x => x.Year)
-                .FirstOrDefaultAsync();
-
-            if (currentAcademicYear == null)
-                return null;
-
-            var academicYearTo = currentAcademicYear.Year;
-            var academicYearFrom = academicYearTo - 4;
-
             return await _dbContext.AcademicYear
-                .Where(x => x.Year >= academicYearFrom && x.Year <= academicYearTo)
-                .Select(x => new FilterLookupData { Id = x.Id, Name = $"{x.Year} to {x.Year + 1}", IsSelected = false })
-                .ToListAsync();
+                    .Where(x => searchDate >= x.EndDate || (searchDate >= x.StartDate && searchDate <= x.EndDate))
+                    .OrderBy(x => x.Year)
+                    .Take(4)
+                    .Select(x => new FilterLookupData { Id = x.Year, Name = $"{x.Year} to {x.Year + 1}", IsSelected = false })
+                    .ToListAsync();
+        }
+
+        public async Task<IList<FilterLookupData>> GetSearchTlevelFiltersAsync()
+        {
+            return await _dbContext.TlPathway
+                    .OrderBy(x => x.Name)
+                    .Select(x => new FilterLookupData { Id = x.Id, Name = x.Name, IsSelected = false })
+                    .ToListAsync();
+
         }
 
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)

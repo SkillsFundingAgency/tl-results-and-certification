@@ -37,16 +37,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
                 x.TqRegistrationPathways.ToList().ForEach(p => p.AcademicYear = currentAcademicYear - 1);
             });
 
-            var pathwaysWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113, 1111111114, 1111111115 };
-            var pathwaysWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
-            SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, $"Summer {currentAcademicYear}");
+            var componentWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113, 1111111114, 1111111115 };
+            var componentWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
+            SeedAssessmentsAndResults(_registrations, componentWithAssessments, componentWithResults, $"Summer {currentAcademicYear}");
 
-            pathwaysWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113 };
-            pathwaysWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
-            SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, $"Autumn {currentAcademicYear}");
+            componentWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113 };
+            componentWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
+            SeedAssessmentsAndResults(_registrations, componentWithAssessments, componentWithResults, $"Autumn {currentAcademicYear}");
 
-            SetAssessmentResult(1111111111, $"Summer {currentAcademicYear}", "B");
-            SetAssessmentResult(1111111112, $"Autumn {currentAcademicYear}", "B");
+            SetAssessmentResult(1111111111, $"Summer {currentAcademicYear}", "B", "Merit");
+            SetAssessmentResult(1111111112, $"Autumn {currentAcademicYear}", "B", "Pass");
 
             CommonRepository = new CommonRepository(DbContext);
             UcasRepository = new UcasRepository(DbContext, CommonRepository);
@@ -67,7 +67,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
 
         [Theory()]
         [MemberData(nameof(Data))]
-        public async Task Then_Expected_Results_Are_Returned(long uln, int expectedAssessmentsCount, int expectedResultsCount, string expectedSeriesName, string expectedGrade)
+        public async Task Then_Expected_Results_Are_Returned(long uln, int expectedAssessmentsCount, int expectedResultsCount, string expectedSeriesName, string expectedGrade, 
+            int expectedSplAssessmentCount, int expectedSplResultsCount, string expectedSplGrade)
         {
             await WhenAsync();
             _result.Should().NotBeNull();
@@ -90,12 +91,37 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             var actualResult = actualResults.FirstOrDefault(x => x.TqPathwayAssessment.AssessmentSeries.Name.Equals(expectedSeriesName, StringComparison.InvariantCultureIgnoreCase));
             if (expectedGrade != null)
                 actualResult.TlLookup.Value.Should().Be(expectedGrade);
+
+            // Assert Specialisms
+            var actualSpecialismAssessments = actualPathwayRegistration.TqRegistrationSpecialisms.SelectMany(x => x.TqSpecialismAssessments);
+            actualSpecialismAssessments.Count().Should().Be(expectedSplAssessmentCount);
+
+            if (expectedSplAssessmentCount > 0)
+            {
+                var hasExpectedAssessmentSeries = actualSpecialismAssessments.FirstOrDefault(x => x.AssessmentSeries.Name.Equals(expectedSeriesName));
+                hasExpectedAssessmentSeries.Should().NotBeNull();
+            }
+
+            var actualSpecialismResults = actualSpecialismAssessments.SelectMany(x => x.TqSpecialismResults);
+            actualSpecialismResults.Count().Should().Be(expectedSplResultsCount);
+
+            var actualSpecialismResult = actualSpecialismResults.FirstOrDefault(x => x.TqSpecialismAssessment.AssessmentSeries.Name.Equals(expectedSeriesName, StringComparison.InvariantCultureIgnoreCase));
+            if (expectedSplGrade != null)
+                actualSpecialismResult.TlLookup.Value.Should().Be(expectedSplGrade);
+
         }
 
-        private void SetAssessmentResult(long uln, string seriesName, string grade)
+        private void SetAssessmentResult(long uln, string seriesName, string coreGrade, string specialismGrade)
         {
             var currentResult = DbContext.TqPathwayResult.FirstOrDefault(x => x.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln && x.TqPathwayAssessment.AssessmentSeries.Name.Equals(seriesName, StringComparison.InvariantCultureIgnoreCase));
-            currentResult.TlLookup = PathwayComponentGrades.FirstOrDefault(x => x.Value.Equals(grade, StringComparison.InvariantCultureIgnoreCase));
+            currentResult.TlLookup = PathwayComponentGrades.FirstOrDefault(x => x.Value.Equals(coreGrade, StringComparison.InvariantCultureIgnoreCase));
+
+            var currentSpecialismResult = DbContext.TqSpecialismResult.FirstOrDefault(x => x.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln && 
+            x.TqSpecialismAssessment.AssessmentSeries.Name.Equals(seriesName, StringComparison.InvariantCultureIgnoreCase));
+            var x = DbContext.TqSpecialismResult.Where(x => x.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln);
+            var y = DbContext.TqSpecialismResult.FirstOrDefault(x => x.TqSpecialismAssessment.AssessmentSeries.Name.Equals(seriesName, StringComparison.InvariantCultureIgnoreCase));
+            currentSpecialismResult.TlLookup = SpecialismComponentGrades.FirstOrDefault(x => x.Value.Equals(specialismGrade, StringComparison.InvariantCultureIgnoreCase));
+
             DbContext.SaveChanges();
         }
 
@@ -105,18 +131,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             {
                 return new[]
                 {
-                    new object[] { 1111111111, 2, 2, "Summer 2021", "B" },
-                    new object[] { 1111111111, 2, 2, "Autumn 2021", "A*" },
+                    new object[] { 1111111111, 2, 2, "Summer 2021", "B", 2, 2, "Merit" },
+                    new object[] { 1111111111, 2, 2, "Autumn 2021", "A*", 2, 2, "Distinction" },
 
-                    new object[] { 1111111112, 2, 2, "Summer 2021", "A*" },
-                    new object[] { 1111111112, 2, 2, "Autumn 2021", "B" },
+                    new object[] { 1111111112, 2, 2, "Summer 2021", "A*", 2, 2, "Distinction" },
+                    new object[] { 1111111112, 2, 2, "Autumn 2021", "B", 2, 2, "Pass" },
 
-                    new object[] { 1111111113, 2, 2, "Summer 2021", "A*" },
-                    new object[] { 1111111113, 2, 2, "Autumn 2021", "A*" },
+                    new object[] { 1111111113, 2, 2, "Summer 2021", "A*", 2, 2, "Distinction" },
+                    new object[] { 1111111113, 2, 2, "Autumn 2021", "A*", 2, 2, "Distinction" },
 
-                    new object[] { 1111111114, 1, 0, "Summer 2021", null },
-                    new object[] { 1111111115, 1, 0, "Summer 2021", null },
-                    new object[] { 1111111116, 0, 0, null, null },
+                    new object[] { 1111111114, 1, 0, "Summer 2021", null, 1, 0,  null },
+                    new object[] { 1111111115, 1, 0, "Summer 2021", null, 1, 0,  null },
+                    new object[] { 1111111116, 0, 0, null, null, null, null, null},
                 };
             }
         }

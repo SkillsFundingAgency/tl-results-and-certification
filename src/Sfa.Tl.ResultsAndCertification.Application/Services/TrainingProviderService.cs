@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -26,6 +27,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _tqRegistrationProfile = tqRegistrationProfile;
             _trainingProviderRepository = trainingProviderRepository;
             _logger = logger;
+        }
+
+        public async Task<SearchLearnerFilters> GetSearchLearnerFiltersAsync(long providerUkprn)
+        {
+            var statusFiltersList = new List<FilterLookupData>();
+            foreach (var status in EnumExtensions.GetEnumDisplayNameAndValue<SearchLearnerFilterStatus>())
+                statusFiltersList.Add(new FilterLookupData { Id = (int)status.Key, Name = status.Value, IsSelected = false });
+
+            return new SearchLearnerFilters
+            {
+                AcademicYears = await _trainingProviderRepository.GetSearchAcademicYearFiltersAsync(DateTime.UtcNow),
+                Tlevels = await _trainingProviderRepository.GetSearchTlevelFiltersAsync(),
+                Status = statusFiltersList
+            };
         }
 
         public async Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request)
@@ -65,16 +80,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             profile.ModifiedOn = DateTime.UtcNow;
             profile.ModifiedBy = request.PerformedBy;
-            
+
             return await _tqRegistrationProfile.UpdateAsync(profile) > 0;
         }
 
-        public async Task<SearchLearnerFilters> GetSearchLearnerFiltersAsync(long providerUkprn)
-        {
-            return new SearchLearnerFilters
-            {
-                AcademicYears = await _trainingProviderRepository.GetSearchAcademicYearFilters()
-            };
-        }
+
     }
 }

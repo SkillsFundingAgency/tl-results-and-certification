@@ -112,7 +112,7 @@
         },
         "ucasTransferEntriesTrigger": {
             "type": "string",
-            "defaultValue": "0 10 20 * * *"
+            "defaultValue": "10 20 * 6 WED"
         },
         "ucasTransferResultsTrigger": {
             "type": "string",

@@ -18,7 +18,7 @@
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">
                         <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-5">
-                            @SearchLearnerRecord.Manage_Learner_Records_Heading
+                            @SearchLearnerRecord.Search_Learner_Records_Heading
                         </h1>
                     </legend>
                                         
@@ -35,7 +35,7 @@
                         </label>
                         <span class="govuk-hint">@SearchLearnerRecord.Uln_Must_10_Digit_Hint</span>
                         <span sfa-validation-for="SearchUln"></span>
-                        <input id="searchuln" class="govuk-input govuk-input--width-10" asp-for="SearchUln" maxlength="10">
+                        <input id="searchuln" class="govuk-input govuk-input--width-10" asp-for="SearchUln" maxlength="10" inputmode="numeric" aria-required="true">
                     </div>
                 </fieldset>
             </div>

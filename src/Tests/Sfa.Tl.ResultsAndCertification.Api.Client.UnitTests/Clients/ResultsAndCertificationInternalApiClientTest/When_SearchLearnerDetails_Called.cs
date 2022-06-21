@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
     public class When_SearchLearnerDetails_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         // inputs
-        private readonly SearchLearnerRequest _apiRequest;
+        private SearchLearnerRequest _apiRequest;
 
         // results
         private PagedResponse<SearchLearnerDetail> _acutalResult;
@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                         AcademicYear = 2020,
                         EnglishStatus = SubjectStatus.Achieved,
                         MathsStatus = SubjectStatus.Achieved,
-                        IndustryPlacementStatus = IndustryPlacementStatus.Completed
+                        IndustryPlacementStatus = null
                     },
                     new SearchLearnerDetail
                     {
@@ -68,7 +68,18 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                         MathsStatus = null,
                         IndustryPlacementStatus = null
                     }
-                }
+                },
+                PagerInfo = new Pager(2, 1, 10)      
+            };
+
+            _apiRequest = new SearchLearnerRequest
+            {
+                AcademicYear = new List<int> { 2020 },
+                Statuses = new List<int> { (int)LearnerStatusFilter.IndustryPlacementIncompleted },
+                Tlevels = new List<int> { 1, 2 },
+                SearchKey = "Smith1",
+                PageNumber = 1,
+                Ukprn = 2568974
             };
         }
 
