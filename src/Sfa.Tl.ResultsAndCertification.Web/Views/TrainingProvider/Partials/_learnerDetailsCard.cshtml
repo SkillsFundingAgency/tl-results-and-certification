@@ -26,6 +26,24 @@
                 @if (!Model.IsStatusCompleted)
                 {
                     <strong class="govuk-tag govuk-tag--red govuk-!-margin-bottom-1">@LearnerRecordDetails.Status_Tag_Incomplete</strong>
+
+                    <ul class="govuk-body-s govuk-list">
+
+                        @if (!Model.IsIndustryPlacementAdded)
+                        {
+                            <li><a class="govuk-link" asp-route="@RouteConstants.AddIndustryPlacement" asp-route-profileId="@Model.ProfileId">@SearchLearnerDetails.Link_Add_Ip</a></li>
+                        }
+
+                        @if (!Model.IsMathsAdded)
+                        {
+                            <li><a class="govuk-link" asp-route="@RouteConstants.AddMathsStatus" asp-route-profileId="@Model.ProfileId">@SearchLearnerDetails.Link_Add_Maths</a></li>
+                        }
+
+                        @if (!Model.IsEnglishAdded)
+                        {
+                            <li><a class="govuk-link" asp-route="@RouteConstants.AddEnglishStatus" asp-route-profileId="@Model.ProfileId">@SearchLearnerDetails.Link_Add_English</a></li>
+                        }
+                    </ul>
                 }
             </dd>
         </div>

@@ -1,4 +1,4 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.SearchLearnerDetailsListViewModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.RegisteredLearnersViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
@@ -12,25 +12,42 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l">@string.Format(SearchLearnerDetails.Heading_Registered_Learners, Model.TotalRecords)</h1>
+        <h1 class="govuk-heading-l">@string.Format(SearchLearnerDetails.Heading_Registered_Learners, Model.SearchLearnerDetailsList?.TotalRecords)</h1>
     </div>
 </div>
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-        <div class="learner-records">
-            <dl class="govuk-summary-list">
-                @foreach (var learner in Model.SearchLearnerDetailsList)
+    <div class="govuk-grid-column-one-third">
+        <partial name="Partials/_searchFilters.cshtml" model="Model.SearchCriteria" />
+    </div>
+    <div class="govuk-grid-column-two-thirds">
+
+        <partial name="Partials/_searchKey.cshtml" model="Model.SearchCriteria" />
+
+        @if (Model.SearchLearnerDetailsList.SearchLearnerDetailsList.Count > 0)
+        {
+            <div class="learner-records">
+                @if (Model.Pagination.PagerInfo.TotalPages > 0)
                 {
-                    <partial name="Partials/_learnerDetailsCard.cshtml" model="learner" />
+                    <div class="govuk-body">@string.Format(Model.Pagination.PaginationSummary, @Model.Pagination.PagerInfo.RecordFrom, @Model.Pagination.PagerInfo.RecordTo, @Model.Pagination.PagerInfo.TotalItems)</div>
                 }
-            </dl>
+                <dl class="govuk-summary-list">
+                    @foreach (var learner in Model.SearchLearnerDetailsList.SearchLearnerDetailsList)
+                    {
+                        <partial name="Partials/_learnerDetailsCard.cshtml" model="learner" />
+                    }
+                </dl>
+            </div>
+            <vc:pagination model=@Model.Pagination></vc:pagination>
+        }
+        else
+        {
+            <partial name="Partials/_noMatchingSearchResults.cshtml" />
+        }
+
+        <div class="govuk-button-group govuk-!-margin-bottom-6">
+            <a id="searchAgainButton" class="govuk-button" role="button" asp-route="@RouteConstants.SearchLearnerRecord">@SearchLearnerDetails.Button_Search_Learner_Records</a>
+            <a id="backToHomeButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.Home">@SearchLearnerDetails.Button_Back_To_Home</a>
         </div>
     </div>
 </div>
-
-<div class="govuk-button-group govuk-!-margin-bottom-6">
-    <a id="searchAgainButton" class="govuk-button" role="button" asp-route="@RouteConstants.SearchLearnerRecord">@SearchLearnerDetails.Button_Search_Again</a>
-    <a id="backToHomeButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.Home">@SearchLearnerDetails.Button_Back_To_Home</a>
-</div>
-

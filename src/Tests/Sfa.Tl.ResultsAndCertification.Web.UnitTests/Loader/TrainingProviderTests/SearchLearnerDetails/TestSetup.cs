@@ -7,11 +7,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
     {
         protected long ProviderUkprn;
         protected int AcademicYear;
+        protected int? PageNumber;
+        protected SearchCriteriaViewModel SearchCriteriaViewModel;
         protected SearchLearnerDetailsListViewModel ActualResult { get; set; }
 
         public async override Task When()
         {
-            ActualResult = await Loader.SearchLearnerDetailsAsync(ProviderUkprn, AcademicYear);
+            ActualResult = await Loader.SearchLearnerDetailsAsync(ProviderUkprn, SearchCriteriaViewModel);
         }
     }
 }

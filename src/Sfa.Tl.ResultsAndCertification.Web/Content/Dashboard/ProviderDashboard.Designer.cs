@@ -124,6 +124,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to industry placement details for each learner.
+        /// </summary>
+        public static string Industry_Placement_Details_For_Each_Learner {
+            get {
+                return ResourceManager.GetString("Industry_Placement_Details_For_Each_Learner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check what data you need to provide and when you need to provide it.
         /// </summary>
         public static string Link_Check_Data_You_Need_To_Provide {
@@ -156,6 +165,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         public static string Link_Ip_Delivery_Guidance {
             get {
                 return ResourceManager.GetString("Link_Ip_Delivery_Guidance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View an example T Level results file (opens in a new tab).
+        /// </summary>
+        public static string Link_View_An_Example_Tlevel_Results_File {
+            get {
+                return ResourceManager.GetString("Link_View_An_Example_Tlevel_Results_File", resourceCulture);
             }
         }
         
@@ -201,6 +219,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         public static string Manage_Your_Account_Text {
             get {
                 return ResourceManager.GetString("Manage_Your_Account_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to missing English and maths details.
+        /// </summary>
+        public static string Missing_English_And_Maths_Details {
+            get {
+                return ResourceManager.GetString("Missing_English_And_Maths_Details", resourceCulture);
             }
         }
         
@@ -322,7 +349,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T Level results, certificates and statements of achievement for your learners.
+        ///   Looks up a localized string similar to This service provides T Level results, certificates and statements of achievement for your learners..
         /// </summary>
         public static string Text_Tlevel_Results_Certificates_Soa {
             get {
@@ -345,6 +372,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         public static string Tlevels_Text {
             get {
                 return ResourceManager.GetString("Tlevels_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must give us:.
+        /// </summary>
+        public static string You_Must_Give_Us_Text {
+            get {
+                return ResourceManager.GetString("You_Must_Give_Us_Text", resourceCulture);
             }
         }
     }

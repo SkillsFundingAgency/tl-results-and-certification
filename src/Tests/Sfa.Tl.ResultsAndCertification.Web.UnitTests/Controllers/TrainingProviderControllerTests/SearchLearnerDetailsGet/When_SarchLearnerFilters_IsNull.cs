@@ -5,22 +5,21 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.SearchLearnerDetails
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.SearchLearnerDetailsGet
 {
-    public class When_Called_With_Invalid_Data : TestSetup
+    public class When_SarchLearnerFilters_IsNull : TestSetup
     {
-        private SearchLearnerDetailsListViewModel _searchLearnersList;
+        private SearchLearnerFiltersViewModel _searchFilters;
 
         public override void Given()
         {
-            AcademicYear = 2020;
-            TrainingProviderLoader.SearchLearnerDetailsAsync(ProviderUkprn, AcademicYear).Returns(_searchLearnersList);
+            TrainingProviderLoader.GetSearchLearnerFiltersAsync(ProviderUkprn).Returns(_searchFilters);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            TrainingProviderLoader.Received(1).SearchLearnerDetailsAsync(ProviderUkprn, AcademicYear);
+            TrainingProviderLoader.Received(1).GetSearchLearnerFiltersAsync(ProviderUkprn);
         }
 
         [Fact]

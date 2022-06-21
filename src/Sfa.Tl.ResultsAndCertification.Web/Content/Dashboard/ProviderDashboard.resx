@@ -138,6 +138,9 @@
   <data name="Heading_News_Guidance_Events" xml:space="preserve">
     <value>News, guidance and events</value>
   </data>
+  <data name="Industry_Placement_Details_For_Each_Learner" xml:space="preserve">
+    <value>industry placement details for each learner</value>
+  </data>
   <data name="Link_Check_Data_You_Need_To_Provide" xml:space="preserve">
     <value>Check what data you need to provide and when you need to provide it</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="Link_Ip_Delivery_Guidance" xml:space="preserve">
     <value>Industry placements delivery guidance (opens in a new tab)</value>
+  </data>
+  <data name="Link_View_An_Example_Tlevel_Results_File" xml:space="preserve">
+    <value>View an example T Level results file (opens in a new tab)</value>
   </data>
   <data name="Link_View_News_And_Updates" xml:space="preserve">
     <value>View news and updates (opens in a new tab)</value>
@@ -164,6 +170,9 @@
   </data>
   <data name="Manage_Your_Account_Text" xml:space="preserve">
     <value>Manage your account</value>
+  </data>
+  <data name="Missing_English_And_Maths_Details" xml:space="preserve">
+    <value>missing English and maths details</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Home page</value>
@@ -205,12 +214,15 @@
     <value>Reviews and appeals</value>
   </data>
   <data name="Text_Tlevel_Results_Certificates_Soa" xml:space="preserve">
-    <value>T Level results, certificates and statements of achievement for your learners</value>
+    <value>This service provides T Level results, certificates and statements of achievement for your learners.</value>
   </data>
   <data name="Tlevels_Description_Text" xml:space="preserve">
     <value>Review T Level details and tell us if they are correct</value>
   </data>
   <data name="Tlevels_Text" xml:space="preserve">
     <value>T Levels</value>
+  </data>
+  <data name="You_Must_Give_Us_Text" xml:space="preserve">
+    <value>You must give us:</value>
   </data>
 </root>

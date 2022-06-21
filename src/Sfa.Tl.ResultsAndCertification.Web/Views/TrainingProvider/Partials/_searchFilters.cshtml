@@ -1,0 +1,92 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.SearchCriteriaViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+<div class="filter-border">
+    <form asp-route="@RouteConstants.SubmitSearchLearnerApplyFilters">
+        <input type="hidden" asp-for="@Model.AcademicYear" />
+
+        <h2 class="govuk-heading-m govuk-!-padding-top-4">@SearchLearnerDetails.Filters_Heading </h2>
+
+        @if (Model.SearchLearnerFilters?.IsApplyFiltersSelected == true)
+        {
+            <div class="govuk-!-margin-bottom-6">
+                <h2 class="govuk-heading-s govuk-!-margin-bottom-1">@SearchLearnerDetails.Filters_Selected_Filters</h2>
+                <div id="selectedFilters">
+                    @foreach (var selectedFilter in Model.SearchLearnerFilters?.SelectedFilters)
+                    {
+                        <p class="govuk-body govuk-!-margin-bottom-1"><span class="app-filter__tag">@selectedFilter</span></p>
+                    }
+                </div>
+            </div>
+        }
+
+        <button id="applyFiltersButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@SearchLearnerDetails.Button_Apply_Filters</button>
+
+        @if (Model.SearchLearnerFilters?.IsApplyFiltersSelected == true)
+        {
+            <a id="clearFiltersButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.SearchLearnerClearFilters" asp-route-academicYear="@Model.AcademicYear">@SearchLearnerDetails.Filters_Clear_All</a>
+        }
+
+        @*<div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+            @SearchLearnerDetails.Filter_Start_Year
+            </legend>
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            @foreach (var academicYear in Model?.SearchLearnerFilters?.AcademicYears?.Select((value, i) => (value, i)))
+            {
+            var elementId = (academicYear.i > 0) ? "selectedacademicyear-" + academicYear.i : "selectedacademicyear";
+            <div class="govuk-checkboxes__item govuk-checkboxes--small">
+            <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchLearnerFilters.AcademicYears[@academicYear.i].IsSelected">
+            <label class="govuk-label govuk-checkboxes__label" for="@elementId">
+            @academicYear.value.Name
+            </label>
+            </div>
+            <input type="hidden" asp-for="@Model.SearchLearnerFilters.AcademicYears[@academicYear.i].Id" />            
+            }
+            </div>
+            </fieldset>
+            </div>*@
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                    @SearchLearnerDetails.Filters_Incomplete
+                </legend>
+                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                @foreach (var status in Model?.SearchLearnerFilters?.Status?.Select((value, i) => (value, i)))
+                {
+                    var elementId = (status.i > 0) ? "selectedtstatus-" + status.i : "selectedtstatus";
+                    <div class="govuk-checkboxes__item govuk-checkboxes--small">
+                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchLearnerFilters.Status[status.i].IsSelected">
+                        <label class="govuk-label govuk-checkboxes__label" for="@elementId">
+                            @status.value.Name
+                        </label>
+                    </div>
+                    <input type="hidden" asp-for="@Model.SearchLearnerFilters.Status[status.i].Id" />                    
+                }
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                    @SearchLearnerDetails.Filters_Tlevel
+                </legend>
+                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                    @foreach (var tlevel in Model?.SearchLearnerFilters?.Tlevels?.Select((value, i) => (value, i)))
+                    {
+                        var elementId = (tlevel.i > 0) ? "selectedtlevel-" + tlevel.i : "selectedtlevel";
+                        <div class="govuk-checkboxes__item govuk-checkboxes--small">
+                            <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchLearnerFilters.Tlevels[tlevel.i].IsSelected">
+                            <label class="govuk-label govuk-checkboxes__label" for="@elementId">
+                                @tlevel.value.Name
+                            </label>
+                        </div>
+                        <input type="hidden" asp-for="@Model.SearchLearnerFilters.Tlevels[@tlevel.i].Id" />                        
+                    }
+                </div>
+            </fieldset>
+        </div>
+    </form>
+</div>

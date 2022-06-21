@@ -6,7 +6,7 @@
 }
 
 @section NavigationBar {
-    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+<vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
 }
 
 <div class="govuk-grid-row">
@@ -20,11 +20,13 @@
                             @RequestSoaUniqueLearnerNumber.Heading_Search_For_A_Learner
                         </h1>
                     </legend>
-                    <p class="govuk-body">@RequestSoaUniqueLearnerNumber.Enter_The_Unique_Learner_Number</p>
                     <div class="govuk-form-group" sfa-validation-for="SearchUln" sfa-validation-class="govuk-form-group--error">
+                        <label class="govuk-!-margin-bottom-6" for="searchuln">
+                            <p class="govuk-body">@RequestSoaUniqueLearnerNumber.Enter_The_Unique_Learner_Number</p>
+                        </label>
                         <span class="govuk-hint">@RequestSoaUniqueLearnerNumber.Uln_Must_10_Digit_Hint</span>
                         <span sfa-validation-for="SearchUln"></span>
-                        <input id="searchuln" class="govuk-input govuk-input--width-10" asp-for="SearchUln" maxlength="10">
+                        <input id="searchuln" class="govuk-input govuk-input--width-10" asp-for="SearchUln" maxlength="10" inputmode="numeric" aria-required="true">
                     </div>
                 </fieldset>
             </div>

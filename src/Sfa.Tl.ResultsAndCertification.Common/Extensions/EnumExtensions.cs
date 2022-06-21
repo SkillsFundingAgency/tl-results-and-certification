@@ -58,5 +58,14 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             var enumType = GetList<T>().FirstOrDefault(x => x.GetDisplayName().Equals(value, StringComparison.InvariantCultureIgnoreCase));
             return enumType;
         }
+
+        public static Dictionary<int?, string> GetEnumDisplayNameAndValue<T>() where T : System.Enum
+        {
+            var result = new Dictionary<int?, string>();
+            foreach (var item in GetList<T>())
+                result.Add(GetEnumValueByName<T>(item), item.GetDisplayName());
+
+            return result;
+        }
     }
 }

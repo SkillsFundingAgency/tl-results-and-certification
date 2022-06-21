@@ -21,3 +21,41 @@
         }
     }
 }
+
+.filter-border {
+    border: 1px solid #b1b4b6;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 10px;
+}
+
+.app-filter__tag {
+    font-family: "GDS Transport", arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 14px;
+    font-size: 0.875rem;
+    line-height: 1.14286;
+    background-color: #ffffff;
+    border: 1px solid #0b0c0c;
+    color: #0b0c0c;
+    display: inline-block;
+    margin-top: 5px;
+    padding: 5px;
+    text-decoration: none;
+}
+
+@media only screen and (max-width: 810px) {
+    .learner-search__input {
+        width: auto;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .learner-search__input {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 10px;
+    }
+}

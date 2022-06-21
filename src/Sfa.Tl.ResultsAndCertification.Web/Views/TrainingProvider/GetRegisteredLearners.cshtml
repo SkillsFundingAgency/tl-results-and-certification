@@ -1,0 +1,44 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.RegisteredLearnersViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = SearchLearnerDetails.Page_Title;
+}
+
+@section NavigationBar {
+<vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+@*TODO: Delete this view*@
+<form asp-route="SubmitGetRegisteredLearners">
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">@string.Format(SearchLearnerDetails.Heading_Registered_Learners, Model.SearchLearnerDetailsList?.TotalRecords)</h1>
+        </div>
+    </div>
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+            <partial name="Partials/_searchFilters.cshtml" model="Model?.SearchCriteria?.SearchLearnerFilters" />
+        </div>
+        <div class="govuk-grid-column-two-thirds">
+            <div class="learner-records">
+                <dl class="govuk-summary-list">
+                    @if (Model.SearchLearnerDetailsList.SearchLearnerDetailsList.Count > 0)
+                    {
+                        @foreach (var learner in Model.SearchLearnerDetailsList.SearchLearnerDetailsList)
+                        {
+                            <partial name="Partials/_learnerDetailsCard.cshtml" model="learner" />
+                        }
+                    }
+                    else
+                    {
+                        <partial name="Partials/_noMatchingSearchResults.cshtml" />
+                    }
+                </dl>
+            </div>
+        </div>
+    </div>
+</form>

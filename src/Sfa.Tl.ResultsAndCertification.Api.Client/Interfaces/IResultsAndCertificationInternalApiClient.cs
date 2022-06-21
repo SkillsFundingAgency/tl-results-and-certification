@@ -68,6 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         // TraningProvider
         Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest apiRequest);
+        Task<SearchLearnerFilters> GetSearchLearnerFiltersAsync(long providerUkprn);
         Task<FindLearnerRecord> FindLearnerRecordAsync(long aoUkprn, long uln);
         Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null);
         Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request);
