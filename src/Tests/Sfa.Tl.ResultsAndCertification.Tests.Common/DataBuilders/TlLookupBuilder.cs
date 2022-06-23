@@ -283,8 +283,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
         {
             new TlLookup
             {
-                Category = "OverallGrade",
-                Code = "OG1",
+                Category = "OverallResult",
+                Code = "OR1",
                 Value = "Distinction*",
                 IsActive = true,
                 SortOrder = 1,
@@ -295,8 +295,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new TlLookup
             {
-                Category = "OverallGrade",
-                Code = "OG2",
+                Category = "OverallResult",
+                Code = "OR2",
                 Value = "Distinction",
                 IsActive = true,
                 SortOrder = 2,
@@ -307,8 +307,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
            new TlLookup
             {
-                Category = "OverallGrade",
-                Code = "OG3",
+                Category = "OverallResult",
+                Code = "OR3",
                 Value = "Merit",
                 IsActive = true,
                 SortOrder = 3,
@@ -319,8 +319,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new TlLookup
             {
-                Category = "OverallGrade",
-                Code = "OG4",
+                Category = "OverallResult",
+                Code = "OR4",
                 Value = "Pass",
                 IsActive = true,
                 SortOrder = 4,
@@ -331,8 +331,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new TlLookup
             {
-                Category = "OverallGrade",
-                Code = "OG5",
+                Category = "OverallResult",
+                Code = "OR5",
                 Value = "Unclassified",
                 IsActive = true,
                 SortOrder = 5,
@@ -343,8 +343,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new TlLookup
             {
-                Category = "OverallGrade",
-                Code = "OG6",
+                Category = "OverallResult",
+                Code = "OR6",
                 Value = "Partial achievement",
                 IsActive = true,
                 SortOrder = 6,
@@ -355,8 +355,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new TlLookup
             {
-                Category = "OverallGrade",
-                Code = "OG5",
+                Category = "OverallResult",
+                Code = "OR5",
                 Value = "X - no result",
                 IsActive = true,
                 SortOrder = 5,
