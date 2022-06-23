@@ -7,18 +7,18 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
 {
     public class OverallResultDataProvider
     {
-        public static OverallResult CreatePrintCertificate(ResultsAndCertificationDbContext _dbContext, TqRegistrationPathway tqRegistrationPathway, bool addToDbContext = true)
+        public static OverallResult CreateOverallResult(ResultsAndCertificationDbContext _dbContext, TqRegistrationPathway tqRegistrationPathway, bool addToDbContext = true)
         {
-            var printCertificate = new OverallResultBuilder().Build(tqRegistrationPathway);
+            var overallResult = new OverallResultBuilder().Build(tqRegistrationPathway);
 
             if (addToDbContext)
             {
-                _dbContext.Add(printCertificate);
+                _dbContext.Add(overallResult);
             }
-            return printCertificate;
+            return overallResult;
         }
 
-        public static OverallResult CreatePrintCertificate(ResultsAndCertificationDbContext _dbContext, TqRegistrationPathway tqRegistrationPathway, OverallResult overallResult, bool addToDbContext = true)
+        public static OverallResult CreateOverallResult(ResultsAndCertificationDbContext _dbContext, TqRegistrationPathway tqRegistrationPathway, OverallResult overallResult, bool addToDbContext = true)
         {
             if (overallResult == null)
             {
@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return overallResult;
         }
 
-        public static IList<OverallResult> CreatePrintCertificate(ResultsAndCertificationDbContext _dbContext, IList<OverallResult> overallResults, bool addToDbContext = true)
+        public static IList<OverallResult> CreateOverallResult(ResultsAndCertificationDbContext _dbContext, IList<OverallResult> overallResults, bool addToDbContext = true)
         {
             if (addToDbContext && overallResults != null && overallResults.Count > 0)
             {

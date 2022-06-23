@@ -266,5 +266,105 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             }
         };
 
+        public TlLookup BuildOverallResult() => new TlLookup
+        {
+            Category = "OverallGrade",
+            Code = "OG1",
+            Value = "Distinction",
+            IsActive = true,
+            SortOrder = 1,
+            CreatedBy = Constants.CreatedByUser,
+            CreatedOn = Constants.CreatedOn,
+            ModifiedBy = Constants.ModifiedByUser,
+            ModifiedOn = Constants.ModifiedOn
+        };
+
+        public IList<TlLookup> BuildOverallResultList() => new List<TlLookup>
+        {
+            new TlLookup
+            {
+                Category = "OverallGrade",
+                Code = "OG1",
+                Value = "Distinction*",
+                IsActive = true,
+                SortOrder = 1,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "OverallGrade",
+                Code = "OG2",
+                Value = "Distinction",
+                IsActive = true,
+                SortOrder = 2,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+           new TlLookup
+            {
+                Category = "OverallGrade",
+                Code = "OG3",
+                Value = "Merit",
+                IsActive = true,
+                SortOrder = 3,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "OverallGrade",
+                Code = "OG4",
+                Value = "Pass",
+                IsActive = true,
+                SortOrder = 4,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "OverallGrade",
+                Code = "OG5",
+                Value = "Unclassified",
+                IsActive = true,
+                SortOrder = 5,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "OverallGrade",
+                Code = "OG6",
+                Value = "Partial achievement",
+                IsActive = true,
+                SortOrder = 6,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "OverallGrade",
+                Code = "OG5",
+                Value = "X - no result",
+                IsActive = true,
+                SortOrder = 5,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+        };
     }
 }

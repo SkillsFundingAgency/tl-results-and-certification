@@ -47,6 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<IpTempFlexNavigation> IpTempFlexNavigation { get; set; }
         public virtual DbSet<IpAchieved> IpAchieved { get; set; }
         public virtual DbSet<OverallResult> OverallResult { get; set; }
+        public virtual DbSet<OverallGradeLookup> OverallGradeLookup { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

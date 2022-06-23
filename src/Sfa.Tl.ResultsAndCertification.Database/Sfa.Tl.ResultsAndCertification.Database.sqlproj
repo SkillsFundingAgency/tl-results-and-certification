@@ -112,6 +112,7 @@
     <Build Include="Tables\IpAchieved.sql" />
     <Build Include="Tables\IpTempFlexNavigation.sql" />
     <Build Include="Tables\OverallResult.sql" />
+    <Build Include="Tables\OverallGradeLookup.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sfa.Tl.ResultsAndCertification.Database.refactorlog" />
