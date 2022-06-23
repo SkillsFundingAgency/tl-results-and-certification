@@ -38,11 +38,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.AssessmentS
             _result.ComponentType.Should().Be(_data.ComponentType);
             _result.Name.Should().Be(_data.Name);
             _result.Description.Should().Be(_data.Description);
-            _result.Year.Should().Be(_data.Year);
+            _result.Year.Should().Be(_data.Year);            
             _result.StartDate.Should().Be(_data.StartDate);
             _result.EndDate.Should().Be(_data.EndDate);
             _result.RommEndDate.Should().Be(_data.RommEndDate);
             _result.AppealEndDate.Should().Be(_data.AppealEndDate);
+            _result.ResultCalculationYear.Should().Be(_data.ResultCalculationYear);
+            _result.ResultPublishDate.Should().Be(_data.ResultPublishDate);
             _result.CreatedBy.Should().Be(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().Be(_data.ModifiedBy);
