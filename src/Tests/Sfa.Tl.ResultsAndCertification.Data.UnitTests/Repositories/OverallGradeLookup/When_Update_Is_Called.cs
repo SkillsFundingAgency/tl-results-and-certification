@@ -4,21 +4,21 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.PrintCertificate
+namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.OverallGradeLookup
 {
-    public class When_Update_Is_Called : BaseTest<Domain.Models.PrintCertificate>
+    public class When_Update_Is_Called : BaseTest<Domain.Models.OverallGradeLookup>
     {
-        private Domain.Models.PrintCertificate _result;
-        private Domain.Models.PrintCertificate _data;
+        private Domain.Models.OverallGradeLookup _result;
+        private Domain.Models.OverallGradeLookup _data;
         private const string ModifiedUserName = "Modified User";
 
         public override void Given()
         {
-            _data = new PrintCertificateBuilder().Build();
+            _data = new OverallGradeLookupBuilder().Build();
             DbContext.Add(_data);
             DbContext.SaveChanges();
 
-            _data.DisplaySnapshot = "New Text";
+            _data.TlPathwayId = 2;
             _data.ModifiedOn = DateTime.UtcNow;
             _data.ModifiedBy = ModifiedUserName;
         }
@@ -35,13 +35,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.PrintCertif
             _data.Should().NotBeNull();
             _result.Should().NotBeNull();
             _result.Id.Should().Be(1);
-            _result.PrintBatchItemId.Should().Be(_data.PrintBatchItem.Id);
-            _result.TqRegistrationPathwayId.Should().Be(_data.TqRegistrationPathway.Id);
-            _result.Uln.Should().Be(_data.Uln);
-            _result.LearnerName.Should().Be(_data.LearnerName);
-            _result.Type.Should().Be(_data.Type);
-            _result.LearningDetails.Should().Be(_data.LearningDetails);
-            _result.DisplaySnapshot.Should().Be(_data.DisplaySnapshot);
+            _result.TlPathwayId.Should().Be(_data.TlPathwayId);
+            _result.TlLookupCoreGradeId.Should().Be(_data.TlLookupCoreGradeId);
+            _result.TlLookupSpecialismGradeId.Should().Be(_data.TlLookupSpecialismGradeId);
+            _result.TlLookupOverallGradeId.Should().Be(_data.TlLookupOverallGradeId);
+            _result.IsActive.Should().Be(_data.IsActive);
             _result.CreatedBy.Should().Be(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().Be(_data.ModifiedBy);

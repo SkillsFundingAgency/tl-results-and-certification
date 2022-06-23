@@ -5,15 +5,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.PrintCertificate
+namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.OverallGradeLookup
 {
-    public class When_CreateMany_Is_Called : BaseTest<Domain.Models.PrintCertificate>
+    public class When_CreateMany_Is_Called : BaseTest<Domain.Models.OverallGradeLookup>
     {
-        private IList<Domain.Models.PrintCertificate> _data;
+        private IList<Domain.Models.OverallGradeLookup> _data;
 
         public override void Given()
         {
-            _data = new PrintCertificateBuilder().BuildList();
+            _data = new OverallGradeLookupBuilder().BuildList();
         }
 
         public async override Task When()

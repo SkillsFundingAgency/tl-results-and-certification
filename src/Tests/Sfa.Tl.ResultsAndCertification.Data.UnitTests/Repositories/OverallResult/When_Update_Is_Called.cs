@@ -4,21 +4,21 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.PrintCertificate
+namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.OverallResult
 {
-    public class When_Update_Is_Called : BaseTest<Domain.Models.PrintCertificate>
+    public class When_Update_Is_Called : BaseTest<Domain.Models.OverallResult>
     {
-        private Domain.Models.PrintCertificate _result;
-        private Domain.Models.PrintCertificate _data;
+        private Domain.Models.OverallResult _result;
+        private Domain.Models.OverallResult _data;
         private const string ModifiedUserName = "Modified User";
 
         public override void Given()
         {
-            _data = new PrintCertificateBuilder().Build();
+            _data = new OverallResultBuilder().Build();
             DbContext.Add(_data);
             DbContext.SaveChanges();
 
-            _data.DisplaySnapshot = "New Text";
+            _data.Details = "New Text";
             _data.ModifiedOn = DateTime.UtcNow;
             _data.ModifiedBy = ModifiedUserName;
         }
@@ -35,13 +35,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.PrintCertif
             _data.Should().NotBeNull();
             _result.Should().NotBeNull();
             _result.Id.Should().Be(1);
-            _result.PrintBatchItemId.Should().Be(_data.PrintBatchItem.Id);
-            _result.TqRegistrationPathwayId.Should().Be(_data.TqRegistrationPathway.Id);
-            _result.Uln.Should().Be(_data.Uln);
-            _result.LearnerName.Should().Be(_data.LearnerName);
-            _result.Type.Should().Be(_data.Type);
-            _result.LearningDetails.Should().Be(_data.LearningDetails);
-            _result.DisplaySnapshot.Should().Be(_data.DisplaySnapshot);
+            _result.TqRegistrationPathwayId.Should().Be(_data.TqRegistrationPathwayId);
+            _result.Details.Should().Be(_data.Details);
+            _result.ResultAwarded.Should().Be(_data.ResultAwarded);
+            _result.CalculationStatus.Should().Be(_data.CalculationStatus);
+            _result.PublishDate.Should().Be(_data.PublishDate);
+            _result.PrintAvailableFrom.Should().Be(_data.PrintAvailableFrom);
+            _result.StartDate.Should().Be(_data.StartDate);
+            _result.EndDate.Should().Be(_data.EndDate);
             _result.CreatedBy.Should().Be(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().Be(_data.ModifiedBy);
