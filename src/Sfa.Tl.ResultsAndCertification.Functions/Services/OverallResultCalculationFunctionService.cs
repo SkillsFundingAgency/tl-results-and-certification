@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
-using System;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.Services
@@ -20,28 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             _resultCalculationService = resultCalculationService;
             _logger = logger;
         }
-
-        //public async Task<FunctionResponse> CalculateOverallGradesAsync()
-        //{
-        //    // Step 1: Get eligible learners to calculate the results.
-        //    // 1.1 GetResultCalculationYear from AssessmentSeries table
-        //    var runDate = DateTime.UtcNow;
-        //    var resultCalculationYear = _commonService.GetAssessmentSeriesForAsync(runDate).ResultCalculationYear;
-
-        //    for (int year = resultCalculationYear; year > resultCalculationYear - 4; year--) // Each year or all years?
-        //    {
-        //        // 1.2
-        //        var learners = await _resultCalculationService.GetLearnersForOverallGradeCalculation(resultCalculationYear);
-
-        //        // Step 2:
-        //        foreach (var learner in learners)
-        //        {
-        //            // Keep lookupdata ready in beganing of this proc. 
-        //        }
-        //    }
-
-        //    return new FunctionResponse();
-        //}
 
         public async Task<FunctionResponse> CalculateOverallResultsAsync()
         {
