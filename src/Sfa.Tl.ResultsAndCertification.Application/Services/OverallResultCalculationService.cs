@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var dateFromPreviousAssessment = currentAssessmentSeries.StartDate.AddDays(1);
             var previousAssessment = assessmentSeries.FirstOrDefault(a => dateFromPreviousAssessment >= a.StartDate && dateFromPreviousAssessment <= a.EndDate);
 
-            return previousAssessment.Year; // TODO: this must be a ResultCalculationYear
+            return previousAssessment.ResultCalculationYear;
         }
 
         public async Task<IList<TqRegistrationPathway>> GetLearnersForOverallGradeCalculationAsync(DateTime runDate)

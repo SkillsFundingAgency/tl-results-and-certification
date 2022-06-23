@@ -27,29 +27,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Include(x => x.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null))
                     .ThenInclude(x => x.TqSpecialismAssessments.Where(a => a.IsOptedin && a.EndDate == null))
                     .ThenInclude(x => x.TqSpecialismResults.Where(r => r.IsOptedin && r.EndDate == null))
+                .Include(x => x.OverallResults)
                 .Where(pw => (pw.Status == RegistrationPathwayStatus.Active || pw.Status == RegistrationPathwayStatus.Withdrawn) &&
-                             pw.AcademicYear >= resultCalculationYear - 4).ToListAsync();
+                             (pw.AcademicYear <= resultCalculationYear && pw.AcademicYear > resultCalculationYear - 4))
+                .ToListAsync();
             
             return registrationPathways;
-
-            //var query = from tqPathway in _dbContext.TqRegistrationPathway
-            //            join tqProfile in _dbContext.TqRegistrationProfile on tqPathway.TqRegistrationProfileId equals tqProfile.Id
-            //            join ip in _dbContext.IndustryPlacement on tqPathway.TqRegistrationProfileId equals ip.Id
-            //            join pwAssessment in _dbContext.TqPathwayAssessment on tqPathway.Id equals pwAssessment.TqRegistrationPathwayId
-            //            join pwResult in _dbContext.TqPathwayResult on pwAssessment.Id equals pwResult.TqPathwayAssessmentId
-            //            join tqSpl in _dbContext.TqRegistrationSpecialism on tqPathway.Id equals tqSpl.TqRegistrationPathwayId
-            //            join splAssessment in _dbContext.TqSpecialismAssessment on tqSpl.Id equals splAssessment.TqRegistrationSpecialismId
-            //            join splResult in _dbContext.TqSpecialismResult on splAssessment.Id equals splResult.TqSpecialismAssessmentId
-            //            where
-            //                pwAssessment.IsOptedin == true && pwAssessment.EndDate == null &&
-            //                pwResult.IsOptedin == true && pwResult.EndDate == null &&
-            //                tqSpl.IsOptedin == true && tqSpl.EndDate == null &&
-            //                splAssessment.IsOptedin == true && splAssessment.EndDate == null &&
-            //                splResult.IsOptedin == true && splResult.EndDate == null && 
-
-            //           select new LearnerForOverallGradeCalculation  {   };
-
-            //return new List<LearnerForOverallGradeCalculation>();
         }
     }
 }
