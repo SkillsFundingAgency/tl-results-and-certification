@@ -8,6 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public int TlLookupCoreGradeId { get; set; }
         public int TlLookupSpecialismGradeId { get; set; }
         public int TlLookupOverallGradeId { get; set; }
+        public bool IsActive { get; set; }
 
         public virtual TlPathway TlPathway { get; set; }
 

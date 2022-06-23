@@ -34,6 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.OverallGrad
             _result.TlLookupCoreGradeId.Should().Be(_data.TlLookupCoreGradeId);
             _result.TlLookupSpecialismGradeId.Should().Be(_data.TlLookupSpecialismGradeId);
             _result.TlLookupOverallGradeId.Should().Be(_data.TlLookupOverallGradeId);
+            _result.IsActive.Should().Be(_data.IsActive);
             _result.CreatedBy.Should().Be(Constants.CreatedByUser);
             _result.CreatedOn.Should().Be(Constants.CreatedOn);
             _result.ModifiedBy.Should().Be(Constants.ModifiedByUser);

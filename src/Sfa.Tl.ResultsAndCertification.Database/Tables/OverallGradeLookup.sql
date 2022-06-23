@@ -5,6 +5,7 @@
 	[TlLookupCoreGradeId] INT NOT NULL,
 	[TlLookupSpecialismGradeId] INT NOT NULL,
 	[TlLookupOverallGradeId] INT NOT NULL,
+	[IsActive] BIT NOT NULL DEFAULT(1),
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 
     [CreatedBy] NVARCHAR(50) NULL, 
     [ModifiedOn] DATETIME2 NULL, 
