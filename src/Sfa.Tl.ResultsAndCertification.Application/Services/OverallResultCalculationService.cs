@@ -26,6 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var assessmentSeries = await _assessmentService.GetAssessmentSeriesAsync();
             var currentAssessmentSeries = assessmentSeries.FirstOrDefault(a => runDate >= a.StartDate && runDate <= a.EndDate);
+            if (currentAssessmentSeries == null)
+                throw new Exception($"There is no AssessmentSeries available for the date {runDate}"); // TODO: we handle this or throw exception?
 
             // Calculate result for recently completed assessment. 
             var dateFromPreviousAssessment = currentAssessmentSeries.StartDate.AddDays(1);

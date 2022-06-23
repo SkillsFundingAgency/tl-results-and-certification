@@ -22,11 +22,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             var registrationPathways = await _dbContext.TqRegistrationPathway
                 .Include(x => x.TqRegistrationProfile)
                 .Include(x => x.IndustryPlacements)
-                .Include(x => x.TqPathwayAssessments.Where(a => a.IsOptedin && a.EndDate == null))
-                    .ThenInclude(x => x.TqPathwayResults.Where(r => r.IsOptedin && r.EndDate == null))
-                .Include(x => x.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null))
-                    .ThenInclude(x => x.TqSpecialismAssessments.Where(a => a.IsOptedin && a.EndDate == null))
-                    .ThenInclude(x => x.TqSpecialismResults.Where(r => r.IsOptedin && r.EndDate == null))
+                .Include(x => x.TqPathwayAssessments.Where(pa => pa.IsOptedin && pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? pa.EndDate != null : pa.EndDate == null))
+                    .ThenInclude(x => x.TqPathwayResults.Where(pr => pr.IsOptedin && pr.TqPathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? pr.EndDate != null : pr.EndDate == null))
+                .Include(x => x.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? s.EndDate != null : s.EndDate == null))
+                    .ThenInclude(x => x.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? sa.EndDate != null : sa.EndDate == null))
+                    .ThenInclude(x => x.TqSpecialismResults.Where(sr => sr.IsOptedin && sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? sr.EndDate != null : sr.EndDate == null))
                 .Include(x => x.OverallResults)
                 .Where(pw => (pw.Status == RegistrationPathwayStatus.Active || pw.Status == RegistrationPathwayStatus.Withdrawn) &&
                              (pw.AcademicYear <= resultCalculationYear && pw.AcademicYear > resultCalculationYear - 4))
