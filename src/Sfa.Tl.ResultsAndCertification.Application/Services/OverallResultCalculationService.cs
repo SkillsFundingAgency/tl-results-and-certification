@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using System;
@@ -42,7 +43,38 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<bool> CalculateOverallResultsAsync(DateTime runDate)
         {
             var learners = await GetLearnersForOverallGradeCalculationAsync(runDate);
+
+            foreach (var learner in learners)
+            {
+                var coreGrade = await GetHightestCoreGradeAsync(learner);
+                var specialismGrade = await GetHightestSpecialismGradeAsync(learner);
+                var ipStatus = learner.IndustryPlacements.Any() ? learner.IndustryPlacements.FirstOrDefault().Status : IndustryPlacementStatus.NotSpecified;
+
+                var overallGrade = await GetOverAllGradeAsync(coreGrade, specialismGrade, ipStatus);
+
+                // Save.
+            }
+
             return true;
+        }
+
+        
+        private async Task<int> GetHightestCoreGradeAsync(TqRegistrationPathway learner)
+        {
+            await Task.CompletedTask;
+            return 1;
+        }
+        
+        private async Task<int> GetHightestSpecialismGradeAsync(TqRegistrationPathway learner)
+        {
+            await Task.CompletedTask;
+            return 1;
+        }
+
+        private async Task<string> GetOverAllGradeAsync(int coreGradel, int speciailsmGrade, IndustryPlacementStatus ipStatus)
+        {
+            await Task.CompletedTask;
+            return "A*";
         }
     }
 }

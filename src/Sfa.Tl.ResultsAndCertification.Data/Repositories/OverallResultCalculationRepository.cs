@@ -31,8 +31,15 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Where(pw => (pw.Status == RegistrationPathwayStatus.Active || pw.Status == RegistrationPathwayStatus.Withdrawn) &&
                              (pw.AcademicYear <= resultCalculationYear && pw.AcademicYear > resultCalculationYear - 4))
                 .ToListAsync();
-            
-            return registrationPathways;
+
+            if (registrationPathways == null) return null;
+
+            var latestRegistrations = registrationPathways
+                    .GroupBy(x => x.TqRegistrationProfile.UniqueLearnerNumber)
+                    .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
+                    .ToList();
+
+            return latestRegistrations;
         }
     }
 }
