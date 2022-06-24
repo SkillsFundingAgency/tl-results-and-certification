@@ -138,6 +138,7 @@
     <None Include="PostDeployment\SeedIpModelTlevelCombination.sql" />
     <None Include="PostDeployment\SeedIpTempFlexTlevelCombination.sql" />
     <None Include="PostDeployment\SeedIpTempFlexNavigation.sql" />
+    <None Include="PostDeployment\SeedOverallGradeLookup.sql" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="environment">
