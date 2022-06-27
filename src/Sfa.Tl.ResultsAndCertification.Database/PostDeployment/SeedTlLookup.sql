@@ -22,7 +22,7 @@ USING (VALUES
   (14, N'SpecialConsideration', N'SC', N'SpecialConsideration', 1, 1),
   (15, N'IndustryPlacementModel', N'IPM', N'IndustryPlacementModel', 2, 1),
   (16, N'TemporaryFlexibility', N'TF', N'TemporaryFlexibility', 3, 1),
-  (17, N'OverallResult', N'OR1', N'Distinction *', 1, 1),
+  (17, N'OverallResult', N'OR1', N'Distinction*', 1, 1),
   (18, N'OverallResult', N'OR2', N'Distinction', 2, 1),
   (19, N'OverallResult', N'OR3', N'Merit', 3, 1),
   (20, N'OverallResult', N'OR4', N'Pass', 4, 1),
