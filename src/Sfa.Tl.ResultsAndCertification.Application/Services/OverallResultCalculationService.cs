@@ -15,17 +15,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     public class OverallResultCalculationService : IOverallResultCalculationService
     {
         private readonly ResultsAndCertificationConfiguration _configuration;
+        private readonly IRepository<TlLookup> _tlLookupRepository;
+        private readonly IRepository<OverallGradeLookup> _overallGradeLookupRepository;
         private readonly IOverallResultCalculationRepository _overallGradeCalculationRepository;
         private readonly IRepository<AssessmentSeries> _assessmentSeriesRepository;
 
         public OverallResultCalculationService(
             ResultsAndCertificationConfiguration configuration,
+            IRepository<TlLookup> tlLookupRepository,
+            IRepository<OverallGradeLookup> overallGradeLookupRepository,
             IOverallResultCalculationRepository overallGradeCalculationRepository,
-            IRepository<AssessmentSeries> assessmentService)
+            IRepository<AssessmentSeries> assessmentSeriesRepository)
         {
             _configuration = configuration;
+            _tlLookupRepository = tlLookupRepository;
+            _overallGradeLookupRepository = overallGradeLookupRepository;
             _overallGradeCalculationRepository = overallGradeCalculationRepository;
-            _assessmentSeriesRepository = assessmentService;
+            _assessmentSeriesRepository = assessmentSeriesRepository;
         }
 
         public async Task<int> GetResultCalculationYearOfAsync(DateTime runDate)
@@ -99,6 +105,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             await Task.CompletedTask;
             return "A*";
+        }
+
+        private async Task<List<TlLookup>> GetTlLookupData()
+        {
+            return await _tlLookupRepository.GetManyAsync().ToListAsync();
+        }
+
+        private async Task<List<OverallGradeLookup>> GetOverallGradeLookupData()
+        {
+            return await _overallGradeLookupRepository.GetManyAsync().ToListAsync();
         }
     }
 }
