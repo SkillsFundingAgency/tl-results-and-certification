@@ -45,7 +45,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<IList<TqRegistrationPathway>> GetLearnersForOverallGradeCalculationAsync(DateTime runDate)
         {
             var resultCalculationYear = await GetResultCalculationYearOfAsync(runDate);
-            return await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYear - 3, resultCalculationYear);
+            var resultCalculationYearFrom = (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ? Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) - 1;
+
+            return await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationYear);
         }
 
         public async Task<bool> CalculateOverallResultsAsync(DateTime runDate)
