@@ -386,6 +386,24 @@
       "additionalProperties": false,
       "required": [],
       "type": "object"
+    },
+	"OverallResultBatchSettings": {
+      "properties": {
+        "BatchSize": {          
+          "type": "integer",
+          "environmentVariable": "OverallResultBatchSize"
+        },
+        "NoOfAcademicYearsToProcess": {          
+          "type": "integer",
+          "environmentVariable": "OverallResultNoOfAcademicYearsToProcess"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "BatchSize",
+        "NoOfAcademicYearsToProcess"
+      ],
+      "type": "object"
     }
   },
   "additionalProperties": false,
@@ -407,7 +425,8 @@
     "PrintingApiSettings",
     "UcasApiSettings",
     "LearningRecordServiceSettings",
-    "UcasDataSettings"
+    "UcasDataSettings",
+	"OverallResultBatchSettings"
   ],
   "type": "object"
 }

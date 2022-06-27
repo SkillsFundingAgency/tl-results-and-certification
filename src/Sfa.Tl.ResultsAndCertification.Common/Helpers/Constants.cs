@@ -158,5 +158,8 @@
 
         // File Extensions
         public const string FileExtensionTxt = "txt";
+
+        public const int OverallResultDefaultNoOfAcademicYearsToProcess = 4;
+        public const int OverallResultDefaultBatchSize = 5000;
     }
 }

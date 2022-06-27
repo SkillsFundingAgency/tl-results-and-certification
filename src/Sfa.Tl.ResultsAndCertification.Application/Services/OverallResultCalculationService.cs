@@ -1,7 +1,9 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +13,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class OverallResultCalculationService : IOverallResultCalculationService
     {
+        private readonly ResultsAndCertificationConfiguration _configuration;
         private readonly IOverallResultCalculationRepository _overallGradeCalculationRepository;
         private readonly IAssessmentService _assessmentService;
 
         public OverallResultCalculationService(
+            ResultsAndCertificationConfiguration configuration,
             IOverallResultCalculationRepository overallGradeCalculationRepository, 
             IAssessmentService assessmentService)
         {
+            _configuration = configuration;
             _overallGradeCalculationRepository = overallGradeCalculationRepository;
             _assessmentService = assessmentService;
         }
@@ -46,6 +51,25 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var learners = await GetLearnersForOverallGradeCalculationAsync(runDate);
 
+            if (learners == null || !learners.Any())
+                return true;
+
+            var tasks = new List<Task>();
+            var batchSize = _configuration.OverallResultBatchSettings.BatchSize <= 0 ? Constants.OverallResultDefaultBatchSize : _configuration.OverallResultBatchSettings.BatchSize;            
+            var batchesToProcess = (int)Math.Ceiling(learners.Count / (decimal)batchSize);
+
+            for (var batchIndex = 0; batchIndex < batchesToProcess; batchIndex++)
+            {
+                var leanersToProcess = learners.Skip(batchIndex * batchSize).Take(batchSize);
+                tasks.Add(ProcessOverallResults(leanersToProcess));
+            }
+
+            await Task.WhenAll(tasks);
+            return true;
+        }
+
+        private async Task ProcessOverallResults(IEnumerable<TqRegistrationPathway> learners)
+        {
             foreach (var learner in learners)
             {
                 var coreGrade = await GetHightestCoreGradeAsync(learner);
@@ -56,11 +80,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 // Save.
             }
-
-            return true;
         }
 
-        
         private async Task<int> GetHightestCoreGradeAsync(TqRegistrationPathway learner)
         {
             await Task.CompletedTask;
