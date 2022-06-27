@@ -19,7 +19,19 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<IList<TqRegistrationPathway>> GetLearnersForOverallGradeCalculation(int academicYearFrom, int academicYearTo)
         {
-            var latestRegistrations = await _dbContext.TqRegistrationPathway
+            var activeLearners = await GetLearnesByStatusAsync(RegistrationPathwayStatus.Active, academicYearFrom, academicYearTo);
+            var allWithdrawnLearners = await GetLearnesByStatusAsync(RegistrationPathwayStatus.Withdrawn, academicYearFrom, academicYearTo);
+
+            // allWithdrawnLearners may contain activeLearnes as well, if so exclude them.
+            var withdrawnLearners = allWithdrawnLearners.Where(w => !activeLearners.Select(x => x.TqRegistrationProfile.UniqueLearnerNumber)
+                            .Contains(w.TqRegistrationProfile.UniqueLearnerNumber));
+
+            return activeLearners.Concat(withdrawnLearners).ToList();
+        }
+
+        private async Task<IList<TqRegistrationPathway>> GetLearnesByStatusAsync(RegistrationPathwayStatus status, int academicYearFrom, int academicYearTo)
+        {
+            var learners = await _dbContext.TqRegistrationPathway
                 .Include(x => x.TqRegistrationProfile)
                 .Include(x => x.IndustryPlacements)
                 .Include(x => x.TqPathwayAssessments.Where(pa => pa.IsOptedin && pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? pa.EndDate != null : pa.EndDate == null))
@@ -28,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     .ThenInclude(x => x.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? sa.EndDate != null : sa.EndDate == null))
                         .ThenInclude(x => x.TqSpecialismResults.Where(sr => sr.IsOptedin && sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? sr.EndDate != null : sr.EndDate == null))
                 .Include(x => x.OverallResults.Where(o => o.EndDate == null))
-                .Where(pw => (pw.Status == RegistrationPathwayStatus.Active || pw.Status == RegistrationPathwayStatus.Withdrawn) &&
+                .Where(pw => (pw.Status == status) &&
                              pw.AcademicYear >= academicYearFrom && pw.AcademicYear <= academicYearTo &&
                              (!pw.OverallResults.Any() || pw.OverallResults.Any(o => o.EndDate == null && (pw.IndustryPlacements.Any(ip => ip.CreatedOn > o.CreatedOn || ip.ModifiedOn > o.CreatedOn) ||
                              pw.TqPathwayAssessments.SelectMany(pa => pa.TqPathwayResults).Any(pr => pr.CreatedOn > o.CreatedOn || pr.ModifiedOn > o.CreatedOn) ||
@@ -38,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
                 .ToListAsync();
 
-            return latestRegistrations;
+            return learners;
         }
     }
 }
