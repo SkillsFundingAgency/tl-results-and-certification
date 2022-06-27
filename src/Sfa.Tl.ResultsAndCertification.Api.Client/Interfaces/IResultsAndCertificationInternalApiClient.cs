@@ -104,5 +104,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<LearnerRecord> GetLearnerRecordAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
         
         Task<IList<DataExportResponse>> GenerateDataExportAsync(long aoUkprn, DataExportType dataExportType, string requestedBy);
+
+        #region Test
+        Task<string> GetLearnersForOverallGradeCalculationAsync(string runDate);
+        #endregion
     }
 }
