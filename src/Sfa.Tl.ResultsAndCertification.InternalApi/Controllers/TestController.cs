@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpGet]
         [Route("OverallResult/GetLearners/{runDate}")]
-        public async Task<IList<TqRegistrationPathway>> GetLearnersForOverallGradeCalculationAsync(DateTime runDate)
+        public async Task<string> GetLearnersForOverallGradeCalculationAsync(DateTime runDate)
         {
             var result = await _overallResultCalculatoinService.GetLearnersForOverallGradeCalculationAsync(runDate);
             string json = JsonConvert.SerializeObject(result, Formatting.Indented, new JsonSerializerSettings
@@ -44,7 +44,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
 
-            return JsonConvert.DeserializeObject<IList<TqRegistrationPathway>>(json);
+            return json;
+            //return JsonConvert.DeserializeObject<IList<TqRegistrationPathway>>(json);
         }
 
         #endregion

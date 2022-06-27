@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -15,36 +16,36 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     {
         private readonly ResultsAndCertificationConfiguration _configuration;
         private readonly IOverallResultCalculationRepository _overallGradeCalculationRepository;
-        private readonly IAssessmentService _assessmentService;
+        private readonly IRepository<AssessmentSeries> _assessmentSeriesRepository;
 
         public OverallResultCalculationService(
             ResultsAndCertificationConfiguration configuration,
-            IOverallResultCalculationRepository overallGradeCalculationRepository, 
-            IAssessmentService assessmentService)
+            IOverallResultCalculationRepository overallGradeCalculationRepository,
+            IRepository<AssessmentSeries> assessmentService)
         {
             _configuration = configuration;
             _overallGradeCalculationRepository = overallGradeCalculationRepository;
-            _assessmentService = assessmentService;
+            _assessmentSeriesRepository = assessmentService;
         }
 
         public async Task<int> GetResultCalculationYearOfAsync(DateTime runDate)
         {
-            var assessmentSeries = await _assessmentService.GetAssessmentSeriesAsync();
+            var assessmentSeries = await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
             var currentAssessmentSeries = assessmentSeries.FirstOrDefault(a => runDate >= a.StartDate && runDate <= a.EndDate);
             if (currentAssessmentSeries == null)
-                throw new Exception($"There is no AssessmentSeries available for the date {runDate}"); // TODO: we handle this or throw exception?
+                throw new Exception($"There is no AssessmentSeries available for the date {runDate}");
 
             // Calculate result for recently completed assessment. 
-            var dateFromPreviousAssessment = currentAssessmentSeries.StartDate.AddDays(1);
+            var dateFromPreviousAssessment = currentAssessmentSeries.StartDate.AddDays(-1);
             var previousAssessment = assessmentSeries.FirstOrDefault(a => dateFromPreviousAssessment >= a.StartDate && dateFromPreviousAssessment <= a.EndDate);
 
-            return previousAssessment.ResultCalculationYear;
+            return previousAssessment?.ResultCalculationYear ?? 0;
         }
 
         public async Task<IList<TqRegistrationPathway>> GetLearnersForOverallGradeCalculationAsync(DateTime runDate)
         {
             var resultCalculationYear = await GetResultCalculationYearOfAsync(runDate);
-            return await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYear);
+            return await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYear - 3, resultCalculationYear);
         }
 
         public async Task<bool> CalculateOverallResultsAsync(DateTime runDate)

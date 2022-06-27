@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<IList<TqRegistrationPathway>> GetLearnersForOverallGradeCalculation(int resultCalculationYear)
+        public async Task<IList<TqRegistrationPathway>> GetLearnersForOverallGradeCalculation(int academicYearFrom, int academicYearTo)
         {
             var latestRegistrations = await _dbContext.TqRegistrationPathway
                 .Include(x => x.TqRegistrationProfile)
@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                         .ThenInclude(x => x.TqSpecialismResults.Where(sr => sr.IsOptedin && sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? sr.EndDate != null : sr.EndDate == null))
                 .Include(x => x.OverallResults.Where(o => o.EndDate == null))
                 .Where(pw => (pw.Status == RegistrationPathwayStatus.Active || pw.Status == RegistrationPathwayStatus.Withdrawn) &&
-                             pw.AcademicYear <= resultCalculationYear && pw.AcademicYear > resultCalculationYear - 4 &&
+                             pw.AcademicYear >= academicYearFrom && pw.AcademicYear <= academicYearTo &&
                              (!pw.OverallResults.Any() || pw.OverallResults.Any(o => o.EndDate == null && (pw.IndustryPlacements.Any(ip => ip.CreatedOn > o.CreatedOn || ip.ModifiedOn > o.CreatedOn) ||
                              pw.TqPathwayAssessments.SelectMany(pa => pa.TqPathwayResults).Any(pr => pr.CreatedOn > o.CreatedOn || pr.ModifiedOn > o.CreatedOn) ||
                              pw.TqRegistrationSpecialisms.SelectMany(s => s.TqSpecialismAssessments.SelectMany(sa => sa.TqSpecialismResults)).Any(sr => sr.CreatedOn > o.CreatedOn || sr.ModifiedOn > o.CreatedOn)
