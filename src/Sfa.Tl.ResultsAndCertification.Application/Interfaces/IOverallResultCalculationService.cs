@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 {
     public interface IOverallResultCalculationService
     {
-        Task<int> GetResultCalculationYearOfAsync(DateTime runDate);
+        Task<AssessmentSeries> GetResultCalculationAssessmentAsync(DateTime runDate);
         Task<IList<TqRegistrationPathway>> GetLearnersForOverallGradeCalculationAsync(DateTime runDate);
         Task<bool> CalculateOverallResultsAsync(DateTime runDate);
     }

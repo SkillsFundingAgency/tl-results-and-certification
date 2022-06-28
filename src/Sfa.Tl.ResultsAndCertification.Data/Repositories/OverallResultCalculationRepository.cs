@@ -37,8 +37,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     .ThenInclude(x => x.TlPathway)
                 .Where(pw => pw.Status == RegistrationPathwayStatus.Active &&
                              pw.AcademicYear >= academicYearFrom && pw.AcademicYear <= academicYearTo &&
-                             (!pw.OverallResults.Any() ||                     // if overall result already exists  OR
-                              pw.OverallResults.Any(ovr => ovr.EndDate == null && // ip or core-result or spl result updated later to the existing calc
+                             (!pw.OverallResults.Any() ||                         // if overall result not yet calculated OR
+                              pw.OverallResults.Any(ovr => ovr.EndDate == null && // ip or core-result or spl result are updated after the calculation
                                  (pw.IndustryPlacements.Any(ip => ip.CreatedOn > ovr.CreatedOn || ip.ModifiedOn > ovr.CreatedOn) ||
                                   pw.TqPathwayAssessments.SelectMany(pa => pa.TqPathwayResults).Any(pr => pr.CreatedOn > ovr.CreatedOn || pr.ModifiedOn > ovr.CreatedOn) ||
                                   pw.TqRegistrationSpecialisms.SelectMany(s => s.TqSpecialismAssessments.SelectMany(sa => sa.TqSpecialismResults)).Any(sr => sr.CreatedOn > ovr.CreatedOn || sr.ModifiedOn > ovr.CreatedOn)))
