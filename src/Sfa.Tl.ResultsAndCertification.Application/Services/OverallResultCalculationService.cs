@@ -75,33 +75,43 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return true;
         }
 
-        private async Task ProcessOverallResults(IEnumerable<TqRegistrationPathway> learners)
+        private async Task ProcessOverallResults(IEnumerable<TqRegistrationPathway> learnerPathways)
         {
-            foreach (var learner in learners)
+            foreach (var pathway in learnerPathways)
             {
-                var coreGrade = await GetHightestCoreGradeAsync(learner);
-                var specialismGrade = await GetHightestSpecialismGradeAsync(learner);
-                var ipStatus = learner.IndustryPlacements.Any() ? learner.IndustryPlacements.FirstOrDefault().Status : IndustryPlacementStatus.NotSpecified;
+                var pathwayResult = GetHighestPathwayResult(pathway);
+                var specialismResult = GetHighestSpecialismResult(pathway).FirstOrDefault(); // as we are not dealing with couplet specialisms as of now
+                var ipStatus = pathway.IndustryPlacements.Any() ? pathway.IndustryPlacements.FirstOrDefault().Status : IndustryPlacementStatus.NotSpecified;
 
-                var overallGrade = await GetOverAllGradeAsync(coreGrade, specialismGrade, ipStatus);
-
-                // Save.
+                var overallGrade = await GetOverAllGrade(pathwayResult?.TlLookupId, specialismResult?.TlLookupId, ipStatus);                
             }
+
+            // Save.
         }
 
-        private async Task<int> GetHightestCoreGradeAsync(TqRegistrationPathway learner)
+        public TqPathwayResult GetHighestPathwayResult(TqRegistrationPathway learnerPathway)
         {
-            await Task.CompletedTask;
-            return 1;
-        }
-        
-        private async Task<int> GetHightestSpecialismGradeAsync(TqRegistrationPathway learner)
-        {
-            await Task.CompletedTask;
-            return 1;
+            if (!learnerPathway.TqPathwayAssessments.Any())
+                return null;
+
+            var pathwayHigherResult = learnerPathway.TqPathwayAssessments.SelectMany(x => x.TqPathwayResults).OrderBy(x => x.TlLookup.SortOrder).FirstOrDefault();
+
+            return pathwayHigherResult;
         }
 
-        private async Task<string> GetOverAllGradeAsync(int coreGradel, int speciailsmGrade, IndustryPlacementStatus ipStatus)
+        public List<TqSpecialismResult> GetHighestSpecialismResult(TqRegistrationPathway learnerPathway)
+        {
+            var specialismResults = new List<TqSpecialismResult>();
+            foreach (var specialism in learnerPathway.TqRegistrationSpecialisms.Where(specialism => specialism.TqSpecialismAssessments.Any()))
+            {
+                var specialismHigherResult = specialism.TqSpecialismAssessments.SelectMany(x => x.TqSpecialismResults).OrderBy(x => x.TlLookup.SortOrder).FirstOrDefault();
+                specialismResults.Add(specialismHigherResult);
+            }
+
+            return specialismResults;
+        }
+
+        private async Task<string> GetOverAllGrade(int? coreGrade, int? speciailsmGrade, IndustryPlacementStatus ipStatus)
         {
             await Task.CompletedTask;
             return "A*";
