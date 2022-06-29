@@ -79,14 +79,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             for (var batchIndex = 0; batchIndex < batchesToProcess; batchIndex++)
             {
                 var leanersToProcess = learners.Skip(batchIndex * batchSize).Take(batchSize);
-                tasks.Add(ProcessOverallResults(leanersToProcess, overallResultLookupData, overallGradeLookupData));
+                tasks.Add(ProcessOverallResults(leanersToProcess, overallResultLookupData, overallGradeLookupData, resultCalculationAssessment));
             }
 
             await Task.WhenAll(tasks);
             return true;
         }
 
-        private async Task ProcessOverallResults(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> overallResultLookupData, List<OverallGradeLookup> overallGradeLookupData)
+        private async Task ProcessOverallResults(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> overallResultLookupData, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
         {
             await Task.CompletedTask;
 
@@ -132,7 +132,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         Details = JsonConvert.SerializeObject(overallResultDetails),
                         ResultAwarded = overallGrade,
                         CalculationStatus = calculationStatus,
-                        PublishDate = DateTime.UtcNow,
+                        PublishDate = assessmentSeries.ResultPublishDate,
                         PrintAvailableFrom = null,
                         StartDate = DateTime.UtcNow,
                         CreatedBy = Constants.DefaultPerformedBy
@@ -233,7 +233,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             if (pathwayGradeId.HasValue && speciailsmGradeId.HasValue && (ipStatus == IndustryPlacementStatus.Completed || ipStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration))
             {
-                var overallGrade = overallGradeLookup.FirstOrDefault(x => x.TlPathwayId == tlPathwayId && x.TlLookupCoreGradeId == pathwayGradeId && x.TlLookupSpecialismGradeId == speciailsmGradeId);
+                var overallGrade = overallGradeLookup.FirstOrDefault(o => o.TlPathwayId == tlPathwayId && o.TlLookupCoreGradeId == pathwayGradeId && o.TlLookupSpecialismGradeId == speciailsmGradeId);
 
                 return overallGrade?.TlLookupOverallGrade?.Value;
             }
