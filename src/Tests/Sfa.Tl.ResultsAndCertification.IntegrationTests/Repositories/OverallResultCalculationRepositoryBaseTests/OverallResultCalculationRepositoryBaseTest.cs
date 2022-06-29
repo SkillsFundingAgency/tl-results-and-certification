@@ -346,5 +346,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.OverallRe
                 actualSpecialismResult.EndDate.Should().BeNull();
             actualSpecialismResult.CreatedBy.Should().Be(expectedSpecialismResult.CreatedBy);
         }
+        
+        public void AssertIndustryPlacement(IndustryPlacement actualIndustryPlacement, IndustryPlacement expectedIndustryPlacement)
+        {
+            if (expectedIndustryPlacement == null)
+            {
+                actualIndustryPlacement.Should().BeNull();
+                return;
+            }
+
+            actualIndustryPlacement.TqRegistrationPathwayId.Should().Be(expectedIndustryPlacement.TqRegistrationPathwayId);
+            actualIndustryPlacement.Status.Should().Be(expectedIndustryPlacement.Status);
+            actualIndustryPlacement.CreatedBy.Should().Be(expectedIndustryPlacement.CreatedBy);
+        }
     }
 }

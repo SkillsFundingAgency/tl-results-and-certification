@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System;
 using System.Collections.Generic;
@@ -73,6 +74,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.OverallRe
 
             _specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
             _specialismResults = SeedSpecialismResultsData(tqSpecialismResultsSeedData, false);
+
+            SeedIndustyPlacementData(industryPlacementUln);
 
             // Overall Results seed
             var ulnsWithOverallResult = new List<long> { 1111111112, 1111111114 };
@@ -160,6 +163,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.OverallRe
                     AssertSpecialismAssessment(actualSpecialismAssessment, expectedSpecialismAssessment);
                     AssertSpecialismResult(actualSpecialismResult, expectedSpecialismResult);
                 }
+
+                // Industry Placement
+                var expectedIndustryPlacement = expectedPathway.IndustryPlacements.FirstOrDefault();
+                var actualIndustryPlacement = actualPathway.IndustryPlacements.FirstOrDefault();
+                AssertIndustryPlacement(actualIndustryPlacement, expectedIndustryPlacement);
             }
         }
 
@@ -190,6 +198,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.OverallRe
                 var resultToUpdate = _overallResults.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == ulnWithPrevCalcResult);
                 resultToUpdate.CreatedOn = DateTime.UtcNow.AddHours(2);
             }
+        }
+        
+        public void SeedIndustyPlacementData(int uln)
+        {
+            var pathway = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln).TqRegistrationPathways.FirstOrDefault();
+            IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, IndustryPlacementStatus.Completed);
         }
     }
 
