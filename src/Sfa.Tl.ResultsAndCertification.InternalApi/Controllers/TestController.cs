@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
@@ -27,12 +25,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         # region OverallResult
-        [HttpGet]
-        [Route("OverallResult/GetCalculationYearOf/{runDate}")]
-        public async Task<int> GetResultCalculationYearOfAsync(DateTime runDate)
-        {
-            return await _overallResultCalculatoinService.GetResultCalculationYearOfAsync(runDate);
-        }
 
         [HttpGet]
         [Route("OverallResult/GetLearners/{runDate}")]

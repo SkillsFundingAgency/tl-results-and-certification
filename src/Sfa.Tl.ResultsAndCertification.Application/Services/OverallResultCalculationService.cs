@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _assessmentSeriesRepository = assessmentSeriesRepository;
         }
 
-        public async Task<int> GetResultCalculationYearOfAsync(DateTime runDate)
+        public async Task<AssessmentSeries> GetResultCalculationAssessmentAsync(DateTime runDate)
         {
             var assessmentSeries = await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
             var currentAssessmentSeries = assessmentSeries.FirstOrDefault(a => runDate >= a.StartDate && runDate <= a.EndDate);
@@ -48,20 +48,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var dateFromPreviousAssessment = currentAssessmentSeries.StartDate.AddDays(-1);
             var previousAssessment = assessmentSeries.FirstOrDefault(a => dateFromPreviousAssessment >= a.StartDate && dateFromPreviousAssessment <= a.EndDate);
 
-            return previousAssessment?.ResultCalculationYear ?? 0;
+            return previousAssessment;
         }
 
         public async Task<IList<TqRegistrationPathway>> GetLearnersForOverallGradeCalculationAsync(DateTime runDate)
         {
-            var resultCalculationYear = await GetResultCalculationYearOfAsync(runDate);
+            // Dev note: This method left to test from api end-point
+            var resultCalculationYear = await GetResultCalculationAssessmentAsync(runDate);
             var resultCalculationYearFrom = (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ? Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) - 1;
 
-            return await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationYear);
+            return await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationYear?.ResultCalculationYear ?? 0);
         }
 
         public async Task<bool> CalculateOverallResultsAsync(DateTime runDate)
         {
-            var learners = await GetLearnersForOverallGradeCalculationAsync(runDate);
+            var resultCalculationAssessment = await GetResultCalculationAssessmentAsync(runDate);
+            var resultCalculationYearFrom = (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ? Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) - 1;
+            var learners = await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationAssessment.ResultCalculationYear ?? 0);
 
             if (learners == null || !learners.Any())
                 return true;
