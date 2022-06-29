@@ -4,11 +4,11 @@
     {
         Completed = 1,
         CompletedRommRaised = 2,
-        CompletedWithRommOutcome = 3,
-        CompletedAppealRaised = 4,
-        CompletedWithAppealOutcome = 5,
-        PartiallyCompleted = 6,
-        NotCompleted = 7,
-        Withdrawn = 8
+        CompletedAppealRaised = 3,
+        PartiallyCompleted = 4,
+        PartiallyCompletedRommRaised = 5,
+        PartiallyCompletedAppealRaised = 6,
+        Unclassified = 7,
+        NoResult = 8
     }
 }
