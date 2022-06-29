@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.OverallRe
             _specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
             _specialismResults = SeedSpecialismResultsData(tqSpecialismResultsSeedData, false);
 
-            SeedIndustyPlacementData(industryPlacementUln);
+            SeedIndustyPlacementData(1111111114);
 
             // Overall Results seed
             var ulnsWithOverallResult = new List<long> { 1111111112, 1111111114 };
