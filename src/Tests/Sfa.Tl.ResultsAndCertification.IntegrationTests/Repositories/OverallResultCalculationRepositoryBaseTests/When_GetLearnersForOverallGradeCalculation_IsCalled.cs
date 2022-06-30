@@ -119,13 +119,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.OverallRe
                 }
                 actualPathway.Should().NotBeNull();
 
-
                 var expectedRegistration = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == data.Uln);
                 var expectedPathway = expectedRegistration.TqRegistrationPathways.FirstOrDefault(p => p.Status == RegistrationPathwayStatus.Active && p.EndDate == null);
                 var expectedSpecialim = expectedPathway.TqRegistrationSpecialisms.FirstOrDefault(s => s.IsOptedin && s.EndDate == null);
                 var expectedSpecialismAssessment = expectedSpecialim.TqSpecialismAssessments.FirstOrDefault(sa => sa.IsOptedin && sa.EndDate == null);
                 var expectedPathwayAssessment = _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == data.Uln && x.IsOptedin && x.EndDate == null);
-                //var expectedSpecialismAssessment = _specialismAssessments.FirstOrDefault(x => x.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == data.Uln && x.IsOptedin && x.EndDate == null);
 
                 var expectedPathwayResult = _pathwayResults.FirstOrDefault(x => expectedPathwayAssessment != null && x.TqPathwayAssessmentId == expectedPathwayAssessment.Id && x.IsOptedin && x.EndDate == null);
                 var expectedSpecialismResult = _specialismResults.FirstOrDefault(x => expectedPathwayAssessment != null && x.TqSpecialismAssessmentId == expectedSpecialismAssessment.Id && x.IsOptedin && x.EndDate == null);
