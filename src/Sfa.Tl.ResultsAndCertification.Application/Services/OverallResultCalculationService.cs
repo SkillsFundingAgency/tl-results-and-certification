@@ -231,29 +231,51 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public string GetOverAllGrade(List<TlLookup> overallResultLookup, List<OverallGradeLookup> overallGradeLookup, int tlPathwayId, int? pathwayGradeId, int? speciailsmGradeId, IndustryPlacementStatus ipStatus)
         {
-            if (pathwayGradeId.HasValue && speciailsmGradeId.HasValue && (ipStatus == IndustryPlacementStatus.Completed || ipStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration))
-            {
-                var overallGrade = overallGradeLookup.FirstOrDefault(o => o.TlPathwayId == tlPathwayId && o.TlLookupCoreGradeId == pathwayGradeId && o.TlLookupSpecialismGradeId == speciailsmGradeId);
+            var isPathwayGradeUnclassified = pathwayGradeId.HasValue ? overallResultLookup.Any(o => o.Id == pathwayGradeId.Value && o.Code.Equals(Constants.PathwayComponentGradeUnclassifiedCode, StringComparison.InvariantCultureIgnoreCase)) : false;
+            var isSpecialismGradeUnclassified = speciailsmGradeId.HasValue ? overallResultLookup.Any(o => o.Id == speciailsmGradeId.Value && o.Code.Equals(Constants.SpecialismComponentGradeUnclassifiedCode, StringComparison.InvariantCultureIgnoreCase)) : false;
 
-                return overallGrade?.TlLookupOverallGrade?.Value;
-            }
-            else if (!pathwayGradeId.HasValue && !speciailsmGradeId.HasValue && (ipStatus == IndustryPlacementStatus.NotSpecified || ipStatus == IndustryPlacementStatus.NotCompleted))
+            var overallResultUnClassified = overallResultLookup.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultUnclassifiedCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
+            var overallResultXNoResult = overallResultLookup.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultXNoResultCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
+            var overallResultPartialAchievement = overallResultLookup.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultPartialAchievementCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
+
+            if (ipStatus == IndustryPlacementStatus.Completed || ipStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
             {
-                // X - no result
-                var overallGrade =  overallResultLookup.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultXNoResultCode, StringComparison.InvariantCultureIgnoreCase));
-                return overallGrade?.Value;
+                if (pathwayGradeId.HasValue && speciailsmGradeId.HasValue && !isPathwayGradeUnclassified && !isSpecialismGradeUnclassified)
+                {
+                    var overallGrade = overallGradeLookup.FirstOrDefault(o => o.TlPathwayId == tlPathwayId && o.TlLookupCoreGradeId == pathwayGradeId && o.TlLookupSpecialismGradeId == speciailsmGradeId);
+                    return overallGrade?.TlLookupOverallGrade?.Value;
+                }
+                else
+                {
+                    return overallResultPartialAchievement;
+                }
             }
             else
             {
-                // partial achievement
-                var overallGrade = overallResultLookup.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultPartialAchievementCode, StringComparison.InvariantCultureIgnoreCase));
-                return overallGrade?.Value;
-            }
+                // if ipStatus is NotSpecified || ipStatus is NotCompleted then apply below logic
+
+                if (pathwayGradeId.HasValue && speciailsmGradeId.HasValue)
+                {
+                    return isPathwayGradeUnclassified && isSpecialismGradeUnclassified ? overallResultUnClassified : overallResultPartialAchievement;
+                }
+                else if (pathwayGradeId.HasValue && !speciailsmGradeId.HasValue)
+                {
+                    return isPathwayGradeUnclassified ? overallResultUnClassified : overallResultPartialAchievement;
+                }
+                else if (!pathwayGradeId.HasValue && speciailsmGradeId.HasValue)
+                {
+                    return isSpecialismGradeUnclassified ? overallResultUnClassified : overallResultPartialAchievement;
+                }
+                else
+                {
+                    // if pathwayGradeId is null && speciailsmGradeId is null return X - no result
+                    return overallResultXNoResult;
+                }
+            }        
         }
 
         private async Task<List<TlLookup>> GetOverallResultLookupData()
         {
-            //return await _tlLookupRepository.GetManyAsync().ToListAsync();
             return await _tlLookupRepository.GetManyAsync(lkp => lkp.Category.Equals(LookupCategory.OverallResult.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToListAsync();
         }
 

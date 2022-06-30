@@ -161,7 +161,10 @@
 
         public const int OverallResultDefaultNoOfAcademicYearsToProcess = 4;
         public const int OverallResultDefaultBatchSize = 5000;
-                
+
+        
+        public const string PathwayComponentGradeUnclassifiedCode = "PCG7";
+        public const string SpecialismComponentGradeUnclassifiedCode = "SCG4";
         public const string OverallResultPartialAchievementCode = "OR5";
         public const string OverallResultUnclassifiedCode = "OR6";
         public const string OverallResultXNoResultCode = "OR7";
