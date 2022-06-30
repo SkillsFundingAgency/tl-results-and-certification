@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Sfa.Tl.ResultsAndCertification.Application.Comparer;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Models;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -89,14 +90,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private async Task ProcessOverallResults(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> overallResultLookupData, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
         {
             await Task.CompletedTask;
-
             var overallResults = new List<OverallResult>();
 
             foreach (var pathway in learnerPathways)
             {
                 var specialism = pathway.TqRegistrationSpecialisms.FirstOrDefault();
 
-                var pathwayResult = GetHighestPathwayResult(pathway);                
+                var pathwayResult = GetHighestPathwayResult(pathway);
                 var specialismResult = GetHighestSpecialismResult(specialism); // as we are not dealing with couplet specialisms as of now
                 var ipStatus = pathway.IndustryPlacements.Any() ? pathway.IndustryPlacements.FirstOrDefault().Status : IndustryPlacementStatus.NotSpecified;
 
@@ -137,12 +137,33 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         StartDate = DateTime.UtcNow,
                         CreatedBy = Constants.DefaultPerformedBy
                     };
+
+                    var existingOverallResult = pathway.OverallResults.FirstOrDefault(x => x.EndDate == null);
+                    if (existingOverallResult == null)
+                        overallResults.Add(overallResult);
+                    else
+                    {
+                        var overallResultComparer = new OverallResultEqualityComparer();
+                        if (!overallResultComparer.Equals(existingOverallResult, overallResult))
+                        {
+                            existingOverallResult.EndDate = DateTime.UtcNow;
+                            existingOverallResult.ModifiedBy = Constants.DefaultPerformedBy;
+                            overallResults.Add(existingOverallResult);
+
+                            overallResults.Add(overallResult);
+                        }
+                    }
                 }
                 else
                 {
                     // TODO : Log
                 }
             }
+
+            var totalRecords = learnerPathways.Count();
+            var updatedRecords = overallResults.Count(x => x.Id != 0);
+            var newRecords = overallResults.Count(x => x.Id == 0) - updatedRecords;
+            var unChangedRecords = totalRecords - (updatedRecords + newRecords);
 
             // Save.
         }
