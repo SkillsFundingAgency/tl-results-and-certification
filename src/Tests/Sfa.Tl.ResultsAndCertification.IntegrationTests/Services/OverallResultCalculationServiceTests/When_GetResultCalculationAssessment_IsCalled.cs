@@ -14,7 +14,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResultCalculationServiceTests
 {
-    public class When_GetResultCalculationAssessmentTest : OverallResultCalculationServiceBaseTest
+    public class When_GetResultCalculationAssessment_IsCalled : OverallResultCalculationServiceBaseTest
     {
         private AssessmentSeries _actualAssessmentSeries;
 
