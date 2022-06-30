@@ -32,8 +32,11 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return overallGradeLookup;
         }
 
-        public static IList<OverallGradeLookup> CreateOverallGradeLookup(ResultsAndCertificationDbContext _dbContext, IList<OverallGradeLookup> overallGradeLookups, bool addToDbContext = true)
+        public static IList<OverallGradeLookup> CreateOverallGradeLookupList(ResultsAndCertificationDbContext _dbContext, IList<OverallGradeLookup> overallGradeLookups, bool addToDbContext = true)
         {
+            if(overallGradeLookups == null || overallGradeLookups.Count == 0)
+                overallGradeLookups = new OverallGradeLookupBuilder().BuildList();
+
             if (addToDbContext && overallGradeLookups != null && overallGradeLookups.Count > 0)
             {
                 _dbContext.AddRange(overallGradeLookups);
