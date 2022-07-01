@@ -87,7 +87,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Expected_Results_Are_Returned(int tlPathwayId, string pathwayGrade, string specialismGrade, IndustryPlacementStatus ipStatus, string overallGrade)
+        public async Task Then_Expected_Results_Are_Returned(int tlPathwayId, string pathwayGrade, string specialismGrade, string overallGrade, IndustryPlacementStatus ipStatus)
         {
             var pathwayGradeId = _tlLookups.FirstOrDefault(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase) && x.Value.Equals(pathwayGrade, StringComparison.InvariantCultureIgnoreCase))?.Id;
             var specialismGradeId = _tlLookups.FirstOrDefault(x => x.Category.Equals(LookupCategory.SpecialismComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase) && x.Value.Equals(specialismGrade, StringComparison.InvariantCultureIgnoreCase))?.Id;
@@ -104,52 +104,52 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 return new[]
                 {
                     // IndustryPlacement Completed
-                    new object[] { 1, "A*", "Distinction", IndustryPlacementStatus.Completed, "Distinction*" },
-                    new object[] { 1, "A*", "Merit", IndustryPlacementStatus.Completed, "Distinction" },
-                    new object[] { 1, "A*", "Pass", IndustryPlacementStatus.Completed, "Distinction" },
-                    new object[] { 1, "A", "Distinction", IndustryPlacementStatus.Completed, "Distinction" },
-                    new object[] { 1, "A", "Merit", IndustryPlacementStatus.Completed, "Distinction" },
-                    new object[] { 1, "A", "Pass", IndustryPlacementStatus.Completed, "Merit" },
-                    new object[] { 1, "B", "Distinction", IndustryPlacementStatus.Completed, "Distinction" },
-                    new object[] { 1, "B", "Merit", IndustryPlacementStatus.Completed, "Merit" },
-                    new object[] { 1, "B", "Pass", IndustryPlacementStatus.Completed, "Merit" },
-                    new object[] { 1, "C", "Distinction", IndustryPlacementStatus.Completed, "Merit" },
-                    new object[] { 1, "C", "Merit", IndustryPlacementStatus.Completed, "Merit" },
-                    new object[] { 1, "C", "Pass", IndustryPlacementStatus.Completed, "Pass" },
-                    new object[] { 1, "D", "Distinction", IndustryPlacementStatus.Completed, "Merit" },
-                    new object[] { 1, "D", "Merit", IndustryPlacementStatus.Completed, "Pass" },
-                    new object[] { 1, "D", "Pass", IndustryPlacementStatus.Completed, "Pass" },
-                    new object[] { 1, "E", "Distinction", IndustryPlacementStatus.Completed, "Pass" },
-                    new object[] { 1, "E", "Merit", IndustryPlacementStatus.Completed, "Pass" },
-                    new object[] { 1, "E", "Pass", IndustryPlacementStatus.Completed, "Pass" },
-                    new object[] { 1, "Unclassified", "Unclassified", IndustryPlacementStatus.Completed, "Partial achievement" },
+                    new object[] { 1, "A*", "Distinction", "Distinction*", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "A*", "Merit", "Distinction", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "A*", "Pass", "Distinction", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "A", "Distinction", "Distinction", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "A", "Merit", "Distinction", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "A", "Pass", "Merit", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "B", "Distinction", "Distinction", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "B", "Merit", "Merit", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "B", "Pass", "Merit", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "C", "Distinction", "Merit", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "C", "Merit", "Merit", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "C", "Pass", "Pass", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "D", "Distinction", "Merit", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "D", "Merit", "Pass", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "D", "Pass", "Pass", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "E", "Distinction", "Pass", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "E", "Merit", "Pass", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "E", "Pass", "Pass", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "Unclassified", "Unclassified", "Partial achievement", IndustryPlacementStatus.Completed },
 
-                    //// IndustryPlacement Not Completed
-                    new object[] { 1, "A*", "Distinction", IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, "A*", "Merit", IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, "A*", "Pass", IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, "A", "Distinction", IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, "A", "Merit", IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, "A", "Pass", IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, "B", "Distinction", IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, "B", "Merit", IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, "B", "Pass", IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, "C", "Distinction", IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, "C", "Merit", IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, "C", "Pass", IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, "D", "Distinction", IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, "D", "Merit", IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, "D", "Pass", IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, "E", "Distinction", IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, "E", "Merit", IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, "E", "Pass", IndustryPlacementStatus.NotSpecified, "Partial achievement" },
+                    // IndustryPlacement Not Completed
+                    new object[] { 1, "A*", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "A*", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "A*", "Pass", "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "A", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "A", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "A", "Pass", "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "B", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "B", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "B", "Pass", "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "C", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "C", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "C", "Pass", "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "D", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "D", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "D", "Pass", "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "E", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "E", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "E", "Pass", "Partial achievement", IndustryPlacementStatus.NotSpecified },
 
-                    new object[] { 1, "Unclassified", "Unclassified", IndustryPlacementStatus.NotCompleted, "Unclassified" },
-                    new object[] { 1, "A*", null, IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, "Unclassified", null, IndustryPlacementStatus.NotCompleted, "Unclassified" },
-                    new object[] { 1, null, "Distinction", IndustryPlacementStatus.NotCompleted, "Partial achievement" },
-                    new object[] { 1, null, "Unclassified", IndustryPlacementStatus.NotCompleted, "Unclassified" },
-                    new object[] { 1, null, null, IndustryPlacementStatus.NotCompleted, "X - no result" }
+                    new object[] { 1, "Unclassified", "Unclassified", "Unclassified", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "A*", null, "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "Unclassified", null, "Unclassified", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, null, "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, null, "Unclassified", "Unclassified", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, null, null, "X - no result", IndustryPlacementStatus.NotCompleted }
                 };
             }
         }
