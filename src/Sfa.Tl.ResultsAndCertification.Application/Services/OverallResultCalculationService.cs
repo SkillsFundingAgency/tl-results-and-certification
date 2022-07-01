@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Comparer;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Models;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -87,82 +88,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return true;
         }
 
-        private async Task ProcessOverallResults(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> overallResultLookupData, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
+        private async Task ProcessOverallResults(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
         {
             await Task.CompletedTask;
-            var overallResults = new List<OverallResult>();
-
-            foreach (var pathway in learnerPathways)
-            {
-                var specialism = pathway.TqRegistrationSpecialisms.FirstOrDefault();
-
-                var pathwayResult = GetHighestPathwayResult(pathway);
-                var specialismResult = GetHighestSpecialismResult(specialism); // as we are not dealing with couplet specialisms as of now
-                var ipStatus = pathway.IndustryPlacements.Any() ? pathway.IndustryPlacements.FirstOrDefault().Status : IndustryPlacementStatus.NotSpecified;
-
-                var overallGrade = GetOverAllGrade(overallResultLookupData, overallGradeLookupData, pathway.TqProvider.TqAwardingOrganisation.TlPathwayId, pathwayResult?.TlLookupId, specialismResult?.TlLookupId, ipStatus);
-
-                if (!string.IsNullOrWhiteSpace(overallGrade))
-                {
-                    var pathwayResultPrsStatus = HasAnyPathwayResultPrsStatusOutstanding(pathway);
-                    var specialismResultPrsStatus = HasAnySpecialismResultPrsStatusOutstanding(specialism);
-                    var calculationStatus = GetCalculationStatus(overallResultLookupData, overallGrade, pathwayResultPrsStatus, specialismResultPrsStatus);
-
-                    var overallResultDetails = new OverallResultDetail
-                    {
-                        TlevelTitle = pathway.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
-                        PathwayName = pathway.TqProvider.TqAwardingOrganisation.TlPathway.Name,
-                        PathwayLarId = pathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-                        PathwayResult = pathwayResult?.TlLookup?.Value,
-                        SpecialismDetails = new List<OverallSpecialismDetail>
-                        {
-                            new OverallSpecialismDetail
-                            {
-                                SpecialismName = specialism?.TlSpecialism?.Name,
-                                SpecialismLarId = specialism?.TlSpecialism?.LarId,
-                                SpecialismResult = specialismResult?.TlLookup?.Value
-                            }
-                        },
-                        OverallResult = overallGrade
-                    };
-
-                    var overallResult = new OverallResult
-                    {
-                        TqRegistrationPathwayId = pathway.Id,
-                        Details = JsonConvert.SerializeObject(overallResultDetails),
-                        ResultAwarded = overallGrade,
-                        CalculationStatus = calculationStatus,
-                        PublishDate = assessmentSeries.ResultPublishDate,
-                        PrintAvailableFrom = null,
-                        StartDate = DateTime.UtcNow,
-                        CreatedBy = Constants.DefaultPerformedBy
-                    };
-
-                    var existingOverallResult = pathway.OverallResults.FirstOrDefault(x => x.EndDate == null);
-                    if (existingOverallResult == null)
-                        overallResults.Add(overallResult);
-                    else
-                    {
-                        var overallResultComparer = new OverallResultEqualityComparer();
-                        if (!overallResultComparer.Equals(existingOverallResult, overallResult))
-                        {
-                            existingOverallResult.EndDate = DateTime.UtcNow;
-                            existingOverallResult.ModifiedBy = Constants.DefaultPerformedBy;
-                            overallResults.Add(existingOverallResult);
-
-                            overallResults.Add(overallResult);
-                        }
-                    }
-                }
-                else
-                {
-                    // TODO : Log
-                }
-            }
+            var reconciledLearnerRecords = ReconcileLearnersData(learnerPathways, tlLookup, overallGradeLookupData, assessmentSeries);
 
             var totalRecords = learnerPathways.Count();
-            var updatedRecords = overallResults.Count(x => x.Id != 0);
-            var newRecords = overallResults.Count(x => x.Id == 0) - updatedRecords;
+            var updatedRecords = reconciledLearnerRecords.Count(x => x.Id != 0);
+            var newRecords = reconciledLearnerRecords.Count(x => x.Id == 0) - updatedRecords;
             var unChangedRecords = totalRecords - (updatedRecords + newRecords);
 
             // Save.
@@ -249,7 +182,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return specialismResults;
         }
 
-
         public string GetOverAllGrade(List<TlLookup> overallResultLookup, List<OverallGradeLookup> overallGradeLookup, int tlPathwayId, int? pathwayGradeId, int? speciailsmGradeId, IndustryPlacementStatus ipStatus)
         {
             var isPathwayGradeUnclassified = pathwayGradeId.HasValue ? overallResultLookup.Any(o => o.Id == pathwayGradeId.Value && o.Code.Equals(Constants.PathwayComponentGradeUnclassifiedCode, StringComparison.InvariantCultureIgnoreCase)) : false;
@@ -293,6 +225,82 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     return overallResultXNoResult;
                 }
             }        
+        }
+
+        public IList<OverallResult> ReconcileLearnersData(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
+        {
+            var overallResults = new List<OverallResult>();
+
+            foreach (var pathway in learnerPathways)
+            {
+                var specialism = pathway.TqRegistrationSpecialisms.FirstOrDefault();
+
+                var pathwayResult = GetHighestPathwayResult(pathway);
+                var specialismResult = GetHighestSpecialismResult(specialism); // as we are not dealing with couplet specialisms as of now
+                var ipStatus = pathway.IndustryPlacements.Any() ? pathway.IndustryPlacements.FirstOrDefault().Status : IndustryPlacementStatus.NotSpecified;
+
+                var overallGrade = GetOverAllGrade(tlLookup, overallGradeLookupData, pathway.TqProvider.TqAwardingOrganisation.TlPathwayId, pathwayResult?.TlLookupId, specialismResult?.TlLookupId, ipStatus);
+
+                if (!string.IsNullOrWhiteSpace(overallGrade))
+                {
+                    var pathwayResultPrsStatus = HasAnyPathwayResultPrsStatusOutstanding(pathway);
+                    var specialismResultPrsStatus = HasAnySpecialismResultPrsStatusOutstanding(specialism);
+                    var calculationStatus = GetCalculationStatus(tlLookup, overallGrade, pathwayResultPrsStatus, specialismResultPrsStatus);
+
+                    var overallResultDetails = new OverallResultDetail
+                    {
+                        TlevelTitle = pathway.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
+                        PathwayName = pathway.TqProvider.TqAwardingOrganisation.TlPathway.Name,
+                        PathwayLarId = pathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
+                        PathwayResult = pathwayResult?.TlLookup?.Value,
+                        SpecialismDetails = new List<OverallSpecialismDetail>
+                        {
+                            new OverallSpecialismDetail
+                            {
+                                SpecialismName = specialism?.TlSpecialism?.Name,
+                                SpecialismLarId = specialism?.TlSpecialism?.LarId,
+                                SpecialismResult = specialismResult?.TlLookup?.Value
+                            }
+                        },
+                        IndustryPlacementStatus = GetIpStatusDisplayName(ipStatus),
+                        OverallResult = overallGrade
+                    };
+
+                    var overallResult = new OverallResult
+                    {
+                        TqRegistrationPathwayId = pathway.Id,
+                        Details = JsonConvert.SerializeObject(overallResultDetails),
+                        ResultAwarded = overallGrade,
+                        CalculationStatus = calculationStatus,
+                        PublishDate = assessmentSeries.ResultPublishDate,
+                        PrintAvailableFrom = null,
+                        StartDate = DateTime.UtcNow,
+                        CreatedBy = Constants.DefaultPerformedBy
+                    };
+
+                    var existingOverallResult = pathway.OverallResults.FirstOrDefault(x => x.EndDate == null);
+                    if (existingOverallResult == null)
+                        overallResults.Add(overallResult);
+                    else
+                    {
+                        var overallResultComparer = new OverallResultEqualityComparer();
+                        if (!overallResultComparer.Equals(existingOverallResult, overallResult))
+                        {
+                            existingOverallResult.EndDate = DateTime.UtcNow;
+                            existingOverallResult.ModifiedBy = Constants.DefaultPerformedBy;
+                            overallResults.Add(existingOverallResult);
+
+                            overallResults.Add(overallResult);
+                        }
+                    }
+                }
+                else
+                {
+                    // TODO : Log
+                }
+            }
+
+            return overallResults;
         }
 
         private async Task<List<TlLookup>> GetOverallResultLookupData()
@@ -352,6 +360,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
 
             return learnerPathway.TqRegistrationSpecialisms.SelectMany(specialism => specialism.TqSpecialismAssessments).SelectMany(x => x.TqSpecialismResults).Any(x => x.PrsStatus == PrsStatus.UnderReview || x.PrsStatus == PrsStatus.BeingAppealed);
+        }
+
+        private string GetIpStatusDisplayName(IndustryPlacementStatus ipStatus)
+        {
+            if (ipStatus == IndustryPlacementStatus.Completed || ipStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
+                return ipStatus.GetDisplayName();
+
+            return IndustryPlacementStatus.NotCompleted.GetDisplayName();
         }
     }
 }
