@@ -1,7 +1,9 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 {
@@ -79,6 +81,35 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     ModifiedOn = Constants.ModifiedOn
                 },
             };
+        }
+
+        public IList<OverallGradeLookup> BuildList(IList<TlLookup> tlLookups, IList<Tuple<int,int,int,int>> seedData)
+        {
+            var returnList = new List<OverallGradeLookup>();
+
+            foreach(var data in seedData)
+            {
+                var coreGradeTlLookup = tlLookups.FirstOrDefault(x => x.Id == data.Item2);
+                var specialismGradeTlLookup = tlLookups.FirstOrDefault(x => x.Id == data.Item3);
+                var overallGradeTlLookup = tlLookups.FirstOrDefault(x => x.Id == data.Item4);
+
+                returnList.Add(new OverallGradeLookup
+                {
+                    TlPathwayId = data.Item1,
+                    TlLookupCoreGradeId = coreGradeTlLookup.Id,
+                    TlLookupCoreGrade = coreGradeTlLookup,
+                    TlLookupSpecialismGradeId = specialismGradeTlLookup.Id,
+                    TlLookupSpecialismGrade = specialismGradeTlLookup,
+                    TlLookupOverallGradeId = overallGradeTlLookup.Id,
+                    TlLookupOverallGrade = overallGradeTlLookup,
+                    IsActive = true,
+                    CreatedBy = Constants.CreatedByUser,
+                    CreatedOn = Constants.CreatedOn,
+                    ModifiedBy = Constants.ModifiedByUser,
+                    ModifiedOn = Constants.ModifiedOn
+                });
+            }
+            return returnList;
         }
     }
 }
