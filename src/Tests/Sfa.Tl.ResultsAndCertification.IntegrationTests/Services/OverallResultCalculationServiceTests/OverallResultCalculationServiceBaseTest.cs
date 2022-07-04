@@ -187,6 +187,37 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             return overallResults;
         }
 
+        public IList<TqSpecialismResult> GetSpecialismResultDataToProcess(TqSpecialismAssessment specialismAssessment, bool seedSpecialismResultsAsActive, bool isHistorical, PrsStatus? prsStatus = null, bool isBulkUpload = true)
+        {
+            var tqSpecialismResults = new List<TqSpecialismResult>();
+
+            if (isHistorical)
+            {
+                // Historical record
+                var specialismResult = new TqSpecialismResultBuilder().Build(specialismAssessment, SpecialismComponentGrades[0], isBulkUpload: isBulkUpload);
+                specialismResult.IsOptedin = false;
+                specialismResult.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                var tqSpecialismResultHistorical = TqSpecialismResultDataProvider.CreateTqSpecialismResult(DbContext, specialismResult);
+                tqSpecialismResults.Add(tqSpecialismResultHistorical);
+            }
+
+            var activeSpecialismResult = new TqSpecialismResultBuilder().Build(specialismAssessment, SpecialismComponentGrades[0], isBulkUpload: isBulkUpload);
+            var tqSpecialismResult = TqSpecialismResultDataProvider.CreateTqSpecialismResult(DbContext, activeSpecialismResult);
+            if (!seedSpecialismResultsAsActive)
+            {
+                tqSpecialismResult.IsOptedin = specialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn;
+                tqSpecialismResult.EndDate = DateTime.UtcNow;
+            }
+            else
+            {
+                tqSpecialismResult.PrsStatus = prsStatus;
+            }
+
+            tqSpecialismResults.Add(tqSpecialismResult);
+            return tqSpecialismResults;
+        }
+
         public List<TqSpecialismAssessment> GetSpecialismAssessmentsDataToProcess(List<TqRegistrationSpecialism> specialismRegistrations, bool seedSpecialismAssessmentsAsActive = true, bool isHistorical = false, string assessmentSeriesName = "Summer 2022")
         {
             var tqSpecialismAssessments = new List<TqSpecialismAssessment>();

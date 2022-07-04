@@ -6,10 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,7 +17,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
     public class When_GetCalculationStatus_IsCalled : OverallResultCalculationServiceBaseTest
     {
         private IList<TlLookup> _tlLookups;
-        private IList<OverallGradeLookup> _overallGradeLookups;
         private CalculationStatus _actualResult;
 
         public override void Given()

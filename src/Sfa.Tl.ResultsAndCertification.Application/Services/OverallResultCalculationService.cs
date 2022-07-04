@@ -316,7 +316,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         }).ToListAsync();
         }
 
-        private PrsStatus? HasAnyPathwayResultPrsStatusOutstanding(TqRegistrationPathway learnerPathway)
+        public PrsStatus? HasAnyPathwayResultPrsStatusOutstanding(TqRegistrationPathway learnerPathway)
         {
             if (!learnerPathway.TqPathwayAssessments.Any())
                 return null;
@@ -335,7 +335,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
         }
 
-        private PrsStatus? HasAnySpecialismResultPrsStatusOutstanding(TqRegistrationSpecialism specialism)
+        public PrsStatus? HasAnySpecialismResultPrsStatusOutstanding(TqRegistrationSpecialism specialism)
         {
             if (specialism == null || !specialism.TqSpecialismAssessments.Any())
                 return null;
