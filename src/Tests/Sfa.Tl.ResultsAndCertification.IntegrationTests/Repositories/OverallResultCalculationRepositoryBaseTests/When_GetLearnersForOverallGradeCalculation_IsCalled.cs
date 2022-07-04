@@ -19,9 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.OverallRe
         private List<long> _ulnWithAcademicYear2021;
         private List<TqPathwayAssessment> _pathwayAssessments;
         private List<TqPathwayResult> _pathwayResults;
-        private List<TqSpecialismAssessment> _specialismAssessments;
         private List<TqSpecialismResult> _specialismResults;
-        private List<OverallResult> _overallResults;
 
         private IList<TqRegistrationPathway> _result;
         private List<long> _ulnWithPrevCalcResults;
@@ -72,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.OverallRe
             _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
             _pathwayResults = SeedPathwayResultsData(tqPathwayResultsSeedData, false);
 
-            _specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
+            SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
             _specialismResults = SeedSpecialismResultsData(tqSpecialismResultsSeedData, false);
 
             SeedIndustyPlacementData(1111111114);

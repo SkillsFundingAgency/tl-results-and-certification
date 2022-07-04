@@ -91,7 +91,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private async Task ProcessOverallResults(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
         {
             await Task.CompletedTask;
-            var reconciledLearnerRecords = ReconcileLearnersData(learnerPathways, tlLookup, overallGradeLookupData, assessmentSeries);
+            var reconciledLearnerRecords = ReconcileLearnersData(learnerPathways, tlLookup, overallGradeLookupData, assessmentSeries.ResultPublishDate);
 
             var totalRecords = learnerPathways.Count();
             var updatedRecords = reconciledLearnerRecords.Count(x => x.Id != 0);
@@ -227,7 +227,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }        
         }
 
-        public IList<OverallResult> ReconcileLearnersData(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
+        public IList<OverallResult> ReconcileLearnersData(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, DateTime? resultPublishDate)
         {
             var overallResults = new List<OverallResult>();
 
@@ -272,7 +272,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         Details = JsonConvert.SerializeObject(overallResultDetails),
                         ResultAwarded = overallGrade,
                         CalculationStatus = calculationStatus,
-                        PublishDate = assessmentSeries.ResultPublishDate,
+                        PublishDate = resultPublishDate,
                         PrintAvailableFrom = null,
                         StartDate = DateTime.UtcNow,
                         CreatedBy = Constants.DefaultPerformedBy
