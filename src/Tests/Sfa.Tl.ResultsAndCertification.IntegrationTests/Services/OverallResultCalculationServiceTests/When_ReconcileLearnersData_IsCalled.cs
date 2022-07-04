@@ -72,9 +72,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
             SeedSpecialismResultsData(tqSpecialismResultsSeedData, false);
 
-            //Seed Ip
+            // Seed Ip
             _ulnWithIndustryPlacements = new Dictionary<long, IndustryPlacementStatus>
             {
+                { 1111111112, IndustryPlacementStatus.NotCompleted },
                 { 1111111113, IndustryPlacementStatus.Completed },
                 { 1111111114, IndustryPlacementStatus.CompletedWithSpecialConsideration },
             };
@@ -94,8 +95,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
 
             // Seed Overall results
             var sameResultPathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111113).TqRegistrationPathways.FirstOrDefault().Id;
-            OverallResultDataProvider.CreateOverallResult(DbContext, new List<OverallResult> { new OverallResult { TqRegistrationPathwayId = sameResultPathwayId, 
-                Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}", 
+            OverallResultDataProvider.CreateOverallResult(DbContext, new List<OverallResult> { new OverallResult { TqRegistrationPathwayId = sameResultPathwayId,
+                Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
                 ResultAwarded = "Distinction*", CalculationStatus = CalculationStatus.Completed } }, true);
 
             var differentCalcResultPathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111114).TqRegistrationPathways.FirstOrDefault().Id;
@@ -106,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
 
             DbContext.SaveChanges();
 
-            // Depenencies
+            // Dependencies
             ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
             {
                 OverallResultBatchSettings = new OverallResultBatchSettings
@@ -136,7 +137,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             var learnerPathways = await OverallResultCalculationRepository.GetLearnersForOverallGradeCalculation(2020, 2020);
             var tlLookup = TlLookup.Where(x => x.Category.Equals("OverallResult", StringComparison.InvariantCultureIgnoreCase)).ToList();
             var assessmentSeries = await OverallResultCalculationService.GetResultCalculationAssessmentAsync(DateTime.Today.AddMonths(4));
-            
+
             _expectedResult = new List<OverallResult>
             {
                 new OverallResult
