@@ -108,7 +108,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             _actualResult = await OverallResultCalculationService.CalculateOverallResultsAsync(runDate);
         }
 
-        [Theory(Skip = "TODO")]
+        [Theory]
         [MemberData(nameof(Data))]
         public async Task Then_Expected_Results_Are_Returned(DateTime runDate, bool expectedResult)
         {
@@ -122,7 +122,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             {
                 return new[]
                 {
-                    new object[] { DateTime.Today.AddMonths(-2), false },
+                    // TODO: To be extended to in next sprint may need to query Database and assert the results. 
                     new object[] { DateTime.Today.AddMonths(4), true },
                 };
             }
