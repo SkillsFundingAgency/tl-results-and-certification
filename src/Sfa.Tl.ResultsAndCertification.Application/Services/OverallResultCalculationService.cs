@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var overallGradeLookupData = await GetOverallGradeLookupData();
 
             var tasks = new List<Task>();
-            var batchSize = _configuration.OverallResultBatchSettings.BatchSize <= 0 ? Constants.OverallResultDefaultBatchSize : _configuration.OverallResultBatchSettings.BatchSize;            
+            var batchSize = _configuration.OverallResultBatchSettings.BatchSize <= 0 ? Constants.OverallResultDefaultBatchSize : _configuration.OverallResultBatchSettings.BatchSize;
             var batchesToProcess = (int)Math.Ceiling(learners.Count / (decimal)batchSize);
 
             for (var batchIndex = 0; batchIndex < batchesToProcess; batchIndex++)
@@ -224,7 +224,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     // if pathwayGradeId is null && speciailsmGradeId is null return X - no result
                     return overallResultXNoResult;
                 }
-            }        
+            }
         }
 
         public IList<OverallResult> ReconcileLearnersData(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, DateTime? resultPublishDate)
@@ -283,8 +283,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         overallResults.Add(overallResult);
                     else
                     {
-                        var overallResultComparer = new OverallResultEqualityComparer();
-                        if (!overallResultComparer.Equals(existingOverallResult, overallResult))
+                        if (IsOverallResultChangedFromPrevious(overallResult, existingOverallResult))
                         {
                             existingOverallResult.EndDate = DateTime.UtcNow;
                             existingOverallResult.ModifiedBy = Constants.DefaultPerformedBy;
@@ -334,7 +333,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (!learnerPathway.TqPathwayAssessments.Any())
                 return null;
 
-            if(learnerPathway.TqPathwayAssessments.SelectMany(x => x.TqPathwayResults).Any(x => x.PrsStatus == PrsStatus.UnderReview))
+            if (learnerPathway.TqPathwayAssessments.SelectMany(x => x.TqPathwayResults).Any(x => x.PrsStatus == PrsStatus.UnderReview))
             {
                 return PrsStatus.UnderReview;
             }
@@ -373,6 +372,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
 
             return learnerPathway.TqRegistrationSpecialisms.SelectMany(specialism => specialism.TqSpecialismAssessments).SelectMany(x => x.TqSpecialismResults).Any(x => x.PrsStatus == PrsStatus.UnderReview || x.PrsStatus == PrsStatus.BeingAppealed);
+        }
+
+        private bool IsOverallResultChangedFromPrevious(OverallResult latestOverallResult, OverallResult existingOverallResult)
+        {
+            var overallResultComparer = new OverallResultEqualityComparer();
+            var existingResult = new List<OverallResult> { existingOverallResult };
+            var latestResult = new List<OverallResult> { latestOverallResult };
+
+            // List Intersect used to rightly refer the Comparer.
+            return !existingResult.Intersect(latestResult, overallResultComparer).Any();
         }
     }
 }

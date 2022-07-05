@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         private Dictionary<long, IndustryPlacementStatus> _ulnWithIndustryPlacements;
         private List<long> _ulnsAlreadyWithCalculatedResult;
         private List<OverallResult> _expectedResult;
-        private OverallGradeLookup _overallGradeLookup;
+        private List<OverallGradeLookup> _overallGradeLookup;
 
         public override void Given()
         {
@@ -84,14 +84,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
 
             // Seed OverallResultLookup
             _ulnsAlreadyWithCalculatedResult = new List<long> { 1111111113, 1111111114 };
+            _overallGradeLookup = new List<OverallGradeLookup>();
             foreach (var uln in _ulnsAlreadyWithCalculatedResult)
             {
                 var pathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln).TqRegistrationPathways.FirstOrDefault().Id;
                 var coreResultId = DbContext.TqPathwayResult.FirstOrDefault(x => x.TqPathwayAssessment.TqRegistrationPathwayId == pathwayId).TlLookupId;
                 var splResultId = DbContext.TqSpecialismResult.FirstOrDefault(x => x.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathwayId == pathwayId).TlLookupId;
-                _overallGradeLookup = new OverallGradeLookup { TlPathwayId = 3, TlLookupCoreGradeId = coreResultId, TlLookupSpecialismGradeId = splResultId, TlLookupOverallGradeId = 17 };
-                OverallGradeLookupProvider.CreateOverallGradeLookupList(DbContext, new List<OverallGradeLookup> { _overallGradeLookup });
+                _overallGradeLookup.Add(new OverallGradeLookup { TlPathwayId = 3, TlLookupCoreGradeId = coreResultId, TlLookupSpecialismGradeId = splResultId, TlLookupOverallGradeId = 17 });                
             }
+            OverallGradeLookupProvider.CreateOverallGradeLookupList(DbContext, _overallGradeLookup);
 
             // Seed Overall results
             var sameResultPathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111113).TqRegistrationPathways.FirstOrDefault().Id;
@@ -183,7 +184,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 }
             };
 
-            _actualResult = OverallResultCalculationService.ReconcileLearnersData(learnerPathways, tlLookup, new List<OverallGradeLookup> { _overallGradeLookup }, assessmentSeries.ResultPublishDate);
+            _actualResult = OverallResultCalculationService.ReconcileLearnersData(learnerPathways, tlLookup, _overallGradeLookup, assessmentSeries.ResultPublishDate);
         }
 
         [Fact]
