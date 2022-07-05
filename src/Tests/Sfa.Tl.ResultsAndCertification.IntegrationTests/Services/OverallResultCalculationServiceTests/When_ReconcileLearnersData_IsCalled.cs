@@ -34,8 +34,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             {
                 { 1111111111, RegistrationPathwayStatus.Active },   // Without result
                 { 1111111112, RegistrationPathwayStatus.Active },   // With result
-                { 1111111113, RegistrationPathwayStatus.Active },   // Already Calculated OverallResult - Same Outcome
-                { 1111111114, RegistrationPathwayStatus.Active },   // Already Calculated OverallResult - Different Outcome
+                { 1111111113, RegistrationPathwayStatus.Active },   // With result + Already Calculated OverallResult - Same Outcome
+                { 1111111114, RegistrationPathwayStatus.Active },   // With result + Already Calculated OverallResult - Different Outcome
             };
 
             // Registrations seed

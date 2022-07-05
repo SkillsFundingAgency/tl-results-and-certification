@@ -237,7 +237,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 var pathwayResult = GetHighestPathwayResult(pathway);
                 var specialismResult = GetHighestSpecialismResult(specialism); // as we are not dealing with couplet specialisms as of now
-                var ipStatus = pathway.IndustryPlacements.Any() ? pathway.IndustryPlacements.FirstOrDefault().Status : IndustryPlacementStatus.NotSpecified;
+                var ipStatus = GetIndustryPlacementStatus(pathway);
 
                 var overallGrade = GetOverAllGrade(tlLookup, overallGradeLookupData, pathway.TqProvider.TqAwardingOrganisation.TlPathwayId, pathwayResult?.TlLookupId, specialismResult?.TlLookupId, ipStatus);
 
@@ -262,7 +262,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                 SpecialismResult = specialismResult?.TlLookup?.Value
                             }
                         },
-                        IndustryPlacementStatus = GetIpStatusDisplayName(ipStatus),
+                        IndustryPlacementStatus = GetIndustryPlacementStatusDisplayName(ipStatus),
                         OverallResult = overallGrade
                     };
 
@@ -301,6 +301,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
 
             return overallResults;
+        }
+
+        public IndustryPlacementStatus GetIndustryPlacementStatus(TqRegistrationPathway pathway)
+        {
+            return pathway.IndustryPlacements.Any() ? pathway.IndustryPlacements.FirstOrDefault().Status : IndustryPlacementStatus.NotSpecified;
+        }
+
+        public string GetIndustryPlacementStatusDisplayName(IndustryPlacementStatus ipStatus)
+        {
+            if (ipStatus == IndustryPlacementStatus.Completed || ipStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
+                return ipStatus.GetDisplayName();
+
+            return IndustryPlacementStatus.NotCompleted.GetDisplayName();
         }
 
         private async Task<List<TlLookup>> GetOverallResultLookupData()
@@ -360,14 +373,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
 
             return learnerPathway.TqRegistrationSpecialisms.SelectMany(specialism => specialism.TqSpecialismAssessments).SelectMany(x => x.TqSpecialismResults).Any(x => x.PrsStatus == PrsStatus.UnderReview || x.PrsStatus == PrsStatus.BeingAppealed);
-        }
-
-        private string GetIpStatusDisplayName(IndustryPlacementStatus ipStatus)
-        {
-            if (ipStatus == IndustryPlacementStatus.Completed || ipStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
-                return ipStatus.GetDisplayName();
-
-            return IndustryPlacementStatus.NotCompleted.GetDisplayName();
         }
     }
 }
