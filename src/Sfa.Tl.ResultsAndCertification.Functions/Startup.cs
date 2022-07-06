@@ -84,6 +84,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(_configuration.GovUkNotifyApiKey));
             services.AddTransient<IBlobStorageService, BlobStorageService>();
+
+            // Overall result calculation
+            services.AddTransient<IOverallResultCalculationService, OverallResultCalculationService>();
+            services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();
         }
 
         private void RegisterApiClients(IServiceCollection services)

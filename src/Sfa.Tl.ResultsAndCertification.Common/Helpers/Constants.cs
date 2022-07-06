@@ -154,8 +154,19 @@
         public const string FetchCertificatePrintingTrackBatch = "FetchCertificatePrintingTrackBatch";
         public const string UcasTransferEntries = "UcasTransferEntries";
         public const string UcasTransferResultEntries = "UcasTransferResultEntries";
+        public const string OverallResultCalculation = "OverallResultCalculation";
 
         // File Extensions
         public const string FileExtensionTxt = "txt";
+
+        public const int OverallResultDefaultNoOfAcademicYearsToProcess = 4;
+        public const int OverallResultDefaultBatchSize = 5000;
+
+        
+        public const string PathwayComponentGradeUnclassifiedCode = "PCG7";
+        public const string SpecialismComponentGradeUnclassifiedCode = "SCG4";
+        public const string OverallResultPartialAchievementCode = "OR5";
+        public const string OverallResultUnclassifiedCode = "OR6";
+        public const string OverallResultXNoResultCode = "OR7";
     }
 }

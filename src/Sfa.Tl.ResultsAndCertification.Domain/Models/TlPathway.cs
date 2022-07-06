@@ -11,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
             TqAwardingOrganisations = new HashSet<TqAwardingOrganisation>();
             IpModelTlevelCombinations = new HashSet<IpModelTlevelCombination>();
             IpTempFlexTlevelCombinations = new HashSet<IpTempFlexTlevelCombination>();
+            OverallGradeLookups = new HashSet<OverallGradeLookup>();
         }
 
         public int TlRouteId { get; set; }
@@ -25,6 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public virtual ICollection<TlPathwaySpecialismCombination> TlPathwaySpecialismCombinations { get; set; }
         public virtual ICollection<TqAwardingOrganisation> TqAwardingOrganisations { get; set; }
         public virtual ICollection<IpModelTlevelCombination> IpModelTlevelCombinations { get; set; }
-        public virtual ICollection<IpTempFlexTlevelCombination> IpTempFlexTlevelCombinations { get; set; }       
+        public virtual ICollection<IpTempFlexTlevelCombination> IpTempFlexTlevelCombinations { get; set; }
+        public virtual ICollection<OverallGradeLookup> OverallGradeLookups { get; set; }
     }
 }

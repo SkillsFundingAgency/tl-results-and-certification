@@ -183,6 +183,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
 
             // IndustryPlacement
             services.AddTransient<IIndustryPlacementService, IndustryPlacementService>();
+
+            // Overall result calculation
+            services.AddTransient<IOverallResultCalculationService, OverallResultCalculationService>();
+            services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();
         }
     }
 }

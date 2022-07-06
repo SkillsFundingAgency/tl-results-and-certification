@@ -33,16 +33,18 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return assessmentSeries;
         }
 
-        public static AssessmentSeries CreateAssessmentSeries(ResultsAndCertificationDbContext _dbContext, string name, string description, int year, DateTime startDate, DateTime endDate, DateTime appealEndDate, bool addToDbContext = true)
+        public static AssessmentSeries CreateAssessmentSeries(ResultsAndCertificationDbContext _dbContext, string name, string description, int year, DateTime startDate, DateTime endDate, DateTime appealEndDate, int? resultCalculationYear, DateTime? resultPublishDate, bool addToDbContext = true)
         {
             var assessmentSeries = new AssessmentSeries
             {
                 Name = name,
                 Description = description,
-                Year = year,
+                Year = year,                
                 StartDate = startDate,
                 EndDate = endDate,
                 AppealEndDate = appealEndDate,
+                ResultCalculationYear = resultCalculationYear,
+                ResultPublishDate = resultPublishDate,
                 CreatedBy = "Test User"
             };
 
