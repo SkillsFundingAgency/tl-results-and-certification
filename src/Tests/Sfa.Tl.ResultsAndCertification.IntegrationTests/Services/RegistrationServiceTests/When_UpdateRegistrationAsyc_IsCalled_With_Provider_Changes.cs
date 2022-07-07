@@ -57,6 +57,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             SeedSpecialismResultsData(tqSpecialismResultsSeedData);
 
+            // Seed OverallResultLookup
+            var _overallGradeLookup = new List<OverallGradeLookup>();
+            var pathwayId = _tqRegistrationProfile.TqRegistrationPathways.FirstOrDefault().Id;
+            var coreResultId = DbContext.TqPathwayResult.FirstOrDefault(x => x.TqPathwayAssessment.TqRegistrationPathwayId == pathwayId).TlLookupId;
+            var splResultId = DbContext.TqSpecialismResult.FirstOrDefault(x => x.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathwayId == pathwayId).TlLookupId;
+            _overallGradeLookup.Add(new OverallGradeLookup { TlPathwayId = 3, TlLookupCoreGradeId = coreResultId, TlLookupSpecialismGradeId = splResultId, TlLookupOverallGradeId = 17 });
+            OverallGradeLookupProvider.CreateOverallGradeLookupList(DbContext, _overallGradeLookup);
+
+            var overResultPathwayId = _tqRegistrationProfile.TqRegistrationPathways.FirstOrDefault().Id;
+            OverallResultDataProvider.CreateOverallResult(DbContext, new List<OverallResult> { new OverallResult { TqRegistrationPathwayId = overResultPathwayId,
+                Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
+                ResultAwarded = "Distinction*", CalculationStatus = CalculationStatus.Completed } }, true);
+
             CreateMapper();
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
@@ -118,6 +131,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                                                                                                                                     .ThenInclude(x => x.TqPathwayResults)
                                                                                                                            .Include(x => x.TqRegistrationPathways)
                                                                                                                                 .ThenInclude(x => x.IndustryPlacements)
+                                                                                                                            .Include(x => x.TqRegistrationPathways)
+                                                                                                                                .ThenInclude(x => x.OverallResults)
                                                                                                                            .FirstOrDefault();
 
                 // assert registration profile data
@@ -201,6 +216,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
                 actualActiveIndustryPlacement.Status.Should().Be(expectedPreviousIndustryPlacement.Status);
                 actualActiveIndustryPlacement.Details.Should().Be(expectedPreviousIndustryPlacement.Details);
+
+                // Assert Active OverallResult
+                var actualActiveOverallResult = activePathway.OverallResults.FirstOrDefault(x => x.EndDate == null);
+                var expectedActiveOverallResult = expectedActivePathway.OverallResults.FirstOrDefault(x => x.EndDate == null);
+                actualActiveOverallResult.Should().NotBeNull();
+                expectedActiveOverallResult.Should().NotBeNull();
+                AssertOverallResult(actualActiveOverallResult, expectedActiveOverallResult, isTransferred: false);
+
+                // Assert Transferred OverallResult
+                var actualTransferredOverallResult = actualTransferredPathway.OverallResults.FirstOrDefault(x => x.EndDate != null);
+                var expectedTransferredOverallResult = expectedTransferredPathway.OverallResults.FirstOrDefault(x => x.EndDate != null);
+                actualTransferredOverallResult.Should().NotBeNull();
+                expectedTransferredOverallResult.Should().NotBeNull();
+                AssertOverallResult(actualTransferredOverallResult, expectedTransferredOverallResult, isTransferred: true);
             }
         }
 

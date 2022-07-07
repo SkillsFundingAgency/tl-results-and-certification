@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
             TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
-            TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
+            TlLookup = TlLookupDataProvider.CreateFullTlLookupList(DbContext, null, true);
             PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
             SpecialismComponentGrades = TlLookupDataProvider.CreateSpecialismGradeTlLookupList(DbContext, null, true);
             DbContext.SaveChangesAsync();
@@ -361,6 +361,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
             actualIndustryPlacement.TqRegistrationPathwayId.Should().Be(expectedIndustryPlacement.TqRegistrationPathwayId);
             actualIndustryPlacement.Status.Should().Be(expectedIndustryPlacement.Status);
             actualIndustryPlacement.CreatedBy.Should().Be(expectedIndustryPlacement.CreatedBy);
+        }
+
+
+        public void AssertOverallResult(OverallResult actualOverallResult, OverallResult expectedOverallResult)
+        {
+            actualOverallResult.TqRegistrationPathwayId.Should().Be(expectedOverallResult.TqRegistrationPathwayId);
+            actualOverallResult.Details.Should().Be(expectedOverallResult.Details);
+            actualOverallResult.ResultAwarded.Should().Be(expectedOverallResult.ResultAwarded);
+            actualOverallResult.CalculationStatus.Should().Be(expectedOverallResult.CalculationStatus);
+            actualOverallResult.PrintAvailableFrom.Should().Be(expectedOverallResult.PrintAvailableFrom);
+            actualOverallResult.PublishDate.Should().Be(expectedOverallResult.PublishDate);
+            if (expectedOverallResult.EndDate == null)
+                actualOverallResult.EndDate.Should().BeNull();
+            else
+                actualOverallResult.EndDate.Should().NotBeNull();
         }
     }
 }

@@ -475,5 +475,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             else
                 actualResult.EndDate.Should().NotBeNull();
         }
+
+        public void AssertOverallResult(OverallResult actualOverallResult, OverallResult expectedOverallResult, bool isTransferred)
+        {
+            actualOverallResult.TqRegistrationPathwayId.Should().Be(expectedOverallResult.TqRegistrationPathwayId);
+            actualOverallResult.Details.Should().Be(expectedOverallResult.Details);
+            actualOverallResult.ResultAwarded.Should().Be(expectedOverallResult.ResultAwarded);
+            actualOverallResult.CalculationStatus.Should().Be(expectedOverallResult.CalculationStatus);
+            actualOverallResult.PrintAvailableFrom.Should().Be(expectedOverallResult.PrintAvailableFrom);
+            actualOverallResult.PublishDate.Should().Be(expectedOverallResult.PublishDate);
+            if (isTransferred)
+                actualOverallResult.EndDate.Should().NotBeNull();
+            else
+                actualOverallResult.EndDate.Should().BeNull();
+        }
     }
 }

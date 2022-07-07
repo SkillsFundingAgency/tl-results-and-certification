@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _logger = logger;
         }
 
-        public async Task<TqRegistrationPathway> GetRegistrationLiteAsync(long aoUkprn, int profileId, bool includeProfile = true, bool includeIndustryPlacements = false)
+        public async Task<TqRegistrationPathway> GetRegistrationLiteAsync(long aoUkprn, int profileId, bool includeProfile = true, bool includeIndustryPlacements = false, bool includeOverallResults = false)
         {
             var pathwayQueryable = _dbContext.TqRegistrationPathway.AsQueryable();
 
@@ -29,6 +29,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
             if (includeIndustryPlacements)
                 pathwayQueryable = pathwayQueryable.Include(p => p.IndustryPlacements);
+            
+            if (includeOverallResults)
+                pathwayQueryable = pathwayQueryable.Include(p => p.OverallResults.Where(x => x.EndDate == null));
 
             var registrationPathway = await pathwayQueryable
                .Include(p => p.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin && (rs.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn) ? rs.EndDate != null : rs.EndDate == null))

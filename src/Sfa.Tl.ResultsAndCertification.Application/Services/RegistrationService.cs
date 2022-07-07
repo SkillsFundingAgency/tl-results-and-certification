@@ -661,7 +661,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private async Task<bool> HandleProviderChanges(ManageRegistration model, RegistrationRecordResponse registrationRecord)
         {
-            var pathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, includeProfile: false, includeIndustryPlacements: true);
+            var pathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, includeProfile: false, includeIndustryPlacements: true, includeOverallResults: true);
 
             if (pathway == null || pathway.Status != RegistrationPathwayStatus.Active)
             {
@@ -688,6 +688,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     TqRegistrationSpecialisms = MapInactiveSpecialismAssessmentsAndResults(pathway, true, false, model.PerformedBy),
                     TqPathwayAssessments = MapInactivePathwayAssessmentsAndResults(pathway, true, false, model.PerformedBy),
                     IndustryPlacements = MapIndustryPlacements(pathway, model.PerformedBy),
+                    OverallResults = MapOverallResults(pathway, model.PerformedBy),
                     CreatedBy = model.PerformedBy,
                     CreatedOn = DateTime.UtcNow
                 });
@@ -786,6 +787,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         });
                     });
                 });
+
+                // Overall Results
+                var overallResult = pathway.OverallResults.FirstOrDefault(x => x.EndDate == null);
+                if (overallResult != null)
+                {
+                    overallResult.EndDate = DateTime.UtcNow;
+                    overallResult.ModifiedBy = performedBy;
+                    overallResult.ModifiedOn = DateTime.UtcNow;
+                }
             }
         }
 
@@ -914,6 +924,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 Status = x.Status,
                 Details = x.Details,
+                CreatedBy = performedBy
+            }).ToList();
+        }
+
+        private IList<OverallResult> MapOverallResults(TqRegistrationPathway tqRegistrationPathway, string performedBy)
+        {
+            return tqRegistrationPathway.OverallResults.Select(x => new OverallResult
+            {
+                Details = x.Details,
+                ResultAwarded = x.ResultAwarded,
+                PublishDate = x.PublishDate,
+                PrintAvailableFrom = x.PrintAvailableFrom,
+                CalculationStatus = x.CalculationStatus,
+                StartDate = x.StartDate,
+                CreatedOn = x.CreatedOn,
                 CreatedBy = performedBy
             }).ToList();
         }
