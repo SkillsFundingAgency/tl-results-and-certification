@@ -187,7 +187,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add or change your learners&apos; English and maths achievements and industry placement status.
+        ///   Looks up a localized string similar to Add or change your learners&apos; English and maths achievements and industry placement status..
         /// </summary>
         public static string Manage_Learner_TLevel_Records_Description_Text {
             get {
@@ -205,7 +205,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View your account profile and permissions.
+        ///   Looks up a localized string similar to View your account profile and permissions..
         /// </summary>
         public static string Manage_Your_Account_Description_Text {
             get {
@@ -259,7 +259,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add or update the address you want certificates and statements of achievement sent to.
+        ///   Looks up a localized string similar to Add or update the address you want certificates and statements of achievement sent to..
         /// </summary>
         public static string Providers_Manage_Postal_Address_Text {
             get {
@@ -277,7 +277,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learners who withdraw from their T Level course must be issued with a statement of achievement.
+        ///   Looks up a localized string similar to You must request a statement of achievement for learners who withdraw early from their T Level course..
         /// </summary>
         public static string Providers_Request_Statement_Of_Achievement_Text {
             get {
@@ -354,6 +354,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         public static string Text_Tlevel_Results_Certificates_Soa {
             get {
                 return ResourceManager.GetString("Text_Tlevel_Results_Certificates_Soa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download learner results.
+        /// </summary>
+        public static string Tile_Heading_Download_Learner_Results {
+            get {
+                return ResourceManager.GetString("Tile_Heading_Download_Learner_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download results for active learners in the final year of their T Level..
+        /// </summary>
+        public static string Tile_Para_Download_Results_For_Active_Learners {
+            get {
+                return ResourceManager.GetString("Tile_Para_Download_Results_For_Active_Learners", resourceCulture);
             }
         }
         
