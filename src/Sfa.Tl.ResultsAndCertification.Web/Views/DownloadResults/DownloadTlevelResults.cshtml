@@ -1,43 +1,33 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.DownloadResults
 @model Sfa.Tl.ResultsAndCertification.Web.ViewModel.DownloadResults.DownloadTlevelResultsViewModel
 
 @{
-    ViewData["Title"] = "Download T Level results";
+    ViewData["Title"] = @DownloadTlevelResults.Page_Title;
 }
 
 @section NavigationBar {
-    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+<vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
 
-        <h1 class="govuk-heading-l">
-            Download T Level results for your learners
-        </h1>
+        <h1 class="govuk-heading-l">@DownloadTlevelResults.Heading_Download_Tlevel_Results</h1>
 
-        <p class="govuk-body">You can download the results for all of your active learners who are in the final year of their T Level.</p>
-        <p class="govuk-body govuk-!-margin-bottom-6">The results will be available as a CSV file the day before each results day.</p>
+        <p class="govuk-body">@DownloadTlevelResults.Para_You_Can_Download_Your_Active_Learners</p>
+        <p class="govuk-body govuk-!-margin-bottom-6">@DownloadTlevelResults.Para_Csv_Data_Should_Not_Be_Shared</p>
 
-
-        <p class="govuk-body">The results in the file may be updated after results day if:</p>
+        <p class="govuk-body">@DownloadTlevelResults.Para_Results_Updated_After_Results_Day_If</p>
         <ul class="govuk-list govuk-list--bullet">
-            <li>a grade has changed due to a review or appeal</li>
-            <li>a learner has completed their industry placement</li>
+            <li>@DownloadTlevelResults.Item_Grade_Changed</li>
+            <li>@DownloadTlevelResults.Item_Completed_Industry_Placement</li>
         </ul>
-        <p class="govuk-body">The file will update each time you download it. Any changes to results will be updated on the results file on the next working day.</p>
-
-        <p class="govuk-body">The results file will not be updated after:</p>
-        <ul class="govuk-list govuk-list--bullet">
-            <li>31 May for overall results provided at the end of the autumn series</li>
-            <li>31 October for overall results provided at the end of the summer series</li>
-        </ul>
-        <p class="govuk-body govuk-!-margin-bottom-6">Following these dates, you will need to look at individual learner records for up-to-date results.</p>
-
+        <p class="govuk-body">@DownloadTlevelResults.Para_File_Update_Each_Time</p>
 
         <div class="govuk-button-group">
-            <a class="govuk-button" role="button" asp-route="@RouteConstants.Home">Back to home</a>
+            <a class="govuk-button" role="button" asp-route="">@DownloadTlevelResults.Button_Download_Results_File</a>
+            <a class="govuk-button govuk-button--secondary" role="button" asp-route="@RouteConstants.Home">@DownloadTlevelResults.Button_Back_To_Home</a>
         </div>
-
     </div>
 </div>
