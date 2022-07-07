@@ -1,0 +1,43 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.DownloadResults.DownloadTlevelResultsViewModel
+
+@{
+    ViewData["Title"] = "Download T Level results";
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+
+        <h1 class="govuk-heading-l">
+            Download T Level results for your learners
+        </h1>
+
+        <p class="govuk-body">You can download the results for all of your active learners who are in the final year of their T Level.</p>
+        <p class="govuk-body govuk-!-margin-bottom-6">The results will be available as a CSV file the day before each results day.</p>
+
+
+        <p class="govuk-body">The results in the file may be updated after results day if:</p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>a grade has changed due to a review or appeal</li>
+            <li>a learner has completed their industry placement</li>
+        </ul>
+        <p class="govuk-body">The file will update each time you download it. Any changes to results will be updated on the results file on the next working day.</p>
+
+        <p class="govuk-body">The results file will not be updated after:</p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>31 May for overall results provided at the end of the autumn series</li>
+            <li>31 October for overall results provided at the end of the summer series</li>
+        </ul>
+        <p class="govuk-body govuk-!-margin-bottom-6">Following these dates, you will need to look at individual learner records for up-to-date results.</p>
+
+
+        <div class="govuk-button-group">
+            <a class="govuk-button" role="button" asp-route="@RouteConstants.Home">Back to home</a>
+        </div>
+
+    </div>
+</div>
