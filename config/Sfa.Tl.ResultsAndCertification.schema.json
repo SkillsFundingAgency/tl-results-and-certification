@@ -45,6 +45,10 @@
       "type": "integer",
       "environmentVariable": "SoaRerequestInDays"
     },
+	"OverallResultsAvailableDate": {
+      "type": "string",
+      "environmentVariable": "SoaAvailableDate"
+    },
     "KeyVaultUri": {
       "type": "string",
       "environmentVariable": "KeyVaultUri"

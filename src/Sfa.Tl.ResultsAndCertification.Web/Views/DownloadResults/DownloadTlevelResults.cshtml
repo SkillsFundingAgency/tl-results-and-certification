@@ -26,7 +26,10 @@
         <p class="govuk-body">@DownloadTlevelResults.Para_File_Update_Each_Time</p>
 
         <div class="govuk-button-group">
-            <a class="govuk-button" role="button" asp-route="">@DownloadTlevelResults.Button_Download_Results_File</a>
+            @if (Model.IsOverallResultsAvailable)
+            {
+                <a class="govuk-button" role="button" asp-route="">@DownloadTlevelResults.Button_Download_Results_File</a>
+            }
             <a class="govuk-button govuk-button--secondary" role="button" asp-route="@RouteConstants.Home">@DownloadTlevelResults.Button_Back_To_Home</a>
         </div>
     </div>
