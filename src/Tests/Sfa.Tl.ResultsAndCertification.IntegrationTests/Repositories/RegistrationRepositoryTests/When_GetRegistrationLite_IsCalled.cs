@@ -71,30 +71,29 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
             foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111 && x.UniqueLearnerNumber != 1111111114))
                 SeedIndustyPlacementData(registration.UniqueLearnerNumber);
 
-            DbContext.SaveChanges();
-            DetachAll();
-
             // Seed OverallResultLookup
-            _ulnsWithCalculatedResult = new List<long> { 1111111112 };
-            _overallGradeLookup = new List<OverallGradeLookup>();
-            foreach (var uln in _ulnsWithCalculatedResult)
-            {
-                var pathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111112).TqRegistrationPathways.FirstOrDefault().Id;
-                var coreResultId = DbContext.TqPathwayResult.FirstOrDefault(x => x.TqPathwayAssessment.TqRegistrationPathwayId == pathwayId).TlLookupId;
-                var splResultId = DbContext.TqSpecialismResult.FirstOrDefault(x => x.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathwayId == pathwayId).TlLookupId;
-                _overallGradeLookup.Add(new OverallGradeLookup { TlPathwayId = 3, TlLookupCoreGradeId = coreResultId, TlLookupSpecialismGradeId = splResultId, TlLookupOverallGradeId = 17 });
-            }
-            OverallGradeLookupProvider.CreateOverallGradeLookupList(DbContext, _overallGradeLookup);
-
-            var overResultPathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111112).TqRegistrationPathways.FirstOrDefault().Id;
             _expectedOverallResult = new OverallResult
             {
-                TqRegistrationPathwayId = overResultPathwayId,
                 Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
                 ResultAwarded = "Distinction*",
                 CalculationStatus = CalculationStatus.Completed
             };
-            OverallResultDataProvider.CreateOverallResult(DbContext, new List<OverallResult> { _expectedOverallResult }, true);
+
+           _ulnsWithCalculatedResult = new List<long> { 1111111112 };
+            _overallGradeLookup = new List<OverallGradeLookup>();
+            foreach (var uln in _ulnsWithCalculatedResult)
+            {
+                var pathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111112).TqRegistrationPathways.FirstOrDefault().Id;
+                var coreResultId = pathwayResults.FirstOrDefault(x => x.TqPathwayAssessment.TqRegistrationPathwayId == pathwayId).TlLookupId;
+                var splResultId = specialismResults.FirstOrDefault(x => x.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathwayId == pathwayId).TlLookupId;
+                _overallGradeLookup.Add(new OverallGradeLookup { TlPathwayId = 3, TlLookupCoreGradeId = coreResultId, TlLookupSpecialismGradeId = splResultId, TlLookupOverallGradeId = 17 });
+            }
+
+            OverallGradeLookupProvider.CreateOverallGradeLookupList(DbContext, _overallGradeLookup);
+            _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111112).TqRegistrationPathways.FirstOrDefault().OverallResults.Add(_expectedOverallResult);
+
+            DbContext.SaveChanges();
+            DetachAll();
 
             // Test class.
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
@@ -218,15 +217,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
                     // InputParams: aoUkprn, Uln, inclProf, inclIp, inclOverallResult AND ExpectedResult: isRegistrationPathwayExpected, isRegistrationProfileExpected, isAssessmentExpected, isResultExpected, isIndustryPlacementExpected, isOverallResultExpected
                     new object[] { 99999999, 1111111111, false, false, false,
                                    false, false, false, false, false, false },
-                    //new object[] { 10011881, 1111111112, true, true, false,  // TODO: including the Overallresult as well eventhough it is true 
-                    //               true, true, true, true, true, false },
+                    new object[] { 10011881, 1111111112, true, true, false,
+                                   true, true, true, true, true, false },
                     new object[] { 10011881, 1111111113, true, true, false,
                                    true, true, true, true, true, false },
                     new object[] { 10011881, 1111111114, true, true, false,
                                    true, true, true, true, false, false },
 
-                    //new object[] { 10011881, 1111111112, false, false, false,
-                    //               true, false, true, true, false, false },
+                    new object[] { 10011881, 1111111112, false, false, false,
+                                   true, false, true, true, false, false },
                     new object[] { 10011881, 1111111113, false, false, false,
                                    true, false, true, true, false, false },
                     new object[] { 10011881, 1111111114, false, false, false,
