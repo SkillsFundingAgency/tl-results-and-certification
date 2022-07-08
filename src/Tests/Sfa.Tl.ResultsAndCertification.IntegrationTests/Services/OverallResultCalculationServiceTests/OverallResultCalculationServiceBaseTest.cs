@@ -47,6 +47,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         protected ILogger<GenericRepository<OverallGradeLookup>> OverallGradeLookupLogger;
         protected IRepository<AssessmentSeries> AssessmentSeriesRepository;
         protected ILogger<GenericRepository<AssessmentSeries>> AssessmentSeriesLogger;
+        protected IRepository<OverallResult> OverallResultRepository;
+        protected ILogger<GenericRepository<OverallResult>> OverallResultLogger;
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
         {

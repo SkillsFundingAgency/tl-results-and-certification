@@ -72,10 +72,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
 
             AssessmentSeriesLogger = new Logger<GenericRepository<AssessmentSeries>>(new NullLoggerFactory());
             AssessmentSeriesRepository = new GenericRepository<AssessmentSeries>(AssessmentSeriesLogger, DbContext);
-
+            OverallResultLogger = new Logger<GenericRepository<OverallResult>>(new NullLoggerFactory());
+            OverallResultRepository = new GenericRepository<OverallResult>(OverallResultLogger, DbContext);
             OverallResultCalculationRepository = new OverallResultCalculationRepository(DbContext);
 
-            OverallResultCalculationService = new OverallResultCalculationService(ResultsAndCertificationConfiguration, TlLookupRepository, OverallGradeLookupRepository, OverallResultCalculationRepository, AssessmentSeriesRepository);
+            OverallResultCalculationService = new OverallResultCalculationService(ResultsAndCertificationConfiguration, TlLookupRepository, OverallGradeLookupRepository, OverallResultCalculationRepository, AssessmentSeriesRepository, OverallResultRepository);
         }
 
         public override Task When()

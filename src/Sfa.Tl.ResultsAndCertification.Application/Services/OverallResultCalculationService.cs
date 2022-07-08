@@ -24,19 +24,22 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IRepository<OverallGradeLookup> _overallGradeLookupRepository;
         private readonly IOverallResultCalculationRepository _overallGradeCalculationRepository;
         private readonly IRepository<AssessmentSeries> _assessmentSeriesRepository;
+        private readonly IRepository<OverallResult> _overallResultRepository;
 
         public OverallResultCalculationService(
             ResultsAndCertificationConfiguration configuration,
             IRepository<TlLookup> tlLookupRepository,
             IRepository<OverallGradeLookup> overallGradeLookupRepository,
             IOverallResultCalculationRepository overallGradeCalculationRepository,
-            IRepository<AssessmentSeries> assessmentSeriesRepository)
+            IRepository<AssessmentSeries> assessmentSeriesRepository,
+            IRepository<OverallResult> overallResultRepository)
         {
             _configuration = configuration;
             _tlLookupRepository = tlLookupRepository;
             _overallGradeLookupRepository = overallGradeLookupRepository;
             _overallGradeCalculationRepository = overallGradeCalculationRepository;
             _assessmentSeriesRepository = assessmentSeriesRepository;
+            _overallResultRepository = overallResultRepository;
         }
 
         public async Task<AssessmentSeries> GetResultCalculationAssessmentAsync(DateTime runDate)
@@ -59,6 +62,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var resultCalculationYear = await GetResultCalculationAssessmentAsync(runDate);
             var resultCalculationYearFrom = (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ? Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) - 1;
 
+            //var result = await CalculateOverallResultsAsync(runDate);
+
             return await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationYear?.ResultCalculationYear ?? 0);
         }
 
@@ -74,21 +79,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var overallResultLookupData = await GetOverallResultLookupData();
             var overallGradeLookupData = await GetOverallGradeLookupData();
 
-            var tasks = new List<Task>();
+            var tasks = new List<Task<OverallResultBatchResponse>>();
             var batchSize = _configuration.OverallResultBatchSettings.BatchSize <= 0 ? Constants.OverallResultDefaultBatchSize : _configuration.OverallResultBatchSettings.BatchSize;
             var batchesToProcess = (int)Math.Ceiling(learners.Count / (decimal)batchSize);
 
             for (var batchIndex = 0; batchIndex < batchesToProcess; batchIndex++)
             {
                 var leanersToProcess = learners.Skip(batchIndex * batchSize).Take(batchSize);
-                tasks.Add(ProcessOverallResults(leanersToProcess, overallResultLookupData, overallGradeLookupData, resultCalculationAssessment));
+                //tasks.Add(ProcessOverallResults(leanersToProcess, overallResultLookupData, overallGradeLookupData, resultCalculationAssessment));
+
+                await ProcessOverallResults(leanersToProcess, overallResultLookupData, overallGradeLookupData, resultCalculationAssessment);
             }
 
-            await Task.WhenAll(tasks);
+            //var batchResults = await Task.WhenAll(tasks);
             return true;
         }
 
-        private async Task ProcessOverallResults(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
+        private async Task<OverallResultBatchResponse> ProcessOverallResults(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
         {
             await Task.CompletedTask;
             var reconciledLearnerRecords = ReconcileLearnersData(learnerPathways, tlLookup, overallGradeLookupData, assessmentSeries.ResultPublishDate);
@@ -99,6 +106,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var unChangedRecords = totalRecords - (updatedRecords + newRecords);
 
             // Save.
+            var isSuccess = await SaveOverallResults(reconciledLearnerRecords);
+
+            return new OverallResultBatchResponse { IsSuccess = isSuccess, TotalRecords = totalRecords, UpdatedRecords = updatedRecords, NewRecords = newRecords, UnChangedRecords = unChangedRecords };
         }
 
         public static CalculationStatus GetCalculationStatus(List<TlLookup> overallResultLookupData, string overallGrade, PrsStatus? pathwayResultPrsStatus, PrsStatus? specialismResultPrsStatus)
@@ -302,6 +312,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return overallResults;
         }
 
+        public async Task<bool?> SaveOverallResults(IList<OverallResult> overallResults)
+        {
+            return await _overallResultRepository.UpdateManyAsync(overallResults) > 0;
+        }
+
         public IndustryPlacementStatus GetIndustryPlacementStatus(TqRegistrationPathway pathway)
         {
             return pathway.IndustryPlacements.Any() ? pathway.IndustryPlacements.FirstOrDefault().Status : IndustryPlacementStatus.NotSpecified;
@@ -317,7 +332,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private async Task<List<TlLookup>> GetOverallResultLookupData()
         {
-            return await _tlLookupRepository.GetManyAsync(lkp => lkp.Category.Equals(LookupCategory.OverallResult.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToListAsync();
+            return await _tlLookupRepository.GetManyAsync(lkp => lkp.Category.ToLower().Equals(LookupCategory.OverallResult.ToString().ToLower())).ToListAsync();
         }
 
         private async Task<List<OverallGradeLookup>> GetOverallGradeLookupData()
