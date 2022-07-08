@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
@@ -12,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadResul
     {
         // Dependencies
         protected DownloadResultsController Controller;
+        protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
 
         // HttpContext
         protected int ProviderUkprn;
@@ -20,7 +22,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadResul
 
         public override void Setup()
         {
-            Controller = new DownloadResultsController();
+            ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration { OverallResultsAvailableDate = "01/12/2022".ToDateTime() };
+            Controller = new DownloadResultsController(ResultsAndCertificationConfiguration);
 
             ProviderUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<DownloadResultsController>(Controller)

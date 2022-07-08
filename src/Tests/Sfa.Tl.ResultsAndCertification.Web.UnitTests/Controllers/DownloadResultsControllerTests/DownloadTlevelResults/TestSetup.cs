@@ -5,7 +5,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadResul
 {
     public abstract class TestSetup : DownloadResultsControllerTestBase
     {
-        public IActionResult Result { get; private set; }
+        public IActionResult Result { get; set; }
 
         public async override Task When()
         {

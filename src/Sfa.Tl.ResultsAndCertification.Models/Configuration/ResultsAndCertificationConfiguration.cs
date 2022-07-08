@@ -108,6 +108,13 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// </value>
         public int SoaRerequestInDays { get; set; }
 
+        /// <summary>
+        /// Gets or sets the Overall results available date.
+        /// </summary>
+        /// <value>
+        /// The soa available date.
+        /// </value>
+        public DateTime? OverallResultsAvailableDate { get; set; }
 
         /// <summary>
         /// Gets or sets the dfe sign in settings.

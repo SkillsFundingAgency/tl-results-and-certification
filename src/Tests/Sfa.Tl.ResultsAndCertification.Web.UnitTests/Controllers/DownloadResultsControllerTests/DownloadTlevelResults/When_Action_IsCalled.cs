@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.DownloadResults;
+using System;
 using Xunit;
 
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
@@ -10,7 +11,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadResul
 {
     public class When_Action_IsCalled : TestSetup
     {
-        public override void Given() { }
+        private bool _expectedIsOverallResultsAvailable;
+
+        public override void Given()
+        {
+            _expectedIsOverallResultsAvailable = ResultsAndCertificationConfiguration.OverallResultsAvailableDate >= DateTime.Today;
+        }
 
         [Fact]
         public void Then_Expected_Result_Returned()
@@ -22,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadResul
 
             var model = viewResult.Model as DownloadTlevelResultsViewModel;
             model.Should().NotBeNull();
+            model.IsOverallResultsAvailable.Should().Be(_expectedIsOverallResultsAvailable);
 
             model.Breadcrumb.Should().NotBeNull();
             model.Breadcrumb.BreadcrumbItems.Should().HaveCount(1);

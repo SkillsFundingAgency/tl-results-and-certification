@@ -8,6 +8,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.DownloadResults
 {
     public class DownloadTlevelResultsViewModel
     {
+        public bool IsOverallResultsAvailable { get; set; }
+        
         public BreadcrumbModel Breadcrumb
         {
             get
