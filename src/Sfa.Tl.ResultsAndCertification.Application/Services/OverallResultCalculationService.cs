@@ -112,7 +112,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var unChangedRecords = totalRecords - (updatedRecords + newRecords);
 
             // Save.
-            var isSuccess = await SaveOverallResults(reconciledLearnerRecords);
+            var isSuccess = await SaveOverallResultsAsync(reconciledLearnerRecords);
 
             return new OverallResultResponse { IsSuccess = isSuccess, TotalRecords = totalRecords, UpdatedRecords = updatedRecords, NewRecords = newRecords, UnChangedRecords = unChangedRecords, SavedRecords = isSuccess ? reconciledLearnerRecords.Count : 0 };
         }
@@ -318,7 +318,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return overallResults;
         }
 
-        public async Task<bool> SaveOverallResults(IList<OverallResult> overallResults)
+        public async Task<bool> SaveOverallResultsAsync(IList<OverallResult> overallResults)
         {
             return await _overallResultRepository.UpdateManyAsync(overallResults) > 0;
         }
