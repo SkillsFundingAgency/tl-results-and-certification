@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Comparer;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
@@ -9,6 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,19 +69,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationYear?.ResultCalculationYear ?? 0);
         }
 
-        public async Task<bool> CalculateOverallResultsAsync(DateTime runDate)
+        public async Task<List<OverallResultResponse>> CalculateOverallResultsAsync(DateTime runDate)
         {
+            var response = new List<OverallResultResponse>();
             var resultCalculationAssessment = await GetResultCalculationAssessmentAsync(runDate);
             var resultCalculationYearFrom = (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ? Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) - 1;
             var learners = await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationAssessment.ResultCalculationYear ?? 0);
 
             if (learners == null || !learners.Any())
-                return true;
+            {
+                var message = $"No learners data retrieved to process overall result calculation. Method: CalculateOverallResultsAsync()";
+                response.Add(new OverallResultResponse { IsSuccess = true, Message = message });
+            }
 
             var overallResultLookupData = await GetOverallResultLookupData();
             var overallGradeLookupData = await GetOverallGradeLookupData();
 
-            var tasks = new List<Task<OverallResultBatchResponse>>();
+            
             var batchSize = _configuration.OverallResultBatchSettings.BatchSize <= 0 ? Constants.OverallResultDefaultBatchSize : _configuration.OverallResultBatchSettings.BatchSize;
             var batchesToProcess = (int)Math.Ceiling(learners.Count / (decimal)batchSize);
 
@@ -88,14 +94,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var leanersToProcess = learners.Skip(batchIndex * batchSize).Take(batchSize);
                 //tasks.Add(ProcessOverallResults(leanersToProcess, overallResultLookupData, overallGradeLookupData, resultCalculationAssessment));
 
-                await ProcessOverallResults(leanersToProcess, overallResultLookupData, overallGradeLookupData, resultCalculationAssessment);
+                response.Add(await ProcessOverallResults(leanersToProcess, overallResultLookupData, overallGradeLookupData, resultCalculationAssessment));
             }
 
             //var batchResults = await Task.WhenAll(tasks);
-            return true;
+            return response;
         }
 
-        private async Task<OverallResultBatchResponse> ProcessOverallResults(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
+        private async Task<OverallResultResponse> ProcessOverallResults(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
         {
             await Task.CompletedTask;
             var reconciledLearnerRecords = ReconcileLearnersData(learnerPathways, tlLookup, overallGradeLookupData, assessmentSeries.ResultPublishDate);
@@ -108,7 +114,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             // Save.
             var isSuccess = await SaveOverallResults(reconciledLearnerRecords);
 
-            return new OverallResultBatchResponse { IsSuccess = isSuccess, TotalRecords = totalRecords, UpdatedRecords = updatedRecords, NewRecords = newRecords, UnChangedRecords = unChangedRecords };
+            return new OverallResultResponse { IsSuccess = isSuccess, TotalRecords = totalRecords, UpdatedRecords = updatedRecords, NewRecords = newRecords, UnChangedRecords = unChangedRecords, SavedRecords = isSuccess ? reconciledLearnerRecords.Count : 0 };
         }
 
         public static CalculationStatus GetCalculationStatus(List<TlLookup> overallResultLookupData, string overallGrade, PrsStatus? pathwayResultPrsStatus, PrsStatus? specialismResultPrsStatus)
@@ -312,7 +318,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return overallResults;
         }
 
-        public async Task<bool?> SaveOverallResults(IList<OverallResult> overallResults)
+        public async Task<bool> SaveOverallResults(IList<OverallResult> overallResults)
         {
             return await _overallResultRepository.UpdateManyAsync(overallResults) > 0;
         }
