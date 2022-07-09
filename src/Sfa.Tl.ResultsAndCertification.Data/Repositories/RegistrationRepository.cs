@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 pathwayQueryable = pathwayQueryable.Include(p => p.IndustryPlacements);
             
             if (includeOverallResults)
-                pathwayQueryable = pathwayQueryable.Include(p => p.OverallResults.Where(x => x.EndDate == null));
+                pathwayQueryable = pathwayQueryable.Include(p => p.OverallResults.Where(x => x.IsOptedin && x.EndDate == null));
 
             var registrationPathway = await pathwayQueryable
                .Include(p => p.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin && (rs.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn) ? rs.EndDate != null : rs.EndDate == null))

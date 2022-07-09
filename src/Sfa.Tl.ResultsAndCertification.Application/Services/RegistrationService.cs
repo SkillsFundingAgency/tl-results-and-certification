@@ -782,7 +782,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 });
 
                 // Overall Results
-                var overallResult = pathway.OverallResults.FirstOrDefault(x => x.EndDate == null);
+                var overallResult = pathway.OverallResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
                 if (overallResult != null)
                 {
                     overallResult.EndDate = DateTime.UtcNow;
@@ -1126,7 +1126,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     entityIndex.PathwayAssessmentStartIndex -= pathwayAssessmentsToUpdate.Count();
 
                     // Transfer - OverallResult
-                    var overallResultsToUpdate = pathwayToUpdate.OverallResults.Where(x => x.EndDate == null);
+                    var overallResultsToUpdate = pathwayToUpdate.OverallResults.Where(x => x.IsOptedin && x.EndDate == null);
                     foreach (var (overallResult, idx) in overallResultsToUpdate.Select((value, i) => (value, i)))
                     {
                         overallResult.EndDate = DateTime.UtcNow;

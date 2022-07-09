@@ -294,7 +294,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         CreatedBy = Constants.DefaultPerformedBy
                     };
 
-                    var existingOverallResult = pathway.OverallResults.FirstOrDefault(x => x.EndDate == null);
+                    var existingOverallResult = pathway.OverallResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
                     if (existingOverallResult == null)
                         overallResults.Add(overallResult);
                     else

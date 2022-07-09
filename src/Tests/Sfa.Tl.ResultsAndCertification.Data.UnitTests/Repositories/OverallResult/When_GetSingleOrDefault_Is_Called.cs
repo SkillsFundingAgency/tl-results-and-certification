@@ -38,6 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.OverallResu
             _result.PrintAvailableFrom.Should().Be(_data.PrintAvailableFrom);
             _result.StartDate.Should().Be(_data.StartDate);
             _result.EndDate.Should().Be(_data.EndDate);
+            _result.IsOptedin.Should().BeTrue();
             _result.CreatedBy.Should().Be(Constants.CreatedByUser);
             _result.CreatedOn.Should().Be(Constants.CreatedOn);
             _result.ModifiedBy.Should().Be(Constants.ModifiedByUser);

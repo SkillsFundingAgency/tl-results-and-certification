@@ -31,14 +31,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     .ThenInclude(x => x.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.EndDate == null))
                     .ThenInclude(x => x.TqSpecialismResults.Where(sr => sr.IsOptedin && sr.EndDate == null))
                     .ThenInclude(x => x.TlLookup)
-                .Include(x => x.OverallResults.Where(o => o.EndDate == null))
+                .Include(x => x.OverallResults.Where(o => o.IsOptedin && o.EndDate == null))
                 .Include(x => x.TqProvider)
                     .ThenInclude(x => x.TqAwardingOrganisation)
                     .ThenInclude(x => x.TlPathway)
                 .Where(pw => pw.Status == RegistrationPathwayStatus.Active &&
                              pw.AcademicYear >= academicYearFrom && pw.AcademicYear <= academicYearTo &&
                              (!pw.OverallResults.Any() ||                         // if overall result not yet calculated OR
-                              pw.OverallResults.Any(ovr => ovr.EndDate == null && // ip or core-result or spl result are updated after the calculation
+                              pw.OverallResults.Any(ovr => ovr.IsOptedin && ovr.EndDate == null && // ip or core-result or spl result are updated after the calculation
                                  (pw.IndustryPlacements.Any(ip => ip.CreatedOn > ovr.CreatedOn || ip.ModifiedOn > ovr.CreatedOn) ||
                                   pw.TqPathwayAssessments.SelectMany(pa => pa.TqPathwayResults).Any(pr => pr.CreatedOn > ovr.CreatedOn || pr.ModifiedOn > ovr.CreatedOn) ||
                                   pw.TqRegistrationSpecialisms.SelectMany(s => s.TqSpecialismAssessments.SelectMany(sa => sa.TqSpecialismResults)).Any(sr => sr.CreatedOn > ovr.CreatedOn || sr.ModifiedOn > ovr.CreatedOn)))

@@ -9,6 +9,7 @@
 	[PrintAvailableFrom] DATETIME NULL,
 	[StartDate] DATETIME NOT NULL,	
 	[EndDate] DATETIME NULL,
+	[IsOptedin] BIT NOT NULL DEFAULT 1,
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 
     [CreatedBy] NVARCHAR(50) NULL, 
     [ModifiedOn] DATETIME2 NULL, 

@@ -98,12 +98,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             var sameResultPathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111113).TqRegistrationPathways.FirstOrDefault().Id;
             OverallResultDataProvider.CreateOverallResult(DbContext, new List<OverallResult> { new OverallResult { TqRegistrationPathwayId = sameResultPathwayId,
                 Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
-                ResultAwarded = "Distinction*", CalculationStatus = CalculationStatus.Completed } }, true);
+                ResultAwarded = "Distinction*", CalculationStatus = CalculationStatus.Completed,IsOptedin = true } }, true);
 
             var differentCalcResultPathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111114).TqRegistrationPathways.FirstOrDefault().Id;
             OverallResultDataProvider.CreateOverallResult(DbContext, new List<OverallResult> { new OverallResult { TqRegistrationPathwayId = differentCalcResultPathwayId,
                 Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"C\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Pass\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Pass\"}",
-                ResultAwarded = "Distinction*", CalculationStatus = CalculationStatus.Completed } }, true);
+                ResultAwarded = "Distinction*", CalculationStatus = CalculationStatus.Completed,IsOptedin = true } }, true);
 
 
             DbContext.SaveChanges();
@@ -151,7 +151,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     ResultAwarded = "X - no result",
                     PrintAvailableFrom = null,
                     PublishDate = assessmentSeries.ResultPublishDate,
-                    EndDate = null
+                    EndDate = null,
+                    IsOptedin = true
                 },
                 new OverallResult
                 {
@@ -161,7 +162,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     ResultAwarded = "Partial achievement",
                     PrintAvailableFrom = null,
                     PublishDate = assessmentSeries.ResultPublishDate,
-                    EndDate = null
+                    EndDate = null,
+                    IsOptedin = true,
                 },
                 new OverallResult
                 {
@@ -171,7 +173,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     ResultAwarded = "Distinction*",
                     PrintAvailableFrom = null,
                     PublishDate = assessmentSeries.ResultPublishDate,
-                    EndDate = null
+                    EndDate = null,
+                    IsOptedin = true
                 },
 
                 new OverallResult
@@ -182,7 +185,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     ResultAwarded = "Distinction*",
                     PrintAvailableFrom = null,
                     PublishDate = null,
-                    EndDate = DateTime.UtcNow
+                    EndDate = DateTime.UtcNow,
+                    IsOptedin = true
                 }
             };
 
