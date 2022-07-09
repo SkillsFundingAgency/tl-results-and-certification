@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
         {
             var rundate = System.DateTime.Now;
             var isSuccess = await _resultCalculationService.CalculateOverallResultsAsync(rundate);
-            return new FunctionResponse { IsSuccess = isSuccess };
+            return new FunctionResponse { IsSuccess = true };
         }
     }
 }

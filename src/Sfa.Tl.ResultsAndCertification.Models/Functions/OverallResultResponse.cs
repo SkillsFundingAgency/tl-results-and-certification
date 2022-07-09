@@ -1,13 +1,11 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Application.Models
+﻿namespace Sfa.Tl.ResultsAndCertification.Models.Functions
 {
-    internal class OverallResultBatchResponse
+    public class OverallResultResponse : FunctionResponse
     {
         public int TotalRecords { get; set; }
         public int UpdatedRecords { get; set; }
         public int NewRecords { get; set; }
         public int UnChangedRecords { get; set; }
         public int SavedRecords { get; set; }
-
-        public bool? IsSuccess { get; set; }
     }
 }
