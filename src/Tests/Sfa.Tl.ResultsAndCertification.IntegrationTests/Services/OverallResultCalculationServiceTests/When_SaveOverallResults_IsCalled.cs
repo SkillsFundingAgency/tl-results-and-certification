@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
@@ -14,18 +15,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
+
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResultCalculationServiceTests
 {
-    public class When_ReconcileLearnersData_IsCalled : OverallResultCalculationServiceBaseTest
+    public class When_SaveOverallResults_IsCalled : OverallResultCalculationServiceBaseTest
     {
-        private IList<OverallResult> _actualResult;
+        private bool _actualResult;
 
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<TqRegistrationProfile> _registrations;
         private Dictionary<long, IndustryPlacementStatus> _ulnWithIndustryPlacements;
-        private List<long> _ulnsAlreadyWithCalculatedResult;
-        private List<OverallResult> _expectedResult;
+        private List<long> _ulnsAlreadyWithCalculatedResult;        
         private List<OverallGradeLookup> _overallGradeLookup;
+        private List<OverallResult> _overallResultToSave;
 
         public override void Given()
         {
@@ -90,7 +92,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 var pathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln).TqRegistrationPathways.FirstOrDefault().Id;
                 var coreResultId = DbContext.TqPathwayResult.FirstOrDefault(x => x.TqPathwayAssessment.TqRegistrationPathwayId == pathwayId).TlLookupId;
                 var splResultId = DbContext.TqSpecialismResult.FirstOrDefault(x => x.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathwayId == pathwayId).TlLookupId;
-                _overallGradeLookup.Add(new OverallGradeLookup { TlPathwayId = 3, TlLookupCoreGradeId = coreResultId, TlLookupSpecialismGradeId = splResultId, TlLookupOverallGradeId = 17 });                
+                _overallGradeLookup.Add(new OverallGradeLookup { TlPathwayId = 3, TlLookupCoreGradeId = coreResultId, TlLookupSpecialismGradeId = splResultId, TlLookupOverallGradeId = 17 });
             }
             OverallGradeLookupProvider.CreateOverallGradeLookupList(DbContext, _overallGradeLookup);
 
@@ -140,7 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             var tlLookup = TlLookup.Where(x => x.Category.ToLower().Equals(LookupCategory.OverallResult.ToString().ToLower(), StringComparison.InvariantCultureIgnoreCase)).ToList();
             var assessmentSeries = await OverallResultCalculationService.GetResultCalculationAssessmentAsync(DateTime.Today.AddMonths(4));
 
-            _expectedResult = new List<OverallResult>
+            _overallResultToSave = new List<OverallResult>
             {
                 new OverallResult
                 {
@@ -175,7 +177,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     EndDate = null,
                     IsOptedin = true
                 },
-
                 new OverallResult
                 {
                     TqRegistrationPathwayId = 4,
@@ -185,37 +186,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     PrintAvailableFrom = null,
                     PublishDate = null,
                     EndDate = DateTime.UtcNow,
-                    IsOptedin = false
+                    IsOptedin = true
                 }
             };
 
-            _actualResult = OverallResultCalculationService.ReconcileLearnersData(learnerPathways, tlLookup, _overallGradeLookup, assessmentSeries.ResultPublishDate);
+            _actualResult = await OverallResultCalculationService.SaveOverallResultsAsync(_overallResultToSave);
         }
 
         [Fact]
         public async Task Then_Expected_Results_Are_Returned()
         {
             await WhenAsync();
-            _actualResult.Count.Should().Be(4);
-
-            var newOverallResultUlns = new List<long> { 1111111111, 1111111112, 1111111114 };
-            foreach (var uln in newOverallResultUlns)
-            {
-                var pathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln).TqRegistrationPathways.FirstOrDefault().Id;
-                var actualOverallResult = _actualResult.FirstOrDefault(x => x.TqRegistrationPathwayId == pathwayId && x.EndDate == null);
-                var expectedOverallResult = _expectedResult.FirstOrDefault(x => x.TqRegistrationPathwayId == pathwayId && x.EndDate == null);
-
-                AssertOverallResult(actualOverallResult, expectedOverallResult);
-            }
-
-            var sameOverallResultPathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111113).TqRegistrationPathways.FirstOrDefault().Id;
-            var sameOverallResult = _actualResult.Any(x => x.TqRegistrationPathwayId == sameOverallResultPathwayId);
-            sameOverallResult.Should().BeFalse();
-
-            var prevOverallResultPathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111114).TqRegistrationPathways.FirstOrDefault().Id;
-            var prevOverallResult = _actualResult.FirstOrDefault(x => x.TqRegistrationPathwayId == prevOverallResultPathwayId && x.EndDate != null);
-            var expectedPrevOverallResult = _expectedResult.FirstOrDefault(x => x.TqRegistrationPathwayId == prevOverallResultPathwayId && x.EndDate != null);
-            AssertOverallResult(prevOverallResult, expectedPrevOverallResult);
+            _actualResult.Should().BeTrue();            
         }
 
         public void SeedIndustyPlacementData(Dictionary<long, IndustryPlacementStatus> ipUlns)
@@ -225,6 +207,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 var pathway = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == ipUln.Key).TqRegistrationPathways.FirstOrDefault();
                 IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, ipUln.Value);
             }
-        }        
+        }
     }
 }

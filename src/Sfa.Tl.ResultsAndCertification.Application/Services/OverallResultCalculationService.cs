@@ -103,7 +103,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private async Task<OverallResultResponse> ProcessOverallResults(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
         {
-            await Task.CompletedTask;
             var reconciledLearnerRecords = ReconcileLearnersData(learnerPathways, tlLookup, overallGradeLookupData, assessmentSeries.ResultPublishDate);
 
             var totalRecords = learnerPathways.Count();
@@ -112,7 +111,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var unChangedRecords = totalRecords - (updatedRecords + newRecords);
 
             // Save.
-            var isSuccess = await SaveOverallResults(reconciledLearnerRecords);
+            var isSuccess = await SaveOverallResultsAsync(reconciledLearnerRecords);
 
             return new OverallResultResponse { IsSuccess = isSuccess, TotalRecords = totalRecords, UpdatedRecords = updatedRecords, NewRecords = newRecords, UnChangedRecords = unChangedRecords, SavedRecords = isSuccess ? reconciledLearnerRecords.Count : 0 };
         }
@@ -290,6 +289,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         CalculationStatus = calculationStatus,
                         PublishDate = resultPublishDate,
                         PrintAvailableFrom = null,
+                        IsOptedin = true,
                         StartDate = DateTime.UtcNow,
                         CreatedBy = Constants.DefaultPerformedBy
                     };
@@ -301,6 +301,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         if (IsOverallResultChangedFromPrevious(overallResult, existingOverallResult))
                         {
+                            existingOverallResult.IsOptedin = false;
                             existingOverallResult.EndDate = DateTime.UtcNow;
                             existingOverallResult.ModifiedBy = Constants.DefaultPerformedBy;
                             overallResults.Add(existingOverallResult);
@@ -318,7 +319,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return overallResults;
         }
 
-        public async Task<bool> SaveOverallResults(IList<OverallResult> overallResults)
+        public async Task<bool> SaveOverallResultsAsync(IList<OverallResult> overallResults)
         {
             return await _overallResultRepository.UpdateManyAsync(overallResults) > 0;
         }
