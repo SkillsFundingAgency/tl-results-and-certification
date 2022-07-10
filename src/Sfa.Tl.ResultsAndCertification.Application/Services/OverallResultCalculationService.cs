@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Comparer;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
@@ -103,7 +102,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private async Task<OverallResultResponse> ProcessOverallResults(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
         {
-            var reconciledLearnerRecords = ReconcileLearnersData(learnerPathways, tlLookup, overallGradeLookupData, assessmentSeries.ResultPublishDate);
+            var reconciledLearnerRecords = ReconcileLearnersData(learnerPathways, tlLookup, overallGradeLookupData, assessmentSeries);
 
             var totalRecords = learnerPathways.Count();
             var updatedRecords = reconciledLearnerRecords.Count(x => x.Id != 0);
@@ -266,7 +265,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
         }
 
-        public IList<OverallResult> ReconcileLearnersData(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, DateTime? resultPublishDate)
+        public IList<OverallResult> ReconcileLearnersData(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
         {
             var overallResults = new List<OverallResult>();
 
@@ -313,8 +312,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     Details = JsonConvert.SerializeObject(overallResultDetails),
                     ResultAwarded = overallGrade,
                     CalculationStatus = calculationStatus,
-                    PublishDate = resultPublishDate,
-                    PrintAvailableFrom = null,
+                    PublishDate = assessmentSeries.ResultPublishDate,
+                    PrintAvailableFrom = certificateType != null ? assessmentSeries.AppealEndDate.AddDays(1) : null,
                     IsOptedin = true,
                     CertificateType = certificateType,
                     StartDate = DateTime.UtcNow,
@@ -330,6 +329,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         existingOverallResult.IsOptedin = false;
                         existingOverallResult.EndDate = DateTime.UtcNow;
+                        existingOverallResult.ModifiedOn = DateTime.UtcNow;
                         existingOverallResult.ModifiedBy = Constants.DefaultPerformedBy;
                         overallResults.Add(existingOverallResult);
 

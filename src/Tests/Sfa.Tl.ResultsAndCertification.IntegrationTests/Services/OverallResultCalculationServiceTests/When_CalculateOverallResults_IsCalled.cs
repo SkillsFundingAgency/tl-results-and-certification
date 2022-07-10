@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
@@ -27,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         private List<OverallResultResponse> _expectedResult;
         private List<OverallGradeLookup> _overallGradeLookup;
         private List<OverallResult> _expectedOverallResults;
+        private DateTime _printAvailableFrom;
 
         public override void Given()
         {
@@ -95,16 +97,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             }
             OverallGradeLookupProvider.CreateOverallGradeLookupList(DbContext, _overallGradeLookup);
 
+            _printAvailableFrom = "10/12/2022".ToDateTime().AddDays(1);
+
             // Seed Overall results
             var sameResultPathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111113).TqRegistrationPathways.FirstOrDefault().Id;
             OverallResultDataProvider.CreateOverallResult(DbContext, new List<OverallResult> { new OverallResult { TqRegistrationPathwayId = sameResultPathwayId,
                 Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
-                ResultAwarded = "Distinction*", CalculationStatus = CalculationStatus.Completed, IsOptedin = true, CertificateType = PrintCertificateType.Certificate, StartDate = DateTime.Now, CreatedOn = DateTime.Now } }, true);
+                ResultAwarded = "Distinction*", CalculationStatus = CalculationStatus.Completed, IsOptedin = true, CertificateType = PrintCertificateType.Certificate, PrintAvailableFrom = _printAvailableFrom, StartDate = DateTime.Now, CreatedOn = DateTime.Now } }, true);
 
             var differentCalcResultPathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111114).TqRegistrationPathways.FirstOrDefault().Id;
             OverallResultDataProvider.CreateOverallResult(DbContext, new List<OverallResult> { new OverallResult { TqRegistrationPathwayId = differentCalcResultPathwayId,
                 Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"Partial achievement\"}",
-                ResultAwarded = "Partial achievement", CalculationStatus = CalculationStatus.Completed, IsOptedin = true, CertificateType = PrintCertificateType.StatementOfAchievement, StartDate = DateTime.Now, CreatedOn = DateTime.Now } }, true);
+                ResultAwarded = "Partial achievement", CalculationStatus = CalculationStatus.Completed, IsOptedin = true, CertificateType = PrintCertificateType.StatementOfAchievement, PrintAvailableFrom = _printAvailableFrom, StartDate = DateTime.Now, CreatedOn = DateTime.Now } }, true);
 
             DbContext.SaveChanges();
 
@@ -173,7 +177,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
 
         public async Task WhenAsync(DateTime runDate)
         {
-            var assessmentSeries = await OverallResultCalculationService.GetResultCalculationAssessmentAsync(DateTime.Today.AddMonths(4));
+            var assessmentSeries = await OverallResultCalculationService.GetResultCalculationAssessmentAsync(runDate);
 
             _expectedOverallResults = new List<OverallResult>
             {
@@ -195,7 +199,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"Partial achievement\"}",
                     CalculationStatus = CalculationStatus.PartiallyCompleted,
                     ResultAwarded = "Partial achievement",
-                    PrintAvailableFrom = null,
+                    PrintAvailableFrom = assessmentSeries.AppealEndDate.AddDays(1),
                     PublishDate = assessmentSeries.ResultPublishDate,
                     EndDate = null,
                     IsOptedin = true,
@@ -207,7 +211,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"Partial achievement\"}",
                     CalculationStatus = CalculationStatus.Completed,
                     ResultAwarded = "Partial achievement",
-                    PrintAvailableFrom = null,
+                    PrintAvailableFrom = assessmentSeries.AppealEndDate.AddDays(1),
                     PublishDate = null,
                     EndDate = DateTime.UtcNow,
                     IsOptedin = false,
@@ -219,7 +223,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed with special consideration\",\"OverallResult\":\"Distinction*\"}",
                     CalculationStatus = CalculationStatus.Completed,
                     ResultAwarded = "Distinction*",
-                    PrintAvailableFrom = null,
+                    PrintAvailableFrom = assessmentSeries.AppealEndDate.AddDays(1),
                     PublishDate = assessmentSeries.ResultPublishDate,
                     EndDate = null,
                     IsOptedin = true,
@@ -231,7 +235,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"Partial achievement\"}",
                     CalculationStatus = CalculationStatus.PartiallyCompleted,
                     ResultAwarded = "Partial achievement",
-                    PrintAvailableFrom = null,
+                    PrintAvailableFrom = assessmentSeries.AppealEndDate.AddDays(1),
                     PublishDate = assessmentSeries.ResultPublishDate,
                     EndDate = null,
                     IsOptedin = true,
@@ -243,7 +247,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"Partial achievement\"}",
                     CalculationStatus = CalculationStatus.PartiallyCompleted,
                     ResultAwarded = "Partial achievement",
-                    PrintAvailableFrom = null,
+                    PrintAvailableFrom = assessmentSeries.AppealEndDate.AddDays(1),
                     PublishDate = assessmentSeries.ResultPublishDate,
                     EndDate = null,
                     IsOptedin = true,
