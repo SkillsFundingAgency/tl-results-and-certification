@@ -103,7 +103,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private async Task<OverallResultResponse> ProcessOverallResults(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
         {
-            await Task.CompletedTask;
             var reconciledLearnerRecords = ReconcileLearnersData(learnerPathways, tlLookup, overallGradeLookupData, assessmentSeries.ResultPublishDate);
 
             var totalRecords = learnerPathways.Count();
@@ -290,6 +289,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         CalculationStatus = calculationStatus,
                         PublishDate = resultPublishDate,
                         PrintAvailableFrom = null,
+                        IsOptedin = true,
                         StartDate = DateTime.UtcNow,
                         CreatedBy = Constants.DefaultPerformedBy
                     };
@@ -301,6 +301,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         if (IsOverallResultChangedFromPrevious(overallResult, existingOverallResult))
                         {
+                            existingOverallResult.IsOptedin = false;
                             existingOverallResult.EndDate = DateTime.UtcNow;
                             existingOverallResult.ModifiedBy = Constants.DefaultPerformedBy;
                             overallResults.Add(existingOverallResult);

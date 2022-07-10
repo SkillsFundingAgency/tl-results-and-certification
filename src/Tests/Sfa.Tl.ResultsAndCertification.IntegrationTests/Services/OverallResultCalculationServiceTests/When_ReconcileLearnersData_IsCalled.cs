@@ -136,9 +136,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
 
         public async Task WhenAsync()
         {
-            await Task.CompletedTask;
             var learnerPathways = await OverallResultCalculationRepository.GetLearnersForOverallGradeCalculation(2020, 2020);
-            var tlLookup = TlLookup.Where(x => x.Category.Equals("OverallResult", StringComparison.InvariantCultureIgnoreCase)).ToList();
+            var tlLookup = TlLookup.Where(x => x.Category.ToLower().Equals(LookupCategory.OverallResult.ToString().ToLower(), StringComparison.InvariantCultureIgnoreCase)).ToList();
             var assessmentSeries = await OverallResultCalculationService.GetResultCalculationAssessmentAsync(DateTime.Today.AddMonths(4));
 
             _expectedResult = new List<OverallResult>
@@ -186,7 +185,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     PrintAvailableFrom = null,
                     PublishDate = null,
                     EndDate = DateTime.UtcNow,
-                    IsOptedin = true
+                    IsOptedin = false
                 }
             };
 
@@ -226,20 +225,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 var pathway = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == ipUln.Key).TqRegistrationPathways.FirstOrDefault();
                 IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, ipUln.Value);
             }
-        }
-
-        private static void AssertOverallResult(OverallResult actualOverallResult, OverallResult expectedOverallResult)
-        {
-            actualOverallResult.TqRegistrationPathwayId.Should().Be(expectedOverallResult.TqRegistrationPathwayId);
-            actualOverallResult.Details.Should().Be(expectedOverallResult.Details);
-            actualOverallResult.ResultAwarded.Should().Be(expectedOverallResult.ResultAwarded);
-            actualOverallResult.CalculationStatus.Should().Be(expectedOverallResult.CalculationStatus);
-            actualOverallResult.PrintAvailableFrom.Should().Be(expectedOverallResult.PrintAvailableFrom);
-            actualOverallResult.PublishDate.Should().Be(expectedOverallResult.PublishDate);
-            if (expectedOverallResult.EndDate == null)
-                actualOverallResult.EndDate.Should().BeNull();
-            else
-                actualOverallResult.EndDate.Should().NotBeNull();
-        }
+        }        
     }
 }

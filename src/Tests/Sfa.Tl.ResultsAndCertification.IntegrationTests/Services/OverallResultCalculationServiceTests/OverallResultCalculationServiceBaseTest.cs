@@ -365,6 +365,26 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             }
 
             DbContext.SaveChanges();
-        }       
+        }
+
+        public static void AssertOverallResult(OverallResult actualOverallResult, OverallResult expectedOverallResult)
+        {
+            actualOverallResult.TqRegistrationPathwayId.Should().Be(expectedOverallResult.TqRegistrationPathwayId);
+            actualOverallResult.Details.Should().Be(expectedOverallResult.Details);
+            actualOverallResult.ResultAwarded.Should().Be(expectedOverallResult.ResultAwarded);
+            actualOverallResult.CalculationStatus.Should().Be(expectedOverallResult.CalculationStatus);
+            actualOverallResult.PrintAvailableFrom.Should().Be(expectedOverallResult.PrintAvailableFrom);
+            actualOverallResult.PublishDate.Should().Be(expectedOverallResult.PublishDate);
+            if (expectedOverallResult.EndDate == null)
+            {
+                actualOverallResult.IsOptedin.Should().BeTrue();
+                actualOverallResult.EndDate.Should().BeNull();
+            }
+            else
+            {
+                actualOverallResult.IsOptedin.Should().BeFalse();
+                actualOverallResult.EndDate.Should().NotBeNull();
+            }
+        }
     }
 }
