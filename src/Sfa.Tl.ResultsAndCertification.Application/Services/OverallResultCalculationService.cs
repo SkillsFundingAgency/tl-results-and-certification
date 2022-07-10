@@ -85,7 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var overallResultLookupData = await GetOverallResultLookupData();
             var overallGradeLookupData = await GetOverallGradeLookupData();
 
-            
+
             var batchSize = _configuration.OverallResultBatchSettings.BatchSize <= 0 ? Constants.OverallResultDefaultBatchSize : _configuration.OverallResultBatchSettings.BatchSize;
             var batchesToProcess = (int)Math.Ceiling(learners.Count / (decimal)batchSize);
 
@@ -114,6 +114,30 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var isSuccess = await SaveOverallResultsAsync(reconciledLearnerRecords);
 
             return new OverallResultResponse { IsSuccess = isSuccess, TotalRecords = totalRecords, UpdatedRecords = updatedRecords, NewRecords = newRecords, UnChangedRecords = unChangedRecords, SavedRecords = isSuccess ? reconciledLearnerRecords.Count : 0 };
+        }
+
+        public PrintCertificateType? GetPrintCertificateType(List<TlLookup> overallResultLookupData, string overallGrade)
+        {
+            if (string.IsNullOrWhiteSpace(overallGrade))
+                return null;
+
+            var unclassifiedGrade = overallResultLookupData.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultUnclassifiedCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
+            var noResultGrade = overallResultLookupData.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultXNoResultCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
+            var partialAchievementGrade = overallResultLookupData.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultPartialAchievementCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
+
+            if (overallGrade.Equals(unclassifiedGrade, StringComparison.InvariantCultureIgnoreCase) ||
+                overallGrade.Equals(noResultGrade, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return null;
+            }
+            else if (overallGrade.Equals(partialAchievementGrade, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return PrintCertificateType.StatementOfAchievement;
+            }
+            else
+            {
+                return PrintCertificateType.Certificate;
+            }
         }
 
         public static CalculationStatus GetCalculationStatus(List<TlLookup> overallResultLookupData, string overallGrade, PrsStatus? pathwayResultPrsStatus, PrsStatus? specialismResultPrsStatus)
@@ -256,19 +280,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 var overallGrade = GetOverAllGrade(tlLookup, overallGradeLookupData, pathway.TqProvider.TqAwardingOrganisation.TlPathwayId, pathwayResult?.TlLookupId, specialismResult?.TlLookupId, ipStatus);
 
-                if (!string.IsNullOrWhiteSpace(overallGrade))
-                {
-                    var pathwayResultPrsStatus = HasAnyPathwayResultPrsStatusOutstanding(pathway);
-                    var specialismResultPrsStatus = HasAnySpecialismResultPrsStatusOutstanding(specialism);
-                    var calculationStatus = GetCalculationStatus(tlLookup, overallGrade, pathwayResultPrsStatus, specialismResultPrsStatus);
+                if (string.IsNullOrWhiteSpace(overallGrade))
+                    throw new ApplicationException("OverallGrade cannot be null");
 
-                    var overallResultDetails = new OverallResultDetail
-                    {
-                        TlevelTitle = pathway.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
-                        PathwayName = pathway.TqProvider.TqAwardingOrganisation.TlPathway.Name,
-                        PathwayLarId = pathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-                        PathwayResult = pathwayResult?.TlLookup?.Value,
-                        SpecialismDetails = new List<OverallSpecialismDetail>
+                var pathwayResultPrsStatus = HasAnyPathwayResultPrsStatusOutstanding(pathway);
+                var specialismResultPrsStatus = HasAnySpecialismResultPrsStatusOutstanding(specialism);
+                var calculationStatus = GetCalculationStatus(tlLookup, overallGrade, pathwayResultPrsStatus, specialismResultPrsStatus);
+                var certificateType = GetPrintCertificateType(tlLookup, overallGrade);
+
+                var overallResultDetails = new OverallResultDetail
+                {
+                    TlevelTitle = pathway.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
+                    PathwayName = pathway.TqProvider.TqAwardingOrganisation.TlPathway.Name,
+                    PathwayLarId = pathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
+                    PathwayResult = pathwayResult?.TlLookup?.Value,
+                    SpecialismDetails = new List<OverallSpecialismDetail>
                         {
                             new OverallSpecialismDetail
                             {
@@ -277,42 +303,38 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                 SpecialismResult = specialismResult?.TlLookup?.Value
                             }
                         },
-                        IndustryPlacementStatus = GetIndustryPlacementStatusDisplayName(ipStatus),
-                        OverallResult = overallGrade
-                    };
+                    IndustryPlacementStatus = GetIndustryPlacementStatusDisplayName(ipStatus),
+                    OverallResult = overallGrade
+                };
 
-                    var overallResult = new OverallResult
-                    {
-                        TqRegistrationPathwayId = pathway.Id,
-                        Details = JsonConvert.SerializeObject(overallResultDetails),
-                        ResultAwarded = overallGrade,
-                        CalculationStatus = calculationStatus,
-                        PublishDate = resultPublishDate,
-                        PrintAvailableFrom = null,
-                        IsOptedin = true,
-                        StartDate = DateTime.UtcNow,
-                        CreatedBy = Constants.DefaultPerformedBy
-                    };
+                var overallResult = new OverallResult
+                {
+                    TqRegistrationPathwayId = pathway.Id,
+                    Details = JsonConvert.SerializeObject(overallResultDetails),
+                    ResultAwarded = overallGrade,
+                    CalculationStatus = calculationStatus,
+                    PublishDate = resultPublishDate,
+                    PrintAvailableFrom = null,
+                    IsOptedin = true,
+                    CertificateType = certificateType,
+                    StartDate = DateTime.UtcNow,
+                    CreatedBy = Constants.DefaultPerformedBy
+                };
 
-                    var existingOverallResult = pathway.OverallResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
-                    if (existingOverallResult == null)
-                        overallResults.Add(overallResult);
-                    else
-                    {
-                        if (IsOverallResultChangedFromPrevious(overallResult, existingOverallResult))
-                        {
-                            existingOverallResult.IsOptedin = false;
-                            existingOverallResult.EndDate = DateTime.UtcNow;
-                            existingOverallResult.ModifiedBy = Constants.DefaultPerformedBy;
-                            overallResults.Add(existingOverallResult);
-
-                            overallResults.Add(overallResult);
-                        }
-                    }
-                }
+                var existingOverallResult = pathway.OverallResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
+                if (existingOverallResult == null)
+                    overallResults.Add(overallResult);
                 else
                 {
-                    // TODO : Log
+                    if (IsOverallResultChangedFromPrevious(overallResult, existingOverallResult))
+                    {
+                        existingOverallResult.IsOptedin = false;
+                        existingOverallResult.EndDate = DateTime.UtcNow;
+                        existingOverallResult.ModifiedBy = Constants.DefaultPerformedBy;
+                        overallResults.Add(existingOverallResult);
+
+                        overallResults.Add(overallResult);
+                    }
                 }
             }
 

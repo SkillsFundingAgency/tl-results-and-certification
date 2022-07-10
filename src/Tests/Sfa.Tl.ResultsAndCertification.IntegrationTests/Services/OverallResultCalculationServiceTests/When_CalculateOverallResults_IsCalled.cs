@@ -99,12 +99,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             var sameResultPathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111113).TqRegistrationPathways.FirstOrDefault().Id;
             OverallResultDataProvider.CreateOverallResult(DbContext, new List<OverallResult> { new OverallResult { TqRegistrationPathwayId = sameResultPathwayId,
                 Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
-                ResultAwarded = "Distinction*", CalculationStatus = CalculationStatus.Completed,IsOptedin = true, StartDate = DateTime.Now, CreatedOn = DateTime.Now } }, true);
+                ResultAwarded = "Distinction*", CalculationStatus = CalculationStatus.Completed, IsOptedin = true, CertificateType = PrintCertificateType.Certificate, StartDate = DateTime.Now, CreatedOn = DateTime.Now } }, true);
 
             var differentCalcResultPathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111114).TqRegistrationPathways.FirstOrDefault().Id;
             OverallResultDataProvider.CreateOverallResult(DbContext, new List<OverallResult> { new OverallResult { TqRegistrationPathwayId = differentCalcResultPathwayId,
                 Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"Partial achievement\"}",
-                ResultAwarded = "Partial achievement", CalculationStatus = CalculationStatus.Completed,IsOptedin = true, StartDate = DateTime.Now, CreatedOn = DateTime.Now } }, true);
+                ResultAwarded = "Partial achievement", CalculationStatus = CalculationStatus.Completed, IsOptedin = true, CertificateType = PrintCertificateType.StatementOfAchievement, StartDate = DateTime.Now, CreatedOn = DateTime.Now } }, true);
 
             DbContext.SaveChanges();
 
@@ -186,7 +186,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     PrintAvailableFrom = null,
                     PublishDate = assessmentSeries.ResultPublishDate,
                     EndDate = null,
-                    IsOptedin = true
+                    IsOptedin = true,
+                    CertificateType = null,
                 },
                 new OverallResult
                 {
@@ -198,6 +199,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     PublishDate = assessmentSeries.ResultPublishDate,
                     EndDate = null,
                     IsOptedin = true,
+                    CertificateType = PrintCertificateType.StatementOfAchievement,
                 },                
                 new OverallResult
                 {
@@ -208,7 +210,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     PrintAvailableFrom = null,
                     PublishDate = null,
                     EndDate = DateTime.UtcNow,
-                    IsOptedin = false
+                    IsOptedin = false,
+                    CertificateType = PrintCertificateType.StatementOfAchievement,
                 },
                 new OverallResult
                 {
@@ -219,7 +222,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     PrintAvailableFrom = null,
                     PublishDate = assessmentSeries.ResultPublishDate,
                     EndDate = null,
-                    IsOptedin = true
+                    IsOptedin = true,
+                    CertificateType = PrintCertificateType.Certificate,
                 },
                 new OverallResult
                 {
@@ -231,6 +235,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     PublishDate = assessmentSeries.ResultPublishDate,
                     EndDate = null,
                     IsOptedin = true,
+                    CertificateType = PrintCertificateType.StatementOfAchievement,
                 },
                 new OverallResult
                 {
@@ -242,6 +247,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     PublishDate = assessmentSeries.ResultPublishDate,
                     EndDate = null,
                     IsOptedin = true,
+                    CertificateType = PrintCertificateType.StatementOfAchievement,
                 }
             };
 
