@@ -532,7 +532,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model)
         {
-            var registration = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, false);
+            var registration = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, false, includeOverallResults: true);
 
             if (registration == null || registration.Status != RegistrationPathwayStatus.Active)
             {
@@ -547,7 +547,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> RejoinRegistrationAsync(RejoinRegistrationRequest model)
         {
-            var tqRegistrationPathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, includeProfile: true, includeIndustryPlacements: true);
+            var tqRegistrationPathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, includeProfile: true, includeIndustryPlacements: true, includeOverallResults: true);
 
             if (tqRegistrationPathway == null || tqRegistrationPathway.Status != RegistrationPathwayStatus.Withdrawn)
             {
@@ -573,6 +573,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 TqRegistrationSpecialisms = MapInactiveSpecialismAssessmentsAndResults(tqRegistrationPathway, true, false, model.PerformedBy),
                 TqPathwayAssessments = MapInactivePathwayAssessmentsAndResults(tqRegistrationPathway, true, false, model.PerformedBy),
                 IndustryPlacements = MapIndustryPlacements(tqRegistrationPathway, model.PerformedBy),
+                OverallResults = MapOverallResults(tqRegistrationPathway, model.PerformedBy),
                 CreatedBy = model.PerformedBy,
                 CreatedOn = DateTime.UtcNow
             };
@@ -931,6 +932,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 PrintAvailableFrom = x.PrintAvailableFrom,
                 CalculationStatus = x.CalculationStatus,
                 StartDate = x.StartDate,
+                IsOptedin = true,
                 CreatedOn = x.CreatedOn,
                 CreatedBy = performedBy
             }).ToList();
@@ -1142,6 +1144,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                             PublishDate = overallResult.PublishDate,
                             PrintAvailableFrom = overallResult.PrintAvailableFrom,
                             StartDate = DateTime.UtcNow,
+                            IsOptedin = true,
                             CreatedOn = DateTime.UtcNow,
                             CreatedBy = amendedRegistration.CreatedBy
                         };

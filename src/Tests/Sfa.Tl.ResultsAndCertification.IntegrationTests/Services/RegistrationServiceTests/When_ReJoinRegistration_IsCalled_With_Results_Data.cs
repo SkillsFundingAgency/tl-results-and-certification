@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
     {
         private bool _result;
         private BulkRegistrationsTextFixture _bulkRegistrationTestFixture;
+        private List<OverallGradeLookup> _overallGradeLookup;
 
         public When_ReJoinRegistration_IsCalled_With_Results_Data(BulkRegistrationsTextFixture bulkRegistrationTestFixture)
         {
@@ -36,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var pathwayAssessments = _bulkRegistrationTestFixture.SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData);
 
             // Results seed
-            _bulkRegistrationTestFixture.SeedPathwayResultsData(_bulkRegistrationTestFixture.GetPathwayResultsDataToProcess(pathwayAssessments, seedPathwayResultsAsActive: false, isHistorical: false, isBulkUpload: false));
+            var pathwayResults = _bulkRegistrationTestFixture.SeedPathwayResultsData(_bulkRegistrationTestFixture.GetPathwayResultsDataToProcess(pathwayAssessments, seedPathwayResultsAsActive: false, isHistorical: false, isBulkUpload: false));
 
             // Specialism Assessments seed
             var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
@@ -45,7 +48,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var specialismAssessments = _bulkRegistrationTestFixture.SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData);
 
             // Specialisms Results seed
-            _bulkRegistrationTestFixture.SeedSpecialismResultsData(_bulkRegistrationTestFixture.GetSpecialismResultsDataToProcess(specialismAssessments, seedSpecialismResultsAsActive: false, isHistorical: false, isBulkUpload: false));
+            var specialismResults = _bulkRegistrationTestFixture.SeedSpecialismResultsData(_bulkRegistrationTestFixture.GetSpecialismResultsDataToProcess(specialismAssessments, seedSpecialismResultsAsActive: false, isHistorical: false, isBulkUpload: false));
+
+            // Seed OverallResultLookup
+            _overallGradeLookup = new List<OverallGradeLookup>();
+            var pathwayId = seededRegistrationPathways.FirstOrDefault().Id;
+            var coreResultId = pathwayResults.FirstOrDefault().TlLookupId;
+            var splResultId = specialismResults.FirstOrDefault().TlLookupId;
+            _overallGradeLookup.Add(new OverallGradeLookup { TlPathwayId = 1, TlLookupCoreGradeId = coreResultId, TlLookupSpecialismGradeId = splResultId, TlLookupOverallGradeId = 1 });
+            OverallGradeLookupProvider.CreateOverallGradeLookupList(_bulkRegistrationTestFixture.DbContext, _overallGradeLookup);
+
+            // Seed Overall results
+            OverallResultDataProvider.CreateOverallResult(_bulkRegistrationTestFixture.DbContext, new List<OverallResult> { new OverallResult { TqRegistrationPathwayId = pathwayId,
+                Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
+                ResultAwarded = "Distinction*", CalculationStatus = CalculationStatus.Completed, StartDate = DateTime.UtcNow.AddMonths(-1), IsOptedin = true, EndDate = DateTime.UtcNow, CreatedOn = DateTime.UtcNow } }, true);
+
         }
 
         [Fact]
@@ -77,6 +94,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                                                                                                                                 .ThenInclude(x => x.TqPathwayResults)
                                                                                                                         .Include(x => x.TqRegistrationPathways)
                                                                                                                             .ThenInclude(x => x.IndustryPlacements)
+                                                                                                                        .Include(x => x.TqRegistrationPathways)
+                                                                                                                            .ThenInclude(x => x.OverallResults)
                                                                                                                        .FirstOrDefault();
             // assert registration profile data
             actualRegistrationProfile.Should().NotBeNull();
@@ -108,7 +127,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var expectedPreviousResult = expectedPreviousAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate != null);
             AssertPathwayResults(actualActiveResult, expectedPreviousResult, isRejoin: true);
 
-
             // Assert Withdrawn SpecialismAssessment
             var actualActiveSpecialism = actualActivePathway.TqRegistrationSpecialisms.FirstOrDefault(x => x.EndDate == null);
             var expectedActiveSpecialism = expectedActivePathway.TqRegistrationSpecialisms.FirstOrDefault(x => x.EndDate != null);
@@ -128,6 +146,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             actualActiveIndustryPlacement.Status.Should().Be(expectedPreviousIndustryPlacement.Status);
             actualActiveIndustryPlacement.Details.Should().Be(expectedPreviousIndustryPlacement.Details);
+
+            // Assert Active Overall result
+            var actualActiveOverallResult = actualActivePathway.OverallResults.FirstOrDefault(ovr => ovr.EndDate == null);
+            var expectedActiveOverallResult = expectedActivePathway.OverallResults.FirstOrDefault(ovr => ovr.EndDate != null);
+            AssertOverallResult(actualActiveOverallResult, expectedActiveOverallResult, isRejoin: true);
         }
 
         public static void AssertRegistrationPathway(TqRegistrationPathway actualPathway, TqRegistrationPathway expectedPathway, bool assertStatus = true)
@@ -217,6 +240,25 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 actualResult.EndDate.Should().BeNull();
             else
                 actualResult.EndDate.Should().NotBeNull();
+        }
+
+        private void AssertOverallResult(OverallResult actualOverallResult, OverallResult expectedOverallResult, bool isRejoin = false, bool isTransferred = false)
+        {
+            actualOverallResult.Should().NotBeNull();
+            if (!isRejoin && !isTransferred)
+                expectedOverallResult.TqRegistrationPathwayId.Should().Be(expectedOverallResult.TqRegistrationPathwayId);
+
+            actualOverallResult.TqRegistrationPathway.TqProviderId.Should().Be(expectedOverallResult.TqRegistrationPathway.TqProviderId);
+            actualOverallResult.Details.Should().Be(expectedOverallResult.Details);
+            actualOverallResult.ResultAwarded.Should().Be(expectedOverallResult.ResultAwarded);
+            actualOverallResult.CalculationStatus.Should().Be(expectedOverallResult.CalculationStatus);
+            actualOverallResult.PrintAvailableFrom.Should().Be(expectedOverallResult.PrintAvailableFrom);
+            actualOverallResult.PublishDate.Should().Be(expectedOverallResult.PublishDate);
+
+            if (actualOverallResult.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active)
+                actualOverallResult.EndDate.Should().BeNull();
+            else
+                actualOverallResult.EndDate.Should().NotBeNull();
         }
     }
 }
