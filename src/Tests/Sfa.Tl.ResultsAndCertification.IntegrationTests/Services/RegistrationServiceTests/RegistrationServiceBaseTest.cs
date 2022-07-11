@@ -482,6 +482,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             actualOverallResult.Details.Should().Be(expectedOverallResult.Details);
             actualOverallResult.ResultAwarded.Should().Be(expectedOverallResult.ResultAwarded);
             actualOverallResult.CalculationStatus.Should().Be(expectedOverallResult.CalculationStatus);
+            actualOverallResult.CertificateType.Should().Be(expectedOverallResult.CertificateType);
             actualOverallResult.PrintAvailableFrom.Should().Be(expectedOverallResult.PrintAvailableFrom);
             actualOverallResult.PublishDate.Should().Be(expectedOverallResult.PublishDate);
             if (isTransferred)

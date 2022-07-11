@@ -77,7 +77,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
                 Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
                 ResultAwarded = "Distinction*",
                 IsOptedin = true,
-                CalculationStatus = CalculationStatus.Completed
+                CalculationStatus = CalculationStatus.Completed,
+                CertificateType = PrintCertificateType.Certificate
             };
 
            _ulnsWithCalculatedResult = new List<long> { 1111111112 };

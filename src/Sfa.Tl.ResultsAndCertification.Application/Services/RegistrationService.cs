@@ -931,9 +931,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 PublishDate = x.PublishDate,
                 PrintAvailableFrom = x.PrintAvailableFrom,
                 CalculationStatus = x.CalculationStatus,
+                CertificateType = x.CertificateType,
                 StartDate = x.StartDate,
                 IsOptedin = true,
-                CreatedOn = x.CreatedOn,
                 CreatedBy = performedBy
             }).ToList();
         }
@@ -1145,6 +1145,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                             PrintAvailableFrom = overallResult.PrintAvailableFrom,
                             StartDate = DateTime.UtcNow,
                             IsOptedin = true,
+                            CertificateType = overallResult.CertificateType,
                             CreatedOn = DateTime.UtcNow,
                             CreatedBy = amendedRegistration.CreatedBy
                         };

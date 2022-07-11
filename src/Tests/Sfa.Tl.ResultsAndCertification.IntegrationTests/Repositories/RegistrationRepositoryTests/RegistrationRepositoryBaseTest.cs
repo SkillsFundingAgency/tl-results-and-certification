@@ -372,6 +372,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
             actualOverallResult.CalculationStatus.Should().Be(expectedOverallResult.CalculationStatus);
             actualOverallResult.PrintAvailableFrom.Should().Be(expectedOverallResult.PrintAvailableFrom);
             actualOverallResult.PublishDate.Should().Be(expectedOverallResult.PublishDate);
+            actualOverallResult.CertificateType.Should().Be(expectedOverallResult.CertificateType);
             if (expectedOverallResult.EndDate == null)
                 actualOverallResult.EndDate.Should().BeNull();
             else
