@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             }
             OverallGradeLookupProvider.CreateOverallGradeLookupList(DbContext, _overallGradeLookup);
 
-            _printAvailableFrom = "10/12/2022".ToDateTime().AddDays(1);
+            _printAvailableFrom = DateTime.Now.Date.AddMonths(5).AddDays(1);
 
             // Seed Overall results
             var sameResultPathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111113).TqRegistrationPathways.FirstOrDefault().Id;
