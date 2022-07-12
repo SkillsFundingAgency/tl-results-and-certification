@@ -76,14 +76,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var learners = await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationAssessment.ResultCalculationYear ?? 0);
 
             if (learners == null || !learners.Any())
-            {
-                var message = $"No learners data retrieved to process overall result calculation. Method: CalculateOverallResultsAsync()";
-                response.Add(new OverallResultResponse { IsSuccess = true, Message = message });
-            }
+                return null;
 
             var overallResultLookupData = await GetOverallResultLookupData();
             var overallGradeLookupData = await GetOverallGradeLookupData();
-
 
             var batchSize = _configuration.OverallResultBatchSettings.BatchSize <= 0 ? Constants.OverallResultDefaultBatchSize : _configuration.OverallResultBatchSettings.BatchSize;
             var batchesToProcess = (int)Math.Ceiling(learners.Count / (decimal)batchSize);
@@ -91,12 +87,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             for (var batchIndex = 0; batchIndex < batchesToProcess; batchIndex++)
             {
                 var leanersToProcess = learners.Skip(batchIndex * batchSize).Take(batchSize);
-                //tasks.Add(ProcessOverallResults(leanersToProcess, overallResultLookupData, overallGradeLookupData, resultCalculationAssessment));
-
                 response.Add(await ProcessOverallResults(leanersToProcess, overallResultLookupData, overallGradeLookupData, resultCalculationAssessment));
             }
 
-            //var batchResults = await Task.WhenAll(tasks);
             return response;
         }
 
