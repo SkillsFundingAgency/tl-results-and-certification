@@ -9,6 +9,8 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.DownloadResults;
 using System;
 using System.Threading.Tasks;
 
+using DownloadOverallResultContent = Sfa.Tl.ResultsAndCertification.Web.Content.DownloadOverallResults.DownloadOverallResults;
+
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
     [Authorize(Policy = RolesExtensions.RequireLearnerRecordsEditorAccess)]
@@ -45,18 +47,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("download-tlevel-results-file", Name = RouteConstants.DownloadOverallResultsFile)]
         public async Task<IActionResult> DownloadOverallResultsFileAsync()
         {
-            var fileName = "TODO_FileName";
             var fileStream = await _downloadOverallResultsLoader.DownloadOverallResultsDataAsync(User.GetUkPrn(), User.GetUserEmail());
             if (fileStream == null)
             {
-                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download overall results. Method: DownloadOverallResultsDataAsync(FileName: {User.GetUkPrn()}, {User.GetUserEmail()})");
+                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download overall results. Method: DownloadOverallResultsDataAsync({User.GetUkPrn()}, {User.GetUserEmail()})");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
             fileStream.Position = 0;
             return new FileStreamResult(fileStream, "text/csv")
             {
-                FileDownloadName = fileName
+                FileDownloadName = DownloadOverallResultContent.Download_Filename
             };
         }
     }

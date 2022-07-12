@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Models;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -67,7 +69,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var overallResults = _overallResultsRepository.GetManyAsync(x =>
                                                 x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
                                                 x.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == providerUkprn &&
-                                                x.PublishDate <= resultPublishDate && DateTime.Today >= resultPublishDate);
+                                                x.PublishDate == resultPublishDate && DateTime.Today >= resultPublishDate);
+
+            var item1  = overallResults.FirstOrDefault();
+            var data  = JsonConvert.DeserializeObject<OverallResultDetail>(item1.Details);
+
 
             var overallResultsData = _mapper.Map<IList<DownloadOverallResultsData>>(overallResults);
             return overallResultsData;

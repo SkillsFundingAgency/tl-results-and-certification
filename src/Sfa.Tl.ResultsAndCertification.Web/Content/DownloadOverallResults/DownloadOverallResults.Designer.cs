@@ -80,6 +80,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.DownloadOverallResults {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to T-Level-overall-results.csv.
+        /// </summary>
+        public static string Download_Filename {
+            get {
+                return ResourceManager.GetString("Download_Filename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download T Level results for your learners.
         /// </summary>
         public static string Heading_Download_Tlevel_Results {

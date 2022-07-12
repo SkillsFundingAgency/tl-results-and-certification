@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<AssessmentSeries> GetResultCalculationAssessmentAsync(DateTime runDate)
         {
             var assessmentSeries = await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
-            var currentAssessmentSeries = assessmentSeries.FirstOrDefault(a => runDate >= a.StartDate && runDate <= a.EndDate);
+            var currentAssessmentSeries = assessmentSeries.FirstOrDefault(a => a.ComponentType == ComponentType.Core && runDate >= a.StartDate && runDate <= a.EndDate);
             if (currentAssessmentSeries == null)
                 throw new Exception($"There is no AssessmentSeries available for the date {runDate}");
 
@@ -72,8 +72,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var response = new List<OverallResultResponse>();
             var resultCalculationAssessment = await GetResultCalculationAssessmentAsync(runDate);
-            var resultCalculationYearFrom = (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ? Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) - 1;
+            var resultCalculationYearFrom = (resultCalculationAssessment.ResultCalculationYear ?? 0) - (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ? 
+                Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) + 1;
             var learners = await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationAssessment.ResultCalculationYear ?? 0);
+            // from to be corrected
 
             if (learners == null || !learners.Any())
             {
