@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
             if (response == null || !response.Any())
             {
-                var message = $"No learners data retrieved to process overall result calculation. Method: CalculateOverallResultsAsync()";
+                var message = $"No learners data retrieved to process overall result calculation. Method: CalculateOverallResultsAsync({System.DateTime.Now})";
                 _logger.LogWarning(LogEvent.NoDataFound, message);
                 return new List<OverallResultResponse> { new OverallResultResponse { IsSuccess = true, Message = message } };
             }

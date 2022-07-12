@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         }
 
         [FunctionName(Constants.OverallResultCalculation)]
-        public async Task OverallResultCalculationAsync([TimerTrigger("%OverallResultCalculation%")] TimerInfo timer, ExecutionContext context, ILogger logger)
+        public async Task OverallResultCalculationAsync([TimerTrigger("%OverallResultCalculationTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
