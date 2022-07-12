@@ -5,6 +5,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 {
     public interface IDownloadOverallResultsLoader
     {
-        Task<Stream> GetDownloadOverallResultsDataAsync(long providerUkprn, string performedBy);
+        Task<Stream> DownloadOverallResultsDataAsync(long providerUkprn, string performedBy);
     }
 }

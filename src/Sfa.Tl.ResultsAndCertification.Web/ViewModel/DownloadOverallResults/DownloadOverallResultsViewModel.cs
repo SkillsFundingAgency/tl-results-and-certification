@@ -6,7 +6,7 @@ using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewCompone
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.DownloadResults
 {
-    public class DownloadTlevelResultsViewModel
+    public class DownloadOverallResultsViewModel
     {
         public bool IsOverallResultsAvailable { get; set; }
         

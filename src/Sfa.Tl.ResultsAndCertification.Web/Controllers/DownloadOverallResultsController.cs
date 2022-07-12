@@ -12,15 +12,15 @@ using System.Threading.Tasks;
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
     [Authorize(Policy = RolesExtensions.RequireLearnerRecordsEditorAccess)]
-    public class DownloadResultsController : Controller
+    public class DownloadOverallResultsController : Controller
     {
         private readonly ResultsAndCertificationConfiguration _configuration;
         private readonly IDownloadOverallResultsLoader _downloadOverallResultsLoader;
         private readonly ILogger _logger;
 
-        public DownloadResultsController(ResultsAndCertificationConfiguration configuration,
+        public DownloadOverallResultsController(ResultsAndCertificationConfiguration configuration,
             IDownloadOverallResultsLoader downloadOverallResultsLoader, 
-            ILogger<DownloadResultsController> logger)
+            ILogger<DownloadOverallResultsController> logger)
         {
             _configuration = configuration;
             _downloadOverallResultsLoader = downloadOverallResultsLoader;
@@ -29,9 +29,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("download-tlevel-results", Name = RouteConstants.DownloadOverallResultsPage)]
-        public IActionResult DownloadTlevelResults()
+        public IActionResult DownloadOverallResults()
         {
-            var viewModel = new DownloadTlevelResultsViewModel
+            var viewModel = new DownloadOverallResultsViewModel
             {
                 IsOverallResultsAvailable =
                     _configuration.OverallResultsAvailableDate == null ||
@@ -46,10 +46,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> DownloadOverallResultsFileAsync()
         {
             var fileName = "TODO_FileName";
-            var fileStream = await _downloadOverallResultsLoader.GetDownloadOverallResultsDataAsync(User.GetUkPrn(), User.GetUserEmail());
+            var fileStream = await _downloadOverallResultsLoader.DownloadOverallResultsDataAsync(User.GetUkPrn(), User.GetUserEmail());
             if (fileStream == null)
             {
-                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download overall results. Method: GetDownloadOverallResultsDataAsync(FileName: {User.GetUkPrn()}, {User.GetUserEmail()})");
+                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download overall results. Method: DownloadOverallResultsDataAsync(FileName: {User.GetUkPrn()}, {User.GetUserEmail()})");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 

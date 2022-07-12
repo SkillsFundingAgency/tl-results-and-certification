@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Content.DownloadResults {
+namespace Sfa.Tl.ResultsAndCertification.Web.Content.DownloadOverallResults {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.DownloadResults {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class DownloadTlevelResults {
+    public class DownloadOverallResults {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal DownloadTlevelResults() {
+        internal DownloadOverallResults() {
         }
         
         /// <summary>
@@ -39,7 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.DownloadResults {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.DownloadResults.DownloadTlevelResults", typeof(DownloadTlevelResults).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.DownloadOverallResults.DownloadOverall" +
+                            "Results", typeof(DownloadOverallResults).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

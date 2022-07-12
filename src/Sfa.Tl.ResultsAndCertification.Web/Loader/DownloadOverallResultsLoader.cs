@@ -27,23 +27,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _logger = logger;
         }
 
-        public async Task<Stream> GetDownloadOverallResultsDataAsync(long providerUkprn, string requestedBy)
+        public async Task<Stream> DownloadOverallResultsDataAsync(long providerUkprn, string requestedBy)
         {
-            var apiResponse = await _internalApiClient.GetDownloadOverallResultsDataAsync(providerUkprn, requestedBy);
-
+            var apiResponse = await _internalApiClient.DownloadOverallResultsDataAsync(providerUkprn, requestedBy);
             if (apiResponse == null || apiResponse.BlobUniqueReference == Guid.Empty)
                 return null;
 
             var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
             {
                 ContainerName = DocumentType.OverallResults.ToString(),
-                BlobFileName = $"{apiResponse.BlobUniqueReference}.{FileType.Csv}",
-                SourceFilePath = $"{providerUkprn}"
+                SourceFilePath = $"{providerUkprn}",
+                BlobFileName = $"{apiResponse.BlobUniqueReference}.{FileType.Csv}"
             });
 
             if (fileStream == null)
             {
-                var blobReadError = $"No FileStream found to download overallresults data. Method: GetDownloadOverallResultsDataAsync(ContainerName: {DocumentType.OverallResults}, BlobFileName = {apiResponse.BlobUniqueReference}, SourceFilePath = {providerUkprn})";
+                var blobReadError = $"No FileStream found to download overallresults data. Method: DownloadOverallResultsDataAsync(ContainerName: {DocumentType.OverallResults}, BlobFileName = {apiResponse.BlobUniqueReference}, SourceFilePath = {providerUkprn})";
                 _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
             }
             return fileStream;
