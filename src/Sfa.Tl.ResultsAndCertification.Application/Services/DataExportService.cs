@@ -66,14 +66,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return new List<DownloadOverallResultsData>();
 
             // 2. Get OverallResults on above PublishDate if date reached
-            var overallResults = _overallResultsRepository.GetManyAsync(x =>
+            var overallResults = await _overallResultsRepository.GetManyAsync(x =>
                                                 x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
                                                 x.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == providerUkprn &&
-                                                x.PublishDate == resultPublishDate && DateTime.Today >= resultPublishDate);
-
-            var item1  = overallResults.FirstOrDefault();
-            var data  = JsonConvert.DeserializeObject<OverallResultDetail>(item1.Details);
-
+                                                x.PublishDate == resultPublishDate && DateTime.Today >= resultPublishDate,
+                                                incl => incl.TqRegistrationPathway.TqRegistrationProfile)
+                                        .ToListAsync();
 
             var overallResultsData = _mapper.Map<IList<DownloadOverallResultsData>>(overallResults);
             return overallResultsData;

@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             // Calculate result for recently completed assessment. 
             var dateFromPreviousAssessment = currentAssessmentSeries.StartDate.AddDays(-1);
-            var previousAssessment = assessmentSeries.FirstOrDefault(a => dateFromPreviousAssessment >= a.StartDate && dateFromPreviousAssessment <= a.EndDate);
+            var previousAssessment = assessmentSeries.FirstOrDefault(a => a.ComponentType == ComponentType.Core && dateFromPreviousAssessment >= a.StartDate && dateFromPreviousAssessment <= a.EndDate);
 
             return previousAssessment;
         }
@@ -75,7 +75,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var resultCalculationYearFrom = (resultCalculationAssessment.ResultCalculationYear ?? 0) - (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ? 
                 Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) + 1;
             var learners = await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationAssessment.ResultCalculationYear ?? 0);
-            // from to be corrected
 
             if (learners == null || !learners.Any())
                 return null;
