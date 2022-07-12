@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\DataExportServiceTests\**" />
+    <EmbeddedResource Remove="Services\DataExportServiceTests\**" />
+    <None Remove="Services\DataExportServiceTests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Data\GenericRepositoryTests.cs" />
     <Compile Remove="Repositories\RegistrationRepositoryTests\MyClassTest.cs" />
   </ItemGroup>
