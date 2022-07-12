@@ -1,7 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.Services
@@ -19,11 +22,17 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             _logger = logger;
         }
 
-        public async Task<FunctionResponse> CalculateOverallResultsAsync()
+        public async Task<IList<OverallResultResponse>> CalculateOverallResultsAsync()
         {
-            var rundate = System.DateTime.Now;
-            var isSuccess = await _resultCalculationService.CalculateOverallResultsAsync(rundate);
-            return new FunctionResponse { IsSuccess = true };
+            var response = await _resultCalculationService.CalculateOverallResultsAsync(System.DateTime.Now);
+
+            if (response == null || !response.Any())
+            {
+                var message = $"No learners data retrieved to process overall result calculation. Method: CalculateOverallResultsAsync()";
+                _logger.LogWarning(LogEvent.NoDataFound, message);
+                return new List<OverallResultResponse> { new OverallResultResponse { IsSuccess = true, Message = message } };
+            }
+            return response;
         }
     }
 }

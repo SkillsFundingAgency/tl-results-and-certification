@@ -86,6 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IBlobStorageService, BlobStorageService>();
 
             // Overall result calculation
+            services.AddTransient<IOverallResultCalculationFunctionService, OverallResultCalculationFunctionService>();
             services.AddTransient<IOverallResultCalculationService, OverallResultCalculationService>();
             services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();
         }
