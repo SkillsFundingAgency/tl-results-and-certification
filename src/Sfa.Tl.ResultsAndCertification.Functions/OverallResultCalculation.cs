@@ -40,10 +40,17 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
                 var responses = await _overallResultCalculationService.CalculateOverallResultsAsync();
-                
-                CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Processed, JsonConvert.SerializeObject(responses));
+
+                var status = responses.All(r => r.IsSuccess) ? FunctionStatus.Processed : responses.All(r => !r.IsSuccess) ? FunctionStatus.Failed : FunctionStatus.PartiallyProcessed;
+
+                var message = JsonConvert.SerializeObject(responses);
+                CommonHelper.UpdateFunctionLogRequest(functionLogDetails, status, message);
 
                 await _commonService.UpdateFunctionLog(functionLogDetails);
+
+                // Send Email notification if status is Failed or PartiallyProcessed
+                if(status == FunctionStatus.Failed || status == FunctionStatus.PartiallyProcessed)
+                    await _commonService.SendFunctionJobFailedNotification(context.FunctionName, $"Function Status: {status}, Message: {message}");
 
                 stopwatch.Stop();
 
