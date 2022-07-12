@@ -35,10 +35,16 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             };
         }
 
+        public async Task<DataExportResponse> DownloadOverallResultsDataAsync(long providerUkprn, string requestedBy)
+        {
+            var overallResults = await _dataExportService.DownloadOverallResultsDataAsync(providerUkprn);
+            return await ProcessDataExportResponseAsync(overallResults, providerUkprn, DocumentType.OverallResults, DataExportType.NotSpecified, requestedBy, classMapType: typeof(DownloadOverallResultsExportMap), isEmptyFileAllowed: true);
+        }
+
         private async Task<IList<DataExportResponse>> ProcessRegistrationsRequestAsync(long aoUkprn, DataExportType requestType, string requestedBy)
         {
             var registrations = await _dataExportService.GetDataExportRegistrationsAsync(aoUkprn);
-            var exportResponse = await ProcessDataExportResponseAsync(registrations, aoUkprn, requestType, requestedBy, classMapType: typeof(RegistrationsExportMap));
+            var exportResponse = await ProcessDataExportResponseAsync(registrations, aoUkprn, DocumentType.DataExports, requestType, requestedBy, classMapType: typeof(RegistrationsExportMap));
             return new List<DataExportResponse>() { exportResponse };
         }
 
@@ -52,8 +58,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             var response = new List<DataExportResponse>();
 
-            var coreAssessmentsResponse = ProcessDataExportResponseAsync(coreAssessments, aoUkprn, requestType, requestedBy, ComponentType.Core);
-            var specialismAssessmentsResponse = ProcessDataExportResponseAsync(specialismAssessments, aoUkprn, requestType, requestedBy, ComponentType.Specialism);
+            var coreAssessmentsResponse = ProcessDataExportResponseAsync(coreAssessments, aoUkprn, DocumentType.DataExports, requestType, requestedBy, ComponentType.Core);
+            var specialismAssessmentsResponse = ProcessDataExportResponseAsync(specialismAssessments, aoUkprn, DocumentType.DataExports, requestType, requestedBy, ComponentType.Specialism);
 
             await Task.WhenAll(coreAssessmentsResponse, specialismAssessmentsResponse);
 
@@ -73,8 +79,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             var response = new List<DataExportResponse>();
 
-            var coreResultsResponse = ProcessDataExportResponseAsync(coreResults, aoUkprn, requestType, requestedBy, ComponentType.Core);
-            var specialismResultsResponse = ProcessDataExportResponseAsync(specialismResults, aoUkprn, requestType, requestedBy, ComponentType.Specialism);
+            var coreResultsResponse = ProcessDataExportResponseAsync(coreResults, aoUkprn, DocumentType.DataExports, requestType, requestedBy, ComponentType.Core);
+            var specialismResultsResponse = ProcessDataExportResponseAsync(specialismResults, aoUkprn, DocumentType.DataExports, requestType, requestedBy, ComponentType.Specialism);
 
             await Task.WhenAll(coreResultsResponse, specialismResultsResponse);
 
@@ -84,24 +90,27 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return response;
         }
 
-        private async Task<DataExportResponse> ProcessDataExportResponseAsync<T>(IList<T> data, long aoUkprn, DataExportType requestType, string requestedBy, ComponentType componentType = ComponentType.NotSpecified, Type classMapType = null)
+        private async Task<DataExportResponse> ProcessDataExportResponseAsync<T>(IList<T> data, long ukprn, DocumentType documentType, DataExportType requestType, string requestedBy, ComponentType componentType = ComponentType.NotSpecified, Type classMapType = null, bool isEmptyFileAllowed = false)
         {
-            if (data == null || !data.Any())
+            if (!isEmptyFileAllowed && (data == null || !data.Any()))
                 return new DataExportResponse { ComponentType = componentType, IsDataFound = false };
 
             var byteData = await CsvExtensions.WriteFileAsync(data, classMapType: classMapType);
-            var response = await WriteCsvToBlobAsync(aoUkprn, requestType, requestedBy, byteData, componentType);
+            var response = await WriteCsvToBlobAsync(ukprn, documentType, requestType, requestedBy, byteData, componentType);
             return response;
         }
 
-        private async Task<DataExportResponse> WriteCsvToBlobAsync(long aoUkprn, DataExportType requestType, string requestedBy, byte[] byteData, ComponentType componentType = ComponentType.NotSpecified)
+        private async Task<DataExportResponse> WriteCsvToBlobAsync(long ukprn, DocumentType documentType, DataExportType requestType, string requestedBy, byte[] byteData, ComponentType componentType = ComponentType.NotSpecified)
         {
             // 3. Save to Blob
+            var sourceFilePath = documentType == DocumentType.OverallResults ? $"{ukprn}" :
+                componentType == ComponentType.NotSpecified ? $"{ukprn}/{requestType}" : $"{ukprn}/{requestType}/{componentType}";
+
             var blobUniqueReference = Guid.NewGuid();
             await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
             {
-                ContainerName = DocumentType.DataExports.ToString(),
-                SourceFilePath = componentType == ComponentType.NotSpecified ? $"{aoUkprn}/{requestType}" : $"{aoUkprn}/{requestType}/{componentType}",
+                ContainerName = documentType.ToString(),
+                SourceFilePath = sourceFilePath,
                 BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
                 FileData = byteData,
                 UserName = requestedBy

@@ -388,7 +388,8 @@
         #endregion
 
         #region Download Tlevel Results
-        public const string DownloadTlevelResults = "DownloadTlevelResults";
+        public const string DownloadOverallResultsPage = "DownloadOverallResultsPage";
+        public const string DownloadOverallResultsFile = "DownloadOverallResultsFile";
         #endregion
     }
 }

@@ -7,6 +7,7 @@
         Results = 3,
         Documents = 4,
         Ucas = 5,
-        DataExports = 6
+        DataExports = 6,
+        OverallResults = 7
     }
 }

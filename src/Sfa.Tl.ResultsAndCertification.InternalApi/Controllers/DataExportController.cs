@@ -25,5 +25,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _dataExportLoader.ProcessDataExportAsync(aoUkprn, requestType, requestedBy);
         }
+
+        [HttpGet]
+        [Route("DownloadOverallResultsData/{providerUkprn}/{requestedBy}")]
+        public async Task<DataExportResponse> DownloadOverallResultsDataAsync(long providerUkprn, string requestedBy)
+        {
+            return await _dataExportLoader.DownloadOverallResultsDataAsync(providerUkprn, requestedBy);
+        }
     }
 }

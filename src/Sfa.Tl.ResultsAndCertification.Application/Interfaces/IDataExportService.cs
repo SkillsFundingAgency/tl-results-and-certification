@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Models.DataExport;
+using Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,5 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<IList<SpecialismAssessmentsExport>> GetDataExportSpecialismAssessmentsAsync(long aoUkprn);
         Task<IList<CoreResultsExport>> GetDataExportCoreResultsAsync(long aoUkprn);
         Task<IList<SpecialismResultsExport>> GetDataExportSpecialismResultsAsync(long aoUkprn);
+        Task<IList<DownloadOverallResultsData>> DownloadOverallResultsDataAsync(long providerUkprn);
     }
 }
