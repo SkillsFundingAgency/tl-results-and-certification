@@ -1,4 +1,4 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Application.Models
+﻿namespace Sfa.Tl.ResultsAndCertification.Models.OverallResults
 {
     public class OverallSpecialismDetail
     {

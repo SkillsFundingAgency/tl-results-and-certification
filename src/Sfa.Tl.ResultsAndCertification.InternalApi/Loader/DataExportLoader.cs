@@ -17,11 +17,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
     {
         private readonly IDataExportService _dataExportService;
         private readonly IBlobStorageService _blobStorageService;
+        private readonly IOverallResultCalculationService _overallResultCalculationService;
 
-        public DataExportLoader(IDataExportService dataExportService, IBlobStorageService blobStorageService)
+        public DataExportLoader(IDataExportService dataExportService, IBlobStorageService blobStorageService, IOverallResultCalculationService overallResultCalculationService)
         {
             _dataExportService = dataExportService;
             _blobStorageService = blobStorageService;
+            _overallResultCalculationService = overallResultCalculationService;
         }
 
         public async Task<IList<DataExportResponse>> ProcessDataExportAsync(long aoUkprn, DataExportType requestType, string requestedBy)
@@ -37,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
         public async Task<DataExportResponse> DownloadOverallResultsDataAsync(long providerUkprn, string requestedBy)
         {
-            var overallResults = await _dataExportService.DownloadOverallResultsDataAsync(providerUkprn);
+            var overallResults = await _overallResultCalculationService.DownloadOverallResultsDataAsync(providerUkprn);
             return await ProcessDataExportResponseAsync(overallResults, providerUkprn, DocumentType.OverallResults, DataExportType.NotSpecified, requestedBy, classMapType: typeof(DownloadOverallResultsExportMap), isEmptyFileAllowed: true);
         }
 
