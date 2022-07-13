@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Sfa.Tl.ResultsAndCertification.Application.Models
+namespace Sfa.Tl.ResultsAndCertification.Models.OverallResults
 {
-    internal class OverallResultDetail
+    public class OverallResultDetail
     {
         public string TlevelTitle { get; set; }
         public string PathwayName { get; set; }
@@ -10,6 +10,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Models
         public string PathwayResult { get; set; }
         public List<OverallSpecialismDetail> SpecialismDetails { get; set; }
         public string IndustryPlacementStatus { get; set; }
-        public string OverallResult { get; set; }        
+        public string OverallResult { get; set; }
     }
 }

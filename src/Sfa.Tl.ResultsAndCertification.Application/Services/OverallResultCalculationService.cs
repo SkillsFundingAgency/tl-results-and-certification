@@ -1,15 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Comparer;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Application.Models;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
+using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IOverallResultCalculationRepository _overallGradeCalculationRepository;
         private readonly IRepository<AssessmentSeries> _assessmentSeriesRepository;
         private readonly IRepository<OverallResult> _overallResultRepository;
+        private readonly IMapper _mapper;
 
         public OverallResultCalculationService(
             ResultsAndCertificationConfiguration configuration,
@@ -33,7 +36,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             IRepository<OverallGradeLookup> overallGradeLookupRepository,
             IOverallResultCalculationRepository overallGradeCalculationRepository,
             IRepository<AssessmentSeries> assessmentSeriesRepository,
-            IRepository<OverallResult> overallResultRepository)
+            IRepository<OverallResult> overallResultRepository,
+            IMapper mapper)
         {
             _configuration = configuration;
             _tlLookupRepository = tlLookupRepository;
@@ -41,6 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _overallGradeCalculationRepository = overallGradeCalculationRepository;
             _assessmentSeriesRepository = assessmentSeriesRepository;
             _overallResultRepository = overallResultRepository;
+            _mapper = mapper;
         }
 
         public async Task<AssessmentSeries> GetResultCalculationAssessmentAsync(DateTime runDate)
@@ -60,12 +65,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<IList<TqRegistrationPathway>> GetLearnersForOverallGradeCalculationAsync(DateTime runDate)
         {
             // Dev note: This method left to test from api end-point
-            var resultCalculationYear = await GetResultCalculationAssessmentAsync(runDate);
+            var previousAssessment = await GetResultCalculationAssessmentAsync(runDate);
             var resultCalculationYearFrom = (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ? Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) - 1;
 
             //var result = await CalculateOverallResultsAsync(runDate);
 
-            return await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationYear?.ResultCalculationYear ?? 0);
+            return await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, previousAssessment?.ResultCalculationYear ?? 0);
         }
 
         public async Task<List<OverallResultResponse>> CalculateOverallResultsAsync(DateTime runDate)
@@ -74,6 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var resultCalculationAssessment = await GetResultCalculationAssessmentAsync(runDate);
             var resultCalculationYearFrom = (resultCalculationAssessment.ResultCalculationYear ?? 0) - (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ? 
                 Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) + 1;
+
             var learners = await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationAssessment.ResultCalculationYear ?? 0);
 
             if (learners == null || !learners.Any())
@@ -356,6 +362,25 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return ipStatus.GetDisplayName();
 
             return IndustryPlacementStatus.NotCompleted.GetDisplayName();
+        }
+
+        public async Task<IList<DownloadOverallResultsData>> DownloadOverallResultsDataAsync(long providerUkprn)
+        {
+            // 1. Get PublishDate from previous assessment
+            var previousAssessment = await GetResultCalculationAssessmentAsync(DateTime.UtcNow);
+            var resultPublishDate = previousAssessment?.ResultPublishDate;
+            if (resultPublishDate == null)
+                return new List<DownloadOverallResultsData>();
+
+            // 2. Get OverallResults on above PublishDate if date reached
+            var overallResults = await _overallResultRepository.GetManyAsync(x =>
+                                                x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
+                                                x.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == providerUkprn &&
+                                                x.PublishDate == resultPublishDate && DateTime.Today >= resultPublishDate,
+                                                incl => incl.TqRegistrationPathway.TqRegistrationProfile)
+                                        .ToListAsync();
+
+            return _mapper.Map<IList<DownloadOverallResultsData>>(overallResults);
         }
 
         private async Task<List<TlLookup>> GetOverallResultLookupData()
