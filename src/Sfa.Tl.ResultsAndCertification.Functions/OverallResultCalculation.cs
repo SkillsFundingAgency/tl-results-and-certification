@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -16,11 +17,13 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 {
     public class OverallResultCalculation
     {
+        private readonly ResultsAndCertificationConfiguration _configuration;
         private readonly IOverallResultCalculationFunctionService _overallResultCalculationService;
         private readonly ICommonService _commonService;
 
-        public OverallResultCalculation(IOverallResultCalculationFunctionService overallResultCalculationService, ICommonService commonService)
+        public OverallResultCalculation(ResultsAndCertificationConfiguration configuration, IOverallResultCalculationFunctionService overallResultCalculationService, ICommonService commonService)
         {
+            _configuration = configuration;
             _overallResultCalculationService = overallResultCalculationService;
             _commonService = commonService;
         }
@@ -30,42 +33,45 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName);
-
-            try
+            if (DateTime.UtcNow >= _configuration.OverallResultsCalculationDate)
             {
-                logger.LogInformation($"Function {context.FunctionName} started");
+                var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName);
 
-                var stopwatch = Stopwatch.StartNew();
-                await _commonService.CreateFunctionLog(functionLogDetails);
+                try
+                {
+                    logger.LogInformation($"Function {context.FunctionName} started");
 
-                var responses = await _overallResultCalculationService.CalculateOverallResultsAsync();
+                    var stopwatch = Stopwatch.StartNew();
+                    await _commonService.CreateFunctionLog(functionLogDetails);
 
-                var status = responses.All(r => r.IsSuccess) ? FunctionStatus.Processed : responses.All(r => !r.IsSuccess) ? FunctionStatus.Failed : FunctionStatus.PartiallyProcessed;
+                    var responses = await _overallResultCalculationService.CalculateOverallResultsAsync();
 
-                var message = JsonConvert.SerializeObject(responses);
-                CommonHelper.UpdateFunctionLogRequest(functionLogDetails, status, message);
+                    var status = responses.All(r => r.IsSuccess) ? FunctionStatus.Processed : responses.All(r => !r.IsSuccess) ? FunctionStatus.Failed : FunctionStatus.PartiallyProcessed;
 
-                await _commonService.UpdateFunctionLog(functionLogDetails);
+                    var message = JsonConvert.SerializeObject(responses);
+                    CommonHelper.UpdateFunctionLogRequest(functionLogDetails, status, message);
 
-                // Send Email notification if status is Failed or PartiallyProcessed
-                if(status == FunctionStatus.Failed || status == FunctionStatus.PartiallyProcessed)
-                    await _commonService.SendFunctionJobFailedNotification(context.FunctionName, $"Function Status: {status}, Message: {message}");
+                    await _commonService.UpdateFunctionLog(functionLogDetails);
 
-                stopwatch.Stop();
+                    // Send Email notification if status is Failed or PartiallyProcessed
+                    if (status == FunctionStatus.Failed || status == FunctionStatus.PartiallyProcessed)
+                        await _commonService.SendFunctionJobFailedNotification(context.FunctionName, $"Function Status: {status}, Message: {message}");
 
-                logger.LogInformation($"Function {context.FunctionName} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
-            }
-            catch (Exception ex)
-            {
-                var errorMessage = $"Function {context.FunctionName} failed to process with the following exception = {ex}";
-                logger.LogError(errorMessage);
+                    stopwatch.Stop();
 
-                CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
+                    logger.LogInformation($"Function {context.FunctionName} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                }
+                catch (Exception ex)
+                {
+                    var errorMessage = $"Function {context.FunctionName} failed to process with the following exception = {ex}";
+                    logger.LogError(errorMessage);
 
-                _ = functionLogDetails.Id > 0 ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);
+                    CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 
-                await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
+                    _ = functionLogDetails.Id > 0 ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);
+
+                    await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
+                }
             }
         }
     }
