@@ -7,7 +7,7 @@ using Xunit;
 
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadResultsControllerTests.DownloadTlevelResults
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadOverallResultsControllerTests.DownloadOverallResults
 {
     public class When_Action_IsCalled : TestSetup
     {
@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadResul
             var viewResult = Result as ViewResult;
             viewResult.Should().NotBeNull();
 
-            var model = viewResult.Model as DownloadTlevelResultsViewModel;
+            var model = viewResult.Model as DownloadOverallResultsViewModel;
             model.Should().NotBeNull();
             model.IsOverallResultsAvailable.Should().Be(_expectedIsOverallResultsAvailable);
 

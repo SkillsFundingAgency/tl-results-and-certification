@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadOverallResultsControllerTests;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadResultsControllerTests.DownloadTlevelResults
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadOverallResultsControllerTests.DownloadOverallResults
 {
     public abstract class TestSetup : DownloadResultsControllerTestBase
     {
@@ -9,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadResul
 
         public async override Task When()
         {
-            Result = Controller.DownloadTlevelResults();
+            Result = Controller.DownloadOverallResults();
             await Task.CompletedTask;
         }
     }
