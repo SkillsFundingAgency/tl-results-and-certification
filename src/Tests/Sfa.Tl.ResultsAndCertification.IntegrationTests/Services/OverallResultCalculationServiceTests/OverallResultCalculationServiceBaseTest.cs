@@ -1,6 +1,9 @@
-﻿using FluentAssertions;
+﻿using AutoMapper;
+using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -49,6 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         protected ILogger<GenericRepository<AssessmentSeries>> AssessmentSeriesLogger;
         protected IRepository<OverallResult> OverallResultRepository;
         protected ILogger<GenericRepository<OverallResult>> OverallResultLogger;
+        protected IMapper Mapper;
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
         {
@@ -66,6 +70,36 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
             OverallGradeLookup = OverallGradeLookupProvider.CreateOverallGradeLookupList(DbContext, null, true);
             DbContext.SaveChanges();
+        }
+
+        protected virtual void CreateService()
+        {
+            // Dependencies
+            {
+                ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
+                {
+                    OverallResultBatchSettings = new OverallResultBatchSettings
+                    {
+                        BatchSize = 2,
+                        NoOfAcademicYearsToProcess = 4
+                    }
+                };
+                TlLookupRepositoryLogger = new Logger<GenericRepository<TlLookup>>(new NullLoggerFactory());
+                TlLookupRepository = new GenericRepository<TlLookup>(TlLookupRepositoryLogger, DbContext);
+                OverallGradeLookupLogger = new Logger<GenericRepository<OverallGradeLookup>>(new NullLoggerFactory());
+                OverallGradeLookupRepository = new GenericRepository<OverallGradeLookup>(OverallGradeLookupLogger, DbContext);
+                AssessmentSeriesLogger = new Logger<GenericRepository<AssessmentSeries>>(new NullLoggerFactory());
+                AssessmentSeriesRepository = new GenericRepository<AssessmentSeries>(AssessmentSeriesLogger, DbContext);
+                OverallResultLogger = new Logger<GenericRepository<OverallResult>>(new NullLoggerFactory());
+                OverallResultRepository = new GenericRepository<OverallResult>(OverallResultLogger, DbContext);
+                OverallResultCalculationRepository = new OverallResultCalculationRepository(DbContext);
+
+                var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(OverallResultCalculationMapper).Assembly));
+                Mapper = new Mapper(mapperConfig);
+
+                // Create Service class to test. 
+                OverallResultCalculationService = new OverallResultCalculationService(ResultsAndCertificationConfiguration, TlLookupRepository, OverallGradeLookupRepository, OverallResultCalculationRepository, AssessmentSeriesRepository, OverallResultRepository, Mapper);
+            }
         }
 
         public int GetAcademicYear()

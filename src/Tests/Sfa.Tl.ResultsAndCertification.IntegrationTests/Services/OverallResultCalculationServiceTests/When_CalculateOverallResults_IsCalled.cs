@@ -115,28 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             // Change pathway result and Industry placement status
             ChangePathwayResultAndIPStatus(1111111114, "B");
 
-            // Dependencies
-            {
-                ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
-                {
-                    OverallResultBatchSettings = new OverallResultBatchSettings
-                    {
-                        BatchSize = 2,
-                        NoOfAcademicYearsToProcess = 4
-                    }
-                };
-                TlLookupRepositoryLogger = new Logger<GenericRepository<TlLookup>>(new NullLoggerFactory());
-                TlLookupRepository = new GenericRepository<TlLookup>(TlLookupRepositoryLogger, DbContext);
-                OverallGradeLookupLogger = new Logger<GenericRepository<OverallGradeLookup>>(new NullLoggerFactory());
-                OverallGradeLookupRepository = new GenericRepository<OverallGradeLookup>(OverallGradeLookupLogger, DbContext);
-                AssessmentSeriesLogger = new Logger<GenericRepository<AssessmentSeries>>(new NullLoggerFactory());
-                AssessmentSeriesRepository = new GenericRepository<AssessmentSeries>(AssessmentSeriesLogger, DbContext);
-                OverallResultLogger = new Logger<GenericRepository<OverallResult>>(new NullLoggerFactory());
-                OverallResultRepository = new GenericRepository<OverallResult>(OverallResultLogger, DbContext);
-                OverallResultCalculationRepository = new OverallResultCalculationRepository(DbContext);
-            }
-            // Create Service class to test. 
-            OverallResultCalculationService = new OverallResultCalculationService(ResultsAndCertificationConfiguration, TlLookupRepository, OverallGradeLookupRepository, OverallResultCalculationRepository, AssessmentSeriesRepository, OverallResultRepository);
+            CreateService();
         }
 
         private void ChangePathwayResultAndIPStatus(long uln, string newPathwayGrade)

@@ -6,9 +6,9 @@ using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 {
-    public class DataExportMapper : Profile
+    public class OverallResultCalculationMapper : Profile
     {
-        public DataExportMapper()
+        public OverallResultCalculationMapper()
         {
             CreateMap<OverallResult, DownloadOverallResultsData>()
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber))
