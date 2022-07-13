@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadOvera
         public override void Given()
         {
             DownloadOverallResultsLoader.DownloadOverallResultsDataAsync(ProviderUkprn, Email)
-                .Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File for validation errors")));
+                .Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File for download overall results")));
         }
 
         [Fact]
