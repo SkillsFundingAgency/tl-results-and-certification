@@ -158,6 +158,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
                                         orderby tqPathway.CreatedOn descending
                                         let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()
+                                        let overallResult = tqPathway.OverallResults.FirstOrDefault(o => o.IsOptedin && (tqPathway.Status == RegistrationPathwayStatus.Withdrawn) ? o.EndDate !=null : o.EndDate == null)
                                         where tqProfile.Id == profileId && tlProvider.UkPrn == providerUkprn
                                         select new LearnerRecordDetails
                                         {
@@ -176,7 +177,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             EnglishStatus = tqProfile.EnglishStatus,
                                             IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn,
                                             IndustryPlacementId = ipRecord != null ? ipRecord.Id : 0,
-                                            IndustryPlacementStatus = ipRecord != null ? ipRecord.Status : null
+                                            IndustryPlacementStatus = ipRecord != null ? ipRecord.Status : null,
+                                            OverallResultDetails = overallResult != null ? overallResult.Details : null
                                         };
 
             var learnerRecordDetails = pathwayId.HasValue ? await learnerRecordQuerable.FirstOrDefaultAsync(p => p.RegistrationPathwayId == pathwayId) : await learnerRecordQuerable.FirstOrDefaultAsync();
