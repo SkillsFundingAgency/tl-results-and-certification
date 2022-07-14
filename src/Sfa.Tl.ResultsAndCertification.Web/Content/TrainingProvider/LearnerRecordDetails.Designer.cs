@@ -160,6 +160,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Results will be displayed from the day before results day and will only be available for active final year learners..
+        /// </summary>
+        public static string Overall_Results_Display_From {
+            get {
+                return ResourceManager.GetString("Overall_Results_Display_From", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Learner T Level record page.
         /// </summary>
         public static string Page_Title {

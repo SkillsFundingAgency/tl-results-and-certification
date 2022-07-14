@@ -36,6 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public IpStatus IndustryPlacementStatus { get; set; }
 
         public OverallResultDetail OverallResultDetails { get; set; }
+        public DateTime? OverallResultPublishDate { get; set; }
 
         public string StartYear => string.Format(LearnerRecordDetailsContent.Start_Year_Value, AcademicYear, AcademicYear + 1);
 
@@ -48,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public bool IsMathsAdded => MathsStatus != SubjectStatus.NotSpecified;
         public bool IsEnglishAdded => EnglishStatus != SubjectStatus.NotSpecified;
         public bool CanAddIndustryPlacement => IndustryPlacementStatus == IpStatus.NotSpecified || IndustryPlacementStatus == IpStatus.NotCompleted;
-        public bool HasOverallResultExists => OverallResultDetails != null;
+        public bool DisplayOverallResults => OverallResultDetails != null && OverallResultPublishDate.HasValue && DateTime.UtcNow >= OverallResultPublishDate;
         public NotificationBannerModel SuccessBanner { get; set; }
 
         #region Summary Header
@@ -183,7 +184,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             RouteName = RouteConstants.SearchLearnerRecord
         };
 
-        private bool HasSpecialismInfo => HasOverallResultExists && OverallResultDetails.SpecialismDetails != null && OverallResultDetails.SpecialismDetails.Any();
+        private bool HasSpecialismInfo => DisplayOverallResults && OverallResultDetails.SpecialismDetails != null && OverallResultDetails.SpecialismDetails.Any();
 
         private static string GetSubjectStatus(SubjectStatus subjectStatus)
         {

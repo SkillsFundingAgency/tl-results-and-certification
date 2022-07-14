@@ -55,7 +55,7 @@
             <vc:summary-item model=Model.SummaryEnglishStatus></vc:summary-item>
         </dl>
 
-        @if (Model.HasOverallResultExists)
+        @if (Model.DisplayOverallResults)
         {
             <h2 class="govuk-heading-m">@LearnerRecordDetails.Section_Heading_Core_Component</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
@@ -72,7 +72,11 @@
                 <vc:summary-item model=Model.SummaryOverallResult></vc:summary-item>
             </dl>
         }
-
+        else
+        {
+            <h2 class="govuk-heading-m">@LearnerRecordDetails.Section_Heading_Overall_Result_Tlevel</h2>
+            <p class="govuk-body govuk-!-margin-bottom-9">@LearnerRecordDetails.Overall_Results_Display_From</p>
+        }
 
         <div class="govuk-button-group">
             <a id="backToLearnersListButton" class="govuk-button" role="button" asp-route="@RouteConstants.SearchLearnerDetails" asp-route-academicYear="@Model.AcademicYear">@LearnerRecordDetails.Back_To_List_Of_Learners_Text</a>

@@ -178,7 +178,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn,
                                             IndustryPlacementId = ipRecord != null ? ipRecord.Id : 0,
                                             IndustryPlacementStatus = ipRecord != null ? ipRecord.Status : null,
-                                            OverallResultDetails = overallResult != null ? overallResult.Details : null
+                                            OverallResultDetails = overallResult != null ? overallResult.Details : null,
+                                            OverallResultPublishDate = overallResult != null ? overallResult.PublishDate : null,
                                         };
 
             var learnerRecordDetails = pathwayId.HasValue ? await learnerRecordQuerable.FirstOrDefaultAsync(p => p.RegistrationPathwayId == pathwayId) : await learnerRecordQuerable.FirstOrDefaultAsync();
