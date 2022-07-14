@@ -48,7 +48,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 ProviderName = "Barnsley College (123456789)",
                 IsLearnerRegistered = true,
                 IndustryPlacementId = 7,
-                IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration
+                IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration,
+                OverallResultDetails = "Result",
+                OverallResultPublishDate = DateTime.UtcNow
             };
         }
 
@@ -75,6 +77,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.IsLearnerRegistered.Should().Be(_mockApiResponse.IsLearnerRegistered);
             _actualResult.IndustryPlacementId.Should().Be(_mockApiResponse.IndustryPlacementId);
             _actualResult.IndustryPlacementStatus.Should().Be(_mockApiResponse.IndustryPlacementStatus);
+            _actualResult.OverallResultDetails.Should().Be(_mockApiResponse.OverallResultDetails);
+            _actualResult.OverallResultPublishDate.Should().Be(_mockApiResponse.OverallResultPublishDate);
         }
     }
 }
