@@ -46,10 +46,16 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                     var responses = await _overallResultCalculationService.CalculateOverallResultsAsync();
 
+                    var message = new StringBuilder($"Function {context.FunctionName} completed processing.").AppendLine();
+
+                    foreach (var (response, index) in responses.Select((value, i) => (value, i)))
+                    {
+                        message.Append($"Batch {index + 1}: { JsonConvert.SerializeObject(response)}").AppendLine();
+                    }
+
                     var status = responses.All(r => r.IsSuccess) ? FunctionStatus.Processed : responses.All(r => !r.IsSuccess) ? FunctionStatus.Failed : FunctionStatus.PartiallyProcessed;
 
-                    var message = JsonConvert.SerializeObject(responses);
-                    CommonHelper.UpdateFunctionLogRequest(functionLogDetails, status, message);
+                    CommonHelper.UpdateFunctionLogRequest(functionLogDetails, status, message.ToString());
 
                     await _commonService.UpdateFunctionLog(functionLogDetails);
 
