@@ -23,7 +23,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
     {
         // Seed variables
         protected long AoUkprn = 10011881;
-        protected AssessmentService AssessmentService;
         protected TlRoute Route;
         protected TlPathway Pathway;
         protected TlSpecialism Specialism;
@@ -419,6 +418,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 actualOverallResult.IsOptedin.Should().BeFalse();
                 actualOverallResult.EndDate.Should().NotBeNull();
             }
+        }
+
+        public enum Provider
+        {
+            BarsleyCollege = 10000536,
+            WalsallCollege = 10007315
         }
     }
 }
