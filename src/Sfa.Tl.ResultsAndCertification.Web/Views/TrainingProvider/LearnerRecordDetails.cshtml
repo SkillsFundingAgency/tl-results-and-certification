@@ -55,6 +55,25 @@
             <vc:summary-item model=Model.SummaryEnglishStatus></vc:summary-item>
         </dl>
 
+        @if (Model.HasOverallResultExists)
+        {
+            <h2 class="govuk-heading-m">@LearnerRecordDetails.Section_Heading_Core_Component</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                <vc:summary-item model=Model.SummaryCoreResult></vc:summary-item>
+            </dl>
+
+            <h2 class="govuk-heading-m">@LearnerRecordDetails.Section_Heading_OccupationalSpecialism</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                <vc:summary-item model=Model.SummarySpecialismResult></vc:summary-item>
+            </dl>
+
+            <h2 class="govuk-heading-m">@LearnerRecordDetails.Section_Heading_Overall_Result_Tlevel</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-6">
+                <vc:summary-item model=Model.SummaryOverallResult></vc:summary-item>
+            </dl>
+        }
+
+
         <div class="govuk-button-group">
             <a id="backToLearnersListButton" class="govuk-button" role="button" asp-route="@RouteConstants.SearchLearnerDetails" asp-route-academicYear="@Model.AcademicYear">@LearnerRecordDetails.Back_To_List_Of_Learners_Text</a>
             <a id="backToHomeButton" class="govuk-button govuk-button--secondary" role="button" asp-route="@RouteConstants.Home">@LearnerRecordDetails.Back_To_Home_Text</a>

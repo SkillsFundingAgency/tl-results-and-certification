@@ -178,6 +178,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Core component.
+        /// </summary>
+        public static string Section_Heading_Core_Component {
+            get {
+                return ResourceManager.GetString("Section_Heading_Core_Component", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Industry placement.
         /// </summary>
         public static string Section_Heading_Industry_Placement {
@@ -192,6 +201,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Section_Heading_Level2_Maths_English {
             get {
                 return ResourceManager.GetString("Section_Heading_Level2_Maths_English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Occupational specialism.
+        /// </summary>
+        public static string Section_Heading_OccupationalSpecialism {
+            get {
+                return ResourceManager.GetString("Section_Heading_OccupationalSpecialism", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overall T Level result.
+        /// </summary>
+        public static string Section_Heading_Overall_Result_Tlevel {
+            get {
+                return ResourceManager.GetString("Section_Heading_Overall_Result_Tlevel", resourceCulture);
             }
         }
         
@@ -291,6 +318,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Title_Maths_Text {
             get {
                 return ResourceManager.GetString("Title_Maths_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Result.
+        /// </summary>
+        public static string Title_OverallResult_Text {
+            get {
+                return ResourceManager.GetString("Title_OverallResult_Text", resourceCulture);
             }
         }
         

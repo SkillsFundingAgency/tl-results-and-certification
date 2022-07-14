@@ -10,6 +10,8 @@ using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.T
 using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
 using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
 using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
+using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
@@ -33,6 +35,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public int IndustryPlacementId { get; set; }
         public IpStatus IndustryPlacementStatus { get; set; }
 
+        public OverallResultDetail OverallResultDetails { get; set; }
+
         public string StartYear => string.Format(LearnerRecordDetailsContent.Start_Year_Value, AcademicYear, AcademicYear + 1);
 
         /// <summary>
@@ -43,9 +47,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public bool IsIndustryPlacementAdded => IndustryPlacementStatus != IpStatus.NotSpecified;
         public bool IsMathsAdded => MathsStatus != SubjectStatus.NotSpecified;
         public bool IsEnglishAdded => EnglishStatus != SubjectStatus.NotSpecified;
-
         public bool CanAddIndustryPlacement => IndustryPlacementStatus == IpStatus.NotSpecified || IndustryPlacementStatus == IpStatus.NotCompleted;
-
+        public bool HasOverallResultExists => OverallResultDetails != null;
         public NotificationBannerModel SuccessBanner { get; set; }
 
         #region Summary Header
@@ -152,10 +155,35 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
                 Value = GetIndustryPlacementDisplayText,
             };
 
+        // Overall Result
+
+        public SummaryItemModel SummaryCoreResult => new SummaryItemModel
+        {
+            Id = "coreResult",
+            Title = OverallResultDetails?.PathwayName,
+            Value = OverallResultDetails?.PathwayResult
+        };
+
+        public SummaryItemModel SummarySpecialismResult => new SummaryItemModel
+        {
+            Id = "specialismResult",
+            Title = HasSpecialismInfo ? OverallResultDetails.SpecialismDetails.FirstOrDefault().SpecialismName : null ,
+            Value = HasSpecialismInfo ? OverallResultDetails.SpecialismDetails.FirstOrDefault().SpecialismResult : null
+        };
+
+        public SummaryItemModel SummaryOverallResult => new SummaryItemModel
+        {
+            Id = "overallResult",
+            Title = LearnerRecordDetailsContent.Title_OverallResult_Text,
+            Value = OverallResultDetails?.OverallResult
+        };
+
         public BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.SearchLearnerRecord
         };
+
+        private bool HasSpecialismInfo => HasOverallResultExists && OverallResultDetails.SpecialismDetails != null && OverallResultDetails.SpecialismDetails.Any();
 
         private static string GetSubjectStatus(SubjectStatus subjectStatus)
         {
