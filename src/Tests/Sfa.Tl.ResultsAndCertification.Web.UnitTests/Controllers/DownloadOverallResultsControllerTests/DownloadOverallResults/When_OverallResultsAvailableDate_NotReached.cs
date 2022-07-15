@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.DownloadResults;
 using System;
 using Xunit;
@@ -10,9 +9,9 @@ using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewCompone
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadOverallResultsControllerTests.DownloadOverallResults
 {
-    public class When_Action_IsCalled : TestSetup
+    public class When_OverallResultsAvailableDate_NotReached : TestSetup
     {
-        protected override DateTime CurrentDate => DateTime.UtcNow.AddDays(-1);
+        protected override DateTime CurrentDate => DateTime.UtcNow.AddDays(1);
 
         public override void Given() { }
 
@@ -26,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadOvera
 
             var model = viewResult.Model as DownloadOverallResultsViewModel;
             model.Should().NotBeNull();
-            model.IsOverallResultsAvailable.Should().BeTrue();
+            model.IsOverallResultsAvailable.Should().BeFalse();
 
             model.Breadcrumb.Should().NotBeNull();
             model.Breadcrumb.BreadcrumbItems.Should().HaveCount(1);

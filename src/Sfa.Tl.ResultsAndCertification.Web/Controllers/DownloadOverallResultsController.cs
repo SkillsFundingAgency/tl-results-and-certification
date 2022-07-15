@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 IsOverallResultsAvailable =
                     _configuration.OverallResultsAvailableDate == null ||
-                    _configuration.OverallResultsAvailableDate >= DateTime.Today
+                    DateTime.Today >= _configuration.OverallResultsAvailableDate
             };
 
             return View(viewModel);

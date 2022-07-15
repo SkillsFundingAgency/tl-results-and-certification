@@ -27,9 +27,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadOvera
         protected string Email = "test.user@test.com";
         protected IHttpContextAccessor HttpContextAccessor;
 
+        protected abstract DateTime CurrentDate { get; }
+
         public override void Setup()
         {
-            ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration { OverallResultsAvailableDate = "01/12/2022".ToDateTime() };
+            ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration { OverallResultsAvailableDate = CurrentDate };
             DownloadOverallResultsLoader = Substitute.For<IDownloadOverallResultsLoader>();
             Logger = Substitute.For<ILogger<DownloadOverallResultsController>>();
             Controller = new DownloadOverallResultsController(ResultsAndCertificationConfiguration, DownloadOverallResultsLoader, Logger);
