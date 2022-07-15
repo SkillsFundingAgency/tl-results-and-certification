@@ -409,14 +409,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<DataExportResponse>(requestUri);
         }
 
-        # region Test
-        public async Task<string> GetLearnersForOverallGradeCalculationAsync(string runDate)
-        {
-            var requestUri = string.Format("/api/Test/OverallResult/GetLearners/{0}", runDate);
-            return await GetAsync<string>(requestUri);
-        }
-        # endregion
-
         #region Private Methods
 
         /// <summary>

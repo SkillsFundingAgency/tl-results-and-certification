@@ -105,10 +105,5 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         
         Task<IList<DataExportResponse>> GenerateDataExportAsync(long aoUkprn, DataExportType dataExportType, string requestedBy);
         Task<DataExportResponse> DownloadOverallResultsDataAsync(long providerUkprn, string requestedBy);
-
-
-        #region Test
-        Task<string> GetLearnersForOverallGradeCalculationAsync(string runDate);
-        #endregion
     }
 }
