@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.LearnerRecordDetailsGet
 {
-    public class When_Called_With_Valid_Data : TestSetup
+    public class When_Called_With_Valid_Data_No_OverallResults : TestSetup
     {
         private Dictionary<string, string> _routeAttributes;
 
@@ -34,24 +34,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 AwardingOrganisationName = "Pearson",
                 MathsStatus = SubjectStatus.NotSpecified,
                 EnglishStatus = SubjectStatus.NotSpecified,
-                IsLearnerRegistered = true,                
+                IsLearnerRegistered = true,
                 IndustryPlacementId = 10,
                 IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified,
-                OverallResultDetails = new Models.OverallResults.OverallResultDetail
-                {
-                    PathwayName = "Pathway 1",
-                    PathwayResult = "Distinction",
-                    SpecialismDetails = new List<Models.OverallResults.OverallSpecialismDetail>
-                    {
-                        new Models.OverallResults.OverallSpecialismDetail
-                        {
-                            SpecialismName = "Specialism 1",
-                            SpecialismResult = "A"
-                        }
-                    },
-                    OverallResult = "Distinction"
-                },
-                OverallResultPublishDate = DateTime.UtcNow
+                OverallResultDetails = null,
+                OverallResultPublishDate = null
             };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, Mockresult.ProfileId.ToString() } };
@@ -111,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             // TLevelTitle
             model.SummaryTlevelTitle.Title.Should().Be(LearnerRecordDetailsContent.Title_TLevel_Text);
             model.SummaryTlevelTitle.Value.Should().Be(Mockresult.TlevelTitle);
-            
+
             // Start Year
             model.SummaryStartYear.Title.Should().Be(LearnerRecordDetailsContent.Title_StartYear_Text);
             model.SummaryStartYear.Value.Should().Be(Mockresult.StartYear);
@@ -149,19 +136,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryEnglishStatus.RouteName.Should().Be(RouteConstants.AddEnglishStatus);
             model.SummaryEnglishStatus.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
-            model.DisplayOverallResults.Should().BeTrue();
+            model.DisplayOverallResults.Should().BeFalse();
 
             // Overall core result details
-            model.SummaryCoreResult.Title.Should().Be(Mockresult.OverallResultDetails.PathwayName);
-            model.SummaryCoreResult.Value.Should().Be(Mockresult.OverallResultDetails.PathwayResult);
+            model.SummaryCoreResult.Title.Should().BeNullOrWhiteSpace();
+            model.SummaryCoreResult.Value.Should().BeNullOrWhiteSpace();
 
             // Overall Specialism result details
-            model.SummarySpecialismResult.Title.Should().Be(Mockresult.OverallResultDetails.SpecialismDetails[0].SpecialismName);
-            model.SummarySpecialismResult.Value.Should().Be(Mockresult.OverallResultDetails.SpecialismDetails[0].SpecialismResult);
+            model.SummarySpecialismResult.Title.Should().BeNullOrWhiteSpace();
+            model.SummarySpecialismResult.Value.Should().BeNullOrWhiteSpace();
 
             // Overall Result
             model.SummaryOverallResult.Title.Should().Be(LearnerRecordDetailsContent.Title_OverallResult_Text);
-            model.SummaryOverallResult.Value.Should().Be(Mockresult.OverallResultDetails.OverallResult);
+            model.SummaryOverallResult.Value.Should().BeNullOrWhiteSpace();
 
 
             // Back link
