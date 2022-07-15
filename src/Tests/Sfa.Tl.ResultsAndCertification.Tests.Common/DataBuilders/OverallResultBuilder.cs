@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 Details = "Test",
                 ResultAwarded = "Distinction",
                 CalculationStatus = CalculationStatus.Completed,
-                PublishDate = null,
+                PublishDate = DateTime.UtcNow.AddDays(7),
                 PrintAvailableFrom = null,
                 StartDate = DateTime.UtcNow,
                 EndDate = null,
