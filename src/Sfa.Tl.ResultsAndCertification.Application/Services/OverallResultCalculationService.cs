@@ -378,6 +378,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                                 x.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == providerUkprn &&
                                                 x.PublishDate == resultPublishDate && DateTime.Today >= resultPublishDate,
                                                 incl => incl.TqRegistrationPathway.TqRegistrationProfile)
+                                        .OrderBy(x => x.TqRegistrationPathway.TqRegistrationProfile.Lastname)
                                         .ToListAsync();
 
             return _mapper.Map<IList<DownloadOverallResultsData>>(overallResults);
