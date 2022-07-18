@@ -85,7 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (learners == null || !learners.Any())
                 return null;
 
-            var overallResultLookupData = await GetOverallResultLookupData();
+            var tlLookupData = await GetTlLookupData();
             var overallGradeLookupData = await GetOverallGradeLookupData();
 
             var batchSize = _configuration.OverallResultBatchSettings.BatchSize <= 0 ? Constants.OverallResultDefaultBatchSize : _configuration.OverallResultBatchSettings.BatchSize;
@@ -94,7 +94,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             for (var batchIndex = 0; batchIndex < batchesToProcess; batchIndex++)
             {
                 var leanersToProcess = learners.Skip(batchIndex * batchSize).Take(batchSize);
-                response.Add(await ProcessOverallResults(leanersToProcess, overallResultLookupData, overallGradeLookupData, resultCalculationAssessment));
+                response.Add(await ProcessOverallResults(leanersToProcess, tlLookupData, overallGradeLookupData, resultCalculationAssessment));
             }
 
             return response;
@@ -384,9 +384,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<IList<DownloadOverallResultsData>>(overallResults);
         }
 
-        private async Task<List<TlLookup>> GetOverallResultLookupData()
+        private async Task<List<TlLookup>> GetTlLookupData()
         {
-            return await _tlLookupRepository.GetManyAsync(lkp => lkp.Category.ToLower().Equals(LookupCategory.OverallResult.ToString().ToLower())).ToListAsync();
+            return await _tlLookupRepository.GetManyAsync().ToListAsync();
         }
 
         private async Task<List<OverallGradeLookup>> GetOverallGradeLookupData()
