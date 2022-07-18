@@ -11,7 +11,7 @@
         public const string CoreComponent = "Core component";
         public const string CoreCode = "Core code";
         public const string CoreResult = "Core result";
-        public const string SpecialismComponent = "Occupational component";
+        public const string SpecialismComponent = "Occupational specialism";
         public const string SpecialismCode = "Specialism code";
         public const string SpecialismResult = "Specialism result";
         public const string IndustryPlacementStatus = "Industry placement status";
