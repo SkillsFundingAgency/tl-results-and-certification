@@ -15,14 +15,14 @@
     <PackageReference Include="IdentityModel" Version="6.0.0" />
     <PackageReference Include="JWT" Version="9.0.3" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.5" />
-    <PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="6.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.7" />
+    <PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="6.0.7" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.7" />
     <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
     <PackageReference Include="NWebsec.AspNetCore.Mvc.TagHelpers" Version="3.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.2" />
   </ItemGroup>
 
 
@@ -134,6 +134,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>TlevelDataFormatAndRulesGuide.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\DownloadOverallResults\DownloadOverallResults.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DownloadOverallResults.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Error\VirusUploaded.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -1063,6 +1068,10 @@
     <EmbeddedResource Update="Content\Document\TlevelDataFormatAndRulesGuide.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TlevelDataFormatAndRulesGuide.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\DownloadOverallResults\DownloadOverallResults.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DownloadOverallResults.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Error\VirusUploaded.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -91,7 +91,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
               .ForMember(d => d.LastUpdatedOn, opts => opts.MapFrom(s => s.CreatedOn))
               .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.CreatedBy));
 
-            CreateMap<Domain.Models.IndustryPlacement, Models.Contracts.Learner.IndustryPlacement>()
+            CreateMap<Domain.Models.IndustryPlacement, ResultsAndCertification.Models.Contracts.Learner.IndustryPlacement>()
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status));
         }

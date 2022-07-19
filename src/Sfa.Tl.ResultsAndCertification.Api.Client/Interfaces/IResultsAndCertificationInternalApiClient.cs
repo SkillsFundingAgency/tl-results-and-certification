@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetTlevelsByStatusIdAsync(long ukprn, int statusId);
         Task<bool> VerifyTlevelAsync(VerifyTlevelDetails model);
         Task<PathwaySpecialisms> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId);
-
+        
         // Providers
         Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn);
         Task<IEnumerable<ProviderMetadata>> FindProviderAsync(string name, bool isExactMatch);
@@ -104,5 +104,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<LearnerRecord> GetLearnerRecordAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
         
         Task<IList<DataExportResponse>> GenerateDataExportAsync(long aoUkprn, DataExportType dataExportType, string requestedBy);
+        Task<DataExportResponse> DownloadOverallResultsDataAsync(long providerUkprn, string requestedBy);
     }
 }

@@ -80,6 +80,9 @@
         },
         "ucasTransferResultsTrigger": {
             "type": "string"
+        },
+		"overallResultCalculationTrigger": {
+            "type": "string"            
         }
     },
     "variables": {
@@ -449,6 +452,10 @@
                             {
                                 "name": "UcasTransferResultsTrigger",
                                 "value": "[parameters('ucasTransferResultsTrigger')]"
+                            },
+							{
+                                "name": "OverallResultCalculationTrigger",
+                                "value": "[parameters('overallResultCalculationTrigger')]"
                             },
                             {
                                 "name": "WEBSITE_LOAD_CERTIFICATES",

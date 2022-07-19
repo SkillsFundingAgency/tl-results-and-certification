@@ -403,6 +403,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<IList<DataExportResponse>>(requestUri);
         }
 
+        public async Task<DataExportResponse> DownloadOverallResultsDataAsync(long providerUkprn, string requestedBy)
+        {
+            var requestUri = string.Format(ApiConstants.DownloadOverallResultsDataUri, providerUkprn, requestedBy);
+            return await GetAsync<DataExportResponse>(requestUri);
+        }
+
         #region Private Methods
 
         /// <summary>

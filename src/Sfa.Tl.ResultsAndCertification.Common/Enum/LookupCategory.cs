@@ -4,6 +4,7 @@
     {
         PathwayComponentGrade = 1,
         QualificationSubject = 2,
-        SpecialismComponentGrade = 3
+        SpecialismComponentGrade = 3,
+        OverallResult = 4
     }
 }

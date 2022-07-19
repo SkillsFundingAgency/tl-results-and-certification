@@ -18,9 +18,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
         private List<TqRegistrationProfile> _registrations;
         private List<TqPathwayAssessment> _pathwayAssessments;
         private List<TqSpecialismAssessment> _specialismAssessments;
+        private List<long> _ulnsWithCalculatedResult;
+        private List<OverallGradeLookup> _overallGradeLookup;
 
         // Input or Output
         private TqRegistrationPathway _actualResult;
+        private OverallResult _expectedOverallResult;
 
         public override void Given()
         {
@@ -68,6 +71,29 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
             foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111 && x.UniqueLearnerNumber != 1111111114))
                 SeedIndustyPlacementData(registration.UniqueLearnerNumber);
 
+            // Seed OverallResultLookup
+            _expectedOverallResult = new OverallResult
+            {
+                Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
+                ResultAwarded = "Distinction*",
+                IsOptedin = true,
+                CalculationStatus = CalculationStatus.Completed,
+                CertificateType = PrintCertificateType.Certificate
+            };
+
+           _ulnsWithCalculatedResult = new List<long> { 1111111112 };
+            _overallGradeLookup = new List<OverallGradeLookup>();
+            foreach (var uln in _ulnsWithCalculatedResult)
+            {
+                var pathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111112).TqRegistrationPathways.FirstOrDefault().Id;
+                var coreResultId = pathwayResults.FirstOrDefault(x => x.TqPathwayAssessment.TqRegistrationPathwayId == pathwayId).TlLookupId;
+                var splResultId = specialismResults.FirstOrDefault(x => x.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathwayId == pathwayId).TlLookupId;
+                _overallGradeLookup.Add(new OverallGradeLookup { TlPathwayId = 3, TlLookupCoreGradeId = coreResultId, TlLookupSpecialismGradeId = splResultId, TlLookupOverallGradeId = 17 });
+            }
+
+            OverallGradeLookupProvider.CreateOverallGradeLookupList(DbContext, _overallGradeLookup);
+            _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111112).TqRegistrationPathways.FirstOrDefault().OverallResults.Add(_expectedOverallResult);
+
             DbContext.SaveChanges();
             DetachAll();
 
@@ -80,21 +106,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
             return Task.CompletedTask;
         }
 
-        public async Task WhenAsync(long aoUkprn, int profileId, bool includeProfile, bool includeIndustryPlacements)
+        public async Task WhenAsync(long aoUkprn, int profileId, bool includeProfile, bool includeIndustryPlacements, bool includeOverallResult)
         {
             if (_actualResult != null)
                 return;
 
-            _actualResult = await RegistrationRepository.GetRegistrationLiteAsync(aoUkprn, profileId, includeProfile, includeIndustryPlacements);
+            _actualResult = await RegistrationRepository.GetRegistrationLiteAsync(aoUkprn, profileId, includeProfile, includeIndustryPlacements, includeOverallResult);
         }
 
         [Theory()]
         [MemberData(nameof(Data))]
-        public async Task Then_Expected_Results_Are_Returned(long aoUkprn, int uln, bool includeProfile, bool includeIndustryPlacement,
-            bool isRegistrationPathwayExpected, bool isRegistrationProfileExpected, bool isAssessmentExpected, bool isResultExpected, bool isIndustryPlacementExpected)
+        public async Task Then_Expected_Results_Are_Returned(long aoUkprn, int uln, bool includeProfile, bool includeIndustryPlacement, bool includeOverallResult,
+            bool isRegistrationPathwayExpected, bool isRegistrationProfileExpected, bool isAssessmentExpected, bool isResultExpected, bool isIndustryPlacementExpected, bool isOverallResultExpected)
         {
             var profileId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln).Id;
-            await WhenAsync(aoUkprn, profileId, includeProfile, includeIndustryPlacement);
+            await WhenAsync(aoUkprn, profileId, includeProfile, includeIndustryPlacement, includeOverallResult);
 
             if (isRegistrationPathwayExpected)
                 _actualResult.Should().NotBeNull();
@@ -171,6 +197,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
             }
             else
                 _actualResult.IndustryPlacements.Any().Should().BeFalse();
+
+            // Assert Overall Results
+            if (isOverallResultExpected)
+            {
+                _actualResult.OverallResults.Any().Should().BeTrue();
+
+                var actualOverallResult = _actualResult.OverallResults.FirstOrDefault();
+                AssertOverallResult(actualOverallResult, _expectedOverallResult);
+            }
+            else
+                _actualResult.OverallResults.Any().Should().BeFalse();
         }
 
         public static IEnumerable<object[]> Data
@@ -179,15 +216,25 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
             {
                 return new[]
                 {
-                    // InputParams: aoUkprn, Uln, inclProf, inclIp AND ExpectedResult: isRegistrationPathwayExpected, isRegistrationProfileExpected, isAssessmentExpected, isResultExpected, isIndustryPlacementExpected
-                    new object[] { 99999999, 1111111111, false, false, false, false, false, false, false },
-                    new object[] { 10011881, 1111111112, true, true, true, true, true, true, true },
-                    new object[] { 10011881, 1111111113, true, true, true, true, true, true, true },
-                    new object[] { 10011881, 1111111114, true, true, true, true, true, true, false },
+                    // InputParams: aoUkprn, Uln, inclProf, inclIp, inclOverallResult AND ExpectedResult: isRegistrationPathwayExpected, isRegistrationProfileExpected, isAssessmentExpected, isResultExpected, isIndustryPlacementExpected, isOverallResultExpected
+                    new object[] { 99999999, 1111111111, false, false, false,
+                                   false, false, false, false, false, false },
+                    new object[] { 10011881, 1111111112, true, true, false,
+                                   true, true, true, true, true, false },
+                    new object[] { 10011881, 1111111113, true, true, false,
+                                   true, true, true, true, true, false },
+                    new object[] { 10011881, 1111111114, true, true, false,
+                                   true, true, true, true, false, false },
 
-                    new object[] { 10011881, 1111111112, false, false, true, false, true, true, false },
-                    new object[] { 10011881, 1111111113, false, false, true, false, true, true, false },
-                    new object[] { 10011881, 1111111114, false, false, true, false, true, true, false },
+                    new object[] { 10011881, 1111111112, false, false, false,
+                                   true, false, true, true, false, false },
+                    new object[] { 10011881, 1111111113, false, false, false,
+                                   true, false, true, true, false, false },
+                    new object[] { 10011881, 1111111114, false, false, false,
+                                   true, false, true, true, false, false},
+
+                    new object[] { 10011881, 1111111112, false, false, true,
+                                   true, false, true, true, false, true }
                 };
             }
         }

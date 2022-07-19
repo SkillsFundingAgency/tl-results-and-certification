@@ -108,6 +108,21 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// </value>
         public int SoaRerequestInDays { get; set; }
 
+        /// <summary>
+        /// Gets or sets the Overall results available date.
+        /// </summary>
+        /// <value>
+        /// The Overall results available date.
+        /// </value>
+        public DateTime? OverallResultsAvailableDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Overall results calculation date.
+        /// </summary>
+        /// <value>
+        /// The soa available date.
+        /// </value>
+        public DateTime? OverallResultsCalculationDate { get; set; }
 
         /// <summary>
         /// Gets or sets the dfe sign in settings.
@@ -188,5 +203,13 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// The ucas data record settings.
         /// </value>
         public UcasDataSettings UcasDataSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets ovarall results batch settings.
+        /// </summary>
+        /// <value>
+        /// The ovarall resutls batch record settings.
+        /// </value>
+        public OverallResultBatchSettings OverallResultBatchSettings { get; set; }
     }
 }

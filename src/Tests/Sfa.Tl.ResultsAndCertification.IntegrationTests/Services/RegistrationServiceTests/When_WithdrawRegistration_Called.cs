@@ -10,6 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         private long _uln;
         private TqRegistrationPathway _tqRegistrationPathway;
         private TqRegistrationProfile _tqRegistrationProfile;
+        private List<OverallGradeLookup> _overallGradeLookup;
 
         public override void Given()
         {
@@ -35,7 +37,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             // Pathway Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
-            tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.ToList(), isBulkUpload: false));
+            var seededRegistrationPathways = _tqRegistrationProfile.TqRegistrationPathways.ToList();
+            tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(seededRegistrationPathways, isBulkUpload: false));
             var pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData);
 
             // Pathway results seed
@@ -43,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             foreach (var assessment in pathwayAssessments)
                 tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(new List<TqPathwayAssessment> { assessment }, isBulkUpload: false));
 
-            SeedPathwayResultsData(tqPathwayResultsSeedData);
+            var pathwayResults = SeedPathwayResultsData(tqPathwayResultsSeedData);
 
             // Specialisms assessment seed
             var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
@@ -55,7 +58,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             foreach (var assessment in specialismsAssessments)
                 tqSpecialismResultsSeedData.AddRange(GetSpecialismResultsDataToProcess(new List<TqSpecialismAssessment> { assessment }, isBulkUpload: false));
 
-            SeedSpecialismResultsData(tqSpecialismResultsSeedData);
+            var specialismResults = SeedSpecialismResultsData(tqSpecialismResultsSeedData);
+
+            // Seed OverallResultLookup
+            _overallGradeLookup = new List<OverallGradeLookup>();
+            var pathwayId = seededRegistrationPathways.FirstOrDefault().Id;
+            var coreResultId = pathwayResults.FirstOrDefault().TlLookupId;
+            var splResultId = specialismResults.FirstOrDefault().TlLookupId;
+            _overallGradeLookup.Add(new OverallGradeLookup { TlPathwayId = 1, TlLookupCoreGradeId = coreResultId, TlLookupSpecialismGradeId = splResultId, TlLookupOverallGradeId = 1 });
+            OverallGradeLookupProvider.CreateOverallGradeLookupList(DbContext, _overallGradeLookup);
+
+            // Seed Overall results
+            OverallResultDataProvider.CreateOverallResult(DbContext, new List<OverallResult> { new OverallResult { TqRegistrationPathwayId = pathwayId,
+                Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
+                ResultAwarded = "Distinction*", CalculationStatus = CalculationStatus.Completed, CertificateType = PrintCertificateType.Certificate, StartDate = DateTime.UtcNow.AddMonths(-1), IsOptedin = true, EndDate = DateTime.UtcNow, CreatedOn = DateTime.UtcNow } }, true);
+
 
             CreateMapper();
 
@@ -105,6 +122,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                                                                                                                            .Include(x => x.TqRegistrationPathways)
                                                                                                                                 .ThenInclude(x => x.TqPathwayAssessments)
                                                                                                                                     .ThenInclude(x => x.TqPathwayResults)
+                                                                                                                           .Include(x => x.TqRegistrationPathways)
+                                                                                                                                .ThenInclude(x => x.OverallResults)
                                                                                                                            .FirstOrDefault();
 
                 // assert registration profile data
@@ -169,7 +188,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                     var expectedWithdrawndSpecialismResult = expectedWithdrawnSpecialismResult.TqSpecialismResults.FirstOrDefault(x => x.EndDate != null);
 
                     AssertSpecialismResult(actualWithdrawnSpecialismResult, expectedWithdrawndSpecialismResult);
-                }                
+                }
+
+                // Assert Active Overall result
+                var actualWithdrawnOverallResult = actualWithdrawnPathway.OverallResults.FirstOrDefault(ovr => ovr.EndDate != null);
+                var expectedWithdrawnOverallResult = expectedWithdrawnPathway.OverallResults.FirstOrDefault(ovr => ovr.EndDate != null);
+                AssertOverallResult(actualWithdrawnOverallResult, expectedWithdrawnOverallResult, true);
             }
         }
 

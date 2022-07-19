@@ -13,5 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public DateTime AppealEndDate { get; set; }
+        public int ResultCalculationYear { get { return Year - 2; } } // TODO: TempCode.
+
     }
 }

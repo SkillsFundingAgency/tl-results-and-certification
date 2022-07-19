@@ -21,7 +21,14 @@ USING (VALUES
   (13, N'SpecialismComponentGrade', N'SCG4', N'Unclassified', 4, 1),
   (14, N'SpecialConsideration', N'SC', N'SpecialConsideration', 1, 1),
   (15, N'IndustryPlacementModel', N'IPM', N'IndustryPlacementModel', 2, 1),
-  (16, N'TemporaryFlexibility', N'TF', N'TemporaryFlexibility', 3, 1) 
+  (16, N'TemporaryFlexibility', N'TF', N'TemporaryFlexibility', 3, 1),
+  (17, N'OverallResult', N'OR1', N'Distinction*', 1, 1),
+  (18, N'OverallResult', N'OR2', N'Distinction', 2, 1),
+  (19, N'OverallResult', N'OR3', N'Merit', 3, 1),
+  (20, N'OverallResult', N'OR4', N'Pass', 4, 1),
+  (21, N'OverallResult', N'OR5', N'Partial achievement', 5, 1),
+  (22, N'OverallResult', N'OR6', N'Unclassified', 6, 1),
+  (23, N'OverallResult', N'OR7', N'X - no result', 7, 1)
   )
   AS Source ([Id], [Category], [Code], [Value], [SortOrder], [IsActive]) 
 ON Target.[Id] = Source.[Id] 

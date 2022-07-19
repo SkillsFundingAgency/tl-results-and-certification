@@ -1,4 +1,4 @@
-﻿    using FluentAssertions;
+﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using System.Collections.Generic;
 using System.Linq;

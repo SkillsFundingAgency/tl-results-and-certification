@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using System;
 using System.Threading.Tasks;

@@ -41,11 +41,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.AssessmentS
             result.ComponentType.Should().Be(testData.ComponentType);
             result.Name.Should().Be(testData.Name);
             result.Description.Should().Be(testData.Description);
-            result.Year.Should().Be(testData.Year);
+            result.Year.Should().Be(testData.Year);            
             result.StartDate.Should().Be(testData.StartDate);
             result.EndDate.Should().Be(testData.EndDate);
             result.RommEndDate.Should().Be(testData.RommEndDate);
             result.AppealEndDate.Should().Be(testData.AppealEndDate);
+            result.ResultCalculationYear.Should().Be(testData.ResultCalculationYear);
+            result.ResultPublishDate.Should().Be(testData.ResultPublishDate);
             result.CreatedBy.Should().Be(Constants.CreatedByUser);
             result.CreatedOn.Should().Be(Constants.CreatedOn);
             result.ModifiedBy.Should().Be(Constants.ModifiedByUser);
