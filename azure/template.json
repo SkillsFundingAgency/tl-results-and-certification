@@ -120,7 +120,7 @@
         },
         "overallResultCalculationTrigger": {
             "type": "string",
-            "defaultValue": "0 5 * * *"
+            "defaultValue": "30 20 * * *"
         }		
     },
     "variables": {
