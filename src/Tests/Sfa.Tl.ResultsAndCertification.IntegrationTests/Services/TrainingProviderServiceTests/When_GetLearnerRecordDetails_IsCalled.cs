@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, bool? isSendLearner)> _testCriteriaData;
-        private IList<TqRegistrationProfile> _profiles;
+        private List<TqRegistrationProfile> _profiles;
         private LearnerRecordDetails _actualResult;
 
         public override void Given()
@@ -49,6 +49,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 var profile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
                 BuildLearnerRecordCriteria(profile, isRcFeed, seedQualificationAchieved, isSendQualification, isEngishAndMathsAchieved, seedIndustryPlacement, isSendLearner);
             }
+
+            // Overall Results seed
+            var ulnsWithOverallResult = new List<long> { 1111111112, 1111111113 };
+            var _overallResults = SeedOverallResultData(_profiles, ulnsWithOverallResult, false);
 
             DbContext.SaveChanges();
 
@@ -120,6 +124,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             var expectedIsLearnerRegistered = expectedPathway.Status == RegistrationPathwayStatus.Active || expectedPathway.Status == RegistrationPathwayStatus.Withdrawn;
             var expectedIndustryPlacementId = expectedPathway.IndustryPlacements.FirstOrDefault()?.Id ?? 0;
             var expectedIndustryPlacementStatus = expectedPathway.IndustryPlacements.FirstOrDefault()?.Status ?? null;
+            var expectedOverallResult = expectedPathway.OverallResults.FirstOrDefault(o => o.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? o.EndDate != null : o.EndDate == null);
+            var expectedOverallReultDetails = expectedOverallResult?.Details;
+            var expectedOverallResultPublishDate = expectedOverallResult?.PublishDate;
 
             _actualResult.Should().NotBeNull();
             _actualResult.ProfileId.Should().Be(expectedProfile.Id);
@@ -137,6 +144,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             _actualResult.IsLearnerRegistered.Should().Be(expectedIsLearnerRegistered);
             _actualResult.IndustryPlacementId.Should().Be(expectedIndustryPlacementId);
             _actualResult.IndustryPlacementStatus.Should().Be(expectedIndustryPlacementStatus);
+
+            // Overall results
+            _actualResult.OverallResultDetails.Should().Be(expectedOverallReultDetails);
+            _actualResult.OverallResultPublishDate.Should().Be(expectedOverallResultPublishDate);
         }
 
         public static IEnumerable<object[]> Data

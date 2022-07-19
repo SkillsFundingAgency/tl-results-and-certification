@@ -45,6 +45,14 @@
       "type": "integer",
       "environmentVariable": "SoaRerequestInDays"
     },
+	"OverallResultsAvailableDate": {
+      "type": "string",
+      "environmentVariable": "OverallResultsAvailableDate"
+    },
+	"OverallResultsCalculationDate": {
+      "type": "string",
+      "environmentVariable": "OverallResultsCalculationDate"
+    },	
     "KeyVaultUri": {
       "type": "string",
       "environmentVariable": "KeyVaultUri"
@@ -416,6 +424,8 @@
     "TechnicalSupportEmailAddress",
     "FeedbackEmailAddress",
     "TechnicalInternalNotificationEmailAddress",
+	"OverallResultsAvailableDate",
+	"OverallResultsCalculationDate",
     "KeyVaultUri",
     "RedisSettings",
     "BlobStorageSettings",

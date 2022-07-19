@@ -150,17 +150,29 @@
   <data name="Notification_Title" xml:space="preserve">
     <value>Important</value>
   </data>
+  <data name="Overall_Results_Display_From" xml:space="preserve">
+    <value>Results will be displayed from the day before results day and will only be available for active final year learners.</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Learner T Level record page</value>
   </data>
   <data name="Personal_Details_Text" xml:space="preserve">
     <value>Personal details</value>
   </data>
+  <data name="Section_Heading_Core_Component" xml:space="preserve">
+    <value>Core component</value>
+  </data>
   <data name="Section_Heading_Industry_Placement" xml:space="preserve">
     <value>Industry placement</value>
   </data>
   <data name="Section_Heading_Level2_Maths_English" xml:space="preserve">
     <value>Level 2 maths and English</value>
+  </data>
+  <data name="Section_Heading_OccupationalSpecialism" xml:space="preserve">
+    <value>Occupational specialism</value>
+  </data>
+  <data name="Section_Heading_Overall_Result_Tlevel" xml:space="preserve">
+    <value>Overall T Level result</value>
   </data>
   <data name="Start_Year_Value" xml:space="preserve">
     <value>{0} to {1}</value>
@@ -194,6 +206,9 @@
   </data>
   <data name="Title_Maths_Text" xml:space="preserve">
     <value>Maths</value>
+  </data>
+  <data name="Title_OverallResult_Text" xml:space="preserve">
+    <value>Result</value>
   </data>
   <data name="Title_Provider_Name_Text" xml:space="preserve">
     <value>Provider</value>

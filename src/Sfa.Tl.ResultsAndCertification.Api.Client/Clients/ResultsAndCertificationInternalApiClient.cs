@@ -403,13 +403,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<IList<DataExportResponse>>(requestUri);
         }
 
-        # region Test
-        public async Task<string> GetLearnersForOverallGradeCalculationAsync(string runDate)
+        public async Task<DataExportResponse> DownloadOverallResultsDataAsync(long providerUkprn, string requestedBy)
         {
-            var requestUri = string.Format("/api/Test/OverallResult/GetLearners/{0}", runDate);
-            return await GetAsync<string>(requestUri);
+            var requestUri = string.Format(ApiConstants.DownloadOverallResultsDataUri, providerUkprn, requestedBy);
+            return await GetAsync<DataExportResponse>(requestUri);
         }
-        # endregion
 
         #region Private Methods
 

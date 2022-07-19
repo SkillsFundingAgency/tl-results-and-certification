@@ -1,7 +1,9 @@
 ﻿using FluentAssertions;
+using Newtonsoft.Json;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -9,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
+        private Models.OverallResults.OverallResultDetail _expectedOverallResult;
         private Models.Contracts.TrainingProvider.LearnerRecordDetails _expectedApiResult;
         protected LearnerRecordDetailsViewModel ActualResult { get; set; }
 
@@ -16,6 +19,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
         {
             ProviderUkprn = 9874561231;
             ProfileId = 1;
+
+            _expectedOverallResult = new Models.OverallResults.OverallResultDetail
+            {
+                TlevelTitle = "Tlevel title",
+                PathwayLarId = "123456789",
+                PathwayName = "Pathway 1",
+                PathwayResult = "Distinction",
+                SpecialismDetails = new List<Models.OverallResults.OverallSpecialismDetail>
+                    {
+                        new Models.OverallResults.OverallSpecialismDetail
+                        {
+                            SpecialismLarId = "987654321",
+                            SpecialismName = "Specialism 1",
+                            SpecialismResult = "A"
+                        }
+                    },
+                OverallResult = "Distinction",
+                IndustryPlacementStatus = "Completed"
+            };
 
             _expectedApiResult = new Models.Contracts.TrainingProvider.LearnerRecordDetails
             {
@@ -33,7 +55,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                 EnglishStatus = Common.Enum.SubjectStatus.Achieved,
                 IsLearnerRegistered = true,
                 IndustryPlacementId = 1,
-                IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed
+                IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed,
+                OverallResultDetails = JsonConvert.SerializeObject(_expectedOverallResult),
+                OverallResultPublishDate = DateTime.UtcNow
             };
             InternalApiClient.GetLearnerRecordDetailsAsync(ProviderUkprn, ProfileId).Returns(_expectedApiResult);
         }
@@ -68,6 +92,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             ActualResult.IsLearnerRegistered.Should().Be(_expectedApiResult.IsLearnerRegistered);
             ActualResult.IndustryPlacementId.Should().Be(_expectedApiResult.IndustryPlacementId);
             ActualResult.IndustryPlacementStatus.Should().Be(_expectedApiResult.IndustryPlacementStatus);
+
+            ActualResult.OverallResultDetails.Should().BeEquivalentTo(_expectedOverallResult);
+            ActualResult.OverallResultPublishDate.Should().Be(_expectedApiResult.OverallResultPublishDate);
         }
     }
 }

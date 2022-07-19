@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
@@ -28,5 +29,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         // Industry placement
         public int IndustryPlacementId { get; set; }
         public IndustryPlacementStatus? IndustryPlacementStatus { get; set; }
+
+        public string OverallResultDetails { get; set; }
+        public DateTime? OverallResultPublishDate { get; set; }
     }
 }

@@ -34,10 +34,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 AwardingOrganisationName = "Pearson",
                 MathsStatus = SubjectStatus.NotSpecified,
                 EnglishStatus = SubjectStatus.NotSpecified,
-                IsLearnerRegistered = true,
-                
+                IsLearnerRegistered = true,                
                 IndustryPlacementId = 10,
-                IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified
+                IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified,
+                OverallResultDetails = new Models.OverallResults.OverallResultDetail
+                {
+                    PathwayName = "Pathway 1",
+                    PathwayResult = "Distinction",
+                    SpecialismDetails = new List<Models.OverallResults.OverallSpecialismDetail>
+                    {
+                        new Models.OverallResults.OverallSpecialismDetail
+                        {
+                            SpecialismName = "Specialism 1",
+                            SpecialismResult = "A"
+                        }
+                    },
+                    OverallResult = "Distinction"
+                },
+                OverallResultPublishDate = DateTime.UtcNow
             };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, Mockresult.ProfileId.ToString() } };
@@ -134,6 +148,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryEnglishStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Action_Text_Link_Add);
             model.SummaryEnglishStatus.RouteName.Should().Be(RouteConstants.AddEnglishStatus);
             model.SummaryEnglishStatus.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
+
+            model.DisplayOverallResults.Should().BeTrue();
+
+            // Overall core result details
+            model.SummaryCoreResult.Title.Should().Be(Mockresult.OverallResultDetails.PathwayName);
+            model.SummaryCoreResult.Value.Should().Be(Mockresult.OverallResultDetails.PathwayResult);
+
+            // Overall Specialism result details
+            model.SummarySpecialismResult.Title.Should().Be(Mockresult.OverallResultDetails.SpecialismDetails[0].SpecialismName);
+            model.SummarySpecialismResult.Value.Should().Be(Mockresult.OverallResultDetails.SpecialismDetails[0].SpecialismResult);
+
+            // Overall Result
+            model.SummaryOverallResult.Title.Should().Be(LearnerRecordDetailsContent.Title_OverallResult_Text);
+            model.SummaryOverallResult.Value.Should().Be(Mockresult.OverallResultDetails.OverallResult);
+
 
             // Back link
             model.BackLink.Should().NotBeNull();

@@ -1,14 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Comparer;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Application.Models;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults;
+using Sfa.Tl.ResultsAndCertification.Models.Functions;
+using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,31 +27,37 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IRepository<OverallGradeLookup> _overallGradeLookupRepository;
         private readonly IOverallResultCalculationRepository _overallGradeCalculationRepository;
         private readonly IRepository<AssessmentSeries> _assessmentSeriesRepository;
+        private readonly IRepository<OverallResult> _overallResultRepository;
+        private readonly IMapper _mapper;
 
         public OverallResultCalculationService(
             ResultsAndCertificationConfiguration configuration,
             IRepository<TlLookup> tlLookupRepository,
             IRepository<OverallGradeLookup> overallGradeLookupRepository,
             IOverallResultCalculationRepository overallGradeCalculationRepository,
-            IRepository<AssessmentSeries> assessmentSeriesRepository)
+            IRepository<AssessmentSeries> assessmentSeriesRepository,
+            IRepository<OverallResult> overallResultRepository,
+            IMapper mapper)
         {
             _configuration = configuration;
             _tlLookupRepository = tlLookupRepository;
             _overallGradeLookupRepository = overallGradeLookupRepository;
             _overallGradeCalculationRepository = overallGradeCalculationRepository;
             _assessmentSeriesRepository = assessmentSeriesRepository;
+            _overallResultRepository = overallResultRepository;
+            _mapper = mapper;
         }
 
         public async Task<AssessmentSeries> GetResultCalculationAssessmentAsync(DateTime runDate)
         {
             var assessmentSeries = await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
-            var currentAssessmentSeries = assessmentSeries.FirstOrDefault(a => runDate >= a.StartDate && runDate <= a.EndDate);
+            var currentAssessmentSeries = assessmentSeries.FirstOrDefault(a => a.ComponentType == ComponentType.Core && runDate >= a.StartDate && runDate <= a.EndDate);
             if (currentAssessmentSeries == null)
                 throw new Exception($"There is no AssessmentSeries available for the date {runDate}");
 
             // Calculate result for recently completed assessment. 
             var dateFromPreviousAssessment = currentAssessmentSeries.StartDate.AddDays(-1);
-            var previousAssessment = assessmentSeries.FirstOrDefault(a => dateFromPreviousAssessment >= a.StartDate && dateFromPreviousAssessment <= a.EndDate);
+            var previousAssessment = assessmentSeries.FirstOrDefault(a => a.ComponentType == ComponentType.Core && dateFromPreviousAssessment >= a.StartDate && dateFromPreviousAssessment <= a.EndDate);
 
             return previousAssessment;
         }
@@ -56,42 +65,44 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<IList<TqRegistrationPathway>> GetLearnersForOverallGradeCalculationAsync(DateTime runDate)
         {
             // Dev note: This method left to test from api end-point
-            var resultCalculationYear = await GetResultCalculationAssessmentAsync(runDate);
+            var previousAssessment = await GetResultCalculationAssessmentAsync(runDate);
             var resultCalculationYearFrom = (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ? Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) - 1;
 
-            return await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationYear?.ResultCalculationYear ?? 0);
+            //var result = await CalculateOverallResultsAsync(runDate);
+
+            return await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, previousAssessment?.ResultCalculationYear ?? 0);
         }
 
-        public async Task<bool> CalculateOverallResultsAsync(DateTime runDate)
+        public async Task<List<OverallResultResponse>> CalculateOverallResultsAsync(DateTime runDate)
         {
+            var response = new List<OverallResultResponse>();
             var resultCalculationAssessment = await GetResultCalculationAssessmentAsync(runDate);
-            var resultCalculationYearFrom = (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ? Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) - 1;
+            var resultCalculationYearFrom = (resultCalculationAssessment.ResultCalculationYear ?? 0) - (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ? 
+                Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) + 1;
+
             var learners = await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationAssessment.ResultCalculationYear ?? 0);
 
             if (learners == null || !learners.Any())
-                return true;
+                return null;
 
-            var overallResultLookupData = await GetOverallResultLookupData();
+            var tlLookupData = await GetTlLookupData();
             var overallGradeLookupData = await GetOverallGradeLookupData();
 
-            var tasks = new List<Task>();
             var batchSize = _configuration.OverallResultBatchSettings.BatchSize <= 0 ? Constants.OverallResultDefaultBatchSize : _configuration.OverallResultBatchSettings.BatchSize;
             var batchesToProcess = (int)Math.Ceiling(learners.Count / (decimal)batchSize);
 
             for (var batchIndex = 0; batchIndex < batchesToProcess; batchIndex++)
             {
                 var leanersToProcess = learners.Skip(batchIndex * batchSize).Take(batchSize);
-                tasks.Add(ProcessOverallResults(leanersToProcess, overallResultLookupData, overallGradeLookupData, resultCalculationAssessment));
+                response.Add(await ProcessOverallResults(leanersToProcess, tlLookupData, overallGradeLookupData, resultCalculationAssessment));
             }
 
-            await Task.WhenAll(tasks);
-            return true;
+            return response;
         }
 
-        private async Task ProcessOverallResults(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
+        private async Task<OverallResultResponse> ProcessOverallResults(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
         {
-            await Task.CompletedTask;
-            var reconciledLearnerRecords = ReconcileLearnersData(learnerPathways, tlLookup, overallGradeLookupData, assessmentSeries.ResultPublishDate);
+            var reconciledLearnerRecords = ReconcileLearnersData(learnerPathways, tlLookup, overallGradeLookupData, assessmentSeries);
 
             var totalRecords = learnerPathways.Count();
             var updatedRecords = reconciledLearnerRecords.Count(x => x.Id != 0);
@@ -99,6 +110,38 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var unChangedRecords = totalRecords - (updatedRecords + newRecords);
 
             // Save.
+            var isSuccess = await SaveOverallResultsAsync(reconciledLearnerRecords);
+
+            return new OverallResultResponse { IsSuccess = isSuccess, TotalRecords = totalRecords, UpdatedRecords = updatedRecords, NewRecords = newRecords, UnChangedRecords = unChangedRecords, SavedRecords = isSuccess ? reconciledLearnerRecords.Count : 0 };
+        }
+
+        public PrintCertificateType? GetPrintCertificateType(List<TlLookup> overallResultLookupData, string overallGrade)
+        {
+            if (string.IsNullOrWhiteSpace(overallGrade))
+                return null;
+
+            var isValidOverallGrade = overallResultLookupData.Any(o => o.Value.Equals(overallGrade, StringComparison.InvariantCultureIgnoreCase));
+
+            if (!isValidOverallGrade)
+                return null;
+
+            var unclassifiedGrade = overallResultLookupData.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultUnclassifiedCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
+            var noResultGrade = overallResultLookupData.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultXNoResultCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
+            var partialAchievementGrade = overallResultLookupData.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultPartialAchievementCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
+
+            if (overallGrade.Equals(unclassifiedGrade, StringComparison.InvariantCultureIgnoreCase) ||
+                overallGrade.Equals(noResultGrade, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return null;
+            }
+            else if (overallGrade.Equals(partialAchievementGrade, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return PrintCertificateType.StatementOfAchievement;
+            }
+            else
+            {
+                return PrintCertificateType.Certificate;
+            }
         }
 
         public static CalculationStatus GetCalculationStatus(List<TlLookup> overallResultLookupData, string overallGrade, PrsStatus? pathwayResultPrsStatus, PrsStatus? specialismResultPrsStatus)
@@ -227,7 +270,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
         }
 
-        public IList<OverallResult> ReconcileLearnersData(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, DateTime? resultPublishDate)
+        public IList<OverallResult> ReconcileLearnersData(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
         {
             var overallResults = new List<OverallResult>();
 
@@ -241,19 +284,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 var overallGrade = GetOverAllGrade(tlLookup, overallGradeLookupData, pathway.TqProvider.TqAwardingOrganisation.TlPathwayId, pathwayResult?.TlLookupId, specialismResult?.TlLookupId, ipStatus);
 
-                if (!string.IsNullOrWhiteSpace(overallGrade))
-                {
-                    var pathwayResultPrsStatus = HasAnyPathwayResultPrsStatusOutstanding(pathway);
-                    var specialismResultPrsStatus = HasAnySpecialismResultPrsStatusOutstanding(specialism);
-                    var calculationStatus = GetCalculationStatus(tlLookup, overallGrade, pathwayResultPrsStatus, specialismResultPrsStatus);
+                if (string.IsNullOrWhiteSpace(overallGrade))
+                    throw new ApplicationException("OverallGrade cannot be null");
 
-                    var overallResultDetails = new OverallResultDetail
-                    {
-                        TlevelTitle = pathway.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
-                        PathwayName = pathway.TqProvider.TqAwardingOrganisation.TlPathway.Name,
-                        PathwayLarId = pathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-                        PathwayResult = pathwayResult?.TlLookup?.Value,
-                        SpecialismDetails = new List<OverallSpecialismDetail>
+                var pathwayResultPrsStatus = HasAnyPathwayResultPrsStatusOutstanding(pathway);
+                var specialismResultPrsStatus = HasAnySpecialismResultPrsStatusOutstanding(specialism);
+                var calculationStatus = GetCalculationStatus(tlLookup, overallGrade, pathwayResultPrsStatus, specialismResultPrsStatus);
+                var certificateType = GetPrintCertificateType(tlLookup, overallGrade);
+
+                var overallResultDetails = new OverallResultDetail
+                {
+                    TlevelTitle = pathway.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
+                    PathwayName = pathway.TqProvider.TqAwardingOrganisation.TlPathway.Name,
+                    PathwayLarId = pathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
+                    PathwayResult = pathwayResult?.TlLookup?.Value,
+                    SpecialismDetails = new List<OverallSpecialismDetail>
                         {
                             new OverallSpecialismDetail
                             {
@@ -262,44 +307,48 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                 SpecialismResult = specialismResult?.TlLookup?.Value
                             }
                         },
-                        IndustryPlacementStatus = GetIndustryPlacementStatusDisplayName(ipStatus),
-                        OverallResult = overallGrade
-                    };
+                    IndustryPlacementStatus = GetIndustryPlacementStatusDisplayName(ipStatus),
+                    OverallResult = overallGrade
+                };
 
-                    var overallResult = new OverallResult
-                    {
-                        TqRegistrationPathwayId = pathway.Id,
-                        Details = JsonConvert.SerializeObject(overallResultDetails),
-                        ResultAwarded = overallGrade,
-                        CalculationStatus = calculationStatus,
-                        PublishDate = resultPublishDate,
-                        PrintAvailableFrom = null,
-                        StartDate = DateTime.UtcNow,
-                        CreatedBy = Constants.DefaultPerformedBy
-                    };
+                var overallResult = new OverallResult
+                {
+                    TqRegistrationPathwayId = pathway.Id,
+                    Details = JsonConvert.SerializeObject(overallResultDetails),
+                    ResultAwarded = overallGrade,
+                    CalculationStatus = calculationStatus,
+                    PublishDate = assessmentSeries.ResultPublishDate,
+                    PrintAvailableFrom = certificateType != null ? assessmentSeries.AppealEndDate.AddDays(1) : null,
+                    IsOptedin = true,
+                    CertificateType = certificateType,
+                    StartDate = DateTime.UtcNow,
+                    CreatedBy = Constants.DefaultPerformedBy
+                };
 
-                    var existingOverallResult = pathway.OverallResults.FirstOrDefault(x => x.EndDate == null);
-                    if (existingOverallResult == null)
-                        overallResults.Add(overallResult);
-                    else
-                    {
-                        if (IsOverallResultChangedFromPrevious(overallResult, existingOverallResult))
-                        {
-                            existingOverallResult.EndDate = DateTime.UtcNow;
-                            existingOverallResult.ModifiedBy = Constants.DefaultPerformedBy;
-                            overallResults.Add(existingOverallResult);
-
-                            overallResults.Add(overallResult);
-                        }
-                    }
-                }
+                var existingOverallResult = pathway.OverallResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
+                if (existingOverallResult == null)
+                    overallResults.Add(overallResult);
                 else
                 {
-                    // TODO : Log
+                    if (IsOverallResultChangedFromPrevious(overallResult, existingOverallResult))
+                    {
+                        existingOverallResult.IsOptedin = false;
+                        existingOverallResult.EndDate = DateTime.UtcNow;
+                        existingOverallResult.ModifiedOn = DateTime.UtcNow;
+                        existingOverallResult.ModifiedBy = Constants.DefaultPerformedBy;
+                        overallResults.Add(existingOverallResult);
+
+                        overallResults.Add(overallResult);
+                    }
                 }
             }
 
             return overallResults;
+        }
+
+        public async Task<bool> SaveOverallResultsAsync(IList<OverallResult> overallResults)
+        {
+            return await _overallResultRepository.UpdateManyAsync(overallResults) > 0;
         }
 
         public IndustryPlacementStatus GetIndustryPlacementStatus(TqRegistrationPathway pathway)
@@ -315,9 +364,29 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return IndustryPlacementStatus.NotCompleted.GetDisplayName();
         }
 
-        private async Task<List<TlLookup>> GetOverallResultLookupData()
+        public async Task<IList<DownloadOverallResultsData>> DownloadOverallResultsDataAsync(long providerUkprn)
         {
-            return await _tlLookupRepository.GetManyAsync(lkp => lkp.Category.Equals(LookupCategory.OverallResult.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToListAsync();
+            // 1. Get PublishDate from previous assessment
+            var previousAssessment = await GetResultCalculationAssessmentAsync(DateTime.UtcNow);
+            var resultPublishDate = previousAssessment?.ResultPublishDate;
+            if (resultPublishDate == null)
+                return new List<DownloadOverallResultsData>();
+
+            // 2. Get OverallResults on above PublishDate if date reached
+            var overallResults = await _overallResultRepository.GetManyAsync(x =>
+                                                x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
+                                                x.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == providerUkprn &&
+                                                x.PublishDate == resultPublishDate && DateTime.Today >= resultPublishDate,
+                                                incl => incl.TqRegistrationPathway.TqRegistrationProfile)
+                                        .OrderBy(x => x.TqRegistrationPathway.TqRegistrationProfile.Lastname)
+                                        .ToListAsync();
+
+            return _mapper.Map<IList<DownloadOverallResultsData>>(overallResults);
+        }
+
+        private async Task<List<TlLookup>> GetTlLookupData()
+        {
+            return await _tlLookupRepository.GetManyAsync().ToListAsync();
         }
 
         private async Task<List<OverallGradeLookup>> GetOverallGradeLookupData()

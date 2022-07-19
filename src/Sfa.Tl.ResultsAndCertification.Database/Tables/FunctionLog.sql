@@ -5,7 +5,7 @@
 	[StartDate] DATETIME NOT NULL,	
 	[EndDate] DATETIME NULL,
 	[Status] INT NOT NULL,
-	[Message] NVARCHAR(4000) NULL,
+	[Message] NVARCHAR(MAX) NULL,
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 
     [CreatedBy] NVARCHAR(50) NULL,
     [ModifiedOn] DATETIME2 NULL,

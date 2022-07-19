@@ -86,6 +86,9 @@
         // Industry Placement Data Index Constants
         public const int IndustryPlacementStartIndex = 100000;
 
+        // Overall Result Index Constants
+        public const int OverallResultStartIndex = 100000;
+
         // Route Attributes
         public const string IsChangeMode = "isChangeMode";
         public const string ProfileId = "profileId";

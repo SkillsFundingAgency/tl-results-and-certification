@@ -386,5 +386,10 @@
         public const string IpCheckAndSubmitCancel = "IpCheckAndSubmitCancel";
 
         #endregion
+
+        #region Download Tlevel Results
+        public const string DownloadOverallResultsPage = "DownloadOverallResultsPage";
+        public const string DownloadOverallResultsFile = "DownloadOverallResultsFile";
+        #endregion
     }
 }

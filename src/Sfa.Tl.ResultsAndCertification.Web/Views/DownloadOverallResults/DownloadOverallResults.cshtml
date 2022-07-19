@@ -1,0 +1,36 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.DownloadOverallResults
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.DownloadResults.DownloadOverallResultsViewModel
+
+@{
+    ViewData["Title"] = @DownloadOverallResults.Page_Title;
+}
+
+@section NavigationBar {
+<vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+
+        <h1 class="govuk-heading-l">@DownloadOverallResults.Heading_Download_Tlevel_Results</h1>
+
+        <p class="govuk-body">@DownloadOverallResults.Para_You_Can_Download_Your_Active_Learners</p>
+        <p class="govuk-body govuk-!-margin-bottom-6">@DownloadOverallResults.Para_Csv_Data_Should_Not_Be_Shared</p>
+
+        <p class="govuk-body">@DownloadOverallResults.Para_Results_Updated_After_Results_Day_If</p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>@DownloadOverallResults.Item_Grade_Changed</li>
+            <li>@DownloadOverallResults.Item_Completed_Industry_Placement</li>
+        </ul>
+        <p class="govuk-body">@DownloadOverallResults.Para_File_Update_Each_Time</p>
+
+        <div class="govuk-button-group">
+            @if (Model.IsOverallResultsAvailable)
+            {
+                <a class="govuk-button" role="button" asp-route="@RouteConstants.DownloadOverallResultsFile">@DownloadOverallResults.Button_Download_Results_File</a>
+            }
+            <a class="govuk-button govuk-button--secondary" role="button" asp-route="@RouteConstants.Home">@DownloadOverallResults.Button_Back_To_Home</a>
+        </div>
+    </div>
+</div>

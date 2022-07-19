@@ -1,9 +1,12 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Registration;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
     {
         private RegistrationProcessResponse _result;
         private BulkRegistrationsTextFixture _bulkRegistrationTestFixture;
+        private List<OverallGradeLookup> _overallGradeLookup;
 
         public When_CompareAndProcessRegistrationsAsync_Called_With_Transfer_Registrations(BulkRegistrationsTextFixture bulkRegistrationTestFixture)
         {
@@ -49,6 +53,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var specialismResultsDataToProcess = _bulkRegistrationTestFixture.GetSpecialismResultsDataToProcess(specialismAssessments);
             var specialismResults = _bulkRegistrationTestFixture.SeedSpecialismResultsData(specialismResultsDataToProcess);
 
+            // Seed OverallResultLookup
+            _overallGradeLookup = new List<OverallGradeLookup>();
+            var pathwayId = seededRegistrationPathways.FirstOrDefault().Id;
+            var coreResultId = pathwayResults.FirstOrDefault().TlLookupId;
+            var splResultId = specialismResults.FirstOrDefault().TlLookupId;
+            _overallGradeLookup.Add(new OverallGradeLookup { TlPathwayId = 3, TlLookupCoreGradeId = coreResultId, TlLookupSpecialismGradeId = splResultId, TlLookupOverallGradeId = 17 });
+            OverallGradeLookupProvider.CreateOverallGradeLookupList(_bulkRegistrationTestFixture.DbContext, _overallGradeLookup);
+
+            // Seed Overall results
+            OverallResultDataProvider.CreateOverallResult(_bulkRegistrationTestFixture.DbContext, new List<OverallResult> { new OverallResult { TqRegistrationPathwayId = pathwayId,
+                Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
+                ResultAwarded = "Distinction*", CalculationStatus = CalculationStatus.Completed, CertificateType = PrintCertificateType.Certificate, StartDate = DateTime.UtcNow.AddMonths(-1), IsOptedin = true, CreatedOn = DateTime.UtcNow } }, true);
+
             // Input param
             var registrationDataToProcess = _bulkRegistrationTestFixture.GetRegistrationsDataToProcess(_bulkRegistrationTestFixture.Uln, walsallCollegeTqProvider);
             registrationDataToProcess.Id = 0 - Constants.RegistrationProfileStartIndex;
@@ -64,6 +81,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             {
                 sp.Id = specialismIndex - Constants.RegistrationSpecialismsStartIndex;
                 specialismIndex++;
+            }
+
+            var overallResultIndex = 0;
+            foreach (var ovrResult in registrationDataToProcess.TqRegistrationPathways.SelectMany(p => p.OverallResults))
+            {
+                ovrResult.Id = overallResultIndex - Constants.OverallResultStartIndex;
+                overallResultIndex++;
             }
             _bulkRegistrationTestFixture.TqRegistrationProfilesData = new List<TqRegistrationProfile> { registrationDataToProcess };
         }
@@ -97,6 +121,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                                                                                                                                 .ThenInclude(x => x.TqPathwayResults)
                                                                                                                        .Include(x => x.TqRegistrationPathways)
                                                                                                                             .ThenInclude(x => x.IndustryPlacements)
+                                                                                                                       .Include(x => x.TqRegistrationPathways)
+                                                                                                                            .ThenInclude(x => x.OverallResults)
                                                                                                                        .FirstOrDefault();
             // Assert registration profile data
             actualRegistrationProfile.Should().NotBeNull();
@@ -167,6 +193,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             actualActiveIndustryPlacement.Status.Should().Be(expectedPreviousIndustryPlacement.Status);
             actualActiveIndustryPlacement.Details.Should().Be(expectedPreviousIndustryPlacement.Details);
+
+            // Assert Active Overall result
+            var actualActiveOverallResult = activePathway.OverallResults.FirstOrDefault(ovr => ovr.EndDate == null);
+            var expectedActiveOverallResult = expectedActivePathway.OverallResults.FirstOrDefault(ovr => ovr.EndDate == null);
+            AssertOverallResult(actualActiveOverallResult, expectedActiveOverallResult);
+
+            // Assert Transferred Overall result
+            var actualTransferredOverallResult = actualTransferredPathway.OverallResults.FirstOrDefault(ovr => ovr.EndDate != null);
+            var expectedTransferredOverallResult = expectedTransferredPathway.OverallResults.FirstOrDefault(ovr => ovr.EndDate != null);
+            AssertOverallResult(actualTransferredOverallResult, expectedTransferredOverallResult);
         }
 
         private static void AssertRegistrationPathway(TqRegistrationPathway actualPathway, TqRegistrationPathway expectedPathway)
@@ -262,6 +298,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 else
                     actualResult.EndDate.Should().NotBeNull();
             }
+        }
+
+        private void AssertOverallResult(OverallResult actualOverallResult, OverallResult expectedOverallResult)
+        {
+            actualOverallResult.TqRegistrationPathwayId.Should().Be(expectedOverallResult.TqRegistrationPathwayId);
+            actualOverallResult.Details.Should().Be(expectedOverallResult.Details);
+            actualOverallResult.ResultAwarded.Should().Be(expectedOverallResult.ResultAwarded);
+            actualOverallResult.CalculationStatus.Should().Be(expectedOverallResult.CalculationStatus);
+            actualOverallResult.PrintAvailableFrom.Should().Be(expectedOverallResult.PrintAvailableFrom);
+            actualOverallResult.PublishDate.Should().Be(expectedOverallResult.PublishDate);
+            actualOverallResult.CertificateType.Should().Be(expectedOverallResult.CertificateType);
+            if (expectedOverallResult.EndDate == null)
+                actualOverallResult.EndDate.Should().BeNull();
+            else
+                actualOverallResult.EndDate.Should().NotBeNull();
         }
     }
 }

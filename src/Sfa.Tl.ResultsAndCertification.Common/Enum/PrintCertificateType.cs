@@ -3,6 +3,7 @@
     public enum PrintCertificateType
     {
         NotSpecified = 0,
-        StatementOfAchievement = 1
+        StatementOfAchievement = 1,
+        Certificate = 2
     }
 }

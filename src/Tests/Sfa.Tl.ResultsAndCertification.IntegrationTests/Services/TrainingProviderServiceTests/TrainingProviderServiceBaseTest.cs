@@ -156,6 +156,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             profile.MathsStatus = mathsStatus; 
             profile.EnglishStatus = englishStatus;
         }
+
+        public List<OverallResult> SeedOverallResultData(List<TqRegistrationProfile> registrations, List<long> ulnsWithOverallResult, bool saveChanges = true)
+        {
+            var overallResults = new List<OverallResult>();
+            foreach (var ulnOverResult in ulnsWithOverallResult)
+            {
+                var registration = registrations.FirstOrDefault(reg => reg.UniqueLearnerNumber == ulnOverResult);
+                overallResults.Add(OverallResultDataProvider.CreateOverallResult(DbContext, registration.TqRegistrationPathways.FirstOrDefault()));
+            }
+
+            if (saveChanges)
+                DbContext.SaveChanges();
+            return overallResults;
+        }
     }
     
     public enum Provider
