@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+﻿using Newtonsoft.Json;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -6,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
+using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -17,44 +19,242 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     public class UcasDataService : IUcasDataService
     {
         private readonly IUcasRepository _ucasRepository;
+        private readonly IUcasRecordSegment<UcasRecordEntriesSegment> _ucasRecordEntrySegment;
+        private readonly IUcasRecordSegment<UcasRecordResultsSegment> _ucasRecordResultsSegment;
         private readonly ResultsAndCertificationConfiguration _resultsAndCertificationConfiguration;
-
-        public UcasDataService(IUcasRepository ucasRepository, ResultsAndCertificationConfiguration resultsAndCertificationConfiguration)
+        public UcasDataService(IUcasRepository ucasRepository,
+            IUcasRecordSegment<UcasRecordEntriesSegment> ucasRecordEntrySegment,
+            IUcasRecordSegment<UcasRecordResultsSegment> ucasRecordResultsSegment,
+            ResultsAndCertificationConfiguration resultsAndCertificationConfiguration)
         {
             _ucasRepository = ucasRepository;
+            _ucasRecordEntrySegment = ucasRecordEntrySegment;
+            _ucasRecordResultsSegment = ucasRecordResultsSegment;
             _resultsAndCertificationConfiguration = resultsAndCertificationConfiguration;
         }
 
         public async Task<UcasData> ProcessUcasDataRecordsAsync(UcasDataType ucasDataType)
         {
-            var includeResults = ucasDataType != UcasDataType.Entries;
-            var registrationPathways = await _ucasRepository.GetUcasDataRecordsAsync(includeResults);
+            return ucasDataType switch
+            {
+                UcasDataType.Entries => await ProcessUcasDataRecordEntriesAsync(),
+                UcasDataType.Results => await ProcessUcasDataRecordResultsAsync(),
+                UcasDataType.Amendments => null,
+                _ => null,
+            };
+        }
 
+        public async Task<UcasData> ProcessUcasDataRecordEntriesAsync()
+        {
             var records = new List<UcasDataRecord>();
+            var registrationPathways = await _ucasRepository.GetUcasDataRecordsForEntriesAsync();
             foreach (var pathway in registrationPathways)
             {
                 var ucasDataComponents = new List<UcasDataComponent>();
 
-                // Add Core
-                var ucasCoreComponent = GetCoreComponentData(includeResults, pathway);
-                if (ucasCoreComponent != null)
-                    ucasDataComponents.Add(ucasCoreComponent);
+                _ucasRecordEntrySegment.AddCoreSegment(ucasDataComponents, pathway);
+                _ucasRecordEntrySegment.AddSpecialismSegment(ucasDataComponents, pathway);
+                _ucasRecordEntrySegment.AddOverallResultSegment(ucasDataComponents, _resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode);
 
-                // Add Specialisms
-                foreach (var specialism in pathway.TqRegistrationSpecialisms)
+                var record = BuildUcasDataRecord(ucasDataComponents, pathway);
+
+                records.Add(record);
+            }
+
+            return BuildUcasData(_ucasRecordEntrySegment.UcasDataType, records);
+        }
+
+        public async Task<UcasData> ProcessUcasDataRecordResultsAsync()
+        {
+            var records = new List<UcasDataRecord>();
+            var overallResults = await _ucasRepository.GetUcasDataRecordsForResultsAsync();
+            foreach (var overallResult in overallResults)
+            {
+                var ucasDataComponents = new List<UcasDataComponent>();
+
+                _ucasRecordResultsSegment.AddCoreSegment(ucasDataComponents, overallResult.TqRegistrationPathway);
+                _ucasRecordResultsSegment.AddSpecialismSegment(ucasDataComponents, overallResult.TqRegistrationPathway);
+                _ucasRecordResultsSegment.AddOverallResultSegment(ucasDataComponents, _resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode, overallResult.ResultAwarded);
+                
+                var record = BuildUcasDataRecord(ucasDataComponents, overallResult.TqRegistrationPathway);
+
+                records.Add(record);
+            }
+
+            return BuildUcasData(_ucasRecordResultsSegment.UcasDataType, records);
+        }
+
+        private UcasDataRecord BuildUcasDataRecord(List<UcasDataComponent> ucasDataComponents, TqRegistrationPathway pathway)
+        {
+            return new UcasDataRecord
+            {
+                UcasRecordType = (char)UcasRecordType.Subject,
+                SendingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.SendingOrganisation,
+                ReceivingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.ReceivingOrganisation,
+                CentreNumber = _resultsAndCertificationConfiguration.UcasDataSettings.CentreNumber,
+                CandidateNumber = pathway.TqRegistrationProfile.UniqueLearnerNumber.ToString(),
+                CandidateName = $"{pathway.TqRegistrationProfile.Lastname}:{pathway.TqRegistrationProfile.Firstname}",
+                CandidateDateofBirth = pathway.TqRegistrationProfile.DateofBirth.ToUcasFormat(),
+                Sex = !string.IsNullOrWhiteSpace(pathway.TqRegistrationProfile.Gender) ? ((char)EnumExtensions.GetEnumByDisplayName<UcasGender>(pathway.TqRegistrationProfile.Gender)).ToString() : string.Empty,
+                UcasDataComponents = ucasDataComponents
+            };
+        }
+
+        private UcasData BuildUcasData(UcasDataType ucasDataType, List<UcasDataRecord> records)
+        {
+            if (!records.Any())
+                return null;
+
+            var ucasData = new UcasData
+            {
+                Header = new UcasDataHeader
                 {
-                    var ucasSpecialismComponent = GetSpecialismComponentData(includeResults, specialism);
-                    if (ucasSpecialismComponent != null)
-                        ucasDataComponents.Add(ucasSpecialismComponent);
+                    UcasRecordType = (char)UcasRecordType.Header,
+                    SendingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.SendingOrganisation,
+                    ReceivingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.ReceivingOrganisation,
+                    UcasDataType = (char)ucasDataType,
+                    ExamMonth = _resultsAndCertificationConfiguration.UcasDataSettings.ExamMonth,
+                    ExamYear = DateTime.UtcNow.Year.ToString(),
+                    DateCreated = DateTime.Today.ToString("ddMMyyyy", CultureInfo.InvariantCulture)
+                },
+
+                UcasDataRecords = records,
+
+                Trailer = new UcasDataTrailer
+                {
+                    UcasRecordType = (char)UcasRecordType.Trailer,
+                    SendingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.SendingOrganisation,
+                    ReceivingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.ReceivingOrganisation,
+                    Count = records.Count + 2,
+                    ExamDate = $"{_resultsAndCertificationConfiguration.UcasDataSettings.ExamMonth}{DateTime.UtcNow.Year}"
                 }
+            };
 
-                if (ucasDataComponents.Any())
+            return ucasData;
+        }
+
+        public static string GetAbbreviatedPathwayResult(string result)
+        {
+            if (string.IsNullOrWhiteSpace(result))
+                return string.Empty;
+
+            var hasValue = Constants.PathwayResultAbbreviations.TryGetValue(result, out string abbrevatedResult);
+
+            if (hasValue)
+                return abbrevatedResult;
+            else
+                throw new ApplicationException("Pathway abbreviated result cannot be null");
+        }
+
+        public static string GetAbbreviatedSpecialismResult(string result)
+        {
+            if (string.IsNullOrWhiteSpace(result))
+                return string.Empty;
+
+            var hasValue = Constants.SpecialismResultAbbreviations.TryGetValue(result, out string abbrevatedResult);
+
+            if (hasValue)
+                return abbrevatedResult;
+            else
+                throw new ApplicationException("Specialism abbreviated result cannot be null");
+        }
+
+        public static string GetAbbreviatedOverallResult(string result)
+        {
+            if (string.IsNullOrWhiteSpace(result))
+                return string.Empty;
+
+            var hasValue = Constants.OverallResultsAbbreviations.TryGetValue(result, out string abbrevatedResult);
+
+            if (hasValue)
+                return abbrevatedResult;
+            else
+                throw new ApplicationException("Overall abbreviated result cannot be null");
+        }
+
+        #region old
+        public async Task<UcasData> ProcessUcasDataRecordsAsync1(UcasDataType ucasDataType)
+        {
+            var records = new List<UcasDataRecord>();
+
+            if (ucasDataType == UcasDataType.Entries)
+            {
+                var registrationPathways = await _ucasRepository.GetUcasDataRecordsForEntriesAsync();
+                foreach (var pathway in registrationPathways)
                 {
-                    // Add Overall result
+                    var ucasDataComponents = new List<UcasDataComponent>();
+
+                    // 1. Add Core
+                    var ucasCoreComponent = GetCoreComponentData(pathway);
+                    if (ucasCoreComponent != null)
+                        ucasDataComponents.Add(ucasCoreComponent);
+
+                    // 2. Add Specialisms
+                    foreach (var specialism in pathway.TqRegistrationSpecialisms)
+                    {
+                        var ucasSpecialismComponent = GetSpecialismComponentData(specialism);
+                        if (ucasSpecialismComponent != null)
+                            ucasDataComponents.Add(ucasSpecialismComponent);
+                    }
+
+                    // 3. Add Overall result
+                    if (ucasDataComponents.Any())
+                    {
+                        ucasDataComponents.Add(new UcasDataComponent
+                        {
+                            SubjectCode = _resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode,
+                            Grade = string.Empty,
+                            PreviousGrade = string.Empty
+                        });
+
+                        records.Add(new UcasDataRecord
+                        {
+                            UcasRecordType = (char)UcasRecordType.Subject,
+                            SendingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.SendingOrganisation,
+                            ReceivingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.ReceivingOrganisation,
+                            CentreNumber = _resultsAndCertificationConfiguration.UcasDataSettings.CentreNumber,
+                            CandidateNumber = pathway.TqRegistrationProfile.UniqueLearnerNumber.ToString(),
+                            CandidateName = $"{pathway.TqRegistrationProfile.Lastname}:{pathway.TqRegistrationProfile.Firstname}",
+                            CandidateDateofBirth = pathway.TqRegistrationProfile.DateofBirth.ToUcasFormat(),
+                            Sex = !string.IsNullOrWhiteSpace(pathway.TqRegistrationProfile.Gender) ? ((char)EnumExtensions.GetEnumByDisplayName<UcasGender>(pathway.TqRegistrationProfile.Gender)).ToString() : string.Empty,
+                            UcasDataComponents = ucasDataComponents
+                        });
+                    }
+                }
+            }
+
+            else
+            {
+                var overallResults = await _ucasRepository.GetUcasDataRecordsForResultsAsync();
+                foreach (var overallResult in overallResults)
+                {
+                    var ucasDataComponents = new List<UcasDataComponent>();
+                    var overallResultDetails = JsonConvert.DeserializeObject<OverallResultDetail>(overallResult.Details);
+
+                    // 1. Add Core
+                    ucasDataComponents.Add(new UcasDataComponent
+                    {
+                        SubjectCode = overallResultDetails.PathwayLarId,
+                        Grade = overallResultDetails.PathwayResult,
+                        PreviousGrade = string.Empty
+                    });
+
+                    // 2. Add Specialisms
+                    foreach (var splDetails in overallResultDetails.SpecialismDetails)
+                    {
+                        ucasDataComponents.Add(new UcasDataComponent
+                        {
+                            SubjectCode = splDetails.SpecialismLarId,
+                            Grade = splDetails.SpecialismResult,
+                            PreviousGrade = string.Empty
+                        });
+                    }
+
+                    // 3. Add Overall result
                     ucasDataComponents.Add(new UcasDataComponent
                     {
                         SubjectCode = _resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode,
-                        Grade = string.Empty,
+                        Grade = overallResult.ResultAwarded,
                         PreviousGrade = string.Empty
                     });
 
@@ -64,10 +264,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         SendingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.SendingOrganisation,
                         ReceivingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.ReceivingOrganisation,
                         CentreNumber = _resultsAndCertificationConfiguration.UcasDataSettings.CentreNumber,
-                        CandidateNumber = pathway.TqRegistrationProfile.UniqueLearnerNumber.ToString(),
-                        CandidateName = $"{pathway.TqRegistrationProfile.Lastname}:{pathway.TqRegistrationProfile.Firstname}",
-                        CandidateDateofBirth = pathway.TqRegistrationProfile.DateofBirth.ToUcasFormat(),
-                        Sex = !string.IsNullOrWhiteSpace(pathway.TqRegistrationProfile.Gender) ? ((char)EnumExtensions.GetEnumByDisplayName<UcasGender>(pathway.TqRegistrationProfile.Gender)).ToString() : string.Empty,
+                        CandidateNumber = overallResult.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber.ToString(),
+                        CandidateName = $"{overallResult.TqRegistrationPathway.TqRegistrationProfile.Lastname}:{overallResult.TqRegistrationPathway.TqRegistrationProfile.Firstname}",
+                        CandidateDateofBirth = overallResult.TqRegistrationPathway.TqRegistrationProfile.DateofBirth.ToUcasFormat(),
+                        Sex = !string.IsNullOrWhiteSpace(overallResult.TqRegistrationPathway.TqRegistrationProfile.Gender) ? ((char)EnumExtensions.GetEnumByDisplayName<UcasGender>(overallResult.TqRegistrationPathway.TqRegistrationProfile.Gender)).ToString() : string.Empty,
                         UcasDataComponents = ucasDataComponents
                     });
                 }
@@ -117,37 +317,28 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
         }
 
-        private static UcasDataComponent GetCoreComponentData(bool includeResults, TqRegistrationPathway pathway)
+        private static UcasDataComponent GetCoreComponentData(TqRegistrationPathway pathway)
         {
             if (!pathway.TqPathwayAssessments.Any())
                 return null;
 
-            TqPathwayResult pathwayHigherResult = null;
-            if (includeResults)
-                pathwayHigherResult = pathway.TqPathwayAssessments.SelectMany(x => x.TqPathwayResults).OrderBy(x => x.TlLookup.SortOrder).FirstOrDefault();
-
             return new UcasDataComponent
             {
                 SubjectCode = pathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-                Grade = pathwayHigherResult != null ? pathwayHigherResult.TlLookup.Value : string.Empty,
+                Grade = string.Empty,
                 PreviousGrade = string.Empty
             };
         }
 
-
-        private static UcasDataComponent GetSpecialismComponentData(bool includeResults, TqRegistrationSpecialism specialism)
+        private static UcasDataComponent GetSpecialismComponentData(TqRegistrationSpecialism specialism)
         {
             if (!specialism.TqSpecialismAssessments.Any())
                 return null;
 
-            TqSpecialismResult specialismHigherResult = null;
-            if (includeResults)
-                specialismHigherResult = specialism.TqSpecialismAssessments.SelectMany(x => x.TqSpecialismResults).OrderBy(x => x.TlLookup.SortOrder).FirstOrDefault();
-
             return new UcasDataComponent
             {
                 SubjectCode = specialism.TlSpecialism.LarId,
-                Grade = specialismHigherResult != null ? specialismHigherResult.TlLookup.Value : string.Empty,
+                Grade = string.Empty,
                 PreviousGrade = string.Empty
             };
         }
@@ -322,44 +513,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
             };
         }
+        #endregion
 
-        public static string GetAbbreviatedPathwayResult(string result)
-        {
-            if(string.IsNullOrWhiteSpace(result))
-                return string.Empty;
-
-            var hasValue = Constants.PathwayResultAbbreviations.TryGetValue(result, out string abbrevatedResult);
-
-            if (hasValue)
-                return abbrevatedResult;
-            else
-                throw new ApplicationException("Pathway abbreviated result cannot be null");
-        }
-
-        public static string GetAbbreviatedSpecialismResult(string result)
-        {
-            if (string.IsNullOrWhiteSpace(result))
-                return string.Empty;
-
-            var hasValue = Constants.SpecialismResultAbbreviations.TryGetValue(result, out string abbrevatedResult);
-
-            if (hasValue)
-                return abbrevatedResult;
-            else
-                throw new ApplicationException("Specialism abbreviated result cannot be null");
-        }
-
-        public static string GetAbbreviatedOverallResult(string result)
-        {
-            if (string.IsNullOrWhiteSpace(result))
-                return string.Empty;
-
-            var hasValue = Constants.OverallResultsAbbreviations.TryGetValue(result, out string abbrevatedResult);
-
-            if (hasValue)
-                return abbrevatedResult;
-            else
-                throw new ApplicationException("Overall abbreviated result cannot be null");
-        }
     }
 }

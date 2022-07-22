@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\UcasDataServiceTests\**" />
+    <EmbeddedResource Remove="Services\UcasDataServiceTests\**" />
+    <None Remove="Services\UcasDataServiceTests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Data\GenericRepositoryTests.cs" />
     <Compile Remove="Repositories\RegistrationRepositoryTests\MyClassTest.cs" />
   </ItemGroup>

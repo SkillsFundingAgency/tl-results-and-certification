@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using System;
@@ -20,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _commonRepository = commonRepository;
         }
 
-        public async Task<IList<TqRegistrationPathway>> GetUcasDataRecordsAsync(bool inclResults)
+        public async Task<IList<TqRegistrationPathway>> GetUcasDataRecordsForEntriesAsync()
         {
             var currentAcademicYears = await _commonRepository.GetCurrentAcademicYearsAsync();
             if (currentAcademicYears == null || !currentAcademicYears.Any())
@@ -42,19 +43,38 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                     x.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1)
                         .AsQueryable();
 
-            if (inclResults)
-            {
-                pathwayQueryable = pathwayQueryable
-                    .Include(x => x.TqPathwayAssessments.Where(a => a.IsOptedin && a.EndDate == null))
-                        .ThenInclude(x => x.TqPathwayResults.Where(r => r.IsOptedin && r.EndDate == null))
-                            .ThenInclude(x => x.TlLookup)
-                    .Include(x => x.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null))
-                        .ThenInclude(x => x.TqSpecialismAssessments.Where(a => a.IsOptedin && a.EndDate == null))
-                            .ThenInclude(x => x.TqSpecialismResults.Where(r => r.IsOptedin && r.EndDate == null))
-                                .ThenInclude(x => x.TlLookup);
-            }
-
             return await pathwayQueryable.ToListAsync();
+        }
+
+        public async Task<IList<OverallResult>> GetUcasDataRecordsForResultsAsync()
+        {
+            var lastRun = _dbContext.FunctionLog
+                .Where(x => x.Name.Equals(Constants.UcasTransferResultEntries) &&
+                            x.Status == FunctionStatus.Processed)
+                            .OrderByDescending(x => x.CreatedOn)
+                            .FirstOrDefault();
+
+            if (lastRun != null)
+                return await _dbContext.OverallResult
+                    .Include(x => x.TqRegistrationPathway)
+                    .ThenInclude(x => x.TqRegistrationProfile)
+                    .Where(x => x.CreatedOn > lastRun.CreatedOn)
+                    .ToListAsync();
+
+            else
+            {
+                var currentAcademicYears = await _commonRepository.GetCurrentAcademicYearsAsync();
+                if (currentAcademicYears == null || !currentAcademicYears.Any())
+                {
+                    throw new ApplicationException("Current Academic years are not found. Method: GetCurrentAcademicYearsAsync()");
+                }
+
+                return await _dbContext.OverallResult
+                       .Include(x => x.TqRegistrationPathway)
+                       .ThenInclude(x => x.TqRegistrationProfile)
+                       .Where(x => x.TqRegistrationPathway.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1)
+                       .ToListAsync();
+            }
         }
     }
 }

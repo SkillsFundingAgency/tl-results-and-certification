@@ -111,9 +111,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 client.ClientCredentials.ClientCertificate.Certificate = lrsCertificate;
                 return client;
             });
+            
             services.AddTransient<ILrsLearnerServiceApiClient, LrsLearnerServiceApiClient>();
             services.AddHttpClient<IPrintingApiClient, PrintingApiClient>();
             services.AddHttpClient<IUcasApiClient, UcasApiClient>();
+            services.AddTransient<IUcasRecordSegment<UcasRecordEntriesSegment>, UcasRecordEntriesSegment>();
+            services.AddTransient<IUcasRecordSegment<UcasRecordResultsSegment>, UcasRecordResultsSegment>();
         }
     }
 }

@@ -9,9 +9,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepositoryTests.GetUcasDataRecords
+namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepositoryTests
 {
-    public class When_Called_Without_IncludeResults : UcasRepositoryBaseTest
+    public class When_GetUcasDataRecordsForEntries_IsCalled : UcasRepositoryBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<TqRegistrationProfile> _registrations;
@@ -62,8 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
         {
             await Task.CompletedTask;
 
-            var includeResults = false;
-            _result = await UcasRepository.GetUcasDataRecordsAsync(includeResults);
+            _result = await UcasRepository.GetUcasDataRecordsForEntriesAsync();
         }
 
         [Theory()]
