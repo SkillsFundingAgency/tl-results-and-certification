@@ -1,6 +1,9 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
+﻿using System;
+using System.Collections.Generic;
+
+namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
 {
-    public static class Constants
+    public class Constants
     {
         // Environment Constants
         public const string EnvironmentNameConfigKey = "EnvironmentName";
@@ -55,19 +58,19 @@
         public const string RegistrationCannotBeDeletedViewModel = "RegistrationCannotBeDeletedViewModel";
         public const string AssessmentsUploadSuccessfulViewModel = "AssessmentsUploadSuccessfulViewModel";
         public const string AssessmentsSearchCriteria = "AssessmentsSearchCriteria";
-        public const string SearchAssessmentsUlnNotFound = "SearchAssessmentsUlnNotFound";        
+        public const string SearchAssessmentsUlnNotFound = "SearchAssessmentsUlnNotFound";
         public const string SearchResultsUlnNotFound = "SearchResultsUlnNotFound";
         public const string ResultWithdrawn = "ResultWithdrawn";
         public const string ResultsSearchCriteria = "ResultsSearchCriteria";
         public const string ResultsUploadSuccessfulViewModel = "ResultsUploadSuccessfulViewModel";
-        public const string ResultConfirmationViewModel = "ResultConfirmationViewModel";        
+        public const string ResultConfirmationViewModel = "ResultConfirmationViewModel";
         public const string AddLearnerRecordConfirmation = "AddLearnerRecordConfirmation";
         public const string SearchLearnerRecordViewModel = "SearchLearnerRecordViewModel";
         public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
         public const string AddEnglishAndMathsSendDataConfirmation = "AddEnglishAndMathsSendDataConfirmation"; // TODO: Delete?
         public const string AddAddressConfirmation = "AddAddressConfirmation";
         public const string RequestSoaConfirmation = "RequestSoaConfirmation";
-        public const string UserSessionActivityId = "UserSessionActivityId";        
+        public const string UserSessionActivityId = "UserSessionActivityId";
 
         // Registration Data Index Constants
         public const int RegistrationProfileStartIndex = 100000;
@@ -165,11 +168,41 @@
         public const int OverallResultDefaultNoOfAcademicYearsToProcess = 4;
         public const int OverallResultDefaultBatchSize = 5000;
 
-        
+
         public const string PathwayComponentGradeUnclassifiedCode = "PCG7";
         public const string SpecialismComponentGradeUnclassifiedCode = "SCG4";
         public const string OverallResultPartialAchievementCode = "OR5";
         public const string OverallResultUnclassifiedCode = "OR6";
         public const string OverallResultXNoResultCode = "OR7";
+
+        public static readonly Dictionary<string, string> PathwayResultAbbrevations = new(StringComparer.InvariantCultureIgnoreCase)
+        {
+            { "A*", "A*" },
+            { "A", "A" },
+            { "B", "B" },
+            { "C", "C" },
+            { "D", "D" },
+            { "E", "E" },
+            { "Unclassified", "U" }
+        };
+
+        public static readonly Dictionary<string, string> SpecialismResultAbbrevations = new(StringComparer.InvariantCultureIgnoreCase)
+        {
+            { "Distinction", "D" },
+            { "Merit", "M" },
+            { "Pass", "P" },
+            { "Unclassified", "U" }
+        };
+
+        public static readonly Dictionary<string, string> OverallResultsAbbrevations = new(StringComparer.InvariantCultureIgnoreCase)
+        {
+            { "Distinction*", "D*" },
+            { "Distinction", "D" },
+            { "Merit", "M" },
+            { "Pass", "P" },
+            { "Partial achievement", "PA" },
+            { "X – no result", "X" },
+            { "Unclassified", "U" }
+        };
     }
 }
