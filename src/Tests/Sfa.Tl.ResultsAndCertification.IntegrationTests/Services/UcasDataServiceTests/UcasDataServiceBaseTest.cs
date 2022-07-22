@@ -1,7 +1,9 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
@@ -35,9 +37,33 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
 
         protected IUcasRepository UcasRepository;
         protected ICommonRepository CommonRepository;
+        protected IUcasRecordSegment<UcasRecordEntriesSegment> UcasRecordEntrySegment;
+        protected IUcasRecordSegment<UcasRecordResultsSegment> UcasRecordResultsSegment;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected IUcasDataService UcasDataService;
         protected UcasData ActualResult;
+
+        protected void CreateService()
+        {
+            ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
+            {
+                UcasDataSettings = new UcasDataSettings
+                {
+                    CentreNumber = "1111111",
+                    ExamMonth = "06",
+                    OverallSubjectCode = "TLEVEL",
+                    ReceivingOrganisation = "90",
+                    SendingOrganisation = "30"
+                }
+            };
+
+            CommonRepository = new CommonRepository(DbContext);
+            UcasRepository = new UcasRepository(DbContext, CommonRepository);
+            UcasRecordEntrySegment = new UcasRecordEntriesSegment();
+            UcasRecordResultsSegment = new UcasRecordResultsSegment();
+            
+            UcasDataService = new UcasDataService(UcasRepository, UcasRecordEntrySegment, UcasRecordResultsSegment, ResultsAndCertificationConfiguration);
+        }
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
         {
