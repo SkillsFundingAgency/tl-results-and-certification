@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public void AddCoreSegment(IList<UcasDataComponent> ucasDataComponents, TqRegistrationPathway pathway)
         {
-            var overallResults = pathway.OverallResults.FirstOrDefault(); // risk?
+            var overallResults = pathway.OverallResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
             var overallResultDetails = JsonConvert.DeserializeObject<OverallResultDetail>(overallResults.Details);
 
             var ucasCoreComponent = new UcasDataComponent
@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public void AddSpecialismSegment(IList<UcasDataComponent> ucasDataComponents, TqRegistrationPathway pathway)
         {
-            var overallResults = pathway.OverallResults.FirstOrDefault(); // risk?
+            var overallResults = pathway.OverallResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
             var overallResultDetails = JsonConvert.DeserializeObject<OverallResultDetail>(overallResults.Details);
 
             foreach (var specialism in overallResultDetails.SpecialismDetails)
