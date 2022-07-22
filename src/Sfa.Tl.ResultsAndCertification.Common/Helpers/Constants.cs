@@ -175,7 +175,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
         public const string OverallResultUnclassifiedCode = "OR6";
         public const string OverallResultXNoResultCode = "OR7";
 
-        public static readonly Dictionary<string, string> PathwayResultAbbrevations = new(StringComparer.InvariantCultureIgnoreCase)
+        public static readonly Dictionary<string, string> PathwayResultAbbreviations = new(StringComparer.InvariantCultureIgnoreCase)
         {
             { "A*", "A*" },
             { "A", "A" },
@@ -186,7 +186,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
             { "Unclassified", "U" }
         };
 
-        public static readonly Dictionary<string, string> SpecialismResultAbbrevations = new(StringComparer.InvariantCultureIgnoreCase)
+        public static readonly Dictionary<string, string> SpecialismResultAbbreviations = new(StringComparer.InvariantCultureIgnoreCase)
         {
             { "Distinction", "D" },
             { "Merit", "M" },
@@ -194,7 +194,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
             { "Unclassified", "U" }
         };
 
-        public static readonly Dictionary<string, string> OverallResultsAbbrevations = new(StringComparer.InvariantCultureIgnoreCase)
+        public static readonly Dictionary<string, string> OverallResultsAbbreviations = new(StringComparer.InvariantCultureIgnoreCase)
         {
             { "Distinction*", "D*" },
             { "Distinction", "D" },

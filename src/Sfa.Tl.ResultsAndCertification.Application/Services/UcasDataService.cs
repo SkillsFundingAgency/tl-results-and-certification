@@ -1,6 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
@@ -320,6 +321,45 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     ExamDate = "062021"
                 }
             };
+        }
+
+        public static string GetAbbreviatedPathwayResult(string result)
+        {
+            if(string.IsNullOrWhiteSpace(result))
+                return string.Empty;
+
+            var hasValue = Constants.PathwayResultAbbreviations.TryGetValue(result, out string abbrevatedResult);
+
+            if (hasValue)
+                return abbrevatedResult;
+            else
+                throw new ApplicationException("Pathway abbreviated result cannot be null");
+        }
+
+        public static string GetAbbreviatedSpecialismResult(string result)
+        {
+            if (string.IsNullOrWhiteSpace(result))
+                return string.Empty;
+
+            var hasValue = Constants.SpecialismResultAbbreviations.TryGetValue(result, out string abbrevatedResult);
+
+            if (hasValue)
+                return abbrevatedResult;
+            else
+                throw new ApplicationException("Specialism abbreviated result cannot be null");
+        }
+
+        public static string GetAbbreviatedOverallResult(string result)
+        {
+            if (string.IsNullOrWhiteSpace(result))
+                return string.Empty;
+
+            var hasValue = Constants.OverallResultsAbbreviations.TryGetValue(result, out string abbrevatedResult);
+
+            if (hasValue)
+                return abbrevatedResult;
+            else
+                throw new ApplicationException("Overall abbreviated result cannot be null");
         }
     }
 }
