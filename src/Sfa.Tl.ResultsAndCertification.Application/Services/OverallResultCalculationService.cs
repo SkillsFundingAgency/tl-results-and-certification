@@ -62,22 +62,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return previousAssessment;
         }
 
-        public async Task<IList<TqRegistrationPathway>> GetLearnersForOverallGradeCalculationAsync(DateTime runDate)
-        {
-            // Dev note: This method left to test from api end-point
-            var previousAssessment = await GetResultCalculationAssessmentAsync(runDate);
-            var resultCalculationYearFrom = (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ? Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) - 1;
-
-            //var result = await CalculateOverallResultsAsync(runDate);
-
-            return await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, previousAssessment?.ResultCalculationYear ?? 0);
-        }
-
         public async Task<List<OverallResultResponse>> CalculateOverallResultsAsync(DateTime runDate)
         {
             var response = new List<OverallResultResponse>();
             var resultCalculationAssessment = await GetResultCalculationAssessmentAsync(runDate);
-            var resultCalculationYearFrom = (resultCalculationAssessment.ResultCalculationYear ?? 0) - (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ? 
+            var resultCalculationYearFrom = (resultCalculationAssessment.ResultCalculationYear ?? 0) - (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ?
                 Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) + 1;
 
             var learners = await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationAssessment.ResultCalculationYear ?? 0);
@@ -433,14 +422,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 return null;
             }
-        }
-
-        private bool HasAnySpecialismResultInRommOrAppeal(TqRegistrationPathway learnerPathway)
-        {
-            if (!learnerPathway.TqRegistrationSpecialisms.SelectMany(specialism => specialism.TqSpecialismAssessments).Any())
-                return false;
-
-            return learnerPathway.TqRegistrationSpecialisms.SelectMany(specialism => specialism.TqSpecialismAssessments).SelectMany(x => x.TqSpecialismResults).Any(x => x.PrsStatus == PrsStatus.UnderReview || x.PrsStatus == PrsStatus.BeingAppealed);
         }
 
         private bool IsOverallResultChangedFromPrevious(OverallResult latestOverallResult, OverallResult existingOverallResult)

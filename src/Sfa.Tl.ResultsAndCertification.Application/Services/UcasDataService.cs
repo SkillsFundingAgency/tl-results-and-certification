@@ -56,9 +56,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 _ucasRecordEntrySegment.AddSpecialismSegment(ucasDataComponents, pathway);
                 _ucasRecordEntrySegment.AddOverallResultSegment(ucasDataComponents, _resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode);
 
-                var record = BuildUcasDataRecord(ucasDataComponents, pathway);
-
-                records.Add(record);
+                if (ucasDataComponents.Any())
+                {
+                    var record = BuildUcasDataRecord(ucasDataComponents, pathway);
+                    records.Add(record);
+                }
             }
 
             return BuildUcasData(_ucasRecordEntrySegment.UcasDataType, records);
@@ -75,10 +77,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 _ucasRecordResultsSegment.AddCoreSegment(ucasDataComponents, overallResult.TqRegistrationPathway);
                 _ucasRecordResultsSegment.AddSpecialismSegment(ucasDataComponents, overallResult.TqRegistrationPathway);
                 _ucasRecordResultsSegment.AddOverallResultSegment(ucasDataComponents, _resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode, overallResult.ResultAwarded);
-                
-                var record = BuildUcasDataRecord(ucasDataComponents, overallResult.TqRegistrationPathway);
 
-                records.Add(record);
+                if (ucasDataComponents.Any())
+                {
+                    var record = BuildUcasDataRecord(ucasDataComponents, overallResult.TqRegistrationPathway);
+                    records.Add(record);
+                }
             }
 
             return BuildUcasData(_ucasRecordResultsSegment.UcasDataType, records);
