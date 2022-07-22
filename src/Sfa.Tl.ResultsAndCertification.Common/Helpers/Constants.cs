@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
+﻿namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
 {
-    public class Constants
+    public static class Constants
     {
         // Environment Constants
         public const string EnvironmentNameConfigKey = "EnvironmentName";
@@ -173,36 +170,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
         public const string SpecialismComponentGradeUnclassifiedCode = "SCG4";
         public const string OverallResultPartialAchievementCode = "OR5";
         public const string OverallResultUnclassifiedCode = "OR6";
-        public const string OverallResultXNoResultCode = "OR7";
-
-        public static readonly Dictionary<string, string> PathwayResultAbbreviations = new(StringComparer.InvariantCultureIgnoreCase)
-        {
-            { "A*", "A*" },
-            { "A", "A" },
-            { "B", "B" },
-            { "C", "C" },
-            { "D", "D" },
-            { "E", "E" },
-            { "Unclassified", "U" }
-        };
-
-        public static readonly Dictionary<string, string> SpecialismResultAbbreviations = new(StringComparer.InvariantCultureIgnoreCase)
-        {
-            { "Distinction", "D" },
-            { "Merit", "M" },
-            { "Pass", "P" },
-            { "Unclassified", "U" }
-        };
-
-        public static readonly Dictionary<string, string> OverallResultsAbbreviations = new(StringComparer.InvariantCultureIgnoreCase)
-        {
-            { "Distinction*", "D*" },
-            { "Distinction", "D" },
-            { "Merit", "M" },
-            { "Pass", "P" },
-            { "Partial achievement", "PA" },
-            { "X – no result", "X" },
-            { "Unclassified", "U" }
-        };
+        public const string OverallResultXNoResultCode = "OR7";        
     }
 }
