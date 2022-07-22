@@ -10,7 +10,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     public interface IOverallResultCalculationService
     {
         Task<AssessmentSeries> GetResultCalculationAssessmentAsync(DateTime runDate);
-        Task<IList<TqRegistrationPathway>> GetLearnersForOverallGradeCalculationAsync(DateTime runDate);
         Task<List<OverallResultResponse>> CalculateOverallResultsAsync(DateTime runDate);
         Task<bool> SaveOverallResultsAsync(IList<OverallResult> overallResults);
         Task<IList<DownloadOverallResultsData>> DownloadOverallResultsDataAsync(long providerUkprn);
