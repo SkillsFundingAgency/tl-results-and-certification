@@ -58,9 +58,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 return await _dbContext.OverallResult
                     .Include(x => x.TqRegistrationPathway)
                     .ThenInclude(x => x.TqRegistrationProfile)
-                    .Where(x => x.CreatedOn > lastRun.CreatedOn)
+                    .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
+                                x.IsOptedin && x.EndDate == null &&
+                                x.CreatedOn > lastRun.CreatedOn)
                     .ToListAsync();
-
             else
             {
                 var currentAcademicYears = await _commonRepository.GetCurrentAcademicYearsAsync();
@@ -72,7 +73,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 return await _dbContext.OverallResult
                        .Include(x => x.TqRegistrationPathway)
                        .ThenInclude(x => x.TqRegistrationProfile)
-                       .Where(x => x.TqRegistrationPathway.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1)
+                       .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active && 
+                                   x.TqRegistrationPathway.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1 &&
+                                   x.IsOptedin && x.EndDate == null)
                        .ToListAsync();
             }
         }

@@ -281,6 +281,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
             DbContext.SaveChanges();
         }
 
+        public List<OverallResult> SeedOverallResultData(List<TqRegistrationProfile> registrations, List<long> ulnsWithOverallResult, bool saveChanges = true)
+        {
+            var overallResults = new List<OverallResult>();
+            foreach (var ulnOverResult in ulnsWithOverallResult)
+            {
+                var registration = registrations.FirstOrDefault(reg => reg.UniqueLearnerNumber == ulnOverResult);
+                overallResults.Add(OverallResultDataProvider.CreateOverallResult(DbContext, registration.TqRegistrationPathways.FirstOrDefault()));
+            }
+
+            if (saveChanges)
+                DbContext.SaveChanges();
+            return overallResults;
+        }
+
         public void AssertHeaderRecord(UcasDataType ucasDataType)
         {
             ActualResult.Header.Should().NotBeNull();
