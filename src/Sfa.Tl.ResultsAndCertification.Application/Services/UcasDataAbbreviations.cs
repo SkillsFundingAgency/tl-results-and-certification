@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using System;
 using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class UcasDataAbbreviations
     {
-        private readonly Dictionary<string, string> _pathwayResultAbbreviations = new(StringComparer.InvariantCultureIgnoreCase)
+        private static readonly Dictionary<string, string> _pathwayResultAbbreviations = new(StringComparer.InvariantCultureIgnoreCase)
         {
             { "A*", "A*" },
             { "A", "A" },
@@ -16,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             { "Unclassified", "U" }
         };
 
-        private readonly Dictionary<string, string> _specialismResultAbbreviations = new(StringComparer.InvariantCultureIgnoreCase)
+        private static readonly Dictionary<string, string> _specialismResultAbbreviations = new(StringComparer.InvariantCultureIgnoreCase)
         {
             { "Distinction", "D" },
             { "Merit", "M" },
@@ -24,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             { "Unclassified", "U" }
         };
 
-        private readonly Dictionary<string, string> _overallResultsAbbreviations = new(StringComparer.InvariantCultureIgnoreCase)
+        private static readonly Dictionary<string, string> _overallResultsAbbreviations = new(StringComparer.InvariantCultureIgnoreCase)
         {
             { "Distinction*", "D*" },
             { "Distinction", "D" },
@@ -35,43 +36,31 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             { "Unclassified", "U" }
         };
 
-        public string GetAbbreviatedPathwayResult(string result)
+        public static string GetAbbreviatedResult(UcasResultType ucasResultType, string result)
         {
             if (string.IsNullOrWhiteSpace(result))
                 return string.Empty;
 
-            var hasValue = _pathwayResultAbbreviations.TryGetValue(result, out string abbrevatedResult);
+            bool hasValue = false;
+            string abbreviatedResult = null;
+
+            switch (ucasResultType)
+            {
+                case UcasResultType.PathwayResult:
+                    hasValue = _pathwayResultAbbreviations.TryGetValue(result, out abbreviatedResult);
+                    break;
+                case UcasResultType.SpecialismResult:
+                    hasValue = _specialismResultAbbreviations.TryGetValue(result, out abbreviatedResult);
+                    break;
+                case UcasResultType.OverallResult:
+                    hasValue = _overallResultsAbbreviations.TryGetValue(result, out abbreviatedResult);
+                    break;
+            }
 
             if (hasValue)
-                return abbrevatedResult;
+                return abbreviatedResult;
             else
-                throw new ApplicationException("Pathway abbreviated result cannot be null");
-        }
-
-        public string GetAbbreviatedSpecialismResult(string result)
-        {
-            if (string.IsNullOrWhiteSpace(result))
-                return string.Empty;
-
-            var hasValue = _specialismResultAbbreviations.TryGetValue(result, out string abbrevatedResult);
-
-            if (hasValue)
-                return abbrevatedResult;
-            else
-                throw new ApplicationException("Specialism abbreviated result cannot be null");
-        }
-
-        public string GetAbbreviatedOverallResult(string result)
-        {
-            if (string.IsNullOrWhiteSpace(result))
-                return string.Empty;
-
-            var hasValue = _overallResultsAbbreviations.TryGetValue(result, out string abbrevatedResult);
-
-            if (hasValue)
-                return abbrevatedResult;
-            else
-                throw new ApplicationException("Overall abbreviated result cannot be null");
-        }
+                throw new ApplicationException($"{ucasResultType} abbreviated result cannot be null");
+        }        
     }
 }

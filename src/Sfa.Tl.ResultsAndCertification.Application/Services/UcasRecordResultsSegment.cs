@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
-    public class UcasRecordResultsSegment : UcasDataAbbreviations, IUcasRecordSegment<UcasRecordResultsSegment>
+    public class UcasRecordResultsSegment : IUcasRecordSegment<UcasRecordResultsSegment>
     {
         public UcasDataType UcasDataType => UcasDataType.Results;
 
@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var ucasCoreComponent = new UcasDataComponent
             {
                 SubjectCode = overallResultDetails.PathwayLarId,
-                Grade = GetAbbreviatedPathwayResult(overallResultDetails.PathwayResult),
+                Grade = UcasDataAbbreviations.GetAbbreviatedResult(UcasResultType.PathwayResult, overallResultDetails.PathwayResult),
                 PreviousGrade = string.Empty
             };
 
@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var ucasSpecialismComponent = new UcasDataComponent
                 {
                     SubjectCode = specialism.SpecialismLarId,
-                    Grade = GetAbbreviatedSpecialismResult(specialism.SpecialismResult),
+                    Grade = UcasDataAbbreviations.GetAbbreviatedResult(UcasResultType.SpecialismResult, specialism.SpecialismResult),
                     PreviousGrade = string.Empty
                 };
 
@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 ucasDataComponents.Add(new UcasDataComponent
                 {
                     SubjectCode = overallSubjectCode,
-                    Grade = GetAbbreviatedOverallResult(resultAwarded),
+                    Grade = UcasDataAbbreviations.GetAbbreviatedResult(UcasResultType.OverallResult, resultAwarded),
                     PreviousGrade = string.Empty
                 });
             }
