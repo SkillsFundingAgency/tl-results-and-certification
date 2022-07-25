@@ -52,7 +52,15 @@
 	"OverallResultsCalculationDate": {
       "type": "string",
       "environmentVariable": "OverallResultsCalculationDate"
-    },	
+    },
+	"FreezePeriodStartDate": {
+      "type": "string",
+      "environmentVariable": "FreezePeriodStartDate"
+    },
+	"FreezePeriodEndDate": {
+      "type": "string",
+      "environmentVariable": "FreezePeriodEndDate"
+    },
     "KeyVaultUri": {
       "type": "string",
       "environmentVariable": "KeyVaultUri"
@@ -426,6 +434,8 @@
     "TechnicalInternalNotificationEmailAddress",
 	"OverallResultsAvailableDate",
 	"OverallResultsCalculationDate",
+	"FreezePeriodStartDate",
+	"FreezePeriodEndDate",
     "KeyVaultUri",
     "RedisSettings",
     "BlobStorageSettings",
