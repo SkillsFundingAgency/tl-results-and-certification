@@ -157,6 +157,7 @@
         public const string FetchCertificatePrintingTrackBatch = "FetchCertificatePrintingTrackBatch";
         public const string UcasTransferEntries = "UcasTransferEntries";
         public const string UcasTransferResultEntries = "UcasTransferResultEntries";
+        public const string UcasTransferAmendments = "UcasTransferAmendments";
         public const string OverallResultCalculation = "OverallResultCalculation";
 
         // File Extensions

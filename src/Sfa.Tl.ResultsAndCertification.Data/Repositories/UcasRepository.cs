@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         public async Task<IList<OverallResult>> GetUcasDataRecordsForResultsAsync()
         {
             var lastRun = _dbContext.FunctionLog
-                .Where(x => x.Name.Equals(Constants.UcasTransferResultEntries) &&
+                .Where(x => x.Name.Equals(Constants.UcasTransferAmendments) &&  // TODO: change this to UcasTransferAmendments 
                             x.Status == FunctionStatus.Processed)
                             .OrderByDescending(x => x.CreatedOn)
                             .FirstOrDefault();

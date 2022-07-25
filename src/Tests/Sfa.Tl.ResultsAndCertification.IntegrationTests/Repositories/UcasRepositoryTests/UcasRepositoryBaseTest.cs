@@ -249,6 +249,38 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             return tqSpecialismResults;
         }
 
+        public List<OverallResult> SeedOverallResultData(List<TqRegistrationProfile> registrations, List<long> ulnsWithOverallResult, bool saveChanges = true)
+        {
+            var overallResults = new List<OverallResult>();
+            foreach (var ulnOverResult in ulnsWithOverallResult)
+            {
+                var registration = registrations.FirstOrDefault(reg => reg.UniqueLearnerNumber == ulnOverResult);
+                overallResults.Add(OverallResultDataProvider.CreateOverallResult(DbContext, registration.TqRegistrationPathways.FirstOrDefault()));
+            }
+
+            if (saveChanges)
+                DbContext.SaveChanges();
+            return overallResults;
+        }
+
+        public FunctionLog SeedFunctionLog(string functionName, bool saveChanges = true)
+        {
+            var functionLogData = new FunctionLog
+            {
+                Name = functionName,
+                StartDate = DateTime.UtcNow.AddMonths(-1),
+                EndDate = DateTime.UtcNow.AddMonths(-1).AddHours(1),
+                Message = "Completed successfully",
+                Status = FunctionStatus.Processed
+            };
+
+            var functionLog = FunctionLogDataProvider.CreateFunctionLog(DbContext, functionLogData);
+
+            if (saveChanges)
+                DbContext.SaveChanges();
+
+            return functionLog;
+        }
 
         public int GetAcademicYear()
         {
