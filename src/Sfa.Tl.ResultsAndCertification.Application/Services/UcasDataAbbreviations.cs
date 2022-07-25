@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public static string GetAbbreviatedResult(UcasResultType ucasResultType, string result)
         {
-            if (string.IsNullOrWhiteSpace(result))
+            if (ucasResultType != UcasResultType.OverallResult && string.IsNullOrWhiteSpace(result))
                 return string.Empty;
 
             bool hasValue = false;
