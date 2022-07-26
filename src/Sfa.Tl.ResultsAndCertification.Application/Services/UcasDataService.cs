@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 UcasDataType.Entries => await ProcessUcasDataRecordEntriesAsync(),
                 UcasDataType.Results => await ProcessUcasDataRecordResultsAsync(),
-                UcasDataType.Amendments => null,
+                UcasDataType.Amendments => await ProcessUcasDataRecordAmendmentsAsync(),
                 _ => null,
             };
         }
@@ -69,6 +69,26 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var records = new List<UcasDataRecord>();
             var overallResults = await _ucasRepository.GetUcasDataRecordsForResultsAsync();
+            foreach (var overallResult in overallResults)
+            {
+                var ucasDataComponents = new List<UcasDataComponent>();
+
+                _ucasRecordResultsSegment.AddCoreSegment(ucasDataComponents, overallResult.TqRegistrationPathway);
+                _ucasRecordResultsSegment.AddSpecialismSegment(ucasDataComponents, overallResult.TqRegistrationPathway);
+                _ucasRecordResultsSegment.AddOverallResultSegment(ucasDataComponents, _resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode, overallResult.ResultAwarded);
+
+                records.Add(BuildUcasDataRecord(ucasDataComponents, overallResult.TqRegistrationPathway));
+            }
+
+            return BuildUcasData(_ucasRecordResultsSegment.UcasDataType, records);
+        }
+
+        public async Task<UcasData> ProcessUcasDataRecordAmendmentsAsync()
+        {
+            var records = new List<UcasDataRecord>();
+            var overallResults = await _ucasRepository.GetUcasDataRecordsForAmendmentsAsync();
+
+            // TODO: use common method for both Results and Amendments.
             foreach (var overallResult in overallResults)
             {
                 var ucasDataComponents = new List<UcasDataComponent>();

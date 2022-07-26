@@ -48,11 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<IList<OverallResult>> GetUcasDataRecordsForResultsAsync()
         {
-            var lastRun = _dbContext.FunctionLog
-                .Where(x => x.Name.Equals(Constants.UcasTransferAmendments) &&  // TODO: change this to UcasTransferAmendments 
-                            x.Status == FunctionStatus.Processed)
-                            .OrderByDescending(x => x.CreatedOn)
-                            .FirstOrDefault();
+            var lastRun = GetLastAmendmentsRun();
 
             if (lastRun != null)
                 return await _dbContext.OverallResult
@@ -73,11 +69,50 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 return await _dbContext.OverallResult
                        .Include(x => x.TqRegistrationPathway)
                        .ThenInclude(x => x.TqRegistrationProfile)
-                       .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active && 
+                       .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
                                    x.TqRegistrationPathway.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1 &&
                                    x.IsOptedin && x.EndDate == null)
                        .ToListAsync();
             }
+        }
+
+        public async Task<IList<OverallResult>> GetUcasDataRecordsForAmendmentsAsync()
+        {
+            var lastAmendmentsRun = GetLastAmendmentsRun();
+
+            if (lastAmendmentsRun != null)
+                return await GetOverallResultsFrom(lastAmendmentsRun);
+            else
+            {
+                var lastResultRun = _dbContext.FunctionLog.Where(x => x.Name.Equals(Constants.UcasTransferResultEntries) &&
+                                        x.Status == FunctionStatus.Processed)
+                                        .OrderByDescending(x => x.CreatedOn)
+                                        .FirstOrDefault();
+
+                if (lastResultRun == null)
+                    throw new ApplicationException("Results last run details are not found in the FunctionLog.");
+
+                return await GetOverallResultsFrom(lastResultRun);
+            }
+        }
+
+        private async Task<IList<OverallResult>> GetOverallResultsFrom(FunctionLog lastAmendmentsRun)
+        {
+            return await _dbContext.OverallResult
+                .Include(x => x.TqRegistrationPathway)
+                .ThenInclude(x => x.TqRegistrationProfile)
+                .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
+                            x.CreatedOn > lastAmendmentsRun.CreatedOn)
+                .ToListAsync();
+        }
+
+        private FunctionLog GetLastAmendmentsRun()
+        {
+            return _dbContext.FunctionLog
+                .Where(x => x.Name.Equals(Constants.UcasTransferAmendments) &&
+                            x.Status == FunctionStatus.Processed)
+                            .OrderByDescending(x => x.CreatedOn)
+                            .FirstOrDefault();
         }
     }
 }
