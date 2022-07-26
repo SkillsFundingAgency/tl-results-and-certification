@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataAbbre
                     new object[] { UcasResultType.OverallResult, "Pass", "P" },
                     new object[] { UcasResultType.OverallResult, "Partial achievement", "PA" },
                     new object[] { UcasResultType.OverallResult, "Unclassified", "U" },
-                    new object[] { UcasResultType.OverallResult, "X – no result", "X" },
+                    new object[] { UcasResultType.OverallResult, "X - no result", "X" },
                 };
             }
         }
