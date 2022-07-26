@@ -1,0 +1,14 @@
+﻿@inject Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper.IWebConfigurationService ConfigurationService
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Help
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Help.ServiceUnavailableViewModel
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">@ServiceUnavailable.Heading_Sorry_Service_Unavailable</h1>
+        <p class="govuk-body">@ServiceUnavailable.Para_Unavailable_While_Results_Calculation</p>
+        <p class="govuk-body">@string.Format(ServiceUnavailable.Para_Use_Service_From, @Model.ServiceAvailableFrom)</p>
+        <p class="govuk-body">@ServiceUnavailable.Para_Contact
+            <a class="govuk-link" href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()">@ConfigurationService.GetTechnicalSupportEmailAddress()</a>
+        </p>
+    </div>
+</div>

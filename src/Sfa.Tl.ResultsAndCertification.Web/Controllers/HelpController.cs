@@ -59,5 +59,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = new UserGuideViewModel { TechnicalSupportEmailAddress = _configuration.TechnicalSupportEmailAddress };
             return View(viewModel);
         }
+
+        [HttpGet]
+        [Route("service-unavailable", Name = RouteConstants.ServiceUnavailable)]
+        public IActionResult ServiceUnavailable()
+        {
+            var viewModel = new ServiceUnavailableViewModel { ServiceAvailableFrom = _configuration.FreezePeriodStartDate.ToString() };
+            return View(viewModel);
+        }
     }
 }
