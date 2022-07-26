@@ -29,8 +29,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Filters
                 {
                     var routeValues = new RouteValueDictionary
                     {
-                        { "controller", Constants.ErrorController },
-                        { "action", nameof(ErrorController.ServiceAccessDenied) }
+                        { "controller", Constants.HelpController },
+                        { "action", nameof(HelpController.ServiceUnavailable) }
                     };
                     context.Result = new RedirectToRouteResult(routeValues);
                     await context.Result.ExecuteResultAsync(context);
