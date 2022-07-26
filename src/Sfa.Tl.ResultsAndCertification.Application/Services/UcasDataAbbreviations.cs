@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             { "Merit", "M" },
             { "Pass", "P" },
             { "Partial achievement", "PA" },
-            { "X – no result", "X" },
+            { "X - no result", "X" },
             { "Unclassified", "U" }
         };
 
