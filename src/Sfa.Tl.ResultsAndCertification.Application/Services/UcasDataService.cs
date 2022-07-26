@@ -77,11 +77,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 _ucasRecordResultsSegment.AddSpecialismSegment(ucasDataComponents, overallResult.TqRegistrationPathway);
                 _ucasRecordResultsSegment.AddOverallResultSegment(ucasDataComponents, _resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode, overallResult.ResultAwarded);
 
-                if (ucasDataComponents.Any())
-                {
-                    var record = BuildUcasDataRecord(ucasDataComponents, overallResult.TqRegistrationPathway);
-                    records.Add(record);
-                }
+                records.Add(BuildUcasDataRecord(ucasDataComponents, overallResult.TqRegistrationPathway));
             }
 
             return BuildUcasData(_ucasRecordResultsSegment.UcasDataType, records);

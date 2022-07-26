@@ -48,15 +48,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public void AddOverallResultSegment(IList<UcasDataComponent> ucasDataComponents, string overallSubjectCode, string resultAwarded)
         {
-            if (ucasDataComponents.Any())
+            ucasDataComponents.Add(new UcasDataComponent
             {
-                ucasDataComponents.Add(new UcasDataComponent
-                {
-                    SubjectCode = overallSubjectCode,
-                    Grade = UcasDataAbbreviations.GetAbbreviatedResult(UcasResultType.OverallResult, resultAwarded),
-                    PreviousGrade = string.Empty
-                });
-            }
+                SubjectCode = overallSubjectCode,
+                Grade = UcasDataAbbreviations.GetAbbreviatedResult(UcasResultType.OverallResult, resultAwarded),
+                PreviousGrade = string.Empty
+            });
         }
     }
 }
