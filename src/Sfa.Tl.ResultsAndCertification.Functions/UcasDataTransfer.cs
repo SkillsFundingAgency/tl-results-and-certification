@@ -68,44 +68,48 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             }
         }
 
-        [Disable]
         [FunctionName(Constants.UcasTransferResultEntries)]
         public async Task UcasTransferResultsAsync([TimerTrigger("%UcasTransferResultsTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
-            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName);
 
-            try
+            // Check if it is the second Thursday in August and run the function if it is true
+            if (DateTime.UtcNow.IsNthWeekdayOfMonth(DayOfWeek.Thursday, Months.August, 2))
             {
-                logger.LogInformation($"Function {context.FunctionName} started");
+                var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName);
 
-                var stopwatch = Stopwatch.StartNew();
-                await _commonService.CreateFunctionLog(functionLogDetails);
+                try
+                {
+                    logger.LogInformation($"Function {context.FunctionName} started");
 
-                var response = await _ucasDataTransferService.ProcessUcasDataRecordsAsync(UcasDataType.Results);
+                    var stopwatch = Stopwatch.StartNew();
+                    await _commonService.CreateFunctionLog(functionLogDetails);
 
-                var message = $"Function {context.FunctionName} completed processing.\n" +
-                                      $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}";
+                    var response = await _ucasDataTransferService.ProcessUcasDataRecordsAsync(UcasDataType.Results);
 
-                CommonHelper.UpdateFunctionLogRequest(functionLogDetails, response.IsSuccess ? FunctionStatus.Processed : FunctionStatus.Failed, message);
+                    var message = $"Function {context.FunctionName} completed processing.\n" +
+                                          $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}";
 
-                await _commonService.UpdateFunctionLog(functionLogDetails);
+                    CommonHelper.UpdateFunctionLogRequest(functionLogDetails, response.IsSuccess ? FunctionStatus.Processed : FunctionStatus.Failed, message);
 
-                stopwatch.Stop();
+                    await _commonService.UpdateFunctionLog(functionLogDetails);
 
-                logger.LogInformation($"Function {context.FunctionName} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                    stopwatch.Stop();
 
-            }
-            catch (Exception ex)
-            {
-                var errorMessage = $"Function {context.FunctionName} failed to process with the following exception = {ex}";
-                logger.LogError(errorMessage);
+                    logger.LogInformation($"Function {context.FunctionName} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
 
-                CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
+                }
+                catch (Exception ex)
+                {
+                    var errorMessage = $"Function {context.FunctionName} failed to process with the following exception = {ex}";
+                    logger.LogError(errorMessage);
 
-                _ = functionLogDetails.Id > 0 ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);
+                    CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 
-                await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
+                    _ = functionLogDetails.Id > 0 ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);
+
+                    await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
+                }
             }
         }
     }
