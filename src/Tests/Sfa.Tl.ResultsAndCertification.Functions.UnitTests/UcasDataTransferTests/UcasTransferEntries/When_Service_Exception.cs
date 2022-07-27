@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            if (DateTime.UtcNow.IsLastWeekdayOfMonth(DayOfWeek.Wednesday))
+            if (DateTime.UtcNow.IsLastWeekdayOfMonth(DayOfWeek.Wednesday, Months.June))
             {
                 CommonService.Received(2).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
                 UcasDataTransferService.Received(1).ProcessUcasDataRecordsAsync(UcasDataType.Entries);
