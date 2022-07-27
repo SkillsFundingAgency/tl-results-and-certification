@@ -64,8 +64,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             var filename = $"{Guid.NewGuid()}.{Constants.FileExtensionTxt}";
             var fileHash = CommonHelper.ComputeSha256Hash(byteData);
             
-            var isTest = true;
-            var ucasFileId = !isTest ? await _ucasApiClient.SendDataAsync(new UcasDataRequest { FileName = filename, FileData = byteData, FileHash = fileHash }) : "test";
+            var ignoreUcasApi = true;
+            var ucasFileId = !ignoreUcasApi ? await _ucasApiClient.SendDataAsync(new UcasDataRequest { FileName = filename, FileData = byteData, FileHash = fileHash }) : "test";
 
             // 4. Write response to blob
             await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
