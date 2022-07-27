@@ -52,5 +52,28 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.DateTimeExtensions
                 };
             }
         }
+
+
+        public static IEnumerable<object[]> NthDateOfMonthData
+        {
+            get
+            {
+                return new[]
+                {
+                    // Valid
+                    new object[] { new DateTime(2022,07,05), DayOfWeek.Wednesday, Months.July, 1, new DateTime(2022, 07, 06) }, // "06/07/2022"
+                    new object[] { new DateTime(2022,07,05), DayOfWeek.Monday, Months.July, 2, new DateTime(2022, 07, 11) }, // "11/07/2022"
+
+                    new object[] { new DateTime(2022,07,12), DayOfWeek.Tuesday, Months.July, 3, new DateTime(2022, 07, 19) }, // "19/07/2022"
+                    new object[] { new DateTime(2022,07,13), DayOfWeek.Thursday, Months.July, 4, new DateTime(2022, 07, 28) }, // "28/07/2022"
+
+                    new object[] { new DateTime(2022,07,19), DayOfWeek.Wednesday, Months.August, 3, new DateTime(2022, 08, 17) }, // "17/08/2022"
+                    new object[] { new DateTime(2023,01,20), DayOfWeek.Monday, Months.January, 1, new DateTime(2023, 01, 02) }, // "02/01/2023"
+                    new object[] { new DateTime(2023,02,20), DayOfWeek.Tuesday, Months.April, 3, new DateTime(2023, 04, 18) }, // "18/04/2023"
+
+                    new object[] { new DateTime(2023,07,26), DayOfWeek.Wednesday, Months.July, 7, null }
+                };
+            }
+        }
     }
 }
