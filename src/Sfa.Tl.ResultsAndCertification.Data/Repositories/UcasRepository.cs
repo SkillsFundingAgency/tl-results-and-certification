@@ -48,23 +48,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<IList<OverallResult>> GetUcasDataRecordsForResultsAsync()
         {
-            var lastRun = GetLastAmendmentsRun();
-
-            if (lastRun != null)
-                return await _dbContext.OverallResult
-                    .Include(x => x.TqRegistrationPathway)
-                    .ThenInclude(x => x.TqRegistrationProfile)
-                    .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
-                                x.IsOptedin && x.EndDate == null &&
-                                x.CreatedOn > lastRun.CreatedOn)
-                    .ToListAsync();
-            else
+            var lastAmendmentsRun = GetLastRunOfJob(Constants.UcasTransferAmendments);
+            if (lastAmendmentsRun == null)
             {
                 var currentAcademicYears = await _commonRepository.GetCurrentAcademicYearsAsync();
                 if (currentAcademicYears == null || !currentAcademicYears.Any())
-                {
                     throw new ApplicationException("Current Academic years are not found. Method: GetCurrentAcademicYearsAsync()");
-                }
 
                 return await _dbContext.OverallResult
                        .Include(x => x.TqRegistrationPathway)
@@ -74,45 +63,42 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                    x.IsOptedin && x.EndDate == null)
                        .ToListAsync();
             }
+
+            return await GetOverallResultsFrom(lastAmendmentsRun);
         }
 
         public async Task<IList<OverallResult>> GetUcasDataRecordsForAmendmentsAsync()
         {
-            var lastAmendmentsRun = GetLastAmendmentsRun();
-
-            if (lastAmendmentsRun != null)
-                return await GetOverallResultsFrom(lastAmendmentsRun);
-            else
+            var lastAmendmentsRun = GetLastRunOfJob(Constants.UcasTransferAmendments);
+            if (lastAmendmentsRun == null)
             {
-                var lastResultRun = _dbContext.FunctionLog.Where(x => x.Name.Equals(Constants.UcasTransferResultEntries) &&
-                                        x.Status == FunctionStatus.Processed)
-                                        .OrderByDescending(x => x.CreatedOn)
-                                        .FirstOrDefault();
-
+                var lastResultRun = GetLastRunOfJob(Constants.UcasTransferResultEntries);
                 if (lastResultRun == null)
                     throw new ApplicationException("Results last run details are not found in the FunctionLog.");
 
                 return await GetOverallResultsFrom(lastResultRun);
             }
-        }
 
+            return await GetOverallResultsFrom(lastAmendmentsRun);
+        }
+       
         private async Task<IList<OverallResult>> GetOverallResultsFrom(FunctionLog lastAmendmentsRun)
         {
             return await _dbContext.OverallResult
                 .Include(x => x.TqRegistrationPathway)
                 .ThenInclude(x => x.TqRegistrationProfile)
                 .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
+                            x.IsOptedin && x.EndDate == null && 
                             x.CreatedOn > lastAmendmentsRun.CreatedOn)
                 .ToListAsync();
         }
 
-        private FunctionLog GetLastAmendmentsRun()
+        private FunctionLog GetLastRunOfJob(string jobName)
         {
             return _dbContext.FunctionLog
-                .Where(x => x.Name.Equals(Constants.UcasTransferAmendments) &&
-                            x.Status == FunctionStatus.Processed)
-                            .OrderByDescending(x => x.CreatedOn)
-                            .FirstOrDefault();
+                        .Where(x => x.Name.Equals(jobName, StringComparison.InvariantCultureIgnoreCase) && x.Status == FunctionStatus.Processed)
+                        .OrderByDescending(x => x.CreatedOn)
+                        .FirstOrDefault();
         }
     }
 }
