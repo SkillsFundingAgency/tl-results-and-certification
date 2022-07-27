@@ -36,5 +36,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             var nthDate = GetNthWeekdayOfMonth(dt, dayOfWeek, month, nthWeek);
             return nthDate != null && nthDate.Value.Date.Equals(dt.Date);
         }
+
+        public static DateTime? GetNthDateOfMonth(this DateTime dt, DayOfWeek dayOfWeek, Months month, int nthWeek)
+        {
+            return GetNthWeekdayOfMonth(dt, dayOfWeek, month, nthWeek);
+        }
     }
 }
