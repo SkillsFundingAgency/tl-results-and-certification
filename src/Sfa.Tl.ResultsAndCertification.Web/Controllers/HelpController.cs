@@ -64,7 +64,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("service-unavailable", Name = RouteConstants.ServiceUnavailable)]
         public IActionResult ServiceUnavailable()
         {
-            var viewModel = new ServiceUnavailableViewModel { ServiceAvailableFrom = _configuration.FreezePeriodStartDate.ToString() };
+            var serviceAvailableFrom = _configuration.FreezePeriodEndDate.AddDays(1);
+            var viewModel = new ServiceUnavailableViewModel
+            {
+                ServiceAvailableFrom = $"{serviceAvailableFrom.ToString("tt").ToLower()} on {serviceAvailableFrom.DayOfWeek} {serviceAvailableFrom:dd MMMM yyyy}"
+            };
             return View(viewModel);
         }
     }
