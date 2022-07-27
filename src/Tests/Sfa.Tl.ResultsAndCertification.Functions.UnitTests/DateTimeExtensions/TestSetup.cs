@@ -23,5 +23,34 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.DateTimeExtensions
                 };
             }
         }
+
+        public static IEnumerable<object[]> NthWeekdayOfMonthData
+        {
+            get
+            {
+                return new[]
+                {
+                    // Valid
+                    new object[] { new DateTime(2022,07,05), DayOfWeek.Wednesday, Months.July, 1, false },
+                    new object[] { new DateTime(2022,07,06), DayOfWeek.Wednesday, Months.July, 1, true },
+
+                    new object[] { new DateTime(2022,07,12), DayOfWeek.Wednesday, Months.July, 2, false },
+                    new object[] { new DateTime(2022,07,13), DayOfWeek.Wednesday, Months.July, 2, true },
+
+                    new object[] { new DateTime(2022,07,19), DayOfWeek.Wednesday, Months.July, 3, false },
+                    new object[] { new DateTime(2022,07,20), DayOfWeek.Wednesday, Months.July, 3, true },
+
+                    new object[] { new DateTime(2022,07,26), DayOfWeek.Wednesday, Months.July, 4, false },
+                    new object[] { new DateTime(2022,07,27), DayOfWeek.Wednesday, Months.July, 4, true },
+
+                    new object[] { new DateTime(2022,08,03), DayOfWeek.Thursday, Months.August, 1, false },
+                    new object[] { new DateTime(2022,08,04), DayOfWeek.Thursday, Months.August, 1, true },
+
+                    new object[] { new DateTime(2022,08,10), DayOfWeek.Thursday, Months.August, 2, false },
+                    new object[] { new DateTime(2022,08,11), DayOfWeek.Thursday, Months.August, 1, false },
+                    new object[] { new DateTime(2022,08,11), DayOfWeek.Thursday, Months.August, 2, true }                    
+                };
+            }
+        }
     }
 }
