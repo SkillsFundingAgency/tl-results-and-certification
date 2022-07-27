@@ -23,10 +23,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
                 return null;
         }
 
-        public static bool IsLastWeekdayOfMonth(this DateTime dt, DayOfWeek dayOfWeek)
+        public static bool IsLastWeekdayOfMonth(this DateTime dt, DayOfWeek dayOfWeek, Months month)
         {
             // Passing nthWeek = 0 will give the last record
-            var nthDate = GetNthWeekdayOfMonth(dt, dayOfWeek);
+            var nthDate = GetNthWeekdayOfMonth(dt, dayOfWeek, month);
             return nthDate != null && nthDate.Value.Date.Equals(dt.Date);
         }
 

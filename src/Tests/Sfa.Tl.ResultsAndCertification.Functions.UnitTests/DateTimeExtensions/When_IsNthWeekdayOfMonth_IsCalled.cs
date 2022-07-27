@@ -6,13 +6,13 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.DateTimeExtensions
 {
-    public class When_IsLastWeekdayOfMonth_IsCalled : TestSetup
+    public class When_IsNthWeekdayOfMonth_IsCalled : TestSetup
     {
         [Theory]
-        [MemberData(nameof(Data))]
-        public void Then_Returns_Expected_Results(DateTime inputDate, DayOfWeek dayOfWeek, Months month, bool isValid)
+        [MemberData(nameof(NthWeekdayOfMonthData))]
+        public void Then_Returns_Expected_Results(DateTime inputDate, DayOfWeek dayOfWeek, Months month, int nthWeek, bool isValid)
         {
-            var result = inputDate.IsLastWeekdayOfMonth(dayOfWeek, month);
+            var result = inputDate.IsNthWeekdayOfMonth(dayOfWeek, month, nthWeek);
 
             result.Should().Be(isValid);
         }
