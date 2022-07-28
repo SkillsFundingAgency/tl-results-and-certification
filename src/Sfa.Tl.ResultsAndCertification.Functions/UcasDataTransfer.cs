@@ -121,10 +121,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
             var runFunctionForTesting = true;
 
-            var startDate = DateTime.UtcNow.GetNthDateOfMonth(DayOfWeek.Friday, Months.August, 3);
-            var endDate = DateTime.UtcNow.GetNthDateOfMonth(DayOfWeek.Friday, Months.October, 1);
+            var startDate = _commonService.CurrentDate.GetNthDateOfMonth(DayOfWeek.Friday, Months.August, 3);
+            var endDate = _commonService.CurrentDate.GetNthDateOfMonth(DayOfWeek.Friday, Months.October, 1);
 
-            var isValidToRunFunction = DateTime.UtcNow >= startDate && DateTime.UtcNow <= endDate;
+            var isValidToRunFunction = _commonService.CurrentDate >= startDate && _commonService.CurrentDate <= endDate;
 
             if (runFunctionForTesting || isValidToRunFunction)
             {

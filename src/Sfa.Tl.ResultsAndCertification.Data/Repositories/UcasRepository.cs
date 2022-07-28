@@ -74,7 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             {
                 var lastResultRun = GetLastRunOfJob(FunctionType.UcasTransferResults);
                 if (lastResultRun == null)
-                    throw new ApplicationException("Results last run details are not found in the FunctionLog.");
+                    throw new ApplicationException($"Function log - last run details are not found for the job: {FunctionType.UcasTransferResults}");
 
                 return await GetOverallResultsFrom(lastResultRun);
             }
@@ -86,7 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         {
             return await _dbContext.OverallResult
                 .Include(x => x.TqRegistrationPathway)
-                .ThenInclude(x => x.TqRegistrationProfile)
+                    .ThenInclude(x => x.TqRegistrationProfile)
                 .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
                             x.IsOptedin && x.EndDate == null && 
                             x.CreatedOn > lastAmendmentsRun.CreatedOn)

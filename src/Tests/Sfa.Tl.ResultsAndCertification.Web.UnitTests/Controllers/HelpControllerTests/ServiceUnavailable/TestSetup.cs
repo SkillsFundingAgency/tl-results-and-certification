@@ -3,8 +3,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
-using System;
-using System.Globalization;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.HelpControllerTests.ServiceUnavailable
@@ -19,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.HelpControlle
         {
             Configuration = new ResultsAndCertificationConfiguration
             {
-                FreezePeriodEndDate = DateTime.ParseExact("31/07/2022", "dd/MM/yyyy", CultureInfo.InvariantCulture)
+                FreezePeriodEndDate = "31/07/2022".ParseStringToDateTimeWithFormat()
             };
 
             Controller = new HelpController(Configuration);
