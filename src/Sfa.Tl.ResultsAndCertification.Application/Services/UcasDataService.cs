@@ -88,7 +88,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var records = new List<UcasDataRecord>();
             var overallResults = await _ucasRepository.GetUcasDataRecordsForAmendmentsAsync();
 
-            // TODO: use common method for both Results and Amendments.
             foreach (var overallResult in overallResults)
             {
                 var ucasDataComponents = new List<UcasDataComponent>();
@@ -100,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 records.Add(BuildUcasDataRecord(ucasDataComponents, overallResult.TqRegistrationPathway));
             }
 
-            return BuildUcasData(_ucasRecordResultsSegment.UcasDataType, records);
+            return BuildUcasData(UcasDataType.Amendments, records);
         }
 
         private UcasDataRecord BuildUcasDataRecord(List<UcasDataComponent> ucasDataComponents, TqRegistrationPathway pathway)

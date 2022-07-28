@@ -96,7 +96,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         private FunctionLog GetLastRunOfJob(string jobName)
         {
             return _dbContext.FunctionLog
-                        .Where(x => x.Name.Equals(jobName, StringComparison.InvariantCultureIgnoreCase) && x.Status == FunctionStatus.Processed)
+                        .Where(x => x.Name == jobName && x.Status == FunctionStatus.Processed)
                         .OrderByDescending(x => x.CreatedOn)
                         .FirstOrDefault();
         }
