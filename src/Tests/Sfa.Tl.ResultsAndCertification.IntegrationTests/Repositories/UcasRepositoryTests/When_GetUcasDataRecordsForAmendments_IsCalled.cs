@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepositoryTests
 {
-    public class When_GetUcasDataRecordsForResults_IsCalled : UcasRepositoryBaseTest
+    public class When_GetUcasDataRecordsForAmendments_IsCalled : UcasRepositoryBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<TqRegistrationProfile> _registrations;
@@ -26,14 +27,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             {
                 { 1111111111, RegistrationPathwayStatus.Active },
                 { 1111111112, RegistrationPathwayStatus.Active },
-                { 1111111113, RegistrationPathwayStatus.Withdrawn }
+                { 1111111113, RegistrationPathwayStatus.Withdrawn },
+                { 1111111114, RegistrationPathwayStatus.Active },
+
             };
 
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsDataByStatus(_ulns, null);
 
-            var ulnsWithOverallResult = new List<long> { 1111111111, 1111111112, 1111111113 };
+            var ulnsWithOverallResult = new List<long> { 1111111111, 1111111112, 1111111113, 1111111114 };
             _overallResults = SeedOverallResultData(_registrations, ulnsWithOverallResult);
+
+            var ulnAlreadySentToUcas = 1111111114;
+            SetOverallResultCreatedOnAsBelongToPreviousRun(_overallResults, ulnAlreadySentToUcas);
 
             CommonRepository = new CommonRepository(DbContext);
             UcasRepository = new UcasRepository(DbContext, CommonRepository);
@@ -47,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
         public async Task WhenAsync()
         {
             await Task.CompletedTask;
-            _actualOverallResults = await UcasRepository.GetUcasDataRecordsForResultsAsync();
+            _actualOverallResults = await UcasRepository.GetUcasDataRecordsForAmendmentsAsync();
         }
 
         [Fact]

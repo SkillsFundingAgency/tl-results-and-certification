@@ -271,7 +271,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
                 StartDate = DateTime.UtcNow.AddMonths(-1),
                 EndDate = DateTime.UtcNow.AddMonths(-1).AddHours(1),
                 Message = "Completed successfully",
-                Status = FunctionStatus.Processed
+                Status = FunctionStatus.Processed, 
+                CreatedOn = DateTime.UtcNow.AddHours(-1),
             };
 
             var functionLog = FunctionLogDataProvider.CreateFunctionLog(DbContext, functionLogData);
@@ -280,6 +281,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
                 DbContext.SaveChanges();
 
             return functionLog;
+        }
+
+        public void SetOverallResultCreatedOnAsBelongToPreviousRun(List<OverallResult> overallResults, int ulnAlreadySentToUcas)
+        {
+            var overallResult = overallResults.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == ulnAlreadySentToUcas);
+            overallResult.CreatedOn = DateTime.UtcNow.AddDays(-1);
+            DbContext.SaveChanges();
         }
 
         public int GetAcademicYear()
