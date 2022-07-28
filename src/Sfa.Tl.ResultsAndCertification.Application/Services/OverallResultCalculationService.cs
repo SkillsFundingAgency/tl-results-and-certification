@@ -58,6 +58,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             // Calculate result for recently completed assessment. 
             var dateFromPreviousAssessment = currentAssessmentSeries.StartDate.AddDays(-1);
             var previousAssessment = assessmentSeries.FirstOrDefault(a => a.ComponentType == ComponentType.Core && dateFromPreviousAssessment >= a.StartDate && dateFromPreviousAssessment <= a.EndDate);
+            if (previousAssessment == null || previousAssessment.ResultCalculationYear == null || previousAssessment.ResultPublishDate == null)
+                throw new Exception($"There is no Previous Assessment or ResultCalculationYear not available or ResultPublishDate not available");
 
             return previousAssessment;
         }

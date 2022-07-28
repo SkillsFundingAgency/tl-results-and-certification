@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
             // Check if it is the last Wednesday in June and run the function if it is true
-            if (DateTime.UtcNow.IsLastWeekdayOfMonth(DayOfWeek.Wednesday, Months.June))
+            if (_commonService.CurrentDate.IsLastWeekdayOfMonth(DayOfWeek.Wednesday, Months.June))
             {
                 var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.UcasTransferEntries);
 
@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
             var runFunctionForTesting = true;
             // Check if it is the second Thursday in August and run the function if it is true
-            if (runFunctionForTesting || DateTime.UtcNow.IsNthWeekdayOfMonth(DayOfWeek.Thursday, Months.August, 2))
+            if (runFunctionForTesting || _commonService.CurrentDate.IsNthWeekdayOfMonth(DayOfWeek.Thursday, Months.August, 2))
             {
                 var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.UcasTransferResults);
 
