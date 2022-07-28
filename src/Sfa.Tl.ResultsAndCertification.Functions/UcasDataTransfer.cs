@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             // Check if it is the last Wednesday in June and run the function if it is true
             if (DateTime.UtcNow.IsLastWeekdayOfMonth(DayOfWeek.Wednesday, Months.June))
             {
-                var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName);
+                var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.UcasTransferEntries);
 
                 try
                 {
@@ -77,7 +77,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             // Check if it is the second Thursday in August and run the function if it is true
             if (runFunctionForTesting || DateTime.UtcNow.IsNthWeekdayOfMonth(DayOfWeek.Thursday, Months.August, 2))
             {
-                var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName);
+                var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.UcasTransferResults);
 
                 try
                 {
@@ -128,7 +128,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
             if (runFunctionForTesting || isValidToRunFunction)
             {
-                var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName);
+                var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.UcasTransferAmendments);
 
                 try
                 {

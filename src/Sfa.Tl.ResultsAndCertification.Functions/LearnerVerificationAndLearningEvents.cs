@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName);
+            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.LearnerVerificationAndLearningEvents);
 
             try
             {

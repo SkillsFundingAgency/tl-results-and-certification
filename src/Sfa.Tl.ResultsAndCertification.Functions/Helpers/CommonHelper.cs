@@ -10,10 +10,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Helpers
 {
     public static class CommonHelper
     {
-        public static FunctionLogDetails CreateFunctionLogRequest(string functionName)
+        public static FunctionLogDetails CreateFunctionLogRequest(string functionName, FunctionType functionType)
         {
             return new FunctionLogDetails
             {
+                FunctionType = functionType,
                 Name = functionName,
                 StartDate = DateTime.UtcNow,
                 Status = FunctionStatus.Processing,

@@ -12,6 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 
         public FunctionLog Build() => new FunctionLog
         {
+            FunctionType = FunctionType.LearnerVerificationAndLearningEvents,
             Name = "LearningEvents",
             StartDate = CurrentDate.AddDays(1),
             EndDate = CurrentDate.AddDays(1).AddMinutes(10),
@@ -27,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
         {
             new FunctionLog
             {
+                FunctionType = FunctionType.LearnerVerificationAndLearningEvents,
                 Name = "LearningEvents",
                 StartDate = CurrentDate.AddDays(1),
                 EndDate = CurrentDate.AddDays(1).AddMinutes(10),
@@ -39,6 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new FunctionLog
             {
+                FunctionType = FunctionType.LearnerVerificationAndLearningEvents,
                 Name = "VerifyLearner",
                 StartDate = CurrentDate.AddDays(1),
                 EndDate = CurrentDate.AddDays(1).AddMinutes(10),
@@ -51,6 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new FunctionLog
             {
+                FunctionType = FunctionType.OverallResultCalculation,
                 Name = "CalculateResults",
                 StartDate = CurrentDate.AddDays(1),
                 EndDate = CurrentDate.AddDays(1).AddMinutes(10),
@@ -63,6 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new FunctionLog
             {
+                FunctionType = FunctionType.UcasTransferEntries,
                 Name = "Test",
                 StartDate = CurrentDate.AddDays(1),
                 EndDate = CurrentDate.AddDays(1).AddMinutes(10),
