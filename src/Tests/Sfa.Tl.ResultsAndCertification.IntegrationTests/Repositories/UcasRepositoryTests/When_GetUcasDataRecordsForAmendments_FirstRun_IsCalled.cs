@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
 
         public override void Given()
         {
-            SeedFunctionLog(Constants.UcasTransferResultEntries);
+            SeedFunctionLog(Constants.UcasTransferResults);
 
             _ulns = new Dictionary<long, RegistrationPathwayStatus>
             {

@@ -72,7 +72,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             var lastAmendmentsRun = GetLastRunOfJob(Constants.UcasTransferAmendments);
             if (lastAmendmentsRun == null)
             {
-                var lastResultRun = GetLastRunOfJob(Constants.UcasTransferResultEntries);
+                var lastResultRun = GetLastRunOfJob(Constants.UcasTransferResults);
                 if (lastResultRun == null)
                     throw new ApplicationException("Results last run details are not found in the FunctionLog.");
 

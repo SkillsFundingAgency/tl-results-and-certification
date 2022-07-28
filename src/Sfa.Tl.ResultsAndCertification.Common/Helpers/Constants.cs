@@ -153,11 +153,13 @@
 
 
         // Function Name Constants
+        public const string FetchLearnerGender = "FetchLearnerGender";
+        public const string VerifyLearnerAndFetchLearningEvents = "VerifyLearnerAndFetchLearningEvents";
         public const string SubmitCertificatePrintingRequest = "SubmitCertificatePrintingRequest";
         public const string FetchCertificatePrintingBatchSummary = "FetchCertificatePrintingBatchSummary";
         public const string FetchCertificatePrintingTrackBatch = "FetchCertificatePrintingTrackBatch";
         public const string UcasTransferEntries = "UcasTransferEntries";
-        public const string UcasTransferResultEntries = "UcasTransferResultEntries";
+        public const string UcasTransferResults = "UcasTransferResults";
         public const string UcasTransferAmendments = "UcasTransferAmendments";
         public const string OverallResultCalculation = "OverallResultCalculation";
 
