@@ -81,6 +81,9 @@
         "ucasTransferResultsTrigger": {
             "type": "string"
         },
+        "ucasTransferAmendmentsTrigger": {
+            "type": "string"
+        },
 		"overallResultCalculationTrigger": {
             "type": "string"            
         }
@@ -452,6 +455,10 @@
                             {
                                 "name": "UcasTransferResultsTrigger",
                                 "value": "[parameters('ucasTransferResultsTrigger')]"
+                            },
+                            {
+                                "name": "UcasTransferAmendmentsTrigger",
+                                "value": "[parameters('ucasTransferAmendmentsTrigger')]"
                             },
 							{
                                 "name": "OverallResultCalculationTrigger",
