@@ -1,10 +1,8 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
 
         public override void Given()
         {
-            SeedFunctionLog(Constants.UcasTransferAmendments);
+            SeedFunctionLog(FunctionType.UcasTransferAmendments);
 
             _ulns = new Dictionary<long, RegistrationPathwayStatus>
             {

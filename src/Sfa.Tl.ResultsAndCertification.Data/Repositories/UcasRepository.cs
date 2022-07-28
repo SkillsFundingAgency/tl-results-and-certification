@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<IList<OverallResult>> GetUcasDataRecordsForResultsAsync()
         {
-            var lastAmendmentsRun = GetLastRunOfJob(Constants.UcasTransferAmendments);
+            var lastAmendmentsRun = GetLastRunOfJob(FunctionType.UcasTransferAmendments);
             if (lastAmendmentsRun == null)
             {
                 var currentAcademicYears = await _commonRepository.GetCurrentAcademicYearsAsync();
@@ -69,10 +69,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<IList<OverallResult>> GetUcasDataRecordsForAmendmentsAsync()
         {
-            var lastAmendmentsRun = GetLastRunOfJob(Constants.UcasTransferAmendments);
+            var lastAmendmentsRun = GetLastRunOfJob(FunctionType.UcasTransferAmendments);
             if (lastAmendmentsRun == null)
             {
-                var lastResultRun = GetLastRunOfJob(Constants.UcasTransferResults);
+                var lastResultRun = GetLastRunOfJob(FunctionType.UcasTransferResults);
                 if (lastResultRun == null)
                     throw new ApplicationException("Results last run details are not found in the FunctionLog.");
 
@@ -93,10 +93,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .ToListAsync();
         }
 
-        private FunctionLog GetLastRunOfJob(string jobName)
+        private FunctionLog GetLastRunOfJob(FunctionType functionType)
         {
             return _dbContext.FunctionLog
-                        .Where(x => x.Name == jobName && x.Status == FunctionStatus.Processed)
+                        .Where(x => x.FunctionType == functionType && x.Status == FunctionStatus.Processed)
                         .OrderByDescending(x => x.CreatedOn)
                         .FirstOrDefault();
         }
