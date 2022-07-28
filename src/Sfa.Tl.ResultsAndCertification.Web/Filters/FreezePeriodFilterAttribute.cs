@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
@@ -24,8 +25,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Filters
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             try
-            {               
-                if (context.Controller.GetType() != typeof(HelpController) && context.Controller.GetType() != typeof(ErrorController) && IsFreezePeriodActive())
+            {
+                //if (context.Controller.GetType() != typeof(HelpController) && context.Controller.GetType() != typeof(ErrorController) && IsFreezePeriodActive())
+                if (context.Controller.GetType() != typeof(HelpController) && IsFreezePeriodActive() && !HasAnyAllowedActions(context))
                 {
                     var routeValues = new RouteValueDictionary
                     {
@@ -49,6 +51,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Filters
         private bool IsFreezePeriodActive()
         {
             return DateTime.UtcNow >= _configuration.FreezePeriodStartDate && DateTime.UtcNow <= _configuration.FreezePeriodEndDate;
+        }
+
+        private static bool HasAnyAllowedActions(ActionContext context)
+        {
+            return context.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor
+                && (controllerActionDescriptor.ControllerName == Constants.ErrorController && controllerActionDescriptor.ActionName == nameof(ErrorController.ProblemWithService) ||
+                controllerActionDescriptor.ControllerName == Constants.AccountController && controllerActionDescriptor.ActionName == nameof(AccountController.SignOut));
         }
     }
 }
