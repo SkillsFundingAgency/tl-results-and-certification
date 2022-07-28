@@ -263,11 +263,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             return overallResults;
         }
 
-        public FunctionLog SeedFunctionLog(string functionName, bool saveChanges = true)
+        public FunctionLog SeedFunctionLog(FunctionType functionType, bool saveChanges = true)
         {
             var functionLogData = new FunctionLog
             {
-                Name = functionName,
+                FunctionType = functionType, 
+                Name = "Function",
                 StartDate = DateTime.UtcNow.AddMonths(-1),
                 EndDate = DateTime.UtcNow.AddMonths(-1).AddHours(1),
                 Message = "Completed successfully",
