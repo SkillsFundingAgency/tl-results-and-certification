@@ -19,25 +19,27 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
 
         public override void Given()
         {
-            SeedFunctionLog(FunctionType.UcasTransferAmendments);
-
             _ulns = new Dictionary<long, RegistrationPathwayStatus>
             {
                 { 1111111111, RegistrationPathwayStatus.Active },
                 { 1111111112, RegistrationPathwayStatus.Active },
                 { 1111111113, RegistrationPathwayStatus.Withdrawn },
-                { 1111111114, RegistrationPathwayStatus.Active },
-
+                { 1111111114, RegistrationPathwayStatus.Active }
             };
 
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsDataByStatus(_ulns, null);
 
-            var ulnsWithOverallResult = new List<long> { 1111111111, 1111111112, 1111111113, 1111111114 };
-            _overallResults = SeedOverallResultData(_registrations, ulnsWithOverallResult);
-
+            // Overall results allready picked by function
             var ulnAlreadySentToUcas = 1111111114;
+            _overallResults = SeedOverallResultData(_registrations, new List<long> { ulnAlreadySentToUcas });
+
             SetOverallResultCreatedOnAsBelongToPreviousRun(_overallResults, ulnAlreadySentToUcas);
+            SeedFunctionLog(FunctionType.UcasTransferAmendments);
+
+            // New overall results to be picked by function
+            var ulnsWithOverallResult = new List<long> { 1111111111, 1111111112, 1111111113 };
+            _overallResults = SeedOverallResultData(_registrations, ulnsWithOverallResult);
 
             CommonRepository = new CommonRepository(DbContext);
             UcasRepository = new UcasRepository(DbContext, CommonRepository);

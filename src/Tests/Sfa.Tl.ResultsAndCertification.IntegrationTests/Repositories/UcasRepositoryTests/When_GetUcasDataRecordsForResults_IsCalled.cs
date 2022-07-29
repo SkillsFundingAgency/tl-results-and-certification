@@ -19,8 +19,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
 
         public override void Given()
         {
-            SeedFunctionLog(FunctionType.UcasTransferAmendments);
-
             _ulns = new Dictionary<long, RegistrationPathwayStatus>
             {
                 { 1111111111, RegistrationPathwayStatus.Active },
@@ -31,9 +29,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsDataByStatus(_ulns, null);
 
+            // Ensure funtionlog contains lastrun information
+            SeedFunctionLog(FunctionType.UcasTransferAmendments);
+
+            // Overall results
             var ulnsWithOverallResult = new List<long> { 1111111111, 1111111112, 1111111113 };
             _overallResults = SeedOverallResultData(_registrations, ulnsWithOverallResult);
-
+            
             CommonRepository = new CommonRepository(DbContext);
             UcasRepository = new UcasRepository(DbContext, CommonRepository);
         }

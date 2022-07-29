@@ -64,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                        .ToListAsync();
             }
 
-            return await GetOverallResultsFrom(lastAmendmentsRun);
+            return await GetOverallResultsFrom(lastAmendmentsRun.CreatedOn);
         }
 
         public async Task<IList<OverallResult>> GetUcasDataRecordsForAmendmentsAsync()
@@ -76,20 +76,20 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 if (lastResultRun == null)
                     throw new ApplicationException($"Function log - last run details are not found for the job: {FunctionType.UcasTransferResults}");
 
-                return await GetOverallResultsFrom(lastResultRun);
+                return await GetOverallResultsFrom(lastResultRun.CreatedOn);
             }
 
-            return await GetOverallResultsFrom(lastAmendmentsRun);
+            return await GetOverallResultsFrom(lastAmendmentsRun.CreatedOn);
         }
        
-        private async Task<IList<OverallResult>> GetOverallResultsFrom(FunctionLog lastAmendmentsRun)
+        private async Task<IList<OverallResult>> GetOverallResultsFrom(DateTime lastJobRunDate)
         {
             return await _dbContext.OverallResult
                 .Include(x => x.TqRegistrationPathway)
                     .ThenInclude(x => x.TqRegistrationProfile)
                 .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
                             x.IsOptedin && x.EndDate == null && 
-                            x.CreatedOn > lastAmendmentsRun.CreatedOn)
+                            x.CreatedOn > lastJobRunDate)
                 .ToListAsync();
         }
 

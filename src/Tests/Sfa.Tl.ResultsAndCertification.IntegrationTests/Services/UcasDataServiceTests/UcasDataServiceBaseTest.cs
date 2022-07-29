@@ -295,6 +295,28 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
             return overallResults;
         }
 
+        public FunctionLog SeedFunctionLog(FunctionType functionType, bool saveChanges = true)
+        {
+            var functionLogData = new FunctionLog
+            {
+                FunctionType = functionType,
+                Name = "Function",
+                StartDate = DateTime.UtcNow.AddMonths(-1),
+                EndDate = DateTime.UtcNow.AddMonths(-1).AddHours(1),
+                Message = "Completed successfully",
+                Status = FunctionStatus.Processed,
+                CreatedOn = DateTime.UtcNow.AddHours(-1),
+            };
+
+            var functionLog = FunctionLogDataProvider.CreateFunctionLog(DbContext, functionLogData);
+
+            if (saveChanges)
+                DbContext.SaveChanges();
+
+            return functionLog;
+
+        }
+
         public void AssertHeaderRecord(UcasDataType ucasDataType)
         {
             ActualResult.Header.Should().NotBeNull();
