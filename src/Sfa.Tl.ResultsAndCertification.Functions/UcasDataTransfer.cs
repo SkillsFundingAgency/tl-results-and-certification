@@ -73,9 +73,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-            var runFunctionForTesting = true;
             // Check if it is the second Thursday in August and run the function if it is true
-            if (runFunctionForTesting || _commonService.CurrentDate.IsNthWeekdayOfMonth(DayOfWeek.Thursday, Months.August, 2))
+            if (_commonService.CurrentDate.IsNthWeekdayOfMonth(DayOfWeek.Thursday, Months.August, 2))
             {
                 var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.UcasTransferResults);
 
@@ -119,14 +118,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-            var runFunctionForTesting = true;
-
             var startDate = _commonService.CurrentDate.GetNthDateOfMonth(DayOfWeek.Friday, Months.August, 3);
             var endDate = _commonService.CurrentDate.GetNthDateOfMonth(DayOfWeek.Friday, Months.October, 1);
 
             var isValidToRunFunction = _commonService.CurrentDate >= startDate && _commonService.CurrentDate <= endDate;
 
-            if (runFunctionForTesting || isValidToRunFunction)
+            if (isValidToRunFunction)
             {
                 var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.UcasTransferAmendments);
 
