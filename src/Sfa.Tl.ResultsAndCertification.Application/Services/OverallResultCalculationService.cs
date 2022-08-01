@@ -283,21 +283,28 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var calculationStatus = GetCalculationStatus(tlLookup, overallGrade, pathwayResultPrsStatus, specialismResultPrsStatus);
                 var certificateType = GetPrintCertificateType(tlLookup, overallGrade);
 
+                List<OverallSpecialismDetail> specialismDetails = null;
+
+                if(specialism != null)
+                {
+                    specialismDetails = new List<OverallSpecialismDetail>
+                                        {
+                                            new OverallSpecialismDetail
+                                            {
+                                                SpecialismName = specialism.TlSpecialism.Name,
+                                                SpecialismLarId = specialism.TlSpecialism.LarId,
+                                                SpecialismResult = specialismResult?.TlLookup?.Value
+                                            }
+                                        };
+                }
+
                 var overallResultDetails = new OverallResultDetail
                 {
                     TlevelTitle = pathway.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
                     PathwayName = pathway.TqProvider.TqAwardingOrganisation.TlPathway.Name,
                     PathwayLarId = pathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                     PathwayResult = pathwayResult?.TlLookup?.Value,
-                    SpecialismDetails = new List<OverallSpecialismDetail>
-                        {
-                            new OverallSpecialismDetail
-                            {
-                                SpecialismName = specialism?.TlSpecialism?.Name,
-                                SpecialismLarId = specialism?.TlSpecialism?.LarId,
-                                SpecialismResult = specialismResult?.TlLookup?.Value
-                            }
-                        },
+                    SpecialismDetails = specialismDetails,
                     IndustryPlacementStatus = GetIndustryPlacementStatusDisplayName(ipStatus),
                     OverallResult = overallGrade
                 };
