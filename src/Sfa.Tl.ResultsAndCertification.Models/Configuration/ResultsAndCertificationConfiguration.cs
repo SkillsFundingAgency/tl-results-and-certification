@@ -211,5 +211,21 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// The ovarall resutls batch record settings.
         /// </value>
         public OverallResultBatchSettings OverallResultBatchSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Freeze period start date.
+        /// </summary>
+        /// <value>
+        /// The Freeze period start date.
+        /// </value>
+        public DateTime FreezePeriodStartDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Freeze period end date.
+        /// </summary>
+        /// <value>
+        /// The Freeze period end date.
+        /// </value>
+        public DateTime FreezePeriodEndDate { get; set; }
     }
 }

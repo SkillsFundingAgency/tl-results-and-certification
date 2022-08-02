@@ -21,6 +21,7 @@ BEGIN
 :r ".\SeedQualificationGrade.sql"
 :r ".\SeedQualification.sql"
 :r ".\SeedIpLookup.sql"
+:r ".\UpdateFunctionLog.sql"
 END
 ELSE IF ('$(environment)' <> 'DevIntegration')
 BEGIN
@@ -44,4 +45,5 @@ BEGIN
 :r ".\SeedIpTempFlexTlevelCombination.sql"
 :r ".\SeedIpTempFlexNavigation.sql"
 :r ".\SeedOverallGradeLookup.sql"
+:r ".\UpdateFunctionLog.sql"
 END

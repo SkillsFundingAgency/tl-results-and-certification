@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[FunctionLog]
 (
 	[Id] INT IDENTITY(1,1) NOT NULL,
+	[FunctionType] INT NOT NULL DEFAULT 0,
 	[Name] NVARCHAR(255) NOT NULL,
 	[StartDate] DATETIME NOT NULL,	
 	[EndDate] DATETIME NULL,

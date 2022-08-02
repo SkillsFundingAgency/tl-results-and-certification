@@ -27,6 +27,7 @@
         public const string HomeController = "Home";
         public const string AccountController = "Account";
         public const string DashboardController = "Dashboard";
+        public const string HelpController = "Help";
         public const string ErrorController = "Error";
         public const string TlevelController = "Tlevel";
 
@@ -55,19 +56,19 @@
         public const string RegistrationCannotBeDeletedViewModel = "RegistrationCannotBeDeletedViewModel";
         public const string AssessmentsUploadSuccessfulViewModel = "AssessmentsUploadSuccessfulViewModel";
         public const string AssessmentsSearchCriteria = "AssessmentsSearchCriteria";
-        public const string SearchAssessmentsUlnNotFound = "SearchAssessmentsUlnNotFound";        
+        public const string SearchAssessmentsUlnNotFound = "SearchAssessmentsUlnNotFound";
         public const string SearchResultsUlnNotFound = "SearchResultsUlnNotFound";
         public const string ResultWithdrawn = "ResultWithdrawn";
         public const string ResultsSearchCriteria = "ResultsSearchCriteria";
         public const string ResultsUploadSuccessfulViewModel = "ResultsUploadSuccessfulViewModel";
-        public const string ResultConfirmationViewModel = "ResultConfirmationViewModel";        
+        public const string ResultConfirmationViewModel = "ResultConfirmationViewModel";
         public const string AddLearnerRecordConfirmation = "AddLearnerRecordConfirmation";
         public const string SearchLearnerRecordViewModel = "SearchLearnerRecordViewModel";
         public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
         public const string AddEnglishAndMathsSendDataConfirmation = "AddEnglishAndMathsSendDataConfirmation"; // TODO: Delete?
         public const string AddAddressConfirmation = "AddAddressConfirmation";
         public const string RequestSoaConfirmation = "RequestSoaConfirmation";
-        public const string UserSessionActivityId = "UserSessionActivityId";        
+        public const string UserSessionActivityId = "UserSessionActivityId";
 
         // Registration Data Index Constants
         public const int RegistrationProfileStartIndex = 100000;
@@ -152,11 +153,14 @@
 
 
         // Function Name Constants
+        public const string FetchLearnerGender = "FetchLearnerGender";
+        public const string VerifyLearnerAndFetchLearningEvents = "VerifyLearnerAndFetchLearningEvents";
         public const string SubmitCertificatePrintingRequest = "SubmitCertificatePrintingRequest";
         public const string FetchCertificatePrintingBatchSummary = "FetchCertificatePrintingBatchSummary";
         public const string FetchCertificatePrintingTrackBatch = "FetchCertificatePrintingTrackBatch";
         public const string UcasTransferEntries = "UcasTransferEntries";
-        public const string UcasTransferResultEntries = "UcasTransferResultEntries";
+        public const string UcasTransferResults = "UcasTransferResults";
+        public const string UcasTransferAmendments = "UcasTransferAmendments";
         public const string OverallResultCalculation = "OverallResultCalculation";
 
         // File Extensions
@@ -165,11 +169,11 @@
         public const int OverallResultDefaultNoOfAcademicYearsToProcess = 4;
         public const int OverallResultDefaultBatchSize = 5000;
 
-        
+
         public const string PathwayComponentGradeUnclassifiedCode = "PCG7";
         public const string SpecialismComponentGradeUnclassifiedCode = "SCG4";
         public const string OverallResultPartialAchievementCode = "OR5";
         public const string OverallResultUnclassifiedCode = "OR6";
-        public const string OverallResultXNoResultCode = "OR7";
+        public const string OverallResultXNoResultCode = "OR7";        
     }
 }

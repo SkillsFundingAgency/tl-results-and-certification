@@ -16,6 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 
             CreateMap<FunctionLogDetails, FunctionLog>()
                 .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
+                .ForMember(d => d.FunctionType, opts => opts.MapFrom(s => s.FunctionType))
                 .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name))
                 .ForMember(d => d.StartDate, opts => opts.MapFrom(s => s.StartDate))
                 .ForMember(d => d.EndDate, opts => opts.MapFrom(s => s.EndDate))

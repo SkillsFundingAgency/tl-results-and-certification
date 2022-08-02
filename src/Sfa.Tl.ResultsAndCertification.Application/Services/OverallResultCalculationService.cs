@@ -58,26 +58,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             // Calculate result for recently completed assessment. 
             var dateFromPreviousAssessment = currentAssessmentSeries.StartDate.AddDays(-1);
             var previousAssessment = assessmentSeries.FirstOrDefault(a => a.ComponentType == ComponentType.Core && dateFromPreviousAssessment >= a.StartDate && dateFromPreviousAssessment <= a.EndDate);
+            if (previousAssessment == null || previousAssessment.ResultCalculationYear == null || previousAssessment.ResultPublishDate == null)
+                throw new Exception($"There is no Previous Assessment or ResultCalculationYear not available or ResultPublishDate not available");
 
             return previousAssessment;
-        }
-
-        public async Task<IList<TqRegistrationPathway>> GetLearnersForOverallGradeCalculationAsync(DateTime runDate)
-        {
-            // Dev note: This method left to test from api end-point
-            var previousAssessment = await GetResultCalculationAssessmentAsync(runDate);
-            var resultCalculationYearFrom = (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ? Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) - 1;
-
-            //var result = await CalculateOverallResultsAsync(runDate);
-
-            return await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, previousAssessment?.ResultCalculationYear ?? 0);
         }
 
         public async Task<List<OverallResultResponse>> CalculateOverallResultsAsync(DateTime runDate)
         {
             var response = new List<OverallResultResponse>();
             var resultCalculationAssessment = await GetResultCalculationAssessmentAsync(runDate);
-            var resultCalculationYearFrom = (resultCalculationAssessment.ResultCalculationYear ?? 0) - (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ? 
+            var resultCalculationYearFrom = (resultCalculationAssessment.ResultCalculationYear ?? 0) - (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ?
                 Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) + 1;
 
             var learners = await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationAssessment.ResultCalculationYear ?? 0);
@@ -292,21 +283,28 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var calculationStatus = GetCalculationStatus(tlLookup, overallGrade, pathwayResultPrsStatus, specialismResultPrsStatus);
                 var certificateType = GetPrintCertificateType(tlLookup, overallGrade);
 
+                List<OverallSpecialismDetail> specialismDetails = null;
+
+                if(specialism != null)
+                {
+                    specialismDetails = new List<OverallSpecialismDetail>
+                                        {
+                                            new OverallSpecialismDetail
+                                            {
+                                                SpecialismName = specialism.TlSpecialism.Name,
+                                                SpecialismLarId = specialism.TlSpecialism.LarId,
+                                                SpecialismResult = specialismResult?.TlLookup?.Value
+                                            }
+                                        };
+                }
+
                 var overallResultDetails = new OverallResultDetail
                 {
                     TlevelTitle = pathway.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
                     PathwayName = pathway.TqProvider.TqAwardingOrganisation.TlPathway.Name,
                     PathwayLarId = pathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                     PathwayResult = pathwayResult?.TlLookup?.Value,
-                    SpecialismDetails = new List<OverallSpecialismDetail>
-                        {
-                            new OverallSpecialismDetail
-                            {
-                                SpecialismName = specialism?.TlSpecialism?.Name,
-                                SpecialismLarId = specialism?.TlSpecialism?.LarId,
-                                SpecialismResult = specialismResult?.TlLookup?.Value
-                            }
-                        },
+                    SpecialismDetails = specialismDetails,
                     IndustryPlacementStatus = GetIndustryPlacementStatusDisplayName(ipStatus),
                     OverallResult = overallGrade
                 };
@@ -433,14 +431,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 return null;
             }
-        }
-
-        private bool HasAnySpecialismResultInRommOrAppeal(TqRegistrationPathway learnerPathway)
-        {
-            if (!learnerPathway.TqRegistrationSpecialisms.SelectMany(specialism => specialism.TqSpecialismAssessments).Any())
-                return false;
-
-            return learnerPathway.TqRegistrationSpecialisms.SelectMany(specialism => specialism.TqSpecialismAssessments).SelectMany(x => x.TqSpecialismResults).Any(x => x.PrsStatus == PrsStatus.UnderReview || x.PrsStatus == PrsStatus.BeingAppealed);
         }
 
         private bool IsOverallResultChangedFromPrevious(OverallResult latestOverallResult, OverallResult existingOverallResult)
