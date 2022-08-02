@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using System;
 using Xunit;
@@ -9,9 +10,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.DateTimeExtensions
     {
         [Theory]
         [MemberData(nameof(Data))]
-        public void Then_Returns_Expected_Results(DateTime inputDate, DayOfWeek dayOfWeek, bool isValid)
+        public void Then_Returns_Expected_Results(DateTime inputDate, DayOfWeek dayOfWeek, Months month, bool isValid)
         {
-            var result = inputDate.IsLastWeekdayOfMonth(dayOfWeek);
+            var result = inputDate.IsLastWeekdayOfMonth(dayOfWeek, month);
 
             result.Should().Be(isValid);
         }

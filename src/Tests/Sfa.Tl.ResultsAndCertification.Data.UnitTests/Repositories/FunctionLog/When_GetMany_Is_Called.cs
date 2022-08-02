@@ -38,6 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.FunctionLog
             testData.Should().NotBeNull();
             result.Should().NotBeNull();
             result.Id.Should().Be(1);
+            result.FunctionType.Should().Be(testData.FunctionType);
             result.Name.Should().Be(testData.Name);
             result.StartDate.Should().Be(testData.StartDate);
             result.EndDate.Should().Be(testData.EndDate);

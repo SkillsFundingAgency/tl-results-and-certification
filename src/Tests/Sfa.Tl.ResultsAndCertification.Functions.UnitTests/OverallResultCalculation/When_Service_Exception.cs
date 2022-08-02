@@ -1,5 +1,4 @@
 ﻿using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Threading.Tasks;
@@ -19,13 +18,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.OverallResultCalcul
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            if (DateTime.UtcNow.IsLastWeekdayOfMonth(DayOfWeek.Wednesday))
-            {
-                CommonService.Received(2).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-                OverallResultCalculationFunctionService.Received(1).CalculateOverallResultsAsync();
-                CommonService.DidNotReceive().UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
-                CommonService.Received(1).SendFunctionJobFailedNotification(Arg.Any<string>(), Arg.Any<string>());
-            }
+            CommonService.Received(2).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
+            OverallResultCalculationFunctionService.Received(1).CalculateOverallResultsAsync();
+            CommonService.DidNotReceive().UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
+            CommonService.Received(1).SendFunctionJobFailedNotification(Arg.Any<string>(), Arg.Any<string>());
         }
     }
 }

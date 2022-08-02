@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
             if (DateTime.UtcNow >= _configuration.OverallResultsCalculationDate)
             {
-                var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName);
+                var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.OverallResultCalculation);
 
                 try
                 {

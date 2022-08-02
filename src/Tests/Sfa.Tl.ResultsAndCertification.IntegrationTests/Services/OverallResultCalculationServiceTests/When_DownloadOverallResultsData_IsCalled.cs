@@ -92,7 +92,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 Details = "{Merit}", ResultAwarded = "Merit", CalculationStatus = CalculationStatus.Completed, IsOptedin = true, CertificateType = PrintCertificateType.Certificate, PrintAvailableFrom = printAvailableFrom, PublishDate = publishDate } }, true);
 
             // SeedPreviousAssessment
-            var prevAssessmentSeries = new AssessmentSeries { Name = _previousAssessmentName, Year = 2020, StartDate = DateTime.Today.AddMonths(-3), EndDate = DateTime.Today.AddDays(-2), ResultPublishDate = publishDate, ComponentType = ComponentType.Core };
+            var prevAssessmentSeries = new AssessmentSeries { Name = _previousAssessmentName, Year = 2020, StartDate = DateTime.Today.AddMonths(-3), EndDate = DateTime.Today.AddDays(-2), ResultPublishDate = publishDate, ComponentType = ComponentType.Core, ResultCalculationYear = 2020 };
             AssessmentSeriesDataProvider.CreateAssessmentSeries(DbContext, prevAssessmentSeries, true);
 
             DbContext.SaveChanges();

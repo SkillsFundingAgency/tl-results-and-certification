@@ -249,6 +249,47 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             return tqSpecialismResults;
         }
 
+        public List<OverallResult> SeedOverallResultData(List<TqRegistrationProfile> registrations, List<long> ulnsWithOverallResult, bool saveChanges = true)
+        {
+            var overallResults = new List<OverallResult>();
+            foreach (var ulnOverResult in ulnsWithOverallResult)
+            {
+                var registration = registrations.FirstOrDefault(reg => reg.UniqueLearnerNumber == ulnOverResult);
+                overallResults.Add(OverallResultDataProvider.CreateOverallResult(DbContext, registration.TqRegistrationPathways.FirstOrDefault()));
+            }
+
+            if (saveChanges)
+                DbContext.SaveChanges();
+            return overallResults;
+        }
+
+        public FunctionLog SeedFunctionLog(FunctionType functionType, bool saveChanges = true)
+        {
+            var functionLogData = new FunctionLog
+            {
+                FunctionType = functionType, 
+                Name = "Function",
+                StartDate = DateTime.UtcNow.AddMonths(-1),
+                EndDate = DateTime.UtcNow.AddMonths(-1).AddHours(1),
+                Message = "Completed successfully",
+                Status = FunctionStatus.Processed, 
+                CreatedOn = DateTime.UtcNow.AddHours(-1),
+            };
+
+            var functionLog = FunctionLogDataProvider.CreateFunctionLog(DbContext, functionLogData);
+
+            if (saveChanges)
+                DbContext.SaveChanges();
+
+            return functionLog;
+        }
+
+        public void SetOverallResultCreatedOnAsBelongToPreviousRun(List<OverallResult> overallResults, int ulnAlreadySentToUcas)
+        {
+            var overallResult = overallResults.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == ulnAlreadySentToUcas);
+            overallResult.CreatedOn = DateTime.UtcNow.AddDays(-1);
+            DbContext.SaveChanges();
+        }
 
         public int GetAcademicYear()
         {

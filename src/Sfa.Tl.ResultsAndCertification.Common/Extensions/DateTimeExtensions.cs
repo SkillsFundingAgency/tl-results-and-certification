@@ -1,13 +1,15 @@
-﻿using System;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using System;
 using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 {
     public static class DateTimeExtensions
     {
-        private static DateTime? GetNthWeekdayOfMonth(DateTime dt, DayOfWeek dayOfWeek, int nthWeek = 0)
+        private static DateTime? GetNthWeekdayOfMonth(DateTime dt, DayOfWeek dayOfWeek, Months? month = null, int nthWeek = 0)
         {
-            var daysInMonth = Enumerable.Range(1, DateTime.DaysInMonth(dt.Year, dt.Month)).Select(day => new DateTime(dt.Year, dt.Month, day));
+            var currentMonth = month == null ? dt.Month : (int)month.Value;
+            var daysInMonth = Enumerable.Range(1, DateTime.DaysInMonth(dt.Year, currentMonth)).Select(day => new DateTime(dt.Year, currentMonth, day));
 
             var weekdays = daysInMonth.Where(d => d.DayOfWeek == dayOfWeek).OrderBy(d => d.Day).Select(d => d).ToList();
 
@@ -21,11 +23,23 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
                 return null;
         }
 
-        public static bool IsLastWeekdayOfMonth(this DateTime dt, DayOfWeek dayOfWeek)
+        public static bool IsLastWeekdayOfMonth(this DateTime dt, DayOfWeek dayOfWeek, Months month)
         {
             // Passing nthWeek = 0 will give the last record
-            var nthDate = GetNthWeekdayOfMonth(dt, dayOfWeek);
+            var nthDate = GetNthWeekdayOfMonth(dt, dayOfWeek, month);
             return nthDate != null && nthDate.Value.Date.Equals(dt.Date);
+        }
+
+        public static bool IsNthWeekdayOfMonth(this DateTime dt, DayOfWeek dayOfWeek, Months month, int nthWeek)
+        {
+            // Passing nthWeek = 0 will give the last record
+            var nthDate = GetNthWeekdayOfMonth(dt, dayOfWeek, month, nthWeek);
+            return nthDate != null && nthDate.Value.Date.Equals(dt.Date);
+        }
+
+        public static DateTime? GetNthDateOfMonth(this DateTime dt, DayOfWeek dayOfWeek, Months month, int nthWeek)
+        {
+            return GetNthWeekdayOfMonth(dt, dayOfWeek, month, nthWeek);
         }
     }
 }

@@ -116,7 +116,11 @@
         },
         "ucasTransferResultsTrigger": {
             "type": "string",
-            "defaultValue": "0 10 21 * * *"
+            "defaultValue": "30 21 * 8 THU"
+        },
+		"ucasTransferAmendmentsTrigger": {
+            "type": "string",
+            "defaultValue": "45 21 * 8-10 *"
         },
         "overallResultCalculationTrigger": {
             "type": "string",
@@ -609,6 +613,10 @@
 							{
                                 "name": "UcasTransferResultsTrigger",
                                 "value": "[parameters('ucasTransferResultsTrigger')]"
+                            },
+							{
+                                "name": "UcasTransferAmendmentsTrigger",
+                                "value": "[parameters('ucasTransferAmendmentsTrigger')]"
                             },
 							{
                                 "name": "OverallResultCalculationTrigger",

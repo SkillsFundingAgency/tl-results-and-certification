@@ -6,6 +6,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
     public class FunctionLogDetails
     {
         public int Id { get; set; }
+        public FunctionType FunctionType { get; set; }
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }

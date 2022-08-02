@@ -89,6 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 });
                 config.Filters.Add<SessionActivityFilterAttribute>();
                 config.Filters.Add<CustomExceptionFilterAttribute>();
+                config.Filters.Add<FreezePeriodFilterAttribute>();
             });
 
             if (_env.IsDevelopment())

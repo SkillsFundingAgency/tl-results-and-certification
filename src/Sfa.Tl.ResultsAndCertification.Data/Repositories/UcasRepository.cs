@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using System;
@@ -20,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _commonRepository = commonRepository;
         }
 
-        public async Task<IList<TqRegistrationPathway>> GetUcasDataRecordsAsync(bool inclResults)
+        public async Task<IList<TqRegistrationPathway>> GetUcasDataRecordsForEntriesAsync()
         {
             var currentAcademicYears = await _commonRepository.GetCurrentAcademicYearsAsync();
             if (currentAcademicYears == null || !currentAcademicYears.Any())
@@ -42,19 +43,62 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                     x.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1)
                         .AsQueryable();
 
-            if (inclResults)
+            return await pathwayQueryable.ToListAsync();
+        }
+
+        public async Task<IList<OverallResult>> GetUcasDataRecordsForResultsAsync()
+        {
+            var lastAmendmentsRun = GetLastRunOfJob(FunctionType.UcasTransferAmendments);
+            if (lastAmendmentsRun == null)
             {
-                pathwayQueryable = pathwayQueryable
-                    .Include(x => x.TqPathwayAssessments.Where(a => a.IsOptedin && a.EndDate == null))
-                        .ThenInclude(x => x.TqPathwayResults.Where(r => r.IsOptedin && r.EndDate == null))
-                            .ThenInclude(x => x.TlLookup)
-                    .Include(x => x.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null))
-                        .ThenInclude(x => x.TqSpecialismAssessments.Where(a => a.IsOptedin && a.EndDate == null))
-                            .ThenInclude(x => x.TqSpecialismResults.Where(r => r.IsOptedin && r.EndDate == null))
-                                .ThenInclude(x => x.TlLookup);
+                var currentAcademicYears = await _commonRepository.GetCurrentAcademicYearsAsync();
+                if (currentAcademicYears == null || !currentAcademicYears.Any())
+                    throw new ApplicationException("Current Academic years are not found. Method: GetCurrentAcademicYearsAsync()");
+
+                return await _dbContext.OverallResult
+                       .Include(x => x.TqRegistrationPathway)
+                       .ThenInclude(x => x.TqRegistrationProfile)
+                       .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
+                                   x.TqRegistrationPathway.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1 &&
+                                   x.IsOptedin && x.EndDate == null)
+                       .ToListAsync();
             }
 
-            return await pathwayQueryable.ToListAsync();
+            return await GetOverallResultsFrom(lastAmendmentsRun.CreatedOn);
+        }
+
+        public async Task<IList<OverallResult>> GetUcasDataRecordsForAmendmentsAsync()
+        {
+            var lastAmendmentsRun = GetLastRunOfJob(FunctionType.UcasTransferAmendments);
+            if (lastAmendmentsRun == null)
+            {
+                var lastResultRun = GetLastRunOfJob(FunctionType.UcasTransferResults);
+                if (lastResultRun == null)
+                    throw new ApplicationException($"Function log - last run details are not found for the job: {FunctionType.UcasTransferResults}");
+
+                return await GetOverallResultsFrom(lastResultRun.CreatedOn);
+            }
+
+            return await GetOverallResultsFrom(lastAmendmentsRun.CreatedOn);
+        }
+       
+        private async Task<IList<OverallResult>> GetOverallResultsFrom(DateTime lastJobRunDate)
+        {
+            return await _dbContext.OverallResult
+                .Include(x => x.TqRegistrationPathway)
+                    .ThenInclude(x => x.TqRegistrationProfile)
+                .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
+                            x.IsOptedin && x.EndDate == null && 
+                            x.CreatedOn > lastJobRunDate)
+                .ToListAsync();
+        }
+
+        private FunctionLog GetLastRunOfJob(FunctionType functionType)
+        {
+            return _dbContext.FunctionLog
+                        .Where(x => x.FunctionType == functionType && x.Status == FunctionStatus.Processed)
+                        .OrderByDescending(x => x.CreatedOn)
+                        .FirstOrDefault();
         }
     }
 }

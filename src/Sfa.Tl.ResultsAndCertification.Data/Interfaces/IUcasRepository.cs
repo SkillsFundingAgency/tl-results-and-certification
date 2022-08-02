@@ -6,6 +6,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
 {
     public interface IUcasRepository
     {
-        public Task<IList<TqRegistrationPathway>> GetUcasDataRecordsAsync(bool inclResults);
+        public Task<IList<TqRegistrationPathway>> GetUcasDataRecordsForEntriesAsync();
+        public Task<IList<OverallResult>> GetUcasDataRecordsForResultsAsync();
+        public Task<IList<OverallResult>> GetUcasDataRecordsForAmendmentsAsync();
     }
 }
