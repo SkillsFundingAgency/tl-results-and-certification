@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Assessment_Entries_DataFormat_And_Rules" xml:space="preserve">
-    <value>assessment entries data format and rules</value>
+    <value>Download assessment entries data format and rules ({0}, {1}KB)</value>
   </data>
   <data name="Assessment_Entries_FileSize_Text" xml:space="preserve">
     <value>285</value>
@@ -130,16 +130,10 @@
     <value>2 March 2022</value>
   </data>
   <data name="Assessment_Entries_Version_Text" xml:space="preserve">
-    <value>version 1.5</value>
+    <value>Version 1.5</value>
   </data>
   <data name="Choose_The_Right_Core_And_Specialism_Codes_Text" xml:space="preserve">
     <value>choose the right core and specialism codes</value>
-  </data>
-  <data name="Download_Text" xml:space="preserve">
-    <value>Download</value>
-  </data>
-  <data name="File_Size_Kb_Text" xml:space="preserve">
-    <value>KB</value>
   </data>
   <data name="Meet_The_Technical_Requirements_Text" xml:space="preserve">
     <value>meet the technical requirements</value>
@@ -163,10 +157,10 @@
     <value>2 March 2022</value>
   </data>
   <data name="Registrations_Version_Text" xml:space="preserve">
-    <value>version 1.7</value>
+    <value>Version 1.7</value>
   </data>
   <data name="Registration_DataFormat_And_Rules" xml:space="preserve">
-    <value>registrations data format and rules</value>
+    <value>Download registrations data format and rules ({0}, {1}KB)</value>
   </data>
   <data name="Results_FileSize_Text" xml:space="preserve">
     <value>274</value>
@@ -178,10 +172,10 @@
     <value>2 March 2022</value>
   </data>
   <data name="Results_Version_Text" xml:space="preserve">
-    <value>version 1.3</value>
+    <value>Version 1.3</value>
   </data>
   <data name="Result_DataFormat_And_Rules" xml:space="preserve">
-    <value>results data format and rules</value>
+    <value>Download results data format and rules ({0}, {1}KB)</value>
   </data>
   <data name="Section_Heading" xml:space="preserve">
     <value>T Levels data format and rules</value>

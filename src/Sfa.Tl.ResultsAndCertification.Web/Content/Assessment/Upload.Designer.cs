@@ -70,20 +70,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to version 1.5.
+        ///   Looks up a localized string similar to Version 1.5.
         /// </summary>
         public static string Assessments_Version {
             get {
                 return ResourceManager.GetString("Assessments_Version", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download.
-        /// </summary>
-        public static string Download {
-            get {
-                return ResourceManager.GetString("Download", resourceCulture);
             }
         }
         
@@ -160,7 +151,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T Levels assessment entry data format and rules.
+        ///   Looks up a localized string similar to Download T Levels assessment entry data format and rules ({0}, {1}).
         /// </summary>
         public static string Link_Tlevels_Assessment_Entry_Data_Format_Rules {
             get {

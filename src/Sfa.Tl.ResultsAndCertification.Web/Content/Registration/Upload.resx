@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Download" xml:space="preserve">
-    <value>Download</value>
-  </data>
   <data name="File_Max_Record_Count_Validation_Message" xml:space="preserve">
     <value>File must contain between one and {0} registrations</value>
   </data>
@@ -145,7 +142,7 @@
     <value>JavaScript is disabled so you will not see the upload progress icon after you press Submit. Processing the file can take up to 10 seconds depending on the file size.</value>
   </data>
   <data name="Link_Tlevels_Registration_Data_Format_Rules" xml:space="preserve">
-    <value>T Levels registrations data format and rules</value>
+    <value>Download T Levels registrations data format and rules ({0}, {1})</value>
   </data>
   <data name="List_Core_Code_Different" xml:space="preserve">
     <value>the core code is different - you cannot change the core code here</value>
@@ -184,7 +181,7 @@
     <value>published 2 March 2022</value>
   </data>
   <data name="Registrations_Version" xml:space="preserve">
-    <value>version 1.7</value>
+    <value>Version 1.7</value>
   </data>
   <data name="Select_File_To_Upload_Required_Validation_Message" xml:space="preserve">
     <value>Select a file to upload</value>
