@@ -18,7 +18,7 @@ USING (VALUES
 	(10, N'ZTLOS028', N'Protection Systems Engineering', 3),
 	(11, N'10202101', N'Heating Engineering', 3),
 	(12, N'ZTLOS029', N'Gas Engineering', 3),
-	(13, N'10202102', N'Plumbing', 3),
+	(13, N'10202102', N'Plumbing Engineering', 3),
 	(14, N'10202103', N'Refrigeration Engineering', 3),
 	(15, N'10202104', N'Air Conditioning Engineering', 3),
 	(16, N'10202105', N'Ventilation', 3),
