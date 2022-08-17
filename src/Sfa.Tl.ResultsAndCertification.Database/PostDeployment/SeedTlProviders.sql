@@ -183,7 +183,8 @@ USING (VALUES
 (175, 10057025, N'Utc South Durham', N'Utc South Durham'),
 (176, 10064686, N'Birkenhead Sixth Form College', N'Birkenhead Sixth Form College'),
 (177, 10082366, N'Ashton Sixth Form College', N'Ashton Sixth Form College'),
-(178, 10085525, N'Gateway Sixth Form College', N'Gateway Sixth Form College')
+(178, 10085525, N'Gateway Sixth Form College', N'Gateway Sixth Form College'),
+(179, 10036143, N'South Gloucestershire And Stroud College', N'South Gloucestershire And Stroud College')
 )
 AS Source ([Id], [UkPrn], [Name], [DisplayName]) 
 ON Target.[Id] = Source.[Id] 
