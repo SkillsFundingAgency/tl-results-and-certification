@@ -39,7 +39,30 @@ USING (VALUES
 	(31, N'ZTLOS018', N'Assisting with Healthcare Science', 9),
 	(32, N'ZTLOS019', N'Technical: Laboratory Sciences', 10),
 	(33, N'ZTLOS020', N'Technical: Food Sciences', 10),
-	(34, N'ZTLOS021', N'Technical: Metrology Sciences', 10)
+	(34, N'ZTLOS021', N'Technical: Metrology Sciences', 10),
+	(35, N'ZTLOS034', N'Investment Banking and Asset and Wealth Management Analyst', 11),
+	(36, N'ZTLOS033', N'Retail and Commercial Banking Analyst', 11),
+	(37, N'ZTLOS035', N'Insurance Practitioner', 11),
+	(38, N'ZTLOS036', N'Financial Compliance / Risk Analyst', 11),
+	(39, N'ZTLOS037', N'Assistant Accountant', 12),
+	(40, N'ZTLOS041', N'Design and Development: Mechanical Engineering', 13),
+	(41, N'ZTLOS042', N'Design and Development: Electrical and Electronic Engineering', 13),
+	(42, N'ZTLOS043', N'Design and Development: Control and Instrumentation Engineering', 13),
+	(43, N'ZTLOS044', N'Design and Development: Structural Engineering', 13),
+	(44, N'ZTLOS049', N'Light and Electric Vehicles', 14),
+	(45, N'ZTLOS045', N'Maintenance Engineering Technologies – Mechanical', 14),
+	(46, N'ZTLOS047', N'Maintenance Engineering Technologies - Electrical & Electronics', 14),
+	(47, N'ZTLOS048', N'Maintenance Engineering Technologies - Control & Instrumentation', 14),
+	(48, N'ZTLOS046', N'Maintenance Engineering Technologies – Mechatronics', 14),
+	(49, N'ZTLOS050', N'Fitting and Assembly Technologies', 15),
+	(50, N'ZTLOS051', N'Machining & Toolmaking Technologies', 15),
+	(51, N'ZTLOS052', N'Composites Manufacturing Technologies', 15),
+	(52, N'ZTLOS053', N'Fabrication & Welding Technologies', 15),
+	(53, N'ZTLOS038', N'Business Improvement', 16),
+	(54, N'ZTLOS039', N'Team Leadership / Management', 16),
+	(55, N'ZTLOS040', N'Business Support', 16),
+	(56, N'ZTLOS055', N'Dental Nursing', 8),
+	(57, N'ZTLOS054', N'Optical Care Services', 9)
   )
   AS Source ([Id], [LarId], [Name], [TlPathwayId]) 
 ON Target.[Id] = Source.[Id] 
