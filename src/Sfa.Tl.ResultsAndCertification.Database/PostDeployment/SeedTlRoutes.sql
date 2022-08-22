@@ -9,7 +9,10 @@ USING (VALUES
   (1, N'Construction'),
   (2, N'Education and Childcare'),
   (3, N'Digital'),
-  (4, N'Health and Science')
+  (4, N'Health and Science'),
+  (5, N'Legal, Finance and Accounting'),
+  (6, N'Engineering and Manufacturing'),
+  (7, N'Business and Administration')
   )
   AS Source ([Id], [Name]) 
 ON Target.[Id] = Source.[Id] 

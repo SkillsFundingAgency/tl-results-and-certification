@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to assessment entries data format and rules.
+        ///   Looks up a localized string similar to Download assessment entries data format and rules ({0}, {1}KB).
         /// </summary>
         public static string Assessment_Entries_DataFormat_And_Rules {
             get {
@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to version 1.5.
+        ///   Looks up a localized string similar to Version 1.5.
         /// </summary>
         public static string Assessment_Entries_Version_Text {
             get {
@@ -112,24 +112,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         public static string Choose_The_Right_Core_And_Specialism_Codes_Text {
             get {
                 return ResourceManager.GetString("Choose_The_Right_Core_And_Specialism_Codes_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download.
-        /// </summary>
-        public static string Download_Text {
-            get {
-                return ResourceManager.GetString("Download_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to KB.
-        /// </summary>
-        public static string File_Size_Kb_Text {
-            get {
-                return ResourceManager.GetString("File_Size_Kb_Text", resourceCulture);
             }
         }
         
@@ -170,7 +152,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to registrations data format and rules.
+        ///   Looks up a localized string similar to Download registrations data format and rules ({0}, {1}KB).
         /// </summary>
         public static string Registration_DataFormat_And_Rules {
             get {
@@ -206,7 +188,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to version 1.7.
+        ///   Looks up a localized string similar to Version 1.7.
         /// </summary>
         public static string Registrations_Version_Text {
             get {
@@ -215,7 +197,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to results data format and rules.
+        ///   Looks up a localized string similar to Download results data format and rules ({0}, {1}KB).
         /// </summary>
         public static string Result_DataFormat_And_Rules {
             get {
@@ -251,7 +233,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to version 1.3.
+        ///   Looks up a localized string similar to Version 1.3.
         /// </summary>
         public static string Results_Version_Text {
             get {

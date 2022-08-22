@@ -52,10 +52,11 @@
                     </a>
                 </div>
                 <h3 class="govuk-heading-s">
-                    @Upload.Download
-                    <a class="govuk-link" target="_self" asp-route="DownloadAssessmentEntriesDataFormatAndRulesGuide">@Upload.Link_Tlevels_Assessment_Entry_Data_Format_Rules</a>
+                    <a class="govuk-link" target="_self" asp-route="DownloadAssessmentEntriesDataFormatAndRulesGuide">
+                        @string.Format(@Upload.Link_Tlevels_Assessment_Entry_Data_Format_Rules, @Upload.File_Type, @Upload.File_Size_Kb_Text)
+                    </a>
                 </h3>
-                <p class="govuk-body-s">@Upload.File_Type, @Upload.File_Size_Kb_Text, @Upload.Assessments_Version, @Upload.Assessments_Published_On</p>
+                <p class="govuk-body-s">@Upload.Assessments_Version, @Upload.Assessments_Published_On</p>
             </section>
 
             <ul class="govuk-list govuk-list--bullet">
