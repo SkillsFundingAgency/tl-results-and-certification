@@ -121,10 +121,7 @@
     <value>published 2 March 2022</value>
   </data>
   <data name="Assessments_Version" xml:space="preserve">
-    <value>version 1.5</value>
-  </data>
-  <data name="Download" xml:space="preserve">
-    <value>Download</value>
+    <value>Version 1.5</value>
   </data>
   <data name="File_Max_Record_Count_Validation_Message" xml:space="preserve">
     <value>File must contain assessment entries for between one and {0} registrations</value>
@@ -151,7 +148,7 @@
     <value>JavaScript is disabled so you will not see the upload progress icon after you press Submit. Processing the file can take up to 10 seconds depending on the file size.</value>
   </data>
   <data name="Link_Tlevels_Assessment_Entry_Data_Format_Rules" xml:space="preserve">
-    <value>T Levels assessment entry data format and rules</value>
+    <value>Download T Levels assessment entry data format and rules ({0}, {1})</value>
   </data>
   <data name="List_Blank_Will_Delete_Existing" xml:space="preserve">
     <value>If a core or occupational specialism assessment entry is already held and a blank one is submitted in the file, the existing entry will be deleted.</value>

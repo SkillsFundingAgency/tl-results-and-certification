@@ -55,10 +55,11 @@
                     </a>
                 </div>
                 <h3 class="govuk-heading-s">
-                    @Upload.Download
-                    <a class="govuk-link" target="_self" asp-route="DownloadRegistrationDataFormatAndRulesGuide">@Upload.Link_Tlevels_Registration_Data_Format_Rules</a>
+                    <a class="govuk-link" target="_self" asp-route="DownloadRegistrationDataFormatAndRulesGuide">
+                        @string.Format(@Upload.Link_Tlevels_Registration_Data_Format_Rules, @Upload.File_Type, @Upload.File_Size_Kb_Text)
+                    </a>
                 </h3>
-                <p class="govuk-body-s">@Upload.File_Type, @Upload.File_Size_Kb_Text, @Upload.Registrations_Version, @Upload.Registrations_Published_On</p>
+                <p class="govuk-body-s">@Upload.Registrations_Version, @Upload.Registrations_Published_On</p>
             </section>
 
             <p class="govuk-body">@Upload.List_If_Uln_Already_Exist</p>

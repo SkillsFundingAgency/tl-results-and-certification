@@ -101,7 +101,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var unChangedRecords = totalRecords - (updatedRecords + newRecords);
 
             // Save.
-            var isSuccess = await SaveOverallResultsAsync(reconciledLearnerRecords);
+            var isSuccess = reconciledLearnerRecords.Any() ? await SaveOverallResultsAsync(reconciledLearnerRecords) : true;
 
             return new OverallResultResponse { IsSuccess = isSuccess, TotalRecords = totalRecords, UpdatedRecords = updatedRecords, NewRecords = newRecords, UnChangedRecords = unChangedRecords, SavedRecords = isSuccess ? reconciledLearnerRecords.Count : 0 };
         }

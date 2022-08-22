@@ -35,13 +35,13 @@ namespace Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults
         public string CoreResult { get { return Details.PathwayResult; } }
 
         [DisplayName(DownloadOverallResultsHeader.SpecialismComponent)]
-        public string SpecialismComponent { get { return Details.SpecialismDetails.Any() ? $"\"{Details.SpecialismDetails.FirstOrDefault().SpecialismName}\"" : string.Empty; } }
+        public string SpecialismComponent { get { return Details.SpecialismDetails != null && Details.SpecialismDetails.Any() ? $"\"{Details.SpecialismDetails.FirstOrDefault().SpecialismName}\"" : string.Empty; } }
 
         [DisplayName(DownloadOverallResultsHeader.SpecialismCode)]
-        public string SpecialismCode { get { return Details.SpecialismDetails.Any() ? Details.SpecialismDetails.FirstOrDefault().SpecialismLarId : string.Empty; } }
+        public string SpecialismCode { get { return Details.SpecialismDetails != null && Details.SpecialismDetails.Any() ? Details.SpecialismDetails.FirstOrDefault().SpecialismLarId : string.Empty; } }
 
         [DisplayName(DownloadOverallResultsHeader.SpecialismResult)]
-        public string SpecialismResult { get { return Details.SpecialismDetails.Any() ? Details.SpecialismDetails.FirstOrDefault().SpecialismResult : string.Empty; } }
+        public string SpecialismResult { get { return Details.SpecialismDetails != null && Details.SpecialismDetails.Any() ? Details.SpecialismDetails.FirstOrDefault().SpecialismResult : string.Empty; } }
 
         [DisplayName(DownloadOverallResultsHeader.IndustryPlacementStatus)]
         public string IndustryPlacementStatus { get { return Details.IndustryPlacementStatus; } }

@@ -61,15 +61,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download.
-        /// </summary>
-        public static string Download {
-            get {
-                return ResourceManager.GetString("Download", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to File must contain results for between one and {0} registrations.
         /// </summary>
         public static string File_Max_Record_Count_Validation_Message {
@@ -142,7 +133,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T Levels results data format and rules.
+        ///   Looks up a localized string similar to Download T Levels results data format and rules ({0}, {1}).
         /// </summary>
         public static string Link_Tlevels_Results_Data_Format_Rules {
             get {
@@ -241,7 +232,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to version 1.3.
+        ///   Looks up a localized string similar to Version 1.3.
         /// </summary>
         public static string Results_Version {
             get {

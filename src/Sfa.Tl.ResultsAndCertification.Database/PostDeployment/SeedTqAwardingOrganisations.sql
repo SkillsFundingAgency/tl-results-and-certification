@@ -15,9 +15,15 @@ USING (VALUES
 	(7, 2, 1, 1),
 	(8, 2, 5, 1),
 	(9, 3, 2, 1),
-	(10, 3, 3, 1)
+	(10, 3, 3, 1),
+	(11, 2, 11, 1),
+	(12, 2, 12, 1),
+	(13, 3, 13, 1),
+	(14, 3, 14, 1),
+	(15, 3, 15, 1),
+	(16, 3, 16, 1)
   )
-  AS Source ([Id], [TlAwardingOrganisatonId], [TlPathwayId], [ReviewStatus]) 
+AS Source ([Id], [TlAwardingOrganisatonId], [TlPathwayId], [ReviewStatus]) 
 ON Target.[Id] = Source.[Id] 
 -- Update from Source when Id is Matched
 WHEN MATCHED 
