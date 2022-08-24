@@ -40,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.OverallResu
             _result.EndDate.Should().Be(_data.EndDate);
             _result.IsOptedin.Should().BeTrue();
             _result.CertificateType.Should().Be(_data.CertificateType);
+            _result.CertificateStatus.Should().Be(_data.CertificateStatus);
             _result.CreatedBy.Should().Be(Constants.CreatedByUser);
             _result.CreatedOn.Should().Be(Constants.CreatedOn);
             _result.ModifiedBy.Should().Be(Constants.ModifiedByUser);

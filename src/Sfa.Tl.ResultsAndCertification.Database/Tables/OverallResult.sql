@@ -11,6 +11,7 @@
 	[EndDate] DATETIME NULL,
 	[IsOptedin] BIT NOT NULL DEFAULT 1,
 	[CertificateType] INT NULL,
+	[CertificateStatus] INT NULL,
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 
     [CreatedBy] NVARCHAR(50) NULL, 
     [ModifiedOn] DATETIME2 NULL, 
