@@ -101,12 +101,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             var sameResultPathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111113).TqRegistrationPathways.FirstOrDefault().Id;
             OverallResultDataProvider.CreateOverallResult(DbContext, new List<OverallResult> { new OverallResult { TqRegistrationPathwayId = sameResultPathwayId,
                 Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
-                ResultAwarded = "Distinction*", CalculationStatus = CalculationStatus.Completed, IsOptedin = true, CertificateType = PrintCertificateType.Certificate, PrintAvailableFrom = _printAvailableFrom } }, true);
+                ResultAwarded = "Distinction*", CalculationStatus = CalculationStatus.Completed, IsOptedin = true, CertificateType = PrintCertificateType.Certificate, CertificateStatus = CertificateStatus.AwaitingProcessing, PrintAvailableFrom = _printAvailableFrom } }, true);
 
             var differentCalcResultPathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111114).TqRegistrationPathways.FirstOrDefault().Id;
             OverallResultDataProvider.CreateOverallResult(DbContext, new List<OverallResult> { new OverallResult { TqRegistrationPathwayId = differentCalcResultPathwayId,
                 Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"C\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Pass\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Pass\"}",
-                ResultAwarded = "Distinction*", CalculationStatus = CalculationStatus.Completed, IsOptedin = true, CertificateType = PrintCertificateType.Certificate, PrintAvailableFrom = _printAvailableFrom } }, true);
+                ResultAwarded = "Distinction*", CalculationStatus = CalculationStatus.Completed, IsOptedin = true, CertificateType = PrintCertificateType.Certificate, CertificateStatus = CertificateStatus.AwaitingProcessing, PrintAvailableFrom = _printAvailableFrom } }, true);
 
 
             DbContext.SaveChanges();
@@ -148,6 +148,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     EndDate = null,
                     IsOptedin = true,
                     CertificateType = null,
+                    CertificateStatus = null
                 },
                 new OverallResult
                 {
@@ -160,6 +161,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     EndDate = null,
                     IsOptedin = true,
                     CertificateType = PrintCertificateType.StatementOfAchievement,
+                    CertificateStatus = CertificateStatus.AwaitingProcessing
                 },
                 new OverallResult
                 {
@@ -172,6 +174,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     EndDate = null,
                     IsOptedin = true,
                     CertificateType = PrintCertificateType.Certificate,
+                    CertificateStatus = CertificateStatus.AwaitingProcessing
                 },
 
                 new OverallResult
@@ -185,6 +188,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     EndDate = DateTime.UtcNow,
                     IsOptedin = false,
                     CertificateType = PrintCertificateType.Certificate,
+                    CertificateStatus = CertificateStatus.AwaitingProcessing
                 }
             };
 

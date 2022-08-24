@@ -15,6 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public DateTime? EndDate { get; set; }
         public bool IsOptedin { get; set; }
         public PrintCertificateType? CertificateType { get; set; }
+        public CertificateStatus? CertificateStatus { get; set; }
 
         public virtual TqRegistrationPathway TqRegistrationPathway { get; set; }
     }
