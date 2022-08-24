@@ -316,7 +316,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     ResultAwarded = overallGrade,
                     CalculationStatus = calculationStatus,
                     PublishDate = assessmentSeries.ResultPublishDate,
-                    PrintAvailableFrom = certificateType != null ? assessmentSeries.AppealEndDate.AddDays(1) : null,
+                    PrintAvailableFrom = certificateType != null ? assessmentSeries.PrintAvailableDate : null,
                     IsOptedin = true,
                     CertificateType = certificateType,
                     StartDate = DateTime.UtcNow,
