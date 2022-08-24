@@ -187,6 +187,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             // Overall result calculation
             services.AddTransient<IOverallResultCalculationService, OverallResultCalculationService>();
             services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();
+
+            // Certificate Printing Service
+            services.AddTransient<ICertificateService, CertificateService>();
         }
     }
 }
