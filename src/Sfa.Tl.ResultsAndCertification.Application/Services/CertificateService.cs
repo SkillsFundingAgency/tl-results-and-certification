@@ -21,16 +21,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<IList<OverallResult>> GetLearnerResultsForPrintingAsync()
         {
-            await Task.CompletedTask;
             var resultsForPrinting = await _overallResultRepository.GetManyAsync(x =>
                                                         x.PrintAvailableFrom.HasValue &&
-                                                        x.PrintAvailableFrom.Value < DateTime.Today &&
-                                                        (x.CalculationStatus == CalculationStatus.Completed ||
-                                                         x.CalculationStatus == CalculationStatus.CompletedRommRaised ||
-                                                         x.CalculationStatus == CalculationStatus.CompletedAppealRaised)
-                                                        // TODO: IsEligibleCertificateStatus,
-                                                        // TODO: OptedIn and EndDate is valid to checck in the printing
-                                                        ,
+                                                        DateTime.Today >= x.PrintAvailableFrom.Value &&
+                                                        (x.CalculationStatus == CalculationStatus.Completed || x.CalculationStatus == CalculationStatus.PartiallyCompleted) &&
+                                                        x.CertificateStatus == CertificateStatus.AwaitingProcessing &&
+                                                        x.IsOptedin && x.EndDate == null,
                                                         incl => incl.TqRegistrationPathway.TqRegistrationProfile,
                                                         incl => incl.TqRegistrationPathway.TqProvider.TlProvider.TlProviderAddresses)
                                                         .ToListAsync();
