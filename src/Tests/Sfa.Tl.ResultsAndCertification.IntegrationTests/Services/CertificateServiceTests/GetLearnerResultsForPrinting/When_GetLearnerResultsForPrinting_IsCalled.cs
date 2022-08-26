@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateServiceTests
+namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateServiceTests.GetLearnerResultsForPrinting
 {
     public class When_GetLearnerResultsForPrintingAsync_IsCalled : CertificateServiceBaseTest
     {
@@ -37,6 +37,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
             _expectedOverallResult = new OverallResultCustomBuilder()
                 .WithTqRegistrationPathwayId(GetPathwayId(1111111111))
                 .WithPrintAvailableFrom(DateTime.Now.AddDays(-1))
+                .WithCalculationStatus(CalculationStatus.Completed)
+                .WithCertificateStatus(CertificateStatus.AwaitingProcessing)
                 .Save(DbContext);
 
             // Invalid - PrintAvailableFrom not reached
@@ -57,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                 .WithCertificateStatus(CertificateStatus.Processed)
                 .Save(DbContext);
 
-            // Seed Overall results
+            // Create CertificateService
             CreateService();
         }
 
@@ -76,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
             var actualTlProvider = _actualResult.First().TlProvider;
             actualTlProvider.Should().NotBeNull();
             actualTlProvider.Should().BeEquivalentTo(TlProvider);
-            
+
             // Assert TlProviderAddress
             var actualTlProviderAdddress = actualTlProvider.TlProviderAddresses;
             actualTlProviderAdddress.Should().HaveCount(1);

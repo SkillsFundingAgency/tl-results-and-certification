@@ -23,6 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<List<LearnerResultsPrintingData>> GetLearnerResultsForPrintingAsync()
         {
+            var allData = await _overallResultRepository.GetManyAsync().ToListAsync();
             var resultsForPrinting = await _overallResultRepository.GetManyAsync(x =>
                                                 x.PrintAvailableFrom.HasValue &&
                                                 DateTime.Today >= x.PrintAvailableFrom.Value &&

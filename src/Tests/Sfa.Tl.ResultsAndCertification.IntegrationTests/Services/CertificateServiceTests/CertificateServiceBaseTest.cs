@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -430,58 +429,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
         {
             BarsleyCollege = 10000536,
             WalsallCollege = 10007315
-        }
-    }
-
-    public class OverallResultCustomBuilder
-    {
-        private readonly OverallResult _overallResult;
-
-        public OverallResultCustomBuilder()
-        {
-            _overallResult = new OverallResultBuilder().Build();
-        }
-
-        public OverallResultCustomBuilder(OverallResult overallResult)
-        {
-            _overallResult = overallResult;
-        }
-
-        public OverallResultCustomBuilder WithTqRegistrationPathwayId(int registrationPathwayId)
-        {
-            _overallResult.TqRegistrationPathwayId = registrationPathwayId;
-            return this;
-        }
-
-        public OverallResultCustomBuilder WithPrintAvailableFrom(DateTime printAvailableFrom)
-        {
-            _overallResult.PrintAvailableFrom = printAvailableFrom;
-            return this;
-        }
-
-        public OverallResultCustomBuilder WithCalculationStatus(CalculationStatus calculationStatus)
-        {
-            _overallResult.CalculationStatus = calculationStatus;
-            return this;
-        }
-
-        public OverallResultCustomBuilder WithCertificateStatus(CertificateStatus certificateStatus)
-        {
-            _overallResult.CertificateStatus = certificateStatus;
-            return this;
-        }
-
-        public OverallResult Build()
-        {
-            return _overallResult;
-        }
-
-        public OverallResult Save(ResultsAndCertificationDbContext dbContext)
-        {
-            OverallResultDataProvider.CreateOverallResult(dbContext, new List<OverallResult> { _overallResult });
-            dbContext.SaveChanges();
-
-            return _overallResult;
         }
     }
 }
