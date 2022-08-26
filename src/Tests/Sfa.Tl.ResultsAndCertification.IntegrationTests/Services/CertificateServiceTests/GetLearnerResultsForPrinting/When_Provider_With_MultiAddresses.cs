@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                 .Save(DbContext);
 
             _latestAddress = AddAdditionalProviderAddress();
-            //DetachAll();
+            DbContext.SaveChanges();
 
             // Create CertificateService
             CreateService();
