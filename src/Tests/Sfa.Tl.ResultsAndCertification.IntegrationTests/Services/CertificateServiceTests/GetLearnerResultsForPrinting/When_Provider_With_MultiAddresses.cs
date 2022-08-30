@@ -42,6 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
 
             _latestAddress = AddAdditionalProviderAddress();
             DbContext.SaveChanges();
+            DetachAll();
 
             // Create CertificateService
             CreateService();
@@ -52,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
             _actualResult = await CertificateService.GetLearnerResultsForPrintingAsync();
         }
 
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void Then_ExpectedResults_Are_Returned()
         {
             _actualResult.Should().NotBeNull();
@@ -70,12 +71,41 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
             // Assert TlProviderAddress
             var actualTlProviderAdddress = actualTlProvider.TlProviderAddresses.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
             actualTlProviderAdddress.Should().NotBeNull();
-            actualTlProviderAdddress.Should().BeEquivalentTo(_latestAddress);
+
+            actualTlProviderAdddress.TlProviderId.Should().Be(_latestAddress.TlProviderId);
+            actualTlProviderAdddress.DepartmentName.Should().Be(_latestAddress.DepartmentName);
+            actualTlProviderAdddress.OrganisationName.Should().Be(_latestAddress.OrganisationName);
+            actualTlProviderAdddress.AddressLine1.Should().Be(_latestAddress.AddressLine1);
+            actualTlProviderAdddress.AddressLine2.Should().Be(_latestAddress.AddressLine2);
+            actualTlProviderAdddress.Town.Should().Be(_latestAddress.Town);
+            actualTlProviderAdddress.Postcode.Should().Be(_latestAddress.Postcode);
+            actualTlProviderAdddress.IsActive.Should().Be(_latestAddress.IsActive);
+            actualTlProviderAdddress.CreatedOn.Should().Be(_latestAddress.CreatedOn);
+            actualTlProviderAdddress.CreatedBy.Should().Be(_latestAddress.CreatedBy);
 
             // Assert OverallResults
             var actualOverallResults = _actualResult.First().OverallResults;
             actualOverallResults.Should().HaveCount(1);
-            actualOverallResults.First().Should().BeEquivalentTo(_expectedOverallResult);
+
+            actualOverallResults[0].TqRegistrationPathwayId.Should().Be(_expectedOverallResult.TqRegistrationPathwayId);
+            actualOverallResults[0].Details.Should().Be(_expectedOverallResult.Details);
+            actualOverallResults[0].ResultAwarded.Should().Be(_expectedOverallResult.ResultAwarded);
+            actualOverallResults[0].CalculationStatus.Should().Be(_expectedOverallResult.CalculationStatus);
+            actualOverallResults[0].PrintAvailableFrom.Should().Be(_expectedOverallResult.PrintAvailableFrom);
+            actualOverallResults[0].PublishDate.Should().Be(_expectedOverallResult.PublishDate);
+            if (_expectedOverallResult.EndDate == null)
+            {
+                actualOverallResults[0].IsOptedin.Should().BeTrue();
+                actualOverallResults[0].EndDate.Should().BeNull();
+            }
+            else
+            {
+                actualOverallResults[0].IsOptedin.Should().BeFalse();
+                actualOverallResults[0].EndDate.Should().NotBeNull();
+            }
+
+            actualOverallResults[0].CertificateType.Should().Be(_expectedOverallResult.CertificateType);
+            actualOverallResults[0].CertificateStatus.Should().Be(_expectedOverallResult.CertificateStatus);
         }
 
         private int GetPathwayId(long uln)
@@ -89,6 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
             latestAddress.DepartmentName = "Latest Office";
             latestAddress.OrganisationName = "Latest Org";
             latestAddress.AddressLine1 = "Latest Address1";
+            latestAddress.CreatedOn = DateTime.Now.AddMinutes(3);
 
             return TlProviderAddress = TlProviderAddressDataProvider.CreateTlProviderAddress(DbContext, latestAddress);
         }
