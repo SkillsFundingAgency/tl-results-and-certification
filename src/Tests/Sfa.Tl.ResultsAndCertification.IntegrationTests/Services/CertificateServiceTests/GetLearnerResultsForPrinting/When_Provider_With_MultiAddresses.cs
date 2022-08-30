@@ -32,6 +32,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsData(_ulns, null);
 
+            _registrations.First().MathsStatus = SubjectStatus.AchievedByLrs;
+            _registrations.First().EnglishStatus = SubjectStatus.AchievedByLrs;
+
             // Valid
             _expectedOverallResult = new OverallResultCustomBuilder()
                 .WithTqRegistrationPathwayId(GetPathwayId(1111111111))
@@ -106,6 +109,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
 
             actualOverallResults[0].CertificateType.Should().Be(_expectedOverallResult.CertificateType);
             actualOverallResults[0].CertificateStatus.Should().Be(_expectedOverallResult.CertificateStatus);
+
+            // Assert Profile
+            var actualProfile = _actualResult.First().OverallResults.First().TqRegistrationPathway.TqRegistrationProfile;
+            var expectedProfile = _expectedOverallResult.TqRegistrationPathway.TqRegistrationProfile;
+            actualProfile.Firstname.Should().Be(expectedProfile.Firstname);
+            actualProfile.Lastname.Should().Be(expectedProfile.Lastname);
+            actualProfile.DateofBirth.Should().Be(expectedProfile.DateofBirth);
+            actualProfile.Gender.Should().Be(expectedProfile.Gender);
+            actualProfile.UniqueLearnerNumber.Should().Be(expectedProfile.UniqueLearnerNumber);
+            actualProfile.MathsStatus.Should().Be(expectedProfile.MathsStatus);
+            actualProfile.EnglishStatus.Should().Be(expectedProfile.EnglishStatus);
+            actualProfile.IsLearnerVerified.Should().Be(expectedProfile.IsLearnerVerified);
+            actualProfile.EnglishStatus.Should().Be(expectedProfile.EnglishStatus);
+            actualProfile.CreatedOn.Should().Be(expectedProfile.CreatedOn);
+            actualProfile.CreatedBy.Should().Be(expectedProfile.CreatedBy);
         }
 
         private int GetPathwayId(long uln)

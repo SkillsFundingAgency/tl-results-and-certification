@@ -88,6 +88,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
             var actualOverallResults = _actualResult.First().OverallResults;
             actualOverallResults.Should().HaveCount(1);
             actualOverallResults.First().Should().BeEquivalentTo(_expectedOverallResult);
+
+            // Assert Profile
+            var actualProfile = _actualResult.First().OverallResults.First().TqRegistrationPathway.TqRegistrationProfile;
+            var expectedProfile = _expectedOverallResult.TqRegistrationPathway.TqRegistrationProfile;
+            actualProfile.Should().BeEquivalentTo(expectedProfile);
         }
 
         private int GetPathwayId(long uln)
