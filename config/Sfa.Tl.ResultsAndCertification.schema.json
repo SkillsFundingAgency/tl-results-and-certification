@@ -420,6 +420,19 @@
         "NoOfAcademicYearsToProcess"
       ],
       "type": "object"
+    },
+	"CertificatePrintingBatchSettings": {
+      "properties": {
+        "ProvidersBatchSize": {          
+          "type": "integer",
+          "environmentVariable": "CertificatePrintingProvidersBatchSize"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "ProvidersBatchSize"        
+      ],
+      "type": "object"
     }
   },
   "additionalProperties": false,
@@ -446,7 +459,8 @@
     "UcasApiSettings",
     "LearningRecordServiceSettings",
     "UcasDataSettings",
-	"OverallResultBatchSettings"
+	"OverallResultBatchSettings",
+	"CertificatePrintingBatchSettings"
   ],
   "type": "object"
 }

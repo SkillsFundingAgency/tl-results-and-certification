@@ -93,7 +93,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
         private void RegisterApiClients(IServiceCollection services)
         {
-            var lrsCertificate = CertificateService.GetLearningRecordServiceCertificate(_configuration).GetAwaiter().GetResult();
+            var lrsCertificate = Common.Services.Certificates.CertificateService.GetLearningRecordServiceCertificate(_configuration).GetAwaiter().GetResult();
 
             services.AddTransient<ILearnerServiceR9Client>(learnerClient =>
             {

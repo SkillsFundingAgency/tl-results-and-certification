@@ -227,5 +227,13 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// The Freeze period end date.
         /// </value>
         public DateTime FreezePeriodEndDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets certificate printing batch settings.
+        /// </summary>
+        /// <value>
+        /// The certificate printing batch record settings.
+        /// </value>
+        public CertificatePrintingBatchSettings CertificatePrintingBatchSettings { get; set; }
     }
 }

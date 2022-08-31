@@ -39,6 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.AssessmentS
             _result.AppealEndDate.Should().Be(_data.AppealEndDate);
             _result.ResultCalculationYear.Should().Be(_data.ResultCalculationYear);
             _result.ResultPublishDate.Should().Be(_data.ResultPublishDate);
+            _result.PrintAvailableDate.Should().Be(_data.PrintAvailableDate);
             _result.CreatedBy.Should().Be(Constants.CreatedByUser);
             _result.CreatedOn.Should().Be(Constants.CreatedOn);
             _result.ModifiedBy.Should().Be(Constants.ModifiedByUser);
