@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Models;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -14,12 +15,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     public class CertificateService : ICertificateService
     {
         private readonly IRepository<OverallResult> _overallResultRepository;
+        private readonly IRepository<Batch> _batchRepository;
+        private readonly IMapper _mapper;
 
-        public CertificateService(IRepository<OverallResult> overallResultRepository)
+        public CertificateService(IRepository<OverallResult> overallResultRepository,
+            IRepository<Batch> batchRepository,
+            IMapper mapper)
         {
             _overallResultRepository = overallResultRepository;
+            _batchRepository = batchRepository;
+            _mapper = mapper;
         }
-
 
         public async Task<List<LearnerResultsPrintingData>> GetLearnerResultsForPrintingAsync()
         {
@@ -39,6 +45,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                             .ToListAsync();
 
             return resultsForPrinting;
+        }
+
+        public async Task<bool> CreatePrintingBatchAsync()
+        {
+            // Pending printing
+            var learners = GetLearnerResultsForPrintingAsync();
+
+            // Map
+            var printingBatches = _mapper.Map<List<Batch>>(learners);
+
+            // Save
+            return await _batchRepository.UpdateManyAsync(printingBatches) > 0;
         }
     }
 }
