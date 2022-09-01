@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
@@ -56,8 +58,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
             var overallResultLogger = new Logger<GenericRepository<OverallResult>>(new NullLoggerFactory());
             var overallResultRepository = new GenericRepository<OverallResult>(overallResultLogger, DbContext);
 
+            var batchRepositoryLogger = new Logger<GenericRepository<Batch>>(new NullLoggerFactory());
+            var batchRepository = new GenericRepository<Batch>(batchRepositoryLogger, DbContext);
+
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CertificateMapper).Assembly));
+            var mapper = new Mapper(mapperConfig);
+
             // Create Service class to test. 
-            CertificateService = new CertificateService(ResultsAndCertificationConfiguration, overallResultRepository);
+            CertificateService = new CertificateService(ResultsAndCertificationConfiguration, overallResultRepository, batchRepository, mapper);
         }
 
         public List<TqRegistrationProfile> SeedRegistrationsData(Dictionary<long, RegistrationPathwayStatus> ulns, TqProvider tqProvider = null, bool isCouplet = false)
