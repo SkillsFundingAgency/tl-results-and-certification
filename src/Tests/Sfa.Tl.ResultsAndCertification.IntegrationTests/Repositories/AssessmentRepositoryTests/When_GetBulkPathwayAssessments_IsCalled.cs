@@ -103,14 +103,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
         {
             get
             {
+                var currentAcademicYear = GetAcademicYear();
                 return new[]
                 {
-                    new object[] { 1111111111, "Autumn 2021", "A*" },
-                    new object[] { 1111111112, "Autumn 2021", null },
-                    new object[] { 1111111113, "Autumn 2021", null },
-                    new object[] { 1111111114, "Summer 2021", "A*" },
-                    new object[] { 1111111115, "Summer 2021", null },
-                    new object[] { 1111111116, null, null },
+                    new object[] { 1111111111, $"Autumn {currentAcademicYear}", "A*" },
+                    new object[] { 1111111112, $"Autumn {currentAcademicYear}", null },
+                    new object[] { 1111111113, $"Autumn {currentAcademicYear}", null },
+                    new object[] { 1111111114, $"Summer {currentAcademicYear}", "A*" },
+                    new object[] { 1111111115, $"Summer {currentAcademicYear}", null },
+                    new object[] { 1111111116, null, null }
                 };
             }
         }
