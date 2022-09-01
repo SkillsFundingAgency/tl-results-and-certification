@@ -27,7 +27,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
         protected TqProvider TqProvider;
         protected IList<TlProvider> TlProviders;
         protected TlProviderAddress TlProviderAddress;
-        
+        protected IList<TqProvider> TqProviders;
+
+
         protected CertificateService CertificateService;
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
@@ -38,8 +40,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
             Specialism = TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, Pathway).First();
             TqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, Pathway, TlAwardingOrganisation);
             TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
-            TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
             TlProviderAddress = TlProviderAddressDataProvider.CreateTlProviderAddress(DbContext, new TlProviderAddressBuilder().Build(TlProvider));
+            TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
+            TlProviders = new List<TlProvider> { TlProvider };
+            TqProviders = new List<TqProvider> { TqProvider };
 
             DbContext.SaveChanges();
         }
@@ -100,6 +104,33 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                 DbContext.SaveChanges();
 
             return tqPathwayAssessment;
+        }
+
+        public void SeedTqProvider(Provider provider)
+        {
+            var pro = new TlProviderBuilder().BuildList().FirstOrDefault(x => x.UkPrn == (long)provider);
+            var tlProvider = ProviderDataProvider.CreateTlProvider(DbContext, pro);
+            TlProviders.Add(tlProvider);
+            TlProviderAddressDataProvider.CreateTlProviderAddress(DbContext, new TlProviderAddressBuilder().Build(tlProvider));
+            TqProviders.Add(ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, tlProvider));
+
+            DbContext.SaveChanges();
+        }
+
+        public void SetRegistrationProviders(List<TqRegistrationProfile> registrations, List<long> ulns, Provider provider)
+        {
+            foreach (var uln in ulns)
+            {
+                var reg = registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln);
+                reg.TqRegistrationPathways.FirstOrDefault().TqProvider = TqProviders.FirstOrDefault(x => x.TlProvider.UkPrn == (long)provider);
+            }
+
+            DbContext.SaveChanges();
+        }
+        public enum Provider
+        {
+            BarsleyCollege = 10000536,
+            WalsallCollege = 10007315
         }
     }
 }

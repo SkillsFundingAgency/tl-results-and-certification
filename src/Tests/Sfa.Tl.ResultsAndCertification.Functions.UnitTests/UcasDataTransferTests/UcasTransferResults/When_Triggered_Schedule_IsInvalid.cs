@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
             CommonService.CurrentDate.Returns(todayDate);
         }
 
-        [Fact(Skip = "Disabled for Testing")]
+        [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.DidNotReceive().CreateFunctionLog(Arg.Any<FunctionLogDetails>());

@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,7 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsDataByStatus(_ulns, null);
 
-            SetAcademicYear(_registrations, 2021, new List<long> { 1111111114 });
+            SetAcademicYear(_registrations, new List<long> { 1111111111, 1111111112, 1111111113 }, -1);
+            SetAcademicYear(_registrations, new List<long> { 1111111114 }, 0);
 
             var ulnsWithOverallResult = new List<long> { 1111111111, 1111111112, 1111111113, 1111111114 };
             _overallResults = SeedOverallResultData(_registrations, ulnsWithOverallResult);
@@ -65,12 +67,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
                 actualOverallResult.TqRegistrationPathway.Should().BeEquivalentTo(expectedOverallResult.TqRegistrationPathway);
                 actualOverallResult.TqRegistrationPathway.TqRegistrationProfile.Should().BeEquivalentTo(expectedOverallResult.TqRegistrationPathway.TqRegistrationProfile);
             }
-        }
-
-        private void SetAcademicYear(List<TqRegistrationProfile> _registrations, int academicYear, List<long> ulns)
-        {
-            _registrations.Where(x => ulns.Contains(x.UniqueLearnerNumber)).ToList()
-                .ForEach(x => { x.TqRegistrationPathways.FirstOrDefault().AcademicYear = academicYear; });
         }
     }
 }

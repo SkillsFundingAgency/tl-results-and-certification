@@ -317,6 +317,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
 
         }
 
+        public void SetAcademicYear(List<TqRegistrationProfile> _registrations, List<long> ulns, int offset)
+        {
+            var currentAcademicYear = AcademicYears.FirstOrDefault(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate).Year + offset;
+            _registrations.Where(x => ulns.Contains(x.UniqueLearnerNumber)).ToList()
+                .ForEach(x => { x.TqRegistrationPathways.FirstOrDefault().AcademicYear = currentAcademicYear; });
+        }
+
         public void AssertHeaderRecord(UcasDataType ucasDataType)
         {
             ActualResult.Header.Should().NotBeNull();

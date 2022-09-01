@@ -26,6 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsDataByStatus(_ulns, null);
 
+            SetAcademicYear(_registrations, new List<long> { 1111111111, 1111111112, 1111111113 }, -1);
+
             var ulnsWithOverallResult = new List<long> { 1111111111, 1111111112, 1111111113 };
             SeedOverallResultData(_registrations, ulnsWithOverallResult);
 
