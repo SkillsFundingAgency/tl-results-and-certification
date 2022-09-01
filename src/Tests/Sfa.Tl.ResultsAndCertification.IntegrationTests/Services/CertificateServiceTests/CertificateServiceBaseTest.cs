@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -25,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
         protected TqProvider TqProvider;
         protected IList<TlProvider> TlProviders;
         protected TlProviderAddress TlProviderAddress;
-        
+        protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected CertificateService CertificateService;
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
@@ -44,11 +45,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
 
         protected virtual void CreateService()
         {
+            ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
+            {
+                CertificatePrintingBatchSettings = new CertificatePrintingBatchSettings
+                {
+                    ProvidersBatchSize = 2
+                }
+            };
+
             var overallResultLogger = new Logger<GenericRepository<OverallResult>>(new NullLoggerFactory());
             var overallResultRepository = new GenericRepository<OverallResult>(overallResultLogger, DbContext);
 
             // Create Service class to test. 
-            CertificateService = new CertificateService(overallResultRepository);
+            CertificateService = new CertificateService(ResultsAndCertificationConfiguration, overallResultRepository);
         }
 
         public List<TqRegistrationProfile> SeedRegistrationsData(Dictionary<long, RegistrationPathwayStatus> ulns, TqProvider tqProvider = null, bool isCouplet = false)

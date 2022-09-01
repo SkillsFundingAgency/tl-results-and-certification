@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
         protected IList<TlLookup> TlLookup;
         protected IList<TlLookup> PathwayComponentGrades;
         protected IList<TlLookup> SpecialismComponentGrades;
-        protected IList<AcademicYear> AcademicYears;
+        protected static IList<AcademicYear> AcademicYears;
 
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected IAssessmentRepository AssessmentRepository;
@@ -300,7 +300,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
         }
 
 
-        public int GetAcademicYear()
+        public static int GetAcademicYear()
         {
             return AcademicYears.FirstOrDefault(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate).Year;
         }

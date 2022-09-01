@@ -168,7 +168,7 @@
 
         public const int OverallResultDefaultNoOfAcademicYearsToProcess = 4;
         public const int OverallResultDefaultBatchSize = 5000;
-
+        public const int CertificatePrintingDefaultProvidersBatchSize = 50;
 
         public const string PathwayComponentGradeUnclassifiedCode = "PCG7";
         public const string SpecialismComponentGradeUnclassifiedCode = "SCG4";
