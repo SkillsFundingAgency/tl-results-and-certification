@@ -5,7 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Printing;
 using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using System;
 using System.Collections.Generic;
@@ -17,68 +17,56 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
     {
         public CertificateMapper()
         {
-            CreateMap<LearnerResultsPrintingData, Batch>()
+            CreateMap<List<LearnerResultsPrintingData>, Batch>()
                 .ForMember(d => d.Type, opts => opts.MapFrom(s => BatchType.Printing))
                 .ForMember(d => d.Status, opts => opts.MapFrom(s => BatchStatus.Created))
                 .ForMember(d => d.PrintBatchItems, opts => opts.MapFrom(s => s))
                 .ForMember(d => d.CreatedBy, opts => opts.MapFrom(s => Constants.FunctionPerformedBy));
 
-            CreateMap<LearnerResultsPrintingData, ICollection<PrintBatchItem>>()
-                .ConstructUsing((m, context) =>
-                {
-                    return new List<PrintBatchItem>
-                    {
-                        new PrintBatchItem
-                        {
-                            TlProviderAddressId = m.TlProvider.TlProviderAddresses.FirstOrDefault().Id,
-                            CreatedBy = Constants.FunctionPerformedBy,
-                            PrintCertificates = context.Mapper.Map<IList<PrintCertificate>>(m.OverallResults)
-                        }
-                    };
-                });
+            CreateMap<LearnerResultsPrintingData, PrintBatchItem>()
+                .ForMember(d => d.TlProviderAddressId, opts => opts.MapFrom(s => s.TlProvider.TlProviderAddresses.FirstOrDefault().Id))
+                .ForMember(d => d.CreatedBy, opts => opts.MapFrom(s => Constants.FunctionPerformedBy))
+                .ForMember(d => d.PrintCertificates, opts => opts.MapFrom(s => s.OverallResults));
 
             CreateMap<OverallResult, PrintCertificate>()
-                .ConstructUsing((m, context) =>
-                {
-                    var overallResultDetail = JsonConvert.DeserializeObject<OverallResultDetail>(m.Details);
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber))
+                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.TqRegistrationPathway.TqRegistrationProfile.Firstname} {s.TqRegistrationPathway.TqRegistrationProfile.Lastname}"))
+                .ForMember(d => d.TqRegistrationPathwayId, opts => opts.MapFrom(s => s.TqRegistrationPathwayId))
+                .ForMember(d => d.Type, opts => opts.MapFrom(s => s.CertificateType.Value))
+                .ForMember(d => d.DisplaySnapshot, opts => opts.MapFrom(s => string.Empty)) // Todo: empty?
+                .ForMember(d => d.LearningDetails, opts => opts.MapFrom(s => TransformLearningDetails(s)))
+                .ForMember(d => d.CreatedBy, opts => opts.MapFrom(s => Constants.FunctionPerformedBy));
+        }
 
-                    var certificateType = m.CalculationStatus == CalculationStatus.Completed ? PrintCertificateType.Certificate
-                                                                : PrintCertificateType.StatementOfAchievement;
-                    var learningDetails = new LearningDetails
-                    {
-                        TLevelTitle = overallResultDetail.TlevelTitle,
-                        Core = overallResultDetail.PathwayName,
-                        CoreGrade = overallResultDetail.PathwayResult,
-                        OccupationalSpecialism = context.Mapper.Map<List<OccupationalSpecialismDetails>>(overallResultDetail.SpecialismDetails), // TODO
-                        IndustryPlacement = overallResultDetail.IndustryPlacementStatus,
-                        Grade = m.ResultAwarded,
-                        EnglishAndMaths = "TODO",
-                        Date = DateTime.UtcNow.ToDobFormat()
-                    };
+        private static string TransformLearningDetails(OverallResult overallResult)
+        {
+            var overallResultDetail = JsonConvert.DeserializeObject<OverallResultDetail>(overallResult.Details);
+            var specialisms = new List<OccupationalSpecialism>();
+            overallResultDetail.SpecialismDetails.ForEach(x =>
+            {
+                specialisms.Add(new OccupationalSpecialism { Specialism = x.SpecialismName, Grade = x.SpecialismResult });
+            });
 
-                    var soaPrintingDetails = new SoaPrintingDetails();
+            var profile = overallResult.TqRegistrationPathway.TqRegistrationProfile;
+            var learningDetails = new LearningDetails
+            {
+                TLevelTitle = overallResultDetail.TlevelTitle,
+                Core = overallResultDetail.PathwayName,
+                CoreGrade = overallResultDetail.PathwayResult,
+                OccupationalSpecialism = specialisms,
+                IndustryPlacement = overallResultDetail.IndustryPlacementStatus,
+                Grade = overallResult.ResultAwarded,
+                EnglishAndMaths = GetEnglishAndMathsStatus(profile.EnglishStatus, profile.MathsStatus),
+                Date = DateTime.UtcNow.ToDobFormat()
+            };
 
-                    return new PrintCertificate
-                    {
-                        Uln = m.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
-                        LearnerName = $"{m.TqRegistrationPathway.TqRegistrationProfile.Firstname} {m.TqRegistrationPathway.TqRegistrationProfile.Lastname}",
-                        TqRegistrationPathwayId = m.TqRegistrationPathwayId,
-                        Type = certificateType,
-                        LearningDetails = JsonConvert.SerializeObject(learningDetails),
-                        DisplaySnapshot = JsonConvert.SerializeObject(soaPrintingDetails),
-                        CreatedBy = Constants.FunctionPerformedBy,
-                    };
-                });
+            return JsonConvert.SerializeObject(learningDetails);
+        }
 
-            CreateMap<OverallSpecialismDetail, OccupationalSpecialismDetails>()
-                .ConstructUsing((m, context) =>
-                {
-                    return new OccupationalSpecialismDetails
-                    {
-                        Specialism = m.SpecialismName,
-                        Grade = m.SpecialismResult
-                    };
-                });
+        private static string GetEnglishAndMathsStatus(SubjectStatus? englishStatus, SubjectStatus? mathsStatus)
+        {
+            // TODO: move this to common
+            return "TODO: This learner has completd English and Maths";
         }
     }
 }

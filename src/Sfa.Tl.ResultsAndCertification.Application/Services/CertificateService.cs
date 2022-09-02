@@ -75,19 +75,78 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<CertificateResponse> PreparePrintingBatchesAsync(IEnumerable<LearnerResultsPrintingData> learnersPrintingData)
         {
             await Task.CompletedTask;
+
+            // Map
+            var printingBatchData = _mapper.Map<Batch>(learnersPrintingData);
+
+            //await _batchRepository.CreateAsync(printingBatchData);
+
+            // TODO: Update OverallResutls 
+
             return new CertificateResponse { IsSuccess = true, TotalRecords = 10, UpdatedRecords = 10, SavedRecords = 10 };
         }
 
-        public async Task<bool> CreatePrintingBatchAsync()
+        public async Task<Batch> CreatePrintingBatchAsync()
         {
-            // Pending printing
-            var learners = GetLearnerResultsForPrintingAsync();
+            var testData = new List<LearnerResultsPrintingData>
+            {
+                new LearnerResultsPrintingData
+                {
+                   TlProvider = new TlProvider { Id = 1, UkPrn = 11111111, DisplayName = "Barsley College", Name = "Barsley College", IsActive = true,
+                       TlProviderAddresses = new List<TlProviderAddress> { new TlProviderAddress { Id = 11, DepartmentName = "Dept", AddressLine1 = "Add1", Postcode = "SN1 5JA", Town= "Swindon", IsActive = true } } },
+
+                   OverallResults = new List<OverallResult>
+                   {
+                       new OverallResult
+                       {
+                           TqRegistrationPathwayId = 1111,
+                           TqRegistrationPathway = new TqRegistrationPathway { Id = 111, TqRegistrationProfile = new TqRegistrationProfile { UniqueLearnerNumber = 1111111111, Firstname = "first11", Lastname = "lastname11" } },
+                           CertificateType = PrintCertificateType.Certificate,
+                           Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
+
+                       },
+                       new OverallResult
+                       {
+                           TqRegistrationPathwayId = 1112,
+                           TqRegistrationPathway = new TqRegistrationPathway { Id = 112, TqRegistrationProfile = new TqRegistrationProfile { UniqueLearnerNumber = 1111111112, Firstname = "first12", Lastname = "lastname12" } },
+                           CertificateType = PrintCertificateType.Certificate,
+                           Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
+
+                       },
+                   }
+                },
+
+                new LearnerResultsPrintingData
+                {
+                   TlProvider = new TlProvider { Id = 2, UkPrn = 22222222, DisplayName = "Walsall College", Name = "Walsall College", IsActive = true,
+                       TlProviderAddresses = new List<TlProviderAddress> { new TlProviderAddress { Id = 22, DepartmentName = "Dept", AddressLine1 = "Add1", Postcode = "SN1 5JA", Town= "Swindon", IsActive = true } } },
+
+                   OverallResults = new List<OverallResult>
+                   {
+                       new OverallResult
+                       {
+                           TqRegistrationPathwayId = 2222,
+                           TqRegistrationPathway = new TqRegistrationPathway { Id = 222, TqRegistrationProfile = new TqRegistrationProfile { UniqueLearnerNumber = 2222222222, Firstname = "first22", Lastname = "lastname22" } },
+                           CertificateType = PrintCertificateType.Certificate,
+                           Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
+
+                       },
+                       new OverallResult
+                       {
+                           TqRegistrationPathwayId = 2223,
+                           TqRegistrationPathway = new TqRegistrationPathway { Id = 223, TqRegistrationProfile = new TqRegistrationProfile { UniqueLearnerNumber = 2222222222, Firstname = "first23", Lastname = "lastname23" } },
+                           CertificateType = PrintCertificateType.Certificate,
+                           Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
+
+                       },
+                   }
+                }
+            };
+
+            await Task.CompletedTask;
 
             // Map
-            var printingBatches = _mapper.Map<List<Batch>>(learners);
-
-            // Save
-            return await _batchRepository.UpdateManyAsync(printingBatches) > 0;
+            return _mapper.Map<Batch>(testData);
         }
     }
 }

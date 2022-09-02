@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Models;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -20,9 +21,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpGet]
         [Route("GetLearnerResultsForPrinting")]
-        public async Task<List<LearnerResultsPrintingData>> GetLearnerResultsForPrintingAsync()
+        public async Task<Batch> GetLearnerResultsForPrintingAsync()
         {
-            return await _certificateService.GetLearnerResultsForPrintingAsync();
+            return await _certificateService.CreatePrintingBatchAsync();
         }
     }
 }
