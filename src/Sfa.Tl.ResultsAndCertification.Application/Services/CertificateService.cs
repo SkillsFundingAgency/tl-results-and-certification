@@ -103,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                            TqRegistrationPathway = new TqRegistrationPathway { Id = 111, TqRegistrationProfile = new TqRegistrationProfile { UniqueLearnerNumber = 1111111111, Firstname = "first11", Lastname = "lastname11" } },
                            CertificateType = PrintCertificateType.Certificate,
                            Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
-
+                           ResultAwarded = "Distinction" 
                        },
                        new OverallResult
                        {
@@ -111,7 +111,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                            TqRegistrationPathway = new TqRegistrationPathway { Id = 112, TqRegistrationProfile = new TqRegistrationProfile { UniqueLearnerNumber = 1111111112, Firstname = "first12", Lastname = "lastname12" } },
                            CertificateType = PrintCertificateType.Certificate,
                            Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
-
+                           ResultAwarded = "Merit"
                        },
                    }
                 },
@@ -129,7 +129,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                            TqRegistrationPathway = new TqRegistrationPathway { Id = 222, TqRegistrationProfile = new TqRegistrationProfile { UniqueLearnerNumber = 2222222222, Firstname = "first22", Lastname = "lastname22" } },
                            CertificateType = PrintCertificateType.Certificate,
                            Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
-
+                           ResultAwarded = "Pass"
                        },
                        new OverallResult
                        {
@@ -137,7 +137,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                            TqRegistrationPathway = new TqRegistrationPathway { Id = 223, TqRegistrationProfile = new TqRegistrationProfile { UniqueLearnerNumber = 2222222222, Firstname = "first23", Lastname = "lastname23" } },
                            CertificateType = PrintCertificateType.Certificate,
                            Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
-
+                           ResultAwarded = "Distinction*"
                        },
                    }
                 }
