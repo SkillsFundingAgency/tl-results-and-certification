@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
         {
             var overallResultDetail = JsonConvert.DeserializeObject<OverallResultDetail>(overallResult.Details);
             var specialisms = new List<OccupationalSpecialism>();
-            overallResultDetail.SpecialismDetails.ForEach(x =>
+            overallResultDetail.SpecialismDetails?.ForEach(x =>
             {
                 specialisms.Add(new OccupationalSpecialism { Specialism = x.SpecialismName, Grade = x.SpecialismResult });
             });
@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 TLevelTitle = overallResultDetail.TlevelTitle.Replace(Constants.TLevelIn, string.Empty, StringComparison.InvariantCultureIgnoreCase),
                 Core = overallResultDetail.PathwayName,
                 CoreGrade = overallResultDetail.PathwayResult,
-                OccupationalSpecialism = specialisms,
+                OccupationalSpecialism = overallResultDetail.SpecialismDetails != null ? specialisms : null,
                 IndustryPlacement = overallResultDetail.IndustryPlacementStatus,
                 Grade = overallResult.ResultAwarded,
                 EnglishAndMaths = GetEnglishAndMathsStatus(profile.EnglishStatus, profile.MathsStatus),
