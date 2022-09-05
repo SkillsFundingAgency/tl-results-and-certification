@@ -56,17 +56,24 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 OccupationalSpecialism = specialisms,
                 IndustryPlacement = overallResultDetail.IndustryPlacementStatus,
                 Grade = overallResult.ResultAwarded,
-                EnglishAndMaths = GetEnglishAndMathsStatus(profile.EnglishStatus, profile.MathsStatus),
+                EnglishAndMaths = GetEnglishAndMathsText(profile.EnglishStatus, profile.MathsStatus),
                 Date = DateTime.UtcNow.ToDobFormat()
             };
 
             return JsonConvert.SerializeObject(learningDetails);
         }
 
-        private static string GetEnglishAndMathsStatus(SubjectStatus? englishStatus, SubjectStatus? mathsStatus)
+        private static string GetEnglishAndMathsText(SubjectStatus? englishStatus, SubjectStatus? mathsStatus)
         {
-            // TODO: move this to common
-            return "TODO: This learner has completd English and Maths";
+            if ((englishStatus == SubjectStatus.Achieved || englishStatus == SubjectStatus.AchievedByLrs) &&
+                (mathsStatus == SubjectStatus.Achieved || mathsStatus == SubjectStatus.AchievedByLrs))
+                return Constants.MathsAndEnglishAchievedText;
+            else if (mathsStatus == SubjectStatus.Achieved || mathsStatus == SubjectStatus.AchievedByLrs)
+                return Constants.MathsAchievedText;
+            else if (englishStatus == SubjectStatus.Achieved || englishStatus == SubjectStatus.AchievedByLrs)
+                return Constants.EnglishAchievedText;
+            else
+                return null;
         }
     }
 }

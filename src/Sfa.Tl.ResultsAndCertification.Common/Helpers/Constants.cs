@@ -134,7 +134,9 @@
         public const string EnglishAndMathsMet = "Met";
         public const string EnglishAndMathsNotMet = "Not met";
         public const string TLevelIn = "T Level in ";
-
+        public const string MathsAndEnglishAchievedText = "The named recipient has also achieved a qualification at Level 2 in both maths and English.";
+        public const string MathsAchievedText = "The named recipient has also achieved a qualification at Level 2 in maths.";
+        public const string EnglishAchievedText = "The named recipient has also achieved a qualification at Level 2 in English.";
 
         // Other constants
         public const string NoBorderBottomCssClassName = "tl-no-border-bottom";
