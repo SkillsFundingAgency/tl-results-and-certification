@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.TqRegistrationPathway.TqRegistrationProfile.Firstname} {s.TqRegistrationPathway.TqRegistrationProfile.Lastname}"))
                 .ForMember(d => d.TqRegistrationPathwayId, opts => opts.MapFrom(s => s.TqRegistrationPathwayId))
                 .ForMember(d => d.Type, opts => opts.MapFrom(s => s.CertificateType.Value))
-                .ForMember(d => d.DisplaySnapshot, opts => opts.MapFrom(s => string.Empty)) // Todo: empty?
+                .ForMember(d => d.DisplaySnapshot, opts => opts.Ignore())
                 .ForMember(d => d.LearningDetails, opts => opts.MapFrom(s => TransformLearningDetails(s)))
                 .ForMember(d => d.CreatedBy, opts => opts.MapFrom(s => Constants.FunctionPerformedBy));
         }
@@ -50,14 +50,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
             var profile = overallResult.TqRegistrationPathway.TqRegistrationProfile;
             var learningDetails = new LearningDetails
             {
-                TLevelTitle = overallResultDetail.TlevelTitle,
+                TLevelTitle = overallResultDetail.TlevelTitle.Replace(Constants.TLevelIn, string.Empty, StringComparison.InvariantCultureIgnoreCase),
                 Core = overallResultDetail.PathwayName,
                 CoreGrade = overallResultDetail.PathwayResult,
                 OccupationalSpecialism = specialisms,
                 IndustryPlacement = overallResultDetail.IndustryPlacementStatus,
                 Grade = overallResult.ResultAwarded,
                 EnglishAndMaths = GetEnglishAndMathsText(profile.EnglishStatus, profile.MathsStatus),
-                Date = DateTime.UtcNow.ToDobFormat()
+                Date = DateTime.UtcNow.ToCertificateDateFormat()
             };
 
             return JsonConvert.SerializeObject(learningDetails);

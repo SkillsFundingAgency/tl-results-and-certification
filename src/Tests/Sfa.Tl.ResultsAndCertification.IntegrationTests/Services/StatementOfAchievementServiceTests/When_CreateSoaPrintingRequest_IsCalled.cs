@@ -201,7 +201,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
                 {
                     TLevelTitle = pathway.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
                     Grade = null,
-                    Date = DateTime.UtcNow.ToSoaFormat(),
+                    Date = DateTime.UtcNow.ToCertificateDateFormat(),
                     Core = pathway.TqProvider.TqAwardingOrganisation.TlPathway.Name,
                     CoreGrade = pathwayResult?.TlLookup.Value,
                     OccupationalSpecialism = new List<OccupationalSpecialismDetails>
