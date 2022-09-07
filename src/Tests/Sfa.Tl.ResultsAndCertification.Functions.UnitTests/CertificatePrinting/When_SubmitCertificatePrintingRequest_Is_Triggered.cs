@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificatePrinting
 
         public async override Task When()
         {
-            await CertificatePrintingFunction.SubmitCertificatePrintingRequestAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<CertificatePrintingRequest>());
+            await CertificatePrintingFunction.SubmitCertificatePrintingRequestAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<Functions.CertificatePrinting>());
         }
 
         [Fact]
