@@ -19,16 +19,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     {
         private readonly ResultsAndCertificationConfiguration _configuration;
         private readonly IRepository<OverallResult> _overallResultRepository;
-        private readonly IRepository<Batch> _batchRepository;
+        private readonly ICertificateRepository _certificateRepository;
         private readonly IMapper _mapper;
 
         public CertificateService(ResultsAndCertificationConfiguration configuration,
-            IRepository<OverallResult> overallResultRepository, IRepository<Batch> batchRepository,
+            IRepository<OverallResult> overallResultRepository,
+            ICertificateRepository certificateRepository,
             IMapper mapper)
         {
             _configuration = configuration;
             _overallResultRepository = overallResultRepository;
-            _batchRepository = batchRepository;
+            _certificateRepository = certificateRepository;
             _mapper = mapper;
         }
 
@@ -46,6 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                                 incl => incl.TqRegistrationPathway.TqRegistrationProfile,
                                                 incl => incl.TqRegistrationPathway.TqProvider.TlProvider.TlProviderAddresses.OrderByDescending(o => o.CreatedOn).Take(1))
                                             .GroupBy(x => x.TqRegistrationPathway.TqProvider.TlProviderId)
+                                            .AsNoTracking()
                                             .Select (x => new LearnerResultsPrintingData  { TlProvider = x.First().TqRegistrationPathway.TqProvider.TlProvider, OverallResults = x.ToList() })
                                             .ToListAsync();
 
@@ -66,24 +68,28 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             for (var batchIndex = 0; batchIndex < batchesToProcess; batchIndex++)
             {
                 var leanersToProcess = learnerResultsForPrinting.Skip(batchIndex * batchSize).Take(batchSize);
-                response.Add(await PreparePrintingBatchesAsync(leanersToProcess));
+                response.Add(await PrepareCertificatesPrintingBatchesAsync(leanersToProcess));
             }
 
             return response;
         }
 
-        public async Task<CertificateResponse> PreparePrintingBatchesAsync(IEnumerable<LearnerResultsPrintingData> learnersPrintingData)
+        private async Task<CertificateResponse> PrepareCertificatesPrintingBatchesAsync(IEnumerable<LearnerResultsPrintingData> learnersPrintingData)
         {
-            await Task.CompletedTask;
-
             // Map
             var printingBatchData = _mapper.Map<Batch>(learnersPrintingData);
 
-            //await _batchRepository.CreateAsync(printingBatchData);
+            var overallResults = new List<OverallResult>();
+            
+            var response = await _certificateRepository.SaveCertificatesPrintingDataAsync(printingBatchData, overallResults);
 
-            // TODO: Update OverallResutls 
-
-            return new CertificateResponse { IsSuccess = true, TotalRecords = 10, UpdatedRecords = 10, SavedRecords = 10 };
+            return new CertificateResponse
+            {
+                IsSuccess = response.IsSuccess,
+                BatchId = response.BatchId,
+                ProvidersCount = printingBatchData.PrintBatchItems.Count(),
+                CertificatesCreated = response.TotalBatchRecordsCreated - (printingBatchData.PrintBatchItems.Count + 1)
+            };
         }
 
         public async Task<Batch> CreatePrintingBatchAsync()

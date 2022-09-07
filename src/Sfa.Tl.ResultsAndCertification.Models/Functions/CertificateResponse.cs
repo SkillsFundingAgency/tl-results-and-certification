@@ -2,15 +2,24 @@
 {
     public class CertificateResponse : FunctionResponse
     {
-        public int TotalRecords { get; set; }
-        public int UpdatedRecords { get; set; }
-        public int SavedRecords { get; set; }
-
-        
-        // TODO: Reconsile Once Save and Update are implemented.
+        /// <summary>
+        /// Gets or sets the batch identifier.
+        /// </summary>
+        /// <value>
+        /// The batch identifier.
+        /// </value>
         public int BatchId { get; set; }
-        public int ProvidersCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the providers count.
+        /// </summary>
+        /// <value>
+        /// The providers count.
+        /// </value>
+        public int ProvidersCount { get; set; }        
+
         public int CertificatesCreated { get; set; }
+        
         public int OverallResultsUpdatedCount { get; set; }
     }
 }
