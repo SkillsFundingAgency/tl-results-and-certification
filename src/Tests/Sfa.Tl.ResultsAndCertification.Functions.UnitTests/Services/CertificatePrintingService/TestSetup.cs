@@ -15,6 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.Certificat
         protected ILogger<ICertificatePrintingService> Logger;
         protected IPrintingService PrintingService;
         protected IPrintingApiClient PrintingApiClient;
+        protected ICertificateService CertificateService;
         protected Functions.Services.CertificatePrintingService Service;
         protected CertificatePrintingResponse ActualResult;
 
@@ -23,11 +24,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.Certificat
             Logger = Substitute.For<ILogger<ICertificatePrintingService>>();
             PrintingService = Substitute.For<IPrintingService>();
             PrintingApiClient = Substitute.For<IPrintingApiClient>();
+            CertificateService = Substitute.For<ICertificateService>();
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly));
             Mapper = new AutoMapper.Mapper(mapperConfig);
 
-            Service = new Functions.Services.CertificatePrintingService(Mapper, Logger, PrintingApiClient, PrintingService);
-        }        
+            Service = new Functions.Services.CertificatePrintingService(Mapper, Logger, PrintingApiClient, PrintingService, CertificateService);
+        }
     }
 }

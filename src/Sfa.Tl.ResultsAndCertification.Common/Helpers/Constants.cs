@@ -158,6 +158,7 @@
         public const string FetchLearnerGender = "FetchLearnerGender";
         public const string VerifyLearnerAndFetchLearningEvents = "VerifyLearnerAndFetchLearningEvents";
         public const string SubmitCertificatePrintingRequest = "SubmitCertificatePrintingRequest";
+        public const string GenrateCertificatePrintingBatches = "GenrateCertificatePrintingBatches";
         public const string FetchCertificatePrintingBatchSummary = "FetchCertificatePrintingBatchSummary";
         public const string FetchCertificatePrintingTrackBatch = "FetchCertificatePrintingTrackBatch";
         public const string UcasTransferEntries = "UcasTransferEntries";
