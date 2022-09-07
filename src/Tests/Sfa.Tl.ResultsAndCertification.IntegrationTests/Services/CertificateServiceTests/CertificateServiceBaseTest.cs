@@ -61,14 +61,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
             var overallResultLogger = new Logger<GenericRepository<OverallResult>>(new NullLoggerFactory());
             var overallResultRepository = new GenericRepository<OverallResult>(overallResultLogger, DbContext);
 
-            var batchRepositoryLogger = new Logger<GenericRepository<Batch>>(new NullLoggerFactory());
-            var batchRepository = new GenericRepository<Batch>(batchRepositoryLogger, DbContext);
-
+            var certificateRepositoryLogger = new Logger<CertificateRepository>(new NullLoggerFactory());
+            var certificateRepository = new CertificateRepository(certificateRepositoryLogger, DbContext);
+ 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CertificateMapper).Assembly));
             var mapper = new Mapper(mapperConfig);
 
             // Create Service class to test. 
-            CertificateService = new CertificateService(ResultsAndCertificationConfiguration, overallResultRepository, batchRepository, mapper);
+            CertificateService = new CertificateService(ResultsAndCertificationConfiguration, overallResultRepository, certificateRepository, mapper);
         }
 
         public List<TqRegistrationProfile> SeedRegistrationsData(Dictionary<long, RegistrationPathwayStatus> ulns, TqProvider tqProvider = null, bool isCouplet = false)
