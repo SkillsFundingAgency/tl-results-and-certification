@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
             {
                 overallResultDetail.SpecialismDetails?.ForEach(x =>
                 {
-                    specialisms.Add(new OccupationalSpecialism { Specialism = x.SpecialismName, Grade = x.SpecialismResult });
+                    specialisms.Add(new OccupationalSpecialism { Specialism = x.SpecialismName, Grade = !string.IsNullOrWhiteSpace(x.SpecialismResult) ? x.SpecialismResult : Constants.NotCompleted });
                 });
             }
 
@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
             {
                 TLevelTitle = overallResultDetail.TlevelTitle.Replace(Constants.TLevelIn, string.Empty, StringComparison.InvariantCultureIgnoreCase),
                 Core = overallResultDetail.PathwayName,
-                CoreGrade = overallResultDetail.PathwayResult,
+                CoreGrade = !string.IsNullOrWhiteSpace(overallResultDetail.PathwayResult) ? overallResultDetail.PathwayResult : Constants.NotCompleted,
                 OccupationalSpecialism = specialisms,
                 IndustryPlacement = overallResultDetail.IndustryPlacementStatus,
                 Grade = overallResult.ResultAwarded,
