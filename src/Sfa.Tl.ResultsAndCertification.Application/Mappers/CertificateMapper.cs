@@ -41,11 +41,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
         private static string TransformLearningDetails(OverallResult overallResult)
         {
             var overallResultDetail = JsonConvert.DeserializeObject<OverallResultDetail>(overallResult.Details);
+
             var specialisms = new List<OccupationalSpecialism>();
-            overallResultDetail.SpecialismDetails?.ForEach(x =>
+            if (overallResultDetail.SpecialismDetails == null || !overallResultDetail.SpecialismDetails.Any())
+                specialisms.Add(new OccupationalSpecialism { Specialism = string.Empty, Grade = Constants.NotCompleted });
+            else
             {
-                specialisms.Add(new OccupationalSpecialism { Specialism = x.SpecialismName, Grade = x.SpecialismResult });
-            });
+                overallResultDetail.SpecialismDetails?.ForEach(x =>
+                {
+                    specialisms.Add(new OccupationalSpecialism { Specialism = x.SpecialismName, Grade = x.SpecialismResult });
+                });
+            }
 
             var profile = overallResult.TqRegistrationPathway.TqRegistrationProfile;
             var learningDetails = new LearningDetails
@@ -53,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 TLevelTitle = overallResultDetail.TlevelTitle.Replace(Constants.TLevelIn, string.Empty, StringComparison.InvariantCultureIgnoreCase),
                 Core = overallResultDetail.PathwayName,
                 CoreGrade = overallResultDetail.PathwayResult,
-                OccupationalSpecialism = overallResultDetail.SpecialismDetails != null ? specialisms : null,
+                OccupationalSpecialism = specialisms,
                 IndustryPlacement = overallResultDetail.IndustryPlacementStatus,
                 Grade = overallResult.ResultAwarded,
                 EnglishAndMaths = GetEnglishAndMathsText(profile.EnglishStatus, profile.MathsStatus),

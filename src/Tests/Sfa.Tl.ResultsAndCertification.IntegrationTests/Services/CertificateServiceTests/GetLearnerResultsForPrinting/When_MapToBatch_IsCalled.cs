@@ -100,7 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                            new PrintCertificate {
                                                   Uln = 1111111112, LearnerName = "first12 last12", TqRegistrationPathwayId = 1112, Type = PrintCertificateType.Certificate,
                                                   DisplaySnapshot = null, CreatedBy = Constants.FunctionPerformedBy,
-                                                  LearningDetails = "{\"TLevelTitle\":\"Health\",\"Grade\":\"Merit\",\"Date\":\"" + awardedOn + "\",\"Core\":\"Health\",\"CoreGrade\":\"A*\",\"OccupationalSpecialism\":null,\"IndustryPlacement\":\"Not completed\",\"EnglishAndMaths\":\"The named recipient has also achieved a qualification at Level 2 in English.\",\"MARS\":null}"
+                                                  LearningDetails = "{\"TLevelTitle\":\"Health\",\"Grade\":\"Merit\",\"Date\":\"" + awardedOn + "\",\"Core\":\"Health\",\"CoreGrade\":\"A*\",\"OccupationalSpecialism\":[{\"Specialism\":\"\",\"Grade\":\"Not completed\"}],\"IndustryPlacement\":\"Not completed\",\"EnglishAndMaths\":\"The named recipient has also achieved a qualification at Level 2 in English.\",\"MARS\":null}"
                                                 },
                         }
                     },
