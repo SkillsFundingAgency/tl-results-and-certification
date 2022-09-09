@@ -99,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
             actualTlProvider.Should().NotBeNull();
 
             var expectedTlProvider = TlProviders.FirstOrDefault(x => x.UkPrn == (long)provider);
-            actualTlProvider.Should().BeEquivalentTo(expectedTlProvider);
+            AssertTlProvider(actualTlProvider, expectedTlProvider);
 
             // Assert TlProviderAddress
             var actualTlProviderAdddress = actualTlProvider.TlProviderAddresses;
@@ -109,13 +109,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
             // Assert OverallResults
             var actualOverallResults = actualResult.First().OverallResults;
             actualOverallResults.Should().HaveCount(1);
+
             var expectedOverallResult = _expectedResults.FirstOrDefault(x => x.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == (long)provider);
-            actualOverallResults.First().Should().BeEquivalentTo(expectedOverallResult);
+            AssertOverallResult(actualOverallResults[0], expectedOverallResult);
 
             // Assert Profile
             var actualProfile = actualResult.First().OverallResults.First().TqRegistrationPathway.TqRegistrationProfile;
             var expectedProfile = expectedOverallResult.TqRegistrationPathway.TqRegistrationProfile;
-            actualProfile.Should().BeEquivalentTo(expectedProfile);
+            AssertProfile(actualProfile, expectedProfile);
         }
 
         private int GetPathwayId(long uln)

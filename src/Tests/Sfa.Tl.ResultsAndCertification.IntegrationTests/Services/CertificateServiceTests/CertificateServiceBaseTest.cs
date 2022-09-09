@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
@@ -135,6 +136,53 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
 
             DbContext.SaveChanges();
         }
+
+        public static void AssertTlProvider(TlProvider actualTlProvider, TlProvider expectedTlProvider)
+        {
+            actualTlProvider.Name.Should().Be(expectedTlProvider.Name);
+            actualTlProvider.DisplayName.Should().Be(expectedTlProvider.DisplayName);
+            actualTlProvider.IsActive.Should().Be(expectedTlProvider.IsActive);
+            actualTlProvider.CreatedBy.Should().Be(expectedTlProvider.CreatedBy);
+            actualTlProvider.CreatedOn.Should().Be(expectedTlProvider.CreatedOn);
+        }
+
+        public static void AssertOverallResult(OverallResult actualOverallResult, OverallResult expectedOverallResult)
+        {
+            actualOverallResult.TqRegistrationPathwayId.Should().Be(expectedOverallResult.TqRegistrationPathwayId);
+            actualOverallResult.Details.Should().Be(expectedOverallResult.Details);
+            actualOverallResult.ResultAwarded.Should().Be(expectedOverallResult.ResultAwarded);
+            actualOverallResult.CalculationStatus.Should().Be(expectedOverallResult.CalculationStatus);
+            actualOverallResult.PrintAvailableFrom.Should().Be(expectedOverallResult.PrintAvailableFrom);
+            actualOverallResult.PublishDate.Should().Be(expectedOverallResult.PublishDate);
+            if (expectedOverallResult.EndDate == null)
+            {
+                actualOverallResult.IsOptedin.Should().BeTrue();
+                actualOverallResult.EndDate.Should().BeNull();
+            }
+            else
+            {
+                actualOverallResult.IsOptedin.Should().BeFalse();
+                actualOverallResult.EndDate.Should().NotBeNull();
+            }
+            actualOverallResult.CertificateType.Should().Be(expectedOverallResult.CertificateType);
+            actualOverallResult.CertificateStatus.Should().Be(expectedOverallResult.CertificateStatus);
+        }
+
+        public static void AssertProfile(TqRegistrationProfile actualProfile, TqRegistrationProfile expectedProfile)
+        {
+            actualProfile.Firstname.Should().Be(expectedProfile.Firstname);
+            actualProfile.Lastname.Should().Be(expectedProfile.Lastname);
+            actualProfile.DateofBirth.Should().Be(expectedProfile.DateofBirth);
+            actualProfile.Gender.Should().Be(expectedProfile.Gender);
+            actualProfile.UniqueLearnerNumber.Should().Be(expectedProfile.UniqueLearnerNumber);
+            actualProfile.MathsStatus.Should().Be(expectedProfile.MathsStatus);
+            actualProfile.EnglishStatus.Should().Be(expectedProfile.EnglishStatus);
+            actualProfile.IsLearnerVerified.Should().Be(expectedProfile.IsLearnerVerified);
+            actualProfile.EnglishStatus.Should().Be(expectedProfile.EnglishStatus);
+            actualProfile.CreatedOn.Should().Be(expectedProfile.CreatedOn);
+            actualProfile.CreatedBy.Should().Be(expectedProfile.CreatedBy);
+        }
+
         public enum Provider
         {
             BarsleyCollege = 10000536,
