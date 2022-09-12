@@ -137,6 +137,8 @@
         public const string MathsAndEnglishAchievedText = "The named recipient has also achieved a qualification at Level 2 in both maths and English.";
         public const string MathsAchievedText = "The named recipient has also achieved a qualification at Level 2 in maths.";
         public const string EnglishAchievedText = "The named recipient has also achieved a qualification at Level 2 in English.";
+        public const string Met = "Met";
+        public const string NotMet = "Not met";
 
         // Other constants
         public const string NoBorderBottomCssClassName = "tl-no-border-bottom";

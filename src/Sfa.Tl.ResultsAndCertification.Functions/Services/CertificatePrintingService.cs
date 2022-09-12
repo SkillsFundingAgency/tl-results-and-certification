@@ -136,7 +136,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
                 _logger.LogWarning(LogEvent.NoDataFound, message);
                 return new List<CertificateResponse> { new CertificateResponse { IsSuccess = true, Message = message } };
             }
-            return response; ;
+            return response;
         }
     }
 }

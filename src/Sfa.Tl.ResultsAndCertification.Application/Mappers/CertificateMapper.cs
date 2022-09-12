@@ -29,6 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.PrintCertificates, opts => opts.MapFrom(s => s.OverallResults));
 
             CreateMap<OverallResult, PrintCertificate>()
+                .ForMember(d => d.Id, opts => opts.Ignore())
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber))
                 .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.TqRegistrationPathway.TqRegistrationProfile.Firstname} {s.TqRegistrationPathway.TqRegistrationProfile.Lastname}"))
                 .ForMember(d => d.TqRegistrationPathwayId, opts => opts.MapFrom(s => s.TqRegistrationPathwayId))
@@ -61,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 Core = overallResultDetail.PathwayName,
                 CoreGrade = !string.IsNullOrWhiteSpace(overallResultDetail.PathwayResult) ? overallResultDetail.PathwayResult : Constants.NotCompleted,
                 OccupationalSpecialism = specialisms,
-                IndustryPlacement = overallResultDetail.IndustryPlacementStatus,
+                IndustryPlacement = GetIndustryPlacementText(overallResultDetail.IndustryPlacementStatus),
                 Grade = overallResult.ResultAwarded,
                 EnglishAndMaths = GetEnglishAndMathsText(profile.EnglishStatus, profile.MathsStatus),
                 Date = DateTime.UtcNow.ToCertificateDateFormat()
@@ -81,6 +82,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 return Constants.EnglishAchievedText;
             else
                 return null;
+        }
+
+        private static string GetIndustryPlacementText(string industryPlacementStatus)
+        {
+            var ipStatus = EnumExtensions.GetEnumByDisplayName<IndustryPlacementStatus>(industryPlacementStatus);
+            
+            if (ipStatus == IndustryPlacementStatus.Completed || ipStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
+                return Constants.Met;
+            
+           return Constants.NotMet;
         }
     }
 }

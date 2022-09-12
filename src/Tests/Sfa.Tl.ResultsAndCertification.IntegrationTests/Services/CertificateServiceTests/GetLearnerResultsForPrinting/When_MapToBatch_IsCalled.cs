@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                                            TqRegistrationPathwayId = 2222,
                                            TqRegistrationPathway = new TqRegistrationPathway { Id = 2222, TqRegistrationProfile = new TqRegistrationProfile { UniqueLearnerNumber = 2222222222, Firstname = "first22", Lastname = "last22", EnglishStatus = SubjectStatus.NotAchieved, MathsStatus = SubjectStatus.NotSpecified } },
                                            CertificateType = PrintCertificateType.Certificate,
-                                           Details = "{\"TlevelTitle\":\"T Level in Science\",\"PathwayName\":\"Science\",\"PathwayLarId\":\"60369899\",\"PathwayResult\":null,\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}, {\"SpecialismName\":\"Civil Engineering\",\"SpecialismLarId\":\"ZTLOS002\",\"SpecialismResult\":null}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
+                                           Details = "{\"TlevelTitle\":\"T Level in Science\",\"PathwayName\":\"Science\",\"PathwayLarId\":\"60369899\",\"PathwayResult\":null,\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}, {\"SpecialismName\":\"Civil Engineering\",\"SpecialismLarId\":\"ZTLOS002\",\"SpecialismResult\":null}],\"IndustryPlacementStatus\":null,\"OverallResult\":\"Distinction*\"}",
                                            ResultAwarded = "Distinction*"
                                        },
                                    }
@@ -95,12 +95,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                            new PrintCertificate {
                                                   Uln = 1111111111, LearnerName = "first11 last11", TqRegistrationPathwayId = 1111, Type = PrintCertificateType.Certificate,
                                                   DisplaySnapshot = null, CreatedBy = Constants.FunctionPerformedBy,
-                                                  LearningDetails = "{\"TLevelTitle\":\"Design, Surveying and Planning for Construction\",\"Grade\":\"Distinction\",\"Date\":\"" + awardedOn + "\",\"Core\":\"Design, Surveying and Planning\",\"CoreGrade\":\"A*\",\"OccupationalSpecialism\":[{\"Specialism\":\"Surveying and design for construction and the built environment\",\"Grade\":\"Distinction\"}],\"IndustryPlacement\":\"Completed\",\"EnglishAndMaths\":\"The named recipient has also achieved a qualification at Level 2 in both maths and English.\",\"MARS\":null}"
+                                                  LearningDetails = "{\"TLevelTitle\":\"Design, Surveying and Planning for Construction\",\"Grade\":\"Distinction\",\"Date\":\"" + awardedOn + "\",\"Core\":\"Design, Surveying and Planning\",\"CoreGrade\":\"A*\",\"OccupationalSpecialism\":[{\"Specialism\":\"Surveying and design for construction and the built environment\",\"Grade\":\"Distinction\"}],\"IndustryPlacement\":\"Met\",\"EnglishAndMaths\":\"The named recipient has also achieved a qualification at Level 2 in both maths and English.\",\"MARS\":null}"
                                                 },
                            new PrintCertificate {
                                                   Uln = 1111111112, LearnerName = "first12 last12", TqRegistrationPathwayId = 1112, Type = PrintCertificateType.Certificate,
                                                   DisplaySnapshot = null, CreatedBy = Constants.FunctionPerformedBy,
-                                                  LearningDetails = "{\"TLevelTitle\":\"Health\",\"Grade\":\"Merit\",\"Date\":\"" + awardedOn + "\",\"Core\":\"Health\",\"CoreGrade\":\"A*\",\"OccupationalSpecialism\":[{\"Specialism\":\"\",\"Grade\":\"Not completed\"}],\"IndustryPlacement\":\"Not completed\",\"EnglishAndMaths\":\"The named recipient has also achieved a qualification at Level 2 in English.\",\"MARS\":null}"
+                                                  LearningDetails = "{\"TLevelTitle\":\"Health\",\"Grade\":\"Merit\",\"Date\":\"" + awardedOn + "\",\"Core\":\"Health\",\"CoreGrade\":\"A*\",\"OccupationalSpecialism\":[{\"Specialism\":\"\",\"Grade\":\"Not completed\"}],\"IndustryPlacement\":\"Not met\",\"EnglishAndMaths\":\"The named recipient has also achieved a qualification at Level 2 in English.\",\"MARS\":null}"
                                                 },
                         }
                     },
@@ -113,12 +113,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                            new PrintCertificate { 
                                                    Uln = 2222222221, LearnerName = "first21 last21", TqRegistrationPathwayId = 2221, Type = PrintCertificateType.Certificate, 
                                                    DisplaySnapshot = null, CreatedBy = Constants.FunctionPerformedBy,
-                                                   LearningDetails = "{\"TLevelTitle\":\"Education and Childcare\",\"Grade\":\"Pass\",\"Date\":\"" + awardedOn + "\",\"Core\":\"Education and Childcare\",\"CoreGrade\":\"A*\",\"OccupationalSpecialism\":[{\"Specialism\":\"Surveying and design for construction and the built environment\",\"Grade\":\"Distinction\"}],\"IndustryPlacement\":\"Completed with special consideration\",\"EnglishAndMaths\":\"The named recipient has also achieved a qualification at Level 2 in maths.\",\"MARS\":null}"
+                                                   LearningDetails = "{\"TLevelTitle\":\"Education and Childcare\",\"Grade\":\"Pass\",\"Date\":\"" + awardedOn + "\",\"Core\":\"Education and Childcare\",\"CoreGrade\":\"A*\",\"OccupationalSpecialism\":[{\"Specialism\":\"Surveying and design for construction and the built environment\",\"Grade\":\"Distinction\"}],\"IndustryPlacement\":\"Met\",\"EnglishAndMaths\":\"The named recipient has also achieved a qualification at Level 2 in maths.\",\"MARS\":null}"
                                                 },
                            new PrintCertificate { 
                                                     Uln = 2222222222, LearnerName = "first22 last22", TqRegistrationPathwayId = 2222, Type = PrintCertificateType.Certificate, 
                                                     DisplaySnapshot = null, CreatedBy = Constants.FunctionPerformedBy,
-                                                    LearningDetails = "{\"TLevelTitle\":\"Science\",\"Grade\":\"Distinction*\",\"Date\":\"" + awardedOn + "\",\"Core\":\"Science\",\"CoreGrade\":\"Not completed\",\"OccupationalSpecialism\":[{\"Specialism\":\"Surveying and design for construction and the built environment\",\"Grade\":\"Distinction\"},{\"Specialism\":\"Civil Engineering\",\"Grade\":\"Not completed\"}],\"IndustryPlacement\":\"Completed\",\"EnglishAndMaths\":null,\"MARS\":null}"
+                                                    LearningDetails = "{\"TLevelTitle\":\"Science\",\"Grade\":\"Distinction*\",\"Date\":\"" + awardedOn + "\",\"Core\":\"Science\",\"CoreGrade\":\"Not completed\",\"OccupationalSpecialism\":[{\"Specialism\":\"Surveying and design for construction and the built environment\",\"Grade\":\"Distinction\"},{\"Specialism\":\"Civil Engineering\",\"Grade\":\"Not completed\"}],\"IndustryPlacement\":\"Not met\",\"EnglishAndMaths\":null,\"MARS\":null}"
                                                 }
                         }
                     }
