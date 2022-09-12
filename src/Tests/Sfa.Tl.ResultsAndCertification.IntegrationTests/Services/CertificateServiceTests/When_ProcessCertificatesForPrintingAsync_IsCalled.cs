@@ -141,7 +141,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                 Core = overallResultDetail.PathwayName,
                 CoreGrade = !string.IsNullOrWhiteSpace(overallResultDetail.PathwayResult) ? overallResultDetail.PathwayResult : Constants.NotCompleted,
                 OccupationalSpecialism = specialisms,
-                IndustryPlacement = overallResultDetail.IndustryPlacementStatus,
+                IndustryPlacement = GetIndustryPlacementText(overallResultDetail.IndustryPlacementStatus),
                 Grade = overallResult.ResultAwarded,
                 EnglishAndMaths = GetEnglishAndMathsText(overallResult.TqRegistrationPathway.TqRegistrationProfile.EnglishStatus, overallResult.TqRegistrationPathway.TqRegistrationProfile.MathsStatus),
                 Date = DateTime.UtcNow.ToCertificateDateFormat()
@@ -161,6 +161,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                 return "The named recipient has also achieved a qualification at Level 2 in English.";
             else
                 return null;
+        }
+
+        private static string GetIndustryPlacementText(string industryPlacementStatus)
+        {
+            var ipStatus = EnumExtensions.GetEnumByDisplayName<IndustryPlacementStatus>(industryPlacementStatus);
+
+            if (ipStatus == IndustryPlacementStatus.Completed || ipStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
+                return "Met";
+
+            return "Not met";
         }
 
         private int GetPathwayId(long uln)
