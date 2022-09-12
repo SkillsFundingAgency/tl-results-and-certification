@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                                 incl => incl.TqRegistrationPathway.TqRegistrationProfile,
                                                 incl => incl.TqRegistrationPathway.TqProvider.TlProvider.TlProviderAddresses.OrderByDescending(o => o.CreatedOn).Take(1))
                                             .GroupBy(x => x.TqRegistrationPathway.TqProvider.TlProviderId)
-                                            .AsNoTracking()
+                                            //.AsNoTracking()
                                             .Select(x => new LearnerResultsPrintingData { TlProvider = x.First().TqRegistrationPathway.TqProvider.TlProvider, OverallResults = x.ToList() })
                                             .ToListAsync();
 
@@ -79,8 +79,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             // Map
             var printingBatchData = MapToBatch(learnersPrintingData);
 
-            var overallResults = new List<OverallResult>();
-            
+            var overallResults = learnersPrintingData.SelectMany(s => s.OverallResults).ToList();
+
             var response = await _certificateRepository.SaveCertificatesPrintingDataAsync(printingBatchData, overallResults);
 
             return new CertificateResponse
@@ -88,7 +88,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 IsSuccess = response.IsSuccess,
                 BatchId = response.BatchId,
                 ProvidersCount = printingBatchData.PrintBatchItems.Count(),
-                CertificatesCreated = response.TotalBatchRecordsCreated - (printingBatchData.PrintBatchItems.Count + 1)
+                CertificatesCreated = response.TotalBatchRecordsCreated - (printingBatchData.PrintBatchItems.Count + 1),
+                OverallResultsUpdatedCount = response.OverallResultsUpdatedCount
             };
         }
 

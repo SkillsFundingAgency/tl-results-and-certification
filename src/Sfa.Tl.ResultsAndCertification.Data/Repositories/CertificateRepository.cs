@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Certificates;
@@ -29,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         {
             var response = new CertificateDataResponse { IsSuccess = true };
 
-            if (batch != null)
+            if (batch != null && overallResults != null && overallResults.Count > 0)
             {
                 var strategy = _dbContext.Database.CreateExecutionStrategy();
                 await strategy.ExecuteAsync(async () =>
@@ -40,18 +41,23 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                         await _dbContext.Batch.AddAsync(batch);
                         var batchCount = await _dbContext.SaveChangesAsync();
 
+                        overallResults.ForEach(x => x.CertificateStatus = CertificateStatus.Processed);
+                        _dbContext.UpdateRange(overallResults);
+                        var overallResultsCount = await _dbContext.SaveChangesAsync();
+
                         transaction.Commit();
 
                         // After successfull transacation populate stats
                         response.BatchId = batch.Id;
                         response.TotalBatchRecordsCreated = batchCount;
+                        response.OverallResultsUpdatedCount = overallResultsCount;
                     }
                     catch (Exception ex)
                     {
                         _logger.LogError(ex.Message, ex.InnerException);
                         transaction.Rollback();
                         response.IsSuccess = false;
-                        // TODO: add message
+                        response.Message = $"Exception: {ex}";
                     }
                 });
             }

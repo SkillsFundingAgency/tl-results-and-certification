@@ -145,7 +145,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Certifica
             {
                 IsSuccess = true,
                 BatchId = batchRequest.Id,
-                TotalBatchRecordsCreated = 5
+                TotalBatchRecordsCreated = 5,
+                OverallResultsUpdatedCount = 3
             };
 
             _actualResult.Should().NotBeNull();

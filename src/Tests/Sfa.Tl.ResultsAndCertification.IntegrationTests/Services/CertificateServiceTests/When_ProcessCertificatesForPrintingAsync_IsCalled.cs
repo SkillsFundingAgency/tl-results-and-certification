@@ -74,8 +74,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
 
             var expectedResult = new List<CertificateResponse>
             {
-                new CertificateResponse {IsSuccess = true, BatchId = 1, ProvidersCount = 2, CertificatesCreated = 4 },
-                new CertificateResponse {IsSuccess = true, BatchId = 2, ProvidersCount = 1, CertificatesCreated = 2 },
+                new CertificateResponse {IsSuccess = true, BatchId = 1, ProvidersCount = 2, CertificatesCreated = 4, OverallResultsUpdatedCount = 4 },
+                new CertificateResponse {IsSuccess = true, BatchId = 2, ProvidersCount = 1, CertificatesCreated = 2, OverallResultsUpdatedCount = 2 },
             };
 
             _actualResult.Should().BeEquivalentTo(expectedResult);
@@ -93,7 +93,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                 var actualPrintCertificate = DbContext.PrintCertificate.Where(p => p.Uln == expectedProfile.UniqueLearnerNumber && p.TqRegistrationPathwayId == expectedPathway.Id)
                                                                        .Include(p => p.PrintBatchItem)
                                                                             .ThenInclude(p => p.Batch)
+                                                                       .Include(p => p.TqRegistrationPathway)
+                                                                            .ThenInclude(p => p.OverallResults)
                                                                        .OrderByDescending(p => p.CreatedOn).FirstOrDefault();
+
+                var actualOverallResult = actualPrintCertificate.TqRegistrationPathway.OverallResults.FirstOrDefault(o => o.TqRegistrationPathwayId == expectedPathway.Id);
 
                 // Assert PrintCertificate
                 actualPrintCertificate.Should().NotBeNull();
@@ -117,6 +121,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                 actualBatch.Type.Should().Be(BatchType.Printing);
                 actualBatch.Status.Should().Be(BatchStatus.Created);
                 actualBatch.CreatedBy.Should().Be(expectedPerformedBy);
+
+                // Assert OverallResult
+                actualOverallResult.CertificateStatus.Should().Be(CertificateStatus.Processed);
             }
         }
 
