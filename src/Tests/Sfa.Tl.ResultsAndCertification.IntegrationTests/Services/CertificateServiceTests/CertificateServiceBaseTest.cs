@@ -186,7 +186,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
         public enum Provider
         {
             BarsleyCollege = 10000536,
-            WalsallCollege = 10007315
+            BishopBurtonCollege = 10000721,
+            WalsallCollege = 10007315            
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         {
             var response = new CertificateDataResponse { IsSuccess = true };
 
-            if (batch != null && overallResults != null && overallResults.Count > 0)
+            if (batch != null)
             {
                 var strategy = _dbContext.Database.CreateExecutionStrategy();
                 await strategy.ExecuteAsync(async () =>

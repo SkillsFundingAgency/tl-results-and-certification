@@ -43,12 +43,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                                 x.TqRegistrationPathway.TqProvider.TlProvider.TlProviderAddresses.Any() &&
                                                 x.IsOptedin && x.EndDate == null &&
                                                 x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
-                                                x.TqRegistrationPathway.EndDate == null, 
+                                                x.TqRegistrationPathway.EndDate == null,
                                                 incl => incl.TqRegistrationPathway.TqRegistrationProfile,
                                                 incl => incl.TqRegistrationPathway.TqProvider.TlProvider.TlProviderAddresses.OrderByDescending(o => o.CreatedOn).Take(1))
                                             .GroupBy(x => x.TqRegistrationPathway.TqProvider.TlProviderId)
                                             .AsNoTracking()
-                                            .Select (x => new LearnerResultsPrintingData  { TlProvider = x.First().TqRegistrationPathway.TqProvider.TlProvider, OverallResults = x.ToList() })
+                                            .Select(x => new LearnerResultsPrintingData { TlProvider = x.First().TqRegistrationPathway.TqProvider.TlProvider, OverallResults = x.ToList() })
                                             .ToListAsync();
 
             return resultsForPrinting;

@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
     {
         public CertificateMapper()
         {
-            CreateMap<List<LearnerResultsPrintingData>, Batch>()
+            CreateMap<IEnumerable<LearnerResultsPrintingData>, Batch>()
                 .ForMember(d => d.Type, opts => opts.MapFrom(s => BatchType.Printing))
                 .ForMember(d => d.Status, opts => opts.MapFrom(s => BatchStatus.Created))
                 .ForMember(d => d.PrintBatchItems, opts => opts.MapFrom(s => s))
@@ -35,7 +35,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.Type, opts => opts.MapFrom(s => s.CertificateType.Value))
                 .ForMember(d => d.DisplaySnapshot, opts => opts.Ignore())
                 .ForMember(d => d.LearningDetails, opts => opts.MapFrom(s => TransformLearningDetails(s)))
-                .ForMember(d => d.CreatedBy, opts => opts.MapFrom(s => Constants.FunctionPerformedBy));
+                .ForMember(d => d.CreatedBy, opts => opts.MapFrom(s => Constants.FunctionPerformedBy))
+                .ForMember(d => d.TqRegistrationPathway, opts => opts.Ignore());
         }
 
         private static string TransformLearningDetails(OverallResult overallResult)
