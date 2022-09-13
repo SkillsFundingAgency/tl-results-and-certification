@@ -167,7 +167,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
             else if (englishStatus == SubjectStatus.Achieved || englishStatus == SubjectStatus.AchievedByLrs)
                 return "The named recipient has also achieved a qualification at Level 2 in English.";
             else
-                return null;
+                return string.Empty;
         }
 
         private static string GetIndustryPlacementText(string industryPlacementStatus)

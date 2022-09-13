@@ -81,7 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
             else if (englishStatus == SubjectStatus.Achieved || englishStatus == SubjectStatus.AchievedByLrs)
                 return Constants.EnglishAchievedText;
             else
-                return null;
+                return string.Empty;
         }
 
         private static string GetIndustryPlacementText(string industryPlacementStatus)

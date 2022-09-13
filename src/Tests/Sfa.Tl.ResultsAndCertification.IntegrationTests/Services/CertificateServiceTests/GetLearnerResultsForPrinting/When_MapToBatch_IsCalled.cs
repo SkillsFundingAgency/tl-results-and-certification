@@ -118,7 +118,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                            new PrintCertificate { 
                                                     Uln = 2222222222, LearnerName = "first22 last22", TqRegistrationPathwayId = 2222, Type = PrintCertificateType.StatementOfAchievement, 
                                                     DisplaySnapshot = null, CreatedBy = Constants.FunctionPerformedBy,
-                                                    LearningDetails = "{\"TLevelTitle\":\"Science\",\"Grade\":\"\",\"Date\":\"" + awardedOn + "\",\"Core\":\"Science\",\"CoreGrade\":\"Not completed\",\"OccupationalSpecialism\":[{\"Specialism\":\"Surveying and design for construction and the built environment\",\"Grade\":\"Distinction\"},{\"Specialism\":\"Civil Engineering\",\"Grade\":\"Not completed\"}],\"IndustryPlacement\":\"Not met\",\"EnglishAndMaths\":null,\"MARS\":null}"
+                                                    LearningDetails = "{\"TLevelTitle\":\"Science\",\"Grade\":\"\",\"Date\":\"" + awardedOn + "\",\"Core\":\"Science\",\"CoreGrade\":\"Not completed\",\"OccupationalSpecialism\":[{\"Specialism\":\"Surveying and design for construction and the built environment\",\"Grade\":\"Distinction\"},{\"Specialism\":\"Civil Engineering\",\"Grade\":\"Not completed\"}],\"IndustryPlacement\":\"Not met\",\"EnglishAndMaths\":\"\",\"MARS\":null}"
                                                 }
                         }
                     }
