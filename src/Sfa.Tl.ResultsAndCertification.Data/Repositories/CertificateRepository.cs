@@ -10,22 +10,26 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 {
-    public class CertificateRepository : ICertificateRepository
+    public class CertificateRepository : GenericRepository<OverallResult>, ICertificateRepository
     {
         private readonly ILogger<CertificateRepository> _logger;
-        private readonly ResultsAndCertificationDbContext _dbContext;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CertificateRepository"/> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="dbContext">The database context.</param>
-        public CertificateRepository(ILogger<CertificateRepository> logger, ResultsAndCertificationDbContext dbContext)
+        public CertificateRepository(ILogger<CertificateRepository> logger, ResultsAndCertificationDbContext dbContext) : base(logger, dbContext)
         {
             _logger = logger;
-            _dbContext = dbContext;
         }
-                
+
+        /// <summary>
+        /// Saves the certificates printing data asynchronous.
+        /// </summary>
+        /// <param name="batch">The batch.</param>
+        /// <param name="overallResults">The overall results.</param>
+        /// <returns><see cref="CertificateDataResponse"/> returns certificate data response</returns>
         public async Task<CertificateDataResponse> SaveCertificatesPrintingDataAsync(Batch batch, List<OverallResult> overallResults)
         {
             var response = new CertificateDataResponse { IsSuccess = true };
@@ -41,10 +45,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                         await _dbContext.Batch.AddAsync(batch);
                         var batchCount = await _dbContext.SaveChangesAsync();
 
+                        // update CertificateStatus from AwaitingProcessing to Processed
                         overallResults.ForEach(x => x.CertificateStatus = CertificateStatus.Processed);
-                        _dbContext.UpdateRange(overallResults);
-                        var overallResultsCount = await _dbContext.SaveChangesAsync();
 
+                        // Update overallresult table for specified column (changed only columns)
+                        var overallResultsCount = await UpdateWithSpecifedColumnsOnlyAsync(overallResults, x => x.CertificateStatus);
+                        
                         transaction.Commit();
 
                         // After successfull transacation populate stats

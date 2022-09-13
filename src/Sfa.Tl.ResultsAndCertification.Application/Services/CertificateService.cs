@@ -47,7 +47,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                                 incl => incl.TqRegistrationPathway.TqRegistrationProfile,
                                                 incl => incl.TqRegistrationPathway.TqProvider.TlProvider.TlProviderAddresses.OrderByDescending(o => o.CreatedOn).Take(1))
                                             .GroupBy(x => x.TqRegistrationPathway.TqProvider.TlProviderId)
-                                            //.AsNoTracking()
                                             .Select(x => new LearnerResultsPrintingData { TlProvider = x.First().TqRegistrationPathway.TqProvider.TlProvider, OverallResults = x.ToList() })
                                             .ToListAsync();
 
@@ -79,8 +78,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             // Map
             var printingBatchData = MapToBatch(learnersPrintingData);
 
+            // Get overall results data
             var overallResults = learnersPrintingData.SelectMany(s => s.OverallResults).ToList();
 
+            // Save printing data and update overallresults
             var response = await _certificateRepository.SaveCertificatesPrintingDataAsync(printingBatchData, overallResults);
 
             return new CertificateResponse
