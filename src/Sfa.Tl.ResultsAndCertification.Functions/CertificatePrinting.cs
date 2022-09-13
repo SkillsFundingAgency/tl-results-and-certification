@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         }
 
         [FunctionName(Constants.GenerateCertificatePrintingBatches)]
-        public async Task GenerateCertificatePrintingBatchesAsync([TimerTrigger("%CertificatePrintingBatchesCreate%")] TimerInfo timer, ExecutionContext context, ILogger logger)
+        public async Task GenerateCertificatePrintingBatchesAsync([TimerTrigger("%CertificatePrintingBatchesCreateTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
             var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.CertificatePrintingBatchesCreate);
