@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificatePrinting.GenrateCertificatePrintingBatches
+namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificatePrinting.GenerateCertificatePrintingBatches
 {
-    public class When_Timer_Function_Is_Triggered : TestSetup
+    public class When_Response_Is_PartiallyProcessed : TestSetup
     {
         public override void Given()
         {
@@ -21,15 +21,16 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificatePrinting
 
         public async override Task When()
         {
-            await CertificatePrintingFunction.GenrateCertificatePrintingBatchesAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<Functions.CertificatePrinting>());
+            await CertificatePrintingFunction.GenerateCertificatePrintingBatchesAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<Functions.CertificatePrinting>());
         }
 
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.Received(1).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            CertificatePrintingService.Received(1).ProcessCertificatesForPrintingAsync();
+            CertificatePrintingService.ProcessCertificatesForPrintingAsync().Returns(new List<CertificateResponse> { new CertificateResponse { IsSuccess = false } });
             CommonService.Received(1).UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
+            CommonService.Received(1).SendFunctionJobFailedNotification(Arg.Any<string>(), Arg.Any<string>());
         }
     }
 }

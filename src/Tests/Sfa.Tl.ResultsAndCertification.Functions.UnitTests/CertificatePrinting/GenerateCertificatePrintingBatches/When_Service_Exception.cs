@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificatePrinting.GenrateCertificatePrintingBatches
+namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificatePrinting.GenerateCertificatePrintingBatches
 {
     public class When_Service_Exception : TestSetup
     {
@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificatePrinting
 
         public async override Task When()
         {
-            await CertificatePrintingFunction.GenrateCertificatePrintingBatchesAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<Functions.CertificatePrinting>());
+            await CertificatePrintingFunction.GenerateCertificatePrintingBatchesAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<Functions.CertificatePrinting>());
         }
 
         [Fact]

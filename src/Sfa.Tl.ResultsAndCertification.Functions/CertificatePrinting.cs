@@ -25,11 +25,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _certificatePrintingService = certificatePrintingService;
         }
 
-        [FunctionName(Constants.GenrateCertificatePrintingBatches)]
-        public async Task GenrateCertificatePrintingBatchesAsync([TimerTrigger("%GenrateCertificatePrintingBatchesTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
+        [FunctionName(Constants.GenerateCertificatePrintingBatches)]
+        public async Task GenerateCertificatePrintingBatchesAsync([TimerTrigger("%CertificatePrintingBatchesCreate%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
-            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.CertificatePringBatchesCreate);
+            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.CertificatePrintingBatchesCreate);
 
             try
             {

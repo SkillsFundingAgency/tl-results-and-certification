@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 CoreGrade = !string.IsNullOrWhiteSpace(overallResultDetail.PathwayResult) ? overallResultDetail.PathwayResult : Constants.NotCompleted,
                 OccupationalSpecialism = specialisms,
                 IndustryPlacement = GetIndustryPlacementText(overallResultDetail.IndustryPlacementStatus),
-                Grade = overallResult.ResultAwarded,
+                Grade = overallResult.CertificateType == PrintCertificateType.Certificate ? overallResult.ResultAwarded : string.Empty,
                 EnglishAndMaths = GetEnglishAndMathsText(profile.EnglishStatus, profile.MathsStatus),
                 Date = DateTime.UtcNow.ToCertificateDateFormat()
             };
