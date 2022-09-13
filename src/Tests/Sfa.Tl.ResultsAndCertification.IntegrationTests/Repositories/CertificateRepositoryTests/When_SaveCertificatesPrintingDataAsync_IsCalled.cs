@@ -168,6 +168,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Certifica
                                                                             .ThenInclude(p => p.Batch)
                                                                        .OrderByDescending(p => p.CreatedOn).FirstOrDefault();
 
+                var actualOverallResult = actualPrintCertificate.TqRegistrationPathway.OverallResults.FirstOrDefault(o => o.TqRegistrationPathwayId == expectedPathway.Id);
+
                 // Assert PrintCertificate
                 actualPrintCertificate.Should().NotBeNull();
                 actualPrintCertificate.TqRegistrationPathwayId.Should().Be(expectedPathway.Id);
@@ -190,6 +192,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Certifica
                 actualBatch.Type.Should().Be(BatchType.Printing);
                 actualBatch.Status.Should().Be(BatchStatus.Created);
                 actualBatch.CreatedBy.Should().Be(expectedPerformedBy);
+
+                // Assert OverallResult
+                actualOverallResult.CertificateStatus.Should().Be(CertificateStatus.Processed);
             }
         }
 
