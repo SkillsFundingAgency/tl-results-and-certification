@@ -84,13 +84,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             // Save printing data and update overallresults
             var response = await _certificateRepository.SaveCertificatesPrintingDataAsync(printingBatchData, overallResults);
 
+            if (!response.IsSuccess)
+                return new CertificateResponse { IsSuccess = false, Message = response.Message };
+
             return new CertificateResponse
             {
                 IsSuccess = response.IsSuccess,
                 BatchId = response.BatchId,
                 ProvidersCount = printingBatchData.PrintBatchItems.Count(),
                 CertificatesCreated = response.TotalBatchRecordsCreated - (printingBatchData.PrintBatchItems.Count + 1),
-                OverallResultsUpdatedCount = response.OverallResultsUpdatedCount
+                OverallResultsUpdatedCount = response.OverallResultsUpdatedCount,
+                Message = response.Message
             };
         }
 
