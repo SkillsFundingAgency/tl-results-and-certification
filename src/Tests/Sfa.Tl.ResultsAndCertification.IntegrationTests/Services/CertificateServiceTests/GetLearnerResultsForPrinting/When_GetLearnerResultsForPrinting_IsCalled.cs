@@ -17,29 +17,40 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<TqRegistrationProfile> _registrations;
         private List<LearnerResultsPrintingData> _actualResult;
-        private OverallResult _expectedOverallResult;
+        private List<OverallResult> _expectedResults = new List<OverallResult>();
 
         public override void Given()
         {
             _ulns = new Dictionary<long, RegistrationPathwayStatus>
             {
-                { 1111111111, RegistrationPathwayStatus.Active },    // Valid
+                { 1111111111, RegistrationPathwayStatus.Active },    // Valid (Barsley)
                 { 1111111112, RegistrationPathwayStatus.Withdrawn }, // Invalid - Withdrawn
                 { 1111111113, RegistrationPathwayStatus.Active },    // Invalid - PrintAvailableFrom
                 { 1111111114, RegistrationPathwayStatus.Active },    // Invalid - CalculationStatus
                 { 1111111115, RegistrationPathwayStatus.Active },    // Invalid - CertificateStatus
+                { 1111111116, RegistrationPathwayStatus.Active }     // Valid (Walsall)
             };
 
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsData(_ulns, null);
 
+            SeedTqProvider(Provider.WalsallCollege);
+            SetRegistrationProviders(_registrations, new List<long> { 1111111116 }, Provider.WalsallCollege);
+
             // Valid
-            _expectedOverallResult = new OverallResultCustomBuilder()
+            _expectedResults.Add(new OverallResultCustomBuilder()
                 .WithTqRegistrationPathwayId(GetPathwayId(1111111111))
                 .WithPrintAvailableFrom(DateTime.Now.AddDays(-1))
                 .WithCalculationStatus(CalculationStatus.Completed)
                 .WithCertificateStatus(CertificateStatus.AwaitingProcessing)
-                .Save(DbContext);
+                .Save(DbContext));
+
+            _expectedResults.Add(new OverallResultCustomBuilder()
+                .WithTqRegistrationPathwayId(GetPathwayId(1111111116))
+                .WithPrintAvailableFrom(DateTime.Now.AddDays(-1))
+                .WithCalculationStatus(CalculationStatus.Completed)
+                .WithCertificateStatus(CertificateStatus.AwaitingProcessing)
+                .Save(DbContext));
 
             // Invalid - PrintAvailableFrom not reached
             _ = new OverallResultCustomBuilder()
@@ -72,27 +83,40 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
         public void Then_ExpectedResults_Are_Returned()
         {
             _actualResult.Should().NotBeNull();
-            _actualResult.Should().HaveCount(1);
+            _actualResult.Should().HaveCount(2);
+
+            AssertLearnerDetailsOf(Provider.BarsleyCollege);
+            AssertLearnerDetailsOf(Provider.WalsallCollege);
+        }
+
+        private void AssertLearnerDetailsOf(Provider provider)
+        {
+            var actualResult = _actualResult.Where(x => x.TlProvider.UkPrn == (long)provider);
+            actualResult.Should().HaveCount(1);
 
             // Assert TlProvider
-            var actualTlProvider = _actualResult.First().TlProvider;
+            var actualTlProvider = actualResult.First().TlProvider;
             actualTlProvider.Should().NotBeNull();
-            actualTlProvider.Should().BeEquivalentTo(TlProvider);
+
+            var expectedTlProvider = TlProviders.FirstOrDefault(x => x.UkPrn == (long)provider);
+            AssertTlProvider(actualTlProvider, expectedTlProvider);
 
             // Assert TlProviderAddress
             var actualTlProviderAdddress = actualTlProvider.TlProviderAddresses;
             actualTlProviderAdddress.Should().HaveCount(1);
-            actualTlProviderAdddress.First().Should().BeEquivalentTo(TlProviderAddress);
+            actualTlProviderAdddress.First().Should().BeEquivalentTo(actualTlProvider.TlProviderAddresses.FirstOrDefault());
 
             // Assert OverallResults
-            var actualOverallResults = _actualResult.First().OverallResults;
+            var actualOverallResults = actualResult.First().OverallResults;
             actualOverallResults.Should().HaveCount(1);
-            actualOverallResults.First().Should().BeEquivalentTo(_expectedOverallResult);
+
+            var expectedOverallResult = _expectedResults.FirstOrDefault(x => x.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == (long)provider);
+            AssertOverallResult(actualOverallResults[0], expectedOverallResult);
 
             // Assert Profile
-            var actualProfile = _actualResult.First().OverallResults.First().TqRegistrationPathway.TqRegistrationProfile;
-            var expectedProfile = _expectedOverallResult.TqRegistrationPathway.TqRegistrationProfile;
-            actualProfile.Should().BeEquivalentTo(expectedProfile);
+            var actualProfile = actualResult.First().OverallResults.First().TqRegistrationPathway.TqRegistrationProfile;
+            var expectedProfile = expectedOverallResult.TqRegistrationPathway.TqRegistrationProfile;
+            AssertProfile(actualProfile, expectedProfile);
         }
 
         private int GetPathwayId(long uln)

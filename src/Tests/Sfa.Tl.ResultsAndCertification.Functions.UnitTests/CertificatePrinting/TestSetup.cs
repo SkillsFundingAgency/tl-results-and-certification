@@ -9,16 +9,16 @@ using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificatePrintingBatchSummary
+namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificatePrinting
 {
-    public abstract class TestSetup : BaseTest<Functions.CertificatePrintingBatchSummary>
+    public abstract class TestSetup : BaseTest<Functions.CertificatePrinting>
     {
         protected IMapper Mapper;
         protected ILogger<ICertificatePrintingService> Logger;
         protected TimerSchedule TimerSchedule;
         protected ICommonService CommonService;
         protected ICertificatePrintingService CertificatePrintingService;
-        protected Functions.CertificatePrintingBatchSummary CertificatePrintingBatchSummaryFunction;
+        protected Functions.CertificatePrinting CertificatePrintingFunction;
 
         public override void Setup()
         {
@@ -29,12 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificatePrinting
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly));
             Mapper = new AutoMapper.Mapper(mapperConfig);
-            CertificatePrintingBatchSummaryFunction = new Functions.CertificatePrintingBatchSummary(CommonService, CertificatePrintingService);
-        }
-
-        public async override Task When()
-        {
-            await CertificatePrintingBatchSummaryFunction.FetchCertificatePrintingBatchSummaryAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<Functions.CertificatePrintingRequest>());
+            CertificatePrintingFunction = new Functions.CertificatePrinting(CommonService, CertificatePrintingService);
         }
     }
 }

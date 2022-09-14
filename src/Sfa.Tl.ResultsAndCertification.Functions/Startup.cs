@@ -89,6 +89,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IOverallResultCalculationFunctionService, OverallResultCalculationFunctionService>();
             services.AddTransient<IOverallResultCalculationService, OverallResultCalculationService>();
             services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();
+
+            // Certificate
+            services.AddTransient<ICertificateService, Application.Services.CertificateService>();
+            services.AddTransient<ICertificateRepository, CertificateRepository>();
         }
 
         private void RegisterApiClients(IServiceCollection services)

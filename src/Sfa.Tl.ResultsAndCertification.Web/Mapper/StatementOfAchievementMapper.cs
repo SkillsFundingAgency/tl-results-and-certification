@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<SoaLearnerRecordDetailsViewModel, LearningDetails>()
                 .ForMember(d => d.TLevelTitle, opts => opts.MapFrom(s => s.TlevelTitle.Replace(Constants.TLevelIn, string.Empty, StringComparison.InvariantCultureIgnoreCase).Trim()))
                 .ForMember(d => d.Grade, opts => opts.MapFrom(s => string.Empty))
-                .ForMember(d => d.Date, opts => opts.MapFrom(s => DateTime.UtcNow.ToSoaFormat()))
+                .ForMember(d => d.Date, opts => opts.MapFrom(s => DateTime.UtcNow.ToCertificateDateFormat()))
                 .ForMember(d => d.Core, opts => opts.MapFrom(s => s.PathwayName))
                 .ForMember(d => d.CoreGrade, opts => opts.MapFrom(s => s.PathwayGrade.Equals(RequestSoaCheckAndSubmitContent.None, StringComparison.InvariantCultureIgnoreCase) ? Constants.NotCompleted : s.PathwayGrade))
                 .ForMember(d => d.OccupationalSpecialism, opts => opts.MapFrom(s => s))

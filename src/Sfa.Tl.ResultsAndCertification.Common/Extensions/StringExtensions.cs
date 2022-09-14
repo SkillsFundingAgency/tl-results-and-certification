@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             return value.ToString("dd MMMM yyyy");
         }
 
-        public static string ToSoaFormat(this DateTime value)
+        public static string ToCertificateDateFormat(this DateTime value)
         {
             return value.ToString("dd MMMM yyyy");
         }

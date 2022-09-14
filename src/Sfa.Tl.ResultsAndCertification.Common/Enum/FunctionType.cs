@@ -11,6 +11,7 @@
         UcasTransferEntries = 6,
         UcasTransferResults = 7,
         UcasTransferAmendments = 8,
-        OverallResultCalculation = 9
+        OverallResultCalculation = 9,
+        CertificatePrintingBatchesCreate = 10
     }
 }

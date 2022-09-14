@@ -3,10 +3,12 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Printing;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,13 +21,19 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
         private readonly ILogger _logger;
         private readonly IPrintingApiClient _printingApiClient;
         private readonly IPrintingService _printingService;
+        private readonly ICertificateService _certificateService;
 
-        public CertificatePrintingService(IMapper mapper, ILogger<ICertificatePrintingService> logger, IPrintingApiClient printingApiClient, IPrintingService printingService)
+        public CertificatePrintingService(IMapper mapper,
+            ILogger<ICertificatePrintingService> logger,
+            IPrintingApiClient printingApiClient,
+            IPrintingService printingService,
+            ICertificateService certificateService)
         {
             _mapper = mapper;
             _logger = logger;
             _printingApiClient = printingApiClient;
             _printingService = printingService;
+            _certificateService = certificateService;
         }
 
         public async Task<CertificatePrintingResponse> ProcessPrintingRequestAsync()
@@ -115,6 +123,19 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             // update print batch items based on response -- service call to update
             var response = await _printingService.UpdateTrackBatchResponsesAsync(trackBatchResponses);
             response.TotalCount = batchIds.Count();
+            return response;
+        }
+
+        public async Task<List<CertificateResponse>> ProcessCertificatesForPrintingAsync()
+        {
+            var response = await _certificateService.ProcessCertificatesForPrintingAsync();
+
+            if (response == null || !response.Any())
+            {
+                var message = "No learners data retrieved to process certificates for printing. Method: ProcessCertificatesForPrintingAsync()";
+                _logger.LogWarning(LogEvent.NoDataFound, message);
+                return new List<CertificateResponse> { new CertificateResponse { IsSuccess = true, Message = message } };
+            }
             return response;
         }
     }

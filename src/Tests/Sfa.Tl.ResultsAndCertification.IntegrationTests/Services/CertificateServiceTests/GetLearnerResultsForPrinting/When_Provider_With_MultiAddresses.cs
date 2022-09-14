@@ -64,13 +64,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
 
             // Assert TlProvider
             var actualTlProvider = _actualResult.First().TlProvider;
-            actualTlProvider.Should().NotBeNull();
-            actualTlProvider.Name.Should().Be(TlProvider.Name);
-            actualTlProvider.DisplayName.Should().Be(TlProvider.DisplayName);
-            actualTlProvider.IsActive.Should().Be(TlProvider.IsActive);
-            actualTlProvider.CreatedBy.Should().Be(TlProvider.CreatedBy);
-            actualTlProvider.CreatedOn.Should().Be(TlProvider.CreatedOn);
-            
+            AssertTlProvider(actualTlProvider, TlProvider);
+
             // Assert TlProviderAddress
             var actualTlProviderAdddress = actualTlProvider.TlProviderAddresses.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
             actualTlProviderAdddress.Should().NotBeNull();
@@ -89,41 +84,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
             // Assert OverallResults
             var actualOverallResults = _actualResult.First().OverallResults;
             actualOverallResults.Should().HaveCount(1);
-
-            actualOverallResults[0].TqRegistrationPathwayId.Should().Be(_expectedOverallResult.TqRegistrationPathwayId);
-            actualOverallResults[0].Details.Should().Be(_expectedOverallResult.Details);
-            actualOverallResults[0].ResultAwarded.Should().Be(_expectedOverallResult.ResultAwarded);
-            actualOverallResults[0].CalculationStatus.Should().Be(_expectedOverallResult.CalculationStatus);
-            actualOverallResults[0].PrintAvailableFrom.Should().Be(_expectedOverallResult.PrintAvailableFrom);
-            actualOverallResults[0].PublishDate.Should().Be(_expectedOverallResult.PublishDate);
-            if (_expectedOverallResult.EndDate == null)
-            {
-                actualOverallResults[0].IsOptedin.Should().BeTrue();
-                actualOverallResults[0].EndDate.Should().BeNull();
-            }
-            else
-            {
-                actualOverallResults[0].IsOptedin.Should().BeFalse();
-                actualOverallResults[0].EndDate.Should().NotBeNull();
-            }
-
-            actualOverallResults[0].CertificateType.Should().Be(_expectedOverallResult.CertificateType);
-            actualOverallResults[0].CertificateStatus.Should().Be(_expectedOverallResult.CertificateStatus);
+            AssertOverallResult(actualOverallResults[0], _expectedOverallResult);
 
             // Assert Profile
             var actualProfile = _actualResult.First().OverallResults.First().TqRegistrationPathway.TqRegistrationProfile;
             var expectedProfile = _expectedOverallResult.TqRegistrationPathway.TqRegistrationProfile;
-            actualProfile.Firstname.Should().Be(expectedProfile.Firstname);
-            actualProfile.Lastname.Should().Be(expectedProfile.Lastname);
-            actualProfile.DateofBirth.Should().Be(expectedProfile.DateofBirth);
-            actualProfile.Gender.Should().Be(expectedProfile.Gender);
-            actualProfile.UniqueLearnerNumber.Should().Be(expectedProfile.UniqueLearnerNumber);
-            actualProfile.MathsStatus.Should().Be(expectedProfile.MathsStatus);
-            actualProfile.EnglishStatus.Should().Be(expectedProfile.EnglishStatus);
-            actualProfile.IsLearnerVerified.Should().Be(expectedProfile.IsLearnerVerified);
-            actualProfile.EnglishStatus.Should().Be(expectedProfile.EnglishStatus);
-            actualProfile.CreatedOn.Should().Be(expectedProfile.CreatedOn);
-            actualProfile.CreatedBy.Should().Be(expectedProfile.CreatedBy);
+            AssertProfile(actualProfile, expectedProfile);
         }
 
         private int GetPathwayId(long uln)

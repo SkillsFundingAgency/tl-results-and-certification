@@ -134,7 +134,11 @@
         public const string EnglishAndMathsMet = "Met";
         public const string EnglishAndMathsNotMet = "Not met";
         public const string TLevelIn = "T Level in ";
-
+        public const string MathsAndEnglishAchievedText = "The named recipient has also achieved a qualification at Level 2 in both maths and English.";
+        public const string MathsAchievedText = "The named recipient has also achieved a qualification at Level 2 in maths.";
+        public const string EnglishAchievedText = "The named recipient has also achieved a qualification at Level 2 in English.";
+        public const string Met = "Met";
+        public const string NotMet = "Not met";
 
         // Other constants
         public const string NoBorderBottomCssClassName = "tl-no-border-bottom";
@@ -156,6 +160,7 @@
         public const string FetchLearnerGender = "FetchLearnerGender";
         public const string VerifyLearnerAndFetchLearningEvents = "VerifyLearnerAndFetchLearningEvents";
         public const string SubmitCertificatePrintingRequest = "SubmitCertificatePrintingRequest";
+        public const string GenerateCertificatePrintingBatches = "GenerateCertificatePrintingBatches";
         public const string FetchCertificatePrintingBatchSummary = "FetchCertificatePrintingBatchSummary";
         public const string FetchCertificatePrintingTrackBatch = "FetchCertificatePrintingTrackBatch";
         public const string UcasTransferEntries = "UcasTransferEntries";
@@ -168,7 +173,7 @@
 
         public const int OverallResultDefaultNoOfAcademicYearsToProcess = 4;
         public const int OverallResultDefaultBatchSize = 5000;
-
+        public const int CertificatePrintingDefaultProvidersBatchSize = 50;
 
         public const string PathwayComponentGradeUnclassifiedCode = "PCG7";
         public const string SpecialismComponentGradeUnclassifiedCode = "SCG4";

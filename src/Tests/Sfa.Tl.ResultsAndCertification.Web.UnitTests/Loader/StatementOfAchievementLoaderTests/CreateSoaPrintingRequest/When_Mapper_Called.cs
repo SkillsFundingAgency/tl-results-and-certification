@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
             {
                 TLevelTitle = "Design, Surveying and Planning for Construction",
                 Grade = string.Empty,
-                Date = DateTime.UtcNow.ToSoaFormat(),
+                Date = DateTime.UtcNow.ToCertificateDateFormat(),
                 Core = SoaLearnerRecordDetailsViewModel.PathwayName,
                 CoreGrade = SoaLearnerRecordDetailsViewModel.PathwayGrade ?? Constants.NotCompleted,
                 OccupationalSpecialism = new List<OccupationalSpecialismDetails>
