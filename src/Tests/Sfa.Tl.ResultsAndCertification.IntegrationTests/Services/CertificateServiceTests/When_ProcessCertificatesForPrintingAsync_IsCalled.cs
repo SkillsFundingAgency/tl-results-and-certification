@@ -151,7 +151,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                 IndustryPlacement = GetIndustryPlacementText(overallResultDetail.IndustryPlacementStatus),
                 Grade = overallResult.ResultAwarded,
                 EnglishAndMaths = GetEnglishAndMathsText(overallResult.TqRegistrationPathway.TqRegistrationProfile.EnglishStatus, overallResult.TqRegistrationPathway.TqRegistrationProfile.MathsStatus),
-                Date = DateTime.UtcNow.ToCertificateDateFormat()
+                Date = DateTime.UtcNow.ToCertificateDateFormat(),
+                MARS = new List<object>()
             };
 
             return JsonConvert.SerializeObject(learningDetails);
