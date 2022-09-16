@@ -98,6 +98,10 @@
             "type": "string",
             "defaultValue": "0 21 15 1-12 *"
         },
+		"certificatePrintingBatchesCreateTrigger": {
+            "type": "string",
+            "defaultValue": "0 22 * * *"
+        },
         "certificatePrintingRequestTrigger": {
             "type": "string",
             "defaultValue": "0 0 19 * * *"
@@ -125,7 +129,7 @@
         "overallResultCalculationTrigger": {
             "type": "string",
             "defaultValue": "30 20 * * *"
-        }		
+        }
     },
     "variables": {
         "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/master/templates/",
@@ -595,6 +599,10 @@
                                 "value": "[parameters('learnerGenderTrigger')]"
                             },
 							{
+                                "name": "CertificatePrintingBatchesCreateTrigger",
+                                "value": "[parameters('certificatePrintingBatchesCreateTrigger')]"
+                            },
+							{
                                 "name": "CertificatePrintingRequestTrigger",
                                 "value": "[parameters('certificatePrintingRequestTrigger')]"
                             },
@@ -621,7 +629,7 @@
 							{
                                 "name": "OverallResultCalculationTrigger",
                                 "value": "[parameters('overallResultCalculationTrigger')]"
-                            },
+                            },							
                             {
                                 "name": "WEBSITE_LOAD_CERTIFICATES",
                                 "value": "1"

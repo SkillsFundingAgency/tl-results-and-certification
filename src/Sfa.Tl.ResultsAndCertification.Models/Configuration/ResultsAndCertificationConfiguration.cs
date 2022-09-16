@@ -125,6 +125,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         public DateTime? OverallResultsCalculationDate { get; set; }
 
         /// <summary>
+        /// Gets or sets the certificate printing batches create start date.
+        /// </summary>
+        /// <value>
+        /// The certificate printing batches create start date.
+        /// </value>
+        public DateTime? CertificatePrintingBatchesCreateStartDate { get; set; }
+
+        /// <summary>
         /// Gets or sets the dfe sign in settings.
         /// </summary>
         /// <value>
