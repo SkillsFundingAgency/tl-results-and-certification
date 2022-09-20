@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateServiceTests.GetLearnerResultsForPrinting
+namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateServiceTests
 {
     public class When_MapToBatch_IsCalled : CertificateServiceBaseTest
     {
@@ -78,18 +78,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                             };
 
             var awardedOn = DateTime.UtcNow.ToCertificateDateFormat();
-            _expectedResult = new Batch 
+            _expectedResult = new Batch
             {
                 Type = BatchType.Printing,
-                Status = BatchStatus.Created, 
+                Status = BatchStatus.Created,
                 CreatedBy = Constants.FunctionPerformedBy,
 
                 PrintBatchItems = new List<PrintBatchItem>
                 {
-                    new PrintBatchItem 
-                    { 
-                        TlProviderAddressId = 11, 
-                        CreatedBy = Constants.FunctionPerformedBy, 
+                    new PrintBatchItem
+                    {
+                        TlProviderAddressId = 11,
+                        CreatedBy = Constants.FunctionPerformedBy,
                         PrintCertificates = new List<PrintCertificate>
                         {
                            new PrintCertificate {
@@ -110,13 +110,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                         CreatedBy = Constants.FunctionPerformedBy,
                         PrintCertificates = new List<PrintCertificate>
                         {
-                           new PrintCertificate { 
-                                                   Uln = 2222222221, LearnerName = "first21 last21", TqRegistrationPathwayId = 2221, Type = PrintCertificateType.Certificate, 
+                           new PrintCertificate {
+                                                   Uln = 2222222221, LearnerName = "first21 last21", TqRegistrationPathwayId = 2221, Type = PrintCertificateType.Certificate,
                                                    DisplaySnapshot = null, CreatedBy = Constants.FunctionPerformedBy,
                                                    LearningDetails = "{\"TLevelTitle\":\"Education and Childcare\",\"Grade\":\"Pass\",\"Date\":\"" + awardedOn + "\",\"Core\":\"Education and Childcare\",\"CoreGrade\":\"A*\",\"OccupationalSpecialism\":[{\"Specialism\":\"Surveying and design for construction and the built environment\",\"Grade\":\"Distinction\"}],\"IndustryPlacement\":\"Met\",\"EnglishAndMaths\":\"The named recipient has also achieved a qualification at Level 2 in maths.\",\"MARS\":[]}"
                                                 },
-                           new PrintCertificate { 
-                                                    Uln = 2222222222, LearnerName = "first22 last22", TqRegistrationPathwayId = 2222, Type = PrintCertificateType.StatementOfAchievement, 
+                           new PrintCertificate {
+                                                    Uln = 2222222222, LearnerName = "first22 last22", TqRegistrationPathwayId = 2222, Type = PrintCertificateType.StatementOfAchievement,
                                                     DisplaySnapshot = null, CreatedBy = Constants.FunctionPerformedBy,
                                                     LearningDetails = "{\"TLevelTitle\":\"Science\",\"Grade\":\"\",\"Date\":\"" + awardedOn + "\",\"Core\":\"Science\",\"CoreGrade\":\"Not completed\",\"OccupationalSpecialism\":[{\"Specialism\":\"Surveying and design for construction and the built environment\",\"Grade\":\"Distinction\"},{\"Specialism\":\"Civil Engineering\",\"Grade\":\"Not completed\"}],\"IndustryPlacement\":\"Not met\",\"EnglishAndMaths\":\"\",\"MARS\":[]}"
                                                 }
