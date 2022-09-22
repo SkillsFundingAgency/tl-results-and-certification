@@ -100,11 +100,11 @@
         },
 		"certificatePrintingBatchesCreateTrigger": {
             "type": "string",
-            "defaultValue": "0 22 * * *"
+            "defaultValue": "0 5 * * *"
         },
         "certificatePrintingRequestTrigger": {
             "type": "string",
-            "defaultValue": "0 0 19 * * *"
+            "defaultValue": "0 7 * * *"
         },
         "certificatePrintingBatchSummaryTrigger": {
             "type": "string",
