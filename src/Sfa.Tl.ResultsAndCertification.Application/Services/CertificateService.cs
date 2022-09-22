@@ -85,13 +85,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var response = await _certificateRepository.SaveCertificatesPrintingDataAsync(printingBatchData, overallResults);
 
             if (!response.IsSuccess)
-                return new CertificateResponse { IsSuccess = false, Message = response.Message };
+                return new CertificateResponse { IsSuccess = false, Message = response.Message, ProvidersCount = printingBatchData.PrintBatchItems.Count };
 
             return new CertificateResponse
             {
                 IsSuccess = response.IsSuccess,
                 BatchId = response.BatchId,
-                ProvidersCount = printingBatchData.PrintBatchItems.Count(),
+                ProvidersCount = printingBatchData.PrintBatchItems.Count,
                 CertificatesCreated = response.TotalBatchRecordsCreated - (printingBatchData.PrintBatchItems.Count + 1),
                 OverallResultsUpdatedCount = response.OverallResultsUpdatedCount,
                 Message = response.Message

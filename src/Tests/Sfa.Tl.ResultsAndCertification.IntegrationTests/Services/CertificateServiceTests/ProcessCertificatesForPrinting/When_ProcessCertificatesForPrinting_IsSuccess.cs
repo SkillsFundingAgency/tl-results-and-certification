@@ -16,9 +16,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateServiceTests
+namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateServiceTests.ProcessCertificatesForPrinting
 {
-    public class When_ProcessCertificatesForPrintingAsync_IsCalled : CertificateServiceBaseTest
+    public class When_ProcessCertificatesForPrinting_IsSuccess : CertificateServiceBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<TqRegistrationProfile> _registrations;
