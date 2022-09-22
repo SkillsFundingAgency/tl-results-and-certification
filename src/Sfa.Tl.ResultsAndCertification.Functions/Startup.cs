@@ -117,10 +117,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             });
             
             services.AddTransient<ILrsLearnerServiceApiClient, LrsLearnerServiceApiClient>();
-            if (Environment.GetEnvironmentVariable(Constants.EnvironmentNameConfigKey).Equals("Local", StringComparison.InvariantCultureIgnoreCase))
-                services.AddTransient<IPrintingApiClient, PrintingToFileClient>();
-            else
-                services.AddHttpClient<IPrintingApiClient, PrintingApiClient>();
+            services.AddHttpClient<IPrintingApiClient, PrintingApiClient>();
             services.AddHttpClient<IUcasApiClient, UcasApiClient>();
             services.AddTransient<IUcasRecordSegment<UcasRecordEntriesSegment>, UcasRecordEntriesSegment>();
             services.AddTransient<IUcasRecordSegment<UcasRecordResultsSegment>, UcasRecordResultsSegment>();

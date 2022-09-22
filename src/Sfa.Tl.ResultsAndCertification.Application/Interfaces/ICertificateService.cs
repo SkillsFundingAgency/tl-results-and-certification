@@ -10,7 +10,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     {
         Task<List<LearnerResultsPrintingData>> GetLearnerResultsForPrintingAsync();
         Task<List<CertificateResponse>> ProcessCertificatesForPrintingAsync();
-        Task<Batch> CreatePrintingBatchAsync();
         Batch MapToBatch(IEnumerable<LearnerResultsPrintingData> learnersPrintingData);
     }
 }
