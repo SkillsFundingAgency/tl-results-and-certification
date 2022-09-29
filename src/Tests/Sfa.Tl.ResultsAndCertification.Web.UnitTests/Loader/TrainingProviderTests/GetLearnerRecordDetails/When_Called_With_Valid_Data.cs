@@ -14,7 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
     {
         private Models.OverallResults.OverallResultDetail _expectedOverallResult;
         private Models.Contracts.TrainingProvider.LearnerRecordDetails _expectedApiResult;
-        private Address _address;
 
         protected LearnerRecordDetailsViewModel ActualResult { get; set; }
 
@@ -22,8 +21,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
         {
             ProviderUkprn = 9874561231;
             ProfileId = 1;
-
-            _address = new Address { AddressId = 1, DepartmentName = "Operations", OrganisationName = "College Ltd", AddressLine1 = "10, House", AddressLine2 = "Street", Town = "Birmingham", Postcode = "B1 1AA" };
 
             _expectedOverallResult = new Models.OverallResults.OverallResultDetail
             {
@@ -62,10 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                 IndustryPlacementId = 1,
                 IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed,
                 OverallResultDetails = JsonConvert.SerializeObject(_expectedOverallResult),
-                OverallResultPublishDate = DateTime.UtcNow,
-                PrintCertificateId = 1,
-                PrintCertificateType = Common.Enum.PrintCertificateType.Certificate,
-                ProviderAddress = _address,
+                OverallResultPublishDate = DateTime.UtcNow                
             };
             InternalApiClient.GetLearnerRecordDetailsAsync(ProviderUkprn, ProfileId).Returns(_expectedApiResult);
         }
@@ -103,10 +97,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
 
             ActualResult.OverallResultDetails.Should().BeEquivalentTo(_expectedOverallResult);
             ActualResult.OverallResultPublishDate.Should().Be(_expectedApiResult.OverallResultPublishDate);
-
-            ActualResult.PrintCertificateId.Should().Be(_expectedApiResult.PrintCertificateId);
-            ActualResult.PrintCertificateType.Should().Be(_expectedApiResult.PrintCertificateType);
-            ActualResult.ProviderAddress.Should().Be(_expectedApiResult.AcademicYear);
         }
     }
 }
