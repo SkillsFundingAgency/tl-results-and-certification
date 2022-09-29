@@ -62,7 +62,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IndustryPlacementId, opts => opts.MapFrom(s => s.IndustryPlacementId))
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus))
                .ForMember(d => d.OverallResultDetails, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.OverallResultDetails) ? JsonConvert.DeserializeObject<OverallResultDetail>(s.OverallResultDetails) : null))
-               .ForMember(d => d.OverallResultPublishDate, opts => opts.MapFrom(s => s.OverallResultPublishDate));
+               .ForMember(d => d.OverallResultPublishDate, opts => opts.MapFrom(s => s.OverallResultPublishDate))
+               .ForMember(d => d.LastPrintRequestedDate, opts => opts.MapFrom(s => s.LastPrintRequestedDate));
 
             CreateMap<LearnerRecordDetails, AddMathsStatusViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))

@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -282,14 +283,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> LearnerRecordDetailsAsync(int profileId)
         {
             var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(User.GetUkPrn(), profileId);
-
             if (viewModel == null || !viewModel.IsLearnerRegistered)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
+            var rePrintAllowedInDays = 21; // TODO: From Config
+            viewModel.IsDocumentReprintEligible = viewModel.LastPrintRequestedDate.HasValue && viewModel.LastPrintRequestedDate > DateTime.Now.AddDays(-rePrintAllowedInDays);
             viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
+
             return View(viewModel);
         }
 

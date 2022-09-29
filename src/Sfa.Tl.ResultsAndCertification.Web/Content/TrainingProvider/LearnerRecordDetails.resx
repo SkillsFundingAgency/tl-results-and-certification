@@ -121,10 +121,13 @@
     <value>Add</value>
   </data>
   <data name="Back_To_Home_Text" xml:space="preserve">
-    <value>Back to home</value>
+    <value>&lt; Back to home</value>
   </data>
   <data name="Back_To_List_Of_Learners_Text" xml:space="preserve">
     <value>Back to list of learners</value>
+  </data>
+  <data name="Button_Request_Replacement_Document" xml:space="preserve">
+    <value>Request replacement document</value>
   </data>
   <data name="Hidden_Action_Text_English" xml:space="preserve">
     <value> english status</value>

@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to home.
+        ///   Looks up a localized string similar to &lt; Back to home.
         /// </summary>
         public static string Back_To_Home_Text {
             get {
@@ -84,6 +84,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Back_To_List_Of_Learners_Text {
             get {
                 return ResourceManager.GetString("Back_To_List_Of_Learners_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request replacement document.
+        /// </summary>
+        public static string Button_Request_Replacement_Document {
+            get {
+                return ResourceManager.GetString("Button_Request_Replacement_Document", resourceCulture);
             }
         }
         

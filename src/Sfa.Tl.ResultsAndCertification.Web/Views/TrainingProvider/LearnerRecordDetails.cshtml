@@ -80,7 +80,11 @@
 
         <div class="govuk-button-group">
             <a id="backToLearnersListButton" class="govuk-button" role="button" asp-route="@RouteConstants.SearchLearnerDetails" asp-route-academicYear="@Model.AcademicYear">@LearnerRecordDetails.Back_To_List_Of_Learners_Text</a>
-            <a id="backToHomeButton" class="govuk-button govuk-button--secondary" role="button" asp-route="@RouteConstants.Home">@LearnerRecordDetails.Back_To_Home_Text</a>
+            @if (Model.IsDocumentReprintEligible) 
+            {
+                <a id="requestReplacementDocument" class="govuk-button" role="button" href="#">@LearnerRecordDetails.Button_Request_Replacement_Document</a>
+            }
         </div>
+        <a id="backToHomeButton" class="govuk-link govuk-link" role="link" asp-route="@RouteConstants.Home">@LearnerRecordDetails.Back_To_Home_Text</a>
     </div>
 </div>

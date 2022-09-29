@@ -32,5 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
 
         public string OverallResultDetails { get; set; }
         public DateTime? OverallResultPublishDate { get; set; }
+
+        public DateTime? LastPrintRequestedDate { get; set; }
     }
 }

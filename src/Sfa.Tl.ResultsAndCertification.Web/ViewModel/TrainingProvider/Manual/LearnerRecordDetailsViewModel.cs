@@ -179,6 +179,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             Value = OverallResultDetails?.OverallResult
         };
 
+        public DateTime? LastPrintRequestedDate { get; set; }
+
+        public bool IsDocumentReprintEligible { get; set; }
+
         public BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.SearchLearnerRecord
