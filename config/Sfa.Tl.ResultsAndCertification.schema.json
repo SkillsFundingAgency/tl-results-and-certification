@@ -61,6 +61,10 @@
       "type": "string",
       "environmentVariable": "FreezePeriodEndDate"
     },
+	"CertificatePrintingBatchesCreateStartDate": {
+      "type": "string",
+      "environmentVariable": "CertificatePrintingBatchesCreateStartDate"
+    },
     "KeyVaultUri": {
       "type": "string",
       "environmentVariable": "KeyVaultUri"
@@ -449,6 +453,7 @@
 	"OverallResultsCalculationDate",
 	"FreezePeriodStartDate",
 	"FreezePeriodEndDate",
+	"CertificatePrintingBatchesCreateStartDate",
     "KeyVaultUri",
     "RedisSettings",
     "BlobStorageSettings",

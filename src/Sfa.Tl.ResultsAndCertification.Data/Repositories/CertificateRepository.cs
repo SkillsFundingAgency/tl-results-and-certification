@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                         _logger.LogError(ex.Message, ex.InnerException);
                         transaction.Rollback();
                         response.IsSuccess = false;
-                        response.Message = $"Exception: {ex}";
+                        response.Message = $"Exception: {ex.Message}";
                     }
                 });
             }

@@ -84,82 +84,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             // Save printing data and update overallresults
             var response = await _certificateRepository.SaveCertificatesPrintingDataAsync(printingBatchData, overallResults);
 
+            if (!response.IsSuccess)
+                return new CertificateResponse { IsSuccess = false, Message = response.Message, ProvidersCount = printingBatchData.PrintBatchItems.Count };
+
             return new CertificateResponse
             {
                 IsSuccess = response.IsSuccess,
                 BatchId = response.BatchId,
-                ProvidersCount = printingBatchData.PrintBatchItems.Count(),
+                ProvidersCount = printingBatchData.PrintBatchItems.Count,
                 CertificatesCreated = response.TotalBatchRecordsCreated - (printingBatchData.PrintBatchItems.Count + 1),
-                OverallResultsUpdatedCount = response.OverallResultsUpdatedCount
+                OverallResultsUpdatedCount = response.OverallResultsUpdatedCount,
+                Message = response.Message
             };
         }
 
         public Batch MapToBatch(IEnumerable<LearnerResultsPrintingData> learnersPrintingData)
         {
             return _mapper.Map<Batch>(learnersPrintingData);
-        }
-
-        public async Task<Batch> CreatePrintingBatchAsync()
-        {
-            var testData = new List<LearnerResultsPrintingData>
-            {
-                new LearnerResultsPrintingData
-                                {
-                                   TlProvider = new TlProvider { Id = 1, UkPrn = 11111111, DisplayName = "Barsley College", Name = "Barsley College", IsActive = true,
-                                       TlProviderAddresses = new List<TlProviderAddress> { new TlProviderAddress { Id = 11, DepartmentName = "Dept", AddressLine1 = "Add1", Postcode = "SN1 5JA", Town= "Swindon", IsActive = true } } },
-
-                                   OverallResults = new List<OverallResult>
-                                   {
-                                       new OverallResult
-                                       {
-                                           TqRegistrationPathwayId = 1111,
-                                           TqRegistrationPathway = new TqRegistrationPathway { Id = 1111, TqRegistrationProfile = new TqRegistrationProfile { UniqueLearnerNumber = 1111111111, Firstname = "first11", Lastname = "last11" } },
-                                           CertificateType = PrintCertificateType.Certificate,
-                                           Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"60358300\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
-                                           ResultAwarded = "Distinction"
-                                       },
-                                       new OverallResult
-                                       {
-                                           TqRegistrationPathwayId = 1112,
-                                           TqRegistrationPathway = new TqRegistrationPathway { Id = 1112, TqRegistrationProfile = new TqRegistrationProfile { UniqueLearnerNumber = 1111111112, Firstname = "first12", Lastname = "last12" } },
-                                           CertificateType = PrintCertificateType.Certificate,
-                                           Details = "{\"TlevelTitle\":\"T Level in Health\",\"PathwayName\":\"Health\",\"PathwayLarId\":\"6037066X\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":null,\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"Distinction*\"}",
-                                           ResultAwarded = "Merit"
-                                       },
-                                   }
-                                },
-
-                                new LearnerResultsPrintingData
-                                {
-                                   TlProvider = new TlProvider { Id = 2, UkPrn = 22222222, DisplayName = "Walsall College", Name = "Walsall College", IsActive = true,
-                                       TlProviderAddresses = new List<TlProviderAddress> { new TlProviderAddress { Id = 22, DepartmentName = "Dept", AddressLine1 = "Add1", Postcode = "SN1 5JA", Town= "Swindon", IsActive = true } } },
-
-                                   OverallResults = new List<OverallResult>
-                                   {
-                                       new OverallResult
-                                       {
-                                           TqRegistrationPathwayId = 2221,
-                                           TqRegistrationPathway = new TqRegistrationPathway { Id = 2221, TqRegistrationProfile = new TqRegistrationProfile { UniqueLearnerNumber = 2222222221, Firstname = "first21", Lastname = "last21" } },
-                                           CertificateType = PrintCertificateType.Certificate,
-                                           Details = "{\"TlevelTitle\":\"T Level in Education and Childcare\",\"PathwayName\":\"Education and Childcare\",\"PathwayLarId\":\"60358294\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed with special consideration\",\"OverallResult\":\"Distinction*\"}",
-                                           ResultAwarded = "Pass"
-                                       },
-                                       new OverallResult
-                                       {
-                                           TqRegistrationPathwayId = 2222,
-                                           TqRegistrationPathway = new TqRegistrationPathway { Id = 2222, TqRegistrationProfile = new TqRegistrationProfile { UniqueLearnerNumber = 2222222222, Firstname = "first22", Lastname = "last22" } },
-                                           CertificateType = PrintCertificateType.Certificate,
-                                           Details = "{\"TlevelTitle\":\"T Level in Science\",\"PathwayName\":\"Science\",\"PathwayLarId\":\"60369899\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}, {\"SpecialismName\":\"Civil Engineering\",\"SpecialismLarId\":\"ZTLOS002\",\"SpecialismResult\":\"Merit\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
-                                           ResultAwarded = "Distinction*"
-                                       },
-                                   }
-                                }
-            };
-
-            await Task.CompletedTask;
-
-            // Map
-            return _mapper.Map<Batch>(testData);
         }
     }
 }
