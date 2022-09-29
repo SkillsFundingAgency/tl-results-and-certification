@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -21,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, bool? isSendLearner)> _testCriteriaData;
         private List<TqRegistrationProfile> _profiles;
+        private List<PrintCertificate> _printCertificates;
         private LearnerRecordDetails _actualResult;
 
         public override void Given()
@@ -53,6 +55,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             // Overall Results seed
             var ulnsWithOverallResult = new List<long> { 1111111112, 1111111113 };
             var _overallResults = SeedOverallResultData(_profiles, ulnsWithOverallResult, false);
+
+            // Seed PrintCertificate
+            _printCertificates = new List<PrintCertificate>();
+
+            foreach (var profile in _profiles)
+                _printCertificates.Add(SeedPrintCertificate(profile.TqRegistrationPathways.FirstOrDefault()));
 
             DbContext.SaveChanges();
 
@@ -113,6 +121,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             var expectedProfile = _profiles.FirstOrDefault(p => p.Id == profileId);
             expectedProfile.Should().NotBeNull();
 
+            var providerAddress = expectedProvider?.TlProviderAddresses?.OrderByDescending(ad => ad.CreatedOn)?.FirstOrDefault();
+            var expectedProviderAddress = new Address { AddressId = providerAddress?.Id ?? 0, OrganisationName = providerAddress?.OrganisationName, DepartmentName = providerAddress?.DepartmentName, AddressLine1 = providerAddress?.AddressLine1, AddressLine2 = providerAddress?.AddressLine2, Town = providerAddress?.Town, Postcode = providerAddress?.Postcode };
+
             var expectedPathway = isTransferedRecord ? expectedProfile.TqRegistrationPathways.FirstOrDefault(p => p.Status == RegistrationPathwayStatus.Transferred)
                 : expectedProfile.TqRegistrationPathways.FirstOrDefault(p => p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn);
 
@@ -148,6 +159,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             // Overall results
             _actualResult.OverallResultDetails.Should().Be(expectedOverallReultDetails);
             _actualResult.OverallResultPublishDate.Should().Be(expectedOverallResultPublishDate);
+
+            // PrintCertificate
+            var expectedPrintCertificate = _printCertificates.FirstOrDefault(p => p.TqRegistrationPathwayId == expectedPathway.Id);
+
+            _actualResult.PrintCertificateId.Should().Be(expectedPrintCertificate?.Id);
+            _actualResult.PrintCertificateType.Should().Be(expectedPrintCertificate?.Type);
+            _actualResult.ProviderAddress.Should().BeEquivalentTo(expectedProviderAddress);
         }
 
         public static IEnumerable<object[]> Data

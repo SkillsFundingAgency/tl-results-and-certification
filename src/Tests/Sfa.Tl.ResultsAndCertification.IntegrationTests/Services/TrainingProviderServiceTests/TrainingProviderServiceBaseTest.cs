@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Printing;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -48,6 +50,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
             PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
+
+            foreach (var provider in TlProviders)
+            {
+                TlProviderAddressDataProvider.CreateTlProviderAddress(DbContext, new TlProviderAddressBuilder().Build(provider));
+            }
 
             DbContext.SaveChangesAsync();
 
@@ -169,6 +176,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             if (saveChanges)
                 DbContext.SaveChanges();
             return overallResults;
+        }
+
+        public PrintCertificate SeedPrintCertificate(TqRegistrationPathway tqRegistrationPathway)
+        {
+            var printCertificate = PrintCertificateDataProvider.CreatePrintCertificate(DbContext, new PrintCertificateBuilder().Build(null, tqRegistrationPathway));
+            printCertificate.Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber;
+            printCertificate.LearningDetails = JsonConvert.SerializeObject(new LearningDetails());
+            DbContext.SaveChanges();
+            return printCertificate;
         }
     }
     
