@@ -2,10 +2,12 @@
 using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using SearchLearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SearchLearnerDetails;
 
@@ -63,7 +65,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus))
                .ForMember(d => d.OverallResultDetails, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.OverallResultDetails) ? JsonConvert.DeserializeObject<OverallResultDetail>(s.OverallResultDetails) : null))
                .ForMember(d => d.OverallResultPublishDate, opts => opts.MapFrom(s => s.OverallResultPublishDate))
-               .ForMember(d => d.LastPrintRequestedDate, opts => opts.MapFrom(s => s.LastPrintRequestedDate));
+               .ForMember(d => d.LastPrintRequestedDate, opts => opts.MapFrom(s => s.LastPrintRequestedDate))
+               .ForMember(d => d.PrintCertificateId, opts => opts.MapFrom(s => s.PrintCertificateId))
+               .ForMember(d => d.PrintCertificateType, opts => opts.MapFrom(s => s.PrintCertificateType))
+               .ForMember(d => d.ProviderAddress, opts => opts.MapFrom(s => s.ProviderAddress));
+
+            CreateMap<Address, AddressViewModel>()
+                .ForMember(d => d.AddressId, opts => opts.MapFrom(s => s.AddressId))
+                .ForMember(d => d.DepartmentName, opts => opts.MapFrom(s => s.DepartmentName))
+                .ForMember(d => d.OrganisationName, opts => opts.MapFrom(s => s.OrganisationName))
+                .ForMember(d => d.AddressLine1, opts => opts.MapFrom(s => s.AddressLine1))
+                .ForMember(d => d.AddressLine2, opts => opts.MapFrom(s => s.AddressLine2))
+                .ForMember(d => d.Town, opts => opts.MapFrom(s => s.Town))
+                .ForMember(d => d.Postcode, opts => opts.MapFrom(s => s.Postcode));
 
             CreateMap<LearnerRecordDetails, AddMathsStatusViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))

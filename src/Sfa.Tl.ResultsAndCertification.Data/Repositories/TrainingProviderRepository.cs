@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
 using System.Collections.Generic;
@@ -157,6 +158,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         join tqAo in _dbContext.TqAwardingOrganisation on tqProvider.TqAwardingOrganisationId equals tqAo.Id
                                         join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
                                         orderby tqPathway.CreatedOn descending
+                                        let printCertificate = tqPathway.PrintCertificates.OrderByDescending(c => c.CreatedOn).FirstOrDefault()
                                         let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()
                                         let overallResult = tqPathway.OverallResults.FirstOrDefault(o => o.IsOptedin && (tqPathway.Status == RegistrationPathwayStatus.Withdrawn) ? o.EndDate !=null : o.EndDate == null)
                                         where tqProfile.Id == profileId && tlProvider.UkPrn == providerUkprn
@@ -180,6 +182,21 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             IndustryPlacementStatus = ipRecord != null ? ipRecord.Status : null,
                                             OverallResultDetails = overallResult != null ? overallResult.Details : null,
                                             OverallResultPublishDate = overallResult != null ? overallResult.PublishDate : null,
+                                            PrintCertificateId = printCertificate != null ? printCertificate.Id : null,
+                                            PrintCertificateType = printCertificate != null ? printCertificate.Type : null,
+                                            ProviderAddress = tlProvider.TlProviderAddresses.Where(pa => pa.IsActive)
+                                                                                            .OrderByDescending(pa => pa.CreatedOn)
+                                                                                            .Select(address => new Address
+                                                                                            {
+                                                                                                AddressId = address.Id,
+                                                                                                DepartmentName = address.DepartmentName,
+                                                                                                OrganisationName = address.OrganisationName,
+                                                                                                AddressLine1 = address.AddressLine1,
+                                                                                                AddressLine2 = address.AddressLine2,
+                                                                                                Town = address.Town,
+                                                                                                Postcode = address.Postcode
+                                                                                            }).FirstOrDefault()
+
                                         };
 
             var learnerRecordDetails = pathwayId.HasValue ? await learnerRecordQuerable.FirstOrDefaultAsync(p => p.RegistrationPathwayId == pathwayId) : await learnerRecordQuerable.FirstOrDefaultAsync();
