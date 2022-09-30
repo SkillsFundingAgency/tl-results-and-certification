@@ -52,5 +52,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _trainingProviderService.GetSearchLearnerFiltersAsync(providerUkprn);
         }
+
+        [HttpPost]
+        [Route("CreateReplacementPrintingRequest")]
+        public async Task<bool> CreateReplacementPrintingRequestAsync(ReplacementPrintRequest request)
+        {
+            return await _trainingProviderService.CreateReplacementPrintingRequestAsync(request);
+        }
     }
 }

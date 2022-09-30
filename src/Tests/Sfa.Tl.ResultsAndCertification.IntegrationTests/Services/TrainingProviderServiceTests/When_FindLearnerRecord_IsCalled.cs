@@ -41,6 +41,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 (1111111114, false, true, true, true, false, null), // Lrs data with Send Qualification
             };
 
+            CreateMapper();
+
             // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _profiles = SeedRegistrationsData(_ulns, TqProvider);
@@ -62,7 +64,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             TrainingProviderRepository = new TrainingProviderRepository(DbContext, TrainingProviderRepositoryLogger);
             TrainingProviderServiceLogger = new Logger<TrainingProviderService>(new NullLoggerFactory());
 
-            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, TrainingProviderRepository, TrainingProviderServiceLogger);
+            BatchRepositoryLogger = new Logger<GenericRepository<Batch>>(new NullLoggerFactory());
+            BatchRepository = new GenericRepository<Batch>(BatchRepositoryLogger, DbContext);
+
+            PrintCertificateRepositoryLogger = new Logger<GenericRepository<PrintCertificate>>(new NullLoggerFactory());
+            PrintCertificateRepository = new GenericRepository<PrintCertificate>(PrintCertificateRepositoryLogger, DbContext);
+
+            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, TrainingProviderRepository, BatchRepository, PrintCertificateRepository, TrainingProviderMapper, TrainingProviderServiceLogger);
         }
 
         public override Task When()

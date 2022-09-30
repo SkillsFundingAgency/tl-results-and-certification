@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -23,6 +25,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         protected ILogger<TrainingProviderService> TrainingProviderServiceLogger;
         protected ITrainingProviderRepository TrainingProviderRepository;
         protected ILogger<TrainingProviderRepository> TrainingProviderRepositoryLogger;
+        protected IRepository<Batch> BatchRepository;
+        protected ILogger<GenericRepository<Batch>> BatchRepositoryLogger;
+        protected IRepository<PrintCertificate> PrintCertificateRepository;
+        protected ILogger<GenericRepository<PrintCertificate>> PrintCertificateRepositoryLogger;
+        protected IMapper TrainingProviderMapper;
 
         // Data Seed variables
         protected TlAwardingOrganisation TlAwardingOrganisation;
@@ -37,6 +44,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         protected IList<TlLookup> TlLookup;
         protected IList<TlLookup> PathwayComponentGrades;
         protected IList<Qualification> Qualifications;
+
+        protected virtual void CreateMapper()
+        {
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(TrainingProviderMapper).Assembly));
+            TrainingProviderMapper = new Mapper(mapperConfig);
+        }
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
         {
