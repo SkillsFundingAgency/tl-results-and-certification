@@ -95,7 +95,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _tqRegistrationProfile.UpdateAsync(profile) > 0;
         }
 
-        public async Task<bool> CreateReplacementPrintingRequestAsync(ReplacementPrintRequest request)
+        public async Task<bool> CreateReplacementDocumentPrintingRequestAsync(ReplacementPrintRequest request)
         {
             var printCertificate = await _printCertificateRepository
                 .GetFirstOrDefaultAsync(p => p.Id == request.PrintCertificateId

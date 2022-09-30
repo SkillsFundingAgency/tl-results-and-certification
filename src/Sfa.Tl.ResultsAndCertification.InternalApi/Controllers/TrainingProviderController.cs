@@ -54,10 +54,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpPost]
-        [Route("CreateReplacementPrintingRequest")]
-        public async Task<bool> CreateReplacementPrintingRequestAsync(ReplacementPrintRequest request)
+        [Route("CreateReplacementDocumentPrintingRequest")]
+        public async Task<bool> CreateReplacementDocumentPrintingRequestAsync(ReplacementPrintRequest request)
         {
-            return await _trainingProviderService.CreateReplacementPrintingRequestAsync(request);
+            return await _trainingProviderService.CreateReplacementDocumentPrintingRequestAsync(request);
         }
     }
 }
