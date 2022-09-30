@@ -64,5 +64,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var learnerSubjectRequest = _mapper.Map<UpdateLearnerSubjectRequest>(model, opt => opt.Items["providerUkprn"] = providerUkprn);
             return await _internalApiClient.UpdateLearnerSubjectAsync(learnerSubjectRequest);
         }
+
+        /// <summary>
+        /// Creates the replacement document printing request asynchronous.
+        /// </summary>
+        /// <param name="providerUkprn">The provider ukprn.</param>
+        /// <param name="viewModel">The view model.</param>
+        /// <returns></returns>
+        public async Task<bool> CreateReplacementDocumentPrintingRequestAsync(long providerUkprn, ReplacementDocumentDetailsViewModel viewModel)
+        {
+            var request = _mapper.Map<ReplacementPrintRequest>(viewModel, opt => opt.Items["providerUkprn"] = providerUkprn);
+            return await _internalApiClient.CreateReplacementDocumentPrintingRequestAsync(request);
+        }
     }
 }

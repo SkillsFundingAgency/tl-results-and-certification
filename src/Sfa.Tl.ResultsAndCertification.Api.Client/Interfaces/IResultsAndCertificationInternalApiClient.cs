@@ -95,6 +95,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         #endregion
 
+        // Replacement Document
+        Task<bool> CreateReplacementDocumentPrintingRequestAsync(ReplacementPrintRequest request);
+
         // Common
         Task<IList<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory);
         Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn);
