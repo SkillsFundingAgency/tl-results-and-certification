@@ -65,7 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus))
                .ForMember(d => d.OverallResultDetails, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.OverallResultDetails) ? JsonConvert.DeserializeObject<OverallResultDetail>(s.OverallResultDetails) : null))
                .ForMember(d => d.OverallResultPublishDate, opts => opts.MapFrom(s => s.OverallResultPublishDate))
-               .ForMember(d => d.LastPrintRequestedDate, opts => opts.MapFrom(s => s.LastPrintRequestedDate))
+               .ForMember(d => d.LastDocumentRequestedDate, opts => opts.MapFrom(s => s.LastDocumentRequestedDate))
                .ForMember(d => d.PrintCertificateId, opts => opts.MapFrom(s => s.PrintCertificateId))
                .ForMember(d => d.PrintCertificateType, opts => opts.MapFrom(s => s.PrintCertificateType))
                .ForMember(d => d.ProviderAddress, opts => opts.MapFrom(s => s.ProviderAddress));

@@ -6,6 +6,8 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
@@ -22,14 +24,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     {
         private readonly ITrainingProviderLoader _trainingProviderLoader;
         private readonly ICacheService _cacheService;
+        private readonly ResultsAndCertificationConfiguration _configuration;
         private readonly ILogger _logger;
 
         private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TrainingProviderCacheKey); } }
 
-        public TrainingProviderController(ITrainingProviderLoader trainingProviderLoader, ICacheService cacheService, ILogger<TrainingProviderController> logger)
+        public TrainingProviderController(ITrainingProviderLoader trainingProviderLoader, ICacheService cacheService, ResultsAndCertificationConfiguration configuration, ILogger<TrainingProviderController> logger)
         {
             _trainingProviderLoader = trainingProviderLoader;
             _cacheService = cacheService;
+            _configuration = configuration;
             _logger = logger;
         }
 
@@ -78,7 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
 
             // populate if any filter are applied from cache
-            if(searchCriteria != null)
+            if (searchCriteria != null)
                 viewModel.SearchLearnerFilters = searchCriteria.SearchLearnerFilters;
 
             viewModel.IsSearchKeyApplied = true;
@@ -126,12 +130,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
 
-            if(searchCriteria != null)
+            if (searchCriteria != null)
             {
                 searchCriteria.SearchLearnerFilters = null;
                 await _cacheService.SetAsync(CacheKey, searchCriteria);
             }
-            
+
             return RedirectToRoute(RouteConstants.SearchLearnerDetails, new { academicYear });
         }
 
@@ -193,7 +197,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
-            
+
             var isSuccess = await _trainingProviderLoader.UpdateLearnerSubjectAsync(User.GetUkPrn(), model);
             if (!isSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
@@ -289,8 +293,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            var rePrintAllowedInDays = 21; // TODO: From Config
-            viewModel.IsDocumentReprintEligible = viewModel.LastPrintRequestedDate.HasValue && viewModel.LastPrintRequestedDate > DateTime.Now.AddDays(-rePrintAllowedInDays);
+            viewModel.IsDocumentRerequestEligible = CommonHelper.IsDocumentRerequestEligible(_configuration.DocumentRerequestInDays, viewModel.LastDocumentRequestedDate);
             viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
 
             return View(viewModel);
@@ -303,7 +306,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [HttpGet]
         [Route("provider-guidance", Name = RouteConstants.ProviderGuidance)]
         public IActionResult ProviderGuidance()
-        {           
+        {
             return View();
         }
 

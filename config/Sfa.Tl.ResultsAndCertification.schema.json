@@ -45,6 +45,10 @@
       "type": "integer",
       "environmentVariable": "SoaRerequestInDays"
     },
+	"DocumentRerequestInDays": {
+      "type": "integer",
+      "environmentVariable": "DocumentRerequestInDays"
+    },
 	"OverallResultsAvailableDate": {
       "type": "string",
       "environmentVariable": "OverallResultsAvailableDate"

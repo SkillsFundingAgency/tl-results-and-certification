@@ -185,9 +185,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             Value = OverallResultDetails?.OverallResult
         };
 
-        public DateTime? LastPrintRequestedDate { get; set; }
+        public DateTime? LastDocumentRequestedDate { get; set; }
 
-        public bool IsDocumentReprintEligible { get; set; }
+        public bool IsDocumentRerequestEligible { get; set; }
 
         public BackLinkModel BackLink => new()
         {
