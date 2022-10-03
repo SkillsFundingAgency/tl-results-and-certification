@@ -10,6 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
         public TrainingProviderMapper()
         {
             CreateMap<PrintCertificate, Batch>()
+                    .ForMember(d => d.Id, opts => opts.Ignore())
                     .ForMember(d => d.Type, opts => opts.MapFrom(s => BatchType.Printing))
                     .ForMember(d => d.Status, opts => opts.MapFrom(s => BatchStatus.Created))
                     .ForMember(d => d.PrintBatchItems, opts => opts.MapFrom(s => s))
@@ -42,6 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                             Type = m.Type,
                             LearningDetails = m.LearningDetails,
                             DisplaySnapshot = m.DisplaySnapshot,
+                            IsReprint = true,
                             CreatedBy = (string)context.Items["performedBy"]
                         }
                     };
