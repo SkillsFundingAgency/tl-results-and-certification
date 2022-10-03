@@ -3,6 +3,14 @@
     public class ReplacementPrintRequest
     {
         /// <summary>
+        /// Gets or sets the uln.
+        /// </summary>
+        /// <value>
+        /// The uln.
+        /// </value>
+        public long Uln { get; set; }
+
+        /// <summary>
         /// Gets or sets the provider ukprn.
         /// </summary>
         /// <value>

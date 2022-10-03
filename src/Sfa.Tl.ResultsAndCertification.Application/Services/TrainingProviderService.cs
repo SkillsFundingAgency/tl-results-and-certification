@@ -99,9 +99,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var printCertificate = await _printCertificateRepository
                 .GetFirstOrDefaultAsync(p => p.Id == request.PrintCertificateId
-                                        && (p.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active ||
-                                            p.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn)
-                                        && p.PrintBatchItem.TlProviderAddress.TlProvider.UkPrn == request.ProviderUkprn,
+                                        && p.Uln == request.Uln
+                                        && p.PrintBatchItem.TlProviderAddress.TlProvider.UkPrn == request.ProviderUkprn
+                                        && p.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active,
                                         navigationPropertyPath: new Expression<Func<PrintCertificate, object>>[]
                                         {
                                             p => p.PrintBatchItem

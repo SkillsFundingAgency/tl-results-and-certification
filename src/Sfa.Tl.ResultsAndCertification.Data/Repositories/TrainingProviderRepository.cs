@@ -158,7 +158,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         join tqAo in _dbContext.TqAwardingOrganisation on tqProvider.TqAwardingOrganisationId equals tqAo.Id
                                         join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
                                         orderby tqPathway.CreatedOn descending
-                                        let printCertificate = tqPathway.PrintCertificates.OrderByDescending(c => c.CreatedOn).FirstOrDefault()
+                                        let printCertificate = tqPathway.PrintCertificates.Where(p => p.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active 
+                                                                                                && (p.Type == PrintCertificateType.StatementOfAchievement || p.Type == PrintCertificateType.Certificate))
+                                                                                          .OrderByDescending(c => c.CreatedOn).FirstOrDefault() // Fetching certificate for only active pathway
                                         let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()
                                         let overallResult = tqPathway.OverallResults.FirstOrDefault(o => o.IsOptedin && (tqPathway.Status == RegistrationPathwayStatus.Withdrawn) ? o.EndDate !=null : o.EndDate == null)
                                         where tqProfile.Id == profileId && tlProvider.UkPrn == providerUkprn

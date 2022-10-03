@@ -7,12 +7,12 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 {
     public class PrintCertificateBuilder
     {
-        public PrintCertificate Build(PrintBatchItem printBatchItem = null, TqRegistrationPathway tqRegistrationPathway = null)
+        public PrintCertificate Build(PrintBatchItem printBatchItem = null, TqRegistrationPathway tqRegistrationPathway = null, TlProviderAddress tlProviderAddress = null)
         {
             tqRegistrationPathway = tqRegistrationPathway ?? new TqRegistrationPathwayBuilder().Build();
             return new PrintCertificate
             {
-                PrintBatchItem = printBatchItem ?? new PrintBatchItemBuilder().Build(),
+                PrintBatchItem = printBatchItem ?? new PrintBatchItemBuilder().Build(null, tlProviderAddress),
                 TqRegistrationPathway = tqRegistrationPathway,
                 Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
                 LearnerName = $"{tqRegistrationPathway.TqRegistrationProfile.Firstname} {tqRegistrationPathway.TqRegistrationProfile.Lastname}",

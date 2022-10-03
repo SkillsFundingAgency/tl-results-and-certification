@@ -44,6 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         protected IList<TlLookup> TlLookup;
         protected IList<TlLookup> PathwayComponentGrades;
         protected IList<Qualification> Qualifications;
+        protected IList<TlProviderAddress> TlProviderAddresses;
 
         protected virtual void CreateMapper()
         {
@@ -64,9 +65,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
             PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
 
+            TlProviderAddresses = new List<TlProviderAddress>();
+
             foreach (var provider in TlProviders)
             {
-                TlProviderAddressDataProvider.CreateTlProviderAddress(DbContext, new TlProviderAddressBuilder().Build(provider));
+                TlProviderAddresses.Add(TlProviderAddressDataProvider.CreateTlProviderAddress(DbContext, new TlProviderAddressBuilder().Build(provider)));
             }
 
             DbContext.SaveChangesAsync();
@@ -191,9 +194,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             return overallResults;
         }
 
-        public PrintCertificate SeedPrintCertificate(TqRegistrationPathway tqRegistrationPathway)
+        public PrintCertificate SeedPrintCertificate(TqRegistrationPathway tqRegistrationPathway, TlProviderAddress tlProviderAddress = null)
         {
-            var printCertificate = PrintCertificateDataProvider.CreatePrintCertificate(DbContext, new PrintCertificateBuilder().Build(null, tqRegistrationPathway));
+            var printCertificate = PrintCertificateDataProvider.CreatePrintCertificate(DbContext, new PrintCertificateBuilder().Build(null, tqRegistrationPathway, tlProviderAddress));
             printCertificate.Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber;
             printCertificate.LearningDetails = JsonConvert.SerializeObject(new LearningDetails());
             DbContext.SaveChanges();

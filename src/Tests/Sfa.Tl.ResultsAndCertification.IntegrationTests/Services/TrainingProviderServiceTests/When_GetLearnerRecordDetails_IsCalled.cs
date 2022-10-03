@@ -169,7 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             _actualResult.OverallResultPublishDate.Should().Be(expectedOverallResultPublishDate);
 
             // PrintCertificate
-            var expectedPrintCertificate = _printCertificates.FirstOrDefault(p => p.TqRegistrationPathwayId == expectedPathway.Id);
+            var expectedPrintCertificate = _printCertificates.FirstOrDefault(p => p.TqRegistrationPathwayId == expectedPathway.Id && p.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active);
 
             _actualResult.PrintCertificateId.Should().Be(expectedPrintCertificate?.Id);
             _actualResult.PrintCertificateType.Should().Be(expectedPrintCertificate?.Type);
