@@ -10,12 +10,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
     public abstract class TestSetup : TrainingProviderLoaderTestBase
     {
         protected long ProviderUkprn;
-        protected ReplacementDocumentDetailsViewModel ReplacementDocumentDetailsViewModel { get; set; }
+        protected RequestReplacementDocumentViewModel RequestReplacementDocumentViewModel { get; set; }
         protected bool ActualResult { get; set; }
 
         public async override Task When()
         {
-            ActualResult = await Loader.CreateReplacementDocumentPrintingRequestAsync(ProviderUkprn, ReplacementDocumentDetailsViewModel);
+            ActualResult = await Loader.CreateReplacementDocumentPrintingRequestAsync(ProviderUkprn, RequestReplacementDocumentViewModel);
         }
 
         public void CreateMapper()
@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                 c.AddMaps(typeof(TrainingProviderMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<ReplacementDocumentDetailsViewModel, ReplacementPrintRequest>(HttpContextAccessor) : null);
+                                new UserNameResolver<RequestReplacementDocumentViewModel, ReplacementPrintRequest>(HttpContextAccessor) : null);
 
             });
             Mapper = new AutoMapper.Mapper(mapperConfig);

@@ -23,7 +23,11 @@
 
     <div class="govuk-grid-row govuk-!-margin-top-4 govuk-!-margin-bottom-9">
         <div class="govuk-grid-column-two-thirds">
-            <form>
+            <form asp-route="@RouteConstants.SubmitRequestReplacementDocument">
+                <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+                <input type="hidden" asp-for="Uln" value="@Model.Uln" />
+                <input type="hidden" asp-for="PrintCertificateId" value="@Model.PrintCertificateId" />
+                <input type="hidden" asp-for="ProviderAddress.AddressId" value="@Model.ProviderAddress.AddressId" />
                 <div class="record-header">
                     <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">@Model.LearnerName</h1>
                     <span class="govuk-caption-xl">@RequestReplacementDocument.Uln_Text @Model.Uln</span>
@@ -35,7 +39,7 @@
 
                 <div>
                     <h2 class="govuk-heading-m govuk-!-display-inline">@RequestReplacementDocument.Your_Org_Postal_Address</h2>
-                    <a asp-route="@RouteConstants.AddAddressPostcode" class="govuk-link govuk-link--no-visited-state float--right">@RequestReplacementDocument.Link_Change</a>
+                    <a asp-route="@RouteConstants.AddAddressPostcode" class="govuk-link float--right">@RequestReplacementDocument.Link_Change</a>
                 </div>
 
                 <p class="govuk-body">@RequestReplacementDocument.Changing_Address_Take_Back_To_Home_Page</p>
@@ -48,8 +52,7 @@
                 <h2 class="govuk-heading-m">@RequestReplacementDocument.Now_Send_Your_Request</h2>
                 <p class="govuk-body">@RequestReplacementDocument.By_Submitting_Request_You_Are_Confirming</p>
                 <button type="submit" class="govuk-button govuk-!-display-block" name="certificateStatus" data-module="govuk-button" data-prevent-double-click="true">@RequestReplacementDocument.Button_Accept_And_Request</button>
-                <a asp-route="@RouteConstants.LearnerRecordDetails" asp-route-profileId="@Model.ProfileId" class="govuk-link govuk-link--no-visited-state">@RequestReplacementDocument.Link_Cancel</a>
-
+                <a asp-route="@RouteConstants.LearnerRecordDetails" asp-route-profileId="@Model.ProfileId" class="govuk-link">@RequestReplacementDocument.Link_Cancel</a>
             </form>
         </div>
     </div>
