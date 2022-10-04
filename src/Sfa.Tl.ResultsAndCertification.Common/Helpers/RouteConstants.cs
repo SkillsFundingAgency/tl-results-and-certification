@@ -281,6 +281,9 @@
         public const string SubmitAddAddressCancel = "SubmitAddAddressCancel";
         public const string AddAddressNotFound = "AddAddressNotFound";
         public const string SubmitAddAddressNotFound = "SubmitAddAddressNotFound";
+        public const string RequestReplacementDocument = "RequestReplacementDocument";
+        public const string SubmitRequestReplacementDocument = "SubmitRequestReplacementDocument";
+
         #endregion
 
         #region Statement of achievement

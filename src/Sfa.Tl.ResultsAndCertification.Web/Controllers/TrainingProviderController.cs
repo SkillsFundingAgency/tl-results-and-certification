@@ -237,6 +237,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
         }
 
+        [HttpGet]
+        [Route("request-replacement-document/{profileId}", Name = RouteConstants.RequestReplacementDocument)]
+        public async Task<IActionResult> RequestReplacementDocumentAsync(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<RequestReplacementDocumentViewModel>(User.GetUkPrn(), profileId);
+            if (viewModel == null || CommonHelper.IsDocumentRerequestEligible(_configuration.DocumentRerequestInDays, viewModel.LastDocumentRequestedDate))
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("request-replacement-document/{profileId}", Name = RouteConstants.SubmitRequestReplacementDocument)]
+        public async Task<IActionResult> RequestReplacementDocumentAsync(RequestReplacementDocumentViewModel model)
+        {
+            await Task.CompletedTask;
+            return View(model);
+        }
+
         #region Update-Learner
 
         [HttpGet]
