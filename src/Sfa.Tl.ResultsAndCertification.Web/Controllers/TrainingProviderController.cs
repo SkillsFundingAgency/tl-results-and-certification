@@ -16,6 +16,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using LearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
+using RequestReplacementDocumentContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.RequestReplacementDocument;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -252,8 +253,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("request-replacement-document/{profileId}", Name = RouteConstants.SubmitRequestReplacementDocument)]
         public async Task<IActionResult> RequestReplacementDocumentAsync(RequestReplacementDocumentViewModel model)
         {
-            await Task.CompletedTask;
-            return View(model);
+            var isSuccess = await _trainingProviderLoader.CreateReplacementDocumentPrintingRequestAsync(User.GetUkPrn(), model);
+
+            if (!isSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            var notificationBanner = new NotificationBannerModel { HeaderMessage = RequestReplacementDocumentContent.Success_Header_Replacement_Certificate_Requested, Message = RequestReplacementDocumentContent.Success_Message_Replacement_Documents, DisplayMessageBody = true, IsRawHtml = true };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
         }
 
         #region Update-Learner

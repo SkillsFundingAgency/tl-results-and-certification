@@ -16,10 +16,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             CreateMapper();
             ProviderUkprn = 987654321;
 
-            ReplacementDocumentDetailsViewModel = new ReplacementDocumentDetailsViewModel
+            RequestReplacementDocumentViewModel = new RequestReplacementDocumentViewModel
             {
                 Uln = 1234567890,               
-                ProviderAddressId = 1,
+                ProviderAddress = new ViewModel.ProviderAddress.AddressViewModel { AddressId = 1 },
                 PrintCertificateId = 1
             };
 

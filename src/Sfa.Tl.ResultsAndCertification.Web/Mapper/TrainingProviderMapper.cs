@@ -109,11 +109,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AddEnglishStatusViewModel, UpdateLearnerSubjectRequest>>());
 
-            CreateMap<ReplacementDocumentDetailsViewModel, ReplacementPrintRequest>()
+            CreateMap<RequestReplacementDocumentViewModel, ReplacementPrintRequest>()
                 .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))
-                .ForMember(d => d.ProviderAddressId, opts => opts.MapFrom(s => s.ProviderAddressId))
+                .ForMember(d => d.ProviderAddressId, opts => opts.MapFrom(s => s.ProviderAddress.AddressId))
                 .ForMember(d => d.PrintCertificateId, opts => opts.MapFrom(s => s.PrintCertificateId))
-                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ReplacementDocumentDetailsViewModel, ReplacementPrintRequest>>());
+                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<RequestReplacementDocumentViewModel, ReplacementPrintRequest>>());
         }
     }
 }

@@ -14,10 +14,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             CreateMapper();
             ProviderUkprn = 987654321;
 
-            ReplacementDocumentDetailsViewModel = new ReplacementDocumentDetailsViewModel
+            RequestReplacementDocumentViewModel = new RequestReplacementDocumentViewModel
             {
                 Uln = 1234567890,
-                ProviderAddressId = 1,
+                ProviderAddress = new ViewModel.ProviderAddress.AddressViewModel { AddressId = 1 },
                 PrintCertificateId = 1,
                 LearnerName = "Test test"
             };
@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var result = Mapper.Map<ReplacementPrintRequest>(ReplacementDocumentDetailsViewModel, opt => opt.Items["providerUkprn"] = ProviderUkprn);
+            var result = Mapper.Map<ReplacementPrintRequest>(RequestReplacementDocumentViewModel, opt => opt.Items["providerUkprn"] = ProviderUkprn);
 
             result.Should().NotBeNull();
             result.Uln.Should().Be(_expectedReplacementPrintRequest.Uln);

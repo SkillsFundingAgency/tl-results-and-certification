@@ -156,6 +156,12 @@
   <data name="Para_Request_If_Lost_Or_Damaged" xml:space="preserve">
     <value>Request a replacement document if it has been lost or damaged.</value>
   </data>
+  <data name="Success_Header_Replacement_Certificate_Requested" xml:space="preserve">
+    <value>Your replacement certificate has been requested</value>
+  </data>
+  <data name="Success_Message_Replacement_Documents" xml:space="preserve">
+    <value>&lt;p class="govuk-body"&gt;Replacement documents can take up to 3 weeks to arrive. If you have not received the learner's document after this time, please &lt;a class="govuk-notification-banner__link" href="/contact-us"&gt;Contact us&lt;/a&gt;.&lt;/p&gt;</value>
+  </data>
   <data name="Title_Department" xml:space="preserve">
     <value>Department</value>
   </data>
