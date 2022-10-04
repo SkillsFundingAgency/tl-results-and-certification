@@ -179,16 +179,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your replacement certificate has been requested.
+        ///   Looks up a localized string similar to A replacement document has been requested.
         /// </summary>
-        public static string Success_Header_Replacement_Certificate_Requested {
+        public static string Success_Header_Replacement_Document_Requested {
             get {
-                return ResourceManager.GetString("Success_Header_Replacement_Certificate_Requested", resourceCulture);
+                return ResourceManager.GetString("Success_Header_Replacement_Document_Requested", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p class=&quot;govuk-body&quot;&gt;Replacement documents can take up to 3 weeks to arrive. If you have not received the learner&apos;s document after this time, please &lt;a class=&quot;govuk-notification-banner__link&quot; href=&quot;/contact-us&quot;&gt;Contact us&lt;/a&gt;.&lt;/p&gt;.
+        ///   Looks up a localized string similar to &lt;p class=&quot;govuk-body&quot;&gt;Replacement documents can take up to 3 weeks to arrive.  If you have not received the learner’s document within 3 weeks, please &lt;a class=&quot;govuk-notification-banner__link&quot; href=&quot;/contact-us&quot;&gt;Contact us&lt;/a&gt;.&lt;/p&gt;.
         /// </summary>
         public static string Success_Message_Replacement_Documents {
             get {

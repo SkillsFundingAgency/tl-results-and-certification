@@ -243,7 +243,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> RequestReplacementDocumentAsync(int profileId)
         {
             var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<RequestReplacementDocumentViewModel>(User.GetUkPrn(), profileId);
-            if (viewModel == null || CommonHelper.IsDocumentRerequestEligible(_configuration.DocumentRerequestInDays, viewModel.LastDocumentRequestedDate))
+            if (viewModel == null || !CommonHelper.IsDocumentRerequestEligible(_configuration.DocumentRerequestInDays, viewModel.LastDocumentRequestedDate))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
@@ -258,7 +258,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!isSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
-            var notificationBanner = new NotificationBannerModel { HeaderMessage = RequestReplacementDocumentContent.Success_Header_Replacement_Certificate_Requested, Message = RequestReplacementDocumentContent.Success_Message_Replacement_Documents, DisplayMessageBody = true, IsRawHtml = true };
+            var notificationBanner = new NotificationBannerModel { HeaderMessage = RequestReplacementDocumentContent.Success_Header_Replacement_Document_Requested, Message = RequestReplacementDocumentContent.Success_Message_Replacement_Documents, DisplayMessageBody = true, IsRawHtml = true };
             await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
