@@ -76,6 +76,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.Town, opts => opts.MapFrom(s => s.Town))
                 .ForMember(d => d.Postcode, opts => opts.MapFrom(s => s.Postcode));
 
+            CreateMap<LearnerRecordDetails, RequestReplacementDocumentViewModel>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
+               .ForMember(d => d.PrintCertificateId, opts => opts.MapFrom(s => s.PrintCertificateId))
+               .ForMember(d => d.PrintCertificateType, opts => opts.MapFrom(s => s.PrintCertificateType))
+               .ForMember(d => d.LastDocumentRequestedDate, opts => opts.MapFrom(s => s.LastDocumentRequestedDate))
+               .ForMember(d => d.ProviderAddress, opts => opts.MapFrom(s => s.ProviderAddress));
+
             CreateMap<LearnerRecordDetails, AddMathsStatusViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))

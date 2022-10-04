@@ -1,0 +1,55 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.RequestReplacementDocumentViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = RequestReplacementDocument.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <span class="govuk-caption-xl">@RequestReplacementDocument.Caption_Request_Replacement_Document</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">
+                @RequestReplacementDocument.Heading_Check_Details_Before_Sending
+            </h1>
+            <p class="govuk-body govuk-!-margin-bottom-0">@RequestReplacementDocument.Para_Request_If_Lost_Or_Damaged</p>
+            <p class="govuk-body">@RequestReplacementDocument.Para_Check_Data_Before_Submit</p>
+        </div>
+    </div>
+
+    <div class="govuk-grid-row govuk-!-margin-top-4 govuk-!-margin-bottom-9">
+        <div class="govuk-grid-column-two-thirds">
+            <form>
+                <div class="record-header">
+                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">@Model.LearnerName</h1>
+                    <span class="govuk-caption-xl">@RequestReplacementDocument.Uln_Text @Model.Uln</span>
+                </div>
+
+                <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                    <vc:summary-item model=Model.SummaryDocumentRequested></vc:summary-item>
+                </dl>
+
+                <div>
+                    <h2 class="govuk-heading-m govuk-!-display-inline">@RequestReplacementDocument.Your_Org_Postal_Address</h2>
+                    <a asp-route="@RouteConstants.AddAddressPostcode" class="govuk-link govuk-link--no-visited-state float--right">@RequestReplacementDocument.Link_Change</a>
+                </div>
+
+                <p class="govuk-body">@RequestReplacementDocument.Changing_Address_Take_Back_To_Home_Page</p>
+
+                <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                    <vc:summary-item model=Model.SummaryDepartment></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryOrganisationAddress></vc:summary-item>
+                </dl>
+
+                <h2 class="govuk-heading-m">@RequestReplacementDocument.Now_Send_Your_Request</h2>
+                <p class="govuk-body">@RequestReplacementDocument.By_Submitting_Request_You_Are_Confirming</p>
+                <button type="submit" class="govuk-button govuk-!-display-block" name="certificateStatus" data-module="govuk-button" data-prevent-double-click="true">@RequestReplacementDocument.Button_Accept_And_Request</button>
+                <a asp-route="@RouteConstants.LearnerRecordDetails" asp-route-profileId="@Model.ProfileId" class="govuk-link govuk-link--no-visited-state">@RequestReplacementDocument.Link_Cancel</a>
+
+            </form>
+        </div>
+    </div>

@@ -117,118 +117,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Assessment_Dashboard" xml:space="preserve">
-    <value>Assessments</value>
+  <data name="Button_Accept_And_Request" xml:space="preserve">
+    <value>Accept and request</value>
   </data>
-  <data name="Check_Learner_Details" xml:space="preserve">
-    <value>Check the learner’s details</value>
+  <data name="By_Submitting_Request_You_Are_Confirming" xml:space="preserve">
+    <value>By submitting this request you are confirming that, to the best of your knowledge, the details you are providing are correct.</value>
   </data>
-  <data name="Contact" xml:space="preserve">
-    <value>Contact us</value>
+  <data name="Caption_Request_Replacement_Document" xml:space="preserve">
+    <value>Request replacement document</value>
   </data>
-  <data name="Home" xml:space="preserve">
-    <value>Home</value>
+  <data name="Changing_Address_Take_Back_To_Home_Page" xml:space="preserve">
+    <value>Changing the address will take you back to the home page.</value>
   </data>
-  <data name="Learners_Assessment_entries" xml:space="preserve">
-    <value>Learner's assessment entries</value>
+  <data name="Document_Certificate" xml:space="preserve">
+    <value>Certificate</value>
   </data>
-  <data name="Learners_Record" xml:space="preserve">
-    <value>Learner’s record</value>
+  <data name="Document_Statement_Of_Achievement" xml:space="preserve">
+    <value>Statement of Achievement</value>
   </data>
-  <data name="Learners_Results" xml:space="preserve">
-    <value>Learner's results</value>
+  <data name="Heading_Check_Details_Before_Sending" xml:space="preserve">
+    <value>Check the learner's details before sending your request</value>
   </data>
-  <data name="Learner_TLevel_Record" xml:space="preserve">
-    <value>Learner T Level record</value>
+  <data name="Link_Cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-  <data name="Manage_Learner_TLevel_Records" xml:space="preserve">
-    <value>Manage learner T Level records</value>
+  <data name="Link_Change" xml:space="preserve">
+    <value>Change</value>
   </data>
-  <data name="Manage_Postal_Address" xml:space="preserve">
-    <value>Manage your organisation’s postal address</value>
+  <data name="Now_Send_Your_Request" xml:space="preserve">
+    <value>Now send your request</value>
   </data>
-  <data name="Provider_Find_Provider" xml:space="preserve">
-    <value>Find a provider</value>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Request a replacement document</value>
   </data>
-  <data name="Provider_Tlevels" xml:space="preserve">
-    <value>Provider’s T Levels</value>
+  <data name="Para_Check_Data_Before_Submit" xml:space="preserve">
+    <value>Check this data is correct or make any changes before submitting your request.</value>
   </data>
-  <data name="Provider_Your_Providers" xml:space="preserve">
-    <value>Your providers</value>
+  <data name="Para_Request_If_Lost_Or_Damaged" xml:space="preserve">
+    <value>Request a replacement document if it has been lost or damaged.</value>
   </data>
-  <data name="Prs_Learner_Component_Grade_Status" xml:space="preserve">
-    <value>Learner’s component grade status</value>
+  <data name="Title_Department" xml:space="preserve">
+    <value>Department</value>
   </data>
-  <data name="Registration_Dashboard" xml:space="preserve">
-    <value>Registrations</value>
+  <data name="Title_Document_Requested" xml:space="preserve">
+    <value>Document requested</value>
   </data>
-  <data name="Registration_Details" xml:space="preserve">
-    <value>Registration details</value>
+  <data name="Title_Organisation_Address" xml:space="preserve">
+    <value>Organisation's address</value>
   </data>
-  <data name="Request_Statement_Of_Achievement" xml:space="preserve">
-    <value>Request statement of achievement</value>
+  <data name="Uln_Text" xml:space="preserve">
+    <value>ULN:</value>
   </data>
-  <data name="Result_Dashboard" xml:space="preserve">
-    <value>Results</value>
-  </data>
-  <data name="Reviews_And_Appeals" xml:space="preserve">
-    <value>Post-results</value>
-  </data>
-  <data name="Search_For_Assessments" xml:space="preserve">
-    <value>Search for a learner</value>
-  </data>
-  <data name="Search_For_Learner" xml:space="preserve">
-    <value>Search for a learner</value>
-  </data>
-  <data name="Search_For_Registration" xml:space="preserve">
-    <value>Search for a registration</value>
-  </data>
-  <data name="Search_For_Results" xml:space="preserve">
-    <value>Search for a learner</value>
-  </data>
-  <data name="Search_Learner_Records" xml:space="preserve">
-    <value>Search learner records</value>
-  </data>
-  <data name="StartPostResultsService" xml:space="preserve">
-    <value>Post-results</value>
-  </data>
-  <data name="StartReviewsAndAppeals" xml:space="preserve">
-    <value>Appeals</value>
-  </data>
-  <data name="StatementOfAchievementRequested" xml:space="preserve">
-    <value>Statement of achievement requested</value>
-  </data>
-  <data name="Statement_Of_Achievement_Not_Available" xml:space="preserve">
-    <value>Statement of achievement not available</value>
-  </data>
-  <data name="Tlevels_Confirmed_List" xml:space="preserve">
-    <value>Confirmed T Levels</value>
-  </data>
-  <data name="Tlevels_Dashboard" xml:space="preserve">
-    <value>T Levels</value>
-  </data>
-  <data name="Tlevels_None_Confirmed" xml:space="preserve">
-    <value>No confirmed T Levels</value>
-  </data>
-  <data name="Tlevels_None_Queried" xml:space="preserve">
-    <value>No queried T Levels</value>
-  </data>
-  <data name="Tlevels_Queried_List" xml:space="preserve">
-    <value>Queried T Levels</value>
-  </data>
-  <data name="Tlevel_Details" xml:space="preserve">
-    <value>T Level details</value>
-  </data>
-  <data name="Tlevel_Review_Select" xml:space="preserve">
-    <value>Review new T Levels</value>
-  </data>
-  <data name="Upload_Assessments_File" xml:space="preserve">
-    <value>Upload multiple assessments</value>
-  </data>
-  <data name="Upload_Registrations_File" xml:space="preserve">
-    <value>Upload multiple registrations</value>
-  </data>
-  <data name="Upload_Results_File" xml:space="preserve">
-    <value>Upload multiple results</value>
+  <data name="Your_Org_Postal_Address" xml:space="preserve">
+    <value>Your organisation's postal address</value>
   </data>
 </root>
