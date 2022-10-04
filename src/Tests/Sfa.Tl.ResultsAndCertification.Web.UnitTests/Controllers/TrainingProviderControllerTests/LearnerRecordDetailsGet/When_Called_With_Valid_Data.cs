@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System;
-using Xunit;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
-using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
 using System.Collections.Generic;
+using Xunit;
+using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
+using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.LearnerRecordDetailsGet
 {
@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 AwardingOrganisationName = "Pearson",
                 MathsStatus = SubjectStatus.NotSpecified,
                 EnglishStatus = SubjectStatus.NotSpecified,
-                IsLearnerRegistered = true,                
+                IsLearnerRegistered = true,
                 IndustryPlacementId = 10,
                 IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified,
                 OverallResultDetails = new Models.OverallResults.OverallResultDetail
@@ -51,7 +51,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                     },
                     OverallResult = "Distinction"
                 },
-                OverallResultPublishDate = DateTime.UtcNow
+                OverallResultPublishDate = DateTime.UtcNow,
+                LastDocumentRequestedDate = null
             };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, Mockresult.ProfileId.ToString() } };
@@ -95,6 +96,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.IsIndustryPlacementAdded.Should().BeFalse();
             model.CanAddIndustryPlacement.Should().BeTrue();
             model.IsStatusCompleted.Should().BeFalse();
+            model.IsDocumentRerequestEligible.Should().BeFalse();
 
             // DateofBirth
             model.SummaryDateofBirth.Title.Should().Be(LearnerRecordDetailsContent.Title_DateofBirth_Text);
@@ -111,7 +113,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             // TLevelTitle
             model.SummaryTlevelTitle.Title.Should().Be(LearnerRecordDetailsContent.Title_TLevel_Text);
             model.SummaryTlevelTitle.Value.Should().Be(Mockresult.TlevelTitle);
-            
+
             // Start Year
             model.SummaryStartYear.Title.Should().Be(LearnerRecordDetailsContent.Title_StartYear_Text);
             model.SummaryStartYear.Value.Should().Be(Mockresult.StartYear);

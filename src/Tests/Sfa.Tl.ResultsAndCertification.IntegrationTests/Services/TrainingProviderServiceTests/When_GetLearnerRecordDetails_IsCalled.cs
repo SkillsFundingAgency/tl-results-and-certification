@@ -103,13 +103,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         {
             var profileId = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln)?.Id ?? 0;
             int? pathwayId = null;
-            
-            if(includePathwayId && profileId > 0)
+
+            if (includePathwayId && profileId > 0)
             {
                 var profile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
                 var pathway = isTransferedRecord ? profile.TqRegistrationPathways.FirstOrDefault(p => p.Status == RegistrationPathwayStatus.Transferred)
                 : profile.TqRegistrationPathways.FirstOrDefault(p => p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn);
-                
+
                 pathwayId = pathway.Id;
             }
 
@@ -119,7 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             {
                 _actualResult.Should().BeNull();
                 return;
-            }            
+            }
 
             var expectedProvider = TlProviders.FirstOrDefault(p => p.UkPrn == (long)provider);
             expectedProvider.Should().NotBeNull();
@@ -174,6 +174,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             _actualResult.PrintCertificateId.Should().Be(expectedPrintCertificate?.Id);
             _actualResult.PrintCertificateType.Should().Be(expectedPrintCertificate?.Type);
             _actualResult.ProviderAddress.Should().BeEquivalentTo(expectedProviderAddress);
+            _actualResult.LastDocumentRequestedDate.Should().Be(expectedPrintCertificate?.CreatedOn);
         }
 
         public static IEnumerable<object[]> Data

@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Newtonsoft.Json;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System;
 using System.Collections.Generic;
@@ -51,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                 ProviderName = "Barsley College",
                 ProviderUkprn = ProviderUkprn,
                 TlevelTitle = "Course name (4561237)",
-                AcademicYear  = 2020,
+                AcademicYear = 2020,
                 AwardingOrganisationName = "Pearson",
                 MathsStatus = Common.Enum.SubjectStatus.Achieved,
                 EnglishStatus = Common.Enum.SubjectStatus.Achieved,
@@ -59,7 +58,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                 IndustryPlacementId = 1,
                 IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed,
                 OverallResultDetails = JsonConvert.SerializeObject(_expectedOverallResult),
-                OverallResultPublishDate = DateTime.UtcNow                
+                OverallResultPublishDate = DateTime.UtcNow,
+                LastDocumentRequestedDate = DateTime.UtcNow.AddDays(-7)
             };
             InternalApiClient.GetLearnerRecordDetailsAsync(ProviderUkprn, ProfileId).Returns(_expectedApiResult);
         }
@@ -97,6 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
 
             ActualResult.OverallResultDetails.Should().BeEquivalentTo(_expectedOverallResult);
             ActualResult.OverallResultPublishDate.Should().Be(_expectedApiResult.OverallResultPublishDate);
+            ActualResult.LastDocumentRequestedDate.Should().Be(_expectedApiResult.LastDocumentRequestedDate);
         }
     }
 }

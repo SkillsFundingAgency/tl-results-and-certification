@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System;
-using Xunit;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
-using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
 using System.Collections.Generic;
+using Xunit;
+using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
+using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.LearnerRecordDetailsGet
 {
@@ -38,12 +38,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 IndustryPlacementId = 10,
                 IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified,
                 OverallResultDetails = null,
-                OverallResultPublishDate = null
+                OverallResultPublishDate = null,
+                LastDocumentRequestedDate = DateTime.Today.AddMonths(-1)
             };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, Mockresult.ProfileId.ToString() } };
 
             TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId).Returns(Mockresult);
+            ResultsAndCertificationConfiguration.DocumentRerequestInDays = 21;
         }
 
         [Fact]
@@ -82,6 +84,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.IsIndustryPlacementAdded.Should().BeFalse();
             model.CanAddIndustryPlacement.Should().BeTrue();
             model.IsStatusCompleted.Should().BeFalse();
+            model.IsDocumentRerequestEligible.Should().BeTrue();
 
             // DateofBirth
             model.SummaryDateofBirth.Title.Should().Be(LearnerRecordDetailsContent.Title_DateofBirth_Text);
