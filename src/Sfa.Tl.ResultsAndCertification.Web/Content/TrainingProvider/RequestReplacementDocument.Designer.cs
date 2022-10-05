@@ -143,6 +143,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to English and maths achievements.
+        /// </summary>
+        public static string List_Item_English_Maths_Achievements {
+            get {
+                return ResourceManager.GetString("List_Item_English_Maths_Achievements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to grades.
+        /// </summary>
+        public static string List_Item_Grades {
+            get {
+                return ResourceManager.GetString("List_Item_Grades", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to industry placement status.
+        /// </summary>
+        public static string List_Item_Industry_Placement_Status {
+            get {
+                return ResourceManager.GetString("List_Item_Industry_Placement_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Now send your request.
         /// </summary>
         public static string Now_Send_Your_Request {
@@ -175,6 +202,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Para_Request_If_Lost_Or_Damaged {
             get {
                 return ResourceManager.GetString("Para_Request_If_Lost_Or_Damaged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This means that the results in the document may not match the results shown in the learner’s record..
+        /// </summary>
+        public static string Para_This_Means_Result_May_Not_Match {
+            get {
+                return ResourceManager.GetString("Para_This_Means_Result_May_Not_Match", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If any components have changed within this learner’s record, you will automatically be sent an updated document within the next two months..
+        /// </summary>
+        public static string Para_Updated_Document_Sent_If_Any_Component_Changes {
+            get {
+                return ResourceManager.GetString("Para_Updated_Document_Sent_If_Any_Component_Changes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The document you will receive will be a copy of the previous certificate or statement of achievement. It may not reflect any changes to:.
+        /// </summary>
+        public static string Para_You_Receive_Previous_Certificate_Or_Soa {
+            get {
+                return ResourceManager.GetString("Para_You_Receive_Previous_Certificate_Or_Soa", resourceCulture);
             }
         }
         
