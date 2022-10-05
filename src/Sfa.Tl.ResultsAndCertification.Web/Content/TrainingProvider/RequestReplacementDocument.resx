@@ -160,7 +160,7 @@
     <value>A replacement document has been requested</value>
   </data>
   <data name="Success_Message_Replacement_Documents" xml:space="preserve">
-    <value>&lt;p class="govuk-body"&gt;Replacement documents can take up to 3 weeks to arrive.  If you have not received the learner’s document within 3 weeks, please &lt;a class="govuk-notification-banner__link" href="/contact-us"&gt;Contact us&lt;/a&gt;.&lt;/p&gt;</value>
+    <value>&lt;p class="govuk-body"&gt;Replacement documents can take up to 3 weeks to arrive.  If you have not received the learner’s document within 3 weeks, please &lt;a class="govuk-notification-banner__link" href="/contact-us"&gt;contact us&lt;/a&gt;.&lt;/p&gt;</value>
   </data>
   <data name="Title_Department" xml:space="preserve">
     <value>Department</value>
