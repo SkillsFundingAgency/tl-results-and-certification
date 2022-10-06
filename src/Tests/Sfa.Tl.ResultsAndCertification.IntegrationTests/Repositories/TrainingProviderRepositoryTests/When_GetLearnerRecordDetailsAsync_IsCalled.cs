@@ -160,6 +160,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             _actualResult.PrintCertificateType.Should().Be(expectedPrintCertificate?.Type);
             _actualResult.ProviderAddress.Should().BeEquivalentTo(expectedProviderAddress);
             _actualResult.LastDocumentRequestedDate.Should().Be(expectedPrintCertificate?.CreatedOn);
+            _actualResult.IsReprint.Should().Be(expectedPrintCertificate?.IsReprint);
         }
 
         public static IEnumerable<object[]> Data

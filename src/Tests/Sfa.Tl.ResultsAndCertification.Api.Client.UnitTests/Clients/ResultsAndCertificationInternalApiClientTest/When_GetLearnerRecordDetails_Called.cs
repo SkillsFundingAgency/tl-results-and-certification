@@ -51,7 +51,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration,
                 OverallResultDetails = "Result",
                 OverallResultPublishDate = DateTime.UtcNow,
-                LastDocumentRequestedDate = DateTime.UtcNow.AddDays(-7)
+                LastDocumentRequestedDate = DateTime.UtcNow.AddDays(-7),
+                IsReprint = true
             };
         }
 
@@ -81,6 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.OverallResultDetails.Should().Be(_mockApiResponse.OverallResultDetails);
             _actualResult.OverallResultPublishDate.Should().Be(_mockApiResponse.OverallResultPublishDate);
             _actualResult.LastDocumentRequestedDate.Should().Be(_mockApiResponse.LastDocumentRequestedDate);
+            _actualResult.IsReprint.Should().Be(_mockApiResponse.IsReprint);
         }
     }
 }

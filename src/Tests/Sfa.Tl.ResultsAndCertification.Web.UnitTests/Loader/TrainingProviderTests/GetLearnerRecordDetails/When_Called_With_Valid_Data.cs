@@ -59,7 +59,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                 IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed,
                 OverallResultDetails = JsonConvert.SerializeObject(_expectedOverallResult),
                 OverallResultPublishDate = DateTime.UtcNow,
-                LastDocumentRequestedDate = DateTime.UtcNow.AddDays(-7)
+                LastDocumentRequestedDate = DateTime.UtcNow.AddDays(-7),
+                IsReprint = false
             };
             InternalApiClient.GetLearnerRecordDetailsAsync(ProviderUkprn, ProfileId).Returns(_expectedApiResult);
         }
@@ -98,6 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             ActualResult.OverallResultDetails.Should().BeEquivalentTo(_expectedOverallResult);
             ActualResult.OverallResultPublishDate.Should().Be(_expectedApiResult.OverallResultPublishDate);
             ActualResult.LastDocumentRequestedDate.Should().Be(_expectedApiResult.LastDocumentRequestedDate);
+            ActualResult.IsReprint.Should().Be(_expectedApiResult.IsReprint.Value);
         }
     }
 }
