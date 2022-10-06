@@ -1,6 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
-using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
@@ -34,10 +33,10 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         public string OverallResultDetails { get; set; }
         public DateTime? OverallResultPublishDate { get; set; }
 
-        public DateTime? LastDocumentRequestedDate { get; set; }
-
         public int? PrintCertificateId { get; set; }
         public PrintCertificateType? PrintCertificateType { get; set; }
+        public DateTime? LastDocumentRequestedDate { get; set; }
+        public bool? IsReprint { get; set; }
 
         // Provider Organisation's postal address
         public Address ProviderAddress { get; set; }
