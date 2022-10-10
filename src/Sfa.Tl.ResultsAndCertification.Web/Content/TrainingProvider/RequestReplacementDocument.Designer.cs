@@ -125,6 +125,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  organisation’s postal address.
+        /// </summary>
+        public static string Hidden_Text_Change_Organisation_Address {
+            get {
+                return ResourceManager.GetString("Hidden_Text_Change_Organisation_Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Link_Cancel {

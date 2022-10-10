@@ -138,6 +138,9 @@
   <data name="Heading_Check_Details_Before_Sending" xml:space="preserve">
     <value>Check the learner's details before sending your request</value>
   </data>
+  <data name="Hidden_Text_Change_Organisation_Address" xml:space="preserve">
+    <value> organisation’s postal address</value>
+  </data>
   <data name="Link_Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>

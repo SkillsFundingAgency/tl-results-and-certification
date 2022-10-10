@@ -48,7 +48,10 @@
 
                 <div>
                     <h2 class="govuk-heading-m govuk-!-display-inline">@RequestReplacementDocument.Your_Org_Postal_Address</h2>
-                    <a asp-route="@RouteConstants.AddAddressPostcode" class="govuk-link float--right">@RequestReplacementDocument.Link_Change</a>
+                    <a class="govuk-body govuk-link float--right" asp-route="@RouteConstants.AddAddressPostcode">
+                        @RequestReplacementDocument.Link_Change
+                        <span class="govuk-visually-hidden">@RequestReplacementDocument.Hidden_Text_Change_Organisation_Address</span>
+                    </a>
                 </div>
 
                 <p class="govuk-body">@RequestReplacementDocument.Changing_Address_Take_Back_To_Home_Page</p>
