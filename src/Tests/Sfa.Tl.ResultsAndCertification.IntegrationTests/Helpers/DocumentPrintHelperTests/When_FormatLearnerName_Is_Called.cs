@@ -15,7 +15,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Helpers.DocumentPrintH
                 {
                     new object[] {"John", "Smith", "John Smith"},
                     new object[] {"JOHN", "Smith", "John Smith"},
-                    new object[] {"McDonald", "Forest", "McDonald Forest"}
+                    new object[] {"McDonald", "Forest", "McDonald Forest"},
+                    new object[] {"john", "smith", "John Smith"}
                 };
             }
         }

@@ -1,8 +1,10 @@
 ﻿using System.Globalization;
-using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Helpers
 {
+    /// <summary>
+    /// return formatted learner name. Convert name into TitleCase if first/last name is in either uppercase or lowercase.
+    /// </summary>
     public static class DocumentPrintHelper
     {
         public static string FormatLearnerName(string firstName, string lastName)
@@ -10,15 +12,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Helpers
             return $"{firstName.ApplyTitleCase()} {lastName.ApplyTitleCase()}";
         }
 
-        /// <summary>
-        /// Convert ToTitleCase if input string is in uppercase.
-        /// </summary>
-        public static string ApplyTitleCase(this string value)
+        private static string ApplyTitleCase(this string value)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return value;
 
-            if (value.Replace(" ", string.Empty).All(c => char.IsUpper(c)))
+            if (value.Trim().Equals(value.Trim().ToUpper()) || value.Trim().Equals(value.Trim().ToLower()))
                 return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(value.ToLower());
 
             return value;
