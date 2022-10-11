@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 IndustryPlacement = GetIndustryPlacementText(overallResultDetail.IndustryPlacementStatus),
                 Grade = overallResult.CertificateType == PrintCertificateType.Certificate ? overallResult.ResultAwarded : string.Empty,
                 EnglishAndMaths = GetEnglishAndMathsText(profile.EnglishStatus, profile.MathsStatus),
-                Date = DateTime.UtcNow.ToCertificateDateFormat(),
+                Date = overallResult.CreatedOn.ToCertificateDateFormat(),
                 MARS = new List<object>()
             };
 

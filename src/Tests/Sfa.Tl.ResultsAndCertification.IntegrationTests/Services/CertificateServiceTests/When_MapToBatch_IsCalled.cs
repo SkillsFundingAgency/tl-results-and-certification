@@ -37,7 +37,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                                            TqRegistrationPathway = new TqRegistrationPathway { Id = 1111, TqRegistrationProfile = new TqRegistrationProfile { UniqueLearnerNumber = 1111111111, Firstname = "first11", Lastname = "last11", EnglishStatus = SubjectStatus.Achieved, MathsStatus = SubjectStatus.Achieved } },
                                            CertificateType = PrintCertificateType.Certificate,
                                            Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"60358300\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
-                                           ResultAwarded = "Distinction"
+                                           ResultAwarded = "Distinction",
+                                           CreatedOn = DateTime.UtcNow
                                        },
                                        new OverallResult
                                        {
@@ -45,7 +46,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                                            TqRegistrationPathway = new TqRegistrationPathway { Id = 1112, TqRegistrationProfile = new TqRegistrationProfile { UniqueLearnerNumber = 1111111112, Firstname = "first12", Lastname = "last12", EnglishStatus = SubjectStatus.Achieved, MathsStatus = SubjectStatus.NotAchieved } },
                                            CertificateType = PrintCertificateType.StatementOfAchievement,
                                            Details = "{\"TlevelTitle\":\"T Level in Health\",\"PathwayName\":\"Health\",\"PathwayLarId\":\"6037066X\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":null,\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"Distinction*\"}",
-                                           ResultAwarded = "Merit"
+                                           ResultAwarded = "Merit",
+                                           CreatedOn = DateTime.UtcNow
                                        }
                                    }
                                 },
@@ -63,7 +65,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                                            TqRegistrationPathway = new TqRegistrationPathway { Id = 2221, TqRegistrationProfile = new TqRegistrationProfile { UniqueLearnerNumber = 2222222221, Firstname = "first21", Lastname = "last21" , EnglishStatus = SubjectStatus.NotSpecified, MathsStatus = SubjectStatus.Achieved} },
                                            CertificateType = PrintCertificateType.Certificate,
                                            Details = "{\"TlevelTitle\":\"T Level in Education and Childcare\",\"PathwayName\":\"Education and Childcare\",\"PathwayLarId\":\"60358294\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed with special consideration\",\"OverallResult\":\"Distinction*\"}",
-                                           ResultAwarded = "Pass"
+                                           ResultAwarded = "Pass",
+                                           CreatedOn = DateTime.UtcNow
                                        },
                                        new OverallResult
                                        {
@@ -71,7 +74,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                                            TqRegistrationPathway = new TqRegistrationPathway { Id = 2222, TqRegistrationProfile = new TqRegistrationProfile { UniqueLearnerNumber = 2222222222, Firstname = "first22", Lastname = "last22", EnglishStatus = SubjectStatus.NotAchieved, MathsStatus = SubjectStatus.NotSpecified } },
                                            CertificateType = PrintCertificateType.StatementOfAchievement,
                                            Details = "{\"TlevelTitle\":\"T Level in Science\",\"PathwayName\":\"Science\",\"PathwayLarId\":\"60369899\",\"PathwayResult\":null,\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}, {\"SpecialismName\":\"Civil Engineering\",\"SpecialismLarId\":\"ZTLOS002\",\"SpecialismResult\":null}],\"IndustryPlacementStatus\":null,\"OverallResult\":\"Distinction*\"}",
-                                           ResultAwarded = null
+                                           ResultAwarded = null,
+                                           CreatedOn = DateTime.UtcNow
                                        }
                                    }
                                 }

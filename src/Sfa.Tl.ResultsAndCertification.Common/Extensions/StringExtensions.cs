@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 
         public static string ToCertificateDateFormat(this DateTime value)
         {
-            return value.ToString("dd MMMM yyyy");
+            return value.ToString("MMMM yyyy");
         }
 
         public static string ToUcasFormat(this DateTime value)
