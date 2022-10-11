@@ -10,9 +10,20 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             return value.ToString("dd MMMM yyyy");
         }
 
+        /// <summary>
+        /// Converts to dd MMMM yyyy format by default.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="dateFormat">The date format.</param>
+        /// <returns></returns>
+        public static string ToFormat(this DateTime value, string dateFormat = "dd MMMM yyyy")
+        {
+            return value.ToString(dateFormat);
+        }
+
         public static string ToCertificateDateFormat(this DateTime value)
         {
-            return value.ToString("dd MMMM yyyy");
+            return value.ToString("MMMM yyyy");
         }
 
         public static string ToUcasFormat(this DateTime value)
