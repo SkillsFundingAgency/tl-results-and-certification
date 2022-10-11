@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                     OverallResult = "Distinction"
                 },
                 OverallResultPublishDate = DateTime.UtcNow,
-                LastDocumentRequestedDate = "15/01/2022".ToDateTime(),
+                LastDocumentRequestedDate = "01/01/2022".ToDateTime(),
                 IsReprint = false
             };
 
@@ -99,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.IsStatusCompleted.Should().BeFalse();
             model.IsDocumentRerequestEligible.Should().BeTrue();
             model.IsReprint.Should().BeFalse();
-            model.LastDocumentRequestedDateDisplayValue.Should().Be("15 January 2022");
+            model.LastDocumentRequestedDateDisplayValue.Should().Be("01 January 2022");
 
             // DateofBirth
             model.SummaryDateofBirth.Title.Should().Be(LearnerRecordDetailsContent.Title_DateofBirth_Text);
