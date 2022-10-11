@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public bool DisplayOverallResults => OverallResultDetails != null && OverallResultPublishDate.HasValue && DateTime.UtcNow >= OverallResultPublishDate;
         public NotificationBannerModel SuccessBanner { get; set; }
         public DateTime? LastDocumentRequestedDate { get; set; }
-        public string LastDocumentRequestedDateDisplayValue { get { return LastDocumentRequestedDate.HasValue ? LastDocumentRequestedDate.Value.ToCertificateDateFormat() : string.Empty; } }
+        public string LastDocumentRequestedDateDisplayValue { get { return LastDocumentRequestedDate.HasValue ? LastDocumentRequestedDate.Value.ToFormat() : string.Empty; } }
         public bool IsDocumentRerequestEligible { get; set; }
         public bool IsReprint { get; set; }
 
