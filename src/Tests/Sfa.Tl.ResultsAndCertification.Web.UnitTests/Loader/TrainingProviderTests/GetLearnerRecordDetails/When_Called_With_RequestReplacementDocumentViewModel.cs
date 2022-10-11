@@ -36,7 +36,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                 IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed,
                 PrintCertificateId = 99,
                 PrintCertificateType = Common.Enum.PrintCertificateType.Certificate,
-                LastDocumentRequestedDate = DateTime.UtcNow.AddDays(30),
+                LastDocumentRequestedDate = DateTime.UtcNow.AddDays(-30),
+                IsReprint = true,
                 ProviderAddress = new Models.Contracts.ProviderAddress.Address { AddressId = 1, AddressLine1 = "Address1", AddressLine2 = "Address2", DepartmentName = "Dept", Town = "Birmingham", Postcode = "A1 2BC" }
             };
             InternalApiClient.GetLearnerRecordDetailsAsync(ProviderUkprn, ProfileId).Returns(_expectedApiResult);

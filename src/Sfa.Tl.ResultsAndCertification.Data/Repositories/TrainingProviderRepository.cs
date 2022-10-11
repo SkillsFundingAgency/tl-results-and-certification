@@ -184,9 +184,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             IndustryPlacementStatus = ipRecord != null ? ipRecord.Status : null,
                                             OverallResultDetails = overallResult != null ? overallResult.Details : null,
                                             OverallResultPublishDate = overallResult != null ? overallResult.PublishDate : null,
-                                            LastDocumentRequestedDate = printCertificate != null ? printCertificate.CreatedOn : null,
                                             PrintCertificateId = printCertificate != null ? printCertificate.Id : null,
                                             PrintCertificateType = printCertificate != null ? printCertificate.Type : null,
+                                            LastDocumentRequestedDate = printCertificate != null ? printCertificate.CreatedOn : null,
+                                            IsReprint = printCertificate != null ? printCertificate.IsReprint : null,
                                             ProviderAddress = tlProvider.TlProviderAddresses.Where(pa => pa.IsActive)
                                                                                             .OrderByDescending(pa => pa.CreatedOn)
                                                                                             .Select(address => new Address

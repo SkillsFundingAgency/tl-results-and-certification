@@ -52,7 +52,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                     OverallResult = "Distinction"
                 },
                 OverallResultPublishDate = DateTime.UtcNow,
-                LastDocumentRequestedDate = null
+                LastDocumentRequestedDate = null,
+                IsReprint = false
             };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, Mockresult.ProfileId.ToString() } };
@@ -97,6 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.CanAddIndustryPlacement.Should().BeTrue();
             model.IsStatusCompleted.Should().BeFalse();
             model.IsDocumentRerequestEligible.Should().BeFalse();
+            model.IsReprint.Should().BeFalse();
 
             // DateofBirth
             model.SummaryDateofBirth.Title.Should().Be(LearnerRecordDetailsContent.Title_DateofBirth_Text);

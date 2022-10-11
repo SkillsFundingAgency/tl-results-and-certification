@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 
         // PrintCertificate Info
         public int? PrintCertificateId { get; set; }
-        public PrintCertificateType? PrintCertificateType { get; set; }        
+        public PrintCertificateType? PrintCertificateType { get; set; }  
         public AddressViewModel ProviderAddress { get; set; }
 
         public string StartYear => string.Format(LearnerRecordDetailsContent.Start_Year_Value, AcademicYear, AcademicYear + 1);
@@ -57,6 +57,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public bool CanAddIndustryPlacement => IndustryPlacementStatus == IpStatus.NotSpecified || IndustryPlacementStatus == IpStatus.NotCompleted;
         public bool DisplayOverallResults => OverallResultDetails != null && OverallResultPublishDate.HasValue && DateTime.UtcNow >= OverallResultPublishDate;
         public NotificationBannerModel SuccessBanner { get; set; }
+        public DateTime? LastDocumentRequestedDate { get; set; }
+        public string LastDocumentRequestedDateDisplayValue { get { return LastDocumentRequestedDate.HasValue ? LastDocumentRequestedDate.Value.ToCertificateDateFormat() : string.Empty; } }
+        public bool IsDocumentRerequestEligible { get; set; }
+        public bool IsReprint { get; set; }
 
         #region Summary Header
         public SummaryItemModel SummaryDateofBirth => new SummaryItemModel
@@ -184,10 +188,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             Title = LearnerRecordDetailsContent.Title_OverallResult_Text,
             Value = OverallResultDetails?.OverallResult
         };
-
-        public DateTime? LastDocumentRequestedDate { get; set; }
-
-        public bool IsDocumentRerequestEligible { get; set; }
 
         public BackLinkModel BackLink => new()
         {

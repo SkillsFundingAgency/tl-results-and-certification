@@ -196,6 +196,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The document may take up to 3 weeks to arrive..
+        /// </summary>
+        public static string Reprint_Document_Arrive_In_3_Weeks {
+            get {
+                return ResourceManager.GetString("Reprint_Document_Arrive_In_3_Weeks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replacement document requested on.
+        /// </summary>
+        public static string Reprint_Document_Requested_On {
+            get {
+                return ResourceManager.GetString("Reprint_Document_Requested_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Core component.
         /// </summary>
         public static string Section_Heading_Core_Component {

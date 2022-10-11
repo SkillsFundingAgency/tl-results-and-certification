@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json;
+using Sfa.Tl.ResultsAndCertification.Application.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Printing;
-using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.CertificateNumber, opts => opts.MapFrom(s => s.CertificateNumber))
                 .ForMember(d => d.Type, opts => opts.MapFrom(s => EnumExtensions.GetEnum<PrintCertificateType>(s.Type)))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
-                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.TqRegistrationPathway.TqRegistrationProfile.Firstname} {s.TqRegistrationPathway.TqRegistrationProfile.Lastname}"))
+                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => DocumentPrintHelper.FormatLearnerName(s.TqRegistrationPathway.TqRegistrationProfile.Firstname, s.TqRegistrationPathway.TqRegistrationProfile.Lastname)))
                 .ForMember(d => d.LearningDetails, opts => opts.MapFrom(s => JsonConvert.DeserializeObject<LearningDetails>(s.LearningDetails)));
         }
     }

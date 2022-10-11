@@ -39,7 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified,
                 OverallResultDetails = null,
                 OverallResultPublishDate = null,
-                LastDocumentRequestedDate = DateTime.Today.AddMonths(-1)
+                LastDocumentRequestedDate = DateTime.Today.AddMonths(-1),
+                IsReprint = true
             };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, Mockresult.ProfileId.ToString() } };
@@ -85,6 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.CanAddIndustryPlacement.Should().BeTrue();
             model.IsStatusCompleted.Should().BeFalse();
             model.IsDocumentRerequestEligible.Should().BeTrue();
+            model.IsReprint.Should().BeTrue();
 
             // DateofBirth
             model.SummaryDateofBirth.Title.Should().Be(LearnerRecordDetailsContent.Title_DateofBirth_Text);
