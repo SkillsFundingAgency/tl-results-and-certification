@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class AddAddressConfirmation {
@@ -64,18 +64,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress {
         /// <summary>
         ///   Looks up a localized string similar to Back to Home.
         /// </summary>
-        public static string Back_To_Home_Link_Text {
+        public static string Back_To_Home_Button_Text {
             get {
-                return ResourceManager.GetString("Back_To_Home_Link_Text", resourceCulture);
+                return ResourceManager.GetString("Back_To_Home_Button_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Certificates and statements of achievement will be sent to this address..
+        ///   Looks up a localized string similar to Certificates and statements of achievement will be sent out to this address..
         /// </summary>
         public static string Certificates_And_Statements_Of_Achievement_Will_Be_Sent_Text {
             get {
                 return ResourceManager.GetString("Certificates_And_Statements_Of_Achievement_Will_Be_Sent_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you have changed the address while requesting a new statement of achievement or certificate, you will need to start the process of requesting the document again..
+        /// </summary>
+        public static string If_You_Have_Changed_The_Address_Text {
+            get {
+                return ResourceManager.GetString("If_You_Have_Changed_The_Address_Text", resourceCulture);
             }
         }
         
@@ -103,15 +112,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress {
         public static string Request_Statement_Of_Achievement_Button_Text {
             get {
                 return ResourceManager.GetString("Request_Statement_Of_Achievement_Button_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You can now continue to request a statement of achievement..
-        /// </summary>
-        public static string You_Can_Now_Continue_To_Request_Soa_Text {
-            get {
-                return ResourceManager.GetString("You_Can_Now_Continue_To_Request_Soa_Text", resourceCulture);
             }
         }
     }
