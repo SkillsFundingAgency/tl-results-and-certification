@@ -124,7 +124,7 @@
     <value>File name must have no more than {0} characters</value>
   </data>
   <data name="File_Size_Kb_Text" xml:space="preserve">
-    <value>274KB</value>
+    <value>276KB</value>
   </data>
   <data name="File_Size_Too_Large_Validation_Message" xml:space="preserve">
     <value>File size too large – must be no more than {0}MB</value>
@@ -172,10 +172,10 @@
     <value>Processing results file</value>
   </data>
   <data name="Results_Published_On" xml:space="preserve">
-    <value>published 2 March 2022</value>
+    <value>published 19 October 2022</value>
   </data>
   <data name="Results_Version" xml:space="preserve">
-    <value>Version 1.3</value>
+    <value>Version 1.4</value>
   </data>
   <data name="Select_File_To_Upload_Required_Validation_Message" xml:space="preserve">
     <value>Select a file to upload</value>
