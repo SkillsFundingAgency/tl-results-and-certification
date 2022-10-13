@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                                            CertificateType = PrintCertificateType.Certificate,
                                            Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"60358300\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
                                            ResultAwarded = "Distinction",
-                                           CreatedOn = "05/10/2020".ToDateTime()
+                                           CreatedOn = "05/10/2020".ParseStringToDateTimeWithFormat()
                                        },
                                        new OverallResult
                                        {
@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                                            CertificateType = PrintCertificateType.StatementOfAchievement,
                                            Details = "{\"TlevelTitle\":\"T Level in Health\",\"PathwayName\":\"Health\",\"PathwayLarId\":\"6037066X\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":null,\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"Distinction*\"}",
                                            ResultAwarded = "Merit",
-                                           CreatedOn = "15/04/2021".ToDateTime()
+                                           CreatedOn = "15/04/2021".ParseStringToDateTimeWithFormat()
                                        }
                                    }
                                 },
@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                                            CertificateType = PrintCertificateType.Certificate,
                                            Details = "{\"TlevelTitle\":\"T Level in Education and Childcare\",\"PathwayName\":\"Education and Childcare\",\"PathwayLarId\":\"60358294\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed with special consideration\",\"OverallResult\":\"Distinction*\"}",
                                            ResultAwarded = "Pass",
-                                           CreatedOn = "03/09/2021".ToDateTime()
+                                           CreatedOn = "03/09/2021".ParseStringToDateTimeWithFormat()
                                        },
                                        new OverallResult
                                        {
@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                                            CertificateType = PrintCertificateType.StatementOfAchievement,
                                            Details = "{\"TlevelTitle\":\"T Level in Science\",\"PathwayName\":\"Science\",\"PathwayLarId\":\"60369899\",\"PathwayResult\":null,\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}, {\"SpecialismName\":\"Civil Engineering\",\"SpecialismLarId\":\"ZTLOS002\",\"SpecialismResult\":null}],\"IndustryPlacementStatus\":null,\"OverallResult\":\"Distinction*\"}",
                                            ResultAwarded = null,
-                                           CreatedOn = "07/05/2022".ToDateTime()
+                                           CreatedOn = "07/05/2022".ParseStringToDateTimeWithFormat()
                                        }
                                    }
                                 }
