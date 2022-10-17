@@ -109,6 +109,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         public int SoaRerequestInDays { get; set; }
 
         /// <summary>
+        /// Gets or sets the document rerequest in days.
+        /// </summary>
+        /// <value>
+        /// The document rerequest in days.
+        /// </value>
+        public int DocumentRerequestInDays { get; set; }
+
+        /// <summary>
         /// Gets or sets the Overall results available date.
         /// </summary>
         /// <value>
@@ -123,6 +131,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// The soa available date.
         /// </value>
         public DateTime? OverallResultsCalculationDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the certificate printing batches create start date.
+        /// </summary>
+        /// <value>
+        /// The certificate printing batches create start date.
+        /// </value>
+        public DateTime? CertificatePrintingBatchesCreateStartDate { get; set; }
 
         /// <summary>
         /// Gets or sets the dfe sign in settings.
@@ -227,5 +243,13 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// The Freeze period end date.
         /// </value>
         public DateTime FreezePeriodEndDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets certificate printing batch settings.
+        /// </summary>
+        /// <value>
+        /// The certificate printing batch record settings.
+        /// </value>
+        public CertificatePrintingBatchSettings CertificatePrintingBatchSettings { get; set; }
     }
 }

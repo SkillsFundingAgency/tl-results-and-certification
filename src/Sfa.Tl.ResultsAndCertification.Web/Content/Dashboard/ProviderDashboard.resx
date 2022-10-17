@@ -160,7 +160,7 @@
     <value>View news and updates (opens in a new tab)</value>
   </data>
   <data name="Manage_Learner_TLevel_Records_Description_Text" xml:space="preserve">
-    <value>Add or change your learners' English and maths achievements and industry placement status.</value>
+    <value>Add or change your learners' English and maths achievements and industry placement status, and order replacement documents.</value>
   </data>
   <data name="Manage_Learner_TLevel_Records_Text" xml:space="preserve">
     <value>Manage learner records</value>
@@ -190,7 +190,7 @@
     <value>Request statement of achievement</value>
   </data>
   <data name="Providers_Request_Statement_Of_Achievement_Text" xml:space="preserve">
-    <value>You must request a statement of achievement for learners who withdraw early from their T Level course.</value>
+    <value>Request a new or replacement statement of achievement for learners who have withdrawn from their T Level course.</value>
   </data>
   <data name="Providers_Text" xml:space="preserve">
     <value>Providers</value>

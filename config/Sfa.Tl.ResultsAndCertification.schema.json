@@ -45,6 +45,10 @@
       "type": "integer",
       "environmentVariable": "SoaRerequestInDays"
     },
+	"DocumentRerequestInDays": {
+      "type": "integer",
+      "environmentVariable": "DocumentRerequestInDays"
+    },
 	"OverallResultsAvailableDate": {
       "type": "string",
       "environmentVariable": "OverallResultsAvailableDate"
@@ -60,6 +64,10 @@
 	"FreezePeriodEndDate": {
       "type": "string",
       "environmentVariable": "FreezePeriodEndDate"
+    },
+	"CertificatePrintingBatchesCreateStartDate": {
+      "type": "string",
+      "environmentVariable": "CertificatePrintingBatchesCreateStartDate"
     },
     "KeyVaultUri": {
       "type": "string",
@@ -420,6 +428,19 @@
         "NoOfAcademicYearsToProcess"
       ],
       "type": "object"
+    },
+	"CertificatePrintingBatchSettings": {
+      "properties": {
+        "ProvidersBatchSize": {          
+          "type": "integer",
+          "environmentVariable": "CertificatePrintingProvidersBatchSize"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "ProvidersBatchSize"        
+      ],
+      "type": "object"
     }
   },
   "additionalProperties": false,
@@ -436,6 +457,7 @@
 	"OverallResultsCalculationDate",
 	"FreezePeriodStartDate",
 	"FreezePeriodEndDate",
+	"CertificatePrintingBatchesCreateStartDate",
     "KeyVaultUri",
     "RedisSettings",
     "BlobStorageSettings",
@@ -446,7 +468,8 @@
     "UcasApiSettings",
     "LearningRecordServiceSettings",
     "UcasDataSettings",
-	"OverallResultBatchSettings"
+	"OverallResultBatchSettings",
+	"CertificatePrintingBatchSettings"
   ],
   "type": "object"
 }

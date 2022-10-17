@@ -6,13 +6,17 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 using LearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
+using RequestReplacementDocumentContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.RequestReplacementDocument;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -21,14 +25,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     {
         private readonly ITrainingProviderLoader _trainingProviderLoader;
         private readonly ICacheService _cacheService;
+        private readonly ResultsAndCertificationConfiguration _configuration;
         private readonly ILogger _logger;
 
         private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TrainingProviderCacheKey); } }
 
-        public TrainingProviderController(ITrainingProviderLoader trainingProviderLoader, ICacheService cacheService, ILogger<TrainingProviderController> logger)
+        public TrainingProviderController(ITrainingProviderLoader trainingProviderLoader, ICacheService cacheService, ResultsAndCertificationConfiguration configuration, ILogger<TrainingProviderController> logger)
         {
             _trainingProviderLoader = trainingProviderLoader;
             _cacheService = cacheService;
+            _configuration = configuration;
             _logger = logger;
         }
 
@@ -77,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
 
             // populate if any filter are applied from cache
-            if(searchCriteria != null)
+            if (searchCriteria != null)
                 viewModel.SearchLearnerFilters = searchCriteria.SearchLearnerFilters;
 
             viewModel.IsSearchKeyApplied = true;
@@ -125,12 +131,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
 
-            if(searchCriteria != null)
+            if (searchCriteria != null)
             {
                 searchCriteria.SearchLearnerFilters = null;
                 await _cacheService.SetAsync(CacheKey, searchCriteria);
             }
-            
+
             return RedirectToRoute(RouteConstants.SearchLearnerDetails, new { academicYear });
         }
 
@@ -192,7 +198,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
-            
+
             var isSuccess = await _trainingProviderLoader.UpdateLearnerSubjectAsync(User.GetUkPrn(), model);
             if (!isSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
@@ -227,6 +233,32 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
             var notificationBanner = new NotificationBannerModel { HeaderMessage = LearnerDetailsContent.Success_Header_English_Status_Added, Message = LearnerDetailsContent.Success_Message_English_Status_Added, DisplayMessageBody = true, IsRawHtml = true };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("request-replacement-document/{profileId}", Name = RouteConstants.RequestReplacementDocument)]
+        public async Task<IActionResult> RequestReplacementDocumentAsync(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<RequestReplacementDocumentViewModel>(User.GetUkPrn(), profileId);
+            if (viewModel == null || !CommonHelper.IsDocumentRerequestEligible(_configuration.DocumentRerequestInDays, viewModel.LastDocumentRequestedDate))
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("request-replacement-document/{profileId}", Name = RouteConstants.SubmitRequestReplacementDocument)]
+        public async Task<IActionResult> RequestReplacementDocumentAsync(RequestReplacementDocumentViewModel model)
+        {
+            var isSuccess = await _trainingProviderLoader.CreateReplacementDocumentPrintingRequestAsync(User.GetUkPrn(), model);
+
+            if (!isSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            var notificationBanner = new NotificationBannerModel { HeaderMessage = RequestReplacementDocumentContent.Success_Header_Replacement_Document_Requested, Message = RequestReplacementDocumentContent.Success_Message_Replacement_Documents, DisplayMessageBody = true, IsRawHtml = true };
             await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
@@ -282,14 +314,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> LearnerRecordDetailsAsync(int profileId)
         {
             var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(User.GetUkPrn(), profileId);
-
             if (viewModel == null || !viewModel.IsLearnerRegistered)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
+            viewModel.IsDocumentRerequestEligible = CommonHelper.IsDocumentRerequestEligible(_configuration.DocumentRerequestInDays, viewModel.LastDocumentRequestedDate);
             viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
+
             return View(viewModel);
         }
 
@@ -300,7 +333,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [HttpGet]
         [Route("provider-guidance", Name = RouteConstants.ProviderGuidance)]
         public IActionResult ProviderGuidance()
-        {           
+        {
             return View();
         }
 

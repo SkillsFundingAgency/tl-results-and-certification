@@ -75,11 +75,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             _result.Should().NotBeNull();
 
             var actualAssessment = _result.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln);
+            var currentAcademicYear = GetAcademicYear();
 
             if (!string.IsNullOrEmpty(expectedSeriesName))
             {
                 actualAssessment.Should().NotBeNull();
-                actualAssessment.AssessmentSeries.Name.Should().Be(expectedSeriesName);
+                actualAssessment.AssessmentSeries.Name.Should().Be($"{expectedSeriesName} {currentAcademicYear}");
             }
             else
                 actualAssessment.Should().BeNull();
@@ -105,12 +106,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             {
                 return new[]
                 {
-                    new object[] { 1111111111, "Autumn 2021", "A*" },
-                    new object[] { 1111111112, "Autumn 2021", null },
-                    new object[] { 1111111113, "Autumn 2021", null },
-                    new object[] { 1111111114, "Summer 2021", "A*" },
-                    new object[] { 1111111115, "Summer 2021", null },
-                    new object[] { 1111111116, null, null },
+                    new object[] { 1111111111, $"Autumn", "A*" },
+                    new object[] { 1111111112, $"Autumn", null },
+                    new object[] { 1111111113, $"Autumn", null },
+                    new object[] { 1111111114, $"Summer", "A*" },
+                    new object[] { 1111111115, $"Summer", null },
+                    new object[] { 1111111116, null, null }
                 };
             }
         }

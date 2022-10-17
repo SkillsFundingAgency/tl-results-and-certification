@@ -211,10 +211,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
                 }
             }
         }
-
-        public bool IsSoaRequestedAlready(int reRequestAllowedInDays)
-        {
-            return LastPrintRequestedDate.HasValue && LastPrintRequestedDate > DateTime.Now.AddDays(-reRequestAllowedInDays);
-        }
     }
 }

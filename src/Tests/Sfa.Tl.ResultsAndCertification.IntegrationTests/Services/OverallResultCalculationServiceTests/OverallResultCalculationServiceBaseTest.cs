@@ -2,7 +2,6 @@
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -418,6 +417,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 actualOverallResult.IsOptedin.Should().BeFalse();
                 actualOverallResult.EndDate.Should().NotBeNull();
             }
+
+            actualOverallResult.CertificateType.Should().Be(expectedOverallResult.CertificateType);
+            actualOverallResult.CertificateStatus.Should().Be(expectedOverallResult.CertificateStatus);
         }
 
         public enum Provider

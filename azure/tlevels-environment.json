@@ -66,6 +66,9 @@
         "learnerGenderTrigger": {
             "type": "string"
         },
+		"certificatePrintingBatchesCreateTrigger": {
+            "type": "string"            
+        },
         "certificatePrintingRequestTrigger": {
             "type": "string"
         },
@@ -86,7 +89,7 @@
         },
 		"overallResultCalculationTrigger": {
             "type": "string"            
-        }
+        }		
     },
     "variables": {
         "deploymentUrlBase": "https://raw.githubusercontent.com/DFE-Digital/operations-devops-deployment/reasc-staging-slot/ArmTemplates/",
@@ -436,6 +439,10 @@
                                 "name": "LearnerGenderTrigger",
                                 "value": "[parameters('learnerGenderTrigger')]"
                             },
+							{
+                                "name": "CertificatePrintingBatchesCreateTrigger",
+                                "value": "[parameters('certificatePrintingBatchesCreateTrigger')]"
+                            },
                             {
                                 "name": "CertificatePrintingRequestTrigger",
                                 "value": "[parameters('certificatePrintingRequestTrigger')]"
@@ -463,7 +470,7 @@
 							{
                                 "name": "OverallResultCalculationTrigger",
                                 "value": "[parameters('overallResultCalculationTrigger')]"
-                            },
+                            },							
                             {
                                 "name": "WEBSITE_LOAD_CERTIFICATES",
                                 "value": "1"

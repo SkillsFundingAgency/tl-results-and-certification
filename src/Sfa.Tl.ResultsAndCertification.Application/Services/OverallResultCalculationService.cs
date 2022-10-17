@@ -106,6 +106,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return new OverallResultResponse { IsSuccess = isSuccess, TotalRecords = totalRecords, UpdatedRecords = updatedRecords, NewRecords = newRecords, UnChangedRecords = unChangedRecords, SavedRecords = isSuccess ? reconciledLearnerRecords.Count : 0 };
         }
 
+        public CertificateStatus? GetCertificateStatus(CalculationStatus calculationStatus)
+        {
+            switch (calculationStatus)
+            {
+                case CalculationStatus.Completed:
+                case CalculationStatus.PartiallyCompleted:
+                    return CertificateStatus.AwaitingProcessing;
+                default:
+                    return null;
+            }
+        }
+
         public PrintCertificateType? GetPrintCertificateType(List<TlLookup> overallResultLookupData, string overallGrade)
         {
             if (string.IsNullOrWhiteSpace(overallGrade))
@@ -282,6 +294,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var specialismResultPrsStatus = HasAnySpecialismResultPrsStatusOutstanding(specialism);
                 var calculationStatus = GetCalculationStatus(tlLookup, overallGrade, pathwayResultPrsStatus, specialismResultPrsStatus);
                 var certificateType = GetPrintCertificateType(tlLookup, overallGrade);
+                var certificateStatus = GetCertificateStatus(calculationStatus);
 
                 List<OverallSpecialismDetail> specialismDetails = null;
 
@@ -316,9 +329,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     ResultAwarded = overallGrade,
                     CalculationStatus = calculationStatus,
                     PublishDate = assessmentSeries.ResultPublishDate,
-                    PrintAvailableFrom = certificateType != null ? assessmentSeries.AppealEndDate.AddDays(1) : null,
+                    PrintAvailableFrom = certificateType != null ? assessmentSeries.PrintAvailableDate : null,
                     IsOptedin = true,
                     CertificateType = certificateType,
+                    CertificateStatus = certificateStatus,
                     StartDate = DateTime.UtcNow,
                     CreatedBy = Constants.DefaultPerformedBy
                 };

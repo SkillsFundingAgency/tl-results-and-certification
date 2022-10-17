@@ -10,5 +10,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
         Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null);
         Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request);
         Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request);
+        Task<bool> CreateReplacementDocumentPrintingRequestAsync(ReplacementPrintRequest request);
     }
 }

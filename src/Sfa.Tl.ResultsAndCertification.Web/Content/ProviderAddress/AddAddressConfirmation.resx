@@ -117,11 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Back_To_Home_Link_Text" xml:space="preserve">
+  <data name="Back_To_Home_Button_Text" xml:space="preserve">
     <value>Back to Home</value>
   </data>
   <data name="Certificates_And_Statements_Of_Achievement_Will_Be_Sent_Text" xml:space="preserve">
-    <value>Certificates and statements of achievement will be sent to this address.</value>
+    <value>Certificates and statements of achievement will be sent out to this address.</value>
+  </data>
+  <data name="If_You_Have_Changed_The_Address_Text" xml:space="preserve">
+    <value>If you have changed the address while requesting a new statement of achievement or certificate, you will need to start the process of requesting the document again.</value>
   </data>
   <data name="Organisation_Postal_Address_Added_Successful_Text" xml:space="preserve">
     <value>Organisation's postal address added successfully</value>
@@ -131,8 +134,5 @@
   </data>
   <data name="Request_Statement_Of_Achievement_Button_Text" xml:space="preserve">
     <value>Request statement of achievement</value>
-  </data>
-  <data name="You_Can_Now_Continue_To_Request_Soa_Text" xml:space="preserve">
-    <value>You can now continue to request a statement of achievement.</value>
   </data>
 </root>

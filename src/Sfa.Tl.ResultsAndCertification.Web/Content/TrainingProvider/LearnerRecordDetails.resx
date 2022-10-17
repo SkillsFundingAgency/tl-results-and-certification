@@ -121,10 +121,13 @@
     <value>Add</value>
   </data>
   <data name="Back_To_Home_Text" xml:space="preserve">
-    <value>Back to home</value>
+    <value>&lt; Back to home</value>
   </data>
   <data name="Back_To_List_Of_Learners_Text" xml:space="preserve">
     <value>Back to list of learners</value>
+  </data>
+  <data name="Button_Request_Replacement_Document" xml:space="preserve">
+    <value>Request replacement document</value>
   </data>
   <data name="Hidden_Action_Text_English" xml:space="preserve">
     <value> english status</value>
@@ -158,6 +161,12 @@
   </data>
   <data name="Personal_Details_Text" xml:space="preserve">
     <value>Personal details</value>
+  </data>
+  <data name="Reprint_Document_Arrive_In_3_Weeks" xml:space="preserve">
+    <value>The document may take up to 3 weeks to arrive.</value>
+  </data>
+  <data name="Reprint_Document_Requested_On" xml:space="preserve">
+    <value>Replacement document requested on</value>
   </data>
   <data name="Section_Heading_Core_Component" xml:space="preserve">
     <value>Core component</value>

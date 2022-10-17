@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
@@ -10,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
@@ -18,14 +20,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     {
         private readonly IRepository<TqRegistrationProfile> _tqRegistrationProfile;
         private readonly ITrainingProviderRepository _trainingProviderRepository;
+        private readonly IRepository<Batch> _batchRepository;
+        private readonly IRepository<PrintCertificate> _printCertificateRepository;
+        private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
         public TrainingProviderService(IRepository<TqRegistrationProfile> tqRegistrationProfile,
             ITrainingProviderRepository trainingProviderRepository,
+            IRepository<Batch> batchRepository,
+            IRepository<PrintCertificate> printCertificateRepository,
+            IMapper mapper,
             ILogger<TrainingProviderService> logger)
         {
             _tqRegistrationProfile = tqRegistrationProfile;
             _trainingProviderRepository = trainingProviderRepository;
+            _batchRepository = batchRepository;
+            _printCertificateRepository = printCertificateRepository;
+            _mapper = mapper;
             _logger = logger;
         }
 
@@ -84,6 +95,29 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _tqRegistrationProfile.UpdateAsync(profile) > 0;
         }
 
+        public async Task<bool> CreateReplacementDocumentPrintingRequestAsync(ReplacementPrintRequest request)
+        {
+            var printCertificate = await _printCertificateRepository
+                .GetFirstOrDefaultAsync(p => p.Id == request.PrintCertificateId
+                                        && p.Uln == request.Uln
+                                        && p.PrintBatchItem.TlProviderAddress.TlProvider.UkPrn == request.ProviderUkprn
+                                        && p.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active,
+                                        navigationPropertyPath: new Expression<Func<PrintCertificate, object>>[]
+                                        {
+                                            p => p.PrintBatchItem
+                                        });
 
+            if (printCertificate == null)
+                return false;
+
+            var replacementBatchRequest = _mapper.Map<Batch>(printCertificate, opt => 
+            { 
+                opt.Items["providerAddressId"] = request.ProviderAddressId;
+                opt.Items["performedBy"] = request.PerformedBy;
+            });
+
+            var result = await _batchRepository.CreateAsync(replacementBatchRequest);
+            return result > 0;
+        }
     }
 }
