@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json;
+using Sfa.Tl.ResultsAndCertification.Application.Helpers;
 using Sfa.Tl.ResultsAndCertification.Application.Models;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
@@ -31,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
             CreateMap<OverallResult, PrintCertificate>()
                 .ForMember(d => d.Id, opts => opts.Ignore())
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber))
-                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.TqRegistrationPathway.TqRegistrationProfile.Firstname} {s.TqRegistrationPathway.TqRegistrationProfile.Lastname}"))
+                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => DocumentPrintHelper.FormatLearnerName(s.TqRegistrationPathway.TqRegistrationProfile.Firstname, s.TqRegistrationPathway.TqRegistrationProfile.Lastname)))
                 .ForMember(d => d.TqRegistrationPathwayId, opts => opts.MapFrom(s => s.TqRegistrationPathwayId))
                 .ForMember(d => d.Type, opts => opts.MapFrom(s => s.CertificateType.Value))
                 .ForMember(d => d.DisplaySnapshot, opts => opts.Ignore())
@@ -65,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 IndustryPlacement = GetIndustryPlacementText(overallResultDetail.IndustryPlacementStatus),
                 Grade = overallResult.CertificateType == PrintCertificateType.Certificate ? overallResult.ResultAwarded : string.Empty,
                 EnglishAndMaths = GetEnglishAndMathsText(profile.EnglishStatus, profile.MathsStatus),
-                Date = DateTime.UtcNow.ToCertificateDateFormat(),
+                Date = overallResult.CreatedOn.ToCertificateDateFormat(),
                 MARS = new List<object>()
             };
 

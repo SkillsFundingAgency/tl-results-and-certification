@@ -109,6 +109,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         public int SoaRerequestInDays { get; set; }
 
         /// <summary>
+        /// Gets or sets the document rerequest in days.
+        /// </summary>
+        /// <value>
+        /// The document rerequest in days.
+        /// </value>
+        public int DocumentRerequestInDays { get; set; }
+
+        /// <summary>
         /// Gets or sets the Overall results available date.
         /// </summary>
         /// <value>

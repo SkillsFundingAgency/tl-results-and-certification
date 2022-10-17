@@ -346,6 +346,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<PrintRequestSnapshot>(requestUri);
         }
 
+        // Provider Replacement Document endpoints
+        public async Task<bool> CreateReplacementDocumentPrintingRequestAsync(ReplacementPrintRequest request)
+        {
+            return await PostAsync<ReplacementPrintRequest, bool>(ApiConstants.CreateReplacementDocumentPrintingRequestUri, request);
+        }
+
         #region PRS
         public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null)
         {

@@ -945,6 +945,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>NoMatchingSearchResults.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\TrainingProvider\RequestReplacementDocument.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RequestReplacementDocument.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\TrainingProvider\SearchLearnerDetails.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1725,6 +1730,10 @@
     <EmbeddedResource Update="Content\TrainingProvider\NoMatchingSearchResults.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>NoMatchingSearchResults.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\RequestReplacementDocument.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestReplacementDocument.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\SearchLearnerDetails.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

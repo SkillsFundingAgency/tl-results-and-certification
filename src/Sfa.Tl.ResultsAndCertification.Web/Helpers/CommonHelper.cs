@@ -20,6 +20,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
             return requestedDate.HasValue && DateTime.Today < requestedDate.Value.Date.AddDays(reRequestAllowedInDays);
         }
 
+        public static bool IsDocumentRerequestEligible(int documentRerequestInDays, DateTime? lastPrintRequestedDate)
+        {
+            return lastPrintRequestedDate.HasValue && DateTime.Today > lastPrintRequestedDate.Value.Date.AddDays(documentRerequestInDays);
+        }
+
         public static bool IsRommAllowed(DateTime? rommEndDate)
         {
             return rommEndDate.HasValue && DateTime.Today <= rommEndDate.Value;

@@ -12,6 +12,7 @@ using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementSta
 using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
 using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using System.Linq;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
@@ -38,6 +39,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public OverallResultDetail OverallResultDetails { get; set; }
         public DateTime? OverallResultPublishDate { get; set; }
 
+        // PrintCertificate Info
+        public int? PrintCertificateId { get; set; }
+        public PrintCertificateType? PrintCertificateType { get; set; }  
+        public AddressViewModel ProviderAddress { get; set; }
+
         public string StartYear => string.Format(LearnerRecordDetailsContent.Start_Year_Value, AcademicYear, AcademicYear + 1);
 
         /// <summary>
@@ -51,6 +57,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public bool CanAddIndustryPlacement => IndustryPlacementStatus == IpStatus.NotSpecified || IndustryPlacementStatus == IpStatus.NotCompleted;
         public bool DisplayOverallResults => OverallResultDetails != null && OverallResultPublishDate.HasValue && DateTime.UtcNow >= OverallResultPublishDate;
         public NotificationBannerModel SuccessBanner { get; set; }
+        public DateTime? LastDocumentRequestedDate { get; set; }
+        public string LastDocumentRequestedDateDisplayValue { get { return LastDocumentRequestedDate.HasValue ? LastDocumentRequestedDate.Value.ToFormat() : string.Empty; } }
+        public bool IsDocumentRerequestEligible { get; set; }
+        public bool IsReprint { get; set; }
 
         #region Summary Header
         public SummaryItemModel SummaryDateofBirth => new SummaryItemModel

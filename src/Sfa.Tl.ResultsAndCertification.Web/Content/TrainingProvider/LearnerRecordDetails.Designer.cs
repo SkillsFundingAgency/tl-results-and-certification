@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to home.
+        ///   Looks up a localized string similar to &lt; Back to home.
         /// </summary>
         public static string Back_To_Home_Text {
             get {
@@ -84,6 +84,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Back_To_List_Of_Learners_Text {
             get {
                 return ResourceManager.GetString("Back_To_List_Of_Learners_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request replacement document.
+        /// </summary>
+        public static string Button_Request_Replacement_Document {
+            get {
+                return ResourceManager.GetString("Button_Request_Replacement_Document", resourceCulture);
             }
         }
         
@@ -183,6 +192,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Personal_Details_Text {
             get {
                 return ResourceManager.GetString("Personal_Details_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The document may take up to 3 weeks to arrive..
+        /// </summary>
+        public static string Reprint_Document_Arrive_In_3_Weeks {
+            get {
+                return ResourceManager.GetString("Reprint_Document_Arrive_In_3_Weeks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replacement document requested on.
+        /// </summary>
+        public static string Reprint_Document_Requested_On {
+            get {
+                return ResourceManager.GetString("Reprint_Document_Requested_On", resourceCulture);
             }
         }
         

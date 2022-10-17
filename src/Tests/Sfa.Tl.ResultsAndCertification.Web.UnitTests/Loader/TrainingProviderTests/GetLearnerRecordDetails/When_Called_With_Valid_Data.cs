@@ -13,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
     {
         private Models.OverallResults.OverallResultDetail _expectedOverallResult;
         private Models.Contracts.TrainingProvider.LearnerRecordDetails _expectedApiResult;
+
         protected LearnerRecordDetailsViewModel ActualResult { get; set; }
 
         public override void Given()
@@ -49,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                 ProviderName = "Barsley College",
                 ProviderUkprn = ProviderUkprn,
                 TlevelTitle = "Course name (4561237)",
-                AcademicYear  = 2020,
+                AcademicYear = 2020,
                 AwardingOrganisationName = "Pearson",
                 MathsStatus = Common.Enum.SubjectStatus.Achieved,
                 EnglishStatus = Common.Enum.SubjectStatus.Achieved,
@@ -57,7 +58,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                 IndustryPlacementId = 1,
                 IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed,
                 OverallResultDetails = JsonConvert.SerializeObject(_expectedOverallResult),
-                OverallResultPublishDate = DateTime.UtcNow
+                OverallResultPublishDate = DateTime.UtcNow,
+                LastDocumentRequestedDate = DateTime.UtcNow.AddDays(-7),
+                IsReprint = false
             };
             InternalApiClient.GetLearnerRecordDetailsAsync(ProviderUkprn, ProfileId).Returns(_expectedApiResult);
         }
@@ -95,6 +98,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
 
             ActualResult.OverallResultDetails.Should().BeEquivalentTo(_expectedOverallResult);
             ActualResult.OverallResultPublishDate.Should().Be(_expectedApiResult.OverallResultPublishDate);
+            ActualResult.LastDocumentRequestedDate.Should().Be(_expectedApiResult.LastDocumentRequestedDate);
+            ActualResult.IsReprint.Should().Be(_expectedApiResult.IsReprint.Value);
         }
     }
 }

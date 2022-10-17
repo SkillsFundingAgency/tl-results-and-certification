@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Printing;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -28,6 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
         protected IList<TlLookup> PathwayComponentGrades;
         protected IList<TqProvider> TqProviders;
         protected IList<Qualification> Qualifications;
+        protected IList<TlProviderAddress> TlProviderAddresses;
 
         // Dependencies.
         protected ILogger<TrainingProviderRepository> TraningProviderRepositoryLogger;
@@ -46,6 +49,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
             PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
+
+            TlProviderAddresses = new List<TlProviderAddress>();
+
+            foreach (var provider in TlProviders)
+            {
+                TlProviderAddresses.Add(TlProviderAddressDataProvider.CreateTlProviderAddress(DbContext, new TlProviderAddressBuilder().Build(provider)));
+            }
 
             DbContext.SaveChangesAsync();
         }
@@ -211,6 +221,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             if (saveChanges)
                 DbContext.SaveChanges();
             return overallResults;
+        }
+
+        public PrintCertificate SeedPrintCertificate(TqRegistrationPathway tqRegistrationPathway, TlProviderAddress tlProviderAddress = null)
+        {
+            var printCertificate = PrintCertificateDataProvider.CreatePrintCertificate(DbContext, new PrintCertificateBuilder().Build(null, tqRegistrationPathway, tlProviderAddress));
+            printCertificate.Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber;
+            printCertificate.LearningDetails = JsonConvert.SerializeObject(new LearningDetails());
+            DbContext.SaveChanges();
+            return printCertificate;
         }
     }
 

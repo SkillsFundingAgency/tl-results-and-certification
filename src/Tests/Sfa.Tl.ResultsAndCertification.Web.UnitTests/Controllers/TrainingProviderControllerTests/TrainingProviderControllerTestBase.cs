@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
@@ -18,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         // Dependencies
         protected ITrainingProviderLoader TrainingProviderLoader;
         protected ICacheService CacheService;
+        protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected ILogger<TrainingProviderController> Logger;
         protected TrainingProviderController Controller;
 
@@ -31,8 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         {
             TrainingProviderLoader = Substitute.For<ITrainingProviderLoader>();
             CacheService = Substitute.For<ICacheService>();
+            ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration { DocumentRerequestInDays = 21 };
             Logger = Substitute.For<ILogger<TrainingProviderController>>();
-            Controller = new TrainingProviderController(TrainingProviderLoader, CacheService, Logger);
+            Controller = new TrainingProviderController(TrainingProviderLoader, CacheService, ResultsAndCertificationConfiguration, Logger);
 
             ProviderUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<TrainingProviderController>(Controller)
