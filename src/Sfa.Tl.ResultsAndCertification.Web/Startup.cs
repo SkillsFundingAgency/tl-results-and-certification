@@ -133,12 +133,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             else
             {
                 app.UseExceptionHandler("/Error/500");
-                app.UseHsts(options => options.MaxAge(365));
+                app.UseHsts(options => 
+                { 
+                    options.MaxAge(365);
+                    options.IncludeSubdomains();
+                });
             }
 
             app.UseXContentTypeOptions();
             app.UseReferrerPolicy(opts => opts.NoReferrer());
-            app.UseXXssProtection(opts => opts.EnabledWithBlockMode());
+            app.UseXXssProtection(opts => opts.Disabled());
             app.UseXfo(xfo => xfo.Deny());
 
             app.UseCsp(options => options.ScriptSources(s => s.StrictDynamic()
