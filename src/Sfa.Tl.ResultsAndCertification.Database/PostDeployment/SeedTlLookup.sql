@@ -30,7 +30,9 @@ USING (VALUES
   (22, N'OverallResult', N'OR6', N'Unclassified', 6, 1),
   (23, N'OverallResult', N'OR7', N'X - no result', 7, 1),
   (24, N'PathwayComponentGrade', N'PCG8', N'Q - pending result', 8, 1),
-  (25, N'SpecialismComponentGrade', N'SCG5', N'Q - pending result', 5, 1)
+  (25, N'PathwayComponentGrade', N'PCG9', N'X - no result', 9, 1),
+  (26, N'SpecialismComponentGrade', N'SCG5', N'Q - pending result', 5, 1),
+  (27, N'SpecialismComponentGrade', N'SCG6', N'X - no result', 6, 1)
   )
   AS Source ([Id], [Category], [Code], [Value], [SortOrder], [IsActive]) 
 ON Target.[Id] = Source.[Id] 
