@@ -104,6 +104,30 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "PathwayComponentGrade",
+                Code = "PCG8",
+                Value = "X - pending result",
+                IsActive = true,
+                SortOrder = 8,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "PathwayComponentGrade",
+                Code = "PCG9",
+                Value = "X - no result",
+                IsActive = true,
+                SortOrder = 8,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
             }
         };
 
@@ -165,6 +189,30 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 Value = "Unclassified",
                 IsActive = true,
                 SortOrder = 4,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "SpecialismComponentGrade",
+                Code = "SCG5",
+                Value = "X - pending result",
+                IsActive = true,
+                SortOrder = 5,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "SpecialismComponentGrade",
+                Code = "SCG6",
+                Value = "X - no result",
+                IsActive = true,
+                SortOrder = 6,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,

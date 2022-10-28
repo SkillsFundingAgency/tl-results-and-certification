@@ -234,7 +234,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
             {
                 return new[]
                 {
-                    //Result not-found - returns false
+                    // Result not-found - returns false
                     new object[]
                     { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 999, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.BeingAppealed },
                       false },
@@ -304,11 +304,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                     // CurrentStatus is UnderReview -> Requesting Final - returns false
                     new object[]
                     { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Specialism, PrsStatus = PrsStatus.Final, ResultLookupId = 8 },
-                      false },                    
+                      false },
 
                     // valid request with CurrentStatus is Reviewed -> Requesting BeingAppealed - returns true
                     new object[]
-                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Specialism, PrsStatus = PrsStatus.BeingAppealed, ResultLookupId = 8 },
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Specialism, PrsStatus = PrsStatus.BeingAppealed, ResultLookupId = 10 },
                       true },
 
                     // valid request with CurrentStatus is Reviewed -> Requesting Final - returns true
@@ -324,7 +324,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                      // When componenttype = specialism - CurrentStatus is BeingAppealed -> Requesting Withdraw
                     new object[]
                     { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 5, ComponentType = ComponentType.Specialism, PrsStatus = PrsStatus.Withdraw, ResultLookupId = 8 },
-                      true },
+                      true }
                 };
             }
         }
