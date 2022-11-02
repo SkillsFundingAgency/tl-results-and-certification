@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
@@ -14,6 +16,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
     public class When_Called_With_PrsRommGradeChangeViewModel_For_Specialism : TestSetup
     {
         private LearnerRecord _expectedApiResult;
+        private List<LookupData> _apiGrades;
+
         protected PrsRommGradeChangeViewModel ActualResult { get; set; }
 
         public override void Given()
@@ -101,6 +105,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             };
 
             InternalApiClient.GetLearnerRecordAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(_expectedApiResult);
+            _apiGrades = new List<LookupData> {
+                new LookupData { Id = 1, Code = "SCG1", Value = "Distinction" },
+                new LookupData { Id = 2, Code = "SCG2", Value = "Merit" },
+                new LookupData { Id = 3, Code = "SCG3", Value = "Pass" },
+                new LookupData { Id = 4, Code = "SCG5", Value = "Q - pending result" },
+                new LookupData { Id = 5, Code = "SCG6", Value = "X - no result" }
+            };
+            InternalApiClient.GetLookupDataAsync(LookupCategory.SpecialismComponentGrade).Returns(_apiGrades);
         }
 
         public async override Task When()
@@ -139,6 +151,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.SpecialismDisplayName.Should().Be($"{expectedSpecialism.Name} ({expectedSpecialism.LarId})");
             ActualResult.ExamPeriod.Should().Be(expectedAssessment.SeriesName);
             ActualResult.Grade.Should().Be(expectedAssessment.Result.Grade);
+
+            // Assert Gardes
+            ActualResult.Grades.Should().HaveCount(_apiGrades.Count - 1);
+            ActualResult.Grades.Select(x => x.Code).Should().NotContain(Constants.SpecialismComponentGradeQpendingResultCode);
         }
     }
 }
