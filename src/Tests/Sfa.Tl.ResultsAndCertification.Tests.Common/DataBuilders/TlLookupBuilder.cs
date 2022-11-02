@@ -109,7 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 Category = "PathwayComponentGrade",
                 Code = "PCG8",
-                Value = "X - pending result",
+                Value = "Q - pending result",
                 IsActive = true,
                 SortOrder = 8,
                 CreatedBy = Constants.CreatedByUser,
@@ -123,7 +123,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 Code = "PCG9",
                 Value = "X - no result",
                 IsActive = true,
-                SortOrder = 8,
+                SortOrder = 9,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
@@ -198,7 +198,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 Category = "SpecialismComponentGrade",
                 Code = "SCG5",
-                Value = "X - pending result",
+                Value = "Q - pending result",
                 IsActive = true,
                 SortOrder = 5,
                 CreatedBy = Constants.CreatedByUser,
