@@ -78,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
             return series;
         }
 
-        public static bool HasValidGradeForRommJourney(string gradeCode, ComponentType componentType)
+        public static bool IsValidGradeForRommJourney(string gradeCode, ComponentType componentType)
         {
             return (componentType == ComponentType.Core && !gradeCode.Equals(Constants.PathwayComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase) ||
                     componentType == ComponentType.Specialism && !gradeCode.Equals(Constants.SpecialismComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase));
