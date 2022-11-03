@@ -23,6 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string TlevelTitle { get; set; }
         
         public string ExamPeriod { get; set; }
+        public string GradeCode { get; set; }
         public string Grade { get; set; }
         public ComponentType ComponentType { get; set; }
 
