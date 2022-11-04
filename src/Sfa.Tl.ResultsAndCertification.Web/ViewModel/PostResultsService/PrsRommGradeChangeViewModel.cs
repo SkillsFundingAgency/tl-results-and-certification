@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public bool IsValid => (((PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified)
                                 && CommonHelper.IsRommAllowed(RommEndDate)) || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.UnderReview)
-                               && CommonHelper.HasValidGradeForRommJourney(GradeCode, ComponentType);
+                               && CommonHelper.IsValidGradeForRommJourney(GradeCode, ComponentType);
 
         public override BackLinkModel BackLink => new()
         {
