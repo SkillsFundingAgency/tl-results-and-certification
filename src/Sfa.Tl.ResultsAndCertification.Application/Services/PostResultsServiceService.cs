@@ -132,6 +132,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
             }
 
+            if (!IsValidGradeForRommJourney(existingSpecialismResult.TlLookup.Code, ComponentType.Specialism))
+            {
+                _logger.LogWarning(LogEvent.NotValidData, $"Requested status: {request.PrsStatus} is not valid. Current result = {existingSpecialismResult.TlLookup.Code}, Current Prs status = {existingSpecialismResult.PrsStatus}, ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: PrsActivityAsync({request})");
+                return false;
+            }
+
             var specialismResultsToUpdate = new List<TqSpecialismResult>();
 
             existingSpecialismResult.IsOptedin = false;
