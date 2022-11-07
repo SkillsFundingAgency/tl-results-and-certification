@@ -28,7 +28,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             CreateMapper();
 
             // Parameters
-            _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Withdrawn }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Active } };
+            _ulns = new Dictionary<long, RegistrationPathwayStatus> 
+            {
+                { 1111111111, RegistrationPathwayStatus.Withdrawn },
+                { 1111111112, RegistrationPathwayStatus.Active },
+                { 1111111113, RegistrationPathwayStatus.Active },
+                { 1111111114, RegistrationPathwayStatus.Active },
+                { 1111111115, RegistrationPathwayStatus.Active }
+            };
 
             // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
@@ -148,7 +155,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                     // valid request with Active result - returns true
                     new object[]
                     { new ChangeResultRequest { AoUkprn = 10011881, ProfileId = 3, LookupId = 2, ComponentType = ComponentType.Core },
-                      new ChangeResultResponse { IsSuccess = true, Uln = 1111111113, ProfileId = 3 } }
+                      new ChangeResultResponse { IsSuccess = true, Uln = 1111111113, ProfileId = 3 } },
+
+                    // valid request - returns true
+                    new object[]
+                    { new ChangeResultRequest { AoUkprn = 10011881, ProfileId = 4, LookupId = 8, ComponentType = ComponentType.Core },
+                      new ChangeResultResponse { IsSuccess = true, Uln = 1111111114, ProfileId = 4 } }, // LookupId = 8 - Q - pending result
+
+                    // valid request - returns true
+                    new object[]
+                    { new ChangeResultRequest { AoUkprn = 10011881, ProfileId = 5, LookupId = 9, ComponentType = ComponentType.Core },
+                      new ChangeResultResponse { IsSuccess = true, Uln = 1111111115, ProfileId = 5 } } // LookupId = 9 - X - no result
                 };
             }
         }
