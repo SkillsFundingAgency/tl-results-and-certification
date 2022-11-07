@@ -38,9 +38,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public bool IsRommOutcomeJourney { get; set; }
         public bool IsChangeMode { get; set; }
 
-        public bool IsValid => ((PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified)
-                            && CommonHelper.IsRommAllowed(RommEndDate))
-                            || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.UnderReview;
+        public bool IsValid => (((PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified)
+                                && CommonHelper.IsRommAllowed(RommEndDate)) || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.UnderReview)
+                               && CommonHelper.IsValidGradeForRommJourney(GradeCode, ComponentType);
 
         public override BackLinkModel BackLink => new()
         {
@@ -52,9 +52,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         private string GetRommOutcomeJourneyRoute => IsRommOutcomeJourney ? RouteConstants.PrsAddRommOutcome : RouteConstants.PrsAddRommOutcomeKnown;
 
-        private Dictionary<string, string> GetRouteAttributes => 
-            IsChangeMode ? null : 
-            IsRommOutcomeJourney ? 
+        private Dictionary<string, string> GetRouteAttributes =>
+            IsChangeMode ? null :
+            IsRommOutcomeJourney ?
             new Dictionary<string, string>
             {
                 { Constants.ProfileId, ProfileId.ToString() },

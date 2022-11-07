@@ -37,6 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 SpecialismLarId = "12121212",
                 ExamPeriod = "Summer 2021",
                 Grade = "B",
+                GradeCode = "PCG3",
                 PrsStatus = PrsStatus.UnderReview,
                 Grades = _grades,
                 ComponentType = ComponentType
