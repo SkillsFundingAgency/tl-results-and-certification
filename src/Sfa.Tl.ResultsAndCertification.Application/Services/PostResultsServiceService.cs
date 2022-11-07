@@ -78,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
             }
 
-            if (IsValidGradeForRommJourney(existingPathwayResult.TlLookup.Code, ComponentType.Core))
+            if (!IsValidGradeForRommJourney(existingPathwayResult.TlLookup.Code, ComponentType.Core))
             {
                 _logger.LogWarning(LogEvent.NotValidData, $"Requested status: {request.PrsStatus} is not valid. Current result = {existingPathwayResult.TlLookup.Code}, Current Prs status = {existingPathwayResult.PrsStatus}, ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: PrsActivityAsync({request})");
                 return false;
