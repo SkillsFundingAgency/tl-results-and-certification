@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (!IsValidGradeForRommJourney(existingPathwayResult.TlLookup.Code, ComponentType.Core))
             {
-                _logger.LogWarning(LogEvent.NotValidData, $"Requested status: {request.PrsStatus} is not valid. Current result = {existingPathwayResult.TlLookup.Code}, Current Prs status = {existingPathwayResult.PrsStatus}, ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: PrsActivityAsync({request})");
+                _logger.LogWarning(LogEvent.NotValidData, $"Requested status: {request.PrsStatus} is not valid. Current core result = {existingPathwayResult.TlLookup.Code}, Current Prs status = {existingPathwayResult.PrsStatus}, ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: PrsActivityAsync({request})");
                 return false;
             }
 
@@ -118,7 +118,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                                                                      && sr.TqSpecialismAssessment.EndDate == null && sr.IsOptedin
                                                                                      && sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId
                                                                                      && sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
-                                                                                     && sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == request.AoUkprn);
+                                                                                     && sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == request.AoUkprn,
+                                                                                     navigationPropertyPath: nav => nav.TlLookup);
 
             if (existingSpecialismResult == null)
             {
@@ -134,7 +135,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (!IsValidGradeForRommJourney(existingSpecialismResult.TlLookup.Code, ComponentType.Specialism))
             {
-                _logger.LogWarning(LogEvent.NotValidData, $"Requested status: {request.PrsStatus} is not valid. Current result = {existingSpecialismResult.TlLookup.Code}, Current Prs status = {existingSpecialismResult.PrsStatus}, ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: PrsActivityAsync({request})");
+                _logger.LogWarning(LogEvent.NotValidData, $"Requested status: {request.PrsStatus} is not valid. Current specialism result = {existingSpecialismResult.TlLookup.Code}, Current Prs status = {existingSpecialismResult.PrsStatus}, ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: PrsActivityAsync({request})");
                 return false;
             }
 
@@ -217,7 +218,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private static PrsStatus? GetPrsStatus(PrsStatus requestPrsStatus, PrsStatus? currentPrsStatus)
         {
-            if(requestPrsStatus == PrsStatus.Withdraw)
+            if (requestPrsStatus == PrsStatus.Withdraw)
             {
                 return currentPrsStatus == PrsStatus.BeingAppealed ? PrsStatus.Reviewed : null;
             }
