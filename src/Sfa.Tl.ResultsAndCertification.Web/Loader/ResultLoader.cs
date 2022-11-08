@@ -133,7 +133,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 return null;
 
             if(isChangeMode)
-                grades.Insert(grades.Count, new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageCoreResult.Option_Not_Received });
+                grades.Insert(grades.Count, new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageCoreResult.Option_Remove_Result });
 
             return _mapper.Map<ManageCoreResultViewModel>(response, opt => 
             { 

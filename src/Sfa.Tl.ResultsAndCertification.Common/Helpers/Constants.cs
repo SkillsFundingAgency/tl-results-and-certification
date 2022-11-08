@@ -155,7 +155,6 @@
         public const string CommaSeperator = ",";
         public const string NotReceived = "NR";
 
-
         // Function Name Constants
         public const string FetchLearnerGender = "FetchLearnerGender";
         public const string VerifyLearnerAndFetchLearningEvents = "VerifyLearnerAndFetchLearningEvents";
