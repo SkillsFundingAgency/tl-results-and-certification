@@ -106,11 +106,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This learner&apos;s grade has not been received.
+        ///   Looks up a localized string similar to Remove result for this learner.
         /// </summary>
-        public static string Option_Not_Received {
+        public static string Option_Remove_Result {
             get {
-                return ResourceManager.GetString("Option_Not_Received", resourceCulture);
+                return ResourceManager.GetString("Option_Remove_Result", resourceCulture);
             }
         }
         
