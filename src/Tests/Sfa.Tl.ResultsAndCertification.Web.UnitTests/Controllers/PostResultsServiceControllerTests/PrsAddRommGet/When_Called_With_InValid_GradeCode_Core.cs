@@ -9,16 +9,15 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommGet
 {
-    public class When_Called_With_IsBack_True_For_Core : TestSetup
+    public class When_Called_With_InValid_GradeCode_Core : TestSetup
     {
         private PrsAddRommViewModel _addRommViewModel;
 
         public override void Given()
         {
-            ProfileId = 1;
+            ProfileId = 0;
             AssessmentId = 7;
             ComponentType = ComponentType.Core;
-            IsBack = true;
 
             _addRommViewModel = new PrsAddRommViewModel
             {
@@ -32,8 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 CoreName = "Childcare",
                 CoreLarId = "12121212",
                 ExamPeriod = "Summer 2021",
-                Grade = "A",
-                GradeCode = "PCG2",
+                Grade = "Q - pending result",
+                GradeCode = "PCG8",
                 PrsStatus = null,
                 ComponentType = ComponentType,
                 RommEndDate = DateTime.UtcNow.AddDays(7)
@@ -49,30 +48,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         }
 
         [Fact]
-        public void Then_Returns_Expected_Results()
+        public void Then_Redirected_To_PageNotFound()
         {
-            var viewResult = Result as ViewResult;
-            var model = viewResult.Model as PrsAddRommViewModel;
-
-            model.Should().NotBeNull();
-            model.ProfileId.Should().Be(_addRommViewModel.ProfileId);
-            model.AssessmentId.Should().Be(_addRommViewModel.AssessmentId);
-            model.Uln.Should().Be(_addRommViewModel.Uln);
-            model.LearnerName.Should().Be(_addRommViewModel.LearnerName);
-            model.DateofBirth.Should().Be(_addRommViewModel.DateofBirth);
-            model.TlevelTitle.Should().Be(_addRommViewModel.TlevelTitle);
-            model.CoreDisplayName.Should().Be($"{_addRommViewModel.CoreName} ({_addRommViewModel.CoreLarId})");
-            model.ExamPeriod.Should().Be(_addRommViewModel.ExamPeriod);
-            model.Grade.Should().Be(_addRommViewModel.Grade);
-            model.RommEndDate.Should().Be(_addRommViewModel.RommEndDate);
-            model.ComponentType.Should().Be(_addRommViewModel.ComponentType);
-            model.IsRommRequested.Should().BeTrue();
-
-            model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.PrsLearnerDetails);
-            model.BackLink.RouteAttributes.Count.Should().Be(1);
-            model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string profileIdRouteValue);
-            profileIdRouteValue.Should().Be(ProfileId.ToString());
+            var routeName = (Result as RedirectToRouteResult).RouteName;
+            routeName.Should().Be(RouteConstants.PageNotFound);
         }
     }
 }
