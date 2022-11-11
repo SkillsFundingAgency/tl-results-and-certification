@@ -41,6 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                 { 1111111113, RegistrationPathwayStatus.Active },
                 { 1111111114, RegistrationPathwayStatus.Active },
                 { 1111111115, RegistrationPathwayStatus.Active },
+                { 1111111116, RegistrationPathwayStatus.Active }
             };
 
             // Registrations seed
@@ -64,7 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
 
                 // Results seed
                 var tqPathwayResultsSeedData = new List<TqPathwayResult>();
-                var profilesWithResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, null), (1111111114, PrsStatus.UnderReview), (1111111115, PrsStatus.Reviewed) };
+                var profilesWithResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, null), (1111111114, PrsStatus.UnderReview), (1111111115, PrsStatus.Reviewed), (1111111116, null) };
                 foreach (var assessment in pathwayAssessments)
                 {
                     var inactiveResultUlns = new List<long> { 1111111112 };
@@ -91,8 +92,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
 
             _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
             _specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
-                        
+
             DbContext.SaveChanges();
+
+            SetAssessmentResult(1111111116, $"Summer 2021", "Q - pending result", "Q - pending result");
 
             // Test class and dependencies. 
             CreateMapper();
@@ -133,8 +136,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
         public async Task Then_Expected_Results_Are_Returned(PrsActivityRequest request, bool expectedResult)
         {
             int? assessmentId;
-            
-            if(request.ComponentType == ComponentType.Core)
+
+            if (request.ComponentType == ComponentType.Core)
                 assessmentId = _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId && x.IsOptedin && x.EndDate == null)?.Id;
             else
                 assessmentId = _specialismAssessments.FirstOrDefault(x => x.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId && x.IsOptedin && x.EndDate == null)?.Id;
@@ -303,7 +306,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                     // When componenttype = specialism - CurrentStatus is UnderReview -> Requesting Withdraw
                     new object[]
                     { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Specialism, PrsStatus = PrsStatus.Withdraw, ResultLookupId = 0 },
-                      true }                    
+                      true },
+
+                    // Invalid current Core result (i.e. Q pending result) - returns false
+                    new object[]
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 6, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Reviewed, ResultLookupId = 3 },
+                      false },
+
+                    // Invalid current Specialism result (i.e. Q pending result) - returns false
+                    new object[]
+                    { new PrsActivityRequest { AoUkprn = 10011881, ProfileId = 6, ComponentType = ComponentType.Specialism, PrsStatus = PrsStatus.Reviewed, ResultLookupId = 3 },
+                      false }
                 };
             }
         }

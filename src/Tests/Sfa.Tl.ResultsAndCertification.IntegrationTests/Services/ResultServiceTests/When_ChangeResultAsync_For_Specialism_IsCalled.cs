@@ -33,7 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                 { 1111111111, RegistrationPathwayStatus.Withdrawn },
                 { 1111111112, RegistrationPathwayStatus.Active },
                 { 1111111113, RegistrationPathwayStatus.Active },
-                { 1111111114, RegistrationPathwayStatus.Active }
+                { 1111111114, RegistrationPathwayStatus.Active },
+                { 1111111115, RegistrationPathwayStatus.Active },
+                { 1111111116, RegistrationPathwayStatus.Active }
             };
 
             // Registrations seed
@@ -53,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
 
             _specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
 
-            var ulnsToAddResults = new List<long> { 1111111113, 1111111114 };
+            var ulnsToAddResults = new List<long> { 1111111113, 1111111114, 1111111115, 1111111116 };
             var tqSpecialismResultsSeedData = new List<TqSpecialismResult>();
 
             foreach (var uln in ulnsToAddResults)
@@ -163,7 +165,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                     // valid request with Active result and removing result - returns true
                     new object[]
                     { new ChangeResultRequest { AoUkprn = 10011881, ProfileId = 4, LookupId = null, ComponentType = ComponentType.Specialism },
-                      new ChangeResultResponse { IsSuccess = true, Uln = 1111111114, ProfileId = 4 } }
+                      new ChangeResultResponse { IsSuccess = true, Uln = 1111111114, ProfileId = 4 } },
+
+                    // valid request - returns true
+                    new object[]
+                    { new ChangeResultRequest { AoUkprn = 10011881, ProfileId = 5, LookupId = 5, ComponentType = ComponentType.Specialism },
+                      new ChangeResultResponse { IsSuccess = true, Uln = 1111111115, ProfileId = 5 } }, // LookupId = 5 - Q - pending result
+
+                    // valid request - returns true
+                    new object[]
+                    { new ChangeResultRequest { AoUkprn = 10011881, ProfileId = 6, LookupId = 6, ComponentType = ComponentType.Specialism },
+                      new ChangeResultResponse { IsSuccess = true, Uln = 1111111116, ProfileId = 6 } } // LookupId = 6 - X - no result
                 };
             }
         }
