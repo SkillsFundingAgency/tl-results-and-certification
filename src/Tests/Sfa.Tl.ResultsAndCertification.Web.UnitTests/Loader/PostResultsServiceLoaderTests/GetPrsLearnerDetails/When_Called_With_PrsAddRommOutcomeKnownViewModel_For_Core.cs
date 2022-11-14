@@ -60,6 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             {
                                 Id = 1,
                                 Grade = "C",
+                                GradeCode = "PCG4",
                                 PrsStatus = null,
                                 LastUpdatedBy = "System",
                                 LastUpdatedOn = DateTime.UtcNow
