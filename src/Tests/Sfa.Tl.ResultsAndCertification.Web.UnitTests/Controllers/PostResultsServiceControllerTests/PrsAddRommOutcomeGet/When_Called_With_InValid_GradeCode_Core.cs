@@ -7,15 +7,15 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomePost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddRommOutcomeGet
 {
-    public class When_RommOutcome_Is_GradeChanged_For_Core : TestSetup
+    public class When_Called_With_InValid_GradeCode_Core : TestSetup
     {
         private PrsAddRommOutcomeViewModel _addRommOutcomeViewModel;
 
         public override void Given()
         {
-            ProfileId = 1;
+            ProfileId = 0;
             AssessmentId = 7;
             ComponentType = ComponentType.Core;
 
@@ -31,33 +31,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 CoreName = "Childcare",
                 CoreLarId = "12121212",
                 ExamPeriod = "Summer 2021",
-                Grade = "A",
-                GradeCode = "PCG2",
+                Grade = "Q - pending result",
+                GradeCode = "PCG8",
                 PrsStatus = PrsStatus.UnderReview,
-                ComponentType = ComponentType,
                 RommEndDate = DateTime.UtcNow.AddDays(7)
             };
 
             Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_addRommOutcomeViewModel);
-            ViewModel = new PrsAddRommOutcomeViewModel { ProfileId = ProfileId, AssessmentId = AssessmentId, ComponentType = ComponentType, RommOutcome = RommOutcomeType.GradeChanged };
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            CacheService.Received(1).RemoveAsync<PrsRommCheckAndSubmitViewModel>(CacheKey);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType);
         }
 
         [Fact]
-        public void Then_Redirected_To_PrsRommGradeChange()
+        public void Then_Redirected_To_PageNotFound()
         {
-            var route = Result as RedirectToRouteResult;
-            route.RouteName.Should().Be(RouteConstants.PrsRommGradeChange);
-            route.RouteValues.Count.Should().Be(4);
-            route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
-            route.RouteValues[Constants.AssessmentId].Should().Be(ViewModel.AssessmentId);
-            route.RouteValues[Constants.ComponentType].Should().Be((int)ViewModel.ComponentType);
-            route.RouteValues[Constants.IsRommOutcomeJourney].Should().Be("true");
+            var routeName = (Result as RedirectToRouteResult).RouteName;
+            routeName.Should().Be(RouteConstants.PageNotFound);
         }
     }
 }

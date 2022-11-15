@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 1;
             AssessmentId = 7;
-            ComponentType = ComponentType.Core;
+            ComponentType = ComponentType.Specialism;
 
             _addRommOutcomeViewModel = new PrsAddRommOutcomeViewModel
             {
@@ -31,9 +31,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 SpecialismName = "Childcare",
                 SpecialismLarId = "12121212",
                 ExamPeriod = "Summer 2021",
-                Grade = "A",
+                Grade = "Merit",
+                GradeCode = "SCG3",
                 PrsStatus = PrsStatus.UnderReview,
-                RommEndDate = DateTime.UtcNow.AddDays(7)
+                RommEndDate = DateTime.UtcNow.AddDays(7),
+                ComponentType = ComponentType.Specialism
             };
 
             Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_addRommOutcomeViewModel);
