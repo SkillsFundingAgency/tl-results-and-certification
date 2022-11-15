@@ -25,12 +25,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 AssessmentId = AssessmentId,
                 RommEndDate = DateTime.UtcNow.AddDays(10),
                 RommOutcome = RommOutcomeKnownType.GradeNotChanged,
-                ComponentType = ComponentType
+                ComponentType = ComponentType,
+                Grade = "Pass",
+                GradeCode = "SCG3",
             };
 
             Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(ViewModel);
 
-            _checkAndSubmitViewModel = new PrsRommCheckAndSubmitViewModel { OldGrade = "B" };
+            _checkAndSubmitViewModel = new PrsRommCheckAndSubmitViewModel { OldGrade = "Pass" };
             Loader.GetPrsLearnerDetailsAsync<PrsRommCheckAndSubmitViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_checkAndSubmitViewModel);
         }
 
