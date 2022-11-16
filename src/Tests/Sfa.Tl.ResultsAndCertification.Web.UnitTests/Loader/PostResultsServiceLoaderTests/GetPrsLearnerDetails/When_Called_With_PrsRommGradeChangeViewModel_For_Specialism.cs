@@ -151,6 +151,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.SpecialismDisplayName.Should().Be($"{expectedSpecialism.Name} ({expectedSpecialism.LarId})");
             ActualResult.ExamPeriod.Should().Be(expectedAssessment.SeriesName);
             ActualResult.Grade.Should().Be(expectedAssessment.Result.Grade);
+            ActualResult.GradeCode.Should().Be(expectedAssessment.Result.GradeCode);
 
             // Assert Gardes
             ActualResult.Grades.Should().HaveCount(_apiGrades.Count - 1);
