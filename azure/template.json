@@ -153,6 +153,7 @@
                 "templateLink": {
                     "uri": "[concat(variables('deploymentUrlBase'), 'storage-account-arm.json')]",
                     "contentVersion": "1.0.0.0"
+			  "minimumTlsVersion": "1.2"
                 },
                 "parameters": {
                     "storageAccountName": {
