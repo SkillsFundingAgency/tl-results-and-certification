@@ -7,15 +7,15 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddAppealOutcomePost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAddAppealOutcomeGet
 {
-    public class When_AppealOutcome_Is_GradeChanged_For_Specialism : TestSetup
+    public class When_Called_With_Invalid_GradeCode_Specialism : TestSetup
     {
         private PrsAddAppealOutcomeViewModel _addAppealOutcomeViewModel;
 
         public override void Given()
         {
-            ProfileId = 1;
+            ProfileId = 0;
             AssessmentId = 7;
             ComponentType = ComponentType.Specialism;
 
@@ -30,35 +30,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 TlevelTitle = "TLevel in Childcare",
                 CoreName = "Childcare",
                 CoreLarId = "12121212",
+                ExamPeriod = "Summer 2021",
                 SpecialismName = "Heating Engineering",
                 SpecialismLarId = "Z1234567",
-                ExamPeriod = "Summer 2021",
-                Grade = "A",
-                GradeCode = "PCG2",
-                PrsStatus = PrsStatus.BeingAppealed,
-                ComponentType = ComponentType
+                Grade = "Q - pending result",
+                GradeCode = "SCG5",
+                ComponentType = ComponentType,
+                PrsStatus = PrsStatus.BeingAppealed
             };
 
             Loader.GetPrsLearnerDetailsAsync<PrsAddAppealOutcomeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_addAppealOutcomeViewModel);
-            ViewModel = new PrsAddAppealOutcomeViewModel { ProfileId = ProfileId, AssessmentId = AssessmentId, ComponentType = ComponentType, AppealOutcome = AppealOutcomeType.GradeChanged };
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            CacheService.Received(1).RemoveAsync<PrsAppealCheckAndSubmitViewModel>(CacheKey);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsAddAppealOutcomeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType);
         }
 
         [Fact]
-        public void Then_Redirected_To_PrsAppealGradeChange()
+        public void Then_Redirected_To_PageNotFound()
         {
-            var route = Result as RedirectToRouteResult;
-            route.RouteName.Should().Be(RouteConstants.PrsAppealGradeChange);
-            route.RouteValues.Count.Should().Be(4);
-            route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
-            route.RouteValues[Constants.AssessmentId].Should().Be(ViewModel.AssessmentId);
-            route.RouteValues[Constants.ComponentType].Should().Be((int)ViewModel.ComponentType);
-            route.RouteValues[Constants.IsAppealOutcomeJourney].Should().Be("true");
+            var routeName = (Result as RedirectToRouteResult).RouteName;
+            routeName.Should().Be(RouteConstants.PageNotFound);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         [Required(ErrorMessageResourceType = typeof(PrsAddAppealOutcomeContent), ErrorMessageResourceName = "Validation_Message")]
         public AppealOutcomeType? AppealOutcome { get; set; }
 
-        public bool IsValid => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.BeingAppealed;
+        public bool IsValid => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.BeingAppealed && 
+                               CommonHelper.IsValidGradeForRommJourney(GradeCode, ComponentType);
 
         public override BackLinkModel BackLink => new()
         {
