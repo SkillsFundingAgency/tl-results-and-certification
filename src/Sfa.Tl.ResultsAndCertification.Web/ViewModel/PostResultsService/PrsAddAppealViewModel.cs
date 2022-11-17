@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public bool? IsAppealRequested { get; set; }
 
         public bool IsValid => (PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Reviewed) 
-                                && CommonHelper.IsAppealsAllowed(AppealEndDate) && CommonHelper.IsValidGradeForRommJourney(GradeCode, ComponentType);
+                                && CommonHelper.IsAppealsAllowed(AppealEndDate) && CommonHelper.IsValidGradeForPrsJourney(GradeCode, ComponentType);
 
         public override BackLinkModel BackLink => new()
         {

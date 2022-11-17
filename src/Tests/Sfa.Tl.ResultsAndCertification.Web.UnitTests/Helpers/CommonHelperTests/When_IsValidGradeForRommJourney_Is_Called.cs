@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers.CommonHelperTests
         [MemberData(nameof(Data))]
         public void Then_Returns_Expected_Results(string gradeCode, ComponentType componentType, bool expectedResult)
         {
-            var actualResult = CommonHelper.IsValidGradeForRommJourney(gradeCode, componentType);
+            var actualResult = CommonHelper.IsValidGradeForPrsJourney(gradeCode, componentType);
             actualResult.Should().Be(expectedResult);
         }
     }
