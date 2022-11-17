@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public AppealOutcomeType? AppealOutcome { get; set; }
 
         public bool IsValid => PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.BeingAppealed && 
-                               CommonHelper.IsValidGradeForRommJourney(GradeCode, ComponentType);
+                               CommonHelper.IsValidGradeForPrsJourney(GradeCode, ComponentType);
 
         public override BackLinkModel BackLink => new()
         {
