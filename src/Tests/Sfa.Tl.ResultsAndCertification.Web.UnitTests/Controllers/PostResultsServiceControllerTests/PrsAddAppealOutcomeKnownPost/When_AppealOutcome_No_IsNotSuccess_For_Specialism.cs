@@ -25,6 +25,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ComponentType = ComponentType,
                 AppealOutcome = AppealOutcomeKnownType.No,
                 AppealEndDate = DateTime.Today.AddDays(7),
+                Grade = "Merit",
+                GradeCode = "SCG2",
                 PrsStatus = PrsStatus.Reviewed
             };
 
