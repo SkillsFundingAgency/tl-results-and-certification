@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using System;
@@ -29,6 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public string PathwayDisplayName { get; set; }
         
         public int? ResultId { get; set; }
+        public string CoreGrade { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ManageCoreResultContent), ErrorMessageResourceName = "Validation_Select_Grade_Required_Message")]
         public string SelectedGradeCode { get; set; }
@@ -36,7 +38,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public PrsStatus? PathwayPrsStatus { get; set; }
 
         public List<LookupViewModel> Grades { get; set; }
-        public bool IsValid => (PathwayPrsStatus.HasValue == false || PathwayPrsStatus == PrsStatus.NotSpecified) && ResultEndDate.HasValue && DateTime.Today <= ResultEndDate;
+        public bool IsValid => (CommonHelper.IsValidGradeForChangeResult(CoreGrade, ComponentType.Core) ||
+                                ((PathwayPrsStatus.HasValue == false || PathwayPrsStatus == PrsStatus.NotSpecified) && 
+                                 ResultEndDate.HasValue && DateTime.Today <= ResultEndDate));
 
         public string SuccessBannerMessage { get { return string.Format(ResultId.HasValue ? ManageCoreResultContent.Banner_Message_For_Result_Changed : ManageCoreResultContent.Banner_Message_For_Result_Added, AssessmentSeries, PathwayName); } }
 
