@@ -27,12 +27,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 AppealEndDate = DateTime.UtcNow.AddDays(10),
                 AppealOutcome = AppealOutcomeKnownType.GradeNotChanged,
                 ComponentType = ComponentType,
+                Grade = "A",
+                GradeCode = "PCG2",
                 PrsStatus = PrsStatus.Reviewed
             };
 
             Loader.GetPrsLearnerDetailsAsync<PrsAddAppealOutcomeKnownViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(ViewModel);
 
-            _checkAndSubmitViewModel = new PrsAppealCheckAndSubmitViewModel { OldGrade = "B" };
+            _checkAndSubmitViewModel = new PrsAppealCheckAndSubmitViewModel { OldGrade = "B", GradeCode = "PCG3" };
             Loader.GetPrsLearnerDetailsAsync<PrsAppealCheckAndSubmitViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_checkAndSubmitViewModel);
         }
 

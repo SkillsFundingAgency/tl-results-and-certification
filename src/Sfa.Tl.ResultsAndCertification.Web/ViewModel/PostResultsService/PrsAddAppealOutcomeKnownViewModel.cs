@@ -34,7 +34,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         [Required(ErrorMessageResourceType = typeof(PrsAddAppealOutcomeKnownContent), ErrorMessageResourceName = "Validation_Message")]
         public AppealOutcomeKnownType? AppealOutcome { get; set; }
 
-        public bool IsValid => (PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Reviewed) && CommonHelper.IsAppealsAllowed(AppealEndDate);
+        public bool IsValid => (PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.Reviewed)
+                                && CommonHelper.IsAppealsAllowed(AppealEndDate) && CommonHelper.IsValidGradeForPrsJourney(GradeCode, ComponentType);
 
         public override BackLinkModel BackLink => new BackLinkModel
         {
