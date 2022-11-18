@@ -249,6 +249,12 @@
                     },
                     "certificateThumbprint": {
                         "value": "[if(greater(length(parameters('uiCustomHostname')), 0), reference(concat('ui-app-service-certificate','-', parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
+                    },
+                    "http20Enabled": {
+                        "value": true
+                    },
+                    "ftpsState": {
+                        "value": "Disabled"
                     }
                 }
             },
@@ -335,6 +341,12 @@
                     },
                     "certificateThumbprint": {
                         "value": "[if(greater(length(parameters('internalApiCustomHostname')), 0), reference(concat('internal-api-app-service-certificate','-',parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
+                    },
+                    "http20Enabled": {
+                        "value": true
+                    },
+                    "ftpsState": {
+                        "value": "Disabled"
                     }
                 }
             },
@@ -485,6 +497,12 @@
                     },
                     "systemAssignedIdentity": {
                         "value": "SystemAssigned"
+                    },
+                    "http20Enabled": {
+                        "value": true
+                    },
+                    "ftpsState": {
+                        "value": "Disabled"
                     }
                 }
             },
