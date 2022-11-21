@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public string PathwayDisplayName { get; set; }
         
         public int? ResultId { get; set; }
-        public string CoreGrade { get; set; }
+        public string CoreGradeCode { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ManageCoreResultContent), ErrorMessageResourceName = "Validation_Select_Grade_Required_Message")]
         public string SelectedGradeCode { get; set; }
@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public PrsStatus? PathwayPrsStatus { get; set; }
 
         public List<LookupViewModel> Grades { get; set; }
-        public bool IsValid => (CommonHelper.IsValidGradeForChangeResult(CoreGrade, ComponentType.Core) ||
+        public bool IsValid => (CommonHelper.IsValidGradeForChangeResult(CoreGradeCode, ComponentType.Core) ||
                                 ((PathwayPrsStatus.HasValue == false || PathwayPrsStatus == PrsStatus.NotSpecified) && 
                                  ResultEndDate.HasValue && DateTime.Today <= ResultEndDate));
 

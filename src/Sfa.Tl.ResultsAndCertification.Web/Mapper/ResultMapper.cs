@@ -78,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ResultEndDate, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.ResultEndDate))
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.Id))
                 .ForMember(d => d.ResultId, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).Result?.Id))
-                .ForMember(d => d.CoreGrade, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).Result?.GradeCode))
+                .ForMember(d => d.CoreGradeCode, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).Result?.GradeCode))
                 .ForMember(d => d.PathwayPrsStatus, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"]).Result?.PrsStatus))
                 .ForMember(d => d.Grades, opts => opts.MapFrom((src, dest, destMember, context) => (IList<LookupData>)context.Items["grades"]));
 
