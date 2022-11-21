@@ -132,7 +132,7 @@
         }
     },
     "variables": {
-        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/master/templates/",
+        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/master/ARMTemplates/",
         "resourceNamePrefix": "[toLower(concat(parameters('resourceIdentifier') , parameters('resourceEnvironmentName'), '-', parameters('serviceName')))]",
         "storageAccountName": "[toLower(concat(parameters('resourceIdentifier'), parameters('resourceEnvironmentName'), parameters('serviceName'), 'str'))]",
         "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-asp')]",
@@ -157,6 +157,9 @@
                 "parameters": {
                     "storageAccountName": {
                         "value": "[variables('storageAccountName')]"
+                    },
+                    "storageKind": {
+                        "value": "Storage"
                     }
                 }
             }
@@ -168,7 +171,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'),'app-service-plan.json')]",
+                    "uri": "[concat(variables('deploymentUrlBase'),'app-service-plan-ase.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -285,6 +288,12 @@
                     },
                     "certificateThumbprint": {
                         "value": "[if(greater(length(parameters('uiCustomHostname')), 0), reference('ui-app-service-certificate', '2018-11-01').outputs.certificateThumbprint.value, '')]"
+                    },
+                    "http20Enabled": {
+                        "value": true
+                    },
+                    "ftpsState": {
+                        "value": "Disabled"
                     }
                 }
             },
@@ -499,6 +508,12 @@
                     },
                     "certificateThumbprint": {
                         "value": "[if(greater(length(parameters('internalApiCustomHostname')), 0), reference('internal-api-app-service-certificate', '2018-11-01').outputs.certificateThumbprint.value, '')]"
+                    },
+                    "http20Enabled" : {
+                        "value": true
+                    },
+                    "ftpsState" : {
+                        "value": "Disabled"
                     }
                 }
             },
@@ -638,6 +653,12 @@
                     },
                     "systemAssignedIdentity": {
                         "value": "SystemAssigned"
+                    },
+                    "http20Enabled" : {
+                        "value": true
+                    },
+                    "ftpsState": {
+                        "value": "Disabled"
                     }
                 }
             }
