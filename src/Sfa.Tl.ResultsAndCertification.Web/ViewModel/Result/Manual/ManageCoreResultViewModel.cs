@@ -38,9 +38,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public PrsStatus? PathwayPrsStatus { get; set; }
 
         public List<LookupViewModel> Grades { get; set; }
-        public bool IsValid => (CommonHelper.IsValidGradeForChangeResult(CoreGradeCode, ComponentType.Core) ||
-                                ((PathwayPrsStatus.HasValue == false || PathwayPrsStatus == PrsStatus.NotSpecified) && 
-                                 ResultEndDate.HasValue && DateTime.Today <= ResultEndDate));
+        public bool IsValid => (PathwayPrsStatus.HasValue == false || PathwayPrsStatus == PrsStatus.NotSpecified) && 
+                                 (CommonHelper.IsValidGradeForChangeResult(CoreGradeCode, ComponentType.Core) || 
+                                 (ResultEndDate.HasValue && DateTime.Today <= ResultEndDate));
 
         public string SuccessBannerMessage { get { return string.Format(ResultId.HasValue ? ManageCoreResultContent.Banner_Message_For_Result_Changed : ManageCoreResultContent.Banner_Message_For_Result_Added, AssessmentSeries, PathwayName); } }
 
