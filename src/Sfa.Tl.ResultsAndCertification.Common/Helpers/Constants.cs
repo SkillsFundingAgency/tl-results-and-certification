@@ -181,6 +181,7 @@
 
         public const string OverallResultPartialAchievementCode = "OR5";
         public const string OverallResultUnclassifiedCode = "OR6";
-        public const string OverallResultXNoResultCode = "OR7";        
+        public const string OverallResultXNoResultCode = "OR7";
+        public const string OverallResultQpendingCode = "OR8";
     }
 }

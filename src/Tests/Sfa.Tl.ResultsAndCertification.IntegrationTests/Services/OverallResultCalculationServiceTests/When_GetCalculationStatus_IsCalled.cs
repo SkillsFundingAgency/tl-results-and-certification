@@ -62,6 +62,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             {
                 return new[]
                 {
+                    new object[] { "Q - pending result", null, null, CalculationStatus.Qpending},
+                    new object[] { "Q - pending result", null, PrsStatus.UnderReview, CalculationStatus.Qpending},
+                    new object[] { "Q - pending result", PrsStatus.UnderReview, null, CalculationStatus.Qpending},
+                    new object[] { "Q - pending result", null, PrsStatus.BeingAppealed, CalculationStatus.Qpending},
+                    new object[] { "Q - pending result", PrsStatus.BeingAppealed, null, CalculationStatus.Qpending},
                     new object[] { "Unclassified", null, null, CalculationStatus.Unclassified},
                     new object[] { "X - no result", null, null, CalculationStatus.NoResult},
                     new object[] { "Partial achievement", null, null, CalculationStatus.PartiallyCompleted},

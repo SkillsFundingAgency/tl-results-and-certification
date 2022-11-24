@@ -40,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 { 1111111114, RegistrationPathwayStatus.Active }, // With result + Already Calculated OverallResult - Different Outcome
                 { 1111111115, RegistrationPathwayStatus.Active }, // With result
                 { 1111111116, RegistrationPathwayStatus.Active }, // With result
+                { 1111111117, RegistrationPathwayStatus.Active }, // With result
             };
 
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
@@ -81,6 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 { 1111111112, IndustryPlacementStatus.NotCompleted },
                 { 1111111113, IndustryPlacementStatus.Completed },
                 { 1111111114, IndustryPlacementStatus.NotCompleted },
+                { 1111111117, IndustryPlacementStatus.NotCompleted },
             };
             SeedIndustyPlacementData(_ulnWithIndustryPlacements);
             DbContext.SaveChanges();
@@ -114,14 +116,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
 
             // Change pathway result and Industry placement status
             ChangePathwayResultAndIPStatus(1111111114, "B");
+            ChangePathwayResultAndIPStatus(1111111117, "Q - pending result");
 
             CreateService();
         }
 
         private void ChangePathwayResultAndIPStatus(long uln, string newPathwayGrade)
         {
-            var tlLookup = TlLookup.FirstOrDefault(l => l.Value == newPathwayGrade);
-            var pathwayToChange = DbContext.TqRegistrationPathway.FirstOrDefault(p => p.TqRegistrationProfile.UniqueLearnerNumber == 1111111114);
+            var tlLookup = TlLookup.FirstOrDefault(l => l.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase) && l.Value == newPathwayGrade);
+            var pathwayToChange = DbContext.TqRegistrationPathway.FirstOrDefault(p => p.TqRegistrationProfile.UniqueLearnerNumber == uln);
             var pathwayAssessment = pathwayToChange.TqPathwayAssessments.FirstOrDefault(a => a.IsOptedin && a.EndDate == null);
             var pathwayResult = pathwayAssessment.TqPathwayResults.FirstOrDefault(r => r.IsOptedin && r.EndDate == null);
 
@@ -237,6 +240,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     IsOptedin = true,
                     CertificateType = PrintCertificateType.StatementOfAchievement,
                     CertificateStatus = CertificateStatus.AwaitingProcessing
+                },
+                new OverallResult
+                {
+                    TqRegistrationPathwayId = 7,
+                    Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"Q - pending result\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed with special consideration\",\"OverallResult\":\"Q - pending result\"}",
+                    CalculationStatus = CalculationStatus.Qpending,
+                    ResultAwarded = "Q - pending result",
+                    PrintAvailableFrom = null,
+                    PublishDate = assessmentSeries.ResultPublishDate,
+                    EndDate = null,
+                    IsOptedin = true,
+                    CertificateType = null,
+                    CertificateStatus = null
                 }
             };
 
@@ -244,7 +260,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             {
                 new OverallResultResponse { IsSuccess = true, TotalRecords = 2, NewRecords = 2, UpdatedRecords = 0, UnChangedRecords = 0, SavedRecords = 2 },
                 new OverallResultResponse { IsSuccess = true, TotalRecords = 2, NewRecords = 1, UpdatedRecords = 1, UnChangedRecords = 0, SavedRecords = 3 },
-                new OverallResultResponse { IsSuccess = true, TotalRecords = 1, NewRecords = 1, UpdatedRecords = 0, UnChangedRecords = 0, SavedRecords = 1 }
+                new OverallResultResponse { IsSuccess = true, TotalRecords = 2, NewRecords = 2, UpdatedRecords = 0, UnChangedRecords = 0, SavedRecords = 2 }
             };
 
             _actualResult = await OverallResultCalculationService.CalculateOverallResultsAsync(runDate);
@@ -257,7 +273,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             await WhenAsync(runDate);
             _actualResult.Should().BeEquivalentTo(_expectedResult);
 
-            var newOverallResultUlns = new List<long> { 1111111111, 1111111112, 1111111114, 1111111115, 1111111116 };
+            var newOverallResultUlns = new List<long> { 1111111111, 1111111112, 1111111114, 1111111115, 1111111116, 1111111117 };
             foreach (var uln in newOverallResultUlns)
             {
                 var pathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln).TqRegistrationPathways.FirstOrDefault().Id;
