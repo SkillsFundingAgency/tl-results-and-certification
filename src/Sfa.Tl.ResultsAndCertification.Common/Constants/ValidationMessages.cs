@@ -88,7 +88,8 @@
         public const string NoCoreAssessmentEntryCurrentlyActive = "No assessment entry is currently active for the core component on this registration - needs adding first through assessment entries file upload or manual entry";
         public const string AssessmentSeriesDoesNotMatchTheSeriesOnTheRegistration = "Assessment series does not match the series on the registration";
         public const string InvalidCoreComponentGrade = "Enter a valid grade for the core component. The grade must be A* to E, unclassified, Q - pending result or X - no result.";
-        
+        public const string CoreSeriesNotCurrentlyOpen = "Incorrect Assessment series";
+
         public const string SpecialismCodeNotRecognised = "Specialism code(s) either not recognised or not registered for this ULN";
         public const string NoSpecialismAssessmentEntryCurrentlyActive = "No assessment entry is currently active for the Specialism on this registration - needs adding first through assessment entries file upload or manual entry";
         public const string InvalidSpecialismAssessmentSeriesEntry = "Specialism assessment series does not exist";

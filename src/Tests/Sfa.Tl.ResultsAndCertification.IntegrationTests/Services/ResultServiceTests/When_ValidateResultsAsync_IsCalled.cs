@@ -185,7 +185,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                 // 16. Specialism - Grade is not valid 
                 new ResultCsvRecordResponse { RowNum = 16, Uln = 1111111114, SpecialismCodes = new List<string> { "10123456" }, SpecialismAssessmentSeries = "Summer 2022", SpecialismGrades = new List<string> { "Hello" }},
 
-                 // 17. Valid Row - Second cohort learner registerd in 2021 and allowed to take specialism in summer 2022
+                // // 17. Valid - Second cohort learner registerd in 2021 and allowed to take specialism in summer 2022
+                //new ResultCsvRecordResponse { RowNum = 17, Uln = 1111111115, CoreCode = "10123456", CoreAssessmentSeries = "Summer 2021", CoreGrade = "A", SpecialismCodes = new List<string> { "10123456" }, SpecialismAssessmentSeries = "Summer 2022", SpecialismGrades = new List<string> { "Merit" }},
+
+                 // 17. Core Assessment series is not currently open
                 new ResultCsvRecordResponse { RowNum = 17, Uln = 1111111115, CoreCode = "10123456", CoreAssessmentSeries = "Summer 2021", CoreGrade = "A", SpecialismCodes = new List<string> { "10123456" }, SpecialismAssessmentSeries = "Summer 2022", SpecialismGrades = new List<string> { "Merit" }},
 
             };
@@ -216,6 +219,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                 new BulkProcessValidationError { RowNum = "14", Uln = "1111111113", ErrorMessage = "Assessment series does not match the series on the registration" },
                 new BulkProcessValidationError { RowNum = "14", Uln = "1111111113", ErrorMessage = "Incorrect Assessment series" },
                 new BulkProcessValidationError { RowNum = "16", Uln = "1111111114", ErrorMessage = "Specialism grade not valid" },
+                new BulkProcessValidationError { RowNum = "17", Uln = "1111111115", ErrorMessage = "Incorrect Assessment series" },
             };
 
             return validationErrors;
