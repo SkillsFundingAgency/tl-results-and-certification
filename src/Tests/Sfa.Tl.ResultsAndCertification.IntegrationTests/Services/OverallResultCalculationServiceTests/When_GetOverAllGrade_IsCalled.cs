@@ -136,6 +136,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     new object[] { 1, "Unclassified", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed },
                     new object[] { 1, "Q - pending result", "Unclassified", "Q - pending result", IndustryPlacementStatus.Completed },
 
+                    new object[] { 1, "X - no result", null, "Partial achievement", IndustryPlacementStatus.Completed },
+                    new object[] { 1, null, "X - no result", "Partial achievement", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "Unclassified", "X - no result", "Partial achievement", IndustryPlacementStatus.Completed },
+                    new object[] { 1, "X - no result", "Unclassified", "Partial achievement", IndustryPlacementStatus.Completed },
+
                     // IndustryPlacement Not Completed
                     new object[] { 1, "A*", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted },
                     new object[] { 1, "A*", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted },
@@ -186,7 +191,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     new object[] { 1, "Q - pending result", null, "Q - pending result", IndustryPlacementStatus.NotCompleted },
                     new object[] { 1, null, "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted },
                     new object[] { 1, "Unclassified", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "Q - pending result", "Unclassified", "Q - pending result", IndustryPlacementStatus.NotCompleted }
+                    new object[] { 1, "Q - pending result", "Unclassified", "Q - pending result", IndustryPlacementStatus.NotCompleted },
+
+                    new object[] { 1, "X - no result", null, "X - no result", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, null, "X - no result", "X - no result", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "Unclassified", "X - no result", "Unclassified", IndustryPlacementStatus.NotCompleted },
+                    new object[] { 1, "X - no result", "Unclassified", "Unclassified", IndustryPlacementStatus.NotCompleted }
                 };
             }
         }
