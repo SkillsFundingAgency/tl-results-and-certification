@@ -125,9 +125,31 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             new Domain.Models.TqRegistrationProfile
             {
                 UniqueLearnerNumber = 1111111117,
-                Firstname = "First ",
-                Lastname = "Last ",
+                Firstname = "First 7",
+                Lastname = "Last 7",
                 DateofBirth = "10/10/1981".ParseStringToDateTimeWithFormat(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new Domain.Models.TqRegistrationProfile
+            {
+                UniqueLearnerNumber = 1111111118,
+                Firstname = "First 8",
+                Lastname = "Last 8",
+                DateofBirth = "01/05/1980".ParseStringToDateTimeWithFormat(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new Domain.Models.TqRegistrationProfile
+            {
+                UniqueLearnerNumber = 1111111119,
+                Firstname = "First 9",
+                Lastname = "Last 9",
+                DateofBirth = "01/07/1980".ParseStringToDateTimeWithFormat(),
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,

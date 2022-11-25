@@ -41,6 +41,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 { 1111111115, RegistrationPathwayStatus.Active }, // With result
                 { 1111111116, RegistrationPathwayStatus.Active }, // With result
                 { 1111111117, RegistrationPathwayStatus.Active }, // With result
+                { 1111111118, RegistrationPathwayStatus.Active }, // With result
+                { 1111111119, RegistrationPathwayStatus.Active }  // With result
             };
 
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
@@ -83,6 +85,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 { 1111111113, IndustryPlacementStatus.Completed },
                 { 1111111114, IndustryPlacementStatus.NotCompleted },
                 { 1111111117, IndustryPlacementStatus.NotCompleted },
+                { 1111111118, IndustryPlacementStatus.NotCompleted },
+                { 1111111119, IndustryPlacementStatus.NotCompleted }
             };
             SeedIndustyPlacementData(_ulnWithIndustryPlacements);
             DbContext.SaveChanges();
@@ -117,11 +121,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             // Change pathway result and Industry placement status
             ChangePathwayResultAndIPStatus(1111111114, "B");
             ChangePathwayResultAndIPStatus(1111111117, "Q - pending result");
+            ChangePathwayResultAndIPStatus(1111111118, "X - no result", false);
+            ChangeSpecialismResult(1111111118, "X - no result");
+
+            ChangePathwayResultAndIPStatus(1111111119, "Unclassified", false);
+            ChangeSpecialismResult(1111111119, "X - no result");
 
             CreateService();
         }
 
-        private void ChangePathwayResultAndIPStatus(long uln, string newPathwayGrade)
+        private void ChangePathwayResultAndIPStatus(long uln, string newPathwayGrade, bool changeIPStatus = true)
         {
             var tlLookup = TlLookup.FirstOrDefault(l => l.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase) && l.Value == newPathwayGrade);
             var pathwayToChange = DbContext.TqRegistrationPathway.FirstOrDefault(p => p.TqRegistrationProfile.UniqueLearnerNumber == uln);
@@ -144,10 +153,39 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 CreatedBy = "System"
             });
 
-            // update Ip Status to CompletedToSpecialConsideration
+            if (changeIPStatus)
+            {
+                // update Ip Status to CompletedToSpecialConsideration
 
-            var ipToChange = pathwayToChange.IndustryPlacements.FirstOrDefault();
-            ipToChange.Status = IndustryPlacementStatus.CompletedWithSpecialConsideration;
+                var ipToChange = pathwayToChange.IndustryPlacements.FirstOrDefault();
+                ipToChange.Status = IndustryPlacementStatus.CompletedWithSpecialConsideration;
+            }
+
+            DbContext.SaveChanges();
+        }
+
+        private void ChangeSpecialismResult(long uln, string newGrade)
+        {
+            var tlLookup = TlLookup.FirstOrDefault(l => l.Category.Equals(LookupCategory.SpecialismComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase) && l.Value == newGrade);
+            var pathwayToChange = DbContext.TqRegistrationPathway.FirstOrDefault(p => p.TqRegistrationProfile.UniqueLearnerNumber == uln);
+            var specialismAssessment = pathwayToChange.TqRegistrationSpecialisms.SelectMany(sa => sa.TqSpecialismAssessments).FirstOrDefault(a => a.IsOptedin && a.EndDate == null);
+            var speicalismResult = specialismAssessment.TqSpecialismResults.FirstOrDefault(sr => sr.IsOptedin && sr.EndDate == null);
+
+            speicalismResult.EndDate = DateTime.Now;
+            speicalismResult.IsOptedin = false;
+            speicalismResult.ModifiedOn = DateTime.Now;
+            speicalismResult.ModifiedBy = "System";
+
+            specialismAssessment.TqSpecialismResults.Add(new TqSpecialismResult
+            {
+                TqSpecialismAssessmentId = specialismAssessment.Id,
+                TlLookupId = tlLookup.Id,
+                IsOptedin = true,
+                StartDate = DateTime.Now.AddMinutes(3),
+                EndDate = null,
+                IsBulkUpload = false,
+                CreatedBy = "System"
+            });           
 
             DbContext.SaveChanges();
         }
@@ -253,6 +291,32 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     IsOptedin = true,
                     CertificateType = null,
                     CertificateStatus = null
+                },
+                new OverallResult
+                {
+                    TqRegistrationPathwayId = 8,
+                    Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"X - no result\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"X - no result\"}],\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"X - no result\"}",
+                    CalculationStatus = CalculationStatus.NoResult,
+                    ResultAwarded = "X - no result",
+                    PrintAvailableFrom = null,
+                    PublishDate = assessmentSeries.ResultPublishDate,
+                    EndDate = null,
+                    IsOptedin = true,
+                    CertificateType = null,
+                    CertificateStatus = null
+                },
+                new OverallResult
+                {
+                    TqRegistrationPathwayId = 9,
+                    Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"Unclassified\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"X - no result\"}],\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"Unclassified\"}",
+                    CalculationStatus = CalculationStatus.Unclassified,
+                    ResultAwarded = "Unclassified",
+                    PrintAvailableFrom = null,
+                    PublishDate = assessmentSeries.ResultPublishDate,
+                    EndDate = null,
+                    IsOptedin = true,
+                    CertificateType = null,
+                    CertificateStatus = null
                 }
             };
 
@@ -260,7 +324,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             {
                 new OverallResultResponse { IsSuccess = true, TotalRecords = 2, NewRecords = 2, UpdatedRecords = 0, UnChangedRecords = 0, SavedRecords = 2 },
                 new OverallResultResponse { IsSuccess = true, TotalRecords = 2, NewRecords = 1, UpdatedRecords = 1, UnChangedRecords = 0, SavedRecords = 3 },
-                new OverallResultResponse { IsSuccess = true, TotalRecords = 2, NewRecords = 2, UpdatedRecords = 0, UnChangedRecords = 0, SavedRecords = 2 }
+                new OverallResultResponse { IsSuccess = true, TotalRecords = 2, NewRecords = 2, UpdatedRecords = 0, UnChangedRecords = 0, SavedRecords = 2 },
+                new OverallResultResponse { IsSuccess = true, TotalRecords = 2, NewRecords = 2, UpdatedRecords = 0, UnChangedRecords = 0, SavedRecords = 2 },
             };
 
             _actualResult = await OverallResultCalculationService.CalculateOverallResultsAsync(runDate);

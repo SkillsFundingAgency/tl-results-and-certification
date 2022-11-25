@@ -249,31 +249,40 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         }
 
         public string GetOverAllGrade(List<TlLookup> overallResultLookup, List<OverallGradeLookup> overallGradeLookup, int tlPathwayId, int? pathwayGradeId, int? speciailsmGradeId, IndustryPlacementStatus ipStatus)
-        {
+        {            
+            // Q - pending result
+            var isPathwayGradeQpending = pathwayGradeId.HasValue ? overallResultLookup.Any(o => o.Id == pathwayGradeId.Value && o.Code.Equals(Constants.PathwayComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase)) : false;
+            var isSpecialismGradeQpending = speciailsmGradeId.HasValue ? overallResultLookup.Any(o => o.Id == speciailsmGradeId.Value && o.Code.Equals(Constants.SpecialismComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase)) : false;
+
+            // Unclassified result
             var isPathwayGradeUnclassified = pathwayGradeId.HasValue ? overallResultLookup.Any(o => o.Id == pathwayGradeId.Value && o.Code.Equals(Constants.PathwayComponentGradeUnclassifiedCode, StringComparison.InvariantCultureIgnoreCase)) : false;
             var isSpecialismGradeUnclassified = speciailsmGradeId.HasValue ? overallResultLookup.Any(o => o.Id == speciailsmGradeId.Value && o.Code.Equals(Constants.SpecialismComponentGradeUnclassifiedCode, StringComparison.InvariantCultureIgnoreCase)) : false;
 
-            // Qpending result
-            var isPathwayGradeQpending = pathwayGradeId.HasValue ? overallResultLookup.Any(o => o.Id == pathwayGradeId.Value && o.Code.Equals(Constants.PathwayComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase)) : false;
-            var isSpecialismGradeQpending = speciailsmGradeId.HasValue ? overallResultLookup.Any(o => o.Id == speciailsmGradeId.Value && o.Code.Equals(Constants.SpecialismComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase)) : false;
+            // X - No result
+            var isPathwayGradeXNoResult = pathwayGradeId.HasValue ? overallResultLookup.Any(o => o.Id == pathwayGradeId.Value && o.Code.Equals(Constants.PathwayComponentGradeXNoResultCode, StringComparison.InvariantCultureIgnoreCase)) : false;
+            var isSpecialismGradeXNoResult = speciailsmGradeId.HasValue ? overallResultLookup.Any(o => o.Id == speciailsmGradeId.Value && o.Code.Equals(Constants.SpecialismComponentGradeXNoResultCode, StringComparison.InvariantCultureIgnoreCase)) : false;
 
             var overallResultQpending = overallResultLookup.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultQpendingCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
             var overallResultUnClassified = overallResultLookup.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultUnclassifiedCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
             var overallResultXNoResult = overallResultLookup.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultXNoResultCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
             var overallResultPartialAchievement = overallResultLookup.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultPartialAchievementCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
 
-            if (ipStatus == IndustryPlacementStatus.Completed || ipStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
+            if (isPathwayGradeQpending || isSpecialismGradeQpending)
+            {
+                return overallResultQpending;
+            }
+            else if (ipStatus == IndustryPlacementStatus.Completed || ipStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
             {
                 if (pathwayGradeId.HasValue && speciailsmGradeId.HasValue &&
-                    !isPathwayGradeQpending && !isSpecialismGradeQpending &&
-                    !isPathwayGradeUnclassified && !isSpecialismGradeUnclassified)
+                    !isPathwayGradeUnclassified && !isSpecialismGradeUnclassified &&
+                    !isPathwayGradeXNoResult && !isSpecialismGradeXNoResult)
                 {
                     var overallGrade = overallGradeLookup.FirstOrDefault(o => o.TlPathwayId == tlPathwayId && o.TlLookupCoreGradeId == pathwayGradeId && o.TlLookupSpecialismGradeId == speciailsmGradeId);
                     return overallGrade?.TlLookupOverallGrade?.Value;
                 }
                 else
                 {
-                    return (isPathwayGradeQpending || isSpecialismGradeQpending) ? overallResultQpending : overallResultPartialAchievement;
+                    return overallResultPartialAchievement;
                 }
             }
             else
@@ -282,29 +291,31 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 if (pathwayGradeId.HasValue && speciailsmGradeId.HasValue)
                 {
-                    if (isPathwayGradeQpending || isSpecialismGradeQpending)
-                    {
-                        return overallResultQpending;
-                    }
-                    else if (isPathwayGradeUnclassified && isSpecialismGradeUnclassified)
+                    if ((isPathwayGradeUnclassified && isSpecialismGradeUnclassified) ||
+                             (isPathwayGradeUnclassified && isSpecialismGradeXNoResult) ||
+                             (isPathwayGradeXNoResult && isSpecialismGradeUnclassified))
                     {
                         return overallResultUnClassified;
-                    }                    
+                    }
+                    else if (isPathwayGradeXNoResult && isSpecialismGradeXNoResult)
+                    {
+                        return overallResultXNoResult;
+                    }
                     else
                     {
                         return overallResultPartialAchievement;
-                    }                    
+                    }
                 }
                 else if (pathwayGradeId.HasValue && !speciailsmGradeId.HasValue)
                 {
-                    if (isPathwayGradeQpending)
-                    {
-                        return overallResultQpending;
-                    }
-                    else if (isPathwayGradeUnclassified)
+                    if (isPathwayGradeUnclassified)
                     {
                         return overallResultUnClassified;
-                    }                    
+                    }
+                    else if (isPathwayGradeXNoResult)
+                    {
+                        return overallResultXNoResult;
+                    }
                     else
                     {
                         return overallResultPartialAchievement;
@@ -312,14 +323,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
                 else if (!pathwayGradeId.HasValue && speciailsmGradeId.HasValue)
                 {
-                    if (isSpecialismGradeQpending)
-                    {
-                        return overallResultQpending;
-                    }
-                    else if (isSpecialismGradeUnclassified)
+                    if (isSpecialismGradeUnclassified)
                     {
                         return overallResultUnClassified;
-                    }                    
+                    }
+                    else if (isSpecialismGradeXNoResult)
+                    {
+                        return overallResultXNoResult;
+                    }
                     else
                     {
                         return overallResultPartialAchievement;
