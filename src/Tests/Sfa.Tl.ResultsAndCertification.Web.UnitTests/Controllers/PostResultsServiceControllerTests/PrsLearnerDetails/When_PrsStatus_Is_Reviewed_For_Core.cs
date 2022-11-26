@@ -27,6 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                     { 
                         AssessmentSeries = "Autumn 2021",
                         Grade = "B",
+                        GradeCode = "PCG3",
+                        ComponentType = ComponentType.Core,
                         PrsStatus = PrsStatus.Reviewed,
                         LastUpdated = "5 June 2021",
                         UpdatedBy = "User 2",

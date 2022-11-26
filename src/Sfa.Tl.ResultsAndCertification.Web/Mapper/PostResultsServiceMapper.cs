@@ -41,6 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.RommEndDate, opts => opts.MapFrom(s => s.RommEndDate))
                 .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AppealEndDate))
                 .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.Result != null ? s.Result.Grade : null))
+                .ForMember(d => d.GradeCode, opts => opts.MapFrom(s => s.Result != null ? s.Result.GradeCode : null))
                 .ForMember(d => d.LastUpdated, opts => opts.MapFrom(s => s.Result != null ? s.Result.LastUpdatedOn.ToDobFormat() : null))
                 .ForMember(d => d.UpdatedBy, opts => opts.MapFrom(s => s.Result != null ? s.Result.LastUpdatedBy : null))
                 .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => s.Result != null ? s.Result.PrsStatus : null));

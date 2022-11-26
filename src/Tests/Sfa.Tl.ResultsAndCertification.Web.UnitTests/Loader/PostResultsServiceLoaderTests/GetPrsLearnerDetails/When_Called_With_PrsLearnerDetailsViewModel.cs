@@ -2,6 +2,7 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
@@ -73,6 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             {
                                 Id = 1,
                                 Grade = "C",
+                                GradeCode = "PCG4",
                                 PrsStatus = null,
                                 LastUpdatedBy = "System",
                                 LastUpdatedOn = DateTime.UtcNow
@@ -93,6 +95,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             {
                                 Id = 1,
                                 Grade = "B",
+                                GradeCode = "PCG3",
                                 PrsStatus = PrsStatus.BeingAppealed,
                                 LastUpdatedBy = "System",
                                 LastUpdatedOn = DateTime.UtcNow
@@ -113,6 +116,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             {
                                 Id = 1,
                                 Grade = "A",
+                                GradeCode = "PCG2",
                                 PrsStatus = PrsStatus.Final,
                                 LastUpdatedBy = "System",
                                 LastUpdatedOn = DateTime.UtcNow
@@ -132,6 +136,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             {
                                 Id = 1,
                                 Grade = "D",
+                                GradeCode = "PCG5",
                                 PrsStatus = PrsStatus.UnderReview,
                                 LastUpdatedBy = "System",
                                 LastUpdatedOn = DateTime.UtcNow
@@ -151,6 +156,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                             {
                                 Id = 1,
                                 Grade = "D",
+                                GradeCode = "PCG5",
+                                PrsStatus = null,
+                                LastUpdatedBy = "System",
+                                LastUpdatedOn = DateTime.UtcNow
+                            }
+                        },
+                        new Assessment
+                        {
+                            Id = 17,
+                            SeriesId = 5,
+                            SeriesName = "Autumn 2020",
+                            ComponentType = ComponentType.Core,
+                            RommEndDate = DateTime.UtcNow.AddDays(-15),
+                            AppealEndDate = DateTime.UtcNow.AddDays(-10),
+                            LastUpdatedBy = "System",
+                            LastUpdatedOn = DateTime.UtcNow,
+                            Result = new Result
+                            {
+                                Id = 1,
+                                Grade = "Q - pending result",
+                                GradeCode = "PCG8",
                                 PrsStatus = null,
                                 LastUpdatedBy = "System",
                                 LastUpdatedOn = DateTime.UtcNow
@@ -191,6 +217,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                     {
                                         Id = 1,
                                         Grade = "Merit",
+                                        GradeCode = "SCG2",
                                         PrsStatus = null,
                                         LastUpdatedBy = "System",
                                         LastUpdatedOn = DateTime.UtcNow
@@ -220,6 +247,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                     {
                                         Id = 1,
                                         Grade = "Pass",
+                                        GradeCode = "PCG3",
                                         PrsStatus = null,
                                         LastUpdatedBy = "System",
                                         LastUpdatedOn = DateTime.UtcNow
@@ -278,7 +306,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 var isGradeExists = expectedExam.Id > 0 && isResultAvailable && !string.IsNullOrWhiteSpace(expectedExam.Result.Grade);
                 var isAddRommAllowed = isGradeExists && (expectedExam.Result.PrsStatus == null || expectedExam.Result.PrsStatus == PrsStatus.NotSpecified) && (DateTime.UtcNow <= expectedExam.RommEndDate);
                 var isAddRommOutcomeAllowed = expectedExam.Result?.PrsStatus == PrsStatus.UnderReview;
-                var isChangedRequestAllowed = ((expectedExam.Result?.PrsStatus == null || expectedExam.Result?.PrsStatus == PrsStatus.NotSpecified) && CommonHelper.IsRommAllowed(expectedExam.RommEndDate) == false)
+
+                var hasQPendingResult = isGradeExists && expectedExam.Result.GradeCode.Equals(Constants.PathwayComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase);
+                var isChangedRequestAllowed = !hasQPendingResult && ((expectedExam.Result?.PrsStatus == null || expectedExam.Result?.PrsStatus == PrsStatus.NotSpecified) && CommonHelper.IsRommAllowed(expectedExam.RommEndDate) == false)
                                            || (expectedExam.Result?.PrsStatus == PrsStatus.Reviewed && CommonHelper.IsAppealsAllowed(expectedExam.AppealEndDate) == false)
                                            || expectedExam.Result?.PrsStatus == PrsStatus.Final;
 
@@ -313,7 +343,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                     var isGradeExists = expectedExam.Id > 0 && isResultAvailable && !string.IsNullOrWhiteSpace(expectedExam.Result.Grade);
                     var isAddRommAllowed = isGradeExists && (expectedExam.Result.PrsStatus == null || expectedExam.Result.PrsStatus == PrsStatus.NotSpecified) && (DateTime.UtcNow <= expectedExam.RommEndDate);
                     var isAddRommOutcomeAllowed = expectedExam.Result?.PrsStatus == PrsStatus.UnderReview;
-                    var isChangedRequestAllowed = ((expectedExam.Result?.PrsStatus == null || expectedExam.Result?.PrsStatus == PrsStatus.NotSpecified) && CommonHelper.IsRommAllowed(expectedExam.RommEndDate) == false)
+                    var hasQPendingResult = isGradeExists && expectedExam.Result.GradeCode.Equals(Constants.SpecialismComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase);
+                    var isChangedRequestAllowed = !hasQPendingResult && ((expectedExam.Result?.PrsStatus == null || expectedExam.Result?.PrsStatus == PrsStatus.NotSpecified) && CommonHelper.IsRommAllowed(expectedExam.RommEndDate) == false)
                                            || (expectedExam.Result?.PrsStatus == PrsStatus.Reviewed && CommonHelper.IsAppealsAllowed(expectedExam.AppealEndDate) == false)
                                            || expectedExam.Result?.PrsStatus == PrsStatus.Final;
 
