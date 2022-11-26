@@ -123,6 +123,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     var hasAssessmentSeriesMatchTheSeriesOnRegistrationCore = dbRegistration.TqPathwayAssessments.Any(pa => pa.IsOptedin && pa.EndDate == null && pa.AssessmentSeries.Name.Equals(result.CoreAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
                     if (!hasAssessmentSeriesMatchTheSeriesOnRegistrationCore)
                         validationErrors.Add(BuildValidationError(result, ValidationMessages.AssessmentSeriesDoesNotMatchTheSeriesOnTheRegistration));
+                    else
+                    {
+                        // 7.1. Core - Assessment series is not open 
+                        var isValidNextAssessmentSeries = CommonHelper.IsValidNextAssessmentSeries(result.CoreAssessmentSeries, dbRegistration.AcademicYear, dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.StartYear, ComponentType.Core, dbAssessmentSeries.Where(x => x.ComponentType == ComponentType.Core).ToList());
+                        if (!isValidNextAssessmentSeries)
+                            validationErrors.Add(BuildValidationError(result, ValidationMessages.CoreSeriesNotCurrentlyOpen));
+                    }
                 }
 
                 // 8. Specialism - Code is not recognised. 
