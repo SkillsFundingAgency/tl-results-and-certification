@@ -249,18 +249,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         }
 
         public string GetOverAllGrade(List<TlLookup> overallResultLookup, List<OverallGradeLookup> overallGradeLookup, int tlPathwayId, int? pathwayGradeId, int? speciailsmGradeId, IndustryPlacementStatus ipStatus)
-        {            
+        {
             // Q - pending result
-            var isPathwayGradeQpending = pathwayGradeId.HasValue ? overallResultLookup.Any(o => o.Id == pathwayGradeId.Value && o.Code.Equals(Constants.PathwayComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase)) : false;
-            var isSpecialismGradeQpending = speciailsmGradeId.HasValue ? overallResultLookup.Any(o => o.Id == speciailsmGradeId.Value && o.Code.Equals(Constants.SpecialismComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase)) : false;
+            var isPathwayGradeQpending = IsComponentGradeWithCode(overallResultLookup, pathwayGradeId, Constants.PathwayComponentGradeQpendingResultCode);
+            var isSpecialismGradeQpending = IsComponentGradeWithCode(overallResultLookup, speciailsmGradeId, Constants.SpecialismComponentGradeQpendingResultCode);
 
             // Unclassified result
-            var isPathwayGradeUnclassified = pathwayGradeId.HasValue ? overallResultLookup.Any(o => o.Id == pathwayGradeId.Value && o.Code.Equals(Constants.PathwayComponentGradeUnclassifiedCode, StringComparison.InvariantCultureIgnoreCase)) : false;
-            var isSpecialismGradeUnclassified = speciailsmGradeId.HasValue ? overallResultLookup.Any(o => o.Id == speciailsmGradeId.Value && o.Code.Equals(Constants.SpecialismComponentGradeUnclassifiedCode, StringComparison.InvariantCultureIgnoreCase)) : false;
+            var isPathwayGradeUnclassified = IsComponentGradeWithCode(overallResultLookup, pathwayGradeId, Constants.PathwayComponentGradeUnclassifiedCode);
+            var isSpecialismGradeUnclassified = IsComponentGradeWithCode(overallResultLookup, speciailsmGradeId, Constants.SpecialismComponentGradeUnclassifiedCode);
 
             // X - No result
-            var isPathwayGradeXNoResult = pathwayGradeId.HasValue ? overallResultLookup.Any(o => o.Id == pathwayGradeId.Value && o.Code.Equals(Constants.PathwayComponentGradeXNoResultCode, StringComparison.InvariantCultureIgnoreCase)) : false;
-            var isSpecialismGradeXNoResult = speciailsmGradeId.HasValue ? overallResultLookup.Any(o => o.Id == speciailsmGradeId.Value && o.Code.Equals(Constants.SpecialismComponentGradeXNoResultCode, StringComparison.InvariantCultureIgnoreCase)) : false;
+            var isPathwayGradeXNoResult = IsComponentGradeWithCode(overallResultLookup, pathwayGradeId, Constants.PathwayComponentGradeXNoResultCode);
+            var isSpecialismGradeXNoResult = IsComponentGradeWithCode(overallResultLookup, speciailsmGradeId, Constants.SpecialismComponentGradeXNoResultCode);
 
             var overallResultQpending = overallResultLookup.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultQpendingCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
             var overallResultUnClassified = overallResultLookup.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultUnclassifiedCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
@@ -342,6 +342,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     return overallResultXNoResult;
                 }
             }
+        }
+
+        private static bool IsComponentGradeWithCode(List<TlLookup> overallResultLookup, int? gradeId, string gradeCode)
+        {
+            return gradeId.HasValue ? overallResultLookup.Any(o => o.Id == gradeId.Value && o.Code.Equals(gradeCode, StringComparison.InvariantCultureIgnoreCase)) : false;
         }
 
         public IList<OverallResult> ReconcileLearnersData(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
