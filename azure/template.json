@@ -132,7 +132,7 @@
         }
     },
     "variables": {
-        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/funding-platform-building-blocks/tlevels/templates/",
+        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/funding-platform-building-blocks/master/templates/",
         "resourceNamePrefix": "[toLower(concat(parameters('resourceIdentifier') , parameters('resourceEnvironmentName'), '-', parameters('serviceName')))]",
         "storageAccountName": "[toLower(concat(parameters('resourceIdentifier'), parameters('resourceEnvironmentName'), parameters('serviceName'), 'str'))]",
         "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-asp')]",
@@ -644,9 +644,6 @@
                                 "value": "1"
                             }
                         ]
-                    },
-                    "systemAssignedIdentity": {
-                        "value": "SystemAssigned"
                     },
                     "http20Enabled": {
                         "value": true
