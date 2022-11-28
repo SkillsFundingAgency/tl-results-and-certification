@@ -121,16 +121,16 @@
     <value>Download assessment entries data format and rules ({0}, {1}KB)</value>
   </data>
   <data name="Assessment_Entries_FileSize_Text" xml:space="preserve">
-    <value>286</value>
+    <value>287</value>
   </data>
   <data name="Assessment_Entries_Heading_Text" xml:space="preserve">
     <value>Assessment entries</value>
   </data>
   <data name="Assessment_Entries_PublishedDate_Text" xml:space="preserve">
-    <value>19 October 2022</value>
+    <value>2 December 2022</value>
   </data>
   <data name="Assessment_Entries_Version_Text" xml:space="preserve">
-    <value>Version 1.6</value>
+    <value>Version 1.7</value>
   </data>
   <data name="Choose_The_Right_Core_And_Specialism_Codes_Text" xml:space="preserve">
     <value>choose the right core and specialism codes</value>
