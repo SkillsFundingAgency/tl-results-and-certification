@@ -185,7 +185,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                 // 16. Specialism - Grade is not valid 
                 new ResultCsvRecordResponse { RowNum = 16, Uln = 1111111114, SpecialismCodes = new List<string> { "10123456" }, SpecialismAssessmentSeries = "Summer 2022", SpecialismGrades = new List<string> { "Hello" }},
 
-                 // 17. Valid Row - Second cohort learner registerd in 2021 and allowed to take specialism in summer 2022
+                // // 17. Valid - Second cohort learner registerd in 2021 and allowed to take specialism in summer 2022
+                //new ResultCsvRecordResponse { RowNum = 17, Uln = 1111111115, CoreCode = "10123456", CoreAssessmentSeries = "Summer 2021", CoreGrade = "A", SpecialismCodes = new List<string> { "10123456" }, SpecialismAssessmentSeries = "Summer 2022", SpecialismGrades = new List<string> { "Merit" }},
+
+                 // 17. Core Assessment series is not currently open
                 new ResultCsvRecordResponse { RowNum = 17, Uln = 1111111115, CoreCode = "10123456", CoreAssessmentSeries = "Summer 2021", CoreGrade = "A", SpecialismCodes = new List<string> { "10123456" }, SpecialismAssessmentSeries = "Summer 2022", SpecialismGrades = new List<string> { "Merit" }},
 
             };
@@ -199,15 +202,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                 new BulkProcessValidationError { RowNum = "2", Uln = "1111111111", ErrorMessage = "Cannot add results to a withdrawn registration"  },
                 new BulkProcessValidationError { RowNum = "3", Uln = "1111111112", ErrorMessage = "Core component code either not recognised or not registered for this ULN" },
                 new BulkProcessValidationError { RowNum = "4", Uln = "1111111112", ErrorMessage = "Assessment series does not exist - see results data format and rules guide for examples of valid series"  },
-                new BulkProcessValidationError { RowNum = "5", Uln = "1111111112", ErrorMessage = "Core component grade not valid - needs to be A* to E, or Unclassified"  },
+                new BulkProcessValidationError { RowNum = "5", Uln = "1111111112", ErrorMessage = "Enter a valid grade for the core component. The grade must be A* to E, unclassified, Q - pending result or X - no result."  },
                 new BulkProcessValidationError { RowNum = "6", Uln = "1111111114", ErrorMessage = "No assessment entry is currently active for the core component on this registration - needs adding first through assessment entries file upload or manual entry"  },
                 new BulkProcessValidationError { RowNum = "7", Uln = "1111111113", ErrorMessage = "Assessment series does not match the series on the registration" },
                 new BulkProcessValidationError { RowNum = "8", Uln = "1111111113", ErrorMessage = "Core component code either not recognised or not registered for this ULN"  },
                 new BulkProcessValidationError { RowNum = "8", Uln = "1111111113", ErrorMessage = "Assessment series does not exist - see results data format and rules guide for examples of valid series"  },
-                new BulkProcessValidationError { RowNum = "8", Uln = "1111111113", ErrorMessage = "Core component grade not valid - needs to be A* to E, or Unclassified"  },
+                new BulkProcessValidationError { RowNum = "8", Uln = "1111111113", ErrorMessage = "Enter a valid grade for the core component. The grade must be A* to E, unclassified, Q - pending result or X - no result."  },
                 new BulkProcessValidationError { RowNum = "9", Uln = "1111111114", ErrorMessage = "Core component code either not recognised or not registered for this ULN"  },
                 new BulkProcessValidationError { RowNum = "9", Uln = "1111111114", ErrorMessage = "Assessment series does not exist - see results data format and rules guide for examples of valid series"  },
-                new BulkProcessValidationError { RowNum = "9", Uln = "1111111114", ErrorMessage = "Core component grade not valid - needs to be A* to E, or Unclassified"  },
+                new BulkProcessValidationError { RowNum = "9", Uln = "1111111114", ErrorMessage = "Enter a valid grade for the core component. The grade must be A* to E, unclassified, Q - pending result or X - no result."  },
                 new BulkProcessValidationError { RowNum = "9", Uln = "1111111114", ErrorMessage = "No assessment entry is currently active for the core component on this registration - needs adding first through assessment entries file upload or manual entry" },
 
                 new BulkProcessValidationError { RowNum = "11", Uln = "1111111114", ErrorMessage = "Specialism code(s) either not recognised or not registered for this ULN" },
@@ -216,6 +219,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                 new BulkProcessValidationError { RowNum = "14", Uln = "1111111113", ErrorMessage = "Assessment series does not match the series on the registration" },
                 new BulkProcessValidationError { RowNum = "14", Uln = "1111111113", ErrorMessage = "Incorrect Assessment series" },
                 new BulkProcessValidationError { RowNum = "16", Uln = "1111111114", ErrorMessage = "Specialism grade not valid" },
+                new BulkProcessValidationError { RowNum = "17", Uln = "1111111115", ErrorMessage = "Incorrect Assessment series" },
             };
 
             return validationErrors;

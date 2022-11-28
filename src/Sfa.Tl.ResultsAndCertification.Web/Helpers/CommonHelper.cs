@@ -80,8 +80,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
 
         public static bool IsValidGradeForPrsJourney(string gradeCode, ComponentType componentType)
         {
-            return (componentType == ComponentType.Core && !gradeCode.Equals(Constants.PathwayComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase) ||
-                    componentType == ComponentType.Specialism && !gradeCode.Equals(Constants.SpecialismComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase));
+            return componentType == ComponentType.Core && !gradeCode.Equals(Constants.PathwayComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase) ||
+                   componentType == ComponentType.Specialism && !gradeCode.Equals(Constants.SpecialismComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase);
         }
 
         public static bool IsValidGradeForChangeResult(string gradeCode, ComponentType componentType)

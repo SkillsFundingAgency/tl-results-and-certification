@@ -276,6 +276,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 
         public IList<TlLookup> BuildIpTypeList() => new List<TlLookup>
         {
+            // This list should be in the same order as TlLookup table data in the database
+            // Otherwise integration test will fail - When_GetOverAllGrade_IsCalled
             new TlLookup
             {
                 Category = "SpecialConsideration",
@@ -404,15 +406,27 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             new TlLookup
             {
                 Category = "OverallResult",
-                Code = "OR5",
+                Code = "OR7",
                 Value = "X - no result",
                 IsActive = true,
-                SortOrder = 5,
+                SortOrder = 7,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
             },
+            new TlLookup
+            {
+                Category = "OverallResult",
+                Code = "OR8",
+                Value = "Q - pending result",
+                IsActive = true,
+                SortOrder = 8,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            }
         };
 
         public IList<TlLookup> BuildFullTlLookupList() => new List<TlLookup>
@@ -688,7 +702,67 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 Code = "OR7",
                 Value = "X - no result",
                 IsActive = true,
+                SortOrder = 7,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "OverallResult",
+                Code = "OR8",
+                Value = "Q - pending result",
+                IsActive = true,
+                SortOrder = 8,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "PathwayComponentGrade",
+                Code = "PCG8",
+                Value = "Q - pending result",
+                IsActive = true,
+                SortOrder = 8,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "PathwayComponentGrade",
+                Code = "PCG9",
+                Value = "X - no result",
+                IsActive = true,
+                SortOrder = 9,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "SpecialismComponentGrade",
+                Code = "SCG5",
+                Value = "Q - pending result",
+                IsActive = true,
                 SortOrder = 5,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "SpecialismComponentGrade",
+                Code = "SCG6",
+                Value = "X - no result",
+                IsActive = true,
+                SortOrder = 6,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,

@@ -63,6 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     new object[] { "xyz", null },
                     new object[] { "Unclassified", null },
                     new object[] { "X - no result", null },
+                    new object[] { "Q - pending result", null },
                     new object[] { "Partial achievement", PrintCertificateType.StatementOfAchievement},
                     new object[] { "Distinction*", PrintCertificateType.Certificate },
                     new object[] { "Distinction", PrintCertificateType.Certificate },

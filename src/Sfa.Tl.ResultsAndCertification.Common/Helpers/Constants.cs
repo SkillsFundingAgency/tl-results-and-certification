@@ -176,11 +176,15 @@
 
         public const string PathwayComponentGradeUnclassifiedCode = "PCG7";
         public const string PathwayComponentGradeQpendingResultCode = "PCG8";
+        public const string PathwayComponentGradeXNoResultCode = "PCG9";
+        
         public const string SpecialismComponentGradeUnclassifiedCode = "SCG4";
         public const string SpecialismComponentGradeQpendingResultCode = "SCG5";
+        public const string SpecialismComponentGradeXNoResultCode = "SCG6";
 
         public const string OverallResultPartialAchievementCode = "OR5";
         public const string OverallResultUnclassifiedCode = "OR6";
-        public const string OverallResultXNoResultCode = "OR7";        
+        public const string OverallResultXNoResultCode = "OR7";
+        public const string OverallResultQpendingCode = "OR8";
     }
 }

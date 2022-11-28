@@ -44,16 +44,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 x.TqRegistrationPathways.ToList().ForEach(p => p.AcademicYear = currentAcademicYear - 1);
             });
 
-            var componentWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113, 1111111114, 1111111115 };
-            var componentWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
+            var componentWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113, 1111111114, 1111111115, 1111111116 };
+            var componentWithResults = new List<long> { 1111111111, 1111111112, 1111111113, 1111111116 };
             SeedAssessmentsAndResults(_registrations, componentWithAssessments, componentWithResults, $"Summer {currentAcademicYear}");
 
-            componentWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113 };
-            componentWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
+            componentWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113, 1111111116 };
+            componentWithResults = new List<long> { 1111111111, 1111111112, 1111111113, 1111111116 };
             SeedAssessmentsAndResults(_registrations, componentWithAssessments, componentWithResults, $"Autumn {currentAcademicYear}");
 
             SetAssessmentResult(1111111111, $"Summer {currentAcademicYear}", "B", "Merit");
             SetAssessmentResult(1111111112, $"Autumn {currentAcademicYear}", "B", "Pass");
+            SetAssessmentResult(1111111116, $"Autumn {currentAcademicYear}", "Q - pending result", "Q - pending result");
 
             ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
             {
@@ -105,7 +106,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     new object[] { 1111111112, true, "A*" },
                     new object[] { 1111111113, true, "A*" },
                     new object[] { 1111111114, false, null },
-                    new object[] { 1111111115, false, null }
+                    new object[] { 1111111115, false, null },
+                    new object[] { 1111111116, true, "Q - pending result" }
                 };
             }
         }

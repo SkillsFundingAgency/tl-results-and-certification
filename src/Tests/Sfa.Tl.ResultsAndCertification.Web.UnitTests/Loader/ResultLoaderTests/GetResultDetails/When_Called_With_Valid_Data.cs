@@ -172,7 +172,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                                     {
                                         Id = 1,
                                         Grade = "Merit",
-                                        PrsStatus = null,
+                                        PrsStatus = PrsStatus.Reviewed,
                                         LastUpdatedBy = "System",
                                         LastUpdatedOn = DateTime.UtcNow
                                     }                                    
@@ -264,8 +264,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                 actualExam.UpdatedBy.Should().Be(!isResultAvailable ? null : expectedExam.Result.LastUpdatedBy);
                 actualExam.ComponentType.Should().Be(ComponentType.Core);
                 actualExam.ProfileId.Should().Be(expectedApiResult.ProfileId);
-
-                var isResultChangeAllowed = isResultAvailable && DateTime.Today <= expectedExam.ResultEndDate;
+                                
+                var isResultChangeAllowed = isResultAvailable && (expectedExam.Result.PrsStatus == null || expectedExam.Result.PrsStatus == PrsStatus.NotSpecified) && DateTime.Today <= expectedExam.ResultEndDate;
                 actualExam.IsResultChangeAllowed.Should().Be(isResultChangeAllowed);
             }
 
@@ -295,7 +295,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                     actualExam.ComponentType.Should().Be(ComponentType.Specialism);
                     actualExam.ProfileId.Should().Be(expectedApiResult.ProfileId);
 
-                    var isResultChangeAllowed = isResultAvailable && DateTime.Today <= expectedExam.ResultEndDate;
+                    var isResultChangeAllowed = isResultAvailable && (expectedExam.Result.PrsStatus == null || expectedExam.Result.PrsStatus == PrsStatus.NotSpecified) && DateTime.Today <= expectedExam.ResultEndDate;
                     actualExam.IsResultChangeAllowed.Should().Be(isResultChangeAllowed);
                 }
             }
