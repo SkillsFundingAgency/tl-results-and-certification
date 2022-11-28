@@ -132,7 +132,7 @@
         }
     },
     "variables": {
-        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/master/templates/",
+        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/funding-platform-building-blocks/tlevels/templates/",
         "resourceNamePrefix": "[toLower(concat(parameters('resourceIdentifier') , parameters('resourceEnvironmentName'), '-', parameters('serviceName')))]",
         "storageAccountName": "[toLower(concat(parameters('resourceIdentifier'), parameters('resourceEnvironmentName'), parameters('serviceName'), 'str'))]",
         "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-asp')]",
@@ -157,6 +157,9 @@
                 "parameters": {
                     "storageAccountName": {
                         "value": "[variables('storageAccountName')]"
+                    },
+                    "minimumTlsVersion" : {
+                        "value": "TLS1_2"
                     }
                 }
             }
@@ -285,6 +288,9 @@
                     },
                     "certificateThumbprint": {
                         "value": "[if(greater(length(parameters('uiCustomHostname')), 0), reference('ui-app-service-certificate', '2018-11-01').outputs.certificateThumbprint.value, '')]"
+                    },
+                    "http20Enabled": {
+                        "value": true
                     }
                 }
             },
@@ -499,6 +505,9 @@
                     },
                     "certificateThumbprint": {
                         "value": "[if(greater(length(parameters('internalApiCustomHostname')), 0), reference('internal-api-app-service-certificate', '2018-11-01').outputs.certificateThumbprint.value, '')]"
+                    },
+                    "http20Enabled": {
+                        "value": true
                     }
                 }
             },
@@ -638,6 +647,9 @@
                     },
                     "systemAssignedIdentity": {
                         "value": "SystemAssigned"
+                    },
+                    "http20Enabled": {
+                        "value": true
                     }
                 }
             }
