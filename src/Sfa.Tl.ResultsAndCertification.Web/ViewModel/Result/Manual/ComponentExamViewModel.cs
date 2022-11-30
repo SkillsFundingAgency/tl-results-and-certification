@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public string AssessmentSeries { get; set; }
         public string Grade { get; set; }
         public string GradeCode { get; set; }
-        public string PrsDisplayText { get { return CommonHelper.GetPrsStatusDisplayText(PrsStatus, RommEndDate, AppealEndDate); } }
+        public string PrsDisplayText { get { return CommonHelper.IsValidGradeForChangeResult(GradeCode, ComponentType) ? string.Empty : CommonHelper.GetPrsStatusDisplayText(PrsStatus, RommEndDate, AppealEndDate); } }
         public string LastUpdated { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime ResultEndDate { get; set; }
