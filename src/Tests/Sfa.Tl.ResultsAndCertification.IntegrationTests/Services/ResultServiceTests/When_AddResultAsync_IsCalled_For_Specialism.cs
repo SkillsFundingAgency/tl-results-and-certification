@@ -32,7 +32,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                 { 1111111111, RegistrationPathwayStatus.Withdrawn },
                 { 1111111112, RegistrationPathwayStatus.Active },
                 { 1111111113, RegistrationPathwayStatus.Active },
-                { 1111111114, RegistrationPathwayStatus.Active }
+                { 1111111114, RegistrationPathwayStatus.Active },
+                { 1111111115, RegistrationPathwayStatus.Active },
+                { 1111111116, RegistrationPathwayStatus.Active }
             };
 
             // Registrations seed
@@ -147,7 +149,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                     // invalid request (Active result exists) - returns false
                     new object[]
                     { new AddResultRequest { AoUkprn = 10011881, ProfileId = 4, LookupId = 1, ComponentType = ComponentType.Specialism },
-                      new AddResultResponse { IsSuccess = false } }
+                      new AddResultResponse { IsSuccess = false } },
+
+                    // valid request - returns true
+                    new object[]
+                    { new AddResultRequest { AoUkprn = 10011881, ProfileId = 5, LookupId = 5, ComponentType = ComponentType.Specialism },
+                      new AddResultResponse { IsSuccess = true, Uln = 1111111115, ProfileId = 5 } }, // LookupId = 5 - Q - pending result
+
+                    // valid request - returns true
+                    new object[]
+                    { new AddResultRequest { AoUkprn = 10011881, ProfileId = 6, LookupId = 6, ComponentType = ComponentType.Specialism },
+                      new AddResultResponse { IsSuccess = true, Uln = 1111111116, ProfileId = 6 } } // LookupId = 6 - X - no result
                 };
             }
         }

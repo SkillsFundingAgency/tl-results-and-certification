@@ -34,6 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 SpecialismLarId = "Z1234567",
                 ExamPeriod = "Summer 2021",
                 Grade = "A",
+                GradeCode = "PCG2",
                 PrsStatus = PrsStatus.BeingAppealed,
                 ComponentType = ComponentType
             };

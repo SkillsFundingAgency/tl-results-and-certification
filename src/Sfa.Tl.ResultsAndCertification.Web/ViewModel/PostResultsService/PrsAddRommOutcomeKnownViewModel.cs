@@ -34,7 +34,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         [Required(ErrorMessageResourceType = typeof(PrsAddRommOutcomeKnownContent), ErrorMessageResourceName = "Validation_Message")]
         public RommOutcomeKnownType? RommOutcome { get; set; }
 
-        public bool IsValid => (PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified) && CommonHelper.IsRommAllowed(RommEndDate);
+        public bool IsValid => (PrsStatus == null || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified) 
+            && CommonHelper.IsRommAllowed(RommEndDate) && CommonHelper.IsValidGradeForPrsJourney(GradeCode, ComponentType);
 
         public override BackLinkModel BackLink => new BackLinkModel
         {

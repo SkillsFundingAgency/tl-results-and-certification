@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Contact {
@@ -88,38 +88,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Discussion forum.
-        /// </summary>
-        public static string Heading_Discussion_Forum {
-            get {
-                return ResourceManager.GetString("Heading_Discussion_Forum", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Support with delivering T Levels discussion forum.
-        /// </summary>
-        public static string Link_Text_Discussion_Forum {
-            get {
-                return ResourceManager.GetString("Link_Text_Discussion_Forum", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to email the Manage T Level results team.
         /// </summary>
         public static string Link_Text_Email_Tlevel_Team {
             get {
                 return ResourceManager.GetString("Link_Text_Email_Tlevel_Team", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to https://support.tlevels.gov.uk/hc/en-gb/community/posts.
-        /// </summary>
-        public static string Link_Url_Discussion_Forum {
-            get {
-                return ResourceManager.GetString("Link_Url_Discussion_Forum", resourceCulture);
             }
         }
         
@@ -138,24 +111,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         public static string Para_Contactus {
             get {
                 return ResourceManager.GetString("Para_Contactus", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You can use the .
-        /// </summary>
-        public static string Para_Discussion_Forum_Text1 {
-            get {
-                return ResourceManager.GetString("Para_Discussion_Forum_Text1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  to get general help..
-        /// </summary>
-        public static string Para_Discussion_Forum_Text2 {
-            get {
-                return ResourceManager.GetString("Para_Discussion_Forum_Text2", resourceCulture);
             }
         }
         

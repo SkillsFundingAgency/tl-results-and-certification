@@ -78,6 +78,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
             return series;
         }
 
+        public static bool IsValidGradeForPrsJourney(string gradeCode, ComponentType componentType)
+        {
+            return componentType == ComponentType.Core && !gradeCode.Equals(Constants.PathwayComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase) ||
+                   componentType == ComponentType.Specialism && !gradeCode.Equals(Constants.SpecialismComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        public static bool IsValidGradeForChangeResult(string gradeCode, ComponentType componentType)
+        {
+            return !string.IsNullOrWhiteSpace(gradeCode) &&
+                   (componentType == ComponentType.Core && gradeCode.Equals(Constants.PathwayComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase) ||
+                    componentType == ComponentType.Specialism && gradeCode.Equals(Constants.SpecialismComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase));
+        }
+
         private static string FormatPrsStatusDisplayHtml(string tagClassName, string statusText) => string.Format(PrsStatusContent.PrsStatus_Display_Html, tagClassName, statusText);
 
         private static int GetStartYearOffset(int academicYear, int tlevelStartYear, ComponentType componentType)

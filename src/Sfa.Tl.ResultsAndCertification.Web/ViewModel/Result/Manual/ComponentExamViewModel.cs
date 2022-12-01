@@ -12,7 +12,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public int AssessmentId { get; set; }
         public string AssessmentSeries { get; set; }
         public string Grade { get; set; }
-        public string PrsDisplayText { get { return CommonHelper.GetPrsStatusDisplayText(PrsStatus, RommEndDate, AppealEndDate); } }
+        public string GradeCode { get; set; }
+        public string PrsDisplayText { get { return CommonHelper.IsValidGradeForChangeResult(GradeCode, ComponentType) ? string.Empty : CommonHelper.GetPrsStatusDisplayText(PrsStatus, RommEndDate, AppealEndDate); } }
         public string LastUpdated { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime ResultEndDate { get; set; }
@@ -24,7 +25,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public int ProfileId { get; set; }
         public ComponentType ComponentType { get; set; }
 
-        public bool IsResultChangeAllowed => !string.IsNullOrEmpty(Grade) && DateTime.Today <= ResultEndDate;
+        public bool IsResultChangeAllowed => (PrsStatus.HasValue == false || PrsStatus == ResultsAndCertification.Common.Enum.PrsStatus.NotSpecified) && 
+                                             ((!string.IsNullOrEmpty(GradeCode) && CommonHelper.IsValidGradeForChangeResult(GradeCode, ComponentType)) ||
+                                             (!string.IsNullOrEmpty(Grade) && DateTime.Today <= ResultEndDate));
 
         public string HiddenActionText { get { return ComponentType == ComponentType.Core ? ResultDetailsContent.Hidden_Text_Core : ResultDetailsContent.Hidden_Text_Specialism; } }
 

@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 CoreComponentDisplayName = "Design, Surveying and Planning (123456)",
                 PrsCoreComponentExams = new List<PrsComponentExamViewModel>
                 {
-                    new PrsComponentExamViewModel { AssessmentSeries = "Autumn 2021", Grade = "B", PrsStatus = PrsStatus.Final, LastUpdated = "5 June 2021", UpdatedBy = "User 2", RommEndDate = DateTime.Today.AddDays(-1), AppealEndDate = DateTime.Today.AddDays(10), AssessmentId = 1 },
+                    new PrsComponentExamViewModel { AssessmentSeries = "Autumn 2021", Grade = "B", GradeCode = "PCG3", PrsStatus = PrsStatus.Final, ComponentType = ComponentType.Core, LastUpdated = "5 June 2021", UpdatedBy = "User 2", RommEndDate = DateTime.Today.AddDays(-1), AppealEndDate = DateTime.Today.AddDays(10), AssessmentId = 1 },
                 },
 
                 // Specialisms
@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                         SpecialismComponentDisplayName = "Plumbing (456789)",
                         SpecialismComponentExams = new List<PrsComponentExamViewModel>
                         {
-                            new PrsComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "Merit", PrsStatus = null, LastUpdated = "6 June 2022", UpdatedBy = "User 1", RommEndDate = DateTime.Today.AddDays(-1), AppealEndDate = DateTime.Today.AddDays(-10), AssessmentId = 7 }
+                            new PrsComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "Merit", GradeCode = "SCG2", PrsStatus = null, ComponentType = ComponentType.Specialism, LastUpdated = "6 June 2022", UpdatedBy = "User 1", RommEndDate = DateTime.Today.AddDays(-1), AppealEndDate = DateTime.Today.AddDays(-10), AssessmentId = 7 }
                         }
                     },
 
@@ -55,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                         SpecialismComponentDisplayName = "Heating (123658)",
                         SpecialismComponentExams = new List<PrsComponentExamViewModel>
                         {
-                            new PrsComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "Merit", PrsStatus = null, LastUpdated = "6 June 2022", UpdatedBy = "User 1", RommEndDate = DateTime.Today.AddDays(-1), AppealEndDate = DateTime.Today.AddDays(-10), AssessmentId = 9 }
+                            new PrsComponentExamViewModel { AssessmentSeries = "Summer 2022", Grade = "Merit", GradeCode = "SCG2", PrsStatus = null, ComponentType = ComponentType.Specialism, LastUpdated = "6 June 2022", UpdatedBy = "User 1", RommEndDate = DateTime.Today.AddDays(-1), AppealEndDate = DateTime.Today.AddDays(-10), AssessmentId = 9 }
                         }
                     }
                 }

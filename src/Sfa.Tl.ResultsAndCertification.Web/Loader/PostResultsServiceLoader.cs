@@ -2,11 +2,13 @@
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -65,8 +67,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             if (typeof(T) == typeof(PrsRommGradeChangeViewModel) || typeof(T) == typeof(PrsAppealGradeChangeViewModel))
             {
-                var grades = await _internalApiClient.GetLookupDataAsync(componentType == ComponentType.Core ? LookupCategory.PathwayComponentGrade : LookupCategory.SpecialismComponentGrade);
-                return _mapper.Map<T>(response, opt => { opt.Items["assessment"] = assessment; opt.Items["specialism"] = specialism; opt.Items["grades"] = grades; });
+                var grades = await GetGradesApplicable(componentType);
+                return _mapper.Map<T>(response, opt =>
+                {
+                    opt.Items["assessment"] = assessment;
+                    opt.Items["specialism"] = specialism;
+                    opt.Items["grades"] = grades;
+                });
             }
             else
             {
@@ -141,6 +148,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public T TransformLearnerDetailsTo<T>(FindPrsLearnerRecord prsLearnerRecord)
         {
             return _mapper.Map<T>(prsLearnerRecord);
+        }
+
+        private async Task<IList<LookupData>> GetGradesApplicable(ComponentType componentType)
+        {
+            var grades = await _internalApiClient.GetLookupDataAsync(componentType == ComponentType.Core ? LookupCategory.PathwayComponentGrade : LookupCategory.SpecialismComponentGrade);
+            
+            return grades.Where(x => (componentType == ComponentType.Core && !x.Code.Equals(Constants.PathwayComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase)) ||
+                                     (componentType == ComponentType.Specialism && !x.Code.Equals(Constants.SpecialismComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase))).ToList();
         }
     }
 }

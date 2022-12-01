@@ -31,7 +31,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 CoreLarId = "1234567",
                 ComponentType = ComponentType,
                 RommOutcome = RommOutcomeKnownType.No,
-                RommEndDate = DateTime.Today.AddDays(7)
+                RommEndDate = DateTime.Today.AddDays(7),
+                Grade = "A",
+                GradeCode = "PCG2",
             };
             Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeKnownViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.AssessmentId, ComponentType)
                 .Returns(ViewModel);

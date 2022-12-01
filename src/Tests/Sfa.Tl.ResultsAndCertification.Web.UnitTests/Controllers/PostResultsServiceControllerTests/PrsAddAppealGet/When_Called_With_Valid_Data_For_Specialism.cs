@@ -33,7 +33,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 SpecialismName = "Plumbing",
                 SpecialismLarId = "Z0001234",
                 ExamPeriod = "Summer 2021",
-                Grade = "A",
+                Grade = "Merit",
+                GradeCode = "SCG2",
                 PrsStatus = PrsStatus.Reviewed,
                 ComponentType = ComponentType,
                 AppealEndDate = DateTime.UtcNow.AddDays(7)

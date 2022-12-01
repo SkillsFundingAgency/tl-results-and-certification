@@ -121,6 +121,39 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
+            },
+            new Domain.Models.TqRegistrationProfile
+            {
+                UniqueLearnerNumber = 1111111117,
+                Firstname = "First 7",
+                Lastname = "Last 7",
+                DateofBirth = "10/10/1981".ParseStringToDateTimeWithFormat(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new Domain.Models.TqRegistrationProfile
+            {
+                UniqueLearnerNumber = 1111111118,
+                Firstname = "First 8",
+                Lastname = "Last 8",
+                DateofBirth = "01/05/1980".ParseStringToDateTimeWithFormat(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new Domain.Models.TqRegistrationProfile
+            {
+                UniqueLearnerNumber = 1111111119,
+                Firstname = "First 9",
+                Lastname = "Last 9",
+                DateofBirth = "01/07/1980".ParseStringToDateTimeWithFormat(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
             }
         };
 
@@ -175,6 +208,17 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 UniqueLearnerNumber = 1111111115,
                 Firstname = "First 5",
                 Lastname = "Last 5",
+                DateofBirth = "03/07/1982".ParseStringToDateTimeWithFormat(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new Domain.Models.TqRegistrationProfile
+            {
+                UniqueLearnerNumber = 1111111116,
+                Firstname = "First 6",
+                Lastname = "Last 6",
                 DateofBirth = "03/07/1982".ParseStringToDateTimeWithFormat(),
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,

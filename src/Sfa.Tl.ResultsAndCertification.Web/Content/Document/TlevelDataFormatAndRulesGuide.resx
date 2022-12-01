@@ -121,16 +121,16 @@
     <value>Download assessment entries data format and rules ({0}, {1}KB)</value>
   </data>
   <data name="Assessment_Entries_FileSize_Text" xml:space="preserve">
-    <value>286</value>
+    <value>287</value>
   </data>
   <data name="Assessment_Entries_Heading_Text" xml:space="preserve">
     <value>Assessment entries</value>
   </data>
   <data name="Assessment_Entries_PublishedDate_Text" xml:space="preserve">
-    <value>19 October 2022</value>
+    <value>2 December 2022</value>
   </data>
   <data name="Assessment_Entries_Version_Text" xml:space="preserve">
-    <value>Version 1.6</value>
+    <value>Version 1.7</value>
   </data>
   <data name="Choose_The_Right_Core_And_Specialism_Codes_Text" xml:space="preserve">
     <value>choose the right core and specialism codes</value>
@@ -163,16 +163,16 @@
     <value>Download registrations data format and rules ({0}, {1}KB)</value>
   </data>
   <data name="Results_FileSize_Text" xml:space="preserve">
-    <value>276</value>
+    <value>279</value>
   </data>
   <data name="Results_Heading_Text" xml:space="preserve">
     <value>Results</value>
   </data>
   <data name="Results_PublishedDate_Text" xml:space="preserve">
-    <value>19 October 2022</value>
+    <value>2 December 2022</value>
   </data>
   <data name="Results_Version_Text" xml:space="preserve">
-    <value>Version 1.4</value>
+    <value>Version 1.5</value>
   </data>
   <data name="Result_DataFormat_And_Rules" xml:space="preserve">
     <value>Download results data format and rules ({0}, {1}KB)</value>

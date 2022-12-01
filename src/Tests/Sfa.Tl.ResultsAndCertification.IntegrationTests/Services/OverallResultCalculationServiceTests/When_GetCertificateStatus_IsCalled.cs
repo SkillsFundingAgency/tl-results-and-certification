@@ -42,6 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             {
                 return new[]
                 {
+                    new object[] { CalculationStatus.Qpending, null },
                     new object[] { CalculationStatus.Unclassified, null },
                     new object[] { CalculationStatus.NoResult, null },
                     new object[] { CalculationStatus.PartiallyCompletedRommRaised, null },
