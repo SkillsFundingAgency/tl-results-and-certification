@@ -32,6 +32,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 CoreLarId = "12121212",
                 ExamPeriod = "Summer 2021",
                 Grade = "A",
+                GradeCode = "PCG2",
+                ComponentType = ComponentType,
                 PrsStatus = PrsStatus.BeingAppealed,
             };
 

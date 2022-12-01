@@ -31,7 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 SpecialismName = "Childcare",
                 SpecialismLarId = "12121212",
                 ExamPeriod = "Summer 2021",
-                Grade = "A",
+                Grade = "Distinction",
+                GradeCode = "SCG1",
                 PrsStatus = null,
                 RommEndDate = DateTime.UtcNow.AddDays(7),
                 ComponentType = ComponentType

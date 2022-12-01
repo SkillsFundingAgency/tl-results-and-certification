@@ -26,7 +26,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 RommEndDate = DateTime.UtcNow.AddDays(10),
                 RommOutcome = RommOutcomeType.GradeNotChanged,
                 PrsStatus = PrsStatus.UnderReview,
-                ComponentType = ComponentType
+                ComponentType = ComponentType,
+                Grade = "A",
+                GradeCode = "PCG2"
             };
 
             Loader.GetPrsLearnerDetailsAsync<PrsAddRommOutcomeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(ViewModel);

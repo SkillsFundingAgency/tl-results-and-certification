@@ -9,6 +9,7 @@
         PartiallyCompletedRommRaised = 5,
         PartiallyCompletedAppealRaised = 6,
         Unclassified = 7,
-        NoResult = 8
+        NoResult = 8,
+        Qpending = 9
     }
 }
