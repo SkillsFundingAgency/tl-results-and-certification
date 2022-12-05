@@ -22,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             {
                 ProfileId = ProfileId,
                 AssessmentId = AssessmentId,
+                GradeCode = "SCG2",
                 AppealOutcome = AppealOutcomeType.GradeNotChanged,
                 PrsStatus = PrsStatus.BeingAppealed,
                 ComponentType = ComponentType

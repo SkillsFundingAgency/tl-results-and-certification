@@ -68,6 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                     {
                                         Id = 1,
                                         Grade = "Merit",
+                                        GradeCode = "SCG2",
                                         PrsStatus = PrsStatus.Reviewed,
                                         LastUpdatedBy = "System",
                                         LastUpdatedOn = DateTime.UtcNow
@@ -119,6 +120,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.SpecialismDisplayName.Should().Be($"{expectedSpecialism.Name} ({expectedSpecialism.LarId})");
             ActualResult.ExamPeriod.Should().Be(expectedAssessment.SeriesName);
             ActualResult.Grade.Should().Be(expectedAssessment.Result.Grade);
+            ActualResult.GradeCode.Should().Be(expectedAssessment.Result.GradeCode);
         }
     }
 }

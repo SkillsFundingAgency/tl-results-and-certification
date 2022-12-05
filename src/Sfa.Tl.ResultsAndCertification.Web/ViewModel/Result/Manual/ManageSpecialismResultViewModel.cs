@@ -31,6 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public string SpecialismDisplayName { get; set; }
 
         public int? ResultId { get; set; }
+        public string GradeCode { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ManageSpecialismResultContent), ErrorMessageResourceName = "Validation_Select_Grade_Required_Message")]
         public string SelectedGradeCode { get; set; }
@@ -38,7 +39,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public PrsStatus? PrsStatus { get; set; }
 
         public List<LookupViewModel> Grades { get; set; }
-        public bool IsValid => (PrsStatus.HasValue == false || PrsStatus == EnumPrsStatus.NotSpecified) && ResultEndDate.HasValue && DateTime.Today <= ResultEndDate;
+        public bool IsValid => (PrsStatus.HasValue == false || PrsStatus == EnumPrsStatus.NotSpecified) &&
+                               (CommonHelper.IsValidGradeForChangeResult(GradeCode, ComponentType.Specialism) || ResultEndDate.HasValue && DateTime.Today <= ResultEndDate);
+        
         public string SuccessBannerMessage { get { return string.Format(ResultId.HasValue ? ManageSpecialismResultContent.Banner_Message_For_Result_Changed : ManageSpecialismResultContent.Banner_Message_For_Result_Added, AssessmentSeries, SpecialismName); } }
         
         public override BackLinkModel BackLink => new()

@@ -122,6 +122,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.CoreDisplayName.Should().Be($"{_expectedApiResult.Pathway.Name} ({_expectedApiResult.Pathway.LarId})");
             ActualResult.ExamPeriod.Should().Be(expectedCoreAssessment.SeriesName);
             ActualResult.Grade.Should().Be(expectedCoreAssessment.Result.Grade);
+            ActualResult.GradeCode.Should().Be(expectedCoreAssessment.Result.GradeCode);
 
             // Assert Gardes
             ActualResult.Grades.Should().HaveCount(_apiGrades.Count - 1);

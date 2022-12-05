@@ -34,7 +34,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 SpecialismName = "Heating Engineering",
                 SpecialismLarId = "Z1234567",
                 Grade = "A",
-                PrsStatus = PrsStatus.BeingAppealed,
+                GradeCode = "PCG2",
+                ComponentType = ComponentType.Core,
+                PrsStatus = PrsStatus.BeingAppealed
             };
 
             Loader.GetPrsLearnerDetailsAsync<PrsAddAppealOutcomeViewModel>(AoUkprn, ProfileId, AssessmentId, ComponentType).Returns(_addAppealOutcomeViewModel);
