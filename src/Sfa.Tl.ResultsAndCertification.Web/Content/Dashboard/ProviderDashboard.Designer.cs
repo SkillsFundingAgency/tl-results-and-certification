@@ -187,7 +187,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add or change your learners&apos; English and maths achievements and industry placement status, and order replacement documents..
+        ///   Looks up a localized string similar to Add or change your learners&apos; English and maths achievements, industry placement status and order replacement documents..
         /// </summary>
         public static string Manage_Learner_TLevel_Records_Description_Text {
             get {
