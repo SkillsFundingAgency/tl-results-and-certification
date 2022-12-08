@@ -115,6 +115,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No, they will not complete it.
+        /// </summary>
+        public static string No_Will_Not_Complete_Option_Text {
+            get {
+                return ResourceManager.GetString("No_Will_Not_Complete_Option_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Industry placement completion - Manage learner.
         /// </summary>
         public static string Page_Title {

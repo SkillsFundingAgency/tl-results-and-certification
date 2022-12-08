@@ -51,6 +51,12 @@
                                 @IpCompletion.No_Still_To_Be_Completed_Option_Text
                             </label>
                         </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="industryplacementstatus-will-not-complete" asp-for="IndustryPlacementStatus" type="radio" value="@IpStatus.IndustryPlacementStatus.WillNotComplete">
+                            <label class="govuk-label govuk-radios__label" for="industryplacementstatus-will-not-complete">
+                                @IpCompletion.No_Will_Not_Complete_Option_Text
+                            </label>
+                        </div>
                     </div>
                 </fieldset>
             </div>

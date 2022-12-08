@@ -135,6 +135,9 @@
   <data name="No_Still_To_Be_Completed_Option_Text" xml:space="preserve">
     <value>No, still to be completed</value>
   </data>
+  <data name="No_Will_Not_Complete_Option_Text" xml:space="preserve">
+    <value>No, they will not complete it</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Industry placement completion - Manage learner</value>
   </data>
