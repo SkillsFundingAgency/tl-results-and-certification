@@ -401,5 +401,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
                 return ResourceManager.GetString("You_Must_Give_Us_Text", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to your organisation&apos;s postal address.
+        /// </summary>
+        public static string Your_Organisations_Postal_Address {
+            get {
+                return ResourceManager.GetString("Your_Organisations_Postal_Address", resourceCulture);
+            }
+        }
     }
 }
