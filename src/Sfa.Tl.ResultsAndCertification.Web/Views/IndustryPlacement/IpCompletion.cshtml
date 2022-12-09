@@ -43,7 +43,20 @@
                             <label class="govuk-label govuk-radios__label" for="industryplacementstatus-cwspc">
                                 @IpCompletion.Yes_Completed_With_Special_Consideration_Option_Text
                             </label>
-                            <div class="govuk-hint govuk-radios__hint">@IpCompletion.We_Will_Ask_You_To_Declare_Hint_Text</div>
+                            <details class="govuk-details govuk-!-margin-left-4" data-module="govuk-details">
+                                <summary class="govuk-details__summary">
+                                    <span class="govuk-details__summary-text">
+                                        @IpCompletion.Summary_Text_What_Is_Special_Consideration
+                                    </span>
+                                </summary>
+                                <div class="govuk-details__text">
+                                    @*TODO: move to res. Content validation is required which is in different story.*@
+                                    <p class="govuk-!-padding-right-2">Learners may experience difficult circumstances during their placement, which mean they are unable to complete the minimum placement hours before the end of the second year.</p>
+                                    <p class="govuk-!-padding-right-2">You have the discretion to apply special consideration in some exceptional circumstances where students have demonstrated sufficient progress towards their learning goals but have not completed the minimum placement hours.</p>
+                                    <p class="govuk-!-padding-right-2">You do not need to upload any evidence, but you should hold supporting documentation in your own files.</p>
+                                    <p class="govuk-!-padding-right-2">More about <a class="govuk-link govuk-link--no-visited-state" target="_blank" href="https://www.gov.uk/government/publications/t-level-industry-placements-delivery-guidance/t-level-industry-placements-delivery-guidance#section5">industry placement completion exceptions (opens in a new tab).</a></p>
+                                </div>
+                            </details>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="industryplacementstatus-notcompleted" asp-for="IndustryPlacementStatus" type="radio" value="@IpStatus.IndustryPlacementStatus.NotCompleted">
@@ -68,5 +81,4 @@
             <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@IpCompletion.Continue_Button_Text</button>
         </form>
     </div>
-    <partial name="Partials/_ipGuidanceNavigation.cshtml" />
 </div>
