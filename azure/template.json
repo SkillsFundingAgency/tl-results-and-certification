@@ -132,7 +132,7 @@
         }
     },
     "variables": {
-        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/funding-platform-building-blocks/master-tlevels/templates/",
+        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/master/ArmTemplates/",
         "resourceNamePrefix": "[toLower(concat(parameters('resourceIdentifier') , parameters('resourceEnvironmentName'), '-', parameters('serviceName')))]",
         "storageAccountName": "[toLower(concat(parameters('resourceIdentifier'), parameters('resourceEnvironmentName'), parameters('serviceName'), 'str'))]",
         "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-asp')]",
