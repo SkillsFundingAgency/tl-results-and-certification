@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Button_Submit" xml:space="preserve">
-    <value>Submit</value>
+    <value>Save and continue</value>
   </data>
   <data name="Declaration_I_Confirm_Supporting_Docs_Held_On_Records" xml:space="preserve">
     <value>I confirm that {0} has completed their T Level industry placement and that all relevant supporting documentation is held on record.</value>
@@ -159,9 +159,6 @@
   <data name="Hidden_Text_Tf_TempFlex_Used" xml:space="preserve">
     <value> whether temporary flexibilities were used</value>
   </data>
-  <data name="Link_Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
   <data name="Link_Change" xml:space="preserve">
     <value>Change</value>
   </data>
@@ -172,7 +169,7 @@
     <value>&lt;p&gt;{0}&lt;/p&gt;</value>
   </data>
   <data name="Status_Completed" xml:space="preserve">
-    <value>completed</value>
+    <value>Placement completed</value>
   </data>
   <data name="Status_Completed_With_Special_Consideration" xml:space="preserve">
     <value>completed with special consideration</value>

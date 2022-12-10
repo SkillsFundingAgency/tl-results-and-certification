@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
@@ -57,51 +58,58 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
 
         public void SetBackLink(IndustryPlacementViewModel cacheModel, IpTempFlexNavigation navigation)
         {
-            if (navigation == null)
-            {
-                // Then Back link is one of the IpModel page. 
-                if (cacheModel?.IpModelViewModel?.IpModelUsed?.IsIpModelUsed == true)
-                {
-                    // Pattern future.
-                    if (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed.IsMultiEmployerModelUsed == true)
-                        BackLink = new BackLinkModel { RouteName = RouteConstants.IpMultiEmployerOther };
-                    else
-                        BackLink = new BackLinkModel { RouteName = RouteConstants.IpMultiEmployerSelect };
-                }
-                else
-                    BackLink = new BackLinkModel { RouteName = RouteConstants.IpModelUsed };
-            }
+            if (cacheModel?.IpCompletion?.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
+                BackLink = new BackLinkModel { RouteName = RouteConstants.IpSpecialConsiderationReasons };
             else
-            {
-                // Then Back link is to one of the TempFlex page
-                if (navigation.AskTempFlexibility && cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == false)
-                    BackLink = new BackLinkModel { RouteName = RouteConstants.IpTempFlexibilityUsed };
-                else
-                {
-                    if (navigation.AskTempFlexibility && !navigation.AskBlendedPlacement) // Pattern 2
-                        BackLink = new BackLinkModel { RouteName = RouteConstants.IpGrantedTempFlexibility };
-                    else
-                    {
-                        if (navigation.AskBlendedPlacement && cacheModel?.TempFlexibility?.IpBlendedPlacementUsed != null &&
-                            cacheModel?.TempFlexibility?.IpEmployerLedUsed == null && cacheModel?.TempFlexibility?.IpGrantedTempFlexibility == null)
-                            BackLink = new BackLinkModel { RouteName = RouteConstants.IpBlendedPlacementUsed }; // Pattern 3
-                        else
-                        {
-                            if (navigation.AskBlendedPlacement && cacheModel?.TempFlexibility?.IpBlendedPlacementUsed != null &&
-                                cacheModel?.TempFlexibility?.IpEmployerLedUsed != null && cacheModel?.TempFlexibility?.IpGrantedTempFlexibility == null)
-                                BackLink = new BackLinkModel { RouteName = RouteConstants.IpEmployerLedUsed }; // Pattern 1
-                            else
-                            {
-                                if (navigation.AskBlendedPlacement && cacheModel?.TempFlexibility?.IpBlendedPlacementUsed != null &&
-                                    cacheModel?.TempFlexibility?.IpEmployerLedUsed == null && cacheModel?.TempFlexibility?.IpGrantedTempFlexibility != null)
-                                    BackLink = new BackLinkModel { RouteName = RouteConstants.IpGrantedTempFlexibility }; // Pattern 1
-                                else
-                                    BackLink = new BackLinkModel { RouteName = RouteConstants.PageNotFound };
-                            }
-                        }
-                    }
-                }
-            }
+                BackLink = new BackLinkModel { RouteName = RouteConstants.IpCompletion, RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } };
+
+            // TODO: Delete
+
+            //if (navigation == null)
+            //{
+            //    // Then Back link is one of the IpModel page. 
+            //    if (cacheModel?.IpModelViewModel?.IpModelUsed?.IsIpModelUsed == true)
+            //    {
+            //        // Pattern future.
+            //        if (cacheModel?.IpModelViewModel?.IpMultiEmployerUsed.IsMultiEmployerModelUsed == true)
+            //            BackLink = new BackLinkModel { RouteName = RouteConstants.IpMultiEmployerOther };
+            //        else
+            //            BackLink = new BackLinkModel { RouteName = RouteConstants.IpMultiEmployerSelect };
+            //    }
+            //    else
+            //        BackLink = new BackLinkModel { RouteName = RouteConstants.IpModelUsed };
+            //}
+            //else
+            //{
+            //    // Then Back link is to one of the TempFlex page
+            //    if (navigation.AskTempFlexibility && cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == false)
+            //        BackLink = new BackLinkModel { RouteName = RouteConstants.IpTempFlexibilityUsed };
+            //    else
+            //    {
+            //        if (navigation.AskTempFlexibility && !navigation.AskBlendedPlacement) // Pattern 2
+            //            BackLink = new BackLinkModel { RouteName = RouteConstants.IpGrantedTempFlexibility };
+            //        else
+            //        {
+            //            if (navigation.AskBlendedPlacement && cacheModel?.TempFlexibility?.IpBlendedPlacementUsed != null &&
+            //                cacheModel?.TempFlexibility?.IpEmployerLedUsed == null && cacheModel?.TempFlexibility?.IpGrantedTempFlexibility == null)
+            //                BackLink = new BackLinkModel { RouteName = RouteConstants.IpBlendedPlacementUsed }; // Pattern 3
+            //            else
+            //            {
+            //                if (navigation.AskBlendedPlacement && cacheModel?.TempFlexibility?.IpBlendedPlacementUsed != null &&
+            //                    cacheModel?.TempFlexibility?.IpEmployerLedUsed != null && cacheModel?.TempFlexibility?.IpGrantedTempFlexibility == null)
+            //                    BackLink = new BackLinkModel { RouteName = RouteConstants.IpEmployerLedUsed }; // Pattern 1
+            //                else
+            //                {
+            //                    if (navigation.AskBlendedPlacement && cacheModel?.TempFlexibility?.IpBlendedPlacementUsed != null &&
+            //                        cacheModel?.TempFlexibility?.IpEmployerLedUsed == null && cacheModel?.TempFlexibility?.IpGrantedTempFlexibility != null)
+            //                        BackLink = new BackLinkModel { RouteName = RouteConstants.IpGrantedTempFlexibility }; // Pattern 1
+            //                    else
+            //                        BackLink = new BackLinkModel { RouteName = RouteConstants.PageNotFound };
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
         }
     }
 }

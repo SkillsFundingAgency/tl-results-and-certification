@@ -78,13 +78,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.ProcessIndustryPlacementDetailsAsync(request);
         }
 
-        public (List<SummaryItemModel>, bool) GetIpSummaryDetailsListAsync(IndustryPlacementViewModel cacheModel, IpTempFlexNavigation ipTempFlexNavigation)
+        public (List<SummaryItemModel>, bool) GetIpSummaryDetailsListAsync(IndustryPlacementViewModel cacheModel, IpTempFlexNavigation ipTempFlexNavigation1)
         {
             var detailsList = new List<SummaryItemModel>();
 
-            // Validate Ip status
+            //Validate Ip status
             if (cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.Completed &&
-                cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration)
+                cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration &&
+                cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.NotCompleted &&
+                cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.WillNotComplete)
                 return (null, false);
 
             var routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, cacheModel.IpCompletion.ProfileId.ToString() }, { Constants.IsChangeMode, "true" } };
@@ -95,20 +97,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             // SpecialConsideration Rows
             if (cacheModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
             {
-                var isScAdded = AddSummaryItemForSpecialConsideration(cacheModel, detailsList);
+                var isScAdded = AddSummaryItemForSpecialConsideration(cacheModel, detailsList); // TODO: next story?
                 if (!isScAdded)
                     return (null, false);
             }
 
-            // IPModel Rows 
-            var isIpModelAdded = AddSummaryItemForIpModel(cacheModel, detailsList);
-            if (!isIpModelAdded)
-                return (null, false);
+            //// IPModel Rows 
+            //var isIpModelAdded = AddSummaryItemForIpModel(cacheModel, detailsList);
+            //if (!isIpModelAdded)
+            //    return (null, false);
 
-            // Temp Flexibilities
-            var isTempFlexAdded = AddSummaryItemForTempFlexbilities(cacheModel, detailsList, ipTempFlexNavigation);
-            if (!isTempFlexAdded)
-                return (null, false);
+            //// Temp Flexibilities
+            //var isTempFlexAdded = AddSummaryItemForTempFlexbilities(cacheModel, detailsList, ipTempFlexNavigation);
+            //if (!isTempFlexAdded)
+            //    return (null, false);
 
             return (detailsList, true);
         }
@@ -270,13 +272,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         private static string GetIpStatusValue(IndustryPlacementStatus? industryPlacementStatus)
         {
-            if (industryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
-                return CheckAndSubmitContent.Status_Completed_With_Special_Consideration;
+            if (!industryPlacementStatus.HasValue)
+                return string.Empty;
 
-            if (industryPlacementStatus == IndustryPlacementStatus.Completed)
-                return CheckAndSubmitContent.Status_Completed;
+            switch (industryPlacementStatus.Value)
+            {
+                case IndustryPlacementStatus.Completed:
+                    return CheckAndSubmitContent.Status_Completed;
 
-            return string.Empty;
+                case IndustryPlacementStatus.CompletedWithSpecialConsideration:
+                    return CheckAndSubmitContent.Status_Completed_With_Special_Consideration;
+
+                case IndustryPlacementStatus.NotCompleted:
+                case IndustryPlacementStatus.WillNotComplete:
+                default:
+                    return string.Empty; // TODO: Content for all above.
+            }
         }
     }
 }
