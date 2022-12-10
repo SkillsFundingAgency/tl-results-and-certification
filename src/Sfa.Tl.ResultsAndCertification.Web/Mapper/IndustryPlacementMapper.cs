@@ -44,9 +44,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<IpCompletionViewModel, IpTempFlexibilityUsedViewModel>()
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));
 
-            CreateMap<IpCompletionViewModel, IpBlendedPlacementUsedViewModel>()
-               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));
-
             CreateMap<IList<IpLookupData>, IpMultiEmployerOtherViewModel>()
                .ForMember(d => d.LearnerName, opts => opts.MapFrom((src, dest, destMember, context) => (string)context.Items["learnerName"]))
                .ForMember(d => d.OtherIpPlacementModels, opts => opts.MapFrom(s => s));
@@ -66,12 +63,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<IpCompletionViewModel, SpecialConsiderationReasonsViewModel>()
                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));
-
-            CreateMap<IpCompletionViewModel, IpEmployerLedUsedViewModel>()
-              .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));
-
-            CreateMap<IpCompletionViewModel, IpGrantedTempFlexibilityViewModel>()
-              .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName));
 
             CreateMap<IpCompletionViewModel, IndustryPlacementRequest>()
                 .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))
@@ -97,13 +88,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
               .ForMember(d => d.MultipleEmployerModelsUsed, opts => opts.MapFrom(s => s.IpModelViewModel.IpModelUsed.IsIpModelUsed.Value ? s.IpModelViewModel.IpMultiEmployerUsed.IsMultiEmployerModelUsed.Value : (bool?)null))
               .ForMember(d => d.OtherIndustryPlacementModels, opts => opts.MapFrom(s => (s.IpModelViewModel.IpModelUsed.IsIpModelUsed.Value && s.IpModelViewModel.IpMultiEmployerUsed.IsMultiEmployerModelUsed.Value) ? s.IpModelViewModel.IpMultiEmployerOther.OtherIpPlacementModels.Where(r => r.IsSelected).Select(r => r.Id).ToList() : null))
               .ForMember(d => d.IndustryPlacementModels, opts => opts.MapFrom(s => (s.IpModelViewModel.IpModelUsed.IsIpModelUsed.Value && s.IpModelViewModel.IpMultiEmployerUsed.IsMultiEmployerModelUsed.Value == false) ? s.IpModelViewModel.IpMultiEmployerSelect.PlacementModels.Where(r => r.IsSelected).Select(r => r.Id).ToList() : null))
-              .ForMember(d => d.TemporaryFlexibilitiesUsed, opts => opts.MapFrom(s => (s.TempFlexibility != null && s.TempFlexibility.IpTempFlexibilityUsed.IsTempFlexibilityUsed != null) ? s.TempFlexibility.IpTempFlexibilityUsed.IsTempFlexibilityUsed.Value : (bool?)null))
-              .ForMember(d => d.BlendedTemporaryFlexibilityUsed, opts => opts.MapFrom(s => (s.TempFlexibility != null && s.TempFlexibility.IpBlendedPlacementUsed != null) ? s.TempFlexibility.IpBlendedPlacementUsed.IsBlendedPlacementUsed.Value : (bool?)null))
-              .ForMember(d => d.TemporaryFlexibilities, opts => opts.MapFrom(s => (s.TempFlexibility != null && s.TempFlexibility.IpEmployerLedUsed != null)
-                                                                                      ? s.TempFlexibility.IpEmployerLedUsed.TemporaryFlexibilities.Where(r => r.IsSelected).Select(r => r.Id).ToList()
-                                                                                      : (s.TempFlexibility != null && s.TempFlexibility.IpGrantedTempFlexibility != null)
-                                                                                      ? s.TempFlexibility.IpGrantedTempFlexibility.TemporaryFlexibilities.Where(r => r.IsSelected).Select(r => r.Id).ToList()
-                                                                                      : null));
+              .ForMember(d => d.TemporaryFlexibilitiesUsed, opts => opts.MapFrom(s => (s.TempFlexibility != null && s.TempFlexibility.IpTempFlexibilityUsed.IsTempFlexibilityUsed != null) ? s.TempFlexibility.IpTempFlexibilityUsed.IsTempFlexibilityUsed.Value : (bool?)null)
+              );
         }
     }
 }

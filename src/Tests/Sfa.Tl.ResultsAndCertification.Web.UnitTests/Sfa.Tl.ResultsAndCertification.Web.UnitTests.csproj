@@ -15,6 +15,7 @@
     <Compile Remove="Controllers\TrainingProviderControllerTests\AddLearnerRecordCheckAndSubmitGet\**" />
     <Compile Remove="Controllers\TrainingProviderControllerTests\AddLearnerRecordCheckAndSubmitPost\**" />
     <Compile Remove="Loader\IndustryPlacementLoaderTests\GetIpSummaryDetailsList\**" />
+    <Compile Remove="Loader\IndustryPlacementLoaderTests\ProcessIndustryPlacementDetails\**" />
     <Compile Remove="Loader\PostResultsServiceLoaderTests\AppealCoreGradeFinal\**" />
     <Compile Remove="Loader\ResultLoaderTests\GetResultNoAssessmentEntryViewModel\**" />
     <Compile Remove="Loader\TrainingProviderTests\AddLearnerRecord\**" />
@@ -26,6 +27,7 @@
     <EmbeddedResource Remove="Controllers\TrainingProviderControllerTests\AddLearnerRecordCheckAndSubmitGet\**" />
     <EmbeddedResource Remove="Controllers\TrainingProviderControllerTests\AddLearnerRecordCheckAndSubmitPost\**" />
     <EmbeddedResource Remove="Loader\IndustryPlacementLoaderTests\GetIpSummaryDetailsList\**" />
+    <EmbeddedResource Remove="Loader\IndustryPlacementLoaderTests\ProcessIndustryPlacementDetails\**" />
     <EmbeddedResource Remove="Loader\PostResultsServiceLoaderTests\AppealCoreGradeFinal\**" />
     <EmbeddedResource Remove="Loader\ResultLoaderTests\GetResultNoAssessmentEntryViewModel\**" />
     <EmbeddedResource Remove="Loader\TrainingProviderTests\AddLearnerRecord\**" />
@@ -37,6 +39,7 @@
     <None Remove="Controllers\TrainingProviderControllerTests\AddLearnerRecordCheckAndSubmitGet\**" />
     <None Remove="Controllers\TrainingProviderControllerTests\AddLearnerRecordCheckAndSubmitPost\**" />
     <None Remove="Loader\IndustryPlacementLoaderTests\GetIpSummaryDetailsList\**" />
+    <None Remove="Loader\IndustryPlacementLoaderTests\ProcessIndustryPlacementDetails\**" />
     <None Remove="Loader\PostResultsServiceLoaderTests\AppealCoreGradeFinal\**" />
     <None Remove="Loader\ResultLoaderTests\GetResultNoAssessmentEntryViewModel\**" />
     <None Remove="Loader\TrainingProviderTests\AddLearnerRecord\**" />

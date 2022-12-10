@@ -160,11 +160,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>IndustryPlacementBanner.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\IndustryPlacement\IpBlendedPlacementUsed.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>IpBlendedPlacementUsed.resx</DependentUpon>
-    </Compile>
     <Compile Update="Content\IndustryPlacement\IpCheckAndSubmit.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -174,16 +169,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>IpCompletion.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\IndustryPlacement\IpEmployerLedUsed.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>IpEmployerLedUsed.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\IndustryPlacement\IpGrantedTempFlexibility.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>IpGrantedTempFlexibility.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\IndustryPlacement\IpModelUsed.Designer.cs">
       <DependentUpon>IpModelUsed.resx</DependentUpon>
@@ -1099,10 +1084,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IndustryPlacementBanner.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\IndustryPlacement\IpBlendedPlacementUsed.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>IpBlendedPlacementUsed.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="Content\IndustryPlacement\IpCheckAndSubmit.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IpCheckAndSubmit.Designer.cs</LastGenOutput>
@@ -1110,14 +1091,6 @@
     <EmbeddedResource Update="Content\IndustryPlacement\IpCompletion.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IpCompletion.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\IndustryPlacement\IpEmployerLedUsed.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>IpEmployerLedUsed.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\IndustryPlacement\IpGrantedTempFlexibility.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>IpGrantedTempFlexibility.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\IndustryPlacement\IpModelUsed.resx">
       <LastGenOutput>IpModelUsed.Designer.cs</LastGenOutput>

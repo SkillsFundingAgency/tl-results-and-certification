@@ -7,4 +7,16 @@
         public IpEmployerLedUsedViewModel IpEmployerLedUsed { get; set; }
         public IpGrantedTempFlexibilityViewModel IpGrantedTempFlexibility { get; set; }
     }
+
+    public class IpGrantedTempFlexibilityViewModel
+    {
+    }
+
+    public class IpEmployerLedUsedViewModel
+    {
+    }
+
+    public class IpBlendedPlacementUsedViewModel
+    {
+    }
 }

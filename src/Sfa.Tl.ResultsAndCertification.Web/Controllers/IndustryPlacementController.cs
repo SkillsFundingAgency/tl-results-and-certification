@@ -494,9 +494,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 await _cacheService.SetAsync(CacheKey, cacheModel);
             }
 
-            if (!navigation.AskTempFlexibility && navigation.AskBlendedPlacement)
-                return RedirectToRoute(RouteConstants.IpBlendedPlacementUsed);
-
+           
             var viewModel = (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpTempFlexibilityUsedViewModel>(cacheModel?.IpCompletion);
 
             viewModel.IsChangeMode = (isChangeMode || (cacheModel.TempFlexibility?.IpTempFlexibilityUsed?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
@@ -529,7 +527,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                         return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
                     else
                     {
-                        if (IsValidToRedirectToCheckAndSubmit(cacheModel))
                             return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
                     }
                 }
@@ -550,246 +547,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
             }
 
-            return RedirectToRoute(RouteConstants.IpBlendedPlacementUsed);
-        }
-
-        [HttpGet]
-        [Route("industry-placement-temporary-flexibility-blended/{isChangeMode:bool?}", Name = RouteConstants.IpBlendedPlacementUsed)]
-        public async Task<IActionResult> IpBlendedPlacementUsedAsync(bool isChangeMode = false)
-        {
-            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
-
-            if (cacheModel?.IpModelViewModel?.IpModelUsed == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            var navigation = await _industryPlacementLoader.GetTempFlexNavigationAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear);
-            if (navigation == null)
-                return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
-
-            if (!navigation.AskBlendedPlacement)
-                return RedirectToRoute(RouteConstants.IpGrantedTempFlexibility);
-
-            var viewModel = (cacheModel?.TempFlexibility?.IpBlendedPlacementUsed) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpBlendedPlacementUsedViewModel>(cacheModel?.IpCompletion);
-            viewModel.IsChangeMode = (isChangeMode || (cacheModel.TempFlexibility?.IpBlendedPlacementUsed?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
-            viewModel.SetBackLink(cacheModel.IpModelViewModel, navigation.AskTempFlexibility);
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("industry-placement-temporary-flexibility-blended/{isChangeMode:bool?}", Name = RouteConstants.SubmitIpBlendedPlacementUsed)]
-        public async Task<IActionResult> IpBlendedPlacementUsedAsync(IpBlendedPlacementUsedViewModel model)
-        {
-            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
-            if (cacheModel?.IpModelViewModel?.IpModelUsed == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            var navigation = await _industryPlacementLoader.GetTempFlexNavigationAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear);
-
-            if (!ModelState.IsValid)
-            {
-                model.SetBackLink(cacheModel.IpModelViewModel, navigation.AskTempFlexibility);
-                return View(model);
-            }
-
-            if (model.IsChangeMode)
-            {
-                // if selection doesn't change then redirect to Ip check and submit page
-                if (model.IsBlendedPlacementUsed == cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed)
-                {
-                    if (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed == null ||
-                        (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == true && model.IsBlendedPlacementUsed == true && cacheModel?.TempFlexibility.IpEmployerLedUsed != null) ||
-                        (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == true && model.IsBlendedPlacementUsed == false && cacheModel?.TempFlexibility.IpGrantedTempFlexibility != null))
-                        return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
-                }
-            }
-
-            if (cacheModel?.TempFlexibility == null)
-                cacheModel.TempFlexibility = new IpTempFlexibilityViewModel();
-
-            cacheModel.TempFlexibility.IpBlendedPlacementUsed = model;
-
-
-            string redirectRouteName;
-
-            if (cacheModel.TempFlexibility.IpTempFlexibilityUsed == null || cacheModel.TempFlexibility.IpTempFlexibilityUsed.IsTempFlexibilityUsed == false)
-            {
-                redirectRouteName = RouteConstants.IpCheckAndSubmit;
-            }
-            else if (cacheModel.TempFlexibility.IpTempFlexibilityUsed.IsTempFlexibilityUsed.Value && model.IsBlendedPlacementUsed.Value)
-            {
-                cacheModel.TempFlexibility.IpGrantedTempFlexibility = null;
-                redirectRouteName = RouteConstants.IpEmployerLedUsed;
-            }
-            else
-            {
-                cacheModel.TempFlexibility.IpEmployerLedUsed = null;
-                redirectRouteName = RouteConstants.IpGrantedTempFlexibility;
-            }
-
-            await _cacheService.SetAsync(CacheKey, cacheModel);
-            return RedirectToRoute(redirectRouteName);
-        }
-
-        [HttpGet]
-        [Route("industry-placement-temporary-flexibility-employer-led/{isChangeMode:bool?}", Name = RouteConstants.IpEmployerLedUsed)]
-        public async Task<IActionResult> IpEmployerLedUsedAsync(bool isChangeMode = false)
-        {
-            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
-
-            if (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == null
-                || cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == false
-                || cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == null
-                || cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value == false)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            IpEmployerLedUsedViewModel viewModel;
-
-            if (cacheModel?.TempFlexibility?.IpEmployerLedUsed == null)
-            {
-                viewModel = await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpEmployerLedUsedViewModel>(cacheModel.IpCompletion);
-
-                var tempFlexibilities = await _industryPlacementLoader.GetTemporaryFlexibilitiesAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear, true);
-
-                viewModel.TemporaryFlexibilities = tempFlexibilities?.Where(t => t.Name.Equals(Constants.EmployerLedActivities, StringComparison.InvariantCultureIgnoreCase) || t.Name.Equals(Constants.BlendedPlacements, StringComparison.InvariantCultureIgnoreCase))?.ToList();
-
-                if (viewModel.TemporaryFlexibilities == null || viewModel.TemporaryFlexibilities.Count == 0)
-                    return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-            else
-            {
-                viewModel = cacheModel?.TempFlexibility?.IpEmployerLedUsed;
-            }
-
-            viewModel.IsChangeMode = (isChangeMode || (cacheModel.TempFlexibility?.IpEmployerLedUsed?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
-            
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("industry-placement-temporary-flexibility-employer-led/{isChangeMode:bool?}", Name = RouteConstants.SubmitIpEmployerLedUsed)]
-        public async Task<IActionResult> IpEmployerLedUsedAsync(IpEmployerLedUsedViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
-
-            if (cacheModel == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            var tempFlexibilities = await _industryPlacementLoader.GetTemporaryFlexibilitiesAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear, true);
-
-            model.TemporaryFlexibilities = tempFlexibilities?.Where(t => t.Name.Equals(Constants.EmployerLedActivities, StringComparison.InvariantCultureIgnoreCase) || t.Name.Equals(Constants.BlendedPlacements, StringComparison.InvariantCultureIgnoreCase))?.ToList();
-
-            if (model.TemporaryFlexibilities == null || !model.TemporaryFlexibilities.Any())
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            if (model.IsEmployerLedUsed.Value)
-            {
-                model.TemporaryFlexibilities.ToList().ForEach(tf => tf.IsSelected = true);
-            }
-            else
-            {
-                model.TemporaryFlexibilities.ToList().ForEach(tf =>
-                {
-                    tf.IsSelected = tf.Name.Equals(Constants.BlendedPlacements, StringComparison.InvariantCultureIgnoreCase);
-                });
-            }
-
-            cacheModel.TempFlexibility.IpEmployerLedUsed = model;
-            await _cacheService.SetAsync(CacheKey, cacheModel);
-
-            return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
-        }
-
-        [HttpGet]
-        [Route("industry-placement-temporary-flexibilities/{isChangeMode:bool?}", Name = RouteConstants.IpGrantedTempFlexibility)]
-        public async Task<IActionResult> IpGrantedTempFlexibilityAsync(bool isChangeMode = false)
-        {
-            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
-
-            if (cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == null
-                || cacheModel?.TempFlexibility?.IpTempFlexibilityUsed?.IsTempFlexibilityUsed == false
-                || (cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed != null
-                && cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value == true))
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            IpGrantedTempFlexibilityViewModel viewModel;
-
-            if (cacheModel?.TempFlexibility?.IpGrantedTempFlexibility == null)
-            {
-                viewModel = await _industryPlacementLoader.TransformIpCompletionDetailsTo<IpGrantedTempFlexibilityViewModel>(cacheModel.IpCompletion);
-
-                var showOption = cacheModel?.TempFlexibility?.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == null;
-                viewModel.TemporaryFlexibilities = await _industryPlacementLoader.GetTemporaryFlexibilitiesAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear, showOption);
-
-                if (viewModel.TemporaryFlexibilities == null || viewModel.TemporaryFlexibilities.Count == 0)
-                    return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-            else
-            {
-                viewModel = cacheModel?.TempFlexibility?.IpGrantedTempFlexibility;
-            }
-
-            viewModel.IsChangeMode = (isChangeMode || (cacheModel.TempFlexibility?.IpGrantedTempFlexibility?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
-            viewModel.SetBackLink(cacheModel.TempFlexibility);
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("industry-placement-temporary-flexibilities/{isChangeMode:bool?}", Name = RouteConstants.SubmitIpGrantedTempFlexibility)]
-        public async Task<IActionResult> IpGrantedTempFlexibilityAsync(IpGrantedTempFlexibilityViewModel model)
-        {
-            var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
-            if (cacheModel == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            if (!ModelState.IsValid)
-            {
-                model.SetBackLink(cacheModel.TempFlexibility);
-                return View(model);
-            }
-
-            cacheModel.TempFlexibility.IpGrantedTempFlexibility = model;
-            await _cacheService.SetAsync(CacheKey, cacheModel);
-
-            return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
+            return RedirectToRoute("TODO");
         }
 
         #endregion
 
         #region CheckAndSubmit
-        // TODO: Delete commented.
-        //public async Task<IActionResult> IpCheckAndSubmitAsync()
-        //{
-        //    var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
-        //    if (cacheModel == null)
-        //        return RedirectToRoute(RouteConstants.PageNotFound);
-
-        //    var viewModel = await _industryPlacementLoader.GetLearnerRecordDetailsAsync<IpCheckAndSubmitViewModel>(User.GetUkPrn(), cacheModel.IpCompletion.ProfileId);
-        //    if (viewModel == null)
-        //        return RedirectToRoute(RouteConstants.PageNotFound);
-
-        //    var navigation = await _industryPlacementLoader.GetTempFlexNavigationAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear);
-
-        //    // Item1 contain - Questions List & Item2 contain IsValid flag
-        //    var ipDetailsList = _industryPlacementLoader.GetIpSummaryDetailsListAsync(cacheModel, navigation);
-        //    if (!ipDetailsList.Item2 || ipDetailsList.Item1 == null || !ipDetailsList.Item1.Any())
-        //        return RedirectToRoute(RouteConstants.PageNotFound);
-
-        //    viewModel.IpDetailsList = ipDetailsList.Item1;
-
-        //    viewModel.SetBackLink(cacheModel, navigation);
-
-        //    cacheModel.ResetChangeMode();
-        //    cacheModel.IsChangeModeAllowed = true;
-        //    await _cacheService.SetAsync(CacheKey, cacheModel);
-
-        //    return View(viewModel);
-        //}
-
         [HttpGet]
         [Route("industry-placement-check-your-answers", Name = RouteConstants.IpCheckAndSubmit)]
         public async Task<IActionResult> IpCheckAndSubmitAsync()
@@ -880,13 +643,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             await _cacheService.SetAsync(CacheKey, cacheModel);
             return cacheModel;
-        }
-
-        private static bool IsValidToRedirectToCheckAndSubmit(IndustryPlacementViewModel cacheModel)
-        {
-            return (cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed == null && cacheModel.TempFlexibility.IpGrantedTempFlexibility != null) ||
-                   (cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed != null && cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value == true && cacheModel.TempFlexibility.IpEmployerLedUsed != null) ||
-                   (cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed != null && cacheModel.TempFlexibility.IpBlendedPlacementUsed?.IsBlendedPlacementUsed.Value == false && cacheModel.TempFlexibility.IpGrantedTempFlexibility != null);
         }
 
         private static bool IsIpModelJourneyAlreadyPopulated(IndustryPlacementViewModel cacheModel)

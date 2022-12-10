@@ -379,12 +379,6 @@
         // Temp Flexibility
         public const string IpTempFlexibilityUsed = "IpTempFlexibilityUsed";
         public const string SubmitIpTempFlexibilityUsed = "SubmitIpTempFlexibilityUsed";
-        public const string IpBlendedPlacementUsed = "IpBlendedPlacementUsed";
-        public const string SubmitIpBlendedPlacementUsed = "SubmitIpBlendedPlacementUsed";
-        public const string IpEmployerLedUsed = "IpEmployerLedUsed";
-        public const string SubmitIpEmployerLedUsed = "SubmitIpEmployerLedUsed";
-        public const string IpGrantedTempFlexibility = "IpGrantedTempFlexibility";
-        public const string SubmitIpGrantedTempFlexibility = "SubmitIpGrantedTempFlexibility";        
         public const string IpCheckAndSubmit = "IpCheckAndSubmit";
         public const string SubmitIpCheckAndSubmit = "SubmitIpCheckAndSubmit";
         public const string IpCheckAndSubmitCancel = "IpCheckAndSubmitCancel"; // TODO: Delete all related links
