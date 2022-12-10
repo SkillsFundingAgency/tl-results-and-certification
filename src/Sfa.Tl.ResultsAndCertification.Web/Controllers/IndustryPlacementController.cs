@@ -129,6 +129,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
+            return RedirectToRoute(RouteConstants.ProblemWithService); // TODO: Work in progress. 
+
+
             if (model.IsChangeMode)
             {
                 // TODO: revisit below logic when we pick associate story. 
