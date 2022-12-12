@@ -145,60 +145,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return true;
         }
 
-        private bool AddSummaryItemForIpModel(IndustryPlacementViewModel cacheModel, List<SummaryItemModel> detailsList)
-        {
-            if (cacheModel.IpModelViewModel?.IpModelUsed?.IsIpModelUsed == null)
-                return false;
-
-            var routeAttribute = new Dictionary<string, string> { { Constants.IsChangeMode, "true" } };
-
-            // IpModelUsed Row
-            detailsList.Add(new SummaryItemModel { Id = "isipmodelused", Title = CheckAndSubmitContent.Title_IpModel_Text, Value = cacheModel.IpModelViewModel.IpModelUsed.IsIpModelUsed.Value.ToYesOrNoString() , 
-                ActionText = CheckAndSubmitContent.Link_Change, HiddenActionText = CheckAndSubmitContent.Hidden_Text_IpModel_Used, RouteName = RouteConstants.IpModelUsed, RouteAttributes = routeAttribute });
-
-            if (cacheModel.IpModelViewModel.IpModelUsed.IsIpModelUsed == true)
-            {
-                // MultiEmp Row
-                if (cacheModel.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == null)
-                    return false;
-                detailsList.Add(new SummaryItemModel { Id = "ismultiempmodel", Title = CheckAndSubmitContent.Title_IpModel_Multi_Emp_Text, Value = cacheModel.IpModelViewModel.IpMultiEmployerUsed.IsMultiEmployerModelUsed.Value.ToYesOrNoString(), 
-                    ActionText = CheckAndSubmitContent.Link_Change, HiddenActionText = CheckAndSubmitContent.Hidden_Text_MultiEmp_Used, RouteName = RouteConstants.IpMultiEmployerUsed, RouteAttributes = routeAttribute });
-
-                // OtherIpModelList Row
-                if (cacheModel.IpModelViewModel?.IpMultiEmployerUsed?.IsMultiEmployerModelUsed == true)
-                {
-                    if (cacheModel.IpModelViewModel?.IpMultiEmployerOther?.OtherIpPlacementModels?.Any(x => x.IsSelected) == false)
-                        return false;
-
-                    var selectedOtherModels = cacheModel.IpModelViewModel?.IpMultiEmployerOther?.OtherIpPlacementModels
-                        .Where(x => x.IsSelected && !x.Name.Equals(Constants.MultipleEmployer, StringComparison.InvariantCultureIgnoreCase))
-                        .Select(x => x.Name);
-                    if (selectedOtherModels == null)
-                        return false;
-
-                    var selectedOtherModelsValue = selectedOtherModels.Any() ? ConvertListToRawHtmlString(selectedOtherModels) : false.ToYesOrNoString();
-                    detailsList.Add(new SummaryItemModel { Id = "selectedothermodellist", Title = CheckAndSubmitContent.Title_IpModel_Selected_Other_List_Text, Value = selectedOtherModelsValue, 
-                        ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Ipmodel_Others_list, RouteName = RouteConstants.IpMultiEmployerOther, RouteAttributes = routeAttribute
-                    });
-                }
-                else
-                {
-                    // IpModelList Row
-                    if (cacheModel.IpModelViewModel?.IpMultiEmployerSelect?.PlacementModels?.Any(x => x.IsSelected) == false)
-                        return false;
-
-                    var selectedPlacementModels = cacheModel.IpModelViewModel?.IpMultiEmployerSelect?.PlacementModels.Where(x => x.IsSelected).Select(x => x.Name);
-                    if (selectedPlacementModels == null)
-                        return false;
-
-                    detailsList.Add(new SummaryItemModel { Id = "selectedplacementmodellist", Title = CheckAndSubmitContent.Title_IpModels_Selected_List_Text, Value = ConvertListToRawHtmlString(selectedPlacementModels), 
-                        ActionText = CheckAndSubmitContent.Link_Change, IsRawHtml = true, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Ipmodel_List, RouteName = RouteConstants.IpMultiEmployerSelect, RouteAttributes = routeAttribute
-                    });
-                }
-            }
-            return true;
-        }
-
         private static string ConvertListToRawHtmlString(IEnumerable<string> selectedList)
         {
             var htmlRawList = selectedList.Select(x => string.Format(CheckAndSubmitContent.Para_Item, x));

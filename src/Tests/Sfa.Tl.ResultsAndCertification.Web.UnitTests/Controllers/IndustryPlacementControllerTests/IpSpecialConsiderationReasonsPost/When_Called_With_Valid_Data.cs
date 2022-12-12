@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
         public void Then_Redirected_To_Expected_Route()
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.IpModelUsed);
+            routeName.Should().Be(RouteConstants.IpCheckAndSubmit);
         }
     }
 }

@@ -358,27 +358,12 @@
         public const string IpCompletion = "IpCompletion";
         public const string SubmitIpCompletion = "SubmitIpCompletion";
 
-        public const string IpModelUsed = "IpModelUsed";
-        public const string SubmitIpModelUsed = "SubmitIpModelUsed";
-
-        public const string IpMultiEmployerUsed = "IpMultiEmployerUsed";
-        public const string SubmitIpMultiEmployerUsed = "SubmitIpMultiEmployerUsed";
-
-        public const string IpMultiEmployerOther = "IpMultiEmployerOther";
-        public const string SubmitIpMultiEmployerOther = "SubmitIpMultiEmployerOther";
-
-        public const string IpMultiEmployerSelect = "IpMultiEmployerSelect";
-        public const string SubmitIpMultiEmployerSelect = "SubmitIpMultiEmployerSelect";
-
         // Special Consideration
         public const string IpSpecialConsiderationHours = "IpSpecialConsiderationHours";
         public const string SubmitIpSpecialConsiderationHours = "SubmitIpSpecialConsiderationHours";
         public const string IpSpecialConsiderationReasons = "IpSpecialConsiderationReasons";
         public const string SubmitIpSpecialConsiderationReasons = "SubmitIpSpecialConsiderationReasons";
 
-        // Temp Flexibility
-        public const string IpTempFlexibilityUsed = "IpTempFlexibilityUsed";
-        public const string SubmitIpTempFlexibilityUsed = "SubmitIpTempFlexibilityUsed";
         public const string IpCheckAndSubmit = "IpCheckAndSubmit";
         public const string SubmitIpCheckAndSubmit = "SubmitIpCheckAndSubmit";
         public const string IpCheckAndSubmitCancel = "IpCheckAndSubmitCancel"; // TODO: Delete all related links
