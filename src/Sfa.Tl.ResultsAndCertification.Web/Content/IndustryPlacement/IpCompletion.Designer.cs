@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No, still to be completed.
+        ///   Looks up a localized string similar to No, they still need to complete it.
         /// </summary>
         public static string No_Still_To_Be_Completed_Option_Text {
             get {
@@ -115,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No, they still need to complete it.
+        ///   Looks up a localized string similar to No, they will not complete it.
         /// </summary>
         public static string No_Will_Not_Complete_Option_Text {
             get {
