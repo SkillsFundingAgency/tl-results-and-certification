@@ -366,7 +366,7 @@
 
         public const string IpCheckAndSubmit = "IpCheckAndSubmit";
         public const string SubmitIpCheckAndSubmit = "SubmitIpCheckAndSubmit";
-        public const string IpCheckAndSubmitCancel = "IpCheckAndSubmitCancel"; // TODO: Delete all related links
+        public const string IpCheckAndSubmitCancel = "IpCheckAndSubmitCancel";
 
         #endregion
 

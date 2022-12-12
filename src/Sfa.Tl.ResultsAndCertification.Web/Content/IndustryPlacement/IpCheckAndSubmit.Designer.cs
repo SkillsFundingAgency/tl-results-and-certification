@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save and continue.
+        ///   Looks up a localized string similar to Submit.
         /// </summary>
         public static string Button_Submit {
             get {
@@ -183,6 +183,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         public static string Hidden_Text_Tf_TempFlex_Used {
             get {
                 return ResourceManager.GetString("Hidden_Text_Tf_TempFlex_Used", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Link_Cancel {
+            get {
+                return ResourceManager.GetString("Link_Cancel", resourceCulture);
             }
         }
         
