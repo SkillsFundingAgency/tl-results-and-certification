@@ -132,6 +132,15 @@
   <data name="Industry_Placement_Caption" xml:space="preserve">
     <value>Industry placement</value>
   </data>
+  <data name="Learners_May_Experience_Diffiuclt_Circumstaces_During_Placement" xml:space="preserve">
+    <value>Learners may experience difficult circumstances during their placement, which mean they are unable to complete the minimum placement hours before the end of the second year.</value>
+  </data>
+  <data name="Link_Ip_Completion_Exception" xml:space="preserve">
+    <value>industry placement completion exceptions (opens in a new tab).</value>
+  </data>
+  <data name="More_About" xml:space="preserve">
+    <value>More about</value>
+  </data>
   <data name="No_Still_To_Be_Completed_Option_Text" xml:space="preserve">
     <value>No, they still need to complete it</value>
   </data>
@@ -155,5 +164,11 @@
   </data>
   <data name="Yes_Completed_With_Special_Consideration_Option_Text" xml:space="preserve">
     <value>Yes, completed with special consideration</value>
+  </data>
+  <data name="You_Do_Not_Need_Upload_Evidence" xml:space="preserve">
+    <value>You do not need to upload any evidence, but you should hold supporting documentation in your own files.</value>
+  </data>
+  <data name="You_Have_Discretion_To_Apply_Special_Consideration" xml:space="preserve">
+    <value>You have the discretion to apply special consideration in some exceptional circumstances where students have demonstrated sufficient progress towards their learning goals but have not completed the minimum placement hours.</value>
   </data>
 </root>

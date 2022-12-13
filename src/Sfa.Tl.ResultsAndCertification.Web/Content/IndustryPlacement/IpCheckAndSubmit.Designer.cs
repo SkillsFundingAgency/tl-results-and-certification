@@ -241,6 +241,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Placement still to be completed.
+        /// </summary>
+        public static string Status_Not_Completed {
+            get {
+                return ResourceManager.GetString("Status_Not_Completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Placement will not be completed.
+        /// </summary>
+        public static string Status_Will_Not_Complete {
+            get {
+                return ResourceManager.GetString("Status_Will_Not_Complete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Blended placement temporary flexibility used.
         /// </summary>
         public static string Title_BlendedPlacement_Used_Text {

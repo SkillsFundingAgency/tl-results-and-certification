@@ -66,8 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            return RedirectToRoute(RouteConstants.ProblemWithService); // TODO: Work in progress. 
-
+            //return RedirectToRoute(RouteConstants.ProblemWithService); // TODO: Work in progress. 
 
             if (model.IsChangeMode)
             {
@@ -90,6 +89,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var cacheModel = await SyncCacheIp(model);
 
+            if (model.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
+                return RedirectToRoute(RouteConstants.IpSpecialConsiderationHours);
+
+            return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
+
+            // TODO: Delete all code below.
             switch (model.IndustryPlacementStatus)
             {
                 case IndustryPlacementStatus.Completed:

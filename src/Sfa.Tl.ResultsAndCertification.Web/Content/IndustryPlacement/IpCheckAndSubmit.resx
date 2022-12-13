@@ -177,6 +177,12 @@
   <data name="Status_Completed_With_Special_Consideration" xml:space="preserve">
     <value>completed with special consideration</value>
   </data>
+  <data name="Status_Not_Completed" xml:space="preserve">
+    <value>Placement still to be completed</value>
+  </data>
+  <data name="Status_Will_Not_Complete" xml:space="preserve">
+    <value>Placement will not be completed</value>
+  </data>
   <data name="Title_BlendedPlacement_Used_Text" xml:space="preserve">
     <value>Blended placement temporary flexibility used</value>
   </data>

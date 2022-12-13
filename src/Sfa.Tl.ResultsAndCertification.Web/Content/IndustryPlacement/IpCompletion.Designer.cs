@@ -106,6 +106,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learners may experience difficult circumstances during their placement, which mean they are unable to complete the minimum placement hours before the end of the second year..
+        /// </summary>
+        public static string Learners_May_Experience_Diffiuclt_Circumstaces_During_Placement {
+            get {
+                return ResourceManager.GetString("Learners_May_Experience_Diffiuclt_Circumstaces_During_Placement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to industry placement completion exceptions (opens in a new tab)..
+        /// </summary>
+        public static string Link_Ip_Completion_Exception {
+            get {
+                return ResourceManager.GetString("Link_Ip_Completion_Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More about.
+        /// </summary>
+        public static string More_About {
+            get {
+                return ResourceManager.GetString("More_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No, they still need to complete it.
         /// </summary>
         public static string No_Still_To_Be_Completed_Option_Text {
@@ -174,6 +201,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         public static string Yes_Completed_With_Special_Consideration_Option_Text {
             get {
                 return ResourceManager.GetString("Yes_Completed_With_Special_Consideration_Option_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You do not need to upload any evidence, but you should hold supporting documentation in your own files..
+        /// </summary>
+        public static string You_Do_Not_Need_Upload_Evidence {
+            get {
+                return ResourceManager.GetString("You_Do_Not_Need_Upload_Evidence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have the discretion to apply special consideration in some exceptional circumstances where students have demonstrated sufficient progress towards their learning goals but have not completed the minimum placement hours..
+        /// </summary>
+        public static string You_Have_Discretion_To_Apply_Special_Consideration {
+            get {
+                return ResourceManager.GetString("You_Have_Discretion_To_Apply_Special_Consideration", resourceCulture);
             }
         }
     }

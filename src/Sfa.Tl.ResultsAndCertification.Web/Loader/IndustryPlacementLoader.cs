@@ -124,14 +124,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var routeAttributes = new Dictionary<string, string> { { Constants.IsChangeMode, "true" } };
 
             // Hours Row
-            detailsList.Add(new SummaryItemModel { Id = "hours", Title = CheckAndSubmitContent.Title_SpecialConsideration_Hours_Text, Value = cacheModel.SpecialConsideration.Hours.Hours, 
-                ActionText = CheckAndSubmitContent.Link_Change, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Special_Consideration_Hours, RouteName = RouteConstants.IpSpecialConsiderationHours, RouteAttributes = routeAttributes
+            detailsList.Add(new SummaryItemModel
+            {
+                Id = "hours",
+                Title = CheckAndSubmitContent.Title_SpecialConsideration_Hours_Text,
+                Value = cacheModel.SpecialConsideration.Hours.Hours,
+                ActionText = CheckAndSubmitContent.Link_Change,
+                HiddenActionText = CheckAndSubmitContent.Hidden_Text_Special_Consideration_Hours,
+                RouteName = RouteConstants.IpSpecialConsiderationHours,
+                RouteAttributes = routeAttributes
             });
 
             // Reasons Row
             var selectedReasons = cacheModel.SpecialConsideration?.Reasons?.ReasonsList.Where(x => x.IsSelected).Select(x => x.Name);
-            detailsList.Add(new SummaryItemModel 
-            { 
+            detailsList.Add(new SummaryItemModel
+            {
                 Id = "specialreasons",
                 Title = CheckAndSubmitContent.Title_SpecialConsideration_Reasons_Text,
                 Value = ConvertListToRawHtmlString(selectedReasons),
@@ -165,9 +172,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                     return CheckAndSubmitContent.Status_Completed_With_Special_Consideration;
 
                 case IndustryPlacementStatus.NotCompleted:
+                    return CheckAndSubmitContent.Status_Not_Completed;
+
                 case IndustryPlacementStatus.WillNotComplete:
+                    return CheckAndSubmitContent.Status_Will_Not_Complete;
+
                 default:
-                    return string.Empty; // TODO: Content for all above.
+                    return string.Empty;
             }
         }
     }
