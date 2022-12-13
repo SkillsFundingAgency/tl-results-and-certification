@@ -154,6 +154,7 @@
         public const string AndSeperator = " and ";
         public const string CommaSeperator = ",";
         public const string NotReceived = "NR";
+        public const string NotSpecified = "NotSpecified";
 
         // Function Name Constants
         public const string FetchLearnerGender = "FetchLearnerGender";

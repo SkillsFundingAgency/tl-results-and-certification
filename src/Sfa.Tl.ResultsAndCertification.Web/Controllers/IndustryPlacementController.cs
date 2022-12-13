@@ -45,9 +45,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("industry-placement-completion/{profileId}/{isChangeMode:bool?}", Name = RouteConstants.IpCompletion)]
         public async Task<IActionResult> IpCompletionAsync(int profileId, bool isChangeMode = false)
         {
-            //var name1 = this.ControllerContext.ActionDescriptor.AttributeRouteInfo.Name;
-            //var name2 = this.HttpContext.Request.Path;
-
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
 
             var viewModel = cacheModel?.IpCompletion;

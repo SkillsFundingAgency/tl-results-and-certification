@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using System.Collections.Generic;
@@ -20,8 +21,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
 
         public bool IsChangeMode { get; set; }
 
-        public bool IsValid => IndustryPlacementStatus != ResultsAndCertification.Common.Enum.IndustryPlacementStatus.Completed && IndustryPlacementStatus != ResultsAndCertification.Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration;
-        
+        // TODO: This valid flag to be determined based on both Add and Change Journey. 
+        public bool IsValid => IndustryPlacementStatus ==  null || EnumExtensions.IsValidValue<IndustryPlacementStatus>(IndustryPlacementStatus, exclNotSpecified: true);
+
         public virtual BackLinkModel BackLink => new()
         {
             RouteName = IsChangeMode ? RouteConstants.IpCheckAndSubmit : RouteConstants.LearnerRecordDetails,
