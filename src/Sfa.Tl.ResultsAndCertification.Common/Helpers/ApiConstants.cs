@@ -104,7 +104,6 @@
 
         // Industry Placement 
         public const string GetIpLookupDataUri = "/api/industryplacement/GetIpLookupData/{0}/{1}";
-        public const string GetTempFlexNavigationUri = "/api/industryplacement/GetTempFlexNavigation/{0}/{1}";
         public const string ProcessIndustryPlacementDetailsUri = "/api/industryplacement/ProcessIndustryPlacementDetails";
 
         // Common Api Uri's

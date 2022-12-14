@@ -2,6 +2,7 @@
 {
     public class IpTempFlexNavigation : BaseEntity
     {
+        // TODO: Delete
         public int TlPathwayId { get; set; }
         public int AcademicYear { get; set; }
         public bool AskTempFlexibility { get; set; }

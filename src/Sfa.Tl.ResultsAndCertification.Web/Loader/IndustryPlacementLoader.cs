@@ -60,17 +60,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<IList<IpLookupDataViewModel>>(scReasons.Where(x => academicYear >= x.StartDate.Year && (x.EndDate == null || academicYear <= x.EndDate.Value.Year)));
         }
 
-        public async Task<IList<IpLookupDataViewModel>> GetTemporaryFlexibilitiesAsync(int pathwayId, int academicYear, bool showOption = false)
-        {
-            var tempFlexibilities = await GetIpLookupDataAsync(IpLookupType.TemporaryFlexibility, pathwayId);
-            return _mapper.Map<IList<IpLookupDataViewModel>>(tempFlexibilities?.Where(x => academicYear >= x.StartDate.Year && (x.EndDate == null || academicYear <= x.EndDate.Value.Year) && (x.ShowOption == showOption || x.ShowOption == null)));
-        }
-
-        public async Task<IpTempFlexNavigation> GetTempFlexNavigationAsync(int pathwayId, int academicYear)
-        {
-            return await _internalApiClient.GetTempFlexNavigationAsync(pathwayId, academicYear);
-        }
-
         public async Task<bool> ProcessIndustryPlacementDetailsAsync(long providerUkprn, IndustryPlacementViewModel viewModel)
         {
             var request = _mapper.Map<IndustryPlacementRequest>(viewModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted
@@ -78,20 +67,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.ProcessIndustryPlacementDetailsAsync(request);
         }
 
-        public (List<SummaryItemModel>, bool) GetIpSummaryDetailsListAsync(IndustryPlacementViewModel cacheModel, IpTempFlexNavigation ipTempFlexNavigation1)
+        public (List<SummaryItemModel>, bool) GetIpSummaryDetailsListAsync(IndustryPlacementViewModel cacheModel)
         {
             var detailsList = new List<SummaryItemModel>();
 
-            //Validate Ip status
-            if (cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.Completed &&
-                cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration &&
-                cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.NotCompleted &&
-                cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.WillNotComplete)
+            // Validate Ip status
+            if (!EnumExtensions.IsValidValue<IndustryPlacementStatus>(cacheModel?.IpCompletion?.IndustryPlacementStatus, exclNotSpecified: true))
                 return (null, false);
 
-            var routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, cacheModel.IpCompletion.ProfileId.ToString() }, { Constants.IsChangeMode, "true" } };
             // Status Row
             var statusValue = GetIpStatusValue(cacheModel.IpCompletion.IndustryPlacementStatus);
+            var routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, cacheModel.IpCompletion.ProfileId.ToString() }, { Constants.IsChangeMode, "true" } };
             detailsList.Add(new SummaryItemModel { Id = "ipstatus", Title = CheckAndSubmitContent.Title_IP_Status_Text, Value = statusValue, ActionText = CheckAndSubmitContent.Link_Change, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Ip_Status, RouteName = RouteConstants.IpCompletion, RouteAttributes = routeAttributes });
 
             // SpecialConsideration Rows
@@ -101,16 +87,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 if (!isScAdded)
                     return (null, false);
             }
-
-            //// IPModel Rows 
-            //var isIpModelAdded = AddSummaryItemForIpModel(cacheModel, detailsList);
-            //if (!isIpModelAdded)
-            //    return (null, false);
-
-            //// Temp Flexibilities
-            //var isTempFlexAdded = AddSummaryItemForTempFlexbilities(cacheModel, detailsList, ipTempFlexNavigation);
-            //if (!isTempFlexAdded)
-            //    return (null, false);
 
             return (detailsList, true);
         }

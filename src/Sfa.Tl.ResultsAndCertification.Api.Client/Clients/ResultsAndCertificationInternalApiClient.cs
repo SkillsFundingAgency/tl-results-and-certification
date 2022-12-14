@@ -384,12 +384,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<IList<IpLookupData>>(requestUri);
         }
 
-        public async Task<IpTempFlexNavigation> GetTempFlexNavigationAsync(int pathwayId, int academicYear)
-        {
-            var requestUri = string.Format(ApiConstants.GetTempFlexNavigationUri, pathwayId, academicYear);
-            return await GetAsync<IpTempFlexNavigation>(requestUri);
-        }
-
         public async Task<bool> ProcessIndustryPlacementDetailsAsync(IndustryPlacementRequest request)
         {
             return await PostAsync<IndustryPlacementRequest, bool>(ApiConstants.ProcessIndustryPlacementDetailsUri, request);

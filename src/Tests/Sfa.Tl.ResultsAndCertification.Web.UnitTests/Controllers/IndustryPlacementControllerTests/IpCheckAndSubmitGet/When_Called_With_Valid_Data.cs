@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using System.Collections.Generic;
 using Xunit;
@@ -11,6 +10,7 @@ using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.Industr
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using System;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpCheckAndSubmitGet
 {
@@ -18,7 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
     {
         private IndustryPlacementViewModel _cacheModel;
         private IpCheckAndSubmitViewModel _learnerDetails;
-        private IpTempFlexNavigation _tempFlexNavigation;
         private (List<SummaryItemModel>, bool) _summaryDetailsList;
 
         public override void Given()
@@ -27,8 +26,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             _cacheModel = new IndustryPlacementViewModel
             {
                 IpCompletion = new IpCompletionViewModel { ProfileId = 1, RegistrationPathwayId = 1, PathwayId = 11, AcademicYear = 2020, IndustryPlacementStatus = IndustryPlacementStatus.Completed },
-                IpModelViewModel = new IpModelViewModel { IpModelUsed = new IpModelUsedViewModel { IsIpModelUsed = false } },
-                TempFlexibility = new IpTempFlexibilityViewModel { IpTempFlexibilityUsed = new IpTempFlexibilityUsedViewModel { IsTempFlexibilityUsed = false } }
             };
             CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(_cacheModel);
 
@@ -36,21 +33,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             _learnerDetails = new IpCheckAndSubmitViewModel { ProfileId = 1, Uln = 1234567890, LearnerName = "John Smith", DateofBirth = DateTime.Today.AddYears(-18) };
             IndustryPlacementLoader.GetLearnerRecordDetailsAsync<IpCheckAndSubmitViewModel>(ProviderUkprn, _cacheModel.IpCompletion.ProfileId).Returns(_learnerDetails);
 
-            // TempFlexNavigation
-            _tempFlexNavigation = new IpTempFlexNavigation { AskTempFlexibility = true };
-            IndustryPlacementLoader.GetTempFlexNavigationAsync(_cacheModel.IpCompletion.PathwayId, _cacheModel.IpCompletion.AcademicYear).Returns(_tempFlexNavigation);
-
             // SummaryDetails 
             _summaryDetailsList = (new List<SummaryItemModel> { new SummaryItemModel { Title = "Title 1", Value = "Value 1" }, new SummaryItemModel { Title = "Title 2", Value = "Value 2" } }, true);
-            IndustryPlacementLoader.GetIpSummaryDetailsListAsync(_cacheModel, _tempFlexNavigation).Returns(_summaryDetailsList);
+            IndustryPlacementLoader.GetIpSummaryDetailsListAsync(_cacheModel).Returns(_summaryDetailsList);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
             IndustryPlacementLoader.Received(1).GetLearnerRecordDetailsAsync<IpCheckAndSubmitViewModel>(ProviderUkprn, _cacheModel.IpCompletion.ProfileId);
-            IndustryPlacementLoader.Received(1).GetTempFlexNavigationAsync(_cacheModel.IpCompletion.PathwayId, _cacheModel.IpCompletion.AcademicYear);
-            IndustryPlacementLoader.Received(1).GetIpSummaryDetailsListAsync(_cacheModel, _tempFlexNavigation);
+            IndustryPlacementLoader.Received(1).GetIpSummaryDetailsListAsync(_cacheModel);
             CacheService.Received(1).SetAsync(CacheKey, Arg.Any<IndustryPlacementViewModel>());
         }
 
@@ -87,8 +79,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.IpDetailsList.Should().BeEquivalentTo(_summaryDetailsList.Item1);
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.IpTempFlexibilityUsed);
-            model.BackLink.RouteAttributes.Count.Should().Be(0);
+            model.BackLink.RouteName.Should().Be(RouteConstants.IpCompletion);
+            var expectedBackLink = new BackLinkModel { RouteName = RouteConstants.IpCompletion, RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, model.ProfileId.ToString() } } };
+            model.BackLink.Should().BeEquivalentTo(expectedBackLink);
         }
     }
 }

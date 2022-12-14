@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Contract = Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using DbModel = Sfa.Tl.ResultsAndCertification.Domain.Models;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
@@ -177,12 +176,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                     .OrderBy(x => x.SortOrder).ToListAsync();
 
             return _mapper.Map<IList<IpLookupData>>(lookupData);
-        }
-
-        public async Task<Contract.IpTempFlexNavigation> GetTempFlexNavigationAsync(int pathwayId, int academicYear)
-        {
-            var navigation = await _ipTempFlexNavigationRepository.GetFirstOrDefaultAsync(x => x.TlPathwayId == pathwayId && x.AcademicYear == academicYear);
-            return _mapper.Map<Contract.IpTempFlexNavigation>(navigation);
         }
     }
 }

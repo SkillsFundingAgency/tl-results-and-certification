@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using System.Collections.Generic;
 using Xunit;
@@ -14,7 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
     {
         private IndustryPlacementViewModel _cacheModel;
         private IpCheckAndSubmitViewModel _learnerDetails;
-        private IpTempFlexNavigation _tempFlexNavigation;
         private (List<SummaryItemModel>, bool) _summaryDetailsList;
 
         public override void Given()
@@ -27,21 +25,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             _learnerDetails = new IpCheckAndSubmitViewModel();
             IndustryPlacementLoader.GetLearnerRecordDetailsAsync<IpCheckAndSubmitViewModel>(ProviderUkprn, _cacheModel.IpCompletion.ProfileId).Returns(_learnerDetails);
 
-            // TempFlexNavigation
-            _tempFlexNavigation = new IpTempFlexNavigation();
-            IndustryPlacementLoader.GetTempFlexNavigationAsync(_cacheModel.IpCompletion.PathwayId, _cacheModel.IpCompletion.AcademicYear).Returns(_tempFlexNavigation);
-
             // SummaryDetails 
             _summaryDetailsList = (null, true); // list is null
-            IndustryPlacementLoader.GetIpSummaryDetailsListAsync(_cacheModel, _tempFlexNavigation).Returns(_summaryDetailsList);
+            IndustryPlacementLoader.GetIpSummaryDetailsListAsync(_cacheModel).Returns(_summaryDetailsList);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
             IndustryPlacementLoader.Received(1).GetLearnerRecordDetailsAsync<IpCheckAndSubmitViewModel>(ProviderUkprn, _cacheModel.IpCompletion.ProfileId);
-            IndustryPlacementLoader.Received(1).GetTempFlexNavigationAsync(_cacheModel.IpCompletion.PathwayId, _cacheModel.IpCompletion.AcademicYear);
-            IndustryPlacementLoader.Received(1).GetIpSummaryDetailsListAsync(_cacheModel, _tempFlexNavigation);
+            IndustryPlacementLoader.Received(1).GetIpSummaryDetailsListAsync(_cacheModel);
         }
 
         [Fact]

@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using System.Collections.Generic;
 using Xunit;
@@ -17,73 +17,37 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 {
                     new object[]
                     {
-                        new IndustryPlacementViewModel { IpModelViewModel = new IpModelViewModel { IpModelUsed = new IpModelUsedViewModel { IsIpModelUsed = false } } },
-                        null, // navigation
-                        RouteConstants.IpModelUsed
+                        new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration } },
+                        new BackLinkModel { RouteName = RouteConstants.IpSpecialConsiderationReasons }
                     },
-
                     new object[]
                     {
-                        new IndustryPlacementViewModel { IpModelViewModel = new IpModelViewModel { IpModelUsed = new IpModelUsedViewModel { IsIpModelUsed = true }, IpMultiEmployerUsed = new IpMultiEmployerUsedViewModel { IsMultiEmployerModelUsed = true  } } },
-                        null, // navigation
-                        RouteConstants.IpMultiEmployerOther
+                        new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed } },
+                        new BackLinkModel { RouteName = RouteConstants.IpCompletion, RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, "1" } } }
                     },
-
                     new object[]
                     {
-                        new IndustryPlacementViewModel { IpModelViewModel = new IpModelViewModel { IpModelUsed = new IpModelUsedViewModel { IsIpModelUsed = true }, IpMultiEmployerUsed = new IpMultiEmployerUsedViewModel { IsMultiEmployerModelUsed = false  } } },
-                        null, // navigation
-                        RouteConstants.IpMultiEmployerSelect
+                        new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.NotCompleted } },
+                        new BackLinkModel { RouteName = RouteConstants.IpCompletion, RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, "1" } } }
                     },
-
                     new object[]
                     {
-                        new IndustryPlacementViewModel { TempFlexibility = new IpTempFlexibilityViewModel { IpTempFlexibilityUsed = new IpTempFlexibilityUsedViewModel { IsTempFlexibilityUsed = false } } },
-                        new  IpTempFlexNavigation { AskTempFlexibility = true, AskBlendedPlacement = false },
-                        RouteConstants.IpTempFlexibilityUsed
-                    },
-
-                    new object[]
-                    {
-                        new IndustryPlacementViewModel(),
-                        new  IpTempFlexNavigation { AskTempFlexibility = true, AskBlendedPlacement = false },
-                        RouteConstants.IpGrantedTempFlexibility
-                    },
-
-                    new object[]
-                    {
-                        new IndustryPlacementViewModel { TempFlexibility = new IpTempFlexibilityViewModel { IpBlendedPlacementUsed = new IpBlendedPlacementUsedViewModel() } },
-                        new  IpTempFlexNavigation { AskTempFlexibility = false, AskBlendedPlacement = true },
-                        RouteConstants.IpBlendedPlacementUsed
-                    },
-
-                    new object[]
-                    {
-                        new IndustryPlacementViewModel { TempFlexibility = new IpTempFlexibilityViewModel { IpBlendedPlacementUsed = new IpBlendedPlacementUsedViewModel(), IpEmployerLedUsed = new IpEmployerLedUsedViewModel() } },
-                        new  IpTempFlexNavigation { AskTempFlexibility = false, AskBlendedPlacement = true },
-                        RouteConstants.IpEmployerLedUsed
-                    },
-
-                    new object[]
-                    {
-                        new IndustryPlacementViewModel { TempFlexibility = new IpTempFlexibilityViewModel { IpBlendedPlacementUsed = new IpBlendedPlacementUsedViewModel(), IpGrantedTempFlexibility = new IpGrantedTempFlexibilityViewModel() } },
-                        new  IpTempFlexNavigation { AskTempFlexibility = false, AskBlendedPlacement = true },
-                        RouteConstants.IpGrantedTempFlexibility
-                    },
+                        new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.WillNotComplete } },
+                        new BackLinkModel { RouteName = RouteConstants.IpCompletion, RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, "1" } } }
+                    }
                 };
             }
         }
 
         [Theory]
         [MemberData(nameof(Data))]
-        public void Then_Returns_Expected_Results(IndustryPlacementViewModel cacheModel, IpTempFlexNavigation navigation, string expectedRouteName)
+        public void Then_Returns_Expected_Results(IndustryPlacementViewModel cacheModel, BackLinkModel expectedRoute)
         {
-            var viewModel = new IpCheckAndSubmitViewModel();
-            viewModel.SetBackLink(cacheModel, navigation);
+            var viewModel = new IpCheckAndSubmitViewModel { ProfileId = 1 };
+            viewModel.SetBackLink(cacheModel);
 
             viewModel.BackLink.Should().NotBeNull();
-            viewModel.BackLink.RouteName.Should().Be(expectedRouteName);
-            viewModel.BackLink.RouteAttributes.Count.Should().Be(0);
+            viewModel.BackLink.Should().BeEquivalentTo(expectedRoute);
         }
     }
 }

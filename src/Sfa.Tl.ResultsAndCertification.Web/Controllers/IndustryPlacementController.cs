@@ -223,16 +223,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            //var navigation = await _industryPlacementLoader.GetTempFlexNavigationAsync(cacheModel.IpCompletion.PathwayId, cacheModel.IpCompletion.AcademicYear); // TODO: Remove this. 
-
             // Item1 contain - Questions List & Item2 contain IsValid flag
-            var ipDetailsList = _industryPlacementLoader.GetIpSummaryDetailsListAsync(cacheModel, null);
+            var ipDetailsList = _industryPlacementLoader.GetIpSummaryDetailsListAsync(cacheModel);
             if (!ipDetailsList.Item2 || ipDetailsList.Item1 == null || !ipDetailsList.Item1.Any())
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             viewModel.IpDetailsList = ipDetailsList.Item1;
 
-            viewModel.SetBackLink(cacheModel, null);
+            viewModel.SetBackLink(cacheModel);
 
             cacheModel.ResetChangeMode();
             cacheModel.IsChangeModeAllowed = true; // TODO: Significance.

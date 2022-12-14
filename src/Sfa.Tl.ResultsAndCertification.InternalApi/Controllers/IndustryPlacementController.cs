@@ -26,13 +26,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             return await _industryPlacementService.GetIpLookupDataAsync(ipLookupType, pathwayId);
         }
 
-        [HttpGet]
-        [Route("GetTempFlexNavigation/{pathwayId}/{academicYear}")]
-        public async Task<IpTempFlexNavigation> GetTempFlexNavigationAsync(int pathwayId, int academicYear)
-        {
-            return await _industryPlacementService.GetTempFlexNavigationAsync(pathwayId, academicYear);
-        }
-
         [HttpPost]
         [Route("ProcessIndustryPlacementDetails")]
         public async Task<bool> ProcessIndustryPlacementDetailsAsync(IndustryPlacementRequest request)
