@@ -66,8 +66,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            //return RedirectToRoute(RouteConstants.ProblemWithService); // TODO: Work in progress. 
-
             if (model.IsChangeMode)
             {
                 // TODO: revisit below logic when we pick associate story. 
@@ -93,44 +91,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.IpSpecialConsiderationHours);
 
             return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
-
-            // TODO: Delete all code below.
-            switch (model.IndustryPlacementStatus)
-            {
-                case IndustryPlacementStatus.Completed:
-                    return RedirectToRoute(RouteConstants.IpCheckAndSubmit);
-                case IndustryPlacementStatus.CompletedWithSpecialConsideration:
-                    return RedirectToRoute(RouteConstants.IpSpecialConsiderationHours);
-                case IndustryPlacementStatus.NotCompleted:
-                    {
-                        // TODO: Other story?
-                        var isSuccess = await _industryPlacementLoader.ProcessIndustryPlacementDetailsAsync(User.GetUkPrn(), cacheModel);
-
-                        if (isSuccess)
-                        {
-                            await _cacheService.RemoveAsync<IndustryPlacementViewModel>(CacheKey);
-
-                            var notificationBanner = new NotificationBannerModel
-                            {
-                                HeaderMessage = IndustryPlacementBanner.Banner_HeaderMesage,
-                                Message = IndustryPlacementBanner.Success_Message,
-                                DisplayMessageBody = true,
-                                IsRawHtml = true
-                            };
-
-                            await _cacheService.SetAsync(TrainingProviderCacheKey, notificationBanner, CacheExpiryTime.XSmall);
-                            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
-                        }
-                        else
-                        {
-                            _logger.LogWarning(LogEvent.ManualIndustryPlacementDetailsProcessFailed, $"Unable to add industry placement status for ProfileId = {cacheModel.IpCompletion.ProfileId}. Method: IpCompletionAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                            return RedirectToRoute(RouteConstants.ProblemWithService);
-                        }
-                    }
-                // TODO: Another option to be added. 
-                default:
-                    return RedirectToRoute(RouteConstants.PageNotFound);
-            }
         }
 
         #region SpecialConsideration
