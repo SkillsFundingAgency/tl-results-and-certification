@@ -21,8 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
 
         public bool IsChangeMode { get; set; }
 
-        // TODO: This valid flag to be determined based on both Add and Change Journey. 
-        public bool IsValid => IndustryPlacementStatus ==  null || EnumExtensions.IsValidValue<IndustryPlacementStatus>(IndustryPlacementStatus, exclNotSpecified: true);
+        public bool IsValid => !EnumExtensions.IsValidValue<IndustryPlacementStatus>(IndustryPlacementStatus, exclNotSpecified: true);
 
         public virtual BackLinkModel BackLink => new()
         {
