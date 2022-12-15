@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Industry placement: Special consideration.
+        ///   Looks up a localized string similar to Industry Placement: Placement Hours.
         /// </summary>
         public static string Caption_Ip_Special_Consideration {
             get {
@@ -116,7 +116,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to hours.
+        ///   Looks up a localized string similar to Hours.
         /// </summary>
         public static string Input_Suffix_Hours {
             get {
