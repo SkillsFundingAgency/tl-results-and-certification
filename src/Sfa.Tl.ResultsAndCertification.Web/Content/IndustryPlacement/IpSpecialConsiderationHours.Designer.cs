@@ -116,7 +116,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hours.
+        ///   Looks up a localized string similar to hours.
         /// </summary>
         public static string Input_Suffix_Hours {
             get {

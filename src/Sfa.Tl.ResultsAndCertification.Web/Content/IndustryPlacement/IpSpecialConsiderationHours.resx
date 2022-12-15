@@ -136,7 +136,7 @@
     <value>Enter number of hours the learner spent on placement</value>
   </data>
   <data name="Input_Suffix_Hours" xml:space="preserve">
-    <value>Hours</value>
+    <value>hours</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Special consideration hours - Industry placement - Manage learner</value>
