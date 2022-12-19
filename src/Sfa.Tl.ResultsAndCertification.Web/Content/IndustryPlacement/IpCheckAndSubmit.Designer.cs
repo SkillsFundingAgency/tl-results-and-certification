@@ -79,6 +79,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I confirm that all relevant supporting documentation is held on record..
+        /// </summary>
+        public static string Declaration_I_Confirm_Supporting_Docs_Is_Held {
+            get {
+                return ResourceManager.GetString("Declaration_I_Confirm_Supporting_Docs_Is_Held", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check your answers.
         /// </summary>
         public static string Heading_Check_Your_Answers {

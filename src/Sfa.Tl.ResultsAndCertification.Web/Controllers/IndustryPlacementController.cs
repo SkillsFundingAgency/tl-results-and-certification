@@ -190,6 +190,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             viewModel.IpDetailsList = ipDetailsList.Item1;
 
+            viewModel.SetDeclarationText(cacheModel);
             viewModel.SetBackLink(cacheModel);
 
             cacheModel.ResetChangeMode();

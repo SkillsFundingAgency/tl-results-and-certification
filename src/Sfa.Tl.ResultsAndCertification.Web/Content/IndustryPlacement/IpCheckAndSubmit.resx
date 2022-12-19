@@ -123,6 +123,9 @@
   <data name="Declaration_I_Confirm_Supporting_Docs_Held_On_Records" xml:space="preserve">
     <value>I confirm that {0} has completed their T Level industry placement and that all relevant supporting documentation is held on record.</value>
   </data>
+  <data name="Declaration_I_Confirm_Supporting_Docs_Is_Held" xml:space="preserve">
+    <value>I confirm that all relevant supporting documentation is held on record.</value>
+  </data>
   <data name="Heading_Check_Your_Answers" xml:space="preserve">
     <value>Check your answers</value>
   </data>

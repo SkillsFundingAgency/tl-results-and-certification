@@ -55,6 +55,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
 
         public virtual BackLinkModel BackLink { get; set; }
 
+        public string DeclarationText { get; set; }
+        public void SetDeclarationText(IndustryPlacementViewModel cacheModel)
+        {
+            if (cacheModel?.IpCompletion?.IndustryPlacementStatus != null &&
+                cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.NotSpecified)
+            {
+                // TODO: Cover UT.
+                switch (cacheModel?.IpCompletion?.IndustryPlacementStatus.Value)
+                {
+                    case IndustryPlacementStatus.Completed:
+                        DeclarationText = string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, LearnerName);
+                        break;
+                    case IndustryPlacementStatus.CompletedWithSpecialConsideration:
+                        DeclarationText = "TODO";
+                        break;
+                    case IndustryPlacementStatus.NotCompleted:
+                        DeclarationText = string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Is_Held, LearnerName);
+                        break;
+                    case IndustryPlacementStatus.WillNotComplete:
+                        DeclarationText = "TODO";
+                        break;
+                }
+            }
+        }
+
         public void SetBackLink(IndustryPlacementViewModel cacheModel)
         {
             if (cacheModel?.IpCompletion?.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
