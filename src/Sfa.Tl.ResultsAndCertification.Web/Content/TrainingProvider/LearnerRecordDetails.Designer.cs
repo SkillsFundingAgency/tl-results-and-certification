@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string Action_Text_Link_Change {
+            get {
+                return ResourceManager.GetString("Action_Text_Link_Change", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt; Back to home.
         /// </summary>
         public static string Back_To_Home_Text {
@@ -273,6 +282,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Status_Tag_Incomplete {
             get {
                 return ResourceManager.GetString("Status_Tag_Incomplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record Complete.
+        /// </summary>
+        public static string Status_Tag_Record_Complete {
+            get {
+                return ResourceManager.GetString("Status_Tag_Record_Complete", resourceCulture);
             }
         }
         

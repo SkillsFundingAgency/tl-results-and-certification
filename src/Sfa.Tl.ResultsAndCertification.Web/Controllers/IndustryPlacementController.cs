@@ -204,6 +204,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> IpCheckAndSubmitSaveAsync()
         {
             return RedirectToRoute(RouteConstants.ProblemWithService);
+
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
             if (cacheModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);

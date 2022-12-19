@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public bool IsIndustryPlacementAdded => IndustryPlacementStatus != IpStatus.NotSpecified;
         public bool IsMathsAdded => MathsStatus != SubjectStatus.NotSpecified;
         public bool IsEnglishAdded => EnglishStatus != SubjectStatus.NotSpecified;
-        public bool CanAddIndustryPlacement => IndustryPlacementStatus == IpStatus.NotSpecified || IndustryPlacementStatus == IpStatus.NotCompleted;
+        //public bool CanAddIndustryPlacement => IndustryPlacementStatus == IpStatus.NotSpecified || IndustryPlacementStatus == IpStatus.NotCompleted;
         public bool DisplayOverallResults => OverallResultDetails != null && OverallResultPublishDate.HasValue && DateTime.UtcNow >= OverallResultPublishDate;
         public NotificationBannerModel SuccessBanner { get; set; }
         public DateTime? LastDocumentRequestedDate { get; set; }
@@ -147,23 +147,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         #endregion
 
         // Industry Placement
-        public SummaryItemModel SummaryIndustryPlacementStatus => CanAddIndustryPlacement ?
+        public SummaryItemModel SummaryIndustryPlacementStatus =>
             new SummaryItemModel
             {
                 Id = "industryplacement",
                 Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
                 Value = GetIndustryPlacementDisplayText,
-                ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
-                RouteName = CanAddIndustryPlacement ? RouteConstants.AddIndustryPlacement : string.Empty,
-                RouteAttributes = CanAddIndustryPlacement ? new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } : null,
+                ActionText = IsIndustryPlacementAdded ? LearnerRecordDetailsContent.Action_Text_Link_Change : LearnerRecordDetailsContent.Action_Text_Link_Add,
+                RouteName = IsIndustryPlacementAdded ? "TODO" : RouteConstants.AddIndustryPlacement,
+                RouteAttributes = IsIndustryPlacementAdded ? null : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
                 HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement
-            }
-            :
-            new SummaryItemModel
-            {
-                Id = "industryplacement",
-                Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
-                Value = GetIndustryPlacementDisplayText,
             };
 
         // Overall Result
