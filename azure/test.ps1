@@ -1,6 +1,4 @@
 $ErrorActionPreference = "Stop"
-# make sure we're on the right subscription to start with
-Set-AzContext -Tenant "9c7d9dd3-840c-4b3f-818e-552865082e16" -Subscription "s126-tlevelservice-development" 
 
 $location = "westeurope"
 $applicationPrefix = "resac"
