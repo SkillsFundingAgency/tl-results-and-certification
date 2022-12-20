@@ -155,6 +155,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("industry-placement-special-consideration-reasons/{isChangeMode:bool?}", Name = RouteConstants.SubmitIpSpecialConsiderationReasons)]
         public async Task<IActionResult> IpSpecialConsiderationReasonsAsync(SpecialConsiderationReasonsViewModel model)
         {
+            return RedirectToRoute(RouteConstants.PageNotFound); // TODO: Work is in progress.
+
             if (!ModelState.IsValid)
                 return View(model);
 
