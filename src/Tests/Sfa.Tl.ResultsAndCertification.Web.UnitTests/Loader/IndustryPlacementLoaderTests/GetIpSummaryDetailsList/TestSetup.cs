@@ -8,7 +8,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
 {
     public abstract class TestSetup : IndustryPlacementLoaderTestBase
     {
-        protected IpTempFlexNavigation IpTempFlexNavigation;
         protected IndustryPlacementViewModel CacheModel;
         protected (List<SummaryItemModel>, bool) ActualResult;
 

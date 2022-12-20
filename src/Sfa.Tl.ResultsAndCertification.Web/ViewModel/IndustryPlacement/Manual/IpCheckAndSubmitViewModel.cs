@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         {
             Id = "dateofbirth",
             Title = CheckAndSubmitContent.Title_DateofBirth_Text,
-            Value = DateofBirth.ToDobFormat()
+            Value = DateofBirth.ToDobFormat(trimLeadingZero: true)
         };
 
         public SummaryItemModel SummaryTlevelTitle => new()

@@ -16,12 +16,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
         {
             CacheModel = new IndustryPlacementViewModel
             {
-                IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = IndustryPlacementStatus.Completed },
-                IpModelViewModel = new IpModelViewModel(),
-                TempFlexibility = new IpTempFlexibilityViewModel()
+                IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = IndustryPlacementStatus.Completed }
             };
-
-            IpTempFlexNavigation = new IpTempFlexNavigation { AskTempFlexibility = true, AskBlendedPlacement = true };
         }
         
         [Fact]

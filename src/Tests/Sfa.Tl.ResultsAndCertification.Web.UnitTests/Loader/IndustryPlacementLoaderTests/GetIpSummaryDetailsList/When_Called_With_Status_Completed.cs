@@ -20,37 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
             CacheModel = new IndustryPlacementViewModel
             {
                 IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = IndustryPlacementStatus.Completed, ProfileId = 1 },
-                IpModelViewModel = new IpModelViewModel
-                {
-                    IpModelUsed = new IpModelUsedViewModel { IsIpModelUsed = true },
-                    IpMultiEmployerUsed = new IpMultiEmployerUsedViewModel { IsMultiEmployerModelUsed = true },
-                    IpMultiEmployerOther = new IpMultiEmployerOtherViewModel
-                    {
-                        OtherIpPlacementModels = new List<IpLookupDataViewModel>
-                        {
-                            new IpLookupDataViewModel { Name = "IpModel 1", IsSelected = true },
-                            new IpLookupDataViewModel { Name = Constants.MultipleEmployer, IsSelected = true },
-                            new IpLookupDataViewModel { Name = "IpModel 3", IsSelected = false }
-                        }
-                    }
-                },
-                TempFlexibility = new IpTempFlexibilityViewModel
-                {
-                    IpTempFlexibilityUsed = new IpTempFlexibilityUsedViewModel { IsTempFlexibilityUsed = true },
-                    IpBlendedPlacementUsed = new IpBlendedPlacementUsedViewModel { IsBlendedPlacementUsed = true },
-                    IpEmployerLedUsed = new IpEmployerLedUsedViewModel
-                    {
-                        TemporaryFlexibilities = new List<IpLookupDataViewModel>
-                        {
-                            new IpLookupDataViewModel { Name = "TF1", IsSelected = true },
-                            new IpLookupDataViewModel { Name = Constants.BlendedPlacements, IsSelected = true },
-                            new IpLookupDataViewModel { Name = "TF2", IsSelected = false }
-                        }
-                    }
-                }
             };
-
-            IpTempFlexNavigation = new IpTempFlexNavigation { AskTempFlexibility = true, AskBlendedPlacement = true };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, CacheModel.IpCompletion.ProfileId.ToString() }, { Constants.IsChangeMode, "true" } };
             

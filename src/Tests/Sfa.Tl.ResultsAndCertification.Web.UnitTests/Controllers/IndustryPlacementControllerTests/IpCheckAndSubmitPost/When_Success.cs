@@ -14,8 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
     {
         private IndustryPlacementViewModel _cacheModel;
         private IpCompletionViewModel _ipCompletionViewModel;
-        private IpModelViewModel _ipModelViewModel;
-        private IpTempFlexibilityUsedViewModel _ipTempFlexibilityUsedViewModel;
 
         private string _expectedSuccessBannerMsg;
         private string _expectedBannerHeaderMsg;
@@ -26,14 +24,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
             // Cache object
             _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = 1, AcademicYear = 2020, LearnerName = "First Last", IndustryPlacementStatus = IndustryPlacementStatus.Completed };
-            _ipModelViewModel = new IpModelViewModel { IpModelUsed = new IpModelUsedViewModel { IsIpModelUsed = false }, IpMultiEmployerUsed = new IpMultiEmployerUsedViewModel { IsMultiEmployerModelUsed = true } };
-            _ipTempFlexibilityUsedViewModel = new IpTempFlexibilityUsedViewModel { LearnerName = _ipCompletionViewModel.LearnerName, IsTempFlexibilityUsed = false };
 
             _cacheModel = new IndustryPlacementViewModel
             {
                 IpCompletion = _ipCompletionViewModel,
-                IpModelViewModel = _ipModelViewModel,
-                TempFlexibility = new IpTempFlexibilityViewModel { IpTempFlexibilityUsed = _ipTempFlexibilityUsedViewModel }
             };
 
             CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(_cacheModel);
