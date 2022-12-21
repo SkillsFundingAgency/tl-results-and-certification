@@ -1,5 +1,12 @@
 $ErrorActionPreference = "Stop"
 
+if ((Get-AzContext).Subscription.Name -ne 's126-tlevelservice-development') {
+    throw 'Azure Context references incorrect subscription'
+}
+
+$scriptRoot = $PSScriptRoot
+if (($PSScriptRoot).Length -eq 0) { $scriptRoot = $PWD.Path}
+
 $location = "westeurope"
 $applicationPrefix = "resac"
 $envPrefix = "s126d99"
@@ -38,7 +45,7 @@ $sharedDeploymentParameters = @{
     ResourceGroupName       = $sharedResourceGroupName
     Mode                    = "Complete"
     Force                   = $true
-    TemplateFile            = "$($PSScriptRoot)/$($templateFilePrefix)-shared.json"
+    TemplateFile            = "$($scriptRoot)/$($templateFilePrefix)-shared.bicep"
     TemplateParameterObject = @{
         environmentNameAbbreviation             = "$($envPrefix)-$($applicationPrefix)"
         sqlServerAdminUsername                  = "xxxServerAdminxxx"
@@ -52,33 +59,29 @@ $sharedDeploymentParameters = @{
         azureWebsitesRPObjectId                 = "0b11c7a6-2868-4728-b83c-d14be9147a97"
         keyVaultReadWriteObjectIds              = @("0316d3ae-e503-4dae-9665-c999fca7cf10", "a6621090-e704-45ec-b65f-50257f9d4dcd")
         keyVaultFullAccessObjectIds             = @("b3b225a1-7c11-4698-9f15-32c345cf5bc2")  
-        redisCacheSKU                           = {name: 'Basic', family: 'C', capacity: 0}     
+        redisCacheSKU                           = @{name= "Basic"; family= "C"; capacity= 0}     
     }
 }
 
 $sharedDeployment = New-AzResourceGroupDeployment @sharedDeploymentParameters
 
 foreach ($key in $certsToUpload.Keys) {
-    # first get a random 32 character alphanumeric key into a SecureString
     $certPassword = ConvertTo-SecureString `
                         -AsPlainText `
                         -Force `
-                        -String ([System.Web.Security.Membership]::GeneratePassword(64, 0) -replace "[^a-zA-Z0-9]","").Substring(0,32)
+                        -String ([System.Web.Security.Membership]::GeneratePassword(32, 2))
 
-    # save the certificate including private key into file protected with the above password
     Export-PfxCertificate `
         -Password $certPassword `
         -FilePath "$($key).pfx" `
         -Cert "cert://CurrentUser/my/$($certsToUpload[$key])"
 
-    # import the certificate to KeyVault 
     Import-AzKeyVaultCertificate `
             -VaultName "$($envPrefix)$($applicationPrefix)sharedkv" `
             -Name $key `
             -FilePath "$($key).pfx" `
             -Password $certPassword   
     
-    # and then delete the file and forget the password
     Remove-Item -Path "$($key).pfx"
     Clear-Variable -Name certPassword
 }
@@ -97,11 +100,11 @@ if ($notPresent) {
     New-AzResourceGroup -Name $envResourceGroupName -Location $location -Tag $tags
 }
 
-$deploymentParameters = @{
+$envDeploymentParameters = @{
     Name                    = "test-{0:yyyyMMdd-HHmmss}" -f (Get-Date)
     ResourceGroupName       = $envResourceGroupName
     Mode                    = "Incremental"
-    TemplateFile            = "$($PSScriptRoot)/$($templateFilePrefix)-environment.json"
+    TemplateFile            = "$($scriptRoot)/$($templateFilePrefix)-environment.bicep"
     TemplateParameterObject = @{
         environmentNameAbbreviation                 = $environmentNameAbbreviation
         resourceNamePrefix                          = ("$($envPrefix)-$($applicationPrefix)-" + $environmentNameAbbreviation)
@@ -109,13 +112,14 @@ $deploymentParameters = @{
         sharedASPName                               = "$($envPrefix)-$($applicationPrefix)-shared-asp"
         sharedEnvResourceGroup                      = $sharedResourceGroupName
         sharedKeyVaultName                          = "$($envPrefix)$($applicationPrefix)sharedkv"
-        sharedSQLServerName                         = "$($sharedDeployment.Outputs.sharedSQLServerName)"
+        sharedSQLServerName                         = "$($sharedDeployment.Outputs.sharedSQLServerName.Value)"
         sqlDatabaseSkuName                          = 'S0'
         sqlDatabaseTier                             = 'Standard'
         sqlserverlessAutoPauseDelay                 = '-1'
         configurationStorageConnectionString        = ($sharedDeployment.Outputs.configStorageConnectionString.Value)
         uiCustomHostname                            = "dev.manage-tlevel-results.tlevels.gov.uk"                     
         uiCertificateName                           = "dev-manage-tlevel-results-tlevels-gov-uk"
+        storageAccountContainerArray                = @()
         learnerVerificationAndLearningEventsTrigger = "0 0 1 1 2"
         learnerGenderTrigger                        = "1 0 1 1 2"
         certificatePrintingBatchesCreateTrigger     = "2 0 1 1 2"
@@ -129,19 +133,19 @@ $deploymentParameters = @{
     }
 }
 
-$envDeployment = New-AzResourceGroupDeployment @deploymentParameters -ErrorVariable errorOutput
+$envDeployment = New-AzResourceGroupDeployment @envDeploymentParameters -ErrorVariable errorOutput
 if ($envDeployment.ProvisioningState -eq "Succeeded") {
     Write-Output "Yippee!!"
 }
 
-<# A section to allow easy cleanup of the environments, the first line is because I've been looking at migration from app insights.
-
+<#
 # you have to remove the diagnostic settings separately as they hang around if you don't and mess things up badly
 $subscriptionId = (Get-AzContext).Subscription.Id
 $diagnosticResourceIds = @(
     "/subscriptions/$($subscriptionId)/resourceGroups/$($sharedResourceGroupName)/providers/Microsoft.KeyVault/vaults/$($envPrefix)$($applicationPrefix)sharedkv",
     "/subscriptions/$($subscriptionId)/resourceGroups/$($envResourceGroupName)/providers/Microsoft.Web/sites/$($envPrefix)-$($applicationPrefix)-$($environmentNameAbbreviation)-web",
     "/subscriptions/$($subscriptionId)/resourceGroups/$($envResourceGroupName)/providers/Microsoft.Web/sites/$($envPrefix)-$($applicationPrefix)-$($environmentNameAbbreviation)-func"
+    "/subscriptions/$($subscriptionId)/resourceGroups/$($envResourceGroupName)/providers/Microsoft.Web/sites/$($envPrefix)-$($applicationPrefix)-$($environmentNameAbbreviation)-internal-api"
 )
 foreach ($diagnosticResourceId in $diagnosticResourceIds) {
     Write-Host "Finding settings in $($diagnosticResourceId) to remove"

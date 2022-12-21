@@ -1,0 +1,3 @@
+[submodule "platform/azure/tl-platform-building-blocks"]
+	path = platform/azure/tl-platform-building-blocks
+	url = https://github.com/SkillsFundingAgency/tl-platform-building-blocks.git
