@@ -13,7 +13,8 @@ $envPrefix = "s126d02"
 $environmentNameAbbreviation = "dev"
 $templateFilePrefix = "tlevels"
 $certsToUpload = @{   
-    "dev-manage-tlevel-results-tlevels-gov-uk" = '950A3F44B4CEB8FC4EC48D6BC74971FDA7337E81'
+    "d01-manage-tlevel-results-tlevels-gov-uk" = '173E73EEF9FDB82488D00B49EC4578D556909F6B'
+    "learnerrecordservicecertificate" = 'bae31aef5a8c6058a060ca053f6f9dd4292b1f57'
 }
 
 $sharedResourceGroupName = $envPrefix + "-$($applicationPrefix)-shared"
@@ -117,8 +118,8 @@ $envDeploymentParameters = @{
         sqlDatabaseTier                             = 'Standard'
         sqlserverlessAutoPauseDelay                 = '-1'
         configurationStorageConnectionString        = ($sharedDeployment.Outputs.configStorageConnectionString.Value)
-        uiCustomHostname                            = "dev.manage-tlevel-results.tlevels.gov.uk"                     
-        uiCertificateName                           = "dev-manage-tlevel-results-tlevels-gov-uk"
+        uiCustomHostname                            = "d01.manage-tlevel-results.tlevels.gov.uk"                     
+        uiCertificateName                           = "d01-manage-tlevel-results-tlevels-gov-uk"
         storageAccountContainerArray                = @()
         learnerVerificationAndLearningEventsTrigger = "0 0 1 1 2"
         learnerGenderTrigger                        = "1 0 1 1 2"
