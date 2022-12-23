@@ -65,10 +65,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
                 switch (cacheModel?.IpCompletion?.IndustryPlacementStatus.Value)
                 {
                     case IndustryPlacementStatus.Completed:
-                        DeclarationText = string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, LearnerName);
-                        break;
                     case IndustryPlacementStatus.CompletedWithSpecialConsideration:
-                        DeclarationText = "TODO";
+                        DeclarationText = string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, LearnerName);
                         break;
                     case IndustryPlacementStatus.NotCompleted:
                         DeclarationText = string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Is_Held, LearnerName);

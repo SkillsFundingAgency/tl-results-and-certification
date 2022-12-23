@@ -83,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             // SpecialConsideration Rows
             if (cacheModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
             {
-                var isScAdded = AddSummaryItemForSpecialConsideration(cacheModel, detailsList); // TODO: next story?
+                var isScAdded = AddSummaryItemForSpecialConsideration(cacheModel, detailsList);
                 if (!isScAdded)
                     return (null, false);
             }

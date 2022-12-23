@@ -241,7 +241,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to completed with special consideration.
+        ///   Looks up a localized string similar to Placement completed with special consideration.
         /// </summary>
         public static string Status_Completed_With_Special_Consideration {
             get {
