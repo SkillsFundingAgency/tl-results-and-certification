@@ -2,9 +2,6 @@ parameters:
   - name: devEnvId
     type: string
 
-variables:
-  - group: platform-global
-
 stages:
   - template: tlevels-build-stage.yml
     parameters:        
