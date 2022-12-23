@@ -58,7 +58,7 @@ jobs:
             -overallResultCalculationTrigger "0 0 0 1 1 2"
             -ucasTransferAmendmentsTrigger "0 0 0 1 1 2"
             -ucasTransferEntriesTrigger "0 0 0 1 1 2"
-            -ucasTransferResultsTrigger "0 0 0 1 1 2"
+            -ucasTransferResultsTrigger "0 0 0 1 1 2"'
           tags: $(Tags) 
           processOutputs: true
 
