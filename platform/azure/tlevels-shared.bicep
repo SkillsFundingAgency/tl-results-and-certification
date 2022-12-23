@@ -115,7 +115,7 @@ var fullAccessPolicies = {
 }
 
 module shared_storage_account_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/storage-account-arm.json' = {
-  name: 'shared-storage-account-${environmentNameAbbreviation}-${deployment().name}'
+  name: 'shared-storage-account-${environmentNameAbbreviation}'
   params: {
     storageAccountName: sharedStorageAccountName
     storageKind: 'StorageV2'
@@ -124,7 +124,7 @@ module shared_storage_account_environmentNameAbbreviation 'tl-platform-building-
 }
 
 module sql_server_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/sql-server.json' = {
-  name: 'sql-server-${environmentNameAbbreviation}-${deployment().name}'
+  name: 'sql-server-${environmentNameAbbreviation}'
   params: {
     sqlServerName: sqlServerName
     sqlServerAdminUserName: sqlServerAdminUsername
@@ -140,7 +140,7 @@ module sql_server_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTe
 }
 
 module app_service_plan_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/app-service-plan.json' = {
-  name: 'app-service-plan-${environmentNameAbbreviation}-${deployment().name}'
+  name: 'app-service-plan-${environmentNameAbbreviation}'
   params: {
     appServicePlanName: appServicePlanName
     nonASETier: appServicePlanTier
@@ -150,7 +150,7 @@ module app_service_plan_environmentNameAbbreviation 'tl-platform-building-blocks
 }
 
 module config_storage_account_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/storage-account-arm.json' = {
-  name: 'config-storage-account-${environmentNameAbbreviation}-${deployment().name}'
+  name: 'config-storage-account-${environmentNameAbbreviation}'
   params: {
     storageAccountName: configStorageAccountName
     storageKind: 'StorageV2'
@@ -159,7 +159,7 @@ module config_storage_account_environmentNameAbbreviation 'tl-platform-building-
 }
 
 module key_vault_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/keyvault.json' = {
-  name: 'key-vault-${environmentNameAbbreviation}-${deployment().name}'
+  name: 'key-vault-${environmentNameAbbreviation}'
   params: {
     keyVaultName: keyVaultName
     enabledForTemplateDeployment: true
@@ -169,7 +169,7 @@ module key_vault_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTem
 }
 
 module redisCache_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/redis.json' = {
-  name: 'redisCache-${environmentNameAbbreviation}-${deployment().name}'
+  name: 'redisCache-${environmentNameAbbreviation}'
   params:{
     redisCacheName: redisCacheName
     redisCacheSKU: redisCacheSku.name
