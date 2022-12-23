@@ -33,7 +33,7 @@ jobs:
           subscriptionId: $(subscriptionId)
           resourceGroupName: $(ResourceGroupName)
           location: "West Europe"
-          templateFilePath: "./azure/tlevels-environment.json"
+          templateFilePath: "./azure/tlevels-environment.bicep"
           armParameterOverrideString:
             '-environmentNameAbbreviation "${{parameters.environmentName}}"
             -resourceNamePrefix "${{parameters.BaseName}}"

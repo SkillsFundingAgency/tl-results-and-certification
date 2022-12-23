@@ -24,7 +24,7 @@ jobs:
                 subscriptionId: $(subscriptionId)
                 resourceGroupName: $(SharedResourceGroup)
                 location: 'West Europe'
-                templateFilePath: './azure/tlevels-shared.json'
+                templateFilePath: './azure/tlevels-shared.bicep'
                 armParameterOverrideString: '-environmentNameAbbreviation "${{parameters.baseName}}" 
                   -sqlServerAdminUsername "$(SQLServerAdminUsername)"
                   -sqlServerAdminPassword "$(SQLServerAdminPassword)"
