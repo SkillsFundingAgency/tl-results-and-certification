@@ -18,6 +18,7 @@ jobs:
 
     steps:
       - checkout: self
+        submodules: true
       - pwsh: |
           'Write-Host "SharedResourceGroup variable: $(SharedResourceGroup)"'
           'Write-Host "SharedASPName variable: $(SharedASPName)"'

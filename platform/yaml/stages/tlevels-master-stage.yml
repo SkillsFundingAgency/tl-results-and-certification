@@ -1,3 +1,10 @@
+parameters:
+  - name: devEnvId
+    type: string
+
+variables:
+  - group: platform-global
+
 stages:
   - template: tlevels-build-stage.yml
     parameters:        
@@ -12,7 +19,7 @@ stages:
       dependencies:
         - build
       environmentName: dev
-      sharedEnvironmentId: d01
+      sharedEnvironmentId: ${{parameters.devEnvId}}
       serviceConnection: $(devServiceConnection)
       applicationName: resac
     
@@ -21,10 +28,10 @@ stages:
       environmentTagName: Dev
       stageName: Dev
       dependencies:
-        - DeploySharedInfrastructure_d01
+        - DeploySharedInfrastructure_${{parameters.devEnvId}}
       environmentName: dev
-      environmentId: d01
-      sharedEnvironmentId: d01
+      environmentId: ${{parameters.devEnvId}}
+      sharedEnvironmentId: ${{parameters.devEnvId}}
       serviceConnection: $(devServiceConnection)
       applicationName: resac
 ######################## TEST ##############################################

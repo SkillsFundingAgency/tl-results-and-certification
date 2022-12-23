@@ -29,3 +29,5 @@ variables:
   applicationName: resac
 stages:
   - template: ./yaml/stages/tlevels-master-stage.yml
+    parameters:
+      devEnvId: ${{parameters.devEnvId}}

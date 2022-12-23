@@ -17,6 +17,7 @@ jobs:
         deploy:
           steps:
             - checkout: self
+              submodules: true
             - template: ./Infrastructure/steps/deploy-template.yml@devopsTemplates
               parameters:
                 serviceConnection: ${{ parameters.serviceConnection }}

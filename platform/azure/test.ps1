@@ -9,8 +9,8 @@ if (($PSScriptRoot).Length -eq 0) { $scriptRoot = $PWD.Path}
 
 $location = "westeurope"
 $applicationPrefix = "resac"
-$envPrefix = "s126d99"
-$environmentNameAbbreviation = "xxx"
+$envPrefix = "s126d02"
+$environmentNameAbbreviation = "dev"
 $templateFilePrefix = "tlevels"
 $certsToUpload = @{   
     "dev-manage-tlevel-results-tlevels-gov-uk" = '950A3F44B4CEB8FC4EC48D6BC74971FDA7337E81'
