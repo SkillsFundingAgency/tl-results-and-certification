@@ -19,16 +19,17 @@ param functionCertificateName string = ''
 
 @description('An array of container names to create in the storage account.')
 param storageAccountContainerArray array
-param learnerVerificationAndLearningEventsTrigger string
-param learnerGenderTrigger string
+
 param certificatePrintingBatchesCreateTrigger string
-param certificatePrintingRequestTrigger string
 param certificatePrintingBatchSummaryTrigger string
+param certificatePrintingRequestTrigger string
 param certificatePrintingTrackBatchTrigger string
+param learnerGenderTrigger string
+param learnerVerificationAndLearningEventsTrigger string
+param overallResultCalculationTrigger string
+param ucasTransferAmendmentsTrigger string
 param ucasTransferEntriesTrigger string
 param ucasTransferResultsTrigger string
-param ucasTransferAmendmentsTrigger string
-param overallResultCalculationTrigger string
 
 var uiAppName = '${resourceNamePrefix}-web'
 var internalApiAppName = '${resourceNamePrefix}-internal-api'
