@@ -73,9 +73,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         /// <summary>
         ///   Looks up a localized string similar to &lt;p&gt;You have told us that this learner has completed their industry placement. You can change the industry placement status by selecting ‘change’.&lt;/p&gt;.
         /// </summary>
-        public static string Success_Message {
+        public static string Success_Message_Completed {
             get {
-                return ResourceManager.GetString("Success_Message", resourceCulture);
+                return ResourceManager.GetString("Success_Message_Completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;You have told us that this learner still needs to complete their industry placement. You can change the industry placement status once the learner has completed this.&lt;/p&gt;.
+        /// </summary>
+        public static string Success_Message_Still_Need_To_Complete {
+            get {
+                return ResourceManager.GetString("Success_Message_Still_Need_To_Complete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;You have told us that this learner will not complete their industry placement. If this changes, you can update the industry placement status by selecting ‘change’.&lt;/p&gt;.
+        /// </summary>
+        public static string Success_Message_Will_Not_Complete {
+            get {
+                return ResourceManager.GetString("Success_Message_Will_Not_Complete", resourceCulture);
             }
         }
     }

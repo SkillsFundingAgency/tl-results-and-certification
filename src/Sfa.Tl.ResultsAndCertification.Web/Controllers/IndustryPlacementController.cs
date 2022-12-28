@@ -214,14 +214,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 await _cacheService.RemoveAsync<IndustryPlacementViewModel>(CacheKey);
 
-                var notificationBanner = new NotificationBannerModel
-                {
-                    HeaderMessage = IndustryPlacementBanner.Banner_HeaderMesage,
-                    Message = IndustryPlacementBanner.Success_Message,
-                    DisplayMessageBody = true,
-                    IsRawHtml = true
-                };
-
+                var notificationBanner = _industryPlacementLoader.GetSuccessNotificationBanner(cacheModel?.IpCompletion?.IndustryPlacementStatus);
+                
                 await _cacheService.SetAsync(TrainingProviderCacheKey, notificationBanner, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = cacheModel.IpCompletion.ProfileId });
             }

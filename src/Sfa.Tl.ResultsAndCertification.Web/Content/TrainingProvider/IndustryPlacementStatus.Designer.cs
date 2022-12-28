@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Not completed.
+        ///   Looks up a localized string similar to Placement still to be completed.
         /// </summary>
         public static string Still_To_Be_Completed_Display_Text {
             get {

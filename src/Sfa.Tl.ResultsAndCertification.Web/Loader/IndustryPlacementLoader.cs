@@ -4,7 +4,9 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using System;
@@ -89,6 +91,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             }
 
             return (detailsList, true);
+        }
+
+        public NotificationBannerModel GetSuccessNotificationBanner(IndustryPlacementStatus? industryPlacementStatus)
+        {
+            string message;
+            if (industryPlacementStatus == null)
+                message = string.Empty;
+            else
+            {
+                message = industryPlacementStatus.Value switch
+                {
+                    IndustryPlacementStatus.Completed or IndustryPlacementStatus.CompletedWithSpecialConsideration => IndustryPlacementBanner.Success_Message_Completed,
+                    IndustryPlacementStatus.NotCompleted => IndustryPlacementBanner.Success_Message_Still_Need_To_Complete,
+                    IndustryPlacementStatus.WillNotComplete => IndustryPlacementBanner.Success_Message_Will_Not_Complete,
+                    _ => string.Empty,
+                };
+            }
+            
+            var notificationBanner = new NotificationBannerModel
+            {
+                HeaderMessage = IndustryPlacementBanner.Banner_HeaderMesage,
+                Message = message,
+                DisplayMessageBody = true,
+                IsRawHtml = true
+            };
+
+            return notificationBanner;
         }
 
         private bool AddSummaryItemForSpecialConsideration(IndustryPlacementViewModel cacheModel, List<SummaryItemModel> detailsList)
