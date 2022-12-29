@@ -104,7 +104,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             {
                 message = industryPlacementStatus.Value switch
                 {
-                    IndustryPlacementStatus.Completed or IndustryPlacementStatus.CompletedWithSpecialConsideration => IndustryPlacementBanner.Success_Message_Completed,
+                    IndustryPlacementStatus.Completed => IndustryPlacementBanner.Success_Message_Completed,
+                    IndustryPlacementStatus.CompletedWithSpecialConsideration => IndustryPlacementBanner.Success_Message_Completed_With_Special_Consideration,
                     IndustryPlacementStatus.NotCompleted => IndustryPlacementBanner.Success_Message_Still_Need_To_Complete,
                     IndustryPlacementStatus.WillNotComplete => IndustryPlacementBanner.Success_Message_Will_Not_Complete,
                     _ => string.Empty,

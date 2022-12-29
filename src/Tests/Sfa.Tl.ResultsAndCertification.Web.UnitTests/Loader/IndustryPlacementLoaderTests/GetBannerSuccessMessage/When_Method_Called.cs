@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
                         new NotificationBannerModel
                         {
                             HeaderMessage = IndustryPlacementContent.Banner_HeaderMesage,
-                            Message = IndustryPlacementContent.Success_Message_Completed,
+                            Message = IndustryPlacementContent.Success_Message_Completed_With_Special_Consideration,
                             DisplayMessageBody = true,
                             IsRawHtml = true
                         }
