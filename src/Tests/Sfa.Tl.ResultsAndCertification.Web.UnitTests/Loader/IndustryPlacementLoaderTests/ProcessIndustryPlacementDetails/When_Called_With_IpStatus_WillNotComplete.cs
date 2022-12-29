@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementLoaderTests.ProcessIndustryPlacementDetails
 {
-    public class When_Called_With_Valid_Data_For_IpStatus_NotCompleted : TestSetup
+    public class When_Called_With_IpStatus_WillNotComplete : TestSetup
     {
         private readonly bool _expectedApiResult = true;
 
@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
                     ProfileId = 1,
                     RegistrationPathwayId = 1,
                     PathwayId = 7,
-                    IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted
+                    IndustryPlacementStatus = IndustryPlacementStatus.WillNotComplete
                 }
             };
 

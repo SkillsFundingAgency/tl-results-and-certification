@@ -64,8 +64,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<bool> ProcessIndustryPlacementDetailsAsync(long providerUkprn, IndustryPlacementViewModel viewModel)
         {
-            var request = _mapper.Map<IndustryPlacementRequest>(viewModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted
-                                                                  ? viewModel.IpCompletion : viewModel, opt => opt.Items["providerUkprn"] = providerUkprn);
+            var request = _mapper.Map<IndustryPlacementRequest>
+                (viewModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted || viewModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.WillNotComplete
+                    ? viewModel.IpCompletion : viewModel,  // If CompletedWithSpecialConsideration then map to store json data.
+                opt => opt.Items["providerUkprn"] = providerUkprn);
             return await _internalApiClient.ProcessIndustryPlacementDetailsAsync(request);
         }
 
@@ -168,23 +170,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (!industryPlacementStatus.HasValue)
                 return string.Empty;
 
-            switch (industryPlacementStatus.Value)
+            return industryPlacementStatus.Value switch
             {
-                case IndustryPlacementStatus.Completed:
-                    return CheckAndSubmitContent.Status_Completed;
-
-                case IndustryPlacementStatus.CompletedWithSpecialConsideration:
-                    return CheckAndSubmitContent.Status_Completed_With_Special_Consideration;
-
-                case IndustryPlacementStatus.NotCompleted:
-                    return CheckAndSubmitContent.Status_Not_Completed;
-
-                case IndustryPlacementStatus.WillNotComplete:
-                    return CheckAndSubmitContent.Status_Will_Not_Complete;
-
-                default:
-                    return string.Empty;
-            }
+                IndustryPlacementStatus.Completed => CheckAndSubmitContent.Status_Completed,
+                IndustryPlacementStatus.CompletedWithSpecialConsideration => CheckAndSubmitContent.Status_Completed_With_Special_Consideration,
+                IndustryPlacementStatus.NotCompleted => CheckAndSubmitContent.Status_Not_Completed,
+                IndustryPlacementStatus.WillNotComplete => CheckAndSubmitContent.Status_Will_Not_Complete,
+                _ => string.Empty,
+            };
         }
     }
 }

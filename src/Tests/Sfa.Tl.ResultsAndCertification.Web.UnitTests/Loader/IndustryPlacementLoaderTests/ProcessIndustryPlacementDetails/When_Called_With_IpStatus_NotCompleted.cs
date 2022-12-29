@@ -1,18 +1,19 @@
-﻿using FluentAssertions;
+﻿using AutoMapper;
+using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
-using System.Collections.Generic;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementLoaderTests.ProcessIndustryPlacementDetails
 {
-    public class When_Called_With_IpStatus_Completed : TestSetup
+    public class When_Called_With_IpStatus_NotCompleted : TestSetup
     {
         private readonly bool _expectedApiResult = true;
-        private IndustryPlacementDetails _industryPlacementDetails;
 
         public override void Given()
         {
@@ -27,27 +28,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
                     ProfileId = 1,
                     RegistrationPathwayId = 1,
                     PathwayId = 7,
-                    IndustryPlacementStatus = IndustryPlacementStatus.Completed
-                },
-            };
-
-            _industryPlacementDetails = new IndustryPlacementDetails
-            {
-                IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString(),
-                HoursSpentOnPlacement = null,
-                SpecialConsiderationReasons = new List<int?>(),
+                    IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted
+                }
             };
 
             InternalApiClient.ProcessIndustryPlacementDetailsAsync(Arg.Is<IndustryPlacementRequest>(x =>
                                 x.ProfileId == ViewModel.IpCompletion.ProfileId &&
                                 x.RegistrationPathwayId == ViewModel.IpCompletion.RegistrationPathwayId &&
-                                x.ProviderUkprn == ProviderUkprn &&
                                 x.IndustryPlacementStatus == ViewModel.IpCompletion.IndustryPlacementStatus &&
-                                x.IndustryPlacementDetails.IndustryPlacementStatus == _industryPlacementDetails.IndustryPlacementStatus &&
-                                x.IndustryPlacementDetails.HoursSpentOnPlacement == _industryPlacementDetails.HoursSpentOnPlacement &&
-                                x.IndustryPlacementDetails.SpecialConsiderationReasons.Count == _industryPlacementDetails.SpecialConsiderationReasons.Count &&
-                                x.PerformedBy == $"{Givenname} {Surname}"
-                                )).Returns(_expectedApiResult);
+                                x.ProviderUkprn == ProviderUkprn &&
+                                x.PerformedBy.Equals($"{Givenname} {Surname}")
+                                ))
+                             .Returns(_expectedApiResult);
 
             Loader = new IndustryPlacementLoader(InternalApiClient, Mapper);
         }
@@ -56,6 +48,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
         public void Then_Returns_Expected_Results()
         {
             ActualResult.Should().BeTrue();
-        }       
+        }
+
+        public override void CreateMapper()
+        {
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddMaps(typeof(IndustryPlacementMapper).Assembly);
+                c.ConstructServicesUsing(type =>
+                            type.Name.Contains("UserNameResolver") ?
+                                new UserNameResolver<IpCompletionViewModel, IndustryPlacementRequest>(HttpContextAccessor) : null);
+            });
+            Mapper = new AutoMapper.Mapper(mapperConfig);
+        }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using System.Collections.Generic;
@@ -10,11 +9,7 @@ using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.Industr
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementLoaderTests.GetIpSummaryDetailsList
 {
-    // Pattern 1: TempFlexUsed  --> BlendUsed   --> TF List --> Check&Submit
-    // Pattern 2: TempFlexUsed  --> TFList      --> Check&Submit
-    // Pattern 3: BlendUsed     --> Check&Submit
-    // Pattern 4: Check&Submit
-    public class When_Called_With_Valid_Pattern1_Data : TestSetup
+    public class When_Called_With_Status_Completed_Sc : TestSetup
     {
         public List<SummaryItemModel> _expectedSummaryDetails;
         private Dictionary<string, string> _routeAttributes;
