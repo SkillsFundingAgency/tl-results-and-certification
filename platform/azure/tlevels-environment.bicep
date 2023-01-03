@@ -308,3 +308,4 @@ output IntTestSQLDatabaseName string = IntTestSQLDatabaseName
 output uiAppName string = uiAppName
 output internalApiAppName string = internalApiAppName
 output functionAppName string = functionAppName
+output blobStorageAccountName string = storageAccountName
