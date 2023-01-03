@@ -63,7 +63,7 @@ jobs:
             $variableName = "BlobStorageConnectionString"
             Write-Host "Obtaining the connection string for $(BlobStorageAccountName) and setting $variableName"
             $storageAccountKey = (Get-AzStorageAccountKey -ResourceGroupName "$(resourceGroupName)" -Name "$(BlobStorageAccountName)")[0].Value
-            $connectionString = "DefaultEndpointsProtocol=https;AccountName=$(BlobStorageAccountName);AccountKey=$(storageAccountKey);EndpointSuffix=core.windows.net"
+            $connectionString = "DefaultEndpointsProtocol=https;AccountName=$(BlobStorageAccountName);AccountKey=" + $storageAccountKey + ";EndpointSuffix=core.windows.net"
             Write-Output "##vso[task.setvariable variable=$variableName;issecret=true]$connectionString"
             Write-Host "Variable $variableName set"
 
