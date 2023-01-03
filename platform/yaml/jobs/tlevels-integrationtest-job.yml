@@ -73,6 +73,7 @@
     - task: AzurePowerShell@5
       displayName: 'ADD build server public ip TO DB FW rules'
       inputs:
+        azurePowerShellVersion: LatestVersion
         azureSubscription: ${{ parameters.serviceConnection }}
         ScriptType: InlineScript
         Inline: |
@@ -90,6 +91,7 @@
     - task: AzurePowerShell@5
       displayName: 'REMOVE build server public ip FROM DB FW rules'
       inputs:
+        azurePowerShellVersion: LatestVersion
         azureSubscription: ${{ parameters.serviceConnection }}
         ScriptType: InlineScript
         Inline: |
