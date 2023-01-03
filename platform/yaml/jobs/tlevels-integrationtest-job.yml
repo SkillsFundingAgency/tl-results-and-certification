@@ -24,6 +24,7 @@
       ConfigurationStorageConnectionString: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.configStorageConnectionString'] ]
       IntTestSqlConnectionString: $[ dependencies.DeploySQLDatabase.outputs['IntTestSqlVariables.IntTestSqlConnectionString'] ]   
       EnvironmentName: ${{ upper(parameters.environmentName) }}
+      SharedResourceGroup: $[stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.SharedVariables.SharedResourceGroup']]
 
     steps:
     - script: echo $EnvironmentName
@@ -69,6 +70,14 @@
         TokenStart: "__"
         TokenEnd: "__"
 
+    - task: AzurePowerShell@5
+      displayName: 'ADD build server public ip TO DB FW rules'
+      inputs:
+        azureSubscription: ${{ parameters.serviceConnection }}
+        ScriptType: InlineScript
+        Inline: |
+          $ip = (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content
+          New-AzSqlServerFirewallRule -ResourceGroupName $(sharedResourceGroup) -ServerName $(SharedSQLServerName) -FirewallRuleName "BuildServer-"+$ip -StartIpAddress $ip -EndIpAddress $ip
 
     - task: VSTest@2
       displayName: 'Run Integration tests'
@@ -77,3 +86,12 @@
         searchFolder: '$(Agent.TempDirectory)\IntegrationTests'
         runInParallel: false
         failOnMinTestsNotRun: false
+
+    - task: AzurePowerShell@5
+      displayName: 'REMOVE build server public ip FROM DB FW rules'
+      inputs:
+        azureSubscription: ${{ parameters.serviceConnection }}
+        ScriptType: InlineScript
+        Inline: |
+          $ip = (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content
+          Remove-AzSqlServerFirewallRule -ResourceGroupName $(sharedResourceGroup) -ServerName $(SharedSQLServerName) -FirewallRuleName "BuildServer-"+$ip -Force
