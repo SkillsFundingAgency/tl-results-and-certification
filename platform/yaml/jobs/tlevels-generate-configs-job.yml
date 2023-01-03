@@ -3,19 +3,22 @@ parameters:
     type: string
   - name: sharedEnvironmentId
     type: string
+  - name: resourceGroupName
+    type: string
   - name: tableName
     type: string
     default: "configuration"
 jobs:
   - job: GenerateConfigs
     variables:
-      ConfigStorageAccountName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.ConfigStorageAccountName'] ]
-      SqlConnectionString: $[ dependencies.DeploySQLDatabase.outputs['SqlVariables.SqlConnectionString'] ]
-      BlobStorageConnectionString: $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.BlobStorageConnectionString'] ]
-      RedisCacheConnection: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.RedisConnectionString'] ]
-      KeyVaultUri: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedKeyVaultUri'] ]
-      DataProtectionKeyVaultKeyId: $[stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DataprotectionKey.DataProtectionKeyVaultKeyId']]
-      IntTestSqlConnectionString: $[ dependencies.DeploySQLDatabase.outputs['IntTestSqlVariables.IntTestSqlConnectionString'] ]
+      ConfigStorageAccountName:     $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.ConfigStorageAccountName'] ]
+      SqlConnectionString:          $[ dependencies.DeploySQLDatabase.outputs['SqlVariables.SqlConnectionString'] ]
+      BlobStorageAccountName     :  $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.BlobStorageAccountName'] ]
+      #RedisCacheConnection:         $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.RedisConnectionString'] ]
+      KeyVaultUri:                  $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedKeyVaultUri'] ]
+      DataProtectionKeyVaultKeyId:  $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DataprotectionKey.DataProtectionKeyVaultKeyId']]
+      IntTestSqlConnectionString:   $[ dependencies.DeploySQLDatabase.outputs['IntTestSqlVariables.IntTestSqlConnectionString'] ]
+      RedisCacheName:               $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.RedisCacheName'] ]
 
     pool:
       name: "Azure Pipelines"
@@ -28,12 +31,41 @@ jobs:
       - pwsh: |
           'Write-Host "ConfigStorageAccountName variable: $(ConfigStorageAccountName)"'
           'Write-Host "SqlConnectionString variable: $(SqlConnectionString)"'
-          'Write-Host "BlobStorageConnectionString variable: $(BlobStorageConnectionString)"'
-          'Write-Host "RedisCacheConnection variable: $(RedisCacheConnection)"'
+          'Write-Host "BlobStorageAccountName variable: $(BlobStorageAccountName)"'
+          'Write-Host "RedisCacheName variable: $(RedisCacheName)"'
           'Write-Host "KeyVaultUri variable: $(KeyVaultUri)"'
           'Write-Host "DataProtectionKeyVaultKeyId : $(DataProtectionKeyVaultKeyId)"'
           'Write-Host "IntTestSqlConnectionString : $(IntTestSqlConnectionString)"'
         name: ShowVariables
+
+      - task: AzurePowerShell@5
+        displayName: "Setting RedisCacheConnection variable"
+        inputs: 
+          azurePowerShellVersion: 'LatestVersion'
+          azureSubscription: ${{ parameters.serviceConnection }}
+          scriptType: 'InlineScript'
+          Inline: |
+            $variableName = "RedisCacheConnection"
+            Write-Host "Obtaining the connection string for $(RedisCacheName) and setting $variableName"
+            $redisCache = Get-AzRedisCache -Name $(RedisCacheName)
+            $primaryKey = (Get-AzRedisCacheKey -Name $(RedisCacheName)).PrimaryKey
+            $connectionString = $redisCache.HostName + ":" + $redisCache.SslPort + ",password=" + $primaryKey + ",ssl=True,abortConnect=False"
+            Write-Output "##vso[task.setvariable variable=$variableName;issecret=true]$connectionString"
+            Write-Host "Variable $variableName set"
+
+      - task: AzurePowerShell@5
+        displayName: "Setting BlobStorageConnectionString variable"
+        inputs: 
+          azurePowerShellVersion: 'LatestVersion'
+          azureSubscription: ${{ parameters.serviceConnection }}
+          scriptType: 'InlineScript'
+          Inline: |
+            $variableName = "BlobStorageConnectionString"
+            Write-Host "Obtaining the connection string for $(BlobStorageAccountName) and setting $variableName"
+            $storageAccountKey = (Get-AzStorageAccountKey -ResourceGroupName "$(resourceGroupName)" -Name "$(BlobStorageAccountName)")[0].Value
+            $connectionString = "DefaultEndpointsProtocol=https;AccountName=$(BlobStorageAccountName);AccountKey=$(StorageAccountKey);EndpointSuffix=core.windows.net"
+            Write-Output "##vso[task.setvariable variable=$variableName;issecret=true]$connectionString"
+            Write-Host "Variable $variableName set"
 
       - task: DownloadBuildArtifacts@0
         inputs:

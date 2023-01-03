@@ -51,6 +51,7 @@ stages:
         parameters:
           serviceConnection: ${{ parameters.serviceConnection }}
           sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
+          resourceGroupName: ${{ variables.resourceGroupName }}
 
       - template: ../jobs/tlevels-integrationtest-job.yml
         parameters:
