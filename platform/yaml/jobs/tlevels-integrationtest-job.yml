@@ -91,6 +91,7 @@
 
     - task: AzurePowerShell@5
       displayName: 'REMOVE build server public ip FROM DB FW rules'
+      condition: succeededOrFailed()
       inputs:
         azurePowerShellVersion: LatestVersion
         azureSubscription: ${{ parameters.serviceConnection }}
