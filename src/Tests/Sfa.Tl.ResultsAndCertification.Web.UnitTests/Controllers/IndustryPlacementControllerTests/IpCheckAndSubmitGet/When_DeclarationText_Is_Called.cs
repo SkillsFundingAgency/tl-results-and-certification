@@ -28,12 +28,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                     new object[]
                     {
                         new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.NotCompleted } },
-                        CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Is_Held // TODO: rename these 
+                        CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Is_Held
                     },
                     new object[]
                     {
                         new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.WillNotComplete } },
-                        "TODO"
+                         CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Is_Held
                     }
                 };
             }

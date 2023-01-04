@@ -69,10 +69,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
                         DeclarationText = string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, LearnerName);
                         break;
                     case IndustryPlacementStatus.NotCompleted:
-                        DeclarationText = string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Is_Held, LearnerName);
-                        break;
                     case IndustryPlacementStatus.WillNotComplete:
-                        DeclarationText = "TODO";
+                        DeclarationText = CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Is_Held;
                         break;
                 }
             }

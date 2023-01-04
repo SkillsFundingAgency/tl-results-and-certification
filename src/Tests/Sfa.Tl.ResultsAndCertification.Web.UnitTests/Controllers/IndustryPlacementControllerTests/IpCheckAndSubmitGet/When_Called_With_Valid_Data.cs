@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
             // DateofBirth
             model.SummaryDateofBirth.Title.Should().Be(CheckAndSubmitContent.Title_DateofBirth_Text);
-            model.SummaryDateofBirth.Value.Should().Be(_learnerDetails.DateofBirth.ToDobFormat());
+            model.SummaryDateofBirth.Value.Should().Be(_learnerDetails.DateofBirth.ToDobFormat(trimLeadingZero: true));
 
             // Tlevel
             model.SummaryTlevelTitle.Title.Should().Be(CheckAndSubmitContent.Title_TLevel_Text);

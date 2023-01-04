@@ -98,6 +98,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Placement will not be completed.
+        /// </summary>
+        public static string Placement_Will_Not_Be_Completed {
+            get {
+                return ResourceManager.GetString("Placement_Will_Not_Be_Completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Placement still needs to be completed.
         /// </summary>
         public static string Still_To_Be_Completed_Display_Text {
