@@ -78,7 +78,8 @@
         ScriptType: InlineScript
         Inline: |
           $ip = (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content
-          New-AzSqlServerFirewallRule -ResourceGroupName $(sharedResourceGroup) -ServerName $(SharedSQLServerName) -FirewallRuleName "BuildServer-"+$ip -StartIpAddress $ip -EndIpAddress $ip
+          Write-Host "Adding $ip to FW Rules for $(SharedSQLServerName) in RG $(sharedResourceGroup)"
+          New-AzSqlServerFirewallRule -ResourceGroupName $(sharedResourceGroup) -ServerName $(SharedSQLServerName) -FirewallRuleName "BuildServer-$ip" -StartIpAddress $ip -EndIpAddress $ip
 
     - task: VSTest@2
       displayName: 'Run Integration tests'
@@ -96,4 +97,5 @@
         ScriptType: InlineScript
         Inline: |
           $ip = (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content
-          Remove-AzSqlServerFirewallRule -ResourceGroupName $(sharedResourceGroup) -ServerName $(SharedSQLServerName) -FirewallRuleName "BuildServer-"+$ip -Force
+          Write-Host "Removing $ip from FW Rules for $(SharedSQLServerName) in RG $(sharedResourceGroup)"
+          Remove-AzSqlServerFirewallRule -ResourceGroupName $(sharedResourceGroup) -ServerName $(SharedSQLServerName) -FirewallRuleName "BuildServer-$ip" -Force
