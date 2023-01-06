@@ -1,3 +1,7 @@
-[submodule "platform/azure/tl-platform-building-blocks"]
-	path = platform/azure/tl-platform-building-blocks
+
+[submodule "platform/tl-platform-automation"]
+	path = platform/tl-platform-automation
+	url = https://github.com/SkillsFundingAgency/tl-platform-automation.git
+[submodule "platform/tl-platform-building-blocks"]
+	path = platform/tl-platform-building-blocks
 	url = https://github.com/SkillsFundingAgency/tl-platform-building-blocks.git

@@ -114,7 +114,7 @@ var fullAccessPolicies = {
   fullAccessPolicies: fullAccessPoliciesInner
 }
 
-module shared_storage_account_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/storage-account-arm.json' = {
+module shared_storage_account_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/storage-account-arm.json' = {
   name: 'shared-storage-account-${environmentNameAbbreviation}'
   params: {
     storageAccountName: sharedStorageAccountName
@@ -123,7 +123,7 @@ module shared_storage_account_environmentNameAbbreviation 'tl-platform-building-
   }
 }
 
-module sql_server_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/sql-server.json' = {
+module sql_server_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/sql-server.json' = {
   name: 'sql-server-${environmentNameAbbreviation}'
   params: {
     sqlServerName: sqlServerName
@@ -139,7 +139,7 @@ module sql_server_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTe
   ]
 }
 
-module app_service_plan_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/app-service-plan.json' = {
+module app_service_plan_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/app-service-plan.json' = {
   name: 'app-service-plan-${environmentNameAbbreviation}'
   params: {
     appServicePlanName: appServicePlanName
@@ -149,7 +149,7 @@ module app_service_plan_environmentNameAbbreviation 'tl-platform-building-blocks
   }
 }
 
-module config_storage_account_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/storage-account-arm.json' = {
+module config_storage_account_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/storage-account-arm.json' = {
   name: 'config-storage-account-${environmentNameAbbreviation}'
   params: {
     storageAccountName: configStorageAccountName
@@ -158,7 +158,7 @@ module config_storage_account_environmentNameAbbreviation 'tl-platform-building-
   }
 }
 
-module key_vault_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/keyvault.json' = {
+module key_vault_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/keyvault.json' = {
   name: 'key-vault-${environmentNameAbbreviation}'
   params: {
     keyVaultName: keyVaultName
@@ -168,7 +168,7 @@ module key_vault_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTem
   }
 }
 
-module redisCache_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/redis.json' = {
+module redisCache_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/redis.json' = {
   name: 'redisCache-${environmentNameAbbreviation}'
   params:{
     redisCacheName: redisCacheName

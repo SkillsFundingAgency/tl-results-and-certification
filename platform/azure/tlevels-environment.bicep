@@ -39,7 +39,7 @@ var sqlDatabaseName = '${resourceNamePrefix}-sqldb'
 var IntTestSQLDatabaseName = '${resourceNamePrefix}-inttest-sqldb'
 var storageAccountName = replace('${resourceNamePrefix}str', '-', '')
 
-module storage_account_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/storage-account-arm.json' = {
+module storage_account_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/storage-account-arm.json' = {
   name: 'storage-account-${environmentNameAbbreviation}'
   params: {
     storageAccountName: storageAccountName
@@ -48,7 +48,7 @@ module storage_account_environmentNameAbbreviation 'tl-platform-building-blocks/
   }
 }
 
-module storage_account_container_storageAccountContainerArray 'tl-platform-building-blocks/ArmTemplates/storage-container.json' = [for item in storageAccountContainerArray: {
+module storage_account_container_storageAccountContainerArray '../tl-platform-building-blocks/ArmTemplates/storage-container.json' = [for item in storageAccountContainerArray: {
   name: 'storage-account-container${item}'
   params: {
     storageAccountName: storageAccountName
@@ -60,7 +60,7 @@ module storage_account_container_storageAccountContainerArray 'tl-platform-build
   ]
 }]
 
-module app_insights_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/application-insights.json' = {
+module app_insights_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/application-insights.json' = {
   name: 'app-insights-${environmentNameAbbreviation}'
   params: {
     appInsightsName: appInsightName
@@ -68,7 +68,7 @@ module app_insights_environmentNameAbbreviation 'tl-platform-building-blocks/Arm
   }
 }
 
-module ui_app_service_certificate_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/app-service-certificate.json' = {
+module ui_app_service_certificate_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/app-service-certificate.json' = {
   name: 'ui-app-service-certificate-${environmentNameAbbreviation}'
   params: {
     keyVaultCertificateName: uiCertificateName
@@ -78,7 +78,7 @@ module ui_app_service_certificate_environmentNameAbbreviation 'tl-platform-build
   }
 }
 
-module ui_app_service_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/app-service.json' = {
+module ui_app_service_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/app-service.json' = {
   name: 'ui-app-service-${environmentNameAbbreviation}'
   params: {
     appServiceName: uiAppName
@@ -112,7 +112,7 @@ module ui_app_service_environmentNameAbbreviation 'tl-platform-building-blocks/A
   }
 }
 
-module internal_api_app_service_certificate_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/app-service-certificate.json' = if (length(internalApiCustomHostname) > 0) {
+module internal_api_app_service_certificate_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/app-service-certificate.json' = if (length(internalApiCustomHostname) > 0) {
   name: 'internal-api-app-service-certificate-${environmentNameAbbreviation}'
   scope: resourceGroup(resourceGroup().name)
   params: {
@@ -123,7 +123,7 @@ module internal_api_app_service_certificate_environmentNameAbbreviation 'tl-plat
   }
 }
 
-module internal_api_app_service_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/app-service.json' = {
+module internal_api_app_service_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/app-service.json' = {
   name: 'internal-api-app-service-${environmentNameAbbreviation}'
   params: {
     appServiceName: internalApiAppName
@@ -157,7 +157,7 @@ module internal_api_app_service_environmentNameAbbreviation 'tl-platform-buildin
   }
 }
 
-module function_app_certificate_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/app-service-certificate.json' = if (length(functionCertificateName) > 0) {
+module function_app_certificate_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/app-service-certificate.json' = if (length(functionCertificateName) > 0) {
   name: 'function-app-certificate-${environmentNameAbbreviation}'
   scope: resourceGroup(resourceGroup().name)
   params: {
@@ -167,7 +167,7 @@ module function_app_certificate_environmentNameAbbreviation 'tl-platform-buildin
   }
 }
 
-module function_app_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/function-app.json' = {
+module function_app_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/function-app.json' = {
   name: 'function-app-${environmentNameAbbreviation}'
   params: {
     functionAppName: functionAppName
@@ -269,7 +269,7 @@ module function_app_environmentNameAbbreviation 'tl-platform-building-blocks/Arm
   ]
 }
 
-module sql_database_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/sql-database.json' = {
+module sql_database_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/sql-database.json' = {
   name: 'sql-database-${environmentNameAbbreviation}'
   scope: resourceGroup(sharedEnvResourceGroup)
   params: {
@@ -281,7 +281,7 @@ module sql_database_environmentNameAbbreviation 'tl-platform-building-blocks/Arm
   }
 }
 
-module inttest_sql_database_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/sql-database.json' = {
+module inttest_sql_database_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/sql-database.json' = {
   name: 'inttest-sql-database-${environmentNameAbbreviation}'
   scope: resourceGroup(sharedEnvResourceGroup)
   params: {
@@ -293,7 +293,7 @@ module inttest_sql_database_environmentNameAbbreviation 'tl-platform-building-bl
   }
 }
 
-module sql_server_firewall_rules_environmentNameAbbreviation 'tl-platform-building-blocks/ArmTemplates/sql-server-firewall-rules.json' = {
+module sql_server_firewall_rules_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/sql-server-firewall-rules.json' = {
   name: 'sql-server-firewall-rules-${environmentNameAbbreviation}'
   scope: resourceGroup(sharedEnvResourceGroup)
   params: {
