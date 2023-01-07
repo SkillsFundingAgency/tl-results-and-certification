@@ -6,13 +6,13 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
 using System.Collections.Generic;
-using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
-using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
-using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
-using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
 using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using System.Linq;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
+using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
+using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
+using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
+using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
@@ -50,11 +50,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         /// True when status is Active or Withdrawn
         /// </summary>
         public bool IsLearnerRegistered { get; set; }
-        public bool IsStatusCompleted => IsMathsAdded && IsEnglishAdded && IsIndustryPlacementAdded; // TODO: should be IsIndustryPlacementCompleted
+        public bool IsStatusCompleted => IsMathsAdded && IsEnglishAdded && (IsIndustryPlacementAdded && IndustryPlacementStatus != IpStatus.NotCompleted);
         public bool IsIndustryPlacementAdded => IndustryPlacementStatus != IpStatus.NotSpecified;
         public bool IsMathsAdded => MathsStatus != SubjectStatus.NotSpecified;
         public bool IsEnglishAdded => EnglishStatus != SubjectStatus.NotSpecified;
-        //public bool CanAddIndustryPlacement => IndustryPlacementStatus == IpStatus.NotSpecified || IndustryPlacementStatus == IpStatus.NotCompleted;
         public bool DisplayOverallResults => OverallResultDetails != null && OverallResultPublishDate.HasValue && DateTime.UtcNow >= OverallResultPublishDate;
         public NotificationBannerModel SuccessBanner { get; set; }
         public DateTime? LastDocumentRequestedDate { get; set; }
