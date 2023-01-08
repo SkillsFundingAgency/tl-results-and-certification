@@ -129,38 +129,14 @@
   <data name="Heading_Check_Your_Answers" xml:space="preserve">
     <value>Check your answers</value>
   </data>
-  <data name="Hidden_Text_Ipmodel_List" xml:space="preserve">
-    <value> which industry placement models were used</value>
-  </data>
-  <data name="Hidden_Text_Ipmodel_Others_list" xml:space="preserve">
-    <value> which other industry placement models were used</value>
-  </data>
-  <data name="Hidden_Text_IpModel_Used" xml:space="preserve">
-    <value> whether industry placement models were used</value>
-  </data>
   <data name="Hidden_Text_Ip_Status" xml:space="preserve">
     <value> industry placement status</value>
-  </data>
-  <data name="Hidden_Text_MultiEmp_Used" xml:space="preserve">
-    <value> whether multiple employer model was used</value>
   </data>
   <data name="Hidden_Text_Special_Consideration_Hours" xml:space="preserve">
     <value> total placement hours</value>
   </data>
   <data name="Hidden_Text_Special_Consideration_Reasons" xml:space="preserve">
     <value> special consideration reasons</value>
-  </data>
-  <data name="Hidden_Text_Tf_Blended_Used" xml:space="preserve">
-    <value> whether a blended placement temporary flexibility was used</value>
-  </data>
-  <data name="Hidden_Text_Tf_Employer_Led_List" xml:space="preserve">
-    <value> whether an employer-led activities/projects temporary flexibility was used</value>
-  </data>
-  <data name="Hidden_Text_Tf_Granted_List" xml:space="preserve">
-    <value> which temporary flexibilities were used</value>
-  </data>
-  <data name="Hidden_Text_Tf_TempFlex_Used" xml:space="preserve">
-    <value> whether temporary flexibilities were used</value>
   </data>
   <data name="Link_Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -192,18 +168,6 @@
   <data name="Title_DateofBirth_Text" xml:space="preserve">
     <value>Date of birth</value>
   </data>
-  <data name="Title_IpModels_Selected_List_Text" xml:space="preserve">
-    <value>Selected industry placement models</value>
-  </data>
-  <data name="Title_IpModel_Multi_Emp_Text" xml:space="preserve">
-    <value>Multiple employer model used</value>
-  </data>
-  <data name="Title_IpModel_Selected_Other_List_Text" xml:space="preserve">
-    <value>Selected other industry placement models</value>
-  </data>
-  <data name="Title_IpModel_Text" xml:space="preserve">
-    <value>Industry placement models used</value>
-  </data>
   <data name="Title_IP_Status_Text" xml:space="preserve">
     <value>Industry placement status</value>
   </data>
@@ -215,15 +179,6 @@
   </data>
   <data name="Title_SpecialConsideration_Reasons_Text" xml:space="preserve">
     <value>Special consideration reasons</value>
-  </data>
-  <data name="Title_TempFlex_Emp_Led_Text" xml:space="preserve">
-    <value>Employer-led activities/projects temporary flexibility used</value>
-  </data>
-  <data name="Title_TempFlex_Selected_Text" xml:space="preserve">
-    <value>Selected temporary flexibilities</value>
-  </data>
-  <data name="Title_TempFlex_Used_Text" xml:space="preserve">
-    <value>Temporary flexibilities used</value>
   </data>
   <data name="Title_TLevel_Text" xml:space="preserve">
     <value>T Level</value>
