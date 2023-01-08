@@ -61,7 +61,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
             if (cacheModel?.IpCompletion?.IndustryPlacementStatus != null &&
                 cacheModel?.IpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.NotSpecified)
             {
-                // TODO: Cover UT.
                 switch (cacheModel?.IpCompletion?.IndustryPlacementStatus.Value)
                 {
                     case IndustryPlacementStatus.Completed:

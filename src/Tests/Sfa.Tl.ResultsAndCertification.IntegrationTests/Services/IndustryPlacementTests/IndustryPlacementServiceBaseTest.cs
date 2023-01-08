@@ -35,22 +35,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
 
         protected IndustryPlacementService IndustryPlacementService;
         protected IRepository<IpLookup> IpLookupRepository;
-        protected IRepository<IpModelTlevelCombination> IpModelTlevelCombinationRepository;
-        protected IRepository<IpTempFlexTlevelCombination> IpTempFlexTlevelCombinationRepository;
-        protected IRepository<IpTempFlexNavigation> IpTempFlexNavigationRepository;
         protected IRepository<IndustryPlacement> IndustryPlacementRepository;        
         protected IRepository<TqRegistrationPathway> RegistrationPathwayRepository;
 
         protected IMapper Mapper;
         protected IList<IpLookup> IpLookup;
-        protected IList<IpModelTlevelCombination> IpModelTlevelCombination;
-        protected IList<IpTempFlexTlevelCombination> IpTempFlexTlevelCombination;
 
         // Dependencies
         protected ILogger<GenericRepository<IpLookup>> IpLookupRepositoryLogger;
-        protected ILogger<GenericRepository<IpModelTlevelCombination>> IpModelTlevelCombinationLogger;
-        protected ILogger<GenericRepository<IpTempFlexTlevelCombination>> IpTempFlexTlevelCombinationLogger;
-        protected ILogger<GenericRepository<IpTempFlexNavigation>> IpTempFlexNavigationLogger;
         protected ILogger<GenericRepository<IndustryPlacement>> IndustryPlacementLogger;
         protected ILogger<GenericRepository<TqRegistrationPathway>> RegistrationPathwayRepositoryLogger;
         protected ILogger<IndustryPlacementService> IndustryPlacementServiceLogger;
@@ -114,31 +106,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
         public void SeedSpecialConsiderationsLookupData()
         {
             IpLookup = IpLookupDataProvider.CreateIpLookupList(DbContext, null, IpLookupType.SpecialConsideration, true);
-            DbContext.SaveChanges();
-        }
-
-        public void SeedTempFlexNavigation()
-        {
-            var navigations = new IpTempFlexNavigationBuilder().BuildList(EnumAwardingOrganisation.Pearson);
-            DbContext.AddRange(navigations);
-            DbContext.SaveChanges();
-        }
-
-        public void SeedIpModelTlevelCombinationsData(TlPathway pathway = null)
-        {
-            var ipModelTlevelCombinations = new IpModelTlevelCombinationBuilder().BuildList(EnumAwardingOrganisation.Pearson, IpLookupType.IndustryPlacementModel, pathway);
-
-            IpModelTlevelCombination = IpModelTlevelCombinationProvider.CreateIpModelTlevelCombinationsList(DbContext, EnumAwardingOrganisation.Ncfe, ipModelTlevelCombinations, true);
-
-            DbContext.SaveChanges();
-        }
-
-        public void SeedIpTempFlexTlevelCombinationsData(TlPathway pathway = null)
-        {
-            var ipTempFlexTlevelCombinations = new IpTempFlexTlevelCombinationBuilder().BuildList(EnumAwardingOrganisation.Pearson, IpLookupType.TemporaryFlexibility, pathway);
-
-            IpTempFlexTlevelCombination = IpTempFlexTlevelCombinationProvider.CreateIpTempFlexTlevelCombinationsList(DbContext, EnumAwardingOrganisation.Pearson, ipTempFlexTlevelCombinations, true);
-
             DbContext.SaveChanges();
         }
     }
