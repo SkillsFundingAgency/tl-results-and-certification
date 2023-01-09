@@ -225,6 +225,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>IpTempFlexibilityUsed.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\IndustryPlacement\Upload.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Upload.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\UploadSuccessful.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UploadSuccessful.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\IndustryPlacement\UploadUnsuccessful.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UploadUnsuccessful.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\PostResultsService\PrsAddAppeal.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1150,6 +1165,18 @@
     <EmbeddedResource Update="Content\IndustryPlacement\IpTempFlexibilityUsed.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IpTempFlexibilityUsed.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\Upload.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Upload.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\UploadSuccessful.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UploadSuccessful.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\IndustryPlacement\UploadUnsuccessful.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UploadUnsuccessful.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\PostResultsService\PrsAddAppeal.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

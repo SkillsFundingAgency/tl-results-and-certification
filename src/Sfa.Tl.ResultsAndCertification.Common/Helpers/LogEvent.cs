@@ -60,5 +60,7 @@
         // Provider Address events
         public const int AddAddressFailed = 9001;
 
+        public const int BulkIndustryPlacementProcessFailed = 10001;
+
     }
 }

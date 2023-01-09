@@ -6,12 +6,17 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
+using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement.IpCheckAndSubmit;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using System.IO;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 {
@@ -19,11 +24,60 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
     {
         private readonly IResultsAndCertificationInternalApiClient _internalApiClient;
         private readonly IMapper _mapper;
+        private readonly IBlobStorageService _blobStorageService;
 
-        public IndustryPlacementLoader(IResultsAndCertificationInternalApiClient internalApiClient, IMapper mapper)
+        public IndustryPlacementLoader(IResultsAndCertificationInternalApiClient internalApiClient, IMapper mapper, IBlobStorageService blobStorageService = null)
         {
             _internalApiClient = internalApiClient;
             _mapper = mapper;
+            _blobStorageService = blobStorageService;
+        }
+
+        public async Task<UploadIndustryPlacementsResponseViewModel> ProcessBulkIndustryPlacementsAsync(UploadIndustryPlacementsRequestViewModel viewModel)
+        {
+            var bulkIndustryPlacementsRequest = _mapper.Map<BulkProcessRequest>(viewModel);
+
+            using (var fileStream = viewModel.File.OpenReadStream())
+            {
+                await _blobStorageService.UploadFileAsync(new BlobStorageData
+                {
+                    ContainerName = bulkIndustryPlacementsRequest.DocumentType.ToString(),
+                    BlobFileName = bulkIndustryPlacementsRequest.BlobFileName,
+                    SourceFilePath = $"{bulkIndustryPlacementsRequest.AoUkprn}/{BulkProcessStatus.Processing}",
+                    FileStream = fileStream,
+                    UserName = bulkIndustryPlacementsRequest.PerformedBy
+                });
+            }
+
+            var bulkIndustryPlacementsResponse = await _internalApiClient.ProcessBulkIndustryPlacementsAsync(bulkIndustryPlacementsRequest);
+            return _mapper.Map<UploadIndustryPlacementsResponseViewModel>(bulkIndustryPlacementsResponse);
+        }
+
+        public async Task<Stream> GetIndustryPlacementValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference)
+        {
+            var documentInfo = await _internalApiClient.GetDocumentUploadHistoryDetailsAsync(aoUkprn, blobUniqueReference);
+
+            if (documentInfo != null && documentInfo.Status == (int)DocumentUploadStatus.Failed)
+            {
+                var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
+                {
+                    ContainerName = DocumentType.IndustryPlacements.ToString(),
+                    BlobFileName = documentInfo.BlobFileName,
+                    SourceFilePath = $"{aoUkprn}/{BulkProcessStatus.ValidationErrors}"
+                });
+
+                if (fileStream == null)
+                {
+                    var blobReadError = $"No FileStream found to download assessment validation errors. Method: DownloadFileAsync(ContainerName: {DocumentType.IndustryPlacements}, BlobFileName = {documentInfo.BlobFileName}, SourceFilePath = {aoUkprn}/{BulkProcessStatus.ValidationErrors})";
+                    //_logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
+                }
+                return fileStream;
+            }
+            else
+            {
+                //_logger.LogWarning(LogEvent.NoDataFound, $"No DocumentUploadHistoryDetails found or the request is not valid. Method: GetDocumentUploadHistoryDetailsAsync(AoUkprn: {aoUkprn}, BlobUniqueReference = {blobUniqueReference})");
+                return null;
+            }
         }
 
         public async Task<IList<IpLookupData>> GetIpLookupDataAsync(IpLookupType ipLookupType, int? pathwayId = null)

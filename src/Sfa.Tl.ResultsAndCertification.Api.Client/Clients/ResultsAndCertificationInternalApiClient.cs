@@ -415,6 +415,15 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<DataExportResponse>(requestUri);
         }
 
+        #region Industry Placement Bulk Upload
+
+        public async Task<BulkIndustryPlacementResponse> ProcessBulkIndustryPlacementsAsync(BulkProcessRequest model)
+        {
+            var requestUri = ApiConstants.ProcessBulkIndustryPlacementsUri;
+            return await PostAsync<BulkProcessRequest, BulkIndustryPlacementResponse>(requestUri, model);
+        }
+
+        #endregion
         #region Private Methods
 
         /// <summary>

@@ -3,11 +3,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement.BulkProcess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +51,192 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
             _mapper = mapper;
             _logger = logger;
+        }
+
+        public async Task<IList<IndustryPlacementRecordResponse>> ValidateIndustryPlacementsAsync(long providerUkprn, IEnumerable<IndustryPlacementCsvRecordResponse> csvIndustryPlacements)
+        {
+            var response = new List<IndustryPlacementRecordResponse>();
+
+            var uniqueLearnerNumbers = csvIndustryPlacements.Select(x => x.Uln);
+            var learnerPathways = await _tqRegistrationPathwayRepository.GetManyAsync(p => uniqueLearnerNumbers.Contains(p.TqRegistrationProfile.UniqueLearnerNumber) &&
+                                                                                      p.TqProvider.TlProvider.UkPrn == providerUkprn &&
+                                                                                      (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn),
+                                                                                      p => p.TqRegistrationProfile, p => p.IndustryPlacements, p => p.TqProvider.TqAwardingOrganisation.TlPathway)
+                                                                        .ToListAsync();
+
+            var latestPathways = learnerPathways
+                    .GroupBy(x => x.TqRegistrationProfileId)
+                    .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
+                    .ToList();
+
+            foreach (var industryPlacement in csvIndustryPlacements)
+            {
+                // 1. ULN not recognised with Provider
+                var registeredPathway = latestPathways.FirstOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == industryPlacement.Uln);
+                if (registeredPathway == null)
+                {
+                    response.Add(AddStage3ValidationError(industryPlacement.RowNum, industryPlacement.Uln, ValidationMessages.UlnNotRegisteredWithProvider));
+                    continue;
+                }
+
+                //// 2. Core code not registered against the learner
+                //var registeredPathway1 = latestPathways.FirstOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == industryPlacement.Uln);
+                //if (registeredPathway == null)
+                //{
+                //    response.Add(AddStage3ValidationError(industryPlacement.RowNum, industryPlacement.Uln, ValidationMessages.UlnNotRegisteredWithProvider));
+                //    continue;
+                //}
+
+                var validationErrors = new List<BulkProcessValidationError>();
+
+                // 2. Core Code is incorrect (not registered aganinst the learner)
+                var isValidRegisteredCoreCode = registeredPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId.Equals(industryPlacement.CoreCode, StringComparison.InvariantCultureIgnoreCase);
+                if (!isValidRegisteredCoreCode)
+                    validationErrors.Add(BuildValidationError(industryPlacement, ValidationMessages.InvalidCoreCodeProvider));
+
+                // 3. Industry Placement status not valid
+                var ipStatus = EnumExtensions.GetEnumByDisplayName<IndustryPlacementStatus>(industryPlacement.IndustryPlacementStatus);
+                if (ipStatus == IndustryPlacementStatus.NotSpecified)
+                    validationErrors.Add(BuildValidationError(industryPlacement, ValidationMessages.InvalidIndustryPlacementStatus));
+
+                var specialConsiderationReasonIds = new List<int?>();
+                // 4. Industry Placement Special considerations not valid
+                if (industryPlacement.SpecialConsiderations.Any())
+                {
+                    var specialConsiderations = await SpecialConsiderationReasonsAsync();
+
+                    var specialConsiderationCodes = specialConsiderations.Select(x => x.Name);
+                    var invalidSpecialConsiderationCodes = industryPlacement.SpecialConsiderations.Except(specialConsiderationCodes, StringComparer.InvariantCultureIgnoreCase);
+
+                    if (invalidSpecialConsiderationCodes.Any())
+                    {
+                        validationErrors.Add(BuildValidationError(industryPlacement, ValidationMessages.InvalidSpecialConsiderationCodes));
+                    }
+                    else
+                    {
+                        specialConsiderationReasonIds = specialConsiderations.Where(sc => industryPlacement.SpecialConsiderations.Any(s => s.Equals(sc.Name, StringComparison.InvariantCultureIgnoreCase))).Select(x => (int?)x.Id).ToList();
+                    }
+                }
+
+                response.Add(new IndustryPlacementRecordResponse
+                {
+                    TqRegistrationPathwayId = registeredPathway.Id,
+                    IpStatus = (int)ipStatus,
+                    IpHours = !string.IsNullOrWhiteSpace(industryPlacement.IndustryPlacementHours) ? industryPlacement.IndustryPlacementHours.ToInt() : null,
+                    SpecialConsiderationReasons = specialConsiderationReasonIds
+                });
+            }
+            return response;
+        }
+
+        public IList<IndustryPlacement> TransformIndustryPlacementsModel(IList<IndustryPlacementRecordResponse> industryPlacementsData, string performedBy)
+        {
+            var industryPlacements = new List<IndustryPlacement>();
+
+            foreach (var (industryPlacement, index) in industryPlacementsData.Select((value, i) => (value, i)))
+            {
+                if (industryPlacement.TqRegistrationPathwayId.HasValue && industryPlacement.TqRegistrationPathwayId.Value > 0)
+                {
+                    industryPlacements.Add(new IndustryPlacement
+                    {
+                        TqRegistrationPathwayId = industryPlacement.TqRegistrationPathwayId.Value,
+                        Status = EnumExtensions.GetEnum<IndustryPlacementStatus>(industryPlacement.IpStatus),
+                        Details = JsonConvert.SerializeObject(ConstructIndustryPlacementDetails(industryPlacement)),
+                        CreatedBy = performedBy,
+                        CreatedOn = DateTime.UtcNow
+                    });
+                }
+            }
+
+            return industryPlacements;
+        }
+
+        public async Task<IndustryPlacementProcessResponse> CompareAndProcessIndustryPlacementsAsync(IList<IndustryPlacement> industryPlacementsToProcess)
+        {
+            var response = new IndustryPlacementProcessResponse();
+
+            // Prepare Industry Placements
+            var newOrAmendedIndustryPlacementRecords = await PrepareNewAndAmendedIndustryPlacements(industryPlacementsToProcess, response);
+
+            if (response.IsValid)
+                response.IsSuccess = await _industryPlacementRepository.UpdateManyAsync(newOrAmendedIndustryPlacementRecords) > 0;
+
+            return response;
+        }
+
+        private async Task<List<IndustryPlacement>> PrepareNewAndAmendedIndustryPlacements(IList<IndustryPlacement> industryPlacementsToProcess, IndustryPlacementProcessResponse response)
+        {
+            var industryPlacementComparer = new IndustryPlacementEqualityComparer();
+            var amendedIndustryPlacements = new List<IndustryPlacement>();
+            var newAndAmendedIndustryPlacementRecords = new List<IndustryPlacement>();
+
+            var tqRegistrationPathwayIds = new HashSet<int>();
+            industryPlacementsToProcess.ToList().ForEach(r => tqRegistrationPathwayIds.Add(r.TqRegistrationPathwayId));
+
+            var existingIndustryPlacementsFromDb = await _industryPlacementRepository.GetManyAsync(ip => tqRegistrationPathwayIds.Contains(ip.TqRegistrationPathwayId)).ToListAsync();
+            var newIndustryPlacements = industryPlacementsToProcess.Except(existingIndustryPlacementsFromDb, industryPlacementComparer).ToList();
+            var matchedIndustryPlacements = industryPlacementsToProcess.Intersect(existingIndustryPlacementsFromDb, industryPlacementComparer).ToList();
+            var unchangedIndustryPlacements = matchedIndustryPlacements.Intersect(existingIndustryPlacementsFromDb, new IndustryPlacementRecordEqualityComparer()).ToList();
+            var hasAnyMatchedIndustryPlacementsToProcess = matchedIndustryPlacements.Count != unchangedIndustryPlacements.Count;
+
+            if (hasAnyMatchedIndustryPlacementsToProcess)
+            {
+                amendedIndustryPlacements = matchedIndustryPlacements.Except(unchangedIndustryPlacements, industryPlacementComparer).ToList();
+                amendedIndustryPlacements.ForEach(amendedIndustryPlacement =>
+                {
+                    var existingIndustryPlacement = existingIndustryPlacementsFromDb.FirstOrDefault(existingIndustryPlacement => existingIndustryPlacement.TqRegistrationPathwayId == amendedIndustryPlacement.TqRegistrationPathwayId);
+                    if (existingIndustryPlacement != null)
+                    {
+                        var hasIndustryPlacementChanged = amendedIndustryPlacement.Status != existingIndustryPlacement.Status;
+
+                        if (hasIndustryPlacementChanged)
+                        {
+                            existingIndustryPlacement.Status = amendedIndustryPlacement.Status;
+                            existingIndustryPlacement.Details = amendedIndustryPlacement.Details;
+                            existingIndustryPlacement.ModifiedBy = amendedIndustryPlacement.CreatedBy;
+                            existingIndustryPlacement.ModifiedOn = DateTime.UtcNow;
+
+                            newAndAmendedIndustryPlacementRecords.Add(existingIndustryPlacement);
+                        }
+                    }
+                });
+            }
+
+            if (response.IsValid && newIndustryPlacements.Any())
+                newAndAmendedIndustryPlacementRecords.AddRange(newIndustryPlacements);
+
+            return newAndAmendedIndustryPlacementRecords;
+        }
+
+        private static IndustryPlacementDetails ConstructIndustryPlacementDetails(IndustryPlacementRecordResponse industryPlacement)
+        {
+            return new IndustryPlacementDetails
+            {
+                IndustryPlacementStatus = EnumExtensions.GetDisplayName<IndustryPlacementStatus>(industryPlacement.IpStatus),
+                HoursSpentOnPlacement = industryPlacement.IpHours,
+                SpecialConsiderationReasons = industryPlacement.SpecialConsiderationReasons != null && industryPlacement.SpecialConsiderationReasons.Any() ? industryPlacement.SpecialConsiderationReasons : null
+            };
+        }
+
+        private IndustryPlacementRecordResponse AddStage3ValidationError(int rowNum, long uln, string errorMessage)
+        {
+            return new IndustryPlacementRecordResponse()
+            {
+                ValidationErrors = new List<BulkProcessValidationError>()
+                {
+                    new BulkProcessValidationError
+                    {
+                        RowNum = rowNum.ToString(),
+                        Uln = uln.ToString(),
+                        ErrorMessage = errorMessage
+                    }
+                }
+            };
+        }
+
+        private BulkProcessValidationError BuildValidationError(IndustryPlacementCsvRecordResponse industryPlacement, string message)
+        {
+            return new BulkProcessValidationError { RowNum = industryPlacement.RowNum.ToString(), Uln = industryPlacement.Uln.ToString(), ErrorMessage = message };
         }
 
         public async Task<bool> ProcessIndustryPlacementDetailsAsync(IndustryPlacementRequest request)
@@ -91,7 +282,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 industryPlacement.Status = request.IndustryPlacementStatus;
                 industryPlacement.Details = request.IndustryPlacementDetails != null ? JsonConvert.SerializeObject(request.IndustryPlacementDetails) : null;
                 industryPlacement.ModifiedBy = request.PerformedBy;
-                industryPlacement.ModifiedOn = DateTime.UtcNow;                
+                industryPlacement.ModifiedOn = DateTime.UtcNow;
 
                 status = await _industryPlacementRepository.UpdateWithSpecifedColumnsOnlyAsync(industryPlacement, u => u.Status, u => u.Details, u => u.ModifiedBy, u => u.ModifiedOn);
             }
@@ -134,9 +325,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (request.IndustryPlacementStatus == IndustryPlacementStatus.Completed)
             {
                 // special considerations objects should not be populated
-                if (request.IndustryPlacementDetails.HoursSpentOnPlacement != null 
+                if (request.IndustryPlacementDetails.HoursSpentOnPlacement != null
                     || (request.IndustryPlacementDetails.SpecialConsiderationReasons != null && request.IndustryPlacementDetails.SpecialConsiderationReasons.Any()))
-                    return false;                
+                    return false;
             }
 
             // Ip Models
@@ -176,8 +367,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             else
             {
                 // If IndustryPlacementModels not used then IP models should not be populated
-                if (request.IndustryPlacementDetails.MultipleEmployerModelsUsed.HasValue 
-                    || (request.IndustryPlacementDetails.OtherIndustryPlacementModels != null &&request.IndustryPlacementDetails.OtherIndustryPlacementModels.Any())
+                if (request.IndustryPlacementDetails.MultipleEmployerModelsUsed.HasValue
+                    || (request.IndustryPlacementDetails.OtherIndustryPlacementModels != null && request.IndustryPlacementDetails.OtherIndustryPlacementModels.Any())
                     || (request.IndustryPlacementDetails.IndustryPlacementModels != null && request.IndustryPlacementDetails.IndustryPlacementModels.Any()))
                     return false;
             }
@@ -189,7 +380,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 if (request.IndustryPlacementDetails.TemporaryFlexibilities != null && request.IndustryPlacementDetails.TemporaryFlexibilities.Any())
                     return false;
-            }            
+            }
 
             // If TemporaryFlexibilitiesUsed is used then TemporaryFlexibilities list should have values. If not return false
             if (request.IndustryPlacementDetails.TemporaryFlexibilitiesUsed != null && request.IndustryPlacementDetails.TemporaryFlexibilitiesUsed.Value)
@@ -228,7 +419,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         if (request.IndustryPlacementDetails.TemporaryFlexibilities != null)
                         {
                             // If blended placement Id do not exist's then add it
-                            if(!request.IndustryPlacementDetails.TemporaryFlexibilities.Any(tfId => tfId == blendedPlacementTempFlex.Id))
+                            if (!request.IndustryPlacementDetails.TemporaryFlexibilities.Any(tfId => tfId == blendedPlacementTempFlex.Id))
                             {
                                 request.IndustryPlacementDetails.TemporaryFlexibilities.Add(blendedPlacementTempFlex.Id);
                             }
