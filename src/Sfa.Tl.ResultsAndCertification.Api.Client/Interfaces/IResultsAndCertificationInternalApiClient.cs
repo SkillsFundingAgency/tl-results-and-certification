@@ -107,5 +107,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         
         Task<IList<DataExportResponse>> GenerateDataExportAsync(long aoUkprn, DataExportType dataExportType, string requestedBy);
         Task<DataExportResponse> DownloadOverallResultsDataAsync(long providerUkprn, string requestedBy);
+
+        // Industry Placement Bulk Upload
+        Task<BulkIndustryPlacementResponse> ProcessBulkIndustryPlacementsAsync(BulkProcessRequest model);
     }
 }

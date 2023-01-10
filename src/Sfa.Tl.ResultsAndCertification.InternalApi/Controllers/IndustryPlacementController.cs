@@ -2,6 +2,8 @@
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
+using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,12 +13,21 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class IndustryPlacementController : ControllerBase, IIndustryPlacementController
-    {
+    {        
         protected IIndustryPlacementService _industryPlacementService;
+        private readonly IBulkIndustryPlacementLoader _bulkIndustryPlacementProcess;
 
-        public IndustryPlacementController(IIndustryPlacementService industryPlacementService)
+        public IndustryPlacementController(IIndustryPlacementService industryPlacementService, IBulkIndustryPlacementLoader bulkIndustryPlacementProcess = null)
         {
             _industryPlacementService = industryPlacementService;
+            _bulkIndustryPlacementProcess = bulkIndustryPlacementProcess;
+        }
+
+        [HttpPost]
+        [Route("ProcessBulkIndustryPlacements")]
+        public async Task<BulkIndustryPlacementResponse> ProcessBulkIndustryPlacementsAsync(BulkProcessRequest request)
+        {
+            return await _bulkIndustryPlacementProcess.ProcessAsync(request);
         }
 
         [HttpGet]

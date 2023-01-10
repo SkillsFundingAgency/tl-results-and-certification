@@ -374,5 +374,14 @@
         public const string DownloadOverallResultsPage = "DownloadOverallResultsPage";
         public const string DownloadOverallResultsFile = "DownloadOverallResultsFile";
         #endregion
+
+        #region Industry Placement Import
+
+        public const string UploadIndustryPlacementsFile = "UploadIndustryPlacementsFile";
+        public const string SubmitUploadIndustryPlacementsFile = "SubmitUploadIndustryPlacementsFile";
+        public const string IndustryPlacementsUploadSuccessful = "IndustryPlacementsUploadSuccessful";
+        public const string IndustryPlacementsUploadUnsuccessful = "IndustryPlacementsUploadUnsuccessful";
+        public const string DownloadIndustryPlacementErrors = "DownloadIndustryPlacementErrors";
+        #endregion
     }
 }

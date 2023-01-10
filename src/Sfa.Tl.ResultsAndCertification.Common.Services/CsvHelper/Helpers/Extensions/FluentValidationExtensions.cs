@@ -39,6 +39,13 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
                 .WithMessage(string.Format(ValidationMessages.StringLength, "{PropertyName}", max.ToString()));
         }
 
+        public static IRuleBuilderOptions<T, string> MustBeNumberWithInRange<T>(this IRuleBuilder<T, string> ruleBuilder, int minRange, int maxRange, string message = null)
+        {
+            return ruleBuilder
+                .Must(r => r.IsInt() && r.ToInt() >= minRange && r.ToInt() <= maxRange)
+                .WithMessage(!string.IsNullOrWhiteSpace(message) ? message : string.Format(ValidationMessages.MustBeNumberWithInRange, "{PropertyName}", minRange, maxRange));
+        }
+
         public static IRuleBuilderOptions<T, string> ValidDate<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder
