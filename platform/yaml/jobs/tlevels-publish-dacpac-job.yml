@@ -58,7 +58,7 @@ jobs:
             Invoke-SqlCmd `
                 -ServerInstance '$(SharedSQLServerName).database.windows.net' `
                 -Database '$(DatabaseName)' `
-                -UserName '$(SQLServerAdminUsername)'
+                -UserName '$(SQLServerAdminUsername)' `
                 -Password '$(SQLServerAdminPassword)' `
                 -Query     $sql
 
@@ -72,7 +72,7 @@ jobs:
               Invoke-SqlCmd `
                 -ServerInstance '$(SharedSQLServerName).database.windows.net' `
                 -Database '$(IntTestDatabaseName)' `
-                -UserName '$(SQLServerAdminUsername)'
+                -UserName '$(SQLServerAdminUsername)' `
                 -Password '$(SQLServerAdminPassword)' `
                 -Query     $sql
             }
