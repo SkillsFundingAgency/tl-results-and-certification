@@ -354,8 +354,10 @@
         #region Industry Placement
 
         public const string AddIndustryPlacement = "AddIndustryPlacement";
+        public const string ChangeIndustryPlacement = "ChangeIndustryPlacement";
 
         public const string IpCompletion = "IpCompletion";
+        public const string IpCompletionChange = "IpCompletionChange";
         public const string SubmitIpCompletion = "SubmitIpCompletion";
 
         // Special Consideration

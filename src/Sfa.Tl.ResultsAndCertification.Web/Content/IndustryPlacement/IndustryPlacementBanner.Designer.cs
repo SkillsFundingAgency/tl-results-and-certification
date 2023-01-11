@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;You have told us that this learner still needs to complete their industry placement. You can change the industry placement status once the learner has completed this.&lt;/p&gt;.
+        ///   Looks up a localized string similar to &lt;p&gt;You have told us that this learner still needs to complete their industry placement. If this changes, you can update the industry placement status by selecting ‘change’.&lt;/p&gt;.
         /// </summary>
         public static string Success_Message_Still_Need_To_Complete {
             get {

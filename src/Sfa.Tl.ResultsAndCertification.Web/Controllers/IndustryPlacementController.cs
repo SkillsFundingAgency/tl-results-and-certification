@@ -7,12 +7,10 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -25,6 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         private string CacheKey => CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.IpCacheKey);
         private string TrainingProviderCacheKey => CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TrainingProviderCacheKey);
+        private string RouteName => ControllerContext.ActionDescriptor.AttributeRouteInfo.Name;
 
         public IndustryPlacementController(IIndustryPlacementLoader industryPlacementLoader, ICacheService cacheService, ILogger<IndustryPlacementController> logger)
         {
@@ -35,14 +34,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("add-industry-placement/{profileId}", Name = RouteConstants.AddIndustryPlacement)]
+        [Route("change-industry-placement/{profileId}", Name = RouteConstants.ChangeIndustryPlacement)]
         public async Task<IActionResult> AddIndustryPlacementAsync(int profileId)
         {
             await _cacheService.RemoveAsync<IndustryPlacementViewModel>(CacheKey);
-            return RedirectToRoute(RouteConstants.IpCompletion, new { profileId });
+
+            return RouteName.Equals(RouteConstants.AddIndustryPlacement, StringComparison.InvariantCultureIgnoreCase)
+                ? RedirectToRoute(RouteConstants.IpCompletion, new { profileId })
+                : (IActionResult)RedirectToRoute(RouteConstants.IpCompletion, new { profileId });
         }
 
         [HttpGet]
         [Route("industry-placement-completion/{profileId}/{isChangeMode:bool?}", Name = RouteConstants.IpCompletion)]
+        [Route("industry-placement-completion-change/{profileId}/{isChangeMode:bool?}", Name = RouteConstants.IpCompletionChange)]
         public async Task<IActionResult> IpCompletionAsync(int profileId, bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
@@ -51,7 +55,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null)
             {
                 viewModel = await _industryPlacementLoader.GetLearnerRecordDetailsAsync<IpCompletionViewModel>(User.GetUkPrn(), profileId);
-                if (viewModel == null || !viewModel.IsValid)
+                if (viewModel == null)
+                    return RedirectToRoute(RouteConstants.PageNotFound);
+
+                viewModel.IsChangeJourney = RouteName.Equals(RouteConstants.IpCompletionChange, StringComparison.InvariantCultureIgnoreCase);
+                if (!viewModel.IsValid)
                     return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
