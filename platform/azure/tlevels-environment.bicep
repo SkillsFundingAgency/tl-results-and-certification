@@ -281,7 +281,7 @@ module sql_database_environmentNameAbbreviation '../tl-platform-building-blocks/
   }
 }
 
-module inttest_sql_database_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/sql-database.json' = {
+module inttest_sql_database_environmentNameAbbreviation '../tl-platform-building-blocks/ArmTemplates/sql-database.json' = if('${environmentNameAbbreviation}' != 'Prod') {
   name: 'inttest-sql-database-${environmentNameAbbreviation}'
   scope: resourceGroup(sharedEnvResourceGroup)
   params: {
