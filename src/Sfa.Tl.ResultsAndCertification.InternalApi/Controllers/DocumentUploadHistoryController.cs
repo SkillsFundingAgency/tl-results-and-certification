@@ -22,10 +22,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetDocumentUploadHistoryDetails/{aoUkprn}/{blobUniqueReference}")]
-        public async Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference)
+        [Route("GetDocumentUploadHistoryDetails/{ukprn}/{blobUniqueReference}")]
+        public async Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long ukprn, Guid blobUniqueReference)
         {
-            return await _documentUploadHistoryService.GetDocumentUploadHistoryDetails(aoUkprn, blobUniqueReference);
+            return await _documentUploadHistoryService.GetDocumentUploadHistoryDetails(ukprn, blobUniqueReference);
         }
     }
 }

@@ -27,6 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.BlobUniqueReference, opts => opts.MapFrom(s => Guid.NewGuid()))
                .ForMember(d => d.FileType, opts => opts.MapFrom(s => FileType.Csv))
                .ForMember(d => d.DocumentType, opts => opts.MapFrom(s => DocumentType.Registrations))
+               .ForMember(d => d.LoginUserType, opts => opts.MapFrom(s => LoginUserType.AwardingOrganisation))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<UploadRegistrationsRequestViewModel, BulkProcessRequest>>());
 
             CreateMap<BulkProcessResponse, UploadRegistrationsResponseViewModel>()

@@ -121,9 +121,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<BulkProcessRequest, BulkProcessResponse>(requestUri, model);
         }
 
-        public async Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference)
+        public async Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long ukprn, Guid blobUniqueReference)
         {
-            var requestUri = string.Format(ApiConstants.GetDocumentUploadHistoryDetailsAsyncUri, aoUkprn, blobUniqueReference);
+            var requestUri = string.Format(ApiConstants.GetDocumentUploadHistoryDetailsAsyncUri, ukprn, blobUniqueReference);
             return await GetAsync<DocumentUploadHistoryDetails>(requestUri);
         }
 

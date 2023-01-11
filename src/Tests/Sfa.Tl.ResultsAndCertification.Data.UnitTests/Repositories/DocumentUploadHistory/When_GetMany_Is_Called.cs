@@ -39,6 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.DocumentUpl
             result.Should().NotBeNull();
             result.Id.Should().Be(1);
             result.TlAwardingOrganisationId.Should().Be(testData.TlAwardingOrganisationId);
+            result.TlProviderId.Should().Be(testData.TlProviderId);
             result.BlobFileName.Should().Be(testData.BlobFileName);
             result.BlobUniqueReference.Should().Be(testData.BlobUniqueReference);
             result.DocumentType.Should().Be(testData.DocumentType);

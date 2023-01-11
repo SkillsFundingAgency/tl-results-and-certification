@@ -23,6 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.BlobUniqueReference, opts => opts.MapFrom(s => Guid.NewGuid()))
                .ForMember(d => d.FileType, opts => opts.MapFrom(s => FileType.Csv))
                .ForMember(d => d.DocumentType, opts => opts.MapFrom(s => DocumentType.IndustryPlacements))
+               .ForMember(d => d.LoginUserType, opts => opts.MapFrom(s => LoginUserType.TrainingProvider))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<UploadIndustryPlacementsRequestViewModel, BulkProcessRequest>>());
 
             CreateMap<BulkIndustryPlacementResponse, UploadIndustryPlacementsResponseViewModel>()

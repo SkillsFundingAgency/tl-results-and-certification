@@ -72,5 +72,12 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
             return ruleBuilder
                 .Must(y => Regex.IsMatch(y, assessmentEntryFormat, RegexOptions.IgnoreCase));
         }
+
+        public static IRuleBuilderOptions<T, string> MustBeNullOrEmpty<T>(this IRuleBuilder<T, string> ruleBuilder, string message = null)
+        {
+            return ruleBuilder
+                .Must(r => string.IsNullOrWhiteSpace(r))
+                .WithMessage(!string.IsNullOrWhiteSpace(message) ? message : string.Format(ValidationMessages.CannotHaveValue, "{PropertyName}"));
+        }
     }
 }
