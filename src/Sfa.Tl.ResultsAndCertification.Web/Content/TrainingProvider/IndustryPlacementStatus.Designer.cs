@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Placement Complete.
+        ///   Looks up a localized string similar to Placement completed.
         /// </summary>
         public static string Completed_Display_Text {
             get {

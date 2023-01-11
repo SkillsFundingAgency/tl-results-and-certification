@@ -121,7 +121,7 @@
     <value>Placement completed with special consideration</value>
   </data>
   <data name="Completed_Display_Text" xml:space="preserve">
-    <value>Placement Complete</value>
+    <value>Placement completed</value>
   </data>
   <data name="NotCompleted_Display_Text" xml:space="preserve">
     <value>Placement still to be completed</value>
