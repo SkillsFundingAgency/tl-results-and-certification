@@ -13,6 +13,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
         public override void Given()
         {
+            SetRouteAttribute(RouteConstants.IpCompletion);
+
             ProfileId = 0;
 
             _ipCompletionViewModel = null;

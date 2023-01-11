@@ -19,10 +19,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         [Required(ErrorMessageResourceType = typeof(ErrorResource.IpCompletion), ErrorMessageResourceName = "Validation_Message")]
         public IndustryPlacementStatus? IndustryPlacementStatus { get; set; }
 
+        public bool IsChangeJourney { get; internal set; }
         public bool IsChangeMode { get; set; }
 
-        public bool IsValid => !EnumExtensions.IsValidValue<IndustryPlacementStatus>(IndustryPlacementStatus, exclNotSpecified: true);
-
+        public bool IsValid
+        {
+            get
+            {
+                var hasStatusAlready = EnumExtensions.IsValidValue<IndustryPlacementStatus>(IndustryPlacementStatus, exclNotSpecified: true);
+                return IsChangeJourney == hasStatusAlready;
+            }
+        }
+        
         public virtual BackLinkModel BackLink => new()
         {
             RouteName = IsChangeMode ? RouteConstants.IpCheckAndSubmit : RouteConstants.LearnerRecordDetails,

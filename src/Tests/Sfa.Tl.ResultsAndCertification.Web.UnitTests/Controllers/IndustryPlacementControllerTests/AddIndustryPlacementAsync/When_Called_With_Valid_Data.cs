@@ -12,6 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
         public override void Given()
         {
             ProfileId = 1;
+            SetRouteAttribute(RouteConstants.AddIndustryPlacement);
         }
 
         [Fact]

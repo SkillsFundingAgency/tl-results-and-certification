@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
@@ -26,6 +28,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
         // HttpContext
         protected int ProviderUkprn;
+
+        public HttpContext HttpContext { get; set; }
+
         protected Guid UserId;
         protected IHttpContextAccessor HttpContextAccessor;
         protected string CacheKey;
@@ -39,20 +44,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             Controller = new IndustryPlacementController(IndustryPlacementLoader, CacheService, Logger);
 
             ProviderUkprn = 1234567890;
-            var httpContext = new ClaimsIdentityBuilder<IndustryPlacementController>(Controller)
+            HttpContext = new ClaimsIdentityBuilder<IndustryPlacementController>(Controller)
                .Add(CustomClaimTypes.Ukprn, ProviderUkprn.ToString())
                .Add(CustomClaimTypes.UserId, Guid.NewGuid().ToString())
                .Build()
                .HttpContext;
 
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
-            HttpContextAccessor.HttpContext.Returns(httpContext);
+            HttpContextAccessor.HttpContext.Returns(HttpContext);
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(IndustryPlacementMapper).Assembly));
             Mapper = new AutoMapper.Mapper(mapperConfig);
 
-            CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.IpCacheKey);
-            TrainingProviderCacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.TrainingProviderCacheKey);
+            CacheKey = CacheKeyHelper.GetCacheKey(HttpContext.User.GetUserId(), CacheConstants.IpCacheKey);
+            TrainingProviderCacheKey = CacheKeyHelper.GetCacheKey(HttpContext.User.GetUserId(), CacheConstants.TrainingProviderCacheKey);
         }
     }
 }
