@@ -134,6 +134,6 @@
     <value>Placement will not be completed</value>
   </data>
   <data name="Still_To_Be_Completed_Display_Text" xml:space="preserve">
-    <value>Placement still needs to be completed</value>
+    <value>Placement still to be completed</value>
   </data>
 </root>

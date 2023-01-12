@@ -182,6 +182,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn,
                                             IndustryPlacementId = ipRecord != null ? ipRecord.Id : 0,
                                             IndustryPlacementStatus = ipRecord != null ? ipRecord.Status : null,
+                                            IndustryPlacementDetails = ipRecord != null ? ipRecord.Details : null,
                                             OverallResultDetails = overallResult != null ? overallResult.Details : null,
                                             OverallResultPublishDate = overallResult != null ? overallResult.PublishDate : null,
                                             PrintCertificateId = printCertificate != null ? printCertificate.Id : null,
