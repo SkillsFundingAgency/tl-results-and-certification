@@ -18,12 +18,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             BlobUniqueReference = Guid.NewGuid();
             ApiResponse = new DocumentUploadHistoryDetails
             {
-                AoUkprn = Ukprn,
+                Ukprn = Ukprn,
                 BlobFileName = BlobFileName,
                 BlobUniqueReference = BlobUniqueReference,
                 DocumentType = (int)DocumentType.Assessments,
                 FileType = (int)FileType.Csv,
                 Status = (int)DocumentUploadStatus.Processed,
+                LoginUserType = LoginUserType.AwardingOrganisation,
                 CreatedBy = $"{Givenname} {Surname}"
             };
 

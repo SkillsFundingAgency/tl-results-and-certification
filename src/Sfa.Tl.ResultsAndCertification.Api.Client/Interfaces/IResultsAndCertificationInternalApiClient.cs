@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<ChangeResultResponse> ChangeResultAsync(ChangeResultRequest model);
 
         // DocumentUploadHistory
-        Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference);
+        Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long ukprn, Guid blobUniqueReference);
         Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request);
 
         // TraningProvider

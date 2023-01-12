@@ -55,9 +55,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<UploadIndustryPlacementsResponseViewModel>(bulkIndustryPlacementsResponse);
         }
 
-        public async Task<Stream> GetIndustryPlacementValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference)
+        public async Task<Stream> GetIndustryPlacementValidationErrorsFileAsync(long ukprn, Guid blobUniqueReference)
         {
-            var documentInfo = await _internalApiClient.GetDocumentUploadHistoryDetailsAsync(aoUkprn, blobUniqueReference);
+            var documentInfo = await _internalApiClient.GetDocumentUploadHistoryDetailsAsync(ukprn, blobUniqueReference);
 
             if (documentInfo != null && documentInfo.Status == (int)DocumentUploadStatus.Failed)
             {
@@ -65,12 +65,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 {
                     ContainerName = DocumentType.IndustryPlacements.ToString(),
                     BlobFileName = documentInfo.BlobFileName,
-                    SourceFilePath = $"{aoUkprn}/{BulkProcessStatus.ValidationErrors}"
+                    SourceFilePath = $"{ukprn}/{BulkProcessStatus.ValidationErrors}"
                 });
 
                 if (fileStream == null)
                 {
-                    var blobReadError = $"No FileStream found to download assessment validation errors. Method: DownloadFileAsync(ContainerName: {DocumentType.IndustryPlacements}, BlobFileName = {documentInfo.BlobFileName}, SourceFilePath = {aoUkprn}/{BulkProcessStatus.ValidationErrors})";
+                    var blobReadError = $"No FileStream found to download assessment validation errors. Method: DownloadFileAsync(ContainerName: {DocumentType.IndustryPlacements}, BlobFileName = {documentInfo.BlobFileName}, SourceFilePath = {ukprn}/{BulkProcessStatus.ValidationErrors})";
                     //_logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
                 }
                 return fileStream;

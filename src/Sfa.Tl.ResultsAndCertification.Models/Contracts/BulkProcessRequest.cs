@@ -10,6 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public Guid BlobUniqueReference { get; set; }
         public FileType FileType { get; set; }
         public DocumentType DocumentType { get; set; }
+        public LoginUserType LoginUserType { get; set; }
         public string PerformedBy { get; set; }
     }
 }

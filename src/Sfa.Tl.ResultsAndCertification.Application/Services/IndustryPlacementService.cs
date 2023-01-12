@@ -68,14 +68,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     continue;
                 }
 
-                //// 2. Core code not registered against the learner
-                //var registeredPathway1 = latestPathways.FirstOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == industryPlacement.Uln);
-                //if (registeredPathway == null)
-                //{
-                //    response.Add(AddStage3ValidationError(industryPlacement.RowNum, industryPlacement.Uln, ValidationMessages.UlnNotRegisteredWithProvider));
-                //    continue;
-                //}
-
                 var validationErrors = new List<BulkProcessValidationError>();
 
                 // 2. Core Code is incorrect (not registered aganinst the learner)
@@ -107,13 +99,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     }
                 }
 
-                response.Add(new IndustryPlacementRecordResponse
+                if (validationErrors.Any())
+                    response.Add(new IndustryPlacementRecordResponse { ValidationErrors = validationErrors });
+                else
                 {
-                    TqRegistrationPathwayId = registeredPathway.Id,
-                    IpStatus = (int)ipStatus,
-                    IpHours = !string.IsNullOrWhiteSpace(industryPlacement.IndustryPlacementHours) ? industryPlacement.IndustryPlacementHours.ToInt() : null,
-                    SpecialConsiderationReasons = specialConsiderationReasonIds
-                });
+                    response.Add(new IndustryPlacementRecordResponse
+                    {
+                        TqRegistrationPathwayId = registeredPathway.Id,
+                        IpStatus = (int)ipStatus,
+                        IpHours = !string.IsNullOrWhiteSpace(industryPlacement.IndustryPlacementHours) ? industryPlacement.IndustryPlacementHours.ToInt() : null,
+                        SpecialConsiderationReasons = specialConsiderationReasonIds
+                    });
+                }
             }
             return response;
         }
@@ -148,7 +145,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var newOrAmendedIndustryPlacementRecords = await PrepareNewAndAmendedIndustryPlacements(industryPlacementsToProcess, response);
 
             if (response.IsValid)
-                response.IsSuccess = await _industryPlacementRepository.UpdateManyAsync(newOrAmendedIndustryPlacementRecords) > 0;
+                response.IsSuccess = !newOrAmendedIndustryPlacementRecords.Any() || await _industryPlacementRepository.UpdateManyAsync(newOrAmendedIndustryPlacementRecords) > 0;
 
             return response;
         }

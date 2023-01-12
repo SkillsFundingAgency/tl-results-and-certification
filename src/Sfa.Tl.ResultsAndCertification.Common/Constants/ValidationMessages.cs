@@ -12,6 +12,7 @@
         public const string MustBeValidDate = "{0} must be a valid date in DDMMYYYY format";
         public const string DateNotinFuture = "{0} must be in the past";
         public const string MustBeNumberWithInRange = "{0} must be between {1} and {2} digit number";
+        public const string CannotHaveValue = "{0} cannot have a value";
 
         public const string MustBeInFormat = "{0} must be in the format {1}";        
 
