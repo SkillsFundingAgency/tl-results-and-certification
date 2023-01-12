@@ -16,6 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<UploadIndustryPlacementsResponseViewModel> ProcessBulkIndustryPlacementsAsync(UploadIndustryPlacementsRequestViewModel viewModel);
         Task<Stream> GetIndustryPlacementValidationErrorsFileAsync(long ukprn, Guid blobUniqueReference);
         Task<T> GetLearnerRecordDetailsAsync<T>(long providerUkprn, int profileId, int? pathwayId = null);
+        Task<IndustryPlacementViewModel> GetIndustryPlacementViewModelAsync(long providerUkprn, int profileId); // TODO: rename
         Task<IList<IpLookupData>> GetIpLookupDataAsync(IpLookupType ipLookupType, int? pathwayId = null);
         Task<T> GetIpLookupDataAsync<T>(IpLookupType ipLookupType, string learnerName = null, int? pathwayId = null, bool showOption = false);
         Task<T> TransformIpCompletionDetailsTo<T>(IpCompletionViewModel model);

@@ -19,6 +19,8 @@ using System.Threading.Tasks;
 using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement.IpCheckAndSubmit;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System.IO;
+using System.Text.Json;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 {
@@ -92,6 +94,44 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var response = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
             return _mapper.Map<T>(response);
         }
+
+        public async Task<IndustryPlacementViewModel> GetIndustryPlacementViewModelAsync(long providerUkprn, int profileId)
+        {
+            // TODO: drafted but not tested yet. 
+            var response = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId: null);
+            if (response == null)
+                return null;
+
+            SpecialConsiderationViewModel specialConsiderationViewModel = null;
+            if (response.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
+            {
+                IndustryPlacementDetails? industryPlacementDetails = JsonSerializer.Deserialize<IndustryPlacementDetails>(response.IndustryPlacementDetails);
+                if (industryPlacementDetails == null)
+                    return null;
+
+                var reasonsList = await GetSpecialConsiderationReasonsListAsync(response.AcademicYear);
+                foreach (var reason in reasonsList.Where(x => industryPlacementDetails.SpecialConsiderationReasons.Contains(x.Id)))
+                    reason.IsSelected = true;
+                
+                specialConsiderationViewModel = new SpecialConsiderationViewModel
+                {
+                    Hours = new SpecialConsiderationHoursViewModel { ProfileId = response.ProfileId, LearnerName = response.Name, Hours = industryPlacementDetails.HoursSpentOnPlacement.ToString() },
+                    Reasons = new SpecialConsiderationReasonsViewModel 
+                    { 
+                        LearnerName = response.Name, 
+                        AcademicYear = response.AcademicYear, 
+                        ReasonsList = reasonsList
+                    }
+                };
+            }
+
+            return new IndustryPlacementViewModel
+            {
+                IpCompletion = _mapper.Map<IpCompletionViewModel>(response),
+                SpecialConsideration = specialConsiderationViewModel
+            };
+        }
+
 
         public async Task<T> GetIpLookupDataAsync<T>(IpLookupType ipLookupType, string learnerName = null, int? pathwayId = null, bool showOption = false)
         {

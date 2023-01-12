@@ -33,10 +33,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<BulkUploadStats, BulkUploadStatsViewModel>();
 
-            CreateMap<LearnerRecordDetails, IndustryPlacementViewModel>()
-               .ForMember(d => d.IpCompletion, opts => opts.MapFrom(s => s))
-               .ForMember(d => d.SpecialConsideration, opts => opts.MapFrom(s => s));
-            
             CreateMap<LearnerRecordDetails, IpCompletionViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))

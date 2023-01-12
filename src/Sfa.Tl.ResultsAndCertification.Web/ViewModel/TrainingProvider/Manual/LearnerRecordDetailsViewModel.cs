@@ -155,8 +155,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
                 Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
                 Value = GetIndustryPlacementDisplayText,
                 ActionText = IsIndustryPlacementAdded ? LearnerRecordDetailsContent.Action_Text_Link_Change : LearnerRecordDetailsContent.Action_Text_Link_Add,
-                RouteName = IsIndustryPlacementAdded ? "TODO" : RouteConstants.AddIndustryPlacement,
-                RouteAttributes = IsIndustryPlacementAdded ? null : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
+                RouteName = IsIndustryPlacementAdded ? RouteConstants.ChangeIndustryPlacement : RouteConstants.AddIndustryPlacement,
+                RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
                 HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement
             };
 

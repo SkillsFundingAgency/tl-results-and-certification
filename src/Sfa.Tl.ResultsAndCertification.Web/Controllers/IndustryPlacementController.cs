@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.IpCompletion, new { profileId });
             else
             {
-                var cacheData =  await _industryPlacementLoader.GetLearnerRecordDetailsAsync<IndustryPlacementViewModel>(User.GetUkPrn(), profileId);
+                var cacheData =  await _industryPlacementLoader.GetIndustryPlacementViewModelAsync(User.GetUkPrn(), profileId);
                 if (cacheData == null)
                     return RedirectToRoute(RouteConstants.PageNotFound);
 
