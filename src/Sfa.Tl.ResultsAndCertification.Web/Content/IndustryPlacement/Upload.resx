@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="File_Max_Record_Count_Validation_Message" xml:space="preserve">
-    <value>File must contain between one and {0} registrations</value>
+    <value>File must contain between one and {0} learners</value>
   </data>
   <data name="File_Name_Length_Validation_Message" xml:space="preserve">
     <value>File name must have no more than {0} characters</value>

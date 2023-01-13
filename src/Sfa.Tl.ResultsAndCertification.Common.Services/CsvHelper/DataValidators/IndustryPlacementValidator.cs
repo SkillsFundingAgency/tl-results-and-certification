@@ -31,21 +31,21 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             // IndustryPlacementHours
             RuleFor(r => r.IndustryPlacementHours)
                 .MustBeNullOrEmpty()
-                .When(x => !string.IsNullOrWhiteSpace(x.IndustryPlacementStatus) && !x.IndustryPlacementStatus.Equals("Placement completed with special considerations", StringComparison.InvariantCultureIgnoreCase));
+                .When(x => !string.IsNullOrWhiteSpace(x.IndustryPlacementStatus) && !x.IndustryPlacementStatus.Equals("Completed with special consideration", StringComparison.InvariantCultureIgnoreCase));
                        
             RuleFor(r => r.IndustryPlacementHours)
                 .MustBeNumberWithInRange(1, 999)
-                .When(x => x.IndustryPlacementStatus.Equals("Placement completed with special considerations", StringComparison.InvariantCultureIgnoreCase));
+                .When(x => x.IndustryPlacementStatus.Equals("Completed with special considerations", StringComparison.InvariantCultureIgnoreCase));
 
             // SpecialConsiderationReasons
             RuleFor(r => r.SpecialConsiderationReasons)
                .MustBeNullOrEmpty()
-               .When(x => !string.IsNullOrWhiteSpace(x.IndustryPlacementStatus) && !x.IndustryPlacementStatus.Equals("Placement completed with special considerations", StringComparison.InvariantCultureIgnoreCase));
+               .When(x => !string.IsNullOrWhiteSpace(x.IndustryPlacementStatus) && !x.IndustryPlacementStatus.Equals("Completed with special consideration", StringComparison.InvariantCultureIgnoreCase));
 
             RuleFor(r => r.SpecialConsiderationReasons)                
                 .Must(r => !string.IsNullOrWhiteSpace(r.Trim()) && r.Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())).All(a => a.Trim().Length > 0))
                 .WithMessage(ValidationMessages.SpecialConsiderationReasonNeedsToBeProvided)
-                .When(x => x.IndustryPlacementStatus.Equals("Placement completed with special considerations", StringComparison.InvariantCultureIgnoreCase));
+                .When(x => x.IndustryPlacementStatus.Equals("Completed with special consideration", StringComparison.InvariantCultureIgnoreCase));
 
             RuleFor(r => r.SpecialConsiderationReasons)
                 .Must(r => !IsDuplicate(r))

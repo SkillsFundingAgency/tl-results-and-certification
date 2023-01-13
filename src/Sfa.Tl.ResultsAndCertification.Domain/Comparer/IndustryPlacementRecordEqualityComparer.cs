@@ -1,5 +1,4 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using System;
 using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
@@ -17,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
             else
                 return x.TqRegistrationPathwayId == y.TqRegistrationPathwayId &&
                        x.Status == y.Status &&
-                       x.Details.Equals(y.Details, StringComparison.InvariantCultureIgnoreCase);
+                       Equals(x.Details, y.Details);
         }
 
         public int GetHashCode(IndustryPlacement placement)
@@ -25,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
             unchecked
             {
                 var hashCode = placement.TqRegistrationPathwayId.GetHashCode();
-                hashCode = (hashCode * 397) ^ placement.Details.GetHashCode();
+                hashCode = (hashCode * 397) ^ (placement.Details != null ? placement.Details.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ placement.Status.GetHashCode();
 
                 return hashCode;

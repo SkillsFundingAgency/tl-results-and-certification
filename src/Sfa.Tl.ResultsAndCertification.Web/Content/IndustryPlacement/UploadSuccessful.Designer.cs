@@ -61,7 +61,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You successfully sent industry placement data for one registration..
+        ///   Looks up a localized string similar to ..
+        /// </summary>
+        public static string Full_Stop {
+            get {
+                return ResourceManager.GetString("Full_Stop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Industry placement upload success.
+        /// </summary>
+        public static string Page_Title {
+            get {
+                return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload complete.
+        /// </summary>
+        public static string Section_Heading {
+            get {
+                return ResourceManager.GetString("Section_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You successfully sent industry placement data for one industry placement..
         /// </summary>
         public static string Successfully_Sent_One_Industry_Placement_Text {
             get {
@@ -70,11 +97,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You successfully sent industry placement data for {0} registrations..
+        ///   Looks up a localized string similar to You have successfully uploaded information for {0} industry placements..
         /// </summary>
         public static string Successfully_Sent_Total_Industry_Placements_Text {
             get {
                 return ResourceManager.GetString("Successfully_Sent_Total_Industry_Placements_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View your learner records.
+        /// </summary>
+        public static string View_Your_Learner_Records {
+            get {
+                return ResourceManager.GetString("View_Your_Learner_Records", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We will use the information you have uploaded to update the relevant learner records..
+        /// </summary>
+        public static string We_Will_Use_The_Information_You_Have_Uploaded {
+            get {
+                return ResourceManager.GetString("We_Will_Use_The_Information_You_Have_Uploaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What happens next.
+        /// </summary>
+        public static string What_Happens_Next {
+            get {
+                return ResourceManager.GetString("What_Happens_Next", resourceCulture);
             }
         }
     }

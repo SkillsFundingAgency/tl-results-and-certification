@@ -200,7 +200,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 IndustryPlacementStatus = EnumExtensions.GetDisplayName<IndustryPlacementStatus>(industryPlacement.IpStatus),
                 HoursSpentOnPlacement = industryPlacement.IpHours,
-                SpecialConsiderationReasons = industryPlacement.SpecialConsiderationReasons != null && industryPlacement.SpecialConsiderationReasons.Any() ? industryPlacement.SpecialConsiderationReasons : null
+                SpecialConsiderationReasons = industryPlacement.SpecialConsiderationReasons != null && industryPlacement.SpecialConsiderationReasons.Any() ? industryPlacement.SpecialConsiderationReasons : new List<int?>()
             };
         }
 
