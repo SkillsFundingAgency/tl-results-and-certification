@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
                 return IsChangeJourney == hasStatusAlready;
             }
         }
-        
+
         public virtual BackLinkModel BackLink => new()
         {
             RouteName = IsChangeMode ? RouteConstants.IpCheckAndSubmit : RouteConstants.LearnerRecordDetails,

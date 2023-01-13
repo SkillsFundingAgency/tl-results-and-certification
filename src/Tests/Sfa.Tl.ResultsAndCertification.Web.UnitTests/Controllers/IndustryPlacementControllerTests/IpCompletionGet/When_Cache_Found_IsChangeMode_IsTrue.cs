@@ -44,6 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.LearnerName.Should().Be(_cacheResult.IpCompletion.LearnerName);
             model.IndustryPlacementStatus.Should().Be(_cacheResult.IpCompletion.IndustryPlacementStatus);
             model.IsChangeMode.Should().BeTrue();
+            model.IsChangeJourney.Should().BeFalse();
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.IpCheckAndSubmit);

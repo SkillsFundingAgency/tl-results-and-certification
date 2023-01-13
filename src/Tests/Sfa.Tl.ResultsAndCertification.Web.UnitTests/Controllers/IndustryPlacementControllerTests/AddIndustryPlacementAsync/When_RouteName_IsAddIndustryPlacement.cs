@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.AddIndustryPlacementAsync
 {
-    public class When_Called_With_Valid_Data : TestSetup
+    public class When_RouteName_IsAddIndustryPlacement : TestSetup
     {
         public override void Given()
         {
@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
         }
 
         [Fact]
-        public void Then_Redirected_To_PageNotFound()
+        public void Then_Redirected_To_IpCompletion()
         {
             var route = ActualResult as RedirectToRouteResult;
             route.RouteName.Should().Be(RouteConstants.IpCompletion);

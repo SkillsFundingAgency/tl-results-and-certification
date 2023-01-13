@@ -128,6 +128,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             var expectedIsLearnerRegistered = expectedPathway.Status == RegistrationPathwayStatus.Active || expectedPathway.Status == RegistrationPathwayStatus.Withdrawn;
             var expectedIndustryPlacementId = expectedPathway.IndustryPlacements.FirstOrDefault()?.Id ?? 0;
             var expectedIndustryPlacementStatus = expectedPathway.IndustryPlacements.FirstOrDefault()?.Status ?? null;
+            var expectedIndustryPlacementDetails = expectedPathway.IndustryPlacements.FirstOrDefault()?.Details ?? null;
             var expectedOverallResult = expectedPathway.OverallResults.FirstOrDefault(o => o.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? o.EndDate != null : o.EndDate == null);
             var expectedOverallReultDetails = expectedOverallResult?.Details;
             var expectedOverallResultPublishDate = expectedOverallResult?.PublishDate;
@@ -148,6 +149,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             _actualResult.IsLearnerRegistered.Should().Be(expectedIsLearnerRegistered);
             _actualResult.IndustryPlacementId.Should().Be(expectedIndustryPlacementId);
             _actualResult.IndustryPlacementStatus.Should().Be(expectedIndustryPlacementStatus);
+            _actualResult.IndustryPlacementDetails.Should().Be(expectedIndustryPlacementDetails);
 
             // Overall results
             _actualResult.OverallResultDetails.Should().Be(expectedOverallReultDetails);

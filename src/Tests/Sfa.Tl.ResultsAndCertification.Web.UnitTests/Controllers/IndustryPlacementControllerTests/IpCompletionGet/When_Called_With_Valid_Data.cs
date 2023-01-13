@@ -43,6 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.IndustryPlacementStatus.Should().BeNull();
             model.IsValid.Should().BeTrue();
             model.IsChangeMode.Should().BeFalse();
+            model.IsChangeJourney.Should().BeFalse();
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.LearnerRecordDetails);
