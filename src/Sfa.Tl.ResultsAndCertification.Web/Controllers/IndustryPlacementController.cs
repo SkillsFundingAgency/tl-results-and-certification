@@ -39,9 +39,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             await _cacheService.RemoveAsync<IndustryPlacementViewModel>(CacheKey);
 
-            return RouteName.Equals(RouteConstants.AddIndustryPlacement, StringComparison.InvariantCultureIgnoreCase)
-                ? RedirectToRoute(RouteConstants.IpCompletion, new { profileId })
-                : (IActionResult)RedirectToRoute(RouteConstants.IpCompletion, new { profileId });
+            if (RouteName.Equals(RouteConstants.AddIndustryPlacement, StringComparison.InvariantCultureIgnoreCase))
+                return RedirectToRoute(RouteConstants.IpCompletion, new { profileId });
+            else
+            {
+                var cacheData =  await _industryPlacementLoader.GetIndustryPlacementViewModelAsync(User.GetUkPrn(), profileId);
+                if (cacheData == null)
+                    return RedirectToRoute(RouteConstants.PageNotFound);
+
+                await _cacheService.SetAsync(CacheKey, cacheData);
+
+                return RedirectToRoute(RouteConstants.IpCompletionChange, new { profileId });
+            }
         }
 
         [HttpGet]
@@ -122,7 +131,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
-
 
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
             if (cacheModel?.IpCompletion?.IndustryPlacementStatus !=
