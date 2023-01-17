@@ -37,7 +37,7 @@ jobs:
         AdditionalArguments: '/p:GenerateSmartDefaults=True /v:environment=$(sqlPublishEnvironmentName)'
 
     - task: AzurePowerShell@5
-      displayName: create ResacSQLServiceAccount User 
+      displayName: Create ResacSQLServiceAccount User 
       inputs:
         azurePowerShellVersion: LatestVersion
         azureSubscription: ${{ parameters.serviceConnection }}
@@ -76,7 +76,6 @@ jobs:
                 -Password '$(SQLServerAdminPassword)' `
                 -Query     $sql
             }
-            Write-Host "Creating user"
           }
           finally {
             Write-Host "Removing $ip from FW Rules for $(SharedSQLServerName) in RG $(sharedResourceGroup)"

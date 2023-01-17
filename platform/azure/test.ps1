@@ -9,12 +9,12 @@ if (($PSScriptRoot).Length -eq 0) { $scriptRoot = $PWD.Path}
 
 $location = "westeurope"
 $applicationPrefix = "resac"
-$envPrefix = "s126d02"
+$envPrefix = "s126d01"
 $environmentNameAbbreviation = "dev"
 $templateFilePrefix = "tlevels"
 $certsToUpload = @{   
     "d01-manage-tlevel-results-tlevels-gov-uk" = '173E73EEF9FDB82488D00B49EC4578D556909F6B'
-    "learnerrecordservicecertificate" = 'bae31aef5a8c6058a060ca053f6f9dd4292b1f57'
+    "LearnerRecordServiceCertificate" = 'bae31aef5a8c6058a060ca053f6f9dd4292b1f57'
 }
 
 $sharedResourceGroupName = $envPrefix + "-$($applicationPrefix)-shared"
