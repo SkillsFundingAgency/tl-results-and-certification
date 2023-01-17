@@ -97,7 +97,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<IndustryPlacementViewModel> GetIndustryPlacementViewModelAsync(long providerUkprn, int profileId)
         {
-            // TODO: Below are to be tested based on the story picked.
             var response = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId: null);
             if (response == null)
                 return null;
