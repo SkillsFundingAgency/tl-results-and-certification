@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
             if (cacheModel?.IpCompletion?.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
                 BackLink = new BackLinkModel { RouteName = RouteConstants.IpSpecialConsiderationReasons };
             else
-                BackLink = new BackLinkModel { RouteName = RouteConstants.IpCompletion, RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } };
+                BackLink = new BackLinkModel { RouteName = cacheModel?.IpCompletion?.IsChangeJourney == true ? RouteConstants.IpCompletionChange : RouteConstants.IpCompletion, RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } };
         }
     }
 }

@@ -8,19 +8,18 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpCompletionGet
 {
-    public class When_Cache_Found_IsChangeMode_IsTrue : TestSetup
+    public class When_Cache_Found_For_Change_Journey : TestSetup
     {
         private IndustryPlacementViewModel _cacheResult;
         private IpCompletionViewModel _ipCompletionViewModel;
 
         public override void Given()
         {
-            SetRouteAttribute(RouteConstants.IpCompletion);
-            _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = 1, AcademicYear = 2020, LearnerName = "First Last", IndustryPlacementStatus = IndustryPlacementStatus.Completed, IsChangeMode = true };
+            SetRouteAttribute(RouteConstants.IpCompletionChange);
+            _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = 1, AcademicYear = 2020, LearnerName = "First Last", IndustryPlacementStatus = IndustryPlacementStatus.Completed };
             _cacheResult = new IndustryPlacementViewModel
             {
-                IpCompletion = _ipCompletionViewModel,
-                IsChangeModeAllowed = true
+                IpCompletion = _ipCompletionViewModel
             };
 
             CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(_cacheResult);
@@ -44,12 +43,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.AcademicYear.Should().Be(_cacheResult.IpCompletion.AcademicYear);
             model.LearnerName.Should().Be(_cacheResult.IpCompletion.LearnerName);
             model.IndustryPlacementStatus.Should().Be(_cacheResult.IpCompletion.IndustryPlacementStatus);
-            model.IsChangeMode.Should().BeTrue();
-            model.IsChangeJourney.Should().BeFalse();
+            model.IsIpStatusExists.Should().BeTrue();
+            model.IsChangeJourney.Should().BeTrue();
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.IpCheckAndSubmit);
-            model.BackLink.RouteAttributes.Should().BeNullOrEmpty();
+            model.BackLink.RouteName.Should().Be(RouteConstants.LearnerRecordDetails);
+            model.BackLink.RouteAttributes.Count.Should().Be(1);
+            model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string profileIdRouteValue);
+            profileIdRouteValue.Should().Be(_cacheResult.IpCompletion.ProfileId.ToString());
         }
     }
 }

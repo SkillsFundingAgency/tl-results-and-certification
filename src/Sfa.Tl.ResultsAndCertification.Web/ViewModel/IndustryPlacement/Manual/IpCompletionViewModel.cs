@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         [Required(ErrorMessageResourceType = typeof(ErrorResource.IpCompletion), ErrorMessageResourceName = "Validation_Message")]
         public IndustryPlacementStatus? IndustryPlacementStatus { get; set; }
 
-        public bool IsChangeJourney { get; internal set; }
+        public bool IsChangeJourney { get; set; }
         public bool IsChangeMode { get; set; }
 
         public bool IsValid
@@ -30,7 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
                 return IsChangeJourney == hasStatusAlready;
             }
         }
-
+        public bool IsIpStatusExists => IndustryPlacementStatus != null && IndustryPlacementStatus != ResultsAndCertification.Common.Enum.IndustryPlacementStatus.NotSpecified;
+        
         public virtual BackLinkModel BackLink => new()
         {
             RouteName = IsChangeMode ? RouteConstants.IpCheckAndSubmit : RouteConstants.LearnerRecordDetails,

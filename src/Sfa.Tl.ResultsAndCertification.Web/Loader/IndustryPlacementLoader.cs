@@ -175,7 +175,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             // Status Row
             var statusValue = GetIpStatusValue(cacheModel.IpCompletion.IndustryPlacementStatus);
             var routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, cacheModel.IpCompletion.ProfileId.ToString() }, { Constants.IsChangeMode, "true" } };
-            detailsList.Add(new SummaryItemModel { Id = "ipstatus", Title = CheckAndSubmitContent.Title_IP_Status_Text, Value = statusValue, ActionText = CheckAndSubmitContent.Link_Change, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Ip_Status, RouteName = RouteConstants.IpCompletion, RouteAttributes = routeAttributes });
+            detailsList.Add(new SummaryItemModel { Id = "ipstatus", Title = CheckAndSubmitContent.Title_IP_Status_Text, Value = statusValue, ActionText = CheckAndSubmitContent.Link_Change, HiddenActionText = CheckAndSubmitContent.Hidden_Text_Ip_Status, RouteName = cacheModel.IpCompletion.IsChangeJourney ? RouteConstants.IpCompletionChange : RouteConstants.IpCompletion, RouteAttributes = routeAttributes });
 
             // SpecialConsideration Rows
             if (cacheModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)

@@ -34,6 +34,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                     {
                         new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.WillNotComplete } },
                         new BackLinkModel { RouteName = RouteConstants.IpCompletion, RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, "1" } } }
+                    },
+                    new object[]
+                    {
+                        new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.WillNotComplete, IsChangeJourney = true } },
+                        new BackLinkModel { RouteName = RouteConstants.IpCompletionChange, RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, "1" } } }
                     }
                 };
             }

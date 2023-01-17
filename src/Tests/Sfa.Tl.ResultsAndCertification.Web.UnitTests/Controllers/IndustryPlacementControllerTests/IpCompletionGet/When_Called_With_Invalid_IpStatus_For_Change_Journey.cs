@@ -7,13 +7,14 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpCompletionGet
 {
-    public class When_Called_With_Invalid_IpStatus : TestSetup
+    public class When_Called_With_Invalid_IpStatus_For_Change_Journey : TestSetup
     {
+        private IndustryPlacementViewModel _cacheResult;
         private IpCompletionViewModel _ipCompletionViewModel;
 
         public override void Given()
         {
-            SetRouteAttribute(RouteConstants.IpCompletion);
+            SetRouteAttribute(RouteConstants.IpCompletionChange);
             ProfileId = 1;
             PathwayId = 1;
 
@@ -22,15 +23,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 ProfileId = ProfileId,
                 PathwayId = PathwayId,
                 LearnerName = "Test Test",
-                IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed
+                IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.NotSpecified
             };
-            IndustryPlacementLoader.GetLearnerRecordDetailsAsync<IpCompletionViewModel>(ProviderUkprn, ProfileId).Returns(_ipCompletionViewModel);
+
+            _cacheResult = new IndustryPlacementViewModel
+            {
+                IpCompletion = _ipCompletionViewModel
+            };
+
+            CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(_cacheResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            IndustryPlacementLoader.Received(1).GetLearnerRecordDetailsAsync<IpCompletionViewModel>(ProviderUkprn, ProfileId);
+            IndustryPlacementLoader.DidNotReceive().GetLearnerRecordDetailsAsync<IpCompletionViewModel>(ProviderUkprn, ProfileId);
         }
 
         [Fact]

@@ -8,14 +8,14 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpCompletionGet
 {
-    public class When_Cache_Found_IsChangeMode_IsTrue : TestSetup
+    public class When_Cache_Found_For_Change_Journey_IsChangeMode_IsTrue : TestSetup
     {
         private IndustryPlacementViewModel _cacheResult;
         private IpCompletionViewModel _ipCompletionViewModel;
 
         public override void Given()
         {
-            SetRouteAttribute(RouteConstants.IpCompletion);
+            SetRouteAttribute(RouteConstants.IpCompletionChange);
             _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = 1, AcademicYear = 2020, LearnerName = "First Last", IndustryPlacementStatus = IndustryPlacementStatus.Completed, IsChangeMode = true };
             _cacheResult = new IndustryPlacementViewModel
             {
@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.LearnerName.Should().Be(_cacheResult.IpCompletion.LearnerName);
             model.IndustryPlacementStatus.Should().Be(_cacheResult.IpCompletion.IndustryPlacementStatus);
             model.IsChangeMode.Should().BeTrue();
-            model.IsChangeJourney.Should().BeFalse();
+            model.IsChangeJourney.Should().BeTrue();
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.IpCheckAndSubmit);

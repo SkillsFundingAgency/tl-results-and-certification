@@ -15,9 +15,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
         public override void Given()
         {
+            SetRouteAttribute(RouteConstants.IpCompletion);
+
             IsChangeMode = true;
 
-            _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = 1, AcademicYear = 2020, LearnerName = "First Last", IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified };
+            _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = 1, AcademicYear = 2020, LearnerName = "First Last", IndustryPlacementStatus = IndustryPlacementStatus.Completed };
             _cacheResult = new IndustryPlacementViewModel
             {
                 IpCompletion = _ipCompletionViewModel,
@@ -45,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.AcademicYear.Should().Be(_cacheResult.IpCompletion.AcademicYear);
             model.LearnerName.Should().Be(_cacheResult.IpCompletion.LearnerName);
             model.IndustryPlacementStatus.Should().Be(_cacheResult.IpCompletion.IndustryPlacementStatus);
-            model.IsValid.Should().BeTrue();
+            model.IsIpStatusExists.Should().BeTrue();
             model.IsChangeMode.Should().BeFalse();
             model.IsChangeJourney.Should().BeFalse();
 

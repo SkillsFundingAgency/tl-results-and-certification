@@ -7,26 +7,32 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpCompletionGet
 {
-    public class When_Called_With_Valid_Data : TestSetup
+    public class When_Called_With_Valid_Data_For_Change_Journey : TestSetup
     {
+        private IndustryPlacementViewModel _cacheResult;
         private IpCompletionViewModel _ipCompletionViewModel;
 
         public override void Given()
         {
-            SetRouteAttribute(RouteConstants.IpCompletion);
+            SetRouteAttribute(RouteConstants.IpCompletionChange);
 
             ProfileId = 1;
             PathwayId = 1;
 
-            _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = ProfileId, PathwayId = PathwayId, AcademicYear = 2020, LearnerName = "Test Test", IndustryPlacementStatus = null };
+            _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = ProfileId, PathwayId = PathwayId, AcademicYear = 2020, LearnerName = "Test Test", IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed };
 
-            IndustryPlacementLoader.GetLearnerRecordDetailsAsync<IpCompletionViewModel>(ProviderUkprn, ProfileId).Returns(_ipCompletionViewModel);
+            _cacheResult = new IndustryPlacementViewModel
+            {
+                IpCompletion = _ipCompletionViewModel
+            };
+
+            CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(_cacheResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            IndustryPlacementLoader.Received(1).GetLearnerRecordDetailsAsync<IpCompletionViewModel>(ProviderUkprn, ProfileId);
+            IndustryPlacementLoader.DidNotReceive().GetLearnerRecordDetailsAsync<IpCompletionViewModel>(ProviderUkprn, ProfileId);
         }
 
         [Fact]
@@ -40,10 +46,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.PathwayId.Should().Be(_ipCompletionViewModel.PathwayId);
             model.AcademicYear.Should().Be(_ipCompletionViewModel.AcademicYear);
             model.LearnerName.Should().Be(_ipCompletionViewModel.LearnerName);
-            model.IndustryPlacementStatus.Should().BeNull();
+            model.IndustryPlacementStatus.Should().Be(_ipCompletionViewModel.IndustryPlacementStatus);
             model.IsValid.Should().BeTrue();
             model.IsChangeMode.Should().BeFalse();
-            model.IsChangeJourney.Should().BeFalse();
+            model.IsChangeJourney.Should().BeTrue();
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.LearnerRecordDetails);

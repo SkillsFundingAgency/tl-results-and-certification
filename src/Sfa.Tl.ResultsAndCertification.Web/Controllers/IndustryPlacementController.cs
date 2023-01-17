@@ -58,6 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("industry-placement-completion-change/{profileId}/{isChangeMode:bool?}", Name = RouteConstants.IpCompletionChange)]
         public async Task<IActionResult> IpCompletionAsync(int profileId, bool isChangeMode = false)
         {
+            var isChangeJourney = RouteName.Equals(RouteConstants.IpCompletionChange, StringComparison.InvariantCultureIgnoreCase);
             var cacheModel = await _cacheService.GetAsync<IndustryPlacementViewModel>(CacheKey);
 
             var viewModel = cacheModel?.IpCompletion;
@@ -67,8 +68,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 if (viewModel == null)
                     return RedirectToRoute(RouteConstants.PageNotFound);
 
-                viewModel.IsChangeJourney = RouteName.Equals(RouteConstants.IpCompletionChange, StringComparison.InvariantCultureIgnoreCase);
+                viewModel.IsChangeJourney = isChangeJourney;
                 if (!viewModel.IsValid)
+                    return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            else
+            {
+                viewModel.IsChangeJourney = isChangeJourney;
+                if (!viewModel.IsIpStatusExists)
                     return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
