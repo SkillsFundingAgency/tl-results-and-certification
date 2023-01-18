@@ -147,8 +147,11 @@
   <data name="No_Will_Not_Complete_Option_Text" xml:space="preserve">
     <value>No, they will not complete it</value>
   </data>
-  <data name="Page_Title" xml:space="preserve">
+  <data name="Page_Title_Add_Journey" xml:space="preserve">
     <value>Industry placement completion - Manage learner</value>
+  </data>
+  <data name="Page_Title_Change_Journey" xml:space="preserve">
+    <value>Change industry placement details - Update learner record</value>
   </data>
   <data name="Signed_Declaration_Hint_Text" xml:space="preserve">
     <value>signed declaration of student completion (opens in a new tab)</value>
