@@ -49,16 +49,16 @@ jobs:
             -uiCertificateName "$(CertificateName)"
             -functionCertificateName "$(LearningRecordServiceCertificateName)"
             -storageAccountContainerArray "$(storageAccountContainerArray)"
-            -certificatePrintingBatchesCreateTrigger "0 0 0 1 1 2"
+            -certificatePrintingBatchesCreateTrigger "$(CertificatePrintingBatchesCreateTrigger)"
             -certificatePrintingBatchSummaryTrigger "$(CertificatePrintingBatchSummaryTrigger)"
             -certificatePrintingRequestTrigger "$(CertificatePrintingRequestTrigger)"
             -certificatePrintingTrackBatchTrigger "$(CertificatePrintingTrackBatchTrigger)"
             -learnerGenderTrigger "$(LearnerGenderTrigger)"
             -learnerVerificationAndLearningEventsTrigger "$(LearnerVerificationAndLearningEventsTrigger)"
-            -overallResultCalculationTrigger "0 0 0 1 1 2"
-            -ucasTransferAmendmentsTrigger "0 0 0 1 1 2"
-            -ucasTransferEntriesTrigger "0 0 0 1 1 2"
-            -ucasTransferResultsTrigger "0 0 0 1 1 2"'
+            -overallResultCalculationTrigger "$(OverallResultCalculationTrigger)"
+            -ucasTransferAmendmentsTrigger "$(UcasTransferAmendmentsTrigger)"
+            -ucasTransferEntriesTrigger "$(UcasTransferEntriesTrigger)"
+            -ucasTransferResultsTrigger "$(UcasTransferResultsTrigger)"'
           tags: $(Tags) 
           processOutputs: true
 
