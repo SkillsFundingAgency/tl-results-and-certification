@@ -248,7 +248,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var isValidData = await IsValidIndustryPlacementData(request, request.PathwayId, pathway.AcademicYear);
 
-            if (!isValidData || (industryPlacement != null && (industryPlacement.Status == IndustryPlacementStatus.Completed || industryPlacement.Status == IndustryPlacementStatus.CompletedWithSpecialConsideration)))
+            if (!isValidData)
                 return false;
 
             int status = 0;
@@ -265,15 +265,60 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
             else
             {
-                industryPlacement.Status = request.IndustryPlacementStatus;
-                industryPlacement.Details = request.IndustryPlacementDetails != null ? JsonConvert.SerializeObject(request.IndustryPlacementDetails) : null;
-                industryPlacement.ModifiedBy = request.PerformedBy;
-                industryPlacement.ModifiedOn = DateTime.UtcNow;
+                var ipDetailsChanged = IsIndustryPlacementDataChanged(industryPlacement, request);
 
-                status = await _industryPlacementRepository.UpdateWithSpecifedColumnsOnlyAsync(industryPlacement, u => u.Status, u => u.Details, u => u.ModifiedBy, u => u.ModifiedOn);
+                // ipDetailsChanged.Item1 - isIpStatusChanged
+                // ipDetailsChanged.Item2 - isSpecialConsiderationDataChanged
+                // Update only if status or special consideration data has changed
+                if (ipDetailsChanged.Item1 || ipDetailsChanged.Item2)
+                {
+                    // Ip Status changed - then update Status, ModifiedBy and ModifiedOn
+                    // If Status not changed and special consideration reasons changed then update Details only (Do not update ModifiedBy and ModifiedOn as this will trigger overall calculation to run)
+                    if (ipDetailsChanged.Item1)
+                    {
+                        industryPlacement.Status = request.IndustryPlacementStatus;
+                        industryPlacement.ModifiedBy = request.PerformedBy;
+                        industryPlacement.ModifiedOn = DateTime.UtcNow;
+                    }
+
+                    // Update details 
+                    industryPlacement.Details = request.IndustryPlacementDetails != null ? JsonConvert.SerializeObject(request.IndustryPlacementDetails) : null;
+                    status = await _industryPlacementRepository.UpdateWithSpecifedColumnsOnlyAsync(industryPlacement, u => u.Status, u => u.Details, u => u.ModifiedBy, u => u.ModifiedOn);
+                }
+                else
+                {
+                    // pretend the status to be 1, so that it will return true and success banner will be shown in the UI
+                    status = 1;
+                }
+            }
+            return status > 0;
+        }
+
+        private Tuple<bool, bool> IsIndustryPlacementDataChanged(IndustryPlacement actualIndustryPlacement, IndustryPlacementRequest industryPlacementRequest)
+        {
+            bool isIpStatusChanged = false;
+            bool isSpecialConsiderationDataChanged = false;
+
+            if (actualIndustryPlacement.Status != industryPlacementRequest.IndustryPlacementStatus)
+            {
+                isIpStatusChanged = true;
+            }
+            else if (actualIndustryPlacement.Status == industryPlacementRequest.IndustryPlacementStatus && industryPlacementRequest.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
+            {
+                var actualIndustryPlacementDetails = !string.IsNullOrWhiteSpace(actualIndustryPlacement.Details) ? JsonConvert.DeserializeObject<IndustryPlacementDetails>(actualIndustryPlacement.Details) : null;
+
+                isSpecialConsiderationDataChanged = actualIndustryPlacementDetails == null
+                                                    || actualIndustryPlacementDetails.HoursSpentOnPlacement != industryPlacementRequest.IndustryPlacementDetails.HoursSpentOnPlacement
+                                                    || actualIndustryPlacementDetails.SpecialConsiderationReasons == null
+                                                    || actualIndustryPlacementDetails.SpecialConsiderationReasons.Count != industryPlacementRequest.IndustryPlacementDetails.SpecialConsiderationReasons.Count
+                                                    || !industryPlacementRequest.IndustryPlacementDetails.SpecialConsiderationReasons.All(x => actualIndustryPlacementDetails.SpecialConsiderationReasons.Contains(x.Value));
+            }
+            else
+            {
+                isIpStatusChanged = false;
             }
 
-            return status > 0;
+            return new Tuple<bool, bool>(isIpStatusChanged, isSpecialConsiderationDataChanged);
         }
 
         private async Task<bool> IsValidIndustryPlacementData(IndustryPlacementRequest request, int? pathwayId, int academicYear)

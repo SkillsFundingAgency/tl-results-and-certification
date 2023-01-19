@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private IList<TqRegistrationProfile> _profiles;
+        private List<IndustryPlacementData> _industryPlacementDatas;
         private bool _actualResult;
 
         public override void Given()
@@ -29,7 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                 { 1111111112, RegistrationPathwayStatus.Withdrawn },
                 { 1111111113, RegistrationPathwayStatus.Active },
                 { 1111111114, RegistrationPathwayStatus.Active },
-                { 1111111115, RegistrationPathwayStatus.Active }
+                { 1111111115, RegistrationPathwayStatus.Active },
+                { 1111111116, RegistrationPathwayStatus.Active },
             };
 
             // Registrations seed
@@ -37,7 +40,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
             SeedSpecialConsiderationsLookupData();
 
             _profiles = SeedRegistrationsData(_ulns, TqProvider);
+                        
+            _industryPlacementDatas = new List<IndustryPlacementData>
+            {
+                new IndustryPlacementData { Uln = 1111111113, IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted, Details = null },
+                new IndustryPlacementData { Uln = 1111111114, IndustryPlacementStatus = IndustryPlacementStatus.Completed, Details = new IndustryPlacementDetails { IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString() } },
+                new IndustryPlacementData { Uln = 1111111115, IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration, Details = new IndustryPlacementDetails { HoursSpentOnPlacement = 100, SpecialConsiderationReasons = new List<int?> { 1, 3 } } },
+                new IndustryPlacementData { Uln = 1111111114, IndustryPlacementStatus = IndustryPlacementStatus.Completed, Details = new IndustryPlacementDetails { IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString() } }
+            };
 
+            SeedIndustyPlacementData(_industryPlacementDatas);
             DbContext.SaveChanges();
 
             // Create Service
@@ -255,13 +267,81 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                         PerformedBy = "Test User"
                     }, true },
 
-                    // Ip Status - Completed - When TemporaryFlexibilitiesUsed = false and BlendedTemporaryFlexibilityUsed = true then TemporaryFlexibilities should have Blended Placement value - return true
+                    // Ip Status - NotCompleted - Changing it to Completed - return - true
                     new object[] { new IndustryPlacementRequest
                     {
                         ProviderUkprn = (long)Provider.BarsleyCollege,
-                        ProfileId = 1,
+                        ProfileId = 3,
                         PathwayId = 1,
-                        RegistrationPathwayId = 1,
+                        RegistrationPathwayId = 3,
+                        IndustryPlacementStatus = IndustryPlacementStatus.Completed,
+                        IndustryPlacementDetails = new IndustryPlacementDetails
+                        {
+                            IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString(),
+                            HoursSpentOnPlacement = null,
+                            SpecialConsiderationReasons = new List<int?>()
+                        },
+                        PerformedBy = "Test User"
+                    }, true },
+
+                    // Ip Status - Completed - Changing it to CompletedWithSpecialConsideration - return - true
+                    new object[] { new IndustryPlacementRequest
+                    {
+                        ProviderUkprn = (long)Provider.BarsleyCollege,
+                        ProfileId = 4,
+                        PathwayId = 1,
+                        RegistrationPathwayId = 4,
+                        IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration,
+                        IndustryPlacementDetails = new IndustryPlacementDetails
+                        {
+                            IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration.ToString(),
+                            HoursSpentOnPlacement = 500,
+                            SpecialConsiderationReasons = new List<int?>{ 1, 7 }
+                        },
+                        PerformedBy = "Test User"
+                    }, true },
+
+                    // Ip Status - CompletedWithSpecialConsideration - Changing it to Completed - return - true
+                    new object[] { new IndustryPlacementRequest
+                    {
+                        ProviderUkprn = (long)Provider.BarsleyCollege,
+                        ProfileId = 5,
+                        PathwayId = 1,
+                        RegistrationPathwayId = 5,
+                        IndustryPlacementStatus = IndustryPlacementStatus.Completed,
+                        IndustryPlacementDetails = new IndustryPlacementDetails
+                        {
+                            IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString(),
+                            HoursSpentOnPlacement = null,
+                            SpecialConsiderationReasons = new List<int?>()
+                        },
+                        PerformedBy = "Test User"
+                    }, true },
+
+                    // Ip Status - CompletedWithSpecialConsideration - Changing it to CompletedWithSpecialConsideration (updating Hours & Special Considerations) - return - true
+                    new object[] { new IndustryPlacementRequest
+                    {
+                        ProviderUkprn = (long)Provider.BarsleyCollege,
+                        ProfileId = 5,
+                        PathwayId = 1,
+                        RegistrationPathwayId = 5,
+                        IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration,
+                        IndustryPlacementDetails = new IndustryPlacementDetails
+                        {
+                            IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration.ToString(),
+                            HoursSpentOnPlacement = 500,
+                            SpecialConsiderationReasons = new List<int?>{ 1, 7 }
+                        },
+                        PerformedBy = "Test User"
+                    }, true },
+
+                    // Ip Status - Completed - set it to Completed only - return - true
+                    new object[] { new IndustryPlacementRequest
+                    {
+                        ProviderUkprn = (long)Provider.BarsleyCollege,
+                        ProfileId = 6,
+                        PathwayId = 1,
+                        RegistrationPathwayId = 6,
                         IndustryPlacementStatus = IndustryPlacementStatus.Completed,
                         IndustryPlacementDetails = new IndustryPlacementDetails
                         {
@@ -273,6 +353,22 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                     }, true }
                 };
             }
+        }        
+
+        private void SeedIndustyPlacementData(List<IndustryPlacementData> ipDatas)
+        {
+            foreach (var ipData in ipDatas)
+            {
+                var pathway = _profiles.FirstOrDefault(x => x.UniqueLearnerNumber == ipData.Uln).TqRegistrationPathways.FirstOrDefault();
+                IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, ipData.IndustryPlacementStatus, ipData.Details != null ? JsonConvert.SerializeObject(ipData.Details) : null);
+            }
         }
+    }
+
+    public class IndustryPlacementData
+    {
+        public long Uln { get; set; }
+        public IndustryPlacementStatus IndustryPlacementStatus { get; set; }
+        public IndustryPlacementDetails Details { get; set; }
     }
 }

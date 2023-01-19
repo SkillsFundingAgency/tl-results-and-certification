@@ -109,7 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 }
             }
 
-            var cacheModel = await SyncCacheIp(model);
+            await SyncCacheIp(model);
 
             if (model.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
                 return RedirectToRoute(RouteConstants.IpSpecialConsiderationHours);
