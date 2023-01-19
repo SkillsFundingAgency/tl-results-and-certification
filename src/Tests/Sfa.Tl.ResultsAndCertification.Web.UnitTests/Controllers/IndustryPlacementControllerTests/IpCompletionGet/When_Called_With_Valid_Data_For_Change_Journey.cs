@@ -4,6 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using Xunit;
+using IpCompletionContent = Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement.IpCompletion;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpCompletionGet
 {
@@ -50,6 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.IsValid.Should().BeTrue();
             model.IsChangeMode.Should().BeFalse();
             model.IsChangeJourney.Should().BeTrue();
+            model.PageTitle.Should().Be(IpCompletionContent.Page_Title_Change_Journey);
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.LearnerRecordDetails);

@@ -15,6 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
             {
                 ProfileId = 1,
                 LearnerName = "First Last",
+                IsChangeJourney= true
             };
         }
 
@@ -28,6 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
         {
             ActualResult.ProfileId.Should().Be(IpCompletionViewModel.ProfileId);
             ActualResult.LearnerName.Should().Be(IpCompletionViewModel.LearnerName);
+            ActualResult.IsChangeJourney.Should().BeTrue();
         }
     }
 }

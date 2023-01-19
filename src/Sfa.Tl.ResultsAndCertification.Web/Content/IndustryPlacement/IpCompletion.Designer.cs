@@ -153,9 +153,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         /// <summary>
         ///   Looks up a localized string similar to Industry placement completion - Manage learner.
         /// </summary>
-        public static string Page_Title {
+        public static string Page_Title_Add_Journey {
             get {
-                return ResourceManager.GetString("Page_Title", resourceCulture);
+                return ResourceManager.GetString("Page_Title_Add_Journey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change industry placement details - Update learner record.
+        /// </summary>
+        public static string Page_Title_Change_Journey {
+            get {
+                return ResourceManager.GetString("Page_Title_Change_Journey", resourceCulture);
             }
         }
         

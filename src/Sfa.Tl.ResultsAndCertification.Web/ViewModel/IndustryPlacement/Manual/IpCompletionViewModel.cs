@@ -22,6 +22,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         public bool IsChangeJourney { get; set; }
         public bool IsChangeMode { get; set; }
 
+        public string PageTitle { get; set; }
+
         public bool IsValid
         {
             get

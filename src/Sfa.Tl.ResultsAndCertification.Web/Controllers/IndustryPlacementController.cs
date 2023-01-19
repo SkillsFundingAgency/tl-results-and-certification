@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using IpCompletionContent = Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement.IpCompletion;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -78,6 +79,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 if (!viewModel.IsIpStatusExists)
                     return RedirectToRoute(RouteConstants.PageNotFound);
             }
+
+            viewModel.PageTitle = viewModel.IsChangeJourney ? IpCompletionContent.Page_Title_Change_Journey : IpCompletionContent.Page_Title_Add_Journey;
 
             viewModel.IsChangeMode = (isChangeMode || (cacheModel?.IpCompletion?.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
             return View(viewModel);
