@@ -131,6 +131,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = (cacheModel?.SpecialConsideration?.Hours) ?? await _industryPlacementLoader.TransformIpCompletionDetailsTo<SpecialConsiderationHoursViewModel>(cacheModel.IpCompletion);
+
+            viewModel.IsChangeJourney = cacheModel.IpCompletion.IsChangeJourney;
             viewModel.IsChangeMode = (isChangeMode || (cacheModel?.SpecialConsideration?.Hours.IsChangeMode ?? false)) && cacheModel?.IsChangeModeAllowed == true;
             return View(viewModel);
         }
