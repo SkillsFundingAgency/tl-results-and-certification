@@ -42,7 +42,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<PrintCertificate> PrintCertificate { get; set; }
         public virtual DbSet<AcademicYear> AcademicYear { get; set; }
         public virtual DbSet<IpLookup> IpLookup { get; set; }
-        public virtual DbSet<IpAchieved> IpAchieved { get; set; }
         public virtual DbSet<OverallResult> OverallResult { get; set; }
         public virtual DbSet<OverallGradeLookup> OverallGradeLookup { get; set; }
 
