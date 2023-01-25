@@ -277,7 +277,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Incomplete.
+        ///   Looks up a localized string similar to Record Incomplete.
         /// </summary>
         public static string Status_Tag_Incomplete {
             get {
