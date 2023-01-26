@@ -89,6 +89,10 @@
     border-bottom: none !important;
 }
 
+.tl-letter-spacing-0 {
+    letter-spacing: unset;
+}
+
 body {
     &.js-enabled {
 
