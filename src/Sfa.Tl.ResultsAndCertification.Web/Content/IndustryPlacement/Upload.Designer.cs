@@ -106,15 +106,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Before you start.
-        /// </summary>
-        public static string Heading_Before_You_Start {
-            get {
-                return ResourceManager.GetString("Heading_Before_You_Start", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Upload (only click once).
         /// </summary>
         public static string Js_Disabled_Upload_File_Button_Text {
@@ -133,29 +124,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 18 January 2023.
+        ///   Looks up a localized string similar to learner data format and rules guidance template.
         /// </summary>
-        public static string Learner_Document_Published_On {
+        public static string Link_Learner_Data_Format_Rules_Guidance_Template {
             get {
-                return ResourceManager.GetString("Learner_Document_Published_On", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version 1.0.
-        /// </summary>
-        public static string Learner_Document_Version {
-            get {
-                return ResourceManager.GetString("Learner_Document_Version", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download learner data format and rules ({0}, {1}).
-        /// </summary>
-        public static string Link_Learner_Data_Format_Rules {
-            get {
-                return ResourceManager.GetString("Link_Learner_Data_Format_Rules", resourceCulture);
+                return ResourceManager.GetString("Link_Learner_Data_Format_Rules_Guidance_Template", resourceCulture);
             }
         }
         
@@ -169,7 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload industry placement status for multiple learners.
+        ///   Looks up a localized string similar to Upload a CSV file to add or change the industry placement status for one or more learners.
         /// </summary>
         public static string Page_Heading {
             get {
@@ -178,20 +151,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload industry placement status for multiple learners.
+        ///   Looks up a localized string similar to Upload industry placement status.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You can download a template for guidance around how to format your CSV file..
-        /// </summary>
-        public static string Para_You_Can_Download_A_Template_For_Guidance {
-            get {
-                return ResourceManager.GetString("Para_You_Can_Download_A_Template_For_Guidance", resourceCulture);
             }
         }
         
@@ -210,15 +174,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         public static string Select_File_To_Upload_Required_Validation_Message {
             get {
                 return ResourceManager.GetString("Select_File_To_Upload_Required_Validation_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Upload a CSV file to add or change the industry placement status for one or more learners..
-        /// </summary>
-        public static string Upload_Csv_File_To_Add_Or_Change_The_Industry_Placement_Text {
-            get {
-                return ResourceManager.GetString("Upload_Csv_File_To_Add_Or_Change_The_Industry_Placement_Text", resourceCulture);
             }
         }
         
@@ -255,6 +210,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         public static string Warning_Text {
             get {
                 return ResourceManager.GetString("Warning_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your file must include the specific column names provided in the .
+        /// </summary>
+        public static string Your_File_Must_Include_Specific_Column_Names {
+            get {
+                return ResourceManager.GetString("Your_File_Must_Include_Specific_Column_Names", resourceCulture);
             }
         }
     }

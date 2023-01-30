@@ -132,44 +132,29 @@
   <data name="File_Type" xml:space="preserve">
     <value>XLSX</value>
   </data>
-  <data name="Heading_Before_You_Start" xml:space="preserve">
-    <value>Before you start</value>
-  </data>
   <data name="Js_Disabled_Upload_File_Button_Text" xml:space="preserve">
     <value>Upload (only click once)</value>
   </data>
   <data name="Js_Disabled_Upload_File_Help_Text" xml:space="preserve">
     <value>JavaScript is disabled so you will not see the upload progress icon after you press Submit. Processing the file can take up to 10 seconds depending on the file size.</value>
   </data>
-  <data name="Learner_Document_Published_On" xml:space="preserve">
-    <value>published 18 January 2023</value>
-  </data>
-  <data name="Learner_Document_Version" xml:space="preserve">
-    <value>Version 1.0</value>
-  </data>
-  <data name="Link_Learner_Data_Format_Rules" xml:space="preserve">
-    <value>Download learner data format and rules ({0}, {1})</value>
+  <data name="Link_Learner_Data_Format_Rules_Guidance_Template" xml:space="preserve">
+    <value>learner data format and rules guidance template</value>
   </data>
   <data name="Must_Be_Csv_Validation_Message" xml:space="preserve">
     <value>The selected file must be a CSV</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
-    <value>Upload industry placement status for multiple learners</value>
+    <value>Upload a CSV file to add or change the industry placement status for one or more learners</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Upload industry placement status for multiple learners</value>
-  </data>
-  <data name="Para_You_Can_Download_A_Template_For_Guidance" xml:space="preserve">
-    <value>You can download a template for guidance around how to format your CSV file.</value>
+    <value>Upload industry placement status</value>
   </data>
   <data name="Processing_IndustryPlacement_File_Text" xml:space="preserve">
     <value>Processing industry placements file</value>
   </data>
   <data name="Select_File_To_Upload_Required_Validation_Message" xml:space="preserve">
     <value>Select a file to upload</value>
-  </data>
-  <data name="Upload_Csv_File_To_Add_Or_Change_The_Industry_Placement_Text" xml:space="preserve">
-    <value>Upload a CSV file to add or change the industry placement status for one or more learners.</value>
   </data>
   <data name="Upload_File_Button_Text" xml:space="preserve">
     <value>Upload</value>
@@ -182,5 +167,8 @@
   </data>
   <data name="Warning_Text" xml:space="preserve">
     <value>Warning</value>
+  </data>
+  <data name="Your_File_Must_Include_Specific_Column_Names" xml:space="preserve">
+    <value>Your file must include the specific column names provided in the </value>
   </data>
 </root>
