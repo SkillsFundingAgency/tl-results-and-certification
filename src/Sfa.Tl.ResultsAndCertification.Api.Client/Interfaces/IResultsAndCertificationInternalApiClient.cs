@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<ChangeResultResponse> ChangeResultAsync(ChangeResultRequest model);
 
         // DocumentUploadHistory
-        Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference);
+        Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long ukprn, Guid blobUniqueReference);
         Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request);
 
         // TraningProvider
@@ -90,7 +90,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         #region IndustryPlacement
         Task<IList<IpLookupData>> GetIpLookupDataAsync(IpLookupType ipLookupType, int? pathwayId = null);
-        Task<IpTempFlexNavigation> GetTempFlexNavigationAsync(int pathwayId, int academicYear);
         Task<bool> ProcessIndustryPlacementDetailsAsync(IndustryPlacementRequest request);
 
         #endregion
@@ -108,5 +107,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         
         Task<IList<DataExportResponse>> GenerateDataExportAsync(long aoUkprn, DataExportType dataExportType, string requestedBy);
         Task<DataExportResponse> DownloadOverallResultsDataAsync(long providerUkprn, string requestedBy);
+
+        // Industry Placement Bulk Upload
+        Task<BulkIndustryPlacementResponse> ProcessBulkIndustryPlacementsAsync(BulkProcessRequest model);
     }
 }

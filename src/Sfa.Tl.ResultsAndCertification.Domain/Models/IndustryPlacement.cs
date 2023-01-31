@@ -5,16 +5,10 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
 {
     public partial class IndustryPlacement : BaseEntity
     {
-        public IndustryPlacement()
-        {
-            IpAchieved = new HashSet<IpAchieved>();
-        }
-
         public int TqRegistrationPathwayId { get; set; }
         public IndustryPlacementStatus Status { get; set; }
         public string Details { get; set; }
 
         public virtual TqRegistrationPathway TqRegistrationPathway { get; set; }
-        public virtual ICollection<IpAchieved> IpAchieved { get; set; }        
     }
 }

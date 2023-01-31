@@ -14,6 +14,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Enum
         CompletedWithSpecialConsideration = 2,
 
         [Display(Name = "Not completed")]
-        NotCompleted = 3
+        NotCompleted = 3,
+
+        [Display(Name = "Will not complete")]
+        WillNotComplete = 4
     }
 }

@@ -82,12 +82,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             var model = new DocumentUploadHistoryDetails
             {
-                AoUkprn = request.AoUkprn,
+                Ukprn = request.AoUkprn,
                 BlobFileName = request.BlobFileName,
                 BlobUniqueReference = request.BlobUniqueReference,
                 DocumentType = (int)request.DocumentType,
                 FileType = (int)request.FileType,
                 Status = (int)status,
+                LoginUserType = request.LoginUserType,
                 CreatedBy = request.PerformedBy
             };
 

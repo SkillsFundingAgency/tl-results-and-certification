@@ -4,6 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using Xunit;
+using IpCompletionContent = Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement.IpCompletion;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementControllerTests.IpCompletionGet
 {
@@ -13,6 +14,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
         public override void Given()
         {
+            SetRouteAttribute(RouteConstants.IpCompletion);
+
             ProfileId = 1;
             PathwayId = 1;
 
@@ -41,6 +44,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.IndustryPlacementStatus.Should().BeNull();
             model.IsValid.Should().BeTrue();
             model.IsChangeMode.Should().BeFalse();
+            model.IsChangeJourney.Should().BeFalse();
+            model.PageTitle.Should().Be(IpCompletionContent.Page_Title_Add_Journey);
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.LearnerRecordDetails);

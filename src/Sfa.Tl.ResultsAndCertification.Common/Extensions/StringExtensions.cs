@@ -10,6 +10,16 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             return value.ToString("dd MMMM yyyy");
         }
 
+        public static string ToDobFormat(this DateTime value, bool trimLeadingZero)
+        {
+            var strDate = value.ToString("dd MMMM yyyy");
+
+            if (!trimLeadingZero)
+                return value.ToDobFormat();
+
+            return strDate.TrimStart('0');
+        }
+
         /// <summary>
         /// Converts to dd MMMM yyyy format by default.
         /// </summary>

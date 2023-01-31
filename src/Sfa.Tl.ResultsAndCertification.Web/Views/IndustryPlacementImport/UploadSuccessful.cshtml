@@ -1,0 +1,23 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.UploadSuccessfulViewModel
+
+@{
+    ViewData["Title"] = @UploadSuccessful.Page_Title;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">@UploadSuccessful.Section_Heading</h1>
+        </div>
+        <p class="govuk-body">@Model.SuccessfulIndustryPlacementsText</p>
+
+        <h2 class="govuk-heading-m">@UploadSuccessful.What_Happens_Next</h2>
+
+        <p class="govuk-body">
+            @UploadSuccessful.We_Will_Use_The_Information_You_Have_Uploaded
+            <a class="govuk-link" asp-route="@RouteConstants.SearchLearnerRecord">@UploadSuccessful.View_Your_Learner_Records</a>@UploadSuccessful.Full_Stop
+        </p>
+    </div>
+</div>

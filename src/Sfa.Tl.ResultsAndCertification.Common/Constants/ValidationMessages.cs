@@ -11,6 +11,8 @@
         public const string MustBeStringWithLength = "{0} must have {1} characters only";
         public const string MustBeValidDate = "{0} must be a valid date in DDMMYYYY format";
         public const string DateNotinFuture = "{0} must be in the past";
+        public const string MustBeNumberWithInRange = "{0} must be between {1} and {2} digit number";
+        public const string CannotHaveValue = "{0} cannot have a value";
 
         public const string MustBeInFormat = "{0} must be in the format {1}";        
 
@@ -101,5 +103,17 @@
         public const string ResultCannotBeChanged = "This learner's grade cannot be changed. Please remove this learner and try again.";
         public const string ResultCannotBeInUnderReviewOrBeingAppealedStatus = "This learner's grade cannot be changed because it is being reviewed or appealed. Please remove this row and try again.";
         public const string ResultIsInFinal = "This learner's grade is now final. Please remove this learner and try again.";
+
+        // Industry Placement - Bulk Stage 2 validations
+        public const string IndustryPlacementHoursNeedsToBeProvided = "Industry placement hours needs to be provided";
+        public const string SpecialConsiderationReasonNeedsToBeProvided = "Special consideration reason needs to be provided";
+        public const string SpecialConsiderationReasonIsNotValid = "Special consideration reason is not valid";
+        public const string NoIndustryPlacementDataAfterUln = "No data provided for this learner. Please provide data or remove the row.";
+
+        // Industry Placement - Bulk stage 3 validations
+        public const string UlnNotRegisteredWithProvider = "ULN not registered with provider";
+        public const string InvalidCoreCodeProvider = "Core code either not recognised or not registered for this ULN";
+        public const string InvalidIndustryPlacementStatus = "Industry placement status is not valid";
+        public const string InvalidSpecialConsiderationCodes = "There is a problem with the special consideration code(s)";
     }
 }

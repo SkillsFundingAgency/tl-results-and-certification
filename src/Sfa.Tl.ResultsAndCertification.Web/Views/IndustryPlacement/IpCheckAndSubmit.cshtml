@@ -28,7 +28,7 @@
                 }
             </dl>
             
-            <p class="govuk-body">@string.Format(@IpCheckAndSubmit.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, Model.LearnerName)</p>
+            <p class="govuk-body">@Model.DeclarationText</p>
             <form asp-route="@RouteConstants.SubmitIpCheckAndSubmit">
                 <div class="govuk-button-group">
                     <button class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@IpCheckAndSubmit.Button_Submit</button>

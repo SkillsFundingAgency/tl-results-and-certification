@@ -65,7 +65,6 @@
         public const string AddLearnerRecordConfirmation = "AddLearnerRecordConfirmation";
         public const string SearchLearnerRecordViewModel = "SearchLearnerRecordViewModel";
         public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
-        public const string AddEnglishAndMathsSendDataConfirmation = "AddEnglishAndMathsSendDataConfirmation"; // TODO: Delete?
         public const string AddAddressConfirmation = "AddAddressConfirmation";
         public const string RequestSoaConfirmation = "RequestSoaConfirmation";
         public const string UserSessionActivityId = "UserSessionActivityId";
@@ -154,6 +153,7 @@
         public const string AndSeperator = " and ";
         public const string CommaSeperator = ",";
         public const string NotReceived = "NR";
+        public const string NotSpecified = "NotSpecified";
 
         // Function Name Constants
         public const string FetchLearnerGender = "FetchLearnerGender";

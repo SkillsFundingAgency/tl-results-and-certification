@@ -8,7 +8,6 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
@@ -23,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.BlobUniqueReference, opts => opts.MapFrom(s => Guid.NewGuid()))
                .ForMember(d => d.FileType, opts => opts.MapFrom(s => FileType.Csv))
                .ForMember(d => d.DocumentType, opts => opts.MapFrom(s => DocumentType.Assessments))
+               .ForMember(d => d.LoginUserType, opts => opts.MapFrom(s => LoginUserType.AwardingOrganisation))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<UploadAssessmentsRequestViewModel, BulkProcessRequest>>());
 
             CreateMap<BulkAssessmentResponse, UploadAssessmentsResponseViewModel>()

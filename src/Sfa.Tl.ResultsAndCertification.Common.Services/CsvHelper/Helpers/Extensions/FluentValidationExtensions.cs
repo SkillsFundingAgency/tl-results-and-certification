@@ -39,6 +39,13 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
                 .WithMessage(string.Format(ValidationMessages.StringLength, "{PropertyName}", max.ToString()));
         }
 
+        public static IRuleBuilderOptions<T, string> MustBeNumberWithInRange<T>(this IRuleBuilder<T, string> ruleBuilder, int minRange, int maxRange, string message = null)
+        {
+            return ruleBuilder
+                .Must(r => r.IsInt() && r.ToInt() >= minRange && r.ToInt() <= maxRange)
+                .WithMessage(!string.IsNullOrWhiteSpace(message) ? message : string.Format(ValidationMessages.MustBeNumberWithInRange, "{PropertyName}", minRange, maxRange));
+        }
+
         public static IRuleBuilderOptions<T, string> ValidDate<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder
@@ -64,6 +71,13 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
         {
             return ruleBuilder
                 .Must(y => Regex.IsMatch(y, assessmentEntryFormat, RegexOptions.IgnoreCase));
+        }
+
+        public static IRuleBuilderOptions<T, string> MustBeNullOrEmpty<T>(this IRuleBuilder<T, string> ruleBuilder, string message = null)
+        {
+            return ruleBuilder
+                .Must(r => string.IsNullOrWhiteSpace(r))
+                .WithMessage(!string.IsNullOrWhiteSpace(message) ? message : string.Format(ValidationMessages.CannotHaveValue, "{PropertyName}"));
         }
     }
 }

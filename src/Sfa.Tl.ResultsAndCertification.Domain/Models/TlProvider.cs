@@ -8,6 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         {
             TqProviders = new HashSet<TqProvider>();
             TlProviderAddresses = new HashSet<TlProviderAddress>();
+            DocumentUploadHistorys = new HashSet<DocumentUploadHistory>();
         }
 
         public long UkPrn { get; set; }
@@ -17,5 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
 
         public virtual ICollection<TqProvider> TqProviders { get; set; }
         public virtual ICollection<TlProviderAddress> TlProviderAddresses { get; set; }
+        public virtual ICollection<DocumentUploadHistory> DocumentUploadHistorys { get; set; }
     }
 }

@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Completed.
+        ///   Looks up a localized string similar to Placement completed.
         /// </summary>
         public static string Completed_Display_Text {
             get {
@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Completed with special consideration.
+        ///   Looks up a localized string similar to Placement completed with special consideration.
         /// </summary>
         public static string CompletedWithSpecialConsideration_Display_Text {
             get {
@@ -98,7 +98,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Not completed.
+        ///   Looks up a localized string similar to Placement will not be completed.
+        /// </summary>
+        public static string Placement_Will_Not_Be_Completed {
+            get {
+                return ResourceManager.GetString("Placement_Will_Not_Be_Completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Placement still to be completed.
         /// </summary>
         public static string Still_To_Be_Completed_Display_Text {
             get {

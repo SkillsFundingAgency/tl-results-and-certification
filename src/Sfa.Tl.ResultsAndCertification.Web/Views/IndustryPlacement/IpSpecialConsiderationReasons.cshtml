@@ -19,7 +19,7 @@
 
             <partial name="_ValidationSummary" />
 
-            <span class="govuk-caption-l">Industry placement: Special consideration</span>
+            <span class="govuk-caption-l">@IpSpecialConsiderationReasons.Caption_Industry_Placement_Special_Consideration</span>
             <div class="govuk-form-group" sfa-validation-for="IsReasonSelected" sfa-validation-class="govuk-form-group--error">
 
                 <fieldset class="govuk-fieldset" aria-describedby="special-consideration-hint">
@@ -45,12 +45,11 @@
                             }
                         </div>
                     </div>
-
                 </fieldset>
+                <div class="govuk-inset-text">@IpSpecialConsiderationReasons.Inset_You_Must_Have_Documentary_Evidence</div>
             </div>
 
             <button id="ContinueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@IpSpecialConsiderationReasons.Button_Continue</button>
         </form>
     </div>
-    <partial name="Partials/_ipGuidanceNavigation.cshtml" />
 </div>

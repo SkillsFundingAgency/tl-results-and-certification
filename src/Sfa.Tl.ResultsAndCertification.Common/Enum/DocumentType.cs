@@ -8,6 +8,7 @@
         Documents = 4,
         Ucas = 5,
         DataExports = 6,
-        OverallResults = 7
+        OverallResults = 7,
+        IndustryPlacements = 8
     }
 }
