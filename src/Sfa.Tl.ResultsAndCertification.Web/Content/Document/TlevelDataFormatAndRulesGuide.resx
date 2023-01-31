@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Assessment_Entries_DataFormat_And_Rules" xml:space="preserve">
-    <value>Download assessment entries data format and rules ({0}, {1}KB)</value>
+    <value>Assessment entries data format and rules ({0}, {1}KB)</value>
   </data>
   <data name="Assessment_Entries_FileSize_Text" xml:space="preserve">
     <value>287</value>
@@ -132,8 +132,26 @@
   <data name="Assessment_Entries_Version_Text" xml:space="preserve">
     <value>Version 1.7</value>
   </data>
+  <data name="Awarding_Organisations_Heading" xml:space="preserve">
+    <value>Awarding organisations</value>
+  </data>
   <data name="Choose_The_Right_Core_And_Specialism_Codes_Text" xml:space="preserve">
     <value>choose the right core and specialism codes</value>
+  </data>
+  <data name="IndustryPlacements_FileSize_Text" xml:space="preserve">
+    <value>239</value>
+  </data>
+  <data name="IndustryPlacements_Heading_Text" xml:space="preserve">
+    <value>Industry placements</value>
+  </data>
+  <data name="IndustryPlacements_PublishedDate_Text" xml:space="preserve">
+    <value>17 February 2023</value>
+  </data>
+  <data name="IndustryPlacements_Version_Text" xml:space="preserve">
+    <value>Version 1.0</value>
+  </data>
+  <data name="IndustryPlacement_DataFormat_And_Rules" xml:space="preserve">
+    <value>Industry placement status data format and rules ({0}, {1}KB)</value>
   </data>
   <data name="Meet_The_Technical_Requirements_Text" xml:space="preserve">
     <value>meet the technical requirements</value>
@@ -143,6 +161,9 @@
   </data>
   <data name="Present_Your_Data_Correctly_By_Viewing_An_Example_CSV_File_Text" xml:space="preserve">
     <value>present your data correctly, by viewing an example CSV file</value>
+  </data>
+  <data name="Providers_Heading" xml:space="preserve">
+    <value>Providers</value>
   </data>
   <data name="Published_Text" xml:space="preserve">
     <value>published</value>
@@ -160,7 +181,7 @@
     <value>Version 1.8</value>
   </data>
   <data name="Registration_DataFormat_And_Rules" xml:space="preserve">
-    <value>Download registrations data format and rules ({0}, {1}KB)</value>
+    <value>Registrations data format and rules ({0}, {1}KB)</value>
   </data>
   <data name="Results_FileSize_Text" xml:space="preserve">
     <value>279</value>
@@ -175,7 +196,7 @@
     <value>Version 1.5</value>
   </data>
   <data name="Result_DataFormat_And_Rules" xml:space="preserve">
-    <value>Download results data format and rules ({0}, {1}KB)</value>
+    <value>Results data format and rules ({0}, {1}KB)</value>
   </data>
   <data name="Section_Heading" xml:space="preserve">
     <value>T Levels data format and rules</value>
@@ -188,6 +209,9 @@
   </data>
   <data name="Tlevels_Assessment_Entry_Data_Format_And_Rules_File_Name" xml:space="preserve">
     <value>tlevels-assessment-entry-data-format-and-rules.xlsx</value>
+  </data>
+  <data name="Tlevels_Industry_Placement_Data_Format_And_Rules_File_Name" xml:space="preserve">
+    <value>tlevels-industry-placement-data-format-and-rules.xlsx</value>
   </data>
   <data name="Tlevels_Registrations_Data_Format_And_Rules_File_Name" xml:space="preserve">
     <value>tlevels-registrations-data-format-and-rules.xlsx</value>
