@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 {
                     ContainerName = bulkIndustryPlacementsRequest.DocumentType.ToString(),
                     BlobFileName = bulkIndustryPlacementsRequest.BlobFileName,
-                    SourceFilePath = $"{bulkIndustryPlacementsRequest.AoUkprn}/{BulkProcessStatus.Processing}",
+                    SourceFilePath = $"{bulkIndustryPlacementsRequest.AoUkprn}/{BulkProcessStatus.Processing}", // TODO: rename to just Ukprn?
                     FileStream = fileStream,
                     UserName = bulkIndustryPlacementsRequest.PerformedBy
                 });

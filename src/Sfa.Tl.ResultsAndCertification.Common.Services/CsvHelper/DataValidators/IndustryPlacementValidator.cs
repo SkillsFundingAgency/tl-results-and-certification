@@ -15,13 +15,16 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             RuleFor(r => r.Uln)
                 .Cascade(CascadeMode.Stop)
                 .Required()
+                .WithMessage(ValidationMessages.IpBulkEnterUln)
                 .MustBeNumberWithLength(10);
 
             // Core code
             RuleFor(r => r.CoreCode)
                 .Cascade(CascadeMode.Stop)
                 .Required()
-                .MustBeStringWithLength(8);
+                .WithMessage(ValidationMessages.IpBulkEnterCorecode)
+                .MustBeStringWithLength(8)
+                .WithMessage(ValidationMessages.IpBulkCorecodeMustBe8Chars);
 
             // IndustryPlacementStatus
             RuleFor(r => r.IndustryPlacementStatus)

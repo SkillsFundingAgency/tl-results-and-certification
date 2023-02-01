@@ -105,6 +105,9 @@
         public const string ResultIsInFinal = "This learner's grade is now final. Please remove this learner and try again.";
 
         // Industry Placement - Bulk Stage 2 validations
+        public const string IpBulkEnterUln = "Enter ULN";
+        public const string IpBulkEnterCorecode = "Enter core code";
+        public const string IpBulkCorecodeMustBe8Chars = "Core code must be 8 characters";
         public const string IndustryPlacementHoursNeedsToBeProvided = "Industry placement hours needs to be provided";
         public const string SpecialConsiderationReasonNeedsToBeProvided = "Special consideration reason needs to be provided";
         public const string SpecialConsiderationReasonIsNotValid = "Special consideration reason is not valid";
