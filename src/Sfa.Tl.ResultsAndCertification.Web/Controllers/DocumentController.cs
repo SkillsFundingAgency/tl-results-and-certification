@@ -78,6 +78,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("tlevels-industry-placement-data-format-and-rules", Name = RouteConstants.DownloadIndustryPlacementDataFormatAndRulesGuide)]
+        public async Task<IActionResult> DownloadIndustryPlacementDataFormatAndRulesGuideAsync()
+        {
+            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Industry_Placement_Data_Format_And_Rules_File_Name;
+            var fileStream = await _documentLoader.GetTechSpecFileAsync(BlobStorageConstants.IndustryPlacementsFolderName, fileName);
+            if (fileStream == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            fileStream.Position = 0;
+            return new FileStreamResult(fileStream, "text/xlsx")
+            {
+                FileDownloadName = fileName
+            };
+        }
+
+        [HttpGet]
         [Route("tlevel-data-format-and-rules-guides", Name = RouteConstants.TlevelDataFormatAndRulesGuide)]
         public IActionResult TlevelDataFormatAndRulesGuide()
         {
@@ -96,6 +112,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 ResultsFileSize = DocumentResource.TlevelDataFormatAndRulesGuide.Results_FileSize_Text,
                 ResultsVersion = DocumentResource.TlevelDataFormatAndRulesGuide.Results_Version_Text,
                 ResultsPublishedDate = $"{DocumentResource.TlevelDataFormatAndRulesGuide.Published_Text} {DocumentResource.TlevelDataFormatAndRulesGuide.Results_PublishedDate_Text}",
+
+                IndustryPlacementsFileSize = DocumentResource.TlevelDataFormatAndRulesGuide.IndustryPlacements_FileSize_Text,
+                IndustryPlacementsVersion = DocumentResource.TlevelDataFormatAndRulesGuide.IndustryPlacements_Version_Text,
+                IndustryPlacementsPublishedDate = $"{DocumentResource.TlevelDataFormatAndRulesGuide.Published_Text} {DocumentResource.TlevelDataFormatAndRulesGuide.IndustryPlacements_PublishedDate_Text}"
             };
 
             return View(viewModel);

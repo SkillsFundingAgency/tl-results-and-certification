@@ -6,5 +6,6 @@
         public const string RegistrationsFolderName = "Registrations";
         public const string AssessmentsFolderName = "Assessments";
         public const string ResultsFolderName = "Results";
+        public const string IndustryPlacementsFolderName = "IndustryPlacements";
     }
 }
