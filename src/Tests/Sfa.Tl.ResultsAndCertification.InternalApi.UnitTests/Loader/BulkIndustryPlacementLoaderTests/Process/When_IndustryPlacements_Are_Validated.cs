@@ -9,7 +9,7 @@ using System.IO;
 using System.Text;
 using Xunit;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using IndustryPlacementStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkIndustryPlacementLoaderTests.Process
 {

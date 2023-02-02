@@ -79,5 +79,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
                 .Must(r => string.IsNullOrWhiteSpace(r))
                 .WithMessage(!string.IsNullOrWhiteSpace(message) ? message : string.Format(ValidationMessages.CannotHaveValue, "{PropertyName}"));
         }
+
+        public static IRuleBuilderOptions<T, string> MustBeValidIndustryPlacementStatus<T>(this IRuleBuilder<T, string> ruleBuilder)
+        {
+            return ruleBuilder
+                .Must(r => EnumExtensions.IsValidDisplayName<Models.IndustryPlacement.BulkProcess.IndustryPlacementStatus>(r));
+        }
     }
 }

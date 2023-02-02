@@ -29,7 +29,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             // IndustryPlacementStatus
             RuleFor(r => r.IndustryPlacementStatus)
                 .Cascade(CascadeMode.Stop)
-                .Required();
+                .Required()
+                .MustBeValidIndustryPlacementStatus()
+                .WithMessage(ValidationMessages.IpBulkStatusMustBeValid);
 
             // IndustryPlacementHours
             RuleFor(r => r.IndustryPlacementHours)

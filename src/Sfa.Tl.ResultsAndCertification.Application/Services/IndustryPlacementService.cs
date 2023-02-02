@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IndustryPlacementStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
