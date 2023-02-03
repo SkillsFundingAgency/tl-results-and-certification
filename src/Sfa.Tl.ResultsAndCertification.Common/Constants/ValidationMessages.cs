@@ -105,13 +105,17 @@
         public const string ResultIsInFinal = "This learner's grade is now final. Please remove this learner and try again.";
 
         // Industry Placement - Bulk Stage 2 validations
-        public const string IpBulkEnterUln = "Enter ULN";
-        public const string IpBulkEnterCorecode = "Enter core code";
+        public const string IpBulkUlnRequired = "Enter ULN";
+        public const string IpBulkCorecodeRequired = "Enter core code";
         public const string IpBulkCorecodeMustBe8Chars = "Core code must be 8 characters";
         public const string IpBulkStatusMustBeValid = "Industry placement status not recognised";
-        public const string IndustryPlacementHoursNeedsToBeProvided = "Industry placement hours needs to be provided";
-        public const string SpecialConsiderationReasonNeedsToBeProvided = "Special consideration reason needs to be provided";
-        public const string SpecialConsiderationReasonIsNotValid = "Special consideration reason is not valid";
+        public const string IpBulkHoursRequired = "Industry placement hours must be provided if industry placement status is Completed with special consideration";
+        public const string IpBulkHoursMustBeEmpty = "Industry placement hours must be empty unless industry placement status is Completed with special consideration";
+        public const string IpBulkHoursMustOutOfRange = "The placement duration must be a whole number between 1 and 999 hours";
+        public const string IpBulkReasonMustBeEmpty = "Industry placement reasons must be empty unless industry placement status is Completed with special consideration"; 
+        public const string IpBulkReasonRequired = "At least one industry placement reason must be provided if industry placement status is Completed with special consideration";
+        public const string IpBulkReasonDuplicated = "Each industry placement reason can only be included once per learner";
+        
         public const string NoIndustryPlacementDataAfterUln = "No data provided for this learner. Please provide data or remove the row.";
 
         // Industry Placement - Bulk stage 3 validations
