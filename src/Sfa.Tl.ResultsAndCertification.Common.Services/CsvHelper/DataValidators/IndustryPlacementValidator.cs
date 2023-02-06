@@ -67,6 +67,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
                 .When(x => x.IndustryPlacementStatus.Equals(EnumExtensions.GetDisplayName(IndustryPlacementStatus.CompletedWithSpecialConsideration), StringComparison.InvariantCultureIgnoreCase));
 
             RuleFor(r => r.SpecialConsiderationReasons)
+                .MustBeValidSpecialConditionReason()
+                .WithMessage(ValidationMessages.IpBulkReasonMustBeValid)
+                .When(x => x.IndustryPlacementStatus.Equals(EnumExtensions.GetDisplayName(IndustryPlacementStatus.CompletedWithSpecialConsideration), StringComparison.InvariantCultureIgnoreCase));
+
+            RuleFor(r => r.SpecialConsiderationReasons)
                 .Must(r => !IsDuplicate(r))
                 .WithMessage(ValidationMessages.IpBulkReasonDuplicated)
                 .When(r => !string.IsNullOrWhiteSpace(r.SpecialConsiderationReasons) && r.SpecialConsiderationReasons.Split(',').Count() > 1);

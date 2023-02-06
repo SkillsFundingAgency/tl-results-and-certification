@@ -114,6 +114,7 @@
         public const string IpBulkHoursMustOutOfRange = "The placement duration must be a whole number between 1 and 999 hours";
         public const string IpBulkReasonMustBeEmpty = "Industry placement reasons must be empty unless industry placement status is Completed with special consideration"; 
         public const string IpBulkReasonRequired = "At least one industry placement reason must be provided if industry placement status is Completed with special consideration";
+        public const string IpBulkReasonMustBeValid = "Invalid industry placement reason code";
         public const string IpBulkReasonDuplicated = "Each industry placement reason can only be included once per learner";
         
         public const string NoIndustryPlacementDataAfterUln = "No data provided for this learner. Please provide data or remove the row.";

@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using System;
 using System.Text.RegularExpressions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Extensions
 {
@@ -84,6 +85,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
         {
             return ruleBuilder
                 .Must(r => EnumExtensions.IsValidDisplayName<Models.IndustryPlacement.BulkProcess.IndustryPlacementStatus>(r));
+        }
+        public static IRuleBuilderOptions<T, string> MustBeValidSpecialConditionReason<T>(this IRuleBuilder<T, string> ruleBuilder)
+        {
+            return ruleBuilder
+                .Must(r => r.Split(",").All(i =>  EnumExtensions.IsValidDisplayName<Models.IndustryPlacement.BulkProcess.IndustryPlacementSpecialConditionReason>(i)));
         }
     }
 }
