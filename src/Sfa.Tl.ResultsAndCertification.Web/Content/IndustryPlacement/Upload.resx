@@ -117,17 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="File_Content_Is_Empty" xml:space="preserve">
+    <value>The selected file is empty</value>
+  </data>
   <data name="File_Max_Record_Count_Validation_Message" xml:space="preserve">
     <value>File must contain between one and {0} learners</value>
   </data>
   <data name="File_Name_Length_Validation_Message" xml:space="preserve">
-    <value>File name must have no more than {0} characters</value>
+    <value>The selected file must have a file name that is {0} characters or less</value>
   </data>
   <data name="File_Size_Kb_Text" xml:space="preserve">
     <value>238KB</value>
   </data>
   <data name="File_Size_Too_Large_Validation_Message" xml:space="preserve">
-    <value>File size too large – must be no more than {0}MB</value>
+    <value>The selected file must be less than {0}MB</value>
   </data>
   <data name="File_Type" xml:space="preserve">
     <value>XLSX</value>
@@ -154,7 +157,7 @@
     <value>Processing industry placements file</value>
   </data>
   <data name="Select_File_To_Upload_Required_Validation_Message" xml:space="preserve">
-    <value>Select a file to upload</value>
+    <value>Select a CSV file</value>
   </data>
   <data name="Upload_File_Button_Text" xml:space="preserve">
     <value>Upload</value>
