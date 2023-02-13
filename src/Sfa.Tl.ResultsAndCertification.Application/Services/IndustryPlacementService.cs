@@ -176,6 +176,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 });
             }
 
+
             if (response.IsValid && newIndustryPlacements.Any())
                 newAndAmendedIndustryPlacementRecords.AddRange(newIndustryPlacements);
 
