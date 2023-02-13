@@ -148,10 +148,13 @@
     <value>The selected file must be a CSV</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
-    <value>Upload a CSV file to add or change the industry placement status for one or more learners</value>
+    <value>Upload industry placement status</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Upload industry placement status</value>
+  </data>
+  <data name="Para_Upload_Csv_To_Add_Or_Change" xml:space="preserve">
+    <value>Upload a CSV file to add or change the industry placement status for one or more learners.</value>
   </data>
   <data name="Processing_IndustryPlacement_File_Text" xml:space="preserve">
     <value>Processing industry placements file</value>
