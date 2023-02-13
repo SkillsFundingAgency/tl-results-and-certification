@@ -61,38 +61,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to home.
+        ///   Looks up a localized string similar to Download the full error report.
         /// </summary>
-        public static string Back_To_Home_Button {
+        public static string Download_The_Full_Error_Report {
             get {
-                return ResourceManager.GetString("Back_To_Home_Button", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download.
-        /// </summary>
-        public static string Download_Text {
-            get {
-                return ResourceManager.GetString("Download_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to industry placements error report.
-        /// </summary>
-        public static string Error_Report {
-            get {
-                return ResourceManager.GetString("Error_Report", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error report.
-        /// </summary>
-        public static string Error_Report_Heading {
-            get {
-                return ResourceManager.GetString("Error_Report_Heading", resourceCulture);
+                return ResourceManager.GetString("Download_The_Full_Error_Report", resourceCulture);
             }
         }
         
@@ -106,6 +79,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to If you leave this page you will not be able to come back later to access the error report..
+        /// </summary>
+        public static string If_You_Leave_This_Page_You_Will_Not_Be_Able_To_Come_Back_Later {
+            get {
+                return ResourceManager.GetString("If_You_Leave_This_Page_You_Will_Not_Be_Able_To_Come_Back_Later", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to industry-placements-error-report.csv.
         /// </summary>
         public static string Industry_Placements_Error_Report_File_Name_Text {
@@ -115,25 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you leave this page you will not be able to come back later to access the error report..
-        /// </summary>
-        public static string Inset_Para_If_You_Leave_This_Page_You_Will_Not_Able_To_Come_Back {
-            get {
-                return ResourceManager.GetString("Inset_Para_If_You_Leave_This_Page_You_Will_Not_Able_To_Come_Back", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Your file contains formatting errors. Please check and correct the errors before uploading it again..
-        /// </summary>
-        public static string Inset_Para_Your_File_Contains_Formatting_Errors {
-            get {
-                return ResourceManager.GetString("Inset_Para_Your_File_Contains_Formatting_Errors", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Industry placements upload error.
+        ///   Looks up a localized string similar to Industry placement status upload problem.
         /// </summary>
         public static string Page_Title {
             get {
@@ -142,20 +106,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The error report will tell you what went wrong. Please download this file immediately..
+        ///   Looks up a localized string similar to Review and update your records.
         /// </summary>
-        public static string Para_The_Error_Report_Will_Tell_You_What_Went_Wrong {
+        public static string Review_And_Update_Your_Records {
             get {
-                return ResourceManager.GetString("Para_The_Error_Report_Will_Tell_You_What_Went_Wrong", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The error report will tell you where the errors were found:.
-        /// </summary>
-        public static string Para_The_Error_Report_Will_Tell_You_Where_The_Errors_Were_Found {
-            get {
-                return ResourceManager.GetString("Para_The_Error_Report_Will_Tell_You_Where_The_Errors_Were_Found", resourceCulture);
+                return ResourceManager.GetString("Review_And_Update_Your_Records", resourceCulture);
             }
         }
         
@@ -169,11 +124,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload another file.
+        ///   Looks up a localized string similar to Upload an updated file.
         /// </summary>
-        public static string Upload_Another_File_Button {
+        public static string Upload_An_Updated_File {
             get {
-                return ResourceManager.GetString("Upload_Another_File_Button", resourceCulture);
+                return ResourceManager.GetString("Upload_An_Updated_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We&apos;ve identified problems in the file you&apos;ve uploaded..
+        /// </summary>
+        public static string We_Have_Identified_Problems_In_The_File {
+            get {
+                return ResourceManager.GetString("We_Have_Identified_Problems_In_The_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You need to:.
+        /// </summary>
+        public static string You_Need_To {
+            get {
+                return ResourceManager.GetString("You_Need_To", resourceCulture);
             }
         }
     }
