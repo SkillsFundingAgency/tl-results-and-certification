@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
                 new BulkProcessValidationError { RowNum = "15", Uln = "3333333330", ErrorMessage = "Industry placement reasons must be empty unless industry placement status is Completed with special consideration" },
                 new BulkProcessValidationError { RowNum = "16", Uln = "3333333331", ErrorMessage = "At least one industry placement reason must be provided if industry placement status is Completed with special consideration" },
                 new BulkProcessValidationError { RowNum = "17", Uln = "3333333332", ErrorMessage = "Each industry placement reason can only be included once per learner" },
-                new BulkProcessValidationError { RowNum = "18", Uln = "3333333333", ErrorMessage = "Invalid industry placement reason code" }
+                new BulkProcessValidationError { RowNum = "18", Uln = "3333333333", ErrorMessage = "Industry placement reasons must be one or more of 'ML', 'MF', 'B', 'T', 'D', 'A', 'U', 'W', 'C'" }
             };
 
             return validationErrors;

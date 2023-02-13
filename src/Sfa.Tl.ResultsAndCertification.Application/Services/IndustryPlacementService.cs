@@ -53,6 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                                                                       (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn),
                                                                                       p => p.TqRegistrationProfile, p => p.IndustryPlacements, p => p.TqProvider.TqAwardingOrganisation.TlPathway)
                                                                         .ToListAsync();
+            // TODO: Clarify, are we doing for Withdrawn as well?
 
             var latestPathways = learnerPathways
                     .GroupBy(x => x.TqRegistrationProfileId)
@@ -65,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var registeredPathway = latestPathways.FirstOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == industryPlacement.Uln);
                 if (registeredPathway == null)
                 {
-                    response.Add(AddStage3ValidationError(industryPlacement.RowNum, industryPlacement.Uln, ValidationMessages.UlnNotRegisteredWithProvider));
+                    response.Add(AddStage3ValidationError(industryPlacement.RowNum, industryPlacement.Uln, ValidationMessages.IpBulkUlnNotRegistered));
                     continue;
                 }
 
@@ -74,30 +75,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 // 2. Core Code is incorrect (not registered aganinst the learner)
                 var isValidRegisteredCoreCode = registeredPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId.Equals(industryPlacement.CoreCode, StringComparison.InvariantCultureIgnoreCase);
                 if (!isValidRegisteredCoreCode)
-                    validationErrors.Add(BuildValidationError(industryPlacement, ValidationMessages.InvalidCoreCodeProvider));
-
-                // 3. Industry Placement status not valid
-                var ipStatus = EnumExtensions.GetEnumByDisplayName<IndustryPlacementStatus>(industryPlacement.IndustryPlacementStatus);
-                if (ipStatus == IndustryPlacementStatus.NotSpecified)
-                    validationErrors.Add(BuildValidationError(industryPlacement, ValidationMessages.InvalidIndustryPlacementStatus));
+                    validationErrors.Add(BuildValidationError(industryPlacement, ValidationMessages.IpBulkCorecodeInvalid));
 
                 var specialConsiderationReasonIds = new List<int?>();
-                // 4. Industry Placement Special considerations not valid
                 if (industryPlacement.SpecialConsiderations.Any())
                 {
-                    var specialConsiderations = await SpecialConsiderationReasonsAsync();
-
-                    var specialConsiderationCodes = specialConsiderations.Select(x => x.Name);
-                    var invalidSpecialConsiderationCodes = industryPlacement.SpecialConsiderations.Except(specialConsiderationCodes, StringComparer.InvariantCultureIgnoreCase);
-
-                    if (invalidSpecialConsiderationCodes.Any())
+                    industryPlacement.SpecialConsiderations.ToList().ForEach(x =>
                     {
-                        validationErrors.Add(BuildValidationError(industryPlacement, ValidationMessages.InvalidSpecialConsiderationCodes));
-                    }
-                    else
-                    {
-                        specialConsiderationReasonIds = specialConsiderations.Where(sc => industryPlacement.SpecialConsiderations.Any(s => s.Equals(sc.Name, StringComparison.InvariantCultureIgnoreCase))).Select(x => (int?)x.Id).ToList();
-                    }
+                        var reasonId = EnumExtensions.GetEnumValueByDisplayName<ResultsAndCertification.Models.IndustryPlacement.BulkProcess.IndustryPlacementStatus>(x);
+                        specialConsiderationReasonIds.Add(reasonId);
+                    });
                 }
 
                 if (validationErrors.Any())
@@ -107,7 +94,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     response.Add(new IndustryPlacementRecordResponse
                     {
                         TqRegistrationPathwayId = registeredPathway.Id,
-                        IpStatus = (int)ipStatus,
+                        IpStatus = (int)EnumExtensions.GetEnumValueByDisplayName<ResultsAndCertification.Models.IndustryPlacement.BulkProcess.IndustryPlacementStatus>(industryPlacement.IndustryPlacementStatus),
                         IpHours = !string.IsNullOrWhiteSpace(industryPlacement.IndustryPlacementHours) ? industryPlacement.IndustryPlacementHours.ToInt() : null,
                         SpecialConsiderationReasons = specialConsiderationReasonIds
                     });
