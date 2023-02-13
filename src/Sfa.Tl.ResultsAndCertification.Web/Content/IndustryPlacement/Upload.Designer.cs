@@ -151,7 +151,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload a CSV file to add or change the industry placement status for one or more learners.
+        ///   Looks up a localized string similar to Upload industry placement status.
         /// </summary>
         public static string Page_Heading {
             get {
@@ -165,6 +165,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload a CSV file to add or change the industry placement status for one or more learners..
+        /// </summary>
+        public static string Para_Upload_Csv_To_Add_Or_Change {
+            get {
+                return ResourceManager.GetString("Para_Upload_Csv_To_Add_Or_Change", resourceCulture);
             }
         }
         
