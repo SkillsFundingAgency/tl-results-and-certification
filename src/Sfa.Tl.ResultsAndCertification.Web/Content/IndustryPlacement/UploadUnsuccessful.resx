@@ -127,7 +127,7 @@
     <value>If you leave this page you will not be able to come back later to access the error report.</value>
   </data>
   <data name="Industry_Placements_Error_Report_File_Name_Text" xml:space="preserve">
-    <value>industry-placements-error-report.csv</value>
+    <value>industry-placement-error-report.csv</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Industry placement status upload problem</value>

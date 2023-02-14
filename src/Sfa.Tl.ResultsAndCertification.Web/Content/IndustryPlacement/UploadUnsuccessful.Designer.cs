@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to industry-placements-error-report.csv.
+        ///   Looks up a localized string similar to industry-placement-error-report.csv.
         /// </summary>
         public static string Industry_Placements_Error_Report_File_Name_Text {
             get {
