@@ -117,18 +117,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         /// <summary>
         ///   Looks up a localized string similar to Upload (only click once).
         /// </summary>
-        public static string Js_Disabled_Upload_File_Button_Text {
+        public static string Js_Disabled_Upload_File_Button {
             get {
-                return ResourceManager.GetString("Js_Disabled_Upload_File_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Js_Disabled_Upload_File_Button", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to JavaScript is disabled so you will not see the upload progress icon after you press Submit. Processing the file can take up to 10 seconds depending on the file size..
         /// </summary>
-        public static string Js_Disabled_Upload_File_Help_Text {
+        public static string Js_Disabled_Upload_File_Help {
             get {
-                return ResourceManager.GetString("Js_Disabled_Upload_File_Help_Text", resourceCulture);
+                return ResourceManager.GetString("Js_Disabled_Upload_File_Help", resourceCulture);
             }
         }
         
