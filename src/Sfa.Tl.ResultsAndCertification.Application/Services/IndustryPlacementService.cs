@@ -314,10 +314,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (request == null || request.IndustryPlacementStatus == IndustryPlacementStatus.NotSpecified)
                 return false;
 
-            if (request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted && request.IndustryPlacementDetails != null)
+            if ((request.IndustryPlacementStatus == IndustryPlacementStatus.Completed ||
+                request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted ||
+                request.IndustryPlacementStatus == IndustryPlacementStatus.WillNotComplete) && 
+                request.IndustryPlacementDetails != null)
                 return false;
 
-            if (request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted && request.IndustryPlacementDetails == null)
+            if ((request.IndustryPlacementStatus == IndustryPlacementStatus.Completed ||
+                request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted ||
+                request.IndustryPlacementStatus == IndustryPlacementStatus.WillNotComplete) && 
+                request.IndustryPlacementDetails == null)
                 return true;
 
             if (request.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
@@ -338,14 +344,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var isValidSpecialConsiderations = request.IndustryPlacementDetails.SpecialConsiderationReasons.All(x => specialConsiderationIds.Contains(x.Value));
 
                 if (!isValidSpecialConsiderations)
-                    return false;
-            }
-
-            if (request.IndustryPlacementStatus == IndustryPlacementStatus.Completed)
-            {
-                // special considerations objects should not be populated
-                if (request.IndustryPlacementDetails.HoursSpentOnPlacement != null
-                    || (request.IndustryPlacementDetails.SpecialConsiderationReasons != null && request.IndustryPlacementDetails.SpecialConsiderationReasons.Any()))
                     return false;
             }
 

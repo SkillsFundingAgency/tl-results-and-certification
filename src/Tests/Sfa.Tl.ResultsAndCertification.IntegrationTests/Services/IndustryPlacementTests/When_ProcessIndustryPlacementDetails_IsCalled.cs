@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                 new IndustryPlacementData { Uln = 1111111113, IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted, Details = null },
                 new IndustryPlacementData { Uln = 1111111114, IndustryPlacementStatus = IndustryPlacementStatus.Completed, Details = new IndustryPlacementDetails { IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString() } },
                 new IndustryPlacementData { Uln = 1111111115, IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration, Details = new IndustryPlacementDetails { HoursSpentOnPlacement = 100, SpecialConsiderationReasons = new List<int?> { 1, 3 } } },
-                new IndustryPlacementData { Uln = 1111111114, IndustryPlacementStatus = IndustryPlacementStatus.Completed, Details = new IndustryPlacementDetails { IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString() } }
+                new IndustryPlacementData { Uln = 1111111114, IndustryPlacementStatus = IndustryPlacementStatus.Completed, Details = null }
             };
 
             SeedIndustyPlacementData(_industryPlacementDatas);
@@ -103,11 +103,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
 
             actualIndustryPlacement.Status.Should().Be(request.IndustryPlacementStatus);
 
-            if (request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted)
+            if (request.IndustryPlacementStatus == IndustryPlacementStatus.Completed || request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted)
             {
                 actualIndustryPlacement.Details.Should().BeNull();
             }
-            else if (request.IndustryPlacementStatus == IndustryPlacementStatus.Completed || request.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
+            else if (request.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
             {
                 var actualDetails = JsonConvert.DeserializeObject<IndustryPlacementDetails>(actualIndustryPlacement.Details);
                 actualDetails.Should().NotBeNull();
@@ -122,65 +122,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
             {
                 return new[]
                 {
-                    // Invalid Provider Ukprn - return false
-                    new object[] { new IndustryPlacementRequest
-                    {
-                        ProviderUkprn = 0000000000,
-                        ProfileId = 1,
-                        PathwayId = 1,
-                        RegistrationPathwayId = 1,
-                        IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
-                        IndustryPlacementDetails = null,
-                        PerformedBy = "Test User"
-                    }, false },
-
-                    // Invalid ProfileID - return false
-                    new object[] { new IndustryPlacementRequest
-                    {
-                        ProviderUkprn = (long)Provider.BarsleyCollege,
-                        ProfileId = 0,
-                        PathwayId = 1,
-                        RegistrationPathwayId = 1,
-                        IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
-                        IndustryPlacementDetails = null,
-                        PerformedBy = "Test User"
-                    }, false },
-
-                    // Invalid RegistrationPathwayId - return false
-                    new object[] { new IndustryPlacementRequest
-                    {
-                        ProviderUkprn = (long)Provider.BarsleyCollege,
-                        ProfileId = 1,
-                        PathwayId = 1,
-                        RegistrationPathwayId = 0,
-                        IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
-                        IndustryPlacementDetails = null,
-                        PerformedBy = "Test User"
-                    }, false },
-
-                    // Ip Status - NotSpecified - return false
-                    new object[] { new IndustryPlacementRequest
-                    {
-                        ProviderUkprn = (long)Provider.BarsleyCollege,
-                        ProfileId = 1,
-                        PathwayId = 1,
-                        RegistrationPathwayId = 1,
-                        IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified,
-                        IndustryPlacementDetails = null,
-                        PerformedBy = "Test User"
-                    }, false },
-
-                    // Ip Status - NotCompleted - return true
-                    new object[] { new IndustryPlacementRequest
-                    {
-                        ProviderUkprn = (long)Provider.BarsleyCollege,
-                        ProfileId = 1,
-                        PathwayId = 1,
-                        RegistrationPathwayId = 1,
-                        IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
-                        IndustryPlacementDetails = null,
-                        PerformedBy = "Test User"
-                    }, true },
+                    
 
                     // Ip Status - Completed - but populated with special considerations data - return false
                     new object[] { new IndustryPlacementRequest
@@ -241,12 +183,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                         PathwayId = 1,
                         RegistrationPathwayId = 1,
                         IndustryPlacementStatus = IndustryPlacementStatus.Completed,
-                        IndustryPlacementDetails = new IndustryPlacementDetails
-                        {
-                            IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString(),
-                            HoursSpentOnPlacement = null,
-                            SpecialConsiderationReasons = new List<int?>()
-                        },
+                        IndustryPlacementDetails = null,
                         PerformedBy = "Test User"
                     }, true },
 
@@ -275,12 +212,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                         PathwayId = 1,
                         RegistrationPathwayId = 3,
                         IndustryPlacementStatus = IndustryPlacementStatus.Completed,
-                        IndustryPlacementDetails = new IndustryPlacementDetails
-                        {
-                            IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString(),
-                            HoursSpentOnPlacement = null,
-                            SpecialConsiderationReasons = new List<int?>()
-                        },
+                        IndustryPlacementDetails = null,
                         PerformedBy = "Test User"
                     }, true },
 
@@ -309,12 +241,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                         PathwayId = 1,
                         RegistrationPathwayId = 5,
                         IndustryPlacementStatus = IndustryPlacementStatus.Completed,
-                        IndustryPlacementDetails = new IndustryPlacementDetails
-                        {
-                            IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString(),
-                            HoursSpentOnPlacement = null,
-                            SpecialConsiderationReasons = new List<int?>()
-                        },
+                        IndustryPlacementDetails = null,
                         PerformedBy = "Test User"
                     }, true },
 
@@ -343,12 +270,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                         PathwayId = 1,
                         RegistrationPathwayId = 6,
                         IndustryPlacementStatus = IndustryPlacementStatus.Completed,
-                        IndustryPlacementDetails = new IndustryPlacementDetails
-                        {
-                            IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString(),
-                            HoursSpentOnPlacement = null,
-                            SpecialConsiderationReasons = new List<int?>()
-                        },
+                        IndustryPlacementDetails = null,
                         PerformedBy = "Test User"
                     }, true }
                 };

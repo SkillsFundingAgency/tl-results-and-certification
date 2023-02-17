@@ -157,7 +157,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task<bool> ProcessIndustryPlacementDetailsAsync(long providerUkprn, IndustryPlacementViewModel viewModel)
         {
             var request = _mapper.Map<IndustryPlacementRequest>
-                (viewModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted || viewModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.WillNotComplete
+                (viewModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted || 
+                viewModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.WillNotComplete ||
+                viewModel.IpCompletion.IndustryPlacementStatus == IndustryPlacementStatus.Completed
                     ? viewModel.IpCompletion : viewModel,  // If CompletedWithSpecialConsideration then map to store json data.
                 opt => opt.Items["providerUkprn"] = providerUkprn);
             return await _internalApiClient.ProcessIndustryPlacementDetailsAsync(request);
