@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement
         {
             if (modelState != null && IsValidErrorType)
             {
-                var error = ModelStateHelper.GetUploadErrorMessage((RequestErrorType)RequestErrorTypeId, typeof(ErrorResource.Upload));
+                var error = ModelStateHelper.GetUploadErrorMessage((RequestErrorType)RequestErrorTypeId, typeof(ErrorResource.Upload), 2);
 
                 if (error != null)
                 {

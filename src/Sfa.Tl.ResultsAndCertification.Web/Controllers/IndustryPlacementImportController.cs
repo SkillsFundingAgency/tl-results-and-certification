@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("industry-placements-upload-confirmation", Name = RouteConstants.IndustryPlacementsUploadSuccessful)]
+        [Route("upload-ip-file-success", Name = RouteConstants.IndustryPlacementsUploadSuccessful)]
         public async Task<IActionResult> UploadSuccessful()
         {
             var viewModel = await _cacheService.GetAndRemoveAsync<UploadSuccessfulViewModel>(CacheKey);

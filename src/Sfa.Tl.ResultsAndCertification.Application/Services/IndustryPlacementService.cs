@@ -82,7 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     industryPlacement.SpecialConsiderations.ToList().ForEach(x =>
                     {
-                        var reasonId = EnumExtensions.GetEnumValueByDisplayName<ResultsAndCertification.Models.IndustryPlacement.BulkProcess.IndustryPlacementStatus>(x);
+                        var reasonId = EnumExtensions.GetEnumValueByDisplayName<IndustryPlacementSpecialConditionReason>(x);
                         specialConsiderationReasonIds.Add(reasonId);
                     });
                 }
@@ -161,8 +161,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     var existingIndustryPlacement = existingIndustryPlacementsFromDb.FirstOrDefault(existingIndustryPlacement => existingIndustryPlacement.TqRegistrationPathwayId == amendedIndustryPlacement.TqRegistrationPathwayId);
                     if (existingIndustryPlacement != null)
                     {
-                        var hasIndustryPlacementChanged = amendedIndustryPlacement.Status != existingIndustryPlacement.Status;
-
+                        var hasIndustryPlacementChanged = amendedIndustryPlacement.Status != existingIndustryPlacement.Status || 
+                                                          !amendedIndustryPlacement.Details.Equals(existingIndustryPlacement.Details, StringComparison.InvariantCultureIgnoreCase);
                         if (hasIndustryPlacementChanged)
                         {
                             existingIndustryPlacement.Status = amendedIndustryPlacement.Status;
@@ -176,7 +176,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 });
             }
 
-
             if (response.IsValid && newIndustryPlacements.Any())
                 newAndAmendedIndustryPlacementRecords.AddRange(newIndustryPlacements);
 
@@ -187,7 +186,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return new IndustryPlacementDetails
             {
-                IndustryPlacementStatus = EnumExtensions.GetDisplayName<IndustryPlacementStatus>(industryPlacement.IpStatus),
+                IndustryPlacementStatus = ((IndustryPlacementStatus)industryPlacement.IpStatus).ToString(),
                 HoursSpentOnPlacement = industryPlacement.IpHours,
                 SpecialConsiderationReasons = industryPlacement.SpecialConsiderationReasons != null && industryPlacement.SpecialConsiderationReasons.Any() ? industryPlacement.SpecialConsiderationReasons : new List<int?>()
             };

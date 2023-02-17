@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You successfully sent industry placement data for one industry placement..
+        ///   Looks up a localized string similar to You have successfully uploaded information for one industry placement..
         /// </summary>
         public static string Successfully_Sent_One_Industry_Placement_Text {
             get {
