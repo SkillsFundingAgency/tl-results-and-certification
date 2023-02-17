@@ -135,10 +135,10 @@
   <data name="File_Type" xml:space="preserve">
     <value>XLSX</value>
   </data>
-  <data name="Js_Disabled_Upload_File_Button_Text" xml:space="preserve">
+  <data name="Js_Disabled_Upload_File_Button" xml:space="preserve">
     <value>Upload (only click once)</value>
   </data>
-  <data name="Js_Disabled_Upload_File_Help_Text" xml:space="preserve">
+  <data name="Js_Disabled_Upload_File_Help" xml:space="preserve">
     <value>JavaScript is disabled so you will not see the upload progress icon after you press Submit. Processing the file can take up to 10 seconds depending on the file size.</value>
   </data>
   <data name="Link_Learner_Data_Format_Rules_Guidance_Template" xml:space="preserve">
