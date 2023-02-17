@@ -53,8 +53,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                                                                       (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn),
                                                                                       p => p.TqRegistrationProfile, p => p.IndustryPlacements, p => p.TqProvider.TqAwardingOrganisation.TlPathway)
                                                                         .ToListAsync();
-            // TODO: Clarify, are we doing for Withdrawn as well?
-
             var latestPathways = learnerPathways
                     .GroupBy(x => x.TqRegistrationProfileId)
                     .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
@@ -115,7 +113,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         TqRegistrationPathwayId = industryPlacement.TqRegistrationPathwayId.Value,
                         Status = EnumExtensions.GetEnum<IndustryPlacementStatus>(industryPlacement.IpStatus),
-                        Details = JsonConvert.SerializeObject(ConstructIndustryPlacementDetails(industryPlacement)),
+                        Details = (industryPlacement.IpStatus == (int)IndustryPlacementStatus.CompletedWithSpecialConsideration) ? JsonConvert.SerializeObject(ConstructIndustryPlacementDetails(industryPlacement)) : null,
                         CreatedBy = performedBy,
                         CreatedOn = DateTime.UtcNow
                     });
