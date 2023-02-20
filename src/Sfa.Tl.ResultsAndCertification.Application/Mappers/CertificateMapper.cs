@@ -89,11 +89,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
         private static string GetIndustryPlacementText(string industryPlacementStatus)
         {
             var ipStatus = EnumExtensions.GetEnumByDisplayName<IndustryPlacementStatus>(industryPlacementStatus);
-            
-            if (ipStatus == IndustryPlacementStatus.Completed || ipStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
-                return Constants.Met;
-            
-           return Constants.NotMet;
+
+            switch (ipStatus)
+            {
+                case IndustryPlacementStatus.Completed:
+                case IndustryPlacementStatus.CompletedWithSpecialConsideration:
+                    return Constants.Met;
+                default:
+                    return Constants.NotMet;
+            }
         }
     }
 }
