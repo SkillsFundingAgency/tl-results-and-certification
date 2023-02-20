@@ -53,8 +53,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                                                                       (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn),
                                                                                       p => p.TqRegistrationProfile, p => p.IndustryPlacements, p => p.TqProvider.TqAwardingOrganisation.TlPathway)
                                                                         .ToListAsync();
-            // TODO: Clarify, are we doing for Withdrawn as well?
-
             var latestPathways = learnerPathways
                     .GroupBy(x => x.TqRegistrationProfileId)
                     .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
@@ -115,7 +113,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         TqRegistrationPathwayId = industryPlacement.TqRegistrationPathwayId.Value,
                         Status = EnumExtensions.GetEnum<IndustryPlacementStatus>(industryPlacement.IpStatus),
-                        Details = JsonConvert.SerializeObject(ConstructIndustryPlacementDetails(industryPlacement)),
+                        Details = (industryPlacement.IpStatus == (int)IndustryPlacementStatus.CompletedWithSpecialConsideration) ? JsonConvert.SerializeObject(ConstructIndustryPlacementDetails(industryPlacement)) : null,
                         CreatedBy = performedBy,
                         CreatedOn = DateTime.UtcNow
                     });
@@ -314,10 +312,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (request == null || request.IndustryPlacementStatus == IndustryPlacementStatus.NotSpecified)
                 return false;
 
-            if (request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted && request.IndustryPlacementDetails != null)
+            if ((request.IndustryPlacementStatus == IndustryPlacementStatus.Completed ||
+                request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted ||
+                request.IndustryPlacementStatus == IndustryPlacementStatus.WillNotComplete) && 
+                request.IndustryPlacementDetails != null)
                 return false;
 
-            if (request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted && request.IndustryPlacementDetails == null)
+            if ((request.IndustryPlacementStatus == IndustryPlacementStatus.Completed ||
+                request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted ||
+                request.IndustryPlacementStatus == IndustryPlacementStatus.WillNotComplete) && 
+                request.IndustryPlacementDetails == null)
                 return true;
 
             if (request.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
@@ -338,14 +342,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var isValidSpecialConsiderations = request.IndustryPlacementDetails.SpecialConsiderationReasons.All(x => specialConsiderationIds.Contains(x.Value));
 
                 if (!isValidSpecialConsiderations)
-                    return false;
-            }
-
-            if (request.IndustryPlacementStatus == IndustryPlacementStatus.Completed)
-            {
-                // special considerations objects should not be populated
-                if (request.IndustryPlacementDetails.HoursSpentOnPlacement != null
-                    || (request.IndustryPlacementDetails.SpecialConsiderationReasons != null && request.IndustryPlacementDetails.SpecialConsiderationReasons.Any()))
                     return false;
             }
 

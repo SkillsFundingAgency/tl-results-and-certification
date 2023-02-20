@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement.BulkProcess
         }
 
         public int? TqRegistrationPathwayId { get; set; }
-        public int? IpStatus { get; set; } // TODO: should be non-nullable
+        public int? IpStatus { get; set; }
         public int? IpHours { get; set; }
 
         public List<int?> SpecialConsiderationReasons { get; set; }
