@@ -56,6 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     new object[] { IndustryPlacementStatus.Completed, "Completed" },
                     new object[] { IndustryPlacementStatus.CompletedWithSpecialConsideration, "Completed with special consideration" },
                     new object[] { IndustryPlacementStatus.NotCompleted, "Not completed" },
+                    new object[] { IndustryPlacementStatus.WillNotComplete, "Will not complete" },
                     new object[] { IndustryPlacementStatus.NotSpecified, "Not completed" },
                 };
             }
