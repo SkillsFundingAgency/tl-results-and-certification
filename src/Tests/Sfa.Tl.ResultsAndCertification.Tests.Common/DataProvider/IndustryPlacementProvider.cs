@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
@@ -40,6 +41,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
                 TqRegistrationPathwayId = tqRegistrationPathwayId,
                 Status = status,
                 Details = details,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn
             };
 
             if (addToDbContext)
