@@ -152,7 +152,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 17 February 2023.
+        ///   Looks up a localized string similar to 24 February 2023.
         /// </summary>
         public static string IndustryPlacements_PublishedDate_Text {
             get {
