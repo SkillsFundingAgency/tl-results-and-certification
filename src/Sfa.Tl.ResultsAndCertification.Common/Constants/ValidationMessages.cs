@@ -14,7 +14,7 @@
         public const string MustBeNumberWithInRange = "{0} must be between {1} and {2} digit number";
         public const string CannotHaveValue = "{0} cannot have a value";
 
-        public const string MustBeInFormat = "{0} must be in the format {1}";        
+        public const string MustBeInFormat = "{0} must be in the format {1}";
 
         // File based validation messages
         public const string FileHeaderNotFound = "File header is not valid";
@@ -34,7 +34,7 @@
         public const string CoreNotRegisteredWithProvider = "Core not registered with provider";
         public const string SpecialismNotValidWithCore = "Specialism not valid with core";
         public const string SpecialismIsNotValid = "Specialism is not valid";
-        public const string SpecialismCannotBeSelectedAsSingleOption = "This specialism cannot be selected as a single option (for when only one code of a paired specialism has been entered)";        
+        public const string SpecialismCannotBeSelectedAsSingleOption = "This specialism cannot be selected as a single option (for when only one code of a paired specialism has been entered)";
 
 
         // Bulk Registration Stage4 Validation Messages
@@ -54,7 +54,7 @@
         public const string SpecialismCodesMustBeDifferent = "Specialism codes must be two different numbers";
         public const string AtleastOneEntryRequired = "File must contain at least one ULN on one row";
         public const string NoDataAfterUln = "No data after ULN - need at least one core code or one specialism code";
-        
+
         // Assesments - Bulk stage 3 validations
         public const string UlnNotRegistered = "ULN not registered with awarding organisation";
         public const string CannotAddAssessmentToWithdrawnRegistration = "Cannot add assessment entries to a withdrawn registration";
@@ -105,15 +105,23 @@
         public const string ResultIsInFinal = "This learner's grade is now final. Please remove this learner and try again.";
 
         // Industry Placement - Bulk Stage 2 validations
-        public const string IndustryPlacementHoursNeedsToBeProvided = "Industry placement hours needs to be provided";
-        public const string SpecialConsiderationReasonNeedsToBeProvided = "Special consideration reason needs to be provided";
-        public const string SpecialConsiderationReasonIsNotValid = "Special consideration reason is not valid";
+        public const string IpBulkUlnRequired = "Enter ULN";
+        public const string IpBulkCorecodeRequired = "Enter core code";
+        public const string IpBulkCorecodeMustBe8Chars = "Core code must be 8 characters";
+        public const string IpBulkStatusMustBeValid = "Industry placement status not recognised";
+        public const string IpBulkHoursRequired = "Industry placement hours must be provided if industry placement status is Completed with special consideration";
+        public const string IpBulkHoursMustBeEmpty = "Industry placement hours must be empty unless industry placement status is Completed with special consideration";
+        public const string IpBulkHoursMustOutOfRange = "The placement duration must be a whole number between 1 and 999 hours";
+        public const string IpBulkReasonMustBeEmpty = "Industry placement reasons must be empty unless industry placement status is Completed with special consideration";
+        public const string IpBulkReasonRequired = "At least one industry placement reason must be provided if industry placement status is Completed with special consideration";
+        public const string IpBulkReasonMustBeValid = "Industry placement reasons must be one or more of 'ML', 'MF', 'B', 'T', 'D', 'A', 'U', 'W', 'C'";
+        public const string IpBulkReasonDuplicated = "Each industry placement reason can only be included once per learner";
+
         public const string NoIndustryPlacementDataAfterUln = "No data provided for this learner. Please provide data or remove the row.";
 
         // Industry Placement - Bulk stage 3 validations
-        public const string UlnNotRegisteredWithProvider = "ULN not registered with provider";
-        public const string InvalidCoreCodeProvider = "Core code either not recognised or not registered for this ULN";
-        public const string InvalidIndustryPlacementStatus = "Industry placement status is not valid";
-        public const string InvalidSpecialConsiderationCodes = "There is a problem with the special consideration code(s)";
+        public const string IpBulkUlnNotRegistered = "The ULN must match a learner in your account";
+        public const string IpBulkCorecodeInvalid = "The core code does not match the existing core code for this learner";
+        public const string BulkIpDuplicateRecord = "Duplicate ULNs are not allowed";
     }
 }

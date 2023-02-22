@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("industry-placements-upload-confirmation", Name = RouteConstants.IndustryPlacementsUploadSuccessful)]
+        [Route("upload-ip-file-success", Name = RouteConstants.IndustryPlacementsUploadSuccessful)]
         public async Task<IActionResult> UploadSuccessful()
         {
             var viewModel = await _cacheService.GetAndRemoveAsync<UploadSuccessfulViewModel>(CacheKey);
@@ -94,7 +94,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("industry-placements-upload-unsuccessful", Name = RouteConstants.IndustryPlacementsUploadUnsuccessful)]
+        [Route("ip-upload-unsuccessful", Name = RouteConstants.IndustryPlacementsUploadUnsuccessful)]
         public async Task<IActionResult> UploadUnsuccessful()
         {
             var viewModel = await _cacheService.GetAndRemoveAsync<UploadUnsuccessfulViewModel>(CacheKey);

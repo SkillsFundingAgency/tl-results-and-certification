@@ -127,7 +127,7 @@
     <value>Upload complete</value>
   </data>
   <data name="Successfully_Sent_One_Industry_Placement_Text" xml:space="preserve">
-    <value>You successfully sent industry placement data for one industry placement.</value>
+    <value>You have successfully uploaded information for one industry placement.</value>
   </data>
   <data name="Successfully_Sent_Total_Industry_Placements_Text" xml:space="preserve">
     <value>You have successfully uploaded information for {0} industry placements.</value>

@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement.BulkProcess;
 using System;
@@ -15,42 +16,65 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             RuleFor(r => r.Uln)
                 .Cascade(CascadeMode.Stop)
                 .Required()
+                .WithMessage(ValidationMessages.IpBulkUlnRequired)
                 .MustBeNumberWithLength(10);
 
             // Core code
             RuleFor(r => r.CoreCode)
                 .Cascade(CascadeMode.Stop)
                 .Required()
-                .MustBeStringWithLength(8);
+                .WithMessage(ValidationMessages.IpBulkCorecodeRequired)
+                .MustBeStringWithLength(8)
+                .WithMessage(ValidationMessages.IpBulkCorecodeMustBe8Chars);
 
             // IndustryPlacementStatus
             RuleFor(r => r.IndustryPlacementStatus)
                 .Cascade(CascadeMode.Stop)
-                .Required();
+                .Required()
+                .MustBeValidIndustryPlacementStatus()
+                .WithMessage(ValidationMessages.IpBulkStatusMustBeValid);
 
             // IndustryPlacementHours
             RuleFor(r => r.IndustryPlacementHours)
+                .Required()
+                .WithMessage(ValidationMessages.IpBulkHoursRequired)
+                .When(x => !string.IsNullOrWhiteSpace(x.IndustryPlacementStatus) &&
+                           x.IndustryPlacementStatus.Equals(EnumExtensions.GetDisplayName(IndustryPlacementStatus.CompletedWithSpecialConsideration), StringComparison.InvariantCultureIgnoreCase) &&
+                           string.IsNullOrWhiteSpace(x.IndustryPlacementHours));
+
+            RuleFor(r => r.IndustryPlacementHours)
                 .MustBeNullOrEmpty()
-                .When(x => !string.IsNullOrWhiteSpace(x.IndustryPlacementStatus) && !x.IndustryPlacementStatus.Equals("Completed with special consideration", StringComparison.InvariantCultureIgnoreCase));
-                       
+                .WithMessage(ValidationMessages.IpBulkHoursMustBeEmpty)
+                .When(x => !string.IsNullOrWhiteSpace(x.IndustryPlacementStatus) &&
+                           !x.IndustryPlacementStatus.Equals(EnumExtensions.GetDisplayName(IndustryPlacementStatus.CompletedWithSpecialConsideration), StringComparison.InvariantCultureIgnoreCase));
+
             RuleFor(r => r.IndustryPlacementHours)
                 .MustBeNumberWithInRange(1, 999)
-                .When(x => x.IndustryPlacementStatus.Equals("Completed with special considerations", StringComparison.InvariantCultureIgnoreCase));
+                .WithMessage(ValidationMessages.IpBulkHoursMustOutOfRange)
+                .When(x => !string.IsNullOrWhiteSpace(x.IndustryPlacementStatus) && !string.IsNullOrWhiteSpace(x.IndustryPlacementHours) &&
+                            x.IndustryPlacementStatus.Equals(EnumExtensions.GetDisplayName(IndustryPlacementStatus.CompletedWithSpecialConsideration), StringComparison.InvariantCultureIgnoreCase));
 
             // SpecialConsiderationReasons
             RuleFor(r => r.SpecialConsiderationReasons)
                .MustBeNullOrEmpty()
-               .When(x => !string.IsNullOrWhiteSpace(x.IndustryPlacementStatus) && !x.IndustryPlacementStatus.Equals("Completed with special consideration", StringComparison.InvariantCultureIgnoreCase));
+               .WithMessage(ValidationMessages.IpBulkReasonMustBeEmpty)
+               .When(x => !string.IsNullOrWhiteSpace(x.IndustryPlacementStatus) &&
+                           !x.IndustryPlacementStatus.Equals(EnumExtensions.GetDisplayName(IndustryPlacementStatus.CompletedWithSpecialConsideration), StringComparison.InvariantCultureIgnoreCase));
 
-            RuleFor(r => r.SpecialConsiderationReasons)                
+            RuleFor(r => r.SpecialConsiderationReasons)
                 .Must(r => !string.IsNullOrWhiteSpace(r.Trim()) && r.Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())).All(a => a.Trim().Length > 0))
-                .WithMessage(ValidationMessages.SpecialConsiderationReasonNeedsToBeProvided)
-                .When(x => x.IndustryPlacementStatus.Equals("Completed with special consideration", StringComparison.InvariantCultureIgnoreCase));
+                .WithMessage(ValidationMessages.IpBulkReasonRequired)
+                .When(x => x.IndustryPlacementStatus.Equals(EnumExtensions.GetDisplayName(IndustryPlacementStatus.CompletedWithSpecialConsideration), StringComparison.InvariantCultureIgnoreCase));
+
+            RuleFor(r => r.SpecialConsiderationReasons)
+                .MustBeValidSpecialConditionReason()
+                .WithMessage(ValidationMessages.IpBulkReasonMustBeValid)
+                .When(x => x.IndustryPlacementStatus.Equals(EnumExtensions.GetDisplayName(IndustryPlacementStatus.CompletedWithSpecialConsideration), StringComparison.InvariantCultureIgnoreCase));
 
             RuleFor(r => r.SpecialConsiderationReasons)
                 .Must(r => !IsDuplicate(r))
-                .WithMessage(ValidationMessages.SpecialConsiderationReasonIsNotValid)
-                .When(r => !string.IsNullOrWhiteSpace(r.SpecialConsiderationReasons) && r.SpecialConsiderationReasons.Split(',').Count() > 1);            
+                .WithMessage(ValidationMessages.IpBulkReasonDuplicated)
+                .When(r => !string.IsNullOrWhiteSpace(r.SpecialConsiderationReasons) && r.SpecialConsiderationReasons.Split(',').Count() > 1);
         }
 
         private bool IsDuplicate(string commaSeparatedString)

@@ -1,17 +1,19 @@
 ﻿using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement;
 using Xunit;
 using UploadContent = Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement.Upload;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementImportControllerTests.UploadIndustryPlacementsFileGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementImportControllerTests.UploadIndustryPlacementsFilePost
 {
-    public class When_FileSize_Error : TestSetup
+    public class When_ModelState_File_Empty : TestSetup
     {
         public override void Given()
         {
-            RequestErrorTypeId = (int)RequestErrorType.FileSize;
+            FormFile = Substitute.For<IFormFile>();
+            Controller.ModelState.AddModelError("File", UploadContent.File_Content_Is_Empty);
         }
 
         [Fact]
@@ -26,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             Controller.ViewData.ModelState.ContainsKey(nameof(UploadIndustryPlacementsRequestViewModel.File)).Should().BeTrue();
 
             var modelState = Controller.ViewData.ModelState[nameof(UploadIndustryPlacementsRequestViewModel.File)];
-            modelState.Errors[0].ErrorMessage.Should().Be(string.Format(UploadContent.File_Size_Too_Large_Validation_Message, 2));
+            modelState.Errors[0].ErrorMessage.Should().Be(UploadContent.File_Content_Is_Empty);
         }
     }
 }

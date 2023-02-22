@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement;
 using System;
 using Xunit;
@@ -28,6 +29,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.Stats.Should().NotBeNull();
             model.Stats.TotalRecordsCount.Should().Be(UploadSuccessfulViewModel.Stats.TotalRecordsCount);
             model.SuccessfulIndustryPlacementsText.Should().Be(string.Format(IndustryPlacementContent.UploadSuccessful.Successfully_Sent_Total_Industry_Placements_Text, UploadSuccessfulViewModel.Stats.TotalRecordsCount));
+
+            model.Breadcrumb.Should().NotBeNull();
+            model.Breadcrumb.BreadcrumbItems.Count.Should().Be(1);
+            model.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Home);
         }
     }
 }

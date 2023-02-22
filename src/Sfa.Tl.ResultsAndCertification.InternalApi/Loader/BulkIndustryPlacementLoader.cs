@@ -165,7 +165,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 {
                     RowNum = record.RowNum.ToString(),
                     Uln = record.Uln != 0 ? record.Uln.ToString() : string.Empty,
-                    ErrorMessage = ValidationMessages.DuplicateRecord
+                    ErrorMessage = ValidationMessages.BulkIpDuplicateRecord
                 });
             }
         }

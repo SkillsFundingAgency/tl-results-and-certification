@@ -117,25 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="File_Content_Is_Empty" xml:space="preserve">
+    <value>The selected file is empty</value>
+  </data>
   <data name="File_Max_Record_Count_Validation_Message" xml:space="preserve">
     <value>File must contain between one and {0} learners</value>
   </data>
   <data name="File_Name_Length_Validation_Message" xml:space="preserve">
-    <value>File name must have no more than {0} characters</value>
+    <value>The selected file must have a file name that is {0} characters or less</value>
   </data>
   <data name="File_Size_Kb_Text" xml:space="preserve">
-    <value>289KB</value>
+    <value>239KB</value>
   </data>
   <data name="File_Size_Too_Large_Validation_Message" xml:space="preserve">
-    <value>File size too large – must be no more than {0}MB</value>
+    <value>The selected file must be less than {0}MB</value>
   </data>
   <data name="File_Type" xml:space="preserve">
     <value>XLSX</value>
   </data>
-  <data name="Js_Disabled_Upload_File_Button_Text" xml:space="preserve">
+  <data name="Js_Disabled_Upload_File_Button" xml:space="preserve">
     <value>Upload (only click once)</value>
   </data>
-  <data name="Js_Disabled_Upload_File_Help_Text" xml:space="preserve">
+  <data name="Js_Disabled_Upload_File_Help" xml:space="preserve">
     <value>JavaScript is disabled so you will not see the upload progress icon after you press Submit. Processing the file can take up to 10 seconds depending on the file size.</value>
   </data>
   <data name="Link_Learner_Data_Format_Rules_Guidance_Template" xml:space="preserve">
@@ -145,16 +148,19 @@
     <value>The selected file must be a CSV</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
-    <value>Upload a CSV file to add or change the industry placement status for one or more learners</value>
+    <value>Upload industry placement status</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Upload industry placement status</value>
+  </data>
+  <data name="Para_Upload_Csv_To_Add_Or_Change" xml:space="preserve">
+    <value>Upload a CSV file to add or change the industry placement status for one or more learners.</value>
   </data>
   <data name="Processing_IndustryPlacement_File_Text" xml:space="preserve">
     <value>Processing industry placements file</value>
   </data>
   <data name="Select_File_To_Upload_Required_Validation_Message" xml:space="preserve">
-    <value>Select a file to upload</value>
+    <value>Select a CSV file</value>
   </data>
   <data name="Upload_File_Button_Text" xml:space="preserve">
     <value>Upload</value>

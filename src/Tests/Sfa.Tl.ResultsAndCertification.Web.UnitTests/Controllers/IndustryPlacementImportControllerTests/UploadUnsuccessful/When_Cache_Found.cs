@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System;
 using Xunit;
+using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlacementImportControllerTests.UploadUnsuccessful
 {
@@ -27,6 +29,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             model.BlobUniqueReference.Should().Be(UploadUnsuccessfulViewModel.BlobUniqueReference);
             model.FileSize.Should().Be(UploadUnsuccessfulViewModel.FileSize);
             model.FileType.Should().Be(UploadUnsuccessfulViewModel.FileType);
+
+            // Breadcrumbs
+            model.Breadcrumb.Should().NotBeNull();
+            model.Breadcrumb.BreadcrumbItems.Should().NotBeNull();
+            model.Breadcrumb.BreadcrumbItems.Count.Should().Be(1);
+
+            model.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Home);
+            model.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(BreadcrumbContent.Home);
         }
     }
 }

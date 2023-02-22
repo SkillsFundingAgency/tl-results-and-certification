@@ -1,8 +1,8 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Enum
 {
+    // Note: Text from the Display attribute is being used in the OverallResult Json data.
     public enum IndustryPlacementStatus
     {
         NotSpecified = 0,

@@ -287,7 +287,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
             else
             {
-                // if ipStatus is NotSpecified || ipStatus is NotCompleted then apply below logic
+                // if ipStatus is NotSpecified || ipStatus is NotCompleted || ipStatus is WillNotComplete then apply below logic
 
                 if (pathwayGradeId.HasValue && speciailsmGradeId.HasValue)
                 {
@@ -446,10 +446,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public string GetIndustryPlacementStatusDisplayName(IndustryPlacementStatus ipStatus)
         {
-            if (ipStatus == IndustryPlacementStatus.Completed || ipStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
-                return ipStatus.GetDisplayName();
-
-            return IndustryPlacementStatus.NotCompleted.GetDisplayName();
+            switch (ipStatus)
+            {
+                case IndustryPlacementStatus.Completed:
+                case IndustryPlacementStatus.CompletedWithSpecialConsideration:
+                case IndustryPlacementStatus.NotCompleted:
+                case IndustryPlacementStatus.WillNotComplete:
+                    return ipStatus.GetDisplayName();
+                default:
+                    return IndustryPlacementStatus.NotCompleted.GetDisplayName();
+            }
         }
 
         public async Task<IList<DownloadOverallResultsData>> DownloadOverallResultsDataAsync(long providerUkprn)

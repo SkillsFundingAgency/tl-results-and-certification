@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The selected file is empty.
+        /// </summary>
+        public static string File_Content_Is_Empty {
+            get {
+                return ResourceManager.GetString("File_Content_Is_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File must contain between one and {0} learners.
         /// </summary>
         public static string File_Max_Record_Count_Validation_Message {
@@ -70,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File name must have no more than {0} characters.
+        ///   Looks up a localized string similar to The selected file must have a file name that is {0} characters or less.
         /// </summary>
         public static string File_Name_Length_Validation_Message {
             get {
@@ -79,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 289KB.
+        ///   Looks up a localized string similar to 239KB.
         /// </summary>
         public static string File_Size_Kb_Text {
             get {
@@ -88,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File size too large – must be no more than {0}MB.
+        ///   Looks up a localized string similar to The selected file must be less than {0}MB.
         /// </summary>
         public static string File_Size_Too_Large_Validation_Message {
             get {
@@ -108,18 +117,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         /// <summary>
         ///   Looks up a localized string similar to Upload (only click once).
         /// </summary>
-        public static string Js_Disabled_Upload_File_Button_Text {
+        public static string Js_Disabled_Upload_File_Button {
             get {
-                return ResourceManager.GetString("Js_Disabled_Upload_File_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Js_Disabled_Upload_File_Button", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to JavaScript is disabled so you will not see the upload progress icon after you press Submit. Processing the file can take up to 10 seconds depending on the file size..
         /// </summary>
-        public static string Js_Disabled_Upload_File_Help_Text {
+        public static string Js_Disabled_Upload_File_Help {
             get {
-                return ResourceManager.GetString("Js_Disabled_Upload_File_Help_Text", resourceCulture);
+                return ResourceManager.GetString("Js_Disabled_Upload_File_Help", resourceCulture);
             }
         }
         
@@ -142,7 +151,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload a CSV file to add or change the industry placement status for one or more learners.
+        ///   Looks up a localized string similar to Upload industry placement status.
         /// </summary>
         public static string Page_Heading {
             get {
@@ -160,6 +169,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload a CSV file to add or change the industry placement status for one or more learners..
+        /// </summary>
+        public static string Para_Upload_Csv_To_Add_Or_Change {
+            get {
+                return ResourceManager.GetString("Para_Upload_Csv_To_Add_Or_Change", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Processing industry placements file.
         /// </summary>
         public static string Processing_IndustryPlacement_File_Text {
@@ -169,7 +187,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a file to upload.
+        ///   Looks up a localized string similar to Select a CSV file.
         /// </summary>
         public static string Select_File_To_Upload_Required_Validation_Message {
             get {
