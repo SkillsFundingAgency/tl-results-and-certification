@@ -127,7 +127,7 @@
     <value>The selected file must have a file name that is {0} characters or less</value>
   </data>
   <data name="File_Size_Kb_Text" xml:space="preserve">
-    <value>238KB</value>
+    <value>239KB</value>
   </data>
   <data name="File_Size_Too_Large_Validation_Message" xml:space="preserve">
     <value>The selected file must be less than {0}MB</value>
