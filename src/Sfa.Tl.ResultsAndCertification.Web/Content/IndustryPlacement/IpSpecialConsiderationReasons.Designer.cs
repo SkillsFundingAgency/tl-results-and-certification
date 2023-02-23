@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Industry placement: Special consideration.
+        ///   Looks up a localized string similar to Industry placement: Reason for reduced hours.
         /// </summary>
         public static string Caption_Industry_Placement_Special_Consideration {
             get {
@@ -80,11 +80,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to We will ask you to declare that you hold documentary evidence on file before you can submit this learner&apos;s industry placement details. Select all that apply..
+        ///   Looks up a localized string similar to These are the only approved reasons for applying special consideration. Select one or more reasons..
         /// </summary>
         public static string Hint_We_Will_Ask_You_To_Declare {
             get {
                 return ResourceManager.GetString("Hint_We_Will_Ask_You_To_Declare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must have documentary evidence to support your decision. You do not need to submit the evidence, but it must be stored for monitoring purposes..
+        /// </summary>
+        public static string Inset_You_Must_Have_Documentary_Evidence {
+            get {
+                return ResourceManager.GetString("Inset_You_Must_Have_Documentary_Evidence", resourceCulture);
             }
         }
         

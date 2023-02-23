@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download assessment entries data format and rules ({0}, {1}KB).
+        ///   Looks up a localized string similar to Assessment entries data format and rules ({0}, {1}KB).
         /// </summary>
         public static string Assessment_Entries_DataFormat_And_Rules {
             get {
@@ -107,11 +107,65 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Awarding organisations.
+        /// </summary>
+        public static string Awarding_Organisations_Heading {
+            get {
+                return ResourceManager.GetString("Awarding_Organisations_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to choose the right core and specialism codes.
         /// </summary>
         public static string Choose_The_Right_Core_And_Specialism_Codes_Text {
             get {
                 return ResourceManager.GetString("Choose_The_Right_Core_And_Specialism_Codes_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Industry placement status data format and rules ({0}, {1}KB).
+        /// </summary>
+        public static string IndustryPlacement_DataFormat_And_Rules {
+            get {
+                return ResourceManager.GetString("IndustryPlacement_DataFormat_And_Rules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 239.
+        /// </summary>
+        public static string IndustryPlacements_FileSize_Text {
+            get {
+                return ResourceManager.GetString("IndustryPlacements_FileSize_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Industry placements.
+        /// </summary>
+        public static string IndustryPlacements_Heading_Text {
+            get {
+                return ResourceManager.GetString("IndustryPlacements_Heading_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 24 February 2023.
+        /// </summary>
+        public static string IndustryPlacements_PublishedDate_Text {
+            get {
+                return ResourceManager.GetString("IndustryPlacements_PublishedDate_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version 1.0.
+        /// </summary>
+        public static string IndustryPlacements_Version_Text {
+            get {
+                return ResourceManager.GetString("IndustryPlacements_Version_Text", resourceCulture);
             }
         }
         
@@ -143,6 +197,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Providers.
+        /// </summary>
+        public static string Providers_Heading {
+            get {
+                return ResourceManager.GetString("Providers_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to published.
         /// </summary>
         public static string Published_Text {
@@ -152,7 +215,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download registrations data format and rules ({0}, {1}KB).
+        ///   Looks up a localized string similar to Registrations data format and rules ({0}, {1}KB).
         /// </summary>
         public static string Registration_DataFormat_And_Rules {
             get {
@@ -197,7 +260,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download results data format and rules ({0}, {1}KB).
+        ///   Looks up a localized string similar to Results data format and rules ({0}, {1}KB).
         /// </summary>
         public static string Result_DataFormat_And_Rules {
             get {
@@ -274,6 +337,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         public static string Tlevels_Assessment_Entry_Data_Format_And_Rules_File_Name {
             get {
                 return ResourceManager.GetString("Tlevels_Assessment_Entry_Data_Format_And_Rules_File_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tlevels-industry-placement-data-format-and-rules.xlsx.
+        /// </summary>
+        public static string Tlevels_Industry_Placement_Data_Format_And_Rules_File_Name {
+            get {
+                return ResourceManager.GetString("Tlevels_Industry_Placement_Data_Format_And_Rules_File_Name", resourceCulture);
             }
         }
         

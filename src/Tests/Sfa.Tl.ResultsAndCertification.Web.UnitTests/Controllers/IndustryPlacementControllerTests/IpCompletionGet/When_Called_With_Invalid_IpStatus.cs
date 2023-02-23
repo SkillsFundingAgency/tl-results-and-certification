@@ -13,10 +13,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
         public override void Given()
         {
+            SetRouteAttribute(RouteConstants.IpCompletion);
             ProfileId = 1;
             PathwayId = 1;
 
-            _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = ProfileId, PathwayId = PathwayId, LearnerName = "Test Test", IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed };
+            _ipCompletionViewModel = new IpCompletionViewModel
+            {
+                ProfileId = ProfileId,
+                PathwayId = PathwayId,
+                LearnerName = "Test Test",
+                IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed
+            };
             IndustryPlacementLoader.GetLearnerRecordDetailsAsync<IpCompletionViewModel>(ProviderUkprn, ProfileId).Returns(_ipCompletionViewModel);
         }
 

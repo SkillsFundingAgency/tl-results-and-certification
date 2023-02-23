@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _mockHttpResult = new DocumentUploadHistoryDetails
             {
                 TlAwardingOrganisationId = 1,
-                AoUkprn = _ukprn,
+                Ukprn = _ukprn,
                 BlobUniqueReference = Guid.NewGuid(),
                 BlobFileName = "inputfile.csv",
                 DocumentType = (int)DocumentType.Registrations,
@@ -64,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         {
             Result.Should().NotBeNull();
             Result.TlAwardingOrganisationId.Should().Be(_mockHttpResult.TlAwardingOrganisationId);
-            Result.AoUkprn.Should().Be(_mockHttpResult.AoUkprn);
+            Result.Ukprn.Should().Be(_mockHttpResult.Ukprn);
             Result.BlobUniqueReference.Should().Be(_mockHttpResult.BlobUniqueReference);
             Result.BlobFileName.Should().Be(_mockHttpResult.BlobFileName);
             Result.DocumentType.Should().Be(_mockHttpResult.DocumentType);

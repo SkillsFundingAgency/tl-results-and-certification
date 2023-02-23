@@ -6,13 +6,13 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
 using System.Collections.Generic;
-using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
-using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
-using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
-using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
 using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using System.Linq;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
+using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
+using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
+using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
+using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
@@ -50,11 +50,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         /// True when status is Active or Withdrawn
         /// </summary>
         public bool IsLearnerRegistered { get; set; }
-        public bool IsStatusCompleted => IsMathsAdded && IsEnglishAdded && IsIndustryPlacementAdded;
-        public bool IsIndustryPlacementAdded => IndustryPlacementStatus != IpStatus.NotSpecified;
+        public bool IsStatusCompleted => IsMathsAdded && IsEnglishAdded && (IsIndustryPlacementAdded && IndustryPlacementStatus != IpStatus.NotCompleted);
         public bool IsMathsAdded => MathsStatus != SubjectStatus.NotSpecified;
         public bool IsEnglishAdded => EnglishStatus != SubjectStatus.NotSpecified;
-        public bool CanAddIndustryPlacement => IndustryPlacementStatus == IpStatus.NotSpecified || IndustryPlacementStatus == IpStatus.NotCompleted;
+        public bool IsIndustryPlacementAdded => IndustryPlacementStatus != IpStatus.NotSpecified;
+        public bool IsIndustryPlacementStillToBeCompleted => IndustryPlacementStatus == IpStatus.NotSpecified || IndustryPlacementStatus == IpStatus.NotCompleted;
+        
         public bool DisplayOverallResults => OverallResultDetails != null && OverallResultPublishDate.HasValue && DateTime.UtcNow >= OverallResultPublishDate;
         public NotificationBannerModel SuccessBanner { get; set; }
         public DateTime? LastDocumentRequestedDate { get; set; }
@@ -147,23 +148,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         #endregion
 
         // Industry Placement
-        public SummaryItemModel SummaryIndustryPlacementStatus => CanAddIndustryPlacement ?
+        public SummaryItemModel SummaryIndustryPlacementStatus =>
             new SummaryItemModel
             {
                 Id = "industryplacement",
                 Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
                 Value = GetIndustryPlacementDisplayText,
-                ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
-                RouteName = CanAddIndustryPlacement ? RouteConstants.AddIndustryPlacement : string.Empty,
-                RouteAttributes = CanAddIndustryPlacement ? new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } : null,
+                ActionText = IsIndustryPlacementAdded ? LearnerRecordDetailsContent.Action_Text_Link_Change : LearnerRecordDetailsContent.Action_Text_Link_Add,
+                RouteName = IsIndustryPlacementAdded ? RouteConstants.ChangeIndustryPlacement : RouteConstants.AddIndustryPlacement,
+                RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
                 HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement
-            }
-            :
-            new SummaryItemModel
-            {
-                Id = "industryplacement",
-                Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
-                Value = GetIndustryPlacementDisplayText,
             };
 
         // Overall Result
@@ -213,6 +207,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             IpStatus.Completed => IndustryPlacementStatusContent.Completed_Display_Text,
             IpStatus.CompletedWithSpecialConsideration => IndustryPlacementStatusContent.CompletedWithSpecialConsideration_Display_Text,
             IpStatus.NotCompleted => IndustryPlacementStatusContent.Still_To_Be_Completed_Display_Text,
+            IpStatus.WillNotComplete => IndustryPlacementStatusContent.Placement_Will_Not_Be_Completed,
             _ => IndustryPlacementStatusContent.Not_Yet_Received_Display_Text,
         };
     }

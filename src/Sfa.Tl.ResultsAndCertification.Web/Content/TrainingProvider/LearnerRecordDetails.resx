@@ -120,6 +120,9 @@
   <data name="Action_Text_Link_Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="Action_Text_Link_Change" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="Back_To_Home_Text" xml:space="preserve">
     <value>&lt; Back to home</value>
   </data>
@@ -187,7 +190,10 @@
     <value>{0} to {1}</value>
   </data>
   <data name="Status_Tag_Incomplete" xml:space="preserve">
-    <value>Incomplete</value>
+    <value>Record Incomplete</value>
+  </data>
+  <data name="Status_Tag_Record_Complete" xml:space="preserve">
+    <value>Record Complete</value>
   </data>
   <data name="Success_Header_English_Status_Added" xml:space="preserve">
     <value>English status added</value>

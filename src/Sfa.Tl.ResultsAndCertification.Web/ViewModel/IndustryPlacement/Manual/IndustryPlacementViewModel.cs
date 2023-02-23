@@ -3,12 +3,9 @@
     public class IndustryPlacementViewModel
     {
         public IpCompletionViewModel IpCompletion { get; set; }
-        public IpModelViewModel IpModelViewModel { get; set; }
         public SpecialConsiderationViewModel SpecialConsideration { get; set; }
-        public IpTempFlexibilityViewModel TempFlexibility { get; set; }
 
         public bool IsChangeModeAllowed { get; set; }
-
 
         public void ResetChangeMode()
         {
@@ -18,29 +15,6 @@
             {
                 SpecialConsideration.Hours.IsChangeMode = false;
                 SpecialConsideration.Reasons.IsChangeMode = false;
-            }
-
-            IpModelViewModel.IpModelUsed.IsChangeMode = false;
-
-            if (IpModelViewModel.IpMultiEmployerUsed != null)
-                IpModelViewModel.IpMultiEmployerUsed.IsChangeMode = false;
-
-            if (IpModelViewModel.IpMultiEmployerOther != null)
-                IpModelViewModel.IpMultiEmployerOther.IsChangeMode = false;
-
-            if (IpModelViewModel.IpMultiEmployerSelect != null)
-                IpModelViewModel.IpMultiEmployerSelect.IsChangeMode = false;
-
-            if(TempFlexibility != null)
-            {
-                if(TempFlexibility.IpTempFlexibilityUsed != null)
-                    TempFlexibility.IpTempFlexibilityUsed.IsChangeMode = false;
-
-                if (TempFlexibility.IpBlendedPlacementUsed != null)
-                    TempFlexibility.IpBlendedPlacementUsed.IsChangeMode = false;
-
-                if (TempFlexibility.IpEmployerLedUsed != null)
-                    TempFlexibility.IpEmployerLedUsed.IsChangeMode = false;
             }
         }
     }

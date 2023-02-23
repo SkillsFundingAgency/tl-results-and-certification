@@ -6,6 +6,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
 {
     interface IDocumentUploadHistoryController
     {
-        Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference);
+        Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long ukprn, Guid blobUniqueReference);
     }
 }

@@ -55,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             if (fileStream == null)
             {
-                var blobReadError = $"No FileStream found to download bulkupload assessment entries tech spec. Method: DownloadFileAsync(ContainerName: {DocumentType.Documents}, BlobFileName = {fileName}, SourceFilePath = {BlobStorageConstants.TechSpecFolderName}/{BlobStorageConstants.RegistrationsFolderName})";
+                var blobReadError = $"No FileStream found to download bulkupload assessment entries tech spec. Method: DownloadFileAsync(ContainerName: {DocumentType.Documents}, BlobFileName = {fileName}, SourceFilePath = {BlobStorageConstants.TechSpecFolderName}/{BlobStorageConstants.AssessmentsFolderName})";
                 _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
             }
             return fileStream;

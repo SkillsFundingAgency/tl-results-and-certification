@@ -4,7 +4,7 @@
 @using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum
 
 @{
-    ViewData["Title"] = IpCompletion.Page_Title;
+    ViewData["Title"] = Model.PageTitle;
 }
 
 @section NavigationBar {
@@ -20,6 +20,7 @@
             <input type="hidden" asp-for="PathwayId" />
             <input type="hidden" asp-for="AcademicYear" />
             <input type="hidden" asp-for="LearnerName" />
+            <input type="hidden" asp-for="IsChangeJourney" />
             <input type="hidden" asp-for="IsChangeMode" />
 
             <span class="govuk-caption-l">@IpCompletion.Industry_Placement_Caption</span>
@@ -43,12 +44,30 @@
                             <label class="govuk-label govuk-radios__label" for="industryplacementstatus-cwspc">
                                 @IpCompletion.Yes_Completed_With_Special_Consideration_Option_Text
                             </label>
-                            <div class="govuk-hint govuk-radios__hint">@IpCompletion.We_Will_Ask_You_To_Declare_Hint_Text</div>
+                            <details class="govuk-details govuk-!-margin-left-4" data-module="govuk-details">
+                                <summary class="govuk-details__summary">
+                                    <span class="govuk-details__summary-text">
+                                        @IpCompletion.Summary_Text_What_Is_Special_Consideration
+                                    </span>
+                                </summary>
+                                <div class="govuk-details__text">
+                                    <p class="govuk-!-padding-right-2">@IpCompletion.Learners_May_Experience_Diffiuclt_Circumstaces_During_Placement</p>
+                                    <p class="govuk-!-padding-right-2">@IpCompletion.You_Have_Discretion_To_Apply_Special_Consideration</p>
+                                        <p class="govuk-!-padding-right-2">@IpCompletion.You_Do_Not_Need_Upload_Evidence</p>
+                                    <p class="govuk-!-padding-right-2">@IpCompletion.More_About <a class="govuk-link govuk-link--no-visited-state" target="_blank" href="https://www.gov.uk/government/publications/t-level-industry-placements-delivery-guidance/t-level-industry-placements-delivery-guidance#section5">@IpCompletion.Link_Ip_Completion_Exception</a></p>
+                                </div>
+                            </details>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="industryplacementstatus-notcompleted" asp-for="IndustryPlacementStatus" type="radio" value="@IpStatus.IndustryPlacementStatus.NotCompleted">
                             <label class="govuk-label govuk-radios__label" for="industryplacementstatus-notcompleted">
                                 @IpCompletion.No_Still_To_Be_Completed_Option_Text
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="industryplacementstatus-will-not-complete" asp-for="IndustryPlacementStatus" type="radio" value="@IpStatus.IndustryPlacementStatus.WillNotComplete">
+                            <label class="govuk-label govuk-radios__label" for="industryplacementstatus-will-not-complete">
+                                @IpCompletion.No_Will_Not_Complete_Option_Text
                             </label>
                         </div>
                     </div>
@@ -62,5 +81,4 @@
             <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@IpCompletion.Continue_Button_Text</button>
         </form>
     </div>
-    <partial name="Partials/_ipGuidanceNavigation.cshtml" />
 </div>

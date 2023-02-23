@@ -71,11 +71,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p class=&quot;govuk-body&quot;&gt;&lt;a class=&quot;govuk-notification-banner__link&quot; href=&quot;/contact-us&quot;&gt;Contact us&lt;/a&gt; if the industry placement status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;.
+        ///   Looks up a localized string similar to &lt;p&gt;You have told us that this learner has completed their industry placement. You can change the industry placement status by selecting ‘change’.&lt;/p&gt;.
         /// </summary>
-        public static string Success_Message {
+        public static string Success_Message_Completed {
             get {
-                return ResourceManager.GetString("Success_Message", resourceCulture);
+                return ResourceManager.GetString("Success_Message_Completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;You have told us that this learner has completed their industry placement with special consideration. You can change the industry placement status by selecting ‘change’.&lt;/p&gt;.
+        /// </summary>
+        public static string Success_Message_Completed_With_Special_Consideration {
+            get {
+                return ResourceManager.GetString("Success_Message_Completed_With_Special_Consideration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;You have told us that this learner still needs to complete their industry placement. If this changes, you can update the industry placement status by selecting ‘change’.&lt;/p&gt;.
+        /// </summary>
+        public static string Success_Message_Still_Need_To_Complete {
+            get {
+                return ResourceManager.GetString("Success_Message_Still_Need_To_Complete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;You have told us that this learner will not complete their industry placement. If this changes, you can update the industry placement status by selecting ‘change’.&lt;/p&gt;.
+        /// </summary>
+        public static string Success_Message_Will_Not_Complete {
+            get {
+                return ResourceManager.GetString("Success_Message_Will_Not_Complete", resourceCulture);
             }
         }
     }

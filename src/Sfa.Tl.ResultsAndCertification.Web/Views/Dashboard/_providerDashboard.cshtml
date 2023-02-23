@@ -16,6 +16,7 @@
         <ul class="govuk-list govuk-list--bullet">
             <li>@ProviderDashboard.Industry_Placement_Details_For_Each_Learner</li>
             <li>@ProviderDashboard.Missing_English_And_Maths_Details</li>
+            <li>@ProviderDashboard.Your_Organisations_Postal_Address</li>
         </ul>
 
         <ul class="govuk-list govuk-list--spaced">
@@ -57,6 +58,22 @@
             </p>
             <p class="govuk-body">
                 @ProviderDashboard.Tile_Para_Download_Results_For_Active_Learners
+            </p>
+        </div>
+    </div>
+
+     <!-- BLOCK: Import Industry placement data -->
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group training-provider-card">
+            <p class="govuk-body">
+                <h2 class="govuk-heading-m">
+                    <a class="govuk-link" asp-route="@RouteConstants.UploadIndustryPlacementsFile">
+                        @ProviderDashboard.Tile_Heading_Import_Industry_Placement_Data
+                    </a>
+                </h2>
+            </p>
+            <p class="govuk-body">
+                @ProviderDashboard.Import_Industry_Placement_Description_Text
             </p>
         </div>
     </div>

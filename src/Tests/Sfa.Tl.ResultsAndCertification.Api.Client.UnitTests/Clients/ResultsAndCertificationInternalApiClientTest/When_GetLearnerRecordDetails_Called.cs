@@ -49,6 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 IsLearnerRegistered = true,
                 IndustryPlacementId = 7,
                 IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration,
+                IndustryPlacementDetails = "{\"IndustryPlacementStatus\":\"CompletedWithSpecialConsideration\",\"HoursSpentOnPlacement\":999,\"SpecialConsiderationReasons\":[1,2,4]}", 
                 OverallResultDetails = "Result",
                 OverallResultPublishDate = DateTime.UtcNow,
                 LastDocumentRequestedDate = DateTime.UtcNow.AddDays(-7),
@@ -79,6 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.IsLearnerRegistered.Should().Be(_mockApiResponse.IsLearnerRegistered);
             _actualResult.IndustryPlacementId.Should().Be(_mockApiResponse.IndustryPlacementId);
             _actualResult.IndustryPlacementStatus.Should().Be(_mockApiResponse.IndustryPlacementStatus);
+            _actualResult.IndustryPlacementDetails.Should().Be(_mockApiResponse.IndustryPlacementDetails);
             _actualResult.OverallResultDetails.Should().Be(_mockApiResponse.OverallResultDetails);
             _actualResult.OverallResultPublishDate.Should().Be(_mockApiResponse.OverallResultPublishDate);
             _actualResult.LastDocumentRequestedDate.Should().Be(_mockApiResponse.LastDocumentRequestedDate);

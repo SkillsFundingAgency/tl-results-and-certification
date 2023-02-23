@@ -14,6 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations
         public int MaxFileSizeInMb { get; set; }
         public int MaxRecordCount { get; set; }
         public Type ErrorResourceType { get; set; }
+        public bool ValidateMinFileSize { get; set; } // TODO: TechDebt remove this property to apply this across to Reg/Ass/Results
 
         private int MaxFileSize => MaxFileSizeInMb * 1024 * 1024;
         private string[] Extensions => AllowedExtensions?.Split(",");
@@ -24,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations
             {
                 var extension = Path.GetExtension(file?.FileName);
                 if (!string.IsNullOrEmpty(AllowedExtensions) && !Extensions.Contains(extension.ToLower()))
-                {                    
+                {
                     return new ValidationResult(GetResourceMessage("Must_Be_Csv_Validation_Message"));
                 }
 
@@ -32,6 +33,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations
                 if (MaxFileNameLength > 0 && fileName.Length > MaxFileNameLength)
                 {
                     return new ValidationResult(string.Format(GetResourceMessage("File_Name_Length_Validation_Message"), MaxFileNameLength));
+                }
+
+                if (ValidateMinFileSize && file.Length == 0)
+                {
+                    return new ValidationResult(GetResourceMessage("File_Content_Is_Empty"));
                 }
 
                 if (MaxFileSize > 0 && file.Length > MaxFileSize)

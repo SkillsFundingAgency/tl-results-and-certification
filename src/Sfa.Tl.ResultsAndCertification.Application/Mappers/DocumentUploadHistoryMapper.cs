@@ -10,6 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
         {
             CreateMap<DocumentUploadHistoryDetails, DocumentUploadHistory>()
                 .ForMember(d => d.TlAwardingOrganisationId, opts => opts.MapFrom(s => s.TlAwardingOrganisationId))
+                .ForMember(d => d.TlProviderId, opts => opts.MapFrom(s => s.TlProviderId))
                 .ForMember(d => d.BlobFileName, opts => opts.MapFrom(s => s.BlobFileName))
                 .ForMember(d => d.BlobUniqueReference, opts => opts.MapFrom(s => s.BlobUniqueReference))
                 .ForMember(d => d.DocumentType, opts => opts.MapFrom(s => s.DocumentType))

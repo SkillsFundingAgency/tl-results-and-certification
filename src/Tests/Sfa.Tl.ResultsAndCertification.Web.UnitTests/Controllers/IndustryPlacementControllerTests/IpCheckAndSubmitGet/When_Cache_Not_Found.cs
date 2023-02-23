@@ -22,8 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
         public void Then_Expected_Methods_AreCalled()
         {
             IndustryPlacementLoader.DidNotReceive().GetLearnerRecordDetailsAsync<IpCheckAndSubmitViewModel>(Arg.Any<long>(), Arg.Any<int>());
-            IndustryPlacementLoader.DidNotReceive().GetTempFlexNavigationAsync(Arg.Any<int>(), Arg.Any<int>());
-            IndustryPlacementLoader.DidNotReceive().GetIpSummaryDetailsListAsync(Arg.Any<IndustryPlacementViewModel>(), Arg.Any<IpTempFlexNavigation>());
+            IndustryPlacementLoader.DidNotReceive().GetIpSummaryDetailsListAsync(Arg.Any<IndustryPlacementViewModel>());
         }
 
         [Fact]

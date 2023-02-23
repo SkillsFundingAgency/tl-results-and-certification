@@ -1,8 +1,8 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Enum
 {
+    // Note: Text from the Display attribute is being used in the OverallResult Json data.
     public enum IndustryPlacementStatus
     {
         NotSpecified = 0,
@@ -14,6 +14,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Enum
         CompletedWithSpecialConsideration = 2,
 
         [Display(Name = "Not completed")]
-        NotCompleted = 3
+        NotCompleted = 3,
+
+        [Display(Name = "Will not complete")]
+        WillNotComplete = 4
     }
 }

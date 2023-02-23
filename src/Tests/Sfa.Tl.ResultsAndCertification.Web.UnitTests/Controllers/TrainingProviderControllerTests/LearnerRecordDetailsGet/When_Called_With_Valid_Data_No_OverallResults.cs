@@ -83,7 +83,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.IsMathsAdded.Should().BeFalse();
             model.IsEnglishAdded.Should().BeFalse();
             model.IsIndustryPlacementAdded.Should().BeFalse();
-            model.CanAddIndustryPlacement.Should().BeTrue();
             model.IsStatusCompleted.Should().BeFalse();
             model.IsDocumentRerequestEligible.Should().BeTrue();
             model.IsReprint.Should().BeTrue();

@@ -14,10 +14,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
     {
         private IndustryPlacementViewModel _cacheModel;
         private IpCompletionViewModel _ipCompletionViewModel;
-        private IpModelViewModel _ipModelViewModel;
-        private IpTempFlexibilityUsedViewModel _ipTempFlexibilityUsedViewModel;
 
-        private string _expectedSuccessBannerMsg;
+        private NotificationBannerModel _expectedNotificationBannerModel;
         private string _expectedBannerHeaderMsg;
 
         public override void Given()
@@ -26,21 +24,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
             // Cache object
             _ipCompletionViewModel = new IpCompletionViewModel { ProfileId = 1, AcademicYear = 2020, LearnerName = "First Last", IndustryPlacementStatus = IndustryPlacementStatus.Completed };
-            _ipModelViewModel = new IpModelViewModel { IpModelUsed = new IpModelUsedViewModel { IsIpModelUsed = false }, IpMultiEmployerUsed = new IpMultiEmployerUsedViewModel { IsMultiEmployerModelUsed = true } };
-            _ipTempFlexibilityUsedViewModel = new IpTempFlexibilityUsedViewModel { LearnerName = _ipCompletionViewModel.LearnerName, IsTempFlexibilityUsed = false };
 
             _cacheModel = new IndustryPlacementViewModel
             {
                 IpCompletion = _ipCompletionViewModel,
-                IpModelViewModel = _ipModelViewModel,
-                TempFlexibility = new IpTempFlexibilityViewModel { IpTempFlexibilityUsed = _ipTempFlexibilityUsedViewModel }
             };
 
             CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(_cacheModel);
 
-            IndustryPlacementLoader.ProcessIndustryPlacementDetailsAsync(ProviderUkprn, _cacheModel).Returns(isSuccess);
+            _expectedNotificationBannerModel = new NotificationBannerModel
+            {
+                HeaderMessage = IpBannerContent.Banner_HeaderMesage,
+                Message = IpBannerContent.Success_Message_Completed,
+                DisplayMessageBody = true,
+                IsRawHtml = true
+            };
 
-            _expectedSuccessBannerMsg = IpBannerContent.Success_Message;
+            IndustryPlacementLoader.ProcessIndustryPlacementDetailsAsync(ProviderUkprn, _cacheModel).Returns(isSuccess);
+            IndustryPlacementLoader.GetSuccessNotificationBanner(_ipCompletionViewModel.IndustryPlacementStatus).Returns(_expectedNotificationBannerModel);
+
             _expectedBannerHeaderMsg = IpBannerContent.Banner_HeaderMesage;
         }
 
@@ -49,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
         {            
             IndustryPlacementLoader.Received(1).ProcessIndustryPlacementDetailsAsync(ProviderUkprn, _cacheModel);
             CacheService.Received(1).RemoveAsync<IndustryPlacementViewModel>(CacheKey);
-            CacheService.Received(1).SetAsync(TrainingProviderCacheKey, Arg.Is<NotificationBannerModel>(x => x.DisplayMessageBody == true && x.IsRawHtml == true && x.HeaderMessage.Equals(_expectedBannerHeaderMsg) && x.Message.Equals(_expectedSuccessBannerMsg)), CacheExpiryTime.XSmall);
+            CacheService.Received(1).SetAsync(TrainingProviderCacheKey, _expectedNotificationBannerModel, CacheExpiryTime.XSmall);
         }
 
         [Fact]

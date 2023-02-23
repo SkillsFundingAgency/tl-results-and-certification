@@ -106,7 +106,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No, still to be completed.
+        ///   Looks up a localized string similar to Learners may experience difficult circumstances during their placement, which mean they are unable to complete the minimum placement hours before the end of the second year..
+        /// </summary>
+        public static string Learners_May_Experience_Diffiuclt_Circumstaces_During_Placement {
+            get {
+                return ResourceManager.GetString("Learners_May_Experience_Diffiuclt_Circumstaces_During_Placement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to industry placement completion exceptions (opens in a new tab)..
+        /// </summary>
+        public static string Link_Ip_Completion_Exception {
+            get {
+                return ResourceManager.GetString("Link_Ip_Completion_Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More about.
+        /// </summary>
+        public static string More_About {
+            get {
+                return ResourceManager.GetString("More_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No, they still need to complete it.
         /// </summary>
         public static string No_Still_To_Be_Completed_Option_Text {
             get {
@@ -115,11 +142,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No, they will not complete it.
+        /// </summary>
+        public static string No_Will_Not_Complete_Option_Text {
+            get {
+                return ResourceManager.GetString("No_Will_Not_Complete_Option_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Industry placement completion - Manage learner.
         /// </summary>
-        public static string Page_Title {
+        public static string Page_Title_Add_Journey {
             get {
-                return ResourceManager.GetString("Page_Title", resourceCulture);
+                return ResourceManager.GetString("Page_Title_Add_Journey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change industry placement details - Update learner record.
+        /// </summary>
+        public static string Page_Title_Change_Journey {
+            get {
+                return ResourceManager.GetString("Page_Title_Change_Journey", resourceCulture);
             }
         }
         
@@ -133,20 +178,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to What is special consideration?.
+        /// </summary>
+        public static string Summary_Text_What_Is_Special_Consideration {
+            get {
+                return ResourceManager.GetString("Summary_Text_What_Is_Special_Consideration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tell us whether this learner has completed their industry placement.
         /// </summary>
         public static string Validation_Message {
             get {
                 return ResourceManager.GetString("Validation_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to We will ask you to declare that you have documentary evidence on file before you can submit this learner&apos;s industry placement details.
-        /// </summary>
-        public static string We_Will_Ask_You_To_Declare_Hint_Text {
-            get {
-                return ResourceManager.GetString("We_Will_Ask_You_To_Declare_Hint_Text", resourceCulture);
             }
         }
         
@@ -165,6 +210,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         public static string Yes_Completed_With_Special_Consideration_Option_Text {
             get {
                 return ResourceManager.GetString("Yes_Completed_With_Special_Consideration_Option_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You do not need to upload any evidence, but you should hold supporting documentation in your own files..
+        /// </summary>
+        public static string You_Do_Not_Need_Upload_Evidence {
+            get {
+                return ResourceManager.GetString("You_Do_Not_Need_Upload_Evidence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have the discretion to apply special consideration in some exceptional circumstances where students have demonstrated sufficient progress towards their learning goals but have not completed the minimum placement hours..
+        /// </summary>
+        public static string You_Have_Discretion_To_Apply_Special_Consideration {
+            get {
+                return ResourceManager.GetString("You_Have_Discretion_To_Apply_Special_Consideration", resourceCulture);
             }
         }
     }

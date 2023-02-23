@@ -29,6 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         // Industry placement
         public int IndustryPlacementId { get; set; }
         public IndustryPlacementStatus? IndustryPlacementStatus { get; set; }
+        public string IndustryPlacementDetails { get; set; }
 
         public string OverallResultDetails { get; set; }
         public DateTime? OverallResultPublishDate { get; set; }

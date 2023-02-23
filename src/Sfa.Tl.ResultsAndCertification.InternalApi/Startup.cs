@@ -32,6 +32,7 @@ using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Result.BulkProcess;
 using System.Linq;
@@ -182,6 +183,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IDataExportRepository, DataExportRepository>();
 
             // IndustryPlacement
+            services.AddTransient<IDataParser<IndustryPlacementCsvRecordResponse>, IndustryPlacementParser>();
+            services.AddTransient<IValidator<IndustryPlacementCsvRecordRequest>, IndustryPlacementValidator>();
+            services.AddTransient<ICsvHelperService<IndustryPlacementCsvRecordRequest, CsvResponseModel<IndustryPlacementCsvRecordResponse>, IndustryPlacementCsvRecordResponse>, CsvHelperService<IndustryPlacementCsvRecordRequest, CsvResponseModel<IndustryPlacementCsvRecordResponse>, IndustryPlacementCsvRecordResponse>>();
+            services.AddTransient<IBulkIndustryPlacementLoader, BulkIndustryPlacementLoader>();
             services.AddTransient<IIndustryPlacementService, IndustryPlacementService>();
 
             // Overall result calculation

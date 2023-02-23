@@ -79,6 +79,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I confirm that all relevant supporting documentation is held on record..
+        /// </summary>
+        public static string Declaration_I_Confirm_Supporting_Docs_Is_Held {
+            get {
+                return ResourceManager.GetString("Declaration_I_Confirm_Supporting_Docs_Is_Held", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check your answers.
         /// </summary>
         public static string Heading_Check_Your_Answers {
@@ -97,42 +106,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  which industry placement models were used.
-        /// </summary>
-        public static string Hidden_Text_Ipmodel_List {
-            get {
-                return ResourceManager.GetString("Hidden_Text_Ipmodel_List", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  which other industry placement models were used.
-        /// </summary>
-        public static string Hidden_Text_Ipmodel_Others_list {
-            get {
-                return ResourceManager.GetString("Hidden_Text_Ipmodel_Others_list", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  whether industry placement models were used.
-        /// </summary>
-        public static string Hidden_Text_IpModel_Used {
-            get {
-                return ResourceManager.GetString("Hidden_Text_IpModel_Used", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  whether multiple employer model was used.
-        /// </summary>
-        public static string Hidden_Text_MultiEmp_Used {
-            get {
-                return ResourceManager.GetString("Hidden_Text_MultiEmp_Used", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to  total placement hours.
         /// </summary>
         public static string Hidden_Text_Special_Consideration_Hours {
@@ -147,42 +120,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         public static string Hidden_Text_Special_Consideration_Reasons {
             get {
                 return ResourceManager.GetString("Hidden_Text_Special_Consideration_Reasons", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  whether a blended placement temporary flexibility was used.
-        /// </summary>
-        public static string Hidden_Text_Tf_Blended_Used {
-            get {
-                return ResourceManager.GetString("Hidden_Text_Tf_Blended_Used", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  whether an employer-led activities/projects temporary flexibility was used.
-        /// </summary>
-        public static string Hidden_Text_Tf_Employer_Led_List {
-            get {
-                return ResourceManager.GetString("Hidden_Text_Tf_Employer_Led_List", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  which temporary flexibilities were used.
-        /// </summary>
-        public static string Hidden_Text_Tf_Granted_List {
-            get {
-                return ResourceManager.GetString("Hidden_Text_Tf_Granted_List", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  whether temporary flexibilities were used.
-        /// </summary>
-        public static string Hidden_Text_Tf_TempFlex_Used {
-            get {
-                return ResourceManager.GetString("Hidden_Text_Tf_TempFlex_Used", resourceCulture);
             }
         }
         
@@ -223,7 +160,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to completed.
+        ///   Looks up a localized string similar to Placement completed.
         /// </summary>
         public static string Status_Completed {
             get {
@@ -232,11 +169,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to completed with special consideration.
+        ///   Looks up a localized string similar to Placement completed with special consideration.
         /// </summary>
         public static string Status_Completed_With_Special_Consideration {
             get {
                 return ResourceManager.GetString("Status_Completed_With_Special_Consideration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Placement still to be completed.
+        /// </summary>
+        public static string Status_Not_Completed {
+            get {
+                return ResourceManager.GetString("Status_Not_Completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Placement will not be completed.
+        /// </summary>
+        public static string Status_Will_Not_Complete {
+            get {
+                return ResourceManager.GetString("Status_Will_Not_Complete", resourceCulture);
             }
         }
         
@@ -268,42 +223,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Multiple employer model used.
-        /// </summary>
-        public static string Title_IpModel_Multi_Emp_Text {
-            get {
-                return ResourceManager.GetString("Title_IpModel_Multi_Emp_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Selected other industry placement models.
-        /// </summary>
-        public static string Title_IpModel_Selected_Other_List_Text {
-            get {
-                return ResourceManager.GetString("Title_IpModel_Selected_Other_List_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Industry placement models used.
-        /// </summary>
-        public static string Title_IpModel_Text {
-            get {
-                return ResourceManager.GetString("Title_IpModel_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Selected industry placement models.
-        /// </summary>
-        public static string Title_IpModels_Selected_List_Text {
-            get {
-                return ResourceManager.GetString("Title_IpModels_Selected_List_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Learner.
         /// </summary>
         public static string Title_Name_Text {
@@ -327,33 +246,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         public static string Title_SpecialConsideration_Reasons_Text {
             get {
                 return ResourceManager.GetString("Title_SpecialConsideration_Reasons_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Employer-led activities/projects temporary flexibility used.
-        /// </summary>
-        public static string Title_TempFlex_Emp_Led_Text {
-            get {
-                return ResourceManager.GetString("Title_TempFlex_Emp_Led_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Selected temporary flexibilities.
-        /// </summary>
-        public static string Title_TempFlex_Selected_Text {
-            get {
-                return ResourceManager.GetString("Title_TempFlex_Selected_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Temporary flexibilities used.
-        /// </summary>
-        public static string Title_TempFlex_Used_Text {
-            get {
-                return ResourceManager.GetString("Title_TempFlex_Used_Text", resourceCulture);
             }
         }
         

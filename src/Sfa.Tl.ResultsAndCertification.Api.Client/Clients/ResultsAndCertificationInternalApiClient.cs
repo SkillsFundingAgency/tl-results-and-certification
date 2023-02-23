@@ -121,9 +121,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<BulkProcessRequest, BulkProcessResponse>(requestUri, model);
         }
 
-        public async Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference)
+        public async Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long ukprn, Guid blobUniqueReference)
         {
-            var requestUri = string.Format(ApiConstants.GetDocumentUploadHistoryDetailsAsyncUri, aoUkprn, blobUniqueReference);
+            var requestUri = string.Format(ApiConstants.GetDocumentUploadHistoryDetailsAsyncUri, ukprn, blobUniqueReference);
             return await GetAsync<DocumentUploadHistoryDetails>(requestUri);
         }
 
@@ -384,12 +384,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<IList<IpLookupData>>(requestUri);
         }
 
-        public async Task<IpTempFlexNavigation> GetTempFlexNavigationAsync(int pathwayId, int academicYear)
-        {
-            var requestUri = string.Format(ApiConstants.GetTempFlexNavigationUri, pathwayId, academicYear);
-            return await GetAsync<IpTempFlexNavigation>(requestUri);
-        }
-
         public async Task<bool> ProcessIndustryPlacementDetailsAsync(IndustryPlacementRequest request)
         {
             return await PostAsync<IndustryPlacementRequest, bool>(ApiConstants.ProcessIndustryPlacementDetailsUri, request);
@@ -415,6 +409,15 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<DataExportResponse>(requestUri);
         }
 
+        #region Industry Placement Bulk Upload
+
+        public async Task<BulkIndustryPlacementResponse> ProcessBulkIndustryPlacementsAsync(BulkProcessRequest model)
+        {
+            var requestUri = ApiConstants.ProcessBulkIndustryPlacementsUri;
+            return await PostAsync<BulkProcessRequest, BulkIndustryPlacementResponse>(requestUri, model);
+        }
+
+        #endregion
         #region Private Methods
 
         /// <summary>

@@ -37,6 +37,16 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             return value != null && System.Enum.IsDefined(typeof(T), value.ToString().IsInt() ? value.ToString().ToInt() : value);
         }
 
+        public static bool IsValidValue<T>(object value, bool exclNotSpecified) where T : System.Enum
+        {
+            var isValid = value != null && System.Enum.IsDefined(typeof(T), value.ToString().IsInt() ? value.ToString().ToInt() : value);
+
+            if (isValid && exclNotSpecified)
+                return !value.ToString().Equals(Helpers.Constants.NotSpecified, StringComparison.InvariantCultureIgnoreCase);
+
+            return isValid;
+        }
+
         public static bool IsValidDisplayName<T>(object value) where T : System.Enum
         {
             return GetList<T>().Any(x => x.GetDisplayName().Equals(value.ToString(), StringComparison.InvariantCultureIgnoreCase));

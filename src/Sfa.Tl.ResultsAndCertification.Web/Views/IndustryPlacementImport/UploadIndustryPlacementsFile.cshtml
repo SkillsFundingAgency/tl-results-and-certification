@@ -1,0 +1,48 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.UploadIndustryPlacementsRequestViewModel
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = @Upload.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+@section Scripts {
+    <script nws-csp-add-nonce="true" src="~/javascripts/industry-placement-upload.min.js"></script>
+}
+
+<div id="uploadIndustryPlacementsContainer">
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-form-group">
+                <partial name="_ValidationSummary" />
+                <h1 class="govuk-heading-l">@Upload.Page_Heading</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+                <p class="govuk-body">@Upload.Para_Upload_Csv_To_Add_Or_Change</p>
+                <p class="govuk-body">@Upload.Your_File_Must_Include_Specific_Column_Names <a class="govuk-link" target="_self" asp-route="DownloadIndustryPlacementDataFormatAndRulesGuide">@Upload.Link_Learner_Data_Format_Rules_Guidance_Template</a> (@Upload.File_Type, @Upload.File_Size_Kb_Text).</p>
+
+            <form id="uploadIndustryPlacementsForm" class="form" asp-route="SubmitUploadIndustryPlacementssFile" enctype="multipart/form-data">
+                <div class="govuk-form-group" sfa-validation-for="File" sfa-validation-class="govuk-form-group--error">
+                    <label for="file" class="govuk-label govuk-!-font-size-19 govuk-!-padding-top-5 govuk-!-font-weight-bold">
+                        @Upload.Upload_File_Text
+                    </label>
+                    <span sfa-validation-for="File"></span>
+                    <input class="govuk-file-upload" id="file" asp-for="File" type="file" accept=".csv" aria-required="true">
+                </div>
+                <button id="uploadIndustryPlacementsButton" class="govuk-button tl-show-on-js-only" data-module="govuk-button" type="submit" data-prevent-double-click="true">@Upload.Upload_File_Button_Text</button>
+                <partial name="~/Views/IndustryPlacementImport/Partials/_uploadIndustryPlacementNoScriptSubmit.cshtml" />
+            </form>
+            
+        </div>
+    </div>
+</div>
+<partial name="~/Views/IndustryPlacementImport/Partials/_uploadIndustryPlacementProgress.cshtml" />

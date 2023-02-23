@@ -17,7 +17,7 @@
                         @LearnerRecordDetails.Notification_Heading
                     </h3>
                     <ul class="govuk-list">
-                        @if (!Model.IsIndustryPlacementAdded)
+                        @if (Model.IsIndustryPlacementStillToBeCompleted)
                         {
                             <li> <a class="govuk-notification-banner__link" asp-route="@RouteConstants.AddIndustryPlacement" asp-route-profileId="@Model.ProfileId">@LearnerRecordDetails.Notification_Link_Add_Ip</a> </li>
                         }

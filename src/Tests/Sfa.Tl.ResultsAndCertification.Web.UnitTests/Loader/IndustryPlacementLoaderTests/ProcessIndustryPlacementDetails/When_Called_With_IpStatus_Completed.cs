@@ -1,10 +1,12 @@
-﻿using FluentAssertions;
+﻿using AutoMapper;
+using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
-using System.Collections.Generic;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementLoaderTests.ProcessIndustryPlacementDetails
@@ -12,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
     public class When_Called_With_IpStatus_Completed : TestSetup
     {
         private readonly bool _expectedApiResult = true;
-        private IndustryPlacementDetails _industryPlacementDetails;
+        private IndustryPlacementDetails _industryPlacementDetails = null;
 
         public override void Given()
         {
@@ -29,90 +31,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
                     PathwayId = 7,
                     IndustryPlacementStatus = IndustryPlacementStatus.Completed
                 },
-                IpModelViewModel = new IpModelViewModel
-                {
-                    IpModelUsed = new IpModelUsedViewModel
-                    {
-                        IsIpModelUsed = true
-                    },
-                    IpMultiEmployerUsed = new IpMultiEmployerUsedViewModel
-                    {
-                        IsMultiEmployerModelUsed = true
-                    },
-                    IpMultiEmployerOther = new IpMultiEmployerOtherViewModel
-                    {
-                        OtherIpPlacementModels = new List<IpLookupDataViewModel>
-                        {
-                            new IpLookupDataViewModel
-                            {
-                                Id = 1,
-                                Name = "Test 1",
-                                IsSelected = true
-                            },
-                            new IpLookupDataViewModel
-                            {
-                                Id = 2,
-                                Name = "Test 2",
-                                IsSelected = true
-                            },
-                            new IpLookupDataViewModel
-                            {
-                                Id = 3,
-                                Name = "Test 3",
-                                IsSelected = false
-                            }
-                        }
-                    }
-                },
-                TempFlexibility = new IpTempFlexibilityViewModel
-                {
-                    IpTempFlexibilityUsed = new IpTempFlexibilityUsedViewModel
-                    {
-                        IsTempFlexibilityUsed = true
-                    },
-                    IpBlendedPlacementUsed = new IpBlendedPlacementUsedViewModel
-                    {
-                        IsBlendedPlacementUsed = false
-                    },
-                    IpGrantedTempFlexibility = new IpGrantedTempFlexibilityViewModel
-                    {
-                        TemporaryFlexibilities = new List<IpLookupDataViewModel>
-                        {
-                            new IpLookupDataViewModel
-                            {
-                                Id = 4,
-                                Name = "Temp Flex 1",
-                                IsSelected = true
-                            },
-                            new IpLookupDataViewModel
-                            {
-                                Id = 5,
-                                Name = "Temp Flex 2",
-                                IsSelected = true
-                            },
-                            new IpLookupDataViewModel
-                            {
-                                Id = 6,
-                                Name = "Temp Flex 3",
-                                IsSelected = false
-                            }
-                        }
-                    }
-                }
-            };
-
-            _industryPlacementDetails = new IndustryPlacementDetails
-            {
-                IndustryPlacementStatus = IndustryPlacementStatus.Completed.ToString(),
-                HoursSpentOnPlacement = null,
-                SpecialConsiderationReasons = new List<int?>(),
-                IndustryPlacementModelsUsed = true,
-                MultipleEmployerModelsUsed = true,
-                OtherIndustryPlacementModels = new List<int?> { 1, 2 },
-                IndustryPlacementModels = new List<int?>(),
-                TemporaryFlexibilitiesUsed = true,
-                BlendedTemporaryFlexibilityUsed = false,
-                TemporaryFlexibilities = new List<int?> { 4, 5 }
             };
 
             InternalApiClient.ProcessIndustryPlacementDetailsAsync(Arg.Is<IndustryPlacementRequest>(x =>
@@ -120,16 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
                                 x.RegistrationPathwayId == ViewModel.IpCompletion.RegistrationPathwayId &&
                                 x.ProviderUkprn == ProviderUkprn &&
                                 x.IndustryPlacementStatus == ViewModel.IpCompletion.IndustryPlacementStatus &&
-                                x.IndustryPlacementDetails.IndustryPlacementStatus == _industryPlacementDetails.IndustryPlacementStatus &&
-                                x.IndustryPlacementDetails.HoursSpentOnPlacement == _industryPlacementDetails.HoursSpentOnPlacement &&
-                                x.IndustryPlacementDetails.SpecialConsiderationReasons.Count == _industryPlacementDetails.SpecialConsiderationReasons.Count &&
-                                x.IndustryPlacementDetails.IndustryPlacementModelsUsed == _industryPlacementDetails.IndustryPlacementModelsUsed &&
-                                x.IndustryPlacementDetails.MultipleEmployerModelsUsed == _industryPlacementDetails.MultipleEmployerModelsUsed &&
-                                x.IndustryPlacementDetails.OtherIndustryPlacementModels.Count == _industryPlacementDetails.OtherIndustryPlacementModels.Count &&
-                                x.IndustryPlacementDetails.IndustryPlacementModels.Count == _industryPlacementDetails.IndustryPlacementModels.Count &&
-                                x.IndustryPlacementDetails.TemporaryFlexibilitiesUsed == _industryPlacementDetails.TemporaryFlexibilitiesUsed &&
-                                x.IndustryPlacementDetails.BlendedTemporaryFlexibilityUsed == _industryPlacementDetails.BlendedTemporaryFlexibilityUsed &&
-                                x.IndustryPlacementDetails.TemporaryFlexibilities.Count == _industryPlacementDetails.TemporaryFlexibilities.Count &&
+                                x.IndustryPlacementDetails == null &&
                                 x.PerformedBy == $"{Givenname} {Surname}"
                                 )).Returns(_expectedApiResult);
 
@@ -140,6 +49,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
         public void Then_Returns_Expected_Results()
         {
             ActualResult.Should().BeTrue();
-        }       
+        }
+
+        public override void CreateMapper()
+        {
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddMaps(typeof(IndustryPlacementMapper).Assembly);
+                c.ConstructServicesUsing(type =>
+                            type.Name.Contains("UserNameResolver") ?
+                                new UserNameResolver<IpCompletionViewModel, IndustryPlacementRequest>(HttpContextAccessor) : null);
+            });
+            Mapper = new AutoMapper.Mapper(mapperConfig);
+        }
     }
 }

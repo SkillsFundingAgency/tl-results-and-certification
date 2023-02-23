@@ -120,7 +120,16 @@
   <data name="Banner_HeaderMesage" xml:space="preserve">
     <value>Industry placement status added</value>
   </data>
-  <data name="Success_Message" xml:space="preserve">
-    <value>&lt;p class="govuk-body"&gt;&lt;a class="govuk-notification-banner__link" href="/contact-us"&gt;Contact us&lt;/a&gt; if the industry placement status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;</value>
+  <data name="Success_Message_Completed" xml:space="preserve">
+    <value>&lt;p&gt;You have told us that this learner has completed their industry placement. You can change the industry placement status by selecting ‘change’.&lt;/p&gt;</value>
+  </data>
+  <data name="Success_Message_Completed_With_Special_Consideration" xml:space="preserve">
+    <value>&lt;p&gt;You have told us that this learner has completed their industry placement with special consideration. You can change the industry placement status by selecting ‘change’.&lt;/p&gt;</value>
+  </data>
+  <data name="Success_Message_Still_Need_To_Complete" xml:space="preserve">
+    <value>&lt;p&gt;You have told us that this learner still needs to complete their industry placement. If this changes, you can update the industry placement status by selecting ‘change’.&lt;/p&gt;</value>
+  </data>
+  <data name="Success_Message_Will_Not_Complete" xml:space="preserve">
+    <value>&lt;p&gt;You have told us that this learner will not complete their industry placement. If this changes, you can update the industry placement status by selecting ‘change’.&lt;/p&gt;</value>
   </data>
 </root>

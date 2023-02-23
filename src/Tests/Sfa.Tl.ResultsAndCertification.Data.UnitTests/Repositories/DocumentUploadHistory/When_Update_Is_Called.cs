@@ -20,6 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.DocumentUpl
             DbContext.Add(_data);
             DbContext.SaveChanges();
 
+            _data.TlAwardingOrganisationId = null;
+            _data.TlProviderId = 1;
             _data.Status = (int)UpdateStatus;
             _data.ModifiedOn = DateTime.UtcNow;
             _data.ModifiedBy = ModifiedUserName;
@@ -38,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.DocumentUpl
             _result.Should().NotBeNull();
             _result.Id.Should().Be(1);
             _result.TlAwardingOrganisationId.Should().Be(_data.TlAwardingOrganisationId);
+            _result.TlProviderId.Should().Be(_data.TlProviderId);
             _result.BlobFileName.Should().Be(_data.BlobFileName);
             _result.BlobUniqueReference.Should().Be(_data.BlobUniqueReference);
             _result.DocumentType.Should().Be(_data.DocumentType);
