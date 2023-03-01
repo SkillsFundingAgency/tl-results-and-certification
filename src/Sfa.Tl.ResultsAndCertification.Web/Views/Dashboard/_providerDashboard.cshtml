@@ -27,111 +27,93 @@
 </div>
 
 <!-- MAIN ROW -->
-<div class="govuk-grid-row">
+<section class="homepage-section--services-and-info">
 
-    <!-- Providers Dashboard -->
-    <!-- BLOCK: Manage Learning Records -->
-    <div class="govuk-grid-column-one-half">
-        <div class="govuk-form-group training-provider-card">
-            <p class="govuk-body">
-                <h2 class="govuk-heading-m">
-                    <a class="govuk-link" asp-route="SearchLearnerRecord">
-                        @ProviderDashboard.Manage_Learner_TLevel_Records_Text
-                    </a>
-                </h2>
-            </p>
-            <p class="govuk-body">
-                @ProviderDashboard.Manage_Learner_TLevel_Records_Description_Text
-            </p>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <h2 class="gem-c-heading govuk-heading-m govuk-!-margin-bottom-6">In this section</h2>
+            <ul class="homepage-services-and-info__list">
+                <li class="chevron-card">
+                    <div class="chevron-card__wrapper">
+                        <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                            <a class="govuk-link" asp-route="SearchLearnerRecord">
+                                @ProviderDashboard.Manage_Learner_TLevel_Records_Text
+                            </a>
+                        </h3>
+                        <p class="govuk-body chevron-card__description">
+                            @ProviderDashboard.Manage_Learner_TLevel_Records_Description_Text
+                        </p>
+                    </div>
+                </li>
+                <li class="chevron-card">
+                    <div class="chevron-card__wrapper">
+                        <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                            <a class="govuk-link" asp-route="@RouteConstants.DownloadOverallResultsPage">
+                                @ProviderDashboard.Tile_Heading_Download_Learner_Results
+                            </a>
+                        </h3>
+                        <p class="govuk-body chevron-card__description">
+                            @ProviderDashboard.Tile_Para_Download_Results_For_Active_Learners
+                        </p>
+                    </div>
+                </li>
+                <li class="chevron-card">
+                    <div class="chevron-card__wrapper">
+                        <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                            <a class="govuk-link" asp-route="@RouteConstants.UploadIndustryPlacementsFile">
+                                @ProviderDashboard.Tile_Heading_Import_Industry_Placement_Data
+                            </a>
+                        </h3>
+                        <p class="govuk-body chevron-card__description">
+                            @ProviderDashboard.Import_Industry_Placement_Description_Text
+                        </p>
+                    </div>
+                </li>
+                <li class="chevron-card">
+                    <div class="chevron-card__wrapper">
+                        <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                            <a class="govuk-link" asp-route="RequestStatementOfAchievement">
+                                @ProviderDashboard.Providers_Request_Statement_Of_Achievement_Heading
+                            </a>
+                        </h3>
+                        <p class="govuk-body chevron-card__description">
+                            @ProviderDashboard.Providers_Request_Statement_Of_Achievement_Text
+                         </p>
+                    </div>
+                </li>
+                <li class="chevron-card">
+                    <div class="chevron-card__wrapper">
+                        <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                            <a class="govuk-link" asp-route="ManagePostalAddress">
+                                @ProviderDashboard.Providers_Manage_Postal_Address_Heading
+                            </a>
+                        </h3>
+                        <p class="govuk-body chevron-card__description">
+                            @ProviderDashboard.Providers_Manage_Postal_Address_Text
+                        </p>
+                    </div>
+                </li>
+                <li class="chevron-card">
+                    <div class="chevron-card__wrapper">
+                        <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                            <a class="govuk-link" asp-route="AccountProfile">
+                                @ProviderDashboard.Manage_Your_Account_Text
+                            </a>
+                        </h3>
+                        <p class="govuk-body">
+                            @ProviderDashboard.Manage_Your_Account_Description_Text
+                        </p>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
-
-    <!-- BLOCK: Download learner results -->
-    <div class="govuk-grid-column-one-half">
-        <div class="govuk-form-group training-provider-card">
-            <p class="govuk-body">
-                <h2 class="govuk-heading-m">
-                    <a class="govuk-link" asp-route="@RouteConstants.DownloadOverallResultsPage">
-                        @ProviderDashboard.Tile_Heading_Download_Learner_Results
-                    </a>
-                </h2>
-            </p>
-            <p class="govuk-body">
-                @ProviderDashboard.Tile_Para_Download_Results_For_Active_Learners
-            </p>
-        </div>
-    </div>
-
-     <!-- BLOCK: Import Industry placement data -->
-    <div class="govuk-grid-column-one-half">
-        <div class="govuk-form-group training-provider-card">
-            <p class="govuk-body">
-                <h2 class="govuk-heading-m">
-                    <a class="govuk-link" asp-route="@RouteConstants.UploadIndustryPlacementsFile">
-                        @ProviderDashboard.Tile_Heading_Import_Industry_Placement_Data
-                    </a>
-                </h2>
-            </p>
-            <p class="govuk-body">
-                @ProviderDashboard.Import_Industry_Placement_Description_Text
-            </p>
-        </div>
-    </div>
-
-    <!-- BLOCK: Request statement of achievement -->
-    <div class="govuk-grid-column-one-half">
-        <div class="govuk-form-group training-provider-card">
-            <p class="govuk-body">
-                <h2 class="govuk-heading-m">
-                    <a class="govuk-link" asp-route="RequestStatementOfAchievement">
-                        @ProviderDashboard.Providers_Request_Statement_Of_Achievement_Heading
-                    </a>
-                </h2>
-            </p>
-            <p class="govuk-body">
-                @ProviderDashboard.Providers_Request_Statement_Of_Achievement_Text
-            </p>
-        </div>
-    </div>
-
-    <!-- BLOCK: Manage Postal Address -->
-    <div class="govuk-grid-column-one-half">
-        <div class="govuk-form-group training-provider-card">
-            <p class="govuk-body">
-                <h2 class="govuk-heading-m">
-                    <a class="govuk-link" asp-route="ManagePostalAddress">
-                        @ProviderDashboard.Providers_Manage_Postal_Address_Heading
-                    </a>
-                </h2>
-            </p>
-            <p class="govuk-body">
-                @ProviderDashboard.Providers_Manage_Postal_Address_Text
-            </p>
-        </div>
-    </div>
-
-    <!-- BLOCK: Manage Your Account -->
-    <div class="govuk-grid-column-one-half">
-        <div class="govuk-form-group training-provider-card">
-            <p class="govuk-body">
-                <h2 class="govuk-heading-m">
-                    <a class="govuk-link" asp-route="AccountProfile">
-                        @ProviderDashboard.Manage_Your_Account_Text
-                    </a>
-                </h2>
-            </p>
-
-            <p class="govuk-body">
-                @ProviderDashboard.Manage_Your_Account_Description_Text
-            </p>
-        </div>
-    </div>
-</div>
+</section>
 
 <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds-from-desktop">
-        <h2 class="govuk-heading-l">@ProviderDashboard.Heading_News_Guidance_Events</h2>
+    <div class="govuk-grid-column-full">
+        <h2 class="govuk-heading-s">@ProviderDashboard.Heading_News_Guidance_Events</h2>
 
         <ul class="govuk-list govuk-list--spaced">
             <li><a class="govuk-link" asp-route="@RouteConstants.ProviderGuidance">@ProviderDashboard.Link_Find_About_Mange_Tlevel_Results</a></li>
