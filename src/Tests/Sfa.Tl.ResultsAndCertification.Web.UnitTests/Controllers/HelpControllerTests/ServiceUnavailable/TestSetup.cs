@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
+using System;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.HelpControllerTests.ServiceUnavailable
@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.HelpControlle
         {
             Configuration = new ResultsAndCertificationConfiguration
             {
-                FreezePeriodEndDate = "31/07/2022".ParseStringToDateTimeWithFormat()
+                FreezePeriodEndDate = new DateTime(2022, 07, 31, 23, 59, 59, DateTimeKind.Utc)
             };
 
             Controller = new HelpController(Configuration);
