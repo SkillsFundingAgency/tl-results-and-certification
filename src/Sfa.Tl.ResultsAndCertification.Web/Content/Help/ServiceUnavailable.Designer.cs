@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You will be able to use the service from 12:00{0}..
+        ///   Looks up a localized string similar to You will be able to use the service from {0}..
         /// </summary>
         public static string Para_Use_Service_From {
             get {

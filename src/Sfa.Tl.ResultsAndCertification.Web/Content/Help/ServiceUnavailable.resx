@@ -130,6 +130,6 @@
     <value>The Manage T Level results service is unavailable while we process and calculate overall T Level results.</value>
   </data>
   <data name="Para_Use_Service_From" xml:space="preserve">
-    <value>You will be able to use the service from 12:00{0}.</value>
+    <value>You will be able to use the service from {0}.</value>
   </data>
 </root>
