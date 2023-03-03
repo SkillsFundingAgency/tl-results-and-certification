@@ -46,30 +46,6 @@
     }
 }
 
-.ao-dashboard-card {
-    @extend .card;
-    min-height: 215px;
-    padding-top: 10px;
-}
-
-@media screen and (max-width: 854px) and (min-width: 808px) {
-    .ao-dashboard-card {
-        min-height: 240px;
-    }
-}
-
-@media screen and (max-width: 807px) and (min-width: 640px) {
-    .ao-dashboard-card {
-        min-height: 340px;
-    }
-}
-
-@media screen and (max-width: 640px) {
-    .card, .ao-dashboard-card {
-        min-height: unset;
-    }
-}
-
 .tlevels-dashboard-card {
     @extend .card;
     margin-bottom: 20px;
