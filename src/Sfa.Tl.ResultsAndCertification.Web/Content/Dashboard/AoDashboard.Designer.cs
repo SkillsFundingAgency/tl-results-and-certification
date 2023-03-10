@@ -178,7 +178,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Register, edit and withdraw learners, and download registrations data..
+        ///   Looks up a localized string similar to Register, edit and withdraw learners and download registrations data..
         /// </summary>
         public static string Tile_Registrations_Register_Edit_Withdraw_Learner {
             get {

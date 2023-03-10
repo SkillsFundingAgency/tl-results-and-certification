@@ -157,7 +157,7 @@
     <value>Registrations</value>
   </data>
   <data name="Tile_Registrations_Register_Edit_Withdraw_Learner" xml:space="preserve">
-    <value>Register, edit and withdraw learners, and download registrations data.</value>
+    <value>Register, edit and withdraw learners and download registrations data.</value>
   </data>
   <data name="Tile_Results_Heading" xml:space="preserve">
     <value>Results</value>
