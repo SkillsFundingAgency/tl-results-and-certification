@@ -124,15 +124,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload a CSV file to add or change the industry placement status for one or more learners..
-        /// </summary>
-        public static string Import_Industry_Placement_Description_Text {
-            get {
-                return ResourceManager.GetString("Import_Industry_Placement_Description_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to industry placement details for each learner.
         /// </summary>
         public static string Industry_Placement_Details_For_Each_Learner {
@@ -376,11 +367,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Import industry placement data.
+        ///   Looks up a localized string similar to Upload industry placement data.
         /// </summary>
-        public static string Tile_Heading_Import_Industry_Placement_Data {
+        public static string Tile_Heading_Upload_Industry_Placement_Data {
             get {
-                return ResourceManager.GetString("Tile_Heading_Import_Industry_Placement_Data", resourceCulture);
+                return ResourceManager.GetString("Tile_Heading_Upload_Industry_Placement_Data", resourceCulture);
             }
         }
         
@@ -408,6 +399,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         public static string Tlevels_Text {
             get {
                 return ResourceManager.GetString("Tlevels_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload a CSV file to add or change the industry placement status for one or more learners..
+        /// </summary>
+        public static string Upload_Industry_Placement_Description_Text {
+            get {
+                return ResourceManager.GetString("Upload_Industry_Placement_Description_Text", resourceCulture);
             }
         }
         

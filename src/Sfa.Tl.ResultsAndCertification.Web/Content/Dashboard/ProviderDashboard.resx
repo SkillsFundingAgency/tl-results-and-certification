@@ -138,9 +138,6 @@
   <data name="Heading_News_Guidance_Events" xml:space="preserve">
     <value>News, guidance and events</value>
   </data>
-  <data name="Import_Industry_Placement_Description_Text" xml:space="preserve">
-    <value>Upload a CSV file to add or change the industry placement status for one or more learners.</value>
-  </data>
   <data name="Industry_Placement_Details_For_Each_Learner" xml:space="preserve">
     <value>industry placement details for each learner</value>
   </data>
@@ -222,8 +219,8 @@
   <data name="Tile_Heading_Download_Learner_Results" xml:space="preserve">
     <value>Download learner results</value>
   </data>
-  <data name="Tile_Heading_Import_Industry_Placement_Data" xml:space="preserve">
-    <value>Import industry placement data</value>
+  <data name="Tile_Heading_Upload_Industry_Placement_Data" xml:space="preserve">
+    <value>Upload industry placement data</value>
   </data>
   <data name="Tile_Para_Download_Results_For_Active_Learners" xml:space="preserve">
     <value>Download results for active learners in their final year of their T Level.</value>
@@ -233,6 +230,9 @@
   </data>
   <data name="Tlevels_Text" xml:space="preserve">
     <value>T Levels</value>
+  </data>
+  <data name="Upload_Industry_Placement_Description_Text" xml:space="preserve">
+    <value>Upload a CSV file to add or change the industry placement status for one or more learners.</value>
   </data>
   <data name="Your_Organisations_Postal_Address" xml:space="preserve">
     <value>your organisation's postal address</value>
