@@ -163,7 +163,7 @@
     <value>View news and updates (opens in a new tab)</value>
   </data>
   <data name="Manage_Learner_TLevel_Records_Description_Text" xml:space="preserve">
-    <value>Add or change your learners' English and maths achievements, industry placement status and order replacement documents.</value>
+    <value>Add and edit achievements and industry placement statuses.  You can also order replacement certificates and statements of achievement.</value>
   </data>
   <data name="Manage_Learner_TLevel_Records_Text" xml:space="preserve">
     <value>Manage learner records</value>
@@ -190,7 +190,7 @@
     <value>Add or update the address you want certificates and statements of achievement sent to.</value>
   </data>
   <data name="Providers_Request_Statement_Of_Achievement_Heading" xml:space="preserve">
-    <value>Request statement of achievement</value>
+    <value>Request statement of achievement for withdrawn learners</value>
   </data>
   <data name="Providers_Request_Statement_Of_Achievement_Text" xml:space="preserve">
     <value>Request a new or replacement statement of achievement for learners who have withdrawn from their T Level course.</value>
@@ -226,7 +226,7 @@
     <value>Import industry placement data</value>
   </data>
   <data name="Tile_Para_Download_Results_For_Active_Learners" xml:space="preserve">
-    <value>Download results for active learners in the final year of their T Level.</value>
+    <value>Download results for active learners in their final year of their T Level.</value>
   </data>
   <data name="Tlevels_Description_Text" xml:space="preserve">
     <value>Review T Level details and tell us if they are correct</value>

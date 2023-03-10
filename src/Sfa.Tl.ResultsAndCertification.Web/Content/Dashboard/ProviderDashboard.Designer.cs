@@ -196,7 +196,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add or change your learners&apos; English and maths achievements, industry placement status and order replacement documents..
+        ///   Looks up a localized string similar to Add and edit achievements and industry placement statuses.  You can also order replacement certificates and statements of achievement..
         /// </summary>
         public static string Manage_Learner_TLevel_Records_Description_Text {
             get {
@@ -277,7 +277,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request statement of achievement.
+        ///   Looks up a localized string similar to Request statement of achievement for withdrawn learners.
         /// </summary>
         public static string Providers_Request_Statement_Of_Achievement_Heading {
             get {
@@ -385,7 +385,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download results for active learners in the final year of their T Level..
+        ///   Looks up a localized string similar to Download results for active learners in their final year of their T Level..
         /// </summary>
         public static string Tile_Para_Download_Results_For_Active_Learners {
             get {
