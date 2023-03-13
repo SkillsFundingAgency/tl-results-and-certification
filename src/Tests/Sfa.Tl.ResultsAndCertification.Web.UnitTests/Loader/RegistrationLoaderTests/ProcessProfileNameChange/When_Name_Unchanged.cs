@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessProfileNameChange
 {
-    public class When_Specialism_Unchanged : TestSetup
+    public class When_Name_Unchanged : TestSetup
     {
         RegistrationDetails regDetailsMock = null;
         readonly string firstName = " John";
@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         public override void Given()
         {
             ViewModel = new ChangeLearnersNameViewModel { ProfileId = 1, Firstname = firstName, Lastname = lastName };
-            regDetailsMock = new RegistrationDetails { Firstname = firstName.Trim().ToUpper(), Lastname = lastName.Trim().ToUpper() };
+            regDetailsMock = new RegistrationDetails { Firstname = firstName.Trim(), Lastname = lastName.Trim() };
 
             InternalApiClient.GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active)
                 .Returns(regDetailsMock);
