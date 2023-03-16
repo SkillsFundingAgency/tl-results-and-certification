@@ -88,6 +88,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 2022 to 2023.
+        /// </summary>
+        public static string Link_2022_To_2023 {
+            get {
+                return ResourceManager.GetString("Link_2022_To_2023", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List all active learners by start year.
         /// </summary>
         public static string List_All_Learners_By_Start_Year {

@@ -126,6 +126,9 @@
   <data name="Link_2021_To_2022" xml:space="preserve">
     <value>2021 to 2022</value>
   </data>
+  <data name="Link_2022_To_2023" xml:space="preserve">
+    <value>2022 to 2023</value>
+  </data>
   <data name="List_All_Learners_By_Start_Year" xml:space="preserve">
     <value>List all active learners by start year</value>
   </data>
