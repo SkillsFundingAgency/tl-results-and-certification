@@ -117,44 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Card_Content_Add_One_Registration" xml:space="preserve">
+    <value>Add details one at a time for registered learners.</value>
+  </data>
+  <data name="Card_Content_Add_Or_Change_Using_Csv" xml:space="preserve">
+    <value>Add or change registration details for learners using a CSV file.</value>
+  </data>
+  <data name="Card_Content_Download_Registrations_Csv" xml:space="preserve">
+    <value>Download your data as a CSV file.</value>
+  </data>
+  <data name="Card_Content_View_And_Change_Registration_Details" xml:space="preserve">
+    <value>View and change registration details, including reinstating and withdrawing learners.</value>
+  </data>
   <data name="Card_Heading_Link_Download_Registrations_Data" xml:space="preserve">
     <value>Download registrations data</value>
   </data>
   <data name="Card_Heading_Link_Manage_Existing_Registration" xml:space="preserve">
-    <value>Manage existing registrations</value>
+    <value>Manage registrations</value>
   </data>
   <data name="Card_Heading_Link_Multiple_Registrations" xml:space="preserve">
-    <value>Upload multiple registrations</value>
+    <value>Upload registrations</value>
   </data>
   <data name="Card_Heading_Link_Register_A_New_Learner" xml:space="preserve">
-    <value>Register a new learner</value>
+    <value>Add registration</value>
   </data>
-  <data name="List_Add_Or_Change_Registration_Details_For_More_Than_One_Learner" xml:space="preserve">
-    <value>Add or change registration details for more than one learner</value>
-  </data>
-  <data name="List_Change_A_Learners_Course" xml:space="preserve">
-    <value>Change a learner's course</value>
-  </data>
-  <data name="List_Change_Registration_Detail" xml:space="preserve">
-    <value>Change registration detail</value>
-  </data>
-  <data name="List_Download_A_Template_With_Registrations_Data_Formats_And_Rules_Guidance" xml:space="preserve">
-    <value>Download a template with registrations data formats and rules guidance</value>
-  </data>
-  <data name="List_Download_Your_Data_As_Csv_File" xml:space="preserve">
-    <value>Download your data as a CSV file</value>
-  </data>
-  <data name="List_Reactivate_A_Withdrawn_Learner" xml:space="preserve">
-    <value>Reactivate a withdrawn learner</value>
-  </data>
-  <data name="List_Register_One_Learner_Onto_A_Course" xml:space="preserve">
-    <value>Register one new learner onto a course</value>
-  </data>
-  <data name="List_See_Registration_Details" xml:space="preserve">
-    <value>See registration details</value>
-  </data>
-  <data name="List_Withdraw_A_Learners_Registration" xml:space="preserve">
-    <value>Withdraw a learner's registration</value>
+  <data name="Heading_In_This_Section" xml:space="preserve">
+    <value>In this section</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
     <value>Registrations</value>
