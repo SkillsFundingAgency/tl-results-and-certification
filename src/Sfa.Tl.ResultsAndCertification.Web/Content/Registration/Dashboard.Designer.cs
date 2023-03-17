@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add registration.
+        ///   Looks up a localized string similar to Add a registration.
         /// </summary>
         public static string Card_Heading_Link_Register_A_New_Learner {
             get {
