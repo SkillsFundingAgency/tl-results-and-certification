@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Dashboard {
@@ -70,74 +70,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage an assessment.
+        ///   Looks up a localized string similar to Manage assessments.
         /// </summary>
-        public static string Card_Heading_Link_Manage_An_Assessment {
+        public static string Card_Heading_Link_Manage_Assessments {
             get {
-                return ResourceManager.GetString("Card_Heading_Link_Manage_An_Assessment", resourceCulture);
+                return ResourceManager.GetString("Card_Heading_Link_Manage_Assessments", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload multiple assessments.
+        ///   Looks up a localized string similar to Upload assessments.
         /// </summary>
-        public static string Card_Heading_Link_Upload_Multiple_Assessments {
+        public static string Card_Heading_Link_Upload_Assessments {
             get {
-                return ResourceManager.GetString("Card_Heading_Link_Upload_Multiple_Assessments", resourceCulture);
+                return ResourceManager.GetString("Card_Heading_Link_Upload_Assessments", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add an assessment period for one learner.
+        ///   Looks up a localized string similar to In this section.
         /// </summary>
-        public static string List_Add_An_Assessment_Period_For_One_Learner {
+        public static string In_This_Section {
             get {
-                return ResourceManager.GetString("List_Add_An_Assessment_Period_For_One_Learner", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add or change assessment periods for more than one learner.
-        /// </summary>
-        public static string List_Add_Or_Change_Assessment_Periods {
-            get {
-                return ResourceManager.GetString("List_Add_Or_Change_Assessment_Periods", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change an assessment period for one learner.
-        /// </summary>
-        public static string List_Change_An_Assessment_Period_For_One_Learner {
-            get {
-                return ResourceManager.GetString("List_Change_An_Assessment_Period_For_One_Learner", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download a template with assessments data formats and rules guidance.
-        /// </summary>
-        public static string List_Download_A_Template_With_Assessments_Data_Formats_And_Rules_Guidance {
-            get {
-                return ResourceManager.GetString("List_Download_A_Template_With_Assessments_Data_Formats_And_Rules_Guidance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download your data as a CSV file.
-        /// </summary>
-        public static string List_Download_Your_Data_As_Csv_File {
-            get {
-                return ResourceManager.GetString("List_Download_Your_Data_As_Csv_File", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to View a learner&apos;s assessment period.
-        /// </summary>
-        public static string List_View_A_Learners_AssessmentPeriod {
-            get {
-                return ResourceManager.GetString("List_View_A_Learners_AssessmentPeriod", resourceCulture);
+                return ResourceManager.GetString("In_This_Section", resourceCulture);
             }
         }
         
@@ -156,6 +111,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add or change assessment periods for learners using a CSV file..
+        /// </summary>
+        public static string Para_Add_Or_Change_Assessment_Periods {
+            get {
+                return ResourceManager.GetString("Para_Add_Or_Change_Assessment_Periods", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add, view or change assessment periods for individual learners..
+        /// </summary>
+        public static string Para_Add_View_Change_Assessment_Periods {
+            get {
+                return ResourceManager.GetString("Para_Add_View_Change_Assessment_Periods", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download assessment data in a CSV file..
+        /// </summary>
+        public static string Para_Download_Your_Data_As_Csv_File {
+            get {
+                return ResourceManager.GetString("Para_Download_Your_Data_As_Csv_File", resourceCulture);
             }
         }
         
