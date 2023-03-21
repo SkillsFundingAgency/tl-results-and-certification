@@ -70,74 +70,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage a result.
+        ///   Looks up a localized string similar to Manage results.
         /// </summary>
-        public static string Card_Heading_Link_Manage_A_Result {
+        public static string Card_Heading_Link_Manage_Results {
             get {
-                return ResourceManager.GetString("Card_Heading_Link_Manage_A_Result", resourceCulture);
+                return ResourceManager.GetString("Card_Heading_Link_Manage_Results", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload multiple results.
+        ///   Looks up a localized string similar to Upload results.
         /// </summary>
-        public static string Card_Heading_Link_Upload_Multiple_Results {
+        public static string Card_Heading_Link_Upload_Results {
             get {
-                return ResourceManager.GetString("Card_Heading_Link_Upload_Multiple_Results", resourceCulture);
+                return ResourceManager.GetString("Card_Heading_Link_Upload_Results", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a result for one learner.
+        ///   Looks up a localized string similar to In this section.
         /// </summary>
-        public static string List_Add_A_Result_For_One_Learner {
+        public static string In_This_Section {
             get {
-                return ResourceManager.GetString("List_Add_A_Result_For_One_Learner", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add or change results for more than one learner.
-        /// </summary>
-        public static string List_Add_Or_Change_Results_For_More_Than_One_Learner {
-            get {
-                return ResourceManager.GetString("List_Add_Or_Change_Results_For_More_Than_One_Learner", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change a result for one learner.
-        /// </summary>
-        public static string List_Change_A_Result_For_One_Learner {
-            get {
-                return ResourceManager.GetString("List_Change_A_Result_For_One_Learner", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download a template with results data formats and rules guidance.
-        /// </summary>
-        public static string List_Download_A_Template_With_Results_Data_Formats_And_Rules_Guidance {
-            get {
-                return ResourceManager.GetString("List_Download_A_Template_With_Results_Data_Formats_And_Rules_Guidance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download your data as a CSV file.
-        /// </summary>
-        public static string List_Download_Your_Data_As_Csv {
-            get {
-                return ResourceManager.GetString("List_Download_Your_Data_As_Csv", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to View a learner&apos;s results.
-        /// </summary>
-        public static string List_View_A_Learners_Results {
-            get {
-                return ResourceManager.GetString("List_View_A_Learners_Results", resourceCulture);
+                return ResourceManager.GetString("In_This_Section", resourceCulture);
             }
         }
         
@@ -156,6 +111,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add or change results for learners using a CSV file..
+        /// </summary>
+        public static string Para_Add_Or_Change_Result_For_Learners {
+            get {
+                return ResourceManager.GetString("Para_Add_Or_Change_Result_For_Learners", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add , view or change results for individual learners..
+        /// </summary>
+        public static string Para_Add_View_Or_Change_Results_For_Individual_Learners {
+            get {
+                return ResourceManager.GetString("Para_Add_View_Or_Change_Results_For_Individual_Learners", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download result data in a CSV file..
+        /// </summary>
+        public static string Para_Download_Result_Data_As_Csv_File {
+            get {
+                return ResourceManager.GetString("Para_Download_Result_Data_As_Csv_File", resourceCulture);
             }
         }
         
