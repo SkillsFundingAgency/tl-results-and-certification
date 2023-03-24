@@ -174,8 +174,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (reg == null) 
                 return null;
 
-            if (viewModel.Firstname.Trim().Equals(reg.Firstname, StringComparison.InvariantCultureIgnoreCase) &&
-                viewModel.Lastname.Trim().Equals(reg.Lastname, StringComparison.InvariantCultureIgnoreCase))
+            if (viewModel.Firstname.Trim().Equals(reg.Firstname) && viewModel.Lastname.Trim().Equals(reg.Lastname))
                 return new ManageRegistrationResponse { IsModified = false };
 
             var request = _mapper.Map<ManageRegistration>(reg);

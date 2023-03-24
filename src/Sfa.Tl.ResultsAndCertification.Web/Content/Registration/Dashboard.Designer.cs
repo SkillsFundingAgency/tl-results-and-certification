@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Dashboard {
@@ -61,6 +61,42 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add details one at a time for registered learners..
+        /// </summary>
+        public static string Card_Content_Add_One_Registration {
+            get {
+                return ResourceManager.GetString("Card_Content_Add_One_Registration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add or change registration details for learners using a CSV file..
+        /// </summary>
+        public static string Card_Content_Add_Or_Change_Using_Csv {
+            get {
+                return ResourceManager.GetString("Card_Content_Add_Or_Change_Using_Csv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download your data as a CSV file..
+        /// </summary>
+        public static string Card_Content_Download_Registrations_Csv {
+            get {
+                return ResourceManager.GetString("Card_Content_Download_Registrations_Csv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View and change registration details, including reinstating and withdrawing learners..
+        /// </summary>
+        public static string Card_Content_View_And_Change_Registration_Details {
+            get {
+                return ResourceManager.GetString("Card_Content_View_And_Change_Registration_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download registrations data.
         /// </summary>
         public static string Card_Heading_Link_Download_Registrations_Data {
@@ -70,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage existing registrations.
+        ///   Looks up a localized string similar to Manage registrations.
         /// </summary>
         public static string Card_Heading_Link_Manage_Existing_Registration {
             get {
@@ -79,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload multiple registrations.
+        ///   Looks up a localized string similar to Upload registrations.
         /// </summary>
         public static string Card_Heading_Link_Multiple_Registrations {
             get {
@@ -88,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Register a new learner.
+        ///   Looks up a localized string similar to Add a registration.
         /// </summary>
         public static string Card_Heading_Link_Register_A_New_Learner {
             get {
@@ -97,83 +133,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add or change registration details for more than one learner.
+        ///   Looks up a localized string similar to In this section.
         /// </summary>
-        public static string List_Add_Or_Change_Registration_Details_For_More_Than_One_Learner {
+        public static string Heading_In_This_Section {
             get {
-                return ResourceManager.GetString("List_Add_Or_Change_Registration_Details_For_More_Than_One_Learner", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change a learner&apos;s course.
-        /// </summary>
-        public static string List_Change_A_Learners_Course {
-            get {
-                return ResourceManager.GetString("List_Change_A_Learners_Course", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change registration detail.
-        /// </summary>
-        public static string List_Change_Registration_Detail {
-            get {
-                return ResourceManager.GetString("List_Change_Registration_Detail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download a template with registrations data formats and rules guidance.
-        /// </summary>
-        public static string List_Download_A_Template_With_Registrations_Data_Formats_And_Rules_Guidance {
-            get {
-                return ResourceManager.GetString("List_Download_A_Template_With_Registrations_Data_Formats_And_Rules_Guidance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download your data as a CSV file.
-        /// </summary>
-        public static string List_Download_Your_Data_As_Csv_File {
-            get {
-                return ResourceManager.GetString("List_Download_Your_Data_As_Csv_File", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reactivate a withdrawn learner.
-        /// </summary>
-        public static string List_Reactivate_A_Withdrawn_Learner {
-            get {
-                return ResourceManager.GetString("List_Reactivate_A_Withdrawn_Learner", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Register one new learner onto a course.
-        /// </summary>
-        public static string List_Register_One_Learner_Onto_A_Course {
-            get {
-                return ResourceManager.GetString("List_Register_One_Learner_Onto_A_Course", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to See registration details.
-        /// </summary>
-        public static string List_See_Registration_Details {
-            get {
-                return ResourceManager.GetString("List_See_Registration_Details", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Withdraw a learner&apos;s registration.
-        /// </summary>
-        public static string List_Withdraw_A_Learners_Registration {
-            get {
-                return ResourceManager.GetString("List_Withdraw_A_Learners_Registration", resourceCulture);
+                return ResourceManager.GetString("Heading_In_This_Section", resourceCulture);
             }
         }
         

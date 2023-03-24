@@ -124,15 +124,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload a CSV file to add or change the industry placement status for one or more learners..
-        /// </summary>
-        public static string Import_Industry_Placement_Description_Text {
-            get {
-                return ResourceManager.GetString("Import_Industry_Placement_Description_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to industry placement details for each learner.
         /// </summary>
         public static string Industry_Placement_Details_For_Each_Learner {
@@ -196,7 +187,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add or change your learners&apos; English and maths achievements, industry placement status and order replacement documents..
+        ///   Looks up a localized string similar to Add and edit achievements and industry placement statuses.  You can also order replacement certificates and statements of achievement..
         /// </summary>
         public static string Manage_Learner_TLevel_Records_Description_Text {
             get {
@@ -277,7 +268,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request statement of achievement.
+        ///   Looks up a localized string similar to Request statement of achievement for withdrawn learners.
         /// </summary>
         public static string Providers_Request_Statement_Of_Achievement_Heading {
             get {
@@ -376,16 +367,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Import industry placement data.
+        ///   Looks up a localized string similar to Upload industry placement data.
         /// </summary>
-        public static string Tile_Heading_Import_Industry_Placement_Data {
+        public static string Tile_Heading_Upload_Industry_Placement_Data {
             get {
-                return ResourceManager.GetString("Tile_Heading_Import_Industry_Placement_Data", resourceCulture);
+                return ResourceManager.GetString("Tile_Heading_Upload_Industry_Placement_Data", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download results for active learners in the final year of their T Level..
+        ///   Looks up a localized string similar to Download results for active learners in their final year of their T Level..
         /// </summary>
         public static string Tile_Para_Download_Results_For_Active_Learners {
             get {
@@ -408,6 +399,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         public static string Tlevels_Text {
             get {
                 return ResourceManager.GetString("Tlevels_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload a CSV file to add or change the industry placement status for one or more learners..
+        /// </summary>
+        public static string Upload_Industry_Placement_Description_Text {
+            get {
+                return ResourceManager.GetString("Upload_Industry_Placement_Description_Text", resourceCulture);
             }
         }
         

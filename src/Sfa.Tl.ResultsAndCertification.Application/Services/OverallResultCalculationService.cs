@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<AssessmentSeries> GetResultCalculationAssessmentAsync(DateTime runDate)
         {
             var assessmentSeries = await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
-            var currentAssessmentSeries = assessmentSeries.FirstOrDefault(a => a.ComponentType == ComponentType.Core && runDate >= a.StartDate && runDate <= a.EndDate);
+            var currentAssessmentSeries = assessmentSeries.FirstOrDefault(a => a.ComponentType == ComponentType.Core && runDate.Date >= a.StartDate && runDate.Date <= a.EndDate);
             if (currentAssessmentSeries == null)
                 throw new Exception($"There is no AssessmentSeries available for the date {runDate}");
 

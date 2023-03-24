@@ -120,28 +120,31 @@
   <data name="Heading_Tlevels" xml:space="preserve">
     <value>T Levels</value>
   </data>
+  <data name="In_This_Section" xml:space="preserve">
+    <value>In this section</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>T Levels</value>
   </data>
   <data name="Para_Check_And_Confirm" xml:space="preserve">
     <value>Check and confirm T Level details are correct before adding them to your providers</value>
   </data>
-  <data name="Tile_Confirmed_Heading" xml:space="preserve">
-    <value>Confirmed T Levels</value>
-  </data>
-  <data name="Tile_Confirmed_Item_View_Tlevels" xml:space="preserve">
-    <value>View the T Levels you have told us are correct</value>
+  <data name="Tile_New_TLevels_Heading" xml:space="preserve">
+    <value>New T Levels</value>
   </data>
   <data name="Tile_Queried_Item_View_Queries" xml:space="preserve">
-    <value>View the T Levels you have asked us to change</value>
+    <value>View the T Levels you've asked us to update.</value>
   </data>
   <data name="Tile_Queries_Heading" xml:space="preserve">
-    <value>Queried T Levels</value>
+    <value>T Level queries</value>
   </data>
-  <data name="Tile_Review_Heading" xml:space="preserve">
-    <value>Review new T Levels</value>
+  <data name="Tile_Review_Item_New_Tlevels" xml:space="preserve">
+    <value>Review the details of the T Levels we're adding to your account.</value>
   </data>
-  <data name="Tile_Review_Item_Confirm_Tlevels" xml:space="preserve">
-    <value>Confirm the T levels you deliver are correct</value>
+  <data name="Tile_TLevels_You_Already_Offer_Heading" xml:space="preserve">
+    <value>T Levels you already offer</value>
+  </data>
+  <data name="Tile_View_Details_Of_The_Tlevels" xml:space="preserve">
+    <value>View details of the T Levels already in your account.</value>
   </data>
 </root>

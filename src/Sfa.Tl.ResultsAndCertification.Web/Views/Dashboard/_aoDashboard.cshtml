@@ -16,108 +16,71 @@
     </div>
 </div>
 
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-half">
-        <div class="govuk-form-group ao-dashboard-card">
-            <h2 class="govuk-heading-m">
-                <a id="tlevelsLink" class="govuk-link" asp-route="@RouteConstants.TlevelsDashboard">
-                    @AoDashboard.Tile_Tlevel_Heading
-                </a>
-            </h2>
-            <ul class="govuk-list govuk-list--bullet">
-                <li>@AoDashboard.Tile_Tlevel_Item_Review_The_Tlevels</li>
-                <li>@AoDashboard.Tile_Tlevel_Item_Confirm_Tlevels</li>
-                <li>@AoDashboard.Tile_Tlevel_Item_Request_Amendments</li>
-            </ul>
-        </div>
-    </div>
+<section class="homepage-section--services-and-info">
 
-    <div class="govuk-grid-column-one-half">
-        <div class="govuk-form-group ao-dashboard-card">
-            <h2 class="govuk-heading-m">
-                <a id="providersLink" class="govuk-link" asp-route="@RouteConstants.FindProvider">
-                    @AoDashboard.Tile_Providers_Heading
-                </a>
-            </h2>
-            <ul class="govuk-list govuk-list--bullet">
-                <li>@AoDashboard.Tile_Providers_Item_Review_Providers</li>
-                <li>@AoDashboard.Tile_Providers_Item_Add_Or_Remove</li>
-                <li>@AoDashboard.Tile_Providers_Item_Select_Tlevel</li>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <h2 class="gem-c-heading govuk-heading-m govuk-!-margin-bottom-6">@AoDashboard.Section_Heading_Navigation</h2>
+            <ul class="homepage-services-and-info__list">
+                <li class="chevron-card">
+                    <div class="chevron-card__wrapper">
+                        <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                            <a class="govuk-link chevron-card__link" asp-route="@RouteConstants.TlevelsDashboard">@AoDashboard.Tile_Tlevels_Heading</a>
+                        </h3>
+                        <p class="govuk-body chevron-card__description">@AoDashboard.Tile_Tlevels_Review_Change_Confirm_Tlevels</p>
+                    </div>
+                </li>
+                <li class="chevron-card">
+                    <div class="chevron-card__wrapper">
+                        <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                            <a class="govuk-link chevron-card__link" asp-route="@RouteConstants.FindProvider">@AoDashboard.Tile_Providers_Heading</a>
+                        </h3>
+                        <p class="govuk-body chevron-card__description">@AoDashboard.Tile_Providers_Manage_Select_Tlevels</p>
+                    </div>
+                </li>
+                <li class="chevron-card">
+                    <div class="chevron-card__wrapper">
+                        <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                            <a class="govuk-link chevron-card__link" asp-route="@RouteConstants.RegistrationDashboard">@AoDashboard.Tile_Registrations_Heading</a>
+                        </h3>
+                        <p class="govuk-body chevron-card__description">@AoDashboard.Tile_Registrations_Register_Edit_Withdraw_Learner</p>
+                    </div>
+                </li>
+                <li class="chevron-card">
+                    <div class="chevron-card__wrapper">
+                        <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                            <a class="govuk-link chevron-card__link" asp-route="@RouteConstants.AssessmentDashboard">@AoDashboard.Tile_Assessments_Heading</a>
+                        </h3>
+                        <p class="govuk-body chevron-card__description">@AoDashboard.Tile_Assessments_Tell_And_Download_Assessments</p>
+                    </div>
+                </li>
+                <li class="chevron-card">
+                    <div class="chevron-card__wrapper">
+                        <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                            <a class="govuk-link chevron-card__link" asp-route="@RouteConstants.ResultsDashboard">@AoDashboard.Tile_Results_Heading</a>
+                        </h3>
+                        <p class="govuk-body chevron-card__description">@AoDashboard.Tile_Results_Tell_And_Download_Results</p>
+                    </div>
+                </li>
+                <li class="chevron-card">
+                    <div class="chevron-card__wrapper">
+                        <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                            <a class="govuk-link chevron-card__link" asp-route="@RouteConstants.StartReviewsAndAppeals">
+                                @AoDashboard.Tile_Review_Appeal_Heading
+                            </a>
+                        </h3>
+                        <p class="govuk-body chevron-card__description">@AoDashboard.Tile_Review_Appeal_Tell_Romms_Or_Appeal_Outcome</p>
+                    </div>
+                </li>
+                <li class="chevron-card">
+                    <div class="chevron-card__wrapper">
+                        <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                            <a class="govuk-link chevron-card__link" asp-route="@RouteConstants.AccountProfile">@AoDashboard.Tile_Account_Heading</a>
+                        </h3>
+                        <p class="govuk-body chevron-card__description">@AoDashboard.Tile_Account_View_Edit_Profile</p>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
-
-    <div class="govuk-grid-column-one-half">
-        <div class="govuk-form-group ao-dashboard-card">
-            <h2 class="govuk-heading-m">
-                <a id="registrationsLink" class="govuk-link" asp-route="@RouteConstants.RegistrationDashboard">
-                    @AoDashboard.Tile_Registrations_Heading
-                </a>
-            </h2>
-            <ul class="govuk-list govuk-list--bullet">
-                <li>@AoDashboard.Tile_Registrations_Item_Register_Courses</li>
-                <li>@AoDashboard.Tile_Registrations_Item_Change_Personal_Details</li>
-                <li>@AoDashboard.Tile_Registrations_Item_Change_Tlevels</li>
-                <li>@AoDashboard.Tile_Registrations_Item_Manage_Movers_Leavers_Rejoiners</li>
-                <li>@AoDashboard.Tile_Download_Registrations_Data</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="govuk-grid-column-one-half">
-        <div class="govuk-form-group ao-dashboard-card">
-            <h2 class="govuk-heading-m">
-                <a id="assessmentsLink" class="govuk-link" asp-route="@RouteConstants.AssessmentDashboard">
-                    @AoDashboard.Tile_Assessments_Heading
-                </a>
-            </h2>
-            <ul class="govuk-list govuk-list--bullet">
-                <li>@AoDashboard.Tile_Assessments_Item_Tell_Us_When_To_Assessed</li>
-                <li>@AoDashboard.Tile_Download_Assessments_Data</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="govuk-grid-column-one-half">
-        <div class="govuk-form-group ao-dashboard-card">
-            <h2 class="govuk-heading-m">
-                <a id="" resultsLink class="govuk-link" asp-route="@RouteConstants.ResultsDashboard">
-                    @AoDashboard.Tile_Results_Heading
-                </a>
-            </h2>
-            <ul class="govuk-list govuk-list--bullet">
-                <li>@AoDashboard.Tile_Results_Item_Tell_Us_Initial_Grades</li>
-                <li>@AoDashboard.Tile_Download_Results_Data</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="govuk-grid-column-one-half">
-        <div class="govuk-form-group ao-dashboard-card">
-            <h2 class="govuk-heading-m">
-                <a id="appealLink" class="govuk-link" asp-route="@RouteConstants.StartReviewsAndAppeals">
-                    @AoDashboard.Tile_Prs_Heading
-                </a>
-            </h2>            
-            <ul class="govuk-list govuk-list--bullet gov-uk-!-padding-bottom-3">
-                <li>@AoDashboard.Tile_Prs_When_ROMM_Or_Appeal_Requested</li>
-                <li>@AoDashboard.Tile_Prs_Outcome_ROMM_Or_Appeal</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="govuk-grid-column-one-half">
-        <div class="govuk-form-group ao-dashboard-card">
-            <h2 class="govuk-heading-m">
-                <a id="accountLink" class="govuk-link" asp-route="@RouteConstants.AccountProfile">
-                    @AoDashboard.Tile_Account_Heading
-                </a>
-            </h2>
-            <ul class="govuk-list govuk-list--bullet">
-                <li>@AoDashboard.Tile_Account_Item_View_Profile_Permissions</li>
-                <li>@AoDashboard.Tile_Account_Item_Change_Email_Password</li>
-                <li>@AoDashboard.Tile_Account_Item_Manage_Other_Users</li>
-            </ul>
-        </div>
-    </div>
-</div>
+</section>
