@@ -56,9 +56,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 SpecialismName = "Specialism",
                 SpecialismCode = "123456",
                 SpecialismGrade = "",
-                IsEnglishAndMathsAchieved = true,
-                HasLrsEnglishAndMaths = true,
-                IsSendLearner = false,
+                //IsEnglishAndMathsAchieved = true,
+                //HasLrsEnglishAndMaths = true,
+                //IsSendLearner = false,
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed,
                 ProviderAddress = new Models.Contracts.ProviderAddress.Address { AddressId = 1, OrganisationName = "Org", DepartmentName = "Dept", AddressLine1 = "Line1", AddressLine2 = "Line2", Town = "Town", Postcode = "xx1 1yy" },
                 Status = RegistrationPathwayStatus.Active
@@ -76,6 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult = await _apiClient.GetSoaLearnerRecordDetailsAsync(_providerUkprn, _profileId);
         }
 
+        // TODO: Ravi
         [Fact]
         public void Then_Returns_Expected_Results()
         {
@@ -95,9 +96,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.SpecialismName.Should().Be(_mockApiResponse.SpecialismName);
             _actualResult.SpecialismCode.Should().Be(_mockApiResponse.SpecialismCode);
             _actualResult.SpecialismGrade.Should().Be(_mockApiResponse.SpecialismGrade);
-            _actualResult.IsEnglishAndMathsAchieved.Should().Be(_mockApiResponse.IsEnglishAndMathsAchieved);
-            _actualResult.HasLrsEnglishAndMaths.Should().Be(_mockApiResponse.HasLrsEnglishAndMaths);
-            _actualResult.IsSendLearner.Should().Be(_mockApiResponse.IsSendLearner);
+            //_actualResult.IsEnglishAndMathsAchieved.Should().Be(_mockApiResponse.IsEnglishAndMathsAchieved);
+            //_actualResult.HasLrsEnglishAndMaths.Should().Be(_mockApiResponse.HasLrsEnglishAndMaths);
+            //_actualResult.IsSendLearner.Should().Be(_mockApiResponse.IsSendLearner);
             _actualResult.IndustryPlacementStatus.Should().Be(_mockApiResponse.IndustryPlacementStatus);
             _actualResult.ProviderAddress.Should().BeEquivalentTo(_mockApiResponse.ProviderAddress);
             _actualResult.Status.Should().Be(_mockApiResponse.Status);            

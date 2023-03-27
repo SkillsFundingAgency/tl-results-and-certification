@@ -12,6 +12,7 @@ using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewCompone
 using RequestSoaCheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaCheckAndSubmit;
 using EnglishAndMathsStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.EnglishAndMathsStatus;
 using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
+using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
 {
@@ -42,9 +43,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         public string SpecialismGrade { get; set; }
 
         //Learner's T level component achievements
-        public bool IsEnglishAndMathsAchieved { get; set; }
-        public bool HasLrsEnglishAndMaths { get; set; }
-        public bool? IsSendLearner { get; set; }
+        public SubjectStatus MathsStatus { get; set; }
+        public SubjectStatus EnglishStatus { get; set; }
+
         public IndustryPlacementStatus IndustryPlacementStatus { get; set; }
 
         // Provider Organisation's postal address
@@ -108,11 +109,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             IsRawHtml = true
         };
 
-        public SummaryItemModel SummaryEnglishAndMaths => new SummaryItemModel
+        public SummaryItemModel SummaryEnglishStatus => new SummaryItemModel
         {
-            Id = "englishandmaths",
-            Title = RequestSoaCheckAndSubmitContent.Title_English_And_Maths_Text,
-            Value = GetEnglishAndMathsStatusDisplayText
+            Id = "englishstatus",
+            Title = RequestSoaCheckAndSubmitContent.Title_English_Text,
+            Value = GetSubjectStatus(EnglishStatus)
+        };
+
+        public SummaryItemModel SummaryMathsStatus => new SummaryItemModel
+        {
+            Id = "mathsstatus",
+            Title = RequestSoaCheckAndSubmitContent.Title_Maths_Text,
+            Value = GetSubjectStatus(MathsStatus)
         };
 
         public SummaryItemModel SummaryIndustryPlacement => new SummaryItemModel
@@ -177,39 +185,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             }
         }
 
-        public string GetEnglishAndMathsStatusDisplayText
+        private static string GetSubjectStatus(SubjectStatus subjectStatus)
         {
-            get
+            return subjectStatus switch
             {
-                if (HasLrsEnglishAndMaths)
-                {
-                    if (IsEnglishAndMathsAchieved && IsSendLearner == true)
-                    {
-                        return EnglishAndMathsStatusContent.Lrs_Achieved_With_Send_Display_Text;
-                    }
-                    else
-                    {
-                        return IsEnglishAndMathsAchieved && !IsSendLearner.HasValue
-                            ? EnglishAndMathsStatusContent.Lrs_Achieved_Display_Text
-                            : EnglishAndMathsStatusContent.Lrs_Not_Achieved_Display_Text;
-                    }
-                }
-                else
-                {
-                    if (IsEnglishAndMathsAchieved && IsSendLearner == true)
-                    {
-                        return EnglishAndMathsStatusContent.Achieved_With_Send_Display_Text;
-                    }
-                    else if (IsEnglishAndMathsAchieved)
-                    {
-                        return EnglishAndMathsStatusContent.Achieved_Display_Text;
-                    }
-                    else
-                    {
-                        return !IsEnglishAndMathsAchieved ? EnglishAndMathsStatusContent.Not_Achieved_Display_Text : string.Empty;
-                    }
-                }
-            }
+                SubjectStatus.Achieved => SubjectStatusContent.Achieved_Display_Text,
+                SubjectStatus.NotAchieved => SubjectStatusContent.Not_Achieved_Display_Text,
+                SubjectStatus.AchievedByLrs => SubjectStatusContent.Achieved_Lrs_Display_Text,
+                SubjectStatus.NotAchievedByLrs => SubjectStatusContent.Not_Achieved_Lrs_Display_Text,
+                _ => SubjectStatusContent.Not_Yet_Recevied_Display_Text,
+            };
         }
+
     }
 }

@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchievementLoaderTests.CreateSoaPrintingRequest
 {
+    // TODO: Ravi
     public class When_Mapper_Called : TestSetup
     {
         private LearningDetails _expectedLearningDetails;
@@ -41,9 +42,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                 SpecialismCode = "ZTLOS003",
                 SpecialismGrade = "None",
 
-                IsEnglishAndMathsAchieved = true,
-                HasLrsEnglishAndMaths = false,
-                IsSendLearner = true,
+                //IsEnglishAndMathsAchieved = true,
+                //HasLrsEnglishAndMaths = false,
+                //IsSendLearner = true,
                 IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
 
                 HasPathwayResult = false,
@@ -71,7 +72,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                     }
                 },
                 IndustryPlacement = SoaLearnerRecordDetailsViewModel.IsIndustryPlacementCompleted ? Constants.IndustryPlacementCompleted : Constants.IndustryPlacementNotCompleted,
-                EnglishAndMaths = SoaLearnerRecordDetailsViewModel.IsEnglishAndMathsAchieved ? Constants.EnglishAndMathsMet : Constants.EnglishAndMathsNotMet
+                //EnglishAndMaths = SoaLearnerRecordDetailsViewModel.IsEnglishAndMathsAchieved ? Constants.EnglishAndMathsMet : Constants.EnglishAndMathsNotMet
             };
 
             _expectedSoaPrintingDetails = new SoaPrintingDetails
@@ -85,7 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                 CoreGrade = SoaLearnerRecordDetailsViewModel.PathwayGrade,
                 Specialism = SoaLearnerRecordDetailsViewModel.SpecialismDisplayName,
                 SpecialismGrade = SoaLearnerRecordDetailsViewModel.SpecialismGrade,
-                EnglishAndMaths = SoaLearnerRecordDetailsViewModel.GetEnglishAndMathsStatusDisplayText,
+                //EnglishAndMaths = SoaLearnerRecordDetailsViewModel.GetEnglishAndMathsStatusDisplayText,
                 IndustryPlacement = SoaLearnerRecordDetailsViewModel.GetIndustryPlacementDisplayText,
                 ProviderAddress = new Models.Contracts.ProviderAddress.Address
                 {

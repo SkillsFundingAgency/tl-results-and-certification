@@ -10,6 +10,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAchievementControllerTests.RequestSoaCheckAndSubmitPost
 {
+    // TODO: Ravi
     public class When_SoaDetails_IsInvalid : TestSetup
     {
         private SoaLearnerRecordDetailsViewModel _mockLearnerDetails;
@@ -32,9 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
                 SpecialismName = "Building Services Design (ZTLOS003)",
                 SpecialismGrade = "None",
 
-                IsEnglishAndMathsAchieved = true,
-                HasLrsEnglishAndMaths = false,
-                IsSendLearner = true,
+                //IsEnglishAndMathsAchieved = true,
+                //HasLrsEnglishAndMaths = false,
+                //IsSendLearner = true,
                 IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
 
                 HasPathwayResult = false,
