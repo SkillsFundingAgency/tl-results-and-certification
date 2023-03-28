@@ -43,8 +43,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         public string SpecialismGrade { get; set; }
 
         //Learner's T level component achievements
-        public SubjectStatus MathsStatus { get; set; }
-        public SubjectStatus EnglishStatus { get; set; }
+        public SubjectStatus? MathsStatus { get; set; }
+        public SubjectStatus? EnglishStatus { get; set; }
 
         public IndustryPlacementStatus IndustryPlacementStatus { get; set; }
 
@@ -185,7 +185,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             }
         }
 
-        private static string GetSubjectStatus(SubjectStatus subjectStatus)
+        private static string GetSubjectStatus(SubjectStatus? subjectStatus)
         {
             return subjectStatus switch
             {

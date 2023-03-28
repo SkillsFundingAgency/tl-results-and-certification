@@ -11,7 +11,6 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAchievementControllerTests.RequestSoaCheckAndSubmitPost
 {
-    // TODO: Ravi
     public class When_Success : TestSetup
     {
         private SoaLearnerRecordDetailsViewModel _mockLearnerDetails = null;
@@ -42,9 +41,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
                 SpecialismCode = "ZTLOS003",
                 SpecialismGrade = "None",
 
-                //IsEnglishAndMathsAchieved = true,
-                //HasLrsEnglishAndMaths = false,
-                //IsSendLearner = true,
+                EnglishStatus = SubjectStatus.Achieved,
+                MathsStatus = SubjectStatus.Achieved,
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed,
 
                 HasPathwayResult = true,

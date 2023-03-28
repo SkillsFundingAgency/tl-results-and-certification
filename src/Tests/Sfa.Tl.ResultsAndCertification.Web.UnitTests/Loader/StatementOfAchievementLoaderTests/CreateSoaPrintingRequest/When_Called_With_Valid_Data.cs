@@ -39,9 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                 SpecialismCode = "ZTLOS003",
                 SpecialismGrade = "None",
 
-                //IsEnglishAndMathsAchieved = true,
-                //HasLrsEnglishAndMaths = false,
-                //IsSendLearner = true,
+                EnglishStatus = SubjectStatus.Achieved,
+                MathsStatus = SubjectStatus.Achieved,
                 IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
 
                 HasPathwayResult = false,
@@ -60,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
             Loader = new StatementOfAchievementLoader(InternalApiClient, Mapper);
         }
 
-        [Fact] // TODO: Ravi
+        [Fact]
         public void Then_Returns_Expected_Results()
         {
             ActualResult.Should().NotBeNull();
