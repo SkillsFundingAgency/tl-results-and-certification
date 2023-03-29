@@ -8,7 +8,6 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAchievementControllerTests.RequestSoaCancelGet
 {
-    // TODO: Ravi
     public class When_LearnerDetails_IsValid : TestSetup
     {
         private SoaLearnerRecordDetailsViewModel _mockLearnerDetails;
@@ -22,9 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
                 Uln = 1234567890,
                 LearnerName = "John Smith",
 
-                //IsEnglishAndMathsAchieved = true,
-                //HasLrsEnglishAndMaths = false,
-                //IsSendLearner = true,
+                EnglishStatus = SubjectStatus.Achieved,
+                MathsStatus = SubjectStatus.Achieved,
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed,
 
                 HasPathwayResult = true,

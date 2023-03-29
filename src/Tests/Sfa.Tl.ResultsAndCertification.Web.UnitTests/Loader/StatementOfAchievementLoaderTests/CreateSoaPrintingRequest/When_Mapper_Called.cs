@@ -11,7 +11,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchievementLoaderTests.CreateSoaPrintingRequest
 {
-    // TODO: Ravi
     public class When_Mapper_Called : TestSetup
     {
         private LearningDetails _expectedLearningDetails;
@@ -84,7 +83,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                 CoreGrade = SoaLearnerRecordDetailsViewModel.PathwayGrade,
                 Specialism = SoaLearnerRecordDetailsViewModel.SpecialismDisplayName,
                 SpecialismGrade = SoaLearnerRecordDetailsViewModel.SpecialismGrade,
-                //EnglishAndMaths = SoaLearnerRecordDetailsViewModel.GetEnglishAndMathsStatusDisplayText,
+                EnglishStatus = SubjectStatus.Achieved,
+                MathsStatus = SubjectStatus.AchievedByLrs,
+                //EnglishAndMaths = Constants.MathsAndEnglishAchievedText,
                 IndustryPlacement = SoaLearnerRecordDetailsViewModel.GetIndustryPlacementDisplayText,
                 ProviderAddress = new Models.Contracts.ProviderAddress.Address
                 {

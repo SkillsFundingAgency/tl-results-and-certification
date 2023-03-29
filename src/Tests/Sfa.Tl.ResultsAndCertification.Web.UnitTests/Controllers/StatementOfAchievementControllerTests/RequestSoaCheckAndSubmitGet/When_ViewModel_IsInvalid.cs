@@ -14,7 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
     {
         private SoaLearnerRecordDetailsViewModel _mockLearnerDetails;
 
-        // TODO: Ravi
         public override void Given()
         {
             ProfileId = 11;
@@ -34,9 +33,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
                 SpecialismName = "Building Services Design (ZTLOS003)",
                 SpecialismGrade = "None",
 
-                //IsEnglishAndMathsAchieved = true,
-                //HasLrsEnglishAndMaths = false,
-                //IsSendLearner = true,
+                EnglishStatus = SubjectStatus.Achieved,
+                MathsStatus = SubjectStatus.Achieved,
                 IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
 
                 HasPathwayResult  = false,

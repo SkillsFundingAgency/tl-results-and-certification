@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class RequestStatementOfAchievement {
@@ -116,11 +116,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell the exam board (also known as the awarding organisation) that the learner has withdrawn from their T Level course..
+        ///   Looks up a localized string similar to Tell the awarding organisation that the learner has withdrawn from their T Level course..
         /// </summary>
-        public static string Tell_The_Exam_Board {
+        public static string Tell_The_Awarding_Organisation {
             get {
-                return ResourceManager.GetString("Tell_The_Exam_Board", resourceCulture);
+                return ResourceManager.GetString("Tell_The_Awarding_Organisation", resourceCulture);
             }
         }
         
