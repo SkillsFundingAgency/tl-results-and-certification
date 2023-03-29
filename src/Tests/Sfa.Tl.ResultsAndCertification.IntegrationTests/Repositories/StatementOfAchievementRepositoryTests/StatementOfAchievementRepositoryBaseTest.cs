@@ -103,11 +103,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             DbContext.SaveChanges();
         }
 
-        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool? isEngishAndMathsAchieved, bool seedIndustryPlacement = false, IndustryPlacementStatus ipStatus = IndustryPlacementStatus.Completed)
+        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, SubjectStatus? englishStatus, SubjectStatus? mathsStatus, bool seedIndustryPlacement = false, IndustryPlacementStatus ipStatus = IndustryPlacementStatus.Completed)
         {
             if (profile == null) return;
 
-            profile.IsEnglishAndMathsAchieved = isEngishAndMathsAchieved;
+            profile.EnglishStatus = englishStatus;
+            profile.MathsStatus = mathsStatus;
 
             if (seedIndustryPlacement)
             {
@@ -116,21 +117,24 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             }
         }
 
-        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool? isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool? isEngishAndMathsAchieved, bool seedIndustryPlacement = false, bool? isSendLearner = null, IndustryPlacementStatus ipStatus = IndustryPlacementStatus.Completed)
+        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool? isRcFeed, bool seedQualificationAchieved, bool isSendQualification, SubjectStatus? englishStatus, SubjectStatus? mathsStatus, bool seedIndustryPlacement = false, bool? isSendLearner = null, IndustryPlacementStatus ipStatus = IndustryPlacementStatus.Completed)
         {
             if (profile == null) return;
 
-            profile.IsRcFeed = isRcFeed;
-            profile.IsEnglishAndMathsAchieved = isEngishAndMathsAchieved;
+            profile.IsRcFeed = isRcFeed; 
+            profile.EnglishStatus = englishStatus;
+            profile.MathsStatus = mathsStatus;
             profile.IsSendLearner = isSendLearner;
+
+            var isEnglishAchieved = englishStatus == SubjectStatus.Achieved || englishStatus == SubjectStatus.AchievedByLrs;
 
             if (seedQualificationAchieved)
             {
                 var engQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Eng" && e.IsSendQualification == isSendQualification);
                 var mathQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Math");
 
-                var engQualifcationGrade = engQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEngishAndMathsAchieved);
-                var mathsQualifcationGrade = mathQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEngishAndMathsAchieved);
+                var engQualifcationGrade = engQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEnglishAchieved);
+                var mathsQualifcationGrade = mathQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEnglishAchieved); // TODO
 
                 profile.QualificationAchieved.Add(new QualificationAchieved
                 {

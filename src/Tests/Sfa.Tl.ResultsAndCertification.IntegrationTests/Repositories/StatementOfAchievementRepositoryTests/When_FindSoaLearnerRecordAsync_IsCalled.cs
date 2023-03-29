@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private IList<TqRegistrationProfile> _profiles;
         private FindSoaLearnerRecord _actualResult;
-        private List<(long uln, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, IndustryPlacementStatus ipStatus)> _testCriteriaData;
+        private List<(long uln, SubjectStatus? englishStatus, SubjectStatus? mathsStatus, bool seedIndustryPlacement, IndustryPlacementStatus ipStatus)> _testCriteriaData;
         private List<long> _profilesWithResults;
 
         public override void Given()
@@ -30,12 +30,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
                 { 1111111114, RegistrationPathwayStatus.Withdrawn }
             };
 
-            _testCriteriaData = new List<(long uln, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, IndustryPlacementStatus ipStatus)>
+            _testCriteriaData = new List<(long uln, SubjectStatus? englishStatus, SubjectStatus? mathsStatus, bool seedIndustryPlacement, IndustryPlacementStatus ipStatus)>
             {
-                (1111111111, true, true, IndustryPlacementStatus.Completed), // EnglishAndMaths + IP
-                (1111111112, true, false, IndustryPlacementStatus.NotSpecified), // EnglishAndMaths + No IP
-                (1111111113, false, true, IndustryPlacementStatus.CompletedWithSpecialConsideration), // EnglishAndMaths + IP
-                (1111111114, true, true, IndustryPlacementStatus.NotCompleted) // EnglishAndMaths + IP
+                (1111111111, SubjectStatus.Achieved, SubjectStatus.Achieved, true, IndustryPlacementStatus.Completed), // EnglishAndMaths + IP
+                (1111111112, SubjectStatus.Achieved, SubjectStatus.Achieved,false, IndustryPlacementStatus.NotSpecified), // EnglishAndMaths + No IP
+                (1111111113, SubjectStatus.NotAchieved, SubjectStatus.NotAchieved,true, IndustryPlacementStatus.CompletedWithSpecialConsideration), // EnglishAndMaths + IP
+                (1111111114, SubjectStatus.Achieved, SubjectStatus.Achieved, true, IndustryPlacementStatus.NotCompleted) // EnglishAndMaths + IP
             };
 
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
@@ -45,10 +45,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
                 _profiles.Add(SeedRegistrationDataByStatus(uln.Key, uln.Value, TqProvider));
             }
 
-            foreach (var (uln, isEngishAndMathsAchieved, seedIndustryPlacement, ipStatus) in _testCriteriaData)
+            foreach (var (uln, englishStatus, mathsStatus, seedIndustryPlacement, ipStatus) in _testCriteriaData)
             {
                 var profile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
-                BuildLearnerRecordCriteria(profile, isEngishAndMathsAchieved, seedIndustryPlacement, ipStatus);
+                BuildLearnerRecordCriteria(profile, englishStatus, mathsStatus, seedIndustryPlacement, ipStatus);
             }
 
             TransferRegistration(_profiles.FirstOrDefault(p => p.UniqueLearnerNumber == 1111111113), Provider.WalsallCollege);

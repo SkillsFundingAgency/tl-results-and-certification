@@ -296,7 +296,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Once the exam board has updated these details, you can come back and request a statement of achievement..
+        ///   Looks up a localized string similar to Once the awarding organisation has updated these details, you can come back and request a statement of achievement..
         /// </summary>
         public static string Tech_Qualification_Section_Come_Back_When_Exam_Board_Updated {
             get {
@@ -305,7 +305,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If the learner’s technical qualification details are wrong, you must contact the exam board and ask them to update our service with the correct information..
+        ///   Looks up a localized string similar to If the learner’s registration details are wrong, you must tell the awarding organisation that registered the learner into our service..
         /// </summary>
         public static string Tech_Qualification_Section_If_Details_Are_Wrong_Contact_Exam_Board {
             get {
