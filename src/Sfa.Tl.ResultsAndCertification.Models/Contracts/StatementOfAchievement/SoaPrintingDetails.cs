@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement
 {
@@ -13,6 +14,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement
         public string CoreGrade { get; set; }
         public string Specialism { get; set; }
         public string SpecialismGrade { get; set; }
+        public SubjectStatus? MathsStatus { get; set; }
+        public SubjectStatus? EnglishStatus { get; set; }
         public string EnglishAndMaths { get; set; }
         public string IndustryPlacement { get; set; }
         public Address ProviderAddress { get; set; }

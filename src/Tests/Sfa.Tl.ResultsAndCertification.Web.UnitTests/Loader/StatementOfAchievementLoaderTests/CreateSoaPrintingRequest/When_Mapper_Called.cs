@@ -41,10 +41,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                 SpecialismName = "Building Services Design",
                 SpecialismCode = "ZTLOS003",
                 SpecialismGrade = "None",
-
-                //IsEnglishAndMathsAchieved = true,
-                //HasLrsEnglishAndMaths = false,
-                //IsSendLearner = true,
+                EnglishStatus = SubjectStatus.Achieved,
+                MathsStatus = SubjectStatus.AchievedByLrs,
                 IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
 
                 HasPathwayResult = false,
@@ -71,8 +69,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                         Grade = SoaLearnerRecordDetailsViewModel.SpecialismGrade.Equals("None", StringComparison.InvariantCultureIgnoreCase) ? Constants.NotCompleted : SoaLearnerRecordDetailsViewModel.SpecialismGrade
                     }
                 },
-                IndustryPlacement = SoaLearnerRecordDetailsViewModel.IsIndustryPlacementCompleted ? Constants.IndustryPlacementCompleted : Constants.IndustryPlacementNotCompleted,
-                //EnglishAndMaths = SoaLearnerRecordDetailsViewModel.IsEnglishAndMathsAchieved ? Constants.EnglishAndMathsMet : Constants.EnglishAndMathsNotMet
+                IndustryPlacement = SoaLearnerRecordDetailsViewModel.IsIndustryPlacementCompleted ? Constants.Met : Constants.NotMet,
+                EnglishAndMaths = SoaLearnerRecordDetailsViewModel.EnglishStatus == SubjectStatus.Achieved && SoaLearnerRecordDetailsViewModel.MathsStatus == SubjectStatus.AchievedByLrs ? Constants.MathsAndEnglishAchievedText : string.Empty
             };
 
             _expectedSoaPrintingDetails = new SoaPrintingDetails
