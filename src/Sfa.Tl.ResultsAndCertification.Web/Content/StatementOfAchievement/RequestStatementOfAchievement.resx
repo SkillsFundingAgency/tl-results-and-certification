@@ -135,8 +135,8 @@
   <data name="Page_Title" xml:space="preserve">
     <value>Request statement of achievement page</value>
   </data>
-  <data name="Tell_The_Exam_Board" xml:space="preserve">
-    <value>Tell the exam board (also known as the awarding organisation) that the learner has withdrawn from their T Level course.</value>
+  <data name="Tell_The_Awarding_Organisation" xml:space="preserve">
+    <value>Tell the awarding organisation that the learner has withdrawn from their T Level course.</value>
   </data>
   <data name="The_Statement_Of_Achievement_Will_Show" xml:space="preserve">
     <value>The statement of achievement will show which T Level components the learner completed. They will not receive a T Level certificate.</value>
