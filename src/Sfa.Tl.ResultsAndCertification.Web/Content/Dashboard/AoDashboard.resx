@@ -132,85 +132,49 @@
   <data name="Para_Use_This_Service_To_Tell" xml:space="preserve">
     <value>Use this service to tell us about:</value>
   </data>
+  <data name="Section_Heading_Navigation" xml:space="preserve">
+    <value>Navigation</value>
+  </data>
   <data name="Tile_Account_Heading" xml:space="preserve">
     <value>Account</value>
   </data>
-  <data name="Tile_Account_Item_Change_Email_Password" xml:space="preserve">
-    <value>Change your email address or password</value>
-  </data>
-  <data name="Tile_Account_Item_Manage_Other_Users" xml:space="preserve">
-    <value>Manage other users (admin only)</value>
-  </data>
-  <data name="Tile_Account_Item_View_Profile_Permissions" xml:space="preserve">
-    <value>View your profile and permissions</value>
+  <data name="Tile_Account_View_Edit_Profile" xml:space="preserve">
+    <value>View and edit your profile. If you're an administrator, you can also manage other users' accounts.</value>
   </data>
   <data name="Tile_Assessments_Heading" xml:space="preserve">
     <value>Assessments</value>
   </data>
-  <data name="Tile_Assessments_Item_Tell_Us_When_To_Assessed" xml:space="preserve">
-    <value>Tell us when your learners will be assessed</value>
-  </data>
-  <data name="Tile_Download_Assessments_Data" xml:space="preserve">
-    <value>Download assessments data</value>
-  </data>
-  <data name="Tile_Download_Registrations_Data" xml:space="preserve">
-    <value>Download registrations data</value>
-  </data>
-  <data name="Tile_Download_Results_Data" xml:space="preserve">
-    <value>Download results data</value>
+  <data name="Tile_Assessments_Tell_And_Download_Assessments" xml:space="preserve">
+    <value>Tell us when your learners will be assessed and download assessments data.</value>
   </data>
   <data name="Tile_Providers_Heading" xml:space="preserve">
     <value>Providers</value>
   </data>
-  <data name="Tile_Providers_Item_Add_Or_Remove" xml:space="preserve">
-    <value>Add or remove providers</value>
-  </data>
-  <data name="Tile_Providers_Item_Review_Providers" xml:space="preserve">
-    <value>Review existing providers</value>
-  </data>
-  <data name="Tile_Providers_Item_Select_Tlevel" xml:space="preserve">
-    <value>Select the T Levels each provider offers</value>
-  </data>
-  <data name="Tile_Prs_Heading" xml:space="preserve">
-    <value>Post-results</value>
-  </data>
-  <data name="Tile_Prs_Outcome_ROMM_Or_Appeal" xml:space="preserve">
-    <value>Tell us the outcome of a ROMM or appeal</value>
-  </data>
-  <data name="Tile_Prs_When_ROMM_Or_Appeal_Requested" xml:space="preserve">
-    <value>Tell us when a learner has requested a ROMM or appeal</value>
+  <data name="Tile_Providers_Manage_Select_Tlevels" xml:space="preserve">
+    <value>Manage providers and select the T Levels they can offer.</value>
   </data>
   <data name="Tile_Registrations_Heading" xml:space="preserve">
     <value>Registrations</value>
   </data>
-  <data name="Tile_Registrations_Item_Change_Personal_Details" xml:space="preserve">
-    <value>Change a learner's personal details</value>
-  </data>
-  <data name="Tile_Registrations_Item_Change_Tlevels" xml:space="preserve">
-    <value>Change the T Level a learner is studying</value>
-  </data>
-  <data name="Tile_Registrations_Item_Manage_Movers_Leavers_Rejoiners" xml:space="preserve">
-    <value>Manage movers, leavers and rejoiners</value>
-  </data>
-  <data name="Tile_Registrations_Item_Register_Courses" xml:space="preserve">
-    <value>Register learners onto T Level courses</value>
+  <data name="Tile_Registrations_Register_Edit_Withdraw_Learner" xml:space="preserve">
+    <value>Register, edit and withdraw learners and download registrations data.</value>
   </data>
   <data name="Tile_Results_Heading" xml:space="preserve">
     <value>Results</value>
   </data>
-  <data name="Tile_Results_Item_Tell_Us_Initial_Grades" xml:space="preserve">
-    <value>Tell us the initial grades learners achieved</value>
+  <data name="Tile_Results_Tell_And_Download_Results" xml:space="preserve">
+    <value>Tell us the initial grades learners achieved and download results data.</value>
   </data>
-  <data name="Tile_Tlevel_Heading" xml:space="preserve">
+  <data name="Tile_Review_Appeal_Heading" xml:space="preserve">
+    <value>Reviews, appeals and grade changes</value>
+  </data>
+  <data name="Tile_Review_Appeal_Tell_Romms_Or_Appeal_Outcome" xml:space="preserve">
+    <value>Tell us about any reviews of marking and moderation (RoMMs) or appeals and report their outcomes.</value>
+  </data>
+  <data name="Tile_Tlevels_Heading" xml:space="preserve">
     <value>T Levels</value>
   </data>
-  <data name="Tile_Tlevel_Item_Confirm_Tlevels" xml:space="preserve">
-    <value>Confirm each T Level's details are correct</value>
-  </data>
-  <data name="Tile_Tlevel_Item_Request_Amendments" xml:space="preserve">
-    <value>Request amendments</value>
-  </data>
-  <data name="Tile_Tlevel_Item_Review_The_Tlevels" xml:space="preserve">
-    <value>Review the T Levels you are licensed to deliver</value>
+  <data name="Tile_Tlevels_Review_Change_Confirm_Tlevels" xml:space="preserve">
+    <value>Review, change and confirm the T Levels you offer.</value>
   </data>
 </root>

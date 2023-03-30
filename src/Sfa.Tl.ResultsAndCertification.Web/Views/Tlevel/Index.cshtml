@@ -1,4 +1,5 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 @model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels.TlevelsDashboardViewModel
 
 @{
@@ -7,55 +8,48 @@
 
 @section NavigationBar
 {
-    <vc:breadcrumb model="Model.Breadcrumb"></vc:breadcrumb>
+<vc:breadcrumb model="Model.Breadcrumb"></vc:breadcrumb>
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
         <div class="govuk-form-group">
             <h1 class="govuk-heading-l">@TlevelsDashboard.Heading_Tlevels</h1>
-            <p class="govuk-body-l">@TlevelsDashboard.Para_Check_And_Confirm</p>
+            <p class="govuk-body">@TlevelsDashboard.Para_Check_And_Confirm</p>
         </div>
     </div>
 </div>
 
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-half">
-        <div class="govuk-form-group tlevels-dashboard-card">
-            <h2 class="govuk-heading-m govuk-!-padding-top-3">
-                <a id="reviewTlevelsLink" class="govuk-link" asp-route="ReviewTlevels">
-                    @TlevelsDashboard.Tile_Review_Heading
-                </a>
-            </h2>
-            <ul class="govuk-list govuk-list--bullet">
-                <li>@TlevelsDashboard.Tile_Review_Item_Confirm_Tlevels</li>
+<section class="homepage-section homepage-section--services-and-info">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h2 class="gem-c-heading govuk-heading-m govuk-!-margin-bottom-6">@TlevelsDashboard.In_This_Section</h2>
+            <ul class="single-column-services-and-info__list">
+                <li class="chevron-card">
+                    <div class="chevron-card__wrapper">
+                        <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                            <a class="govuk-link chevron-card__link" asp-route="@RouteConstants.ReviewTlevels">@TlevelsDashboard.Tile_New_TLevels_Heading</a>
+                        </h3>
+                        <p class="govuk-body chevron-card__description">@TlevelsDashboard.Tile_Review_Item_New_Tlevels</p>
+                    </div>
+                </li>
+                <li class="chevron-card">
+                    <div class="chevron-card__wrapper">
+                        <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                            <a class="govuk-link chevron-card__link" asp-route="@RouteConstants.ConfirmedTlevels">@TlevelsDashboard.Tile_TLevels_You_Already_Offer_Heading</a>
+                        </h3>
+                        <p class="govuk-body chevron-card__description">@TlevelsDashboard.Tile_View_Details_Of_The_Tlevels</p>
+                    </div>
+                </li>
+                <li class="chevron-card">
+                    <div class="chevron-card__wrapper">
+                        <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                            <a class="govuk-link chevron-card__link" asp-route="@RouteConstants.QueriedTlevels">@TlevelsDashboard.Tile_Queries_Heading</a>
+                        </h3>
+                        <p class="govuk-body chevron-card__description">@TlevelsDashboard.Tile_Queried_Item_View_Queries</p>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
-
-    <div class="govuk-grid-column-one-half">
-        <div class="govuk-form-group tlevels-dashboard-card">
-            <h2 class="govuk-heading-m govuk-!-padding-top-3">
-                <a id="confirmedTlevelsLink" class="govuk-link" asp-route="ConfirmedTlevels">
-                    @TlevelsDashboard.Tile_Confirmed_Heading
-                </a>
-            </h2>
-            <ul class="govuk-list govuk-list--bullet">
-                <li>@TlevelsDashboard.Tile_Confirmed_Item_View_Tlevels</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="govuk-grid-column-one-half">
-        <div class="govuk-form-group tlevels-dashboard-card">
-            <h2 class="govuk-heading-m govuk-!-padding-top-3">
-                <a id="queriedTlevelsLink" class="govuk-link" asp-route="QueriedTlevels">
-                    @TlevelsDashboard.Tile_Queries_Heading
-                </a>
-            </h2>
-            <ul class="govuk-list govuk-list--bullet">
-                <li>@TlevelsDashboard.Tile_Queried_Item_View_Queries</li>
-            </ul>
-        </div>
-    </div>
-</div>
+</section>

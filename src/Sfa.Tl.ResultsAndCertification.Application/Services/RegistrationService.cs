@@ -317,6 +317,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                             if (hasTqRegistrationProfileRecordChanged)
                             {
+                                // populate existing data that cannot be changed from upload file
+                                amendedRegistration.Gender = existingRegistration.Gender;
+                                amendedRegistration.IsLearnerVerified = existingRegistration.IsLearnerVerified;
+                                amendedRegistration.IsEnglishAndMathsAchieved = existingRegistration.IsEnglishAndMathsAchieved;
+                                amendedRegistration.IsSendLearner = existingRegistration.IsSendLearner;
+                                amendedRegistration.IsRcFeed = existingRegistration.IsRcFeed;
+                                amendedRegistration.MathsStatus = existingRegistration.MathsStatus;
+                                amendedRegistration.EnglishStatus = existingRegistration.EnglishStatus;
                                 amendedRegistration.CreatedBy = existingRegistration.CreatedBy;
                                 amendedRegistration.CreatedOn = existingRegistration.CreatedOn;
                                 amendedRegistration.ModifiedBy = amendedRegistration.CreatedBy;

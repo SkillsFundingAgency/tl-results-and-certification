@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class TlevelsDashboard {
@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to In this section.
+        /// </summary>
+        public static string In_This_Section {
+            get {
+                return ResourceManager.GetString("In_This_Section", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to T Levels.
         /// </summary>
         public static string Page_Title {
@@ -88,25 +97,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirmed T Levels.
+        ///   Looks up a localized string similar to New T Levels.
         /// </summary>
-        public static string Tile_Confirmed_Heading {
+        public static string Tile_New_TLevels_Heading {
             get {
-                return ResourceManager.GetString("Tile_Confirmed_Heading", resourceCulture);
+                return ResourceManager.GetString("Tile_New_TLevels_Heading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View the T Levels you have told us are correct.
-        /// </summary>
-        public static string Tile_Confirmed_Item_View_Tlevels {
-            get {
-                return ResourceManager.GetString("Tile_Confirmed_Item_View_Tlevels", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to View the T Levels you have asked us to change.
+        ///   Looks up a localized string similar to View the T Levels you&apos;ve asked us to update..
         /// </summary>
         public static string Tile_Queried_Item_View_Queries {
             get {
@@ -115,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Queried T Levels.
+        ///   Looks up a localized string similar to T Level queries.
         /// </summary>
         public static string Tile_Queries_Heading {
             get {
@@ -124,20 +124,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Review new T Levels.
+        ///   Looks up a localized string similar to Review the details of the T Levels we&apos;re adding to your account..
         /// </summary>
-        public static string Tile_Review_Heading {
+        public static string Tile_Review_Item_New_Tlevels {
             get {
-                return ResourceManager.GetString("Tile_Review_Heading", resourceCulture);
+                return ResourceManager.GetString("Tile_Review_Item_New_Tlevels", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirm the T levels you deliver are correct.
+        ///   Looks up a localized string similar to T Levels you already offer.
         /// </summary>
-        public static string Tile_Review_Item_Confirm_Tlevels {
+        public static string Tile_TLevels_You_Already_Offer_Heading {
             get {
-                return ResourceManager.GetString("Tile_Review_Item_Confirm_Tlevels", resourceCulture);
+                return ResourceManager.GetString("Tile_TLevels_You_Already_Offer_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View details of the T Levels already in your account..
+        /// </summary>
+        public static string Tile_View_Details_Of_The_Tlevels {
+            get {
+                return ResourceManager.GetString("Tile_View_Details_Of_The_Tlevels", resourceCulture);
             }
         }
     }

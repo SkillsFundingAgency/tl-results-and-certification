@@ -106,6 +106,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Navigation.
+        /// </summary>
+        public static string Section_Heading_Navigation {
+            get {
+                return ResourceManager.GetString("Section_Heading_Navigation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account.
         /// </summary>
         public static string Tile_Account_Heading {
@@ -115,29 +124,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change your email address or password.
+        ///   Looks up a localized string similar to View and edit your profile. If you&apos;re an administrator, you can also manage other users&apos; accounts..
         /// </summary>
-        public static string Tile_Account_Item_Change_Email_Password {
+        public static string Tile_Account_View_Edit_Profile {
             get {
-                return ResourceManager.GetString("Tile_Account_Item_Change_Email_Password", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Manage other users (admin only).
-        /// </summary>
-        public static string Tile_Account_Item_Manage_Other_Users {
-            get {
-                return ResourceManager.GetString("Tile_Account_Item_Manage_Other_Users", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to View your profile and permissions.
-        /// </summary>
-        public static string Tile_Account_Item_View_Profile_Permissions {
-            get {
-                return ResourceManager.GetString("Tile_Account_Item_View_Profile_Permissions", resourceCulture);
+                return ResourceManager.GetString("Tile_Account_View_Edit_Profile", resourceCulture);
             }
         }
         
@@ -151,38 +142,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell us when your learners will be assessed.
+        ///   Looks up a localized string similar to Tell us when your learners will be assessed and download assessments data..
         /// </summary>
-        public static string Tile_Assessments_Item_Tell_Us_When_To_Assessed {
+        public static string Tile_Assessments_Tell_And_Download_Assessments {
             get {
-                return ResourceManager.GetString("Tile_Assessments_Item_Tell_Us_When_To_Assessed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download assessments data.
-        /// </summary>
-        public static string Tile_Download_Assessments_Data {
-            get {
-                return ResourceManager.GetString("Tile_Download_Assessments_Data", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download registrations data.
-        /// </summary>
-        public static string Tile_Download_Registrations_Data {
-            get {
-                return ResourceManager.GetString("Tile_Download_Registrations_Data", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download results data.
-        /// </summary>
-        public static string Tile_Download_Results_Data {
-            get {
-                return ResourceManager.GetString("Tile_Download_Results_Data", resourceCulture);
+                return ResourceManager.GetString("Tile_Assessments_Tell_And_Download_Assessments", resourceCulture);
             }
         }
         
@@ -196,56 +160,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add or remove providers.
+        ///   Looks up a localized string similar to Manage providers and select the T Levels they can offer..
         /// </summary>
-        public static string Tile_Providers_Item_Add_Or_Remove {
+        public static string Tile_Providers_Manage_Select_Tlevels {
             get {
-                return ResourceManager.GetString("Tile_Providers_Item_Add_Or_Remove", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Review existing providers.
-        /// </summary>
-        public static string Tile_Providers_Item_Review_Providers {
-            get {
-                return ResourceManager.GetString("Tile_Providers_Item_Review_Providers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select the T Levels each provider offers.
-        /// </summary>
-        public static string Tile_Providers_Item_Select_Tlevel {
-            get {
-                return ResourceManager.GetString("Tile_Providers_Item_Select_Tlevel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Post-results.
-        /// </summary>
-        public static string Tile_Prs_Heading {
-            get {
-                return ResourceManager.GetString("Tile_Prs_Heading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tell us the outcome of a ROMM or appeal.
-        /// </summary>
-        public static string Tile_Prs_Outcome_ROMM_Or_Appeal {
-            get {
-                return ResourceManager.GetString("Tile_Prs_Outcome_ROMM_Or_Appeal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tell us when a learner has requested a ROMM or appeal.
-        /// </summary>
-        public static string Tile_Prs_When_ROMM_Or_Appeal_Requested {
-            get {
-                return ResourceManager.GetString("Tile_Prs_When_ROMM_Or_Appeal_Requested", resourceCulture);
+                return ResourceManager.GetString("Tile_Providers_Manage_Select_Tlevels", resourceCulture);
             }
         }
         
@@ -259,38 +178,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change a learner&apos;s personal details.
+        ///   Looks up a localized string similar to Register, edit and withdraw learners and download registrations data..
         /// </summary>
-        public static string Tile_Registrations_Item_Change_Personal_Details {
+        public static string Tile_Registrations_Register_Edit_Withdraw_Learner {
             get {
-                return ResourceManager.GetString("Tile_Registrations_Item_Change_Personal_Details", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change the T Level a learner is studying.
-        /// </summary>
-        public static string Tile_Registrations_Item_Change_Tlevels {
-            get {
-                return ResourceManager.GetString("Tile_Registrations_Item_Change_Tlevels", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Manage movers, leavers and rejoiners.
-        /// </summary>
-        public static string Tile_Registrations_Item_Manage_Movers_Leavers_Rejoiners {
-            get {
-                return ResourceManager.GetString("Tile_Registrations_Item_Manage_Movers_Leavers_Rejoiners", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Register learners onto T Level courses.
-        /// </summary>
-        public static string Tile_Registrations_Item_Register_Courses {
-            get {
-                return ResourceManager.GetString("Tile_Registrations_Item_Register_Courses", resourceCulture);
+                return ResourceManager.GetString("Tile_Registrations_Register_Edit_Withdraw_Learner", resourceCulture);
             }
         }
         
@@ -304,47 +196,47 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell us the initial grades learners achieved.
+        ///   Looks up a localized string similar to Tell us the initial grades learners achieved and download results data..
         /// </summary>
-        public static string Tile_Results_Item_Tell_Us_Initial_Grades {
+        public static string Tile_Results_Tell_And_Download_Results {
             get {
-                return ResourceManager.GetString("Tile_Results_Item_Tell_Us_Initial_Grades", resourceCulture);
+                return ResourceManager.GetString("Tile_Results_Tell_And_Download_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reviews, appeals and grade changes.
+        /// </summary>
+        public static string Tile_Review_Appeal_Heading {
+            get {
+                return ResourceManager.GetString("Tile_Review_Appeal_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tell us about any reviews of marking and moderation (RoMMs) or appeals and report their outcomes..
+        /// </summary>
+        public static string Tile_Review_Appeal_Tell_Romms_Or_Appeal_Outcome {
+            get {
+                return ResourceManager.GetString("Tile_Review_Appeal_Tell_Romms_Or_Appeal_Outcome", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to T Levels.
         /// </summary>
-        public static string Tile_Tlevel_Heading {
+        public static string Tile_Tlevels_Heading {
             get {
-                return ResourceManager.GetString("Tile_Tlevel_Heading", resourceCulture);
+                return ResourceManager.GetString("Tile_Tlevels_Heading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirm each T Level&apos;s details are correct.
+        ///   Looks up a localized string similar to Review, change and confirm the T Levels you offer..
         /// </summary>
-        public static string Tile_Tlevel_Item_Confirm_Tlevels {
+        public static string Tile_Tlevels_Review_Change_Confirm_Tlevels {
             get {
-                return ResourceManager.GetString("Tile_Tlevel_Item_Confirm_Tlevels", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Request amendments.
-        /// </summary>
-        public static string Tile_Tlevel_Item_Request_Amendments {
-            get {
-                return ResourceManager.GetString("Tile_Tlevel_Item_Request_Amendments", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Review the T Levels you are licensed to deliver.
-        /// </summary>
-        public static string Tile_Tlevel_Item_Review_The_Tlevels {
-            get {
-                return ResourceManager.GetString("Tile_Tlevel_Item_Review_The_Tlevels", resourceCulture);
+                return ResourceManager.GetString("Tile_Tlevels_Review_Change_Confirm_Tlevels", resourceCulture);
             }
         }
     }

@@ -7,14 +7,14 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessProfileNameChange
 {
-    public class When_Name_Changed : TestSetup
+    public class When_Name_Changed_Case_Sensitive : TestSetup
     {
         RegistrationDetails mockRegDetails = null;
         readonly string reqFirstName = "John";
         readonly string reqLastName = "Smith";
 
-        readonly string existingFirstName = "First";
-        readonly string existingLastName = "Last";
+        readonly string existingFirstName = "John";
+        readonly string existingLastName = "smith"; // case sensitive
 
         public override void Given()
         {
@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             InternalApiClient.UpdateRegistrationAsync(Arg.Is<ManageRegistration>
                 (x => x.Uln == mockRegDetails.Uln &&
                 x.ProfileId == mockRegDetails.ProfileId &&
-                x.FirstName == ViewModel.Firstname && 
+                x.FirstName == ViewModel.Firstname &&
                 x.LastName == ViewModel.Lastname))
                 .Returns(true);
         }
@@ -46,8 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         public void Then_Called_ExpectedMethods()
         {
             InternalApiClient.Received().GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active);
-            InternalApiClient.Received()
-                .UpdateRegistrationAsync(Arg.Any<ManageRegistration>());
+            InternalApiClient.Received().UpdateRegistrationAsync(Arg.Any<ManageRegistration>());
         }
 
         [Fact]
