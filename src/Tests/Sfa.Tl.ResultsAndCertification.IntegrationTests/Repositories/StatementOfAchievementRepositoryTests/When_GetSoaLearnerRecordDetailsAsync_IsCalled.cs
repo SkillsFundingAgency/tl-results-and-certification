@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
         private IList<TqRegistrationProfile> _profiles;
         private SoaLearnerRecordDetails _actualResult;
         private List<long> _profilesWithResults;
-        private List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, SubjectStatus? englishStatus, SubjectStatus? mathsStatus, bool seedIndustryPlacement, bool? isSendLearner, IndustryPlacementStatus ipStatus)> _testCriteriaData;
+        private List<(long uln, bool seedQualificationAchieved, bool isSendQualification, SubjectStatus? englishStatus, SubjectStatus? mathsStatus, bool seedIndustryPlacement, IndustryPlacementStatus ipStatus)> _testCriteriaData;
 
         public override void Given()
         {
@@ -32,13 +32,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
                 { 1111111115, RegistrationPathwayStatus.Withdrawn }
             };
 
-            _testCriteriaData = new List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, SubjectStatus? englishStatus, SubjectStatus? mathsStatus, bool seedIndustryPlacement, bool? isSendLearner, IndustryPlacementStatus ipStatus)>
+            _testCriteriaData = new List<(long uln, bool seedQualificationAchieved, bool isSendQualification, SubjectStatus? englishStatus, SubjectStatus? mathsStatus, bool seedIndustryPlacement, IndustryPlacementStatus ipStatus)>
             {
-                (1111111111, false, true, true,  SubjectStatus.Achieved, SubjectStatus.Achieved, true, true, IndustryPlacementStatus.Completed), // Lrs data with Send Qualification + IP
-                (1111111112, true, false, false, SubjectStatus.NotAchieved, SubjectStatus.NotAchieved,false, null, IndustryPlacementStatus.NotSpecified), // Not from Lrs + No IP
-                (1111111113, false, true, false, SubjectStatus.AchievedByLrs, SubjectStatus.AchievedByLrs,false, false, IndustryPlacementStatus.NotSpecified), // Lrs data without Send Qualification
-                (1111111114, true, false, false, SubjectStatus.NotAchievedByLrs, SubjectStatus.NotAchievedByLrs, true, null, IndustryPlacementStatus.CompletedWithSpecialConsideration), // Not from Lrs + IP
-                (1111111115, true, false, false, SubjectStatus.NotSpecified, SubjectStatus.NotSpecified, true, null, IndustryPlacementStatus.NotCompleted) // Not from Lrs + IP (Not Completed)
+                (1111111111, false, true,  SubjectStatus.Achieved, SubjectStatus.Achieved, true, IndustryPlacementStatus.Completed), // Lrs data with Send Qualification + IP
+                (1111111112, true, false, SubjectStatus.NotAchieved, SubjectStatus.NotAchieved,false, IndustryPlacementStatus.NotSpecified), // Not from Lrs + No IP
+                (1111111113, false, false, SubjectStatus.AchievedByLrs, SubjectStatus.AchievedByLrs,false, IndustryPlacementStatus.NotSpecified), // Lrs data without Send Qualification
+                (1111111114, true, false, SubjectStatus.NotAchievedByLrs, SubjectStatus.NotAchievedByLrs, true, IndustryPlacementStatus.CompletedWithSpecialConsideration), // Not from Lrs + IP
+                (1111111115, true, false, SubjectStatus.NotSpecified, SubjectStatus.NotSpecified, true, IndustryPlacementStatus.NotCompleted) // Not from Lrs + IP (Not Completed)
             };
 
             // Registrations seed
@@ -76,10 +76,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
 
             SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, true);
 
-            foreach (var (uln, isRcFeed, seedQualificationAchieved, isSendQualification, englishStatus, mathsStatus, seedIndustryPlacement, isSendLearner, ipStatus) in _testCriteriaData)
+            foreach (var (uln, seedQualificationAchieved, isSendQualification, englishStatus, mathsStatus, seedIndustryPlacement, ipStatus) in _testCriteriaData)
             {
                 var profile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
-                BuildLearnerRecordCriteria(profile, isRcFeed, seedQualificationAchieved, isSendQualification, englishStatus, mathsStatus, seedIndustryPlacement, isSendLearner, ipStatus);
+                BuildLearnerRecordCriteria(profile, seedQualificationAchieved, isSendQualification, englishStatus, mathsStatus, seedIndustryPlacement, ipStatus);
             }
 
             TransferRegistration(_profiles.FirstOrDefault(p => p.UniqueLearnerNumber == 1111111113), Provider.WalsallCollege);

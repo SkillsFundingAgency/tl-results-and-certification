@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
         private IList<TqRegistrationProfile> _profiles;
         private SoaPrintingResponse _actualResult;
         private List<long> _profilesWithResults;
-        private List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, SubjectStatus? englishStatus, SubjectStatus? mathsStatus, bool seedIndustryPlacement, bool? isSendLearner, IndustryPlacementStatus ipStatus)> _testCriteriaData;
+        private List<(long uln, bool seedQualificationAchieved, bool isSendQualification, SubjectStatus? englishStatus, SubjectStatus? mathsStatus, bool seedIndustryPlacement, bool? isSendLearner, IndustryPlacementStatus ipStatus)> _testCriteriaData;
 
         public override void Given()
         {
@@ -38,11 +38,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
                 { 1111111113, RegistrationPathwayStatus.Withdrawn }                
             };
 
-            _testCriteriaData = new List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, SubjectStatus? englishStatus, SubjectStatus? mathsStatus, bool seedIndustryPlacement, bool? isSendLearner, IndustryPlacementStatus ipStatus)>
+            _testCriteriaData = new List<(long uln, bool seedQualificationAchieved, bool isSendQualification, SubjectStatus? englishStatus, SubjectStatus? mathsStatus, bool seedIndustryPlacement, bool? isSendLearner, IndustryPlacementStatus ipStatus)>
             {
-                (1111111111, false, true, true, SubjectStatus.Achieved, SubjectStatus.Achieved, true, true, IndustryPlacementStatus.Completed), // Lrs data with Send Qualification + IP
-                (1111111112, true, false, false, SubjectStatus.Achieved, SubjectStatus.Achieved, true, null, IndustryPlacementStatus.CompletedWithSpecialConsideration), // Not from Lrs + IP
-                (1111111113, true, false, false, SubjectStatus.Achieved, SubjectStatus.Achieved, true, null, IndustryPlacementStatus.NotCompleted) // Not from Lrs + IP (Not Completed)
+                (1111111111, true, true, SubjectStatus.Achieved, SubjectStatus.Achieved, true, true, IndustryPlacementStatus.Completed), // Lrs data with Send Qualification + IP
+                (1111111112, false, false, SubjectStatus.Achieved, SubjectStatus.Achieved, true, null, IndustryPlacementStatus.CompletedWithSpecialConsideration), // Not from Lrs + IP
+                (1111111113, false, false, SubjectStatus.Achieved, SubjectStatus.Achieved, true, null, IndustryPlacementStatus.NotCompleted) // Not from Lrs + IP (Not Completed)
             };
 
             // Create Mapper
@@ -80,10 +80,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
 
             SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, true);
 
-            foreach (var (uln, isRcFeed, seedQualificationAchieved, isSendQualification, englishStatus, mathsStatus, seedIndustryPlacement, isSendLearner, ipStatus) in _testCriteriaData)
+            foreach (var (uln, seedQualificationAchieved, isSendQualification, englishStatus, mathsStatus, seedIndustryPlacement, isSendLearner, ipStatus) in _testCriteriaData)
             {
                 var profile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
-                BuildLearnerRecordCriteria(profile, isRcFeed, seedQualificationAchieved, isSendQualification, englishStatus, mathsStatus, seedIndustryPlacement, isSendLearner, ipStatus);
+                BuildLearnerRecordCriteria(profile, seedQualificationAchieved, isSendQualification, englishStatus, mathsStatus, seedIndustryPlacement, ipStatus);
             }
 
             StatementOfAchievementRepositoryLogger = new Logger<StatementOfAchievementRepository>(new NullLoggerFactory());

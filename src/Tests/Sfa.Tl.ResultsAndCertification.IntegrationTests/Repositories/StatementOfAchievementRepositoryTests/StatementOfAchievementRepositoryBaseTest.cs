@@ -117,14 +117,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             }
         }
 
-        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool? isRcFeed, bool seedQualificationAchieved, bool isSendQualification, SubjectStatus? englishStatus, SubjectStatus? mathsStatus, bool seedIndustryPlacement = false, bool? isSendLearner = null, IndustryPlacementStatus ipStatus = IndustryPlacementStatus.Completed)
+        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool seedQualificationAchieved, bool isSendQualification, SubjectStatus? englishStatus, SubjectStatus? mathsStatus, bool seedIndustryPlacement = false, IndustryPlacementStatus ipStatus = IndustryPlacementStatus.Completed)
         {
             if (profile == null) return;
 
-            profile.IsRcFeed = isRcFeed; 
             profile.EnglishStatus = englishStatus;
             profile.MathsStatus = mathsStatus;
-            profile.IsSendLearner = isSendLearner;
 
             var isEnglishAchieved = englishStatus == SubjectStatus.Achieved || englishStatus == SubjectStatus.AchievedByLrs;
 

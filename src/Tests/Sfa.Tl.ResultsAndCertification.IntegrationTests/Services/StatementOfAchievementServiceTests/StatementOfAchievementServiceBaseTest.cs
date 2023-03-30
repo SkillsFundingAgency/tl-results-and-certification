@@ -110,14 +110,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
             }
         }
 
-        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool? isRcFeed, bool seedQualificationAchieved, bool isSendQualification, SubjectStatus? englishStatus, SubjectStatus? mathsStatus, bool seedIndustryPlacement = false, bool? isSendLearner = null, IndustryPlacementStatus ipStatus = IndustryPlacementStatus.Completed)
+        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool seedQualificationAchieved, bool isSendQualification, SubjectStatus? englishStatus, SubjectStatus? mathsStatus, bool seedIndustryPlacement = false, IndustryPlacementStatus ipStatus = IndustryPlacementStatus.Completed)
         {
             if (profile == null) return;
 
-            profile.IsRcFeed = isRcFeed;  // TODO: check if these need to be cleaned?
             profile.EnglishStatus = englishStatus;
             profile.MathsStatus = mathsStatus;
-            profile.IsSendLearner = isSendLearner; // TODO: check if all these flags to be cleaned?
 
             var isEnglishAchieved = englishStatus == SubjectStatus.Achieved || englishStatus == SubjectStatus.AchievedByLrs;
 
