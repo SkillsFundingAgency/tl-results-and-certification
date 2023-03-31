@@ -163,10 +163,10 @@
     <value>Incorrect technical qualification details?</value>
   </data>
   <data name="Learner_Details_Section_If_Learner_Details_Are_Wrong" xml:space="preserve">
-    <value>If the learner’s registration details are wrong, you must tell the exam board that registered the learner into our service.</value>
+    <value>If the learner’s registration details are wrong, you must tell the awarding organisation that registered the learner into our service.</value>
   </data>
   <data name="Learner_Details_Section_Once_Exam_Board_Updated_You_Can_Come_Back" xml:space="preserve">
-    <value>Once the exam board has updated these details, you can come back and request a statement of achievement.</value>
+    <value>Once the awarding organisation has updated these details, you can come back and request a statement of achievement.</value>
   </data>
   <data name="Link_Change_Component_Achievements" xml:space="preserve">
     <value>Change</value>

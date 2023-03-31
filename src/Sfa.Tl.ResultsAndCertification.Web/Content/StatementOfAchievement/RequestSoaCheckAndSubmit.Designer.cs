@@ -197,7 +197,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If the learner’s registration details are wrong, you must tell the exam board that registered the learner into our service..
+        ///   Looks up a localized string similar to If the learner’s registration details are wrong, you must tell the awarding organisation that registered the learner into our service..
         /// </summary>
         public static string Learner_Details_Section_If_Learner_Details_Are_Wrong {
             get {
@@ -206,7 +206,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Once the exam board has updated these details, you can come back and request a statement of achievement..
+        ///   Looks up a localized string similar to Once the awarding organisation has updated these details, you can come back and request a statement of achievement..
         /// </summary>
         public static string Learner_Details_Section_Once_Exam_Board_Updated_You_Can_Come_Back {
             get {
