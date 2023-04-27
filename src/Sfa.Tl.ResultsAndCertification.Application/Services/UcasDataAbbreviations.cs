@@ -36,6 +36,24 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             { "Unclassified", "U" }
         };
 
+        private static readonly Dictionary<string, string> _industryPlacementResultsAbbreviations = new(StringComparer.InvariantCultureIgnoreCase)
+        {
+            { "Completed", "P" },
+            { "Completed with special consideration", "P" },
+            { "Not completed", "PC" },
+            { "Will not complete", "NC" }
+        };
+
+        
+
+        public static readonly List<KeyValuePair<string, List<string>>> _dualSpecialisms = new List<KeyValuePair<string, List<string>>>
+        {
+            new ("ZTLOS030", new List<string>{ "10202102", "10202101"}),
+            new ("ZTLOS031", new List<string>{ "10202101", "10202105"}),
+            new ("ZTLOS032", new List<string>{ "10202103", "10202104"})
+        };
+
+       
         public static string GetAbbreviatedResult(UcasResultType ucasResultType, string result)
         {
             if (ucasResultType != UcasResultType.OverallResult && string.IsNullOrWhiteSpace(result))
@@ -55,6 +73,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 case UcasResultType.OverallResult:
                     hasValue = _overallResultsAbbreviations.TryGetValue(result, out abbreviatedResult);
                     break;
+                case UcasResultType.IndustryPlacement:
+                    hasValue = _industryPlacementResultsAbbreviations.TryGetValue(result,out abbreviatedResult);
+                    break;
+                //case UcasResultType.DualSpecialsms:
+                //    hasValue = _combiCodes.TryGetValue(result, out abbreviatedResult);
+                //    break;
             }
 
             if (hasValue)

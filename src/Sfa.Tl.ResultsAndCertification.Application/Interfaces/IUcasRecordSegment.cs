@@ -11,5 +11,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         void AddCoreSegment(IList<UcasDataComponent> ucasDataComponent, TqRegistrationPathway pathway);
         void AddSpecialismSegment(IList<UcasDataComponent> ucasDataComponents, TqRegistrationPathway pathway);
         void AddOverallResultSegment(IList<UcasDataComponent> ucasDataComponents, string overallSubjectCode, string resultAwarded = "");
+        void AddIndustryPlacementResultSegment(IList<UcasDataComponent> ucasDataComponents, string industryPlacementCode, TqRegistrationPathway pathway);
     }
 }
