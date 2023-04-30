@@ -262,7 +262,7 @@
     <value>tell us if T Level details are correct</value>
   </data>
   <data name="Start_Button_Text" xml:space="preserve">
-    <value>Start now</value>
+    <value>Start now BUT</value>
   </data>
   <data name="Tlevel_Data_Format_And_Rules" xml:space="preserve">
     <value>T Level data format and rules</value>
