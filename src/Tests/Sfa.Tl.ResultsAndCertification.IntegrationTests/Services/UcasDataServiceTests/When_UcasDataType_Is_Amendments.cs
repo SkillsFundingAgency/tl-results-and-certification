@@ -59,8 +59,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
 
             var expectedDataRecords = new List<ExepectedUcasDataRecord>
             {
-                new ExepectedUcasDataRecord { Uln = 1111111111, Name = "Last 1:First 1", Sex = "M", DateOfBirth = "10101980", ComponentRecord = "_|10123456|A*||_|10123456|D||_|TLEVEL|D||_|" },
-                new ExepectedUcasDataRecord { Uln = 1111111112, Name = "Last 2:First 2", Sex = "F", DateOfBirth = "07051981", ComponentRecord = "_|10123456|A*||_|10123456|D||_|TLEVEL|D||_|" },
+                new ExepectedUcasDataRecord { Uln = 1111111111, Name = "Last 1:First 1", Sex = "M", DateOfBirth = "10101980", ComponentRecord = "_|10123456|A*||_|10123456|D||_|TLEVEL|D||_|INDUSTRYP|P||_|" },
+                new ExepectedUcasDataRecord { Uln = 1111111112, Name = "Last 2:First 2", Sex = "F", DateOfBirth = "07051981", ComponentRecord = "_|10123456|A*||_|10123456|D||_|TLEVEL|D||_|INDUSTRYP|P||_|" },
             };
 
             foreach (var expectedRecord in expectedDataRecords)
