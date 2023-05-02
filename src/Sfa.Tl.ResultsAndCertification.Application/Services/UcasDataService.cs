@@ -53,6 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 _ucasRecordEntrySegment.AddCoreSegment(ucasDataComponents, pathway);
                 _ucasRecordEntrySegment.AddSpecialismSegment(ucasDataComponents, pathway);
                 _ucasRecordEntrySegment.AddOverallResultSegment(ucasDataComponents, _resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode);
+                _ucasRecordEntrySegment.AddIndustryPlacementResultSegment(ucasDataComponents, _resultsAndCertificationConfiguration.UcasDataSettings.IndustryPlacementCode, pathway);
 
                 if (ucasDataComponents.Any())
                 {
@@ -75,6 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 _ucasRecordResultsSegment.AddCoreSegment(ucasDataComponents, overallResult.TqRegistrationPathway);
                 _ucasRecordResultsSegment.AddSpecialismSegment(ucasDataComponents, overallResult.TqRegistrationPathway);
                 _ucasRecordResultsSegment.AddOverallResultSegment(ucasDataComponents, _resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode, overallResult.ResultAwarded);
+                _ucasRecordResultsSegment.AddIndustryPlacementResultSegment(ucasDataComponents, _resultsAndCertificationConfiguration.UcasDataSettings.IndustryPlacementCode, overallResult.TqRegistrationPathway);
 
                 records.Add(BuildUcasDataRecord(ucasDataComponents, overallResult.TqRegistrationPathway));
             }
@@ -94,7 +96,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 _ucasRecordResultsSegment.AddCoreSegment(ucasDataComponents, overallResult.TqRegistrationPathway);
                 _ucasRecordResultsSegment.AddSpecialismSegment(ucasDataComponents, overallResult.TqRegistrationPathway);
                 _ucasRecordResultsSegment.AddOverallResultSegment(ucasDataComponents, _resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode, overallResult.ResultAwarded);
-
+                _ucasRecordResultsSegment.AddIndustryPlacementResultSegment(ucasDataComponents, _resultsAndCertificationConfiguration.UcasDataSettings.IndustryPlacementCode, overallResult.TqRegistrationPathway);
                 records.Add(BuildUcasDataRecord(ucasDataComponents, overallResult.TqRegistrationPathway));
             }
 
