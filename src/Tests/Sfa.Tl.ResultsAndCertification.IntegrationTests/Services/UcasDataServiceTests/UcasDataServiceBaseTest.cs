@@ -53,7 +53,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
                     ExamMonth = "06",
                     OverallSubjectCode = "TLEVEL",
                     ReceivingOrganisation = "90",
-                    SendingOrganisation = "30"
+                    SendingOrganisation = "30",
+                    IndustryPlacementCode ="INDUSTRYP"
                 }
             };
 
