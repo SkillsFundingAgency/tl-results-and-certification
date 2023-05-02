@@ -15,7 +15,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
             CommonService.CurrentDate.Returns(todayDate);
         }
 
-
         [Fact(Skip = "Taking out the schedule for UCAS entries")]
         public void Then_Expected_Methods_Are_Called()
         {
