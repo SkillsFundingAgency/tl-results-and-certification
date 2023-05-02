@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using AutoMapper.Configuration.Annotations;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -14,7 +15,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
             CommonService.CurrentDate.Returns(todayDate);
         }
 
-        [Fact]
+
+        [Fact(Skip = "Taking out the schedule for UCAS entries")]
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.DidNotReceive().CreateFunctionLog(Arg.Any<FunctionLogDetails>());
