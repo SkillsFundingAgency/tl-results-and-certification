@@ -16,8 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
     {
         private TqRegistrationPathway _mockUcasData;
         private TqRegistrationPathway _mockExpectedUcasData;
-        private TqRegistrationPathway _response;
-        //private const string ucasDualDataFileId = "ucasFileId123";
+        private TqRegistrationPathway _response;       
 
         public override void Given()
         {
@@ -27,15 +26,13 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
             _response = UcasRecordEntrySegment.ReplaceDualSpecialismCodes(_mockUcasData);
 
         }
-
         [Fact]
         public void Then_Expected_DualSpecialism_NotMatches()
         {
 
-          Assert.DoesNotContain("ZTLOS", _mockExpectedUcasData.TqRegistrationSpecialisms.First().TlSpecialism.LarId);
+            Assert.DoesNotContain("ZTLOS", _mockExpectedUcasData.TqRegistrationSpecialisms.First().TlSpecialism.LarId);
 
         }
-
         private TqRegistrationPathway GetPathwayMockData()
         {
             var pathWayData = new TqRegistrationPathway()
@@ -72,16 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
 
                   } }
             };
-
             return pathWayData;
-      
-    }
-
-
-        
-
-
-
-
+        }
     }
 }

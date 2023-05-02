@@ -75,10 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     break;
                 case UcasResultType.IndustryPlacement:
                     hasValue = _industryPlacementResultsAbbreviations.TryGetValue(result,out abbreviatedResult);
-                    break;
-                //case UcasResultType.DualSpecialsms:
-                //    hasValue = _combiCodes.TryGetValue(result, out abbreviatedResult);
-                //    break;
+                    break;              
             }
 
             if (hasValue)

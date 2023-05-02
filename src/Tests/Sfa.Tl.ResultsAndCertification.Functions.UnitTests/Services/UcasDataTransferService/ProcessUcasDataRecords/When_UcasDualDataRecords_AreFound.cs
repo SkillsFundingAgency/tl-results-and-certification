@@ -16,8 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
     {
         private TqRegistrationPathway _mockUcasData;
         private TqRegistrationPathway _mockExpectedUcasData;
-        private TqRegistrationPathway _response;
-        //private const string ucasDualDataFileId = "ucasFileId123";
+        private TqRegistrationPathway _response;       
 
         public override void Given()
         {
@@ -81,9 +80,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
             };
 
             return pathWayData;
-      
-    }
 
+        }
 
         private TqRegistrationPathway GetExpectedPathwayMockData()
         {
@@ -110,11 +108,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
             };
 
             return pathWayData;
-
         }
-
-
-
-
     }
 }
