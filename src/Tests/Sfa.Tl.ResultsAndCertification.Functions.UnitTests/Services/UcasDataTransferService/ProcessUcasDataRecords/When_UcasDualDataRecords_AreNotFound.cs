@@ -16,16 +16,27 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
     {
         private TqRegistrationPathway _mockUcasData;
         private TqRegistrationPathway _mockExpectedUcasData;
-        private TqRegistrationPathway _response;       
+        private string _dualSpecialismCode;       
 
         public override void Given()
         {
             UcasDataType = UcasDataType.Entries;
             _mockUcasData = GetPathwayMockData();
             _mockExpectedUcasData = GetPathwayMockData();
-            _response = UcasRecordEntrySegment.ReplaceDualSpecialismCodes(_mockUcasData);
+            _dualSpecialismCode = UcasRecordEntrySegment.ReplaceDualSpecialismCodes(_mockUcasData);
 
         }
+
+        [Fact]
+        public void Then_Expected_DualSpecialism_DOES_NOT_Matches()
+        {
+
+            Assert.False(_dualSpecialismCode ==
+                _mockExpectedUcasData.TqRegistrationSpecialisms.First().TlSpecialism.LarId);
+
+        }
+
+
         [Fact]
         public void Then_Expected_DualSpecialism_NotMatches()
         {

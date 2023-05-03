@@ -31,44 +31,37 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public void AddSpecialismSegment(IList<UcasDataComponent> ucasDataComponents, TqRegistrationPathway pathway)
         {
-            pathway = ReplaceDualSpecialismCodes(pathway);
+            string dualSpecialismCode = ReplaceDualSpecialismCodes(pathway);
 
-            foreach (var specialism in pathway.TqRegistrationSpecialisms)
+            var ucasSpecialismComponent = new UcasDataComponent
             {
-                if (!specialism.TqSpecialismAssessments.Any())
-                    return;
+                SubjectCode = !string.IsNullOrEmpty(dualSpecialismCode) ? dualSpecialismCode : pathway.TqRegistrationSpecialisms.First().TlSpecialism.LarId,
+                Grade = string.Empty,
+                PreviousGrade = string.Empty
+            };
 
-                var ucasSpecialismComponent = new UcasDataComponent
-                {
-                    SubjectCode = specialism.TlSpecialism.LarId,
-                    Grade = string.Empty,
-                    PreviousGrade = string.Empty
-                };
+            ucasDataComponents.Add(ucasSpecialismComponent);
 
-                ucasDataComponents.Add(ucasSpecialismComponent);
-            }
         }
 
-        public TqRegistrationPathway ReplaceDualSpecialismCodes(TqRegistrationPathway pathway)
+        public string ReplaceDualSpecialismCodes(TqRegistrationPathway tqRegistrationPathway)
         {
-            if (pathway.TqRegistrationSpecialisms.Count > 1)
+            var dualSpecialismCode = string.Empty;
+
+            if (tqRegistrationPathway.TqRegistrationSpecialisms.Count > 1)
             {
                 var dualSpecialims = UcasDataAbbreviations._dualSpecialisms.SelectMany(t => t.Value).ToList();
-                var pathwayRegistrationSpecialism = pathway.TqRegistrationSpecialisms.Select(t => t.TlSpecialism.LarId).ToList();
+                var pathwayRegistrationSpecialism = tqRegistrationPathway.TqRegistrationSpecialisms.Select(t => t.TlSpecialism.LarId).ToList();
 
 
                 if (dualSpecialims.Any(b => pathwayRegistrationSpecialism.Any(a => b.Contains(a))))
                 {
-                    var dualCode = UcasDataAbbreviations._dualSpecialisms.Where(f => f.Value.Intersect(pathwayRegistrationSpecialism, StringComparer.OrdinalIgnoreCase).Count() == 2).FirstOrDefault().Key;
-                    if (!string.IsNullOrEmpty(dualCode))
-                    {
-                        pathway.TqRegistrationSpecialisms.ToList().ForEach(f => f.TlSpecialism.LarId = dualCode);
-                        pathway.TqRegistrationSpecialisms = new List<TqRegistrationSpecialism>() { pathway.TqRegistrationSpecialisms.First() };
-                    }
+                    dualSpecialismCode = UcasDataAbbreviations._dualSpecialisms.Where(f => f.Value.Intersect(pathwayRegistrationSpecialism, StringComparer.OrdinalIgnoreCase).Count() == 2).FirstOrDefault().Key;
+
                 }
             }
 
-            return pathway;
+            return dualSpecialismCode;
         }
 
         public void AddOverallResultSegment(IList<UcasDataComponent> ucasDataComponents, string overallSubjectCode, string resultAwarded = "")
