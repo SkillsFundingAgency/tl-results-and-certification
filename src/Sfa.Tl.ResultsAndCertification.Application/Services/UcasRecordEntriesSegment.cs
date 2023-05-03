@@ -90,7 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 ucasDataComponents.Add(new UcasDataComponent
                 {
-                    SubjectCode = industryPlacementCode,
+                    SubjectCode = string.IsNullOrEmpty(industryPlacementCode) ? "INDUSTRYP" : industryPlacementCode,
                     Grade = string.Empty,
                     PreviousGrade = string.Empty
                 });
