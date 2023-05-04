@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
             // Check if it is the last Wednesday in June and run the function if it is true
             //if (_commonService.CurrentDate.IsLastWeekdayOfMonth(DayOfWeek.Wednesday, Months.June))
-            //{
+            // {
                 var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.UcasTransferEntries);
 
                 try
