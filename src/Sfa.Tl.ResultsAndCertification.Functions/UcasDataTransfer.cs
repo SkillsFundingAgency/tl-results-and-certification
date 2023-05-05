@@ -40,11 +40,20 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             {
                 logger.LogInformation($"Function {context.FunctionName} started");
 
-                logger.LogInformation($"ProcessUcasDataRecordResultsAsync {_resultsAndCertificationConfiguration} started");
-
                 logger.LogInformation($"ProcessUcasDataRecordResultsAsync UcasDataSettings {_resultsAndCertificationConfiguration.UcasDataSettings} started");
 
                 logger.LogInformation($"ProcessUcasDataRecordResultsAsync UcasDataSettings IndustryPlacementCode {_resultsAndCertificationConfiguration.UcasDataSettings.IndustryPlacementCode} started");
+
+                logger.LogInformation($"ProcessUcasDataRecordResultsAsync OverallSubjectCode {_resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode} ");
+
+                logger.LogInformation($"ProcessUcasDataRecordResultsAsync ExamMonth {_resultsAndCertificationConfiguration.UcasDataSettings.ExamMonth} ");
+
+                logger.LogInformation($"ProcessUcasDataRecordResultsAsync CentreNumber {_resultsAndCertificationConfiguration.UcasDataSettings.CentreNumber} ");
+
+                logger.LogInformation($"ProcessUcasDataRecordResultsAsync ReceivingOrganisation {_resultsAndCertificationConfiguration.UcasDataSettings.ReceivingOrganisation} ");
+
+                logger.LogInformation($"ProcessUcasDataRecordResultsAsync SendingOrganisation {_resultsAndCertificationConfiguration.UcasDataSettings.SendingOrganisation} ");
+
 
                 var stopwatch = Stopwatch.StartNew();
                 await _commonService.CreateFunctionLog(functionLogDetails);
