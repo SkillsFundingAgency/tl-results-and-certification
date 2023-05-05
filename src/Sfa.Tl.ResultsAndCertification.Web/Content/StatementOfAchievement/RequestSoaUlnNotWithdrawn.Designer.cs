@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class RequestSoaUlnNotWithdrawn {
@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to After the exam board has updated the learner’s registration, you can come back and request a statement of achievement..
+        ///   Looks up a localized string similar to After the awarding organisation has updated the learner’s registration, you can come back and request a statement of achievement..
         /// </summary>
         public static string After_The_Exam_Board_Has_Updated_The_Learners_Registration {
             get {
@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner has not been withdrawn by the exam board.
+        ///   Looks up a localized string similar to Learner has not been withdrawn by the awarding organisation.
         /// </summary>
         public static string Heading_Learner_Has_Not_Been_Withdrawn {
             get {
@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This learner’s registration is still active. You must tell the exam board that this learner has withdrawn..
+        ///   Looks up a localized string similar to This learner’s registration is still active. You must tell the awarding organisation that this learner has withdrawn..
         /// </summary>
         public static string This_Learners_Registration_Is_Still_Active {
             get {
