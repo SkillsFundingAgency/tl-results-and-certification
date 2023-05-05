@@ -136,7 +136,7 @@
     <value>Our records show:</value>
   </data>
   <data name="InsetText_Para_If_Learner_Completed_Core_Contact_Board" xml:space="preserve">
-    <value>If the learner has completed a core component, contact the exam board and ask them to record the result.</value>
+    <value>If the learner has completed a core component, contact the awarding organisation and ask them to record the result.</value>
   </data>
   <data name="InsetText_Para_If_learner_Completed_Industry_Placement" xml:space="preserve">
     <value>If the learner has completed an industry placement, you must</value>
