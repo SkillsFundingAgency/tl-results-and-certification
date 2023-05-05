@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -16,11 +17,13 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
     {
         private readonly IUcasDataTransferService _ucasDataTransferService;
         private readonly ICommonService _commonService;
+        private readonly ResultsAndCertificationConfiguration _resultsAndCertificationConfiguration;
 
-        public UcasDataTransfer(IUcasDataTransferService ucasDataTransferService, ICommonService commonService)
+        public UcasDataTransfer(IUcasDataTransferService ucasDataTransferService, ICommonService commonService, ResultsAndCertificationConfiguration resultsAndCertificationConfiguration)
         {
             _ucasDataTransferService = ucasDataTransferService;
             _commonService = commonService;
+            _resultsAndCertificationConfiguration = resultsAndCertificationConfiguration;
         }
 
         [FunctionName(Constants.UcasTransferEntries)]
@@ -37,7 +40,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 {
                     logger.LogInformation($"Function {context.FunctionName} started");
 
-                    var stopwatch = Stopwatch.StartNew();
+                logger.LogInformation($"ProcessUcasDataRecordResultsAsync {_resultsAndCertificationConfiguration} started");
+
+                logger.LogInformation($"ProcessUcasDataRecordResultsAsync UcasDataSettings {_resultsAndCertificationConfiguration.UcasDataSettings} started");
+
+                logger.LogInformation($"ProcessUcasDataRecordResultsAsync UcasDataSettings IndustryPlacementCode {_resultsAndCertificationConfiguration.UcasDataSettings.IndustryPlacementCode} started");
+                var stopwatch = Stopwatch.StartNew();
                     await _commonService.CreateFunctionLog(functionLogDetails);
 
                     var response = await _ucasDataTransferService.ProcessUcasDataRecordsAsync(UcasDataType.Entries);
