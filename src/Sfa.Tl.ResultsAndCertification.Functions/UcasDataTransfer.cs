@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
@@ -40,7 +41,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             {
                 logger.LogInformation($"Function {context.FunctionName} started");
 
+
+               
+
                 logger.LogInformation($"ProcessUcasDataRecordResultsAsync UcasDataSettings {_resultsAndCertificationConfiguration.UcasDataSettings} started");
+
+                logger.LogInformation($"ProcessUcasDataRecordResultsAsync UcasDataSettings IP Coe {_resultsAndCertificationConfiguration.UcasDataSettings.IPCode} started");
 
                 logger.LogInformation($"ProcessUcasDataRecordResultsAsync UcasDataSettings IndustryPlacementCode {_resultsAndCertificationConfiguration.UcasDataSettings.IndustryPlacementCode} started");
 
