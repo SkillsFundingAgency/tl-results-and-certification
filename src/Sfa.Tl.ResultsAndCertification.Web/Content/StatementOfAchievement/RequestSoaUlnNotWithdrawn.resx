@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="After_The_Exam_Board_Has_Updated_The_Learners_Registration" xml:space="preserve">
-    <value>After the exam board has updated the learner’s registration, you can come back and request a statement of achievement.</value>
+    <value>After the awarding organisation has updated the learner’s registration, you can come back and request a statement of achievement.</value>
   </data>
   <data name="Back_To_Home" xml:space="preserve">
     <value>Back to Home</value>
   </data>
   <data name="Heading_Learner_Has_Not_Been_Withdrawn" xml:space="preserve">
-    <value>Learner has not been withdrawn by the exam board</value>
+    <value>Learner has not been withdrawn by the awarding organisation</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Request statement of achievement - ULN not withdrawn page</value>
   </data>
   <data name="This_Learners_Registration_Is_Still_Active" xml:space="preserve">
-    <value>This learner’s registration is still active. You must tell the exam board that this learner has withdrawn.</value>
+    <value>This learner’s registration is still active. You must tell the awarding organisation that this learner has withdrawn.</value>
   </data>
   <data name="Title_DateofBirth_Text" xml:space="preserve">
     <value>Date of birth</value>
