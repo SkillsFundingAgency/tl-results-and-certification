@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
                     OverallSubjectCode = "TLEVEL",
                     ReceivingOrganisation = "90",
                     SendingOrganisation = "30",
-                    IPCode ="INDUSTRYP"
+                    IndustryPlacementCode ="INDUSTRYP"
                 }
             };
 

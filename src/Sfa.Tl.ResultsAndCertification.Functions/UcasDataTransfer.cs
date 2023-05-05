@@ -46,9 +46,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 logger.LogInformation($"ProcessUcasDataRecordResultsAsync UcasDataSettings {_resultsAndCertificationConfiguration.UcasDataSettings} started");
 
-                logger.LogInformation($"ProcessUcasDataRecordResultsAsync UcasDataSettings IP Coe {_resultsAndCertificationConfiguration.UcasDataSettings.IPCode} started");
+                logger.LogInformation($"ProcessUcasDataRecordResultsAsync UcasDataSettings IP Coe {_resultsAndCertificationConfiguration.UcasDataSettings.IndustryPlacementCode} started");
 
-                logger.LogInformation($"ProcessUcasDataRecordResultsAsync UcasDataSettings IndustryPlacementCode {_resultsAndCertificationConfiguration.UcasDataSettings.IndustryPlacementCode} started");
 
                 logger.LogInformation($"ProcessUcasDataRecordResultsAsync OverallSubjectCode {_resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode} ");
 
