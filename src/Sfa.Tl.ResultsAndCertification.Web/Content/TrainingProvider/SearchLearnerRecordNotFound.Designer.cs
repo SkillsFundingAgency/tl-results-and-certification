@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you think this learner should be registered, please contact the exam board responsible for delivering the T Level..
+        ///   Looks up a localized string similar to If you think this learner should be registered, please contact the awarding organisation responsible for delivering the T Level..
         /// </summary>
         public static string Para_Please_Contact_ExamBoard {
             get {
@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can only update records for learners registered on a T Level course by an exam board (also known as an awarding organisation)..
+        ///   Looks up a localized string similar to You can only request a statement of achievement for a learner registered on a T Level course by an awarding organisation..
         /// </summary>
         public static string Para_You_Can_Only_Update_Registered_Learners {
             get {
