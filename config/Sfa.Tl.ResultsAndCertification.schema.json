@@ -405,6 +405,10 @@
         "OverallSubjectCode": {
           "type": "string",
           "environmentVariable": "UcasOverallSubjectCode"
+        },
+		"IndustryPlacementCode": {
+          "type": "string",
+          "environmentVariable": "UcasIndustryPlacementCode"
         }
       },
       "additionalProperties": false,
