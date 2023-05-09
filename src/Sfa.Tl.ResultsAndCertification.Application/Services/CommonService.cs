@@ -120,6 +120,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var uCasTriggerDates = new List<DateTime>() {
                 new DateTime(2023,05,09),
                 new DateTime(2023,05,10),
+                new DateTime(2023,05,11),
                 new DateTime(2023,05,12),
                 new DateTime(2023,08,19),
                 new DateTime(2023,08,24),
