@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+﻿using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -68,7 +69,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private async Task<UcasData> ProcessUcasDataRecordResultsAsync()
         {
             var records = new List<UcasDataRecord>();
-            var overallResults = await _ucasRepository.GetUcasDataRecordsForResultsAsync();
+            var overallResults = await _ucasRepository.GetUcasDataRecordsForResultsAsync();           
+
             foreach (var overallResult in overallResults)
             {
                 var ucasDataComponents = new List<UcasDataComponent>();
@@ -150,6 +152,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
 
             return ucasData;
-        }       
+        }
     }
 }

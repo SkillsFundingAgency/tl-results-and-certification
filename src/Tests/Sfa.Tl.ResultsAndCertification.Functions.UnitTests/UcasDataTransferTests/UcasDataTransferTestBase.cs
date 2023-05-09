@@ -2,6 +2,7 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTests
