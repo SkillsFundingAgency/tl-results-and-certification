@@ -20,22 +20,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IUcasRecordSegment<UcasRecordEntriesSegment> _ucasRecordEntrySegment;
         private readonly IUcasRecordSegment<UcasRecordResultsSegment> _ucasRecordResultsSegment;
         private readonly ResultsAndCertificationConfiguration _resultsAndCertificationConfiguration;
-        private readonly ILogger _logger;
 
         public UcasDataService(IUcasRepository ucasRepository,
             IUcasRecordSegment<UcasRecordEntriesSegment> ucasRecordEntrySegment,
             IUcasRecordSegment<UcasRecordResultsSegment> ucasRecordResultsSegment,
-            ResultsAndCertificationConfiguration resultsAndCertificationConfiguration,
-            ILogger<UcasData> logger)
+            ResultsAndCertificationConfiguration resultsAndCertificationConfiguration)
         {
             _ucasRepository = ucasRepository;
             _ucasRecordEntrySegment = ucasRecordEntrySegment;
             _ucasRecordResultsSegment = ucasRecordResultsSegment;
             _resultsAndCertificationConfiguration = resultsAndCertificationConfiguration;
-            _logger = logger;
         }
 
-            public async Task<UcasData> ProcessUcasDataRecordsAsync(UcasDataType ucasDataType)
+        public async Task<UcasData> ProcessUcasDataRecordsAsync(UcasDataType ucasDataType)
         {
             return ucasDataType switch
             {
@@ -72,13 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private async Task<UcasData> ProcessUcasDataRecordResultsAsync()
         {
             var records = new List<UcasDataRecord>();
-            var overallResults = await _ucasRepository.GetUcasDataRecordsForResultsAsync();
-
-            _logger.LogInformation($"ProcessUcasDataRecordResultsAsync {_resultsAndCertificationConfiguration} started");
-
-            _logger.LogInformation($"ProcessUcasDataRecordResultsAsync UcasDataSettings {_resultsAndCertificationConfiguration.UcasDataSettings} started");
-
-            _logger.LogInformation($"ProcessUcasDataRecordResultsAsync UcasDataSettings IndustryPlacementCode {_resultsAndCertificationConfiguration.UcasDataSettings.IndustryPlacementCode} started");
+            var overallResults = await _ucasRepository.GetUcasDataRecordsForResultsAsync();           
 
             foreach (var overallResult in overallResults)
             {
@@ -161,6 +152,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
 
             return ucasData;
-        }       
+        }
     }
 }

@@ -45,8 +45,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
         protected IUcasDataService UcasDataService;
         protected UcasData ActualResult;
 
-        protected ILogger<UcasData> Logger;
-
         protected void CreateService()
         {
             ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
@@ -66,9 +64,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
             UcasRepository = new UcasRepository(DbContext, CommonRepository);
             UcasRecordEntrySegment = new UcasRecordEntriesSegment();
             UcasRecordResultsSegment = new UcasRecordResultsSegment();
-            Logger = Substitute.For<ILogger<UcasData>>();
 
-            UcasDataService = new UcasDataService(UcasRepository, UcasRecordEntrySegment, UcasRecordResultsSegment, ResultsAndCertificationConfiguration, Logger);
+            UcasDataService = new UcasDataService(UcasRepository, UcasRecordEntrySegment, UcasRecordResultsSegment, ResultsAndCertificationConfiguration);
         }
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
