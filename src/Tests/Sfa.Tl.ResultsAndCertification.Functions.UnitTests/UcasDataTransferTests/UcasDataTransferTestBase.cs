@@ -14,7 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
         // Dependencies
         protected IUcasDataTransferService UcasDataTransferService;
         protected ICommonService CommonService;
-        private ResultsAndCertificationConfiguration _resultsAndCertificationConfiguration;
 
         // Actual function instance
         protected UcasDataTransfer UcasDataTransferFunction;
@@ -24,9 +23,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
             TimerSchedule = Substitute.For<TimerSchedule>();
             UcasDataTransferService = Substitute.For<IUcasDataTransferService>();
             CommonService = Substitute.For<ICommonService>();
-            _resultsAndCertificationConfiguration = Substitute.For<ResultsAndCertificationConfiguration>();
 
-            UcasDataTransferFunction = new UcasDataTransfer(UcasDataTransferService, CommonService, _resultsAndCertificationConfiguration);
+            UcasDataTransferFunction = new UcasDataTransfer(UcasDataTransferService, CommonService);
         }
     }
 }
