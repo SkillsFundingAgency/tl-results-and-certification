@@ -1,4 +1,5 @@
 ﻿using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -11,10 +12,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
     {
         public override void Given()
         {
-            var todayDate = "29/06/2022".ParseStringToDateTimeWithFormat();
+            var todayDate = "10/05/2023".ParseStringToDateTimeWithFormat();
             CommonService.CurrentDate.Returns(todayDate); 
             
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
+            CommonService.IsUcasTransferEntriesTriggerDateValid().Returns(true);
             UcasDataTransferService.ProcessUcasDataRecordsAsync(UcasDataType.Entries).Returns(new UcasDataTransferResponse { IsSuccess = true });
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }
