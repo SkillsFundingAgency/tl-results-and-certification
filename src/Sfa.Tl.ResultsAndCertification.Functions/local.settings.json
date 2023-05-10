@@ -8,7 +8,7 @@
     "CertificatePrintingRequestTrigger": "0 0 19 * * *",
     "CertificatePrintingBatchSummaryTrigger": "0 30 19 * * *",
     "CertificatePrintingTrackBatchTrigger": "0 0 20 * * *",
-    "UcasTransferEntriesTrigger": "37 09 * 6 WED",
+    "UcasTransferEntriesTrigger": "0 0 8 * * *",
     "UcasTransferResultsTrigger": "30 21 * 8 THU",
     "UcasTransferAmendmentsTrigger": "45 21 * 8-10 *",
     "OverallResultCalculationTrigger": "30 20 * * *",
