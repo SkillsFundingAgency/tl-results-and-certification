@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
     {
         private const string LearnerName = "John Smith";
         private const int AcademicYear = 2023;
-        private const int CompletionYear = AcademicYear + 2;
+        private const int CompletionAcademicYear = AcademicYear + 2;
 
         public static IEnumerable<object[]> Data
         {
@@ -21,15 +21,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 {
                     new object[]
                     {
-                        new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration, AcademicYear = AcademicYear, CompletionYear = CompletionYear } },
-                        string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, LearnerName, CompletionYear),
-                        string.Format(CheckAndSubmitContent.Declaration_I_Will_Make_Sure_The_Record_Is_Updated, CompletionYear)
+                        new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration, AcademicYear = AcademicYear, CompletionAcademicYear = CompletionAcademicYear } },
+                        string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, LearnerName, CompletionAcademicYear),
+                        string.Format(CheckAndSubmitContent.Declaration_I_Will_Make_Sure_The_Record_Is_Updated, CompletionAcademicYear)
                     },
                     new object[]
                     {
-                        new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed, AcademicYear = AcademicYear, CompletionYear = CompletionYear } },
-                        string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, LearnerName, CompletionYear),
-                        string.Format(CheckAndSubmitContent.Declaration_I_Will_Make_Sure_The_Record_Is_Updated, CompletionYear)
+                        new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed, AcademicYear = AcademicYear, CompletionAcademicYear = CompletionAcademicYear } },
+                        string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, LearnerName, CompletionAcademicYear),
+                        string.Format(CheckAndSubmitContent.Declaration_I_Will_Make_Sure_The_Record_Is_Updated, CompletionAcademicYear)
                     },
                     new object[]
                     {
