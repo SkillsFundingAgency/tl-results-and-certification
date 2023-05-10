@@ -40,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                     logger.LogInformation($"Function {context.FunctionName} started");
 
                     var stopwatch = Stopwatch.StartNew();
+
                     await _commonService.CreateFunctionLog(functionLogDetails);
 
                     var response = await _ucasDataTransferService.ProcessUcasDataRecordsAsync(UcasDataType.Entries);
