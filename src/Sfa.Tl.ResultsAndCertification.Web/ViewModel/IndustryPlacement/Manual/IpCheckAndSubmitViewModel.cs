@@ -55,7 +55,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
 
         public virtual BackLinkModel BackLink { get; set; }
 
-        public string DeclarationText { get; set; }
+        public string DeclarationConfirmSupportText { get; set; }
+
+        public string DeclarationUpdateRecordText { get; set; }
+
         public void SetDeclarationText(IndustryPlacementViewModel cacheModel)
         {
             if (cacheModel?.IpCompletion?.IndustryPlacementStatus != null &&
@@ -65,11 +68,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
                 {
                     case IndustryPlacementStatus.Completed:
                     case IndustryPlacementStatus.CompletedWithSpecialConsideration:
-                        DeclarationText = string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, LearnerName);
+                        DeclarationConfirmSupportText = string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, LearnerName, cacheModel.IpCompletion.CompletionYear);
+                        DeclarationUpdateRecordText = string.Format(CheckAndSubmitContent.Declaration_I_Will_Make_Sure_The_Record_Is_Updated, cacheModel.IpCompletion.CompletionYear);
                         break;
                     case IndustryPlacementStatus.NotCompleted:
                     case IndustryPlacementStatus.WillNotComplete:
-                        DeclarationText = CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Is_Held;
+                        DeclarationConfirmSupportText = CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Is_Held;
                         break;
                 }
             }
