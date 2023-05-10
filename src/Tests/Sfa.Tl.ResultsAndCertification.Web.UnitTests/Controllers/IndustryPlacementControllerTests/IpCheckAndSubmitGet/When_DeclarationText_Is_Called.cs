@@ -21,13 +21,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 {
                     new object[]
                     {
-                        new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration, AcademicYear = AcademicYear } },
+                        new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration, AcademicYear = AcademicYear, CompletionYear = CompletionYear } },
                         string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, LearnerName, CompletionYear),
                         string.Format(CheckAndSubmitContent.Declaration_I_Will_Make_Sure_The_Record_Is_Updated, CompletionYear)
                     },
                     new object[]
                     {
-                        new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed, AcademicYear = AcademicYear } },
+                        new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed, AcademicYear = AcademicYear, CompletionYear = CompletionYear } },
                         string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, LearnerName, CompletionYear),
                         string.Format(CheckAndSubmitContent.Declaration_I_Will_Make_Sure_The_Record_Is_Updated, CompletionYear)
                     },

@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         }
         public bool IsIpStatusExists => IndustryPlacementStatus != null && IndustryPlacementStatus != ResultsAndCertification.Common.Enum.IndustryPlacementStatus.NotSpecified;
 
-        public int CompletionYear => AcademicYear + 2;
+        public int CompletionYear { get; set; }
 
         public virtual BackLinkModel BackLink => new()
         {
