@@ -106,15 +106,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learners may experience difficult circumstances during their placement, which mean they are unable to complete the minimum placement hours before the end of the second year..
-        /// </summary>
-        public static string Learners_May_Experience_Diffiuclt_Circumstaces_During_Placement {
-            get {
-                return ResourceManager.GetString("Learners_May_Experience_Diffiuclt_Circumstaces_During_Placement", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to industry placement completion exceptions (opens in a new tab)..
         /// </summary>
         public static string Link_Ip_Completion_Exception {
@@ -178,6 +169,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to What if the industry placement status changes?.
+        /// </summary>
+        public static string Summary_Text_What_If_Industry_Placement_Status_Change {
+            get {
+                return ResourceManager.GetString("Summary_Text_What_If_Industry_Placement_Status_Change", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to What is special consideration?.
         /// </summary>
         public static string Summary_Text_What_Is_Special_Consideration {
@@ -228,6 +228,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         public static string You_Have_Discretion_To_Apply_Special_Consideration {
             get {
                 return ResourceManager.GetString("You_Have_Discretion_To_Apply_Special_Consideration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must make sure any changes to the learner record, including the industry placement status, are made in this service before 31 July [YEAR]. This is to ensure the learner’s results and certificate are accurate..
+        /// </summary>
+        public static string You_Must_Make_Sure_Any_Changes_To_The_Learner_Record {
+            get {
+                return ResourceManager.GetString("You_Must_Make_Sure_Any_Changes_To_The_Learner_Record", resourceCulture);
             }
         }
     }

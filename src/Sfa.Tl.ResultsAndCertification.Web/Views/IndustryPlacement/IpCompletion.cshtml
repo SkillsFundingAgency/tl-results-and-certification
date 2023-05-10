@@ -38,6 +38,16 @@
                             <label class="govuk-label govuk-radios__label" for="industryplacementstatus">
                                 @IpCompletion.Yes_Completed_Option_Text
                             </label>
+                            <details class="govuk-details govuk-!-margin-left-4" data-module="govuk-details">
+                                <summary class="govuk-details__summary">
+                                    <span class="govuk-details__summary-text">
+                                        @IpCompletion.Summary_Text_What_If_Industry_Placement_Status_Change
+                                    </span>
+                                </summary>
+                                <div class="govuk-details__text">
+                                    <p class="govuk-!-padding-right-2">@IpCompletion.You_Must_Make_Sure_Any_Changes_To_The_Learner_Record</p>
+                                </div>
+                            </details>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="industryplacementstatus-cwspc" asp-for="IndustryPlacementStatus" type="radio" value="@IpStatus.IndustryPlacementStatus.CompletedWithSpecialConsideration">
