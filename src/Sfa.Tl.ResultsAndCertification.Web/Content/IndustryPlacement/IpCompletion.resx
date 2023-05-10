@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
+	<!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,122 +59,128 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="By_Selecting_Hint_Text" xml:space="preserve">
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="By_Selecting_Hint_Text" xml:space="preserve">
     <value>By selecting either 'yes' response, you are declaring that the relevant provider responsibilities have been met and that you hold the</value>
   </data>
-  <data name="Continue_Button_Text" xml:space="preserve">
+	<data name="Continue_Button_Text" xml:space="preserve">
     <value>Continue</value>
   </data>
-  <data name="For_This_Learner_Hint_Text" xml:space="preserve">
+	<data name="For_This_Learner_Hint_Text" xml:space="preserve">
     <value>for this learner.</value>
   </data>
-  <data name="Has_Learner_Completed_Industry_Placement_Heading" xml:space="preserve">
+	<data name="Has_Learner_Completed_Industry_Placement_Heading" xml:space="preserve">
     <value>Has {0} completed their industry placement?</value>
   </data>
-  <data name="Industry_Placement_Caption" xml:space="preserve">
+	<data name="Industry_Placement_Caption" xml:space="preserve">
     <value>Industry placement</value>
   </data>
-	<data name="You_Must_Make_Sure_Any_Changes_To_The_Learner_Record" xml:space="preserve">
-    <value>You must make sure any changes to the learner record, including the industry placement status, are made in this service before 31 July [YEAR]. This is to ensure the learner’s results and certificate are accurate.</value>
+	<data name="Learners_May_Experience_Diffiuclt_Circumstaces_During_Placement" xml:space="preserve">
+    <value>Learners may experience difficult circumstances during their placement, which mean they are unable to complete the minimum placement hours before the end of the second year.</value>
   </data>
-  <data name="Link_Ip_Completion_Exception" xml:space="preserve">
+	<data name="Link_Ip_Completion_Exception" xml:space="preserve">
     <value>industry placement completion exceptions (opens in a new tab).</value>
   </data>
-  <data name="More_About" xml:space="preserve">
+	<data name="More_About" xml:space="preserve">
     <value>More about</value>
   </data>
-  <data name="No_Still_To_Be_Completed_Option_Text" xml:space="preserve">
+	<data name="No_Still_To_Be_Completed_Option_Text" xml:space="preserve">
     <value>No, they still need to complete it</value>
   </data>
-  <data name="No_Will_Not_Complete_Option_Text" xml:space="preserve">
+	<data name="No_Will_Not_Complete_Option_Text" xml:space="preserve">
     <value>No, they will not complete it</value>
   </data>
-  <data name="Page_Title_Add_Journey" xml:space="preserve">
+	<data name="Page_Title_Add_Journey" xml:space="preserve">
     <value>Industry placement completion - Manage learner</value>
   </data>
-  <data name="Page_Title_Change_Journey" xml:space="preserve">
+	<data name="Page_Title_Change_Journey" xml:space="preserve">
     <value>Change industry placement details - Update learner record</value>
   </data>
-  <data name="Signed_Declaration_Hint_Text" xml:space="preserve">
+	<data name="Signed_Declaration_Hint_Text" xml:space="preserve">
     <value>signed declaration of student completion (opens in a new tab)</value>
   </data>
-  <data name="Summary_Text_What_Is_Special_Consideration" xml:space="preserve">
+	<data name="Learners_May_Experience_Diffiuclt_Circumstaces_During_Placement" xml:space="preserve">
+    <value>Learners may experience difficult circumstances during their placement, which mean they are unable to complete the minimum placement hours before the end of the second year.</value>
+  </data>
+	<data name="You_Must_Make_Sure_Any_Changes_To_The_Learner_Record" xml:space="preserve">
+		<value>You must make sure any changes to the learner record, including the industry placement status, are made in this service before 31 July [YEAR]. This is to ensure the learner’s results and certificate are accurate.</value>  
+	</data>
+	<data name="Summary_Text_What_Is_Special_Consideration" xml:space="preserve">
     <value>What is special consideration?</value>
   </data>
 	<data name="Summary_Text_What_If_Industry_Placement_Status_Change">
 		<value>What if the industry placement status changes?</value>
 	</data>
-  <data name="Validation_Message" xml:space="preserve">
+	<data name="Validation_Message" xml:space="preserve">
     <value>Tell us whether this learner has completed their industry placement</value>
   </data>
-  <data name="Yes_Completed_Option_Text" xml:space="preserve">
+	<data name="Yes_Completed_Option_Text" xml:space="preserve">
     <value>Yes, completed</value>
   </data>
-  <data name="Yes_Completed_With_Special_Consideration_Option_Text" xml:space="preserve">
+	<data name="Yes_Completed_With_Special_Consideration_Option_Text" xml:space="preserve">
     <value>Yes, completed with special consideration</value>
   </data>
-  <data name="You_Do_Not_Need_Upload_Evidence" xml:space="preserve">
+	<data name="You_Do_Not_Need_Upload_Evidence" xml:space="preserve">
     <value>You do not need to upload any evidence, but you should hold supporting documentation in your own files.</value>
   </data>
-  <data name="You_Have_Discretion_To_Apply_Special_Consideration" xml:space="preserve">
+	<data name="You_Have_Discretion_To_Apply_Special_Consideration" xml:space="preserve">
     <value>You have the discretion to apply special consideration in some exceptional circumstances where students have demonstrated sufficient progress towards their learning goals but have not completed the minimum placement hours.</value>
   </data>
 </root>

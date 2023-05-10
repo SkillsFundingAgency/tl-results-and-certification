@@ -106,6 +106,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learners may experience difficult circumstances during their placement, which mean they are unable to complete the minimum placement hours before the end of the second year..
+        /// </summary>
+        public static string Learners_May_Experience_Diffiuclt_Circumstaces_During_Placement {
+            get {
+                return ResourceManager.GetString("Learners_May_Experience_Diffiuclt_Circumstaces_During_Placement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to industry placement completion exceptions (opens in a new tab)..
         /// </summary>
         public static string Link_Ip_Completion_Exception {
