@@ -172,7 +172,7 @@
     <value>Tell us whether this learner has completed their industry placement</value>
   </data>
 	<data name="Yes_Completed_Option_Text" xml:space="preserve">
-    <value>Yes, completed</value>
+    <value>Yes, completed, or will be completed by 31 July [YEAR]</value>
   </data>
 	<data name="Yes_Completed_With_Special_Consideration_Option_Text" xml:space="preserve">
     <value>Yes, completed with special consideration</value>

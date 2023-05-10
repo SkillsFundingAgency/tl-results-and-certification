@@ -205,7 +205,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes, completed.
+        ///   Looks up a localized string similar to Yes, completed, or will be completed by 31 July [YEAR].
         /// </summary>
         public static string Yes_Completed_Option_Text {
             get {
