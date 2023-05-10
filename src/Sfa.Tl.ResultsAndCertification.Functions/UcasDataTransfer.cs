@@ -30,9 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-            // Check if it is the last Wednesday in June and run the function if it is true
+            // Check if it is the Ucas transfer entries trigger date valid
             if (_commonService.IsUcasTransferEntriesTriggerDateValid())
-            //if (_commonService.CurrentDate.IsLastWeekdayOfMonth(DayOfWeek.Wednesday, Months.June))
             {
                 var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.UcasTransferEntries);
 
@@ -41,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                     logger.LogInformation($"Function {context.FunctionName} started");
 
                     var stopwatch = Stopwatch.StartNew();
+
                     await _commonService.CreateFunctionLog(functionLogDetails);
 
                     var response = await _ucasDataTransferService.ProcessUcasDataRecordsAsync(UcasDataType.Entries);

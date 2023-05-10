@@ -12,9 +12,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
     {
         public override void Given()
         {
-            var todayDate = "29/06/2022".ParseStringToDateTimeWithFormat();
+            var todayDate = "12/05/2023".ParseStringToDateTimeWithFormat();
             CommonService.CurrentDate.Returns(todayDate);
-
+            CommonService.IsUcasTransferEntriesTriggerDateValid().Returns(true);
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
             UcasDataTransferService.ProcessUcasDataRecordsAsync(UcasDataType.Entries).Returns(x => Task.FromException(new Exception()));
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
