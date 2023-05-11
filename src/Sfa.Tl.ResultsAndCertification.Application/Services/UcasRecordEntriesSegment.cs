@@ -35,7 +35,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var ucasSpecialismComponent = new UcasDataComponent
             {
-                SubjectCode = !string.IsNullOrEmpty(dualSpecialismCode) ? dualSpecialismCode : pathway.TqRegistrationSpecialisms.First().TlSpecialism.LarId,
+                SubjectCode = !string.IsNullOrEmpty(dualSpecialismCode) ? dualSpecialismCode :
+                pathway.TqRegistrationSpecialisms.Any() ?
+                pathway.TqRegistrationSpecialisms.First().TlSpecialism.LarId : string.Empty,
                 Grade = string.Empty,
                 PreviousGrade = string.Empty
             };
