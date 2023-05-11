@@ -178,6 +178,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to What if the industry placement status changes?.
+        /// </summary>
+        public static string Summary_Text_What_If_Industry_Placement_Status_Change {
+            get {
+                return ResourceManager.GetString("Summary_Text_What_If_Industry_Placement_Status_Change", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to What is special consideration?.
         /// </summary>
         public static string Summary_Text_What_Is_Special_Consideration {
@@ -196,7 +205,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes, completed.
+        ///   Looks up a localized string similar to Yes, completed, or will be completed by 31 July {0}.
         /// </summary>
         public static string Yes_Completed_Option_Text {
             get {
@@ -228,6 +237,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         public static string You_Have_Discretion_To_Apply_Special_Consideration {
             get {
                 return ResourceManager.GetString("You_Have_Discretion_To_Apply_Special_Consideration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must make sure any changes to the learner record, including the industry placement status, are made in this service before 31 July {0}. This is to ensure the learner’s results and certificate are accurate..
+        /// </summary>
+        public static string You_Must_Make_Sure_Any_Changes_To_The_Learner_Record {
+            get {
+                return ResourceManager.GetString("You_Must_Make_Sure_Any_Changes_To_The_Learner_Record", resourceCulture);
             }
         }
     }
