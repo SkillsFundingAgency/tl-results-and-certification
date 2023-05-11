@@ -241,7 +241,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You must make sure any changes to the learner record, including the industry placement status, are made in this service before 31 July [YEAR]. This is to ensure the learner’s results and certificate are accurate..
+        ///   Looks up a localized string similar to You must make sure any changes to the learner record, including the industry placement status, are made in this service before 31 July {0}. This is to ensure the learner’s results and certificate are accurate..
         /// </summary>
         public static string You_Must_Make_Sure_Any_Changes_To_The_Learner_Record {
             get {
