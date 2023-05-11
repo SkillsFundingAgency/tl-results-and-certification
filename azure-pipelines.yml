@@ -4,9 +4,10 @@ trigger:
   branches:
     include:
       - master
-      - feature/*
+      - develop/*
     exclude:
       - feature/lrs-integration
+      - feature/*
 
 pr: 
   - master
