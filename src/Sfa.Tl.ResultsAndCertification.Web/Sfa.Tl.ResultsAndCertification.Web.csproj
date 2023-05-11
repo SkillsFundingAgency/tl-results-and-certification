@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="__azurite_db_blob_extent__.json" />
+    <Content Remove="__azurite_db_blob__.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Frontend\src\stylesheets\css\" />
   </ItemGroup>
 
