@@ -171,8 +171,8 @@
 	<data name="Validation_Message" xml:space="preserve">
     <value>Tell us whether this learner has completed their industry placement</value>
   </data>
-	<data name="Yes_Completed_Option_Text" xml:space="preserve">
-    <value>Yes, completed, or will be completed by 31 July [YEAR]</value>
+  <data name="Yes_Completed_Option_Text" xml:space="preserve">
+    <value>Yes, completed, or will be completed by 31 July {0}</value>
   </data>
 	<data name="Yes_Completed_With_Special_Consideration_Option_Text" xml:space="preserve">
     <value>Yes, completed with special consideration</value>

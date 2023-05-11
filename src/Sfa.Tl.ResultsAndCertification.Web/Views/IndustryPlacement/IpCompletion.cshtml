@@ -8,7 +8,7 @@
 }
 
 @section NavigationBar {
-<vc:back-link model=Model.BackLink></vc:back-link>
+    <vc:back-link model=Model.BackLink></vc:back-link>
 }
 
 <div class="govuk-grid-row">
@@ -36,7 +36,7 @@
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="industryplacementstatus" asp-for="IndustryPlacementStatus" type="radio" value="@IpStatus.IndustryPlacementStatus.Completed">
                             <label class="govuk-label govuk-radios__label" for="industryplacementstatus">
-                                @IpCompletion.Yes_Completed_Option_Text
+                                @string.Format(IpCompletion.Yes_Completed_Option_Text, Model.CompletionAcademicYear)
                             </label>
                             <details class="govuk-details govuk-!-margin-left-4" data-module="govuk-details">
                                 <summary class="govuk-details__summary">
@@ -63,7 +63,7 @@
                                 <div class="govuk-details__text">
                                     <p class="govuk-!-padding-right-2">@IpCompletion.Learners_May_Experience_Diffiuclt_Circumstaces_During_Placement</p>
                                     <p class="govuk-!-padding-right-2">@IpCompletion.You_Have_Discretion_To_Apply_Special_Consideration</p>
-                                        <p class="govuk-!-padding-right-2">@IpCompletion.You_Do_Not_Need_Upload_Evidence</p>
+                                    <p class="govuk-!-padding-right-2">@IpCompletion.You_Do_Not_Need_Upload_Evidence</p>
                                     <p class="govuk-!-padding-right-2">@IpCompletion.More_About <a class="govuk-link govuk-link--no-visited-state" target="_blank" href="https://www.gov.uk/government/publications/t-level-industry-placements-delivery-guidance/t-level-industry-placements-delivery-guidance#section5">@IpCompletion.Link_Ip_Completion_Exception</a></p>
                                 </div>
                             </details>
