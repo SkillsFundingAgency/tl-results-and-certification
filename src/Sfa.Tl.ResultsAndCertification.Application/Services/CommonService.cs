@@ -48,18 +48,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var lookupData = await _tlLookupRepository.GetManyAsync(x => x.IsActive && x.Category == lookupCategory.ToString())
                                                       .OrderBy(x => x.SortOrder).ToListAsync();
-            
+
             return _mapper.Map<IEnumerable<LookupData>>(lookupData);
         }
 
         public async Task<bool> CreateFunctionLog(FunctionLogDetails model)
         {
             if (model != null)
-            {               
+            {
                 var entityModel = _mapper.Map<FunctionLog>(model);
                 var isSuccess = await _functionLogRepository.CreateAsync(entityModel) > 0;
 
-                if(isSuccess)
+                if (isSuccess)
                 {
                     model.Id = entityModel.Id;
                     return true;
@@ -106,6 +106,30 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 };
 
             return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.FunctionJobFailedNotification.ToString(), _configuration.TechnicalInternalNotificationEmailAddress, tokens);
+        }
+
+        /// <summary>
+        /// TLRC-9512 have a list of dates which will trigger the UcasTransferEntries function accordind to the demand
+        /// </summary>
+        /// <returns></returns>
+
+        public bool IsUcasTransferEntriesTriggerDateValid()
+        {
+            var isValid = false;            
+
+            var uCasTriggerDates = new List<DateTime>() {
+                new DateTime(2023,05,10),
+                new DateTime(2023,05,11),
+                new DateTime(2023,05,12),
+                new DateTime(2023,06,28)                
+            };
+
+            if (uCasTriggerDates.Contains(new DateTime(CurrentDate.Year, CurrentDate.Month, CurrentDate.Day)))
+            {
+                isValid = true;
+            }
+
+            return isValid;
         }
 
         public async Task<IEnumerable<Contract.AcademicYear>> GetCurrentAcademicYearsAsync()

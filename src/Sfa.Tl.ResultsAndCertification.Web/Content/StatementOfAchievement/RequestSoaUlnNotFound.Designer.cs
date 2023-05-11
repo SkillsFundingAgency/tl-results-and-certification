@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class RequestSoaUlnNotFound {
@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you think this learner should be registered, please contact the exam board responsible for delivering the T Level..
+        ///   Looks up a localized string similar to If you think this learner should be registered, please contact the awarding organisation responsible for delivering the T Level..
         /// </summary>
         public static string Para_If_You_Think_Registered_Contact_Exam_Board {
             get {
@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can only request a statement of achievement for a learner registered on a T Level course by an exam board (also known as an awarding organisation)..
+        ///   Looks up a localized string similar to You can only request a statement of achievement for a learner registered on a T Level course by an awarding organisation..
         /// </summary>
         public static string Para_You_Can_Only_Request_For_Registered_Learner {
             get {

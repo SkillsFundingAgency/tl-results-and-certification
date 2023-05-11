@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,6 +36,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (overallResultDetails.SpecialismDetails != null)
             {
+                overallResultDetails = ReplaceDualSpecialismCode(overallResultDetails);
+
                 foreach (var specialism in overallResultDetails.SpecialismDetails)
                 {
                     var ucasSpecialismComponent = new UcasDataComponent
@@ -49,6 +52,25 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
         }
 
+        public OverallResultDetail ReplaceDualSpecialismCode(OverallResultDetail overallResultDetails)
+        {
+            var dualSpecialims = UcasDataAbbreviations._dualSpecialisms.SelectMany(t => t.Value).ToList();
+            var specialismDetails = overallResultDetails.SpecialismDetails.Select(t => t.SpecialismLarId).ToList();
+
+
+            if (dualSpecialims.Any(b => specialismDetails.Any(a => b.Contains(a))))
+            {
+                var dualCode = UcasDataAbbreviations._dualSpecialisms.Where(f => f.Value.Intersect(specialismDetails, StringComparer.OrdinalIgnoreCase).Count() == 2).FirstOrDefault().Key;
+                if (!string.IsNullOrEmpty(dualCode))
+                {
+                    overallResultDetails.SpecialismDetails.ToList().ForEach(f => f.SpecialismLarId = dualCode);
+                    overallResultDetails.SpecialismDetails = new List<OverallSpecialismDetail>() { overallResultDetails.SpecialismDetails.First() };
+                }
+            }
+
+            return overallResultDetails;
+        }
+
         public void AddOverallResultSegment(IList<UcasDataComponent> ucasDataComponents, string overallSubjectCode, string resultAwarded)
         {
             ucasDataComponents.Add(new UcasDataComponent
@@ -58,5 +80,22 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 PreviousGrade = string.Empty
             });
         }
+
+        public void AddIndustryPlacementResultSegment(IList<UcasDataComponent> ucasDataComponents, string industryPlacementCode, TqRegistrationPathway pathway)
+        {
+            var overallResults = pathway.OverallResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
+            var overallResultDetails = JsonConvert.DeserializeObject<OverallResultDetail>(overallResults.Details);
+
+            if (overallResultDetails.IndustryPlacementStatus !=null)
+            {
+                ucasDataComponents.Add(new UcasDataComponent
+                {
+                    SubjectCode = industryPlacementCode,
+                    Grade = UcasDataAbbreviations.GetAbbreviatedResult(UcasResultType.IndustryPlacement,overallResultDetails.IndustryPlacementStatus),
+                    PreviousGrade = string.Empty
+                });
+            }
+        }
+
     }
 }

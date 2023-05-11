@@ -6,8 +6,10 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
@@ -28,8 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-            // Check if it is the last Wednesday in June and run the function if it is true
-            if (_commonService.CurrentDate.IsLastWeekdayOfMonth(DayOfWeek.Wednesday, Months.June))
+            // Check if it is the Ucas transfer entries trigger date valid
+            if (_commonService.IsUcasTransferEntriesTriggerDateValid())
             {
                 var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.UcasTransferEntries);
 
@@ -38,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                     logger.LogInformation($"Function {context.FunctionName} started");
 
                     var stopwatch = Stopwatch.StartNew();
+
                     await _commonService.CreateFunctionLog(functionLogDetails);
 
                     var response = await _ucasDataTransferService.ProcessUcasDataRecordsAsync(UcasDataType.Entries);
@@ -73,7 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-            // Check if it is the second Thursday in August and run the function if it is true
+            //Check if it is the second Thursday in August and run the function if it is true
             if (_commonService.CurrentDate.IsNthWeekdayOfMonth(DayOfWeek.Thursday, Months.August, 2))
             {
                 var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.UcasTransferResults);

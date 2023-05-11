@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using AutoMapper.Configuration.Annotations;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;

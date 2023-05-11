@@ -4,6 +4,7 @@
     {
         PathwayResult = 1,
         SpecialismResult = 2,
-        OverallResult = 3
+        OverallResult = 3,
+        IndustryPlacement =4
     }
 }

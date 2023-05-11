@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+﻿using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -53,6 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 _ucasRecordEntrySegment.AddCoreSegment(ucasDataComponents, pathway);
                 _ucasRecordEntrySegment.AddSpecialismSegment(ucasDataComponents, pathway);
                 _ucasRecordEntrySegment.AddOverallResultSegment(ucasDataComponents, _resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode);
+                _ucasRecordEntrySegment.AddIndustryPlacementResultSegment(ucasDataComponents, _resultsAndCertificationConfiguration.UcasDataSettings.IndustryPlacementCode, pathway);
 
                 if (ucasDataComponents.Any())
                 {
@@ -67,7 +69,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private async Task<UcasData> ProcessUcasDataRecordResultsAsync()
         {
             var records = new List<UcasDataRecord>();
-            var overallResults = await _ucasRepository.GetUcasDataRecordsForResultsAsync();
+            var overallResults = await _ucasRepository.GetUcasDataRecordsForResultsAsync();           
+
             foreach (var overallResult in overallResults)
             {
                 var ucasDataComponents = new List<UcasDataComponent>();
@@ -75,6 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 _ucasRecordResultsSegment.AddCoreSegment(ucasDataComponents, overallResult.TqRegistrationPathway);
                 _ucasRecordResultsSegment.AddSpecialismSegment(ucasDataComponents, overallResult.TqRegistrationPathway);
                 _ucasRecordResultsSegment.AddOverallResultSegment(ucasDataComponents, _resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode, overallResult.ResultAwarded);
+                _ucasRecordResultsSegment.AddIndustryPlacementResultSegment(ucasDataComponents, _resultsAndCertificationConfiguration.UcasDataSettings.IndustryPlacementCode, overallResult.TqRegistrationPathway);
 
                 records.Add(BuildUcasDataRecord(ucasDataComponents, overallResult.TqRegistrationPathway));
             }
@@ -94,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 _ucasRecordResultsSegment.AddCoreSegment(ucasDataComponents, overallResult.TqRegistrationPathway);
                 _ucasRecordResultsSegment.AddSpecialismSegment(ucasDataComponents, overallResult.TqRegistrationPathway);
                 _ucasRecordResultsSegment.AddOverallResultSegment(ucasDataComponents, _resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode, overallResult.ResultAwarded);
-
+                _ucasRecordResultsSegment.AddIndustryPlacementResultSegment(ucasDataComponents, _resultsAndCertificationConfiguration.UcasDataSettings.IndustryPlacementCode, overallResult.TqRegistrationPathway);
                 records.Add(BuildUcasDataRecord(ucasDataComponents, overallResult.TqRegistrationPathway));
             }
 
@@ -148,6 +152,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
 
             return ucasData;
-        }       
+        }
     }
 }

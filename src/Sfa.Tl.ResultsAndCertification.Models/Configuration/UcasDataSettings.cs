@@ -7,5 +7,6 @@
         public string ExamMonth { get; set; }
         public string CentreNumber { get; set; }
         public string OverallSubjectCode { get; set; }
+        public string IndustryPlacementCode { get; set; }
     }
 }
