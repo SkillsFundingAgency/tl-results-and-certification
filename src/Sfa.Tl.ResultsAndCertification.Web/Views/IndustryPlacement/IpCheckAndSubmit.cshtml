@@ -28,10 +28,12 @@
                 }
             </dl>
             
-            <p class="govuk-body">@Model.DeclarationText</p>
+            <p class="govuk-body">@Model.DeclarationConfirmSupportText</p>
+            <p class="govuk-body">@Model.DeclarationUpdateRecordText</p>
+
             <form asp-route="@RouteConstants.SubmitIpCheckAndSubmit">
                 <div class="govuk-button-group">
-                    <button class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@IpCheckAndSubmit.Button_Submit</button>
+                    <button class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@IpCheckAndSubmit.Button_Save_And_Continue</button>
                     <a class="govuk-link" asp-route="@RouteConstants.IpCheckAndSubmitCancel" asp-route-profileId="@Model.ProfileId">@IpCheckAndSubmit.Link_Cancel</a>
                 </div>
             </form>

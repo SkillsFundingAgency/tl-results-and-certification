@@ -61,16 +61,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Submit.
+        ///   Looks up a localized string similar to Save and continue.
         /// </summary>
-        public static string Button_Submit {
+        public static string Button_Save_And_Continue {
             get {
-                return ResourceManager.GetString("Button_Submit", resourceCulture);
+                return ResourceManager.GetString("Button_Save_And_Continue", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I confirm that {0} has completed their T Level industry placement and that all relevant supporting documentation is held on record..
+        ///   Looks up a localized string similar to I confirm that {0} has completed, or will complete by 31 July {1}, their T Level industry placement and that all relevant supporting documentation is held on record..
         /// </summary>
         public static string Declaration_I_Confirm_Supporting_Docs_Held_On_Records {
             get {
@@ -84,6 +84,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         public static string Declaration_I_Confirm_Supporting_Docs_Is_Held {
             get {
                 return ResourceManager.GetString("Declaration_I_Confirm_Supporting_Docs_Is_Held", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If this status changes, I will make sure the learner record is updated to reflect the change by no later than 31 July {0} to ensure accurate results and certification..
+        /// </summary>
+        public static string Declaration_I_Will_Make_Sure_The_Record_Is_Updated {
+            get {
+                return ResourceManager.GetString("Declaration_I_Will_Make_Sure_The_Record_Is_Updated", resourceCulture);
             }
         }
         
