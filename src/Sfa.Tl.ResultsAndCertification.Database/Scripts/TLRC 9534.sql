@@ -2,7 +2,7 @@ BEGIN TRANSACTION [UpdateAcademicYear]
 
   BEGIN TRY
 	-- Update script for 
-	DECLARE @ULN1 INT = 3545229229
+	DECLARE @ULN1 BIGINT = 3545229229
 
 	IF EXISTS (SELECT ID FROM TqRegistrationProfile WHERE UniqueLearnerNumber=@ULN1)
 		 BEGIN 
