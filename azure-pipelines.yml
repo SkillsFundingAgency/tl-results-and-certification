@@ -3,10 +3,11 @@ trigger:
   batch: true
   branches:
     include:
-      - master
-      - feature/*
+      - master      
+      - develop      
     exclude:
       - feature/lrs-integration
+      - feature/*
 
 pr: 
   - master
