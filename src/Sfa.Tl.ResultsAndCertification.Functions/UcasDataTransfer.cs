@@ -6,10 +6,8 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
 using System.Diagnostics;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
@@ -75,6 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         public async Task UcasTransferResultsAsync([TimerTrigger("%UcasTransferResultsTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
+
 
             //Check if it is the second Thursday in August and run the function if it is true
             if (_commonService.CurrentDate.IsNthWeekdayOfMonth(DayOfWeek.Thursday, Months.August, 2))
