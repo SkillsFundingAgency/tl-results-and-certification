@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Assessments_Published_On" xml:space="preserve">
-    <value>published 2 December 2022</value>
+    <value>published 16 May 2023</value>
   </data>
   <data name="Assessments_Version" xml:space="preserve">
-    <value>Version 1.7</value>
+    <value>Version 1.8</value>
   </data>
   <data name="File_Max_Record_Count_Validation_Message" xml:space="preserve">
     <value>File must contain assessment entries for between one and {0} registrations</value>
