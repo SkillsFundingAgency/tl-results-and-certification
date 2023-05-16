@@ -412,11 +412,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to T Level status.
+        /// </summary>
+        public static string Title_TLevel_Status_Text {
+            get {
+                return ResourceManager.GetString("Title_TLevel_Status_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to T Level.
         /// </summary>
         public static string Title_TLevel_Text {
             get {
                 return ResourceManager.GetString("Title_TLevel_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pending Withdrawal.
+        /// </summary>
+        public static string TLevel_Status_Pending_Withdrawal_Text {
+            get {
+                return ResourceManager.GetString("TLevel_Status_Pending_Withdrawal_Text", resourceCulture);
             }
         }
         

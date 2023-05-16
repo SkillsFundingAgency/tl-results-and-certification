@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
+        public bool IsPendingWithdrawal { get; set; }
         public bool IsBulkUpload { get; set; }
 
         public virtual TqProvider TqProvider { get; set; }
