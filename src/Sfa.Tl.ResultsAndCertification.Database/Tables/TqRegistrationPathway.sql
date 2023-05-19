@@ -12,7 +12,8 @@
     [CreatedBy] NVARCHAR(50) NULL, 
     [ModifiedOn] DATETIME2 NULL, 
     [ModifiedBy] NVARCHAR(50) NULL,
-	CONSTRAINT [PK_TqRegistrationPathway] PRIMARY KEY ([Id]),
+	[IsPendingWithdrawal] BIT NULL DEFAULT 0, 
+    CONSTRAINT [PK_TqRegistrationPathway] PRIMARY KEY ([Id]),
 	CONSTRAINT [FK_TqRegistrationPathway_TqRegistrationProfile] FOREIGN KEY ([TqRegistrationProfileId]) REFERENCES [TqRegistrationProfile]([Id]),
 	CONSTRAINT [FK_TqRegistrationPathway_TqProvider] FOREIGN KEY ([TqProviderId]) REFERENCES [TqProvider]([Id]),
 	INDEX IX_TqRegistrationPathway_RegistrationProfileId NONCLUSTERED ([TqRegistrationProfileId], [TqProviderId])
