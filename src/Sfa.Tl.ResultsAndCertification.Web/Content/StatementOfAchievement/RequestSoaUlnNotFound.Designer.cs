@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ULN ({0}) has not been registered in this service by an exam board.
+        ///   Looks up a localized string similar to ULN ({0}) has not been registered in this service by an awarding organisation.
         /// </summary>
         public static string Heading_Uln_Not_Registered {
             get {
@@ -91,9 +91,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         /// <summary>
         ///   Looks up a localized string similar to If you think this learner should be registered, please contact the awarding organisation responsible for delivering the T Level..
         /// </summary>
-        public static string Para_If_You_Think_Registered_Contact_Exam_Board {
+        public static string Para_If_You_Think_Registered_Contact_Awarding_Organisation {
             get {
-                return ResourceManager.GetString("Para_If_You_Think_Registered_Contact_Exam_Board", resourceCulture);
+                return ResourceManager.GetString("Para_If_You_Think_Registered_Contact_Awarding_Organisation", resourceCulture);
             }
         }
         

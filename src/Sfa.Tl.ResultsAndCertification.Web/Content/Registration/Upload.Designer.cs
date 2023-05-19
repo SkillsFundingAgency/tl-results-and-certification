@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 289KB.
+        ///   Looks up a localized string similar to 290KB.
         /// </summary>
         public static string File_Size_Kb_Text {
             get {
@@ -241,7 +241,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 19 October 2022.
+        ///   Looks up a localized string similar to published 16 May 2023.
         /// </summary>
         public static string Registrations_Published_On {
             get {
@@ -250,7 +250,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version 1.8.
+        ///   Looks up a localized string similar to Version 1.9.
         /// </summary>
         public static string Registrations_Version {
             get {
