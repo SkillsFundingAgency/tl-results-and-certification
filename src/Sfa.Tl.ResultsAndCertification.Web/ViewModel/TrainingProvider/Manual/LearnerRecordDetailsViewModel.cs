@@ -1,18 +1,18 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using System;
 using System.Collections.Generic;
-using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using System.Linq;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
-using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
-using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
 using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
 using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
+using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
+using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
         public long ProviderUkprn { get; set; }
-        public string TlevelTitle { get; set; }        
+        public string TlevelTitle { get; set; }
         public int AcademicYear { get; set; }
         public string AwardingOrganisationName { get; set; }
         public SubjectStatus MathsStatus { get; set; }
@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 
         // PrintCertificate Info
         public int? PrintCertificateId { get; set; }
-        public PrintCertificateType? PrintCertificateType { get; set; }  
+        public PrintCertificateType? PrintCertificateType { get; set; }
         public AddressViewModel ProviderAddress { get; set; }
 
         public string StartYear => string.Format(LearnerRecordDetailsContent.Start_Year_Value, AcademicYear, AcademicYear + 1);
@@ -55,7 +55,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public bool IsEnglishAdded => EnglishStatus != SubjectStatus.NotSpecified;
         public bool IsIndustryPlacementAdded => IndustryPlacementStatus != IpStatus.NotSpecified;
         public bool IsIndustryPlacementStillToBeCompleted => IndustryPlacementStatus == IpStatus.NotSpecified || IndustryPlacementStatus == IpStatus.NotCompleted;
-        
+        public RegistrationPathwayStatus RegistrationPathwayStatus { get; set; }
+        public bool IsPendingWithdrawal { get; set; }
+
         public bool DisplayOverallResults => OverallResultDetails != null && OverallResultPublishDate.HasValue && DateTime.UtcNow >= OverallResultPublishDate;
         public NotificationBannerModel SuccessBanner { get; set; }
         public DateTime? LastDocumentRequestedDate { get; set; }
@@ -64,6 +66,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public bool IsReprint { get; set; }
 
         #region Summary Header
+
+        public SummaryItemModel SummaryTLevelStatus => new SummaryItemModel
+        {
+            Id = "tlevelstatus",
+            Title = LearnerRecordDetailsContent.Title_TLevel_Status_Text,
+            Value = TLevelStatusValue,
+            HasTag = true,
+            TagCssClass = TLevelStatusTagCssClass,
+            ActionText = TLevelStatusChangeLinkText
+        };
+
         public SummaryItemModel SummaryDateofBirth => new SummaryItemModel
         {
             Id = "dateofbirth",
@@ -172,7 +185,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public SummaryItemModel SummarySpecialismResult => new SummaryItemModel
         {
             Id = "specialismResult",
-            Title = HasSpecialismInfo ? OverallResultDetails.SpecialismDetails.FirstOrDefault().SpecialismName : null ,
+            Title = HasSpecialismInfo ? OverallResultDetails.SpecialismDetails.FirstOrDefault().SpecialismName : null,
             Value = HasSpecialismInfo ? OverallResultDetails.SpecialismDetails.FirstOrDefault().SpecialismResult : null
         };
 
@@ -210,5 +223,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             IpStatus.WillNotComplete => IndustryPlacementStatusContent.Placement_Will_Not_Be_Completed,
             _ => IndustryPlacementStatusContent.Not_Yet_Received_Display_Text,
         };
+
+        private string TLevelStatusTagCssClass
+            => RegistrationPathwayStatus == RegistrationPathwayStatus.Active && !IsPendingWithdrawal ? "govuk-tag--green" : "govuk-tag--blue";
+
+        private string TLevelStatusValue
+            => IsPendingWithdrawal ? LearnerRecordDetailsContent.TLevel_Status_Pending_Withdrawal_Text : RegistrationPathwayStatus.ToString();
+
+        private string TLevelStatusChangeLinkText
+        {
+            get
+            {
+                bool shouldShowTLevelStatusChangeLink = IsPendingWithdrawal || RegistrationPathwayStatus == RegistrationPathwayStatus.Active;
+                return shouldShowTLevelStatusChangeLink ? LearnerRecordDetailsContent.Action_Text_Link_Change : string.Empty;
+            }
+        }
     }
 }
