@@ -156,12 +156,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("manage-add-withdrawn-status", Name = RouteConstants.SubmitWithdrawnStatus)]
-        public async Task<IActionResult> AddWithdrawnStatusAsync(AddWithdrawnStatusViewModel model)
+        public IActionResult SubmitWithdrawnStatusAsync(AddWithdrawnStatusViewModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(model);
 
-            return View(model);
+            bool yesSelected = model.IsPendingWithdrawl.HasValue && model.IsPendingWithdrawl.Value;
+
+            if (yesSelected)
+            {
+                return View(model);
+            }
+
+            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
+
         }
 
         [HttpGet]

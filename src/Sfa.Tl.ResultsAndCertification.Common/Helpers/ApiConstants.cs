@@ -31,6 +31,8 @@
         public const string WithdrawRegistrationUri = "/api/registration/WithdrawRegistration";
         public const string RejoinRegistrationUri = "/api/registration/RejoinRegistration";
         public const string ReregistrationUri = "/api/registration/Reregistration";
+        public const string SetRegistrationAsPendingWithdrawalUri = "/api/registration/SetRegistrationAsPendingWithdrawal";
+        public const string ReinstateRegistrationFromPendingWithdrawalUri = "/api/registration/ReinstateRegistrationFromPendingWithdrawal";
 
         // Assessments Related Uri's
         public const string ProcessBulkAssessmentsUri = "/api/assessment/ProcessBulkAssessments";

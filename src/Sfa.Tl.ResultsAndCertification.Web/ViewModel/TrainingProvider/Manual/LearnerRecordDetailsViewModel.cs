@@ -75,7 +75,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             Value = TLevelStatusValue,
             HasTag = true,
             TagCssClass = TLevelStatusTagCssClass,
-            ActionText = TLevelStatusChangeLinkText
+            ActionText = TLevelStatusChangeLinkText,
+            RouteName = RegistrationPathwayStatus == RegistrationPathwayStatus.Active ? RouteConstants.AddWithdrawnStatus : string.Empty,
+            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
         };
 
         public SummaryItemModel SummaryDateofBirth => new SummaryItemModel
