@@ -141,6 +141,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("manage-add-withdrawn-status/{profileId}", Name = RouteConstants.AddWithdrawnStatus)]
+        public async Task<IActionResult> AddWithdrawnStatusAsync(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<AddWithdrawnStatusViewModel>(User.GetUkPrn(), profileId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("manage-add-withdrawn-status", Name = RouteConstants.SubmitWithdrawnStatus)]
+        public async Task<IActionResult> AddWithdrawnStatusAsync(AddWithdrawnStatusViewModel model)
+        {
+            if(!ModelState.IsValid)
+                return View(model);
+
+            return View(model);
+        }
+
+        [HttpGet]
         [Route("manage-learner-maths-level/{profileId}", Name = RouteConstants.AddMathsStatus)]
         public async Task<IActionResult> AddMathsStatusAsync(int profileId)
         {
