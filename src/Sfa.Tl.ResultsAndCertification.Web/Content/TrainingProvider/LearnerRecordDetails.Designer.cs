@@ -446,5 +446,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
                 return ResourceManager.GetString("Uln_Text", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;ve told us that {0} has withdrawn from this T Level. We will update their status to Withdrawn once {1} confirms the change..
+        /// </summary>
+        public static string Withdrawn_Message_Template {
+            get {
+                return ResourceManager.GetString("Withdrawn_Message_Template", resourceCulture);
+            }
+        }
     }
 }

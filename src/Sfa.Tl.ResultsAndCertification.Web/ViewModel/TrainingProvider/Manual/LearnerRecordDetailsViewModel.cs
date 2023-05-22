@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
@@ -200,6 +201,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         {
             RouteName = RouteConstants.SearchLearnerRecord
         };
+
+        public InformationBannerModel AwardingOrganisationInformationBanner { get; set; }
 
         private bool HasSpecialismInfo => DisplayOverallResults && OverallResultDetails.SpecialismDetails != null && OverallResultDetails.SpecialismDetails.Any();
 
