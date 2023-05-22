@@ -205,6 +205,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You&apos;ve told us that you want to reinstate {0} onto this T Level..
+        /// </summary>
+        public static string Reinstate_Message_Template {
+            get {
+                return ResourceManager.GetString("Reinstate_Message_Template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The document may take up to 3 weeks to arrive..
         /// </summary>
         public static string Reprint_Document_Arrive_In_3_Weeks {
@@ -448,11 +457,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You&apos;ve told us that {0} has withdrawn from this T Level. You should also contact {1} to let them know..
+        /// </summary>
+        public static string Withdrawn_Message_Told_AO_No_Template {
+            get {
+                return ResourceManager.GetString("Withdrawn_Message_Told_AO_No_Template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You&apos;ve told us that {0} has withdrawn from this T Level. We will update their status to Withdrawn once {1} confirms the change..
         /// </summary>
-        public static string Withdrawn_Message_Template {
+        public static string Withdrawn_Message_Told_AO_Yes_Template {
             get {
-                return ResourceManager.GetString("Withdrawn_Message_Template", resourceCulture);
+                return ResourceManager.GetString("Withdrawn_Message_Told_AO_Yes_Template", resourceCulture);
             }
         }
     }

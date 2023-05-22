@@ -202,7 +202,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             RouteName = RouteConstants.SearchLearnerRecord
         };
 
-        public InformationBannerModel AwardingOrganisationInformationBanner { get; set; }
+        public InformationBannerModel InformationBanner { get; set; }
 
         private bool HasSpecialismInfo => DisplayOverallResults && OverallResultDetails.SpecialismDetails != null && OverallResultDetails.SpecialismDetails.Any();
 

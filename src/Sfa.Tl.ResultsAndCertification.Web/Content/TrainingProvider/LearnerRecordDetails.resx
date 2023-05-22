@@ -165,6 +165,9 @@
   <data name="Personal_Details_Text" xml:space="preserve">
     <value>Personal details</value>
   </data>
+  <data name="Reinstate_Message_Template" xml:space="preserve">
+    <value>You've told us that you want to reinstate {0} onto this T Level.</value>
+  </data>
   <data name="Reprint_Document_Arrive_In_3_Weeks" xml:space="preserve">
     <value>The document may take up to 3 weeks to arrive.</value>
   </data>
@@ -246,7 +249,10 @@
   <data name="Uln_Text" xml:space="preserve">
     <value>ULN: {0}</value>
   </data>
-  <data name="Withdrawn_Message_Template" xml:space="preserve">
+  <data name="Withdrawn_Message_Told_AO_No_Template" xml:space="preserve">
+    <value>You've told us that {0} has withdrawn from this T Level. You should also contact {1} to let them know.</value>
+  </data>
+  <data name="Withdrawn_Message_Told_AO_Yes_Template" xml:space="preserve">
     <value>You've told us that {0} has withdrawn from this T Level. We will update their status to Withdrawn once {1} confirms the change.</value>
   </data>
 </root>
