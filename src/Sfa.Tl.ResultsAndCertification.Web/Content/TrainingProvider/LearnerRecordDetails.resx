@@ -234,8 +234,14 @@
   <data name="Title_StartYear_Text" xml:space="preserve">
     <value>Start year</value>
   </data>
+  <data name="Title_TLevel_Status_Text" xml:space="preserve">
+    <value>T Level status</value>
+  </data>
   <data name="Title_TLevel_Text" xml:space="preserve">
     <value>T Level</value>
+  </data>
+  <data name="TLevel_Status_Pending_Withdrawal_Text" xml:space="preserve">
+    <value>Pending Withdrawal</value>
   </data>
   <data name="Uln_Text" xml:space="preserve">
     <value>ULN: {0}</value>
