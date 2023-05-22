@@ -253,6 +253,9 @@
         public const string AddEnglishStatus = "AddEnglishStatus";
         public const string SubmitAddEnglishStatus = "SubmitAddEnglishStatus";
 
+        public const string AddWithdrawnStatus = "AddWithdrawnStatus";
+        public const string SubmitWithdrawnStatus = "SubmitWithdrawnStatus";
+
         public const string SearchLearnerDetails = "SearchLearnerDetails";
         public const string SubmitSearchLearnerDetails = "SubmitSearchLearnerDetails";
         public const string SubmitSearchLearnerApplyFilters = "SubmitSearchLearnerApplyFilters";
