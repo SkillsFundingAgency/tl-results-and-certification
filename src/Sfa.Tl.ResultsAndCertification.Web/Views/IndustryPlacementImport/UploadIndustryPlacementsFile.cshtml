@@ -27,9 +27,8 @@
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <p class="govuk-body">@Upload.Para_Upload_Csv_To_Add_Or_Change</p>
-            <p class="govuk-body">@Upload.Your_File_Must_Include_Specific_Column_Names <a class="govuk-link" target="_self" asp-route="DownloadIndustryPlacementDataFormatAndRulesGuide">@Upload.Link_Learner_Data_Format_Rules_Guidance_Template</a> (@Upload.File_Type, @Upload.File_Size_Kb_Text).</p>
-            <p class="govuk-body-s">@Upload.File_Version_Text</p>
+                <p class="govuk-body">@Upload.Para_Upload_Csv_To_Add_Or_Change</p>
+                <p class="govuk-body">@Upload.Your_File_Must_Include_Specific_Column_Names <a class="govuk-link" target="_self" asp-route="DownloadIndustryPlacementDataFormatAndRulesGuide">@Upload.Link_Learner_Data_Format_Rules_Guidance_Template</a> (@Upload.File_Type, @Upload.File_Size_Kb_Text).</p>
 
             <form id="uploadIndustryPlacementsForm" class="form" asp-route="SubmitUploadIndustryPlacementssFile" enctype="multipart/form-data">
                 <div class="govuk-form-group" sfa-validation-for="File" sfa-validation-class="govuk-form-group--error">
@@ -42,7 +41,7 @@
                 <button id="uploadIndustryPlacementsButton" class="govuk-button tl-show-on-js-only" data-module="govuk-button" type="submit" data-prevent-double-click="true">@Upload.Upload_File_Button_Text</button>
                 <partial name="~/Views/IndustryPlacementImport/Partials/_uploadIndustryPlacementNoScriptSubmit.cshtml" />
             </form>
-
+            
         </div>
     </div>
 </div>
