@@ -14,9 +14,6 @@
         public string ResultsFileSize { get; set; }
         public string ResultsVersion { get; set; }
         public string ResultsPublishedDate { get; set; }
-
-        public string IndustryPlacementsFileSize { get; set; }
-        public string IndustryPlacementsVersion { get; set; }
-        public string IndustryPlacementsPublishedDate { get; set; }
+       
     }
 }
