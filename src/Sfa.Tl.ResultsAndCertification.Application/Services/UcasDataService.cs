@@ -47,7 +47,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var records = new List<UcasDataRecord>();
             var registrationPathways = await _ucasRepository.GetUcasDataRecordsForEntriesAsync();
-            foreach (var pathway in registrationPathways)
+
+            foreach (var pathway in registrationPathways.Where(w => w.TqPathwayAssessments.Any() && w.TqRegistrationSpecialisms.Any()))
             {
                 var ucasDataComponents = new List<UcasDataComponent>();
 
@@ -69,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private async Task<UcasData> ProcessUcasDataRecordResultsAsync()
         {
             var records = new List<UcasDataRecord>();
-            var overallResults = await _ucasRepository.GetUcasDataRecordsForResultsAsync();           
+            var overallResults = await _ucasRepository.GetUcasDataRecordsForResultsAsync();
 
             foreach (var overallResult in overallResults)
             {
