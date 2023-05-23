@@ -297,7 +297,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                         var pathwaysToAdd = amendedRegistration.TqRegistrationPathways.Where(mp => !activePathwayRegistrationsInDb.Any(ap => ap.TqProviderId == mp.TqProviderId)).ToList();
                         var pathwaysToUpdate = (pathwaysToAdd.Any() ? activePathwayRegistrationsInDb : activePathwayRegistrationsInDb.Where(s => amendedRegistration.TqRegistrationPathways.Any(r => r.TqProviderId == s.TqProviderId))).ToList();
-                        
+
                         if (pathwaysToUpdate.Any())
                         {
                             response = ValidateStage4Rules(amendedRegistration, pathwaysToUpdate, response);
@@ -642,6 +642,34 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 _logger.LogWarning(LogEvent.ManualReregistrationProcessFailed, $"Manual Reregistration failed to process due to validation errors = {errorMessage}. Method: ReregistrationAsync()");
                 return false;
             }
+        }
+
+        public async Task<bool> SetRegistrationAsPendingWithdrawalAsync(SetRegistrationAsPendingWithdrawalRequest model)
+        {
+            var registration = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, includeProfile: false);
+
+            if (registration == null || registration.Status != RegistrationPathwayStatus.Active || (registration.Status == RegistrationPathwayStatus.Active && registration.IsPendingWithdrawal))
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: {nameof(SetRegistrationAsPendingWithdrawalAsync)}({model.AoUkprn}, {model.ProfileId})");
+                return false;
+            }
+
+            registration.IsPendingWithdrawal = true;
+            return await _tqRegistrationPathwayRepository.UpdateWithSpecifedColumnsOnlyAsync(registration, r => r.IsPendingWithdrawal, r => r.ModifiedBy, r => r.ModifiedOn) > 0;
+        }
+
+        public async Task<bool> ReinstateRegistrationFromPendingWithdrawalAsync(ReinstateRegistrationFromPendingWithdrawalRequest model)
+        {
+            var registration = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, includeProfile: false);
+
+            if (registration == null || registration.Status != RegistrationPathwayStatus.Active || (registration.Status == RegistrationPathwayStatus.Active && !registration.IsPendingWithdrawal))
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: {nameof(ReinstateRegistrationFromPendingWithdrawalAsync)}({model.AoUkprn}, {model.ProfileId})");
+                return false;
+            }
+
+            registration.IsPendingWithdrawal = false;
+            return await _tqRegistrationPathwayRepository.UpdateWithSpecifedColumnsOnlyAsync(registration, r => r.IsPendingWithdrawal, r => r.ModifiedBy, r => r.ModifiedOn) > 0;
         }
 
         #region Private Methods
@@ -990,8 +1018,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         }
 
         private Tuple<bool, bool, BulkRegistrationEntityIndex> PrepareAndAmendRegistrationData(
-            TqRegistrationProfile amendedRegistration, 
-            List<TqRegistrationPathway> pathwaysToAdd, 
+            TqRegistrationProfile amendedRegistration,
+            List<TqRegistrationPathway> pathwaysToAdd,
             List<TqRegistrationPathway> pathwaysToUpdate,
             BulkRegistrationEntityIndex entityIndex)
         {

@@ -960,6 +960,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>SubjectStatus.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\ViewComponents\InformationBanner.Designer.cs">
+      <DependentUpon>InformationBanner.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Content\ViewComponents\NotificationBanner.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1718,6 +1723,10 @@
     <EmbeddedResource Update="Content\TrainingProvider\SubjectStatus.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SubjectStatus.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\ViewComponents\InformationBanner.resx">
+      <LastGenOutput>InformationBanner.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\ViewComponents\NotificationBanner.resx">
       <LastGenOutput>NotificationBanner.Designer.cs</LastGenOutput>

@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
@@ -74,7 +75,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             Value = TLevelStatusValue,
             HasTag = true,
             TagCssClass = TLevelStatusTagCssClass,
-            ActionText = TLevelStatusChangeLinkText
+            ActionText = TLevelStatusChangeLinkText,
+            RouteName = RegistrationPathwayStatus == RegistrationPathwayStatus.Active ? RouteConstants.AddWithdrawnStatus : string.Empty,
+            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
         };
 
         public SummaryItemModel SummaryDateofBirth => new SummaryItemModel
@@ -200,6 +203,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         {
             RouteName = RouteConstants.SearchLearnerRecord
         };
+
+        public InformationBannerModel InformationBanner { get; set; }
 
         private bool HasSpecialismInfo => DisplayOverallResults && OverallResultDetails.SpecialismDetails != null && OverallResultDetails.SpecialismDetails.Any();
 

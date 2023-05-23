@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System;
@@ -29,6 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly ILogger _logger;
 
         private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TrainingProviderCacheKey); } }
+        private string InformationCacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TrainingProviderInformationCacheKey); } }
 
         public TrainingProviderController(ITrainingProviderLoader trainingProviderLoader, ICacheService cacheService, ResultsAndCertificationConfiguration configuration, ILogger<TrainingProviderController> logger)
         {
@@ -154,12 +156,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("manage-add-withdrawn-status", Name = RouteConstants.SubmitWithdrawnStatus)]
-        public async Task<IActionResult> AddWithdrawnStatusAsync(AddWithdrawnStatusViewModel model)
+        public IActionResult SubmitWithdrawnStatusAsync(AddWithdrawnStatusViewModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(model);
 
-            return View(model);
+            bool yesSelected = model.IsPendingWithdrawl.HasValue && model.IsPendingWithdrawl.Value;
+
+            if (yesSelected)
+            {
+                return View(model);
+            }
+
+            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
+
         }
 
         [HttpGet]
@@ -303,6 +313,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             viewModel.IsDocumentRerequestEligible = CommonHelper.IsDocumentRerequestEligible(_configuration.DocumentRerequestInDays, viewModel.LastDocumentRequestedDate);
+
+            viewModel.InformationBanner = await _cacheService.GetAndRemoveAsync<InformationBannerModel>(InformationCacheKey);
             viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
 
             return View(viewModel);
