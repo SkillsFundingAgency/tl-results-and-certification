@@ -146,7 +146,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("/request-statement-of-achievement-not-available-no-ip-status", Name = RouteConstants.RequestSoaNotAvailableNoIpStatus)]
         public async Task<IActionResult> RequestSoaNotAvailableNoIpStatusAsync()
         {
-            var cacheModel = await _cacheService.GetAsync<RequestSoaNotAvailableNoIpStatusViewModel>(CacheKey);
+            var cacheModel = await _cacheService.GetAndRemoveAsync<RequestSoaNotAvailableNoIpStatusViewModel>(CacheKey);
             if (cacheModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read RequestSoaNotAvailableNoIpStatusViewModel from redis cache in request soa not available no ip status page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");

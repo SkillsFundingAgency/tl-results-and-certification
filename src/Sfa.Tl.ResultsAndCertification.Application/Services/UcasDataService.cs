@@ -41,14 +41,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 UcasDataType.Amendments => await ProcessUcasDataRecordAmendmentsAsync(),
                 _ => null,
             };
-        }        
+        }
 
         private async Task<UcasData> ProcessUcasDataRecordEntriesAsync()
         {
             var records = new List<UcasDataRecord>();
             var registrationPathways = await _ucasRepository.GetUcasDataRecordsForEntriesAsync();
-
-            foreach (var pathway in registrationPathways.Where(w => w.TqPathwayAssessments.Any() && w.TqRegistrationSpecialisms.Any()))
+            foreach (var pathway in registrationPathways)
             {
                 var ucasDataComponents = new List<UcasDataComponent>();
 
@@ -70,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private async Task<UcasData> ProcessUcasDataRecordResultsAsync()
         {
             var records = new List<UcasDataRecord>();
-            var overallResults = await _ucasRepository.GetUcasDataRecordsForResultsAsync();
+            var overallResults = await _ucasRepository.GetUcasDataRecordsForResultsAsync();           
 
             foreach (var overallResult in overallResults)
             {

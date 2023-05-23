@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
 
             AssertHeaderRecord(UcasDataType.Entries);
 
-            ActualResult.UcasDataRecords.Should().HaveCount(5);
+            ActualResult.UcasDataRecords.Should().HaveCount(6);
 
             var expectedDataRecords = new List<ExepectedUcasDataRecord>
             {
