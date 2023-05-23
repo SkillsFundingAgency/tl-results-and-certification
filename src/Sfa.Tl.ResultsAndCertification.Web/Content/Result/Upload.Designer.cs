@@ -223,7 +223,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 16 May 2023.
+        ///   Looks up a localized string similar to published 2 December 2022.
         /// </summary>
         public static string Results_Published_On {
             get {
@@ -232,7 +232,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version 1.6.
+        ///   Looks up a localized string similar to Version 1.5.
         /// </summary>
         public static string Results_Version {
             get {
