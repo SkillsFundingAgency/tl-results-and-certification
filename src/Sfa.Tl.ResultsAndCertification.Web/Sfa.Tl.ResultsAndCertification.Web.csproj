@@ -960,6 +960,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>SubjectStatus.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\TrainingProvider\WithdrawnConfirmation.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>WithdrawnConfirmation.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\WithdrawnLearnerAOMessage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>WithdrawnLearnerAOMessage.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\ViewComponents\InformationBanner.Designer.cs">
       <DependentUpon>InformationBanner.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -1724,9 +1734,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SubjectStatus.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\ViewComponents\InformationBanner.resx">
-      <LastGenOutput>InformationBanner.Designer.cs</LastGenOutput>
+    <EmbeddedResource Update="Content\TrainingProvider\WithdrawnConfirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>WithdrawnConfirmation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\WithdrawnLearnerAOMessage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>WithdrawnLearnerAOMessage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\ViewComponents\NotificationBanner.resx">
       <LastGenOutput>NotificationBanner.Designer.cs</LastGenOutput>

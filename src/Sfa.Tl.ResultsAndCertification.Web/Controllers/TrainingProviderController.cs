@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
@@ -156,7 +157,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("manage-add-withdrawn-status", Name = RouteConstants.SubmitWithdrawnStatus)]
-        public IActionResult SubmitWithdrawnStatusAsync(AddWithdrawnStatusViewModel model)
+        public IActionResult SubmitWithdrawnStatusAsync(WithdrawnConfirmationViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
@@ -168,8 +169,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
-            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
+            return RedirectToRoute(RouteConstants.WithdrawLearnerAOMessage, new { profileId = model.ProfileId });
 
+        }
+
+        [HttpGet]
+        [Route("withdraw-learner-ao-message/{profileId}", Name = RouteConstants.WithdrawLearnerAOMessage)]
+        public async Task<IActionResult> WithdrawLearnerAOMessage(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<WithdrawLearnerAOMessageViewModel>(User.GetUkPrn(), profileId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
         }
 
         [HttpGet]
