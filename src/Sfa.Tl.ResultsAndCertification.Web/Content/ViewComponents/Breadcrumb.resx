@@ -159,6 +159,9 @@
   <data name="Prs_Learner_Component_Grade_Status" xml:space="preserve">
     <value>Learner’s component grade status</value>
   </data>
+  <data name="Registered_Learners" xml:space="preserve">
+    <value>Registered learners</value>
+  </data>
   <data name="Registration_Dashboard" xml:space="preserve">
     <value>Registrations</value>
   </data>

@@ -19,7 +19,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             _changeBackToActiveStatusModel = new ChangeBackToActiveStatusModel
             {
                 ProfileId = ProfileId,
-                LearnerName = "test-learner-name"
+                LearnerName = "test-learner-name",
+                AcademicYear = 2020
             };
 
             TrainingProviderLoader.GetLearnerRecordDetailsAsync<ChangeBackToActiveStatusModel>(ProviderUkprn, ProfileId).Returns(_changeBackToActiveStatusModel);
@@ -32,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         }
 
         [Fact]
-        public void Then_Redirected_To_PageNotFound()
+        public void Then_Returns_Expected_Results()
         {
             var viewResult = Result as ViewResult;
             var model = viewResult.Model as ChangeBackToActiveStatusModel;
@@ -48,8 +49,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(Breadcrumb.Home);
             model.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Home);
 
-            model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(Breadcrumb.Search_For_Learner);
-            model.Breadcrumb.BreadcrumbItems[1].RouteName.Should().Be(RouteConstants.SearchLearnerRecord);
+            model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(Breadcrumb.Registered_Learners);
+            model.Breadcrumb.BreadcrumbItems[1].RouteName.Should().Be(RouteConstants.SearchLearnerDetails);
+            model.Breadcrumb.BreadcrumbItems[1].RouteAttributes.TryGetValue(Constants.AcademicYear, out string academicYearRouteValue);
+            academicYearRouteValue.Should().Be(_changeBackToActiveStatusModel.AcademicYear.ToString());
 
             model.Breadcrumb.BreadcrumbItems[2].DisplayName.Should().Be(Breadcrumb.Learners_Record);
             model.Breadcrumb.BreadcrumbItems[2].RouteName.Should().Be(RouteConstants.LearnerRecordDetails);

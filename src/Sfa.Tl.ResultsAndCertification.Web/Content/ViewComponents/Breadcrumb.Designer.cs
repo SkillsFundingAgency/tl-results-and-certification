@@ -187,6 +187,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Registered learners.
+        /// </summary>
+        public static string Registered_Learners {
+            get {
+                return ResourceManager.GetString("Registered_Learners", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registrations.
         /// </summary>
         public static string Registration_Dashboard {
