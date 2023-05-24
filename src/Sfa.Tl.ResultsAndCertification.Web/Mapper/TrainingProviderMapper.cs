@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.OverallResultDetails, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.OverallResultDetails) ? JsonConvert.DeserializeObject<OverallResultDetail>(s.OverallResultDetails) : null))
                .ForMember(d => d.OverallResultPublishDate, opts => opts.MapFrom(s => s.OverallResultPublishDate))
                .ForMember(d => d.LastDocumentRequestedDate, opts => opts.MapFrom(s => s.LastDocumentRequestedDate))
-               .ForMember(d => d.IsReprint, opts => opts.MapFrom(s => s.IsReprint == true));               
+               .ForMember(d => d.IsReprint, opts => opts.MapFrom(s => s.IsReprint == true));
 
             CreateMap<Address, AddressViewModel>()
                 .ForMember(d => d.AddressId, opts => opts.MapFrom(s => s.AddressId))
@@ -89,8 +89,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<LearnerRecordDetails, AddWithdrawnStatusViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
-               .ForMember(d=> d.IsPendingWithdrawl, opts => opts.MapFrom(s=> s.IsPendingWithdrawal))
-               .ForMember(d=> d.RegistrationPathwayStatus, opts => opts.MapFrom(s=> s.RegistrationPathwayStatus));
+               .ForMember(d => d.IsPendingWithdrawl, opts => opts.MapFrom(s => s.IsPendingWithdrawal))
+               .ForMember(d => d.RegistrationPathwayStatus, opts => opts.MapFrom(s => s.RegistrationPathwayStatus));
+
+            CreateMap<LearnerRecordDetails, ChangeBackToActiveStatusModel>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name));
 
             CreateMap<LearnerRecordDetails, AddMathsStatusViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))

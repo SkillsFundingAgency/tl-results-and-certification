@@ -76,7 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             HasTag = true,
             TagCssClass = TLevelStatusTagCssClass,
             ActionText = TLevelStatusChangeLinkText,
-            RouteName = RegistrationPathwayStatus == RegistrationPathwayStatus.Active ? RouteConstants.AddWithdrawnStatus : string.Empty,
+            RouteName = TLevelStatusChangeRouteName,
             RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
         };
 
@@ -241,6 +241,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             {
                 bool shouldShowTLevelStatusChangeLink = IsPendingWithdrawal || RegistrationPathwayStatus == RegistrationPathwayStatus.Active;
                 return shouldShowTLevelStatusChangeLink ? LearnerRecordDetailsContent.Action_Text_Link_Change : string.Empty;
+            }
+        }
+
+        private string TLevelStatusChangeRouteName
+        {
+            get
+            {
+                string routeName = string.Empty;
+
+                if (RegistrationPathwayStatus == RegistrationPathwayStatus.Active)
+                {
+                    routeName = IsPendingWithdrawal ? RouteConstants.ChangeBackToActiveStatus : RouteConstants.AddWithdrawnStatus;
+                }
+
+                return routeName;
             }
         }
     }
