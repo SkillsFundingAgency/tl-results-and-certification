@@ -176,7 +176,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("manage-learners-change-back-to-active-status/{profileId}", Name = RouteConstants.ChangeBackToActiveStatus)]
         public async Task<IActionResult> ChangeBackToActiveStatusAsync(int profileId)
         {
-            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<ChangeBackToActiveStatusModel>(User.GetUkPrn(), profileId);
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<ChangeBackToActiveStatusViewModel>(User.GetUkPrn(), profileId);
 
             if (viewModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -186,12 +186,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("manage-learners-change-back-to-active-status", Name = RouteConstants.SubmitChangeBackToActiveStatus)]
-        public IActionResult ChangeBackToActiveStatusAsync(ChangeBackToActiveStatusModel model)
+        public IActionResult ChangeBackToActiveStatusAsync(ChangeBackToActiveStatusViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
             bool yesSelected = model.ChangeBackToActive.HasValue && model.ChangeBackToActive.Value;
+
+            if (yesSelected)
+            {
+                return RedirectToRoute(RouteConstants.ChangeBackToActiveStatusHaveYouToldAwardingOrganisation, new { profileId = model.ProfileId });
+            }
+
             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
 
         }
@@ -206,6 +212,39 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("manage-learners-change-back-to-active-status-ao-message/{profileId}", Name = RouteConstants.ChangeBackToActiveStatusHaveYouToldAwardingOrganisation)]
+        public async Task<IActionResult> ChangeBackToActiveStatusHaveYouToldAwardingOrganisationAsync(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel>(User.GetUkPrn(), profileId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("manage-learners-change-back-to-active-status-ao-message", Name = RouteConstants.SubmitChangeBackToActiveStatusHaveYouToldAwardingOrganisation)]
+        public async Task<IActionResult> ChangeBackToActiveStatusHaveYouToldAwardingOrganisationAsync(ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            bool yesSelected = model.HaveYouToldAwardingOrganisation.HasValue && model.HaveYouToldAwardingOrganisation.Value;
+
+            if (yesSelected)
+            {
+                await _trainingProviderLoader.ReinstateRegistrationFromPendingWithdrawalAsync(model);
+                await _cacheService.SetAsync(InformationCacheKey, new InformationBannerModel
+                {
+                    Message = string.Format(LearnerDetailsContent.Reinstate_Message_Template, model.LearnerName)
+                });
+            }
+
+            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
         }
 
         [HttpGet]
