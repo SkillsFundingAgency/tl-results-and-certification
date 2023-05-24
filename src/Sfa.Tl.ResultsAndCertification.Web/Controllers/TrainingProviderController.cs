@@ -169,7 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
-            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
+            return RedirectToRoute(RouteConstants.WithdrawLearnerAOMessage, new { profileId = model.ProfileId });
         }
 
         [HttpGet]
@@ -192,13 +192,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
 
             bool yesSelected = model.ChangeBackToActive.HasValue && model.ChangeBackToActive.Value;
-            return RedirectToRoute(RouteConstants.WithdrawLearnerAOMessage, new { profileId = model.ProfileId });
+            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
 
         }
 
         [HttpGet]
         [Route("withdraw-learner-ao-message/{profileId}", Name = RouteConstants.WithdrawLearnerAOMessage)]
-        public async Task<IActionResult> WithdrawLearnerAOMessage(int profileId)
+        public async Task<IActionResult> WithdrawLearnerAOMessageAsync(int profileId)
         {
             var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<WithdrawLearnerAOMessageViewModel>(User.GetUkPrn(), profileId);
 
