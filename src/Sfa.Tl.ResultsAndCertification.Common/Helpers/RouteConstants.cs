@@ -255,6 +255,8 @@
 
         public const string AddWithdrawnStatus = "AddWithdrawnStatus";
         public const string SubmitWithdrawnStatus = "SubmitWithdrawnStatus";
+        public const string ChangeBackToActiveStatus = "ChangeBackToActiveStatus";
+        public const string SubmitChangeBackToActiveStatus = "SubmitChangeBackToActiveStatus";
         public const string WithdrawLearnerAOMessage = "WithdrawLearnerAOMessage";
 
         public const string SearchLearnerDetails = "SearchLearnerDetails";

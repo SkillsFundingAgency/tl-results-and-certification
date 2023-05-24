@@ -169,6 +169,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
+            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("manage-learners-change-back-to-active-status/{profileId}", Name = RouteConstants.ChangeBackToActiveStatus)]
+        public async Task<IActionResult> ChangeBackToActiveStatusAsync(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<ChangeBackToActiveStatusModel>(User.GetUkPrn(), profileId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("manage-learners-change-back-to-active-status", Name = RouteConstants.SubmitChangeBackToActiveStatus)]
+        public IActionResult ChangeBackToActiveStatusAsync(ChangeBackToActiveStatusModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            bool yesSelected = model.ChangeBackToActive.HasValue && model.ChangeBackToActive.Value;
             return RedirectToRoute(RouteConstants.WithdrawLearnerAOMessage, new { profileId = model.ProfileId });
 
         }

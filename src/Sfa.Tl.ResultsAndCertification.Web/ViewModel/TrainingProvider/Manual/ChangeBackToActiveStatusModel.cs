@@ -1,5 +1,4 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,15 +7,12 @@ using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvide
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
-    public class AddWithdrawnStatusViewModel
-    {   
-        [Required(ErrorMessageResourceType = typeof(ErrorResource.AddWithdrawnStatus), ErrorMessageResourceName = "Validation_Message")]
-        public bool? IsPendingWithdrawl { get; set; }
-        public RegistrationPathwayStatus RegistrationPathwayStatus { get; set; }
-
+    public class ChangeBackToActiveStatusModel
+    {
+        [Required(ErrorMessageResourceType = typeof(ErrorResource.ChangeBackToActiveStatus), ErrorMessageResourceName = "Validation_Message")]
+        public bool? ChangeBackToActive { get; set; }
         public int ProfileId { get; set; }
         public string LearnerName { get; set; }
-        public string AwardingOrganisationName { get; set; }
 
         public BreadcrumbModel Breadcrumb
         {

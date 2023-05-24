@@ -111,11 +111,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
                 ResultsFileSize = DocumentResource.TlevelDataFormatAndRulesGuide.Results_FileSize_Text,
                 ResultsVersion = DocumentResource.TlevelDataFormatAndRulesGuide.Results_Version_Text,
-                ResultsPublishedDate = $"{DocumentResource.TlevelDataFormatAndRulesGuide.Published_Text} {DocumentResource.TlevelDataFormatAndRulesGuide.Results_PublishedDate_Text}",
-
-                IndustryPlacementsFileSize = DocumentResource.TlevelDataFormatAndRulesGuide.IndustryPlacements_FileSize_Text,
-                IndustryPlacementsVersion = DocumentResource.TlevelDataFormatAndRulesGuide.IndustryPlacements_Version_Text,
-                IndustryPlacementsPublishedDate = $"{DocumentResource.TlevelDataFormatAndRulesGuide.Published_Text} {DocumentResource.TlevelDataFormatAndRulesGuide.IndustryPlacements_PublishedDate_Text}"
+                ResultsPublishedDate = $"{DocumentResource.TlevelDataFormatAndRulesGuide.Published_Text} {DocumentResource.TlevelDataFormatAndRulesGuide.Results_PublishedDate_Text}"               
             };
 
             return View(viewModel);
