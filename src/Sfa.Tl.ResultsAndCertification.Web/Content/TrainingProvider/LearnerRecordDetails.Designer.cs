@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request replacement document.
+        ///   Looks up a localized string similar to Request replacement certificate.
         /// </summary>
         public static string Button_Request_Replacement_Document {
             get {

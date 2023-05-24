@@ -90,7 +90,6 @@
         }
 
         <div class="govuk-button-group">
-            <a id="backToLearnersListButton" class="govuk-button" role="button" asp-route="@RouteConstants.SearchLearnerDetails" asp-route-academicYear="@Model.AcademicYear">@LearnerRecordDetails.Back_To_List_Of_Learners_Text</a>
             @if (Model.IsDocumentRerequestEligible) 
             {
                 <a id="requestReplacementDocument" class="govuk-button" role="button" asp-route="@RouteConstants.RequestReplacementDocument" asp-route-profileId="@Model.ProfileId">@LearnerRecordDetails.Button_Request_Replacement_Document</a>
