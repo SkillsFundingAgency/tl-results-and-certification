@@ -1,22 +1,27 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+﻿using AutoMapper;
+using Newtonsoft.Json.Linq;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
+using System.Net.NetworkInformation;
 using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider;
+using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
-    public class AddWithdrawnStatusViewModel
-    {   
-        [Required(ErrorMessageResourceType = typeof(ErrorResource.AddWithdrawnStatus), ErrorMessageResourceName = "Validation_Message")]
+    public class WithdrawnConfirmationViewModel
+    {
+        public bool? IsWithdrawnConfirmed { get; set; }
         public bool? IsPendingWithdrawl { get; set; }
         public RegistrationPathwayStatus RegistrationPathwayStatus { get; set; }
+        public string AwardingOrganisationName { get; set; }
 
         public int ProfileId { get; set; }
         public string LearnerName { get; set; }
-        public string AwardingOrganisationName { get; set; }
 
         public BreadcrumbModel Breadcrumb
         {

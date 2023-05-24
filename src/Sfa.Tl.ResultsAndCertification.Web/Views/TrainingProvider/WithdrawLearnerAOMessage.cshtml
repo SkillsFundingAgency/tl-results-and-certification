@@ -1,0 +1,26 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.WithdrawLearnerAOMessageViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+
+@{
+    ViewData["Title"] = WithdrawnLearnerAOMessage.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <p class="govuk-body">
+           @String.Format(@WithdrawnLearnerAOMessage.Para_Inform_AO_Learner_Has_Withdrawn, Model.AwardingOrganisationName, Model.LearnerName, Model.AwardingOrganisationName)
+        </p>
+        <p class="govuk-body">
+            @WithdrawnLearnerAOMessage.Para_Having_Accurate_Records
+        </p>
+        <ul class="govuk-list govuk-list--bullet"">
+            @Html.Raw(@WithdrawnLearnerAOMessage.Para_Bullet_Points)
+        </ul>
+        <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@WithdrawnLearnerAOMessage.Button_Continue</button>
+    </div>
+</div>
