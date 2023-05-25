@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            TrainingProviderLoader.Received(1).GetLearnerRecordDetailsAsync<ChangeBackToActiveStatusViewModel>(ProviderUkprn, ProfileId);
+            TrainingProviderLoader.Received(1).GetLearnerRecordDetailsAsync<ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel>(ProviderUkprn, ProfileId);
         }
 
         [Fact]
