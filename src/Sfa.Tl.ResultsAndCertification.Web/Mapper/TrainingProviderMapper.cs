@@ -94,7 +94,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.RegistrationPathwayStatus, opts => opts.MapFrom(s => s.RegistrationPathwayStatus))
                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear));
 
-            CreateMap<LearnerRecordDetails, ChangeBackToActiveStatusModel>()
+            CreateMap<LearnerRecordDetails, ChangeBackToActiveStatusViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear));
@@ -103,6 +103,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
                .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => s.AwardingOrganisationName));
+
+            CreateMap<LearnerRecordDetails, ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
+               .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => s.AwardingOrganisationName))
+               .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear));
+
+            CreateMap<ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel, ReinstateRegistrationFromPendingWithdrawalRequest>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.AoUkprn, opts => opts.MapFrom(s => s.AwardingOrganisationUkprn))
+               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel, ReinstateRegistrationFromPendingWithdrawalRequest>>());
 
             CreateMap<LearnerRecordDetails, WithdrawnConfirmationViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))

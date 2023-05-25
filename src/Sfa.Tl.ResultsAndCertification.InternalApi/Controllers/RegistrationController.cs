@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers

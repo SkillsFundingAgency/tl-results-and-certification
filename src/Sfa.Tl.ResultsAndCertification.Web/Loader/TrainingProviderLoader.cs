@@ -76,5 +76,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var request = _mapper.Map<ReplacementPrintRequest>(viewModel, opt => opt.Items["providerUkprn"] = providerUkprn);
             return await _internalApiClient.CreateReplacementDocumentPrintingRequestAsync(request);
         }
+
+        public Task<bool> ReinstateRegistrationFromPendingWithdrawalAsync(ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel model)
+        {
+            var request = _mapper.Map<ReinstateRegistrationFromPendingWithdrawalRequest>(model);
+            return _internalApiClient.ReinstateRegistrationFromPendingWithdrawalAsync(request);
+        }
     }
 }

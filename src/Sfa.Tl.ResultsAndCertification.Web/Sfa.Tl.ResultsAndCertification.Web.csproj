@@ -911,6 +911,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ChangeBackToActiveStatus.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\TrainingProvider\ChangeBackToActiveStatusHaveYouToldAwardingOrganisation.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ChangeBackToActiveStatusHaveYouToldAwardingOrganisation.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\TrainingProvider\EnglishAndMathsStatus.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1697,6 +1702,10 @@
       <CustomToolNamespace></CustomToolNamespace>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AddWithdrawnStatus.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\ChangeBackToActiveStatusHaveYouToldAwardingOrganisation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ChangeBackToActiveStatusHaveYouToldAwardingOrganisation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsQuestion - Copy.resx">
       <LastGenOutput>EnglishAndMathsQuestion.Designer.cs</LastGenOutput>

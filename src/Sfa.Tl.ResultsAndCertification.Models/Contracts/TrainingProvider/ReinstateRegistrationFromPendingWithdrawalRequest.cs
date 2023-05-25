@@ -1,4 +1,4 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
+﻿namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
 {
     public class ReinstateRegistrationFromPendingWithdrawalRequest
     {
