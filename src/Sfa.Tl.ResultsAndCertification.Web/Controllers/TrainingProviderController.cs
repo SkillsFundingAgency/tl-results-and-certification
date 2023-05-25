@@ -7,13 +7,11 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -238,10 +236,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (yesSelected)
             {
                 await _trainingProviderLoader.ReinstateRegistrationFromPendingWithdrawalAsync(model);
-                await _cacheService.SetAsync(InformationCacheKey, new InformationBannerModel
-                {
-                    Message = string.Format(LearnerDetailsContent.Reinstate_Message_Template, model.LearnerName)
-                });
+
+                InformationBannerModel bannerModel = new(string.Format(LearnerDetailsContent.Reinstate_Message_Template, model.LearnerName));
+                await _cacheService.SetAsync(InformationCacheKey, bannerModel, CacheExpiryTime.XSmall);
             }
 
             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
