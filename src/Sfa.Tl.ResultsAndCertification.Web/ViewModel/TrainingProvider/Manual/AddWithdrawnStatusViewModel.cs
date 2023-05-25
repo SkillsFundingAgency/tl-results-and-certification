@@ -9,7 +9,7 @@ using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvide
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
     public class AddWithdrawnStatusViewModel
-    {   
+    {
         [Required(ErrorMessageResourceType = typeof(ErrorResource.AddWithdrawnStatus), ErrorMessageResourceName = "Validation_Message")]
         public bool? IsPendingWithdrawl { get; set; }
         public RegistrationPathwayStatus RegistrationPathwayStatus { get; set; }
@@ -18,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public string LearnerName { get; set; }
         public int AcademicYear { get; set; }
         public string AwardingOrganisationName { get; set; }
+        public long ProviderUkprn { get; set; }
 
         public BreadcrumbModel Breadcrumb
         {

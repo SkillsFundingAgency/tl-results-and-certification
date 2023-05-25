@@ -228,7 +228,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         #region Pending withdrawal
 
         [HttpGet]
-        [Route("manage-add-withdrawn-status/{profileId}", Name = RouteConstants.AddWithdrawnStatus)]
+        [Route("manage-learners-add-withdrawn-status/{profileId}", Name = RouteConstants.AddWithdrawnStatus)]
         public async Task<IActionResult> AddWithdrawnStatusAsync(int profileId)
         {
             var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<AddWithdrawnStatusViewModel>(User.GetUkPrn(), profileId);
@@ -240,7 +240,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("manage-add-withdrawn-status", Name = RouteConstants.SubmitWithdrawnStatus)]
+        [Route("manage-learners-add-withdrawn-status", Name = RouteConstants.SubmitWithdrawnStatus)]
         public async Task<IActionResult> SubmitWithdrawnStatusAsync(WithdrawnConfirmationViewModel model)
         {
             if (!ModelState.IsValid)
@@ -249,7 +249,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             bool pendingWithdrawl = model.IsPendingWithdrawl.HasValue && model.IsPendingWithdrawl.Value;
             bool withdrawnConfirmed = model.IsWithdrawnConfirmed.HasValue && model.IsWithdrawnConfirmed.Value;
 
-            if (pendingWithdrawl && withdrawnConfirmed) {
+            if (pendingWithdrawl && withdrawnConfirmed)
+            {
                 var isSuccess = await _trainingProviderLoader.UpdateLearnerWithdrawnStatusAsync(User.GetUkPrn(), model);
 
                 if (!isSuccess)
@@ -257,7 +258,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
                 return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
             }
-            else if (pendingWithdrawl){
+            else if (pendingWithdrawl)
+            {
                 return View(model);
             }
 
@@ -329,7 +331,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (yesSelected)
             {
-                await _trainingProviderLoader.ReinstateRegistrationFromPendingWithdrawalAsync(model);
+                var isSuccess = await _trainingProviderLoader.ReinstateRegistrationFromPendingWithdrawalAsync(model);
+                if (!isSuccess)
+                    return RedirectToRoute(RouteConstants.ProblemWithService);
 
                 await _cacheService.SetAsync(
                     InformationCacheKey,

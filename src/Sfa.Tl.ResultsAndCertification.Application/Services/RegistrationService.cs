@@ -647,11 +647,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> SetRegistrationAsPendingWithdrawalAsync(SetRegistrationAsPendingWithdrawalRequest model)
         {
-            var registration = await _tqRegistrationRepository.GetRegistrationAoUkprnLiteAsync(model.AoUkprn, model.ProfileId, includeProfile: false);
+            var registration = await _tqRegistrationRepository.GetRegistrationLiteByProviderUkprnAsync(model.ProviderUkprn, model.ProfileId, includeProfile: false);
 
             if (registration == null || registration.Status != RegistrationPathwayStatus.Active || (registration.Status == RegistrationPathwayStatus.Active && registration.IsPendingWithdrawal))
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: {nameof(SetRegistrationAsPendingWithdrawalAsync)}({model.AoUkprn}, {model.ProfileId})");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: {nameof(SetRegistrationAsPendingWithdrawalAsync)}({model.ProviderUkprn}, {model.ProfileId})");
                 return false;
             }
 
@@ -661,11 +661,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> ReinstateRegistrationFromPendingWithdrawalAsync(ReinstateRegistrationFromPendingWithdrawalRequest model)
         {
-            var registration = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, includeProfile: false);
+            var registration = await _tqRegistrationRepository.GetRegistrationLiteByProviderUkprnAsync(model.ProviderUkprn, model.ProfileId, includeProfile: false);
 
             if (registration == null || registration.Status != RegistrationPathwayStatus.Active || (registration.Status == RegistrationPathwayStatus.Active && !registration.IsPendingWithdrawal))
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: {nameof(ReinstateRegistrationFromPendingWithdrawalAsync)}({model.AoUkprn}, {model.ProfileId})");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: {nameof(ReinstateRegistrationFromPendingWithdrawalAsync)}({model.ProviderUkprn}, {model.ProfileId})");
                 return false;
             }
 

@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             {
                 ProfileId = ProfileId,
                 AwardingOrganisationName = "test-ao-name",
-                AwardingOrganisationUkprn = 123456789,
+                ProviderUkprn = 123456789,
                 LearnerName = "test-learner-name",
                 AcademicYear = 2020
             };
@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.HaveYouToldAwardingOrganisation.Should().BeNull();
             model.ProfileId.Should().Be(_model.ProfileId);
             model.AwardingOrganisationName.Should().Be(_model.AwardingOrganisationName);
-            model.AwardingOrganisationUkprn.Should().Be(_model.AwardingOrganisationUkprn);
+            model.ProviderUkprn.Should().Be(_model.ProviderUkprn);
             model.LearnerName.Should().Be(_model.LearnerName);
             model.AcademicYear.Should().Be(_model.AcademicYear);
 
