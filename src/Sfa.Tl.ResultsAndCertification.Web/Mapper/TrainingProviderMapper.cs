@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
@@ -143,6 +144,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.SubjectType, opts => opts.MapFrom(s => SubjectType.English))
                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AddEnglishStatusViewModel, UpdateLearnerSubjectRequest>>());
+
+            CreateMap<WithdrawnConfirmationViewModel, SetRegistrationAsPendingWithdrawalRequest>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.IsPendingWithdrawl, opts => opts.MapFrom(s => s.IsPendingWithdrawl))
+               .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))
+               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<WithdrawnConfirmationViewModel, SetRegistrationAsPendingWithdrawalRequest>>());
 
             CreateMap<RequestReplacementDocumentViewModel, ReplacementPrintRequest>()
                 .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))

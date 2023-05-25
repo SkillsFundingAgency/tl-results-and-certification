@@ -45,6 +45,31 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return registrationPathway;            
         }
 
+        public async Task<TqRegistrationPathway> GetRegistrationAoUkprnLiteAsync(long aoUkprn, int profileId, bool includeProfile = true, bool includeIndustryPlacements = false, bool includeOverallResults = false)
+        {
+            var pathwayQueryable = _dbContext.TqRegistrationPathway.AsQueryable();
+
+            if (includeProfile)
+                pathwayQueryable = pathwayQueryable.Include(p => p.TqRegistrationProfile);
+
+            if (includeIndustryPlacements)
+                pathwayQueryable = pathwayQueryable.Include(p => p.IndustryPlacements);
+
+            if (includeOverallResults)
+                pathwayQueryable = pathwayQueryable.Include(p => p.OverallResults.Where(x => x.IsOptedin && (x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? x.EndDate != null : x.EndDate == null)));
+
+            var registrationPathway = await pathwayQueryable
+               .Include(p => p.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin && (rs.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn) ? rs.EndDate != null : rs.EndDate == null))
+                    .ThenInclude(x => x.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? sa.EndDate != null : sa.EndDate == null))
+                        .ThenInclude(x => x.TqSpecialismResults.Where(sr => sr.IsOptedin && sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? sr.EndDate != null : sr.EndDate == null))
+               .Include(p => p.TqPathwayAssessments.Where(pa => pa.IsOptedin && (pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn) ? pa.EndDate != null : pa.EndDate == null))
+                    .ThenInclude(pa => pa.TqPathwayResults.Where(pr => pr.IsOptedin && pr.TqPathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? pr.EndDate != null : pr.EndDate == null))
+               .OrderByDescending(p => p.CreatedOn)
+               .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId && p.TqProvider.TlProvider.UkPrn == aoUkprn);
+
+            return registrationPathway;
+        }
+
         public async Task<TqRegistrationProfile> GetRegistrationDataWithHistoryAsync(long aoUkprn, int profileId)
         {
             var profile = await _dbContext.TqRegistrationProfile

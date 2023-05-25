@@ -647,7 +647,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> SetRegistrationAsPendingWithdrawalAsync(SetRegistrationAsPendingWithdrawalRequest model)
         {
-            var registration = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, includeProfile: false);
+            var registration = await _tqRegistrationRepository.GetRegistrationAoUkprnLiteAsync(model.AoUkprn, model.ProfileId, includeProfile: false);
 
             if (registration == null || registration.Status != RegistrationPathwayStatus.Active || (registration.Status == RegistrationPathwayStatus.Active && registration.IsPendingWithdrawal))
             {
