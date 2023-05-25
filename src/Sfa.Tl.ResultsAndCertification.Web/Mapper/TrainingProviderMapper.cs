@@ -115,6 +115,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.AoUkprn, opts => opts.MapFrom(s => s.AwardingOrganisationUkprn))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel, ReinstateRegistrationFromPendingWithdrawalRequest>>());
 
+            CreateMap<LearnerRecordDetails, ChangeBackToActiveAOMessageViewModel>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
+               .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => s.AwardingOrganisationName))
+               .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear));
+
             CreateMap<LearnerRecordDetails, WithdrawnConfirmationViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
