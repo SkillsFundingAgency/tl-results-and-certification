@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
@@ -63,6 +64,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var learnerSubjectRequest = _mapper.Map<UpdateLearnerSubjectRequest>(model, opt => opt.Items["providerUkprn"] = providerUkprn);
             return await _internalApiClient.UpdateLearnerSubjectAsync(learnerSubjectRequest);
+        }
+
+        public async Task<bool> UpdateLearnerWithdrawnStatusAsync(long providerUkprn, WithdrawnConfirmationViewModel model)
+        {
+            var pendingWithdrawlRequest = _mapper.Map<SetRegistrationAsPendingWithdrawalRequest>(model, opt => opt.Items["providerUkprn"] = providerUkprn);
+            return await _internalApiClient.SetRegistrationAsPendingWithdrawalAsync(pendingWithdrawlRequest);
         }
 
         /// <summary>
