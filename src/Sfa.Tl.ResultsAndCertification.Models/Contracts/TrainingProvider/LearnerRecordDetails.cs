@@ -17,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         public string TlevelTitle { get; set; }
         public int AcademicYear { get; set; }
         public string AwardingOrganisationName { get; set; }
+        public long AwardingOrganisationUkprn { get; set; }
         public SubjectStatus? MathsStatus { get;set; }
         public SubjectStatus? EnglishStatus { get; set; }
 

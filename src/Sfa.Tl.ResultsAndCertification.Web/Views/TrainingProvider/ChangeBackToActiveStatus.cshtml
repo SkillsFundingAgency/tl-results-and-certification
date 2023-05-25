@@ -1,4 +1,4 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.ChangeBackToActiveStatusModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.ChangeBackToActiveStatusViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 
@@ -26,14 +26,14 @@
                         <div class="govuk-radios" data-module="govuk-radios">
                             <span sfa-validation-for="ChangeBackToActive"></span>
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="withdrawnstatus" asp-for="ChangeBackToActive" type="radio" value="true">
-                                <label class="govuk-label govuk-radios__label" for="withdrawnstatus">
+                                <input class="govuk-radios__input" id="change-back-to-active-status" asp-for="ChangeBackToActive" type="radio" value="true">
+                                <label class="govuk-label govuk-radios__label" for="change-back-to-active-status">
                                     @string.Format(@ChangeBackToActiveStatus.Option_Yes, Model.ChangeBackToActive)
                                 </label>
                             </div>
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="withdrawnstatus-no" asp-for="ChangeBackToActive" type="radio" value="false">
-                                <label class="govuk-label govuk-radios__label" for="withdrawnstatus-no">
+                                <input class="govuk-radios__input" id="change-back-to-active-status-no" asp-for="ChangeBackToActive" type="radio" value="false">
+                                <label class="govuk-label govuk-radios__label" for="change-back-to-active-status-no">
                                     @string.Format(@ChangeBackToActiveStatus.Option_No, Model.ChangeBackToActive)
                                 </label>
                             </div>

@@ -15,5 +15,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<bool> UpdateLearnerSubjectAsync(long providerUkprn, AddEnglishStatusViewModel model);
         Task<bool> UpdateLearnerWithdrawnStatusAsync(long providerUkprn, WithdrawnConfirmationViewModel model);
         Task<bool> CreateReplacementDocumentPrintingRequestAsync(long providerUkprn, RequestReplacementDocumentViewModel viewModel);
+        Task<bool> ReinstateRegistrationFromPendingWithdrawalAsync(ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel model);
     }
 }

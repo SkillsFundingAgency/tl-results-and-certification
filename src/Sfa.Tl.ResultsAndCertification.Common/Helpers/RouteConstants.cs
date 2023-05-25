@@ -96,7 +96,7 @@
         public const string SubmitChangeCoreQuestion = "SubmitChangeCoreQuestion";
         public const string ChangeRegistrationConfirmation = "ChangeRegistrationConfirmation";
         public const string ChangeRegistrationCore = "ChangeRegistrationCore";
-        public const string ChangeSpecialismRestriction = "ChangeSpecialismRestriction";        
+        public const string ChangeSpecialismRestriction = "ChangeSpecialismRestriction";
         public const string ChangeRegistrationSpecialismQuestion = "ChangeRegistrationSpecialismQuestion";
         public const string SubmitChangeRegistrationSpecialismQuestion = "SubmitChangeRegistrationSpecialismQuestion";
         public const string ChangeRegistrationSpecialisms = "ChangeRegistrationSpecialisms";
@@ -156,7 +156,7 @@
         public const string ProblemWithAssessmentsUpload = "ProblemWithAssessmentsUpload";
         public const string DownloadAssessmentErrors = "DownloadAssessmentErrors";
         public const string AddCoreAssessmentEntry = "AddCoreAssessmentEntry";
-        public const string EntrySeries = "SubmitAddCoreAssessmentEntry";        
+        public const string EntrySeries = "SubmitAddCoreAssessmentEntry";
         public const string RemoveCoreAssessmentEntry = "RemoveCoreAssessmentEntry";
         public const string SubmitRemoveCoreAssessmentEntry = "SubmitRemoveCoreAssessmentEntry";
         public const string AddSpecialismAssessmentEntry = "AddSpecialismAssessmentEntry";
@@ -258,6 +258,8 @@
         public const string ChangeBackToActiveStatus = "ChangeBackToActiveStatus";
         public const string SubmitChangeBackToActiveStatus = "SubmitChangeBackToActiveStatus";
         public const string WithdrawLearnerAOMessage = "WithdrawLearnerAOMessage";
+        public const string ChangeBackToActiveStatusHaveYouToldAwardingOrganisation = "ChangeBackToActiveStatusHaveYouToldAwardingOrganisation";
+        public const string SubmitChangeBackToActiveStatusHaveYouToldAwardingOrganisation = "SubmitChangeBackToActiveStatusHaveYouToldAwardingOrganisation";
 
         public const string SearchLearnerDetails = "SearchLearnerDetails";
         public const string SubmitSearchLearnerDetails = "SubmitSearchLearnerDetails";
@@ -348,7 +350,7 @@
         public const string PrsCancelAppealUpdate = "PrsCancelAppealUpdate";
         public const string SubmitPrsCancelAppealUpdate = "SubmitPrsCancelAppealUpdate";
 
-        public const string PrsNoResults = "PrsNoResults";        
+        public const string PrsNoResults = "PrsNoResults";
         public const string PrsGradeChangeRequest = "PrsGradeChangeRequest";
         public const string SubmitPrsGradeChangeRequest = "SubmitPrsGradeChangeRequest";
         public const string PrsCancelGradeChangeRequest = "PrsCancelGradeChangeRequest";
