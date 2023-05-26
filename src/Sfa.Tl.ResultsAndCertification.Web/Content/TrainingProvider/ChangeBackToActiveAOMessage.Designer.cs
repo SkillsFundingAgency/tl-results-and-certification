@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class WithdrawnLearnerAOMessage {
+    public class ChangeBackToActiveAOMessage {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal WithdrawnLearnerAOMessage() {
+        internal ChangeBackToActiveAOMessage() {
         }
         
         /// <summary>
@@ -39,8 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.WithdrawnLearnerAOMes" +
-                            "sage", typeof(WithdrawnLearnerAOMessage).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.ChangeBackToActiveAOM" +
+                            "essage", typeof(ChangeBackToActiveAOMessage).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You should contact {0}.
+        ///   Looks up a localized string similar to You should contact the Awarding Organisation.
         /// </summary>
         public static string Page_Title {
             get {
@@ -89,17 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;li&gt;you will not receive unnecessary notifications from us&lt;/li&gt;
-        ///&lt;li&gt;you can request statements of achievement for withdrawn learners&lt;/li&gt;.
-        /// </summary>
-        public static string Para_Bullet_Points {
-            get {
-                return ResourceManager.GetString("Para_Bullet_Points", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Having accurate records will mean:.
+        ///   Looks up a localized string similar to Having accurate records will mean you will not receive unnecessary notifications from us..
         /// </summary>
         public static string Para_Having_Accurate_Records {
             get {
@@ -108,11 +98,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to It’s important that you let {0} know that {1} has withdrawn from their T Level. Once {2} knows they will be able to update their records..
+        ///   Looks up a localized string similar to It’s important that you let {0} know that {1} would like to continue their T Level. You may need to register them with {2} again..
         /// </summary>
-        public static string Para_Inform_AO_Learner_Has_Withdrawn {
+        public static string Para_Inform_AO_Learner_Continues {
             get {
-                return ResourceManager.GetString("Para_Inform_AO_Learner_Has_Withdrawn", resourceCulture);
+                return ResourceManager.GetString("Para_Inform_AO_Learner_Continues", resourceCulture);
             }
         }
     }

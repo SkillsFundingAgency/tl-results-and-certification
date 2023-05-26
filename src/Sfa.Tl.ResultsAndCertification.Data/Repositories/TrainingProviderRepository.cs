@@ -177,7 +177,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             TlevelTitle = tlPathway.TlevelTitle,
                                             AcademicYear = tqPathway.AcademicYear,
                                             AwardingOrganisationName = tqAo.TlAwardingOrganisaton.DisplayName,
-                                            AwardingOrganisationUkprn = tqAo.TlAwardingOrganisaton.UkPrn,
                                             MathsStatus = tqProfile.MathsStatus,
                                             EnglishStatus = tqProfile.EnglishStatus,
                                             IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn,

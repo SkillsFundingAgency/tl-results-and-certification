@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return registrationPathway;            
         }
 
-        public async Task<TqRegistrationPathway> GetRegistrationAoUkprnLiteAsync(long aoUkprn, int profileId, bool includeProfile = true, bool includeIndustryPlacements = false, bool includeOverallResults = false)
+        public async Task<TqRegistrationPathway> GetRegistrationLiteByProviderUkprnAsync(long providerUkprn, int profileId, bool includeProfile = true, bool includeIndustryPlacements = false, bool includeOverallResults = false)
         {
             var pathwayQueryable = _dbContext.TqRegistrationPathway.AsQueryable();
 
@@ -65,7 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                .Include(p => p.TqPathwayAssessments.Where(pa => pa.IsOptedin && (pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn) ? pa.EndDate != null : pa.EndDate == null))
                     .ThenInclude(pa => pa.TqPathwayResults.Where(pr => pr.IsOptedin && pr.TqPathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? pr.EndDate != null : pr.EndDate == null))
                .OrderByDescending(p => p.CreatedOn)
-               .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId && p.TqProvider.TlProvider.UkPrn == aoUkprn);
+               .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId && p.TqProvider.TlProvider.UkPrn == providerUkprn);
 
             return registrationPathway;
         }

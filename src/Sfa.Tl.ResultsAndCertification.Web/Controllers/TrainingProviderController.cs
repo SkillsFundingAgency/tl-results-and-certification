@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
@@ -7,13 +8,11 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -144,118 +143,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("manage-add-withdrawn-status/{profileId}", Name = RouteConstants.AddWithdrawnStatus)]
-        public async Task<IActionResult> AddWithdrawnStatusAsync(int profileId)
-        {
-            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<AddWithdrawnStatusViewModel>(User.GetUkPrn(), profileId);
-
-            if (viewModel == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("manage-add-withdrawn-status", Name = RouteConstants.SubmitWithdrawnStatus)]
-        public async Task<IActionResult> SubmitWithdrawnStatusAsync(WithdrawnConfirmationViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            bool pendingWithdrawl = model.IsPendingWithdrawl.HasValue && model.IsPendingWithdrawl.Value;
-            bool withdrawnConfirmed = model.IsWithdrawnConfirmed.HasValue && model.IsWithdrawnConfirmed.Value;
-
-            if (pendingWithdrawl && withdrawnConfirmed) {
-                var isSuccess = await _trainingProviderLoader.UpdateLearnerWithdrawnStatusAsync(User.GetUkPrn(), model);
-
-                if (!isSuccess)
-                    return RedirectToRoute(RouteConstants.ProblemWithService);
-
-                return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
-            }
-            else if (pendingWithdrawl){
-                return View(model);
-            }
-
-            return RedirectToRoute(RouteConstants.WithdrawLearnerAOMessage, new { profileId = model.ProfileId });
-        }
-
-        [HttpGet]
-        [Route("manage-learners-change-back-to-active-status/{profileId}", Name = RouteConstants.ChangeBackToActiveStatus)]
-        public async Task<IActionResult> ChangeBackToActiveStatusAsync(int profileId)
-        {
-            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<ChangeBackToActiveStatusViewModel>(User.GetUkPrn(), profileId);
-
-            if (viewModel == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("manage-learners-change-back-to-active-status", Name = RouteConstants.SubmitChangeBackToActiveStatus)]
-        public IActionResult ChangeBackToActiveStatusAsync(ChangeBackToActiveStatusViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            bool yesSelected = model.ChangeBackToActive.HasValue && model.ChangeBackToActive.Value;
-
-            if (yesSelected)
-            {
-                return RedirectToRoute(RouteConstants.ChangeBackToActiveStatusHaveYouToldAwardingOrganisation, new { profileId = model.ProfileId });
-            }
-
-            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
-
-        }
-
-        [HttpGet]
-        [Route("withdraw-learner-ao-message/{profileId}", Name = RouteConstants.WithdrawLearnerAOMessage)]
-        public async Task<IActionResult> WithdrawLearnerAOMessageAsync(int profileId)
-        {
-            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<WithdrawLearnerAOMessageViewModel>(User.GetUkPrn(), profileId);
-
-            if (viewModel == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            return View(viewModel);
-        }
-
-        [HttpGet]
-        [Route("manage-learners-change-back-to-active-status-ao-message/{profileId}", Name = RouteConstants.ChangeBackToActiveStatusHaveYouToldAwardingOrganisation)]
-        public async Task<IActionResult> ChangeBackToActiveStatusHaveYouToldAwardingOrganisationAsync(int profileId)
-        {
-            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel>(User.GetUkPrn(), profileId);
-
-            if (viewModel == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("manage-learners-change-back-to-active-status-ao-message", Name = RouteConstants.SubmitChangeBackToActiveStatusHaveYouToldAwardingOrganisation)]
-        public async Task<IActionResult> ChangeBackToActiveStatusHaveYouToldAwardingOrganisationAsync(ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            bool yesSelected = model.HaveYouToldAwardingOrganisation.HasValue && model.HaveYouToldAwardingOrganisation.Value;
-
-            if (yesSelected)
-            {
-                await _trainingProviderLoader.ReinstateRegistrationFromPendingWithdrawalAsync(model);
-                await _cacheService.SetAsync(InformationCacheKey, new InformationBannerModel
-                {
-                    Message = string.Format(LearnerDetailsContent.Reinstate_Message_Template, model.LearnerName)
-                });
-            }
-
-            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
-        }
-
-        [HttpGet]
         [Route("manage-learner-maths-level/{profileId}", Name = RouteConstants.AddMathsStatus)]
         public async Task<IActionResult> AddMathsStatusAsync(int profileId)
         {
@@ -338,6 +225,169 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
         }
+
+        #region Pending withdrawal
+
+        [HttpGet]
+        [Route("manage-learners-add-withdrawn-status/{profileId}", Name = RouteConstants.AddWithdrawnStatus)]
+        public async Task<IActionResult> AddWithdrawnStatusAsync(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<AddWithdrawnStatusViewModel>(User.GetUkPrn(), profileId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("manage-add-withdrawn-status", Name = RouteConstants.SubmitWithdrawnStatus)]
+        public IActionResult AddWithdrawnStatusAsync(AddWithdrawnStatusViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            bool pendingWithdrawl = model.IsPendingWithdrawl.HasValue && model.IsPendingWithdrawl.Value;
+
+            bool yesSelected = model.IsPendingWithdrawl.HasValue && model.IsPendingWithdrawl.Value;
+
+            if (yesSelected)
+            {
+                return RedirectToRoute(RouteConstants.ChangeWithdrawnStatusHaveYouToldAwardingOrganisation, new { profileId = model.ProfileId });
+            }
+
+            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("manage-add-withdrawn-status-ao-message/{profileId}", Name = RouteConstants.ChangeWithdrawnStatusHaveYouToldAwardingOrganisation)]
+        public async Task<IActionResult> ChangeWithdrawnStatusHaveYouToldAwardingOrganisationAsync(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<ChangeWithdrawnStatusHaveYouToldAwardingOrganisationViewModel>(User.GetUkPrn(), profileId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("manage-add-withdrawn-status-ao-message", Name = RouteConstants.SubmitChangeWithdrawnStatusHaveYouToldAwardingOrganisation)]
+        public async Task<IActionResult> ChangeWithdrawnStatusHaveYouToldAwardingOrganisationAsync(ChangeWithdrawnStatusHaveYouToldAwardingOrganisationViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            bool yesSelected = model.HaveYouToldAwardingOrganisation.HasValue && model.HaveYouToldAwardingOrganisation.Value;
+
+            if (yesSelected)
+            {
+                await _trainingProviderLoader.UpdateLearnerWithdrawnStatusAsync(User.GetUkPrn(),model);
+                await _cacheService.SetAsync(InformationCacheKey, new InformationBannerModel
+                {
+                    Message = string.Format(LearnerDetailsContent.Reinstate_Message_Template, model.LearnerName)
+                });
+            }
+
+            return RedirectToRoute(RouteConstants.WithdrawLearnerAOMessage, new { profileId = model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("manage-learners-change-back-to-active-status/{profileId}", Name = RouteConstants.ChangeBackToActiveStatus)]
+        public async Task<IActionResult> ChangeBackToActiveStatusAsync(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<ChangeBackToActiveStatusViewModel>(User.GetUkPrn(), profileId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("manage-learners-change-back-to-active-status", Name = RouteConstants.SubmitChangeBackToActiveStatus)]
+        public IActionResult ChangeBackToActiveStatusAsync(ChangeBackToActiveStatusViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            bool yesSelected = model.ChangeBackToActive.HasValue && model.ChangeBackToActive.Value;
+
+            if (yesSelected)
+            {
+                return RedirectToRoute(RouteConstants.ChangeBackToActiveStatusHaveYouToldAwardingOrganisation, new { profileId = model.ProfileId });
+            }
+
+            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
+
+        }
+
+        [HttpGet]
+        [Route("withdraw-learner-ao-message/{profileId}", Name = RouteConstants.WithdrawLearnerAOMessage)]
+        public async Task<IActionResult> WithdrawLearnerAOMessageAsync(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<WithdrawLearnerAOMessageViewModel>(User.GetUkPrn(), profileId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("manage-learners-change-back-to-active-status-have-you-told-ao/{profileId}", Name = RouteConstants.ChangeBackToActiveStatusHaveYouToldAwardingOrganisation)]
+        public async Task<IActionResult> ChangeBackToActiveStatusHaveYouToldAwardingOrganisationAsync(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel>(User.GetUkPrn(), profileId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("manage-learners-change-back-to-active-status-have-you-told-ao", Name = RouteConstants.SubmitChangeBackToActiveStatusHaveYouToldAwardingOrganisation)]
+        public async Task<IActionResult> ChangeBackToActiveStatusHaveYouToldAwardingOrganisationAsync(ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            bool yesSelected = model.HaveYouToldAwardingOrganisation.HasValue && model.HaveYouToldAwardingOrganisation.Value;
+
+            if (yesSelected)
+            {
+                var isSuccess = await _trainingProviderLoader.ReinstateRegistrationFromPendingWithdrawalAsync(model);
+                if (!isSuccess)
+                    return RedirectToRoute(RouteConstants.ProblemWithService);
+
+                await _cacheService.SetAsync(
+                    InformationCacheKey,
+                    new InformationBannerModel
+                    {
+                        Message = string.Format(LearnerDetailsContent.Reinstate_Message_Template, model.LearnerName)
+                    },
+                    CacheExpiryTime.XSmall);
+
+                return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
+            }
+
+            return RedirectToRoute(RouteConstants.ChangeBackToActiveAOMessage, new { profileId = model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("manage-learners-change-back-to-active-status-ao-message/{profileId}", Name = RouteConstants.ChangeBackToActiveAOMessage)]
+        public async Task<IActionResult> ChangeBackToActiveAOMessageAsync(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<ChangeBackToActiveAOMessageViewModel>(User.GetUkPrn(), profileId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        #endregion
 
         #region Update-Learner
 
