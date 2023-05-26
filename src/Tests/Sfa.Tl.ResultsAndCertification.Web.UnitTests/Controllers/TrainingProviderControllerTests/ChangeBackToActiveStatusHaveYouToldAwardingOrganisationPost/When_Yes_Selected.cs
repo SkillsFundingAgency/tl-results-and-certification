@@ -23,6 +23,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 LearnerName = "test-learner-name",
                 AcademicYear = 2020
             };
+
+            TrainingProviderLoader.ReinstateRegistrationFromPendingWithdrawalAsync(ViewModel).Returns(true);
         }
 
         [Fact]
