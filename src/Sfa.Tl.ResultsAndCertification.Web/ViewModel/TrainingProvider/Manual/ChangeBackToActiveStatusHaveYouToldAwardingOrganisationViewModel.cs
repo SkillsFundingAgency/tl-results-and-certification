@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public bool? HaveYouToldAwardingOrganisation { get; set; }
         public int ProfileId { get; set; }
         public string AwardingOrganisationName { get; set; }
-        public long AwardingOrganisationUkprn { get; set; }
+        public long ProviderUkprn { get; set; }
         public string LearnerName { get; set; }
         public int AcademicYear { get; set; }
 

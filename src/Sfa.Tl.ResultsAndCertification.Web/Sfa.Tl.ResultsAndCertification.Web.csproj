@@ -906,6 +906,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AddWithdrawnStatus.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\TrainingProvider\ChangeBackToActiveAOMessage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ChangeBackToActiveAOMessage.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\TrainingProvider\ChangeBackToActiveStatus.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1693,6 +1698,10 @@
     <EmbeddedResource Update="Content\TrainingProvider\AddMathsStatus.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AddMathsStatus.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\ChangeBackToActiveAOMessage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ChangeBackToActiveAOMessage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\ChangeBackToActiveStatus.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

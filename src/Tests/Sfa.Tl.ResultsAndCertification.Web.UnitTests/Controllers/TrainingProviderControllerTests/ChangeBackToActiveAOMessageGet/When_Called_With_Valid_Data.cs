@@ -1,54 +1,52 @@
-﻿using FluentAssertions;
+﻿using AutoMapper;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using Xunit;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.ChangeBackToActiveStatusHaveYouToldAwardingOrganisationGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.ChangeBackToActiveAOMessageGet
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
-        private ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel _model;
+        private ChangeBackToActiveAOMessageViewModel _model;
 
         public override void Given()
         {
             ProfileId = 1;
 
-            _model = new ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel
+            _model = new ChangeBackToActiveAOMessageViewModel
             {
                 ProfileId = ProfileId,
-                AwardingOrganisationName = "test-ao-name",
-                ProviderUkprn = 123456789,
                 LearnerName = "test-learner-name",
+                AwardingOrganisationName = "test-ao-name",
                 AcademicYear = 2020
             };
 
             TrainingProviderLoader
-                .GetLearnerRecordDetailsAsync<ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel>(ProviderUkprn, ProfileId)
+                .GetLearnerRecordDetailsAsync<ChangeBackToActiveAOMessageViewModel>(ProviderUkprn, ProfileId)
                 .Returns(_model);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            TrainingProviderLoader.Received(1).GetLearnerRecordDetailsAsync<ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel>(ProviderUkprn, ProfileId);
+            TrainingProviderLoader.Received(1).GetLearnerRecordDetailsAsync<ChangeBackToActiveAOMessageViewModel>(ProviderUkprn, ProfileId);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
             var viewResult = Result as ViewResult;
-            var model = viewResult.Model as ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel;
+            var model = viewResult.Model as ChangeBackToActiveAOMessageViewModel;
 
             model.Should().NotBeNull();
-            model.HaveYouToldAwardingOrganisation.Should().BeNull();
             model.ProfileId.Should().Be(_model.ProfileId);
-            model.AwardingOrganisationName.Should().Be(_model.AwardingOrganisationName);
-            model.ProviderUkprn.Should().Be(_model.ProviderUkprn);
             model.LearnerName.Should().Be(_model.LearnerName);
-            model.AcademicYear.Should().Be(_model.AcademicYear);
+            model.AwardingOrganisationName.Should().Be(_model.AwardingOrganisationName);
 
             model.Breadcrumb.Should().NotBeNull();
             model.Breadcrumb.BreadcrumbItems.Should().HaveCount(3);

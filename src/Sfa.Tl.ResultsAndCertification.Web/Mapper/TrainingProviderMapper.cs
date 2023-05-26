@@ -93,7 +93,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IsPendingWithdrawl, opts => opts.MapFrom(s => s.IsPendingWithdrawal))
                .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => s.AwardingOrganisationName))
                .ForMember(d => d.RegistrationPathwayStatus, opts => opts.MapFrom(s => s.RegistrationPathwayStatus))
-               .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear));
+               .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
+               .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn));
 
             CreateMap<LearnerRecordDetails, ChangeBackToActiveStatusViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
@@ -109,17 +110,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
                .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => s.AwardingOrganisationName))
-               .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear));
+               .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
+               .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn));
 
             CreateMap<ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel, ReinstateRegistrationFromPendingWithdrawalRequest>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-               .ForMember(d => d.AoUkprn, opts => opts.MapFrom(s => s.AwardingOrganisationUkprn))
+               .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel, ReinstateRegistrationFromPendingWithdrawalRequest>>());
+
+            CreateMap<LearnerRecordDetails, ChangeBackToActiveAOMessageViewModel>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
+               .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => s.AwardingOrganisationName))
+               .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear));
 
             CreateMap<LearnerRecordDetails, WithdrawnConfirmationViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
-               .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => s.AwardingOrganisationName));
+               .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => s.AwardingOrganisationName))
+               .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn));
 
             CreateMap<LearnerRecordDetails, AddMathsStatusViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
@@ -147,8 +156,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<WithdrawnConfirmationViewModel, SetRegistrationAsPendingWithdrawalRequest>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-               .ForMember(d => d.IsPendingWithdrawl, opts => opts.MapFrom(s => s.IsPendingWithdrawl))
-               .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))
+               .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<WithdrawnConfirmationViewModel, SetRegistrationAsPendingWithdrawalRequest>>());
 
             CreateMap<RequestReplacementDocumentViewModel, ReplacementPrintRequest>()
