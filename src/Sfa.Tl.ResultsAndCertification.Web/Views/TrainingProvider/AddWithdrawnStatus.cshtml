@@ -18,6 +18,8 @@
             <form asp-route="@RouteConstants.SubmitWithdrawnStatus" id="addWithdrawnStatusForm">
                 <input type="hidden" asp-for="ProfileId" />
                 <input type="hidden" asp-for="LearnerName" />
+                <input type="hidden" asp-for="AwardingOrganisationName" />
+                <input type="hidden" asp-for="ProviderUkprn" />
 
                 <partial name="_ValidationSummary" />
 

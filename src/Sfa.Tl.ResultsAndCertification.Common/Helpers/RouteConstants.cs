@@ -263,6 +263,7 @@
         public const string SubmitChangeWithdrawnStatusHaveYouToldAwardingOrganisation = "SubmitChangeWithdrawnStatusHaveYouToldAwardingOrganisation";
         public const string ChangeBackToActiveStatusHaveYouToldAwardingOrganisation = "ChangeBackToActiveStatusHaveYouToldAwardingOrganisation";
         public const string SubmitChangeBackToActiveStatusHaveYouToldAwardingOrganisation = "SubmitChangeBackToActiveStatusHaveYouToldAwardingOrganisation";
+        public const string ChangeBackToActiveAOMessage = "ChangeBackToActiveAOMessage";
 
         public const string SearchLearnerDetails = "SearchLearnerDetails";
         public const string SubmitSearchLearnerDetails = "SubmitSearchLearnerDetails";

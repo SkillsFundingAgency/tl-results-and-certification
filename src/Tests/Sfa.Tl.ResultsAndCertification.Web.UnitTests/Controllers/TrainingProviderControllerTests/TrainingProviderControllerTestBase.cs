@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests
 {
@@ -28,6 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         protected Guid UserId;
         protected IHttpContextAccessor HttpContextAccessor;
         protected string CacheKey;
+        protected string InformationCacheKey;
 
         public override void Setup()
         {
@@ -48,6 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             HttpContextAccessor.HttpContext.Returns(httpContext);
 
             CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.TrainingProviderCacheKey);
+            InformationCacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.TrainingProviderInformationCacheKey);
         }
     }
 }

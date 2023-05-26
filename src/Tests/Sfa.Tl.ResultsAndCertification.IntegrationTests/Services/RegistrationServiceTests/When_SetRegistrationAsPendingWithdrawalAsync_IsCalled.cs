@@ -18,6 +18,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 {
     public class When_SetRegistrationAsPendingWithdrawalAsync_IsCalled : RegistrationServiceBaseTest
     {
+        private static long _providerUkprn = 10000536;
+
         public override void Given()
         {
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
@@ -59,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                     {
                         new SetRegistrationAsPendingWithdrawalRequest
                         {
-                            AoUkprn = 10011881,
+                            ProviderUkprn = _providerUkprn,
                             ProfileId = 1, //Profile => Active, pending withdrawal false
                             PerformedBy = "Test User"
                         },
@@ -69,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                     {
                         new SetRegistrationAsPendingWithdrawalRequest
                         {
-                            AoUkprn = 10011881,
+                            ProviderUkprn = _providerUkprn,
                             ProfileId = 2, //Profile => Active, pending withdrawal true
                             PerformedBy = "Test User"
                         },
@@ -79,7 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                     {
                         new SetRegistrationAsPendingWithdrawalRequest
                         {
-                            AoUkprn = 10011881,
+                            ProviderUkprn = _providerUkprn,
                             ProfileId = 3, //Profile => Withdrawn
                             PerformedBy = "Test User"
                         },
@@ -89,7 +91,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                     {
                         new SetRegistrationAsPendingWithdrawalRequest
                         {
-                            AoUkprn = 10011881,
+                            ProviderUkprn = _providerUkprn,
                             ProfileId = 99, //Non-existing profile
                             PerformedBy = "Test User"
                         },

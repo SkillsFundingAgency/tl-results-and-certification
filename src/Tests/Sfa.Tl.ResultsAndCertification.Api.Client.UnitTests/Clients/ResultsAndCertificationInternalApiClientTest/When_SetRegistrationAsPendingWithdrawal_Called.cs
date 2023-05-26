@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _model = new SetRegistrationAsPendingWithdrawalRequest
             {
                 ProfileId = 1,
-                AoUkprn = 1234567890,
+                ProviderUkprn = 1234567890,
                 PerformedBy = "Test User"
             };
         }

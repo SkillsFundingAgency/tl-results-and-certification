@@ -18,7 +18,9 @@
             <form asp-route="@RouteConstants.SubmitChangeWithdrawnStatusHaveYouToldAwardingOrganisation" id="submitWithdrawnStatusForm">
                 <input type="hidden" asp-for="ProfileId" />
                 <input type="hidden" asp-for="LearnerName" />
-                
+                <input type="hidden" asp-for="AwardingOrganisationName" />
+                <input type="hidden" asp-for="ProviderUkprn" />
+
                 <partial name="_ValidationSummary" />
 
                 <div class="govuk-form-group" sfa-validation-for="HaveYouToldAwardingOrganisation" sfa-validation-class="govuk-form-group--error">
