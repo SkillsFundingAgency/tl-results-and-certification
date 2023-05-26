@@ -120,6 +120,9 @@
   <data name="Button_Continue" xml:space="preserve">
     <value>Continue</value>
   </data>
+  <data name="Page_Header" xml:space="preserve">
+    <value>You should contact {0}</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>You should contact {0}</value>
   </data>

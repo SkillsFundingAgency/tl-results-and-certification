@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.UpdateLearnerSubjectAsync(learnerSubjectRequest);
         }
 
-        public async Task<bool> UpdateLearnerWithdrawnStatusAsync(long providerUkprn, WithdrawnConfirmationViewModel model)
+        public async Task<bool> UpdateLearnerWithdrawnStatusAsync(long providerUkprn, ChangeWithdrawnStatusHaveYouToldAwardingOrganisationViewModel model)
         {
             var pendingWithdrawlRequest = _mapper.Map<SetRegistrationAsPendingWithdrawalRequest>(model, opt => opt.Items["providerUkprn"] = providerUkprn);
             return await _internalApiClient.SetRegistrationAsPendingWithdrawalAsync(pendingWithdrawlRequest);
