@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
@@ -646,7 +647,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> SetRegistrationAsPendingWithdrawalAsync(SetRegistrationAsPendingWithdrawalRequest model)
         {
-            var registration = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, includeProfile: false);
+            var registration = await _tqRegistrationRepository.GetRegistrationAoUkprnLiteAsync(model.AoUkprn, model.ProfileId, includeProfile: false);
 
             if (registration == null || registration.Status != RegistrationPathwayStatus.Active || (registration.Status == RegistrationPathwayStatus.Active && registration.IsPendingWithdrawal))
             {
