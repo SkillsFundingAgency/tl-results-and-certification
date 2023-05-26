@@ -117,21 +117,12 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<!--<data name="Button_Accept_And_Request" xml:space="preserve">
-    <value>Accept and request</value>
-  </data>-->
 	<data name="Button_Send_Request" xml:space="preserve">
     <value>Send request</value>
   </data>
-	<!--<data name="By_Submitting_Request_You_Are_Confirming" xml:space="preserve">
-    <value>By submitting this request you are confirming that, to the best of your knowledge, the details you are providing are correct.</value>
-  </data>-->
 	<data name="Caption_Request_Replacement_Document" xml:space="preserve">
     <value>Request replacement certificate</value>
   </data>
-	<!--<data name="Changing_Address_Take_Back_To_Home_Page" xml:space="preserve">
-    <value>Changing the address will take you back to the home page.</value>
-  </data>-->
 	<data name="Document_Certificate" xml:space="preserve">
     <value>Certificate</value>
   </data>
@@ -165,18 +156,9 @@
 	<data name="Page_Title" xml:space="preserve">
     <value>Request a replacement document</value>
   </data>
-	<!--<data name="Para_Check_Data_Before_Submit" xml:space="preserve">
-    <value>Check this data is correct or make any changes before submitting your request.</value>
-  </data>-->
-	<!--<data name="Para_Request_If_Lost_Or_Damaged" xml:space="preserve">
-    <value>Request a replacement document if it has been lost or damaged.</value>
-  </data>-->
 	<data name="Para_This_Means_Result_May_Not_Match" xml:space="preserve">
     <value>The replacement will be a copy of the learner’s previous certificate. This means it may not reflect any recent changes in their learner record.</value>
   </data>
-	<!--<data name="Para_Updated_Document_Sent_If_Any_Component_Changes" xml:space="preserve">
-    <value>If any components have changed within this learner’s record, you will automatically be sent an updated document within the next two months.</value>
-  </data>-->
 	<data name="Para_You_Receive_Previous_Certificate_Or_Soa" xml:space="preserve">
     <value>If you have changed any components in the learner's record, we will automatically send you an updated certificate or statement of achievement within the next two months.</value>
   </data>
@@ -198,7 +180,6 @@
 	<data name="Uln_Text" xml:space="preserve">
     <value>ULN</value>
   </data>
-
 	<data name="Title_Learner_Name" xml:space="preserve">
     <value>Learner name</value>
   </data>
