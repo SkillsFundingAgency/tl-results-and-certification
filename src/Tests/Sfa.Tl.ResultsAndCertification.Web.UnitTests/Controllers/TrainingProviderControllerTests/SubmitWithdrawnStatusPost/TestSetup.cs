@@ -6,13 +6,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 {
     public abstract class TestSetup: TrainingProviderControllerTestBase
     {
-        public WithdrawnConfirmationViewModel ViewModel;
+        public AddWithdrawnStatusViewModel ViewModel;
         public int ProfileId;
         public IActionResult Result { get; private set; }
 
-        public async override Task When()
+        public override Task When()
         {
-            Result = await Controller.SubmitWithdrawnStatusAsync(ViewModel);
+            Result = Controller.AddWithdrawnStatusAsync(ViewModel);
+            return Task.CompletedTask;
         }
     }
 }

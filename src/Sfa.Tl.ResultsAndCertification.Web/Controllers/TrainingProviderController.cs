@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
@@ -240,27 +241,52 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("manage-learners-add-withdrawn-status", Name = RouteConstants.SubmitWithdrawnStatus)]
-        public async Task<IActionResult> SubmitWithdrawnStatusAsync(WithdrawnConfirmationViewModel model)
+        [Route("manage-add-withdrawn-status", Name = RouteConstants.SubmitWithdrawnStatus)]
+        public IActionResult AddWithdrawnStatusAsync(AddWithdrawnStatusViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
             bool pendingWithdrawl = model.IsPendingWithdrawl.HasValue && model.IsPendingWithdrawl.Value;
-            bool withdrawnConfirmed = model.IsWithdrawnConfirmed.HasValue && model.IsWithdrawnConfirmed.Value;
 
-            if (pendingWithdrawl && withdrawnConfirmed)
+            bool yesSelected = model.IsPendingWithdrawl.HasValue && model.IsPendingWithdrawl.Value;
+
+            if (yesSelected)
             {
-                var isSuccess = await _trainingProviderLoader.UpdateLearnerWithdrawnStatusAsync(User.GetUkPrn(), model);
-
-                if (!isSuccess)
-                    return RedirectToRoute(RouteConstants.ProblemWithService);
-
-                return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
+                return RedirectToRoute(RouteConstants.ChangeWithdrawnStatusHaveYouToldAwardingOrganisation, new { profileId = model.ProfileId });
             }
-            else if (pendingWithdrawl)
-            {
+
+            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("manage-add-withdrawn-status-ao-message/{profileId}", Name = RouteConstants.ChangeWithdrawnStatusHaveYouToldAwardingOrganisation)]
+        public async Task<IActionResult> ChangeWithdrawnStatusHaveYouToldAwardingOrganisationAsync(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<ChangeWithdrawnStatusHaveYouToldAwardingOrganisationViewModel>(User.GetUkPrn(), profileId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("manage-add-withdrawn-status-ao-message", Name = RouteConstants.SubmitChangeWithdrawnStatusHaveYouToldAwardingOrganisation)]
+        public async Task<IActionResult> ChangeWithdrawnStatusHaveYouToldAwardingOrganisationAsync(ChangeWithdrawnStatusHaveYouToldAwardingOrganisationViewModel model)
+        {
+            if (!ModelState.IsValid)
                 return View(model);
+
+            bool yesSelected = model.HaveYouToldAwardingOrganisation.HasValue && model.HaveYouToldAwardingOrganisation.Value;
+
+            if (yesSelected)
+            {
+                await _trainingProviderLoader.UpdateLearnerWithdrawnStatusAsync(User.GetUkPrn(),model);
+                await _cacheService.SetAsync(InformationCacheKey, new InformationBannerModel
+                {
+                    Message = string.Format(LearnerDetailsContent.Reinstate_Message_Template, model.LearnerName)
+                });
             }
 
             return RedirectToRoute(RouteConstants.WithdrawLearnerAOMessage, new { profileId = model.ProfileId });

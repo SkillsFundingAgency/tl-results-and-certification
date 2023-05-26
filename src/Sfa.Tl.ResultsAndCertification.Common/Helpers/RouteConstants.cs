@@ -258,6 +258,9 @@
         public const string ChangeBackToActiveStatus = "ChangeBackToActiveStatus";
         public const string SubmitChangeBackToActiveStatus = "SubmitChangeBackToActiveStatus";
         public const string WithdrawLearnerAOMessage = "WithdrawLearnerAOMessage";
+        public const string SubmitWithdrawLearnerAOMessage = "SubmitWithdrawLearnerAOMessage";
+        public const string ChangeWithdrawnStatusHaveYouToldAwardingOrganisation = "ChangeWithdrawnStatusHaveYouToldAwardingOrganisation";
+        public const string SubmitChangeWithdrawnStatusHaveYouToldAwardingOrganisation = "SubmitChangeWithdrawnStatusHaveYouToldAwardingOrganisation";
         public const string ChangeBackToActiveStatusHaveYouToldAwardingOrganisation = "ChangeBackToActiveStatusHaveYouToldAwardingOrganisation";
         public const string SubmitChangeBackToActiveStatusHaveYouToldAwardingOrganisation = "SubmitChangeBackToActiveStatusHaveYouToldAwardingOrganisation";
         public const string ChangeBackToActiveAOMessage = "ChangeBackToActiveAOMessage";
