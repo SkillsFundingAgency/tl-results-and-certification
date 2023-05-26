@@ -196,7 +196,7 @@
     <value>Organisation's address</value>
   </data>
 	<data name="Uln_Text" xml:space="preserve">
-    <value>ULN:</value>
+    <value>ULN</value>
   </data>
 
 	<data name="Title_Learner_Name" xml:space="preserve">
@@ -207,5 +207,8 @@
   </data>
 	<data name="Organisation_Address_Wrong_Message" xml:space="preserve">
     <value>If your organisation's address is wrong you will need to change it in your T Levels account.</value>
+  </data>
+	<data name="Service_Home_Page" xml:space="preserve">
+    <value>You can do this from the service's home page.</value>
   </data>
 </root>

@@ -215,6 +215,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You can do this from the service&apos;s home page..
+        /// </summary>
+        public static string Service_Home_Page {
+            get {
+                return ResourceManager.GetString("Service_Home_Page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A replacement document has been requested.
         /// </summary>
         public static string Success_Header_Replacement_Document_Requested {
@@ -269,7 +278,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ULN:.
+        ///   Looks up a localized string similar to ULN.
         /// </summary>
         public static string Uln_Text {
             get {
