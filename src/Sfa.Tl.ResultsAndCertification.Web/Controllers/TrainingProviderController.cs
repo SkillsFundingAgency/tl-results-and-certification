@@ -267,6 +267,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("withdraw-learner-ao-message/{profileId}", Name = RouteConstants.WithdrawLearnerAOMessage)]
+        public async Task<IActionResult> WithdrawLearnerAOMessageAsync(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<WithdrawLearnerAOMessageViewModel>(User.GetUkPrn(), profileId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        #endregion
+
+        #region Change back to active from pending withdrawal
+
+        [HttpGet]
         [Route("manage-learners-change-back-to-active-status/{profileId}", Name = RouteConstants.ChangeBackToActiveStatus)]
         public async Task<IActionResult> ChangeBackToActiveStatusAsync(int profileId)
         {
@@ -297,18 +313,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("withdraw-learner-ao-message/{profileId}", Name = RouteConstants.WithdrawLearnerAOMessage)]
-        public async Task<IActionResult> WithdrawLearnerAOMessageAsync(int profileId)
-        {
-            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<WithdrawLearnerAOMessageViewModel>(User.GetUkPrn(), profileId);
-
-            if (viewModel == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            return View(viewModel);
-        }
-
-        [HttpGet]
         [Route("manage-learners-change-back-to-active-status-have-you-told-ao/{profileId}", Name = RouteConstants.ChangeBackToActiveStatusHaveYouToldAwardingOrganisation)]
         public async Task<IActionResult> ChangeBackToActiveStatusHaveYouToldAwardingOrganisationAsync(int profileId)
         {
@@ -327,14 +331,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
+            var isSuccess = await _trainingProviderLoader.ReinstateRegistrationFromPendingWithdrawalAsync(model);
+            if (!isSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
             bool yesSelected = model.HaveYouToldAwardingOrganisation.HasValue && model.HaveYouToldAwardingOrganisation.Value;
 
             if (yesSelected)
             {
-                var isSuccess = await _trainingProviderLoader.ReinstateRegistrationFromPendingWithdrawalAsync(model);
-                if (!isSuccess)
-                    return RedirectToRoute(RouteConstants.ProblemWithService);
-
                 await _cacheService.SetAsync(
                     InformationCacheKey,
                     new InformationBannerModel
@@ -359,6 +363,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("manage-learners-change-back-to-active-status-ao-message", Name = RouteConstants.SubmitChangeBackToActiveAOMessage)]
+        public IActionResult ChangeBackToActiveAOMessageAsync(ChangeBackToActiveAOMessageViewModel model)
+        {
+            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
         }
 
         #endregion
