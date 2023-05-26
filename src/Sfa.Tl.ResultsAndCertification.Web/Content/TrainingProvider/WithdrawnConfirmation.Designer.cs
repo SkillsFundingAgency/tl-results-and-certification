@@ -105,5 +105,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select yes if you have contacted the awarding organisation.
+        /// </summary>
+        public static string Validation_Message {
+            get {
+                return ResourceManager.GetString("Validation_Message", resourceCulture);
+            }
+        }
     }
 }

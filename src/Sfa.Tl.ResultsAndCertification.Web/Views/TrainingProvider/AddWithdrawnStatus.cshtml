@@ -18,8 +18,6 @@
             <form asp-route="@RouteConstants.SubmitWithdrawnStatus" id="addWithdrawnStatusForm">
                 <input type="hidden" asp-for="ProfileId" />
                 <input type="hidden" asp-for="LearnerName" />
-                <input type="hidden" asp-for="AwardingOrganisationName" />
-                
 
                 <partial name="_ValidationSummary" />
 
@@ -31,14 +29,14 @@
                         <div class="govuk-radios" data-module="govuk-radios">
                             <span sfa-validation-for="IsPendingWithdrawl"></span>
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="withdrawnstatus" asp-for="IsPendingWithdrawl" type="radio" value="true">
-                                <label class="govuk-label govuk-radios__label" for="withdrawnstatus">
+                                <input class="govuk-radios__input" id="is-pending-withdrawl-status" asp-for="IsPendingWithdrawl" type="radio" value="true">
+                                <label class="govuk-label govuk-radios__label" for="is-pending-withdrawl-status">
                                     @string.Format(@AddWithdrawnStatus.Option_Yes, Model.IsPendingWithdrawl)
                                 </label>
                             </div>
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="withdrawnstatus-no" asp-for="IsPendingWithdrawl" type="radio" value="false">
-                                <label class="govuk-label govuk-radios__label" for="withdrawnstatus-no">
+                                <input class="govuk-radios__input" id="is-pending-withdrawl-status-no" asp-for="IsPendingWithdrawl" type="radio" value="false">
+                                <label class="govuk-label govuk-radios__label" for="is-pending-withdrawl-status-no">
                                     @string.Format(@AddWithdrawnStatus.Option_No, Model.IsPendingWithdrawl)
                                 </label>
                             </div>

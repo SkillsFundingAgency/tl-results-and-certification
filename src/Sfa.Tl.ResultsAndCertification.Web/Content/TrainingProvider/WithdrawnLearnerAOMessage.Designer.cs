@@ -73,6 +73,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         /// <summary>
         ///   Looks up a localized string similar to You should contact {0}.
         /// </summary>
+        public static string Page_Header {
+            get {
+                return ResourceManager.GetString("Page_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You should contact {0}.
+        /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
