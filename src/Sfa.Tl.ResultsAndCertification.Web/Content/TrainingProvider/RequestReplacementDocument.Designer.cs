@@ -62,38 +62,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Accept and request.
+        ///   Looks up a localized string similar to Send request.
         /// </summary>
-        public static string Button_Accept_And_Request {
+        public static string Button_Send_Request {
             get {
-                return ResourceManager.GetString("Button_Accept_And_Request", resourceCulture);
+                return ResourceManager.GetString("Button_Send_Request", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By submitting this request you are confirming that, to the best of your knowledge, the details you are providing are correct..
-        /// </summary>
-        public static string By_Submitting_Request_You_Are_Confirming {
-            get {
-                return ResourceManager.GetString("By_Submitting_Request_You_Are_Confirming", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Request replacement document.
+        ///   Looks up a localized string similar to Request replacement certificate.
         /// </summary>
         public static string Caption_Request_Replacement_Document {
             get {
                 return ResourceManager.GetString("Caption_Request_Replacement_Document", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Changing the address will take you back to the home page..
-        /// </summary>
-        public static string Changing_Address_Take_Back_To_Home_Page {
-            get {
-                return ResourceManager.GetString("Changing_Address_Take_Back_To_Home_Page", resourceCulture);
             }
         }
         
@@ -116,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check the learner&apos;s details before sending your request.
+        ///   Looks up a localized string similar to Check details before sending your request.
         /// </summary>
         public static string Heading_Check_Details_Before_Sending {
             get {
@@ -188,6 +170,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to My organisation&apos;s address is wrong.
+        /// </summary>
+        public static string Organisation_Address_Wrong {
+            get {
+                return ResourceManager.GetString("Organisation_Address_Wrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If your organisation&apos;s address is wrong you will need to change it in your T Levels account..
+        /// </summary>
+        public static string Organisation_Address_Wrong_Message {
+            get {
+                return ResourceManager.GetString("Organisation_Address_Wrong_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Request a replacement document.
         /// </summary>
         public static string Page_Title {
@@ -197,25 +197,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check this data is correct or make any changes before submitting your request..
-        /// </summary>
-        public static string Para_Check_Data_Before_Submit {
-            get {
-                return ResourceManager.GetString("Para_Check_Data_Before_Submit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Request a replacement document if it has been lost or damaged..
-        /// </summary>
-        public static string Para_Request_If_Lost_Or_Damaged {
-            get {
-                return ResourceManager.GetString("Para_Request_If_Lost_Or_Damaged", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This means that the results in the document may not match the results shown in the learner’s record..
+        ///   Looks up a localized string similar to The replacement will be a copy of the learner’s previous certificate. This means it may not reflect any recent changes in their learner record..
         /// </summary>
         public static string Para_This_Means_Result_May_Not_Match {
             get {
@@ -224,20 +206,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If any components have changed within this learner’s record, you will automatically be sent an updated document within the next two months..
-        /// </summary>
-        public static string Para_Updated_Document_Sent_If_Any_Component_Changes {
-            get {
-                return ResourceManager.GetString("Para_Updated_Document_Sent_If_Any_Component_Changes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The document you will receive will be a copy of the previous certificate or statement of achievement. It may not reflect any changes to:.
+        ///   Looks up a localized string similar to If you have changed any components in the learner&apos;s record, we will automatically send you an updated certificate or statement of achievement within the next two months..
         /// </summary>
         public static string Para_You_Receive_Previous_Certificate_Or_Soa {
             get {
                 return ResourceManager.GetString("Para_You_Receive_Previous_Certificate_Or_Soa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can do this from the service&apos;s home page..
+        /// </summary>
+        public static string Service_Home_Page {
+            get {
+                return ResourceManager.GetString("Service_Home_Page", resourceCulture);
             }
         }
         
@@ -278,6 +260,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learner name.
+        /// </summary>
+        public static string Title_Learner_Name {
+            get {
+                return ResourceManager.GetString("Title_Learner_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Organisation&apos;s address.
         /// </summary>
         public static string Title_Organisation_Address {
@@ -287,20 +278,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ULN:.
+        ///   Looks up a localized string similar to ULN.
         /// </summary>
         public static string Uln_Text {
             get {
                 return ResourceManager.GetString("Uln_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Your organisation&apos;s postal address.
-        /// </summary>
-        public static string Your_Org_Postal_Address {
-            get {
-                return ResourceManager.GetString("Your_Org_Postal_Address", resourceCulture);
             }
         }
     }
