@@ -12,7 +12,7 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        
+        <form asp-route="@RouteConstants.SubmitWithdrawLearnerAOMessage" id="submitWithdrawnLearnerAoMessage">
             <input type="hidden" asp-for="ProfileId" />
 
             <div class="govuk-form-group" sfa-validation-class="govuk-form-group--error">
@@ -28,11 +28,11 @@
                         @WithdrawnLearnerAOMessage.Para_Having_Accurate_Records
                     </p>
                     <ul class="govuk-list govuk-list--bullet">
-                    @Html.Raw(@WithdrawnLearnerAOMessage.Para_Bullet_Points)
+                        @Html.Raw(@WithdrawnLearnerAOMessage.Para_Bullet_Points)
                     </ul>
                 </fieldset>
             </div>
             <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@WithdrawnLearnerAOMessage.Button_Continue</button>
-        
+        </form>
     </div>
 </div>

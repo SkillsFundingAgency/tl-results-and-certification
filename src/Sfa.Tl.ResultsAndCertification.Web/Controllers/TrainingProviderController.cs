@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MessagePack.Formatters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -287,6 +288,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 {
                     Message = string.Format(LearnerDetailsContent.Reinstate_Message_Template, model.LearnerName)
                 });
+
+                return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
             }
 
             return RedirectToRoute(RouteConstants.WithdrawLearnerAOMessage, new { profileId = model.ProfileId });
@@ -332,6 +335,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
+        }
+
+
+        [HttpPost]
+        [Route("withdraw-learner-ao-message", Name = RouteConstants.SubmitWithdrawLearnerAOMessage)]
+        public IActionResult SubmitWithdrawLearnerAOMessageAsync(int profileId)
+        {
+            if (profileId == 0)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return RedirectToAction(nameof(RouteConstants.LearnerRecordDetails), new { profileId = profileId });
         }
 
         [HttpGet]
@@ -385,6 +399,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("manage-learners-change-back-to-active-status-ao-message", Name = RouteConstants.SubmitChangeBackToActiveAOMessage)]
+        public IActionResult SubmitChangeBackToActiveAOMessageAsync(int profileId)
+        {
+            if (profileId == 0)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return RedirectToAction(nameof(RouteConstants.LearnerRecordDetails), new { profileId = profileId });
         }
 
         #endregion

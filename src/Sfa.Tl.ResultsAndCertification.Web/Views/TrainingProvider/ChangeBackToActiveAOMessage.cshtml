@@ -12,13 +12,17 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl">@string.Format(ChangeBackToActiveAOMessage.Page_Header, Model.AwardingOrganisationName)</h1>
-        <p class="govuk-body">
-            @String.Format(@ChangeBackToActiveAOMessage.Para_Inform_AO_Learner_Continues, Model.AwardingOrganisationName, Model.LearnerName, Model.AwardingOrganisationName)
-        </p>
-        <p class="govuk-body">
-            @ChangeBackToActiveAOMessage.Para_Having_Accurate_Records
-        </p>
-        <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ChangeBackToActiveAOMessage.Button_Continue</button>
+        <form asp-action="@RouteConstants.SubmitChangeBackToActiveAOMessage" id="submitChangeBackToActiveAOMessage">
+            <input type="hidden" asp-for="ProfileId" />
+
+            <h1 class="govuk-heading-xl">@string.Format(ChangeBackToActiveAOMessage.Page_Header, Model.AwardingOrganisationName)</h1>
+            <p class="govuk-body">
+                @String.Format(@ChangeBackToActiveAOMessage.Para_Inform_AO_Learner_Continues, Model.AwardingOrganisationName, Model.LearnerName, Model.AwardingOrganisationName)
+            </p>
+            <p class="govuk-body">
+                @ChangeBackToActiveAOMessage.Para_Having_Accurate_Records
+            </p>
+            <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ChangeBackToActiveAOMessage.Button_Continue</button>
+        </form>
     </div>
 </div>
