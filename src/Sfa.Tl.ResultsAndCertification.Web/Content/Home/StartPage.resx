@@ -154,7 +154,7 @@
     <value>This service is for awarding organisations and education providers who deliver T Level qualifications.</value>
   </data>
   <data name="Para_This_Service_IsFor" xml:space="preserve">
-    <value>This service is for awarding organisations and providers who deliver T Level qualifications.</value>
+    <value>It is managed and run by the Department for Education (DfE),</value>
   </data>
   <data name="Para_User_Can_Be_Given_More_Than_One_Role" xml:space="preserve">
     <value>A user can be given more than one role. More details on the roles in this service can be read below.</value>
