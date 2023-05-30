@@ -306,12 +306,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        [Route("withdraw-learner-ao-message", Name = RouteConstants.SubmitWithdrawLearnerAOMessage)]
+        public IActionResult SubmitWithdrawLearnerAOMessageAsync(int profileId)
+        {
+            if (profileId == 0)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return RedirectToAction(nameof(RouteConstants.LearnerRecordDetails), new { profileId = profileId });
+        }
+
         #endregion
 
         #region Change back to active from pending withdrawal
 
         [HttpGet]
-        [Route("manage-learners-change-back-to-active-status/{profileId}", Name = RouteConstants.ChangeBackToActiveStatus)]
+        [Route("restore-learner-ao/{profileId}", Name = RouteConstants.ChangeBackToActiveStatus)]
         public async Task<IActionResult> ChangeBackToActiveStatusAsync(int profileId)
         {
             var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<ChangeBackToActiveStatusViewModel>(User.GetUkPrn(), profileId);
@@ -323,7 +333,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("manage-learners-change-back-to-active-status", Name = RouteConstants.SubmitChangeBackToActiveStatus)]
+        [Route("restore-learner-ao", Name = RouteConstants.SubmitChangeBackToActiveStatus)]
         public IActionResult ChangeBackToActiveStatusAsync(ChangeBackToActiveStatusViewModel model)
         {
             if (!ModelState.IsValid)
@@ -340,18 +350,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         }
 
-        [HttpPost]
-        [Route("withdraw-learner-ao-message", Name = RouteConstants.SubmitWithdrawLearnerAOMessage)]
-        public IActionResult SubmitWithdrawLearnerAOMessageAsync(int profileId)
-        {
-            if (profileId == 0)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            return RedirectToAction(nameof(RouteConstants.LearnerRecordDetails), new { profileId = profileId });
-        }
-
         [HttpGet]
-        [Route("manage-learners-change-back-to-active-status-have-you-told-ao/{profileId}", Name = RouteConstants.ChangeBackToActiveStatusHaveYouToldAwardingOrganisation)]
+        [Route("restore-learner-have-you-told-ao/{profileId}", Name = RouteConstants.ChangeBackToActiveStatusHaveYouToldAwardingOrganisation)]
         public async Task<IActionResult> ChangeBackToActiveStatusHaveYouToldAwardingOrganisationAsync(int profileId)
         {
             var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel>(User.GetUkPrn(), profileId);
@@ -363,7 +363,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("manage-learners-change-back-to-active-status-have-you-told-ao", Name = RouteConstants.SubmitChangeBackToActiveStatusHaveYouToldAwardingOrganisation)]
+        [Route("restore-learner-have-you-told-ao", Name = RouteConstants.SubmitChangeBackToActiveStatusHaveYouToldAwardingOrganisation)]
         public async Task<IActionResult> ChangeBackToActiveStatusHaveYouToldAwardingOrganisationAsync(ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel model)
         {
             if (!ModelState.IsValid)
@@ -392,7 +392,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("manage-learners-change-back-to-active-status-ao-message/{profileId}", Name = RouteConstants.ChangeBackToActiveAOMessage)]
+        [Route("restore-learner-ao-message/{profileId}", Name = RouteConstants.ChangeBackToActiveAOMessage)]
         public async Task<IActionResult> ChangeBackToActiveAOMessageAsync(int profileId)
         {
             var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<ChangeBackToActiveAOMessageViewModel>(User.GetUkPrn(), profileId);
@@ -404,7 +404,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("manage-learners-change-back-to-active-status-ao-message", Name = RouteConstants.SubmitChangeBackToActiveAOMessage)]
+        [Route("restore-learner-ao-message", Name = RouteConstants.SubmitChangeBackToActiveAOMessage)]
         public IActionResult ChangeBackToActiveAOMessageAsync(ChangeBackToActiveAOMessageViewModel model)
         {
             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
