@@ -12,8 +12,11 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form asp-action="@RouteConstants.SubmitChangeBackToActiveAOMessage" id="submitChangeBackToActiveAOMessage">
+        <form asp-route="@RouteConstants.SubmitChangeBackToActiveAOMessage" id="submit-change-back-to-active-status-ao-message-form">
             <input type="hidden" asp-for="ProfileId" />
+            <input type="hidden" asp-for="AwardingOrganisationName" />
+            <input type="hidden" asp-for="LearnerName" />
+            <input type="hidden" asp-for="AcademicYear" />
 
             <h1 class="govuk-heading-xl">@string.Format(ChangeBackToActiveAOMessage.Page_Header, Model.AwardingOrganisationName)</h1>
             <p class="govuk-body">
