@@ -151,7 +151,7 @@
     <value>For security reasons you should always sign out when you have finished using the service. Select ‘Sign out’ in the top right-hand corner of the screen to sign out and return to the 'Start' page.</value>
   </data>
   <data name="Para_Manage_TLevel_Results_Is_Run_By" xml:space="preserve">
-    <value>Manage T Level results is run by the Education and Skills Funding Agency (ESFA), an executive agency of the Department for Education (DfE).</value>
+    <value>This service is for awarding organisations and education providers who deliver T Level qualifications.</value>
   </data>
   <data name="Para_This_Service_IsFor" xml:space="preserve">
     <value>This service is for awarding organisations and providers who deliver T Level qualifications.</value>
