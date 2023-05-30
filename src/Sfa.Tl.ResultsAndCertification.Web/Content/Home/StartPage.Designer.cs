@@ -160,7 +160,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage T Level results is run by the Education and Skills Funding Agency (ESFA), an executive agency of the Department for Education (DfE)..
+        ///   Looks up a localized string similar to This service is for awarding organisations and education providers who deliver T Level qualifications..
         /// </summary>
         public static string Para_Manage_TLevel_Results_Is_Run_By {
             get {
