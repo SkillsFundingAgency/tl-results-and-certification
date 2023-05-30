@@ -1,7 +1,10 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using Xunit;
 
@@ -28,6 +31,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public void Then_Expected_Methods_Called()
         {
             TrainingProviderLoader.Received(1).ReinstateRegistrationFromPendingWithdrawalAsync(ViewModel);
+
+            CacheService.Received(1).SetAsync(InformationCacheKey, Arg.Is<InformationBannerModel>(x =>
+                x.Heading.Equals(Content.ViewComponents.InformationBanner.Heading) &&
+                x.Message.Equals(string.Format(LearnerRecordDetails.Reinstate_Message_Template, ViewModel.LearnerName))),
+                CacheExpiryTime.XSmall);
         }
 
         [Fact]

@@ -374,18 +374,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!isSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
+            await _cacheService.SetAsync(
+                   InformationCacheKey,
+                   new InformationBannerModel
+                   {
+                       Message = string.Format(LearnerDetailsContent.Reinstate_Message_Template, model.LearnerName)
+                   },
+                   CacheExpiryTime.XSmall);
+
             bool yesSelected = model.HaveYouToldAwardingOrganisation.HasValue && model.HaveYouToldAwardingOrganisation.Value;
 
             if (yesSelected)
             {
-                await _cacheService.SetAsync(
-                    InformationCacheKey,
-                    new InformationBannerModel
-                    {
-                        Message = string.Format(LearnerDetailsContent.Reinstate_Message_Template, model.LearnerName)
-                    },
-                    CacheExpiryTime.XSmall);
-
                 return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
             }
 
