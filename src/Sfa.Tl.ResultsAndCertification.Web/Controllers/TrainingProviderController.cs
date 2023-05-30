@@ -248,8 +248,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            bool pendingWithdrawl = model.IsPendingWithdrawl.HasValue && model.IsPendingWithdrawl.Value;
-
             bool yesSelected = model.IsPendingWithdrawl.HasValue && model.IsPendingWithdrawl.Value;
 
             if (yesSelected)
@@ -286,8 +284,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 await _trainingProviderLoader.UpdateLearnerWithdrawnStatusAsync(User.GetUkPrn(), model);
                 await _cacheService.SetAsync(InformationCacheKey, new InformationBannerModel
                 {
-                    Message = string.Format(LearnerDetailsContent.Reinstate_Message_Template, model.LearnerName)
-                });
+                    Message = string.Format(LearnerDetailsContent.Withdrawn_Message_Told_AO_Yes_Template, model.LearnerName)
+                },
+                CacheExpiryTime.XSmall);
 
                 return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
             }
