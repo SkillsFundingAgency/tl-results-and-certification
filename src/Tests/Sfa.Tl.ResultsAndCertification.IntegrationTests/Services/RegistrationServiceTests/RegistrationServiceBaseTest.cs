@@ -371,6 +371,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 actualPathway.Status.Should().Be(expectedPathway.Status);
 
             actualPathway.IsBulkUpload.Should().Be(expectedPathway.IsBulkUpload);
+            actualPathway.IsPendingWithdrawal.Should().Be(expectedPathway.IsPendingWithdrawal);
 
             // Assert specialisms
             actualPathway.TqRegistrationSpecialisms.Count.Should().Be(expectedPathway.TqRegistrationSpecialisms.Count);

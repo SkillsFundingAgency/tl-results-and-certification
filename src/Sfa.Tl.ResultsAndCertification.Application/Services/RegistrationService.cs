@@ -779,6 +779,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 // Pathway
                 pathway.Status = status;
+                pathway.IsPendingWithdrawal = false;
                 pathway.EndDate = DateTime.UtcNow;
                 pathway.ModifiedBy = performedBy;
                 pathway.ModifiedOn = DateTime.UtcNow;
