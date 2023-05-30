@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MessagePack.Formatters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -282,11 +283,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (yesSelected)
             {
-                await _trainingProviderLoader.UpdateLearnerWithdrawnStatusAsync(User.GetUkPrn(),model);
+                await _trainingProviderLoader.UpdateLearnerWithdrawnStatusAsync(User.GetUkPrn(), model);
                 await _cacheService.SetAsync(InformationCacheKey, new InformationBannerModel
                 {
                     Message = string.Format(LearnerDetailsContent.Reinstate_Message_Template, model.LearnerName)
                 });
+
+                return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
             }
 
             return RedirectToRoute(RouteConstants.WithdrawLearnerAOMessage, new { profileId = model.ProfileId });
@@ -336,6 +339,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
 
+        }
+
+        [HttpPost]
+        [Route("withdraw-learner-ao-message", Name = RouteConstants.SubmitWithdrawLearnerAOMessage)]
+        public IActionResult SubmitWithdrawLearnerAOMessageAsync(int profileId)
+        {
+            if (profileId == 0)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return RedirectToAction(nameof(RouteConstants.LearnerRecordDetails), new { profileId = profileId });
         }
 
         [HttpGet]
