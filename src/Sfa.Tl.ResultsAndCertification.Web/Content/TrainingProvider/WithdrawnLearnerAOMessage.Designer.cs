@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You should contact {0}.
+        ///   Looks up a localized string similar to You should contact the awarding organisation.
         /// </summary>
         public static string Page_Title {
             get {
