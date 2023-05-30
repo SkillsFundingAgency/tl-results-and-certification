@@ -284,7 +284,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 await _trainingProviderLoader.UpdateLearnerWithdrawnStatusAsync(User.GetUkPrn(), model);
                 await _cacheService.SetAsync(InformationCacheKey, new InformationBannerModel
                 {
-                    Message = string.Format(LearnerDetailsContent.Withdrawn_Message_Told_AO_Yes_Template, model.LearnerName)
+                    Message = string.Format(LearnerDetailsContent.Withdrawn_Message_Told_AO_Yes_Template, model.LearnerName, model.AwardingOrganisationName)
                 },
                 CacheExpiryTime.XSmall);
 
