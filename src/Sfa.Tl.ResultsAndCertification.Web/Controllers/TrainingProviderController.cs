@@ -291,6 +291,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
             }
 
+            await _cacheService.SetAsync(InformationCacheKey, new InformationBannerModel
+            {
+                Message = string.Format(LearnerDetailsContent.Withdrawn_Message_Told_AO_No_Template, model.LearnerName, model.AwardingOrganisationName)
+            },
+                CacheExpiryTime.XSmall);
+
             return RedirectToRoute(RouteConstants.WithdrawLearnerAOMessage, new { profileId = model.ProfileId });
         }
 
