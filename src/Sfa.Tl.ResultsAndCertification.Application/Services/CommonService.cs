@@ -121,6 +121,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 new DateTime(2023,05,24),
                 new DateTime(2023,05,25),
                 new DateTime(2023,05,26),
+                new DateTime(2023,06,26),
                 new DateTime(2023,06,28)                
             };
 
