@@ -133,7 +133,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check what data you need to provide and when you need to provide it (opens in a new tab).
+        ///   Looks up a localized string similar to Check what data you need to provide and when you need to provide it.
         /// </summary>
         public static string Link_Check_Data_You_Need_To_Provide {
             get {
@@ -151,7 +151,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Find out about Manage T Level results (opens in a new tab).
+        ///   Looks up a localized string similar to Find out about Manage T Level results.
         /// </summary>
         public static string Link_Find_About_Mange_Tlevel_Results {
             get {

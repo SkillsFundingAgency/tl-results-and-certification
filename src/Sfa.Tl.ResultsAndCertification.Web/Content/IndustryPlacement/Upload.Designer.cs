@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 240KB.
+        ///   Looks up a localized string similar to 239KB.
         /// </summary>
         public static string File_Size_Kb_Text {
             get {
@@ -111,15 +111,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         public static string File_Type {
             get {
                 return ResourceManager.GetString("File_Type", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version 1.3.
-        /// </summary>
-        public static string File_Version_Text {
-            get {
-                return ResourceManager.GetString("File_Version_Text", resourceCulture);
             }
         }
         
