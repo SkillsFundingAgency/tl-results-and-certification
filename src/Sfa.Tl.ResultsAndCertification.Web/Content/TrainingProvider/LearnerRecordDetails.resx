@@ -130,7 +130,7 @@
     <value>Back to list of learners</value>
   </data>
   <data name="Button_Request_Replacement_Document" xml:space="preserve">
-    <value>Request replacement certificate</value>
+    <value>Request replacement document</value>
   </data>
   <data name="Hidden_Action_Text_English" xml:space="preserve">
     <value> english status</value>
