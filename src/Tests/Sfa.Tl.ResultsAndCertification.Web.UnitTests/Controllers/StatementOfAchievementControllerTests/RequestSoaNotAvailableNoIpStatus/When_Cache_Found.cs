@@ -18,13 +18,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
         public override void Given()
         {
             _mockCache = new RequestSoaNotAvailableNoIpStatusViewModel { Uln = 1234567891, LearnerName = "Test Name", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Provider (1234567)", TLevelTitle = "Title" };
-            CacheService.GetAndRemoveAsync<RequestSoaNotAvailableNoIpStatusViewModel>(CacheKey).Returns(_mockCache);
+            CacheService.GetAsync<RequestSoaNotAvailableNoIpStatusViewModel>(CacheKey).Returns(_mockCache);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            CacheService.Received(1).GetAndRemoveAsync<RequestSoaNotAvailableNoIpStatusViewModel>(CacheKey);
+            CacheService.Received(1).GetAsync<RequestSoaNotAvailableNoIpStatusViewModel>(CacheKey);
         }
 
         [Fact]

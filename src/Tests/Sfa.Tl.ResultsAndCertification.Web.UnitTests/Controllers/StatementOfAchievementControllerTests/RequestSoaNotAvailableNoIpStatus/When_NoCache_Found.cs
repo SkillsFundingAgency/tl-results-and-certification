@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
         [Fact]
         public void Then_Expected_Method_IsCalled()
         {
-            CacheService.Received(1).GetAndRemoveAsync<RequestSoaNotAvailableNoIpStatusViewModel>(CacheKey);
+            CacheService.Received(1).GetAsync<RequestSoaNotAvailableNoIpStatusViewModel>(CacheKey);
         }
 
         [Fact]
