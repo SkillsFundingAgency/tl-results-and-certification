@@ -151,10 +151,10 @@
     <value>For security reasons you should always sign out when you have finished using the service. Select ‘Sign out’ in the top right-hand corner of the screen to sign out and return to the 'Start' page.</value>
   </data>
   <data name="Para_Manage_TLevel_Results_Is_Run_By" xml:space="preserve">
-    <value>Manage T Level results is run by the Education and Skills Funding Agency (ESFA), an executive agency of the Department for Education (DfE).</value>
+    <value>This service is for awarding organisations and education providers who deliver T Level qualifications.</value>
   </data>
   <data name="Para_This_Service_IsFor" xml:space="preserve">
-    <value>This service is for awarding organisations and providers who deliver T Level qualifications.</value>
+    <value>It is managed and run by the Department for Education (DfE),</value>
   </data>
   <data name="Para_User_Can_Be_Given_More_Than_One_Role" xml:space="preserve">
     <value>A user can be given more than one role. More details on the roles in this service can be read below.</value>
@@ -266,6 +266,9 @@
   </data>
   <data name="Tlevel_Data_Format_And_Rules" xml:space="preserve">
     <value>T Level data format and rules</value>
+  </data>
+  <data name="Tlevel_Data_IndustryPlacement_Format_And_Rules" xml:space="preserve">
+    <value>T Level data format and rules (opens in a new tab)</value>
   </data>
   <data name="You_Need_DfE_SignIn_Account_To_Use_This_Service_Text" xml:space="preserve">
     <value>You will need a DfE Sign-in account and an assigned role.</value>
