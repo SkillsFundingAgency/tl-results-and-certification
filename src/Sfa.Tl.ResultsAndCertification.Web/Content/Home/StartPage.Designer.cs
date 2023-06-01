@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class StartPage {
@@ -160,7 +160,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage T Level results is run by the Education and Skills Funding Agency (ESFA), an executive agency of the Department for Education (DfE)..
+        ///   Looks up a localized string similar to This service is for awarding organisations and education providers who deliver T Level qualifications..
         /// </summary>
         public static string Para_Manage_TLevel_Results_Is_Run_By {
             get {
@@ -169,7 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This service is for awarding organisations and providers who deliver T Level qualifications..
+        ///   Looks up a localized string similar to It is managed and run by the Department for Education (DfE),.
         /// </summary>
         public static string Para_This_Service_IsFor {
             get {
@@ -507,6 +507,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         public static string Tlevel_Data_Format_And_Rules {
             get {
                 return ResourceManager.GetString("Tlevel_Data_Format_And_Rules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Level data format and rules (opens in a new tab).
+        /// </summary>
+        public static string Tlevel_Data_IndustryPlacement_Format_And_Rules {
+            get {
+                return ResourceManager.GetString("Tlevel_Data_IndustryPlacement_Format_And_Rules", resourceCulture);
             }
         }
         
