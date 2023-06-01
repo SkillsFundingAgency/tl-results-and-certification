@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 2 December 2022.
+        ///   Looks up a localized string similar to published 16 May 2023.
         /// </summary>
         public static string Assessments_Published_On {
             get {
@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version 1.7.
+        ///   Looks up a localized string similar to Version 1.8.
         /// </summary>
         public static string Assessments_Version {
             get {
