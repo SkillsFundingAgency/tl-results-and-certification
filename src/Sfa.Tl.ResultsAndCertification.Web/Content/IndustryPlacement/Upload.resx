@@ -127,13 +127,16 @@
     <value>The selected file must have a file name that is {0} characters or less</value>
   </data>
   <data name="File_Size_Kb_Text" xml:space="preserve">
-    <value>239KB</value>
+    <value>240KB</value>
   </data>
   <data name="File_Size_Too_Large_Validation_Message" xml:space="preserve">
     <value>The selected file must be less than {0}MB</value>
   </data>
   <data name="File_Type" xml:space="preserve">
     <value>XLSX</value>
+  </data>
+  <data name="File_Version_Text" xml:space="preserve">
+    <value>Version 1.3</value>
   </data>
   <data name="Js_Disabled_Upload_File_Button" xml:space="preserve">
     <value>Upload (only click once)</value>
