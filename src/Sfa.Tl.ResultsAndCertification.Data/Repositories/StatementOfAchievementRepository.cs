@@ -66,13 +66,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                           {
                                               ProfileId = tqProfile.Id,
                                               Uln = tqProfile.UniqueLearnerNumber,
+                                              MathsStatus = tqProfile.MathsStatus,
+                                              EnglishStatus = tqProfile.EnglishStatus,
                                               Firstname = tqProfile.Firstname,
                                               Lastname = tqProfile.Lastname,
                                               DateofBirth = tqProfile.DateofBirth,
                                               ProviderName = tlProvider.Name,
                                               ProviderUkprn = tlProvider.UkPrn,
                                               TlevelTitle = tlPathway.TlevelTitle,
-
                                               RegistrationPathwayId = tqPathway.Id,
                                               PathwayName = tlPathway.Name,
                                               PathwayCode = tlPathway.LarId,
