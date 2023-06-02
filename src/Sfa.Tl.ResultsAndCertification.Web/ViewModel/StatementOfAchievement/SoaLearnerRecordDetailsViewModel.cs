@@ -12,6 +12,7 @@ using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewCompone
 using RequestSoaCheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaCheckAndSubmit;
 using EnglishAndMathsStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.EnglishAndMathsStatus;
 using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
+using AutoMapper;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
 {
@@ -20,7 +21,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         public bool IsValid { get { return IsLearnerRegistered && !IsNotWithdrawn && IsIndustryPlacementAdded && !(HasPathwayResult == false && !IsIndustryPlacementCompleted); } }
 
         //Learner's registration details
-        public int ProfileId { get; set; }
+        public int ProfileId { get; set; }      
+        public SubjectStatus? MathsStatus { get; set; }
+        public SubjectStatus? EnglishStatus { get; set; }
         public long Uln { get; set; }
         public string LearnerName { get; set; }
         public DateTime DateofBirth { get; set; }
@@ -175,7 +178,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
                     _ => string.Empty,
                 };
             }
-        }
+        }        
 
         public string GetEnglishAndMathsStatusDisplayText
         {
