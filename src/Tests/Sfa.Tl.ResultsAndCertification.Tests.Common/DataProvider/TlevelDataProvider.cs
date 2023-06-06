@@ -232,6 +232,17 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return tlSpecialisms;
         }
 
+        public static IList<TlDualSpecialism> CreateDualTlSpecialisms(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, TlPathway tlPathway, bool addToDbContext = true)
+        {
+            var tlSpecialisms = new TlDualSpecialismBuilder().BuildList(awardingOrganisation, tlPathway);
+
+            if (addToDbContext && tlSpecialisms != null)
+            {
+                _dbContext.AddRange(tlSpecialisms);
+            }
+            return tlSpecialisms;
+        }
+
         #endregion
 
         #region TqAwardingOrganisation
