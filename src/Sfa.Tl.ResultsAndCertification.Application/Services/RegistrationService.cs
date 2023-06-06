@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
@@ -297,7 +298,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                         var pathwaysToAdd = amendedRegistration.TqRegistrationPathways.Where(mp => !activePathwayRegistrationsInDb.Any(ap => ap.TqProviderId == mp.TqProviderId)).ToList();
                         var pathwaysToUpdate = (pathwaysToAdd.Any() ? activePathwayRegistrationsInDb : activePathwayRegistrationsInDb.Where(s => amendedRegistration.TqRegistrationPathways.Any(r => r.TqProviderId == s.TqProviderId))).ToList();
-                        
+
                         if (pathwaysToUpdate.Any())
                         {
                             response = ValidateStage4Rules(amendedRegistration, pathwaysToUpdate, response);
@@ -644,6 +645,34 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
         }
 
+        public async Task<bool> SetRegistrationAsPendingWithdrawalAsync(SetRegistrationAsPendingWithdrawalRequest model)
+        {
+            var registration = await _tqRegistrationRepository.GetRegistrationLiteByProviderUkprnAsync(model.ProviderUkprn, model.ProfileId, includeProfile: false);
+
+            if (registration == null || registration.Status != RegistrationPathwayStatus.Active || (registration.Status == RegistrationPathwayStatus.Active && registration.IsPendingWithdrawal))
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: {nameof(SetRegistrationAsPendingWithdrawalAsync)}({model.ProviderUkprn}, {model.ProfileId})");
+                return false;
+            }
+
+            registration.IsPendingWithdrawal = true;
+            return await _tqRegistrationPathwayRepository.UpdateWithSpecifedColumnsOnlyAsync(registration, r => r.IsPendingWithdrawal, r => r.ModifiedBy, r => r.ModifiedOn) > 0;
+        }
+
+        public async Task<bool> ReinstateRegistrationFromPendingWithdrawalAsync(ReinstateRegistrationFromPendingWithdrawalRequest model)
+        {
+            var registration = await _tqRegistrationRepository.GetRegistrationLiteByProviderUkprnAsync(model.ProviderUkprn, model.ProfileId, includeProfile: false);
+
+            if (registration == null || registration.Status != RegistrationPathwayStatus.Active || (registration.Status == RegistrationPathwayStatus.Active && !registration.IsPendingWithdrawal))
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: {nameof(ReinstateRegistrationFromPendingWithdrawalAsync)}({model.ProviderUkprn}, {model.ProfileId})");
+                return false;
+            }
+
+            registration.IsPendingWithdrawal = false;
+            return await _tqRegistrationPathwayRepository.UpdateWithSpecifedColumnsOnlyAsync(registration, r => r.IsPendingWithdrawal, r => r.ModifiedBy, r => r.ModifiedOn) > 0;
+        }
+
         #region Private Methods
 
         private async Task<bool> HandleProfileChanges(ManageRegistration model)
@@ -750,6 +779,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 // Pathway
                 pathway.Status = status;
+                pathway.IsPendingWithdrawal = false;
                 pathway.EndDate = DateTime.UtcNow;
                 pathway.ModifiedBy = performedBy;
                 pathway.ModifiedOn = DateTime.UtcNow;
@@ -990,8 +1020,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         }
 
         private Tuple<bool, bool, BulkRegistrationEntityIndex> PrepareAndAmendRegistrationData(
-            TqRegistrationProfile amendedRegistration, 
-            List<TqRegistrationPathway> pathwaysToAdd, 
+            TqRegistrationProfile amendedRegistration,
+            List<TqRegistrationPathway> pathwaysToAdd,
             List<TqRegistrationPathway> pathwaysToUpdate,
             BulkRegistrationEntityIndex entityIndex)
         {

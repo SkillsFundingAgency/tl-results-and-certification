@@ -115,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner’s record.
+        ///   Looks up a localized string similar to Learner record.
         /// </summary>
         public static string Learners_Record {
             get {
@@ -183,6 +183,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static string Prs_Learner_Component_Grade_Status {
             get {
                 return ResourceManager.GetString("Prs_Learner_Component_Grade_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registered learners.
+        /// </summary>
+        public static string Registered_Learners {
+            get {
+                return ResourceManager.GetString("Registered_Learners", resourceCulture);
             }
         }
         
