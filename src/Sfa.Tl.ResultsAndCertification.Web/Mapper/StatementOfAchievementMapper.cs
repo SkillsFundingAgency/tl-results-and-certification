@@ -21,6 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<SoaLearnerRecordDetails, SoaLearnerRecordDetailsViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+               .ForMember(d => d.MathsStatus, opts => opts.MapFrom(s => s.MathsStatus))
+               .ForMember(d => d.EnglishStatus, opts => opts.MapFrom(s => s.EnglishStatus))
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
                .ForMember(d => d.ProviderDisplayName, opts => opts.MapFrom(s => $"{s.ProviderName} ({s.ProviderUkprn})"))
@@ -75,10 +77,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.Core, opts => opts.MapFrom(s => s.PathwayName))
                 .ForMember(d => d.CoreGrade, opts => opts.MapFrom(s => s.PathwayGrade.Equals(RequestSoaCheckAndSubmitContent.None, StringComparison.InvariantCultureIgnoreCase) ? Constants.NotCompleted : s.PathwayGrade))
                 .ForMember(d => d.OccupationalSpecialism, opts => opts.MapFrom(s => s))
-                .ForMember(d => d.IndustryPlacement, opts => opts.MapFrom(s => (s.IndustryPlacementStatus == IndustryPlacementStatus.Completed 
-                                                                             || s.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration) 
+                .ForMember(d => d.IndustryPlacement, opts => opts.MapFrom(s => (s.IndustryPlacementStatus == IndustryPlacementStatus.Completed
+                                                                             || s.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
                                                                              ? Constants.IndustryPlacementCompleted : Constants.IndustryPlacementNotCompleted))
-                .ForMember(d => d.EnglishAndMaths, opts => opts.MapFrom(s => s.IsEnglishAndMathsAchieved ? Constants.EnglishAndMathsMet : Constants.EnglishAndMathsNotMet));
+                //    .ForMember(d => d.EnglishAndMaths, opts => opts.MapFrom(s => s.GetEnglishAndMathsStatusDisplayText));
+
+                //.ForMember(d => d.EnglishAndMaths, opts => opts.MapFrom(s => s.g.GetEnglishA.EnglishStatus, profile.MathsStatus));
+
+
+                .ForMember(d => d.EnglishAndMaths, opts => opts.MapFrom(s => GetEnglishAndMathsText(s.EnglishStatus, s.MathsStatus)));
 
             CreateMap<SoaLearnerRecordDetailsViewModel, IList<OccupationalSpecialismDetails>>()
                 .ConstructUsing((m, context) =>
@@ -112,6 +119,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.RequestedBy, opts => opts.MapFrom(s => s.RequestedBy))
                 .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.RegistrationPathwayStatus))
                 .ForMember(d => d.SnapshotDetails, opts => opts.MapFrom(s => JsonConvert.DeserializeObject<SoaPrintingDetails>(s.RequestDetails)));
+        }
+
+        private static string GetEnglishAndMathsText(SubjectStatus? englishStatus, SubjectStatus? mathsStatus)
+        {
+            if ((englishStatus == SubjectStatus.Achieved || englishStatus == SubjectStatus.AchievedByLrs) &&
+                (mathsStatus == SubjectStatus.Achieved || mathsStatus == SubjectStatus.AchievedByLrs))
+                return Constants.MathsAndEnglishAchievedText;
+            else if (mathsStatus == SubjectStatus.Achieved || mathsStatus == SubjectStatus.AchievedByLrs)
+                return Constants.MathsAchievedText;
+            else if (englishStatus == SubjectStatus.Achieved || englishStatus == SubjectStatus.AchievedByLrs)
+                return Constants.EnglishAchievedText;
+            else
+                return string.Empty;
         }
     }
 }
