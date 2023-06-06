@@ -29,22 +29,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
                 Value = GetDocumentRequestedValue(PrintCertificateType)
             };
 
-        public SummaryItemModel SummaryLearnerName =>
-           new SummaryItemModel
-           {
-               Id = "learnerName",
-               Title = RequestReplacementDocumentContent.Title_Learner_Name,
-               Value = LearnerName
-           };
-
-        public SummaryItemModel SummaryULN =>
-           new SummaryItemModel
-           {
-               Id = "ULN",
-               Title = RequestReplacementDocumentContent.Uln_Text,
-               Value = Uln.ToString()
-           };
-
         public SummaryItemModel SummaryDepartment =>
             new SummaryItemModel
             {

@@ -10,57 +10,61 @@
     <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
 }
 
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-        <span class="govuk-caption-xl">@RequestReplacementDocument.Caption_Request_Replacement_Document</span>
-        <h1 class="govuk-heading-l govuk-!-margin-bottom-3">
-            @RequestReplacementDocument.Heading_Check_Details_Before_Sending
-        </h1>
-
-        <div class="govuk-details govuk-!-margin-left-4">
-            <div class="govuk-details__text">
-                <p class="govuk-!-padding-right-2">@RequestReplacementDocument.Para_You_Receive_Previous_Certificate_Or_Soa</p>
-            </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <span class="govuk-caption-xl">@RequestReplacementDocument.Caption_Request_Replacement_Document</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">
+                @RequestReplacementDocument.Heading_Check_Details_Before_Sending
+            </h1>
+            
+            <p class="govuk-body">@RequestReplacementDocument.Para_Request_If_Lost_Or_Damaged</p>
+            <p class="govuk-body">@RequestReplacementDocument.Para_You_Receive_Previous_Certificate_Or_Soa</p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@RequestReplacementDocument.List_Item_Grades</li>
+                <li>@RequestReplacementDocument.List_Item_Industry_Placement_Status</li>
+                <li>@RequestReplacementDocument.List_Item_English_Maths_Achievements</li>
+            </ul>
+            <p class="govuk-body">@RequestReplacementDocument.Para_This_Means_Result_May_Not_Match</p>
+            <p class="govuk-body">@RequestReplacementDocument.Para_Updated_Document_Sent_If_Any_Component_Changes</p>
+            <p class="govuk-body">@RequestReplacementDocument.Para_Check_Data_Before_Submit</p>
         </div>
-
-        <p class="govuk-body">@RequestReplacementDocument.Para_This_Means_Result_May_Not_Match</p>
-
-        <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border">
-            <vc:summary-item model=Model.SummaryDocumentRequested></vc:summary-item>
-            <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
-            <vc:summary-item model=Model.SummaryULN></vc:summary-item>
-            <vc:summary-item model=Model.SummaryOrganisationAddress></vc:summary-item>
-        </dl>
-
-
-        <details class="govuk-details" data-module="govuk-details">
-            <summary class="govuk-details__summary">
-                <span class="govuk-details__summary-text">
-                    @RequestReplacementDocument.Organisation_Address_Wrong
-                </span>
-            </summary>
-            <div class="govuk-details__text">
-                <p class="govuk-!-padding-right-2">@RequestReplacementDocument.Organisation_Address_Wrong_Message <a asp-route="@RouteConstants.Home" class="govuk-link">@RequestReplacementDocument.Service_Home_Page</a></p>
-
-            </div>
-        </details>
-
     </div>
 
-</div>
+    <div class="govuk-grid-row govuk-!-margin-top-4 govuk-!-margin-bottom-9">
+        <div class="govuk-grid-column-two-thirds">
+            <form asp-route="@RouteConstants.SubmitRequestReplacementDocument">
+                <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+                <input type="hidden" asp-for="Uln" value="@Model.Uln" />
+                <input type="hidden" asp-for="PrintCertificateId" value="@Model.PrintCertificateId" />
+                <input type="hidden" asp-for="ProviderAddress.AddressId" value="@Model.ProviderAddress.AddressId" />
+                <div class="record-header">
+                    <h2 class="govuk-heading-xl govuk-!-margin-bottom-0">@Model.LearnerName</h2>
+                    <span class="govuk-caption-xl">@RequestReplacementDocument.Uln_Text @Model.Uln</span>
+                </div>
 
-<div class="govuk-grid-row govuk-!-margin-top-4 govuk-!-margin-bottom-9">
-    <div class="govuk-grid-column-two-thirds">
-        <form asp-route="@RouteConstants.SubmitRequestReplacementDocument">
-            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
-            <input type="hidden" asp-for="Uln" value="@Model.Uln" />
-            <input type="hidden" asp-for="PrintCertificateId" value="@Model.PrintCertificateId" />
-            <input type="hidden" asp-for="ProviderAddress.AddressId" value="@Model.ProviderAddress.AddressId" />
+                <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                    <vc:summary-item model=Model.SummaryDocumentRequested></vc:summary-item>
+                </dl>
 
-            <div class="govuk-button-group">
-                <button type="submit" class="govuk-button govuk-!-display-block" name="certificateStatus" data-module="govuk-button" data-prevent-double-click="true">@RequestReplacementDocument.Button_Send_Request</button>
+                <div>
+                    <h2 class="govuk-heading-m govuk-!-display-inline">@RequestReplacementDocument.Your_Org_Postal_Address</h2>
+                    <a class="govuk-body govuk-link float--right" asp-route="@RouteConstants.AddAddressPostcode">
+                        @RequestReplacementDocument.Link_Change
+                        <span class="govuk-visually-hidden">@RequestReplacementDocument.Hidden_Text_Change_Organisation_Address</span>
+                    </a>
+                </div>
+
+                <p class="govuk-body">@RequestReplacementDocument.Changing_Address_Take_Back_To_Home_Page</p>
+
+                <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                    <vc:summary-item model=Model.SummaryDepartment></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryOrganisationAddress></vc:summary-item>
+                </dl>
+
+                <h2 class="govuk-heading-m">@RequestReplacementDocument.Now_Send_Your_Request</h2>
+                <p class="govuk-body">@RequestReplacementDocument.By_Submitting_Request_You_Are_Confirming</p>
+                <button type="submit" class="govuk-button govuk-!-display-block" name="certificateStatus" data-module="govuk-button" data-prevent-double-click="true">@RequestReplacementDocument.Button_Accept_And_Request</button>
                 <a asp-route="@RouteConstants.LearnerRecordDetails" asp-route-profileId="@Model.ProfileId" class="govuk-link">@RequestReplacementDocument.Link_Cancel</a>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
