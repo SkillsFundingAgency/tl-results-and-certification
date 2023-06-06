@@ -119,6 +119,10 @@
     <None Include="Scripts\TLRC9484.sql" />
     <None Include="Scripts\TLRC 9557.sql" />
     <None Include="Scripts\TLRC 9558.sql" />
+    <None Include="PostDeployment\SeedTlDualSpecialism.sql" />
+    <Build Include="Tables\TlDualSpecialism.sql" />
+    <Build Include="Tables\TlDualSpecialismToSpecialism.sql" />
+    <None Include="PostDeployment\SeedTlDualSpecialismTolSpecialism.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sfa.Tl.ResultsAndCertification.Database.refactorlog" />
