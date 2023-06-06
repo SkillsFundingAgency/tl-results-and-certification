@@ -28,7 +28,7 @@ UPDATE SET
 	[ModifiedBy] = 'System'
 WHEN NOT MATCHED BY TARGET THEN 
 	INSERT ([Id], [TlPathwayId], [LarId], [Name], [IsActive], [CreatedOn], [CreatedBy], [ModifiedOn], [ModifiedBy]) 
-	VALUES ([Id], [TlPathwayId], [LarId], [Name], 'System', [ModifiedOn], 'System') 
+	VALUES ([Id], [TlPathwayId], [LarId], [Name], [IsActive], [CreatedOn], 'System',  [ModifiedOn], 'System') 
 WHEN NOT MATCHED BY SOURCE THEN 
 DELETE;
 
