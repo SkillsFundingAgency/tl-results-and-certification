@@ -132,6 +132,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             // Assert Any Active Pathway
             actualRegistrationProfile.TqRegistrationPathways.Any(x => x.Status == RegistrationPathwayStatus.Active).Should().BeTrue();
 
+            // Assert pending withdrawal is false
+            actualRegistrationProfile.TqRegistrationPathways.All(x => x.IsPendingWithdrawal).Should().BeFalse();
+
             // Assert Active Pathway
             var actualActivePathway = actualRegistrationProfile.TqRegistrationPathways.FirstOrDefault(x => x.EndDate == null && x.Status == RegistrationPathwayStatus.Active);
             var expectedActivePathway = expectedRegistrationProfile.TqRegistrationPathways.FirstOrDefault(x => actualRegistrationProfile.TqRegistrationPathways.Any(y => y.TqProviderId == x.TqProviderId && x.Status == RegistrationPathwayStatus.Transferred));

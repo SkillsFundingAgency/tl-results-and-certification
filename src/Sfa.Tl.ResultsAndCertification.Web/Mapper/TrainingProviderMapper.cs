@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
@@ -66,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.OverallResultDetails, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.OverallResultDetails) ? JsonConvert.DeserializeObject<OverallResultDetail>(s.OverallResultDetails) : null))
                .ForMember(d => d.OverallResultPublishDate, opts => opts.MapFrom(s => s.OverallResultPublishDate))
                .ForMember(d => d.LastDocumentRequestedDate, opts => opts.MapFrom(s => s.LastDocumentRequestedDate))
-               .ForMember(d => d.IsReprint, opts => opts.MapFrom(s => s.IsReprint == true));               
+               .ForMember(d => d.IsReprint, opts => opts.MapFrom(s => s.IsReprint == true));
 
             CreateMap<Address, AddressViewModel>()
                 .ForMember(d => d.AddressId, opts => opts.MapFrom(s => s.AddressId))
@@ -85,6 +86,48 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PrintCertificateType, opts => opts.MapFrom(s => s.PrintCertificateType))
                .ForMember(d => d.LastDocumentRequestedDate, opts => opts.MapFrom(s => s.LastDocumentRequestedDate))
                .ForMember(d => d.ProviderAddress, opts => opts.MapFrom(s => s.ProviderAddress));
+
+            CreateMap<LearnerRecordDetails, AddWithdrawnStatusViewModel>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
+               .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => s.AwardingOrganisationName))
+               .ForMember(d => d.RegistrationPathwayStatus, opts => opts.MapFrom(s => s.RegistrationPathwayStatus))
+               .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
+               .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn));
+
+            CreateMap<LearnerRecordDetails, ChangeBackToActiveStatusViewModel>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
+               .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear));
+
+            CreateMap<LearnerRecordDetails, WithdrawLearnerAOMessageViewModel>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
+               .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => s.AwardingOrganisationName));
+
+            CreateMap<LearnerRecordDetails, ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
+               .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => s.AwardingOrganisationName))
+               .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
+               .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn));
+
+            CreateMap<ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel, ReinstateRegistrationFromPendingWithdrawalRequest>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
+               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel, ReinstateRegistrationFromPendingWithdrawalRequest>>());
+
+            CreateMap<LearnerRecordDetails, ChangeBackToActiveAOMessageViewModel>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
+               .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => s.AwardingOrganisationName))
+               .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear));
+
+            CreateMap<LearnerRecordDetails, ChangeWithdrawnStatusHaveYouToldAwardingOrganisationViewModel>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
+               .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => s.AwardingOrganisationName))
+               .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn));
 
             CreateMap<LearnerRecordDetails, AddMathsStatusViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
@@ -109,6 +152,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.SubjectType, opts => opts.MapFrom(s => SubjectType.English))
                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AddEnglishStatusViewModel, UpdateLearnerSubjectRequest>>());
+
+            CreateMap<ChangeWithdrawnStatusHaveYouToldAwardingOrganisationViewModel, SetRegistrationAsPendingWithdrawalRequest>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
+               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeWithdrawnStatusHaveYouToldAwardingOrganisationViewModel, SetRegistrationAsPendingWithdrawalRequest>>());
 
             CreateMap<RequestReplacementDocumentViewModel, ReplacementPrintRequest>()
                 .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))

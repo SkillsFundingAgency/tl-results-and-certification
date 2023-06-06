@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetTlevelsByStatusIdAsync(long ukprn, int statusId);
         Task<bool> VerifyTlevelAsync(VerifyTlevelDetails model);
         Task<PathwaySpecialisms> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId);
-        
+
         // Providers
         Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn);
         Task<IEnumerable<ProviderMetadata>> FindProviderAsync(string name, bool isExactMatch);
@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln);
         Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
         Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId);
-        
+
         // Manage registrations
         Task<bool> UpdateRegistrationAsync(ManageRegistration model);
         Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model);
@@ -104,11 +104,15 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync();
 
         Task<LearnerRecord> GetLearnerRecordAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
-        
+
         Task<IList<DataExportResponse>> GenerateDataExportAsync(long aoUkprn, DataExportType dataExportType, string requestedBy);
         Task<DataExportResponse> DownloadOverallResultsDataAsync(long providerUkprn, string requestedBy);
 
         // Industry Placement Bulk Upload
         Task<BulkIndustryPlacementResponse> ProcessBulkIndustryPlacementsAsync(BulkProcessRequest model);
+
+        // Registration pending withdrawal
+        Task<bool> SetRegistrationAsPendingWithdrawalAsync(SetRegistrationAsPendingWithdrawalRequest model);
+        Task<bool> ReinstateRegistrationFromPendingWithdrawalAsync(ReinstateRegistrationFromPendingWithdrawalRequest model);
     }
 }

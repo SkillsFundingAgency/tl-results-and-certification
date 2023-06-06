@@ -1,0 +1,49 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+
+@{
+    ViewData["Title"] = ChangeBackToActiveStatusHaveYouToldAwardingOrganisation.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="@RouteConstants.SubmitChangeBackToActiveStatusHaveYouToldAwardingOrganisation" id="submit-change-back-to-active-status-have-you-told-ao-form">
+            <input type="hidden" asp-for="ProfileId" />
+            <input type="hidden" asp-for="AwardingOrganisationName" />
+            <input type="hidden" asp-for="ProviderUkprn" />
+            <input type="hidden" asp-for="LearnerName" />
+            <input type="hidden" asp-for="AcademicYear" />
+
+            <partial name="_ValidationSummary" />
+
+            <div class="govuk-form-group" sfa-validation-for="HaveYouToldAwardingOrganisation" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">@string.Format(ChangeBackToActiveStatusHaveYouToldAwardingOrganisation.Page_Header, Model.AwardingOrganisationName, Model.LearnerName)</h1>
+                    </legend>
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <span sfa-validation-for="HaveYouToldAwardingOrganisation"></span>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="have-told-ao-status" asp-for="HaveYouToldAwardingOrganisation" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="have-told-ao-status">
+                                @string.Format(@ChangeBackToActiveStatusHaveYouToldAwardingOrganisation.Option_Yes, Model.HaveYouToldAwardingOrganisation)
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="have-told-ao-status-no" asp-for="HaveYouToldAwardingOrganisation" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="have-told-ao-status-no">
+                                @string.Format(@ChangeBackToActiveStatusHaveYouToldAwardingOrganisation.Option_No, Model.HaveYouToldAwardingOrganisation)
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ChangeBackToActiveStatusHaveYouToldAwardingOrganisation.Button_Save</button>
+        </form>
+    </div>
+</div>
