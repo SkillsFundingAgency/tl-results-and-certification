@@ -1,9 +1,9 @@
 ﻿/*
-Insert initial data for TlDualSpecialismTolSpecialism
+Insert initial data for TlDualSpecialismToSpecialism
 */
 
 
-MERGE INTO [dbo].[TlDualSpecialismTolSpecialism] AS Target 
+MERGE INTO [dbo].[TlDualSpecialismToSpecialism] AS Target 
 USING (VALUES 
   (1, (select Id from TlSpecialism where LarId='10202102')),
   (1, (select Id from TlSpecialism where LarId='10202101')),
@@ -29,4 +29,4 @@ WHEN NOT MATCHED BY TARGET THEN
 WHEN NOT MATCHED BY SOURCE THEN 
 DELETE;
 
-SET IDENTITY_INSERT [dbo].[TlDualSpecialismTolSpecialism] OFF
+SET IDENTITY_INSERT [dbo].[TlDualSpecialismToSpecialism] OFF

@@ -122,7 +122,7 @@
     <None Include="PostDeployment\SeedTlDualSpecialism.sql" />
     <Build Include="Tables\TlDualSpecialism.sql" />
     <Build Include="Tables\TlDualSpecialismToSpecialism.sql" />
-    <None Include="PostDeployment\SeedTlDualSpecialismTolSpecialism.sql" />
+    <None Include="PostDeployment\SeedTlDualSpecialismToSpecialism.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sfa.Tl.ResultsAndCertification.Database.refactorlog" />
