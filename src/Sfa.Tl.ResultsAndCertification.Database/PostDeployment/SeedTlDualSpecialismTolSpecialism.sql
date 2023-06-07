@@ -16,7 +16,8 @@ USING (VALUES
 ON Target.[DualSpecialismId] = Source.[DualSpecialismId] 
 -- Update from Source when Id is Matched
 WHEN MATCHED 
-	 AND ((Target.[DualSpecialismId] <> Source.[DualSpecialismId] COLLATE Latin1_General_CS_AS)	
+	 AND ((Target.[DualSpecialismId] <> Source.[DualSpecialismId])	
+	 AND (Target.[SpecialismId] <> Source.[SpecialismId])	
 	 )
 THEN 
 UPDATE SET 	
