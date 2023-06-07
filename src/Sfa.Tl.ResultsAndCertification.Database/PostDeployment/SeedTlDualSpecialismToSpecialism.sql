@@ -28,5 +28,3 @@ WHEN NOT MATCHED BY TARGET THEN
 	VALUES ([DualSpecialismId], [SpecialismId]) 
 WHEN NOT MATCHED BY SOURCE THEN 
 DELETE;
-
-SET IDENTITY_INSERT [dbo].[TlDualSpecialismToSpecialism] OFF
