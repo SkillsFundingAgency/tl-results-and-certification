@@ -277,16 +277,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
+            bool isSuccess = await _trainingProviderLoader.UpdateLearnerWithdrawnStatusAsync(User.GetUkPrn(), model);
+            if (!isSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
             bool yesSelected = model.HaveYouToldAwardingOrganisation.HasValue && model.HaveYouToldAwardingOrganisation.Value;
 
             if (yesSelected)
             {
-                await _trainingProviderLoader.UpdateLearnerWithdrawnStatusAsync(User.GetUkPrn(), model);
                 await _cacheService.SetAsync(InformationCacheKey, new InformationBannerModel
                 {
                     Message = string.Format(LearnerDetailsContent.Withdrawn_Message_Told_AO_Yes_Template, model.LearnerName, model.AwardingOrganisationName)
                 },
-                CacheExpiryTime.XSmall);
+                    CacheExpiryTime.XSmall);
 
                 return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
             }
