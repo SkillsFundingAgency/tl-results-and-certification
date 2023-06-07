@@ -2,9 +2,9 @@
 
 namespace Sfa.Tl.ResultsAndCertification.Domain.Models
 {
-    public partial class TlDualSpecialismTolSpecialism
+    public partial class TlDualSpecialismToSpecialism
     {
-        public TlDualSpecialismTolSpecialism()
+        public TlDualSpecialismToSpecialism()
         {            
         }
 
