@@ -119,6 +119,10 @@
     <None Include="Scripts\TLRC9484.sql" />
     <None Include="Scripts\TLRC 9557.sql" />
     <None Include="Scripts\TLRC 9558.sql" />
+    <None Include="PostDeployment\SeedTlDualSpecialism.sql" />
+    <Build Include="Tables\TlDualSpecialism.sql" />
+    <Build Include="Tables\TlDualSpecialismToSpecialism.sql" />
+    <None Include="PostDeployment\SeedTlDualSpecialismToSpecialism.sql" />
     <None Include="PostDeployment\SeedOverallGradeLookupPostStartYear2020.sql" />
   </ItemGroup>
   <ItemGroup>

@@ -205,6 +205,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You&apos;ve told us that you want to reinstate {0} onto this T Level..
+        /// </summary>
+        public static string Reinstate_Message_Template {
+            get {
+                return ResourceManager.GetString("Reinstate_Message_Template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The document may take up to 3 weeks to arrive..
         /// </summary>
         public static string Reprint_Document_Arrive_In_3_Weeks {
@@ -412,6 +421,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to T Level status.
+        /// </summary>
+        public static string Title_TLevel_Status_Text {
+            get {
+                return ResourceManager.GetString("Title_TLevel_Status_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to T Level.
         /// </summary>
         public static string Title_TLevel_Text {
@@ -421,11 +439,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pending Withdrawal.
+        /// </summary>
+        public static string TLevel_Status_Pending_Withdrawal_Text {
+            get {
+                return ResourceManager.GetString("TLevel_Status_Pending_Withdrawal_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ULN: {0}.
         /// </summary>
         public static string Uln_Text {
             get {
                 return ResourceManager.GetString("Uln_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;ve told us that {0} has withdrawn from this T Level. You should also contact {1} to let them know..
+        /// </summary>
+        public static string Withdrawn_Message_Told_AO_No_Template {
+            get {
+                return ResourceManager.GetString("Withdrawn_Message_Told_AO_No_Template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;ve told us that {0} has withdrawn from this T Level. We will update their status to Withdrawn once {1} confirms the change..
+        /// </summary>
+        public static string Withdrawn_Message_Told_AO_Yes_Template {
+            get {
+                return ResourceManager.GetString("Withdrawn_Message_Told_AO_Yes_Template", resourceCulture);
             }
         }
     }

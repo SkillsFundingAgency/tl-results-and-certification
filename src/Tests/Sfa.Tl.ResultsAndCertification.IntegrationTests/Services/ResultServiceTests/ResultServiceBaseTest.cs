@@ -24,6 +24,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         protected TlPathway Pathway;
         protected TlSpecialism Specialism;
         protected IList<TlSpecialism> Specialisms;
+        protected TlDualSpecialism DualSpecialism;
+        protected IList<TlDualSpecialism> DualSpecialisms;
         protected TlProvider TlProvider;
         protected TlAwardingOrganisation TlAwardingOrganisation;
         protected TqAwardingOrganisation TqAwardingOrganisation;
@@ -63,6 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             Route = TlevelDataProvider.CreateTlRoute(DbContext, awardingOrganisation);
             Pathway = TlevelDataProvider.CreateTlPathway(DbContext, awardingOrganisation, Route);
             Specialism = TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, Pathway).First();
+            DualSpecialism = TlevelDataProvider.CreateDualTlSpecialisms(DbContext, awardingOrganisation, Pathway).First();
             TqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, Pathway, TlAwardingOrganisation);
             TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
@@ -52,17 +53,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var response = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
             return _mapper.Map<T>(response);
         }
-        
+
         public async Task<bool> UpdateLearnerSubjectAsync(long providerUkprn, AddMathsStatusViewModel model)
         {
             var learnerSubjectRequest = _mapper.Map<UpdateLearnerSubjectRequest>(model, opt => opt.Items["providerUkprn"] = providerUkprn);
             return await _internalApiClient.UpdateLearnerSubjectAsync(learnerSubjectRequest);
         }
-        
+
         public async Task<bool> UpdateLearnerSubjectAsync(long providerUkprn, AddEnglishStatusViewModel model)
         {
             var learnerSubjectRequest = _mapper.Map<UpdateLearnerSubjectRequest>(model, opt => opt.Items["providerUkprn"] = providerUkprn);
             return await _internalApiClient.UpdateLearnerSubjectAsync(learnerSubjectRequest);
+        }
+
+        public async Task<bool> UpdateLearnerWithdrawnStatusAsync(long providerUkprn, ChangeWithdrawnStatusHaveYouToldAwardingOrganisationViewModel model)
+        {
+            var pendingWithdrawlRequest = _mapper.Map<SetRegistrationAsPendingWithdrawalRequest>(model, opt => opt.Items["providerUkprn"] = providerUkprn);
+            return await _internalApiClient.SetRegistrationAsPendingWithdrawalAsync(pendingWithdrawlRequest);
         }
 
         /// <summary>
@@ -75,6 +82,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var request = _mapper.Map<ReplacementPrintRequest>(viewModel, opt => opt.Items["providerUkprn"] = providerUkprn);
             return await _internalApiClient.CreateReplacementDocumentPrintingRequestAsync(request);
+        }
+
+        public Task<bool> ReinstateRegistrationFromPendingWithdrawalAsync(ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel model)
+        {
+            var request = _mapper.Map<ReinstateRegistrationFromPendingWithdrawalRequest>(model);
+            return _internalApiClient.ReinstateRegistrationFromPendingWithdrawalAsync(request);
         }
     }
 }
