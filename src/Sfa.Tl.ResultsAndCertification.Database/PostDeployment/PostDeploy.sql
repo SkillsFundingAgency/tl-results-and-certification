@@ -44,4 +44,6 @@ BEGIN
 :r ".\SeedIpTempFlexTlevelCombination.sql"
 :r ".\SeedIpTempFlexNavigation.sql"
 :r ".\SeedOverallGradeLookup.sql"
+:r ".\SeedTlDualSpecialism.sql"
+:r ".\SeedTlDualSpecialismToSpecialism.sql"
 END
