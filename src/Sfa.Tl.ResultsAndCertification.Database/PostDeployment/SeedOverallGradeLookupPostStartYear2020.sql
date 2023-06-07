@@ -284,7 +284,6 @@ UPDATE SET
 WHEN NOT MATCHED BY TARGET THEN 
 	INSERT ([Id], [TlPathwayId], [TlLookupCoreGradeId], [TlLookupSpecialismGradeId], [TlLookupOverallGradeId], [IsActive], [CreatedBy]) 
 	VALUES ([Id], [TlPathwayId], [TlLookupCoreGradeId], [TlLookupSpecialismGradeId], [TlLookupOverallGradeId], [IsActive], 'System') 
-WHEN NOT MATCHED BY SOURCE THEN 
-DELETE;
+;
 
 SET IDENTITY_INSERT [dbo].[OverallGradeLookup] OFF
