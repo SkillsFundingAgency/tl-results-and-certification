@@ -284,8 +284,8 @@ UPDATE SET
 	[ModifiedOn] = GETDATE(),
 	[ModifiedBy] = 'System'
 WHEN NOT MATCHED BY TARGET THEN 
-	INSERT ([Id], [TlPathwayId], [TlLookupCoreGradeId], [TlLookupSpecialismGradeId], [TlLookupOverallGradeId], [IsActive], [CreatedBy]) 
-	VALUES ([Id], [TlPathwayId], [TlLookupCoreGradeId], [TlLookupSpecialismGradeId], [TlLookupOverallGradeId], [IsActive], 'System') 
+	INSERT ([Id], [TlPathwayId], [TlLookupCoreGradeId], [TlLookupSpecialismGradeId], [TlLookupOverallGradeId], [StartYear], [IsActive], [CreatedBy]) 
+	VALUES ([Id], [TlPathwayId], [TlLookupCoreGradeId], [TlLookupSpecialismGradeId], [TlLookupOverallGradeId], [StartYear], [IsActive], 'System') 
 WHEN NOT MATCHED BY SOURCE THEN 
 DELETE;
 

@@ -271,6 +271,7 @@ WHEN MATCHED
 	   OR (Target.[TlLookupCoreGradeId] <> Source.[TlLookupCoreGradeId])
 	   OR (Target.[TlLookupSpecialismGradeId] <> Source.[TlLookupSpecialismGradeId])
 	   OR (Target.[TlLookupOverallGradeId] <> Source.[TlLookupOverallGradeId])
+	   OR (Target.[StartYear] <> Source.[StartYear])
 	   OR (Target.[IsActive] <> Source.[IsActive]))
 THEN 
 UPDATE SET 
@@ -278,12 +279,13 @@ UPDATE SET
 	[TlLookupCoreGradeId] = Source.[TlLookupCoreGradeId],
 	[TlLookupSpecialismGradeId] = Source.[TlLookupSpecialismGradeId],
 	[TlLookupOverallGradeId] = Source.[TlLookupOverallGradeId],
+	[StartYear] = Source.[StartYear],
 	[IsActive] = Source.[IsActive],
 	[ModifiedOn] = GETDATE(),
 	[ModifiedBy] = 'System'
 WHEN NOT MATCHED BY TARGET THEN 
-	INSERT ([Id], [TlPathwayId], [TlLookupCoreGradeId], [TlLookupSpecialismGradeId], [TlLookupOverallGradeId], [IsActive], [CreatedBy]) 
-	VALUES ([Id], [TlPathwayId], [TlLookupCoreGradeId], [TlLookupSpecialismGradeId], [TlLookupOverallGradeId], [IsActive], 'System') 
+	INSERT ([Id], [TlPathwayId], [TlLookupCoreGradeId], [TlLookupSpecialismGradeId], [TlLookupOverallGradeId],[StartYear], [IsActive], [CreatedBy]) 
+	VALUES ([Id], [TlPathwayId], [TlLookupCoreGradeId], [TlLookupSpecialismGradeId], [TlLookupOverallGradeId],[StartYear], [IsActive], 'System') 
 ;
 
 SET IDENTITY_INSERT [dbo].[OverallGradeLookup] OFF
