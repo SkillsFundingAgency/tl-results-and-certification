@@ -180,6 +180,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             MathsStatus = tqProfile.MathsStatus,
                                             EnglishStatus = tqProfile.EnglishStatus,
                                             IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn,
+                                            RegistrationPathwayStatus = tqPathway.Status,
+                                            IsPendingWithdrawal = tqPathway.IsPendingWithdrawal,
                                             IndustryPlacementId = ipRecord != null ? ipRecord.Id : 0,
                                             IndustryPlacementStatus = ipRecord != null ? ipRecord.Status : null,
                                             IndustryPlacementDetails = ipRecord != null ? ipRecord.Details : null,

@@ -115,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public bool IsUcasTransferEntriesTriggerDateValid()
         {
-            var isValid = false;            
+            var isValid = false;
 
             var uCasTriggerDates = new List<DateTime>() {               
                 new DateTime(2023,06,26),

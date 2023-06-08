@@ -13,7 +13,7 @@ using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.Training
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.LearnerRecordDetailsGet
 {
-    public class When_Called_With_Valid_Data : TestSetup
+    public class When_Called_With_Valid_Data_RegistrationPathwayStatus_Active_PendingWithdrawal_False : TestSetup
     {
         private Dictionary<string, string> _routeAttributes;
 
@@ -35,6 +35,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 MathsStatus = SubjectStatus.NotSpecified,
                 EnglishStatus = SubjectStatus.NotSpecified,
                 IsLearnerRegistered = true,
+                RegistrationPathwayStatus = RegistrationPathwayStatus.Active,
+                IsPendingWithdrawal = false,
                 IndustryPlacementId = 10,
                 IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified,
                 OverallResultDetails = new Models.OverallResults.OverallResultDetail
@@ -99,6 +101,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.IsDocumentRerequestEligible.Should().BeTrue();
             model.IsReprint.Should().BeFalse();
             model.LastDocumentRequestedDateDisplayValue.Should().Be("01 January 2022");
+
+            // TLevelStatus
+            model.SummaryTLevelStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_TLevel_Status_Text);
+            model.SummaryTLevelStatus.Value.Should().Be(Mockresult.RegistrationPathwayStatus.ToString());
+            model.SummaryTLevelStatus.HasTag.Should().BeTrue();
+            model.SummaryTLevelStatus.TagCssClass.Should().Be("govuk-tag--green");
+            model.SummaryTLevelStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Action_Text_Link_Change);
 
             // DateofBirth
             model.SummaryDateofBirth.Title.Should().Be(LearnerRecordDetailsContent.Title_DateofBirth_Text);

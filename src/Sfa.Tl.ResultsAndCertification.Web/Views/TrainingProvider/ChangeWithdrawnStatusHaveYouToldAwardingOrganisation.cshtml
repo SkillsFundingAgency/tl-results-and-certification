@@ -1,0 +1,52 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.ChangeWithdrawnStatusHaveYouToldAwardingOrganisationViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+
+
+@{
+    ViewData["Title"] = WithdrawnConfirmation.Page_Title;
+}
+
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+@{
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form asp-route="@RouteConstants.SubmitChangeWithdrawnStatusHaveYouToldAwardingOrganisation" id="submitWithdrawnStatusForm">
+                <input type="hidden" asp-for="ProfileId" />
+                <input type="hidden" asp-for="LearnerName" />
+                <input type="hidden" asp-for="AwardingOrganisationName" />
+                <input type="hidden" asp-for="ProviderUkprn" />
+
+                <partial name="_ValidationSummary" />
+
+                <div class="govuk-form-group" sfa-validation-for="HaveYouToldAwardingOrganisation" sfa-validation-class="govuk-form-group--error">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading">@string.Format(@WithdrawnConfirmation.Page_Header,Model.AwardingOrganisationName ,Model.LearnerName)</h1>
+                        </legend>
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            <span sfa-validation-for="HaveYouToldAwardingOrganisation"></span>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="withdrawnstatus" asp-for="HaveYouToldAwardingOrganisation" type="radio" value="true">
+                                <label class="govuk-label govuk-radios__label" for="withdrawnstatus">
+                                    @string.Format(@WithdrawnConfirmation.Option_Yes, Model.HaveYouToldAwardingOrganisation)
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="withdrawnstatus-no" asp-for="HaveYouToldAwardingOrganisation" type="radio" value="false">
+                                <label class="govuk-label govuk-radios__label" for="withdrawnstatus-no">
+                                    @string.Format(@WithdrawnConfirmation.Option_No, Model.HaveYouToldAwardingOrganisation)
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@WithdrawnConfirmation.Button_Save</button>
+            </form>
+        </div>
+    </div>
+}

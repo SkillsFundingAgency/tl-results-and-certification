@@ -418,6 +418,23 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         }
 
         #endregion
+
+        #region Registration pending withdrawal
+
+        public async Task<bool> SetRegistrationAsPendingWithdrawalAsync(SetRegistrationAsPendingWithdrawalRequest model)
+        {
+            var requestUri = ApiConstants.SetRegistrationAsPendingWithdrawalUri;
+            return await PutAsync<SetRegistrationAsPendingWithdrawalRequest, bool>(requestUri, model);
+        }
+
+        public async Task<bool> ReinstateRegistrationFromPendingWithdrawalAsync(ReinstateRegistrationFromPendingWithdrawalRequest model)
+        {
+            var requestUri = ApiConstants.ReinstateRegistrationFromPendingWithdrawalUri;
+            return await PutAsync<ReinstateRegistrationFromPendingWithdrawalRequest, bool>(requestUri, model);
+        }
+
+        #endregion
+
         #region Private Methods
 
         /// <summary>
