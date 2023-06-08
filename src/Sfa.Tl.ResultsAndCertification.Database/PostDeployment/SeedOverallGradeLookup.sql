@@ -271,7 +271,7 @@ WHEN MATCHED
 	   OR (Target.[TlLookupCoreGradeId] <> Source.[TlLookupCoreGradeId])
 	   OR (Target.[TlLookupSpecialismGradeId] <> Source.[TlLookupSpecialismGradeId])
 	   OR (Target.[TlLookupOverallGradeId] <> Source.[TlLookupOverallGradeId])
-	   OR (Target.[StartYear] <> Source.[StartYear])
+	   OR (Target.[StartYear] IS NULL )
 	   OR (Target.[IsActive] <> Source.[IsActive]))
 THEN 
 UPDATE SET 
