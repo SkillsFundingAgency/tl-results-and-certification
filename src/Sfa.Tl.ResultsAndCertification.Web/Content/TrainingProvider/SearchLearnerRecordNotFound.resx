@@ -121,12 +121,12 @@
     <value>Back to search</value>
   </data>
   <data name="Heading_Uln_Not_Registered" xml:space="preserve">
-    <value>ULN ({0}) has not been registered in this service by an exam board</value>
+    <value>ULN ({0}) has not been registered in this service by an awarding organisation</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Search for a learner - ULN not registered page</value>
   </data>
-  <data name="Para_Please_Contact_ExamBoard" xml:space="preserve">
+  <data name="Para_Please_Contact_Awarding_Organisation" xml:space="preserve">
     <value>If you think this learner should be registered, please contact the awarding organisation responsible for delivering the T Level.</value>
   </data>
   <data name="Para_You_Can_Only_Update_Registered_Learners" xml:space="preserve">

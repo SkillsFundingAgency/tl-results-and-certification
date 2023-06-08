@@ -169,7 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to It is managed and run by the Department for Education (DfE)..
+        ///   Looks up a localized string similar to It is managed and run by the Department for Education (DfE),.
         /// </summary>
         public static string Para_This_Service_IsFor {
             get {
