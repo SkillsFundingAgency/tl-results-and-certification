@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                     }
                 },
                 IndustryPlacement = SoaLearnerRecordDetailsViewModel.IsIndustryPlacementCompleted ? Constants.IndustryPlacementCompleted : Constants.IndustryPlacementNotCompleted,
-                EnglishAndMaths = SoaLearnerRecordDetailsViewModel.IsEnglishAndMathsAchieved ? Constants.EnglishAndMathsMet : Constants.EnglishAndMathsNotMet
+                EnglishAndMaths = GetEnglishAndMathsText(SubjectStatus.NotSpecified, SubjectStatus.NotSpecified)
             };
 
             _expectedSoaPrintingDetails = new SoaPrintingDetails
@@ -104,7 +104,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
         public void Then_Returns_Expected_Results()
         {
             var result = Mapper.Map<SoaPrintingRequest>(SoaLearnerRecordDetailsViewModel, opt => opt.Items["providerUkprn"] = ProviderUkprn);
-            
+
             result.Should().NotBeNull();
             result.ProviderUkprn.Should().Be(ProviderUkprn);
             result.AddressId.Should().Be(SoaLearnerRecordDetailsViewModel.ProviderAddress.AddressId);
@@ -114,6 +114,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
             result.LearningDetails.Should().BeEquivalentTo(_expectedLearningDetails);
             result.SoaPrintingDetails.Should().BeEquivalentTo(_expectedSoaPrintingDetails);
             result.PerformedBy.Should().Be($"{Givenname} {Surname}");
+        }
+
+        private static string GetEnglishAndMathsText(SubjectStatus? englishStatus, SubjectStatus? mathsStatus)
+        {
+            if ((englishStatus == SubjectStatus.Achieved || englishStatus == SubjectStatus.AchievedByLrs) &&
+                (mathsStatus == SubjectStatus.Achieved || mathsStatus == SubjectStatus.AchievedByLrs))
+                return Constants.MathsAndEnglishAchievedText;
+            else if (mathsStatus == SubjectStatus.Achieved || mathsStatus == SubjectStatus.AchievedByLrs)
+                return Constants.MathsAchievedText;
+            else if (englishStatus == SubjectStatus.Achieved || englishStatus == SubjectStatus.AchievedByLrs)
+                return Constants.EnglishAchievedText;
+            else
+                return string.Empty;
         }
     }
 }

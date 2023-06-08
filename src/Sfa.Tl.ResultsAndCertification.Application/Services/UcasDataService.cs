@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 UcasDataType.Amendments => await ProcessUcasDataRecordAmendmentsAsync(),
                 _ => null,
             };
-        }        
+        }
 
         private async Task<UcasData> ProcessUcasDataRecordEntriesAsync()
         {
