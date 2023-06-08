@@ -46,4 +46,6 @@ BEGIN
 :r ".\SeedOverallGradeLookup.sql"
 :r ".\SeedTlDualSpecialism.sql"
 :r ".\SeedTlDualSpecialismToSpecialism.sql"
+:r ".\SeedOverallGradeLookupPre2021StartYearUpdate.sql"
+:r ".\SeedOverallGradeLookupPostStartYear2020.sql"
 END
