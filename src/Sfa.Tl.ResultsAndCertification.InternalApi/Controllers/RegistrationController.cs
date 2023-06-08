@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
@@ -18,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public RegistrationController(IRegistrationService registrationService, IBulkProcessLoader bulkRegistrationProcess)
         {
             _registrationService = registrationService;
-            _bulkRegistrationProcess = bulkRegistrationProcess; 
+            _bulkRegistrationProcess = bulkRegistrationProcess;
         }
 
         [HttpPost]
@@ -82,6 +83,20 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public async Task<bool> ReregistrationAsync(ReregistrationRequest model)
         {
             return await _registrationService.ReregistrationAsync(model);
-        }        
+        }
+
+        [HttpPut]
+        [Route("SetRegistrationAsPendingWithdrawal")]
+        public async Task<bool> SetRegistrationAsPendingWithdrawalAsync(SetRegistrationAsPendingWithdrawalRequest model)
+        {
+            return await _registrationService.SetRegistrationAsPendingWithdrawalAsync(model);
+        }
+
+        [HttpPut]
+        [Route("ReinstateRegistrationFromPendingWithdrawal")]
+        public async Task<bool> ReinstateRegistrationFromPendingWithdrawalAsync(ReinstateRegistrationFromPendingWithdrawalRequest model)
+        {
+            return await _registrationService.ReinstateRegistrationFromPendingWithdrawalAsync(model);
+        }
     }
 }

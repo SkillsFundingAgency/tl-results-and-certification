@@ -21,7 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         public SubjectStatus? EnglishStatus { get; set; }
 
         public bool IsLearnerRegistered { get; set; }
-
+        public RegistrationPathwayStatus RegistrationPathwayStatus { get; set; }
+        public bool IsPendingWithdrawal { get; set; }
         // English and Maths
         public SubjectStatus IsEnglishAchieved { get; set; }
         public SubjectStatus IsMathsAchieved { get; set; }

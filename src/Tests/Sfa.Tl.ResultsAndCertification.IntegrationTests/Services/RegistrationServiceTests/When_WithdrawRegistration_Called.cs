@@ -149,6 +149,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 // Assert withdrawn PathwayAssessments should not have any active assessments
                 actualWithdrawnPathway.TqPathwayAssessments.Any(x => x.EndDate == null).Should().BeFalse();
 
+                // Assert pending withdrawal is false
+                actualWithdrawnPathway.IsPendingWithdrawal.Should().BeFalse();
+
                 // Assert Withdrawn PathwayAssessment
                 var actualWithdrawnAssessment = actualWithdrawnPathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate != null);
                 var expectedWithdrawnAssessment = expectedWithdrawnPathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate != null);
@@ -180,7 +183,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 }
 
                 // Assert Withdrawn Specialism Assessment Result
-                foreach(var actualWithdrawnSpecialismAssessment in actualWithdrawnSpecialismAssessments)
+                foreach (var actualWithdrawnSpecialismAssessment in actualWithdrawnSpecialismAssessments)
                 {
                     var expectedWithdrawnSpecialismResult = expectedWithdrawnSpecialismAssessments.FirstOrDefault(x => x.TqRegistrationSpecialismId == actualWithdrawnSpecialismAssessment.TqRegistrationSpecialismId);
 
