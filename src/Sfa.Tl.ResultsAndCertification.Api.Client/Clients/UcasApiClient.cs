@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         public async Task<string> GetTokenAsync()
         {
             var requestUri = FormatRequestUri(ApiConstants.UcasTokenUri);
-            string requestParameters = string.Format(ApiConstants.UcasTokenParameters, _configuration.UcasApiSettings.GrantType,_configuration.UcasApiSettings.Username,_configuration.UcasApiSettings.Password);
+            string requestParameters = string.Format(ApiConstants.UcasTokenParameters, _configuration.UcasApiSettings.GrantType, _configuration.UcasApiSettings.Username, _configuration.UcasApiSettings.Password);
             var tokenResponse = await PostAsync<string, UcasTokenResponse>(requestUri, requestParameters);
             if (string.IsNullOrWhiteSpace(tokenResponse?.AccessToken))
                 throw new ApplicationException($"Ucas - Failed to retrive api token. Error = {tokenResponse.Error}; ErrorMessage = {tokenResponse.ErrorDescription}");
@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         public async Task<string> SendDataAsync(UcasDataRequest request)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetTokenAsync());
-            
+
             using (var content = new MultipartFormDataContent())
             {
                 content.Add(new StringContent(ApiConstants.SHA256), ApiConstants.FormDataHashType);
@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
                 content.Add(new StreamContent(new MemoryStream(request.FileData))
                 {
                     Headers =
-                    {                        
+                    {
                         ContentType = new MediaTypeHeaderValue("multipart/form-data")
                     }
                 }, ApiConstants.FormDataFile, request.FileName);
@@ -68,7 +68,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         private async Task<TResponse> PostAsync<TRequest, TResponse>(string requestUri, TRequest content)
         {
             var response = await _httpClient.PostAsync(requestUri, CreateHttpContent(content));
-            return JsonConvert.DeserializeObject<TResponse>(await response.Content.ReadAsStringAsync());
+            var respContent = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<TResponse>(File.ReadAllText(respContent));
+
         }
 
         /// <summary>
