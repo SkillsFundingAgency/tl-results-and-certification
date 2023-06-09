@@ -69,8 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var response = await _httpClient.PostAsync(requestUri, CreateHttpContent(content));
             var respContent = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<TResponse>(File.ReadAllText(respContent));
-
+            return JsonConvert.DeserializeObject<TResponse>(respContent);
         }
 
         /// <summary>
