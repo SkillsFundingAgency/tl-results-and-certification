@@ -46,6 +46,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             };
 
             _overallGradeLookups = new OverallGradeLookupBuilder().BuildList(_tlLookups, seedData);
+            DbContext.AddRange(_overallGradeLookups);
+
             DbContext.SaveChanges();
 
             ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
