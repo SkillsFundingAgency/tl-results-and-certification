@@ -19,30 +19,53 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         private IList<OverallGradeLookup> _overallGradeLookups;
         private string _actualResult;
 
+        private const int TlPathwayId = 1;
+
         public override void Given()
         {
             _tlLookups = TlLookupDataProvider.CreateFullTlLookupList(DbContext);
 
-            var seedData = new List<Tuple<int, int, int, int>>
+            var seedData = new List<Tuple<int, int, int, int, int?>>
             {
-                new Tuple<int, int, int, int>(1, 1, 10, 17),
-                new Tuple<int, int, int, int>(1, 1, 11, 18),
-                new Tuple<int, int, int, int>(1, 1, 12, 18),
-                new Tuple<int, int, int, int>(1, 2, 10, 18),
-                new Tuple<int, int, int, int>(1, 2, 11, 18),
-                new Tuple<int, int, int, int>(1, 2, 12, 19),
-                new Tuple<int, int, int, int>(1, 3, 10, 18),
-                new Tuple<int, int, int, int>(1, 3, 11, 19),
-                new Tuple<int, int, int, int>(1, 3, 12, 19),
-                new Tuple<int, int, int, int>(1, 4, 10, 19),
-                new Tuple<int, int, int, int>(1, 4, 11, 19),
-                new Tuple<int, int, int, int>(1, 4, 12, 20),
-                new Tuple<int, int, int, int>(1, 5, 10, 19),
-                new Tuple<int, int, int, int>(1, 5, 11, 20),
-                new Tuple<int, int, int, int>(1, 5, 12, 20),
-                new Tuple<int, int, int, int>(1, 6, 10, 20),
-                new Tuple<int, int, int, int>(1, 6, 11, 20),
-                new Tuple<int, int, int, int>(1, 6, 12, 20)
+                // 2020
+                NewSeedData(PathwayComponentGradeLookup.APlus, SpecialismComponentGradeLookup.Distinction, OverallResultLookup.DistinctionPlus, 2020),
+                NewSeedData(PathwayComponentGradeLookup.APlus, SpecialismComponentGradeLookup.Merit, OverallResultLookup.Distinction, 2020),
+                NewSeedData(PathwayComponentGradeLookup.APlus, SpecialismComponentGradeLookup.Pass, OverallResultLookup.Distinction, 2020),
+                NewSeedData(PathwayComponentGradeLookup.A, SpecialismComponentGradeLookup.Distinction, OverallResultLookup.Distinction, 2020),
+                NewSeedData(PathwayComponentGradeLookup.A, SpecialismComponentGradeLookup.Merit, OverallResultLookup.Distinction, 2020),
+                NewSeedData(PathwayComponentGradeLookup.A, SpecialismComponentGradeLookup.Pass, OverallResultLookup.Merit, 2020),
+                NewSeedData(PathwayComponentGradeLookup.B, SpecialismComponentGradeLookup.Distinction, OverallResultLookup.Distinction, 2020),
+                NewSeedData(PathwayComponentGradeLookup.B, SpecialismComponentGradeLookup.Merit, OverallResultLookup.Merit, 2020),
+                NewSeedData(PathwayComponentGradeLookup.B, SpecialismComponentGradeLookup.Pass, OverallResultLookup.Merit, 2020),
+                NewSeedData(PathwayComponentGradeLookup.C, SpecialismComponentGradeLookup.Distinction, OverallResultLookup.Merit, 2020),
+                NewSeedData(PathwayComponentGradeLookup.C, SpecialismComponentGradeLookup.Merit, OverallResultLookup.Merit, 2020),
+                NewSeedData(PathwayComponentGradeLookup.C, SpecialismComponentGradeLookup.Pass, OverallResultLookup.Pass, 2020),
+                NewSeedData(PathwayComponentGradeLookup.D, SpecialismComponentGradeLookup.Distinction, OverallResultLookup.Merit, 2020),
+                NewSeedData(PathwayComponentGradeLookup.D, SpecialismComponentGradeLookup.Merit, OverallResultLookup.Pass, 2020),
+                NewSeedData(PathwayComponentGradeLookup.D, SpecialismComponentGradeLookup.Pass, OverallResultLookup.Pass, 2020),
+                NewSeedData(PathwayComponentGradeLookup.E, SpecialismComponentGradeLookup.Distinction, OverallResultLookup.Pass, 2020),
+                NewSeedData(PathwayComponentGradeLookup.E, SpecialismComponentGradeLookup.Merit, OverallResultLookup.Pass, 2020),
+                NewSeedData(PathwayComponentGradeLookup.E, SpecialismComponentGradeLookup.Pass, OverallResultLookup.Pass, 2020),
+
+                // 2021 onwards
+                NewSeedData(PathwayComponentGradeLookup.APlus, SpecialismComponentGradeLookup.Distinction, OverallResultLookup.DistinctionPlus),
+                NewSeedData(PathwayComponentGradeLookup.APlus, SpecialismComponentGradeLookup.Merit, OverallResultLookup.Distinction),
+                NewSeedData(PathwayComponentGradeLookup.APlus, SpecialismComponentGradeLookup.Pass, OverallResultLookup.Distinction),
+                NewSeedData(PathwayComponentGradeLookup.A, SpecialismComponentGradeLookup.Distinction, OverallResultLookup.Distinction),
+                NewSeedData(PathwayComponentGradeLookup.A, SpecialismComponentGradeLookup.Merit, OverallResultLookup.Distinction),
+                NewSeedData(PathwayComponentGradeLookup.A, SpecialismComponentGradeLookup.Pass, OverallResultLookup.Merit),
+                NewSeedData(PathwayComponentGradeLookup.B, SpecialismComponentGradeLookup.Distinction, OverallResultLookup.Distinction),
+                NewSeedData(PathwayComponentGradeLookup.B, SpecialismComponentGradeLookup.Merit, OverallResultLookup.Merit),
+                NewSeedData(PathwayComponentGradeLookup.B, SpecialismComponentGradeLookup.Pass, OverallResultLookup.Merit),
+                NewSeedData(PathwayComponentGradeLookup.C, SpecialismComponentGradeLookup.Distinction, OverallResultLookup.Distinction),
+                NewSeedData(PathwayComponentGradeLookup.C, SpecialismComponentGradeLookup.Merit, OverallResultLookup.Merit),
+                NewSeedData(PathwayComponentGradeLookup.C, SpecialismComponentGradeLookup.Pass, OverallResultLookup.Pass),
+                NewSeedData(PathwayComponentGradeLookup.D, SpecialismComponentGradeLookup.Distinction, OverallResultLookup.Merit),
+                NewSeedData(PathwayComponentGradeLookup.D, SpecialismComponentGradeLookup.Merit, OverallResultLookup.Merit),
+                NewSeedData(PathwayComponentGradeLookup.D, SpecialismComponentGradeLookup.Pass, OverallResultLookup.Pass),
+                NewSeedData(PathwayComponentGradeLookup.E, SpecialismComponentGradeLookup.Distinction, OverallResultLookup.Merit),
+                NewSeedData(PathwayComponentGradeLookup.E, SpecialismComponentGradeLookup.Merit, OverallResultLookup.Pass),
+                NewSeedData(PathwayComponentGradeLookup.E, SpecialismComponentGradeLookup.Pass, OverallResultLookup.Pass)
             };
 
             _overallGradeLookups = new OverallGradeLookupBuilder().BuildList(_tlLookups, seedData);
@@ -67,20 +90,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             return Task.CompletedTask;
         }
 
-        public async Task WhenAsync(int pathwayId, int? pathwayGradeId, int? specialismGradeId, IndustryPlacementStatus ipStatus)
+        public async Task WhenAsync(int pathwayId, int? pathwayGradeId, int? specialismGradeId, IndustryPlacementStatus ipStatus, int academicYear)
         {
             await Task.CompletedTask;
-            _actualResult = await OverallResultCalculationService.GetOverAllGrade(_tlLookups.ToList(), pathwayId, pathwayGradeId, specialismGradeId, ipStatus, 2020);
+            _actualResult = await OverallResultCalculationService.GetOverAllGrade(_tlLookups.ToList(), pathwayId, pathwayGradeId, specialismGradeId, ipStatus, academicYear);
         }
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Expected_Results_Are_Returned(int tlPathwayId, string pathwayGrade, string specialismGrade, string overallGrade, IndustryPlacementStatus ipStatus)
+        public async Task Then_Expected_Results_Are_Returned(int tlPathwayId, string pathwayGrade, string specialismGrade, string overallGrade, IndustryPlacementStatus ipStatus, int academicYear)
         {
             var pathwayGradeId = _tlLookups.FirstOrDefault(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase) && x.Value.Equals(pathwayGrade, StringComparison.InvariantCultureIgnoreCase))?.Id;
             var specialismGradeId = _tlLookups.FirstOrDefault(x => x.Category.Equals(LookupCategory.SpecialismComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase) && x.Value.Equals(specialismGrade, StringComparison.InvariantCultureIgnoreCase))?.Id;
 
-            await WhenAsync(tlPathwayId, pathwayGradeId, specialismGradeId, ipStatus);
+            await WhenAsync(tlPathwayId, pathwayGradeId, specialismGradeId, ipStatus, academicYear);
 
             _actualResult.Should().Be(overallGrade);
         }
@@ -89,118 +112,170 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         {
             get
             {
+                return Data_2020.Concat(Data_2021);
+            }
+        }
+
+        private static IEnumerable<object[]> Data_2020
+        {
+            get
+            {
                 return new[]
                 {
                     // IndustryPlacement Completed
-                    new object[] { 1, "A*", "Distinction", "Distinction*", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "A*", "Merit", "Distinction", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "A*", "Pass", "Distinction", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "A*", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "A", "Distinction", "Distinction", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "A", "Merit", "Distinction", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "A", "Pass", "Merit", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "A", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "B", "Distinction", "Distinction", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "B", "Merit", "Merit", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "B", "Pass", "Merit", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "B", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "C", "Distinction", "Merit", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "C", "Merit", "Merit", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "C", "Pass", "Pass", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "C", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "D", "Distinction", "Merit", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "D", "Merit", "Pass", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "D", "Pass", "Pass", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "D", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "E", "Distinction", "Pass", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "E", "Merit", "Pass", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "E", "Pass", "Pass", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "E", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed },
+                    new object[] { TlPathwayId, "A*", "Distinction", "Distinction*", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "A*", "Merit", "Distinction", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "A*", "Pass", "Distinction", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "A*", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "A", "Distinction", "Distinction", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "A", "Merit", "Distinction", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "A", "Pass", "Merit", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "A", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "B", "Distinction", "Distinction", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "B", "Merit", "Merit", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "B", "Pass", "Merit", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "B", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "C", "Distinction", "Merit", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "C", "Merit", "Merit", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "C", "Pass", "Pass", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "C", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "D", "Distinction", "Merit", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "D", "Merit", "Pass", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "D", "Pass", "Pass", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "D", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "E", "Distinction", "Pass", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "E", "Merit", "Pass", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "E", "Pass", "Pass", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "E", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed , 2020 },
 
-                    new object[] { 1, "Q - pending result", "Distinction", "Q - pending result", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "Q - pending result", "Merit", "Q - pending result", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "Q - pending result", "Pass", "Q - pending result", IndustryPlacementStatus.Completed },
+                    new object[] { TlPathwayId, "Q - pending result", "Distinction", "Q - pending result", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "Q - pending result", "Merit", "Q - pending result", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "Q - pending result", "Pass", "Q - pending result", IndustryPlacementStatus.Completed , 2020 },
 
-                    new object[] { 1, "Unclassified", "Unclassified", "Partial achievement", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "Unclassified", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "Q - pending result", "Unclassified", "Q - pending result", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "X - no result", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "A*", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "Q - pending result", "Merit", "Q - pending result", IndustryPlacementStatus.Completed },
+                    new object[] { TlPathwayId, "Unclassified", "Unclassified", "Partial achievement", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "Unclassified", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "Q - pending result", "Unclassified", "Q - pending result", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "X - no result", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "A*", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "Q - pending result", "Merit", "Q - pending result", IndustryPlacementStatus.Completed , 2020 },
 
-                    new object[] { 1, "A*", null, "Partial achievement", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "Unclassified", null, "Partial achievement", IndustryPlacementStatus.Completed },
-                    new object[] { 1, null, "Distinction", "Partial achievement", IndustryPlacementStatus.Completed },
-                    new object[] { 1, null, "Unclassified", "Partial achievement", IndustryPlacementStatus.Completed },
-                    new object[] { 1, null, null, "Partial achievement", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "Q - pending result", null, "Q - pending result", IndustryPlacementStatus.Completed },
-                    new object[] { 1, null, "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "Unclassified", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "Q - pending result", "Unclassified", "Q - pending result", IndustryPlacementStatus.Completed },
+                    new object[] { TlPathwayId, "A*", null, "Partial achievement", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "Unclassified", null, "Partial achievement", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, null, "Distinction", "Partial achievement", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, null, "Unclassified", "Partial achievement", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, null, null, "Partial achievement", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "Q - pending result", null, "Q - pending result", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, null, "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "Unclassified", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "Q - pending result", "Unclassified", "Q - pending result", IndustryPlacementStatus.Completed , 2020 },
 
-                    new object[] { 1, "X - no result", null, "Partial achievement", IndustryPlacementStatus.Completed },
-                    new object[] { 1, null, "X - no result", "Partial achievement", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "Unclassified", "X - no result", "Partial achievement", IndustryPlacementStatus.Completed },
-                    new object[] { 1, "X - no result", "Unclassified", "Partial achievement", IndustryPlacementStatus.Completed },
+                    new object[] { TlPathwayId, "X - no result", null, "Partial achievement", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, null, "X - no result", "Partial achievement", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "Unclassified", "X - no result", "Partial achievement", IndustryPlacementStatus.Completed , 2020 },
+                    new object[] { TlPathwayId, "X - no result", "Unclassified", "Partial achievement", IndustryPlacementStatus.Completed , 2020 },
 
                     // IndustryPlacement Not Completed
-                    new object[] { 1, "A*", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "A*", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "A*", "Pass", "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "A*", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "A", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "A", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "A", "Pass", "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "A", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "B", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "B", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "B", "Pass", "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "B", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "C", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "C", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "C", "Pass", "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "C", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "D", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "D", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "D", "Pass", "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "D", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "E", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "E", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "E", "Pass", "Partial achievement", IndustryPlacementStatus.NotSpecified },
-                    new object[] { 1, "E", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted },
+                    new object[] { TlPathwayId, "A*", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "A*", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "A*", "Pass", "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "A*", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "A", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "A", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "A", "Pass", "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "A", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "B", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "B", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "B", "Pass", "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "B", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "C", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "C", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "C", "Pass", "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "C", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "D", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "D", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "D", "Pass", "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "D", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "E", "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "E", "Merit", "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "E", "Pass", "Partial achievement", IndustryPlacementStatus.NotSpecified, 2020 },
+                    new object[] { TlPathwayId, "E", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted , 2020 },
 
-                    new object[] { 1, "Q - pending result", "Distinction", "Q - pending result", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "Q - pending result", "Merit", "Q - pending result", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "Q - pending result", "Pass", "Q - pending result", IndustryPlacementStatus.NotCompleted },
+                    new object[] { TlPathwayId, "Q - pending result", "Distinction", "Q - pending result", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "Q - pending result", "Merit", "Q - pending result", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "Q - pending result", "Pass", "Q - pending result", IndustryPlacementStatus.NotCompleted , 2020 },
 
-                    new object[] { 1, "Q - pending result", "Distinction", "Q - pending result", IndustryPlacementStatus.NotSpecified },
-                    new object[] { 1, "Q - pending result", "Merit", "Q - pending result", IndustryPlacementStatus.NotSpecified },
-                    new object[] { 1, "Q - pending result", "Pass", "Q - pending result", IndustryPlacementStatus.NotSpecified },
+                    new object[] { TlPathwayId, "Q - pending result", "Distinction", "Q - pending result", IndustryPlacementStatus.NotSpecified, 2020 },
+                    new object[] { TlPathwayId, "Q - pending result", "Merit", "Q - pending result", IndustryPlacementStatus.NotSpecified, 2020 },
+                    new object[] { TlPathwayId, "Q - pending result", "Pass", "Q - pending result", IndustryPlacementStatus.NotSpecified , 2020 },
 
-                    new object[] { 1, "Unclassified", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "Q - pending result", "Unclassified", "Q - pending result", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "Q - pending result", "Merit", "Q - pending result", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "Unclassified", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotSpecified },
-                    new object[] { 1, "Q - pending result", "Unclassified", "Q - pending result", IndustryPlacementStatus.NotSpecified },
-                    new object[] { 1, "Q - pending result", "Merit", "Q - pending result", IndustryPlacementStatus.NotSpecified },
+                    new object[] { TlPathwayId, "Unclassified", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "Q - pending result", "Unclassified", "Q - pending result", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "Q - pending result", "Merit", "Q - pending result", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "Unclassified", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotSpecified, 2020 },
+                    new object[] { TlPathwayId, "Q - pending result", "Unclassified", "Q - pending result", IndustryPlacementStatus.NotSpecified, 2020 },
+                    new object[] { TlPathwayId, "Q - pending result", "Merit", "Q - pending result", IndustryPlacementStatus.NotSpecified, 2020 },
 
-                    new object[] { 1, "Unclassified", "Unclassified", "Unclassified", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "A*", null, "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "Unclassified", null, "Unclassified", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, null, "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, null, "Unclassified", "Unclassified", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, null, null, "X - no result", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "Q - pending result", null, "Q - pending result", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, null, "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "Unclassified", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "Q - pending result", "Unclassified", "Q - pending result", IndustryPlacementStatus.NotCompleted },
+                    new object[] { TlPathwayId, "Unclassified", "Unclassified", "Unclassified", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "A*", null, "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "Unclassified", null, "Unclassified", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, null, "Distinction", "Partial achievement", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, null, "Unclassified", "Unclassified", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, null, null, "X - no result", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "Q - pending result", null, "Q - pending result", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, null, "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "Unclassified", "Q - pending result", "Q - pending result", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "Q - pending result", "Unclassified", "Q - pending result", IndustryPlacementStatus.NotCompleted , 2020 },
 
-                    new object[] { 1, "X - no result", null, "X - no result", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, null, "X - no result", "X - no result", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "Unclassified", "X - no result", "Unclassified", IndustryPlacementStatus.NotCompleted },
-                    new object[] { 1, "X - no result", "Unclassified", "Unclassified", IndustryPlacementStatus.NotCompleted }
+                    new object[] { TlPathwayId, "X - no result", null, "X - no result", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, null, "X - no result", "X - no result", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "Unclassified", "X - no result", "Unclassified", IndustryPlacementStatus.NotCompleted , 2020 },
+                    new object[] { TlPathwayId, "X - no result", "Unclassified", "Unclassified", IndustryPlacementStatus.NotCompleted , 2020 }
                 };
             }
+        }
+
+        private static IEnumerable<object[]> Data_2021
+        {
+            get
+            {
+                return new[]
+                {
+                    new object[] { TlPathwayId, "A*", "Distinction", "Distinction*", IndustryPlacementStatus.Completed , 2021 },
+                    new object[] { TlPathwayId, "A*", "Merit", "Distinction", IndustryPlacementStatus.Completed , 2021 },
+                    new object[] { TlPathwayId, "A*", "Pass", "Distinction", IndustryPlacementStatus.Completed , 2021 },
+                    new object[] { TlPathwayId, "A*", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed , 2021 },
+
+                    new object[] { TlPathwayId, "A", "Distinction", "Distinction", IndustryPlacementStatus.Completed , 2021 },
+                    new object[] { TlPathwayId, "A", "Merit", "Distinction", IndustryPlacementStatus.Completed , 2021 },
+                    new object[] { TlPathwayId, "A", "Pass", "Merit", IndustryPlacementStatus.Completed , 2021 },
+                    new object[] { TlPathwayId, "A", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed , 2021 },
+
+                    new object[] { TlPathwayId, "B", "Distinction", "Distinction", IndustryPlacementStatus.Completed , 2021 },
+                    new object[] { TlPathwayId, "B", "Merit", "Merit", IndustryPlacementStatus.Completed , 2021 },
+                    new object[] { TlPathwayId, "B", "Pass", "Merit", IndustryPlacementStatus.Completed , 2021 },
+                    new object[] { TlPathwayId, "B", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed , 2021 },
+
+                    new object[] { TlPathwayId, "C", "Distinction", "Distinction", IndustryPlacementStatus.Completed , 2021 },
+                    new object[] { TlPathwayId, "C", "Merit", "Merit", IndustryPlacementStatus.Completed , 2021 },
+                    new object[] { TlPathwayId, "C", "Pass", "Pass", IndustryPlacementStatus.Completed , 2021 },
+                    new object[] { TlPathwayId, "C", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed , 2021 },
+
+                    new object[] { TlPathwayId, "D", "Distinction", "Merit", IndustryPlacementStatus.Completed , 2021 },
+                    new object[] { TlPathwayId, "D", "Merit", "Merit", IndustryPlacementStatus.Completed , 2021 },
+                    new object[] { TlPathwayId, "D", "Pass", "Pass", IndustryPlacementStatus.Completed , 2021 },
+                    new object[] { TlPathwayId, "D", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed , 2021 },
+
+                    new object[] { TlPathwayId, "E", "Distinction", "Merit", IndustryPlacementStatus.Completed , 2021 },
+                    new object[] { TlPathwayId, "E", "Merit", "Pass", IndustryPlacementStatus.Completed , 2021 },
+                    new object[] { TlPathwayId, "E", "Pass", "Pass", IndustryPlacementStatus.Completed , 2021 },
+                    new object[] { TlPathwayId, "E", "Q - pending result", "Q - pending result", IndustryPlacementStatus.Completed , 2021 },
+                };
+            }
+        }
+
+        private Tuple<int, int, int, int, int?> NewSeedData(PathwayComponentGradeLookup pathwayComponentGrade, SpecialismComponentGradeLookup specialismComponentGrade, OverallResultLookup overallResult, int? academicYear = null)
+        {
+            return new Tuple<int, int, int, int, int?>(TlPathwayId, (int)pathwayComponentGrade, (int)specialismComponentGrade, (int)overallResult, academicYear);
         }
     }
 }

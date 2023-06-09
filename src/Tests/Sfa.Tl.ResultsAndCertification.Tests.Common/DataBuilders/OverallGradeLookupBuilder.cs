@@ -83,11 +83,11 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             };
         }
 
-        public IList<OverallGradeLookup> BuildList(IList<TlLookup> tlLookups, IList<Tuple<int,int,int,int>> seedData)
+        public IList<OverallGradeLookup> BuildList(IList<TlLookup> tlLookups, IList<Tuple<int, int, int, int, int?>> seedData)
         {
             var returnList = new List<OverallGradeLookup>();
 
-            foreach(var data in seedData)
+            foreach (var data in seedData)
             {
                 var coreGradeTlLookup = tlLookups.FirstOrDefault(x => x.Id == data.Item2);
                 var specialismGradeTlLookup = tlLookups.FirstOrDefault(x => x.Id == data.Item3);
@@ -102,6 +102,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     TlLookupSpecialismGrade = specialismGradeTlLookup,
                     TlLookupOverallGradeId = overallGradeTlLookup.Id,
                     TlLookupOverallGrade = overallGradeTlLookup,
+                    StartYear = data.Item5,
                     IsActive = true,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
