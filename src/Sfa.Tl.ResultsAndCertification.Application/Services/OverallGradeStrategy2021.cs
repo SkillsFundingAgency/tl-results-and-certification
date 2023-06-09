@@ -54,7 +54,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
             else
             {
-                if ((!pathwayGradeId.HasValue || isPathwayGradeUnclassified || isPathwayGradeXNoResult)
+                if (isPathwayGradeUnclassified && isSpecialismGradeUnclassified)
+                {
+                    return overallResultUnClassified;
+                }
+                else if ((!pathwayGradeId.HasValue || isPathwayGradeUnclassified || isPathwayGradeXNoResult)
                     && (!speciailsmGradeId.HasValue || isSpecialismGradeUnclassified || isSpecialismGradeXNoResult))
                 {
                     return overallResultXNoResult;
