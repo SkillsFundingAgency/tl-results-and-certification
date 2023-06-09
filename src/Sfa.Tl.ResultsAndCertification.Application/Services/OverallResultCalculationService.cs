@@ -24,27 +24,27 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     {
         private readonly ResultsAndCertificationConfiguration _configuration;
         private readonly IRepository<TlLookup> _tlLookupRepository;
-        private readonly IRepository<OverallGradeLookup> _overallGradeLookupRepository;
         private readonly IOverallResultCalculationRepository _overallGradeCalculationRepository;
         private readonly IRepository<AssessmentSeries> _assessmentSeriesRepository;
         private readonly IRepository<OverallResult> _overallResultRepository;
+        private readonly IOverallGradeStrategyFactory _overallGradeStrategyFactory;
         private readonly IMapper _mapper;
 
         public OverallResultCalculationService(
             ResultsAndCertificationConfiguration configuration,
             IRepository<TlLookup> tlLookupRepository,
-            IRepository<OverallGradeLookup> overallGradeLookupRepository,
             IOverallResultCalculationRepository overallGradeCalculationRepository,
             IRepository<AssessmentSeries> assessmentSeriesRepository,
             IRepository<OverallResult> overallResultRepository,
+            IOverallGradeStrategyFactory overallGradeStrategyFactory,
             IMapper mapper)
         {
             _configuration = configuration;
             _tlLookupRepository = tlLookupRepository;
-            _overallGradeLookupRepository = overallGradeLookupRepository;
             _overallGradeCalculationRepository = overallGradeCalculationRepository;
             _assessmentSeriesRepository = assessmentSeriesRepository;
             _overallResultRepository = overallResultRepository;
+            _overallGradeStrategyFactory = overallGradeStrategyFactory;
             _mapper = mapper;
         }
 
@@ -77,7 +77,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return null;
 
             var tlLookupData = await GetTlLookupData();
-            var overallGradeLookupData = await GetOverallGradeLookupData();
 
             var batchSize = _configuration.OverallResultBatchSettings.BatchSize <= 0 ? Constants.OverallResultDefaultBatchSize : _configuration.OverallResultBatchSettings.BatchSize;
             var batchesToProcess = (int)Math.Ceiling(learners.Count / (decimal)batchSize);
@@ -85,15 +84,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             for (var batchIndex = 0; batchIndex < batchesToProcess; batchIndex++)
             {
                 var leanersToProcess = learners.Skip(batchIndex * batchSize).Take(batchSize);
-                response.Add(await ProcessOverallResults(leanersToProcess, tlLookupData, overallGradeLookupData, resultCalculationAssessment));
+                response.Add(await ProcessOverallResults(leanersToProcess, tlLookupData, resultCalculationAssessment));
             }
 
             return response;
         }
 
-        private async Task<OverallResultResponse> ProcessOverallResults(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
+        private async Task<OverallResultResponse> ProcessOverallResults(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, AssessmentSeries assessmentSeries)
         {
-            var reconciledLearnerRecords = ReconcileLearnersData(learnerPathways, tlLookup, overallGradeLookupData, assessmentSeries);
+            var reconciledLearnerRecords = await ReconcileLearnersData(learnerPathways, tlLookup, assessmentSeries);
 
             var totalRecords = learnerPathways.Count();
             var updatedRecords = reconciledLearnerRecords.Count(x => x.Id != 0);
@@ -157,7 +156,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var partialAchievementGrade = overallResultLookupData.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultPartialAchievementCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
 
             CalculationStatus calculationStatus;
-            
+
             if (overallGrade.Equals(qPendingGrade, StringComparison.InvariantCultureIgnoreCase))
             {
                 calculationStatus = CalculationStatus.Qpending;
@@ -248,108 +247,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return specialismResults;
         }
 
-        public string GetOverAllGrade(List<TlLookup> overallResultLookup, List<OverallGradeLookup> overallGradeLookup, int tlPathwayId, int? pathwayGradeId, int? speciailsmGradeId, IndustryPlacementStatus ipStatus)
+        public async Task<string> GetOverAllGrade(List<TlLookup> tlLookup, int tlPathwayId, int? pathwayGradeId, int? speciailsmGradeId, IndustryPlacementStatus ipStatus, int academicYear)
         {
-            // Q - pending result
-            var isPathwayGradeQpending = IsComponentGradeWithCode(overallResultLookup, pathwayGradeId, Constants.PathwayComponentGradeQpendingResultCode);
-            var isSpecialismGradeQpending = IsComponentGradeWithCode(overallResultLookup, speciailsmGradeId, Constants.SpecialismComponentGradeQpendingResultCode);
-
-            // Unclassified result
-            var isPathwayGradeUnclassified = IsComponentGradeWithCode(overallResultLookup, pathwayGradeId, Constants.PathwayComponentGradeUnclassifiedCode);
-            var isSpecialismGradeUnclassified = IsComponentGradeWithCode(overallResultLookup, speciailsmGradeId, Constants.SpecialismComponentGradeUnclassifiedCode);
-
-            // X - No result
-            var isPathwayGradeXNoResult = IsComponentGradeWithCode(overallResultLookup, pathwayGradeId, Constants.PathwayComponentGradeXNoResultCode);
-            var isSpecialismGradeXNoResult = IsComponentGradeWithCode(overallResultLookup, speciailsmGradeId, Constants.SpecialismComponentGradeXNoResultCode);
-
-            var overallResultQpending = overallResultLookup.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultQpendingCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
-            var overallResultUnClassified = overallResultLookup.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultUnclassifiedCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
-            var overallResultXNoResult = overallResultLookup.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultXNoResultCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
-            var overallResultPartialAchievement = overallResultLookup.FirstOrDefault(o => o.Code.Equals(Constants.OverallResultPartialAchievementCode, StringComparison.InvariantCultureIgnoreCase))?.Value;
-
-            if (isPathwayGradeQpending || isSpecialismGradeQpending)
-            {
-                return overallResultQpending;
-            }
-            else if (ipStatus == IndustryPlacementStatus.Completed || ipStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
-            {
-                if (pathwayGradeId.HasValue && speciailsmGradeId.HasValue &&
-                    !isPathwayGradeUnclassified && !isSpecialismGradeUnclassified &&
-                    !isPathwayGradeXNoResult && !isSpecialismGradeXNoResult)
-                {
-                    var overallGrade = overallGradeLookup.FirstOrDefault(o => o.TlPathwayId == tlPathwayId && o.TlLookupCoreGradeId == pathwayGradeId && o.TlLookupSpecialismGradeId == speciailsmGradeId);
-                    return overallGrade?.TlLookupOverallGrade?.Value;
-                }
-                else
-                {
-                    return overallResultPartialAchievement;
-                }
-            }
-            else
-            {
-                // if ipStatus is NotSpecified || ipStatus is NotCompleted || ipStatus is WillNotComplete then apply below logic
-
-                if (pathwayGradeId.HasValue && speciailsmGradeId.HasValue)
-                {
-                    if ((isPathwayGradeUnclassified && isSpecialismGradeUnclassified) ||
-                             (isPathwayGradeUnclassified && isSpecialismGradeXNoResult) ||
-                             (isPathwayGradeXNoResult && isSpecialismGradeUnclassified))
-                    {
-                        return overallResultUnClassified;
-                    }
-                    else if (isPathwayGradeXNoResult && isSpecialismGradeXNoResult)
-                    {
-                        return overallResultXNoResult;
-                    }
-                    else
-                    {
-                        return overallResultPartialAchievement;
-                    }
-                }
-                else if (pathwayGradeId.HasValue && !speciailsmGradeId.HasValue)
-                {
-                    if (isPathwayGradeUnclassified)
-                    {
-                        return overallResultUnClassified;
-                    }
-                    else if (isPathwayGradeXNoResult)
-                    {
-                        return overallResultXNoResult;
-                    }
-                    else
-                    {
-                        return overallResultPartialAchievement;
-                    }
-                }
-                else if (!pathwayGradeId.HasValue && speciailsmGradeId.HasValue)
-                {
-                    if (isSpecialismGradeUnclassified)
-                    {
-                        return overallResultUnClassified;
-                    }
-                    else if (isSpecialismGradeXNoResult)
-                    {
-                        return overallResultXNoResult;
-                    }
-                    else
-                    {
-                        return overallResultPartialAchievement;
-                    }
-                }
-                else
-                {
-                    // if pathwayGradeId is null && speciailsmGradeId is null return X - no result
-                    return overallResultXNoResult;
-                }
-            }
+            IOverallGradeStrategy overallGradeStrategy = await _overallGradeStrategyFactory.GetOverallGradeStrategy(academicYear, tlLookup);
+            return overallGradeStrategy.GetOverAllGrade(tlPathwayId, pathwayGradeId, speciailsmGradeId, ipStatus);
         }
 
-        private static bool IsComponentGradeWithCode(List<TlLookup> overallResultLookup, int? gradeId, string gradeCode)
-        {
-            return gradeId.HasValue ? overallResultLookup.Any(o => o.Id == gradeId.Value && o.Code.Equals(gradeCode, StringComparison.InvariantCultureIgnoreCase)) : false;
-        }
-
-        public IList<OverallResult> ReconcileLearnersData(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, List<OverallGradeLookup> overallGradeLookupData, AssessmentSeries assessmentSeries)
+        public async Task<IList<OverallResult>> ReconcileLearnersData(IEnumerable<TqRegistrationPathway> learnerPathways, List<TlLookup> tlLookup, AssessmentSeries assessmentSeries)
         {
             var overallResults = new List<OverallResult>();
 
@@ -361,7 +265,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var specialismResult = GetHighestSpecialismResult(specialism); // as we are not dealing with couplet specialisms as of now
                 var ipStatus = GetIndustryPlacementStatus(pathway);
 
-                var overallGrade = GetOverAllGrade(tlLookup, overallGradeLookupData, pathway.TqProvider.TqAwardingOrganisation.TlPathwayId, pathwayResult?.TlLookupId, specialismResult?.TlLookupId, ipStatus);
+                var overallGrade = await GetOverAllGrade(tlLookup, pathway.TqProvider.TqAwardingOrganisation.TlPathwayId, pathwayResult?.TlLookupId, specialismResult?.TlLookupId, ipStatus, pathway.AcademicYear);
 
                 if (string.IsNullOrWhiteSpace(overallGrade))
                     throw new ApplicationException("OverallGrade cannot be null");
@@ -374,7 +278,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 List<OverallSpecialismDetail> specialismDetails = null;
 
-                if(specialism != null)
+                if (specialism != null)
                 {
                     specialismDetails = new List<OverallSpecialismDetail>
                                         {
@@ -481,14 +385,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private async Task<List<TlLookup>> GetTlLookupData()
         {
             return await _tlLookupRepository.GetManyAsync().ToListAsync();
-        }
-
-        private async Task<List<OverallGradeLookup>> GetOverallGradeLookupData()
-        {
-            return await _overallGradeLookupRepository.GetManyAsync(navigationPropertyPath: new Expression<Func<OverallGradeLookup, object>>[]
-                        {
-                            o => o.TlLookupOverallGrade
-                        }).ToListAsync();
         }
 
         public PrsStatus? HasAnyPathwayResultPrsStatusOutstanding(TqRegistrationPathway learnerPathway)

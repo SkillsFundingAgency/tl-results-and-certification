@@ -2,50 +2,50 @@
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
-    public class OverallGradeStrategyFactory
+    public class OverallGradeStrategyFactory : IOverallGradeStrategyFactory
     {
-        private readonly IRepository<TlLookup> _lookupRepo;
-        private readonly IRepository<OverallResult> _overallResultRepo;
+        private readonly IRepository<OverallGradeLookup> _overallGradeLookupRepository;
+        private readonly Dictionary<int, IOverallGradeStrategy> _overallGradeStrategyDict = new();
 
-        private List<TlLookup> _tlLookup;
-
-
-
-        public OverallGradeStrategyFactory(IRepository<TlLookup> lookupRepo, IRepository<OverallResult> overallResultRepo)
+        public OverallGradeStrategyFactory(IRepository<OverallGradeLookup> overallResultRepository)
         {
-            _lookupRepo = lookupRepo;
-            _overallResultRepo = overallResultRepo;
+            _overallGradeLookupRepository = overallResultRepository;
         }
 
-        public async Task<IOverallGradeStrategy> GetStrategy(int academicYear)
+        public async Task<IOverallGradeStrategy> GetOverallGradeStrategy(int academicYear, IEnumerable<TlLookup> tlLookup)
         {
-            _tlLookup ??= await GetTlLookupData();
+            bool found = _overallGradeStrategyDict.TryGetValue(academicYear, out IOverallGradeStrategy overallGradeStrategy);
 
-            //if (academicYear == 2020)
-            //{
+            if (found)
+            {
+                return overallGradeStrategy;
+            }
 
-            //    return new OverallGradeStrategy2020(_tlLookup);
-            //}
-            //else
-            //{
-            //    return new OverallGradeStrategy2021
-            //}
+            overallGradeStrategy = academicYear == 2020
+                ? new OverallGradeStrategy2020(tlLookup, await GetOverallGradeLookupData(academicYear))
+                : new OverallGradeStrategy2021(tlLookup, await GetOverallGradeLookupData(academicYear));
 
-            throw new NotImplementedException();
+            _overallGradeStrategyDict.Add(academicYear, overallGradeStrategy);
 
+            return overallGradeStrategy;
         }
 
-        private async Task<List<TlLookup>> GetTlLookupData()
+        private async Task<List<OverallGradeLookup>> GetOverallGradeLookupData(int startYear)
         {
-            return await _lookupRepo.GetManyAsync().ToListAsync();
+            var overallGradeLookup = await _overallGradeLookupRepository.GetManyAsync(p => p.StartYear == startYear).ToListAsync();
+
+            if (overallGradeLookup == null || !overallGradeLookup.Any())
+            {
+                overallGradeLookup = await _overallGradeLookupRepository.GetManyAsync(p => !p.StartYear.HasValue).ToListAsync();
+            }
+
+            return overallGradeLookup;
         }
     }
 }

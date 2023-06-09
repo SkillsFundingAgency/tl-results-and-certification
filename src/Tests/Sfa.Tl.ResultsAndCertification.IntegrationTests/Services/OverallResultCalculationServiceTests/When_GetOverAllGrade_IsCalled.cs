@@ -68,7 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         public async Task WhenAsync(int pathwayId, int? pathwayGradeId, int? specialismGradeId, IndustryPlacementStatus ipStatus)
         {
             await Task.CompletedTask;
-            _actualResult = OverallResultCalculationService.GetOverAllGrade(_tlLookups.ToList(), _overallGradeLookups.ToList(), pathwayId, pathwayGradeId, specialismGradeId, ipStatus);
+            _actualResult = await OverallResultCalculationService.GetOverAllGrade(_tlLookups.ToList(), pathwayId, pathwayGradeId, specialismGradeId, ipStatus, 2020);
         }
 
         [Theory]
