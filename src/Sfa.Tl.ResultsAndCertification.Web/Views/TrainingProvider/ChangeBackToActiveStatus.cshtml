@@ -15,6 +15,7 @@
         <div class="govuk-grid-column-two-thirds">
             <form asp-route="@RouteConstants.SubmitChangeBackToActiveStatus" id="submitChangeBackToActiveStatusForm">
                 <input type="hidden" asp-for="ProfileId" />
+                <input type="hidden" asp-for="AcademicYear" />
 
                 <partial name="_ValidationSummary" />
 
