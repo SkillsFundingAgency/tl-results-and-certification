@@ -8,12 +8,12 @@ using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
-    public class OverallGradeStrategy2021 : IOverallGradeStrategy
+    public class OverallGradeStrategy2021Onwards : IOverallGradeStrategy
     {
         private readonly IEnumerable<TlLookup> _overallResultLookup;
         private readonly IEnumerable<OverallGradeLookup> _overallGradeLookup;
 
-        public OverallGradeStrategy2021(IEnumerable<TlLookup> overallResultLookup, IEnumerable<OverallGradeLookup> overallGradeLookup)
+        public OverallGradeStrategy2021Onwards(IEnumerable<TlLookup> overallResultLookup, IEnumerable<OverallGradeLookup> overallGradeLookup)
         {
             _overallResultLookup = overallResultLookup;
             _overallGradeLookup = overallGradeLookup;

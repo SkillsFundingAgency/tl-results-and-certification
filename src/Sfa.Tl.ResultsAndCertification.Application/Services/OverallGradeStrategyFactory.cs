@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             overallGradeStrategy = academicYear == 2020
                 ? new OverallGradeStrategy2020(tlLookup, await GetOverallGradeLookupData(academicYear))
-                : new OverallGradeStrategy2021(tlLookup, await GetOverallGradeLookupData(academicYear));
+                : new OverallGradeStrategy2021Onwards(tlLookup, await GetOverallGradeLookupData(academicYear));
 
             _overallGradeStrategyDict.Add(academicYear, overallGradeStrategy);
 
