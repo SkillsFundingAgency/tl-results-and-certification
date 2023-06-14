@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -15,15 +16,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
 {
     public class When_GetOverAllGrade_IsCalled : OverallResultCalculationServiceBaseTest
     {
-        private IList<TlLookup> _tlLookups;
-        private IList<OverallGradeLookup> _overallGradeLookups;
         private string _actualResult;
-
         private const int TlPathwayId = 1;
 
         public override void Given()
         {
-            _tlLookups = TlLookupDataProvider.CreateFullTlLookupList(DbContext);
+            TlLookup = TlLookupDataProvider.CreateFullTlLookupList(DbContext);
 
             var seedData = new List<Tuple<int, int, int, int, int?>>
             {
@@ -68,8 +66,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 NewSeedData(PathwayComponentGradeLookup.E, SpecialismComponentGradeLookup.Pass, OverallResultLookup.Pass)
             };
 
-            _overallGradeLookups = new OverallGradeLookupBuilder().BuildList(_tlLookups, seedData);
-            DbContext.AddRange(_overallGradeLookups);
+            OverallGradeLookup = new OverallGradeLookupBuilder().BuildList(TlLookup, seedData);
+            DbContext.AddRange(OverallGradeLookup);
 
             DbContext.SaveChanges();
 
@@ -93,19 +91,64 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         public async Task WhenAsync(int pathwayId, int? pathwayGradeId, int? specialismGradeId, IndustryPlacementStatus ipStatus, int academicYear)
         {
             await Task.CompletedTask;
-            _actualResult = await OverallResultCalculationService.GetOverAllGrade(_tlLookups.ToList(), pathwayId, pathwayGradeId, specialismGradeId, ipStatus, academicYear);
+            _actualResult = await OverallResultCalculationService.GetOverAllGrade(TlLookup.ToList(), pathwayId, pathwayGradeId, specialismGradeId, ipStatus, academicYear);
         }
 
         [Theory]
         [MemberData(nameof(Data))]
         public async Task Then_Expected_Results_Are_Returned(int tlPathwayId, string pathwayGrade, string specialismGrade, string overallGrade, IndustryPlacementStatus ipStatus, int academicYear)
         {
-            var pathwayGradeId = _tlLookups.FirstOrDefault(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase) && x.Value.Equals(pathwayGrade, StringComparison.InvariantCultureIgnoreCase))?.Id;
-            var specialismGradeId = _tlLookups.FirstOrDefault(x => x.Category.Equals(LookupCategory.SpecialismComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase) && x.Value.Equals(specialismGrade, StringComparison.InvariantCultureIgnoreCase))?.Id;
+            var pathwayGradeId = TlLookup.FirstOrDefault(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase) && x.Value.Equals(pathwayGrade, StringComparison.InvariantCultureIgnoreCase))?.Id;
+            var specialismGradeId = TlLookup.FirstOrDefault(x => x.Category.Equals(LookupCategory.SpecialismComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase) && x.Value.Equals(specialismGrade, StringComparison.InvariantCultureIgnoreCase))?.Id;
 
             await WhenAsync(tlPathwayId, pathwayGradeId, specialismGradeId, ipStatus, academicYear);
 
             _actualResult.Should().Be(overallGrade);
+        }
+
+        [Theory]
+        [InlineData(2020, typeof(OverallGradeStrategy2020))]
+        [InlineData(2021, typeof(OverallGradeStrategy2021Onwards))]
+        [InlineData(2022, typeof(OverallGradeStrategy2021Onwards))]
+        [InlineData(2023, typeof(OverallGradeStrategy2021Onwards))]
+        [InlineData(2050, typeof(OverallGradeStrategy2021Onwards))]
+        public async Task Then_Correct_OverallGradeStrategy_Is_Returned(int academicYear, Type expectedStrategy)
+        {
+            IOverallGradeStrategy strategy = await OverallGradeStrategyFactory.GetOverallGradeStrategy(academicYear, TlLookup);
+            strategy.Should().BeOfType(expectedStrategy);
+        }
+
+        [Theory]
+        [InlineData(2018)]
+        [InlineData(2019)]
+        [InlineData(1998)]
+        public async Task If_Year_Less_Than_2020_Then_ArgumentException_Is_Thrown(int academicYear)
+        {
+            Func<Task<IOverallGradeStrategy>> getOverallGradeStrategy = () => OverallGradeStrategyFactory.GetOverallGradeStrategy(academicYear, TlLookup);
+
+            await getOverallGradeStrategy.Should()
+                .ThrowExactlyAsync<ArgumentException>()
+                .WithParameterName(nameof(academicYear));
+        }
+
+        [Fact]
+        public async Task If_TlLookup_Collection_Null_Then_ArgumentNullException_Is_Thrown()
+        {
+            Func<Task<IOverallGradeStrategy>> getOverallGradeStrategy = () => OverallGradeStrategyFactory.GetOverallGradeStrategy(2020, null);
+
+            await getOverallGradeStrategy.Should()
+                .ThrowExactlyAsync<ArgumentNullException>()
+                .WithParameterName("tlLookup");
+        }
+
+        [Fact]
+        public async Task If_TlLookup_Collection_Empty_Then_ArgumentException_Is_Thrown()
+        {
+            Func<Task<IOverallGradeStrategy>> getOverallGradeStrategy = () => OverallGradeStrategyFactory.GetOverallGradeStrategy(2020, Enumerable.Empty<TlLookup>());
+
+            await getOverallGradeStrategy.Should()
+                .ThrowExactlyAsync<ArgumentException>()
+                .WithParameterName("tlLookup");
         }
 
         public static IEnumerable<object[]> Data

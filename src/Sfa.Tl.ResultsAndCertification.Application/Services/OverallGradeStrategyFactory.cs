@@ -22,6 +22,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<IOverallGradeStrategy> GetOverallGradeStrategy(int academicYear, IEnumerable<TlLookup> tlLookup)
         {
+            if (academicYear < 2020)
+                throw new ArgumentException("The year must be greater than or equal to 2020.", nameof(academicYear));
+
+            if (tlLookup == null)
+                throw new ArgumentNullException(nameof(tlLookup), "The TlLookup cannot be null.");
+
+            if (!tlLookup.Any())
+                throw new ArgumentException("The TlLookup cannot be empty.", nameof(tlLookup));
+
             bool found = _overallGradeStrategyDict.TryGetValue(academicYear, out IOverallGradeStrategy overallGradeStrategy);
 
             if (found)
