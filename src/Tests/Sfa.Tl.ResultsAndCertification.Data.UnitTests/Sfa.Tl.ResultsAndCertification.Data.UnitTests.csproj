@@ -38,8 +38,4 @@
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Tests.Common\Sfa.Tl.ResultsAndCertification.Tests.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\DualSpecialism\" />
-  </ItemGroup>
-
 </Project>
