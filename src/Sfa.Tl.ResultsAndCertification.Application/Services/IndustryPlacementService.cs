@@ -12,6 +12,7 @@ using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement.BulkProcess;
 using System;
 using System.Collections.Generic;
@@ -354,6 +355,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return await SpecialConsiderationReasonsAsync();
 
             return null;
+        }
+
+        public async Task<FunctionResponse> ProcessIndustryPlacementExtractionsAsync()
+        {
+
         }
 
         private async Task<IList<IpLookupData>> SpecialConsiderationReasonsAsync()

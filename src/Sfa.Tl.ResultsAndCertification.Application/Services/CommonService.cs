@@ -117,12 +117,31 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var isValid = false;
 
-            var uCasTriggerDates = new List<DateTime>() {               
+            var uCasTriggerDates = new List<DateTime>() {
                 new DateTime(2023,06,26),
-                new DateTime(2023,06,28)                
+                new DateTime(2023,06,28)
             };
 
             if (uCasTriggerDates.Contains(new DateTime(CurrentDate.Year, CurrentDate.Month, CurrentDate.Day)))
+            {
+                isValid = true;
+            }
+
+            return isValid;
+        }
+
+        public bool IsIndustryPlacementTriggerDateValid()
+        {
+            var isValid = false;
+
+            var uCasTriggerDates = new List<DateTime>() {
+                new DateTime(2023,06,26),
+                new DateTime(2023,07,31)
+            };
+
+            var currentDate = new DateTime(CurrentDate.Year, CurrentDate.Month, CurrentDate.Day);
+
+            if (uCasTriggerDates.Any(a => currentDate <= a && a <= currentDate))
             {
                 isValid = true;
             }
