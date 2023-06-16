@@ -2,12 +2,8 @@
 
 namespace Sfa.Tl.ResultsAndCertification.Domain.Models
 {
-    public partial class TlDualSpecialismToSpecialism
+    public partial class TlDualSpecialismToSpecialism: BaseEntity
     {
-        public TlDualSpecialismToSpecialism()
-        {            
-        }
-
         public int DualSpecialismId { get; set; }
         public int SpecialismId { get; set; }        
 
