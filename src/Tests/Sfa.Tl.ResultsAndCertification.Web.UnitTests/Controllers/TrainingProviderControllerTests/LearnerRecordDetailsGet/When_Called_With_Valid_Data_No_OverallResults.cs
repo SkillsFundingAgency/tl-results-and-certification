@@ -147,8 +147,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryCoreResult.Value.Should().BeNullOrWhiteSpace();
 
             // Overall Specialism result details
-            model.SummarySpecialismResult.Title.Should().BeNullOrWhiteSpace();
-            model.SummarySpecialismResult.Value.Should().BeNullOrWhiteSpace();
+            model.SummarySpecialismResult.ForEach(x => x.Title.Should().BeNullOrWhiteSpace());
+            model.SummarySpecialismResult.ForEach(x => x.Value.Should().BeNullOrWhiteSpace());
 
             // Overall Result
             model.SummaryOverallResult.Title.Should().Be(LearnerRecordDetailsContent.Title_OverallResult_Text);
