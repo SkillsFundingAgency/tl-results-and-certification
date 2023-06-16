@@ -124,6 +124,8 @@
     <Build Include="Tables\TlDualSpecialismToSpecialism.sql" />
     <None Include="PostDeployment\SeedTlDualSpecialismToSpecialism.sql" />
     <None Include="PostDeployment\SeedOverallGradeLookupPostStartYear2020.sql" />
+    <Build Include="Tables\DualSpecialismOverallGradeLookup.sql" />
+    <None Include="PostDeployment\SeedDualSpecialismOverallGradeLookup.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sfa.Tl.ResultsAndCertification.Database.refactorlog" />

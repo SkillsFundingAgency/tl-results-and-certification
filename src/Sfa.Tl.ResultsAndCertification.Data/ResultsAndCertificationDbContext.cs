@@ -46,6 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<OverallResult> OverallResult { get; set; }
         public virtual DbSet<OverallGradeLookup> OverallGradeLookup { get; set; }
         public virtual DbSet<TlDualSpecialismToSpecialism> TlDualSpecialismToSpecialism { get; set; }
+        public virtual DbSet<DualSpecialismOverallGradeLookup> DualSpecialismOverallGradeLookup { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
