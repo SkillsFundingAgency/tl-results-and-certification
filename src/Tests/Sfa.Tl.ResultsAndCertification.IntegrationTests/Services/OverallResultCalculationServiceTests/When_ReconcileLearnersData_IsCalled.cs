@@ -192,7 +192,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 }
             };
 
-            _actualResult = OverallResultCalculationService.ReconcileLearnersData(learnerPathways, tlLookup, _overallGradeLookup, assessmentSeries);
+            _actualResult = await OverallResultCalculationService.ReconcileLearnersData(learnerPathways, tlLookup, assessmentSeries);
         }
 
         [Fact]

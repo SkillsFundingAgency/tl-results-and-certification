@@ -190,6 +190,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IIndustryPlacementService, IndustryPlacementService>();
 
             // Overall result calculation
+            services.AddTransient<IOverallGradeStrategyFactory, OverallGradeStrategyFactory>();
             services.AddTransient<IOverallResultCalculationService, OverallResultCalculationService>();
             services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();
 

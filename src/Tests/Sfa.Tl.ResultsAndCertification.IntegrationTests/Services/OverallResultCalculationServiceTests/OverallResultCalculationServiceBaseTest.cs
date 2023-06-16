@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -44,13 +45,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
 
         protected IRepository<TlLookup> TlLookupRepository;
         protected ILogger<GenericRepository<TlLookup>> TlLookupRepositoryLogger;
-        protected IRepository<OverallGradeLookup> OverallGradeLookupRepository;
         protected ILogger<GenericRepository<OverallGradeLookup>> OverallGradeLookupLogger;
         protected IRepository<AssessmentSeries> AssessmentSeriesRepository;
         protected ILogger<GenericRepository<AssessmentSeries>> AssessmentSeriesLogger;
         protected IRepository<OverallResult> OverallResultRepository;
         protected ILogger<GenericRepository<OverallResult>> OverallResultLogger;
         protected IMapper Mapper;
+
+        protected IOverallGradeStrategyFactory OverallGradeStrategyFactory;
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
         {
@@ -85,18 +87,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 TlLookupRepositoryLogger = new Logger<GenericRepository<TlLookup>>(new NullLoggerFactory());
                 TlLookupRepository = new GenericRepository<TlLookup>(TlLookupRepositoryLogger, DbContext);
                 OverallGradeLookupLogger = new Logger<GenericRepository<OverallGradeLookup>>(new NullLoggerFactory());
-                OverallGradeLookupRepository = new GenericRepository<OverallGradeLookup>(OverallGradeLookupLogger, DbContext);
                 AssessmentSeriesLogger = new Logger<GenericRepository<AssessmentSeries>>(new NullLoggerFactory());
                 AssessmentSeriesRepository = new GenericRepository<AssessmentSeries>(AssessmentSeriesLogger, DbContext);
                 OverallResultLogger = new Logger<GenericRepository<OverallResult>>(new NullLoggerFactory());
                 OverallResultRepository = new GenericRepository<OverallResult>(OverallResultLogger, DbContext);
                 OverallResultCalculationRepository = new OverallResultCalculationRepository(DbContext);
 
+                var overallGradeLookupRepository = new GenericRepository<OverallGradeLookup>(OverallGradeLookupLogger, DbContext);
+                OverallGradeStrategyFactory = new OverallGradeStrategyFactory(overallGradeLookupRepository);
+
                 var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(OverallResultCalculationMapper).Assembly));
                 Mapper = new Mapper(mapperConfig);
 
                 // Create Service class to test. 
-                OverallResultCalculationService = new OverallResultCalculationService(ResultsAndCertificationConfiguration, TlLookupRepository, OverallGradeLookupRepository, OverallResultCalculationRepository, AssessmentSeriesRepository, OverallResultRepository, Mapper);
+                OverallResultCalculationService = new OverallResultCalculationService(ResultsAndCertificationConfiguration, TlLookupRepository, OverallResultCalculationRepository, AssessmentSeriesRepository, OverallResultRepository, OverallGradeStrategyFactory, Mapper);
             }
         }
 

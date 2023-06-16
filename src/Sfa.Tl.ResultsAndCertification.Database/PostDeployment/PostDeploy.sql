@@ -21,6 +21,10 @@ BEGIN
 :r ".\SeedQualificationGrade.sql"
 :r ".\SeedQualification.sql"
 :r ".\SeedIpLookup.sql"
+:r ".\SeedOverallGradeLookup.sql"
+:r ".\SeedTlDualSpecialism.sql"
+:r ".\SeedTlDualSpecialismToSpecialism.sql"
+:r ".\SeedOverallGradeLookupPostStartYear2020.sql"
 END
 ELSE IF ('$(environment)' <> 'DevIntegration')
 BEGIN
