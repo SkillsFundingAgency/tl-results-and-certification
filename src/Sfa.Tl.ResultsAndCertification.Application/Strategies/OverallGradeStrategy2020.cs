@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Sfa.Tl.ResultsAndCertification.Application.Services
+namespace Sfa.Tl.ResultsAndCertification.Application.Strategies
 {
     public class OverallGradeStrategy2020 : IOverallGradeStrategy
     {

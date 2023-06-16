@@ -8,7 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Application.Services
+namespace Sfa.Tl.ResultsAndCertification.Application.Strategies
 {
     public class OverallGradeStrategyFactory : IOverallGradeStrategyFactory
     {

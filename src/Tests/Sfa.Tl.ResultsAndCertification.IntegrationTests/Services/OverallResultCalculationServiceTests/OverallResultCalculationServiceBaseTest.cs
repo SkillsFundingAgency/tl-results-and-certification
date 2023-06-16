@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Application.Strategies;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
@@ -52,6 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         protected ILogger<GenericRepository<OverallResult>> OverallResultLogger;
         protected IMapper Mapper;
 
+        protected ISpecialismResultStrategyFactory SpecialismResultStrategyFactory;
         protected IOverallGradeStrategyFactory OverallGradeStrategyFactory;
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
@@ -94,13 +96,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 OverallResultCalculationRepository = new OverallResultCalculationRepository(DbContext);
 
                 var overallGradeLookupRepository = new GenericRepository<OverallGradeLookup>(OverallGradeLookupLogger, DbContext);
+                SpecialismResultStrategyFactory = new SpecialismResultStrategyFactory();
                 OverallGradeStrategyFactory = new OverallGradeStrategyFactory(overallGradeLookupRepository);
 
                 var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(OverallResultCalculationMapper).Assembly));
                 Mapper = new Mapper(mapperConfig);
 
                 // Create Service class to test. 
-                OverallResultCalculationService = new OverallResultCalculationService(ResultsAndCertificationConfiguration, TlLookupRepository, OverallResultCalculationRepository, AssessmentSeriesRepository, OverallResultRepository, OverallGradeStrategyFactory, Mapper);
+                OverallResultCalculationService = new OverallResultCalculationService(ResultsAndCertificationConfiguration, TlLookupRepository, OverallResultCalculationRepository, AssessmentSeriesRepository, OverallResultRepository, SpecialismResultStrategyFactory, OverallGradeStrategyFactory, Mapper);
             }
         }
 

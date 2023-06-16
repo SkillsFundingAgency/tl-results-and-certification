@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
@@ -26,6 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IOverallResultCalculationRepository _overallGradeCalculationRepository;
         private readonly IRepository<AssessmentSeries> _assessmentSeriesRepository;
         private readonly IRepository<OverallResult> _overallResultRepository;
+        private readonly ISpecialismResultStrategyFactory _specialismResultStrategyFactory;
         private readonly IOverallGradeStrategyFactory _overallGradeStrategyFactory;
         private readonly IMapper _mapper;
 
@@ -35,6 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             IOverallResultCalculationRepository overallGradeCalculationRepository,
             IRepository<AssessmentSeries> assessmentSeriesRepository,
             IRepository<OverallResult> overallResultRepository,
+            ISpecialismResultStrategyFactory specialismResultStrategyFactory,
             IOverallGradeStrategyFactory overallGradeStrategyFactory,
             IMapper mapper)
         {
@@ -43,6 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _overallGradeCalculationRepository = overallGradeCalculationRepository;
             _assessmentSeriesRepository = assessmentSeriesRepository;
             _overallResultRepository = overallResultRepository;
+            _specialismResultStrategyFactory = specialismResultStrategyFactory;
             _overallGradeStrategyFactory = overallGradeStrategyFactory;
             _mapper = mapper;
         }
@@ -216,34 +220,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return pathwayHigherResult;
         }
 
-        public TqSpecialismResult GetHighestSpecialismResult(TqRegistrationSpecialism specialism)
+        public TqSpecialismResult GetSpecialismsResult(ICollection<TqRegistrationSpecialism> specialisms)
         {
-            if (specialism == null || !specialism.TqSpecialismAssessments.Any())
-                return null;
-
-            // Get Q-Pending grade if they are any across the results
-            var qPendingGrade = specialism.TqSpecialismAssessments.SelectMany(x => x.TqSpecialismResults).FirstOrDefault(x => x.TlLookup.Code.Equals(Constants.SpecialismComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase));
-
-            // If there is Q-Pending grade then use that if not get the higher result
-            var specialismHigherResult = qPendingGrade ?? specialism.TqSpecialismAssessments.SelectMany(x => x.TqSpecialismResults).OrderBy(x => x.TlLookup.SortOrder).FirstOrDefault();
-
-            return specialismHigherResult;
-        }
-
-        public List<TqSpecialismResult> GetHighestSpecialismResult(TqRegistrationPathway learnerPathway)
-        {
-            var specialismResults = new List<TqSpecialismResult>();
-            foreach (var specialism in learnerPathway.TqRegistrationSpecialisms.Where(specialism => specialism.TqSpecialismAssessments.Any()))
-            {
-                // Get Q-Pending grade if they are any across the results
-                var qPendingGrade = specialism.TqSpecialismAssessments.SelectMany(x => x.TqSpecialismResults).FirstOrDefault(x => x.TlLookup.Code.Equals(Constants.SpecialismComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase));
-
-                // If there is Q-Pending grade then use that if not get the higher result
-                var specialismHigherResult = qPendingGrade ?? specialism.TqSpecialismAssessments.SelectMany(x => x.TqSpecialismResults).OrderBy(x => x.TlLookup.SortOrder).FirstOrDefault();
-                specialismResults.Add(specialismHigherResult);
-            }
-
-            return specialismResults;
+            ISpecialismResultStrategy specialismResultStrategy = _specialismResultStrategyFactory.GetSpecialismResultStrategy(specialisms);
+            return specialismResultStrategy.GetResult(specialisms);
         }
 
         public async Task<string> GetOverAllGrade(List<TlLookup> tlLookup, int tlPathwayId, int? pathwayGradeId, int? speciailsmGradeId, IndustryPlacementStatus ipStatus, int academicYear)
@@ -258,10 +238,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             foreach (var pathway in learnerPathways)
             {
-                var specialism = pathway.TqRegistrationSpecialisms.FirstOrDefault();
+                var specialisms = pathway.TqRegistrationSpecialisms;
 
                 var pathwayResult = GetHighestPathwayResult(pathway);
-                var specialismResult = GetHighestSpecialismResult(specialism); // as we are not dealing with couplet specialisms as of now
+                var specialismResult = GetSpecialismsResult(specialisms);
                 var ipStatus = GetIndustryPlacementStatus(pathway);
 
                 var overallGrade = await GetOverAllGrade(tlLookup, pathway.TqProvider.TqAwardingOrganisation.TlPathwayId, pathwayResult?.TlLookupId, specialismResult?.TlLookupId, ipStatus, pathway.AcademicYear);
@@ -270,24 +250,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     throw new ApplicationException("OverallGrade cannot be null");
 
                 var pathwayResultPrsStatus = HasAnyPathwayResultPrsStatusOutstanding(pathway);
-                var specialismResultPrsStatus = HasAnySpecialismResultPrsStatusOutstanding(specialism);
+                var specialismResultPrsStatus = HasAnySpecialismResultPrsStatusOutstanding(specialisms);
                 var calculationStatus = GetCalculationStatus(tlLookup, overallGrade, pathwayResultPrsStatus, specialismResultPrsStatus);
                 var certificateType = GetPrintCertificateType(tlLookup, overallGrade);
                 var certificateStatus = GetCertificateStatus(calculationStatus);
 
                 List<OverallSpecialismDetail> specialismDetails = null;
 
-                if (specialism != null)
+                if (specialisms != null && specialisms.Any())
                 {
-                    specialismDetails = new List<OverallSpecialismDetail>
-                                        {
-                                            new OverallSpecialismDetail
-                                            {
-                                                SpecialismName = specialism.TlSpecialism.Name,
-                                                SpecialismLarId = specialism.TlSpecialism.LarId,
-                                                SpecialismResult = specialismResult?.TlLookup?.Value
-                                            }
-                                        };
+                    specialismDetails = specialisms.Select(s => new OverallSpecialismDetail
+                    {
+                        SpecialismName = s.TlSpecialism.Name,
+                        SpecialismLarId = s.TlSpecialism.LarId,
+                        SpecialismResult = specialismResult?.TlLookup?.Value
+                    }).ToList();
                 }
 
                 var overallResultDetails = new OverallResultDetail
@@ -405,16 +382,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
         }
 
-        public PrsStatus? HasAnySpecialismResultPrsStatusOutstanding(TqRegistrationSpecialism specialism)
+        public PrsStatus? HasAnySpecialismResultPrsStatusOutstanding(ICollection<TqRegistrationSpecialism> specialisms)
         {
-            if (specialism == null || !specialism.TqSpecialismAssessments.Any())
+            if (specialisms == null || !specialisms.Any() || specialisms.All(s => !s.TqSpecialismAssessments.Any()))
                 return null;
 
-            if (specialism.TqSpecialismAssessments.SelectMany(x => x.TqSpecialismResults).Any(x => x.PrsStatus == PrsStatus.UnderReview))
+            IEnumerable<TqSpecialismResult> results = specialisms.SelectMany(s => s.TqSpecialismAssessments).SelectMany(sa => sa.TqSpecialismResults);
+
+            if (results.Any(x => x.PrsStatus == PrsStatus.UnderReview))
             {
                 return PrsStatus.UnderReview;
             }
-            else if (specialism.TqSpecialismAssessments.SelectMany(x => x.TqSpecialismResults).Any(x => x.PrsStatus == PrsStatus.BeingAppealed))
+            else if (results.Any(x => x.PrsStatus == PrsStatus.BeingAppealed))
             {
                 return PrsStatus.BeingAppealed;
             }
