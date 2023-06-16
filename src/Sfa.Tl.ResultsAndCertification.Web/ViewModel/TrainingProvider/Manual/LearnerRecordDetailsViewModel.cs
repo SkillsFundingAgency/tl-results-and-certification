@@ -1,4 +1,6 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+﻿using Microsoft.Identity.Client;
+using Newtonsoft.Json.Linq;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
@@ -64,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public DateTime? LastDocumentRequestedDate { get; set; }
         public string LastDocumentRequestedDateDisplayValue { get { return LastDocumentRequestedDate.HasValue ? LastDocumentRequestedDate.Value.ToFormat() : string.Empty; } }
         public bool IsDocumentRerequestEligible { get; set; }
-        public bool IsReprint { get; set; }
+        public bool IsReprint { get; set; }      
 
         #region Summary Header
 
@@ -185,14 +187,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             Value = OverallResultDetails?.PathwayResult
         };
 
-        public SummaryItemModel SummarySpecialismResult => new SummaryItemModel
-        {
-            Id = "specialismResult",
-            Title = HasSpecialismInfo ? OverallResultDetails.SpecialismDetails.FirstOrDefault().SpecialismName : null,
-            Value = HasSpecialismInfo ? OverallResultDetails.SpecialismDetails.FirstOrDefault().SpecialismResult : null
-        };
+        public List<SummaryItemModel> SummarySpecialismResult => GetSummaryItemModels();
+        
 
-        public SummaryItemModel SummaryOverallResult => new SummaryItemModel
+    public SummaryItemModel SummaryOverallResult => new SummaryItemModel
         {
             Id = "overallResult",
             Title = LearnerRecordDetailsContent.Title_OverallResult_Text,
@@ -219,6 +217,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
                 _ => SubjectStatusContent.Not_Yet_Recevied_Display_Text,
             };
         }
+
+
+        private List<SummaryItemModel> GetSummaryItemModels()
+        {
+            var specialisms = new List<SummaryItemModel>();
+            if(OverallResultDetails is null || OverallResultDetails.SpecialismDetails is null) return specialisms;
+            foreach (var summary in OverallResultDetails.SpecialismDetails)
+            {
+                specialisms.Add(new SummaryItemModel()
+                {
+                    Id = "specialismResult",
+                    Title = HasSpecialismInfo ? summary.SpecialismName : null,
+                    Value = HasSpecialismInfo ? summary.SpecialismResult : null
+                });
+            }
+            return specialisms;
+        }
+
 
         private string GetIndustryPlacementDisplayText => IndustryPlacementStatus switch
         {
