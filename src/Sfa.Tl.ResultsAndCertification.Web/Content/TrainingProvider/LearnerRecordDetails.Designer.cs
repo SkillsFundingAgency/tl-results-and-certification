@@ -259,7 +259,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Occupational specialism.
+        ///   Looks up a localized string similar to Occupational specialism(s).
         /// </summary>
         public static string Section_Heading_OccupationalSpecialism {
             get {
