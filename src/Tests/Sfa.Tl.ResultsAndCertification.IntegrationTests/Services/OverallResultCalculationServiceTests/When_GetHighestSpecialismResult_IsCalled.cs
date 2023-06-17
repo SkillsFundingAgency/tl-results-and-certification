@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<TqRegistrationProfile> _registrations;
-        private TqSpecialismResult _actualResult;
+        private TlLookup _actualResult;
 
         public override void Given()
         {
@@ -73,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         public async Task WhenAsync(ICollection<TqRegistrationSpecialism> specialism)
         {
             await Task.CompletedTask;
-            _actualResult = OverallResultCalculationService.GetSpecialismsResult(specialism);
+            _actualResult = await OverallResultCalculationService.GetSpecialismsResult(TlLookup, specialism);
         }
 
         [Theory]
@@ -91,7 +91,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 return;
             }
 
-            _actualResult.TlLookup.Value.Should().Be(expectedHighestGrade);
+            _actualResult.Value.Should().Be(expectedHighestGrade);
         }
 
         public static IEnumerable<object[]> Data

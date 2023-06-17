@@ -1,10 +1,11 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 {
     public interface ISpecialismResultStrategyFactory
     {
-        ISpecialismResultStrategy GetSpecialismResultStrategy(ICollection<TqRegistrationSpecialism> specialisms);
+        Task<ISpecialismResultStrategy> GetSpecialismResultStrategyAsync(IEnumerable<TlLookup> tlLookup, IEnumerable<TqRegistrationSpecialism> specialisms);
     }
 }

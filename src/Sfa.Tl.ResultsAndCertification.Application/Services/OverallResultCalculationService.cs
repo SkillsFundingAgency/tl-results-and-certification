@@ -220,9 +220,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return pathwayHigherResult;
         }
 
-        public TqSpecialismResult GetSpecialismsResult(ICollection<TqRegistrationSpecialism> specialisms)
+        public async Task<TlLookup> GetSpecialismsResult(IList<TlLookup> tlLookup, ICollection<TqRegistrationSpecialism> specialisms)
         {
-            ISpecialismResultStrategy specialismResultStrategy = _specialismResultStrategyFactory.GetSpecialismResultStrategy(specialisms);
+            ISpecialismResultStrategy specialismResultStrategy = await _specialismResultStrategyFactory.GetSpecialismResultStrategyAsync(tlLookup, specialisms);
             return specialismResultStrategy.GetResult(specialisms);
         }
 
@@ -241,10 +241,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var specialisms = pathway.TqRegistrationSpecialisms;
 
                 var pathwayResult = GetHighestPathwayResult(pathway);
-                var specialismResult = GetSpecialismsResult(specialisms);
+                var specialismResult = await GetSpecialismsResult(tlLookup, specialisms);
                 var ipStatus = GetIndustryPlacementStatus(pathway);
 
-                var overallGrade = await GetOverAllGrade(tlLookup, pathway.TqProvider.TqAwardingOrganisation.TlPathwayId, pathwayResult?.TlLookupId, specialismResult?.TlLookupId, ipStatus, pathway.AcademicYear);
+                var overallGrade = await GetOverAllGrade(tlLookup, pathway.TqProvider.TqAwardingOrganisation.TlPathwayId, pathwayResult?.TlLookupId, specialismResult?.Id, ipStatus, pathway.AcademicYear);
 
                 if (string.IsNullOrWhiteSpace(overallGrade))
                     throw new ApplicationException("OverallGrade cannot be null");
@@ -263,7 +263,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         SpecialismName = s.TlSpecialism.Name,
                         SpecialismLarId = s.TlSpecialism.LarId,
-                        SpecialismResult = specialismResult?.TlLookup?.Value
+                        SpecialismResult = specialismResult?.Value
                     }).ToList();
                 }
 

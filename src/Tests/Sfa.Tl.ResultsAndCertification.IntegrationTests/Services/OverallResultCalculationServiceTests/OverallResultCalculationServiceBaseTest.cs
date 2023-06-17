@@ -46,6 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
 
         protected IRepository<TlLookup> TlLookupRepository;
         protected ILogger<GenericRepository<TlLookup>> TlLookupRepositoryLogger;
+        protected ILogger<GenericRepository<DualSpecialismOverallGradeLookup>> DualSpecialismOverallGradeLookupLogger;
         protected ILogger<GenericRepository<OverallGradeLookup>> OverallGradeLookupLogger;
         protected IRepository<AssessmentSeries> AssessmentSeriesRepository;
         protected ILogger<GenericRepository<AssessmentSeries>> AssessmentSeriesLogger;
@@ -88,15 +89,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 };
                 TlLookupRepositoryLogger = new Logger<GenericRepository<TlLookup>>(new NullLoggerFactory());
                 TlLookupRepository = new GenericRepository<TlLookup>(TlLookupRepositoryLogger, DbContext);
-                OverallGradeLookupLogger = new Logger<GenericRepository<OverallGradeLookup>>(new NullLoggerFactory());
                 AssessmentSeriesLogger = new Logger<GenericRepository<AssessmentSeries>>(new NullLoggerFactory());
                 AssessmentSeriesRepository = new GenericRepository<AssessmentSeries>(AssessmentSeriesLogger, DbContext);
                 OverallResultLogger = new Logger<GenericRepository<OverallResult>>(new NullLoggerFactory());
                 OverallResultRepository = new GenericRepository<OverallResult>(OverallResultLogger, DbContext);
                 OverallResultCalculationRepository = new OverallResultCalculationRepository(DbContext);
 
+                DualSpecialismOverallGradeLookupLogger = new Logger<GenericRepository<DualSpecialismOverallGradeLookup>>(new NullLoggerFactory());
+                var dualSpecialismOverallGradeLookupRepository = new GenericRepository<DualSpecialismOverallGradeLookup>(DualSpecialismOverallGradeLookupLogger, DbContext);
+                SpecialismResultStrategyFactory = new SpecialismResultStrategyFactory(dualSpecialismOverallGradeLookupRepository);
+
+                OverallGradeLookupLogger = new Logger<GenericRepository<OverallGradeLookup>>(new NullLoggerFactory());
                 var overallGradeLookupRepository = new GenericRepository<OverallGradeLookup>(OverallGradeLookupLogger, DbContext);
-                SpecialismResultStrategyFactory = new SpecialismResultStrategyFactory();
                 OverallGradeStrategyFactory = new OverallGradeStrategyFactory(overallGradeLookupRepository);
 
                 var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(OverallResultCalculationMapper).Assembly));
