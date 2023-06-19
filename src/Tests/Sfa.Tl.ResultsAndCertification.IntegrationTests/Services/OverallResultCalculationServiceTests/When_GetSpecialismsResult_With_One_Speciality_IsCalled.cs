@@ -2,7 +2,6 @@
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResultCalculationServiceTests
 {
-    public class When_GetHighestSpecialismResult_IsCalled : OverallResultCalculationServiceBaseTest
+    public class When_GetSpecialismsResult_With_One_Speciality_IsCalled : OverallResultCalculationServiceBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<TqRegistrationProfile> _registrations;
@@ -53,15 +52,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             SetAssessmentResult(1111111112, $"Autumn {currentAcademicYear}", "B", "Pass");
             SetAssessmentResult(1111111116, $"Autumn {currentAcademicYear}", "Q - pending result", "Q - pending result");
 
-            ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
-            {
-                OverallResultBatchSettings = new OverallResultBatchSettings
-                {
-                    BatchSize = 10,
-                    NoOfAcademicYearsToProcess = 4
-                }
-            };
-
             CreateService();
         }
 
@@ -70,10 +60,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             return Task.CompletedTask;
         }
 
-        public async Task WhenAsync(ICollection<TqRegistrationSpecialism> specialism)
+        public async Task WhenAsync(ICollection<TqRegistrationSpecialism> specialisms)
         {
             await Task.CompletedTask;
-            _actualResult = await OverallResultCalculationService.GetSpecialismsResult(TlLookup, specialism);
+            _actualResult = await OverallResultCalculationService.GetSpecialismsResult(TlLookup, specialisms);
         }
 
         [Theory]

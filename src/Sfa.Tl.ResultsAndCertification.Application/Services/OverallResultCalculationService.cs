@@ -222,7 +222,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<TlLookup> GetSpecialismsResult(IList<TlLookup> tlLookup, ICollection<TqRegistrationSpecialism> specialisms)
         {
-            ISpecialismResultStrategy specialismResultStrategy = await _specialismResultStrategyFactory.GetSpecialismResultStrategyAsync(tlLookup, specialisms);
+            ISpecialismResultStrategy specialismResultStrategy = await _specialismResultStrategyFactory.GetSpecialismResultStrategyAsync(tlLookup, specialisms.Count);
             return specialismResultStrategy.GetResult(specialisms);
         }
 

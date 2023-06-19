@@ -28,14 +28,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Strategies
             TqSpecialismResult firstSpecialismResult = GetHighestResult(specialisms.First());
             TqSpecialismResult secondSpecialismResult = GetHighestResult(specialisms.Last());
 
-            if (IsSpecialismGradeQPending(firstSpecialismResult) || IsSpecialismGradeQPending(secondSpecialismResult))
-            {
-                return GetSpecialismTLookupResult(Constants.SpecialismComponentGradeQpendingResultCode);
-            }
-
             if (IsSpecialismGradeXNoResult(firstSpecialismResult) || IsSpecialismGradeXNoResult(secondSpecialismResult))
             {
                 return GetSpecialismTLookupResult(Constants.SpecialismComponentGradeXNoResultCode);
+            }
+
+            if (IsSpecialismGradeQPending(firstSpecialismResult) || IsSpecialismGradeQPending(secondSpecialismResult))
+            {
+                return GetSpecialismTLookupResult(Constants.SpecialismComponentGradeQpendingResultCode);
             }
 
             if (firstSpecialismResult == null || secondSpecialismResult == null)
@@ -54,17 +54,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Strategies
 
         private bool IsSpecialismGradeQPending(TqSpecialismResult specialismResult)
         {
-            return IsComponentGradeWithCode(specialismResult.TlLookupId, Constants.SpecialismComponentGradeQpendingResultCode);
+            return IsComponentGradeWithCode(specialismResult?.TlLookupId, Constants.SpecialismComponentGradeQpendingResultCode);
         }
 
         private bool IsSpecialismGradeXNoResult(TqSpecialismResult specialismResult)
         {
-            return IsComponentGradeWithCode(specialismResult.TlLookupId, Constants.SpecialismComponentGradeXNoResultCode);
+            return IsComponentGradeWithCode(specialismResult?.TlLookupId, Constants.SpecialismComponentGradeXNoResultCode);
         }
 
         private bool IsSpecialismGradeUnclassified(TqSpecialismResult specialismResult)
         {
-            return IsComponentGradeWithCode(specialismResult.TlLookupId, Constants.SpecialismComponentGradeUnclassifiedCode);
+            return IsComponentGradeWithCode(specialismResult?.TlLookupId, Constants.SpecialismComponentGradeUnclassifiedCode);
         }
 
         private bool IsComponentGradeWithCode(int? gradeId, string gradeCode)

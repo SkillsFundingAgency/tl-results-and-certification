@@ -20,15 +20,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Strategies
             _dualSpecialismOverallGradeLookupRepository = dualSpecialismOverallGradeLookupRepository;
         }
 
-        public Task<ISpecialismResultStrategy> GetSpecialismResultStrategyAsync(IEnumerable<TlLookup> tlLookup, IEnumerable<TqRegistrationSpecialism> specialisms)
+        public Task<ISpecialismResultStrategy> GetSpecialismResultStrategyAsync(IEnumerable<TlLookup> tlLookup, int numberOfSpecialisms)
         {
-            if (specialisms == null)
-                throw new ArgumentNullException(nameof(specialisms), "The specialism collection cannot be null.");
+            if (tlLookup == null)
+                throw new ArgumentNullException(nameof(tlLookup), "The TlLookup cannot be null.");
 
-            int numberOfSpecialisms = specialisms.Count();
+            if (!tlLookup.Any())
+                throw new ArgumentException("The TlLookup cannot be empty.", nameof(tlLookup));
 
-            if (numberOfSpecialisms < 1 && numberOfSpecialisms > 2)
-                throw new ArgumentException("The specialism collection must cointain one or two specialisms", nameof(specialisms));
+          if (numberOfSpecialisms < 1 || numberOfSpecialisms > 2)
+                throw new ArgumentException("The number of specialisms must be one or two.", nameof(numberOfSpecialisms));
 
             return GetSpecialismResultStrategy(tlLookup, numberOfSpecialisms);
         }
@@ -64,7 +65,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Strategies
                      o => o.SecondTlLookupSpecialismGrade,
                      o => o.TlLookupOverallSpecialismGrade
                  }).ToListAsync();
-
         }
     }
 }

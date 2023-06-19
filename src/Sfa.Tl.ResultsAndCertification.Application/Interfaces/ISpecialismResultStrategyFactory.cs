@@ -6,6 +6,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 {
     public interface ISpecialismResultStrategyFactory
     {
-        Task<ISpecialismResultStrategy> GetSpecialismResultStrategyAsync(IEnumerable<TlLookup> tlLookup, IEnumerable<TqRegistrationSpecialism> specialisms);
+        Task<ISpecialismResultStrategy> GetSpecialismResultStrategyAsync(IEnumerable<TlLookup> tlLookup, int numberOfSpecialisms);
     }
 }
