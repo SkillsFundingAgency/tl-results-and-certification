@@ -2,7 +2,9 @@
 using FluentAssertions.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement.BulkProcess;
@@ -15,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
     public class When_TransformIndustryPlacement_IsCalled : IndustryPlacementServiceBaseTest
     {
         private List<IndustryPlacementRecordResponse> _industryPlacementData;
+        protected IBlobStorageService BlobStorageService;
         private string _performedBy;
 
         private IList<IndustryPlacement> _actualResult;
@@ -37,7 +40,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
 
             IndustryPlacementServiceLogger = new Logger<IndustryPlacementService>(new NullLoggerFactory());
 
-            IndustryPlacementService = new IndustryPlacementService(IpLookupRepository, IndustryPlacementRepository, RegistrationPathwayRepository, Mapper, IndustryPlacementServiceLogger);
+            BlobStorageService = Substitute.For<IBlobStorageService>();
+
+            IndustryPlacementService = new IndustryPlacementService(IpLookupRepository, IndustryPlacementRepository, RegistrationPathwayRepository, BlobStorageService, Mapper, IndustryPlacementServiceLogger);
 
             _performedBy = "Test user";
             _industryPlacementData = new List<IndustryPlacementRecordResponse>

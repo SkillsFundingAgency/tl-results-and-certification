@@ -7,11 +7,15 @@ using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Models.Functions;
+using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement.BulkProcess;
 using System;
 using System.Collections.Generic;
@@ -26,6 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IRepository<IpLookup> _ipLookupRepository;
         private readonly IRepository<IndustryPlacement> _industryPlacementRepository;
         private readonly IRepository<TqRegistrationPathway> _tqRegistrationPathwayRepository;
+        private readonly IBlobStorageService _blobStorageService;
 
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
@@ -34,11 +39,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             IRepository<IpLookup> ipLookupRepository,
             IRepository<IndustryPlacement> industryPlacementRepository,
             IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
+            IBlobStorageService blobStorageService,
             IMapper mapper, ILogger<IndustryPlacementService> logger)
         {
             _ipLookupRepository = ipLookupRepository;
             _industryPlacementRepository = industryPlacementRepository;
             _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
+            _blobStorageService = blobStorageService;
             _mapper = mapper;
             _logger = logger;
         }
@@ -159,7 +166,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     var existingIndustryPlacement = existingIndustryPlacementsFromDb.FirstOrDefault(existingIndustryPlacement => existingIndustryPlacement.TqRegistrationPathwayId == amendedIndustryPlacement.TqRegistrationPathwayId);
                     if (existingIndustryPlacement != null)
                     {
-                        var hasIndustryPlacementChanged = amendedIndustryPlacement.Status != existingIndustryPlacement.Status || 
+                        var hasIndustryPlacementChanged = amendedIndustryPlacement.Status != existingIndustryPlacement.Status ||
                                                           !amendedIndustryPlacement.Details.Equals(existingIndustryPlacement.Details, StringComparison.InvariantCultureIgnoreCase);
                         if (hasIndustryPlacementChanged)
                         {
@@ -314,13 +321,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if ((request.IndustryPlacementStatus == IndustryPlacementStatus.Completed ||
                 request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted ||
-                request.IndustryPlacementStatus == IndustryPlacementStatus.WillNotComplete) && 
+                request.IndustryPlacementStatus == IndustryPlacementStatus.WillNotComplete) &&
                 request.IndustryPlacementDetails != null)
                 return false;
 
             if ((request.IndustryPlacementStatus == IndustryPlacementStatus.Completed ||
                 request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted ||
-                request.IndustryPlacementStatus == IndustryPlacementStatus.WillNotComplete) && 
+                request.IndustryPlacementStatus == IndustryPlacementStatus.WillNotComplete) &&
                 request.IndustryPlacementDetails == null)
                 return true;
 
@@ -354,6 +361,45 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return await SpecialConsiderationReasonsAsync();
 
             return null;
+        }
+
+        public async Task<FunctionResponse> ProcessIndustryPlacementExtractionsAsync()
+        {
+            var industryPlacements = await _industryPlacementRepository.GetManyAsync(g => g.TqRegistrationPathway.AcademicYear == 2021).ToListAsync();
+
+            //            var test = await _industryPlacementRepository.get();
+            if (industryPlacements == null || !industryPlacements.Any())
+            {
+                var message = $"No entries are found. Method: {nameof(ProcessIndustryPlacementExtractionsAsync)}()";
+                _logger.LogWarning(LogEvent.NoDataFound, message);
+                return new FunctionResponse { IsSuccess = true, Message = message };
+            }
+
+            //var test = Extensions.s.cs
+
+            //var byteData = await CsvExtensions.WriteFileAsync(industryPlacements, delimeter: Constants.PipeSeperator, writeHeader: false, typeof(CsvMapper));
+            var byteData = await CsvExtensions.WriteFileAsync(industryPlacements, classMapType: typeof(ExtractIndustryPlacementExportMap));
+
+
+            if (byteData.Length <= 0)
+            {
+                var message = $"No byte data available to send Ucas. Method: Csv WriteFileAsync()";
+                throw new ApplicationException(message);
+            }
+
+            string result = System.Text.Encoding.UTF8.GetString(byteData);
+
+            var blobUniqueReference = Guid.NewGuid();
+            await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
+            {
+                ContainerName = DocumentType.IndustryPlacements.ToString(),
+                SourceFilePath = "industryplacements/extracts",
+                BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
+                FileData = byteData,
+                UserName = Constants.FunctionPerformedBy
+            });
+
+            return new FunctionResponse();
         }
 
         private async Task<IList<IpLookupData>> SpecialConsiderationReasonsAsync()
