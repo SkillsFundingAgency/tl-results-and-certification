@@ -30,6 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IRepository<IpLookup> _ipLookupRepository;
         private readonly IRepository<IndustryPlacement> _industryPlacementRepository;
         private readonly IRepository<TqRegistrationPathway> _tqRegistrationPathwayRepository;
+        //private readonly IIndustryPlacementRepository _ucasRepository;
+        private readonly ICommonRepository _commonRepository;
         private readonly IBlobStorageService _blobStorageService;
 
         private readonly IMapper _mapper;
@@ -39,12 +41,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             IRepository<IpLookup> ipLookupRepository,
             IRepository<IndustryPlacement> industryPlacementRepository,
             IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
-            IBlobStorageService blobStorageService,
+            ICommonRepository commonRepository,
+        IBlobStorageService blobStorageService,
             IMapper mapper, ILogger<IndustryPlacementService> logger)
         {
             _ipLookupRepository = ipLookupRepository;
             _industryPlacementRepository = industryPlacementRepository;
             _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
+            _commonRepository = commonRepository;
             _blobStorageService = blobStorageService;
             _mapper = mapper;
             _logger = logger;
@@ -365,7 +369,25 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<FunctionResponse> ProcessIndustryPlacementExtractionsAsync()
         {
-            var industryPlacements = await _industryPlacementRepository.GetManyAsync(g => g.TqRegistrationPathway.AcademicYear == 2021).ToListAsync();
+            // var industryPlacements = await _industryPlacementRepository.GetManyAsync(g => g.TqRegistrationPathway.AcademicYear == 2021).ToListAsync();
+
+            var currentAcademicYears = await _commonRepository.GetCurrentAcademicYearsAsync();
+            if (currentAcademicYears == null || !currentAcademicYears.Any())
+            {
+                throw new ApplicationException($"Current Academic years are not found. Method: {nameof(ProcessIndustryPlacementExtractionsAsync)}");
+            }
+
+            var industryPlacements = _industryPlacementRepository.GetManyAsync()
+                        .Include(x => x.TqRegistrationPathway)
+                            .ThenInclude(x => x.TqRegistrationProfile)
+                        .Include(x => x.TqRegistrationPathway)
+                            .ThenInclude(x => x.TqProvider)
+                                .ThenInclude(x => x.TqAwardingOrganisation)
+                                    .ThenInclude(x => x.TlAwardingOrganisaton)
+                        .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
+                                    x.TqRegistrationPathway.EndDate == null &&
+                                    x.TqRegistrationPathway.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1)
+                        .ToList();
 
             //            var test = await _industryPlacementRepository.get();
             if (industryPlacements == null || !industryPlacements.Any())
