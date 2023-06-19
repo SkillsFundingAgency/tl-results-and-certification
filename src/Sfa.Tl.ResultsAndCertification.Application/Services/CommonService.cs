@@ -136,19 +136,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var isValid = false;
 
-            var uCasTriggerDates = new List<DateTime>() {
-                new DateTime(2023,06,17),
-                new DateTime(2023,07,31)
+            DateTime startDate = new(2023, 06, 17),
+                     endDate = new(2023, 07, 31);
 
-                //new DateTime(2023,05,17),
-                //new DateTime(2023,06,17)
-            };
+            var ipExtractTriggerDates = Enumerable.Range(0, (endDate - startDate).Days + 1).Select(d => startDate.AddDays(d));
 
-            var currentDate = new DateTime(CurrentDate.Year, CurrentDate.Month, CurrentDate.Day);
-
-            var list = uCasTriggerDates.Where(a => currentDate <= a && currentDate >= a);
-
-            if (uCasTriggerDates.Any(a => currentDate <= a || currentDate >= a))
+            if (ipExtractTriggerDates.Contains(new DateTime(CurrentDate.Year, CurrentDate.Month, CurrentDate.Day)))
             {
                 isValid = true;
             }
