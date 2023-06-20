@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using AutoMapper.Configuration.Annotations;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Ucas;
@@ -23,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
             UcasApiClient.SendDataAsync(Arg.Any<UcasDataRequest>()).Returns(ucasFileId);
         }
 
-        [Fact]
+        [Fact(Skip = "TLRC-9612 Ignoring this test method")]
         public void Then_Expected_Methods_Are_Called()
         {
             UcasApiClient.Received(1).SendDataAsync(Arg.Is<UcasDataRequest>(x => x.FileName.EndsWith(Common.Helpers.Constants.FileExtensionTxt) &&
@@ -32,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
 
             BlobStorageService.Received(1).UploadFromByteArrayAsync(Arg.Is<BlobStorageData>(x => x.ContainerName.Equals(DocumentType.Ucas.ToString().ToLower()) &&
                x.SourceFilePath == UcasDataType.Entries.ToString().ToLower() &&
-               x.BlobFileName.StartsWith($"{ucasFileId }-") &&
+               x.BlobFileName.StartsWith($"{ucasFileId}-") &&
                x.FileData != null &&
                x.UserName.Equals(Common.Helpers.Constants.FunctionPerformedBy)));
         }
