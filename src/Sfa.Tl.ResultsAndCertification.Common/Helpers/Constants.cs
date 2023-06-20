@@ -167,6 +167,7 @@
         public const string UcasTransferAmendments = "UcasTransferAmendments";
         public const string OverallResultCalculation = "OverallResultCalculation";
         public const string IndustryPlacementExtract = "IndustryPlacementExtract";
+        public const string IndustryPlacementExtractsFolder = "extracts";
 
         // File Extensions
         public const string FileExtensionTxt = "txt";

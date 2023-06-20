@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -370,14 +371,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<FunctionResponse> ProcessIndustryPlacementExtractionsAsync()
         {
-            // var industryPlacements = await _industryPlacementRepository.GetManyAsync(g => g.TqRegistrationPathway.AcademicYear == 2021).ToListAsync();
-
             var currentAcademicYears = await _commonRepository.GetCurrentAcademicYearsAsync();
             if (currentAcademicYears == null || !currentAcademicYears.Any())
             {
                 throw new ApplicationException($"Current Academic years are not found. Method: {nameof(ProcessIndustryPlacementExtractionsAsync)}");
             }
 
+            // 1. Get data
             var industryPlacements = await _industryPlacementRepository.GetManyAsync()
                         .Include(x => x.TqRegistrationPathway)
                             .ThenInclude(x => x.TqRegistrationProfile)
@@ -400,13 +400,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return new FunctionResponse { IsSuccess = true, Message = message };
             }
 
-            //var test = Extensions.s.cs
-
-            //var byteData = await CsvExtensions.WriteFileAsync(industryPlacements, delimeter: Constants.PipeSeperator, writeHeader: false, typeof(CsvMapper));
-            //var byteData = await CsvExtensions.WriteFileAsync(industryPlacements, classMapType: typeof(ExtractIndustryPlacementExportMap));
-
+            // 2. Write to the file (in byte format)
             var byteData = await CsvExtensions.WriteFileAsync(industryPlacementResults, classMapType: typeof(ExtractIndustryPlacementExportMap));
-
 
             if (byteData.Length <= 0)
             {
@@ -415,28 +410,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
 
             string result = System.Text.Encoding.UTF8.GetString(byteData);
-
             var blobUniqueReference = Guid.NewGuid();
 
-            try
+            // 3. Write response to blob
+            await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
             {
+                ContainerName = DocumentType.IndustryPlacements.ToString(),
+                SourceFilePath = Constants.IndustryPlacementExtractsFolder,
+                BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
+                FileData = byteData,
+                UserName = Constants.FunctionPerformedBy
+            });
 
-
-                await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
-                {
-                    ContainerName = DocumentType.IndustryPlacements.ToString(),
-                    SourceFilePath = "industryplacements/extracts",
-                    BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
-                    FileData = byteData,
-                    UserName = Constants.FunctionPerformedBy
-                });
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-
-            return new FunctionResponse();
+            // 4.Update response
+            return new FunctionResponse { IsSuccess = true };
         }
 
         private async Task<IList<IpLookupData>> SpecialConsiderationReasonsAsync()
