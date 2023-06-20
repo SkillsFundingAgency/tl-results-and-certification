@@ -7,6 +7,9 @@ namespace Sfa.Tl.ResultsAndCertification.Models.DataExport
         [DisplayName(SpecialismResultsExportHeader.Uln)]
         public long Uln { get; set; }
 
+        [DisplayName(SpecialismResultsExportHeader.AcademicYear)]
+        public int AcademicYear { get; set; }
+
         [DisplayName(SpecialismResultsExportHeader.SpecialismCode)]
         public string SpecialismCode { get; set; }
 
