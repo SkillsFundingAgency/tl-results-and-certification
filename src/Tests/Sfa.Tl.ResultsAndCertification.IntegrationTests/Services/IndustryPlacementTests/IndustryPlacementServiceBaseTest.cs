@@ -42,6 +42,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
         protected IMapper Mapper;
         protected IList<IpLookup> IpLookup;
 
+
+        // Actual function instance
+        //protected IndustryPlacementExtract IndustryPlacementExtractFunction;
+
         // Dependencies
         protected ILogger<GenericRepository<IpLookup>> IpLookupRepositoryLogger;
         protected ILogger<GenericRepository<IndustryPlacement>> IndustryPlacementLogger;

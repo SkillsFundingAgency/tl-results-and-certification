@@ -31,7 +31,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IRepository<IpLookup> _ipLookupRepository;
         private readonly IRepository<IndustryPlacement> _industryPlacementRepository;
         private readonly IRepository<TqRegistrationPathway> _tqRegistrationPathwayRepository;
-        //private readonly IIndustryPlacementRepository _ucasRepository;
         private readonly ICommonRepository _commonRepository;
         private readonly IBlobStorageService _blobStorageService;
 
@@ -424,8 +423,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
                 {
-                    ContainerName = DocumentType.IndustryPlacements.ToString(),
-                    SourceFilePath = "industryplacements/extracts",
+                    ContainerName = DocumentType.IndustryPlacements.ToString().ToLower(),
+                    SourceFilePath = "extracts",
                     BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
                     FileData = byteData,
                     UserName = Constants.FunctionPerformedBy
@@ -436,7 +435,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Console.WriteLine(ex.ToString());
             }
 
-            return new FunctionResponse();
+            // 5. Update response
+            return new FunctionResponse { IsSuccess = true };
         }
 
         private async Task<IList<IpLookupData>> SpecialConsiderationReasonsAsync()
