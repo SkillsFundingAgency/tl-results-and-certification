@@ -382,6 +382,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                             .ThenInclude(x => x.TqRegistrationProfile)
                         .Include(x => x.TqRegistrationPathway)
                             .ThenInclude(x => x.TqProvider)
+                                .ThenInclude(x => x.TlProvider)
+                        .Include(x => x.TqRegistrationPathway)
+                            .ThenInclude(x => x.TqProvider)
                                 .ThenInclude(x => x.TqAwardingOrganisation)
                                     .ThenInclude(x => x.TlAwardingOrganisaton)
                         .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
@@ -391,7 +394,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var industryPlacementResults = _mapper.Map<IList<ExtractData>>(industryPlacements);
 
-            //            var test = await _industryPlacementRepository.get();
             if (industryPlacementResults == null || !industryPlacementResults.Any())
             {
                 var message = $"No entries are found. Method: {nameof(ProcessIndustryPlacementExtractionsAsync)}()";
