@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Sfa.Tl.ResultsAndCertification.Functions\Sfa.Tl.ResultsAndCertification.Functions.csproj" />
+    <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.IntegrationTests\Sfa.Tl.ResultsAndCertification.IntegrationTests.csproj" />
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Tests.Common\Sfa.Tl.ResultsAndCertification.Tests.Common.csproj" />
   </ItemGroup>
 
