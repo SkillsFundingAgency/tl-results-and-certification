@@ -118,10 +118,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var isValid = false;
 
             var uCasTriggerDates = new List<DateTime>() {
-                new DateTime(2023,06,12),
-                new DateTime(2023,06,13),
+                new DateTime(2023,06,20),
+                new DateTime(2023,06,21),
+                new DateTime(2023,06,22),
+                new DateTime(2023,06,23),
                 new DateTime(2023,06,26),
-                new DateTime(2023,06,28)                
+                new DateTime(2023,06,28)
             };
 
             if (uCasTriggerDates.Contains(new DateTime(CurrentDate.Year, CurrentDate.Month, CurrentDate.Day)))
