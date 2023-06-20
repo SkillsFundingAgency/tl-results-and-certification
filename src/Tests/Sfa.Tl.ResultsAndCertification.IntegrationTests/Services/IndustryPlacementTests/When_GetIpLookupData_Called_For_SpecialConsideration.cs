@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service;
+using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
@@ -20,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
     public class When_GetIpLookupData_Called_For_SpecialConsideration : IndustryPlacementServiceBaseTest
     {
         private IList<IpLookupData> _actualResult;
+        protected ICommonRepository CommonRepository;
         protected IBlobStorageService BlobStorageService;
 
 
@@ -37,11 +39,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
             RegistrationPathwayRepositoryLogger = new Logger<GenericRepository<Domain.Models.TqRegistrationPathway>>(new NullLoggerFactory());
             RegistrationPathwayRepository = new GenericRepository<Domain.Models.TqRegistrationPathway>(RegistrationPathwayRepositoryLogger, DbContext);
 
+            CommonRepository = new CommonRepository(DbContext);
+
             IndustryPlacementServiceLogger = new Logger<IndustryPlacementService>(new NullLoggerFactory());
 
             BlobStorageService = Substitute.For<IBlobStorageService>();
 
-            IndustryPlacementService = new IndustryPlacementService(IpLookupRepository, IndustryPlacementRepository, RegistrationPathwayRepository, BlobStorageService, Mapper, IndustryPlacementServiceLogger);
+            IndustryPlacementService = new IndustryPlacementService(IpLookupRepository, IndustryPlacementRepository, RegistrationPathwayRepository,
+                CommonRepository, BlobStorageService, Mapper, IndustryPlacementServiceLogger);
         }
 
         public override Task When()
@@ -58,16 +63,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
         public async Task Then_Expected_Results_Are_Returned()
         {
             await WhenAsync();
-            
+
             var expectedResult = DbContext.IpLookup.Where(x => x.TlLookup.Category == IpLookupType.SpecialConsideration.ToString()).OrderBy(x => x.SortOrder)
-                .Select(x => new IpLookupData 
+                .Select(x => new IpLookupData
                 {
                     Id = x.Id,
                     Name = x.Name,
                     StartDate = x.StartDate,
                     EndDate = x.EndDate,
                     ShowOption = x.ShowOption != null ? Convert.ToBoolean(x.ShowOption) : null
-                } ).ToList();
+                }).ToList();
 
             _actualResult.Should().BeEquivalentTo(expectedResult);
         }

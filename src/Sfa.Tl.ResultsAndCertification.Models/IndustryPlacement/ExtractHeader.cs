@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement
+namespace Sfa.Tl.ResultsAndCertification.Models.ExtractIndustryPlacement
 {
     internal class ExtractHeader
     {

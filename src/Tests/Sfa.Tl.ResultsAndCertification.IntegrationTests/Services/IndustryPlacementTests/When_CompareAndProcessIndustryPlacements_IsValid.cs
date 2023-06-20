@@ -6,6 +6,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
+using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
@@ -25,6 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private IList<TqRegistrationProfile> _profiles;
         private List<IndustryPlacementData> _industryPlacementDatas;
+        protected ICommonRepository CommonRepository;
         private IndustryPlacementProcessResponse _actualResult;
         protected IBlobStorageService BlobStorageService;
 
@@ -131,8 +133,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                     },
                 };
             }
-        }        
-        
+        }
+
         private void SeedIndustyPlacementData(List<IndustryPlacementData> ipDatas)
         {
             foreach (var ipData in ipDatas)
@@ -155,11 +157,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
             RegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
             RegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(RegistrationPathwayRepositoryLogger, DbContext);
 
+            CommonRepository = new CommonRepository(DbContext);
+
             IndustryPlacementServiceLogger = new Logger<IndustryPlacementService>(new NullLoggerFactory());
 
             BlobStorageService = Substitute.For<IBlobStorageService>();
 
-            IndustryPlacementService = new IndustryPlacementService(IpLookupRepository, IndustryPlacementRepository, RegistrationPathwayRepository, BlobStorageService, Mapper, IndustryPlacementServiceLogger);
+            IndustryPlacementService = new IndustryPlacementService(IpLookupRepository, IndustryPlacementRepository, 
+                RegistrationPathwayRepository, CommonRepository, BlobStorageService, Mapper, IndustryPlacementServiceLogger);
         }
     }
 }

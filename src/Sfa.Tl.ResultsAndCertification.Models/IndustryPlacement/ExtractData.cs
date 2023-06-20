@@ -1,12 +1,11 @@
-﻿using Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement
+namespace Sfa.Tl.ResultsAndCertification.Models.ExtractIndustryPlacement
 {
    public  class ExtractData
     {

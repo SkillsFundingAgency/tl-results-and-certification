@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
+using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement.BulkProcess;
@@ -19,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
         private List<IndustryPlacementRecordResponse> _industryPlacementData;
         protected IBlobStorageService BlobStorageService;
         private string _performedBy;
-
+        protected ICommonRepository CommonRepository;
         private IList<IndustryPlacement> _actualResult;
         private IList<IndustryPlacement> _expectedResult;
 
@@ -40,14 +41,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
 
             IndustryPlacementServiceLogger = new Logger<IndustryPlacementService>(new NullLoggerFactory());
 
+            CommonRepository = new CommonRepository(DbContext);
+
             BlobStorageService = Substitute.For<IBlobStorageService>();
 
-            IndustryPlacementService = new IndustryPlacementService(IpLookupRepository, IndustryPlacementRepository, RegistrationPathwayRepository, BlobStorageService, Mapper, IndustryPlacementServiceLogger);
+            IndustryPlacementService = new IndustryPlacementService(IpLookupRepository, IndustryPlacementRepository,
+                RegistrationPathwayRepository, CommonRepository, BlobStorageService, Mapper, IndustryPlacementServiceLogger);
 
             _performedBy = "Test user";
             _industryPlacementData = new List<IndustryPlacementRecordResponse>
             {
-                new IndustryPlacementRecordResponse 
+                new IndustryPlacementRecordResponse
                 {
                     TqRegistrationPathwayId = 1,
                     IpStatus = 1,
@@ -77,9 +81,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                 }
             };
 
-            _expectedResult = new List<IndustryPlacement> 
+            _expectedResult = new List<IndustryPlacement>
             {
-                new IndustryPlacement 
+                new IndustryPlacement
                 {
                     TqRegistrationPathwayId = 1,
                     Status = Common.Enum.IndustryPlacementStatus.Completed,
@@ -131,7 +135,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
                     actualResult.Details.Should().Be("{\"IndustryPlacementStatus\":\"CompletedWithSpecialConsideration\",\"HoursSpentOnPlacement\":100,\"SpecialConsiderationReasons\":[33,44]}");
                 else
                     actualResult.Details.Should().Be(_expectedResult[idx].Details);
-                
+
                 actualResult.CreatedBy.Should().Be(_expectedResult[idx].CreatedBy);
                 actualResult.CreatedOn.Should().BeWithin(5.Seconds()).Before(System.DateTime.UtcNow);
                 idx++;

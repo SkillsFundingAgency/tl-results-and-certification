@@ -38,6 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
         protected IRepository<IndustryPlacement> IndustryPlacementRepository;        
         protected IRepository<TqRegistrationPathway> RegistrationPathwayRepository;
 
+        
         protected IMapper Mapper;
         protected IList<IpLookup> IpLookup;
 

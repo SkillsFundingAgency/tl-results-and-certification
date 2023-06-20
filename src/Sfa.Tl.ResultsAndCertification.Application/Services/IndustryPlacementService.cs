@@ -14,6 +14,7 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Models.ExtractIndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement.BulkProcess;
@@ -42,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             IRepository<IndustryPlacement> industryPlacementRepository,
             IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
             ICommonRepository commonRepository,
-        IBlobStorageService blobStorageService,
+            IBlobStorageService blobStorageService,
             IMapper mapper, ILogger<IndustryPlacementService> logger)
         {
             _ipLookupRepository = ipLookupRepository;
@@ -377,7 +378,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 throw new ApplicationException($"Current Academic years are not found. Method: {nameof(ProcessIndustryPlacementExtractionsAsync)}");
             }
 
-            var industryPlacements = _industryPlacementRepository.GetManyAsync()
+            var industryPlacements = await _industryPlacementRepository.GetManyAsync()
                         .Include(x => x.TqRegistrationPathway)
                             .ThenInclude(x => x.TqRegistrationProfile)
                         .Include(x => x.TqRegistrationPathway)
@@ -387,10 +388,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
                                     x.TqRegistrationPathway.EndDate == null &&
                                     x.TqRegistrationPathway.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1)
-                        .ToList();
+                        .ToListAsync();
+
+            var industryPlacementResults = _mapper.Map<IList<ExtractData>>(industryPlacements);
 
             //            var test = await _industryPlacementRepository.get();
-            if (industryPlacements == null || !industryPlacements.Any())
+            if (industryPlacementResults == null || !industryPlacementResults.Any())
             {
                 var message = $"No entries are found. Method: {nameof(ProcessIndustryPlacementExtractionsAsync)}()";
                 _logger.LogWarning(LogEvent.NoDataFound, message);
@@ -400,7 +403,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             //var test = Extensions.s.cs
 
             //var byteData = await CsvExtensions.WriteFileAsync(industryPlacements, delimeter: Constants.PipeSeperator, writeHeader: false, typeof(CsvMapper));
-            var byteData = await CsvExtensions.WriteFileAsync(industryPlacements, classMapType: typeof(ExtractIndustryPlacementExportMap));
+            //var byteData = await CsvExtensions.WriteFileAsync(industryPlacements, classMapType: typeof(ExtractIndustryPlacementExportMap));
+
+            var byteData = await CsvExtensions.WriteFileAsync(industryPlacementResults, classMapType: typeof(ExtractIndustryPlacementExportMap));
 
 
             if (byteData.Length <= 0)
@@ -412,14 +417,24 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             string result = System.Text.Encoding.UTF8.GetString(byteData);
 
             var blobUniqueReference = Guid.NewGuid();
-            await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
+
+            try
             {
-                ContainerName = DocumentType.IndustryPlacements.ToString(),
-                SourceFilePath = "industryplacements/extracts",
-                BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
-                FileData = byteData,
-                UserName = Constants.FunctionPerformedBy
-            });
+
+
+                await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
+                {
+                    ContainerName = DocumentType.IndustryPlacements.ToString(),
+                    SourceFilePath = "industryplacements/extracts",
+                    BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
+                    FileData = byteData,
+                    UserName = Constants.FunctionPerformedBy
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
 
             return new FunctionResponse();
         }
