@@ -1,6 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Strategies
 {
     public abstract class SpecialismResultStrategyBase : ISpecialismResultStrategy
     {
-        public TqSpecialismResult GetHighestResult(TqRegistrationSpecialism specialism)
+        protected TqSpecialismResult GetHighestResult(TqRegistrationSpecialism specialism)
         {
             if (specialism == null || !specialism.TqSpecialismAssessments.Any())
                 return null;
@@ -23,6 +24,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Strategies
             return specialismHigherResult;
         }
 
-        public abstract TlLookup GetResult(ICollection<TqRegistrationSpecialism> specialisms);
+        protected OverallSpecialismDetail CreateOverallSpecialismDetail(TqRegistrationSpecialism registrationSpecialism, TqSpecialismResult specialismResult)
+        {
+            return new OverallSpecialismDetail
+            {
+                SpecialismName = registrationSpecialism.TlSpecialism.Name,
+                SpecialismLarId = registrationSpecialism.TlSpecialism.LarId,
+                SpecialismResult = specialismResult?.TlLookup?.Value
+            };
+        }
+
+        public abstract OverallSpecialismResultDetail GetResult(ICollection<TqRegistrationSpecialism> specialisms);
     }
 }

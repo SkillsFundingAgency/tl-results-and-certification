@@ -9,7 +9,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
@@ -220,7 +219,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return pathwayHigherResult;
         }
 
-        public async Task<TlLookup> GetSpecialismsResult(IList<TlLookup> tlLookup, ICollection<TqRegistrationSpecialism> specialisms)
+        public async Task<OverallSpecialismResultDetail> GetOverallSpecialismResult(IList<TlLookup> tlLookup, ICollection<TqRegistrationSpecialism> specialisms)
         {
             ISpecialismResultStrategy specialismResultStrategy = await _specialismResultStrategyFactory.GetSpecialismResultStrategyAsync(tlLookup, specialisms.Count);
             return specialismResultStrategy.GetResult(specialisms);
@@ -241,10 +240,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var specialisms = pathway.TqRegistrationSpecialisms;
 
                 var pathwayResult = GetHighestPathwayResult(pathway);
-                var specialismResult = await GetSpecialismsResult(tlLookup, specialisms);
+                var overallSpecialismResult = await GetOverallSpecialismResult(tlLookup, specialisms);
                 var ipStatus = GetIndustryPlacementStatus(pathway);
 
-                var overallGrade = await GetOverAllGrade(tlLookup, pathway.TqProvider.TqAwardingOrganisation.TlPathwayId, pathwayResult?.TlLookupId, specialismResult?.Id, ipStatus, pathway.AcademicYear);
+                var overallGrade = await GetOverAllGrade(tlLookup, pathway.TqProvider.TqAwardingOrganisation.TlPathwayId, pathwayResult?.TlLookupId, overallSpecialismResult?.TlLookupId, ipStatus, pathway.AcademicYear);
 
                 if (string.IsNullOrWhiteSpace(overallGrade))
                     throw new ApplicationException("OverallGrade cannot be null");
@@ -255,25 +254,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var certificateType = GetPrintCertificateType(tlLookup, overallGrade);
                 var certificateStatus = GetCertificateStatus(calculationStatus);
 
-                List<OverallSpecialismDetail> specialismDetails = null;
-
-                if (specialisms != null && specialisms.Any())
-                {
-                    specialismDetails = specialisms.Select(s => new OverallSpecialismDetail
-                    {
-                        SpecialismName = s.TlSpecialism.Name,
-                        SpecialismLarId = s.TlSpecialism.LarId,
-                        SpecialismResult = specialismResult?.Value
-                    }).ToList();
-                }
-
                 var overallResultDetails = new OverallResultDetail
                 {
                     TlevelTitle = pathway.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
                     PathwayName = pathway.TqProvider.TqAwardingOrganisation.TlPathway.Name,
                     PathwayLarId = pathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                     PathwayResult = pathwayResult?.TlLookup?.Value,
-                    SpecialismDetails = specialismDetails,
+                    SpecialismDetails = overallSpecialismResult.SpecialismDetails,
                     IndustryPlacementStatus = GetIndustryPlacementStatusDisplayName(ipStatus),
                     OverallResult = overallGrade
                 };

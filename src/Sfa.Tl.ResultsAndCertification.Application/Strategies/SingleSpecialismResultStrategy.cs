@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Strategies
 {
     public class SingleSpecialismResultStrategy : SpecialismResultStrategyBase
     {
-        public override TlLookup GetResult(ICollection<TqRegistrationSpecialism> specialisms)
+        public override OverallSpecialismResultDetail GetResult(ICollection<TqRegistrationSpecialism> specialisms)
         {
             if (specialisms == null)
                 throw new ArgumentNullException(nameof(specialisms), "The specialism collection cannot be null.");
@@ -18,7 +19,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Strategies
             TqRegistrationSpecialism specialism = specialisms.Single();
             TqSpecialismResult result = GetHighestResult(specialism);
 
-            return result?.TlLookup;
+            return new OverallSpecialismResultDetail
+            {
+                SpecialismDetails = new List<OverallSpecialismDetail> { CreateOverallSpecialismDetail(specialism, result) },
+                TlLookupId = result?.TlLookupId,
+                OverallSpecialismResult = result?.TlLookup?.Value
+            };
         }
     }
 }

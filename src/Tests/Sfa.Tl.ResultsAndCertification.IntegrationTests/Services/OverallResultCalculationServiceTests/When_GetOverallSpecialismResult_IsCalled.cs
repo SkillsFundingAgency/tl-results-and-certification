@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResultCalculationServiceTests
 {
-    public class When_GetSpecialismsResult_IsCalled : OverallResultCalculationServiceBaseTest
+    public class When_GetOverallSpecialismResult_IsCalled : OverallResultCalculationServiceBaseTest
     {
         public override void Given()
         {

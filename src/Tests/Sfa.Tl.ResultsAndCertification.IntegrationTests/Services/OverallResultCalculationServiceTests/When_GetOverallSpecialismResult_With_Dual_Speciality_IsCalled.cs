@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResultCalculationServiceTests
 {
-    public class When_GetSpecialismsResult_With_Dual_Speciality_IsCalled : OverallResultCalculationServiceBaseTest
+    public class When_GetOverallSpecialismResult_With_Dual_Speciality_IsCalled : OverallResultCalculationServiceBaseTest
     {
         private List<TqRegistrationProfile> _registrations;
-        private TlLookup _actualResult;
+        private OverallSpecialismResultDetail _actualResult;
 
         private static Dictionary<long, (string FirstSpecialismGrade, string SecondSpecialismGrade, string ExpectedOverallSpecialismGrade)> LearnerGradesDict = new()
         {
@@ -97,8 +98,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
 
         public async Task WhenAsync(ICollection<TqRegistrationSpecialism> specialisms)
         {
+            _actualResult = await OverallResultCalculationService.GetOverallSpecialismResult(TlLookup, specialisms);
             await Task.CompletedTask;
-            _actualResult = await OverallResultCalculationService.GetSpecialismsResult(TlLookup, specialisms);
         }
 
         [Theory]
@@ -110,14 +111,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             var specialisms = pathway.TqRegistrationSpecialisms;
             await WhenAsync(specialisms);
 
-            if (string.IsNullOrEmpty(expectedGrade))
-            {
-                _actualResult.Should().BeNull();
-            }
-            else
-            {
-                _actualResult.Value.Should().Be(expectedGrade);
-            }
+            OverallSpecialismResultDetail expectedResult = CreateExpectedOverallSpecialismResultDetail(specialisms, expectedGrade);
+            _actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
         public static IEnumerable<object[]> Data
@@ -126,6 +121,36 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             {
                 return LearnerGradesDict.Select(p => new object[] { p.Key, p.Value.ExpectedOverallSpecialismGrade });
             }
+        }
+
+        private OverallSpecialismResultDetail CreateExpectedOverallSpecialismResultDetail(IEnumerable<TqRegistrationSpecialism> registrationSpecialisms, string expectedGrade)
+        {
+            TqRegistrationSpecialism firstRegistrationSpecialism = registrationSpecialisms.FirstOrDefault();
+            TqRegistrationSpecialism secondRegistrationSpecialism = registrationSpecialisms.LastOrDefault();
+
+            return new OverallSpecialismResultDetail()
+            {
+                SpecialismDetails = new List<OverallSpecialismDetail>
+                {
+                    CreateOverallSpecialismDetail(firstRegistrationSpecialism),
+                    CreateOverallSpecialismDetail(secondRegistrationSpecialism)
+                },
+                TlLookupId = TlLookup.SingleOrDefault(x => x.Category == "SpecialismComponentGrade" && x.Value == expectedGrade)?.Id,
+                OverallSpecialismResult = expectedGrade
+            };
+        }
+
+        private OverallSpecialismDetail CreateOverallSpecialismDetail(TqRegistrationSpecialism registrationSpecialism)
+        {
+            TlSpecialism firstSpecialism = registrationSpecialism?.TlSpecialism;
+            string firstSpecialismResult = registrationSpecialism?.TqSpecialismAssessments.FirstOrDefault()?.TqSpecialismResults.FirstOrDefault()?.TlLookup?.Value;
+
+            return new OverallSpecialismDetail
+            {
+                SpecialismName = firstSpecialism?.Name,
+                SpecialismLarId = firstSpecialism?.LarId,
+                SpecialismResult = firstSpecialismResult
+            };
         }
     }
 }

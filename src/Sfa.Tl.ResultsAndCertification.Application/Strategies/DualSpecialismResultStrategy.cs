@@ -1,5 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
+using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Strategies
             _dualSpecialismOverallGradeLookups = dualSpecialismOverallGradeLookups;
         }
 
-        public override TlLookup GetResult(ICollection<TqRegistrationSpecialism> specialisms)
+        public override OverallSpecialismResultDetail GetResult(ICollection<TqRegistrationSpecialism> specialisms)
         {
             if (specialisms == null)
                 throw new ArgumentNullException(nameof(specialisms), "The specialism collection cannot be null.");
@@ -25,31 +27,37 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Strategies
             if (specialisms.Count != 2)
                 throw new ArgumentException("The specialism collection must contain two specialisms.", nameof(specialisms));
 
-            TqSpecialismResult firstSpecialismResult = GetHighestResult(specialisms.First());
-            TqSpecialismResult secondSpecialismResult = GetHighestResult(specialisms.Last());
+            TqRegistrationSpecialism firstSpecialism = specialisms.First();
+            TqSpecialismResult firstSpecialismResult = GetHighestResult(firstSpecialism);
+
+            TqRegistrationSpecialism secondSpecialism = specialisms.Last();
+            TqSpecialismResult secondSpecialismResult = GetHighestResult(secondSpecialism);
+
+            TlLookup overallSpecialismResult = null;
 
             if (IsSpecialismGradeXNoResult(firstSpecialismResult) || IsSpecialismGradeXNoResult(secondSpecialismResult))
             {
-                return GetSpecialismTLookupResult(Constants.SpecialismComponentGradeXNoResultCode);
+                overallSpecialismResult = GetSpecialismTLookupResult(Constants.SpecialismComponentGradeXNoResultCode);
             }
-
-            if (IsSpecialismGradeQPending(firstSpecialismResult) || IsSpecialismGradeQPending(secondSpecialismResult))
+            else if (IsSpecialismGradeQPending(firstSpecialismResult) || IsSpecialismGradeQPending(secondSpecialismResult))
             {
-                return GetSpecialismTLookupResult(Constants.SpecialismComponentGradeQpendingResultCode);
+                overallSpecialismResult = GetSpecialismTLookupResult(Constants.SpecialismComponentGradeQpendingResultCode);
             }
-
-            if (firstSpecialismResult == null || secondSpecialismResult == null)
+            else if (firstSpecialismResult == null || secondSpecialismResult == null)
             {
-                return null;
+                overallSpecialismResult = null;
             }
-
-            if (IsSpecialismGradeUnclassified(firstSpecialismResult) || IsSpecialismGradeUnclassified(secondSpecialismResult))
+            else if (IsSpecialismGradeUnclassified(firstSpecialismResult) || IsSpecialismGradeUnclassified(secondSpecialismResult))
             {
-                return GetSpecialismTLookupResult(Constants.SpecialismComponentGradeUnclassifiedCode);
+                overallSpecialismResult = GetSpecialismTLookupResult(Constants.SpecialismComponentGradeUnclassifiedCode);
+            }
+            else
+            {
+                var overallGrade = _dualSpecialismOverallGradeLookups.FirstOrDefault(o => o.FirstTlLookupSpecialismGradeId == firstSpecialismResult.TlLookupId && o.SecondTlLookupSpecialismGradeId == secondSpecialismResult.TlLookupId);
+                overallSpecialismResult = overallGrade?.TlLookupOverallSpecialismGrade;
             }
 
-            var overallGrade = _dualSpecialismOverallGradeLookups.FirstOrDefault(o => o.FirstTlLookupSpecialismGradeId == firstSpecialismResult.TlLookupId && o.SecondTlLookupSpecialismGradeId == secondSpecialismResult.TlLookupId);
-            return overallGrade?.TlLookupOverallSpecialismGrade;
+            return CreateOverallSpecialismResultDetail(firstSpecialism, firstSpecialismResult, secondSpecialism, secondSpecialismResult, overallSpecialismResult);
         }
 
         private bool IsSpecialismGradeQPending(TqSpecialismResult specialismResult)
@@ -75,6 +83,25 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Strategies
         private TlLookup GetSpecialismTLookupResult(string code)
         {
             return _tlLookup.FirstOrDefault(o => o.Code.Equals(code, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        private OverallSpecialismResultDetail CreateOverallSpecialismResultDetail(
+            TqRegistrationSpecialism firstSpecialism,
+            TqSpecialismResult firstSpecialismResult,
+            TqRegistrationSpecialism secondSpecialism,
+            TqSpecialismResult secondSpecialismResult,
+            TlLookup overallSpecialismResult)
+        {
+            return new OverallSpecialismResultDetail
+            {
+                SpecialismDetails = new List<OverallSpecialismDetail>
+                {
+                    CreateOverallSpecialismDetail(firstSpecialism, firstSpecialismResult),
+                    CreateOverallSpecialismDetail(secondSpecialism, secondSpecialismResult),
+                },
+                TlLookupId = overallSpecialismResult?.Id,
+                OverallSpecialismResult = overallSpecialismResult?.Value
+            };
         }
     }
 }
