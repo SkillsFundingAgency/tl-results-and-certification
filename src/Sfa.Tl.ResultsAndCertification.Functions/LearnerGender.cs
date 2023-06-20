@@ -21,8 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _commonService = commonService;
             _learnerService = learnerService;
         }
-
-        [Disable]
+      
         [FunctionName(Constants.FetchLearnerGender)]
         public async Task FetchLearnerGenderAsync([TimerTrigger("%LearnerGenderTrigger%")]TimerInfo timer, ExecutionContext context, ILogger logger)
         {
