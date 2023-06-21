@@ -2,8 +2,12 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service;
+using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
@@ -21,6 +25,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private IList<TqRegistrationProfile> _profiles;
         private List<IndustryPlacementData> _industryPlacementDatas;
+        protected ICommonRepository CommonRepository;
+        protected IBlobStorageService BlobStorageService;
         private bool _actualResult;
 
         public override void Given()
@@ -64,9 +70,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
             RegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
             RegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(RegistrationPathwayRepositoryLogger, DbContext);
 
+            CommonRepository = new CommonRepository(DbContext);
+
             IndustryPlacementServiceLogger = new Logger<IndustryPlacementService>(new NullLoggerFactory());
 
-            IndustryPlacementService = new IndustryPlacementService(IpLookupRepository, IndustryPlacementRepository, RegistrationPathwayRepository, Mapper, IndustryPlacementServiceLogger);
+            BlobStorageService = Substitute.For<IBlobStorageService>();
+
+            IndustryPlacementService = new IndustryPlacementService(IpLookupRepository, IndustryPlacementRepository, 
+                RegistrationPathwayRepository, CommonRepository, BlobStorageService, Mapper, IndustryPlacementServiceLogger);
         }
 
         public override Task When()

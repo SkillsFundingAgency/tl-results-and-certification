@@ -12,6 +12,7 @@
         UcasTransferResults = 7,
         UcasTransferAmendments = 8,
         OverallResultCalculation = 9,
-        CertificatePrintingBatchesCreate = 10
+        CertificatePrintingBatchesCreate = 10,
+        IndustryPlacementExtract = 11
     }
 }
