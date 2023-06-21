@@ -24,6 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         }
 
         [Theory]
+        [InlineData(0, typeof(NoSpecialismResultStrategy))]
         [InlineData(1, typeof(SingleSpecialismResultStrategy))]
         [InlineData(2, typeof(DualSpecialismResultStrategy))]
         public async Task Then_Correct_SpecialismResultStrategy_Is_Returned(int numberOfSpecialisms, Type expectedStrategy)
@@ -54,10 +55,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
 
         [Theory]
         [InlineData(-1)]
-        [InlineData(0)]
         [InlineData(3)]
         [InlineData(5)]
         [InlineData(10)]
+        [InlineData(999)]
         public async Task If_Number_Of_Specialisms_Invalid_Then_ArgumentException_Is_Thrown(int numberOfSpecialisms)
         {
             Func<Task<ISpecialismResultStrategy>> getStrategy = () => SpecialismResultStrategyFactory.GetSpecialismResultStrategyAsync(TlLookup, numberOfSpecialisms);

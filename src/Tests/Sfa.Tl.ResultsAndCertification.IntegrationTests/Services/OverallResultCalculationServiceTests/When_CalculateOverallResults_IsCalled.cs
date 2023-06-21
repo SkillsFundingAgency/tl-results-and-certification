@@ -1,12 +1,7 @@
 ﻿using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
-using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -207,6 +202,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":null,\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":null}],\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"X - no result\"}",
                     CalculationStatus = CalculationStatus.NoResult,
                     ResultAwarded = "X - no result",
+                    SpecialismResultAwarded = "X - no result",
                     PrintAvailableFrom = null,
                     PublishDate = assessmentSeries.ResultPublishDate,
                     EndDate = null,
@@ -220,6 +216,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"Partial achievement\"}",
                     CalculationStatus = CalculationStatus.PartiallyCompleted,
                     ResultAwarded = "Partial achievement",
+                    SpecialismResultAwarded = "X - no result",
                     PrintAvailableFrom = assessmentSeries.PrintAvailableDate,
                     PublishDate = assessmentSeries.ResultPublishDate,
                     EndDate = null,
@@ -233,6 +230,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"Partial achievement\"}",
                     CalculationStatus = CalculationStatus.Completed,
                     ResultAwarded = "Partial achievement",
+                    SpecialismResultAwarded = "X - no result",
                     PrintAvailableFrom = assessmentSeries.PrintAvailableDate,
                     PublishDate = null,
                     EndDate = DateTime.UtcNow,
@@ -246,6 +244,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed with special consideration\",\"OverallResult\":\"Distinction*\"}",
                     CalculationStatus = CalculationStatus.Completed,
                     ResultAwarded = "Distinction*",
+                    SpecialismResultAwarded = "Distinction",
                     PrintAvailableFrom = assessmentSeries.PrintAvailableDate,
                     PublishDate = assessmentSeries.ResultPublishDate,
                     EndDate = null,
@@ -259,6 +258,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"Partial achievement\"}",
                     CalculationStatus = CalculationStatus.PartiallyCompleted,
                     ResultAwarded = "Partial achievement",
+                    SpecialismResultAwarded = "X - no result",
                     PrintAvailableFrom = assessmentSeries.PrintAvailableDate,
                     PublishDate = assessmentSeries.ResultPublishDate,
                     EndDate = null,
@@ -272,6 +272,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"Partial achievement\"}",
                     CalculationStatus = CalculationStatus.PartiallyCompleted,
                     ResultAwarded = "Partial achievement",
+                    SpecialismResultAwarded = null,
                     PrintAvailableFrom = assessmentSeries.PrintAvailableDate,
                     PublishDate = assessmentSeries.ResultPublishDate,
                     EndDate = null,
@@ -285,6 +286,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"Q - pending result\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed with special consideration\",\"OverallResult\":\"Q - pending result\"}",
                     CalculationStatus = CalculationStatus.Qpending,
                     ResultAwarded = "Q - pending result",
+                    SpecialismResultAwarded = "Q - pending result",
                     PrintAvailableFrom = null,
                     PublishDate = assessmentSeries.ResultPublishDate,
                     EndDate = null,
@@ -298,6 +300,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"X - no result\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"X - no result\"}],\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"X - no result\"}",
                     CalculationStatus = CalculationStatus.NoResult,
                     ResultAwarded = "X - no result",
+                    SpecialismResultAwarded = "X - no result",
                     PrintAvailableFrom = null,
                     PublishDate = assessmentSeries.ResultPublishDate,
                     EndDate = null,
@@ -311,6 +314,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"Unclassified\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"X - no result\"}],\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"Unclassified\"}",
                     CalculationStatus = CalculationStatus.Unclassified,
                     ResultAwarded = "Unclassified",
+                    SpecialismResultAwarded = "Unclassified",
                     PrintAvailableFrom = null,
                     PublishDate = assessmentSeries.ResultPublishDate,
                     EndDate = null,

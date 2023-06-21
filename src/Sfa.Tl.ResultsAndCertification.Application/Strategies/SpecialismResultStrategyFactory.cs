@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Strategies
             _dualSpecialismOverallGradeLookupRepository = dualSpecialismOverallGradeLookupRepository;
         }
 
-        public Task<ISpecialismResultStrategy> GetSpecialismResultStrategyAsync(IEnumerable<TlLookup> tlLookup, int numberOfSpecialisms)
+        public async Task<ISpecialismResultStrategy> GetSpecialismResultStrategyAsync(IEnumerable<TlLookup> tlLookup, int numberOfSpecialisms)
         {
             if (tlLookup == null)
                 throw new ArgumentNullException(nameof(tlLookup), "The TlLookup cannot be null.");
@@ -28,14 +28,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Strategies
             if (!tlLookup.Any())
                 throw new ArgumentException("The TlLookup cannot be empty.", nameof(tlLookup));
 
-          if (numberOfSpecialisms < 1 || numberOfSpecialisms > 2)
-                throw new ArgumentException("The number of specialisms must be one or two.", nameof(numberOfSpecialisms));
+            if (numberOfSpecialisms < 0 || numberOfSpecialisms > 2)
+                throw new ArgumentException("The number of specialisms must be zero, one or two.", nameof(numberOfSpecialisms));
 
-            return GetSpecialismResultStrategy(tlLookup, numberOfSpecialisms);
-        }
-
-        private async Task<ISpecialismResultStrategy> GetSpecialismResultStrategy(IEnumerable<TlLookup> tlLookup, int numberOfSpecialisms)
-        {
             bool found = _specialismStrategyDict.TryGetValue(numberOfSpecialisms, out ISpecialismResultStrategy specialismResultStrategy);
 
             if (found)
@@ -43,18 +38,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Strategies
                 return specialismResultStrategy;
             }
 
-            if (numberOfSpecialisms == 1)
+            specialismResultStrategy = numberOfSpecialisms switch
             {
-                specialismResultStrategy = new SingleSpecialismResultStrategy();
-            }
-            else
-            {
-                List<DualSpecialismOverallGradeLookup> dualSpecialismOverallGradeLookups = await GetDualSpecialismOverallGradeLookupData();
-                specialismResultStrategy = new DualSpecialismResultStrategy(tlLookup, dualSpecialismOverallGradeLookups);
-            }
+                0 => new NoSpecialismResultStrategy(),
+                1 => new SingleSpecialismResultStrategy(),
+                _ => await CreateDualSpecialismResultStrategy(tlLookup)
+            };
 
             _specialismStrategyDict.Add(numberOfSpecialisms, specialismResultStrategy);
             return specialismResultStrategy;
+        }
+
+        private async Task<ISpecialismResultStrategy> CreateDualSpecialismResultStrategy(IEnumerable<TlLookup> tlLookup)
+        {
+            List<DualSpecialismOverallGradeLookup> dualSpecialismOverallGradeLookups = await GetDualSpecialismOverallGradeLookupData();
+            return new DualSpecialismResultStrategy(tlLookup, dualSpecialismOverallGradeLookups);
         }
 
         private async Task<List<DualSpecialismOverallGradeLookup>> GetDualSpecialismOverallGradeLookupData()

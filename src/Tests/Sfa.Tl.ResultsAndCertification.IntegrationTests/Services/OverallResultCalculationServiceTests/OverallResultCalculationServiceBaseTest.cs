@@ -163,6 +163,27 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             return profiles;
         }
 
+        public List<TqRegistrationProfile> SeedNoSpecialismRegistrationData(IEnumerable<long> ulns)
+        {
+            var profiles = new List<TqRegistrationProfile>();
+
+            foreach (var uln in ulns)
+            {
+                profiles.Add(SeedNoSpecialismRegistrationData(uln));
+            }
+            return profiles;
+        }
+
+        public TqRegistrationProfile SeedNoSpecialismRegistrationData(long uln)
+        {
+            var profile = new TqRegistrationProfileBuilder().Build(uln);
+
+            var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
+            RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, TqProvider);
+
+            return profile;
+        }
+
         public TqRegistrationProfile SeedDualSpecialismRegistrationData(long uln)
         {
             var profile = new TqRegistrationProfileBuilder().Build(uln);

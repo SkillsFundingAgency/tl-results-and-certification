@@ -30,6 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IOverallGradeStrategyFactory _overallGradeStrategyFactory;
         private readonly IMapper _mapper;
 
+        private readonly OverallResultEqualityComparer _overallResultComparer = new();
+
         public OverallResultCalculationService(
             ResultsAndCertificationConfiguration configuration,
             IRepository<TlLookup> tlLookupRepository,
@@ -221,7 +223,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<OverallSpecialismResultDetail> GetOverallSpecialismResult(IList<TlLookup> tlLookup, ICollection<TqRegistrationSpecialism> specialisms)
         {
-            ISpecialismResultStrategy specialismResultStrategy = await _specialismResultStrategyFactory.GetSpecialismResultStrategyAsync(tlLookup, specialisms.Count);
+            int numberOfSpecialisms = specialisms == null ? 0 : specialisms.Count;
+
+            ISpecialismResultStrategy specialismResultStrategy = await _specialismResultStrategyFactory.GetSpecialismResultStrategyAsync(tlLookup, numberOfSpecialisms);
             return specialismResultStrategy.GetResult(specialisms);
         }
 
@@ -270,6 +274,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     TqRegistrationPathwayId = pathway.Id,
                     Details = JsonConvert.SerializeObject(overallResultDetails),
                     ResultAwarded = overallGrade,
+                    SpecialismResultAwarded = overallSpecialismResult.OverallSpecialismResult,
                     CalculationStatus = calculationStatus,
                     PublishDate = assessmentSeries.ResultPublishDate,
                     PrintAvailableFrom = certificateType != null ? assessmentSeries.PrintAvailableDate : null,
@@ -392,12 +397,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private bool IsOverallResultChangedFromPrevious(OverallResult latestOverallResult, OverallResult existingOverallResult)
         {
-            var overallResultComparer = new OverallResultEqualityComparer();
             var existingResult = new List<OverallResult> { existingOverallResult };
             var latestResult = new List<OverallResult> { latestOverallResult };
 
             // List Intersect used to rightly refer the Comparer.
-            return !existingResult.Intersect(latestResult, overallResultComparer).Any();
+            return !existingResult.Intersect(latestResult, _overallResultComparer).Any();
         }
     }
 }
