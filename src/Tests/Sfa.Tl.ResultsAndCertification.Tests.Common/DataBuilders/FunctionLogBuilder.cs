@@ -77,7 +77,20 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
-            }
+            },
+            new FunctionLog
+            {
+                FunctionType = FunctionType.IndustryPlacementExtract,
+                Name = "IndustryPlacementExtract",
+                StartDate = CurrentDate.AddDays(1),
+                EndDate = CurrentDate.AddDays(1).AddMinutes(10),
+                Status = FunctionStatus.Processed,
+                Message = "Processed Successfully",
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
         };
     }
 }

@@ -134,6 +134,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return isValid;
         }
 
+        public bool IsIndustryPlacementTriggerDateValid()
+        {
+            var isValid = false;
+
+            DateTime startDate = new(2023, 06, 17),
+                     endDate = new(2023, 07, 31);
+
+            var ipExtractTriggerDates = Enumerable.Range(0, (endDate - startDate).Days + 1).Select(d => startDate.AddDays(d));
+
+            if (ipExtractTriggerDates.Contains(new DateTime(CurrentDate.Year, CurrentDate.Month, CurrentDate.Day)))
+            {
+                isValid = true;
+            }
+
+            return isValid;
+        }
+
         public async Task<IEnumerable<Contract.AcademicYear>> GetCurrentAcademicYearsAsync()
         {
             return await _commonRepository.GetCurrentAcademicYearsAsync();
