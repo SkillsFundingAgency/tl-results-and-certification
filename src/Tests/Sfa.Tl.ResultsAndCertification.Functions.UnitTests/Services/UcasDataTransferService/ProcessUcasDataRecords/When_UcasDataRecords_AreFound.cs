@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
             UcasApiClient.SendDataAsync(Arg.Any<UcasDataRequest>()).Returns(ucasFileId);
         }
 
-        [Fact(Skip = "TLRC-9612 Ignoring this test method")]
+        [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
             UcasApiClient.Received(1).SendDataAsync(Arg.Is<UcasDataRequest>(x => x.FileName.EndsWith(Common.Helpers.Constants.FileExtensionTxt) &&
