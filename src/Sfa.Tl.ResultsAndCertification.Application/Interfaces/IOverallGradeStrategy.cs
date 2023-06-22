@@ -4,6 +4,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 {
     public interface IOverallGradeStrategy
     {
-        string GetOverAllGrade(int tlPathwayId, int? pathwayGradeId, int? speciailsmGradeId, IndustryPlacementStatus ipStatus);
+        string GetOverAllGrade(int tlPathwayId, int? pathwayGradeId, int? specialismGradeId, IndustryPlacementStatus ipStatus);
     }
 }

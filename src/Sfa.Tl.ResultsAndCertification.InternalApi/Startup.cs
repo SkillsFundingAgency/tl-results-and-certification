@@ -12,6 +12,7 @@ using Notify.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Strategies;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service;
@@ -190,6 +191,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IIndustryPlacementService, IndustryPlacementService>();
 
             // Overall result calculation
+            services.AddTransient<ISpecialismResultStrategyFactory, SpecialismResultStrategyFactory>();
             services.AddTransient<IOverallGradeStrategyFactory, OverallGradeStrategyFactory>();
             services.AddTransient<IOverallResultCalculationService, OverallResultCalculationService>();
             services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();

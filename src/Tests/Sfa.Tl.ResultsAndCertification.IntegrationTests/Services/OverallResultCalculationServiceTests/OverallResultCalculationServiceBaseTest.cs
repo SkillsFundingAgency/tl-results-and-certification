@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Application.Strategies;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
@@ -38,6 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         protected IList<TlLookup> SpecialismComponentGrades;
         protected IList<AcademicYear> AcademicYears;
         protected IList<OverallGradeLookup> OverallGradeLookup;
+        protected IList<DualSpecialismOverallGradeLookup> DualSpecialismOverallGradeLookup;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected OverallResultCalculationService OverallResultCalculationService;
 
@@ -45,6 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
 
         protected IRepository<TlLookup> TlLookupRepository;
         protected ILogger<GenericRepository<TlLookup>> TlLookupRepositoryLogger;
+        protected ILogger<GenericRepository<DualSpecialismOverallGradeLookup>> DualSpecialismOverallGradeLookupLogger;
         protected ILogger<GenericRepository<OverallGradeLookup>> OverallGradeLookupLogger;
         protected IRepository<AssessmentSeries> AssessmentSeriesRepository;
         protected ILogger<GenericRepository<AssessmentSeries>> AssessmentSeriesLogger;
@@ -52,6 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         protected ILogger<GenericRepository<OverallResult>> OverallResultLogger;
         protected IMapper Mapper;
 
+        protected ISpecialismResultStrategyFactory SpecialismResultStrategyFactory;
         protected IOverallGradeStrategyFactory OverallGradeStrategyFactory;
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
@@ -69,6 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             SpecialismComponentGrades = TlLookupDataProvider.CreateSpecialismGradeTlLookupList(DbContext, null, true);
             AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
             OverallGradeLookup = OverallGradeLookupProvider.CreateOverallGradeLookupList(DbContext, null, true);
+            DualSpecialismOverallGradeLookup = DualSpecialismOverallGradeLookupProvider.DualSpecialismOverallGradeLookupList(DbContext, TlLookup, true);
             DbContext.SaveChanges();
         }
 
@@ -86,13 +91,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 };
                 TlLookupRepositoryLogger = new Logger<GenericRepository<TlLookup>>(new NullLoggerFactory());
                 TlLookupRepository = new GenericRepository<TlLookup>(TlLookupRepositoryLogger, DbContext);
-                OverallGradeLookupLogger = new Logger<GenericRepository<OverallGradeLookup>>(new NullLoggerFactory());
                 AssessmentSeriesLogger = new Logger<GenericRepository<AssessmentSeries>>(new NullLoggerFactory());
                 AssessmentSeriesRepository = new GenericRepository<AssessmentSeries>(AssessmentSeriesLogger, DbContext);
                 OverallResultLogger = new Logger<GenericRepository<OverallResult>>(new NullLoggerFactory());
                 OverallResultRepository = new GenericRepository<OverallResult>(OverallResultLogger, DbContext);
                 OverallResultCalculationRepository = new OverallResultCalculationRepository(DbContext);
 
+                DualSpecialismOverallGradeLookupLogger = new Logger<GenericRepository<DualSpecialismOverallGradeLookup>>(new NullLoggerFactory());
+                var dualSpecialismOverallGradeLookupRepository = new GenericRepository<DualSpecialismOverallGradeLookup>(DualSpecialismOverallGradeLookupLogger, DbContext);
+                SpecialismResultStrategyFactory = new SpecialismResultStrategyFactory(dualSpecialismOverallGradeLookupRepository);
+
+                OverallGradeLookupLogger = new Logger<GenericRepository<OverallGradeLookup>>(new NullLoggerFactory());
                 var overallGradeLookupRepository = new GenericRepository<OverallGradeLookup>(OverallGradeLookupLogger, DbContext);
                 OverallGradeStrategyFactory = new OverallGradeStrategyFactory(overallGradeLookupRepository);
 
@@ -100,7 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 Mapper = new Mapper(mapperConfig);
 
                 // Create Service class to test. 
-                OverallResultCalculationService = new OverallResultCalculationService(ResultsAndCertificationConfiguration, TlLookupRepository, OverallResultCalculationRepository, AssessmentSeriesRepository, OverallResultRepository, OverallGradeStrategyFactory, Mapper);
+                OverallResultCalculationService = new OverallResultCalculationService(ResultsAndCertificationConfiguration, TlLookupRepository, OverallResultCalculationRepository, AssessmentSeriesRepository, OverallResultRepository, SpecialismResultStrategyFactory, OverallGradeStrategyFactory, Mapper);
             }
         }
 
@@ -140,6 +149,49 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             }
 
             DbContext.SaveChanges();
+            return profile;
+        }
+
+        public List<TqRegistrationProfile> SeedDualSpecialismRegistrationData(IEnumerable<long> ulns)
+        {
+            var profiles = new List<TqRegistrationProfile>();
+
+            foreach (var uln in ulns)
+            {
+                profiles.Add(SeedDualSpecialismRegistrationData(uln));
+            }
+            return profiles;
+        }
+
+        public List<TqRegistrationProfile> SeedNoSpecialismRegistrationData(IEnumerable<long> ulns)
+        {
+            var profiles = new List<TqRegistrationProfile>();
+
+            foreach (var uln in ulns)
+            {
+                profiles.Add(SeedNoSpecialismRegistrationData(uln));
+            }
+            return profiles;
+        }
+
+        public TqRegistrationProfile SeedNoSpecialismRegistrationData(long uln)
+        {
+            var profile = new TqRegistrationProfileBuilder().Build(uln);
+
+            var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
+            RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, TqProvider);
+
+            return profile;
+        }
+
+        public TqRegistrationProfile SeedDualSpecialismRegistrationData(long uln)
+        {
+            var profile = new TqRegistrationProfileBuilder().Build(uln);
+
+            var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
+            var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, TqProvider);
+            RegistrationsDataProvider.CreateTqRegistrationSpecialisms(DbContext, tqRegistrationPathway);
+
             return profile;
         }
 
@@ -401,6 +453,29 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             }
 
             DbContext.SaveChanges();
+        }
+
+        public void SeedAssesmentsResults(List<TqRegistrationProfile> registrations, long uln, string[] specialismGradeCodes, string assessmentSeriesName)
+        {
+            TqRegistrationProfile registration = registrations.Single(x => x.UniqueLearnerNumber == uln);
+            TqRegistrationPathway pathway = registration.TqRegistrationPathways.Single();
+            ICollection<TqRegistrationSpecialism> specialisms = pathway.TqRegistrationSpecialisms;
+
+            foreach (TqRegistrationSpecialism currentSpecialism in specialisms)
+            {
+                var specialismAssessments = GetSpecialismAssessmentsDataToProcess(registration.TqRegistrationPathways.FirstOrDefault().TqRegistrationSpecialisms.ToList(), assessmentSeriesName: assessmentSeriesName);
+
+                for (int i = 0; i < specialismAssessments.Count; i++)
+                {
+                    if (specialismGradeCodes[i] != null)
+                    {
+                        var specialismGrade = TlLookup.SingleOrDefault(s => s.Category == "SpecialismComponentGrade" && s.Value == specialismGradeCodes[i]);
+
+                        var currentSpecialismResult = new TqSpecialismResultBuilder().Build(specialismAssessments[i], specialismGrade);
+                        specialismAssessments[i].TqSpecialismResults.Add(currentSpecialismResult);
+                    }
+                }
+            }
         }
 
         public static void AssertOverallResult(OverallResult actualOverallResult, OverallResult expectedOverallResult)

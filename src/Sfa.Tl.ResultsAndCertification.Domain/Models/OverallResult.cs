@@ -8,6 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public int TqRegistrationPathwayId { get; set; }
         public string Details { get; set; }
         public string ResultAwarded { get; set; }
+        public string SpecialismResultAwarded { get; set; }
         public CalculationStatus CalculationStatus { get; set; }
         public DateTime? PublishDate { get; set; }
         public DateTime? PrintAvailableFrom { get; set; }

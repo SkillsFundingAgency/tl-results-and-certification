@@ -30,9 +30,12 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             };
         }
 
-        public IList<DualSpecialismOverallGradeLookup> BuildList()
+        public IList<DualSpecialismOverallGradeLookup> BuildList(IList<TlLookup> tlLookups = null)
         {
-            IList<TlLookup> tlLookups = _tlLookupBuilder.BuildSpecialismResultList();
+            if (tlLookups == null)
+            {
+                tlLookups = new TlLookupBuilder().BuildFullTlLookupList();
+            }
 
             return new List<DualSpecialismOverallGradeLookup>
             {
