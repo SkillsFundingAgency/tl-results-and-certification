@@ -63,18 +63,16 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             // 3. Send data to Ucas using ApiClient
             var filename = $"{Guid.NewGuid()}.{Constants.FileExtensionTxt}";
 
-            //Todo: TLRC-9612 Disabled, not to send the data into Ucas 
+            var fileHash = CommonHelper.ComputeSha256Hash(byteData);
 
-            //var fileHash = CommonHelper.ComputeSha256Hash(byteData);
-
-            //var ucasFileId = await _ucasApiClient.SendDataAsync(new UcasDataRequest { FileName = filename, FileData = byteData, FileHash = fileHash });
+            var ucasFileId = await _ucasApiClient.SendDataAsync(new UcasDataRequest { FileName = filename, FileData = byteData, FileHash = fileHash });
 
             // 4. Write response to blob
             await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
             {
                 ContainerName = DocumentType.Ucas.ToString().ToLower(),
                 SourceFilePath = ucasDataType.ToString().ToLower(),
-                BlobFileName = $"{filename}",
+                BlobFileName = $"{ucasFileId}-{filename}",
                 FileData = byteData,
                 UserName = Constants.FunctionPerformedBy
             });
