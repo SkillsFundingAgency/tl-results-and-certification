@@ -90,6 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Select(pr => new CoreResultsExport
                 {
                     Uln = pr.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
+                    AcademicYear = pr.TqPathwayAssessment.TqRegistrationPathway.AcademicYear,
                     CoreCode = pr.TqPathwayAssessment.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                     CoreAssessmentEntry = pr.TqPathwayAssessment.AssessmentSeries.Name,
                     CoreGrade = pr.TlLookup.Value
