@@ -13,11 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.Mapper
             Map(m => m.AcademicYear).Ignore();
             Map(m => m.CreatedOn).Ignore();
             Map(m => m.SpecialismsList).Ignore();
-            Map(m => m.Specialisms).Convert(args =>
-            {
-                string value = args.Row.GetField<string>("Specialisms");
-                return value;
-            });
+            Map(m => m.Specialisms).TypeConverterOption.Format("N0");
         }
     }
 }
