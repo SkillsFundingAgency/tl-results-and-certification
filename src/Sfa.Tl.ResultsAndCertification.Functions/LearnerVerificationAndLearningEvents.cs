@@ -21,7 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _commonService = commonService;
             _personalLearningRecordService = personalLearningRecordService;
         }
-       
+
+        [Disable]
         [FunctionName(Constants.VerifyLearnerAndFetchLearningEvents)]
         public async Task VerifyLearnerAndFetchLearningEventsAsync([TimerTrigger("%LearnerVerificationAndLearningEventsTrigger%")]TimerInfo timer, ExecutionContext context, ILogger logger)
         {

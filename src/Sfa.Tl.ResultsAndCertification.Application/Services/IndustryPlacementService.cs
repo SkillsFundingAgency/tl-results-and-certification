@@ -376,21 +376,35 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 throw new ApplicationException($"Current Academic years are not found. Method: {nameof(ProcessIndustryPlacementExtractionsAsync)}");
             }
 
-            // 1. Get data
-            var industryPlacements = await _industryPlacementRepository.GetManyAsync()
-                        .Include(x => x.TqRegistrationPathway)
-                            .ThenInclude(x => x.TqRegistrationProfile)
-                        .Include(x => x.TqRegistrationPathway)
-                            .ThenInclude(x => x.TqProvider)
-                                .ThenInclude(x => x.TlProvider)
-                        .Include(x => x.TqRegistrationPathway)
-                            .ThenInclude(x => x.TqProvider)
-                                .ThenInclude(x => x.TqAwardingOrganisation)
+            var industryPlacements = await _tqRegistrationPathwayRepository.GetManyAsync()
+                       .Include(x => x.IndustryPlacements)
+                       .Include(x => x.TqRegistrationProfile)
+                       .Include(x => x.TqProvider)
+                            .ThenInclude(x => x.TlProvider)
+                       .Include(x => x.TqProvider)
+                            .ThenInclude(x => x.TqAwardingOrganisation)
                                     .ThenInclude(x => x.TlAwardingOrganisaton)
-                        .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
-                                    x.TqRegistrationPathway.EndDate == null &&
-                                    x.TqRegistrationPathway.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1)
-                        .ToListAsync();
+                .Where(w => w.Status == RegistrationPathwayStatus.Active &&
+                             w.EndDate == null &&
+                w.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1).ToListAsync();
+
+            var test2 = industryPlacements.Where(w => w.IndustryPlacements.Any()).ToList();
+
+            // 1. Get data
+            //var industryPlacements = await _industryPlacementRepository.GetManyAsync()
+            //            .Include(x => x.TqRegistrationPathway)
+            //                .ThenInclude(x => x.TqRegistrationProfile)
+            //            .Include(x => x.TqRegistrationPathway)
+            //                .ThenInclude(x => x.TqProvider)
+            //                    .ThenInclude(x => x.TlProvider)
+            //            .Include(x => x.TqRegistrationPathway)
+            //                .ThenInclude(x => x.TqProvider)
+            //                    .ThenInclude(x => x.TqAwardingOrganisation)
+            //                        .ThenInclude(x => x.TlAwardingOrganisaton)
+            //            .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
+            //                        x.TqRegistrationPathway.EndDate == null &&
+            //                        x.TqRegistrationPathway.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1)
+            //            .ToListAsync();
 
             var industryPlacementResults = _mapper.Map<IList<ExtractData>>(industryPlacements);
 
