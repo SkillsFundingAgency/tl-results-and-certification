@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _overallResultCalculationService = overallResultCalculationService;
             _commonService = commonService;
         }
-       
+        
         [FunctionName(Constants.OverallResultCalculation)]
         public async Task OverallResultCalculationAsync([TimerTrigger("%OverallResultCalculationTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
