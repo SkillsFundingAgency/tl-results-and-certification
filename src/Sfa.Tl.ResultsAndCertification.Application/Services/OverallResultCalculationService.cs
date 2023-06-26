@@ -68,6 +68,47 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return previousAssessment;
         }
 
+        //public async Task<AssessmentSeries> GetResultCalculationAssessmentAsync(DateTime runDate)
+        //{
+        //    var currentAssessmentSeries = await _assessmentSeriesRepository
+        //                                    .GetManyAsync(p => p.ComponentType == ComponentType.Core && p.ResultPublishDate.HasValue && p.ResultPublishDate.Value <= runDate.Date)
+        //                                    .OrderByDescending(p => p.ResultPublishDate)
+        //                                    .FirstOrDefaultAsync();
+
+        //    if (currentAssessmentSeries == null)
+        //        throw new Exception($"There is no AssessmentSeries available for the date {runDate}");
+
+        //    return currentAssessmentSeries;
+
+
+        //    // Calculate result for recently completed assessment. 
+        //    //var dateFromPreviousAssessment = currentAssessmentSeries.StartDate.AddDays(-1);
+        //    //var previousAssessment = assessmentSeries.FirstOrDefault(a => a.ComponentType == ComponentType.Core && dateFromPreviousAssessment >= a.StartDate && dateFromPreviousAssessment <= a.EndDate);
+        //    //if (previousAssessment == null || previousAssessment.ResultCalculationYear == null || previousAssessment.ResultPublishDate == null)
+        //    //    throw new Exception($"There is no Previous Assessment or ResultCalculationYear not available or ResultPublishDate not available");
+
+        //    //return previousAssessment;
+
+        //}
+
+        //public async Task<AssessmentSeries> GetResultCalculationAssessmentAsync2(DateTime runDate)
+        //{
+        //    var assessmentSeries = await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
+        //    var currentAssessmentSeries = assessmentSeries.FirstOrDefault(a => a.ComponentType == ComponentType.Core && runDate.Date >= a.StartDate && runDate.Date <= a.EndDate);
+        //    if (currentAssessmentSeries == null)
+        //        throw new Exception($"There is no AssessmentSeries available for the date {runDate}");
+
+        //    // Calculate result for recently completed assessment. 
+        //    var dateFromPreviousAssessment = currentAssessmentSeries.StartDate.AddDays(-1);
+        //    var previousAssessment = assessmentSeries.FirstOrDefault(a => a.ComponentType == ComponentType.Core && dateFromPreviousAssessment >= a.StartDate && dateFromPreviousAssessment <= a.EndDate);
+        //    if (previousAssessment == null || previousAssessment.ResultCalculationYear == null || previousAssessment.ResultPublishDate == null)
+        //        throw new Exception($"There is no Previous Assessment or ResultCalculationYear not available or ResultPublishDate not available");
+
+        //    return previousAssessment;
+        //}
+
+
+
         public async Task<List<OverallResultResponse>> CalculateOverallResultsAsync(DateTime runDate)
         {
             var response = new List<OverallResultResponse>();
@@ -75,8 +116,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var resultCalculationYearFrom = (resultCalculationAssessment.ResultCalculationYear ?? 0) - (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ?
                 Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) + 1;
 
-            var learners = await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationAssessment.ResultCalculationYear ?? 0);
+            try
+            {
 
+                var learners1 = await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationAssessment.ResultCalculationYear ?? 0);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            var learner3 = await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationAssessment.ResultCalculationYear ?? 0);
+
+
+            var learners = learner3.Where(w => w.TqRegistrationProfileId == 17303).ToList();
             if (learners == null || !learners.Any())
                 return null;
 
