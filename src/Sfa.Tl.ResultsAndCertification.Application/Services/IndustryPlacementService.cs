@@ -385,26 +385,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                             .ThenInclude(x => x.TqAwardingOrganisation)
                                     .ThenInclude(x => x.TlAwardingOrganisaton)
                 .Where(w => w.Status == RegistrationPathwayStatus.Active &&
-                             w.EndDate == null &&
-                w.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1).ToListAsync();
-
-            var test2 = industryPlacements.Where(w => w.IndustryPlacements.Any()).ToList();
-
-            // 1. Get data
-            //var industryPlacements = await _industryPlacementRepository.GetManyAsync()
-            //            .Include(x => x.TqRegistrationPathway)
-            //                .ThenInclude(x => x.TqRegistrationProfile)
-            //            .Include(x => x.TqRegistrationPathway)
-            //                .ThenInclude(x => x.TqProvider)
-            //                    .ThenInclude(x => x.TlProvider)
-            //            .Include(x => x.TqRegistrationPathway)
-            //                .ThenInclude(x => x.TqProvider)
-            //                    .ThenInclude(x => x.TqAwardingOrganisation)
-            //                        .ThenInclude(x => x.TlAwardingOrganisaton)
-            //            .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
-            //                        x.TqRegistrationPathway.EndDate == null &&
-            //                        x.TqRegistrationPathway.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1)
-            //            .ToListAsync();
+                            w.EndDate == null &&
+                            w.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1)
+                .ToListAsync();            
 
             var industryPlacementResults = _mapper.Map<IList<ExtractData>>(industryPlacements);
 
@@ -424,7 +407,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 throw new ApplicationException(message);
             }
 
-            string result = System.Text.Encoding.UTF8.GetString(byteData);
             var blobUniqueReference = Guid.NewGuid();
 
             // 3. Write response to blob
