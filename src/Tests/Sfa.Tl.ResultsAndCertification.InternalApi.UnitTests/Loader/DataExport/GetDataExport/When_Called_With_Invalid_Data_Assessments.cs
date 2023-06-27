@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
         {
             DataExportType = Common.Enum.DataExportType.Assessments;
 
-            _coreAssessments = new List<CoreAssessmentsExport> { new CoreAssessmentsExport { Uln = 1111112548, CoreCode = "45678941", CoreAssessmentEntry = "Summer 2021" } };
+            _coreAssessments = new List<CoreAssessmentsExport> { new CoreAssessmentsExport { Uln = 1111112548, StartYear= "2021/22", CoreCode = "45678941", CoreAssessmentEntry = "Summer 2021" } };
             _specialismAssessments = new List<SpecialismAssessmentsExport>();
 
             DataExportService.GetDataExportCoreAssessmentsAsync(AoUkprn).Returns(_coreAssessments);
