@@ -5,10 +5,10 @@ namespace Sfa.Tl.ResultsAndCertification.Models.DataExport
     public class CoreResultsExport
     {
         [DisplayName(CoreResultsExportHeader.Uln)]
-        public long Uln { get; set; }
 
+        public long Uln { get; set; }
         [DisplayName(CoreResultsExportHeader.AcademicYear)]
-        public int AcademicYear { get; set; }
+        public string AcademicYear { get; set; }
 
         [DisplayName(CoreResultsExportHeader.CoreCode)]
         public string CoreCode { get; set; }

@@ -87,7 +87,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
                         .Select(x => new CoreResultsExport
                         {
                             Uln = x.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
-                            AcademicYear = x.TqPathwayAssessment.TqRegistrationPathway.AcademicYear,
+                            AcademicYear = DbContext.AcademicYear.First(e => e.Year == x.TqPathwayAssessment.TqRegistrationPathway.AcademicYear).Name,
                             CoreCode = x.TqPathwayAssessment.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                             CoreAssessmentEntry = x.TqPathwayAssessment.AssessmentSeries.Name,
                             CoreGrade = x.TlLookup.Value

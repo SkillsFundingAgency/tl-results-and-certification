@@ -13,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
     public class DataExportRepository : IDataExportRepository
     {
         protected readonly ResultsAndCertificationDbContext _dbContext;
+        
 
         public DataExportRepository(ResultsAndCertificationDbContext dbContext)
         {
@@ -149,6 +150,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<IList<CoreResultsExport>> GetDataExportCoreResultsAsync(long aoUkprn)
         {
+            var academicYear = _dbContext.AcademicYear;
+
             return await _dbContext.TqPathwayResult
                 .Where(pr => pr.TqPathwayAssessment.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
                        && pr.TqPathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
@@ -159,7 +162,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Select(pr => new CoreResultsExport
                 {
                     Uln = pr.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
-                    AcademicYear = pr.TqPathwayAssessment.TqRegistrationPathway.AcademicYear,
+                    AcademicYear = academicYear.First(e => e.Year == pr.TqPathwayAssessment.TqRegistrationPathway.AcademicYear).Name,
                     CoreCode = pr.TqPathwayAssessment.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                     CoreAssessmentEntry = pr.TqPathwayAssessment.AssessmentSeries.Name,
                     CoreGrade = pr.TlLookup.Value
@@ -168,6 +171,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<IList<SpecialismResultsExport>> GetDataExportSpecialismResultsAsync(long aoUkprn)
         {
+            var academicYear = _dbContext.AcademicYear;
+
             return await _dbContext.TqSpecialismResult
                 .Where(sr => sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
                        && sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
@@ -178,7 +183,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Select(sr => new SpecialismResultsExport
                 {
                     Uln = sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
-                    AcademicYear = sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.AcademicYear,
+                    AcademicYear = academicYear.First(e => e.Year == sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.AcademicYear).Name,
                     SpecialismCode = sr.TqSpecialismAssessment.TqRegistrationSpecialism.TlSpecialism.LarId,
                     SpecialismAssessmentEntry = sr.TqSpecialismAssessment.AssessmentSeries.Name,
                     SpecialismGrade = sr.TlLookup.Value
