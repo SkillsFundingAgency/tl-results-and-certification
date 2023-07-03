@@ -13,13 +13,13 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 {
     public static class CsvExtensions
     {
-        public static async Task<byte[]> WriteFileAsync<T>(IList<T> data, string delimeter = ",", bool writeHeader = true, Type classMapType = null)
+        public static async Task<byte[]> WriteFileAsync<T>(IList<T> data, string delimeter = ",", bool writeHeader = true, Type classMapType = null, bool shouldQuote=false)
         {
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 HasHeaderRecord = false,
                 Delimiter = delimeter,
-                ShouldQuote = args => false                
+                ShouldQuote = args => shouldQuote
             };
 
             await using var ms = new MemoryStream();
