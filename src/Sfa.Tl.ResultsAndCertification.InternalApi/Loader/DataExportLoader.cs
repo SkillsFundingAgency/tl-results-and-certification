@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             if (!isEmptyFileAllowed && (data == null || !data.Any()))
                 return new DataExportResponse { ComponentType = componentType, IsDataFound = false };
 
-            var byteData = await CsvExtensions.WriteFileAsync(data, classMapType: classMapType,shouldQuote:true);
+            var byteData = await CsvExtensions.WriteFileAsync(data, classMapType: classMapType);
             var response = await WriteCsvToBlobAsync(ukprn, documentType, requestType, requestedBy, byteData, componentType);
             return response;
         }

@@ -12,7 +12,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.Mapper
             Map(m => m.DateOfBirth).Ignore();
             Map(m => m.AcademicYear).Ignore();
             Map(m => m.CreatedOn).Ignore();
-            Map(m => m.SpecialismsList).Ignore();            
+            Map(m => m.SpecialismsList).Ignore();
+            Map(m => m.Specialisms).TypeConverterOption.Format("N0");
         }
     }
 }
