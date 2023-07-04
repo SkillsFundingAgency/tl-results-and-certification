@@ -14,8 +14,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 
             return new Domain.Models.TlDualSpecialismToSpecialism
             {
-                DualSpecialismId = dualSpecialism[0].Id,
-                SpecialismId = specialism[0].Id,
+                TlDualSpecialismId = dualSpecialism[0].Id,
+                TlSpecialismId = specialism[0].Id,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
@@ -27,8 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
         {
             new Domain.Models.TlDualSpecialismToSpecialism
             {
-                DualSpecialismId = 1,
-                SpecialismId  = 11,
+                TlDualSpecialismId = 1,
+                TlSpecialismId  = 11,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
@@ -36,8 +36,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlDualSpecialismToSpecialism
             {
-                DualSpecialismId = 1,
-                SpecialismId  = 13,
+                TlDualSpecialismId = 1, 
+                TlSpecialismId = 13,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,

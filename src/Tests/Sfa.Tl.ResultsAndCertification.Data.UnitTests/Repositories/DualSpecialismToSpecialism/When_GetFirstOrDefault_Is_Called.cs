@@ -39,8 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.DualSpecial
 
             _result.Should().NotBeNull();
             _result.Id.Should().Be(1);
-            _result.DualSpecialismId.Should().Be(expectedResult.DualSpecialismId);
-            _result.SpecialismId.Should().Be(expectedResult.SpecialismId);
+            _result.TlDualSpecialismId.Should().Be(expectedResult.TlDualSpecialismId);
+            _result.TlSpecialismId.Should().Be(expectedResult.TlSpecialismId);
             _result.CreatedBy.Should().Be(expectedResult.CreatedBy);
             _result.CreatedOn.Should().Be(expectedResult.CreatedOn);
             _result.ModifiedBy.Should().Be(expectedResult.ModifiedBy);

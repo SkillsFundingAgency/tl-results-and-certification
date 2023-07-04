@@ -91,6 +91,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IOverallGradeStrategyFactory, OverallGradeStrategyFactory>();
             services.AddTransient<IOverallResultCalculationService, OverallResultCalculationService>();
             services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();
+            services.AddTransient<IOverallResultRepository, OverallResultRepository>();
 
             // Certificate
             services.AddTransient<ICertificateService, Application.Services.CertificateService>();

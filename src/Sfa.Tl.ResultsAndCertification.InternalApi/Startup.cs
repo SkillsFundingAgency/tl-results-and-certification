@@ -194,6 +194,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<ISpecialismResultStrategyFactory, SpecialismResultStrategyFactory>();
             services.AddTransient<IOverallGradeStrategyFactory, OverallGradeStrategyFactory>();
             services.AddTransient<IOverallResultCalculationService, OverallResultCalculationService>();
+            services.AddTransient<IOverallResultRepository, OverallResultRepository>();
             services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();
 
             // Certificate Printing Service

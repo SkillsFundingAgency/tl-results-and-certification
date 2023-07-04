@@ -37,12 +37,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.DualSpecial
         {
             var expectedResult = _data;
 
-            _result.DualSpecialismId.Should().Be(expectedResult.DualSpecialismId);
-            _result.SpecialismId.Should().Be(expectedResult.SpecialismId);
+            _result.TlDualSpecialismId.Should().Be(expectedResult.TlDualSpecialismId);
+            _result.TlSpecialismId.Should().Be(expectedResult.TlSpecialismId);
             _result.CreatedBy.Should().Be(expectedResult.CreatedBy);
             _result.CreatedOn.Should().Be(expectedResult.CreatedOn);
             _result.ModifiedBy.Should().Be(expectedResult.ModifiedBy);
             _result.ModifiedOn.Should().Be(expectedResult.ModifiedOn);
-        }        
+        }
     }
 }
