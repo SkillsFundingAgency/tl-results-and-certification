@@ -26,7 +26,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
 
         public override void Given()
         {
-            SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _ulns = new Dictionary<long, RegistrationPathwayStatus>
             {
                 { 1111111111, RegistrationPathwayStatus.Active },
