@@ -28,12 +28,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 
         private static string GetSpecialismName(OverallResult overallResult)
         {
-            return overallResult.TqRegistrationPathway.TqRegistrationSpecialisms.Count switch
+            string specialismName = overallResult.TqRegistrationPathway.TqRegistrationSpecialisms.Count switch
             {
                 1 => GetSingleSpecialismName(overallResult),
                 2 => GetDualSpecialismName(overallResult),
                 _ => string.Empty
             };
+
+            return $"\"{specialismName}\"";
         }
 
         private static string GetSpecialismCode(OverallResult overallResult)
@@ -79,7 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                                                                         .SelectMany(s => s.TlDualSpecialismToSpecialisms)
                                                                         .Select(p => p.DualSpecialism);
 
-            IGrouping<string, TlDualSpecialism> dualSpecialism = dualSpecialisms.GroupBy(p => p.Name).FirstOrDefault(p => p.Count() == 2);
+            IGrouping<int, TlDualSpecialism> dualSpecialism = dualSpecialisms.GroupBy(p => p.Id).FirstOrDefault(p => p.Count() == 2);
             return dualSpecialism != null ? getPropertyValue(dualSpecialism.First()) : string.Empty;
         }
     }

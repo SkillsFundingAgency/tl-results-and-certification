@@ -147,7 +147,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
 
                 actualResult.SpecialismCode.Should().Be($"{expectedOverallResultsDetails.SpecialismDetails.FirstOrDefault().SpecialismLarId}");
                 actualResult.SpecialismComponent.Should().Be($"\"{expectedOverallResultsDetails.SpecialismDetails.FirstOrDefault().SpecialismName}\"");
-                actualResult.SpecialismResult.Should().Be($"{expectedOverallResultsDetails.SpecialismDetails.FirstOrDefault().SpecialismResult}");
+                actualResult.SpecialismResult.Should().Be(expectedOverallResults.SpecialismResultAwarded);
 
                 actualResult.IndustryPlacementStatus.Should().Be($"{expectedOverallResultsDetails.IndustryPlacementStatus}");
                 actualResult.OverallResult.Should().Be(expectedOverallResults.ResultAwarded);
