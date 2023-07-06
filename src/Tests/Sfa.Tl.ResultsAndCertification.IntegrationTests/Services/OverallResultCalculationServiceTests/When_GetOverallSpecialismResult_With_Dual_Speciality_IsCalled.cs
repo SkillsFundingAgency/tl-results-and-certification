@@ -63,14 +63,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             { 1111111149, ("Q - pending result", "Unclassified", "Q - pending result") },
             { 1111111150, ("Q - pending result", null, "Q - pending result") },
             { 1111111151, ("Q - pending result", "Q - pending result", "Q - pending result") },
-            { 1111111152, ("Q - pending result", "X - no result", "X - no result") },
+            { 1111111152, ("Q - pending result", "X - no result", "Q - pending result") },
 
             { 1111111153, ("X - no result", "Distinction", "X - no result") },
             { 1111111154, ("X - no result", "Merit", "X - no result") },
             { 1111111155, ("X - no result", "Pass", "X - no result") },
             { 1111111156, ("X - no result", "Unclassified", "X - no result") },
             { 1111111157, ("X - no result", null, "X - no result") },
-            { 1111111158, ("X - no result", "Q - pending result", "X - no result") },
+            { 1111111158, ("X - no result", "Q - pending result", "Q - pending result") },
             { 1111111159, ("X - no result", "X - no result", "X - no result") }
         };
 

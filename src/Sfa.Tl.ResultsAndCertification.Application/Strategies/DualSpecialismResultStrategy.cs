@@ -35,13 +35,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Strategies
 
             TlLookup overallSpecialismResult = null;
 
-            if (IsSpecialismGradeXNoResult(firstSpecialismResult) || IsSpecialismGradeXNoResult(secondSpecialismResult))
-            {
-                overallSpecialismResult = GetSpecialismTLookupResult(Constants.SpecialismComponentGradeXNoResultCode);
-            }
-            else if (IsSpecialismGradeQPending(firstSpecialismResult) || IsSpecialismGradeQPending(secondSpecialismResult))
+            
+            if (IsSpecialismGradeQPending(firstSpecialismResult) || IsSpecialismGradeQPending(secondSpecialismResult))
             {
                 overallSpecialismResult = GetSpecialismTLookupResult(Constants.SpecialismComponentGradeQpendingResultCode);
+            }
+            else if (IsSpecialismGradeXNoResult(firstSpecialismResult) || IsSpecialismGradeXNoResult(secondSpecialismResult))
+            {
+                overallSpecialismResult = GetSpecialismTLookupResult(Constants.SpecialismComponentGradeXNoResultCode);
             }
             else if (firstSpecialismResult == null || secondSpecialismResult == null)
             {
