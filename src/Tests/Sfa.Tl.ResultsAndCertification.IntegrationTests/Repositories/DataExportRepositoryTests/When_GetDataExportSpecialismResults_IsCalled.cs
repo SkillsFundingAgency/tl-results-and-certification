@@ -50,6 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
 
             // Test class.
             DataExportRepository = new DataExportRepository(DbContext);
+            AcademicYears = DbContext.AcademicYear.ToList();
         }
 
         public override Task When()
@@ -87,6 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
                         .Select(x => new SpecialismResultsExport
                         {
                             Uln = x.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
+                            AcademicYear = DbContext.AcademicYear.Single(e => e.Year == x.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.AcademicYear).Name,
                             SpecialismCode = x.TqSpecialismAssessment.TqRegistrationSpecialism.TlSpecialism.LarId,
                             SpecialismAssessmentEntry = x.TqSpecialismAssessment.AssessmentSeries.Name,
                             SpecialismGrade = x.TlLookup.Value

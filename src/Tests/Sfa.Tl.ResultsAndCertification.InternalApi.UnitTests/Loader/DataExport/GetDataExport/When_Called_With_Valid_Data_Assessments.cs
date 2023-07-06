@@ -17,9 +17,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
         {
             DataExportType = Common.Enum.DataExportType.Assessments;
 
-            _coreAssessments = new List<CoreAssessmentsExport> { new CoreAssessmentsExport { Uln = 1111112548, CoreCode = "45678941", CoreAssessmentEntry = "Summer 2021" } };
-            _specialismAssessments = new List<SpecialismAssessmentsExport> { new SpecialismAssessmentsExport { Uln = 1111112548, SpecialismCode = "ZT78945612", SpecialismAssessmentEntry = "Summer 2022" } };
-            
+            _coreAssessments = new List<CoreAssessmentsExport> { new CoreAssessmentsExport { Uln = 1111112548, StartYear = "2021/22", CoreCode = "45678941", CoreAssessmentEntry = "Summer 2021" } };
+            _specialismAssessments = new List<SpecialismAssessmentsExport> { new SpecialismAssessmentsExport { Uln = 1111112548, StartYear = "2021/22", SpecialismCode = "ZT78945612", SpecialismAssessmentEntry = "Summer 2022" } };
+
             DataExportService.GetDataExportCoreAssessmentsAsync(AoUkprn).Returns(_coreAssessments);
             DataExportService.GetDataExportSpecialismAssessmentsAsync(AoUkprn).Returns(_specialismAssessments);
         }
@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
         {
             Response.Should().NotBeNull();
             Response.Count.Should().Be(2);
-            
+
             Response.FirstOrDefault().IsDataFound.Should().BeTrue();
             Response.FirstOrDefault().ComponentType.Should().Be(Common.Enum.ComponentType.Core);
 

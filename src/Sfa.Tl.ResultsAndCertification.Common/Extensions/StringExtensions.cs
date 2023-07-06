@@ -102,5 +102,13 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
         {
             return Guid.TryParse(value, out _);
         }
+
+        public static int GetHashCodeWithNullCheck(this string value)
+        {
+            if (value == null)
+                return 0;
+
+            return value.GetHashCode();
+        }
     }
 }

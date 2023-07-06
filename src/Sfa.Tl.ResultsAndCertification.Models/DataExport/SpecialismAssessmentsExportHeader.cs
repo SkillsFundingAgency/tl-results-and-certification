@@ -3,6 +3,7 @@
     public class SpecialismAssessmentsExportHeader
     {
         public const string Uln = "ULN";
+        public const string StartYear = "Start Year";
         public const string SpecialismCode = "Specialism code(s)";
         public const string SpecialismAssessmentEntry = "Specialism assessment entry";
     }

@@ -81,6 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
                                                            .SelectMany(p => p.TqPathwayAssessments.Where(pa => pa.IsOptedin && pa.EndDate == null).Select(x => new CoreAssessmentsExport
                                                            {
                                                                Uln = x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
+                                                               StartYear = AcademicYears.First(f => f.Year == x.TqRegistrationPathway.AcademicYear).Name,
                                                                CoreCode = x.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                                                                CoreAssessmentEntry = x.AssessmentSeries.Name
                                                            }))).ToList();

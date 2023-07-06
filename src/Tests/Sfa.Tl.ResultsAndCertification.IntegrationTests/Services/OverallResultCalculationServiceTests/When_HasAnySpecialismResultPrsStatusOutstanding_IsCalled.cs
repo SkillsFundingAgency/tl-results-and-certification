@@ -1,9 +1,6 @@
 ﻿using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -88,7 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             return Task.CompletedTask;
         }
 
-        public async Task WhenAsync(TqRegistrationSpecialism request)
+        public async Task WhenAsync(ICollection<TqRegistrationSpecialism> request)
         {
             await Task.CompletedTask;
             _actualResult = OverallResultCalculationService.HasAnySpecialismResultPrsStatusOutstanding(request);
@@ -99,8 +96,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         public async Task Then_Expected_Results_Are_Returned(long uln, PrsStatus? expectedResult)
         {
             var pathway = _registrations.Where(x => x.UniqueLearnerNumber == uln).SelectMany(x => x.TqRegistrationPathways).FirstOrDefault();
-            var specialism = pathway.TqRegistrationSpecialisms.FirstOrDefault();
-            await WhenAsync(specialism);
+            var specialisms = pathway.TqRegistrationSpecialisms;
+            await WhenAsync(specialisms);
 
             _actualResult.Should().Be(expectedResult);
         }
