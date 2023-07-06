@@ -1,30 +1,33 @@
 ﻿/*
 Insert initial data for TlDualSpecialismToSpecialism
 */
-
+SET IDENTITY_INSERT [dbo].[TlDualSpecialismToSpecialism] ON
 
 MERGE INTO [dbo].[TlDualSpecialismToSpecialism] AS Target 
 USING (VALUES 
-  (1, (select Id from TlSpecialism where LarId='10202102')),
-  (1, (select Id from TlSpecialism where LarId='10202101')),
-  (2, (select Id from TlSpecialism where LarId='10202101')),  
-  (2, (select Id from TlSpecialism where LarId='10202105')), 
-  (3, (select Id from TlSpecialism where LarId='10202103')), 
-  (3, (select Id from TlSpecialism where LarId='10202104'))
+  (1,1,11),
+  (2,1,13),
+  (3,2,11),  
+  (4,2,16), 
+  (5,3,14), 
+  (6,3,15)
   )
-  AS Source ([DualSpecialismId], [SpecialismId]) 
-ON Target.[DualSpecialismId] = Source.[DualSpecialismId] 
+  AS Source ([Id], [TlDualSpecialismId], [TlSpecialismId]) 
+ON Target.[TlDualSpecialismId] = Source.[TlDualSpecialismId] 
 -- Update from Source when Id is Matched
 WHEN MATCHED 
-	 AND ((Target.[DualSpecialismId] <> Source.[DualSpecialismId])	
-	 AND (Target.[SpecialismId] <> Source.[SpecialismId])	
+	 AND ((Target.[Id] <> Source.[Id])	
+	 AND (Target.[TlDualSpecialismId] <> Source.[TlDualSpecialismId])	
+	 AND (Target.[TlSpecialismId] <> Source.[TlSpecialismId])	
 	 )
 THEN 
 UPDATE SET 	
-	[DualSpecialismId] = Source.[DualSpecialismId],
-	[SpecialismId] = Source.[SpecialismId]	
+	[TlDualSpecialismId] = Source.[TlDualSpecialismId],
+	[TlSpecialismId] = Source.[TlSpecialismId]	
 WHEN NOT MATCHED BY TARGET THEN 
-	INSERT ([DualSpecialismId], [SpecialismId]) 
-	VALUES ([DualSpecialismId], [SpecialismId]) 
+	INSERT ([Id], [TlDualSpecialismId], [TlSpecialismId]) 
+	VALUES ([Id], [TlDualSpecialismId], [TlSpecialismId]) 
 WHEN NOT MATCHED BY SOURCE THEN 
 DELETE;
+
+SET IDENTITY_INSERT [dbo].[TlDualSpecialismToSpecialism] OFF

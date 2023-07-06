@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IRepository<TlLookup> _tlLookupRepository;
         private readonly IOverallResultCalculationRepository _overallGradeCalculationRepository;
         private readonly IRepository<AssessmentSeries> _assessmentSeriesRepository;
-        private readonly IRepository<OverallResult> _overallResultRepository;
+        private readonly IOverallResultRepository _overallResultRepository;
         private readonly ISpecialismResultStrategyFactory _specialismResultStrategyFactory;
         private readonly IOverallGradeStrategyFactory _overallGradeStrategyFactory;
         private readonly IMapper _mapper;
@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             IRepository<TlLookup> tlLookupRepository,
             IOverallResultCalculationRepository overallGradeCalculationRepository,
             IRepository<AssessmentSeries> assessmentSeriesRepository,
-            IRepository<OverallResult> overallResultRepository,
+            IOverallResultRepository overallResultRepository,
             ISpecialismResultStrategyFactory specialismResultStrategyFactory,
             IOverallGradeStrategyFactory overallGradeStrategyFactory,
             IMapper mapper)
@@ -339,14 +339,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return new List<DownloadOverallResultsData>();
 
             // 2. Get OverallResults on above PublishDate if date reached
-            var overallResults = await _overallResultRepository.GetManyAsync(x =>
-                                                x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
-                                                x.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == providerUkprn &&
-                                                x.PublishDate == resultPublishDate && DateTime.Today >= resultPublishDate,
-                                                incl => incl.TqRegistrationPathway.TqRegistrationProfile)
-                                        .OrderBy(x => x.TqRegistrationPathway.TqRegistrationProfile.Lastname)
-                                        .ToListAsync();
-
+            var overallResults = await _overallResultRepository.GetOverallResults(providerUkprn, resultPublishDate.Value);
             return _mapper.Map<IList<DownloadOverallResultsData>>(overallResults);
         }
 

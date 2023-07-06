@@ -51,8 +51,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         protected ILogger<GenericRepository<OverallGradeLookup>> OverallGradeLookupLogger;
         protected IRepository<AssessmentSeries> AssessmentSeriesRepository;
         protected ILogger<GenericRepository<AssessmentSeries>> AssessmentSeriesLogger;
-        protected IRepository<OverallResult> OverallResultRepository;
-        protected ILogger<GenericRepository<OverallResult>> OverallResultLogger;
+        protected IOverallResultRepository OverallResultRepository;
+        protected ILogger<OverallResultRepository> OverallResultLogger;
         protected IMapper Mapper;
 
         protected ISpecialismResultStrategyFactory SpecialismResultStrategyFactory;
@@ -93,8 +93,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 TlLookupRepository = new GenericRepository<TlLookup>(TlLookupRepositoryLogger, DbContext);
                 AssessmentSeriesLogger = new Logger<GenericRepository<AssessmentSeries>>(new NullLoggerFactory());
                 AssessmentSeriesRepository = new GenericRepository<AssessmentSeries>(AssessmentSeriesLogger, DbContext);
-                OverallResultLogger = new Logger<GenericRepository<OverallResult>>(new NullLoggerFactory());
-                OverallResultRepository = new GenericRepository<OverallResult>(OverallResultLogger, DbContext);
+                OverallResultLogger = new Logger<OverallResultRepository>(new NullLoggerFactory());
+                OverallResultRepository = new OverallResultRepository(OverallResultLogger, DbContext);
                 OverallResultCalculationRepository = new OverallResultCalculationRepository(DbContext);
 
                 DualSpecialismOverallGradeLookupLogger = new Logger<GenericRepository<DualSpecialismOverallGradeLookup>>(new NullLoggerFactory());

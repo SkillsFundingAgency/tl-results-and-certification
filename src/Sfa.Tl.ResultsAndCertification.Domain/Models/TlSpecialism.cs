@@ -8,6 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         {
             TqSpecialismRegistrations = new HashSet<TqRegistrationSpecialism>();
             TlPathwaySpecialismCombinations = new HashSet<TlPathwaySpecialismCombination>();
+            TlDualSpecialismToSpecialisms = new HashSet<TlDualSpecialismToSpecialism>();
         }
 
         public int TlPathwayId { get; set; }
@@ -18,5 +19,6 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public virtual TlPathway TlPathway { get; set; }
         public virtual ICollection<TqRegistrationSpecialism> TqSpecialismRegistrations { get; set; }
         public virtual ICollection<TlPathwaySpecialismCombination> TlPathwaySpecialismCombinations { get; set; }
+        public virtual ICollection<TlDualSpecialismToSpecialism> TlDualSpecialismToSpecialisms { get; set; }
     }
 }
