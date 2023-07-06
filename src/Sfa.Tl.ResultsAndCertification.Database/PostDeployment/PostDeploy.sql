@@ -21,6 +21,11 @@ BEGIN
 :r ".\SeedQualificationGrade.sql"
 :r ".\SeedQualification.sql"
 :r ".\SeedIpLookup.sql"
+:r ".\SeedOverallGradeLookup.sql"
+:r ".\SeedTlDualSpecialism.sql"
+:r ".\SeedTlDualSpecialismToSpecialism.sql"
+:r ".\SeedOverallGradeLookupPostStartYear2020.sql"
+:r ".\SeedDualSpecialismOverallGradeLookup.sql"
 END
 ELSE IF ('$(environment)' <> 'DevIntegration')
 BEGIN
@@ -44,4 +49,8 @@ BEGIN
 :r ".\SeedIpTempFlexTlevelCombination.sql"
 :r ".\SeedIpTempFlexNavigation.sql"
 :r ".\SeedOverallGradeLookup.sql"
+:r ".\SeedTlDualSpecialism.sql"
+:r ".\SeedTlDualSpecialismToSpecialism.sql"
+:r ".\SeedOverallGradeLookupPostStartYear2020.sql"
+:r ".\SeedDualSpecialismOverallGradeLookup.sql"
 END

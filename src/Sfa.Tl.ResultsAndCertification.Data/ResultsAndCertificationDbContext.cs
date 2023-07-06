@@ -17,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<TlProviderAddress> TlProviderAddress { get; set; }
         public virtual DbSet<TlRoute> TlRoute { get; set; }
         public virtual DbSet<TlSpecialism> TlSpecialism { get; set; }
+        public virtual DbSet<TlDualSpecialism> TlDualSpecialism { get; set; }
         public virtual DbSet<TlPathwaySpecialismCombination> TlPathwaySpecialismCombination { get; set; }
         public virtual DbSet<TqAwardingOrganisation> TqAwardingOrganisation { get; set; }
         public virtual DbSet<TqProvider> TqProvider { get; set; }
@@ -44,6 +45,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<IpLookup> IpLookup { get; set; }
         public virtual DbSet<OverallResult> OverallResult { get; set; }
         public virtual DbSet<OverallGradeLookup> OverallGradeLookup { get; set; }
+        public virtual DbSet<TlDualSpecialismToSpecialism> TlDualSpecialismToSpecialism { get; set; }
+        public virtual DbSet<DualSpecialismOverallGradeLookup> DualSpecialismOverallGradeLookup { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
@@ -169,8 +170,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryCoreResult.Value.Should().Be(Mockresult.OverallResultDetails.PathwayResult);
 
             // Overall Specialism result details
-            model.SummarySpecialismResult.Title.Should().Be(Mockresult.OverallResultDetails.SpecialismDetails[0].SpecialismName);
-            model.SummarySpecialismResult.Value.Should().Be(Mockresult.OverallResultDetails.SpecialismDetails[0].SpecialismResult);
+            model.SummarySpecialismResult.ForEach(t=>t.Title.Should().Be(Mockresult.OverallResultDetails.SpecialismDetails[0].SpecialismName));
+            model.SummarySpecialismResult.ForEach(t => t.Value.Should().Be(Mockresult.OverallResultDetails.SpecialismDetails[0].SpecialismResult));
 
             // Overall Result
             model.SummaryOverallResult.Title.Should().Be(LearnerRecordDetailsContent.Title_OverallResult_Text);

@@ -70,6 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
                                                            .Select(x => new SpecialismAssessmentsExport
                                                            {
                                                                Uln = x.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
+                                                               StartYear = AcademicYears.First(f => f.Year == x.TqRegistrationSpecialism.TqRegistrationPathway.AcademicYear).Name,
                                                                SpecialismCode = x.TqRegistrationSpecialism.TlSpecialism.LarId,
                                                                SpecialismAssessmentEntry = x.AssessmentSeries.Name
                                                            })))).ToList();

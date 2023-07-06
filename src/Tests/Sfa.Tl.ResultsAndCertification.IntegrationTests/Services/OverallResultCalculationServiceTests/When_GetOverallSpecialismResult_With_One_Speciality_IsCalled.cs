@@ -1,11 +1,8 @@
 ﻿using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System;
 using System.Collections.Generic;
@@ -15,11 +12,11 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResultCalculationServiceTests
 {
-    public class When_GetHighestSpecialismResult_IsCalled : OverallResultCalculationServiceBaseTest
+    public class When_GetOverallSpecialismResult_With_One_Speciality_IsCalled : OverallResultCalculationServiceBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<TqRegistrationProfile> _registrations;
-        private TqSpecialismResult _actualResult;
+        private OverallSpecialismResultDetail _actualResult;
 
         public override void Given()
         {
@@ -56,15 +53,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             SetAssessmentResult(1111111112, $"Autumn {currentAcademicYear}", "B", "Pass");
             SetAssessmentResult(1111111116, $"Autumn {currentAcademicYear}", "Q - pending result", "Q - pending result");
 
-            ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
-            {
-                OverallResultBatchSettings = new OverallResultBatchSettings
-                {
-                    BatchSize = 10,
-                    NoOfAcademicYearsToProcess = 4
-                }
-            };
-
             CreateService();
         }
 
@@ -73,10 +61,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             return Task.CompletedTask;
         }
 
-        public async Task WhenAsync(TqRegistrationSpecialism specialism)
+        public async Task WhenAsync(ICollection<TqRegistrationSpecialism> specialisms)
         {
+            _actualResult = await OverallResultCalculationService.GetOverallSpecialismResult(TlLookup, specialisms);
             await Task.CompletedTask;
-            _actualResult = OverallResultCalculationService.GetHighestSpecialismResult(specialism);
         }
 
         [Theory]
@@ -85,16 +73,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         {
             var pathway = _registrations.SelectMany(r => r.TqRegistrationPathways).FirstOrDefault(r => r.TqRegistrationProfile.UniqueLearnerNumber == uln);
 
-            var specialism = pathway.TqRegistrationSpecialisms.FirstOrDefault();
-            await WhenAsync(specialism);
+            var specialisms = pathway.TqRegistrationSpecialisms;
+            await WhenAsync(specialisms);
 
-            if (hasHighestResult == false)
-            {
-                _actualResult.Should().BeNull();
-                return;
-            }
-
-            _actualResult.TlLookup.Value.Should().Be(expectedHighestGrade);
+            OverallSpecialismResultDetail expectedResult = CreateExpectedOverallSpecialismResultDetail(specialisms, hasHighestResult, expectedHighestGrade);
+            _actualResult.Should().BeEquivalentTo(expectedResult, options => options.Excluding(p => p.TlLookupId));
         }
 
         public static IEnumerable<object[]> Data
@@ -125,6 +108,25 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             currentSpecialismResult.TlLookup = SpecialismComponentGrades.FirstOrDefault(x => x.Value.Equals(specialismGrade, StringComparison.InvariantCultureIgnoreCase));
 
             DbContext.SaveChanges();
+        }
+
+        private OverallSpecialismResultDetail CreateExpectedOverallSpecialismResultDetail(IEnumerable<TqRegistrationSpecialism> registrationSpecialisms, bool hasHighestResult, string expectedHighestGrade)
+        {
+            TlSpecialism specialism = registrationSpecialisms.SingleOrDefault()?.TlSpecialism;
+
+            return new OverallSpecialismResultDetail()
+            {
+                SpecialismDetails = new List<OverallSpecialismDetail>
+                {
+                    new OverallSpecialismDetail
+                    {
+                        SpecialismName = specialism?.Name,
+                        SpecialismLarId = specialism?.LarId,
+                        SpecialismResult = hasHighestResult ? expectedHighestGrade : null
+                    }
+                },
+                OverallSpecialismResult = hasHighestResult ? expectedHighestGrade : null
+            };
         }
     }
 }

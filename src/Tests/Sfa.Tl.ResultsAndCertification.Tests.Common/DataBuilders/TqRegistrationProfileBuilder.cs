@@ -7,9 +7,11 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 {
     public class TqRegistrationProfileBuilder
     {
-        public Domain.Models.TqRegistrationProfile Build() => new Domain.Models.TqRegistrationProfile
+        public Domain.Models.TqRegistrationProfile Build() => Build(1111111111);
+
+        public Domain.Models.TqRegistrationProfile Build(long uln) => new Domain.Models.TqRegistrationProfile
         {
-            UniqueLearnerNumber = 1111111111,
+            UniqueLearnerNumber = uln,
             Firstname = "First 1",
             Lastname = "Last 1",
             DateofBirth = "10/10/1980".ParseStringToDateTimeWithFormat(),

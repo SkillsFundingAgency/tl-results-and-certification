@@ -87,6 +87,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.DataExportSer
                                                            .Select(x => new SpecialismResultsExport
                                                            {
                                                                Uln = x.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
+                                                               AcademicYear = DbContext.AcademicYear.First(e => e.Year == x.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.AcademicYear).Name,
                                                                SpecialismCode = x.TqSpecialismAssessment.TqRegistrationSpecialism.TlSpecialism.LarId,
                                                                SpecialismAssessmentEntry = x.TqSpecialismAssessment.AssessmentSeries.Name,
                                                                SpecialismGrade = x.TlLookup.Value

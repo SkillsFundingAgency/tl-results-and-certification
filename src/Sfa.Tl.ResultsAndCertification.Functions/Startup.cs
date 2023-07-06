@@ -9,10 +9,10 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Application.Strategies;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service;
-using Sfa.Tl.ResultsAndCertification.Common.Services.Certificates;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Configuration;
 using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -89,8 +89,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
             // Overall result calculation
             services.AddTransient<IOverallResultCalculationFunctionService, OverallResultCalculationFunctionService>();
+            services.AddTransient<ISpecialismResultStrategyFactory, SpecialismResultStrategyFactory>();
+            services.AddTransient<IOverallGradeStrategyFactory, OverallGradeStrategyFactory>();
             services.AddTransient<IOverallResultCalculationService, OverallResultCalculationService>();
             services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();
+            services.AddTransient<IOverallResultRepository, OverallResultRepository>();
 
             // Certificate
             services.AddTransient<ICertificateService, Application.Services.CertificateService>();

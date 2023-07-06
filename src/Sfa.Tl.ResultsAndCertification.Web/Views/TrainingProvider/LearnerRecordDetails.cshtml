@@ -82,7 +82,9 @@
 
             <h2 class="govuk-heading-m">@LearnerRecordDetails.Section_Heading_OccupationalSpecialism</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <vc:summary-item model=Model.SummarySpecialismResult></vc:summary-item>
+                @foreach(var specialism in Model.SummarySpecialismResult){
+                <vc:summary-item model=specialism></vc:summary-item>
+                }
             </dl>
 
             <h2 class="govuk-heading-m">@LearnerRecordDetails.Section_Heading_Overall_Result_Tlevel</h2>
