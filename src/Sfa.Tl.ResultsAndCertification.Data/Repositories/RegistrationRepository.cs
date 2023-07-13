@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
             if (includeIndustryPlacements)
                 pathwayQueryable = pathwayQueryable.Include(p => p.IndustryPlacements);
-            
+
             if (includeOverallResults)
                 pathwayQueryable = pathwayQueryable.Include(p => p.OverallResults.Where(x => x.IsOptedin && (x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? x.EndDate != null : x.EndDate == null)));
 
@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                .OrderByDescending(p => p.CreatedOn)
                .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn);
 
-            return registrationPathway;            
+            return registrationPathway;
         }
 
         public async Task<TqRegistrationPathway> GetRegistrationLiteByProviderUkprnAsync(long providerUkprn, int profileId, bool includeProfile = true, bool includeIndustryPlacements = false, bool includeOverallResults = false)
@@ -83,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     .ThenInclude(x => x.IndustryPlacements)
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqPathwayAssessments)
-                    .ThenInclude(x => x.TqPathwayResults)                
+                    .ThenInclude(x => x.TqPathwayResults)
                 .FirstOrDefaultAsync();
             return profile;
         }
@@ -94,7 +94,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Include(x => x.TqRegistrationProfile)
                 .Include(x => x.TqProvider)
                     .ThenInclude(x => x.TqAwardingOrganisation)
-                        .ThenInclude(x => x.TlAwardingOrganisaton)    
+                        .ThenInclude(x => x.TlAwardingOrganisaton)
                 .Include(x => x.TqProvider)
                     .ThenInclude(x => x.TqAwardingOrganisation)
                         .ThenInclude(x => x.TlPathway)
@@ -114,7 +114,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             Func<TqRegistrationSpecialism, bool> predicate = e => e.IsOptedin && e.EndDate == null;
             if (regPathway.Status == RegistrationPathwayStatus.Withdrawn)
                 predicate = e => e.IsOptedin && e.EndDate != null;
-            
+
             regPathway.TqRegistrationSpecialisms = regPathway.TqRegistrationSpecialisms.Where(predicate).ToList();
             return regPathway;
         }
@@ -127,6 +127,29 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 profileQueryable = profileQueryable.Include(p => p.QualificationAchieved);
 
             return await profileQueryable.ToListAsync();
+        }
+
+        public async Task<IList<TqRegistrationPathway>> GetRegistrationPathwaysByAcademicYear(int academicYear)
+        {
+            var query = _dbContext.TqRegistrationPathway
+                            .Include(p => p.TqRegistrationProfile)
+                            .Include(p => p.TqProvider)
+                                .ThenInclude(p => p.TlProvider)
+                            .Include(p => p.TqProvider)
+                                .ThenInclude(p => p.TqAwardingOrganisation)
+                            .Include(p => p.TqPathwayAssessments)
+                                .ThenInclude(p => p.TqPathwayResults.Where(p => p.IsOptedin))
+                                .ThenInclude(p => p.TlLookup)
+                            .Include(p => p.TqRegistrationSpecialisms.Where(p => p.IsOptedin))
+                                .ThenInclude(p => p.TlSpecialism)
+                                .ThenInclude(s => s.TlDualSpecialismToSpecialisms)
+                                .ThenInclude(s => s.DualSpecialism)
+                            .Include(p => p.IndustryPlacements)
+                            .Include(p => p.OverallResults)
+                            .Where(p => p.AcademicYear == academicYear);
+
+            IList<TqRegistrationPathway> results = await query.ToListAsync();
+            return results;
         }
 
         #region Bulk Registration
@@ -165,8 +188,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     using (var transaction = await _dbContext.Database.BeginTransactionAsync())
                     {
                         try
-                         {
-                            var bulkConfig = new BulkConfig() 
+                        {
+                            var bulkConfig = new BulkConfig()
                             {
                                 UseTempDB = true,
                                 SetOutputIdentity = true,
@@ -194,7 +217,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
                             await ProcessIndustryPlacements(industryPlacements);
 
-                            var pathwayResults = new List <TqPathwayResult>();
+                            var pathwayResults = new List<TqPathwayResult>();
                             await ProcessPathwayAssessments(bulkConfig, pathwayAssessments, pathwayResults);
                             await ProcessPathwayResults(pathwayResults);
 
@@ -235,13 +258,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
                     if (profile.Id <= 0)
                         profileEntity = profileEntities.FirstOrDefault(x => x.UniqueLearnerNumber == profile.UniqueLearnerNumber);
-                    
+
                     foreach (var pathway in profile.TqRegistrationPathways)
                     {
                         // update fk relationship id for newly added records
                         if (pathway.TqRegistrationProfileId == 0)
                             pathway.TqRegistrationProfileId = profileEntity.Id;
-                        
+
                         pathwayRegistrations.Add(pathway);
                     }
                 });
@@ -352,7 +375,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             var pathwayAssessmentsCopy = new List<TqPathwayAssessment>(pathwayAssessments);
 
             pathwayAssessments = SortUpdateAndInsertOrder(pathwayAssessments, x => x.Id);
-            
+
             await _dbContext.BulkInsertOrUpdateAsync(pathwayAssessments, bulkConfig);
 
             foreach (var assessmentCopy in pathwayAssessmentsCopy)
@@ -375,8 +398,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 return;
 
             pathwayResults = SortUpdateAndInsertOrder(pathwayResults, x => x.Id);
-            await _dbContext.BulkInsertOrUpdateAsync(pathwayResults, bulkConfig => 
-            { 
+            await _dbContext.BulkInsertOrUpdateAsync(pathwayResults, bulkConfig =>
+            {
                 bulkConfig.UseTempDB = true;
                 bulkConfig.SetOutputIdentity = false;
                 bulkConfig.PreserveInsertOrder = false;
@@ -433,14 +456,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 return;
 
             industryPlacements = SortUpdateAndInsertOrder(industryPlacements, x => x.Id);
-            await _dbContext.BulkInsertOrUpdateAsync(industryPlacements, bulkConfig => 
-            { 
+            await _dbContext.BulkInsertOrUpdateAsync(industryPlacements, bulkConfig =>
+            {
                 bulkConfig.UseTempDB = true;
                 bulkConfig.SetOutputIdentity = false;
                 bulkConfig.PreserveInsertOrder = false;
                 bulkConfig.OnSaveChangesSetFK = false;
                 bulkConfig.BatchSize = 5000;
-                bulkConfig.BulkCopyTimeout = 60; 
+                bulkConfig.BulkCopyTimeout = 60;
             });
         }
 
@@ -477,7 +500,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             }
             return returnResult;
         }
-        
+
         #endregion
     }
 }
