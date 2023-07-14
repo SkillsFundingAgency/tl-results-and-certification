@@ -14,7 +14,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             { "C", "C" },
             { "D", "D" },
             { "E", "E" },
-            { "Unclassified", "U" }
+            { "Unclassified", "U" },
+            { "X - no result", "X" }
         };
 
         private static readonly Dictionary<string, string> _specialismResultAbbreviations = new(StringComparer.InvariantCultureIgnoreCase)
@@ -22,7 +23,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             { "Distinction", "D" },
             { "Merit", "M" },
             { "Pass", "P" },
-            { "Unclassified", "U" }
+            { "Unclassified", "U" },
+            { "X - no result", "X" }
         };
 
         private static readonly Dictionary<string, string> _overallResultsAbbreviations = new(StringComparer.InvariantCultureIgnoreCase)
@@ -44,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             { "Will not complete", "NC" }
         };
 
-        
+
 
         public static readonly List<KeyValuePair<string, List<string>>> _dualSpecialisms = new List<KeyValuePair<string, List<string>>>
         {
@@ -53,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             new ("ZTLOS032", new List<string>{ "10202103", "10202104"})
         };
 
-       
+
         public static string GetAbbreviatedResult(UcasResultType ucasResultType, string result)
         {
             if (ucasResultType != UcasResultType.OverallResult && string.IsNullOrWhiteSpace(result))
@@ -74,14 +76,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     hasValue = _overallResultsAbbreviations.TryGetValue(result, out abbreviatedResult);
                     break;
                 case UcasResultType.IndustryPlacement:
-                    hasValue = _industryPlacementResultsAbbreviations.TryGetValue(result,out abbreviatedResult);
-                    break;              
+                    hasValue = _industryPlacementResultsAbbreviations.TryGetValue(result, out abbreviatedResult);
+                    break;
             }
 
             if (hasValue)
                 return abbreviatedResult;
             else
                 throw new ApplicationException($"{ucasResultType} abbreviated result cannot be null");
-        }        
+        }
     }
 }
