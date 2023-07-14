@@ -26,8 +26,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _configuration = configuration;
             _commonService = commonService;
             _certificatePrintingService = certificatePrintingService;
-        }       
-        
+        }
+
+        [Disable]
         [FunctionName(Constants.GenerateCertificatePrintingBatches)]
         public async Task GenerateCertificatePrintingBatchesAsync([TimerTrigger("%CertificatePrintingBatchesCreateTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
@@ -79,7 +80,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 }
             }
         }
-        
+
+        [Disable]
         [FunctionName(Constants.FetchCertificatePrintingBatchSummary)]
         public async Task FetchCertificatePrintingBatchSummaryAsync([TimerTrigger("%CertificatePrintingBatchSummaryTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
@@ -125,7 +127,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
             }
         }
-        
+
+        [Disable]
         [FunctionName(Constants.SubmitCertificatePrintingRequest)]
         public async Task SubmitCertificatePrintingRequestAsync([TimerTrigger("%CertificatePrintingRequestTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
@@ -171,7 +174,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
             }
         }
-        
+
+        [Disable]
         [FunctionName(Constants.FetchCertificatePrintingTrackBatch)]
         public async Task FetchCertificatePrintingTrackBatchAsync([TimerTrigger("%CertificatePrintingTrackBatchTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
