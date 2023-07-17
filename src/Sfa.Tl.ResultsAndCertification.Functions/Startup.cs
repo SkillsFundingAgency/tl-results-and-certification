@@ -8,6 +8,7 @@ using Notify.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Application.Strategies;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -85,7 +86,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(_configuration.GovUkNotifyApiKey));
             services.AddTransient<IIndustryPlacementService, IndustryPlacementService>();
             services.AddTransient<IBlobStorageService, BlobStorageService>();
-            
 
             // Overall result calculation
             services.AddTransient<IOverallResultCalculationFunctionService, OverallResultCalculationFunctionService>();
@@ -95,8 +95,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();
             services.AddTransient<IOverallResultRepository, OverallResultRepository>();
 
+            // Converter
+            services.AddTransient<IPathwayResultConverter, PathwayResultConverter>();
+            services.AddTransient<IIndustryPlacementStatusConverter, IndustryPlacementStatusConverter>();
+
             // Certificate
-            services.AddTransient<ICertificateService, Application.Services.CertificateService>();
+            services.AddTransient<ICertificateService, CertificateService>();
             services.AddTransient<ICertificateRepository, CertificateRepository>();
         }
 
