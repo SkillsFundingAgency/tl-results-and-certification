@@ -26,6 +26,8 @@ using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Builder;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
+using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Functions.Services;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Extensions;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Infrastructure;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader;
@@ -200,6 +202,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             // Certificate Printing Service
             services.AddTransient<ICertificateService, CertificateService>();
             services.AddTransient<ICertificateRepository, CertificateRepository>();
+
+            // Analyst CoreResult
+            services.AddTransient<IAnalystCoreResultExtractionService, AnalystCoreResultExtractionService>();
         }
     }
 }

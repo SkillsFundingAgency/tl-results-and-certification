@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync();
         bool IsUcasTransferEntriesTriggerDateValid();
         bool IsIndustryPlacementTriggerDateValid();
+        bool IsAnalystCoreResultExtractionTriggerValid();
         DateTime CurrentDate { get; }
         
     }

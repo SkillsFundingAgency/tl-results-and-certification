@@ -158,5 +158,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return await _commonRepository.GetAcademicYearsAsync();
         }
+
+        public bool IsAnalystCoreResultExtractionTriggerValid()
+        {
+            return true;
+        }
     }
 }
