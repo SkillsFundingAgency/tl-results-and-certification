@@ -1,25 +1,18 @@
-﻿using AutoMapper;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using NSubstitute;
-using NSubstitute.ReturnsExtensions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
-using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.LearnerRecordDetailsGet
 {
-    public class When_Called_With_Dual_Specialism_With_OnlyOneSpecialism_Result:TestSetup
+    public class When_Called_With_Dual_Specialism_With_OnlyOneSpecialism_Result : TestSetup
     {
         private Dictionary<string, string> _routeAttributes;
         public override void Given()
@@ -57,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                         },
                          new Models.OverallResults.OverallSpecialismDetail
                         {
-                            SpecialismName = "Specialism 2"                           
+                            SpecialismName = "Specialism 2"
                         }
                     },
                     OverallResult = "Distinction"
@@ -84,7 +77,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             (Result as ViewResult).Model.Should().NotBeNull();
 
             var model = (Result as ViewResult).Model as LearnerRecordDetailsViewModel;
-            model.OverallResultDetails.SpecialismDetails.Where(x=>x.SpecialismResult.IsNullOrEmpty()).Should().HaveCount(1);
+            model.OverallResultDetails.SpecialismDetails.Where(x => string.IsNullOrEmpty(x.SpecialismResult)).Should().HaveCount(1);
         }
     }
 }

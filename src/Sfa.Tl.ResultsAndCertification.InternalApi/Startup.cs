@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Notify.Client;
 using Notify.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Strategies;
@@ -198,6 +199,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IOverallResultCalculationService, OverallResultCalculationService>();
             services.AddTransient<IOverallResultRepository, OverallResultRepository>();
             services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();
+
+            // Converter
+            services.AddTransient<IPathwayResultConverter, PathwayResultConverter>();
+            services.AddTransient<IIndustryPlacementStatusConverter, IndustryPlacementStatusConverter>();
 
             // Certificate Printing Service
             services.AddTransient<ICertificateService, CertificateService>();

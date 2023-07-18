@@ -29,6 +29,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly ISpecialismResultStrategyFactory _specialismResultStrategyFactory;
         private readonly IOverallGradeStrategyFactory _overallGradeStrategyFactory;
         private readonly IMapper _mapper;
+        private readonly IPathwayResultConverter _pathwayResultConverter;
+        private readonly IIndustryPlacementStatusConverter _industryPlacementStatusConverter;
 
         private readonly OverallResultEqualityComparer _overallResultComparer = new();
 
@@ -40,7 +42,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             IOverallResultRepository overallResultRepository,
             ISpecialismResultStrategyFactory specialismResultStrategyFactory,
             IOverallGradeStrategyFactory overallGradeStrategyFactory,
-            IMapper mapper)
+            IMapper mapper,
+            IPathwayResultConverter pathwayResultConverter,
+            IIndustryPlacementStatusConverter industryPlacementStatusConverter)
         {
             _configuration = configuration;
             _tlLookupRepository = tlLookupRepository;
@@ -50,6 +54,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _specialismResultStrategyFactory = specialismResultStrategyFactory;
             _overallGradeStrategyFactory = overallGradeStrategyFactory;
             _mapper = mapper;
+            _pathwayResultConverter = pathwayResultConverter;
+            _industryPlacementStatusConverter = industryPlacementStatusConverter;
         }
 
         public async Task<AssessmentSeries> GetResultCalculationAssessmentAsync(DateTime runDate)
@@ -209,16 +215,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public TqPathwayResult GetHighestPathwayResult(TqRegistrationPathway learnerPathway)
         {
-            if (!learnerPathway.TqPathwayAssessments.Any())
-                return null;
-
-            // Get Q-Pending grade if they are any across the results
-            var qPendingGrade = learnerPathway.TqPathwayAssessments.SelectMany(x => x.TqPathwayResults).FirstOrDefault(x => x.TlLookup.Code.Equals(Constants.PathwayComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase));
-
-            // If there is Q-Pending grade then use that if not get the higher result
-            var pathwayHigherResult = qPendingGrade ?? learnerPathway.TqPathwayAssessments.SelectMany(x => x.TqPathwayResults).OrderBy(x => x.TlLookup.SortOrder).FirstOrDefault();
-
-            return pathwayHigherResult;
+            return _pathwayResultConverter.Convert(learnerPathway, null);
         }
 
         public async Task<OverallSpecialismResultDetail> GetOverallSpecialismResult(IList<TlLookup> tlLookup, ICollection<TqRegistrationSpecialism> specialisms)
@@ -313,7 +310,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public IndustryPlacementStatus GetIndustryPlacementStatus(TqRegistrationPathway pathway)
         {
-            return pathway.IndustryPlacements.Any() ? pathway.IndustryPlacements.FirstOrDefault().Status : IndustryPlacementStatus.NotSpecified;
+            return _industryPlacementStatusConverter.Convert(pathway, null);
         }
 
         public string GetIndustryPlacementStatusDisplayName(IndustryPlacementStatus ipStatus)
