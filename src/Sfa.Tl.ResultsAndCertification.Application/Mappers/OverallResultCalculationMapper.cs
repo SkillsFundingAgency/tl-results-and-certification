@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialism;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults;
 using Sfa.Tl.ResultsAndCertification.Models.OverallResults;

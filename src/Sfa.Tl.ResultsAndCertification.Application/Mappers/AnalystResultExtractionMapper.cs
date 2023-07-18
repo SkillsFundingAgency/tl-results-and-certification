@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.PathwayResult;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialism;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.AnalystResultsExtraction;
 using System;
