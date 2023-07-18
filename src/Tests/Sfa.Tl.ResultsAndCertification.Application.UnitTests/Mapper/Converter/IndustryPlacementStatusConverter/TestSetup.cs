@@ -1,0 +1,11 @@
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
+using IndustryPlacementConverter = Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.IndustryPlacementStatusConverter;
+
+namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.Converter.IndustryPlacementStatusConverter
+{
+    public abstract class TestSetup : ConverterBaseTest<IndustryPlacementConverter, TqRegistrationPathway, IndustryPlacementStatus>
+    {
+    }
+}
