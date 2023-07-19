@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.Converter.PathwayResult
 {
-    public abstract class PathwayResultConverterBaseTest<TConverter, TResult> : ConverterBaseTest<TConverter, TqRegistrationPathway, TResult>
-        where TConverter : IValueConverter<TqRegistrationPathway, TResult>, new()
+    public abstract class PathwayResultConverterBaseTest<TConverter, TResult> : ConverterBaseTest<TConverter, IEnumerable<TqPathwayAssessment>, TResult>
+        where TConverter : IValueConverter<IEnumerable<TqPathwayAssessment>, TResult>, new()
     {
         protected TqPathwayResult APlusResult = CreateResult("PCG1", "A*", 1);
         protected TqPathwayResult AResult = CreateResult("PCG2", "A", 2);
@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.Converter.
             };
         }
 
-        protected TqRegistrationPathway CreateTqRegistrationPathway(TqPathwayResult result, params TqPathwayResult[] extraResults)
+        protected IEnumerable<TqPathwayAssessment> CreateTqRegistrationPathway(TqPathwayResult result, params TqPathwayResult[] extraResults)
         {
             var results = new List<TqPathwayResult> { result };
 
@@ -36,14 +36,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.Converter.
                 results.AddRange(extraResults);
             }
 
-            return new TqRegistrationPathway
+            return new[]
             {
-                TqPathwayAssessments = new[]
+                new TqPathwayAssessment
                 {
-                    new TqPathwayAssessment
-                    {
-                        TqPathwayResults = results
-                    }
+                    TqPathwayResults = results
                 }
             };
         }

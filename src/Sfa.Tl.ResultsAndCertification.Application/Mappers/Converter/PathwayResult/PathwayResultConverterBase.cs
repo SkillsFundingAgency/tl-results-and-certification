@@ -2,18 +2,19 @@
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.PathwayResult
 {
     public abstract class PathwayResultConverterBase
     {
-        protected TqPathwayResult Convert(TqRegistrationPathway sourceMember)
+        protected TqPathwayResult Convert(IEnumerable<TqPathwayAssessment> assesments)
         {
-            if (sourceMember.TqPathwayAssessments.IsNullOrEmpty())
+            if (assesments.IsNullOrEmpty())
                 return null;
 
-            var pathwayResults = sourceMember.TqPathwayAssessments.SelectMany(x => x.TqPathwayResults);
+            var pathwayResults = assesments.SelectMany(x => x.TqPathwayResults);
 
             // Get Q-Pending grade if they are any across the results
             var qPendingGrade = pathwayResults.FirstOrDefault(x => x.TlLookup.Code.Equals(Constants.PathwayComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase));

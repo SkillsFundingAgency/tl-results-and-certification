@@ -137,6 +137,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 .ThenInclude(p => p.TlProvider)
                             .Include(p => p.TqProvider)
                                 .ThenInclude(p => p.TqAwardingOrganisation)
+                                .ThenInclude(p => p.TlPathway)
                             .Include(p => p.TqPathwayAssessments)
                                 .ThenInclude(p => p.TqPathwayResults.Where(p => p.IsOptedin))
                                 .ThenInclude(p => p.TlLookup)

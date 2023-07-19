@@ -8,10 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.Converter.
     {
         public override void Given()
         {
-            Source = new TqRegistrationPathway
-            {
-                TqRegistrationSpecialisms = null
-            };
+            Source = null;
         }
 
         [Fact]

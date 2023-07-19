@@ -1,6 +1,6 @@
 using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.Converter.IndustryPlacement.IndustryPlacementStatusConverter
@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.Converter.
     {
         public override void Given()
         {
-            Source = new TqRegistrationPathway();
+            Source = Enumerable.Empty<Domain.Models.IndustryPlacement>();
         }
 
         [Fact]

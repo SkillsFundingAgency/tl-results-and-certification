@@ -1,6 +1,5 @@
 using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.Converter.IndustryPlacement.IndustryPlacementStatusConverter
@@ -17,11 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.Converter.
 
         public override void Given()
         {
-            Source = new TqRegistrationPathway
-            {
-                Id = TqRegistrationPathwayId,
-                IndustryPlacements = new[] { _industryPlacement }
-            };
+            Source = new[] { _industryPlacement };
         }
 
         [Fact]

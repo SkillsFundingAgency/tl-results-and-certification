@@ -26,11 +26,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.StartYear, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.StartYear))
                 .ForMember(d => d.CoreComponent, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.Name))
                 .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.LarId))
-                .ForMember(d => d.CoreResult, opts => opts.ConvertUsing<PathwayResultStringConverter, TqRegistrationPathway>())
-                .ForMember(d => d.OccupationalSpecialism, opts => opts.ConvertUsing<SpecialismNameConverter, TqRegistrationPathway>())
-                .ForMember(d => d.SpecialismCode, opts => opts.ConvertUsing<SpecialismCodeConverter, TqRegistrationPathway>())
+                .ForMember(d => d.CoreResult, opts => opts.ConvertUsing(new PathwayResultStringConverter(), p => p.TqPathwayAssessments))
+                .ForMember(d => d.OccupationalSpecialism, opts => opts.ConvertUsing(new SpecialismNameConverter(), p => p.TqRegistrationSpecialisms))
+                .ForMember(d => d.SpecialismCode, opts => opts.ConvertUsing(new SpecialismCodeConverter(), p => p.TqRegistrationSpecialisms))
                 .ForMember(d => d.SpecialismResult, opts => opts.MapFrom(s => GetSpecialismResult(s)))
-                .ForMember(d => d.IndustryPlacementStatus, opts => opts.ConvertUsing<IndustryPlacementStatusStringConverter, TqRegistrationPathway>())
+                .ForMember(d => d.IndustryPlacementStatus, opts => opts.ConvertUsing(new IndustryPlacementStatusStringConverter(), p => p.IndustryPlacements))
                 .ForMember(d => d.OverallResult, opts => opts.MapFrom(s => GetOverallResult(s)));
         }
 

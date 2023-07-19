@@ -26,8 +26,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.AnalystResultsExtraction
 
         public string CoreComponent { get; set; }
 
-        public string LarId { get; set; }
-
         public string CoreCode { get; set; }
 
         public string CoreResult { get; set; }

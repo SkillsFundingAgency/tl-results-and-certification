@@ -1,19 +1,17 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.Converter.Specialism
 {
-    public abstract class SpecialismConverterBaseTest<TConverter> : ConverterBaseTest<TConverter, TqRegistrationPathway, string>
-        where TConverter : IValueConverter<TqRegistrationPathway, string>, new()
+    public abstract class SpecialismConverterBaseTest<TConverter> : ConverterBaseTest<TConverter, IEnumerable<TqRegistrationSpecialism>, string>
+        where TConverter : IValueConverter<IEnumerable<TqRegistrationSpecialism>, string>, new()
     {
-        protected TqRegistrationPathway CivilEngineeringRegistration = new()
+        protected IEnumerable<TqRegistrationSpecialism> CivilEngineeringRegistration = new[]
         {
-            TqRegistrationSpecialisms = new[]
+            new TqRegistrationSpecialism
             {
-                new TqRegistrationSpecialism
-                {
-                    TlSpecialism = CivilEngineering
-                }
+                TlSpecialism = CivilEngineering
             }
         };
 
@@ -24,18 +22,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.Converter.
             Name = "Civil Engineering"
         };
 
-        protected TqRegistrationPathway PlumbingAndHeatingEngineeringRegistration = new()
+        protected IEnumerable<TqRegistrationSpecialism> PlumbingAndHeatingEngineeringRegistration = new[]
         {
-            TqRegistrationSpecialisms = new[]
+            new TqRegistrationSpecialism
             {
-                new TqRegistrationSpecialism
-                {
-                    TlSpecialism = HeatingEngineering
-                },
-                new TqRegistrationSpecialism
-                {
-                    TlSpecialism = PlumbingEngineering
-                }
+                TlSpecialism = HeatingEngineering
+            },
+            new TqRegistrationSpecialism
+            {
+                TlSpecialism = PlumbingEngineering
             }
         };
 

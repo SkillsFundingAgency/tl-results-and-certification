@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.Converter.Specialism.SpecialismCodeConverter
@@ -8,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.Converter.
     {
         public override void Given()
         {
-            Source = new TqRegistrationPathway();
+            Source = Enumerable.Empty<TqRegistrationSpecialism>();
         }
 
         [Fact]

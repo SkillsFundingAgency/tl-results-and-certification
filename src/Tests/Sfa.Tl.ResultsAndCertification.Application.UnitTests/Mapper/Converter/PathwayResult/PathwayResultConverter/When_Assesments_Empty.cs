@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.Converter.PathwayResult.PathwayResultConverter
@@ -8,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.Converter.
     {
         public override void Given()
         {
-            Source = new TqRegistrationPathway();
+            Source = Enumerable.Empty<TqPathwayAssessment>();
         }
 
         [Fact]

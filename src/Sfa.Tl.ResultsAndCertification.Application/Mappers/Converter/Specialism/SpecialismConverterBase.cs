@@ -7,15 +7,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialis
 {
     public abstract class SpecialismConverterBase
     {
-        protected static string GetSingleSpecialismProperty(TqRegistrationPathway registrationPathway, Func<TqRegistrationSpecialism, string> getPropertyValue)
+        protected static string GetSingleSpecialismProperty(IEnumerable<TqRegistrationSpecialism> specialisms, Func<TqRegistrationSpecialism, string> getPropertyValue)
         {
-            TqRegistrationSpecialism registrationSpecialism = registrationPathway.TqRegistrationSpecialisms.FirstOrDefault();
+            TqRegistrationSpecialism registrationSpecialism = specialisms.FirstOrDefault();
             return registrationSpecialism != null ? getPropertyValue(registrationSpecialism) : string.Empty;
         }
 
-        protected static string GetDualSpecialismProperty(TqRegistrationPathway registrationPathway, Func<TlDualSpecialism, string> getPropertyValue)
+        protected static string GetDualSpecialismProperty(IEnumerable<TqRegistrationSpecialism> specialisms, Func<TlDualSpecialism, string> getPropertyValue)
         {
-            IEnumerable<TlDualSpecialism> dualSpecialisms = registrationPathway.TqRegistrationSpecialisms
+            IEnumerable<TlDualSpecialism> dualSpecialisms = specialisms
                                                                 .Select(p => p.TlSpecialism)
                                                                 .SelectMany(s => s.TlDualSpecialismToSpecialisms)
                                                                 .Select(p => p.DualSpecialism);

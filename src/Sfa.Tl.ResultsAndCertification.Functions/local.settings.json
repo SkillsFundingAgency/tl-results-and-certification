@@ -13,6 +13,7 @@
     "UcasTransferAmendmentsTrigger": "45 21 * 8-10 *",
     "OverallResultCalculationTrigger": "30 20 * * *",
     "IndustryPlacementExtractTrigger": "0 30 8 * * *",
+    "AnalystOverallResultExtractTrigger": "0 18 * * * *",
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "BlobStorageConnectionString": "UseDevelopmentStorage=true;",
     "ConfigurationStorageConnectionString": "UseDevelopmentStorage=true;",
