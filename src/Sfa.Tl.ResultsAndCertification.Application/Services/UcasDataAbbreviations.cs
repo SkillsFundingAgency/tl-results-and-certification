@@ -15,7 +15,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             { "D", "D" },
             { "E", "E" },
             { "Unclassified", "U" },
-            { "X - no result", "X" }
+            { "X - no result", "X" },
+            { "Q - pending result","Q"}
+
         };
 
         private static readonly Dictionary<string, string> _specialismResultAbbreviations = new(StringComparer.InvariantCultureIgnoreCase)
@@ -24,7 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             { "Merit", "M" },
             { "Pass", "P" },
             { "Unclassified", "U" },
-            { "X - no result", "X" }
+            { "X - no result", "X" },
+            { "Q - pending result","Q"}
         };
 
         private static readonly Dictionary<string, string> _overallResultsAbbreviations = new(StringComparer.InvariantCultureIgnoreCase)
@@ -35,7 +38,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             { "Pass", "P" },
             { "Partial achievement", "PA" },
             { "X - no result", "X" },
-            { "Unclassified", "U" }
+            { "Unclassified", "U" },
+            { "Q - pending result","Q"}
         };
 
         private static readonly Dictionary<string, string> _industryPlacementResultsAbbreviations = new(StringComparer.InvariantCultureIgnoreCase)
