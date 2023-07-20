@@ -74,9 +74,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var records = new List<UcasDataRecord>();
             var overallResults = await _ucasRepository.GetUcasDataRecordsForResultsAsync();
 
-            var test = overallResults.ToList();
-            var test1 = overallResults.ToList().Where(w => w.Id == 1125);
-            var test2 = overallResults.Take(33).ToList();
+            //var test = overallResults.ToList();
+            //var test1 = overallResults.ToList().Where(w => w.Id == 1125);
+            //var test2 = overallResults.Take(33).ToList();
 
             foreach (var overallResult in overallResults)
             //foreach (var overallResult in overallResults.Where(w => w.Id == 1125))
