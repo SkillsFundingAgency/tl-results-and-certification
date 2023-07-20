@@ -147,7 +147,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 .ThenInclude(s => s.DualSpecialism)
                             .Include(p => p.IndustryPlacements)
                             .Include(p => p.OverallResults)
-                            .Where(p => academicYears.Contains(p.AcademicYear));
+                            .Where(p => academicYears.Contains(p.AcademicYear))
+                            .OrderBy(p => p.AcademicYear)
+                            .ThenBy(p => p.TqRegistrationProfile.UniqueLearnerNumber);
 
             IList<TqRegistrationPathway> results = await query.ToListAsync();
             return results;
