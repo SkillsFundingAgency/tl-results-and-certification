@@ -215,7 +215,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public TqPathwayResult GetHighestPathwayResult(TqRegistrationPathway learnerPathway)
         {
-            return _pathwayResultConverter.Convert(learnerPathway, null);
+            return _pathwayResultConverter.Convert(learnerPathway.TqPathwayAssessments, null);
         }
 
         public async Task<OverallSpecialismResultDetail> GetOverallSpecialismResult(IList<TlLookup> tlLookup, ICollection<TqRegistrationSpecialism> specialisms)
@@ -310,7 +310,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public IndustryPlacementStatus GetIndustryPlacementStatus(TqRegistrationPathway pathway)
         {
-            return _industryPlacementStatusConverter.Convert(pathway, null);
+            return _industryPlacementStatusConverter.Convert(pathway.IndustryPlacements, null);
         }
 
         public string GetIndustryPlacementStatusDisplayName(IndustryPlacementStatus ipStatus)

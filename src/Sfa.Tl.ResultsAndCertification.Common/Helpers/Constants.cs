@@ -169,6 +169,7 @@
         public const string IndustryPlacementExtract = "IndustryPlacementExtract";
         public const string AnalystCoreResultExtraction = "AnalystCoreResultExtraction";
         public const string IndustryPlacementExtractsFolder = "extracts";
+        public const string AnalystOverallResultExtract = "AnalystOverallResultExtract";
         public const string AnalystOverallResultExtractsFolder = "extracts";
         public const string AnalystCoreResultExtractsFolder = "extracts";
 

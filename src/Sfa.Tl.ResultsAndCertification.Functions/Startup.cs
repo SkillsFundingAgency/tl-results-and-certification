@@ -8,7 +8,8 @@ using Notify.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.PathwayResult;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Application.Strategies;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -95,6 +96,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();
             services.AddTransient<IOverallResultRepository, OverallResultRepository>();
 
+            // AnalystOverallResultExtract
+            services.AddTransient<IAnalystResultExtractionService, AnalystResultExtractionService>();
+
             // Converter
             services.AddTransient<IPathwayResultConverter, PathwayResultConverter>();
             services.AddTransient<IIndustryPlacementStatusConverter, IndustryPlacementStatusConverter>();
@@ -124,7 +128,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 client.ClientCredentials.ClientCertificate.Certificate = lrsCertificate;
                 return client;
             });
-            
+
             services.AddTransient<ILrsLearnerServiceApiClient, LrsLearnerServiceApiClient>();
             services.AddHttpClient<IPrintingApiClient, PrintingApiClient>();
             services.AddHttpClient<IUcasApiClient, UcasApiClient>();
