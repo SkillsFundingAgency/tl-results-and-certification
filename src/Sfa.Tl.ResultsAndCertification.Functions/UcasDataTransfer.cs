@@ -76,9 +76,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
 
-            //Check if it is the second Thursday in August and run the function if it is true
-            //if (_commonService.CurrentDate.IsNthWeekdayOfMonth(DayOfWeek.Thursday, Months.August, 2))
-            //{
+            if (_commonService.IsUcasTransferResultssTriggerDateValid())
+            {
+                //Check if it is the second Thursday in August and run the function if it is true
+                //if (_commonService.CurrentDate.IsNthWeekdayOfMonth(DayOfWeek.Thursday, Months.August, 2))
+                //{
                 var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.UcasTransferResults);
 
                 try
@@ -113,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                     await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
                 }
-            //}
+            }
         }
 
         [Disable]

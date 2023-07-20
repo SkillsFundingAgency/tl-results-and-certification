@@ -34,16 +34,26 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var overallResults = pathway.OverallResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
             var overallResultDetails = JsonConvert.DeserializeObject<OverallResultDetail>(overallResults.Details);
 
+
+
             if (overallResultDetails.SpecialismDetails != null)
             {
                 overallResultDetails = ReplaceDualSpecialismCode(overallResultDetails);
 
                 foreach (var specialism in overallResultDetails.SpecialismDetails)
                 {
+                    //var ucasSpecialismComponent = new UcasDataComponent
+                    //{
+                    //    SubjectCode = specialism.SpecialismLarId,
+                    //    Grade = UcasDataAbbreviations.GetAbbreviatedResult(UcasResultType.SpecialismResult, specialism.SpecialismResult),
+                    //    PreviousGrade = string.Empty
+                    //};
+
+                    var specialismResult = overallResults.SpecialismResultAwarded ?? specialism.SpecialismResult;
                     var ucasSpecialismComponent = new UcasDataComponent
                     {
                         SubjectCode = specialism.SpecialismLarId,
-                        Grade = UcasDataAbbreviations.GetAbbreviatedResult(UcasResultType.SpecialismResult, specialism.SpecialismResult),
+                        Grade = UcasDataAbbreviations.GetAbbreviatedResult(UcasResultType.SpecialismResult, specialismResult),
                         PreviousGrade = string.Empty
                     };
 

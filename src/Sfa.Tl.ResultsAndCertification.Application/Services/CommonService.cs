@@ -117,7 +117,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var isValid = false;
 
-            var uCasTriggerDates = new List<DateTime>() {                
+            var uCasTriggerDates = new List<DateTime>() {
                 new DateTime(2023,06,22),
                 new DateTime(2023,06,23),
                 new DateTime(2023,06,26),
@@ -125,6 +125,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
 
             if (uCasTriggerDates.Contains(new DateTime(CurrentDate.Year, CurrentDate.Month, CurrentDate.Day)))
+            {
+                isValid = true;
+            }
+
+            return isValid;
+        }
+
+        public bool IsUcasTransferResultssTriggerDateValid()
+        {
+            var isValid = false;
+
+            DateTime startDate = new(2023, 07, 20),
+                     endDate = new(2023, 08, 11);
+
+            var ucasExtractTriggerDates = Enumerable.Range(0, (endDate - startDate).Days + 1).Select(d => startDate.AddDays(d));
+
+            if (ucasExtractTriggerDates.Contains(new DateTime(CurrentDate.Year, CurrentDate.Month, CurrentDate.Day)))
             {
                 isValid = true;
             }
