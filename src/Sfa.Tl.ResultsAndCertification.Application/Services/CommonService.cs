@@ -161,7 +161,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public bool IsAnalystCoreResultExtractionTriggerValid()
         {
-            return true;
+            var isValid = false;
+
+            DateTime startDate = new(2023, 07, 20),
+                     endDate = new(2023, 07, 20);
+
+            var extractTriggerDates = Enumerable.Range(0, (endDate - startDate).Days + 1).Select(d => startDate.AddDays(d));
+
+            if (extractTriggerDates.Contains(new DateTime(CurrentDate.Year, CurrentDate.Month, CurrentDate.Day)))
+            {
+                isValid = true;
+            }
+
+            return isValid;
         }
     }
 }
