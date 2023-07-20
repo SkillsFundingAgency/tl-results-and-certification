@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.PathwayResult;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -27,20 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.StartYear, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.StartYear))
                 .ForMember(d => d.CoreComponent, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.Name))
                 .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.LarId))
-                .ForMember(d => d.CoreResult, opts => opts.MapFrom(s => GetHighestPathwayResult(s)));
-        }
-
-        private static string GetHighestPathwayResult(TqRegistrationPathway learnerPathway)
-        {
-            if (!learnerPathway.TqPathwayAssessments.Any())
-                return null;
-
-            var pathwayResults = learnerPathway.TqPathwayAssessments.SelectMany(x => x.TqPathwayResults).ToList();
-
-            var qPendingGrade = pathwayResults.FirstOrDefault(x => x.TlLookup.Code.Equals(Constants.PathwayComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase));
-            var pathwayHigherResult = qPendingGrade ?? pathwayResults.OrderBy(x => x.TlLookup.SortOrder).FirstOrDefault();
-
-            return pathwayHigherResult.TlLookup?.Value;
+                .ForMember(d => d.CoreResult, opts => opts.ConvertUsing(new PathwayResultStringConverter(), p => p.TqPathwayAssessments));
         }
     }
 }
