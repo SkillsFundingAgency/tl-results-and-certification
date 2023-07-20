@@ -8,6 +8,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialis
 {
     public class SpecialismNameConverter : SpecialismConverterBase, IValueConverter<IEnumerable<TqRegistrationSpecialism>, string>
     {
+        private readonly DoubleQuotedStringConverter _doubleQuotedStringConverter = new();
+
         public string Convert(IEnumerable<TqRegistrationSpecialism> sourceMember, ResolutionContext context)
         {
             if (sourceMember.IsNullOrEmpty())
@@ -22,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialis
                 _ => string.Empty
             };
 
-            return $"\"{specialismName}\"";
+            return _doubleQuotedStringConverter.Convert(specialismName, null);
         }
     }
 }
