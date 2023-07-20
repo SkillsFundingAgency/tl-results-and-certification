@@ -129,7 +129,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return await profileQueryable.ToListAsync();
         }
 
-        public async Task<IList<TqRegistrationPathway>> GetRegistrationPathwaysByAcademicYear(int academicYear)
+        public async Task<IList<TqRegistrationPathway>> GetRegistrationPathwaysByAcademicYear(int[] academicYears)
         {
             var query = _dbContext.TqRegistrationPathway
                             .Include(p => p.TqRegistrationProfile)
@@ -147,7 +147,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 .ThenInclude(s => s.DualSpecialism)
                             .Include(p => p.IndustryPlacements)
                             .Include(p => p.OverallResults)
-                            .Where(p => p.AcademicYear == academicYear);
+                            .Where(p => academicYears.Contains(p.AcademicYear));
 
             IList<TqRegistrationPathway> results = await query.ToListAsync();
             return results;

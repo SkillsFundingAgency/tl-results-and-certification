@@ -35,15 +35,22 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _logger = logger;
         }
 
-        public async Task<FunctionResponse> ProcessAnalystOverallResultExtractionData()
+        public async Task<FunctionResponse> ProcessAnalystOverallResultExtractionData(int[] academicYears)
         {
-            IList<AnalystOverallResultExtractionData> extractionData = await GetAnalystOverallResultExtractionData();
+            if (academicYears.IsNullOrEmpty())
+            {
+                string message = $"No academic years specified. Method: {nameof(ProcessAnalystOverallResultExtractionData)}()";
+                _logger.LogWarning(LogEvent.ConfigurationMissing, message);
+                return new FunctionResponse { IsSuccess = false, Message = message };
+            }
 
-            if (extractionData == null || extractionData.Count == 0)
+            IList<AnalystOverallResultExtractionData> extractionData = await GetAnalystOverallResultExtractionData(academicYears);
+
+            if (extractionData.IsNullOrEmpty())
             {
                 string message = $"No entries are found. Method: {nameof(ProcessAnalystOverallResultExtractionData)}()";
                 _logger.LogWarning(LogEvent.NoDataFound, message);
-                return new FunctionResponse { IsSuccess = true, Message = message };
+                return new FunctionResponse { IsSuccess = false, Message = message };
             }
 
             var byteData = await CsvExtensions.WriteFileAsync(extractionData, classMapType: typeof(AnalystOverallResultExtractionDataExportMap));
@@ -60,9 +67,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return new FunctionResponse { IsSuccess = true };
         }
 
-        private async Task<IList<AnalystOverallResultExtractionData>> GetAnalystOverallResultExtractionData()
+        private async Task<IList<AnalystOverallResultExtractionData>> GetAnalystOverallResultExtractionData(int[] academicYears)
         {
-            IList<TqRegistrationPathway> registrationPathways = await _registrationRepository.GetRegistrationPathwaysByAcademicYear(2020);
+            IList<TqRegistrationPathway> registrationPathways = await _registrationRepository.GetRegistrationPathwaysByAcademicYear(academicYears);
             return _mapper.Map<IList<AnalystOverallResultExtractionData>>(registrationPathways);
         }
 
