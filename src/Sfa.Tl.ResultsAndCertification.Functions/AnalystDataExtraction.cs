@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 var stopwatch = Stopwatch.StartNew();
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                await _analystResultExtractionService.ProcessAnalystOverallResultExtractionData();
+                await _analystResultExtractionService.ProcessAnalystOverallResultExtractionData(new int[] { 2020 });
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Processed, $"Function {context.FunctionName} completed processing.");
                 await _commonService.UpdateFunctionLog(functionLogDetails);

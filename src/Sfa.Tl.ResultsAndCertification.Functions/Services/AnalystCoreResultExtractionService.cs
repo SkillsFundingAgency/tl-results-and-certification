@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
         private async Task<IList<AnalystCoreResultExtractionData>> GetAnalystCoreResultExtractionData()
         {
-            IList<TqRegistrationPathway> registrationPathways = await _registrationRepository.GetRegistrationPathwaysByAcademicYear(2020);
+            IList<TqRegistrationPathway> registrationPathways = await _registrationRepository.GetRegistrationPathwaysByAcademicYear(new int[] { 2020 });
             return _mapper.Map<IList<AnalystCoreResultExtractionData>>(registrationPathways);
         }
 
