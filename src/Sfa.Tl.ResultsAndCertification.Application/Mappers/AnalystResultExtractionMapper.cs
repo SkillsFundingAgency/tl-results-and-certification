@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.PathwayResult;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialism;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.AnalystResultsExtraction;
 using System;
@@ -47,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 
         private string GetOverallResultProperty(TqRegistrationPathway registrationPathway, Func<OverallResult, string> getPropertyValue)
         {
-            if (registrationPathway.OverallResults.Count == 0)
+            if (registrationPathway.OverallResults.IsNullOrEmpty())
                 return string.Empty;
 
             OverallResult overallResult = registrationPathway.OverallResults.OrderByDescending(r => r.Id).First();

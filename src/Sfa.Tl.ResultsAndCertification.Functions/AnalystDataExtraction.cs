@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -12,13 +13,16 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 {
     public class AnalystDataExtraction
     {
+        private readonly AnalystOverallResultExtractSettings _configuration;
         private readonly IAnalystResultExtractionService _analystResultExtractionService;
         private readonly ICommonService _commonService;
 
         public AnalystDataExtraction(
+            ResultsAndCertificationConfiguration configuration,
             IAnalystResultExtractionService analystResultExtractionService,
             ICommonService commonService)
         {
+            _configuration = configuration.AnalystOverallResultExtractSettings;
             _analystResultExtractionService = analystResultExtractionService;
             _commonService = commonService;
         }
@@ -37,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 var stopwatch = Stopwatch.StartNew();
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                await _analystResultExtractionService.ProcessAnalystOverallResultExtractionData();
+                await _analystResultExtractionService.ProcessAnalystOverallResultExtractionData(_configuration.AcademicYearsToProcess);
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Processed, $"Function {context.FunctionName} completed processing.");
                 await _commonService.UpdateFunctionLog(functionLogDetails);
