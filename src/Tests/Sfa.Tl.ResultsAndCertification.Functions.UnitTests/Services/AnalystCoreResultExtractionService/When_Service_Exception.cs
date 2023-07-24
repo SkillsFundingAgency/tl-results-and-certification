@@ -12,12 +12,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultEx
     {
         public override void Given()
         {
-            var todayDate = "20/07/2023".ParseStringToDateTimeWithFormat();
-            CommonService.CurrentDate.Returns(todayDate);
-                
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
             CommonService.IsAnalystCoreResultExtractionTriggerValid().Returns(true);            
-            AnalystCoreResultExtractionService.ProcessAnalystCoreResultExtractsAsync().Returns(x => Task.FromException(new Exception()));
+            AnalystCoreResultExtractionService.ProcessAnalystCoreResultExtractsAsync(AcademicYearsToProcess).Returns(x => Task.FromException(new Exception()));
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }
 
@@ -25,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultEx
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.Received(2).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            AnalystCoreResultExtractionService.Received(1).ProcessAnalystCoreResultExtractsAsync();
+            AnalystCoreResultExtractionService.Received(1).ProcessAnalystCoreResultExtractsAsync(AcademicYearsToProcess);
             CommonService.DidNotReceive().UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
             CommonService.Received(1).SendFunctionJobFailedNotification(Arg.Any<string>(), Arg.Any<string>());
         }

@@ -11,12 +11,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultEx
     {
         public override void Given()
         {
-            var todayDate = "19/08/2022".ParseStringToDateTimeWithFormat();
-            CommonService.CurrentDate.Returns(todayDate);
-
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
             CommonService.IsAnalystCoreResultExtractionTriggerValid().Returns(true);
-            AnalystCoreResultExtractionService.ProcessAnalystCoreResultExtractsAsync().Returns(new FunctionResponse { IsSuccess = true });
+            AnalystCoreResultExtractionService.ProcessAnalystCoreResultExtractsAsync(AcademicYearsToProcess).Returns(new FunctionResponse { IsSuccess = true });
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }
 
@@ -24,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultEx
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.Received(1).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            AnalystCoreResultExtractionService.Received(1).ProcessAnalystCoreResultExtractsAsync();
+            AnalystCoreResultExtractionService.Received(1).ProcessAnalystCoreResultExtractsAsync(AcademicYearsToProcess);
             CommonService.Received(1).UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
         }
     }

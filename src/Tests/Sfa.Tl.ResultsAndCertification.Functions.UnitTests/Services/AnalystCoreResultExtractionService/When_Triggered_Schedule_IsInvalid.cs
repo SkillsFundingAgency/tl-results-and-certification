@@ -3,6 +3,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultExtractionService
@@ -11,15 +12,17 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultEx
     {
         public override void Given()
         {
-            var todayDate = "15/05/2022".ParseStringToDateTimeWithFormat();
-            CommonService.CurrentDate.Returns(todayDate);
+            CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
+            CommonService.IsAnalystCoreResultExtractionTriggerValid().Returns(false);
+            AnalystCoreResultExtractionService.ProcessAnalystCoreResultExtractsAsync(AcademicYearsToProcess).Returns(new FunctionResponse { IsSuccess = true });
+            CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }
 
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.DidNotReceive().CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            AnalystCoreResultExtractionService.DidNotReceive().ProcessAnalystCoreResultExtractsAsync();
+            AnalystCoreResultExtractionService.DidNotReceive().ProcessAnalystCoreResultExtractsAsync(AcademicYearsToProcess);
             CommonService.DidNotReceive().UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
         }
     }

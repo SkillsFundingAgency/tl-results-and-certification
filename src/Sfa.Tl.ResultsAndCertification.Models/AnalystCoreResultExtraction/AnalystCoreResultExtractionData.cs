@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.AnalystCoreResultsExtraction
         public string FirstName { get; set; }
 
         [DisplayName(AnalystCoreResultExtractHeader.DateOfBirth)]
-        public DateTime DateofBirth { get; set; }
+        public DateOnly DateofBirth { get; set; }
 
         [DisplayName(AnalystCoreResultExtractHeader.Gender)]
         public string Gender { get; set; }

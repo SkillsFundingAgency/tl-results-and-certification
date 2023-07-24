@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
@@ -15,11 +16,14 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
     {
         private readonly IAnalystCoreResultExtractionService _analystCoreResultExtractionService;
         private readonly ICommonService _commonService;
+        private readonly AnalystCoreResultExtractSettings _configuration;
 
-        public AnalystCoreResultExtraction(IAnalystCoreResultExtractionService analystCoreResultExtractionService, ICommonService commonService)
+
+        public AnalystCoreResultExtraction(ResultsAndCertificationConfiguration configuration, IAnalystCoreResultExtractionService analystCoreResultExtractionService, ICommonService commonService)
         {
             _analystCoreResultExtractionService = analystCoreResultExtractionService;
             _commonService = commonService;
+            _configuration = configuration.AnalystCoreResultExtractSettings;
         }
 
         [FunctionName(Constants.AnalystCoreResultExtraction)]
@@ -37,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                     await _commonService.CreateFunctionLog(functionLogDetails);
 
-                    var response = await _analystCoreResultExtractionService.ProcessAnalystCoreResultExtractsAsync();
+                    var response = await _analystCoreResultExtractionService.ProcessAnalystCoreResultExtractsAsync(_configuration.AcademicYearsToProcess);
                     var message = $"Function {context.FunctionName} completed processing.\n" +
                                          $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}";
 
