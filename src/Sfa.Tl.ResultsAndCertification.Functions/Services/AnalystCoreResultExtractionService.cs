@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.AnalystCoreResultsExtraction;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
 using System.Collections.Generic;
@@ -33,9 +34,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             _logger = logger;
         }
 
-        public async Task<FunctionResponse> ProcessAnalystCoreResultExtractsAsync()
+        public async Task<FunctionResponse> ProcessAnalystCoreResultExtractsAsync(int[] academicYears)
         {
-             IList<AnalystCoreResultExtractionData> extractionData = await GetAnalystCoreResultExtractionData();
+             IList<AnalystCoreResultExtractionData> extractionData = await GetAnalystCoreResultExtractionData(academicYears);
 
             if (extractionData == null || extractionData.Count == 0)
             {
@@ -60,9 +61,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             return new FunctionResponse { IsSuccess = true };
         }
 
-        private async Task<IList<AnalystCoreResultExtractionData>> GetAnalystCoreResultExtractionData()
+        private async Task<IList<AnalystCoreResultExtractionData>> GetAnalystCoreResultExtractionData(int[] academicYears)
         {
-            IList<TqRegistrationPathway> registrationPathways = await _registrationRepository.GetRegistrationPathwaysByAcademicYear(new int[] { 2020 });
+            IList<TqRegistrationPathway> registrationPathways = await _registrationRepository.GetRegistrationPathwaysByAcademicYear(academicYears);
             return _mapper.Map<IList<AnalystCoreResultExtractionData>>(registrationPathways);
         }
 
