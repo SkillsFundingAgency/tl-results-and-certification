@@ -38,18 +38,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (overallResultDetails.SpecialismDetails != null)
             {
+                var isDualSpecialism = overallResultDetails.SpecialismDetails.Count > 1;
                 overallResultDetails = ReplaceDualSpecialismCode(overallResultDetails);
 
                 foreach (var specialism in overallResultDetails.SpecialismDetails)
                 {
-                    //var ucasSpecialismComponent = new UcasDataComponent
-                    //{
-                    //    SubjectCode = specialism.SpecialismLarId,
-                    //    Grade = UcasDataAbbreviations.GetAbbreviatedResult(UcasResultType.SpecialismResult, specialism.SpecialismResult),
-                    //    PreviousGrade = string.Empty
-                    //};
-
-                    var specialismResult = overallResults.SpecialismResultAwarded ?? specialism.SpecialismResult;
+                    var specialismResult = isDualSpecialism ? overallResults.SpecialismResultAwarded : specialism.SpecialismResult;
                     var ucasSpecialismComponent = new UcasDataComponent
                     {
                         SubjectCode = specialism.SpecialismLarId,
