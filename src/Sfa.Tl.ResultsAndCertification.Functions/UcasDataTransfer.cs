@@ -22,8 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _ucasDataTransferService = ucasDataTransferService;
             _commonService = commonService;
         }
-
-        [Disable]
+        
         [FunctionName(Constants.UcasTransferEntries)]
         public async Task UcasTransferEntriesAsync([TimerTrigger("%UcasTransferEntriesTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
@@ -75,12 +74,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-
             if (_commonService.IsUcasTransferResultssTriggerDateValid())
             {
                 //Check if it is the second Thursday in August and run the function if it is true
-                //if (_commonService.CurrentDate.IsNthWeekdayOfMonth(DayOfWeek.Thursday, Months.August, 2))
-                //{
+                
                 var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.UcasTransferResults);
 
                 try
@@ -117,8 +114,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 }
             }
         }
-
-        [Disable]
+        
         [FunctionName(Constants.UcasTransferAmendments)]
         public async Task UcasTransferAmendmentsAsync([TimerTrigger("%UcasTransferAmendmentsTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {

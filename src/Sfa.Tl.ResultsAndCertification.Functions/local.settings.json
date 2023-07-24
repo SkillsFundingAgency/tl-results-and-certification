@@ -9,7 +9,7 @@
     "CertificatePrintingBatchSummaryTrigger": "0 30 19 * * *",
     "CertificatePrintingTrackBatchTrigger": "0 0 20 * * *",
     "UcasTransferEntriesTrigger": "0 0 8 * * *",
-    "UcasTransferResultsTrigger": "* * * * * *",
+    "UcasTransferResultsTrigger": "30 21 * 8 THU",
     "UcasTransferAmendmentsTrigger": "45 21 * 8-10 *",
     "OverallResultCalculationTrigger": "30 20 * * *",
     "IndustryPlacementExtractTrigger": "0 30 8 * * *",

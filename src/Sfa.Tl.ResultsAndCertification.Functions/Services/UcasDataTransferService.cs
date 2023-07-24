@@ -59,9 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             {
                 var message = $"No byte data available to send Ucas. Method: Csv WriteFileAsync()";
                 throw new ApplicationException(message);
-            }
-
-            string result = System.Text.Encoding.UTF8.GetString(byteData);
+            }            
 
             // 3. Send data to Ucas using ApiClient
             var filename = $"{Guid.NewGuid()}.{Constants.FileExtensionTxt}";

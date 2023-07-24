@@ -23,8 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _industryPlacementService = industryPlacementService;
             _commonService = commonService;
         }
-
-        [Disable]
+        
         [FunctionName(Constants.IndustryPlacementExtract)]
         public async Task IndustryPlacementExtractAsync([TimerTrigger("%IndustryPlacementExtractTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {

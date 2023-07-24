@@ -136,7 +136,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var isValid = false;
 
-            DateTime startDate = new(2023, 07, 20),
+            DateTime startDate = new(2023, 07, 25),
                      endDate = new(2023, 08, 11);
 
             var ucasExtractTriggerDates = Enumerable.Range(0, (endDate - startDate).Days + 1).Select(d => startDate.AddDays(d));
