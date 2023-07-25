@@ -445,6 +445,21 @@
         "ProvidersBatchSize"        
       ],
       "type": "object"
+    },
+	"AnalystCoreResultExtractSettings": {
+      "AcademicYearsToProcess": [
+        2022
+      ],
+		"ValidDateRanges": [
+			{
+				"From": "08/08/2023",
+				"To": "08/25/2023"
+			},
+			{
+				"From": "07/25/2023",
+				"To": "07/25/2023"
+			}
+		]
     }
   },
   "additionalProperties": false,
@@ -473,7 +488,8 @@
     "LearningRecordServiceSettings",
     "UcasDataSettings",
 	"OverallResultBatchSettings",
-	"CertificatePrintingBatchSettings"
+	"CertificatePrintingBatchSettings",
+	"AnalystCoreResultExtractSettings"
   ],
   "type": "object"
 }
