@@ -208,9 +208,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             // Certificate Printing Service
             services.AddTransient<ICertificateService, CertificateService>();
             services.AddTransient<ICertificateRepository, CertificateRepository>();
-
-            // Analyst CoreResult
-            services.AddTransient<IAnalystCoreResultExtractionService, AnalystCoreResultExtractionService>();
         }
     }
 }
