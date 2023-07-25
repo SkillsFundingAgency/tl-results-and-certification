@@ -19,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
         protected IUcasApiClient UcasApiClient;
         protected ILogger<IUcasDataTransferService> Logger;
         protected UcasRecordEntriesSegment UcasRecordEntrySegment;
+        protected UcasRecordResultsSegment UcasRecordResultSegment;
 
         // Actual test instance
         protected Functions.Services.UcasDataTransferService Service;
@@ -35,6 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
 
             Service = new Functions.Services.UcasDataTransferService(UcasDataService, BlobStorageService, UcasApiClient, Logger);
             UcasRecordEntrySegment = new UcasRecordEntriesSegment();
+            UcasRecordResultSegment = new UcasRecordResultsSegment();
         }
     }
 }

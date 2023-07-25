@@ -73,8 +73,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var records = new List<UcasDataRecord>();
             var overallResults = await _ucasRepository.GetUcasDataRecordsForResultsAsync();
-
-            foreach (var overallResult in overallResults)
+           
+            foreach (var overallResult in overallResults)            
             {
                 var ucasDataComponents = new List<UcasDataComponent>();
 
