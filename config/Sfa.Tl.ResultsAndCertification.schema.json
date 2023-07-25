@@ -45,27 +45,27 @@
       "type": "integer",
       "environmentVariable": "SoaRerequestInDays"
     },
-	"DocumentRerequestInDays": {
+    "DocumentRerequestInDays": {
       "type": "integer",
       "environmentVariable": "DocumentRerequestInDays"
     },
-	"OverallResultsAvailableDate": {
+    "OverallResultsAvailableDate": {
       "type": "string",
       "environmentVariable": "OverallResultsAvailableDate"
     },
-	"OverallResultsCalculationDate": {
+    "OverallResultsCalculationDate": {
       "type": "string",
       "environmentVariable": "OverallResultsCalculationDate"
     },
-	"FreezePeriodStartDate": {
+    "FreezePeriodStartDate": {
       "type": "string",
       "environmentVariable": "FreezePeriodStartDate"
     },
-	"FreezePeriodEndDate": {
+    "FreezePeriodEndDate": {
       "type": "string",
       "environmentVariable": "FreezePeriodEndDate"
     },
-	"CertificatePrintingBatchesCreateStartDate": {
+    "CertificatePrintingBatchesCreateStartDate": {
       "type": "string",
       "environmentVariable": "CertificatePrintingBatchesCreateStartDate"
     },
@@ -406,7 +406,7 @@
           "type": "string",
           "environmentVariable": "UcasOverallSubjectCode"
         },
-		"IndustryPlacementCode": {
+        "IndustryPlacementCode": {
           "type": "string",
           "environmentVariable": "UcasIndustryPlacementCode"
         }
@@ -415,13 +415,13 @@
       "required": [],
       "type": "object"
     },
-	"OverallResultBatchSettings": {
+    "OverallResultBatchSettings": {
       "properties": {
-        "BatchSize": {          
+        "BatchSize": {
           "type": "integer",
           "environmentVariable": "OverallResultBatchSize"
         },
-        "NoOfAcademicYearsToProcess": {          
+        "NoOfAcademicYearsToProcess": {
           "type": "integer",
           "environmentVariable": "OverallResultNoOfAcademicYearsToProcess"
         }
@@ -433,33 +433,90 @@
       ],
       "type": "object"
     },
-	"CertificatePrintingBatchSettings": {
+    "CertificatePrintingBatchSettings": {
       "properties": {
-        "ProvidersBatchSize": {          
+        "ProvidersBatchSize": {
           "type": "integer",
           "environmentVariable": "CertificatePrintingProvidersBatchSize"
         }
       },
       "additionalProperties": false,
       "required": [
-        "ProvidersBatchSize"        
+        "ProvidersBatchSize"
       ],
       "type": "object"
     },
-	"AnalystCoreResultExtractSettings": {
-      "AcademicYearsToProcess": [
-        2022
+    "AnalystOverallResultExtractSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "AcademicYearsToProcess": {
+          "environmentVariable": "AnalystOverallResultExtractAcademicYearsToProcess",
+          "items": {
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "ValidDateRanges": {
+          "environmentVariable": "AnalystOverallResultExtractValidDateRanges",
+          "items": {
+            "properties": {
+              "From": {
+                "type": "string"
+              },
+              "To": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "From",
+              "To"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "AcademicYearsToProcess",
+        "ValidDateRanges"
       ],
-		"ValidDateRanges": [
-			{
-				"From": "08/08/2023",
-				"To": "08/25/2023"
-			},
-			{
-				"From": "07/25/2023",
-				"To": "07/25/2023"
-			}
-		]
+      "type": "object"
+    },
+    "AnalystCoreResultExtractSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "AcademicYearsToProcess": {
+          "environmentVariable": "AnalystOverallResultExtractAcademicYearsToProcess",
+          "items": {
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "ValidDateRanges": {
+          "environmentVariable": "AnalystCoreResultExtractValidDateRanges",
+          "items": {
+            "properties": {
+              "From": {
+                "type": "string"
+              },
+              "To": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "From",
+              "To"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "AcademicYearsToProcess",
+        "ValidDateRanges"
+      ],
+      "type": "object"
     }
   },
   "additionalProperties": false,
@@ -472,11 +529,11 @@
     "TechnicalSupportEmailAddress",
     "FeedbackEmailAddress",
     "TechnicalInternalNotificationEmailAddress",
-	"OverallResultsAvailableDate",
-	"OverallResultsCalculationDate",
-	"FreezePeriodStartDate",
-	"FreezePeriodEndDate",
-	"CertificatePrintingBatchesCreateStartDate",
+    "OverallResultsAvailableDate",
+    "OverallResultsCalculationDate",
+    "FreezePeriodStartDate",
+    "FreezePeriodEndDate",
+    "CertificatePrintingBatchesCreateStartDate",
     "KeyVaultUri",
     "RedisSettings",
     "BlobStorageSettings",
@@ -487,9 +544,10 @@
     "UcasApiSettings",
     "LearningRecordServiceSettings",
     "UcasDataSettings",
-	"OverallResultBatchSettings",
-	"CertificatePrintingBatchSettings",
-	"AnalystCoreResultExtractSettings"
+    "OverallResultBatchSettings",
+    "CertificatePrintingBatchSettings",
+    "AnalystCoreResultExtractSettings",
+    "AnalystOverallResultExtractSettings"
   ],
   "type": "object"
 }
