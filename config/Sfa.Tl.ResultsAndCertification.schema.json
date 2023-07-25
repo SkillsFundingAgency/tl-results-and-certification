@@ -73,6 +73,18 @@
       "type": "string",
       "environmentVariable": "KeyVaultUri"
     },
+	"AcademicYearsToProcess": {
+		 "type": "string",
+      "environmentVariable": "AcademicYearsToProcess"
+	},
+	"ValidDateRanges" : {
+		 "type": "string",
+         "environmentVariable": "ValidDateRanges"
+	},
+	"CoreValidDateRanges" : {
+		 "type": "string",
+         "environmentVariable": "CoreValidDateRanges"
+	},	
     "RedisSettings": {
       "properties": {
         "CacheConnection": {
@@ -492,7 +504,7 @@
           },
           "type": "array"
         },
-        "ValidDateRanges": {
+        "CoreValidDateRanges": {
           "environmentVariable": "AnalystCoreResultExtractValidDateRanges",
           "items": {
             "properties": {
@@ -514,7 +526,7 @@
       },
       "required": [
         "AcademicYearsToProcess",
-        "ValidDateRanges"
+        "CoreValidDateRanges"
       ],
       "type": "object"
     }
