@@ -22,7 +22,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         bool IsUcasTransferEntriesTriggerDateValid();
         bool IsUcasTransferResultssTriggerDateValid();
         bool IsIndustryPlacementTriggerDateValid();
-        bool IsAnalystCoreResultExtractionTriggerValid();
         DateTime CurrentDate { get; }
         
     }

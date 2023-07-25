@@ -12,8 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultEx
     {
         public override void Given()
         {
-            CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
-            CommonService.IsAnalystCoreResultExtractionTriggerValid().Returns(true);            
+            CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);     
             AnalystCoreResultExtractionService.ProcessAnalystCoreResultExtractsAsync(AcademicYearsToProcess).Returns(x => Task.FromException(new Exception()));
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }

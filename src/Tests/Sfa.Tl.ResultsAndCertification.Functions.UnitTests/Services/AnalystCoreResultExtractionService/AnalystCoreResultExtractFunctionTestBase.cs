@@ -2,7 +2,6 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 
 
@@ -11,12 +10,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.AnalystCor
     public abstract class AnalystCoreResultExtractFunctionTestBase : BaseTest<AnalystCoreResultExtraction>
     {
         // Depedencies
-        protected TimerSchedule TimerSchedule;
-        protected IAnalystCoreResultExtractionService AnalystCoreResultExtractionService;
-        protected ICommonService CommonService;
-        
+        protected TimerSchedule TimerSchedule = Substitute.For<TimerSchedule>();
+        protected IAnalystCoreResultExtractionService AnalystCoreResultExtractionService = Substitute.For<IAnalystCoreResultExtractionService>();
+        protected ICommonService CommonService = Substitute.For<ICommonService>();
+
         // Actual function instance
         protected AnalystCoreResultExtraction AnalystCoreResultExtractionFunction;
-
     }
 }

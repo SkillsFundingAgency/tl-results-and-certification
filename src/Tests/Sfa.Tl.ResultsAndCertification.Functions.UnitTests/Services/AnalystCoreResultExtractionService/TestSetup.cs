@@ -1,11 +1,10 @@
 ﻿using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Timers;
 using Microsoft.Extensions.Logging.Abstractions;
-using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
 using Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.AnalystCoreResultExtractionService;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using System;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultExtractionService
@@ -16,17 +15,23 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultEx
 
         public override void Setup()
         {
+            DateTime today = DateTime.UtcNow.Date;
+
             var config = new ResultsAndCertificationConfiguration
             {
-                AnalystCoreResultExtractSettings = new  AnalystCoreResultExtractSettings
+                AnalystCoreResultExtractSettings = new AnalystCoreResultExtractSettings
                 {
-                    AcademicYearsToProcess = AcademicYearsToProcess
+                    AcademicYearsToProcess = AcademicYearsToProcess,
+                    ValidDateRanges = new[]
+                    {
+                        new DateTimeRange
+                        {
+                            From = today.AddDays(-1),
+                            To = today.AddDays(1)
+                        }
+                    }
                 }
             };
-
-            TimerSchedule = Substitute.For<TimerSchedule>();
-            AnalystCoreResultExtractionService = Substitute.For<IAnalystCoreResultExtractionService>();
-            CommonService = Substitute.For<ICommonService>();
 
             AnalystCoreResultExtractionFunction = new AnalystCoreResultExtraction(config, AnalystCoreResultExtractionService, CommonService);
         }

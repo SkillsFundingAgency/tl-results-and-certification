@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
@@ -31,40 +32,47 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-            if (_commonService.IsAnalystCoreResultExtractionTriggerValid())
+            var today = DateTime.UtcNow.Date;
+            bool shouldFunctionRunToday = _configuration.ValidDateRanges.Any(r => r.Contains(today));
+
+            if (!shouldFunctionRunToday)
             {
-                var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.AnalystCoreResultExtract);
-                try
-                {
-                    logger.LogInformation($"Function {context.FunctionName} started");
-                    var stopwatch = Stopwatch.StartNew();
-
-                    await _commonService.CreateFunctionLog(functionLogDetails);
-
-                    var response = await _analystCoreResultExtractionService.ProcessAnalystCoreResultExtractsAsync(_configuration.AcademicYearsToProcess);
-                    var message = $"Function {context.FunctionName} completed processing.\n" +
-                                         $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}";
-
-                    CommonHelper.UpdateFunctionLogRequest(functionLogDetails, response.IsSuccess ? FunctionStatus.Processed : FunctionStatus.Failed, message);
-
-                    await _commonService.UpdateFunctionLog(functionLogDetails);
-
-                    stopwatch.Stop();
-
-                    logger.LogInformation($"Function {context.FunctionName} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
-                }
-                catch (Exception ex)
-                {
-                    var errorMessage = $"Function {context.FunctionName} failed to process with the following exception = {ex}";
-                    logger.LogError(errorMessage);
-
-                    CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
-
-                    _ = functionLogDetails.Id > 0 ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);
-
-                    await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
-                }
+                await Task.CompletedTask;
+                return;
             }
+
+            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.AnalystCoreResultExtract);
+            try
+            {
+                logger.LogInformation($"Function {context.FunctionName} started");
+                var stopwatch = Stopwatch.StartNew();
+
+                await _commonService.CreateFunctionLog(functionLogDetails);
+
+                var response = await _analystCoreResultExtractionService.ProcessAnalystCoreResultExtractsAsync(_configuration.AcademicYearsToProcess);
+                var message = $"Function {context.FunctionName} completed processing.\n" +
+                                     $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}";
+
+                CommonHelper.UpdateFunctionLogRequest(functionLogDetails, response.IsSuccess ? FunctionStatus.Processed : FunctionStatus.Failed, message);
+
+                await _commonService.UpdateFunctionLog(functionLogDetails);
+
+                stopwatch.Stop();
+
+                logger.LogInformation($"Function {context.FunctionName} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = $"Function {context.FunctionName} failed to process with the following exception = {ex}";
+                logger.LogError(errorMessage);
+
+                CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
+
+                _ = functionLogDetails.Id > 0 ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);
+
+                await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
+            }
+
         }
     }
 }

@@ -2,15 +2,14 @@
 using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
-using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultExtractionService
 {
-    public class When_Triggered_Schedule_IsInvalid : TestSetup
+    public class When_Today_Is_InvalidDate : TestSetup
     {
-        public override void Setup()
+        public override void Setup() 
         {
             DateTime today = DateTime.UtcNow.Date;
 
@@ -23,26 +22,26 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultEx
                     {
                         new DateTimeRange
                         {
-                            From = today.AddDays(-1),
-                            To = today.AddDays(1)
+                            From = today.AddDays(1),
+                            To = today.AddDays(10)
                         }
                     }
                 }
             };
+
+            AnalystCoreResultExtractionFunction = new AnalystCoreResultExtraction(config, AnalystCoreResultExtractionService, CommonService);
         }
+
         public override void Given()
         {
-            CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
-            AnalystCoreResultExtractionService.ProcessAnalystCoreResultExtractsAsync(AcademicYearsToProcess).Returns(new FunctionResponse { IsSuccess = true });
-            CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }
 
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            CommonService.DidNotReceive().CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            AnalystCoreResultExtractionService.DidNotReceive().ProcessAnalystCoreResultExtractsAsync(AcademicYearsToProcess);
-            CommonService.DidNotReceive().UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
+            CommonService.Received(0).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
+            AnalystCoreResultExtractionService.Received(0).ProcessAnalystCoreResultExtractsAsync(AcademicYearsToProcess);
+            CommonService.Received(0).UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
         }
     }
 }
