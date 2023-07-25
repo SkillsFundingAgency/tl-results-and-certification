@@ -13,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
         {
             var todayDate = "11/08/2022".ParseStringToDateTimeWithFormat();
             CommonService.CurrentDate.Returns(todayDate);
+            CommonService.IsUcasTransferResultssTriggerDateValid().Returns(true);
 
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
             UcasDataTransferService.ProcessUcasDataRecordsAsync(UcasDataType.Results).Returns(new UcasDataTransferResponse { IsSuccess = true });
