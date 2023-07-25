@@ -9,6 +9,7 @@
         Ucas = 5,
         DataExports = 6,
         OverallResults = 7,
-        IndustryPlacements = 8
+        IndustryPlacements = 8,
+        AnalystOverallResults = 9
     }
 }

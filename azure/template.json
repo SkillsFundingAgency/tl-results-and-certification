@@ -133,6 +133,10 @@
 		 "industryPlacementExtractTrigger": {
             "type": "string",
             "defaultValue": "0 30 8 * * *"
+        },
+		 "analystOverallResultExtractTrigger": {
+            "type": "string",
+            "defaultValue": "0 0 7 * * *"
         }
     },
     "variables": {
@@ -646,6 +650,10 @@
 							{
 								"name": "IndustryPlacementExtractTrigger",
 								"value": "[parameters('industryPlacementExtractTrigger')]"
+							},
+							{
+								"name": "AnalystOverallResultExtractTrigger",
+								"value": "[parameters('analystOverallResultExtractTrigger')]"
 							},
                             {
                                 "name": "WEBSITE_LOAD_CERTIFICATES",

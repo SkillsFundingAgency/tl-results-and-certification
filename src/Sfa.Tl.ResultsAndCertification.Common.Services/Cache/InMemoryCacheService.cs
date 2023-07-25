@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.Cache
     public class InMemoryCacheService : ICacheService
     {
         private static readonly Lazy<MemoryCache> _cache = new Lazy<MemoryCache>(() => new MemoryCache(new MemoryCacheOptions()));
-        
+
         public async Task<T> GetAsync<T>(string key)
         {
             key = GenerateCacheKey<T>(key);
@@ -34,7 +34,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.Cache
             key = GenerateCacheKey<T>(key);
             var cacheValue = _cache.Value.Get<string>(key);
             _cache.Value.Remove(key);
-            return await Task.FromResult(JsonConvert.DeserializeObject<T>(cacheValue));
+
+            T result = string.IsNullOrEmpty(cacheValue) ? default : JsonConvert.DeserializeObject<T>(cacheValue);
+            return await Task.FromResult<T>(result);
         }
 
         public async Task SetAsync<T>(string key, T item, CacheExpiryTime cacheExpiryTime = CacheExpiryTime.Small)
@@ -52,6 +54,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.Cache
         static string GenerateCacheKey(Type objectType, string key)
         {
             return $"{key}:{objectType.Name}".ToLower();
-        }        
+        }
     }
 }
