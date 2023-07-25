@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _ucasDataTransferService = ucasDataTransferService;
             _commonService = commonService;
         }
-        
+
         [FunctionName(Constants.UcasTransferEntries)]
         public async Task UcasTransferEntriesAsync([TimerTrigger("%UcasTransferEntriesTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
@@ -76,8 +76,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
 
             //Check if it is the second Thursday in August and run the function if it is true
-            if (_commonService.CurrentDate.IsNthWeekdayOfMonth(DayOfWeek.Monday, Months.July, 24)
-                || _commonService.CurrentDate.IsNthWeekdayOfMonth(DayOfWeek.Tuesday, Months.July, 25))
+            if (_commonService.CurrentDate.Date == new DateTime(2023, 07, 25)
+                || _commonService.CurrentDate.Date == new DateTime(2023, 07, 26))
+
             {
                 var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.UcasTransferResults);
 
