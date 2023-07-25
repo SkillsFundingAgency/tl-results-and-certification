@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            
+
             services.AddAntiforgery(options =>
             {
                 options.Cookie.Name = "tl-rc-x-csrf";
@@ -74,7 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddTransient<ITokenServiceClient, TokenServiceClient>();
             services.AddTransient<ISessionService, SessionService>();
             services.AddHttpClient<IResultsAndCertificationInternalApiClient, ResultsAndCertificationInternalApiClient>();
-            services.AddHttpClient<IOrdnanceSurveyApiClient, OrdnanceSurveyApiClient>();            
+            services.AddHttpClient<IOrdnanceSurveyApiClient, OrdnanceSurveyApiClient>();
             services.AddHttpClient<IDfeSignInApiClient, DfeSignInApiClient>();
 
             var builder = services.AddMvc(config =>
@@ -94,12 +94,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web
 
             if (_env.IsDevelopment())
             {
-                //services.AddSingleton<IDistributedCache, InMemoryCache>();
+                services.AddSingleton<ICacheService, InMemoryCacheService>();
                 builder.AddRazorRuntimeCompilation();
             }
-
-            services.AddSingleton<IConnectionMultiplexer>(x => ConnectionMultiplexer.Connect(_env.IsDevelopment() ? "localhost" : ResultsAndCertificationConfiguration.RedisSettings.CacheConnection));
-            services.AddSingleton<ICacheService, RedisCacheService>();
+            else
+            {
+                services.AddSingleton<IConnectionMultiplexer>(x => ConnectionMultiplexer.Connect(_env.IsDevelopment() ? "localhost" : ResultsAndCertificationConfiguration.RedisSettings.CacheConnection));
+                services.AddSingleton<ICacheService, RedisCacheService>();
+            }
 
             services.AddWebAuthentication(ResultsAndCertificationConfiguration, _env);
             services.AddAuthorization(options =>
@@ -133,8 +135,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             else
             {
                 app.UseExceptionHandler("/Error/500");
-                app.UseHsts(options => 
-                { 
+                app.UseHsts(options =>
+                {
                     options.MaxAge(365);
                     options.IncludeSubdomains();
                 });
@@ -146,7 +148,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             app.UseXfo(xfo => xfo.Deny());
 
             app.UseCsp(options => options.ScriptSources(s => s.StrictDynamic()
-                                         .CustomSources("https:","https://www.google-analytics.com/analytics.js",
+                                         .CustomSources("https:", "https://www.google-analytics.com/analytics.js",
                                                         "https://www.googletagmanager.com/",
                                                         "https://tagmanager.google.com/")
                                          .UnsafeInline())
