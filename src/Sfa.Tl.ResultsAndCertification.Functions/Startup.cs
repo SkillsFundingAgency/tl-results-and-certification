@@ -8,8 +8,6 @@ using Notify.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.IndustryPlacement;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.PathwayResult;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Application.Strategies;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -87,6 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(_configuration.GovUkNotifyApiKey));
             services.AddTransient<IIndustryPlacementService, IndustryPlacementService>();
             services.AddTransient<IBlobStorageService, BlobStorageService>();
+            
 
             // Overall result calculation
             services.AddTransient<IOverallResultCalculationFunctionService, OverallResultCalculationFunctionService>();
@@ -96,39 +95,32 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();
             services.AddTransient<IOverallResultRepository, OverallResultRepository>();
 
-            // AnalystOverallResultExtract
-            services.AddTransient<IAnalystResultExtractionService, AnalystResultExtractionService>();
-
-            // Converter
-            services.AddTransient<IPathwayResultConverter, PathwayResultConverter>();
-            services.AddTransient<IIndustryPlacementStatusConverter, IndustryPlacementStatusConverter>();
-
             // Certificate
-            services.AddTransient<ICertificateService, CertificateService>();
+            services.AddTransient<ICertificateService, Application.Services.CertificateService>();
             services.AddTransient<ICertificateRepository, CertificateRepository>();
         }
 
         private void RegisterApiClients(IServiceCollection services)
         {
-            //var lrsCertificate = Common.Services.Certificates.CertificateService.GetLearningRecordServiceCertificate(_configuration).GetAwaiter().GetResult();
+            var lrsCertificate = Common.Services.Certificates.CertificateService.GetLearningRecordServiceCertificate(_configuration).GetAwaiter().GetResult();
 
-            //services.AddTransient<ILearnerServiceR9Client>(learnerClient =>
-            //{
-            //    var client = new LearnerServiceR9Client();
-            //    client.Endpoint.Address = CommonHelper.GetLrsEndpointAddress(_configuration.LearningRecordServiceSettings.BaseUri, ApiConstants.PlrServiceUri);
-            //    client.ClientCredentials.ClientCertificate.Certificate = lrsCertificate;
-            //    return client;
-            //});
-            //services.AddTransient<ILrsPersonalLearningRecordServiceApiClient, LrsPersonalLearningRecordServiceApiClient>();
+            services.AddTransient<ILearnerServiceR9Client>(learnerClient =>
+            {
+                var client = new LearnerServiceR9Client();
+                client.Endpoint.Address = CommonHelper.GetLrsEndpointAddress(_configuration.LearningRecordServiceSettings.BaseUri, ApiConstants.PlrServiceUri);
+                client.ClientCredentials.ClientCertificate.Certificate = lrsCertificate;
+                return client;
+            });
+            services.AddTransient<ILrsPersonalLearningRecordServiceApiClient, LrsPersonalLearningRecordServiceApiClient>();
 
-            //services.AddTransient<ILearnerPortTypeClient>(learnerClient =>
-            //{
-            //    var client = new LearnerPortTypeClient();
-            //    client.Endpoint.Address = CommonHelper.GetLrsEndpointAddress(_configuration.LearningRecordServiceSettings.BaseUri, ApiConstants.LearnerServiceUri);
-            //    client.ClientCredentials.ClientCertificate.Certificate = lrsCertificate;
-            //    return client;
-            //});
-            
+            services.AddTransient<ILearnerPortTypeClient>(learnerClient =>
+            {
+                var client = new LearnerPortTypeClient();
+                client.Endpoint.Address = CommonHelper.GetLrsEndpointAddress(_configuration.LearningRecordServiceSettings.BaseUri, ApiConstants.LearnerServiceUri);
+                client.ClientCredentials.ClientCertificate.Certificate = lrsCertificate;
+                return client;
+            });
+
             services.AddTransient<ILrsLearnerServiceApiClient, LrsLearnerServiceApiClient>();
             services.AddHttpClient<IPrintingApiClient, PrintingApiClient>();
             services.AddHttpClient<IUcasApiClient, UcasApiClient>();
