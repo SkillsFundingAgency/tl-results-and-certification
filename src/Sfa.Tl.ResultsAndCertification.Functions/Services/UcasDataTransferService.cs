@@ -12,6 +12,7 @@ using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Ucas;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -58,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             {
                 var message = $"No byte data available to send Ucas. Method: Csv WriteFileAsync()";
                 throw new ApplicationException(message);
-            }
+            }            
 
             // 3. Send data to Ucas using ApiClient
             var filename = $"{Guid.NewGuid()}.{Constants.FileExtensionTxt}";

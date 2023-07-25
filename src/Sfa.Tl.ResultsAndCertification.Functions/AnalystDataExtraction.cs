@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -39,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             if (!shouldFunctionRunToday)
             {
                 await Task.CompletedTask;
+                return;
             }
 
             var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.AnalystOverallResultExtract);
@@ -50,9 +52,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 var stopwatch = Stopwatch.StartNew();
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                await _analystResultExtractionService.ProcessAnalystOverallResultExtractionData(_configuration.AcademicYearsToProcess);
+                FunctionResponse response = await _analystResultExtractionService.ProcessAnalystOverallResultExtractionData(_configuration.AcademicYearsToProcess);
 
-                CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Processed, $"Function {context.FunctionName} completed processing.");
+                FunctionStatus status = response.IsSuccess ? FunctionStatus.Processed : FunctionStatus.Failed;
+                var message = $"Function {context.FunctionName} completed processing.{Environment.NewLine}Status: {status}";
+
+                CommonHelper.UpdateFunctionLogRequest(functionLogDetails, status, message);
                 await _commonService.UpdateFunctionLog(functionLogDetails);
 
                 stopwatch.Stop();
