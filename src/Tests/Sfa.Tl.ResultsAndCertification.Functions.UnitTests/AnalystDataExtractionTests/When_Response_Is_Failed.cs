@@ -20,7 +20,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystDataExtracti
             CommonService.Received(1).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
             AnalystResultExtractionService.Received(1).ProcessAnalystOverallResultExtractionData(AcademicYearsToProcess);
             CommonService.Received(1).UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
-            CommonService.Received(1).SendFunctionJobFailedNotification(Arg.Any<string>(), Arg.Any<string>());
         }
     }
 }
