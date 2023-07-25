@@ -10,6 +10,7 @@
         DataExports = 6,
         OverallResults = 7,
         IndustryPlacements = 8,
-        AnalystOverallResults = 9
+        AnalystOverallResults = 9,
+        AnalystCoreResults = 10
     }
 }
