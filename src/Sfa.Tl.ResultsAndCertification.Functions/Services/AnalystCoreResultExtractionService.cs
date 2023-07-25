@@ -9,7 +9,6 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.AnalystCoreResultsExtraction;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
 using System.Collections.Generic;
@@ -52,8 +51,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
                 var message = $"No byte data available to write. Method: {nameof(ProcessAnalystCoreResultExtractsAsync)}()";
                 throw new ApplicationException(message);
             }
-
-            var blobUniqueReference = Guid.NewGuid();
 
             BlobStorageData blobStorageData = CreateBlobStorageData(byteData);
             await _blobStorageService.UploadFromByteArrayAsync(blobStorageData);
