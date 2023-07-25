@@ -445,6 +445,42 @@
         "ProvidersBatchSize"        
       ],
       "type": "object"
+    },
+	"AnalystOverallResultExtractSettings": {
+        "additionalProperties": false,
+        "properties": {
+            "AcademicYearsToProcess": {
+                "environmentVariable": "AnalystOverallResultExtractAcademicYearsToProcess",
+                "items": {
+                    "type": "integer"
+                },
+                "type": "array"
+            },
+            "ValidDateRanges": {
+                "environmentVariable": "AnalystOverallResultExtractValidDateRanges",
+                "items": {
+                    "properties": {
+                        "From": {
+                            "type": "string"
+                        },
+                        "To": {
+                            "type": "string"
+                        }
+                    },
+					"required": [
+                            "From",
+                            "To"
+                        ],
+                    "type": "object"
+                },
+                "type": "array"
+            }
+        },
+        "required": [
+            "AcademicYearsToProcess",
+            "ValidDateRanges"
+        ],
+        "type": "object"
     }
   },
   "additionalProperties": false,
@@ -473,7 +509,8 @@
     "LearningRecordServiceSettings",
     "UcasDataSettings",
 	"OverallResultBatchSettings",
-	"CertificatePrintingBatchSettings"
+	"CertificatePrintingBatchSettings",
+	"AnalystOverallResultExtractSettings"
   ],
   "type": "object"
 }
