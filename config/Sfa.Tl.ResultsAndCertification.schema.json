@@ -72,23 +72,7 @@
     "KeyVaultUri": {
       "type": "string",
       "environmentVariable": "KeyVaultUri"
-    },
-	"AcademicYearsToProcess": {
-		 "type": "array",
-      "environmentVariable": "AcademicYearsToProcess"
-	},
-	"ValidDateRanges" : {
-		 "type": "array",
-         "environmentVariable": "ValidDateRanges"
-	},
-	"CoreAcademicYearsToProcess": {
-		 "type": "array",
-         "environmentVariable": "CoreAcademicYearsToProcess"
-	},
-	"CoreValidDateRanges" : {
-		 "type": "array",
-         "environmentVariable": "CoreValidDateRanges"
-	},	
+    },	
     "RedisSettings": {
       "properties": {
         "CacheConnection": {
@@ -466,14 +450,14 @@
       "additionalProperties": false,
       "properties": {
         "AcademicYearsToProcess": {
-          "environmentVariable": "AnalystOverallResultExtractAcademicYearsToProcess",
+          "environmentVariable": "AcademicYearsToProcess",
           "items": {
             "type": "integer"
           },
           "type": "array"
         },
         "ValidDateRanges": {
-          "environmentVariable": "AnalystOverallResultExtractValidDateRanges",
+          "environmentVariable": "ValidDateRanges",
           "items": {
             "properties": {
               "From": {
@@ -502,14 +486,14 @@
       "additionalProperties": false,
       "properties": {
         "CoreAcademicYearsToProcess": {
-          "environmentVariable": "AnalystOverallResultExtractAcademicYearsToProcess",
+          "environmentVariable": "CoreAcademicYearsToProcess",
           "items": {
             "type": "integer"
           },
           "type": "array"
         },
         "CoreValidDateRanges": {
-          "environmentVariable": "AnalystCoreResultExtractValidDateRanges",
+          "environmentVariable": "CoreValidDateRanges",
           "items": {
             "properties": {
               "From": {
