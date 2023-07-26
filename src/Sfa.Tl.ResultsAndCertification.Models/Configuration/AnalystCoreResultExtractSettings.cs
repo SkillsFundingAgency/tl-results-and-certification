@@ -1,4 +1,6 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
+﻿using Newtonsoft.Json;
+using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
+using Sfa.Tl.ResultsAndCertification.Models.JsonConverter;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
 {
@@ -18,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// <value>
         /// The valid date ranges to run the process.
         /// </value>
+        [JsonConverter(typeof(StringToDateTimeRangeArrayJsonConverter))]
         public DateTimeRange[] CoreValidDateRanges { get; set; }
     }
 }
