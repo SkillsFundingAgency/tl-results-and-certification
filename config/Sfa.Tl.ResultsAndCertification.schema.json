@@ -74,19 +74,19 @@
       "environmentVariable": "KeyVaultUri"
     },
 	"AcademicYearsToProcess": {
-		 "type": "string",
+		 "type": "array",
       "environmentVariable": "AcademicYearsToProcess"
 	},
 	"ValidDateRanges" : {
-		 "type": "string",
+		 "type": "array",
          "environmentVariable": "ValidDateRanges"
 	},
 	"CoreAcademicYearsToProcess": {
-		 "type": "string",
+		 "type": "array",
          "environmentVariable": "CoreAcademicYearsToProcess"
 	},
 	"CoreValidDateRanges" : {
-		 "type": "string",
+		 "type": "array",
          "environmentVariable": "CoreValidDateRanges"
 	},	
     "RedisSettings": {
