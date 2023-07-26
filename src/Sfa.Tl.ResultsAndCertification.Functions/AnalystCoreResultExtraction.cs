@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
             var today = DateTime.UtcNow.Date;
-            bool shouldFunctionRunToday = _configuration.ValidDateRanges.Any(r => r.Contains(today));
+            bool shouldFunctionRunToday = _configuration.CoreValidDateRanges.Any(r => r.Contains(today));
 
             if (!shouldFunctionRunToday)
             {
@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                var response = await _analystCoreResultExtractionService.ProcessAnalystCoreResultExtractsAsync(_configuration.AcademicYearsToProcess);
+                var response = await _analystCoreResultExtractionService.ProcessAnalystCoreResultExtractsAsync(_configuration.CoreAcademicYearsToProcess);
                 var message = $"Function {context.FunctionName} completed processing.\n" +
                                      $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}";
 
