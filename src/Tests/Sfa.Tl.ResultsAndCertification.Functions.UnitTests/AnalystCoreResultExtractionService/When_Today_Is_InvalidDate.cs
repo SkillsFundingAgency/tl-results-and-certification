@@ -17,8 +17,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultEx
             {
                 AnalystCoreResultExtractSettings = new AnalystCoreResultExtractSettings
                 {
-                    AcademicYearsToProcess = AcademicYearsToProcess,
-                    ValidDateRanges = new[]
+                    CoreAcademicYearsToProcess = AcademicYearsToProcess,
+                    CoreValidDateRanges = new[]
                     {
                         new DateTimeRange
                         {
