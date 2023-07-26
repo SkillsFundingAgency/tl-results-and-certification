@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
-using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.AnalystResultsExtraction;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
@@ -14,20 +14,20 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Application.Services
+namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 {
-    public class AnalystResultExtractionService : IAnalystResultExtractionService
+    public class AnalystOverallResultExtractionService : IAnalystOverallResultExtractionService
     {
         private readonly IRegistrationRepository _registrationRepository;
         private readonly IBlobStorageService _blobStorageService;
         private readonly IMapper _mapper;
-        private readonly ILogger<AnalystResultExtractionService> _logger;
+        private readonly ILogger<AnalystOverallResultExtractionService> _logger;
 
-        public AnalystResultExtractionService(
+        public AnalystOverallResultExtractionService(
             IRegistrationRepository registrationRepository,
             IBlobStorageService blobStorageService,
             IMapper mapper,
-            ILogger<AnalystResultExtractionService> logger)
+            ILogger<AnalystOverallResultExtractionService> logger)
         {
             _registrationRepository = registrationRepository;
             _blobStorageService = blobStorageService;

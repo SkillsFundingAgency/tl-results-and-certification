@@ -5,7 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 
 
-namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.AnalystCoreResultExtractionService
+namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultExtractionService
 {
     public abstract class AnalystCoreResultExtractFunctionTestBase : BaseTest<AnalystCoreResultExtraction>
     {

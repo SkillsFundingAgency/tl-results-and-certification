@@ -4,7 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 
 
-namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.IndustryPlacementExtractTests
+namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementExtractTests
 {
     public abstract class IndustryPlacementExtractFunctionTestBase : BaseTest<IndustryPlacementExtract>
     {
@@ -24,6 +24,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.IndustryPl
 
             IndustryPlacementExtractFunction = new IndustryPlacementExtract(IndustryPlacementService, CommonService);
         }
-       
+
     }
 }

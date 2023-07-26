@@ -9,7 +9,6 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.AnalystCoreResultsExtraction;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
 using System.Collections.Generic;
@@ -24,9 +23,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
         private readonly IMapper _mapper;
         private readonly ILogger<AnalystCoreResultExtractionService> _logger;
 
-        public AnalystCoreResultExtractionService(IRegistrationRepository registrationRepository,
+        public AnalystCoreResultExtractionService(
+            IRegistrationRepository registrationRepository,
             IBlobStorageService blobStorageService,
-            IMapper mapper, ILogger<AnalystCoreResultExtractionService> logger)
+            IMapper mapper,
+            ILogger<AnalystCoreResultExtractionService> logger)
         {
             _registrationRepository = registrationRepository;
             _blobStorageService = blobStorageService;
@@ -36,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
         public async Task<FunctionResponse> ProcessAnalystCoreResultExtractsAsync(int[] academicYears)
         {
-             IList<AnalystCoreResultExtractionData> extractionData = await GetAnalystCoreResultExtractionData(academicYears);
+            IList<AnalystCoreResultExtractionData> extractionData = await GetAnalystCoreResultExtractionData(academicYears);
 
             if (extractionData == null || extractionData.Count == 0)
             {
@@ -52,8 +53,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
                 var message = $"No byte data available to write. Method: {nameof(ProcessAnalystCoreResultExtractsAsync)}()";
                 throw new ApplicationException(message);
             }
-
-            var blobUniqueReference = Guid.NewGuid();
 
             BlobStorageData blobStorageData = CreateBlobStorageData(byteData);
             await _blobStorageService.UploadFromByteArrayAsync(blobStorageData);
