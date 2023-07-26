@@ -11,9 +11,9 @@ using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 {
-    public class AnalystResultExtractionMapper : Profile
+    public class AnalystOverallResultExtractionMapper : Profile
     {
-        public AnalystResultExtractionMapper()
+        public AnalystOverallResultExtractionMapper()
         {
             CreateMap<TqRegistrationPathway, AnalystOverallResultExtractionData>()
                 .ForMember(d => d.UniqueLearnerNumber, opts => opts.MapFrom(s => s.TqRegistrationProfile.UniqueLearnerNumber))
