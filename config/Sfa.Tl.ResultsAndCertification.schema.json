@@ -81,6 +81,10 @@
 		 "type": "string",
          "environmentVariable": "ValidDateRanges"
 	},
+	"CoreAcademicYearsToProcess": {
+		 "type": "string",
+         "environmentVariable": "CoreAcademicYearsToProcess"
+	},
 	"CoreValidDateRanges" : {
 		 "type": "string",
          "environmentVariable": "CoreValidDateRanges"
@@ -497,7 +501,7 @@
     "AnalystCoreResultExtractSettings": {
       "additionalProperties": false,
       "properties": {
-        "AcademicYearsToProcess": {
+        "CoreAcademicYearsToProcess": {
           "environmentVariable": "AnalystOverallResultExtractAcademicYearsToProcess",
           "items": {
             "type": "integer"
@@ -525,7 +529,7 @@
         }
       },
       "required": [
-        "AcademicYearsToProcess",
+        "CoreAcademicYearsToProcess",
         "CoreValidDateRanges"
       ],
       "type": "object"
