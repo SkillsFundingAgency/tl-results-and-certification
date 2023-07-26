@@ -2,11 +2,10 @@
 using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
-using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystDataExtractionTests
+namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystOverallResultExtractionTests
 {
     public class When_Today_Is_InvalidDate : TestSetup
     {
@@ -30,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystDataExtracti
                 }
             };
 
-            AnalystDataExtraction = new AnalystDataExtraction(config, AnalystResultExtractionService, CommonService);
+            AnalystDataExtraction = new AnalystOverallResultExtraction(config, AnalystResultExtractionService, CommonService);
         }
 
         public override void Given()

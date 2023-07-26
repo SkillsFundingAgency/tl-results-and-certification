@@ -99,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<ICertificateRepository, CertificateRepository>();
 
             // Analyst Result
-            services.AddTransient<IAnalystResultExtractionService, AnalystResultExtractionService>();
+            services.AddTransient<IAnalystOverallResultExtractionService, AnalystOverallResultExtractionService>();
             services.AddTransient<IAnalystCoreResultExtractionService, AnalystCoreResultExtractionService>();
         }
 

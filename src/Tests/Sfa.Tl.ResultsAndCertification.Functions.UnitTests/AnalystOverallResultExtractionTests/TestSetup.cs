@@ -10,14 +10,14 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystDataExtractionTests
+namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystOverallResultExtractionTests
 {
-    public abstract class TestSetup : BaseTest<AnalystDataExtraction>
+    public abstract class TestSetup : BaseTest<AnalystOverallResultExtraction>
     {
         private readonly TimerSchedule _timerSchedule = Substitute.For<TimerSchedule>();
-        protected AnalystDataExtraction AnalystDataExtraction;
+        protected AnalystOverallResultExtraction AnalystDataExtraction;
 
-        protected IAnalystResultExtractionService AnalystResultExtractionService = Substitute.For<IAnalystResultExtractionService>();
+        protected IAnalystOverallResultExtractionService AnalystResultExtractionService = Substitute.For<IAnalystOverallResultExtractionService>();
         protected ICommonService CommonService = Substitute.For<ICommonService>();
 
         protected int[] AcademicYearsToProcess = new[] { 2020, 2021 };
@@ -42,12 +42,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystDataExtracti
                 }
             };
 
-            AnalystDataExtraction = new AnalystDataExtraction(config, AnalystResultExtractionService, CommonService);
+            AnalystDataExtraction = new AnalystOverallResultExtraction(config, AnalystResultExtractionService, CommonService);
         }
 
         public override Task When()
         {
-            return AnalystDataExtraction.AnalystOverallResultExtractAsync(new TimerInfo(_timerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<AnalystDataExtraction>());
+            return AnalystDataExtraction.AnalystOverallResultExtractAsync(new TimerInfo(_timerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<AnalystOverallResultExtraction>());
         }
     }
 }

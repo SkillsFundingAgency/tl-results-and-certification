@@ -4,7 +4,7 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystDataExtractionTests
+namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystOverallResultExtractionTests
 {
     public class When_Service_Exception : TestSetup
     {

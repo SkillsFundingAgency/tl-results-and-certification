@@ -2,7 +2,6 @@
 using Microsoft.Azure.WebJobs.Extensions.Timers;
 using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
-using Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.AnalystCoreResultExtractionService;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
 using System.Threading.Tasks;

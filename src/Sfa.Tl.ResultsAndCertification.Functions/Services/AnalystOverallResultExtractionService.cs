@@ -16,18 +16,18 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 {
-    public class AnalystResultExtractionService : IAnalystResultExtractionService
+    public class AnalystOverallResultExtractionService : IAnalystOverallResultExtractionService
     {
         private readonly IRegistrationRepository _registrationRepository;
         private readonly IBlobStorageService _blobStorageService;
         private readonly IMapper _mapper;
-        private readonly ILogger<AnalystResultExtractionService> _logger;
+        private readonly ILogger<AnalystOverallResultExtractionService> _logger;
 
-        public AnalystResultExtractionService(
+        public AnalystOverallResultExtractionService(
             IRegistrationRepository registrationRepository,
             IBlobStorageService blobStorageService,
             IMapper mapper,
-            ILogger<AnalystResultExtractionService> logger)
+            ILogger<AnalystOverallResultExtractionService> logger)
         {
             _registrationRepository = registrationRepository;
             _blobStorageService = blobStorageService;

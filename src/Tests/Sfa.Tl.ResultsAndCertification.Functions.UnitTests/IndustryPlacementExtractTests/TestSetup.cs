@@ -1,7 +1,6 @@
 ﻿using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Timers;
 using Microsoft.Extensions.Logging.Abstractions;
-using Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.IndustryPlacementExtractTests;
 using Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlacementTests;
 using System.Threading.Tasks;
 
