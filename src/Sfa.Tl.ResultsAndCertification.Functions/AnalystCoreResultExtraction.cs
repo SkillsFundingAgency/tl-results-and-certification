@@ -30,28 +30,17 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         [FunctionName(Constants.AnalystCoreResultExtract)]
         public async Task AnalystCoreResultExtractAsync([TimerTrigger("%AnalystCoreResultExtractTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
-            logger.LogInformation($"Function {context.FunctionName} started");
-
-            logger.LogInformation($"Function timer: {timer}");
-
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-            var today = DateTime.UtcNow.Date;
-            logger.LogInformation($"Function date: {today}");
-
-            logger.LogInformation($"Function CoreValidDateRanges: {_configuration.CoreValidDateRanges.Select(x => x.ToString())}");
+            var today = DateTime.UtcNow.Date;            
 
             bool shouldFunctionRunToday = _configuration.CoreValidDateRanges.Any(r => r.Contains(today));
-
-            logger.LogInformation($"Function shouldFunctionRunToday 1: {shouldFunctionRunToday}");
 
             if (!shouldFunctionRunToday)
             {
                 await Task.CompletedTask;
                 return;
             }
-
-            logger.LogInformation($"Function shouldFunctionRunToday 2: {shouldFunctionRunToday}");
 
             var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.AnalystCoreResultExtract);
             try
