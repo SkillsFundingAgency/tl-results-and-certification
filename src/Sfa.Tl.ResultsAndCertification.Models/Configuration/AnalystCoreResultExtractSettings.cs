@@ -1,4 +1,6 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
+﻿using Newtonsoft.Json;
+using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
+using Sfa.Tl.ResultsAndCertification.Models.JsonConverter;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
 {
@@ -10,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// <value>
         /// The academic years to process.
         /// </value>
-        public int[] AcademicYearsToProcess { get; set; }
+        public int[] CoreAcademicYearsToProcess { get; set; }
 
         /// <summary>
         /// Gets or sets the valid date ranges to run the process.
@@ -18,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// <value>
         /// The valid date ranges to run the process.
         /// </value>
-        public DateTimeRange[] ValidDateRanges { get; set; }
+        [JsonConverter(typeof(StringToDateTimeRangeArrayJsonConverter))]
+        public DateTimeRange[] CoreValidDateRanges { get; set; }
     }
 }

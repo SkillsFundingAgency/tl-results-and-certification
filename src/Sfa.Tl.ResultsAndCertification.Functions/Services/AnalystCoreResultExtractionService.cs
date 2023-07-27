@@ -24,9 +24,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
         private readonly IMapper _mapper;
         private readonly ILogger<AnalystCoreResultExtractionService> _logger;
 
-        public AnalystCoreResultExtractionService(IRegistrationRepository registrationRepository,
+        public AnalystCoreResultExtractionService(
+            IRegistrationRepository registrationRepository,
             IBlobStorageService blobStorageService,
-            IMapper mapper, ILogger<AnalystCoreResultExtractionService> logger)
+            IMapper mapper,
+            ILogger<AnalystCoreResultExtractionService> logger)
         {
             _registrationRepository = registrationRepository;
             _blobStorageService = blobStorageService;
@@ -36,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
         public async Task<FunctionResponse> ProcessAnalystCoreResultExtractsAsync(int[] academicYears)
         {
-             IList<AnalystCoreResultExtractionData> extractionData = await GetAnalystCoreResultExtractionData(academicYears);
+            IList<AnalystCoreResultExtractionData> extractionData = await GetAnalystCoreResultExtractionData(academicYears);
 
             if (extractionData == null || extractionData.Count == 0)
             {

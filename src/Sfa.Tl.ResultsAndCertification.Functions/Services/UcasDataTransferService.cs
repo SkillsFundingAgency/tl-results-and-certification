@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             {
                 ContainerName = DocumentType.Ucas.ToString().ToLower(),
                 SourceFilePath = ucasDataType.ToString().ToLower(),
-                BlobFileName = $"{filename}-{DateTime.UtcNow.Date.ToString()}",
+                BlobFileName = $"{filename}",
                 FileData = byteData,
                 UserName = Constants.FunctionPerformedBy
             });

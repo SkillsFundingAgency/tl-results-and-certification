@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
+using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
@@ -13,15 +14,15 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
-    public class AnalystDataExtraction
+    public class AnalystOverallResultExtraction
     {
         private readonly AnalystOverallResultExtractSettings _configuration;
-        private readonly IAnalystResultExtractionService _analystResultExtractionService;
+        private readonly IAnalystOverallResultExtractionService _analystResultExtractionService;
         private readonly ICommonService _commonService;
 
-        public AnalystDataExtraction(
+        public AnalystOverallResultExtraction(
             ResultsAndCertificationConfiguration configuration,
-            IAnalystResultExtractionService analystResultExtractionService,
+            IAnalystOverallResultExtractionService analystResultExtractionService,
             ICommonService commonService)
         {
             _configuration = configuration.AnalystOverallResultExtractSettings;
