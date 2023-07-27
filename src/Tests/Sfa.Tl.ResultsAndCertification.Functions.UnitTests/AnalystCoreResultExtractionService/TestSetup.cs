@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultEx
 
         public async override Task When()
         {
-            await AnalystCoreResultExtractionFunction.AnalystCoreResultExtractionServiceAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<AnalystCoreResultExtraction>());
+            await AnalystCoreResultExtractionFunction.AnalystCoreResultExtractAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<AnalystCoreResultExtraction>());
         }
     }
 }

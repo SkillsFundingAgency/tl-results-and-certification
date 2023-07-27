@@ -27,8 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _configuration = configuration.AnalystCoreResultExtractSettings;
         }
 
-        [FunctionName(Constants.AnalystCoreResultExtraction)]
-        public async Task AnalystCoreResultExtractionServiceAsync([TimerTrigger("%AnalystCoreResultExtractionTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
+        [FunctionName(Constants.AnalystCoreResultExtract)]
+        public async Task AnalystCoreResultExtractAsync([TimerTrigger("%AnalystCoreResultExtractTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             logger.LogInformation($"Function {context.FunctionName} started");
 
