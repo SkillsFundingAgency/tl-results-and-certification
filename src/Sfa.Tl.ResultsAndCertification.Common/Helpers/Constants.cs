@@ -168,6 +168,10 @@
         public const string OverallResultCalculation = "OverallResultCalculation";
         public const string IndustryPlacementExtract = "IndustryPlacementExtract";
         public const string IndustryPlacementExtractsFolder = "extracts";
+        public const string AnalystOverallResultExtract = "AnalystOverallResultExtract";
+        public const string AnalystCoreResultExtract = "AnalystCoreResultExtract";
+        public const string AnalystOverallResultExtractsFolder = "extracts";
+        public const string AnalystCoreResultExtractsFolder = "extracts";
 
         // File Extensions
         public const string FileExtensionTxt = "txt";

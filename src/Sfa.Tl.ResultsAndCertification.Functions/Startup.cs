@@ -85,7 +85,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(_configuration.GovUkNotifyApiKey));
             services.AddTransient<IIndustryPlacementService, IndustryPlacementService>();
             services.AddTransient<IBlobStorageService, BlobStorageService>();
-            
 
             // Overall result calculation
             services.AddTransient<IOverallResultCalculationFunctionService, OverallResultCalculationFunctionService>();
@@ -98,6 +97,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             // Certificate
             services.AddTransient<ICertificateService, Application.Services.CertificateService>();
             services.AddTransient<ICertificateRepository, CertificateRepository>();
+
+            // Analyst Result
+            services.AddTransient<IAnalystOverallResultExtractionService, AnalystOverallResultExtractionService>();
+            services.AddTransient<IAnalystCoreResultExtractionService, AnalystCoreResultExtractionService>();
         }
 
         private void RegisterApiClients(IServiceCollection services)
@@ -120,7 +123,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 client.ClientCredentials.ClientCertificate.Certificate = lrsCertificate;
                 return client;
             });
-            
+
             services.AddTransient<ILrsLearnerServiceApiClient, LrsLearnerServiceApiClient>();
             services.AddHttpClient<IPrintingApiClient, PrintingApiClient>();
             services.AddHttpClient<IUcasApiClient, UcasApiClient>();

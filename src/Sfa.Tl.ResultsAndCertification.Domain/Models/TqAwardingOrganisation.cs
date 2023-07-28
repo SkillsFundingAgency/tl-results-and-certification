@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Domain.Models
 {
@@ -19,10 +18,5 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public virtual TlPathway TlPathway { get; set; }
 
         public virtual ICollection<TqProvider> TqProviders { get; set; }
-
-        public int Count()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

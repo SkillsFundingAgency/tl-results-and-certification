@@ -4,6 +4,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.PathwayResult;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Application.Strategies;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -54,6 +56,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         protected IOverallResultRepository OverallResultRepository;
         protected ILogger<OverallResultRepository> OverallResultLogger;
         protected IMapper Mapper;
+        protected IPathwayResultConverter PathwayResultConverter;
+        protected IIndustryPlacementStatusConverter IndustryPlacementStatusConverter;
 
         protected ISpecialismResultStrategyFactory SpecialismResultStrategyFactory;
         protected IOverallGradeStrategyFactory OverallGradeStrategyFactory;
@@ -108,8 +112,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(OverallResultCalculationMapper).Assembly));
                 Mapper = new Mapper(mapperConfig);
 
+                PathwayResultConverter = new PathwayResultConverter();
+                IndustryPlacementStatusConverter = new IndustryPlacementStatusConverter();
+
                 // Create Service class to test. 
-                OverallResultCalculationService = new OverallResultCalculationService(ResultsAndCertificationConfiguration, TlLookupRepository, OverallResultCalculationRepository, AssessmentSeriesRepository, OverallResultRepository, SpecialismResultStrategyFactory, OverallGradeStrategyFactory, Mapper);
+                OverallResultCalculationService = new OverallResultCalculationService(ResultsAndCertificationConfiguration, TlLookupRepository, OverallResultCalculationRepository, AssessmentSeriesRepository, OverallResultRepository, SpecialismResultStrategyFactory, OverallGradeStrategyFactory, Mapper, PathwayResultConverter, IndustryPlacementStatusConverter);
             }
         }
 
