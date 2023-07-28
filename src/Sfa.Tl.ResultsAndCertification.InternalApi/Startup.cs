@@ -10,6 +10,8 @@ using Microsoft.Extensions.Hosting;
 using Notify.Client;
 using Notify.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.PathwayResult;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Strategies;
@@ -26,6 +28,8 @@ using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Builder;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
+using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Functions.Services;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Extensions;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Infrastructure;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader;
@@ -196,6 +200,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IOverallResultCalculationService, OverallResultCalculationService>();
             services.AddTransient<IOverallResultRepository, OverallResultRepository>();
             services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();
+
+            // Converter
+            services.AddTransient<IPathwayResultConverter, PathwayResultConverter>();
+            services.AddTransient<IIndustryPlacementStatusConverter, IndustryPlacementStatusConverter>();
 
             // Certificate Printing Service
             services.AddTransient<ICertificateService, CertificateService>();

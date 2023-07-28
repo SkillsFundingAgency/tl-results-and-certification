@@ -133,7 +133,15 @@
 		 "industryPlacementExtractTrigger": {
             "type": "string",
             "defaultValue": "0 30 8 * * *"
-        }
+        },
+		 "analystOverallResultExtractTrigger": {
+            "type": "string",
+            "defaultValue": "0 0 7 * * *"
+        },
+        "analystCoreResultExtractTrigger": {
+           "type": "string",
+           "defaultValue": "0 30 7 * * *"
+       }
     },
     "variables": {
         "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/master/ArmTemplates/",
@@ -646,6 +654,14 @@
 							{
 								"name": "IndustryPlacementExtractTrigger",
 								"value": "[parameters('industryPlacementExtractTrigger')]"
+							},
+							{
+								"name": "AnalystOverallResultExtractTrigger",
+								"value": "[parameters('analystOverallResultExtractTrigger')]"
+							},
+							{
+								"name": "AnalystCoreResultExtractTrigger",
+								"value": "[parameters('analystCoreResultExtractTrigger')]"
 							},
                             {
                                 "name": "WEBSITE_LOAD_CERTIFICATES",

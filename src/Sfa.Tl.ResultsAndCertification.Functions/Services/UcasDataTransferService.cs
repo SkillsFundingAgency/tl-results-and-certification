@@ -12,6 +12,7 @@ using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Ucas;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -58,21 +59,23 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             {
                 var message = $"No byte data available to send Ucas. Method: Csv WriteFileAsync()";
                 throw new ApplicationException(message);
-            }
+            }            
 
             // 3. Send data to Ucas using ApiClient
             var filename = $"{Guid.NewGuid()}.{Constants.FileExtensionTxt}";
 
-            var fileHash = CommonHelper.ComputeSha256Hash(byteData);
+            //Todo: Not sending the file to UCas API 
 
-            var ucasFileId = await _ucasApiClient.SendDataAsync(new UcasDataRequest { FileName = filename, FileData = byteData, FileHash = fileHash });
+            //var fileHash = CommonHelper.ComputeSha256Hash(byteData);
+
+            //var ucasFileId = await _ucasApiClient.SendDataAsync(new UcasDataRequest { FileName = filename, FileData = byteData, FileHash = fileHash });
 
             // 4. Write response to blob
             await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
             {
                 ContainerName = DocumentType.Ucas.ToString().ToLower(),
                 SourceFilePath = ucasDataType.ToString().ToLower(),
-                BlobFileName = $"{ucasFileId}-{filename}",
+                BlobFileName = $"{filename}",
                 FileData = byteData,
                 UserName = Constants.FunctionPerformedBy
             });

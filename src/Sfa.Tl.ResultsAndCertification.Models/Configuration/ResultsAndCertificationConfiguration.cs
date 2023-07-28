@@ -251,5 +251,21 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// The certificate printing batch record settings.
         /// </value>
         public CertificatePrintingBatchSettings CertificatePrintingBatchSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the analyst overall result extract settings.
+        /// </summary>
+        /// <value>
+        /// The analyst overall result extract settings.
+        /// </value>
+        public AnalystOverallResultExtractSettings AnalystOverallResultExtractSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the analyst core result extract settings.
+        /// </summary>
+        /// <value>
+        /// The analyst core result extract settings.
+        /// </value>
+        public AnalystCoreResultExtractSettings AnalystCoreResultExtractSettings { get; set; }
     }
 }
