@@ -8,6 +8,8 @@ using Notify.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.PathwayResult;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Application.Strategies;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -32,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
     public class Startup : FunctionsStartup
     {
         private ResultsAndCertificationConfiguration _configuration;
-        
+
         public override void Configure(IFunctionsHostBuilder builder)
         {
             _configuration = ConfigurationLoader.Load(
@@ -93,9 +95,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IOverallResultCalculationService, OverallResultCalculationService>();
             services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();
             services.AddTransient<IOverallResultRepository, OverallResultRepository>();
+            services.AddTransient<IPathwayResultConverter, PathwayResultConverter>();
+            services.AddTransient<IIndustryPlacementStatusConverter, IndustryPlacementStatusConverter>();
 
             // Certificate
-            services.AddTransient<ICertificateService, Application.Services.CertificateService>();
+            services.AddTransient<ICertificateService, CertificateService>();
             services.AddTransient<ICertificateRepository, CertificateRepository>();
 
             // Analyst Result
