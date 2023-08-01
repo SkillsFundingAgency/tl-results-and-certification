@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace Sfa.Tl.ResultsAndCertification.Models.AnalystResultsExtraction
+namespace Sfa.Tl.ResultsAndCertification.Models.AnalystOverallResultExtraction
 {
     public class AnalystOverallResultExtractionData
     {
@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.AnalystResultsExtraction
         public string TlevelTitle { get; set; }
 
         [DisplayName(AnalystOverallResultExtractionHeader.StartYear)]
-        public int StartYear { get; set; }
+        public string StartYear { get; set; }
 
         [DisplayName(AnalystOverallResultExtractionHeader.CoreComponent)]
         public string CoreComponent { get; set; }
