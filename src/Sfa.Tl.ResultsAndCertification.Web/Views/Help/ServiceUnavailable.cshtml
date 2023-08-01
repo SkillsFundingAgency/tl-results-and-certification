@@ -13,7 +13,8 @@
         <p class="govuk-body">@string.Format(ServiceUnavailable.Para_Use_Service_From, @Model.ServiceAvailableFrom)</p>
         <p class="govuk-body">
             @ServiceUnavailable.Para_Contact
-            <a class="govuk-link" href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()">@ConfigurationService.GetTechnicalSupportEmailAddress()</a>
+            <a class="govuk-link" asp-route="Contact">@ServiceUnavailable.Para_Contact_Manage_TLevels_Results_Team</a>
+            @ServiceUnavailable.Para_Contact_1
         </p>
     </div>
 </div>
