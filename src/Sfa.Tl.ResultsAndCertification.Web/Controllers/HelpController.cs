@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var serviceAvailableFrom = _configuration.FreezePeriodEndDate.AddSeconds(1);
             var viewModel = new ServiceUnavailableViewModel
             {
-                ServiceAvailableFrom = $"{serviceAvailableFrom.ToString("hh:mmtt").ToLower()} on {serviceAvailableFrom.DayOfWeek} {serviceAvailableFrom:dd MMMM yyyy}"
+                ServiceAvailableFrom = $"{serviceAvailableFrom.AddMinutes(1).ToString("HH:mmtt").ToLower()} on {serviceAvailableFrom.DayOfWeek} {serviceAvailableFrom:dd MMMM yyyy}"
             };
             return View(viewModel);
         }
