@@ -124,7 +124,13 @@
     <value>Service unavailable</value>
   </data>
   <data name="Para_Contact" xml:space="preserve">
-    <value>If you have any queries, contact:</value>
+    <value>Contact the </value>
+  </data>
+  <data name="Para_Contact_1" xml:space="preserve">
+    <value> if you need to speak to someone.</value>
+  </data>
+  <data name="Para_Contact_Manage_TLevels_Results_Team" xml:space="preserve">
+    <value>Manage T Level results team</value>
   </data>
   <data name="Para_Unavailable_While_Results_Calculation" xml:space="preserve">
     <value>The Manage T Level results service is unavailable while we process and calculate overall T Level results.</value>

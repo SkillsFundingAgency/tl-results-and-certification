@@ -79,11 +79,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you have any queries, contact:.
+        ///   Looks up a localized string similar to Contact the .
         /// </summary>
         public static string Para_Contact {
             get {
                 return ResourceManager.GetString("Para_Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  if you need to speak to someone..
+        /// </summary>
+        public static string Para_Contact_1 {
+            get {
+                return ResourceManager.GetString("Para_Contact_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage T Level results team.
+        /// </summary>
+        public static string Para_Contact_Manage_TLevels_Results_Team {
+            get {
+                return ResourceManager.GetString("Para_Contact_Manage_TLevels_Results_Team", resourceCulture);
             }
         }
         
