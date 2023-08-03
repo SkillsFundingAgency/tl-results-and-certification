@@ -136,12 +136,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var isValid = false;
 
-            DateTime startDate = new(2023, 07, 25),
-                     endDate = new(2023, 08, 11);
+            DateTime preStartDate = new(2023, 08, 03),
+                     preEndDate = new(2023, 08, 04);
+
+            DateTime startDate = new(2023, 08, 09),
+                     endDate = new(2023, 08, 10);
 
             var ucasExtractTriggerDates = Enumerable.Range(0, (endDate - startDate).Days + 1).Select(d => startDate.AddDays(d));
+            var ucasPreExtractTriggerDates = Enumerable.Range(0, (preEndDate - preStartDate).Days + 1).Select(d => preStartDate.AddDays(d));
 
-            if (ucasExtractTriggerDates.Contains(new DateTime(CurrentDate.Year, CurrentDate.Month, CurrentDate.Day)))
+            if (ucasExtractTriggerDates.Contains(new DateTime(CurrentDate.Year, CurrentDate.Month, CurrentDate.Day)) ||
+                ucasPreExtractTriggerDates.Contains(new DateTime(CurrentDate.Year, CurrentDate.Month, CurrentDate.Day)))
             {
                 isValid = true;
             }
@@ -154,7 +159,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var isValid = false;
 
             DateTime startDate = new(2023, 06, 17),
-                     endDate = new(2023, 07, 31);
+                     endDate = new(2023, 08, 18);
 
             var ipExtractTriggerDates = Enumerable.Range(0, (endDate - startDate).Days + 1).Select(d => startDate.AddDays(d));
 
