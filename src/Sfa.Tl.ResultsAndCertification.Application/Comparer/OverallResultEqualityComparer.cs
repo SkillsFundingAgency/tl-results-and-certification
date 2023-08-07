@@ -19,7 +19,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Comparer
                 return x.TqRegistrationPathwayId == y.TqRegistrationPathwayId &&
                        x.Details.Equals(y.Details, StringComparison.InvariantCultureIgnoreCase) &&
                        x.ResultAwarded.Equals(y.ResultAwarded, StringComparison.InvariantCultureIgnoreCase) &&
-                       x.SpecialismResultAwarded.Equals(y.SpecialismResultAwarded, StringComparison.InvariantCultureIgnoreCase) &&
                        x.CalculationStatus == y.CalculationStatus;
         }
 
@@ -30,7 +29,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Comparer
                 var hashCode = overallResult.TqRegistrationPathwayId.GetHashCode();
                 hashCode = (hashCode * 397) ^ overallResult.Details.GetHashCodeWithNullCheck();
                 hashCode = (hashCode * 397) ^ overallResult.ResultAwarded.GetHashCodeWithNullCheck();
-                hashCode = (hashCode * 397) ^ overallResult.SpecialismResultAwarded.GetHashCodeWithNullCheck();
                 hashCode = (hashCode * 397) ^ overallResult.CalculationStatus.GetHashCode();
 
                 return hashCode;
