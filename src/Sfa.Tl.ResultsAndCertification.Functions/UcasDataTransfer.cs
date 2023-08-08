@@ -120,7 +120,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-            var startDate = _commonService.CurrentDate.GetNthDateOfMonth(DayOfWeek.Friday, Months.August, 3);
+            var startDate = _commonService.CurrentDate.GetNthDateOfMonth(DayOfWeek.Friday, Months.August, 1);
             var endDate = _commonService.CurrentDate.GetNthDateOfMonth(DayOfWeek.Friday, Months.October, 1);
 
             var isValidToRunFunction = _commonService.CurrentDate >= startDate && _commonService.CurrentDate <= endDate;
