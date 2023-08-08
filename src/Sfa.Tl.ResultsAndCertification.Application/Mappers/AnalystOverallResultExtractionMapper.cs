@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.PathwayResult;
@@ -6,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialism;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.AnalystOverallResultExtraction;
+using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using System;
 using System.Linq;
 
@@ -52,8 +54,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 return string.Empty;
 
             OverallResult overallResult = registrationPathway.OverallResults.OrderByDescending(r => r.Id).First();
+            var overallResultDetails = JsonConvert.DeserializeObject<OverallResultDetail>(overallResult.Details);
 
-            return overallResult != null ? getPropertyValue(overallResult) : string.Empty;
+            return overallResult != null ? string.IsNullOrEmpty(overallResult.SpecialismResultAwarded) ?
+                overallResultDetails.SpecialismDetails.FirstOrDefault()?.SpecialismResult :
+                getPropertyValue(overallResult) : string.Empty;
         }
     }
 }
