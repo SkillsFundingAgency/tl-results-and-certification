@@ -54,11 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 return string.Empty;
 
             OverallResult overallResult = registrationPathway.OverallResults.OrderByDescending(r => r.Id).First();
-            var overallResultDetails = JsonConvert.DeserializeObject<OverallResultDetail>(overallResult.Details);
-
-            var testttt = overallResult != null ? string.IsNullOrEmpty(overallResult.SpecialismResultAwarded) ?
-                overallResultDetails.SpecialismDetails.FirstOrDefault()?.SpecialismResult :
-                getPropertyValue(overallResult) : string.Empty;
+            var overallResultDetails = JsonConvert.DeserializeObject<OverallResultDetail>(overallResult.Details);            
 
             return overallResult != null ? string.IsNullOrEmpty(overallResult.SpecialismResultAwarded) ?
                 overallResultDetails.SpecialismDetails.FirstOrDefault()?.SpecialismResult :
