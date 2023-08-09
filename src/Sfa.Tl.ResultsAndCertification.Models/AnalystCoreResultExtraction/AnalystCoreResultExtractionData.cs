@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.AnalystCoreResultsExtraction
         public string TlevelTitle { get; set; }
 
         [DisplayName(AnalystCoreResultExtractHeader.StartYear)]
-        public int StartYear { get; set; }
+        public string StartYear { get; set; }
 
         [DisplayName(AnalystCoreResultExtractHeader.CoreComponent)]
         public string CoreComponent { get; set; }

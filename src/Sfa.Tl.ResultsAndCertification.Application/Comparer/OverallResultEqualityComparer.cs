@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Comparer
             else
                 return x.TqRegistrationPathwayId == y.TqRegistrationPathwayId &&
                        x.Details.Equals(y.Details, StringComparison.InvariantCultureIgnoreCase) &&
-                       x.ResultAwarded.Equals(y.ResultAwarded, StringComparison.InvariantCultureIgnoreCase) &&                       
+                       x.ResultAwarded.Equals(y.ResultAwarded, StringComparison.InvariantCultureIgnoreCase) &&
                        x.CalculationStatus == y.CalculationStatus;
         }
 
