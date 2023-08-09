@@ -124,7 +124,7 @@
         },
 		"ucasTransferAmendmentsTrigger": {
             "type": "string",
-            "defaultValue": "45 21 * 8-10 *"
+            "defaultValue": "0 15 6 * 8-10 *"
         },
         "overallResultCalculationTrigger": {
             "type": "string",
