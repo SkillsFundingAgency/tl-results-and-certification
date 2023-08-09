@@ -34,8 +34,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var overallResults = pathway.OverallResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
             var overallResultDetails = JsonConvert.DeserializeObject<OverallResultDetail>(overallResults.Details);
 
-
-
             if (overallResultDetails.SpecialismDetails != null)
             {
                 var isDualSpecialism = overallResultDetails.SpecialismDetails.Count > 1;
@@ -61,13 +59,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var dualSpecialims = UcasDataAbbreviations._dualSpecialisms.SelectMany(t => t.Value).ToList();
             var specialismDetails = overallResultDetails.SpecialismDetails.Select(t => t.SpecialismLarId).ToList();
 
-
             if (dualSpecialims.Any(b => specialismDetails.Any(a => b.Contains(a))))
             {
-                var dualCode = UcasDataAbbreviations._dualSpecialisms.Where(f => f.Value.Intersect(specialismDetails, StringComparer.OrdinalIgnoreCase).Count() == 2).FirstOrDefault().Key;
-                if (!string.IsNullOrEmpty(dualCode))
+                var dualCombinationCode = UcasDataAbbreviations._dualSpecialisms.Where(f => f.Value.Intersect(specialismDetails, StringComparer.OrdinalIgnoreCase).Count() == 2).FirstOrDefault().Key;
+                if (!string.IsNullOrEmpty(dualCombinationCode))
                 {
-                    overallResultDetails.SpecialismDetails.ToList().ForEach(f => f.SpecialismLarId = dualCode);
+                    overallResultDetails.SpecialismDetails.ToList().ForEach(f => f.SpecialismLarId = dualCombinationCode);
                     overallResultDetails.SpecialismDetails = new List<OverallSpecialismDetail>() { overallResultDetails.SpecialismDetails.First() };
                 }
             }

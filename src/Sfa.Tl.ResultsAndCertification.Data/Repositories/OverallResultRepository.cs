@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 {
     public class OverallResultRepository : GenericRepository<OverallResult>, IOverallResultRepository
     {
-        public OverallResultRepository(ILogger<OverallResultRepository> logger, ResultsAndCertificationDbContext dbContext) 
+        public OverallResultRepository(ILogger<OverallResultRepository> logger, ResultsAndCertificationDbContext dbContext)
             : base(logger, dbContext)
         {
         }
@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 .ThenInclude(s => s.TlSpecialism)
                                 .ThenInclude(s => s.TlDualSpecialismToSpecialisms)
                                 .ThenInclude(s => s.DualSpecialism)
-                            .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
+                             .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
                                         x.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == providerUkprn &&
                                         x.PublishDate == resultPublishDate && DateTime.Today >= resultPublishDate)
                             .OrderBy(x => x.TqRegistrationPathway.TqRegistrationProfile.Lastname)
