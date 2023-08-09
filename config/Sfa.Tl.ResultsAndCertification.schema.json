@@ -454,7 +454,7 @@
 				},
 				"ValidDateRanges": {
 					"type": "array",
-					"environmentVariable": "ValidDateRanges"
+					"environmentVariable": "AnalystOverallValidDateRanges"
 				}
 			},
 			"additionalProperties": false,
@@ -469,7 +469,7 @@
 				},
 				"CoreValidDateRanges": {
 					"type": "array",
-					"environmentVariable": "CoreValidDateRanges"
+					"environmentVariable": "AnalystCoreValidDateRanges"
 				}
 			},
 			"additionalProperties": false,
