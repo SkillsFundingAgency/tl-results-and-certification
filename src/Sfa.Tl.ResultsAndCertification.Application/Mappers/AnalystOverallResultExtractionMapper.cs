@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 
         private string GetOverallResult(TqRegistrationPathway registrationPathway)
         {
-            return GetOverallResultProperty(registrationPathway, p => p.ResultAwarded);
+            return GetOverallResultAwardedProperty(registrationPathway, p => p.ResultAwarded);
         }
 
         private string GetOverallResultProperty(TqRegistrationPathway registrationPathway, Func<OverallResult, string> getPropertyValue)
@@ -54,11 +54,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 return string.Empty;
 
             OverallResult overallResult = registrationPathway.OverallResults.OrderByDescending(r => r.Id).First();
-            var overallResultDetails = JsonConvert.DeserializeObject<OverallResultDetail>(overallResult.Details);
+            var overallResultDetails = JsonConvert.DeserializeObject<OverallResultDetail>(overallResult.Details);            
 
             return overallResult != null ? string.IsNullOrEmpty(overallResult.SpecialismResultAwarded) ?
                 overallResultDetails.SpecialismDetails.FirstOrDefault()?.SpecialismResult :
                 getPropertyValue(overallResult) : string.Empty;
+        }
+
+        private string GetOverallResultAwardedProperty(TqRegistrationPathway registrationPathway, Func<OverallResult, string> getPropertyValue)
+        {
+            if (registrationPathway.OverallResults.IsNullOrEmpty())
+                return string.Empty;
+
+            OverallResult overallResult = registrationPathway.OverallResults.OrderByDescending(r => r.Id).First();
+
+            return overallResult != null ? getPropertyValue(overallResult) : string.Empty;
         }
     }
 }
