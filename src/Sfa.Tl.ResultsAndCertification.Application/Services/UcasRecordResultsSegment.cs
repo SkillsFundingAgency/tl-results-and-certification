@@ -39,13 +39,27 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var isDualSpecialism = overallResultDetails.SpecialismDetails.Count > 1;
                 overallResultDetails = ReplaceDualSpecialismCode(overallResultDetails);
 
-                foreach (var specialism in overallResultDetails.SpecialismDetails)
+                if (overallResultDetails.SpecialismDetails.Any())
                 {
-                    var specialismResult = isDualSpecialism ? overallResults.SpecialismResultAwarded : specialism.SpecialismResult;
+                    foreach (var specialism in overallResultDetails.SpecialismDetails)
+                    {
+                        var specialismResult = isDualSpecialism ? overallResults.SpecialismResultAwarded : specialism.SpecialismResult;
+                        var ucasSpecialismComponent = new UcasDataComponent
+                        {
+                            SubjectCode = specialism.SpecialismLarId,
+                            Grade = UcasDataAbbreviations.GetAbbreviatedResult(UcasResultType.SpecialismResult, specialismResult),
+                            PreviousGrade = string.Empty
+                        };
+
+                        ucasDataComponents.Add(ucasSpecialismComponent);
+                    }
+                }
+                else
+                {
                     var ucasSpecialismComponent = new UcasDataComponent
                     {
-                        SubjectCode = specialism.SpecialismLarId,
-                        Grade = UcasDataAbbreviations.GetAbbreviatedResult(UcasResultType.SpecialismResult, specialismResult),
+                        SubjectCode = string.Empty,
+                        Grade = string.Empty,
                         PreviousGrade = string.Empty
                     };
 
@@ -87,12 +101,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var overallResults = pathway.OverallResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
             var overallResultDetails = JsonConvert.DeserializeObject<OverallResultDetail>(overallResults.Details);
 
-            if (overallResultDetails.IndustryPlacementStatus !=null)
+            if (overallResultDetails.IndustryPlacementStatus != null)
             {
                 ucasDataComponents.Add(new UcasDataComponent
                 {
                     SubjectCode = industryPlacementCode,
-                    Grade = UcasDataAbbreviations.GetAbbreviatedResult(UcasResultType.IndustryPlacement,overallResultDetails.IndustryPlacementStatus),
+                    Grade = UcasDataAbbreviations.GetAbbreviatedResult(UcasResultType.IndustryPlacement, overallResultDetails.IndustryPlacementStatus),
                     PreviousGrade = string.Empty
                 });
             }
