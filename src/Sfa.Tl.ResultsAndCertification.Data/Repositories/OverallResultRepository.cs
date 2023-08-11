@@ -26,8 +26,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 .ThenInclude(s => s.TlDualSpecialismToSpecialisms)
                                 .ThenInclude(s => s.DualSpecialism)
                              .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
-                                        x.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == providerUkprn &&
-                                        x.PublishDate == resultPublishDate && DateTime.Today >= resultPublishDate)
+                                         x.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == providerUkprn &&
+                                         x.PublishDate == resultPublishDate && DateTime.Today >= resultPublishDate &&
+                                         x.IsOptedin && !x.EndDate.HasValue)
                             .OrderBy(x => x.TqRegistrationPathway.TqRegistrationProfile.Lastname)
                             .ToListAsync();
 
