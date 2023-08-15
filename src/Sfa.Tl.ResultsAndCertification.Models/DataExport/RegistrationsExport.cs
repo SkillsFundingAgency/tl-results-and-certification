@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.DataExport
             get
             {
                 return SpecialismsList.Any() && SpecialismsList.Count() > 1 ?
-                    $"\"{string.Join(Constants.CommaSeperator, SpecialismsList)}\"" :
+                    $"\"\"\"{string.Join(Constants.CommaSeparator, SpecialismsList)}\"\"\"" :
                     SpecialismsList.FirstOrDefault();
             }
         }
@@ -49,10 +49,10 @@ namespace Sfa.Tl.ResultsAndCertification.Models.DataExport
         public string Status { get; set; }
 
         public IList<string> SpecialismsList { get; set; }
-        
+
         public DateTime DateOfBirth { get; set; }
-        
-        public int AcademicYear { get; set; }       
+
+        public int AcademicYear { get; set; }
 
         public DateTime CreatedOn { get; set; }
     }
