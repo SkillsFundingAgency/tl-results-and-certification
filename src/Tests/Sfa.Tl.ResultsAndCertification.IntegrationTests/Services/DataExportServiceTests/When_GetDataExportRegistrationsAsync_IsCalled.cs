@@ -82,7 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.DataExportSer
                 actualExport.FirstName.Should().Be(expectedProfile.Firstname);
                 actualExport.LastName.Should().Be(expectedProfile.Lastname);
                 actualExport.DateOfBirth.Should().Be(expectedProfile.DateofBirth);
-                actualExport.DisplayDateOfBirth.Should().Be(expectedProfile.DateofBirth.ToString("ddMMyyyy"));
+                actualExport.DisplayDateOfBirth.Should().Be(expectedProfile.DateofBirth.ToString("dd-MMM-yyyy"));
                 actualExport.Ukprn.Should().Be(expectedPathway.TqProvider.TlProvider.UkPrn);
                 actualExport.AcademicYear.Should().Be(expectedPathway.AcademicYear);
                 actualExport.DisplayAcademicYear.Should().Be("2020/21");
