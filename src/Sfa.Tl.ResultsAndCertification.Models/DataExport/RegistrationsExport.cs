@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.DataExport
         public string LastName { get; set; }
 
         [DisplayName(RegistrationsExportHeader.DateOfBirth)]
-        public string DisplayDateOfBirth => DateOfBirth.ToString("ddMMyyyy");
+        public string DisplayDateOfBirth => DateOfBirth.ToString("dd-MMM-yyyy");
 
         [DisplayName(RegistrationsExportHeader.Ukprn)]
         public long Ukprn { get; set; }
