@@ -8,8 +8,8 @@ MERGE INTO [dbo].[TlPathwaySpecialismCombination] AS Target
 USING (VALUES 
 	(1, 3, 11, 1, 1),
 	(2, 3, 16, 1, 1),
-	(3, 3, 13, 2, 1),
-	(4, 3, 11, 2, 1),
+	(3, 3, 11, 2, 1),
+	(4, 3, 13, 2, 1),
 	(5, 3, 14, 3, 1),
 	(6, 3, 15, 3, 1)
   )
