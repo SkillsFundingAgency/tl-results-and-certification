@@ -11,6 +11,7 @@
         OverallResults = 7,
         IndustryPlacements = 8,
         AnalystOverallResults = 9,
-        AnalystCoreResults = 10
+        AnalystCoreResults = 10,
+        CoreRommExtract = 11
     }
 }

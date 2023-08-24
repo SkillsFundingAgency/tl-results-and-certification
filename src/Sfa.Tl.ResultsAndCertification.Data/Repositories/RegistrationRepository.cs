@@ -155,6 +155,26 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return results;
         }
 
+        public async Task<IList<TqRegistrationPathway>> GetRegistrationPathwaysByAssesmentSeriesYear(int assesmentSeriesYear)
+        {
+            var query = _dbContext.TqRegistrationPathway
+                            .Include(p => p.TqRegistrationProfile)
+                            .Include(p => p.TqProvider)
+                                .ThenInclude(p => p.TlProvider)
+                            .Include(p => p.TqProvider)
+                                .ThenInclude(p => p.TqAwardingOrganisation)
+                                .ThenInclude(p => p.TlPathway)
+                            .Include(p => p.TqPathwayAssessments)
+                                .ThenInclude(p => p.TqPathwayResults.Where(p => p.IsOptedin))
+                                .ThenInclude(p => p.TlLookup)
+                            .Where(p => p.AcademicYear == assesmentSeriesYear)
+                            .OrderBy(p => p.AcademicYear)
+                            .ThenBy(p => p.TqRegistrationProfile.UniqueLearnerNumber);
+
+            IList<TqRegistrationPathway> results = await query.ToListAsync();
+            return results;
+        }
+
         #region Bulk Registration
 
         public async Task<IList<TqRegistrationProfile>> GetRegistrationProfilesAsync(IList<TqRegistrationProfile> registrations)
