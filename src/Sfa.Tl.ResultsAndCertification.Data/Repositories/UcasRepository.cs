@@ -104,5 +104,19 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                         .OrderByDescending(x => x.CreatedOn)
                         .FirstOrDefault();
         }
+
+        private List<TlDualSpecialismToSpecialism> GetDualSpecialisms()
+        {
+            return _dbContext.TlDualSpecialismToSpecialism
+                .Include(x => x.Specialism)
+                .Include(x => x.DualSpecialism).ToList();
+                 
+        }
+
+        public string GetDualSpecialismLarId(string larId)
+        {
+            var dualSpecialisms = GetDualSpecialisms();
+           return dualSpecialisms.Where(y => y.Specialism.LarId == larId).FirstOrDefault().DualSpecialism.LarId;    
+        }
     }
 }

@@ -4,6 +4,8 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
+using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
@@ -20,6 +22,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
         protected ILogger<IUcasDataTransferService> Logger;
         protected UcasRecordEntriesSegment UcasRecordEntrySegment;
         protected UcasRecordResultsSegment UcasRecordResultSegment;
+        protected IUcasRepository UcasRepository;
+
 
         // Actual test instance
         protected Functions.Services.UcasDataTransferService Service;
@@ -32,11 +36,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
             UcasDataService = Substitute.For<IUcasDataService>();
             BlobStorageService = Substitute.For<IBlobStorageService>();
             UcasApiClient = Substitute.For<IUcasApiClient>();
+            UcasRepository = Substitute.For<IUcasRepository>();
             Logger = Substitute.For<ILogger<IUcasDataTransferService>>();
 
             Service = new Functions.Services.UcasDataTransferService(UcasDataService, BlobStorageService, UcasApiClient, Logger);
             UcasRecordEntrySegment = new UcasRecordEntriesSegment();
-            UcasRecordResultSegment = new UcasRecordResultsSegment();
+            UcasRecordResultSegment = new UcasRecordResultsSegment(UcasRepository);
         }
     }
 }

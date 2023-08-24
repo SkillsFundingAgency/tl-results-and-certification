@@ -9,5 +9,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
         public Task<IList<TqRegistrationPathway>> GetUcasDataRecordsForEntriesAsync();
         public Task<IList<OverallResult>> GetUcasDataRecordsForResultsAsync();
         public Task<IList<OverallResult>> GetUcasDataRecordsForAmendmentsAsync();
+        public string GetDualSpecialismLarId(string larId);
     }
 }
