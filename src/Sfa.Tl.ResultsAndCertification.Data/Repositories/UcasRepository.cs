@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -113,10 +114,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                  
         }
 
-        public string GetDualSpecialismLarId(string larId)
+        public string GetDualSpecialismLarId(List<string> specialismlarId)
         {
             var dualSpecialisms = GetDualSpecialisms();
-           return dualSpecialisms.Where(y => y.Specialism.LarId == larId).FirstOrDefault().DualSpecialism.LarId;    
+            var dualSpecialismLarIdForSpecialism = dualSpecialisms.Where(t => specialismlarId.Contains(t.Specialism.LarId.ToString())).ToList();
+            var filteredDualSpecialisms = dualSpecialismLarIdForSpecialism.GroupBy(x => x.TlDualSpecialismId).Where(g => g.Count() > 1).ToList();
+            var dualSpecialismCodes = filteredDualSpecialisms.SelectMany(t => t).ToList();
+
+            return dualSpecialisms.Where(t => t.TlDualSpecialismId.Equals(dualSpecialismCodes.FirstOrDefault().TlDualSpecialismId)).FirstOrDefault().DualSpecialism.LarId;
         }
     }
 }

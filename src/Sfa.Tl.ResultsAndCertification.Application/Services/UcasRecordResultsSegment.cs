@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 var isDualSpecialism = overallResultDetails.SpecialismDetails.Count > 1;
                 overallResultDetails = isDualSpecialism ? ReplaceDualSpecialismCode(overallResultDetails) : overallResultDetails;
-
+                //overallResultDetails = ReplaceDualSpecialismCode(overallResultDetails);
                 foreach (var specialism in overallResultDetails.SpecialismDetails)
                 {
                     var specialismResult = isDualSpecialism ? overallResults.SpecialismResultAwarded : specialism.SpecialismResult;
@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (specialismDetails.Count >1)
             {
-                var dualCombinationCode = _ucasRepository.GetDualSpecialismLarId(specialismDetails.FirstOrDefault().ToString());  
+                var dualCombinationCode = _ucasRepository.GetDualSpecialismLarId(specialismDetails);  
                 
                 if (!string.IsNullOrEmpty(dualCombinationCode))
                 {
