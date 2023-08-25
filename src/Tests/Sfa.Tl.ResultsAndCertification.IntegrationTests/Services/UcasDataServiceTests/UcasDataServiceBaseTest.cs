@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
 
             CommonRepository = new CommonRepository(DbContext);
             UcasRepository = new UcasRepository(DbContext, CommonRepository);
-            UcasRecordEntrySegment = new UcasRecordEntriesSegment();
+            UcasRecordEntrySegment = new UcasRecordEntriesSegment(UcasRepository);
             UcasRecordResultsSegment = new UcasRecordResultsSegment(UcasRepository);
 
             UcasDataService = new UcasDataService(UcasRepository, UcasRecordEntrySegment, UcasRecordResultsSegment, ResultsAndCertificationConfiguration);

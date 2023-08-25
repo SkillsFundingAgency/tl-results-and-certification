@@ -38,9 +38,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
             UcasApiClient = Substitute.For<IUcasApiClient>();
             UcasRepository = Substitute.For<IUcasRepository>();
             Logger = Substitute.For<ILogger<IUcasDataTransferService>>();
+            
 
             Service = new Functions.Services.UcasDataTransferService(UcasDataService, BlobStorageService, UcasApiClient, Logger);
-            UcasRecordEntrySegment = new UcasRecordEntriesSegment();
+            UcasRecordEntrySegment = new UcasRecordEntriesSegment(UcasRepository);
             UcasRecordResultSegment = new UcasRecordResultsSegment(UcasRepository);
         }
     }
