@@ -164,12 +164,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                             .Include(p => p.TqProvider)
                                 .ThenInclude(p => p.TqAwardingOrganisation)
                                 .ThenInclude(p => p.TlPathway)
+                            .Include(p => p.TqProvider)
+                                .ThenInclude(p => p.TqAwardingOrganisation)
+                                .ThenInclude(p => p.TlAwardingOrganisatonId)
                             .Include(p => p.TqPathwayAssessments)
-                                .ThenInclude(p => p.TqPathwayResults.Where(p => p.IsOptedin))
+                                .ThenInclude(p => p.TqPathwayResults)
                                 .ThenInclude(p => p.TlLookup)
-                            .Where(p => p.AcademicYear == assesmentSeriesYear)
-                            .OrderBy(p => p.AcademicYear)
-                            .ThenBy(p => p.TqRegistrationProfile.UniqueLearnerNumber);
+                            .Include(p => p.TqPathwayAssessments)
+                                .ThenInclude(p => p.AssessmentSeries)
+                            .Where(p => p.TqPathwayAssessments.All(p => p.AssessmentSeries.Year == assesmentSeriesYear))
+                            .OrderBy(p => p.TqRegistrationProfile.UniqueLearnerNumber);
 
             IList<TqRegistrationPathway> results = await query.ToListAsync();
             return results;
