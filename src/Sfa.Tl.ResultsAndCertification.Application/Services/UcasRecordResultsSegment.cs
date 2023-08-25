@@ -45,7 +45,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 var isDualSpecialism = overallResultDetails.SpecialismDetails.Count > 1;
                 overallResultDetails = isDualSpecialism ? ReplaceDualSpecialismCode(overallResultDetails) : overallResultDetails;
-                //overallResultDetails = ReplaceDualSpecialismCode(overallResultDetails);
                 foreach (var specialism in overallResultDetails.SpecialismDetails)
                 {
                     var specialismResult = isDualSpecialism ? overallResults.SpecialismResultAwarded : specialism.SpecialismResult;
