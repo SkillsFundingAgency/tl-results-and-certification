@@ -21,13 +21,13 @@ namespace Sfa.Tl.ResultsAndCertification.Models.CoreRommExtract
         public string CurrentCoreGrade { get; set; }
 
         [DisplayName(CoreRommtExtractHeader.RommOpenedTimeStamp)]
-        public DateTime RommOpenedTimeStamp { get; set; }
+        public DateTime? RommOpenedTimeStamp { get; set; }
 
         [DisplayName(CoreRommtExtractHeader.RommGrade)]
         public string RommGrade { get; set; }
 
         [DisplayName(CoreRommtExtractHeader.AppealOpenedTimeStamp)]
-        public DateTime AppealOpenedTimeStamp { get; set; }
+        public DateTime? AppealOpenedTimeStamp { get; set; }
 
         [DisplayName(CoreRommtExtractHeader.AppealGrade)]
         public string AppealGrade { get; set; }

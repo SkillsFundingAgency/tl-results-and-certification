@@ -105,6 +105,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             // Analyst Result
             services.AddTransient<IAnalystOverallResultExtractionService, AnalystOverallResultExtractionService>();
             services.AddTransient<IAnalystCoreResultExtractionService, AnalystCoreResultExtractionService>();
+
+            // ROMM Extract
+            services.AddTransient<ICoreRommExtractService, CoreRommExtractService>();
         }
 
         private void RegisterApiClients(IServiceCollection services)
