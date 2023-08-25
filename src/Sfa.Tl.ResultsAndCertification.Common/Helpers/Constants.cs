@@ -151,7 +151,7 @@
         public const string IpSpecialConsiderationHoursRegex = @"^([1-9][0-9]{0,2})$";
         public const string PipeSeperator = "|";
         public const string AndSeperator = " and ";
-        public const string CommaSeperator = ",";
+        public const string CommaSeparator = ",";
         public const string NotReceived = "NR";
         public const string NotSpecified = "NotSpecified";
 
