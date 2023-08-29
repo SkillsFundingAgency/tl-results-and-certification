@@ -33,13 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                                         .SelectMany(p => p.TqPathwayResults)
                                         .Where(p => !p.PrsStatus.HasValue);
 
-            if (!coreGradeResults.IsNullOrEmpty())
-            {
-                int coreGradeResultId = coreGradeResults.Max(p => p.Id);
-                coreGrade = coreGradeResults.Single(p => p.Id == coreGradeResultId).TlLookup.Value;
-            }
-
-            return coreGrade;
+            return coreGradeResults.IsNullOrEmpty()
+                ? string.Empty
+                : coreGradeResults.MaxBy(p => p.Id).TlLookup.Value;
         }
 
         private DateTime? GetRommOpenedTimeStamp(TqRegistrationPathway tqRegistrationPathway)
@@ -54,17 +50,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 
         private DateTime? GetOpenedTimeStampByPrsStatus(TqRegistrationPathway tqRegistrationPathway, PrsStatus prsStatus, params PrsStatus[] prsStatusParams)
         {
-            DateTime? openedTimeStamp = null;
+            IList<TqPathwayResult> results = GetPathwayResultsByPrsStatus(tqRegistrationPathway, prsStatus, prsStatusParams);
 
-            IReadOnlyList<TqPathwayResult> results = GetPathwayResultsByPrsStatus(tqRegistrationPathway, prsStatus, prsStatusParams);
-
-            if (!results.IsNullOrEmpty())
-            {
-                int appealOpenedResultId = results.Min(p => p.Id);
-                openedTimeStamp = results.Single(p => p.Id == appealOpenedResultId).CreatedOn;
-            }
-
-            return openedTimeStamp;
+            return results.IsNullOrEmpty()
+                ? null
+                : results.MinBy(p => p.Id).CreatedOn;
         }
 
         private string GetRommGrade(TqRegistrationPathway tqRegistrationPathway)
@@ -79,19 +69,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 
         private string GetRommGradeByPrsStatus(TqRegistrationPathway tqRegistrationPathway, PrsStatus prsStatus)
         {
-            string rommGrade = string.Empty;
+            IList<TqPathwayResult> results = GetPathwayResultsByPrsStatus(tqRegistrationPathway, prsStatus);
 
-            IReadOnlyList<TqPathwayResult> results = GetPathwayResultsByPrsStatus(tqRegistrationPathway, prsStatus);
-
-            if (!results.IsNullOrEmpty())
-            {
-                rommGrade = results.Single().TlLookup.Value;
-            }
-
-            return rommGrade;
+            return results.IsNullOrEmpty()
+                ? string.Empty
+                : results[0].TlLookup.Value;
         }
 
-        private IReadOnlyList<TqPathwayResult> GetPathwayResultsByPrsStatus(TqRegistrationPathway tqRegistrationPathway, PrsStatus prsStatus, params PrsStatus[] prsStatusParams)
+        private IList<TqPathwayResult> GetPathwayResultsByPrsStatus(TqRegistrationPathway tqRegistrationPathway, PrsStatus prsStatus, params PrsStatus[] prsStatusParams)
         {
             var prsStatuses = new List<PrsStatus> { prsStatus };
 

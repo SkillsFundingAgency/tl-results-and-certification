@@ -155,7 +155,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return results;
         }
 
-        public async Task<IList<TqRegistrationPathway>> GetRegistrationPathwaysByAssesmentSeriesYear(int assesmentSeriesYear)
+        public async Task<IList<TqRegistrationPathway>> GetRegistrationPathwaysByAssesmentSeriesYear(int[] assesmentSeriesYears)
         {
             var query = _dbContext.TqRegistrationPathway
                             .Include(p => p.TqRegistrationProfile)
@@ -172,8 +172,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 .ThenInclude(p => p.TlLookup)
                             .Include(p => p.TqPathwayAssessments.Where(p => p.AssessmentSeries.ComponentType == ComponentType.Core))
                                 .ThenInclude(p => p.AssessmentSeries)
-                            .Where(p => p.Status == RegistrationPathwayStatus.Active 
-                                        && p.TqPathwayAssessments.All(p => p.AssessmentSeries.Year == assesmentSeriesYear))
+                            .Where(p => p.Status == RegistrationPathwayStatus.Active
+                                        && p.TqPathwayAssessments.All(p => assesmentSeriesYears.Contains(p.AssessmentSeries.Year)))
                             .OrderBy(p => p.TqRegistrationProfile.UniqueLearnerNumber);
 
             IList<TqRegistrationPathway> results = await query.ToListAsync();

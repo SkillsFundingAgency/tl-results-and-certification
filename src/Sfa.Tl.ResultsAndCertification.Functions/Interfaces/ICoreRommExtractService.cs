@@ -5,6 +5,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Interfaces
 {
     public interface ICoreRommExtractService
     {
-        Task<FunctionResponse> ProcessCoreRommExtractAsync(int assesmentSeriesYear);
+        Task<FunctionResponse> ProcessCoreRommExtractAsync(int[] assesmentSeriesYears);
     }
 }

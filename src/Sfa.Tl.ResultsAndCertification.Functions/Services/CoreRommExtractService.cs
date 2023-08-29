@@ -35,9 +35,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             _logger = logger;
         }
 
-        public async Task<FunctionResponse> ProcessCoreRommExtractAsync(int assesmentSeriesYear)
+        public async Task<FunctionResponse> ProcessCoreRommExtractAsync(int[] assesmentSeriesYears)
         {
-            IList<CoreRommExtractData> coreRommExtractData = await GetCoreRommExtractData(assesmentSeriesYear);
+            IList<CoreRommExtractData> coreRommExtractData = await GetCoreRommExtractData(assesmentSeriesYears);
 
             if (coreRommExtractData == null || coreRommExtractData.Count == 0)
             {
@@ -62,9 +62,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             return new FunctionResponse { IsSuccess = true };
         }
 
-        private async Task<IList<CoreRommExtractData>> GetCoreRommExtractData(int assesmentSeriesYear)
+        private async Task<IList<CoreRommExtractData>> GetCoreRommExtractData(int[] assesmentSeriesYears)
         {
-            IList<TqRegistrationPathway> registrationPathways = await _registrationRepository.GetRegistrationPathwaysByAssesmentSeriesYear(assesmentSeriesYear);
+            IList<TqRegistrationPathway> registrationPathways = await _registrationRepository.GetRegistrationPathwaysByAssesmentSeriesYear(assesmentSeriesYears);
             return _mapper.Map<IList<CoreRommExtractData>>(registrationPathways);
         }
 
@@ -74,8 +74,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
             return new BlobStorageData
             {
-                ContainerName = DocumentType.CoreRommExtract.ToString(),
-                SourceFilePath = Constants.CoreRommExtractFolder,
+                ContainerName = DocumentType.CoreRomm.ToString(),
+                SourceFilePath = Constants.CoreRommFolder,
                 BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
                 FileData = data,
                 UserName = Constants.FunctionPerformedBy

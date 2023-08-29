@@ -5,8 +5,10 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
@@ -15,19 +17,31 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
     {
         private readonly ICoreRommExtractService _coreRommExtractService;
         private readonly ICommonService _commonService;
+        private readonly CoreRommExtractSettings _configuration;
 
         public CoreRommExtract(
-            ICoreRommExtractService coreRommExtractService, 
+            ResultsAndCertificationConfiguration configuration,
+            ICoreRommExtractService coreRommExtractService,
             ICommonService commonService)
         {
+            _configuration = configuration.CoreRommExtractSettings;
             _coreRommExtractService = coreRommExtractService;
             _commonService = commonService;
         }
 
-        [FunctionName(Constants.CoreRommExtract)]
+        [FunctionName(Constants.CoreRomm)]
         public async Task CoreRommExtractAsync([TimerTrigger("%CoreRommExtracTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
+
+            var today = DateTime.UtcNow.Date;
+            bool shouldFunctionRunToday = _configuration.CoreRommValidDateRanges.Any(r => r.Contains(today));
+
+            if (!shouldFunctionRunToday)
+            {
+                await Task.CompletedTask;
+                return;
+            }
 
             var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.AnalystCoreResultExtract);
             try
@@ -36,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 var stopwatch = Stopwatch.StartNew();
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                var response = await _coreRommExtractService.ProcessCoreRommExtractAsync(2023);
+                var response = await _coreRommExtractService.ProcessCoreRommExtractAsync(_configuration.AssesmentSeriesYearsToProcess);
                 var message = $"Function {context.FunctionName} completed processing.\n" +
                                      $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}";
 
