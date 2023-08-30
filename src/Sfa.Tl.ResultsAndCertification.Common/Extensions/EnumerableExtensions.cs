@@ -13,13 +13,17 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 
         public static TSource MinBy<TSource>(this IEnumerable<TSource> collection, Func<TSource, int> selector)
         {
-            IEnumerable<TSource> sortedCollection = collection.OrderBy(selector);
-            return sortedCollection.FirstOrDefault();
+            return ByOrderFunc(() => collection.OrderBy(selector));
         }
 
         public static TSource MaxBy<TSource>(this IEnumerable<TSource> collection, Func<TSource, int> selector)
         {
-            IEnumerable<TSource> sortedCollection = collection.OrderByDescending(selector);
+            return ByOrderFunc(() => collection.OrderByDescending(selector));
+        }
+
+        private static TSource ByOrderFunc<TSource>(Func<IEnumerable<TSource>> orderByFunc)
+        {
+            IEnumerable<TSource> sortedCollection = orderByFunc();
             return sortedCollection.FirstOrDefault();
         }
     }
