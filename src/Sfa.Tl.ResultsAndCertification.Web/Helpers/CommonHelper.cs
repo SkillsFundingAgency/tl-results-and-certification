@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
             int startYearOffset = GetStartYearOffset(academicYear, tlevelStartYear, componentType);
 
             var series = assessmentSeries?.Where(s => s.ComponentType == componentType &&
-                                                 s.Year > academicYear + startYearOffset &&
+                                                 s.Year >= academicYear + startYearOffset &&
                                                  s.Year <= academicYear + Constants.AssessmentEndInYears &&
                                                  currentDate >= s.StartDate && currentDate <= s.EndDate)
                                          ?.OrderBy(a => a.Id)?.ToList();
