@@ -160,8 +160,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             var query = _dbContext.TqRegistrationPathway
                             .Include(p => p.TqRegistrationProfile)
                             .Include(p => p.TqProvider)
-                                .ThenInclude(p => p.TlProvider)
-                            .Include(p => p.TqProvider)
                                 .ThenInclude(p => p.TqAwardingOrganisation)
                                 .ThenInclude(p => p.TlPathway)
                             .Include(p => p.TqProvider)
