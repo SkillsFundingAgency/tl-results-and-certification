@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialis
             if (sourceMember.IsNullOrEmpty())
             {
                 return string.Empty;
-            }           
+            }
             
             string specialismName = sourceMember.Count() switch
             {
