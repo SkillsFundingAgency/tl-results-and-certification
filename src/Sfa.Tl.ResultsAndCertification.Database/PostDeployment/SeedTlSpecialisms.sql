@@ -62,7 +62,16 @@ USING (VALUES
 	(54, N'ZTLOS053', N'Fabrication & Welding Technologies', 15),
 	(55, N'ZTLOS038', N'Business Improvement', 16),
 	(56, N'ZTLOS039', N'Team Leadership / Management', 16),
-	(57, N'ZTLOS040', N'Business Support', 16)
+	(57, N'ZTLOS040', N'Business Support', 16),
+	(58, N'ZTLOS062', N'Legal Services: Assistant Business, Finance and Employment', 17),
+	(59, N'ZTLOS063', N'Legal Services: Assistant Crime, Criminal Justice and Social Welfare', 17),
+	(60, N'ZTLOS056', N'Crop and Plant Production', 18),
+	(61, N'ZTLOS057', N'Floristry', 18),
+	(62, N'ZTLOS058', N'Land-based Engineering', 18),
+	(63, N'ZTLOS059', N'Livestock Production', 18),
+	(64, N'ZTLOS060', N'Ornamental and Environmental Horticulture and Landscaping', 18),
+	(65, N'ZTLOS061', N'Tree and Woodland Management and Maintenance', 18),
+	(66, N'ZTLOS064', N'Cyber Security', 18)
   )
   AS Source ([Id], [LarId], [Name], [TlPathwayId]) 
 ON Target.[Id] = Source.[Id] 

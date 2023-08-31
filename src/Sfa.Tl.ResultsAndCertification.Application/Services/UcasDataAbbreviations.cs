@@ -49,16 +49,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             { "Will not complete", "NC" }
         };
 
-
-
-        public static readonly List<KeyValuePair<string, List<string>>> _dualSpecialisms = new List<KeyValuePair<string, List<string>>>
-        {
-            new ("ZTLOS030", new List<string>{ "10202102", "10202101"}),
-            new ("ZTLOS031", new List<string>{ "10202101", "10202105"}),
-            new ("ZTLOS032", new List<string>{ "10202103", "10202104"})
-        };
-
-
         public static string GetAbbreviatedResult(UcasResultType ucasResultType, string result)
         {
             if (ucasResultType != UcasResultType.OverallResult && string.IsNullOrWhiteSpace(result))
