@@ -11,9 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Models.AnalystOverallResultExtraction;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.Services
@@ -55,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
                 return new FunctionResponse { IsSuccess = false, Message = message };
             }
 
-            var byteData = await CsvExtensions.WriteFileAsync(extractionData, classMapType: typeof(AnalystOverallResultExtractionDataExportMap));            
+            var byteData = await CsvExtensions.WriteFileAsync(extractionData, classMapType: typeof(AnalystOverallResultExtractionDataExportMap));
 
             if (byteData.Length <= 0)
             {
