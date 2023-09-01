@@ -62,7 +62,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.TqRegistra
                         IsOptedin = true,
                         AssessmentSeries = new AssessmentSeries
                         {
-                            Year = 2023
+                            Year = 2023,
+                            Name = "Autumn 2023"
                         },
                         TqPathwayResults = new List<TqPathwayResult>()
                     }
