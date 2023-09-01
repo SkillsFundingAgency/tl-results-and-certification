@@ -174,7 +174,8 @@
         public const string AnalystOverallResultExtractsFolder = "extracts";
         public const string AnalystCoreResultExtractsFolder = "extracts";
         public const string SpecialismRommExtractFolder = "extracts";
-
+        public const string CoreRomm = "CoreRomm";
+        public const string CoreRommFolder = "extracts";
 
         // File Extensions
         public const string FileExtensionTxt = "txt";
