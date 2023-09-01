@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.CoreRommExtract
         public int StudentStartYear { get; set; }
 
         [DisplayName(CoreRommtExtractHeader.AssessmentSeries)]
-        public int? AssessmentSeries { get; set; }
+        public string AssessmentSeries { get; set; }
 
         [DisplayName(CoreRommtExtractHeader.AoName)]
         public string AoName { get; set; }

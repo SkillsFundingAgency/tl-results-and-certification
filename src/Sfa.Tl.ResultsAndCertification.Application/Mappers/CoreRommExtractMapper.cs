@@ -26,11 +26,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                .ForMember(d => d.AppealGrade, opts => opts.MapFrom(s => GetAppealGrade(s)));
         }
 
-        private int? GetAssessmentSeriesYear(ICollection<TqPathwayAssessment> tqPathwayAssessments)
+        private string GetAssessmentSeriesYear(ICollection<TqPathwayAssessment> tqPathwayAssessments)
         {
             return tqPathwayAssessments.IsNullOrEmpty()
-                ? default(int?)
-                : tqPathwayAssessments.First().AssessmentSeries.Year;
+                ? string.Empty
+                : tqPathwayAssessments.First().AssessmentSeries.Name;
         }
 
         private string GetCurrentCoreGrade(TqRegistrationPathway tqRegistrationPathway)

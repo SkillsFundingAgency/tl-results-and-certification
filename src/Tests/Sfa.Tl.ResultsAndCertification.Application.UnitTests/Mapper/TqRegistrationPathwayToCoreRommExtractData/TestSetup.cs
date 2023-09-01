@@ -99,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.TqRegistra
         {
             Destination.UniqueLearnerNumber.Should().Be(Source.TqRegistrationProfile.UniqueLearnerNumber);
             Destination.StudentStartYear.Should().Be(Source.AcademicYear);
-            Destination.AssessmentSeries.Should().Be(Source.TqPathwayAssessments.Single().AssessmentSeries.Year);
+            Destination.AssessmentSeries.Should().Be(Source.TqPathwayAssessments.Single().AssessmentSeries.Name);
             Destination.AoName.Should().Be(Source.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.Name);
             Destination.CoreCode.Should().Be(Source.TqProvider.TqAwardingOrganisation.TlPathway.LarId);
         }
