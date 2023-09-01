@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
+    [Disable]
     public class OverallResultCalculation
     {
         private readonly ResultsAndCertificationConfiguration _configuration;
