@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CoreRommExtractTest
         public override void Given()
         {
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
-            CoreRommExtractService.ProcessCoreRommExtractAsync(AssesmentSeriesYearsToProcess).Returns(new FunctionResponse { IsSuccess = true, Message = "Success message." });
+            CoreRommExtractService.ProcessCoreRommExtractAsync(AssessmentSeriesYearsToProcess).Returns(new FunctionResponse { IsSuccess = true, Message = "Success message." });
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }
 
@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CoreRommExtractTest
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.Received(1).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            CoreRommExtractService.Received(1).ProcessCoreRommExtractAsync(AssesmentSeriesYearsToProcess);
+            CoreRommExtractService.Received(1).ProcessCoreRommExtractAsync(AssessmentSeriesYearsToProcess);
             CommonService.Received(1).UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
         }
     }
