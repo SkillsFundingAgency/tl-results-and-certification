@@ -16,11 +16,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialis
             {
                 return string.Empty;
             }
-
+            
             string specialismName = sourceMember.Count() switch
             {
                 1 => GetSingleSpecialismProperty(sourceMember, rs => rs.TlSpecialism.Name),
-                2 => GetDualSpecialismNameProperty(sourceMember, ds => ds.Name),
+                2 => GetDualSpecialismProperty(sourceMember, ds => ds.Name),
                 _ => string.Empty
             };
 

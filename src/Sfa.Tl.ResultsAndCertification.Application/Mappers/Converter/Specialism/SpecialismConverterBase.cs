@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialis
             return registrationSpecialism != null ? getPropertyValue(registrationSpecialism) : string.Empty;
         }
 
-        protected static string GetDualSpecialismNameProperty(IEnumerable<TqRegistrationSpecialism> specialisms, Func<TlDualSpecialism, string> getPropertyValue)
+        protected static string GetDualSpecialismProperty(IEnumerable<TqRegistrationSpecialism> specialisms, Func<TlDualSpecialism, string> getPropertyValue)
         {
             IEnumerable<TlDualSpecialism> dualSpecialisms = specialisms
                                                                 .Select(p => p.TlSpecialism)
@@ -21,34 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialis
                                                                 .Select(p => p.DualSpecialism);
 
             IGrouping<int, TlDualSpecialism> dualSpecialism = dualSpecialisms.GroupBy(p => p.Id).FirstOrDefault(p => p.Count() == 2);
-
-            if (!dualSpecialisms.Any())
-            {
-                TqRegistrationSpecialism latestRegistrationSpecialism = specialisms.FirstOrDefault(f => f.EndDate is null);
-                return latestRegistrationSpecialism != null ? latestRegistrationSpecialism.TlSpecialism.Name : string.Empty;
-            }
-
             return dualSpecialism != null ? getPropertyValue(dualSpecialism.First()) : string.Empty;
         }
-
-        protected static string GetDualSpecialismLarIdProperty(IEnumerable<TqRegistrationSpecialism> specialisms, Func<TlDualSpecialism, string> getPropertyValue)
-        {
-            IEnumerable<TlDualSpecialism> dualSpecialisms = specialisms
-                                                                .Select(p => p.TlSpecialism)
-                                                                .SelectMany(s => s.TlDualSpecialismToSpecialisms)
-                                                                .Select(p => p.DualSpecialism);
-
-            IGrouping<int, TlDualSpecialism> dualSpecialism = dualSpecialisms.GroupBy(p => p.Id).FirstOrDefault(p => p.Count() == 2);
-
-            if (!dualSpecialisms.Any())
-            {
-                TqRegistrationSpecialism latestRegistrationSpecialism = specialisms.FirstOrDefault(f => f.EndDate is null);
-                return latestRegistrationSpecialism != null ? latestRegistrationSpecialism.TlSpecialism.LarId : string.Empty;
-            }
-
-            return dualSpecialism != null ? getPropertyValue(dualSpecialism.First()) : string.Empty;
-        }
-
 
     }
 }
