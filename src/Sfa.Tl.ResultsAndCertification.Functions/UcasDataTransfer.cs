@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
-    [Disable]
     public class UcasDataTransfer
     {
         private readonly IUcasDataTransferService _ucasDataTransferService;

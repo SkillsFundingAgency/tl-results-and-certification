@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
-    [Disable]
     public class LearnerGender
     {
         private readonly ILrsLearnerService _learnerService;

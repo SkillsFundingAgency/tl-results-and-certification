@@ -12,7 +12,6 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
-    [Disable]
     public class IndustryPlacementExtract
     {
         private readonly IIndustryPlacementService _industryPlacementService;

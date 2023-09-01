@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
-    [Disable]
     public class AnalystOverallResultExtraction
     {
         private readonly AnalystOverallResultExtractSettings _configuration;
