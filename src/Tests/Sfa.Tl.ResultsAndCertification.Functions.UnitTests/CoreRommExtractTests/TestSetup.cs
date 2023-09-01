@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CoreRommExtractTest
         protected ICoreRommExtractService CoreRommExtractService = Substitute.For<ICoreRommExtractService>();
         protected ICommonService CommonService = Substitute.For<ICommonService>();
 
-        protected int[] AssesmentSeriesYearsToProcess = new[] { 2023 };
+        protected int[] AssessmentSeriesYearsToProcess = new[] { 2023 };
 
         public override void Setup()
         {
@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CoreRommExtractTest
             {
                 CoreRommExtractSettings = new CoreRommExtractSettings
                 {
-                    AssesmentSeriesYearsToProcess = AssesmentSeriesYearsToProcess,
+                    AssessmentSeriesYearsToProcess = AssessmentSeriesYearsToProcess,
                     CoreRommValidDateRanges = new[]
                     {
                         new DateTimeRange

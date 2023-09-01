@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.CoreRommExtract;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
@@ -15,6 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
             CreateMap<TqRegistrationPathway, CoreRommExtractData>()
                .ForMember(d => d.UniqueLearnerNumber, opts => opts.MapFrom(s => s.TqRegistrationProfile.UniqueLearnerNumber))
                .ForMember(d => d.StudentStartYear, opts => opts.MapFrom(s => s.AcademicYear))
+               .ForMember(d => d.AssessmentSeries, opts => opts.MapFrom(s => GetAssessmentSeriesYear(s.TqPathwayAssessments)))
                .ForMember(d => d.AoName, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.Name))
                .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.LarId))
                .ForMember(d => d.CurrentCoreGrade, opts => opts.MapFrom(s => GetCurrentCoreGrade(s)))
@@ -22,6 +24,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                .ForMember(d => d.RommGrade, opts => opts.MapFrom(s => GetRommGrade(s)))
                .ForMember(d => d.AppealOpenedTimeStamp, opts => opts.MapFrom(s => GetAppealOpenedTimeStamp(s)))
                .ForMember(d => d.AppealGrade, opts => opts.MapFrom(s => GetAppealGrade(s)));
+        }
+
+        private int? GetAssessmentSeriesYear(ICollection<TqPathwayAssessment> tqPathwayAssessments)
+        {
+            return tqPathwayAssessments.IsNullOrEmpty()
+                ? default(int?)
+                : tqPathwayAssessments.First().AssessmentSeries.Year;
         }
 
         private string GetCurrentCoreGrade(TqRegistrationPathway tqRegistrationPathway)

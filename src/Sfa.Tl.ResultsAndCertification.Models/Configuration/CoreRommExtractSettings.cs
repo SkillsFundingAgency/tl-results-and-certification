@@ -7,12 +7,12 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
     public class CoreRommExtractSettings
     {
         /// <summary>
-        /// Gets or sets the assesment series years to process.
+        /// Gets or sets the assessment series years to process.
         /// </summary>
         /// <value>
         /// The academic years to process.
         /// </value>
-        public int[] AssesmentSeriesYearsToProcess { get; set; }
+        public int[] AssessmentSeriesYearsToProcess { get; set; }
 
         /// <summary>
         /// Gets or sets the valid date ranges to run the process.

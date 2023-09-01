@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 var stopwatch = Stopwatch.StartNew();
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                var response = await _coreRommExtractService.ProcessCoreRommExtractAsync(_configuration.AssesmentSeriesYearsToProcess);
+                var response = await _coreRommExtractService.ProcessCoreRommExtractAsync(_configuration.AssessmentSeriesYearsToProcess);
                 var message = $"Function {context.FunctionName} completed processing.\n" +
                                      $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}";
 

@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CoreRommExtractTest
             {
                 CoreRommExtractSettings = new CoreRommExtractSettings
                 {
-                    AssesmentSeriesYearsToProcess = AssesmentSeriesYearsToProcess,
+                    AssessmentSeriesYearsToProcess = AssessmentSeriesYearsToProcess,
                     CoreRommValidDateRanges = new[]
                     {
                         new DateTimeRange
@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CoreRommExtractTest
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.Received(0).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            CoreRommExtractService.Received(0).ProcessCoreRommExtractAsync(AssesmentSeriesYearsToProcess);
+            CoreRommExtractService.Received(0).ProcessCoreRommExtractAsync(AssessmentSeriesYearsToProcess);
             CommonService.Received(0).UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
         }
     }

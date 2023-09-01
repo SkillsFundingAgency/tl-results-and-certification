@@ -168,10 +168,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                             .Include(p => p.TqPathwayAssessments)
                                 .ThenInclude(p => p.TqPathwayResults)
                                 .ThenInclude(p => p.TlLookup)
-                            .Include(p => p.TqPathwayAssessments.Where(p => p.AssessmentSeries.ComponentType == ComponentType.Core))
+                            .Include(p => p.TqPathwayAssessments.Where(p => p.IsOptedin))
                                 .ThenInclude(p => p.AssessmentSeries)
                             .Where(p => p.Status == RegistrationPathwayStatus.Active
-                                        && p.TqPathwayAssessments.All(p => assesmentSeriesYears.Contains(p.AssessmentSeries.Year)))
+                                    && (p.TqPathwayAssessments != null && p.TqPathwayAssessments.Count > 0)
+                                    && p.TqPathwayAssessments.All(p => assesmentSeriesYears.Contains(p.AssessmentSeries.Year)))
                             .OrderBy(p => p.TqRegistrationProfile.UniqueLearnerNumber);
 
             IList<TqRegistrationPathway> results = await query.ToListAsync();
