@@ -14,15 +14,15 @@ using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
     public class SpecialismRommExtract
-    {
-        private readonly IAnalystCoreResultExtractionService _analystCoreResultExtractionService;
+    {   
+        private readonly ISpecialismRommExtractionService _specialismRommExtractionService;
         private readonly ICommonService _commonService;
         private readonly SpecialismRommExtractSetting _configuration;
 
 
-        public SpecialismRommExtract(ResultsAndCertificationConfiguration configuration, IAnalystCoreResultExtractionService analystCoreResultExtractionService, ICommonService commonService)
+        public SpecialismRommExtract(ResultsAndCertificationConfiguration configuration, ISpecialismRommExtractionService specialismRommExtractionService, ICommonService commonService)
         {
-            _analystCoreResultExtractionService = analystCoreResultExtractionService;
+            _specialismRommExtractionService = specialismRommExtractionService;
             _commonService = commonService;
             _configuration = configuration.SpecialismRommExtractSetting;
         }
@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                var response = await _analystCoreResultExtractionService.ProcessAnalystCoreResultExtractsAsync(_configuration.CoreAcademicYearsToProcess);
+                var response = await _specialismRommExtractionService.ProcessSpecialismRommExtractsAsync(_configuration.AssesmentSeriesYearsToProcess);
                 var message = $"Function {context.FunctionName} completed processing.\n" +
                                      $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}";
 

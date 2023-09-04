@@ -7,6 +7,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
     public class SpecialismRommExtractSetting
     {
         /// <summary>
+        /// Gets or sets the assesment series years to process.
+        /// </summary>
+        /// <value>
+        /// The academic years to process.
+        /// </value>
+        public int[] AssesmentSeriesYearsToProcess { get; set; }
+
+        /// <summary>
         /// Gets or sets the valid date ranges to run the process.
         /// </summary>
         /// <value>

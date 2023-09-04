@@ -173,7 +173,8 @@
         public const string SpecialismRommExtract = "SpecialismRommExtract";
         public const string AnalystOverallResultExtractsFolder = "extracts";
         public const string AnalystCoreResultExtractsFolder = "extracts";
-        public const string SpecialismRommExtractFolder = "extracts";
+        public const string SpecialismRommFolder = "extracts";
+        public const string SpecialismRomm = "SpecialismRomm";
         public const string CoreRomm = "CoreRomm";
         public const string CoreRommFolder = "extracts";
 
