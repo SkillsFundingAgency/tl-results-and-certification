@@ -71,7 +71,7 @@ USING (VALUES
 	(63, N'ZTLOS059', N'Livestock Production', 18),
 	(64, N'ZTLOS060', N'Ornamental and Environmental Horticulture and Landscaping', 18),
 	(65, N'ZTLOS061', N'Tree and Woodland Management and Maintenance', 18),
-	(66, N'ZTLOS064', N'Cyber Security', 18)
+	(66, N'ZTLOS064', N'Cyber Security', 6)
   )
   AS Source ([Id], [LarId], [Name], [TlPathwayId]) 
 ON Target.[Id] = Source.[Id] 
