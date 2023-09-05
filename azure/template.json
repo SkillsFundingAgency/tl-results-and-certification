@@ -141,6 +141,10 @@
         "analystCoreResultExtractTrigger": {
            "type": "string",
            "defaultValue": "0 30 7 * * *"
+       },
+	   "coreRommExtracTrigger": {
+           "type": "string",
+           "defaultValue": "0 0 8 * * *"
        }
     },
     "variables": {
@@ -662,6 +666,10 @@
 							{
 								"name": "AnalystCoreResultExtractTrigger",
 								"value": "[parameters('analystCoreResultExtractTrigger')]"
+							},
+							{
+								"name": "CoreRommExtracTrigger",
+								"value": "[parameters('coreRommExtracTrigger')]"
 							},
                             {
                                 "name": "WEBSITE_LOAD_CERTIFICATES",
