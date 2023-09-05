@@ -35,8 +35,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 
         private string GetCurrentCoreGrade(TqRegistrationPathway tqRegistrationPathway)
         {
-            string coreGrade = string.Empty;
-
             var coreGradeResults = tqRegistrationPathway.TqPathwayAssessments
                                         .SelectMany(p => p.TqPathwayResults)
                                         .Where(p => !p.PrsStatus.HasValue);
