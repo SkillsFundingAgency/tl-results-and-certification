@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.Interfaces
 {
-    public interface ICoreRommExtractService
+    public interface ISpecialismRommExtractionService
     {
-        Task<FunctionResponse> ProcessCoreRommExtractAsync(int[] assesmentSeriesYears);
+        Task<FunctionResponse> ProcessSpecialismRommExtractsAsync(int[] academicYears);
     }
 }

@@ -491,6 +491,21 @@
 			"required": [],
 			"type": "object"
 		},
+		"SpecialismRommExtractSettings": {
+			"properties": {
+				"AssesmentSeriesYearsToProcess": {
+					"type": "array",
+					"environmentVariable": "AssesmentSeriesYearsToProcess"
+				},
+				"SpecialismRommValidDateRanges": {
+					"type": "array",
+					"environmentVariable": "SpecialismRommValidDateRanges"
+				}
+			},
+			"additionalProperties": false,
+			"required": [],
+			"type": "object"
+		}
 	},
 	"additionalProperties": false,
 	"required": [
