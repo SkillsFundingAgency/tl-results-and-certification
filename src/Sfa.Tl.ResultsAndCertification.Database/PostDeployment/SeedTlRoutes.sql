@@ -12,7 +12,8 @@ USING (VALUES
   (4, N'Health and Science'),
   (5, N'Legal, Finance and Accounting'),
   (6, N'Engineering and Manufacturing'),
-  (7, N'Business and Administration')
+  (7, N'Business and Administration'),
+  (8, N'Agriculture, Environment and Animal Care')
   )
   AS Source ([Id], [Name]) 
 ON Target.[Id] = Source.[Id] 

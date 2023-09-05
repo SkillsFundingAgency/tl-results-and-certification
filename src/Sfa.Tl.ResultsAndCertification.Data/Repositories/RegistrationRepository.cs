@@ -146,7 +146,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 .ThenInclude(s => s.TlDualSpecialismToSpecialisms)
                                 .ThenInclude(s => s.DualSpecialism)
                             .Include(p => p.IndustryPlacements)
-                            .Include(p => p.OverallResults)
+                            .Include(p => p.OverallResults.Where(w => w.EndDate == null))
                             .Where(p => academicYears.Contains(p.AcademicYear))
                             .OrderBy(p => p.AcademicYear)
                             .ThenBy(p => p.TqRegistrationProfile.UniqueLearnerNumber);

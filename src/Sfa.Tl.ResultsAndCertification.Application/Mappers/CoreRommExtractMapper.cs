@@ -16,6 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
             CreateMap<TqRegistrationPathway, CoreRommExtractData>()
                .ForMember(d => d.UniqueLearnerNumber, opts => opts.MapFrom(s => s.TqRegistrationProfile.UniqueLearnerNumber))
                .ForMember(d => d.StudentStartYear, opts => opts.MapFrom(s => s.AcademicYear))
+               .ForMember(d => d.AssessmentSeries, opts => opts.MapFrom(s => GetAssessmentSeriesYear(s.TqPathwayAssessments)))
                .ForMember(d => d.AoName, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.Name))
                .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.LarId))
                .ForMember(d => d.CurrentCoreGrade, opts => opts.MapFrom(s => GetCurrentCoreGrade(s)))
@@ -23,6 +24,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                .ForMember(d => d.RommGrade, opts => opts.MapFrom(s => GetRommGrade(s)))
                .ForMember(d => d.AppealOpenedTimeStamp, opts => opts.MapFrom(s => GetAppealOpenedTimeStamp(s)))
                .ForMember(d => d.AppealGrade, opts => opts.MapFrom(s => GetAppealGrade(s)));
+        }
+
+        private string GetAssessmentSeriesYear(ICollection<TqPathwayAssessment> tqPathwayAssessments)
+        {
+            return tqPathwayAssessments.IsNullOrEmpty()
+                ? string.Empty
+                : tqPathwayAssessments.First().AssessmentSeries.Name;
         }
 
         private string GetCurrentCoreGrade(TqRegistrationPathway tqRegistrationPathway)
@@ -40,17 +48,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 
         private DateTime? GetRommOpenedTimeStamp(TqRegistrationPathway tqRegistrationPathway)
         {
-            return GetOpenedTimeStampByPrsStatus(tqRegistrationPathway, PrsStatus.UnderReview, PrsStatus.Reviewed);
+            return GetOpenedTimeStampByPrsStatus(tqRegistrationPathway, new[] { PrsStatus.UnderReview, PrsStatus.Reviewed });
         }
 
         private DateTime? GetAppealOpenedTimeStamp(TqRegistrationPathway tqRegistrationPathway)
         {
-            return GetOpenedTimeStampByPrsStatus(tqRegistrationPathway, PrsStatus.BeingAppealed, PrsStatus.Final);
+            return GetOpenedTimeStampByPrsStatus(tqRegistrationPathway, new[] { PrsStatus.BeingAppealed, PrsStatus.Final });
         }
 
-        private DateTime? GetOpenedTimeStampByPrsStatus(TqRegistrationPathway tqRegistrationPathway, PrsStatus prsStatus, params PrsStatus[] prsStatusParams)
+        private DateTime? GetOpenedTimeStampByPrsStatus(TqRegistrationPathway tqRegistrationPathway, PrsStatus[] prsStatuses)
         {
-            IList<TqPathwayResult> results = GetPathwayResultsByPrsStatus(tqRegistrationPathway, prsStatus, prsStatusParams);
+            TqPathwayResult[] results = GetPathwayResultsByPrsStatus(tqRegistrationPathway, prsStatuses);
 
             return results.IsNullOrEmpty()
                 ? null
@@ -69,26 +77,24 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 
         private string GetRommGradeByPrsStatus(TqRegistrationPathway tqRegistrationPathway, PrsStatus prsStatus)
         {
-            IList<TqPathwayResult> results = GetPathwayResultsByPrsStatus(tqRegistrationPathway, prsStatus);
+            TqPathwayResult[] results = GetPathwayResultsByPrsStatus(tqRegistrationPathway, prsStatus);
 
             return results.IsNullOrEmpty()
                 ? string.Empty
                 : results[0].TlLookup.Value;
         }
 
-        private IList<TqPathwayResult> GetPathwayResultsByPrsStatus(TqRegistrationPathway tqRegistrationPathway, PrsStatus prsStatus, params PrsStatus[] prsStatusParams)
+        private TqPathwayResult[] GetPathwayResultsByPrsStatus(TqRegistrationPathway tqRegistrationPathway, PrsStatus prsStatus)
         {
-            var prsStatuses = new List<PrsStatus> { prsStatus };
+            return GetPathwayResultsByPrsStatus(tqRegistrationPathway, new[] { prsStatus });
+        }
 
-            if (!prsStatusParams.IsNullOrEmpty())
-            {
-                prsStatuses.AddRange(prsStatusParams);
-            }
-
+        private TqPathwayResult[] GetPathwayResultsByPrsStatus(TqRegistrationPathway tqRegistrationPathway, PrsStatus[] prsStatuses)
+        {
             return tqRegistrationPathway.TqPathwayAssessments
                     .SelectMany(p => p.TqPathwayResults)
                     .Where(p => p.PrsStatus.HasValue && prsStatuses.Contains(p.PrsStatus.Value))
-                    .ToList();
+                    .ToArray();
         }
     }
 }

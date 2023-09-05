@@ -16,6 +16,7 @@
         IndustryPlacementExtract = 11,
         AnalystOverallResultExtract = 12,
         AnalystCoreResultExtract = 13,
+        CoreRomm = 14,
         SpecialismRommExtract = 15
     }
 }

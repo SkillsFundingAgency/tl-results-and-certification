@@ -35,11 +35,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             _logger = logger;
         }
 
-        public async Task<FunctionResponse> ProcessCoreRommExtractAsync(int[] assesmentSeriesYears)
+        public async Task<FunctionResponse> ProcessCoreRommExtractAsync(int[] assessmentSeriesYears)
         {
-            IList<CoreRommExtractData> coreRommExtractData = await GetCoreRommExtractData(assesmentSeriesYears);
+            IList<CoreRommExtractData> coreRommExtractData = await GetCoreRommExtractData(assessmentSeriesYears);
 
-            if (coreRommExtractData == null || coreRommExtractData.Count == 0)
+            if (coreRommExtractData.IsNullOrEmpty())
             {
                 string message = $"No entries are found. Method: {nameof(ProcessCoreRommExtractAsync)}()";
                 _logger.LogWarning(LogEvent.NoDataFound, message);

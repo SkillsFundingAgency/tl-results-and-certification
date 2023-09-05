@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,6 +104,24 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                         .Where(x => x.FunctionType == functionType && x.Status == FunctionStatus.Processed)
                         .OrderByDescending(x => x.CreatedOn)
                         .FirstOrDefault();
+        }
+
+        private List<TlDualSpecialismToSpecialism> GetDualSpecialisms()
+        {
+            return _dbContext.TlDualSpecialismToSpecialism
+                .Include(x => x.Specialism)
+                .Include(x => x.DualSpecialism).ToList();
+                 
+        }
+
+        public string GetDualSpecialismLarId(List<string> specialismlarId)
+        {
+            var dualSpecialisms = GetDualSpecialisms();
+            var dualSpecialismLarIdForSpecialism = dualSpecialisms.Where(t => specialismlarId.Contains(t.Specialism.LarId.ToString())).ToList();
+            var filteredDualSpecialisms = dualSpecialismLarIdForSpecialism.GroupBy(x => x.TlDualSpecialismId).Where(g => g.Count() > 1).ToList();
+            var dualSpecialismCodes = filteredDualSpecialisms.SelectMany(t => t).ToList();
+
+            return dualSpecialisms.Where(t => t.TlDualSpecialismId.Equals(dualSpecialismCodes.FirstOrDefault().TlDualSpecialismId)).FirstOrDefault().DualSpecialism.LarId;
         }
     }
 }

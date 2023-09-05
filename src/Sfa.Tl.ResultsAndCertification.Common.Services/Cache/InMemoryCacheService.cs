@@ -8,52 +8,64 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.Cache
 {
     public class InMemoryCacheService : ICacheService
     {
-        private static readonly Lazy<MemoryCache> _cache = new Lazy<MemoryCache>(() => new MemoryCache(new MemoryCacheOptions()));
+        private readonly MemoryCache _cache = new(new MemoryCacheOptions());
 
-        public async Task<T> GetAsync<T>(string key)
+        public Task<T> GetAsync<T>(string key)
         {
-            key = GenerateCacheKey<T>(key);
-            return await Task.FromResult(JsonConvert.DeserializeObject<T>(_cache.Value.Get<string>(key)));
+            string cachedValue = GetCachedValue<T>(key);
+            return DeserializeOrDefaultAsync<T>(cachedValue);
         }
 
-        public async Task<bool> KeyExistsAsync<T>(string key)
+        public Task<bool> KeyExistsAsync<T>(string key)
         {
-            key = GenerateCacheKey<T>(key);
-            return await Task.FromResult(_cache.Value.Get(key) != null);
+            string cachedValue = GetCachedValue<T>(key);
+            return Task.FromResult(cachedValue != null);
         }
 
-        public async Task RemoveAsync<T>(string key)
+        public Task RemoveAsync<T>(string key)
         {
-            key = GenerateCacheKey<T>(key);
-            _cache.Value.Remove(key);
-            await Task.CompletedTask;
+            string generatedCacheKey = GenerateCacheKey<T>(key);
+            _cache.Remove(generatedCacheKey);
+
+            return Task.CompletedTask;
         }
 
-        public async Task<T> GetAndRemoveAsync<T>(string key)
+        public Task<T> GetAndRemoveAsync<T>(string key)
         {
-            key = GenerateCacheKey<T>(key);
-            var cacheValue = _cache.Value.Get<string>(key);
-            _cache.Value.Remove(key);
+            var cachedValue = GetCachedValue<T>(key, out string generatedCacheKey);
+            _cache.Remove(generatedCacheKey);
 
-            T result = string.IsNullOrEmpty(cacheValue) ? default : JsonConvert.DeserializeObject<T>(cacheValue);
-            return await Task.FromResult<T>(result);
+            return DeserializeOrDefaultAsync<T>(cachedValue);
         }
 
-        public async Task SetAsync<T>(string key, T item, CacheExpiryTime cacheExpiryTime = CacheExpiryTime.Small)
+        public Task SetAsync<T>(string key, T item, CacheExpiryTime cacheExpiryTime = CacheExpiryTime.Small)
         {
-            key = GenerateCacheKey<T>(key);
-            _cache.Value.Set(key, JsonConvert.SerializeObject(item), TimeSpan.FromHours((int)cacheExpiryTime));
-            await Task.CompletedTask;
+            string generatedCacheKey = GenerateCacheKey<T>(key);
+            _cache.Set(generatedCacheKey, JsonConvert.SerializeObject(item), TimeSpan.FromHours((int)cacheExpiryTime));
+
+            return Task.CompletedTask;
         }
 
-        static string GenerateCacheKey<T>(string key)
+        private string GetCachedValue<T>(string key)
         {
-            return GenerateCacheKey(typeof(T), key);
+            return GetCachedValue<T>(key, out _);
         }
 
-        static string GenerateCacheKey(Type objectType, string key)
+        private string GetCachedValue<T>(string key, out string generatedCacheKey)
         {
-            return $"{key}:{objectType.Name}".ToLower();
+            generatedCacheKey = GenerateCacheKey<T>(key);
+            return _cache.Get<string>(generatedCacheKey);
+        }
+
+        private string GenerateCacheKey<T>(string key)
+        {
+            return $"{key}:{typeof(T).Name}".ToLower();
+        }
+
+        private Task<T> DeserializeOrDefaultAsync<T>(string value)
+        {
+            T result = string.IsNullOrEmpty(value) ? default : JsonConvert.DeserializeObject<T>(value);
+            return Task.FromResult(result);
         }
     }
 }
