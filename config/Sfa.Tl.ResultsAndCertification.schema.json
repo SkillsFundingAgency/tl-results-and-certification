@@ -475,7 +475,22 @@
 			"additionalProperties": false,
 			"required": [],
 			"type": "object"
-		}
+		},
+		"CoreRommExtractSettings": {
+			"properties": {
+				"AssessmentSeriesYearsToProcess": {
+					"type": "array",
+					"environmentVariable": "AssessmentSeriesYearsToProcess"
+				},
+				"CoreRommValidDateRanges": {
+					"type": "array",
+					"environmentVariable": "CoreRommValidDateRanges"
+				}
+			},
+			"additionalProperties": false,
+			"required": [],
+			"type": "object"
+		},
 	},
 	"additionalProperties": false,
 	"required": [
@@ -505,7 +520,8 @@
 		"OverallResultBatchSettings",
 		"CertificatePrintingBatchSettings",
 		"AnalystCoreResultExtractSettings",
-		"AnalystOverallResultExtractSettings"
+		"AnalystOverallResultExtractSettings",
+		"CoreRommExtractSettings"
 	],
 	"type": "object"
 }
