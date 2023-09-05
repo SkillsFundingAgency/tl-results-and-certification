@@ -16,6 +16,7 @@
     "AnalystOverallResultExtractTrigger": "0 15 7 * * *",
     "AnalystCoreResultExtractTrigger": "0 30 7 * * *",
     "CoreRommExtracTrigger": "0 0 8 * * *",
+    "SpecialismRommExtractTrigger": "0 45 7 * * *",
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "BlobStorageConnectionString": "UseDevelopmentStorage=true;",
     "ConfigurationStorageConnectionString": "UseDevelopmentStorage=true;",
