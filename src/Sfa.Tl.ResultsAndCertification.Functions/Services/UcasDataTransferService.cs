@@ -66,16 +66,16 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
             //Todo: Not sending the file to UCas API 
 
-            //var fileHash = CommonHelper.ComputeSha256Hash(byteData);
+            var fileHash = CommonHelper.ComputeSha256Hash(byteData);
 
-            //var ucasFileId = await _ucasApiClient.SendDataAsync(new UcasDataRequest { FileName = filename, FileData = byteData, FileHash = fileHash });
+            var ucasFileId = await _ucasApiClient.SendDataAsync(new UcasDataRequest { FileName = filename, FileData = byteData, FileHash = fileHash });
 
             // 4. Write response to blob
             await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
             {
                 ContainerName = DocumentType.Ucas.ToString().ToLower(),
-                SourceFilePath = ucasDataType.ToString().ToLower(),
-                BlobFileName = $"{filename}",
+                SourceFilePath = ucasDataType.ToString().ToLower(),                
+                BlobFileName = $"{ucasFileId}-{filename}",
                 FileData = byteData,
                 UserName = Constants.FunctionPerformedBy
             });
