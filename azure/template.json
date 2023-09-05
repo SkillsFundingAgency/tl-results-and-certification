@@ -146,7 +146,7 @@
            "type": "string",
            "defaultValue": "0 0 8 * * *"
        },
-	   "specialismRommExtracTrigger": {
+	   "specialismRommExtractTrigger": {
            "type": "string",
            "defaultValue": "0 45 7 * * *"
        }
