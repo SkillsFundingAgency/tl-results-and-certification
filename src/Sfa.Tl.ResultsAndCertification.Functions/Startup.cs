@@ -108,6 +108,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
             // ROMM Extract
             services.AddTransient<ICoreRommExtractService, CoreRommExtractService>();
+            services.AddTransient<ISpecialismRommExtractionService, SpecialismRommExtractionService>();
         }
 
         private void RegisterApiClients(IServiceCollection services)
