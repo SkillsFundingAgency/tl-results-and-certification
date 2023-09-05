@@ -536,7 +536,8 @@
 		"CertificatePrintingBatchSettings",
 		"AnalystCoreResultExtractSettings",
 		"AnalystOverallResultExtractSettings",
-		"CoreRommExtractSettings"
+		"CoreRommExtractSettings",
+		"SpecialismRommExtractSettings"
 	],
 	"type": "object"
 }
