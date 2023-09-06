@@ -480,7 +480,7 @@
 			"properties": {
 				"AssessmentSeriesYearsToProcess": {
 					"type": "array",
-					"environmentVariable": "AssessmentSeriesYearsToProcess"
+					"environmentVariable": "CoreAssessmentSeriesYearsToProcess"
 				},
 				"CoreRommValidDateRanges": {
 					"type": "array",
@@ -495,7 +495,7 @@
 			"properties": {
 				"AssesmentSeriesYearsToProcess": {
 					"type": "array",
-					"environmentVariable": "AssesmentSeriesYearsToProcess"
+					"environmentVariable": "SpecialismAssessmentSeriesYearsToProcess"
 				},
 				"SpecialismRommValidDateRanges": {
 					"type": "array",
