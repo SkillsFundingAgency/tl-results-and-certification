@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 return;
             }
 
-            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.CoreRomm);
+            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.CoreRommExtract);
             try
             {
                 logger.LogInformation($"Function {context.FunctionName} started");
