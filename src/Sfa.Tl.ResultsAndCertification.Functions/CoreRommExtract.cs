@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _commonService = commonService;
         }
 
-        [FunctionName(Constants.CoreRomm)]
+        [FunctionName(Constants.CoreRommExtract)]
         public async Task CoreRommExtractAsync([TimerTrigger("%CoreRommExtractTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));

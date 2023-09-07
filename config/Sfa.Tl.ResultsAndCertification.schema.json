@@ -493,7 +493,7 @@
 		},
 		"SpecialismRommExtractSettings": {
 			"properties": {
-				"AssesmentSeriesYearsToProcess": {
+				"SpecialismAssessmentSeriesYearsToProcess": {
 					"type": "array",
 					"environmentVariable": "SpecialismAssessmentSeriesYearsToProcess"
 				},

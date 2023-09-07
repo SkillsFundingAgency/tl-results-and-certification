@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.SpecialismRommExtra
             {
                 SpecialismRommExtractSetting = new SpecialismRommExtractSetting
                 {
-                    AssesmentSeriesYearsToProcess = AssessmentSeriesYearsToProcess,
+                    SpecialismAssessmentSeriesYearsToProcess = SpecialismAssessmentSeriesYearsToProcess,
                     SpecialismRommValidDateRanges = new[]
                     {
                         new DateTimeRange
@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.SpecialismRommExtra
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.Received(0).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            SpecialismRommExtractService.Received(0).ProcessSpecialismRommExtractsAsync(AssessmentSeriesYearsToProcess);
+            SpecialismRommExtractService.Received(0).ProcessSpecialismRommExtractsAsync(SpecialismAssessmentSeriesYearsToProcess);
             CommonService.Received(0).UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
         }
     }

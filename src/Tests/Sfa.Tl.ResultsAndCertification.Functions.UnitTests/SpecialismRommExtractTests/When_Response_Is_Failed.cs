@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.SpecialismRommExtra
         public override void Given()
         {
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
-            SpecialismRommExtractService.ProcessSpecialismRommExtractsAsync(AssessmentSeriesYearsToProcess).Returns(new FunctionResponse { IsSuccess = false, Message = "Error message." });
+            SpecialismRommExtractService.ProcessSpecialismRommExtractsAsync(SpecialismAssessmentSeriesYearsToProcess).Returns(new FunctionResponse { IsSuccess = false, Message = "Error message." });
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }
 
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.SpecialismRommExtra
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.Received(1).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            SpecialismRommExtractService.Received(1).ProcessSpecialismRommExtractsAsync(AssessmentSeriesYearsToProcess);
+            SpecialismRommExtractService.Received(1).ProcessSpecialismRommExtractsAsync(SpecialismAssessmentSeriesYearsToProcess);
             CommonService.Received(1).UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
         }
     }
