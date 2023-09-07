@@ -21,13 +21,13 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
         private readonly IRegistrationRepository _registrationRepository;
         private readonly IBlobStorageService _blobStorageService;
         private readonly IMapper _mapper;
-        private readonly ILogger<AnalystCoreResultExtractionService> _logger;
+        private readonly ILogger<CoreRommExtractService> _logger;
 
         public CoreRommExtractService(
             IRegistrationRepository registrationRepository,
             IBlobStorageService blobStorageService,
             IMapper mapper,
-            ILogger<AnalystCoreResultExtractionService> logger)
+            ILogger<CoreRommExtractService> logger)
         {
             _registrationRepository = registrationRepository;
             _blobStorageService = blobStorageService;

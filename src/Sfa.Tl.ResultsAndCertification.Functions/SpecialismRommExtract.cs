@@ -36,6 +36,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
             logger.LogInformation($"Function SpecialismRommExtractTrigger {context.FunctionName} started");
 
+            logger.LogInformation($"_configuration started");
+
+            logger.LogInformation($"_configuration.SpecialismRommValidDateRanges {_configuration}");
+
+
             logger.LogInformation($"_configuration.SpecialismRommValidDateRanges {_configuration.SpecialismRommValidDateRanges} SpecialismRommValidDateRanges Object");
 
             logger.LogInformation($"_configuration.SpecialismRommValidDateRanges {_configuration.SpecialismRommValidDateRanges?.Count()} count");
