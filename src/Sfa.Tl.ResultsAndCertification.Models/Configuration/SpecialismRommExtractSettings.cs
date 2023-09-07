@@ -4,7 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Models.JsonConverter;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
 {
-    public class SpecialismRommExtractSetting
+    public class SpecialismRommExtractSettings
     {
         /// <summary>
         /// Gets or sets the assesment series years to process.

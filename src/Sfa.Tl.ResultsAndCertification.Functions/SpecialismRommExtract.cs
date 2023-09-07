@@ -17,14 +17,14 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
     {   
         private readonly ISpecialismRommExtractionService _specialismRommExtractionService;
         private readonly ICommonService _commonService;
-        private readonly SpecialismRommExtractSetting _configuration;
+        private readonly SpecialismRommExtractSettings _configuration;
 
 
         public SpecialismRommExtract(ResultsAndCertificationConfiguration configuration, ISpecialismRommExtractionService specialismRommExtractionService, ICommonService commonService)
         {
             _specialismRommExtractionService = specialismRommExtractionService;
             _commonService = commonService;
-            _configuration = configuration.SpecialismRommExtractSetting;
+            _configuration = configuration.SpecialismRommExtractSettings;
         }
 
         [FunctionName(Constants.SpecialismRommExtract)]

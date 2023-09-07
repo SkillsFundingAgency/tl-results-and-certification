@@ -274,7 +274,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// <value>
         /// The specialism Romm extract settings.
         /// </value>
-        public SpecialismRommExtractSetting SpecialismRommExtractSetting { get; set; }
+        public SpecialismRommExtractSettings SpecialismRommExtractSettings { get; set; }
 
         /// <summary>
         /// Gets or sets the core romm extract settings.
