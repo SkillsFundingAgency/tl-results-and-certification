@@ -36,6 +36,16 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
             logger.LogInformation($"Function SpecialismRommExtractTrigger {context.FunctionName} started");
 
+            logger.LogInformation($"_configuration.SpecialismRommValidDateRanges {_configuration.SpecialismRommValidDateRanges} SpecialismRommValidDateRanges Object");
+
+            logger.LogInformation($"_configuration.SpecialismRommValidDateRanges {_configuration.SpecialismRommValidDateRanges?.Count()} count");
+
+
+            logger.LogInformation($"_configuration.SpecialismRommValidDateRanges {_configuration.SpecialismRommValidDateRanges?.FirstOrDefault().From.ToString()} From Date");
+
+            logger.LogInformation($"_configuration.SpecialismRommValidDateRanges {_configuration.SpecialismRommValidDateRanges?.FirstOrDefault().To.ToString()} To Date");
+
+
             bool shouldFunctionRunToday = _configuration.SpecialismRommValidDateRanges.Any(r => r.Contains(today));
 
             logger.LogInformation($"Function SpecialismRommExtractTrigger shouldFunctionRunTodaystarted {shouldFunctionRunToday}");
@@ -58,7 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 logger.LogInformation($"_commonService  created");
 
-                var response = await _specialismRommExtractionService.ProcessSpecialismRommExtractsAsync(_configuration.AssesmentSeriesYearsToProcess);
+                var response = await _specialismRommExtractionService.ProcessSpecialismRommExtractsAsync(_configuration.SpecialismAssessmentSeriesYearsToProcess);
                 var message = $"Function {context.FunctionName} completed processing.\n" +
                                      $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}";
 

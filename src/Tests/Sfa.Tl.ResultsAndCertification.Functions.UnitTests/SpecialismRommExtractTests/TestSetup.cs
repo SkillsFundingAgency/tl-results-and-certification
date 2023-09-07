@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.SpecialismRommExtra
         protected ISpecialismRommExtractionService SpecialismRommExtractService = Substitute.For<ISpecialismRommExtractionService>();
         protected ICommonService CommonService = Substitute.For<ICommonService>();
 
-        protected int[] AssessmentSeriesYearsToProcess = new[] { 2023 };
+        protected int[] SpecialismAssessmentSeriesYearsToProcess = new[] { 2023 };
 
         public override void Setup()
         {
@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.SpecialismRommExtra
             {
                 SpecialismRommExtractSetting = new SpecialismRommExtractSetting
                 {
-                    AssesmentSeriesYearsToProcess = AssessmentSeriesYearsToProcess,
+                    SpecialismAssessmentSeriesYearsToProcess = SpecialismAssessmentSeriesYearsToProcess,
                     SpecialismRommValidDateRanges = new[]
                     {
                         new DateTimeRange
