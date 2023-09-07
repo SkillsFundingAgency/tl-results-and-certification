@@ -34,34 +34,13 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
             var today = DateTime.UtcNow.Date;
 
-            logger.LogInformation($"Function SpecialismRommExtractTrigger {context.FunctionName} started");
-
-            logger.LogInformation($"_configuration started");
-
-            logger.LogInformation($"_configuration.SpecialismRommValidDateRanges {_configuration}");
-
-
-            logger.LogInformation($"_configuration.SpecialismRommValidDateRanges {_configuration.SpecialismRommValidDateRanges} SpecialismRommValidDateRanges Object");
-
-            logger.LogInformation($"_configuration.SpecialismRommValidDateRanges {_configuration.SpecialismRommValidDateRanges?.Count()} count");
-
-
-            logger.LogInformation($"_configuration.SpecialismRommValidDateRanges {_configuration.SpecialismRommValidDateRanges?.FirstOrDefault().From.ToString()} From Date");
-
-            logger.LogInformation($"_configuration.SpecialismRommValidDateRanges {_configuration.SpecialismRommValidDateRanges?.FirstOrDefault().To.ToString()} To Date");
-
-
             bool shouldFunctionRunToday = _configuration.SpecialismRommValidDateRanges.Any(r => r.Contains(today));
-
-            logger.LogInformation($"Function SpecialismRommExtractTrigger shouldFunctionRunTodaystarted {shouldFunctionRunToday}");
 
             if (!shouldFunctionRunToday)
             {
                 await Task.CompletedTask;
                 return;
             }
-
-            logger.LogInformation($"Function ran configs succesfully");
 
             var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.SpecialismRommExtract);
             try
@@ -70,8 +49,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 var stopwatch = Stopwatch.StartNew();
 
                 await _commonService.CreateFunctionLog(functionLogDetails);
-
-                logger.LogInformation($"_commonService  created");
 
                 var response = await _specialismRommExtractionService.ProcessSpecialismRommExtractsAsync(_configuration.SpecialismAssessmentSeriesYearsToProcess);
                 var message = $"Function {context.FunctionName} completed processing.\n" +
@@ -87,8 +64,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             }
             catch (Exception ex)
             {
-                logger.LogInformation($"Exception {ex.ToString}");
-
                 var errorMessage = $"Function {context.FunctionName} failed to process with the following exception = {ex}";
                 logger.LogError(errorMessage);
 
