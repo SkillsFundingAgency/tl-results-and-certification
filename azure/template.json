@@ -142,11 +142,11 @@
            "type": "string",
            "defaultValue": "0 30 7 * * *"
        },
-	   "coreRommExtracTrigger": {
+	   "coreRommExtractTrigger": {
            "type": "string",
            "defaultValue": "0 0 8 * * *"
        },
-	   "specialismRommExtracTrigger": {
+	   "specialismRommExtractTrigger": {
            "type": "string",
            "defaultValue": "0 45 7 * * *"
        }
@@ -672,8 +672,12 @@
 								"value": "[parameters('analystCoreResultExtractTrigger')]"
 							},
 							{
-								"name": "CoreRommExtracTrigger",
-								"value": "[parameters('coreRommExtracTrigger')]"
+								"name": "CoreRommExtractTrigger",
+								"value": "[parameters('coreRommExtractTrigger')]"
+							},
+							{
+								"name": "SpecialismRommExtractTrigger",
+								"value": "[parameters('specialismRommExtractTrigger')]"
 							},
 							{
 								"name": "SpecialismRommExtracTrigger",

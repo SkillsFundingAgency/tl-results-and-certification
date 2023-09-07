@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         }
 
         [FunctionName(Constants.CoreRomm)]
-        public async Task CoreRommExtractAsync([TimerTrigger("%CoreRommExtracTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
+        public async Task CoreRommExtractAsync([TimerTrigger("%CoreRommExtractTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 return;
             }
 
-            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.CoreRomm);
+            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.CoreRommExtract);
             try
             {
                 logger.LogInformation($"Function {context.FunctionName} started");

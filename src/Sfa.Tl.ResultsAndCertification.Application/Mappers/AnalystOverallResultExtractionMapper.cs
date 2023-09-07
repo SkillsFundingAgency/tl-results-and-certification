@@ -31,8 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.CoreComponent, opts => opts.ConvertUsing(new DoubleQuotedStringConverter(), s => s.TqProvider.TqAwardingOrganisation.TlPathway.Name))
                 .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.LarId))
                 .ForMember(d => d.CoreResult, opts => opts.ConvertUsing(new PathwayResultStringConverter(), p => p.TqPathwayAssessments))
-                .ForMember(d => d.OccupationalSpecialism, opts => opts.ConvertUsing(new SpecialismNameConverter(), p => p.TqRegistrationSpecialisms.Where(w => w.EndDate == null)))
-                .ForMember(d => d.SpecialismCode, opts => opts.ConvertUsing(new SpecialismCodeConverter(), p => p.TqRegistrationSpecialisms.Where(w => w.EndDate == null)))
+                .ForMember(d => d.OccupationalSpecialism, opts => opts.ConvertUsing(new SpecialismNameConverter(), p => p.TqRegistrationSpecialisms))
+                .ForMember(d => d.SpecialismCode, opts => opts.ConvertUsing(new SpecialismCodeConverter(), p => p.TqRegistrationSpecialisms))
                 .ForMember(d => d.SpecialismResult, opts => opts.MapFrom(s => GetSpecialismResult(s)))
                 .ForMember(d => d.IndustryPlacementStatus, opts => opts.ConvertUsing(new IndustryPlacementStatusStringConverter(), p => p.IndustryPlacements))
                 .ForMember(d => d.OverallResult, opts => opts.MapFrom(s => GetOverallResult(s)));
@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 return string.Empty;
 
             OverallResult overallResult = registrationPathway.OverallResults.OrderByDescending(r => r.Id).First();
-            var overallResultDetails = JsonConvert.DeserializeObject<OverallResultDetail>(overallResult.Details);
+            var overallResultDetails = JsonConvert.DeserializeObject<OverallResultDetail>(overallResult.Details);            
 
             return overallResult != null ? string.IsNullOrEmpty(overallResult.SpecialismResultAwarded) ?
                 overallResultDetails.SpecialismDetails.FirstOrDefault()?.SpecialismResult :
