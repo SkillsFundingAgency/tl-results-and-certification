@@ -678,7 +678,7 @@
 							{
 								"name": "SpecialismRommExtractTrigger",
 								"value": "[parameters('specialismRommExtractTrigger')]"
-							},
+							},						
                             {
                                 "name": "WEBSITE_LOAD_CERTIFICATES",
                                 "value": "1"
