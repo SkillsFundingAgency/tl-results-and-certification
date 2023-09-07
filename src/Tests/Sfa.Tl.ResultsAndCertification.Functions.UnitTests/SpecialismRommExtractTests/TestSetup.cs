@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.SpecialismRommExtra
 
             var config = new ResultsAndCertificationConfiguration
             {
-                SpecialismRommExtractSetting = new SpecialismRommExtractSetting
+                SpecialismRommExtractSettings = new SpecialismRommExtractSettings
                 {
                     SpecialismAssessmentSeriesYearsToProcess = SpecialismAssessmentSeriesYearsToProcess,
                     SpecialismRommValidDateRanges = new[]
