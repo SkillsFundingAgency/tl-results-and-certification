@@ -675,6 +675,10 @@
 								"name": "CoreRommExtracTrigger",
 								"value": "[parameters('coreRommExtracTrigger')]"
 							},
+							{
+								"name": "SpecialismRommExtracTrigger",
+								"value": "[parameters('specialismRommExtracTrigger')]"
+							},
                             {
                                 "name": "WEBSITE_LOAD_CERTIFICATES",
                                 "value": "1"
