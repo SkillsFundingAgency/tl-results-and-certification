@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                .ForMember(d => d.StudentStartYear, opts => opts.MapFrom(s => s.AcademicYear))
                .ForMember(d => d.AssessmentSeries, opts => opts.MapFrom(s => GetAssessmentSeriesYear(s.TqRegistrationSpecialisms.SelectMany(p => p.TqSpecialismAssessments))))
                .ForMember(d => d.AoName, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.Name))
-               .ForMember(d => d.SpecialismCode, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.LarId))
+               .ForMember(d => d.SpecialismCode, opts => opts.ConvertUsing(new SpecialismCodeConverter(), s => s.TqRegistrationSpecialisms))
                .ForMember(d => d.CurrentSpecialismGrade, opts => opts.MapFrom(s => GetCurrentSpecialismGrade(s)))
                .ForMember(d => d.RommOpenedTimeStamp, opts => opts.MapFrom(s => GetRommOpenedTimeStamp(s)))
                .ForMember(d => d.RommGrade, opts => opts.MapFrom(s => GetRommGrade(s)))
