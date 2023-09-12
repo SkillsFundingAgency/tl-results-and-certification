@@ -71,7 +71,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.TqRegistra
                                   },
                                   TqSpecialismResults = new List<TqSpecialismResult>()
                              }
-                        }
+                        },
+                         TlSpecialism = new TlSpecialism()
+                         {
+                              Id = 1,
+                              LarId = "The_Lar_Id",
+                              Name = "Civil Engineering"
+                         }
                     }
                 }
             };
