@@ -201,6 +201,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 .ThenInclude(p => p.AssessmentSeries)
                             .Include(p => p.TqRegistrationSpecialisms.Where(p => p.IsOptedin))
                                 .ThenInclude(p => p.TlSpecialism)
+                                .ThenInclude(s => s.TlDualSpecialismToSpecialisms)
+                                .ThenInclude(s => s.DualSpecialism)
                             .Where(p => p.Status == RegistrationPathwayStatus.Active
                                         && (p.TqRegistrationSpecialisms != null && p.TqRegistrationSpecialisms.Count > 0)
                                         && (p.TqRegistrationSpecialisms.All(p => p.TqSpecialismAssessments != null && p.TqSpecialismAssessments.Count > 0))
