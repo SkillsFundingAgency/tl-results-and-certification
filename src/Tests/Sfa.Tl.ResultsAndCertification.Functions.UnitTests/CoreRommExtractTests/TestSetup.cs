@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CoreRommExtractTest
         protected ICoreRommExtractService CoreRommExtractService = Substitute.For<ICoreRommExtractService>();
         protected ICommonService CommonService = Substitute.For<ICommonService>();
 
-        protected int[] AssessmentSeriesYearsToProcess = new[] { 2023 };
+        protected string[] AssessmentSeriesYearsToProcess = new[] { "Summer 2023" };
 
         public override void Setup()
         {
