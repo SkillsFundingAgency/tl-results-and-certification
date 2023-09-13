@@ -141,6 +141,14 @@
         "analystCoreResultExtractTrigger": {
            "type": "string",
            "defaultValue": "0 30 7 * * *"
+       },
+	   "coreRommExtractTrigger": {
+           "type": "string",
+           "defaultValue": "0 0 8 * * *"
+       },
+	   "specialismRommExtractTrigger": {
+           "type": "string",
+           "defaultValue": "0 45 7 * * *"
        }
     },
     "variables": {
@@ -663,6 +671,14 @@
 								"name": "AnalystCoreResultExtractTrigger",
 								"value": "[parameters('analystCoreResultExtractTrigger')]"
 							},
+							{
+								"name": "CoreRommExtractTrigger",
+								"value": "[parameters('coreRommExtractTrigger')]"
+							},
+							{
+								"name": "SpecialismRommExtractTrigger",
+								"value": "[parameters('specialismRommExtractTrigger')]"
+							},						
                             {
                                 "name": "WEBSITE_LOAD_CERTIFICATES",
                                 "value": "1"

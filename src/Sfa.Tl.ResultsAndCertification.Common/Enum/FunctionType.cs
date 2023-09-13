@@ -15,6 +15,8 @@
         CertificatePrintingBatchesCreate = 10,
         IndustryPlacementExtract = 11,
         AnalystOverallResultExtract = 12,
-        AnalystCoreResultExtract = 13
+        AnalystCoreResultExtract = 13,
+        CoreRommExtract = 14,
+        SpecialismRommExtract = 15
     }
 }

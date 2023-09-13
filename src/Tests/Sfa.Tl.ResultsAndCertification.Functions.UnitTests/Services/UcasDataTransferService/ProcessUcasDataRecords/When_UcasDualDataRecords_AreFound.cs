@@ -16,14 +16,15 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
     {
         private TqRegistrationPathway _mockUcasData;
         private TqRegistrationPathway _mockExpectedUcasData;
-        private string _dualSpecialismCode;
-
+        private string _dualSpecialismCode = "ZTLOS031";
+         
+        
         public override void Given()
         {
             UcasDataType = UcasDataType.Entries;
             _mockUcasData = GetPathwayMockData();
             _mockExpectedUcasData = GetExpectedPathwayMockData();
-            _dualSpecialismCode = UcasRecordEntrySegment.ReplaceDualSpecialismCodes(_mockUcasData);
+            UcasRecordEntrySegment.ReplaceDualSpecialismCodes(_mockUcasData).Returns(_dualSpecialismCode);
 
         }
 

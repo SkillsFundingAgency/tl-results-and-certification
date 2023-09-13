@@ -85,7 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
                     // Start in +1 yr - assessment window not opened.
                     new object[]
                     { new RequestParameter { AoUkprn = 10011881, ProfileId = 1, StartInYear = 1, ComponentType = ComponentType.Core },
-                      null },
+                       new AssessmentSeries { Id = 1, ComponentType = ComponentType.Core, Name = "Summer 2021", Description = "Summer 2021", Year = 2021 } },
 
                     // Invlaid AoUkprn
                     new object[]

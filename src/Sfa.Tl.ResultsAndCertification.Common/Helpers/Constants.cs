@@ -170,8 +170,13 @@
         public const string IndustryPlacementExtractsFolder = "extracts";
         public const string AnalystOverallResultExtract = "AnalystOverallResultExtract";
         public const string AnalystCoreResultExtract = "AnalystCoreResultExtract";
+        public const string SpecialismRommExtract = "SpecialismRommExtract";
         public const string AnalystOverallResultExtractsFolder = "extracts";
         public const string AnalystCoreResultExtractsFolder = "extracts";
+        public const string SpecialismRommFolder = "extracts";
+        public const string SpecialismRomm = "SpecialismRomm";
+        public const string CoreRommExtract = "CoreRommExtract";
+        public const string CoreRommFolder = "extracts";
 
         // File Extensions
         public const string FileExtensionTxt = "txt";
