@@ -114,7 +114,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 }
             }
         }
-        
+
+                
         [FunctionName(Constants.UcasTransferAmendments)]
         public async Task UcasTransferAmendmentsAsync([TimerTrigger("%UcasTransferAmendmentsTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {

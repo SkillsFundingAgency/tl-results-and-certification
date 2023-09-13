@@ -475,6 +475,36 @@
 			"additionalProperties": false,
 			"required": [],
 			"type": "object"
+		},
+		"CoreRommExtractSettings": {
+			"properties": {
+				"AssessmentSeriesYearsToProcess": {
+					"type": "array",
+					"environmentVariable": "CoreAssessmentSeriesYearsToProcess"
+				},
+				"CoreRommValidDateRanges": {
+					"type": "array",
+					"environmentVariable": "CoreRommValidDateRanges"
+				}
+			},
+			"additionalProperties": false,
+			"required": [],
+			"type": "object"
+		},
+		"SpecialismRommExtractSettings": {
+			"properties": {
+				"SpecialismAssessmentSeriesYearsToProcess": {
+					"type": "array",
+					"environmentVariable": "SpecialismAssessmentSeriesYearsToProcess"
+				},
+				"SpecialismRommValidDateRanges": {
+					"type": "array",
+					"environmentVariable": "SpecialismRommValidDateRanges"
+				}
+			},
+			"additionalProperties": false,
+			"required": [],
+			"type": "object"
 		}
 	},
 	"additionalProperties": false,
@@ -505,7 +535,9 @@
 		"OverallResultBatchSettings",
 		"CertificatePrintingBatchSettings",
 		"AnalystCoreResultExtractSettings",
-		"AnalystOverallResultExtractSettings"
+		"AnalystOverallResultExtractSettings",
+		"CoreRommExtractSettings",
+		"SpecialismRommExtractSettings"
 	],
 	"type": "object"
 }

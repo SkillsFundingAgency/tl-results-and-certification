@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
@@ -13,6 +14,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     public class UcasRecordResultsSegment : IUcasRecordSegment<UcasRecordResultsSegment>
     {
         public UcasDataType UcasDataType => UcasDataType.Results;
+        private readonly IUcasRepository _ucasRepository;
+
+        public UcasRecordResultsSegment(IUcasRepository ucasRepository)
+        {
+            _ucasRepository = ucasRepository;
+        }
 
         public void AddCoreSegment(IList<UcasDataComponent> ucasDataComponents, TqRegistrationPathway pathway)
         {
@@ -37,8 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (overallResultDetails.SpecialismDetails != null)
             {
                 var isDualSpecialism = overallResultDetails.SpecialismDetails.Count > 1;
-                overallResultDetails = ReplaceDualSpecialismCode(overallResultDetails);
-
+                overallResultDetails = isDualSpecialism ? ReplaceDualSpecialismCode(overallResultDetails) : overallResultDetails;
                 foreach (var specialism in overallResultDetails.SpecialismDetails)
                 {
                     var specialismResult = isDualSpecialism ? overallResults.SpecialismResultAwarded : specialism.SpecialismResult;
@@ -56,12 +62,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public OverallResultDetail ReplaceDualSpecialismCode(OverallResultDetail overallResultDetails)
         {
-            var dualSpecialims = UcasDataAbbreviations._dualSpecialisms.SelectMany(t => t.Value).ToList();
-            var specialismDetails = overallResultDetails.SpecialismDetails.Select(t => t.SpecialismLarId).ToList();
+           var specialismDetails = overallResultDetails.SpecialismDetails.Select(t => t.SpecialismLarId).ToList();
 
-            if (dualSpecialims.Any(b => specialismDetails.Any(a => b.Contains(a))))
+            if (specialismDetails.Count >1)
             {
-                var dualCombinationCode = UcasDataAbbreviations._dualSpecialisms.Where(f => f.Value.Intersect(specialismDetails, StringComparer.OrdinalIgnoreCase).Count() == 2).FirstOrDefault().Key;
+                var dualCombinationCode = _ucasRepository.GetDualSpecialismLarId(specialismDetails);  
+                
                 if (!string.IsNullOrEmpty(dualCombinationCode))
                 {
                     overallResultDetails.SpecialismDetails.ToList().ForEach(f => f.SpecialismLarId = dualCombinationCode);

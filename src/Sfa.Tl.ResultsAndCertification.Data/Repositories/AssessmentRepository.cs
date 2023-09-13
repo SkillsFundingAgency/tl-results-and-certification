@@ -229,7 +229,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Where(rpw => rpw.Status == RegistrationPathwayStatus.Active && rpw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn && 
                        rpw.TqRegistrationProfile.Id == profileId)
                 .SelectMany(reg => _dbContext.AssessmentSeries
-                        .Where(s => s.Year > reg.AcademicYear + startYearOffset && s.Year <= reg.AcademicYear + Common.Helpers.Constants.AssessmentEndInYears && 
+                        .Where(s => s.Year >= reg.AcademicYear + startYearOffset && s.Year <= reg.AcademicYear + Common.Helpers.Constants.AssessmentEndInYears && 
                         currentDate >= s.StartDate && currentDate <= s.EndDate))
                 .ToListAsync();
 
