@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             _logger = logger;
         }
 
-        public async Task<FunctionResponse> ProcessCoreRommExtractAsync(int[] assessmentSeriesYears)
+        public async Task<FunctionResponse> ProcessCoreRommExtractAsync(string[] assessmentSeriesYears)
         {
             IList<CoreRommExtractData> coreRommExtractData = await GetCoreRommExtractData(assessmentSeriesYears);
 
@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             return new FunctionResponse { IsSuccess = true };
         }
 
-        private async Task<IList<CoreRommExtractData>> GetCoreRommExtractData(int[] assesmentSeriesYears)
+        private async Task<IList<CoreRommExtractData>> GetCoreRommExtractData(string[] assesmentSeriesYears)
         {
             IList<TqRegistrationPathway> registrationPathways = await _registrationRepository.GetRegistrationPathwaysByAssesmentSeriesYear(assesmentSeriesYears);
             return _mapper.Map<IList<CoreRommExtractData>>(registrationPathways);

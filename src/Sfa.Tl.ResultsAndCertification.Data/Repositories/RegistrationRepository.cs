@@ -155,61 +155,61 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return results;
         }
 
-        public async Task<IList<TqRegistrationPathway>> GetRegistrationPathwaysByAssesmentSeriesYear(int[] assesmentSeriesYears)
+        public async Task<IList<TqRegistrationPathway>> GetRegistrationPathwaysByAssesmentSeriesYear(string[] assesmentSeriesYears)
         {
             var query = _dbContext.TqRegistrationPathway
                             .Include(p => p.TqRegistrationProfile)
-                            .Include(p => p.TqProvider)
-                                .ThenInclude(p => p.TlProvider)
                             .Include(p => p.TqProvider)
                                 .ThenInclude(p => p.TqAwardingOrganisation)
                                 .ThenInclude(p => p.TlPathway)
                             .Include(p => p.TqProvider)
                                 .ThenInclude(p => p.TqAwardingOrganisation)
                                 .ThenInclude(p => p.TlAwardingOrganisaton)
-                            .Include(p => p.TqPathwayAssessments)
+                            .Include(p => p.TqPathwayAssessments.Where(p => p.IsOptedin && p.AssessmentSeries.ComponentType == ComponentType.Core))
                                 .ThenInclude(p => p.TqPathwayResults)
                                 .ThenInclude(p => p.TlLookup)
-                            .Include(p => p.TqPathwayAssessments.Where(p => p.AssessmentSeries.ComponentType == ComponentType.Core))
+                            .Include(p => p.TqPathwayAssessments.Where(p => p.IsOptedin && p.AssessmentSeries.ComponentType == ComponentType.Core))
                                 .ThenInclude(p => p.AssessmentSeries)
                             .Where(p => p.Status == RegistrationPathwayStatus.Active
-                                        && p.TqPathwayAssessments.All(p => assesmentSeriesYears.Contains(p.AssessmentSeries.Year)))
+                                    && (p.TqPathwayAssessments != null && p.TqPathwayAssessments.Where(p => p.IsOptedin && p.AssessmentSeries.ComponentType == ComponentType.Core).Count() > 0)
+                                    && p.TqPathwayAssessments.All(p => assesmentSeriesYears.Contains(p.AssessmentSeries.Name)))
                             .OrderBy(p => p.TqRegistrationProfile.UniqueLearnerNumber);
 
             IList<TqRegistrationPathway> results = await query.ToListAsync();
             return results;
         }
 
-        public async Task<IList<TqRegistrationPathway>> GetSpecialismRegistrationPathwaysByAssesmentSeriesYear(int[] assesmentSeriesYears)
+        public async Task<IList<TqRegistrationSpecialism>> GetSpecialismRegistrationPathwaysByAssesmentSeriesYear(string[] assesmentSeriesYears)
         {
-            var query = _dbContext.TqRegistrationPathway
-                            .Include(p => p.TqRegistrationProfile)
-                            .Include(p => p.TqProvider)
-                                .ThenInclude(p => p.TlProvider)
-                            .Include(p => p.TqProvider)
-                                .ThenInclude(p => p.TqAwardingOrganisation)
-                                .ThenInclude(p => p.TlPathway)
-                            .Include(p => p.TqProvider)
-                                .ThenInclude(p => p.TqAwardingOrganisation)
-                                .ThenInclude(p => p.TlAwardingOrganisaton)
-                            .Include(p => p.TqRegistrationSpecialisms.Where(p => p.IsOptedin))
-                                .ThenInclude(p => p.TqSpecialismAssessments.Where(p => p.IsOptedin && p.AssessmentSeries.ComponentType == ComponentType.Specialism))
-                                .ThenInclude(p => p.TqSpecialismResults)
-                                .ThenInclude(p => p.TlLookup)
-                            .Include(p => p.TqRegistrationSpecialisms.Where(p => p.IsOptedin))
-                                .ThenInclude(p => p.TqSpecialismAssessments.Where(p => p.IsOptedin && p.AssessmentSeries.ComponentType == ComponentType.Specialism))
-                                .ThenInclude(p => p.AssessmentSeries)
-                            .Include(p => p.TqRegistrationSpecialisms.Where(p => p.IsOptedin))
-                                .ThenInclude(p => p.TlSpecialism)
-                                .ThenInclude(s => s.TlDualSpecialismToSpecialisms)
-                                .ThenInclude(s => s.DualSpecialism)
-                            .Where(p => p.Status == RegistrationPathwayStatus.Active
-                                        && (p.TqRegistrationSpecialisms != null && p.TqRegistrationSpecialisms.Count > 0)
-                                        && (p.TqRegistrationSpecialisms.All(p => p.TqSpecialismAssessments != null && p.TqSpecialismAssessments.Count > 0))
-                                        && p.TqRegistrationSpecialisms.All(p => p.TqSpecialismAssessments.All(p => assesmentSeriesYears.Contains(p.AssessmentSeries.Year))))
-                            .OrderBy(p => p.TqRegistrationProfile.UniqueLearnerNumber);
+            var query = _dbContext.TqRegistrationSpecialism
+                .Include(p => p.TlSpecialism)
+                    .ThenInclude(p => p.TlDualSpecialismToSpecialisms)
+                    .ThenInclude(p => p.DualSpecialism)
+                .Include(p => p.TqSpecialismAssessments)
+                   .ThenInclude(p => p.AssessmentSeries)
+                .Include(p => p.TqRegistrationPathway)
+                    .ThenInclude(p => p.TqRegistrationProfile)
+                .Include(p => p.TqRegistrationPathway)
+                    .ThenInclude(p => p.TqProvider)
+                    .ThenInclude(p => p.TqAwardingOrganisation)
+                    .ThenInclude(p => p.TlPathway)
+                .Include(p => p.TqRegistrationPathway)
+                    .ThenInclude(p => p.TqProvider)
+                    .ThenInclude(p => p.TqAwardingOrganisation)
+                    .ThenInclude(p => p.TlAwardingOrganisaton)
+                .Include(p => p.TqSpecialismAssessments)
+                    .ThenInclude(p => p.TqSpecialismResults)
+                .Include(p => p.TqSpecialismAssessments)
+                    .ThenInclude(p => p.TqSpecialismResults)
+                    .ThenInclude(p => p.TlLookup)
+            .Where(p => p.TqSpecialismAssessments != null
+                            && p.TqSpecialismAssessments.Where(p => p.IsOptedin && p.AssessmentSeries.ComponentType == ComponentType.Specialism).Count() > 0
+                            && p.IsOptedin
+                            && p.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
+                            && p.TqSpecialismAssessments.All(p => assesmentSeriesYears.Contains(p.AssessmentSeries.Name)))
+            .OrderBy(p => p.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber);
 
-            IList<TqRegistrationPathway> results = await query.ToListAsync();
+            IList<TqRegistrationSpecialism> results = await query.ToListAsync();
             return results;
         }
 
