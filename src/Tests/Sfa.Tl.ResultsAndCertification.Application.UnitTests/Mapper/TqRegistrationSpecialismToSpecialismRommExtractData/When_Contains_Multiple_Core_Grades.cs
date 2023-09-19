@@ -1,15 +1,21 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.TqRegistrationPathwayToSpecialismRommExtractData
+namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.TqRegistrationSpecialismToSpecialismRommExtractData
 {
-    public class When_Doesnt_Contain_Core_Grade : TestSetup
+    public class When_Contains_Multiple_Core_Grades : TestSetup
     {
+
         public override void Given()
         {
-            SetSourceResults(Array.Empty<TqSpecialismResult>());
+            TqSpecialismResult[] results = new[] 
+            {
+                CreateTqSpecialismResult(1, "C", false),
+                CreateTqSpecialismResult(2, "B", true),
+            };
+
+            SetSourceResults(results);
         }
 
         [Fact]
@@ -17,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.TqRegistra
         {
             AssertDirectPropertyMappings();
 
-            Destination.CurrentSpecialismGrade.Should().BeEmpty();
+            Destination.CurrentSpecialismGrade.Should().Be("C");
             Destination.RommOpenedTimeStamp.Should().NotHaveValue();
             Destination.RommGrade.Should().BeEmpty();
             Destination.AppealOpenedTimeStamp.Should().NotHaveValue();

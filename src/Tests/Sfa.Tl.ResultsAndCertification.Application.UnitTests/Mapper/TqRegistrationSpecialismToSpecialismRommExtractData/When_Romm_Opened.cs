@@ -1,18 +1,22 @@
 ﻿using FluentAssertions;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.TqRegistrationPathwayToSpecialismRommExtractData
+namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.TqRegistrationSpecialismToSpecialismRommExtractData
 {
-    public class When_Contains_Multiple_Core_Grades : TestSetup
+    public class When_Romm_Opened : TestSetup
     {
+        private readonly DateTime _rommOpenedTimeStamp = new(2023, 1, 1);
 
         public override void Given()
         {
             TqSpecialismResult[] results = new[] 
             {
                 CreateTqSpecialismResult(1, "C", false),
-                CreateTqSpecialismResult(2, "B", true),
+                CreateTqSpecialismResult(2, "B", false),
+                CreateTqSpecialismResult(3, "B", true, PrsStatus.UnderReview, _rommOpenedTimeStamp)
             };
 
             SetSourceResults(results);
@@ -23,8 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.TqRegistra
         {
             AssertDirectPropertyMappings();
 
-            Destination.CurrentSpecialismGrade.Should().Be("B");
-            Destination.RommOpenedTimeStamp.Should().NotHaveValue();
+            Destination.CurrentSpecialismGrade.Should().Be("C");
+            Destination.RommOpenedTimeStamp.Should().Be(_rommOpenedTimeStamp);
             Destination.RommGrade.Should().BeEmpty();
             Destination.AppealOpenedTimeStamp.Should().NotHaveValue();
             Destination.AppealGrade.Should().BeEmpty();

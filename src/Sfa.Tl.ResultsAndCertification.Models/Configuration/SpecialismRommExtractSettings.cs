@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// <value>
         /// The academic years to process.
         /// </value>
-        public int[] SpecialismAssessmentSeriesYearsToProcess { get; set; }
+        public string[] SpecialismAssessmentSeriesYearsToProcess { get; set; }
 
         /// <summary>
         /// Gets or sets the valid date ranges to run the process.
