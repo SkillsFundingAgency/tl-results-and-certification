@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
         private async Task<IList<SpecialRommExtractionData>> GetSpecialismRommExtractionData(int[] assesmentSeriesYears)
         {
-            IList<TqRegistrationPathway> registrationPathways = await _registrationRepository.GetSpecialismRegistrationPathwaysByAssesmentSeriesYear(assesmentSeriesYears);
+            IList<TqRegistrationSpecialism> registrationPathways = await _registrationRepository.GetSpecialismRegistrationPathwaysByAssesmentSeriesYear(assesmentSeriesYears);
             return _mapper.Map<IList<SpecialRommExtractionData>>(registrationPathways);
         }
 
