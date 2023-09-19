@@ -180,7 +180,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return results;
         }
 
-        public async Task<IList<TqRegistrationSpecialism>> GetSpecialismRegistrationPathwaysByAssesmentSeriesYear(int[] assesmentSeriesYears)
+        public async Task<IList<TqRegistrationSpecialism>> GetSpecialismRegistrationPathwaysByAssesmentSeriesYear(string[] assesmentSeriesYears)
         {
             var query = _dbContext.TqRegistrationSpecialism
                 .Include(p => p.TlSpecialism)
@@ -207,7 +207,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                             && p.TqSpecialismAssessments.Where(p => p.IsOptedin && p.AssessmentSeries.ComponentType == ComponentType.Specialism).Count() > 0
                             && p.IsOptedin
                             && p.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
-                            && p.TqSpecialismAssessments.All(p => p.AssessmentSeries.Name == "Summer 2023"));
+                            && p.TqSpecialismAssessments.All(p => assesmentSeriesYears.Contains(p.AssessmentSeries.Name)))
+            .OrderBy(p => p.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber);
 
             IList<TqRegistrationSpecialism> results = await query.ToListAsync();
             return results;
