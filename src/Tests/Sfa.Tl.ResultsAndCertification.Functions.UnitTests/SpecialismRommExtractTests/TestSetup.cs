@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.SpecialismRommExtra
         protected ISpecialismRommExtractionService SpecialismRommExtractService = Substitute.For<ISpecialismRommExtractionService>();
         protected ICommonService CommonService = Substitute.For<ICommonService>();
 
-        protected int[] SpecialismAssessmentSeriesYearsToProcess = new[] { 2023 };
+        protected string[] SpecialismAssessmentSeriesYearsToProcess = new[] { "Summer 2023" };
 
         public override void Setup()
         {

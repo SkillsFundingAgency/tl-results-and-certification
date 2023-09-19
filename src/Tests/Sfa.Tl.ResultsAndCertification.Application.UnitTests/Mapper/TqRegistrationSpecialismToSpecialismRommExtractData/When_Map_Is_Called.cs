@@ -5,7 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Models.CoreRommExtract;
 using Sfa.Tl.ResultsAndCertification.Models.SpecialRommExtraction;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.TqRegistrationPathwayToSpecialismRommExtractData
+namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.TqRegistrationSpecialismToSpecialismRommExtractData
 {
     public class When_Map_Is_Called
     {
@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.TqRegistra
         [Fact]
         public void Then_Map_Without_Throwing()
         {
-            _mapper.Map<SpecialRommExtractionData>(new TqRegistrationPathway());
+            _mapper.Map<SpecialRommExtractionData>(new TqRegistrationSpecialism());
         }
     }
 }

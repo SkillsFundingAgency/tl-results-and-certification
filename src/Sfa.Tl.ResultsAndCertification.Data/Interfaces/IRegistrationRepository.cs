@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
         Task<IList<TqRegistrationProfile>> GetRegistrationProfilesByIdsAsync(HashSet<int> profileIds, bool includeQualificationAchieved = false);
         Task<IList<TqRegistrationPathway>> GetRegistrationPathwaysByAcademicYear(int[] academicYears);
         Task<IList<TqRegistrationPathway>> GetRegistrationPathwaysByAssesmentSeriesYear(int[] assesmentSeriesYears);
-        Task<IList<TqRegistrationPathway>> GetSpecialismRegistrationPathwaysByAssesmentSeriesYear(int[] assesmentSeriesYears);
+        Task<IList<TqRegistrationSpecialism>> GetSpecialismRegistrationPathwaysByAssesmentSeriesYear(string[] assesmentSeriesYears);
 
         // Bulk process methods below.
         Task<IList<TqRegistrationProfile>> GetRegistrationProfilesAsync(IList<TqRegistrationProfile> registrations);

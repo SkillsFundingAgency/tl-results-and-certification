@@ -4,7 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.TqRegistrationPathwayToSpecialismRommExtractData
+namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.TqRegistrationSpecialismToSpecialismRommExtractData
 {
     public class When_Contains_Romm_Grade : TestSetup
     {
@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.TqRegistra
         {
             AssertDirectPropertyMappings();
 
-            Destination.CurrentSpecialismGrade.Should().Be("B");
+            Destination.CurrentSpecialismGrade.Should().Be("C");
             Destination.RommOpenedTimeStamp.Should().Be(_rommOpenedTimeStamp);
             Destination.RommGrade.Should().Be("A");
             Destination.AppealOpenedTimeStamp.Should().NotHaveValue();
