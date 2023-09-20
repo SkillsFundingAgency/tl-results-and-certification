@@ -5,6 +5,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Interfaces
 {
     public interface ISpecialismRommExtractionService
     {
-        Task<FunctionResponse> ProcessSpecialismRommExtractsAsync(int[] academicYears);
+        Task<FunctionResponse> ProcessSpecialismRommExtractsAsync(string[] academicYears);
     }
 }
