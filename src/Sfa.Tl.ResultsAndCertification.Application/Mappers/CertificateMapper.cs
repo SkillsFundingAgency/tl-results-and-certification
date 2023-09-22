@@ -67,7 +67,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 Grade = overallResult.CertificateType == PrintCertificateType.Certificate ? overallResult.ResultAwarded : string.Empty,
                 EnglishAndMaths = GetEnglishAndMathsText(profile.EnglishStatus, profile.MathsStatus),
                 Date = overallResult.CreatedOn.ToCertificateDateFormat(),
-                MARS = new List<object>()
+                MARS = new List<object>(),
+                StartYear = overallResult.TqRegistrationPathway.AcademicYear.ToString()
             };
 
             return JsonConvert.SerializeObject(learningDetails);
