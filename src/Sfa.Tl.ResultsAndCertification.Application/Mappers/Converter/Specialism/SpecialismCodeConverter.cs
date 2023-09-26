@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialis
             string specialismCode = sourceMember.Count() switch
             {
                 1 => GetSingleSpecialismProperty(sourceMember, rs => rs.TlSpecialism.LarId),
-                2 => GetDualSpecialismLarIdProperty(sourceMember, ds => ds.LarId),
+                2 => GetDualSpecialismProperty(sourceMember, ds => ds.LarId),
                 _ => string.Empty
             };
 
