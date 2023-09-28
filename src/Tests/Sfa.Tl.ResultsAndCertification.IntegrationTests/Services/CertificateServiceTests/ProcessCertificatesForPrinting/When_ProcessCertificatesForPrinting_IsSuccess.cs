@@ -152,7 +152,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                 Grade = overallResult.ResultAwarded,
                 EnglishAndMaths = GetEnglishAndMathsText(overallResult.TqRegistrationPathway.TqRegistrationProfile.EnglishStatus, overallResult.TqRegistrationPathway.TqRegistrationProfile.MathsStatus),
                 Date = DateTime.UtcNow.ToCertificateDateFormat(),
-                MARS = new List<object>()
+                MARS = new List<object>(),
+                StartYear= overallResult.TqRegistrationPathway.AcademicYear.ToString()
             };
 
             return JsonConvert.SerializeObject(learningDetails);
