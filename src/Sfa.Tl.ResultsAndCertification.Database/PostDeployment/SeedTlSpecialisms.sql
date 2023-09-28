@@ -65,7 +65,7 @@ USING (VALUES
 	(57, N'ZTLOS040', N'Business Support', 16, 1),
 	(58, N'ZTLOS062', N'Legal Services: Business, Finance and Employment', 17, 1),
 	(59, N'ZTLOS063', N'Legal Services: Crime, Criminal Justice and Social Welfare', 17, 1),
-	(60, N'ZTLOS056', N'Crop and Plant Production', 18, 1),
+	(60, N'ZTLOS056', N'Crop Production', 18, 1),
 	(61, N'ZTLOS057', N'Floristry', 18, 1),
 	(62, N'ZTLOS058', N'Land-based Engineering', 18, 1),
 	(63, N'ZTLOS059', N'Livestock Production', 18, 1),
