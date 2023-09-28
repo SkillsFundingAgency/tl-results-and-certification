@@ -24,7 +24,7 @@ USING (VALUES
 	(16, N'10202105', N'Ventilation', 3, 1),
 	(17, N'ZTLOS006', N'Early Years Educator', 4, 1),
 	(18, N'ZTLOS007', N'Assisting Teaching', 4, 1),
-	(19, N'ZTLOS008', N'Supporting and Mentoring Students in Educational Settings', 4, 1),
+	(19, N'ZTLOS008', N'Supporting and Mentoring Students in Educational Settings', 4, 0),
 	(20, N'ZTLOS005', N'Digital Production, Design and Development', 5, 1),
 	(21, N'ZTLOS027', N'Electrical and Electronic Equipment Engineering', 3, 1),
 	(22, N'ZTLOS010', N'Digital Infrastructure', 6, 1),
