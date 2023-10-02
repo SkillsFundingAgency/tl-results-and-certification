@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var pathway = await _pathwayRepository.GetFirstOrDefaultAsync(p => p.LarId == pathwayLarId && 
                                                                          p.TqAwardingOrganisations.Any(x => x.TlPathwayId == p.Id && x.TlAwardingOrganisaton.UkPrn == aoUkprn),
-                                                                         navigationPropertyPath: new Expression<Func<TlPathway, object>>[] { s => s.TlSpecialisms, s => s.TlPathwaySpecialismCombinations });
+                                                                         navigationPropertyPath: new Expression<Func<TlPathway, object>>[] { s => s.TlSpecialisms.Where(x=>x.IsActive), s => s.TlPathwaySpecialismCombinations });
 
             if (pathway == null)
                 return null;
