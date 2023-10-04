@@ -156,20 +156,14 @@
   <data name="Signed_Declaration_Hint_Text" xml:space="preserve">
     <value>signed declaration of student completion (opens in a new tab)</value>
   </data>
-  <data name="You_Must_Make_Sure_Any_Changes_To_The_Learner_Record" xml:space="preserve">
-    <value>You must make sure any changes to the learner record, including the industry placement status, are made in this service before 31 July {0}. This is to ensure the learner’s results and certificate are accurate.</value>
-  </data>
   <data name="Summary_Text_What_Is_Special_Consideration" xml:space="preserve">
     <value>What is special consideration?</value>
-  </data>
-  <data name="Summary_Text_What_If_Industry_Placement_Status_Change" xml:space="preserve">
-    <value>What if the industry placement status changes?</value>
   </data>
   <data name="Validation_Message" xml:space="preserve">
     <value>Tell us whether this learner has completed their industry placement</value>
   </data>
   <data name="Yes_Completed_Option_Text" xml:space="preserve">
-    <value>Yes, completed, or will be completed by 31 July {0}</value>
+    <value>Yes, completed</value>
   </data>
   <data name="Yes_Completed_With_Special_Consideration_Option_Text" xml:space="preserve">
     <value>Yes, completed with special consideration</value>

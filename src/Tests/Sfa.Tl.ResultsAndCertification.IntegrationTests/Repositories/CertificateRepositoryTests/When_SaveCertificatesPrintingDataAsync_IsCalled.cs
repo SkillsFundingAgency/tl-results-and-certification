@@ -113,7 +113,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Certifica
             OverallResultDataProvider.CreateOverallResult(DbContext, new List<OverallResult> { new OverallResult { TqRegistrationPathwayId = regPathwayId,
                 Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Not completed\",\"OverallResult\":\"Partial achievement\"}",
                 ResultAwarded = "Partial achievement", CalculationStatus = CalculationStatus.Completed, IsOptedin = true, CertificateType = PrintCertificateType.StatementOfAchievement, CertificateStatus = CertificateStatus.AwaitingProcessing, PublishDate = publishDate, PrintAvailableFrom = printAvailableFrom, StartDate = DateTime.Now, CreatedOn = DateTime.Now } }, true);
-                        
+
             DbContext.SaveChanges();
 
             CertificateRepositoryLogger = new Logger<CertificateRepository>(new NullLoggerFactory());
@@ -136,7 +136,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Certifica
         [Fact]
         public async Task Then_Returns_Expected_Results()
         {
-            
+
             var batchRequest = GetBatchRequest();
             var overallResults = _registrations.SelectMany(x => x.TqRegistrationPathways).SelectMany(x => x.OverallResults).ToList();
             await WhenAsync(batchRequest, overallResults);
@@ -199,7 +199,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Certifica
         }
 
         private Batch GetBatchRequest()
-        {              
+        {
             var printCertificates = new List<PrintCertificate>();
             foreach (var registration in _registrations)
             {
@@ -227,7 +227,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Certifica
                     IndustryPlacement = overallResultDetail.IndustryPlacementStatus,
                     Grade = overallResult.ResultAwarded,
                     EnglishAndMaths = "The named recipient has also achieved a qualification at Level 2 in both maths and English.",
-                    Date = DateTime.UtcNow.ToCertificateDateFormat()
+                    Date = DateTime.UtcNow.ToCertificateDateFormat(),
+                    StartYear = overallResult.TqRegistrationPathway.AcademicYear.ToString()
                 };
 
                 printCertificates.Add(new PrintCertificate

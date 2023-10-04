@@ -13,5 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.Printing
         public string IndustryPlacement { get; set; }
         public string EnglishAndMaths { get; set; }
         public List<object> MARS { get; set; }
+        public string StartYear { get; set; }
     }
 }

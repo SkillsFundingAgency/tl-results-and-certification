@@ -61,7 +61,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.Certificat
                                         }
                                     },
                                     IndustryPlacement = "Not completed",
-                                    EnglishAndMaths = "Met"
+                                    EnglishAndMaths = "Met",
+                                    StartYear = "2021"
                                }
                            }
                         }
@@ -72,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.Certificat
             _printRequests = new List<PrintRequest> { printRequest };
             PrintingService.GetPendingPrintRequestsAsync().Returns(_printRequests);
 
-            _apiResponse = new PrintResponse { PrintRequestResponse = new PrintRequestResponse { BatchNumber = printRequest.Batch.BatchNumber, Errors = new List<Error>(), Status = "Success"  } };
+            _apiResponse = new PrintResponse { PrintRequestResponse = new PrintRequestResponse { BatchNumber = printRequest.Batch.BatchNumber, Errors = new List<Error>(), Status = "Success" } };
             PrintingApiClient.ProcessPrintRequestAsync(Arg.Any<PrintRequest>()).Returns(_apiResponse);
 
             _expectedResult = new CertificatePrintingResponse { IsSuccess = true, TotalCount = 1, PrintingProcessedCount = 1, ModifiedCount = 1, SavedCount = 1 };
