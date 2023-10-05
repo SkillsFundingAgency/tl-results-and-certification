@@ -121,13 +121,10 @@
     <value>Save and continue</value>
   </data>
   <data name="Declaration_I_Confirm_Supporting_Docs_Held_On_Records" xml:space="preserve">
-    <value>I confirm that {0} has completed, or will complete by 31 July {1}, their T Level industry placement and that all relevant supporting documentation is held on record.</value>
+    <value>I confirm that {0} has completed their T Level industry placement and that all relevant supporting documentation is held on record.</value>
   </data>
   <data name="Declaration_I_Confirm_Supporting_Docs_Is_Held" xml:space="preserve">
     <value>I confirm that all relevant supporting documentation is held on record.</value>
-  </data>
-  <data name="Declaration_I_Will_Make_Sure_The_Record_Is_Updated" xml:space="preserve">
-    <value>If this status changes, I will make sure the learner record is updated to reflect the change by no later than 31 July {0} to ensure accurate results and certification.</value>
   </data>
   <data name="Heading_Check_Your_Answers" xml:space="preserve">
     <value>Check your answers</value>
