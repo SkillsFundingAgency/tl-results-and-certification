@@ -57,8 +57,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
 
         public string DeclarationConfirmSupportText { get; set; }
 
-        public string DeclarationUpdateRecordText { get; set; }
-
         public void SetDeclarationText(IndustryPlacementViewModel cacheModel)
         {
             if (cacheModel?.IpCompletion?.IndustryPlacementStatus != null &&
@@ -69,7 +67,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
                     case IndustryPlacementStatus.Completed:
                     case IndustryPlacementStatus.CompletedWithSpecialConsideration:
                         DeclarationConfirmSupportText = string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, LearnerName, cacheModel.IpCompletion.CompletionAcademicYear);
-                        DeclarationUpdateRecordText = string.Format(CheckAndSubmitContent.Declaration_I_Will_Make_Sure_The_Record_Is_Updated, cacheModel.IpCompletion.CompletionAcademicYear);
                         break;
                     case IndustryPlacementStatus.NotCompleted:
                     case IndustryPlacementStatus.WillNotComplete:
