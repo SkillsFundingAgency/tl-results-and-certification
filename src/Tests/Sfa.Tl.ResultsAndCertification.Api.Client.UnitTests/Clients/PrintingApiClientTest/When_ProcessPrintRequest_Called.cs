@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Printing;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
@@ -17,11 +18,11 @@ using Xunit;
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.PrintingApiClientTest
 {
     public class When_ProcessPrintRequest_Called : BaseTest<PrintingApiClient>
-    {        
+    {
         protected PrintToken _mockTokenHttpResult;
-        private PrintResponse _result;        
+        private PrintResponse _result;
         private PrintRequest _printRequest;
-        protected PrintResponse _mockHttpResult;        
+        protected PrintResponse _mockHttpResult;
         private ResultsAndCertificationConfiguration _configuration;
         private PrintingApiClient _apiClient;
 
@@ -74,7 +75,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.PrintingAp
                                         }
                                     },
                                     IndustryPlacement = "Not completed",
-                                    EnglishAndMaths = "Met"
+                                    EnglishAndMaths = "Met",
+                                    StartYear = "2021"
                                }
                            }
                         }
@@ -87,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.PrintingAp
         }
 
         public override void Given()
-        {            
+        {
             var mockHttpHandler = new MockHttpMessageHandler<PrintToken>(_mockTokenHttpResult, string.Format(ApiConstants.PrintingTokenUri, _configuration.PrintingApiSettings.Username, _configuration.PrintingApiSettings.Password), HttpStatusCode.OK);
             mockHttpHandler.AddHttpResponses(_mockHttpResult, string.Format(ApiConstants.PrintRequestUri, _mockTokenHttpResult.Token), HttpStatusCode.OK, JsonConvert.SerializeObject(_printRequest));
 
