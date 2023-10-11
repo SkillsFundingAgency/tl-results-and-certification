@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 287.
+        ///   Looks up a localized string similar to 292.
         /// </summary>
         public static string Assessment_Entries_FileSize_Text {
             get {
@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 16 May 2023.
+        ///   Looks up a localized string similar to 05 Oct 2023.
         /// </summary>
         public static string Assessment_Entries_PublishedDate_Text {
             get {
@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version 1.8.
+        ///   Looks up a localized string similar to Version 1.9.
         /// </summary>
         public static string Assessment_Entries_Version_Text {
             get {
@@ -224,7 +224,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 290.
+        ///   Looks up a localized string similar to 296.
         /// </summary>
         public static string Registrations_FileSize_Text {
             get {
@@ -242,7 +242,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 16 May 2023.
+        ///   Looks up a localized string similar to 05 Oct 2023.
         /// </summary>
         public static string Registrations_PublishedDate_Text {
             get {
@@ -251,7 +251,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version 1.9.
+        ///   Looks up a localized string similar to Version 2.0.
         /// </summary>
         public static string Registrations_Version_Text {
             get {
@@ -269,7 +269,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 278.
+        ///   Looks up a localized string similar to 292.
         /// </summary>
         public static string Results_FileSize_Text {
             get {
@@ -287,7 +287,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 16 May 2023.
+        ///   Looks up a localized string similar to 05 Oct 2023.
         /// </summary>
         public static string Results_PublishedDate_Text {
             get {
@@ -296,7 +296,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version 1.6.
+        ///   Looks up a localized string similar to Version 1.7.
         /// </summary>
         public static string Results_Version_Text {
             get {

@@ -22,26 +22,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                     new object[]
                     {
                         new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration, AcademicYear = AcademicYear, CompletionAcademicYear = CompletionAcademicYear } },
-                        string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, LearnerName, CompletionAcademicYear),
-                        string.Format(CheckAndSubmitContent.Declaration_I_Will_Make_Sure_The_Record_Is_Updated, CompletionAcademicYear)
+                        string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, LearnerName, CompletionAcademicYear)
                     },
                     new object[]
                     {
                         new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed, AcademicYear = AcademicYear, CompletionAcademicYear = CompletionAcademicYear } },
-                        string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, LearnerName, CompletionAcademicYear),
-                        string.Format(CheckAndSubmitContent.Declaration_I_Will_Make_Sure_The_Record_Is_Updated, CompletionAcademicYear)
+                        string.Format(CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Held_On_Records, LearnerName, CompletionAcademicYear)
                     },
                     new object[]
                     {
                         new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.NotCompleted } },
-                        CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Is_Held,
-                        null
+                        CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Is_Held
                     },
                     new object[]
                     {
                         new IndustryPlacementViewModel { IpCompletion = new IpCompletionViewModel { IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.WillNotComplete } },
-                         CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Is_Held,
-                         null
+                         CheckAndSubmitContent.Declaration_I_Confirm_Supporting_Docs_Is_Held
                     }
                 };
             }
@@ -49,13 +45,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 
         [Theory]
         [MemberData(nameof(Data))]
-        public void Then_Returns_Expected_Results(IndustryPlacementViewModel cacheModel, string expectedDeclarationConfirmText, string expectedDeclarationUpdateText)
+        public void Then_Returns_Expected_Results(IndustryPlacementViewModel cacheModel, string expectedDeclarationConfirmText)
         {
             var viewModel = new IpCheckAndSubmitViewModel { ProfileId = 1, LearnerName = LearnerName };
             viewModel.SetDeclarationText(cacheModel);
 
             viewModel.DeclarationConfirmSupportText.Should().Be(expectedDeclarationConfirmText);
-            viewModel.DeclarationUpdateRecordText.Should().Be(expectedDeclarationUpdateText);
         }
     }
 }
