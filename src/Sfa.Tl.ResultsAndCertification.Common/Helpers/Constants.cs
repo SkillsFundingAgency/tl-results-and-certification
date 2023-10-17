@@ -177,6 +177,8 @@
         public const string SpecialismRomm = "SpecialismRomm";
         public const string CoreRommExtract = "CoreRommExtract";
         public const string CoreRommFolder = "extracts";
+        public const string ProviderAddressExtract = "ProviderAddressExtract";
+
 
         // File Extensions
         public const string FileExtensionTxt = "txt";
