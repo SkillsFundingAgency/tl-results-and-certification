@@ -29,11 +29,11 @@
                     </a>
                 </div>
                 <div class="attachment__details">
-                    <h3 class="govuk-heading-m">
+                    <h2 class="govuk-heading-m">
                         <a class="govuk-link" target="_self" asp-route="@RouteConstants.ResultsDownloadDataLink" asp-route-id="@Model.CoreResultsDownloadLinkViewModel.BlobUniqueReference" asp-route-componentType="@Model.CoreComponentType">
                             @ResultsDownloadData.Core_Results_Link_DisplayName (@Model.CoreResultsDownloadLinkViewModel.FileType, @Model.CoreResultsDownloadLinkViewModel.FileSize<abbr title="Kilobyte">@ResultsDownloadData.File_Size_Units</abbr>)
                         </a>
-                    </h3>
+                    </h2>
                 </div>
             </section>
         }
@@ -51,11 +51,11 @@
                     </a>
                 </div>
                 <div class="attachment__details">
-                    <h3 class="govuk-heading-m">
+                    <h2 class="govuk-heading-m">
                         <a class="govuk-link" target="_self" asp-route="@RouteConstants.ResultsDownloadDataLink" asp-route-id="@Model.SpecialismResultsDownloadLinkViewModel.BlobUniqueReference" asp-route-componentType="@Model.SpecialismComponentType">
                             @ResultsDownloadData.Specialism_Results_Link_DisplayName (@Model.SpecialismResultsDownloadLinkViewModel.FileType, @Model.SpecialismResultsDownloadLinkViewModel.FileSize<abbr title="Kilobyte">@ResultsDownloadData.File_Size_Units</abbr>)
                         </a>
-                    </h3>
+                    </h2>
                 </div>
             </section>
         }
