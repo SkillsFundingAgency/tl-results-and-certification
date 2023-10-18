@@ -74,6 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
             services.AddTransient<ICommonRepository, CommonRepository>();
             services.AddTransient<IUcasRepository, UcasRepository>();
+            services.AddTransient<IProviderRepository, ProviderRepository>();
 
             services.AddTransient<ICommonService, CommonService>();
             services.AddTransient<ILrsLearnerService, LrsLearnerService>();
