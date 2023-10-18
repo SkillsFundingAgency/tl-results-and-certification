@@ -682,7 +682,11 @@
 							{
 								"name": "SpecialismRommExtractTrigger",
 								"value": "[parameters('specialismRommExtractTrigger')]"
-							},						
+							},	
+							{
+								"name": "ProviderAddressExtractTrigger",
+								"value": "[parameters('ProviderAddressExtractTrigger')]"
+							},							
                             {
                                 "name": "WEBSITE_LOAD_CERTIFICATES",
                                 "value": "1"
