@@ -3,6 +3,8 @@ using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -63,6 +65,27 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                              TlevelTitle = tqao.TlPathway.TlevelTitle
                                          }).OrderBy(o => o.TlevelTitle).ToList()
                           }).FirstOrDefaultAsync();
+        }
+           
+        public async Task<IList<ProviderAddressDetails>> GetProviderAddressesForRegistrations(int[] academicYears)
+        {
+           return await (from trp in _dbContext.TqRegistrationPathway
+                                               join tqp in _dbContext.TqProvider on trp.TqProviderId equals tqp.Id
+                                               join tlp in _dbContext.TlProvider on tqp.TlProviderId equals tlp.Id
+                                               join tlpa in _dbContext.TlProviderAddress on tlp.Id equals tlpa.TlProviderId into ps
+                                               from tlpa in ps.DefaultIfEmpty()
+                                               where academicYears.Contains(trp.AcademicYear)
+                                               select new ProviderAddressDetails
+                                               {
+                                                   Name = tlp.Name,
+                                                   UkPrn = tlp.UkPrn,
+                                                   AddressLine1 = tlpa.AddressLine1,
+                                                   AddressLine2 = tlpa.AddressLine2,
+                                                   Postcode = tlpa.Postcode,
+                                                   Town = tlpa.Town,
+                                                   CreatedOn = tlpa.CreatedOn,
+                                                   ModifiedOn = tlpa.ModifiedOn
+                                               }).Distinct().ToListAsync();          
         }
     }
 }
