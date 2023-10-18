@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You should contact {0}.
+        ///   Looks up a localized string similar to Have you told the awarding organisation that the learner has been reinstated?.
         /// </summary>
         public static string Page_Title {
             get {
