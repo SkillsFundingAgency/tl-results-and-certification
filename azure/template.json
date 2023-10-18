@@ -149,6 +149,10 @@
 	   "specialismRommExtractTrigger": {
            "type": "string",
            "defaultValue": "0 45 7 * * *"
+       },
+	   "ProviderAddressExtractTrigger": {
+           "type": "string",
+           "defaultValue": "0 45 7 * * *"
        }
     },
     "variables": {
