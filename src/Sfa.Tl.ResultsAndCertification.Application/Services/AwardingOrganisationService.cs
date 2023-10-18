@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetTlevelsByStatusIdAsync(long ukprn, int statusId)
         {
             var tlevels = await _awardingOrganisationRepository
-               .GetManyAsync(x => x.TlAwardingOrganisaton.UkPrn == ukprn && statusId == x.ReviewStatus,
+               .GetManyAsync(x => x.IsActive && x.TlAwardingOrganisaton.UkPrn == ukprn && statusId == x.ReviewStatus && x.TlPathway.IsActive,
                        n => n.TlPathway,
                        n => n.TlAwardingOrganisaton)
                .ToListAsync();
