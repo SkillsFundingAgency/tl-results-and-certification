@@ -506,15 +506,15 @@
 			"required": [],
 			"type": "object"
 		},
-		"ProvideAddressExtractSettings": {
+		"ProviderAddressExtractSettings": {
 			"properties": {
-				"ProvideAddressAcademicYearsToProcess": {
+				"ProviderAddressAcademicYearsToProcess": {
 					"type": "array",
-					"environmentVariable": "ProvideAddressAcademicYearsToProcess"
+					"environmentVariable": "ProviderAddressAcademicYearsToProcess"
 				},
-				"ProvideAddressValidDateRanges": {
+				"ProviderAddressValidDateRanges": {
 					"type": "array",
-					"environmentVariable": "ProvideAddressValidDateRanges"
+					"environmentVariable": "ProviderAddressValidDateRanges"
 				}
 			},
 			"additionalProperties": false,
