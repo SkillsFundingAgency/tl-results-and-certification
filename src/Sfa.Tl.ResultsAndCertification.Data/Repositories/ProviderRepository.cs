@@ -74,7 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                join tlp in _dbContext.TlProvider on tqp.TlProviderId equals tlp.Id
                                                join tlpa in _dbContext.TlProviderAddress on tlp.Id equals tlpa.TlProviderId into ps
                                                from tlpa in ps.DefaultIfEmpty()
-                                               where academicYears.Contains(trp.AcademicYear)
+                                               where academicYears.Contains(trp.AcademicYear) && tlpa.IsActive
                                                select new ProviderAddressDetails
                                                {
                                                    Name = tlp.Name,
