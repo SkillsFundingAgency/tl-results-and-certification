@@ -97,6 +97,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learner is not registered.
+        /// </summary>
+        public static string Learner_Not_Registered {
+            get {
+                return ResourceManager.GetString("Learner_Not_Registered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Learner T Level record.
         /// </summary>
         public static string Learner_TLevel_Record {

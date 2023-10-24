@@ -4,6 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
 using Xunit;
+using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAchievementControllerTests.RequestSoaUlnNotFound
 {
@@ -27,9 +28,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
             model.Should().NotBeNull();
             model.Uln.Should().Be(uln.ToString());
 
-            model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.RequestSoaUniqueLearnerNumber);
-            model.BackLink.RouteAttributes.Should().BeEmpty();
+            // Breadcrumb
+            model.Breadcrumb.Should().NotBeNull();
+            model.Breadcrumb.BreadcrumbItems.Should().NotBeNull();
+            model.Breadcrumb.BreadcrumbItems.Count.Should().Be(3);
+
+            model.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Home);
+            model.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(BreadcrumbContent.Home);
+            model.Breadcrumb.BreadcrumbItems[1].RouteName.Should().Be(RouteConstants.RequestSoaUniqueLearnerNumber);
+            model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Request_Statement_Of_Achievement);
+            model.Breadcrumb.BreadcrumbItems[2].RouteName.Should().BeNullOrEmpty();
+            model.Breadcrumb.BreadcrumbItems[2].DisplayName.Should().Be(BreadcrumbContent.Learner_Not_Registered);
         }
 
         [Fact]
