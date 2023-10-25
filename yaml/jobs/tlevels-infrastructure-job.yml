@@ -50,11 +50,14 @@ jobs:
             -storageAccountContainerArray "$(storageAccountContainerArray)"
             -learnerVerificationAndLearningEventsTrigger "$(LearnerVerificationAndLearningEventsTrigger)"
             -learnerGenderTrigger "$(learnerGenderTrigger)"
+            -certificatePrintingBatchesCreateTrigger "$(certificatePrintingBatchesCreateTrigger)"
             -certificatePrintingRequestTrigger "$(certificatePrintingRequestTrigger)"
             -certificatePrintingBatchSummaryTrigger "$(certificatePrintingBatchSummaryTrigger)"
             -certificatePrintingTrackBatchTrigger "$(certificatePrintingTrackBatchTrigger)"
             -ucasTransferEntriesTrigger "$(ucasTransferEntriesTrigger)"
-            -ucasTransferResultsTrigger "$(ucasTransferResultsTrigger)"'
+            -ucasTransferResultsTrigger "$(ucasTransferResultsTrigger)"
+            -ucasTransferAmendmentsTrigger "$(ucasTransferAmendmentsTrigger)"
+            -overallResultCalculationTrigger "$(overallResultCalculationTrigger)"'
           tags: $(Tags) 
           processOutputs: true
 
