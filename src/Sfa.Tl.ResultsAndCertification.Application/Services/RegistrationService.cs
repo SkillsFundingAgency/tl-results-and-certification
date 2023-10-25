@@ -877,10 +877,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private async Task<IList<TechnicalQualificationDetails>> GetAllTLevelsByAoUkprnAsync(long ukprn)
         {
-            var result = await _tqProviderRepository.GetManyAsync(p => p.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == ukprn,
+            var result = await _tqProviderRepository.GetManyAsync(p => p.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == ukprn
+                                                                    && p.TqAwardingOrganisation.TlAwardingOrganisaton.IsActive
+                                                                    && p.TqAwardingOrganisation.TlPathway.IsActive,
                p => p.TlProvider, p => p.TqAwardingOrganisation, p => p.TqAwardingOrganisation.TlAwardingOrganisaton,
-               p => p.TqAwardingOrganisation.TlPathway, p => p.TqAwardingOrganisation.TlPathway.TlPathwaySpecialismCombinations,
-               p => p.TqAwardingOrganisation.TlPathway.TlSpecialisms).ToListAsync();
+               p => p.TqAwardingOrganisation.TlPathway, p => p.TqAwardingOrganisation.TlPathway.TlPathwaySpecialismCombinations.Where(p => p.IsActive),
+               p => p.TqAwardingOrganisation.TlPathway.TlSpecialisms.Where(p => p.IsActive)).ToListAsync();
 
             return _mapper.Map<IList<TechnicalQualificationDetails>>(result);
         }

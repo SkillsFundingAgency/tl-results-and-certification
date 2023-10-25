@@ -6,6 +6,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
     {
         public TqAwardingOrganisation()
         {
+            IsActive = true;
             TqProviders = new HashSet<TqProvider>();
         }
 

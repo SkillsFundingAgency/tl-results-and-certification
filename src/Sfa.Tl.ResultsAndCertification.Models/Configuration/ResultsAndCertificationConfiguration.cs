@@ -283,5 +283,13 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// The  core romm extract settings.
         /// </value>
         public CoreRommExtractSettings CoreRommExtractSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the analyst core result extract settings.
+        /// </summary>
+        /// <value>
+        /// The analyst core result extract settings.
+        /// </value>
+        public ProviderAddressExtractSettings ProviderAddressExtractSettings { get; set; }
     }
 }
