@@ -13,6 +13,7 @@
         AnalystOverallResults = 9,
         AnalystCoreResults = 10,
         CoreRomm = 11,
-        SpecialismRomm = 12
+        SpecialismRomm = 12,
+        ProviderAddressess=13
     }
 }
