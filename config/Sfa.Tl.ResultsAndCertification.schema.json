@@ -505,7 +505,23 @@
 			"additionalProperties": false,
 			"required": [],
 			"type": "object"
+		},
+		"ProviderAddressExtractSettings": {
+			"properties": {
+				"ProviderAddressAcademicYearsToProcess": {
+					"type": "array",
+					"environmentVariable": "ProviderAddressAcademicYearsToProcess"
+				},
+				"ProviderAddressValidDateRanges": {
+					"type": "array",
+					"environmentVariable": "ProviderAddressValidDateRanges"
+				}
+			},
+			"additionalProperties": false,
+			"required": [],
+			"type": "object"
 		}
+		
 	},
 	"additionalProperties": false,
 	"required": [

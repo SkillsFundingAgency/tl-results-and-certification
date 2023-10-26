@@ -26,15 +26,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var tlevel = await _pathwayRepository.GetFirstOrDefaultAsync(p => p.Id == pathwayId &&
                                                                          p.TqAwardingOrganisations.Any(x => x.TlPathwayId == p.Id && x.TlAwardingOrganisaton.UkPrn == aoUkprn),
-                                                                         navigationPropertyPath: new Expression<Func<TlPathway, object>>[] { r => r.TlRoute, s => s.TlSpecialisms, s => s.TqAwardingOrganisations });
+                                                                         navigationPropertyPath: new Expression<Func<TlPathway, object>>[] { r => r.TlRoute, s => s.TlSpecialisms.Where(s => s.IsActive), s => s.TqAwardingOrganisations });
             return _mapper.Map<TlevelPathwayDetails>(tlevel);
         }
 
         public async Task<PathwaySpecialisms> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId)
         {
-            var pathway = await _pathwayRepository.GetFirstOrDefaultAsync(p => p.LarId == pathwayLarId && 
+            var pathway = await _pathwayRepository.GetFirstOrDefaultAsync(p => p.LarId == pathwayLarId &&
                                                                          p.TqAwardingOrganisations.Any(x => x.TlPathwayId == p.Id && x.TlAwardingOrganisaton.UkPrn == aoUkprn),
-                                                                         navigationPropertyPath: new Expression<Func<TlPathway, object>>[] { s => s.TlSpecialisms.Where(x=>x.IsActive), s => s.TlPathwaySpecialismCombinations });
+                                                                         navigationPropertyPath: new Expression<Func<TlPathway, object>>[] { s => s.TlSpecialisms.Where(s => s.IsActive), s => s.TlPathwaySpecialismCombinations.Where(x => x.IsActive) });
 
             if (pathway == null)
                 return null;
@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Id = pathway.Id,
                 PathwayCode = pathway.LarId,
                 PathwayName = pathway.Name,
-                Specialisms = pathway.TlPathwaySpecialismCombinations.Where(x => x.IsActive).GroupBy(c => c.GroupId)  // 1. Read only the couplets
+                Specialisms = pathway.TlPathwaySpecialismCombinations.GroupBy(c => c.GroupId)  // 1. Read only the couplets
                                                 .Select(x => new PathwaySpecialismCombination
                                                 {
                                                     SpecialismDetails = _mapper.Map<IEnumerable<SpecialismDetails>>(x.Select(s => s.TlSpecialism))

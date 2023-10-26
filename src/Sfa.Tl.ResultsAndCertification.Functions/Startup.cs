@@ -74,6 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
             services.AddTransient<ICommonRepository, CommonRepository>();
             services.AddTransient<IUcasRepository, UcasRepository>();
+            services.AddTransient<IProviderRepository, ProviderRepository>();
 
             services.AddTransient<ICommonService, CommonService>();
             services.AddTransient<ILrsLearnerService, LrsLearnerService>();
@@ -87,6 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(_configuration.GovUkNotifyApiKey));
             services.AddTransient<IIndustryPlacementService, IndustryPlacementService>();
             services.AddTransient<IBlobStorageService, BlobStorageService>();
+            services.AddTransient<IProviderAddressExtractionService, ProviderAddressExtractionService>();
 
             // Overall result calculation
             services.AddTransient<IOverallResultCalculationFunctionService, OverallResultCalculationFunctionService>();

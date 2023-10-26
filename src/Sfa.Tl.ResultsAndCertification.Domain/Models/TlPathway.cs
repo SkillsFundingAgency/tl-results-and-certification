@@ -6,6 +6,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
     {
         public TlPathway()
         {
+            IsActive = true;
             TlSpecialisms = new HashSet<TlSpecialism>();
             TlPathwaySpecialismCombinations = new HashSet<TlPathwaySpecialismCombination>();
             TqAwardingOrganisations = new HashSet<TqAwardingOrganisation>();
