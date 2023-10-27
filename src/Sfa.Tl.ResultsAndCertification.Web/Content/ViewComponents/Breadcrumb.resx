@@ -138,9 +138,6 @@
   <data name="Learners_Results" xml:space="preserve">
     <value>Learner's results</value>
   </data>
-  <data name="Learner_Not_Registered" xml:space="preserve">
-    <value>Learner is not registered</value>
-  </data>
   <data name="Learner_TLevel_Record" xml:space="preserve">
     <value>Learner T Level record</value>
   </data>
@@ -200,9 +197,6 @@
   </data>
   <data name="StartReviewsAndAppeals" xml:space="preserve">
     <value>Appeals</value>
-  </data>
-  <data name="StatementOfAchievementRequested" xml:space="preserve">
-    <value>Statement of achievement requested</value>
   </data>
   <data name="Statement_Of_Achievement_Not_Available" xml:space="preserve">
     <value>Statement of achievement not available</value>

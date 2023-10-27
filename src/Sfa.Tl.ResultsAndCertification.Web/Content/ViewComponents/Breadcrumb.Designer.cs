@@ -97,15 +97,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner is not registered.
-        /// </summary>
-        public static string Learner_Not_Registered {
-            get {
-                return ResourceManager.GetString("Learner_Not_Registered", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Learner T Level record.
         /// </summary>
         public static string Learner_TLevel_Record {
@@ -318,15 +309,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static string Statement_Of_Achievement_Not_Available {
             get {
                 return ResourceManager.GetString("Statement_Of_Achievement_Not_Available", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Statement of achievement requested.
-        /// </summary>
-        public static string StatementOfAchievementRequested {
-            get {
-                return ResourceManager.GetString("StatementOfAchievementRequested", resourceCulture);
             }
         }
         
