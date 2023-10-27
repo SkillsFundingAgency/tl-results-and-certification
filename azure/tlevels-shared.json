@@ -167,6 +167,9 @@
                 "parameters": {
                     "storageAccountName": {
                         "value": "[variables('sharedStorageAccountName')]"
+                    },
+                    "storageKind": {
+                        "value": "StorageV2"
                     }
                 }
             }
@@ -248,6 +251,9 @@
                 "parameters": {
                     "storageAccountName": {
                         "value": "[variables('configStorageAccountName')]"
+                    },
+                    "storageKind": {
+                        "value": "StorageV2"
                     }
                 }
             }
