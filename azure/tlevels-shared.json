@@ -62,7 +62,7 @@
         }
     },
     "variables": {
-        "deploymentUrlBase": "https://raw.githubusercontent.com/DFE-Digital/operations-devops-deployment/reasc-staging-slot/ArmTemplates/",
+        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/master/ArmTemplates/",
         "resourceNamePrefix": "[toLower(parameters('environmentNameAbbreviation'))]",
         "sqlServerName": "[concat(variables('resourceNamePrefix'), '-shared-sql')]",
         "sharedStorageAccountName": "[replace(concat(variables('resourceNamePrefix'), 'sharedstr'), '-', '')]",
@@ -216,7 +216,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'),'app-service-plan-ase.json')]",
+                    "uri": "[concat(variables('deploymentUrlBase'),'app-service-plan.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
