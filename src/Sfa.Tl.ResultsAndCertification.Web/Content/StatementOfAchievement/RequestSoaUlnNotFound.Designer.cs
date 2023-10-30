@@ -71,11 +71,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ULN ({0}) has not been registered in this service by an awarding organisation.
+        ///   Looks up a localized string similar to Search again.
         /// </summary>
-        public static string Heading_Uln_Not_Registered {
+        public static string Button_Search_Again {
             get {
-                return ResourceManager.GetString("Heading_Uln_Not_Registered", resourceCulture);
+                return ResourceManager.GetString("Button_Search_Again", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learner is not registered.
+        /// </summary>
+        public static string Heading_Learner_Not_Registered {
+            get {
+                return ResourceManager.GetString("Heading_Learner_Not_Registered", resourceCulture);
             }
         }
         
@@ -89,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you think this learner should be registered, please contact the awarding organisation responsible for delivering the T Level..
+        ///   Looks up a localized string similar to If you entered the correct ULN and think this learner should be registered, contact the awarding organisation responsible for delivering the T Level..
         /// </summary>
         public static string Para_If_You_Think_Registered_Contact_Awarding_Organisation {
             get {
@@ -98,11 +107,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can only request a statement of achievement for a learner registered on a T Level course by an awarding organisation..
+        ///   Looks up a localized string similar to ULN: {0}.
         /// </summary>
-        public static string Para_You_Can_Only_Request_For_Registered_Learner {
+        public static string Para_ULN {
             get {
-                return ResourceManager.GetString("Para_You_Can_Only_Request_For_Registered_Learner", resourceCulture);
+                return ResourceManager.GetString("Para_ULN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We cannot find a registered learner with the unique learner number (ULN) you provided. Check you entered the ULN correctly..
+        /// </summary>
+        public static string Para_We_Cannot_Find_Registered_Learner {
+            get {
+                return ResourceManager.GetString("Para_We_Cannot_Find_Registered_Learner", resourceCulture);
             }
         }
     }
