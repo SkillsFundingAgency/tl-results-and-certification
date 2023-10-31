@@ -59,6 +59,9 @@
             "metadata": {
                 "description": ""
             }
+        },
+        "sqlFirewallIpAddresses": {
+            "type": "array"
         }
     },
     "variables": {
@@ -294,6 +297,37 @@
                 "sku": "[parameters('redisCacheSku')]",
                 "enableNonSslPort": false,
                 "minimumTlsVersion": "1.2"
+            }
+        },
+        {
+            "apiVersion": "2020-10-01",
+            "name": "[concat('sql-server-firewall-rules','-', parameters('environmentNameAbbreviation'), copyIndex())]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'sql-server-firewall-rules.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "firewallRuleNamePrefix": {
+                        "value": "[parameters('sqlFirewallIpAddresses')[copyIndex()].name]"
+                    },
+                    "startIpAddress": {
+                        "value": "[parameters('sqlFirewallIpAddresses')[copyIndex()].startIpAddress]"
+                    },
+                    "endIpAddress": {
+                        "value": "[parameters('sqlFirewallIpAddresses')[copyIndex()].endIpAddress]"
+                    },
+                    "serverName": {
+                        "value": "[variables('sqlServerName')]"
+                    }
+                }
+            },
+            "copy": {
+                "count": "[length(parameters('sqlFirewallIpAddresses'))]",
+                "name": "firewallrulecopy",
+                "mode": "Parallel"
             }
         }
     ],
