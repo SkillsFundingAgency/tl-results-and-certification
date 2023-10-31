@@ -1,5 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
+using System.Collections.Generic;
+using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
 {
@@ -7,9 +9,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
     {
         public string Uln { get; set; }
 
-        public virtual BackLinkModel BackLink => new BackLinkModel
+        public BreadcrumbModel Breadcrumb
         {
-            RouteName = RouteConstants.RequestSoaUniqueLearnerNumber
-        };
+            get
+            {
+                return new BreadcrumbModel
+                {
+                    BreadcrumbItems = new List<BreadcrumbItem>
+                    {
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Request_Statement_Of_Achievement, RouteName = RouteConstants.RequestSoaUniqueLearnerNumber }
+                    }
+                };
+            }
+        }
     }
 }

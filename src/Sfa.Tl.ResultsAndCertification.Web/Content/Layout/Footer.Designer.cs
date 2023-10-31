@@ -153,7 +153,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Layout {
         /// <summary>
         ///   Looks up a localized string similar to opens in a new tab.
         /// </summary>
-        public static string Opens_In_New_Tab_Text {
+        public static string Opens_In_New_Tab_Text
+        {
             get {
                 return ResourceManager.GetString("Opens_In_New_Tab_Text", resourceCulture);
             }

@@ -6,7 +6,7 @@
 }
 
 @section NavigationBar {
-<vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
 }
 
 <div class="govuk-grid-row">
@@ -15,16 +15,19 @@
         <form asp-route="SubmitRequestStatementOfAchievementUniqueLearnerNumber">
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">
-                        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-5">
-                            @RequestSoaUniqueLearnerNumber.Heading_Search_For_A_Learner
-                        </h1>
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-heading-l">@RequestSoaUniqueLearnerNumber.Heading_Request_Soa</h1>
                     </legend>
+
+                    <p class="govuk-body">@RequestSoaUniqueLearnerNumber.The_Statement_Of_Achievement_Will_Show</p>
+
+                    <h2 class="govuk-heading-m">@RequestSoaUniqueLearnerNumber.Heading_Unique_Learner_Number</h2>
+
                     <div class="govuk-form-group" sfa-validation-for="SearchUln" sfa-validation-class="govuk-form-group--error">
                         <label class="govuk-!-margin-bottom-6" for="searchuln">
                             <p class="govuk-body">@RequestSoaUniqueLearnerNumber.Enter_The_Unique_Learner_Number</p>
                         </label>
-                        <span class="govuk-hint">@RequestSoaUniqueLearnerNumber.Uln_Must_10_Digit_Hint</span>
+
                         <span sfa-validation-for="SearchUln"></span>
                         <input id="searchuln" class="govuk-input govuk-input--width-10" asp-for="SearchUln" maxlength="10" inputmode="numeric" aria-required="true">
                     </div>

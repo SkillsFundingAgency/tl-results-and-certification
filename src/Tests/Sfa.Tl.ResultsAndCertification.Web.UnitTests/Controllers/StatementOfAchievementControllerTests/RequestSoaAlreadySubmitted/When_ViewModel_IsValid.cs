@@ -135,16 +135,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 
             // Breadcrum 
             model.Breadcrumb.Should().NotBeNull();
-            model.Breadcrumb.BreadcrumbItems.Count.Should().Be(4);
+            model.Breadcrumb.BreadcrumbItems.Count.Should().Be(2);
 
             model.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(BreadcrumbContent.Home);
             model.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Home);
             model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Request_Statement_Of_Achievement);
             model.Breadcrumb.BreadcrumbItems[1].RouteName.Should().Be(RouteConstants.RequestStatementOfAchievement);
-            model.Breadcrumb.BreadcrumbItems[2].DisplayName.Should().Be(BreadcrumbContent.Search_For_Learner);
-            model.Breadcrumb.BreadcrumbItems[2].RouteName.Should().Be(RouteConstants.RequestSoaUniqueLearnerNumber);
-            model.Breadcrumb.BreadcrumbItems[3].DisplayName.Should().Be(BreadcrumbContent.StatementOfAchievementRequested);
-            model.Breadcrumb.BreadcrumbItems[3].RouteName.Should().BeNull();
         }
 
         private string FormatedAddress
