@@ -553,7 +553,8 @@
 		"AnalystCoreResultExtractSettings",
 		"AnalystOverallResultExtractSettings",
 		"CoreRommExtractSettings",
-		"SpecialismRommExtractSettings"
+		"SpecialismRommExtractSettings",
+		"ProviderAddressExtractSettings"
 	],
 	"type": "object"
 }
