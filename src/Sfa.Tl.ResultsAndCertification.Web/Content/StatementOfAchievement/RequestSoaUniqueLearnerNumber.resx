@@ -118,16 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Enter_The_Unique_Learner_Number" xml:space="preserve">
-    <value>Enter the Unique Learner Number (ULN) for a learner who has withdrawn from their T Level course.</value>
+    <value>Enter the ULN for a learner who has withdrawn from their T Level course.</value>
   </data>
-  <data name="Heading_Search_For_A_Learner" xml:space="preserve">
-    <value>Search for a learner</value>
+  <data name="Heading_Request_Soa" xml:space="preserve">
+    <value>Request statement of achievement</value>
+  </data>
+  <data name="Heading_Unique_Learner_Number" xml:space="preserve">
+    <value>Unique learner number (ULN)</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Search for a learner - Enter Unique Learner Number page</value>
+    <value>Request statement of achievement page</value>
   </data>
   <data name="Search_Button" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="The_Statement_Of_Achievement_Will_Show" xml:space="preserve">
+    <value>The statement of achievement will show which T Level components the learner completed before they withdrew. They will not receive a T Level certificate.</value>
   </data>
   <data name="Uln_Must_10_Digit_Hint" xml:space="preserve">
     <value>ULN must be 10 digits long</value>

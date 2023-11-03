@@ -72,9 +72,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!IsSoaAvailable() || !await IsAddressAvailable())
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var cacheModel = await _cacheService.GetAsync<RequestSoaUniqueLearnerNumberViewModel>(CacheKey);
-            var viewModel = cacheModel ?? new RequestSoaUniqueLearnerNumberViewModel();
-
+            var viewModel = new RequestSoaUniqueLearnerNumberViewModel();
             return View(viewModel);
         }
 
