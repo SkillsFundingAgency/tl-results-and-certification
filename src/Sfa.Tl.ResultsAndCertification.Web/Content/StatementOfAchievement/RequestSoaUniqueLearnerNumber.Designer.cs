@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class RequestSoaUniqueLearnerNumber {
@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter the Unique Learner Number (ULN) for a learner who has withdrawn from their T Level course..
+        ///   Looks up a localized string similar to Enter the ULN for a learner who has withdrawn from their T Level course..
         /// </summary>
         public static string Enter_The_Unique_Learner_Number {
             get {
@@ -71,16 +71,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for a learner.
+        ///   Looks up a localized string similar to Request statement of achievement.
         /// </summary>
-        public static string Heading_Search_For_A_Learner {
+        public static string Heading_Request_Soa {
             get {
-                return ResourceManager.GetString("Heading_Search_For_A_Learner", resourceCulture);
+                return ResourceManager.GetString("Heading_Request_Soa", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for a learner - Enter Unique Learner Number page.
+        ///   Looks up a localized string similar to Unique learner number (ULN).
+        /// </summary>
+        public static string Heading_Unique_Learner_Number {
+            get {
+                return ResourceManager.GetString("Heading_Unique_Learner_Number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request statement of achievement page.
         /// </summary>
         public static string Page_Title {
             get {
@@ -94,6 +103,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         public static string Search_Button {
             get {
                 return ResourceManager.GetString("Search_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The statement of achievement will show which T Level components the learner completed before they withdrew. They will not receive a T Level certificate..
+        /// </summary>
+        public static string The_Statement_Of_Achievement_Will_Show {
+            get {
+                return ResourceManager.GetString("The_Statement_Of_Achievement_Will_Show", resourceCulture);
             }
         }
         

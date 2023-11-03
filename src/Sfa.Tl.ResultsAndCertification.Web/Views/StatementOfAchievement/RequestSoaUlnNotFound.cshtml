@@ -1,4 +1,5 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement.RequestSoaUlnNotFoundViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 @using Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement
 
 @{
@@ -6,26 +7,30 @@
 }
 
 @section NavigationBar {
-    <vc:back-link model=Model.BackLink></vc:back-link>
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <div class="govuk-form-group">
-            <h1 class="govuk-label-wrapper">
-                <label class="govuk-label govuk-label--l govuk-!-margin-bottom-6">
-                    @string.Format(RequestSoaUlnNotFound.Heading_Uln_Not_Registered, Model.Uln)
-                </label>
+            <h1 class="govuk-heading-l">
+                @RequestSoaUlnNotFound.Heading_Learner_Not_Registered
             </h1>
             <p class="govuk-body">
-                @RequestSoaUlnNotFound.Para_You_Can_Only_Request_For_Registered_Learner
+                @RequestSoaUlnNotFound.Para_We_Cannot_Find_Registered_Learner
+            </p>
+            <p class="govuk-body govuk-!-font-weight-bold">
+                @string.Format(@RequestSoaUlnNotFound.Para_ULN, Model.Uln)
             </p>
             <p class="govuk-body">
                 @RequestSoaUlnNotFound.Para_If_You_Think_Registered_Contact_Awarding_Organisation
             </p>
         </div>
         <p class="govuk-body">
-            <a id="buttonHome" class="govuk-button" role="button" asp-route="Home">
+            <a id="buttonSearchAgain" class="govuk-button" role="button" asp-route=@RouteConstants.RequestSoaUniqueLearnerNumber>
+                @RequestSoaUlnNotFound.Button_Search_Again
+            </a>
+            <a id="buttonHome" class="govuk-button govuk-button--secondary govuk-!-margin-left-4" role="button" asp-route="Home">
                 @RequestSoaUlnNotFound.Button_Back_To_Home
             </a>
         </p>
