@@ -52,33 +52,30 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             var ucasDataRecords = new List<dynamic> { ucasData.Header };
             ucasDataRecords.AddRange(ucasData.UcasDataRecords);
             ucasDataRecords.Add(ucasData.Trailer);
-            
+
             var byteData = await CsvExtensions.WriteFileAsync(ucasDataRecords, delimeter: Constants.PipeSeperator, writeHeader: false, typeof(CsvMapper));
-            
+
             if (byteData.Length <= 0)
             {
                 var message = $"No byte data available to send Ucas. Method: Csv WriteFileAsync()";
                 throw new ApplicationException(message);
-            }            
+            }
 
-            // 3. Send data to Ucas using ApiClient
             var filename = $"{Guid.NewGuid()}.{Constants.FileExtensionTxt}";
 
-            //Todo: Not sending the file to UCas API 
-
-            var fileHash = CommonHelper.ComputeSha256Hash(byteData);
-
-            var ucasFileId = await _ucasApiClient.SendDataAsync(new UcasDataRequest { FileName = filename, FileData = byteData, FileHash = fileHash });
-
-            // 4. Write response to blob
+            // 3. Write response to blob
             await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
             {
                 ContainerName = DocumentType.Ucas.ToString().ToLower(),
-                SourceFilePath = ucasDataType.ToString().ToLower(),                
-                BlobFileName = $"{ucasFileId}-{filename}",
+                SourceFilePath = ucasDataType.ToString().ToLower(),
+                BlobFileName = filename,
                 FileData = byteData,
                 UserName = Constants.FunctionPerformedBy
             });
+
+            // 4. Send data to Ucas using ApiClient
+            var fileHash = CommonHelper.ComputeSha256Hash(byteData);
+            await _ucasApiClient.SendDataAsync(new UcasDataRequest { FileName = filename, FileData = byteData, FileHash = fileHash });
 
             // 5. Update response
             return new UcasDataTransferResponse { IsSuccess = true };
