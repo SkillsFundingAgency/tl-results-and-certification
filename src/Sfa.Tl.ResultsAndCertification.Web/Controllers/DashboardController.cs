@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("home", Name = RouteConstants.Home)]
         public IActionResult Index()
         {
-            var loggedInUserType = HttpContext.User.GetLoggedInUserType();
+            LoginUserType? loggedInUserType = HttpContext.User.GetLoggedInUserType();
 
             if (!HttpContext.User.HasAccessToService() || !loggedInUserType.HasValue)
             {
@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.ServiceAccessDenied);
             }
 
-            var viewModel = new DashboardViewModel { IsAoUser = loggedInUserType == LoginUserType.AwardingOrganisation, IsTrainingProviderUser = loggedInUserType == LoginUserType.TrainingProvider };
+            var viewModel = new DashboardViewModel { LoginUserType = loggedInUserType.Value };
             return View(viewModel);
         }
     }
