@@ -291,5 +291,13 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// The analyst core result extract settings.
         /// </value>
         public ProviderAddressExtractSettings ProviderAddressExtractSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the UCAS transfer amendments settings.
+        /// </summary>
+        /// <value>
+        /// The UCAS transfer amendments settings.
+        /// </value>
+        public UcasTransferAmendmentsSettings UcasTransferAmendmentsSettings { get; set; }
     }
 }
