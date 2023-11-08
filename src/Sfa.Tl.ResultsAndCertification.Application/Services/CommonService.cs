@@ -108,50 +108,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.FunctionJobFailedNotification.ToString(), _configuration.TechnicalInternalNotificationEmailAddress, tokens);
         }
 
-        /// <summary>
-        /// TLRC-9512 have a list of dates which will trigger the UcasTransferEntries function accordind to the demand
-        /// </summary>
-        /// <returns></returns>
-
-        public bool IsUcasTransferEntriesTriggerDateValid()
-        {
-            var isValid = false;
-
-            var uCasTriggerDates = new List<DateTime>() {
-                new DateTime(2023,09,05),
-                new DateTime(2023,09,06)                
-            };
-
-            if (uCasTriggerDates.Contains(new DateTime(CurrentDate.Year, CurrentDate.Month, CurrentDate.Day)))
-            {
-                isValid = true;
-            }
-
-            return isValid;
-        }
-
-        public bool IsUcasTransferResultssTriggerDateValid()
-        {
-            var isValid = false;
-
-            DateTime preStartDate = new(2023, 08, 03),
-                     preEndDate = new(2023, 08, 04);
-
-            DateTime startDate = new(2023, 08, 09),
-                     endDate = new(2023, 08, 10);
-
-            var ucasExtractTriggerDates = Enumerable.Range(0, (endDate - startDate).Days + 1).Select(d => startDate.AddDays(d));
-            var ucasPreExtractTriggerDates = Enumerable.Range(0, (preEndDate - preStartDate).Days + 1).Select(d => preStartDate.AddDays(d));
-
-            if (ucasExtractTriggerDates.Contains(new DateTime(CurrentDate.Year, CurrentDate.Month, CurrentDate.Day)) ||
-                ucasPreExtractTriggerDates.Contains(new DateTime(CurrentDate.Year, CurrentDate.Month, CurrentDate.Day)))
-            {
-                isValid = true;
-            }
-
-            return isValid;
-        }
-
         public bool IsIndustryPlacementTriggerDateValid()
         {
             var isValid = false;

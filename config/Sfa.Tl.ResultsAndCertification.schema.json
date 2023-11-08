@@ -520,8 +520,18 @@
 			"additionalProperties": false,
 			"required": [],
 			"type": "object"
+		},
+		"UcasTransferAmendmentsSettings": {
+			"properties": {	
+				"ValidDateRanges": {
+					"type": "array",
+					"environmentVariable": "UcasTransferAmendmentsValidDateRanges"
+				}
+			},
+			"additionalProperties": false,
+			"required": [],
+			"type": "object"
 		}
-		
 	},
 	"additionalProperties": false,
 	"required": [
@@ -553,7 +563,9 @@
 		"AnalystCoreResultExtractSettings",
 		"AnalystOverallResultExtractSettings",
 		"CoreRommExtractSettings",
-		"SpecialismRommExtractSettings"
+		"SpecialismRommExtractSettings",
+		"ProviderAddressExtractSettings",
+		"UcasTransferAmendmentsSettings"
 	],
 	"type": "object"
 }
