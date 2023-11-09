@@ -26,6 +26,8 @@ pool:
   vmImage: 'windows-latest' #'vs2017-win2016'
   
 variables:
-  applicationName: resac
+- template: ./Automation/variables/vars-global.yml@devopsTemplates
+- name: applicationName
+  value: resac
 stages:
   - template: ./yaml/stages/tlevels-master-stage.yml
