@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly INotificationService _notificationService;
         private readonly ResultsAndCertificationConfiguration _configuration;
 
-        public DateTime CurrentDate => DateTime.UtcNow;
+        public DateTime CurrentDate => DateTime.UtcNow.Date;
 
         public CommonService(ILogger<CommonService> logger, IMapper mapper,
             IRepository<TlLookup> tlLookupRepository,
