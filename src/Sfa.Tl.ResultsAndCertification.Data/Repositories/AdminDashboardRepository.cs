@@ -20,18 +20,20 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         public async Task<IList<FilterLookupData>> GetAwardingOrganisationFiltersAsync()
         {
             return await _dbContext.TlAwardingOrganisation
-                    .Select(x => new FilterLookupData { Id = x.Id, Name = x.Name, IsSelected = false })
-                    .ToListAsync();
+                .OrderBy(x => x.Name)
+                .Select(x => new FilterLookupData { Id = x.Id, Name = x.Name, IsSelected = false })
+                .ToListAsync();
         }
 
         public async Task<IList<FilterLookupData>> GetAcademicYearFiltersAsync(DateTime searchDate)
         {
             return await _dbContext.AcademicYear
-                    .Where(x => searchDate >= x.EndDate || (searchDate >= x.StartDate && searchDate <= x.EndDate))
-                    .OrderBy(x => x.Year)
-                    .Take(4)
-                    .Select(x => new FilterLookupData { Id = x.Year, Name = $"{x.Year} to {x.Year + 1}", IsSelected = false })
-                    .ToListAsync();
+                .Where(x => searchDate >= x.EndDate || (searchDate >= x.StartDate && searchDate <= x.EndDate))
+                .OrderByDescending(x => x.Year)
+                .Take(4)
+                .OrderBy(x => x.Year)
+                .Select(x => new FilterLookupData { Id = x.Year, Name = $"{x.Year} to {x.Year + 1}", IsSelected = false })
+                .ToListAsync();
         }
     }
 }

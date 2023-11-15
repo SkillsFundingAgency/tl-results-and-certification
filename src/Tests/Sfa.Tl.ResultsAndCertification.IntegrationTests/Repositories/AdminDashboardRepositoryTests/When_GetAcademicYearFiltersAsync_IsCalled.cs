@@ -12,7 +12,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDashboardRepositoryTests
 {
-    public class When_GetAcademicYearFiltersAsync_IsCalled : BaseTest<TlAwardingOrganisation>
+    public class When_GetAcademicYearFiltersAsync_IsCalled : BaseTest<AcademicYear>
     {
         private readonly AdminDashboardRepository _repository;
 
@@ -91,7 +91,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
             }
         }
 
-        public void SeedAcademicYears()
+        private void SeedAcademicYears()
         {
             AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
             DbContext.SaveChanges();

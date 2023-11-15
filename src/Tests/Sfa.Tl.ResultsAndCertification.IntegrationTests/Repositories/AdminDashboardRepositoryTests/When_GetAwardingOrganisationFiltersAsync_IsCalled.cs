@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
             }
         }
 
-        public void SeedAwardingOrganisations()
+        private void SeedAwardingOrganisations()
         {
             var builder = new TlAwardingOrganisationBuilder();
 
