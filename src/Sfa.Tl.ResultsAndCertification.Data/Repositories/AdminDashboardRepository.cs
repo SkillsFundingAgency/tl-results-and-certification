@@ -17,22 +17,21 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<IList<FilterLookupData>> GetAwardingOrganisationFiltersAsync()
+        public async Task<IList<AdminFilter>> GetAwardingOrganisationFiltersAsync()
         {
             return await _dbContext.TlAwardingOrganisation
                 .OrderBy(x => x.Name)
-                .Select(x => new FilterLookupData { Id = x.Id, Name = x.Name, IsSelected = false })
+                .Select(x => new AdminFilter { Id = x.Id, Name = x.Name, IsSelected = false })
                 .ToListAsync();
         }
 
-        public async Task<IList<FilterLookupData>> GetAcademicYearFiltersAsync(DateTime searchDate)
+        public async Task<IList<AdminFilter>> GetAcademicYearFiltersAsync(DateTime searchDate)
         {
             return await _dbContext.AcademicYear
                 .Where(x => searchDate >= x.EndDate || (searchDate >= x.StartDate && searchDate <= x.EndDate))
                 .OrderByDescending(x => x.Year)
-                .Take(4)
-                .OrderBy(x => x.Year)
-                .Select(x => new FilterLookupData { Id = x.Year, Name = $"{x.Year} to {x.Year + 1}", IsSelected = false })
+                .Take(5)
+                .Select(x => new AdminFilter { Id = x.Year, Name = $"{x.Year} to {x.Year + 1}", IsSelected = false })
                 .ToListAsync();
         }
     }

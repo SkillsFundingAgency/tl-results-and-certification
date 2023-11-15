@@ -184,6 +184,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddTransient<IPostResultsServiceLoader, PostResultsServiceLoader>();
             services.AddTransient<IIndustryPlacementLoader, IndustryPlacementLoader>();
             services.AddTransient<IDownloadOverallResultsLoader, DownloadOverallResultsLoader>();
+            services.AddTransient<IAdminDashboardLoader, AdminDashboardLoader>();
         }
     }
 }

@@ -18,10 +18,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetFilters")]
-        public Task<SearchLearnerFilters> GetFiltersAsync()
+        [Route("GetAdminSearchLearnerFilters")]
+        public Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync()
         {
-            return _adminDashboardService.GetFiltersAsync();
+            return _adminDashboardService.GetAdminSearchLearnerFiltersAsync();
         }
     }
 }

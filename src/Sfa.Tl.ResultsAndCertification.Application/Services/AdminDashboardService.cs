@@ -17,9 +17,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _systemProvider = systemProvider;
         }
 
-        public async Task<SearchLearnerFilters> GetFiltersAsync()
+        public async Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync()
         {
-            return new SearchLearnerFilters
+            return new AdminSearchLearnerFilters
             {
                 AwardingOrganisations = await _adminDashboardRepository.GetAwardingOrganisationFiltersAsync(),
                 AcademicYears = await _adminDashboardRepository.GetAcademicYearFiltersAsync(_systemProvider.UtcToday)

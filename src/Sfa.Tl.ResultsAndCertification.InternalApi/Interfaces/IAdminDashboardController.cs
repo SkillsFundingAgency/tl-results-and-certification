@@ -5,6 +5,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
 {
     public interface IAdminDashboardController
     {
-        Task<SearchLearnerFilters> GetFiltersAsync();
+        Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync();
     }
 }

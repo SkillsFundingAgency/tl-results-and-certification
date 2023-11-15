@@ -7,8 +7,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
 {
     public interface IAdminDashboardRepository
     {
-        Task<IList<FilterLookupData>> GetAwardingOrganisationFiltersAsync();
+        Task<IList<AdminFilter>> GetAwardingOrganisationFiltersAsync();
 
-        Task<IList<FilterLookupData>> GetAcademicYearFiltersAsync(DateTime searchDate);
+        Task<IList<AdminFilter>> GetAcademicYearFiltersAsync(DateTime searchDate);
     }
 }

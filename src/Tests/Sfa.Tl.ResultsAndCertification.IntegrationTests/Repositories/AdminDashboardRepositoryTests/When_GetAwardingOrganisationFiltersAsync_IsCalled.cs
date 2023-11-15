@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
     {
         private readonly AdminDashboardRepository _repository;
 
-        private IList<FilterLookupData> _actualResult;
+        private IList<AdminFilter> _actualResult;
 
         public When_GetAwardingOrganisationFiltersAsync_IsCalled()
         {
@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Returns_Expected_Results(IList<FilterLookupData> expectedResult)
+        public async Task Then_Returns_Expected_Results(IList<AdminFilter> expectedResult)
         {
             await When();
 
@@ -49,10 +49,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
                 {
                     new object[]
                     {
-                        new List<FilterLookupData>
+                        new List<AdminFilter>
                         {
-                            new FilterLookupData{ Id = 1, Name = "Ncfe", IsSelected = false },
-                            new FilterLookupData{ Id = 2, Name = "Pearson", IsSelected = false }
+                            new AdminFilter{ Id = 1, Name = "Ncfe", IsSelected = false },
+                            new AdminFilter{ Id = 2, Name = "Pearson", IsSelected = false }
                         }
                     }
                 };

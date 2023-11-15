@@ -5,6 +5,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 {
     public interface IAdminDashboardService
     {
-        Task<SearchLearnerFilters> GetFiltersAsync();
+        Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync();
     }
 }
