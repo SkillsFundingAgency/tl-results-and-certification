@@ -6,35 +6,33 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Dashboard;
-using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardControllerTests.Index
 {
-    public class When_Valid_Access : TestSetup
+    public abstract class When_Valid_UserType_BaseTest : TestSetup
     {
-        public override void Given()
+        public void Given(LoginUserType loginUserType)
         {
             var httpContext = new ClaimsIdentityBuilder<DashboardController>(Controller)
                 .Add(CustomClaimTypes.HasAccessToService, "true")
-                .Add(CustomClaimTypes.LoginUserType, ((int)LoginUserType.AwardingOrganisation).ToString())
-                .Build()
-                .HttpContext;
+                .Add(CustomClaimTypes.LoginUserType, ((int)loginUserType).ToString())
+                .Build().HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
         }
 
-        [Fact]
-        public void Then_Expected_Result_Returned()
+        public void Then_Expected_Result(LoginUserType loginUserType)
         {
             Result.Should().NotBeNull();
             Result.Should().BeOfType<ViewResult>();
+
             var viewResult = Result as ViewResult;
             viewResult.Should().NotBeNull();
 
             var model = viewResult.Model as DashboardViewModel;
             model.Should().NotBeNull();
-            model.IsAoUser.Should().BeTrue();
-            model.IsTrainingProviderUser.Should().BeFalse();
+
+            model.LoginUserType.Should().Be(loginUserType);
         }
     }
 }

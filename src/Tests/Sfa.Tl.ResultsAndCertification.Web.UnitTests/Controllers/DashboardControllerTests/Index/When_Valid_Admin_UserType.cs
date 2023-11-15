@@ -3,17 +3,17 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardControllerTests.Index
 {
-    public class When_Valid_TrainingProvider_UserType : When_Valid_UserType_BaseTest
+    public class When_Valid_Admin_UserType : When_Valid_UserType_BaseTest
     {
         public override void Given()
         {
-            Given(LoginUserType.TrainingProvider);
+            Given(LoginUserType.Admin);
         }
 
         [Fact]
         public void Then_Expected_Result_Returned()
         {
-            Then_Expected_Result(LoginUserType.TrainingProvider);
+            Then_Expected_Result(LoginUserType.Admin);
         }
     }
 }

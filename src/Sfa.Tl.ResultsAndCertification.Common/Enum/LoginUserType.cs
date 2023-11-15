@@ -4,6 +4,7 @@
     {
         NotSpecified = 0,
         AwardingOrganisation = 1,
-        TrainingProvider = 2
+        TrainingProvider = 2,
+        Admin = 3
     }
 }
