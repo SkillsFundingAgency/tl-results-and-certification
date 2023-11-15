@@ -1,17 +1,23 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Dashboard.DashboardViewModel
 
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard
+@using Sfa.Tl.ResultsAndCertification.Common.Enum
 
 @{
     ViewData["Title"] = CommonDashboard.Page_Title;
 }
 
-@if (Model?.IsAoUser == true)
+@switch (Model.LoginUserType)
 {
-    <partial name="_aoDashboard" />
-}
+    case LoginUserType.AwardingOrganisation:
+        <partial name="_aoDashboard" />
+        break;
 
-@if (Model?.IsTrainingProviderUser == true)
-{
-    <partial name="_providerDashboard" />
+    case LoginUserType.TrainingProvider:
+        <partial name="_providerDashboard" />
+        break;
+
+    case LoginUserType.Admin:
+        <partial name="_adminDashboard" />
+        break;
 }
