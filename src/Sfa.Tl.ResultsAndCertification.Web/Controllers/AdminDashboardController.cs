@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("admin/search-learner-records", Name = RouteConstants.SearchLearners)]
+        [Route("admin/search-learner-records", Name = RouteConstants.AdminSearchLearners)]
         public async Task<IActionResult> AdminSearchLearnersAsync()
         {
             AdminSearchLearnerFiltersViewModel filters = await _loader.GetAdminSearchLearnerFiltersAsync();
