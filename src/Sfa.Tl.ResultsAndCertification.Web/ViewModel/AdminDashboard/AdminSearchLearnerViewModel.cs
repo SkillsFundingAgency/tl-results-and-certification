@@ -7,6 +7,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 {
     public class AdminSearchLearnerViewModel
     {
+        public AdminSearchLearnerViewModel(AdminSearchLearnerFiltersViewModel filtersViewModel) 
+        {
+            SearchCriteria = new AdminSearchLearnerCriteriaViewModel
+            {
+                SearchLearnerFilters = filtersViewModel
+            };
+        }
+
         public AdminSearchLearnerCriteriaViewModel SearchCriteria { get; set; }
 
         public BreadcrumbModel Breadcrumb => new()

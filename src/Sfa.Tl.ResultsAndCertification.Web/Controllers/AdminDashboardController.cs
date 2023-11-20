@@ -20,15 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AdminSearchLearnersAsync()
         {
             AdminSearchLearnerFiltersViewModel filters = await _loader.GetAdminSearchLearnerFiltersAsync();
-
-            var viewModel = new AdminSearchLearnerViewModel
-            {
-                SearchCriteria = new AdminSearchLearnerCriteriaViewModel
-                {
-                    SearchLearnerFilters = filters
-                }
-            };
-
+            
+            var viewModel = new AdminSearchLearnerViewModel(filters);
             return View(viewModel);
         }
     }
