@@ -1,9 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Authentication;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -32,24 +35,25 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public async Task<DfeUserInfo> GetDfeSignInUserInfo(string organisationId, string userId)
         {
-            var organisationUkprn = GetOrganisationUkprn(organisationId, userId);
+            var organisation = GetOrganisation(organisationId, userId);
             var userInfo = GetUserInfo(organisationId, userId);
 
-            await Task.WhenAll(organisationUkprn, userInfo);
+            await Task.WhenAll(organisation, userInfo);
 
             var userInfoResult = userInfo.Result;
-            var ukprn = organisationUkprn.Result;
+            var organisationResult = organisation.Result;
+            userInfoResult.Organisation = organisation.Result.Name;
 
-            if(ukprn.HasValue)
-                userInfoResult.Ukprn = ukprn;
-            else
-                userInfoResult.HasAccessToService = false;
-            
+            if (organisationResult.UKPRN.HasValue)
+                userInfoResult.Ukprn = organisationResult.UKPRN;
+            else  userInfoResult.HasAccessToService = HasAccesstoService(Common.Constants.OrganisationConstants.AdminOrganisation, userInfoResult, RolesExtensions.AdminDashboardAccess);
+                        
             return userInfoResult;
         }
 
-        private async Task<long?> GetOrganisationUkprn(string organisationId, string userId)
+        private async Task<Organisation> GetOrganisation(string organisationId, string userId)
         {
+            var organisation = new Organisation();
             var requestUri = $"/users/{userId}/organisations";
             var response = await _httpClient.GetAsync(requestUri);
 
@@ -57,9 +61,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
                 var orgToken = JArray.Parse(responseContent).FirstOrDefault(org => org.SelectToken("id").ToString() == organisationId);
-                return orgToken?["ukprn"].ToObject<long?>();
+                organisation.UKPRN = (int?)(orgToken?["ukprn"]);
+                organisation.Name = (string)(orgToken?["name"]);
             }            
-            return null;
+            return organisation;
         }
 
         private async Task<DfeUserInfo> GetUserInfo(string organisationId, string userId)
@@ -79,5 +84,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             }
             return userClaims;
         }
+
+        private bool HasAccesstoService(string organisation, DfeUserInfo userInfo,string role)
+        {
+            return userInfo.Roles.Any(t => t.Name == role) && userInfo.Organisation == organisation;
+        }
+
     }
 }
