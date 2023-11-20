@@ -1,11 +1,9 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
+﻿namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.Common
 {
-    public class AdminFilter
+    public class FilterLookupData
     {
         public int Id { get; set; }
-
         public string Name { get; set; }
-
         public bool IsSelected { get; set; }
     }
 }

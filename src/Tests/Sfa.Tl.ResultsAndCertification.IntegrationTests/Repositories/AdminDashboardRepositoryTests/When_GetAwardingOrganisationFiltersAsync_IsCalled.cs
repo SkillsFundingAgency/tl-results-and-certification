@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
     {
         private readonly AdminDashboardRepository _repository;
 
-        private IList<AdminFilter> _actualResult;
+        private IList<FilterLookupData> _actualResult;
 
         public When_GetAwardingOrganisationFiltersAsync_IsCalled()
         {
@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Returns_Expected_Results(IList<AdminFilter> expectedResult)
+        public async Task Then_Returns_Expected_Results(IList<FilterLookupData> expectedResult)
         {
             await When();
 
@@ -49,10 +49,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
                 {
                     new object[]
                     {
-                        new List<AdminFilter>
+                        new List<FilterLookupData>
                         {
-                            new AdminFilter{ Id = 1, Name = "Ncfe", IsSelected = false },
-                            new AdminFilter{ Id = 2, Name = "Pearson", IsSelected = false }
+                            new FilterLookupData { Id = 1, Name = "Ncfe", IsSelected = false },
+                            new FilterLookupData { Id = 2, Name = "Pearson", IsSelected = false }
                         }
                     }
                 };

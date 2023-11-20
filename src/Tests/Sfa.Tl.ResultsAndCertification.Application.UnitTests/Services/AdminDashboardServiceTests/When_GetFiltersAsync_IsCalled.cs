@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System;
 using System.Collections.Generic;
@@ -21,16 +22,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
 
         public override void Setup()
         {
-            var mockAwardingOrganisationFilters = new List<AdminFilter>
+            var mockAwardingOrganisationFilters = new List<FilterLookupData>
             {
-                new AdminFilter { Id = 1, Name = "Ncfe", IsSelected = false },
-                new AdminFilter { Id = 2, Name = "Pearson", IsSelected = false }
+                new FilterLookupData { Id = 1, Name = "Ncfe", IsSelected = false },
+                new FilterLookupData { Id = 2, Name = "Pearson", IsSelected = false }
             };
 
-            var mockAcademicYearFilters = new List<AdminFilter>
+            var mockAcademicYearFilters = new List<FilterLookupData>
             {
-                new AdminFilter { Id = 2021, Name = "2021 to 2022", IsSelected = false },
-                new AdminFilter { Id = 2022, Name = "2022 to 2023", IsSelected = false }
+                new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false },
+                new FilterLookupData { Id = 2022, Name = "2022 to 2023", IsSelected = false }
             };
 
             _expectedResult = new AdminSearchLearnerFilters

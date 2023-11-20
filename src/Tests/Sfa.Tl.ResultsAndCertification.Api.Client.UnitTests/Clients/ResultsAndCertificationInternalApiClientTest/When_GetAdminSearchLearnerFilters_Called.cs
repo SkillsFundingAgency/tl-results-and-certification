@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System.Collections.Generic;
 using System.Net;
@@ -33,14 +34,14 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
             _mockApiResponse = new AdminSearchLearnerFilters
             {
-                AwardingOrganisations = new List<AdminFilter>
+                AwardingOrganisations = new List<FilterLookupData>
                 {
-                    new AdminFilter { Id = 1, Name = "Ncfe", IsSelected = false },
-                    new AdminFilter { Id = 2, Name = "Pearson", IsSelected = false }
+                    new FilterLookupData { Id = 1, Name = "Ncfe", IsSelected = false },
+                    new FilterLookupData { Id = 2, Name = "Pearson", IsSelected = false }
                 },
-                AcademicYears = new List<AdminFilter>
+                AcademicYears = new List<FilterLookupData>
                 {
-                    new AdminFilter { Id = 1, Name = "2020 to 2021", IsSelected = false }
+                    new FilterLookupData { Id = 1, Name = "2020 to 2021", IsSelected = false }
                 }
             };
         }
