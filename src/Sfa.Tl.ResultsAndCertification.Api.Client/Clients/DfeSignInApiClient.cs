@@ -41,11 +41,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             await Task.WhenAll(organisation, userInfo);
 
             var userInfoResult = userInfo.Result;
-            var ukprn = organisation.Result;
+            var organisationResult = organisation.Result;
             userInfoResult.Organisation = organisation.Result.Name;
 
-            if (ukprn.UKPRN.HasValue)
-                userInfoResult.Ukprn = ukprn.UKPRN;
+            if (organisationResult.UKPRN.HasValue)
+                userInfoResult.Ukprn = organisationResult.UKPRN;
             else  userInfoResult.HasAccessToService = HasAccesstoService(Common.Constants.OrganisationConstants.AdminOrganisation, userInfoResult, RolesExtensions.AdminDashboardAccess);
                         
             return userInfoResult;
@@ -63,7 +63,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
                 var orgToken = JArray.Parse(responseContent).FirstOrDefault(org => org.SelectToken("id").ToString() == organisationId);
                 organisation.UKPRN = (int?)(orgToken?["ukprn"]);
                 organisation.Name = (string)(orgToken?["name"]);
-                return organisation;
             }            
             return organisation;
         }
