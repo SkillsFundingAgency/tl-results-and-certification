@@ -21,14 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             AdminSearchLearnerFiltersViewModel filters = await _loader.GetAdminSearchLearnerFiltersAsync();
 
-            var viewModel = new AdminSearchLearnerViewModel
-            {
-                SearchCriteria = new AdminSearchLearnerCriteriaViewModel
-                {
-                    SearchLearnerFilters = filters
-                }
-            };
-
+            var viewModel = new AdminSearchLearnerViewModel(filters);
             return View(viewModel);
         }
     }

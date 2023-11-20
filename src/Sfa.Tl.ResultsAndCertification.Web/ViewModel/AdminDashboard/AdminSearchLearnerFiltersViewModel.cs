@@ -7,6 +7,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 {
     public class AdminSearchLearnerFiltersViewModel
     {
+        public string Provider { get; set; } = string.Empty;
+
         public IList<FilterLookupData> AwardingOrganisations { get; set; }
 
         public IList<FilterLookupData> AcademicYears { get; set; }
