@@ -35,25 +35,23 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public async Task<DfeUserInfo> GetDfeSignInUserInfo(string organisationId, string userId)
         {
-            var organisationUkprn = GetOrganisationUkprn(organisationId, userId);
+            var organisation = GetOrganisation(organisationId, userId);
             var userInfo = GetUserInfo(organisationId, userId);
 
-            await Task.WhenAll(organisationUkprn, userInfo);
+            await Task.WhenAll(organisation, userInfo);
 
             var userInfoResult = userInfo.Result;
-            var ukprn = organisationUkprn.Result;
-            userInfoResult.Organisation = organisationUkprn.Result.Name;
+            var ukprn = organisation.Result;
+            userInfoResult.Organisation = organisation.Result.Name;
 
             if (ukprn.UKPRN.HasValue)
                 userInfoResult.Ukprn = ukprn.UKPRN;
-            else if (!ukprn.UKPRN.HasValue) userInfoResult.HasAccessToService = HasAccesstoService(Common.Constants.OrganisationConstants.AdminOrganisation, userInfoResult, RolesExtensions.AdminDashboardAccess);
-            else
-                userInfoResult.HasAccessToService = false;
-            
+            else  userInfoResult.HasAccessToService = HasAccesstoService(Common.Constants.OrganisationConstants.AdminOrganisation, userInfoResult, RolesExtensions.AdminDashboardAccess);
+                        
             return userInfoResult;
         }
 
-        private async Task<Organisation> GetOrganisationUkprn(string organisationId, string userId)
+        private async Task<Organisation> GetOrganisation(string organisationId, string userId)
         {
             var organisation = new Organisation();
             var requestUri = $"/users/{userId}/organisations";
