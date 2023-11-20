@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -156,11 +157,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 
                                 var dfeSignInApiClient = ctx.HttpContext.RequestServices.GetService<IDfeSignInApiClient>();
                                 var userInfo = await dfeSignInApiClient.GetDfeSignInUserInfo(organisationId, userId);
-
+                              
                                 if (userInfo.HasAccessToService)
                                 {
                                     var internalApiClient = ctx.HttpContext.RequestServices.GetService<IResultsAndCertificationInternalApiClient>();
-                                    var loggedInUserTypeResponse = userInfo.Ukprn.Value == 1
+
+                                    var loggedInUserTypeResponse = !userInfo.Ukprn.HasValue ? new LoggedInUserTypeInfo { UserType = LoginUserType.Admin } : userInfo.Ukprn.Value == 1
                                                                     ? new LoggedInUserTypeInfo { Ukprn = userInfo.Ukprn.Value, UserType = LoginUserType.AwardingOrganisation }
                                                                     : await internalApiClient.GetLoggedInUserTypeInfoAsync(userInfo.Ukprn.Value);
 
@@ -183,7 +185,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                                             claims.AddRange(userInfo.Roles.Select(role => new Claim(ClaimTypes.Role, role.Name)));
                                         }
                                     }
+
                                 }
+                                else
+                                { claims.Add(new Claim(CustomClaimTypes.HasAccessToService, "true")); }
                             }
                             else
                             {
