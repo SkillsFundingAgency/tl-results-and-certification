@@ -25,7 +25,13 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 
         // TrainingProvider Roles
         public const string ProviderAdministrator = "Provider Administrator";
-        public const string LearnerRecordsEditor = "Learner Records Editor";        
+        public const string LearnerRecordsEditor = "Learner Records Editor";
+
+        // Admin Dashboard Policy Names
+        public const string RequireAdminDashboardAccess = "RequireAdminDashboardAccess";
+
+        //Admin Dashboard Access
+        public const string AdminDashboardAccess = "Admin Dashboard Access";
 
         public static bool HasAccessToService(this ClaimsPrincipal user)
         {

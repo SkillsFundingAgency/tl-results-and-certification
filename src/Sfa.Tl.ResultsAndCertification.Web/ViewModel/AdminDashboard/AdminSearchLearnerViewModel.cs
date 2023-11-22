@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 {
     public class AdminSearchLearnerViewModel
     {
-        public AdminSearchLearnerViewModel(AdminSearchLearnerFiltersViewModel filtersViewModel)
+        public AdminSearchLearnerViewModel(AdminSearchLearnerFiltersViewModel filtersViewModel) 
         {
             SearchLearnerFilters = filtersViewModel;
         }
@@ -22,8 +22,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 
         public BreadcrumbModel Breadcrumb => new()
         {
-            BreadcrumbItems = new List<BreadcrumbItem>
-            {
+            BreadcrumbItems = new List<BreadcrumbItem> 
+            { 
                 new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
                 new BreadcrumbItem { DisplayName = BreadcrumbContent.Search_Learner_Records }
             }
