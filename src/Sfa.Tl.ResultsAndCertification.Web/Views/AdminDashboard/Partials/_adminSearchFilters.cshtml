@@ -1,0 +1,73 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.AdminSearchLearnerCriteriaViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+<form asp-route="@RouteConstants.SubmitSearchLearnerApplyFilters">
+
+    <h2 class="govuk-heading-m govuk-!-padding-top-4">@SearchLearners.Filters_Heading </h2>
+
+    <div class="govuk-form-group">
+        <label class="govuk-label govuk-label--s" for="search">
+            @SearchLearners.Filters_Provider_Name
+        </label>
+        <p class="govuk-visually-hidden">@SearchLearners.AutoComplete_Help_Text</p>
+        <span sfa-validation-for="Provider"></span>
+        <input id="search" name="Search" class="govuk-input" asp-for="Provider" />
+    </div>
+
+    <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-margin-bottom-0">
+                <label class="govuk-label govuk-label--s">
+                    @SearchLearners.Filters_Awarding_Organisation
+                </label>
+            </legend>
+            <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                @foreach (var awardingOrganisation in Model?.SearchLearnerFilters?.AwardingOrganisations?.Select((value, i) => (value, i)))
+                {
+                    var elementId = (awardingOrganisation.i > 0) ? "selectedawardingorganisation-" + awardingOrganisation.i : "selectedawardingorganisation";
+                    <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchLearnerFilters.AwardingOrganisations[awardingOrganisation.i].IsSelected">
+                        <label class="govuk-label govuk-checkboxes__label" for="@elementId">
+                            @awardingOrganisation.value.Name
+                        </label>
+                    </div>
+                    <input type="hidden" asp-for="@Model.SearchLearnerFilters.AwardingOrganisations[@awardingOrganisation.i].Id" />
+                }
+            </div>
+        </fieldset>
+    </div>
+
+    <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-margin-bottom-0">
+                <label class="govuk-label govuk-label--s">
+                    @SearchLearners.Filters_Start_Year
+                </label>
+            </legend>
+            <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                @foreach (var academicYear in Model?.SearchLearnerFilters?.AcademicYears?.Select((value, i) => (value, i)))
+                {
+                    var elementId = (academicYear.i > 0) ? "selectedacademicyear-" + academicYear.i : "selectedacademicyear";
+                    <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchLearnerFilters.AcademicYears[academicYear.i].IsSelected">
+                        <label class="govuk-label govuk-checkboxes__label" for="@elementId">
+                            @academicYear.value.Name
+                        </label>
+                    </div>
+                    <input type="hidden" asp-for="@Model.SearchLearnerFilters.AcademicYears[@academicYear.i].Id" />
+                }
+            </div>
+        </fieldset>
+    </div>
+
+    <div class="govuk-button-group">
+        <button id="applyFiltersButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@SearchLearners.Button_Apply_Filters</button>
+
+        @if (Model.SearchLearnerFilters?.IsApplyFiltersSelected == true)
+        {
+            <button id="clearFiltersButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.SearchLearnerClearFilters">@SearchLearners.Button_Clear_Filters</button>
+        }
+
+    </div>
+</form>

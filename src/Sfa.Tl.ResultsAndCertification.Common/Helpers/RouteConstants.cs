@@ -400,5 +400,11 @@
         public const string IndustryPlacementsUploadUnsuccessful = "IndustryPlacementsUploadUnsuccessful";
         public const string DownloadIndustryPlacementErrors = "DownloadIndustryPlacementErrors";
         #endregion
+
+        #region Admin Dashboard
+
+        public const string AdminSearchLearners = "AdminSearchLearners";
+
+        #endregion
     }
 }

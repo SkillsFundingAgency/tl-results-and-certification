@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
@@ -114,5 +115,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         // Registration pending withdrawal
         Task<bool> SetRegistrationAsPendingWithdrawalAsync(SetRegistrationAsPendingWithdrawalRequest model);
         Task<bool> ReinstateRegistrationFromPendingWithdrawalAsync(ReinstateRegistrationFromPendingWithdrawalRequest model);
+
+        #region Admin dashboard
+
+        Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync();
+
+        #endregion
     }
 }

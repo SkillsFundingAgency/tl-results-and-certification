@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
@@ -304,7 +305,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             var requestUri = string.Format(ApiConstants.GetLearnerRecordDetailsUri, providerUkprn, profileId, pathwayId);
             return await GetAsync<LearnerRecordDetails>(requestUri);
         }
-        
+
         public async Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request)
         {
             return await PutAsync<UpdateLearnerSubjectRequest, bool>(ApiConstants.UpdateLearnerSubjectUri, request);
@@ -355,7 +356,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         #region PRS
         public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null)
         {
-            var requestUri = uln != null ? 
+            var requestUri = uln != null ?
                 string.Format(ApiConstants.FindPrsLearnerRecordUri, aoUkprn, uln) :
                 string.Format(ApiConstants.FindPrsLearnerRecordByProfileIdUri, aoUkprn, profileId);
 
@@ -387,7 +388,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         public async Task<bool> ProcessIndustryPlacementDetailsAsync(IndustryPlacementRequest request)
         {
             return await PostAsync<IndustryPlacementRequest, bool>(ApiConstants.ProcessIndustryPlacementDetailsUri, request);
-        }        
+        }
 
         #endregion
 
@@ -435,6 +436,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         #endregion
 
+        #region Admin dashboard
+
+        public Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync()
+        {
+            var requestUri = ApiConstants.GetAdminSearchLearnerFiltersUri;
+            return GetAsync<AdminSearchLearnerFilters>(requestUri);
+        }
+
+        #endregion
+
         #region Private Methods
 
         /// <summary>
@@ -478,7 +489,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return JsonConvert.DeserializeObject<TResponse>(await response.Content.ReadAsStringAsync());
         }
 
-           /// <summary>
+        /// <summary>
         /// Puts the asynchronous.
         /// </summary>
         /// <typeparam name="TRequest">The type of the request.</typeparam>

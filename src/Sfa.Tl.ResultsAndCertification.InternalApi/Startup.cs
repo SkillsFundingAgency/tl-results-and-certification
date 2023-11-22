@@ -24,12 +24,12 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interf
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidators;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface;
+using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
+using Sfa.Tl.ResultsAndCertification.Common.Services.System.Service;
 using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Builder;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
-using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Functions.Services;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Extensions;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Infrastructure;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader;
@@ -152,6 +152,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IDocumentUploadHistoryService, DocumentUploadHistoryService>();
             services.AddTransient<ICommonService, CommonService>();
+            services.AddTransient<IAdminDashboardRepository, AdminDashboardRepository>();
+            services.AddTransient<ISystemProvider, SystemProvider>();
 
             // Bulk Registrations
             services.AddTransient<IDataParser<RegistrationCsvRecordResponse>, RegistrationParser>();
@@ -181,6 +183,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IStatementOfAchievementService, StatementOfAchievementService>();
             services.AddTransient<IPostResultsServiceService, PostResultsServiceService>();
             services.AddTransient<ILearnerService, LearnerService>();
+            services.AddTransient<IAdminDashboardService, AdminDashboardService>();
 
             // DataExports 
             services.AddTransient<IDataExportLoader, DataExportLoader>();

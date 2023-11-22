@@ -121,5 +121,8 @@
 
         // Industry Placement Upload
         public const string ProcessBulkIndustryPlacementsUri = "/api/industryplacement/ProcessBulkIndustryPlacements";
+
+        // Admin dashboard
+        public const string GetAdminSearchLearnerFiltersUri = "/api/admindashboard/GetAdminSearchLearnerFilters";
     }
 }

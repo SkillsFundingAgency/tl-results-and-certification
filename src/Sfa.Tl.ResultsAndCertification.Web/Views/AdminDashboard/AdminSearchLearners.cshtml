@@ -1,0 +1,31 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.AdminSearchLearnerViewModel
+
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+
+@{
+    ViewData["Title"] = SearchLearners.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<h1 class="govuk-heading-xl">@SearchLearners.Heading_Search_Learners_Records</h1>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half filter-border">
+        <partial name="Partials/_adminSearchFilters.cshtml" model="Model.SearchCriteria" />
+    </div>
+    <div class="govuk-grid-column-one-half">
+        <partial name="Partials/_adminSearchKey.cshtml" model="Model.SearchCriteria" />
+
+        <label class="govuk-label govuk-label--m">
+            @SearchLearners.Heading_Start_Search
+        </label>
+
+        <p class="govuk-body">
+            @SearchLearners.Para_Enter_ULN_Or_Learner_Last_Name
+        </p>
+    </div>
+</div>
