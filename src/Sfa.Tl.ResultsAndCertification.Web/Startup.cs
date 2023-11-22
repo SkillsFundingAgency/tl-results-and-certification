@@ -115,6 +115,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web
 
                 // Training Provider Access Policies                
                 options.AddPolicy(RolesExtensions.RequireLearnerRecordsEditorAccess, policy => { policy.RequireRole(RolesExtensions.ProviderAdministrator, RolesExtensions.LearnerRecordsEditor); policy.RequireClaim(CustomClaimTypes.LoginUserType, ((int)LoginUserType.TrainingProvider).ToString()); });
+
+                // Admin Dashboard Access Policies                
+                options.AddPolicy(RolesExtensions.RequireAdminDashboardAccess, policy => { policy.RequireRole(RolesExtensions.AdminDashboardAccess); policy.RequireClaim(CustomClaimTypes.LoginUserType, ((int)LoginUserType.Admin).ToString()); });
             });
 
             services.AddWebDataProtection(ResultsAndCertificationConfiguration, _env);
