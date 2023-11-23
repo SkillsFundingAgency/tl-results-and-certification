@@ -8,9 +8,9 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
 
         public long? ProviderUkprn { get; set; }
 
-        public IList<int> AcademicYears { get; set; }
+        public IList<int> SelectedAcademicYears { get; set; }
 
-        public IList<int> AwardingOrganisations { get; set; }
+        public IList<int> SelectedAwardingOrganisations { get; set; }
 
         public int? PageNumber { get; set; }
     }

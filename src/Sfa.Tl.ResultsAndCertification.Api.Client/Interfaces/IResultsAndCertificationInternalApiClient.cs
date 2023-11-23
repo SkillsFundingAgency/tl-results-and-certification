@@ -121,6 +121,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync();
 
+        Task<PagedResponse<AdminSearchLearnerDetail>> GetAdminSearchLearnerDetailsAsync(AdminSearchLearnerRequest request);
+
         #endregion
     }
 }

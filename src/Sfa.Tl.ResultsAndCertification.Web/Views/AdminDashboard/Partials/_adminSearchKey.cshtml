@@ -1,4 +1,4 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.AdminSearchLearnerViewModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.AdminSearchLearnerCriteriaViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
@@ -6,17 +6,17 @@
     <div class="govuk-form-group">
 
         <label class="govuk-label" for="full">
-            <h2 class="govuk-heading-m">@SearchLearners.Search_By_Uln_Or_Learner_Lastname</h2>
+            <h2 class="govuk-heading-m">@AdminSearchLearners.Search_By_Uln_Or_Learner_Lastname</h2>
         </label>
 
         <input id="searchkey" class="govuk-input govuk-!-width-full-width search-uln" type="search" asp-for="@Model.SearchKey" maxlength="100">
 
         <div class="govuk-button-group govuk-!-margin-top-2">
-            <button id="searchButton" class="govuk-button uln-search-button" data-module="govuk-button" data-prevent-double-click="true">@SearchLearners.Button_Search</button>
+            <button id="searchButton" class="govuk-button uln-search-button" data-module="govuk-button" data-prevent-double-click="true">@AdminSearchLearners.Button_Search</button>
 
             @if (Model.IsSearchKeyApplied)
             {
-                <button id="clearSearchButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.SearchLearnerClearKey">@SearchLearners.Clear_Search</button>
+                <button id="clearSearchButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.SearchLearnerClearKey">@AdminSearchLearners.Clear_Search</button>
             }
         </div>
     </div>

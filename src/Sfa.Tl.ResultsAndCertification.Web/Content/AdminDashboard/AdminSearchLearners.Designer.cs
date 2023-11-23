@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class SearchLearners {
+    public class AdminSearchLearners {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SearchLearners() {
+        internal AdminSearchLearners() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.SearchLearners", typeof(SearchLearners).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.AdminSearchLearners", typeof(AdminSearchLearners).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -165,6 +165,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Viewing {0} - {1} of {2} learners.
+        /// </summary>
+        public static string PaginationSummary_Text {
+            get {
+                return ResourceManager.GetString("PaginationSummary_Text", resourceCulture);
             }
         }
         

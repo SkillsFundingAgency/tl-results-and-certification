@@ -14,25 +14,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public IList<FilterLookupData> AcademicYears { get; set; }
 
         public bool IsApplyFiltersSelected { get; set; }
-
-        public IList<string> SelectedFilters
-        {
-            get
-            {
-                var selectedFilters = new List<string>();
-
-                if (!AwardingOrganisations.IsNullOrEmpty())
-                {
-                    selectedFilters.AddRange(AwardingOrganisations.Where(a => a.IsSelected).Select(a => a.Name));
-                }
-
-                if (!AcademicYears.IsNullOrEmpty())
-                {
-                    selectedFilters.AddRange(AcademicYears.Where(a => a.IsSelected).Select(a => a.Name));
-                }
-
-                return selectedFilters;
-            }
-        }
     }
 }

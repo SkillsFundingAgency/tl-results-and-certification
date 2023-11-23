@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
@@ -22,6 +23,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync()
         {
             return _adminDashboardService.GetAdminSearchLearnerFiltersAsync();
+        }
+
+        [HttpPost]
+        [Route("GetAdminSearchLearnerDetails")]
+        public Task<PagedResponse<AdminSearchLearnerDetail>> GetAdminSearchLearnerDetailsAsync(AdminSearchLearnerRequest request)
+        {
+            return _adminDashboardService.GetAdminSearchLearnerDetailsAsync(request);
         }
     }
 }

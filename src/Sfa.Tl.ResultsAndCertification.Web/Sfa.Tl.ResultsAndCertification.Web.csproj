@@ -41,10 +41,10 @@
 
 
   <ItemGroup>
-    <Compile Update="Content\AdminDashboard\SearchLearners.Designer.cs">
+    <Compile Update="Content\AdminDashboard\AdminSearchLearners.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>SearchLearners.resx</DependentUpon>
+      <DependentUpon>AdminSearchLearners.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Assessment\AddCoreAssessmentEntry.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -1025,9 +1025,9 @@
 
 
   <ItemGroup>
-    <EmbeddedResource Update="Content\AdminDashboard\SearchLearners.resx">
+    <EmbeddedResource Update="Content\AdminDashboard\AdminSearchLearners.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SearchLearners.Designer.cs</LastGenOutput>
+      <LastGenOutput>AdminSearchLearners.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Assessment\AddCoreAssessmentEntry.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -17,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -443,6 +442,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var requestUri = ApiConstants.GetAdminSearchLearnerFiltersUri;
             return GetAsync<AdminSearchLearnerFilters>(requestUri);
+        }
+
+        public Task<PagedResponse<AdminSearchLearnerDetail>> GetAdminSearchLearnerDetailsAsync(AdminSearchLearnerRequest request)
+        {
+            var requestUri = ApiConstants.GetAdminSearchLearnerDetailsUri;
+            return PostAsync<AdminSearchLearnerRequest, PagedResponse<AdminSearchLearnerDetail>>(requestUri, request);
         }
 
         #endregion

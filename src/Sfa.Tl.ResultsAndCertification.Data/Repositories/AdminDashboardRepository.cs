@@ -62,14 +62,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 registrationPathwayQueryable = registrationPathwayQueryable.Where(expression);
             }
 
-            if (!request.AwardingOrganisations.IsNullOrEmpty())
+            if (!request.SelectedAwardingOrganisations.IsNullOrEmpty())
             {
-                registrationPathwayQueryable = registrationPathwayQueryable.Where(p => request.AwardingOrganisations.Contains(p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisatonId));
+                registrationPathwayQueryable = registrationPathwayQueryable.Where(p => request.SelectedAwardingOrganisations.Contains(p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisatonId));
             }
 
-            if (!request.AcademicYears.IsNullOrEmpty())
+            if (!request.SelectedAcademicYears.IsNullOrEmpty())
             {
-                registrationPathwayQueryable = registrationPathwayQueryable.Where(p => request.AcademicYears.Contains(p.AcademicYear));
+                registrationPathwayQueryable = registrationPathwayQueryable.Where(p => request.SelectedAcademicYears.Contains(p.AcademicYear));
             }
 
             if (request.ProviderUkprn.HasValue)

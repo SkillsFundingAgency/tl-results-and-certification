@@ -403,7 +403,8 @@
 
         #region Admin Dashboard
 
-        public const string AdminSearchLearners = "AdminSearchLearners";
+        public const string AdminSearchLearnersRecords = "AdminSearchLearnersRecords";
+        public const string SubmitAdminSearchLearnersRecords = "SubmitAdminSearchLearnersRecords";
 
         #endregion
     }
