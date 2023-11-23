@@ -64,10 +64,10 @@
     <div class="govuk-button-group">
         <button id="applyFiltersButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@SearchLearners.Button_Apply_Filters</button>
 
-        @if (Model.SearchLearnerFilters?.IsApplyFiltersSelected == true)
-        {
+       @* @if (Model.SearchLearnerFilters?.IsApplyFiltersSelected == true)
+        {*@
             <button id="clearFiltersButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.SearchLearnerClearFilters">@SearchLearners.Button_Clear_Filters</button>
-        }
+        @*}*@
 
     </div>
 </form>

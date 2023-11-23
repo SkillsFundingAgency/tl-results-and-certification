@@ -20,8 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         public async Task<IList<AdminFilter>> GetAwardingOrganisationFiltersAsync()
         {
             return await _dbContext.TlAwardingOrganisation
-                .OrderBy(x => x.Name)
-                .Select(x => new AdminFilter { Id = x.Id, Name = x.Name, IsSelected = false })
+                .OrderBy(x => x.DisplayName)
+                .Select(x => new AdminFilter { Id = x.Id, Name = x.DisplayName, IsSelected = false })
                 .ToListAsync();
         }
 
