@@ -14,10 +14,10 @@
         <div class="govuk-button-group govuk-!-margin-top-2">
             <button id="searchButton" class="govuk-button uln-search-button" data-module="govuk-button" data-prevent-double-click="true">@SearchLearners.Button_Search</button>
 
-            @if (Model.IsSearchKeyApplied)
-            {
+            @*@if (Model.IsSearchKeyApplied)
+            {*@
                 <button id="clearSearchButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.SearchLearnerClearKey">@SearchLearners.Clear_Search</button>
-            }
+            @*}*@
         </div>
     </div>
 </form>
