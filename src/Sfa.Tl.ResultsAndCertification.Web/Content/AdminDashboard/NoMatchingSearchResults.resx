@@ -117,19 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Awarding_Organisation_Text" xml:space="preserve">
-    <value>Awarding organisation:</value>
+  <data name="Heading_No_Matching_Results" xml:space="preserve">
+    <value>There are no matching results</value>
   </data>
-  <data name="Provider_UKPRN_Text" xml:space="preserve">
-    <value>Provider (UKPRN):</value>
+  <data name="List_Item_Double_Checking_Spelling" xml:space="preserve">
+    <value>double-checking your spelling</value>
   </data>
-  <data name="Start_Year_Text" xml:space="preserve">
-    <value>Start year:</value>
+  <data name="List_Item_Removing_Filters" xml:space="preserve">
+    <value>removing filters</value>
   </data>
-  <data name="Start_Year_Value" xml:space="preserve">
-    <value>{0} to {1}</value>
-  </data>
-  <data name="ULN_Text" xml:space="preserve">
-    <value>ULN:</value>
+  <data name="List_Title_Improve_Your_Search_By" xml:space="preserve">
+    <value>Improve your search results by:</value>
   </data>
 </root>

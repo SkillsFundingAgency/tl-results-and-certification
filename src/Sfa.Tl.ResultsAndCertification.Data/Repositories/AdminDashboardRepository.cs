@@ -47,6 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                                                         .Include(p => p.TqProvider)
                                                                                             .ThenInclude(p => p.TqAwardingOrganisation)
                                                                                             .ThenInclude(p => p.TlAwardingOrganisaton)
+                                                                                       .Where(p => !_dbContext.TqRegistrationPathway.Any(p2 => p2.TqRegistrationProfileId == p.TqRegistrationProfileId && p2.Id > p.Id))
                                                                                        .AsQueryable();
 
             int totalCount = registrationPathwayQueryable.Count();
@@ -80,22 +81,22 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             int filteredRecordsCount = await registrationPathwayQueryable.CountAsync();
             var pager = new Pager(filteredRecordsCount, request.PageNumber, 10);
 
-            List<AdminSearchLearnerDetail> learnerRecords = await registrationPathwayQueryable
+            IQueryable<AdminSearchLearnerDetail> learnerRecordsQueryable = registrationPathwayQueryable
                 .Select(x => new AdminSearchLearnerDetail
                 {
                     ProfileId = x.TqRegistrationProfile.Id,
                     Uln = x.TqRegistrationProfile.UniqueLearnerNumber,
                     Firstname = x.TqRegistrationProfile.Firstname,
                     Lastname = x.TqRegistrationProfile.Lastname,
-                    Provider = x.TqProvider.TlProvider.DisplayName,
+                    Provider = x.TqProvider.TlProvider.Name,
                     ProviderUkprn = x.TqProvider.TlProvider.UkPrn,
-                    AwardingOrganisation = x.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.Name,
+                    AwardingOrganisation = x.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.DisplayName,
                     AcademicYear = x.AcademicYear
                 })
                 .OrderBy(x => x.Lastname)
-                .Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize)
-                .ToListAsync();
+                .Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize);
 
+            List<AdminSearchLearnerDetail> learnerRecords = await learnerRecordsQueryable.ToListAsync();
             return new PagedResponse<AdminSearchLearnerDetail> { Records = learnerRecords, TotalRecords = totalCount, PagerInfo = pager };
         }
     }

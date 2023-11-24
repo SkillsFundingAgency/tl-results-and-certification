@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class AdminSearchLearnerDetails {
+    public class NoMatchingSearchResults {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AdminSearchLearnerDetails() {
+        internal NoMatchingSearchResults() {
         }
         
         /// <summary>
@@ -39,8 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.AdminSearchLearnerDetai" +
-                            "ls", typeof(AdminSearchLearnerDetails).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.NoMatchingSearchResults" +
+                            "", typeof(NoMatchingSearchResults).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -62,47 +62,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Awarding organisation:.
+        ///   Looks up a localized string similar to There are no matching results.
         /// </summary>
-        public static string Awarding_Organisation_Text {
+        public static string Heading_No_Matching_Results {
             get {
-                return ResourceManager.GetString("Awarding_Organisation_Text", resourceCulture);
+                return ResourceManager.GetString("Heading_No_Matching_Results", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Provider (UKPRN):.
+        ///   Looks up a localized string similar to double-checking your spelling.
         /// </summary>
-        public static string Provider_UKPRN_Text {
+        public static string List_Item_Double_Checking_Spelling {
             get {
-                return ResourceManager.GetString("Provider_UKPRN_Text", resourceCulture);
+                return ResourceManager.GetString("List_Item_Double_Checking_Spelling", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start year:.
+        ///   Looks up a localized string similar to removing filters.
         /// </summary>
-        public static string Start_Year_Text {
+        public static string List_Item_Removing_Filters {
             get {
-                return ResourceManager.GetString("Start_Year_Text", resourceCulture);
+                return ResourceManager.GetString("List_Item_Removing_Filters", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} to {1}.
+        ///   Looks up a localized string similar to Improve your search results by:.
         /// </summary>
-        public static string Start_Year_Value {
+        public static string List_Title_Improve_Your_Search_By {
             get {
-                return ResourceManager.GetString("Start_Year_Value", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ULN:.
-        /// </summary>
-        public static string ULN_Text {
-            get {
-                return ResourceManager.GetString("ULN_Text", resourceCulture);
+                return ResourceManager.GetString("List_Title_Improve_Your_Search_By", resourceCulture);
             }
         }
     }

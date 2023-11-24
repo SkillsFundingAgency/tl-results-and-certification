@@ -4,9 +4,9 @@ using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -29,53 +29,53 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/search-learner-records/{pageNumber:int?}", Name = RouteConstants.AdminSearchLearnersRecords)]
         public async Task<IActionResult> AdminSearchLearnersAsync(int? pageNumber = default)
         {
-            AdminSearchLearnerFiltersViewModel filters = await _loader.GetAdminSearchLearnerFiltersAsync();
-
-            if (filters == null)
+            var viewModel = await _cacheService.GetAsync<AdminSearchLearnerViewModel>(CacheKey);
+            if (viewModel == null)
             {
-                return RedirectToRoute(RouteConstants.PageNotFound);
+                AdminSearchLearnerFiltersViewModel filters = await _loader.GetAdminSearchLearnerFiltersAsync();
+                viewModel = new AdminSearchLearnerViewModel(filters);
+
+                await _cacheService.SetAsync(CacheKey, viewModel);
+                return View(viewModel);
             }
 
-            var searchCriteria = await _cacheService.GetAsync<AdminSearchLearnerCriteriaViewModel>(CacheKey);
+            var searchCriteria = viewModel.SearchLearnerCriteria;
 
-            if (searchCriteria == null)
+            if (searchCriteria.IsSearchKeyApplied && !viewModel.IsSearchKeyValid)
             {
-                return View(new AdminSearchLearnerViewModel(filters));
+                ModelState.AddModelError(nameof(viewModel.SearchLearnerCriteria.SearchKey), AdminSearchLearners.Validation_Enter_Valid_ULN_Or_Learners_Last_Name);
+                return View(viewModel);
             }
 
             searchCriteria.PageNumber = pageNumber;
 
-            if (searchCriteria.SearchLearnerFilters != null)
-            {
-                searchCriteria.SearchLearnerFilters.AwardingOrganisations?.ToList().ForEach(tl => tl.Name = filters.AwardingOrganisations.FirstOrDefault(x => x.Id == tl.Id)?.Name);
-                searchCriteria.SearchLearnerFilters.AcademicYears?.ToList().ForEach(s => s.Name = filters.AcademicYears.FirstOrDefault(x => x.Id == s.Id)?.Name);
-            }
-            else
-            {
-                searchCriteria.SearchLearnerFilters = filters;
-            }
-
             AdminSearchLearnerDetailsListViewModel learnerDetailsListViewModel = await _loader.GetAdminSearchLearnerDetailsListAsync(searchCriteria);
-            return View(new AdminSearchLearnerViewModel(searchCriteria, learnerDetailsListViewModel));
+            viewModel.SearchLearnerDetailsList = learnerDetailsListViewModel;
 
+            await _cacheService.SetAsync(CacheKey, viewModel);
+            return View(viewModel);
         }
 
         [HttpPost]
-        [Route("admin/search-learner-records", Name = RouteConstants.SubmitAdminSearchLearnersRecords)]
-        public async Task<IActionResult> SubmitAdminSearchLearnerApplyFiltersAsync(AdminSearchLearnerCriteriaViewModel viewModel)
+        [Route("admin/search-learner-records-search-key", Name = RouteConstants.SubmitAdminSearchLearnersRecordsApplySearchKey)]
+        public async Task<IActionResult> SubmitAdminSearchLearnerApplyFiltersAsync(AdminSearchLearnerCriteriaViewModel searchCriteriaViewModel)
         {
-            var searchCriteria = await _cacheService.GetAsync<AdminSearchLearnerCriteriaViewModel>(CacheKey);
-
-            // populate if any filter are applied from cache
-            if (searchCriteria != null)
-            {
-                viewModel.SearchLearnerFilters = searchCriteria.SearchLearnerFilters;
-            }
-
-            viewModel.IsSearchKeyApplied = true;
+            var viewModel = await _cacheService.GetAsync<AdminSearchLearnerViewModel>(CacheKey);
+            viewModel.SetSearchKey(searchCriteriaViewModel.SearchKey);
 
             await _cacheService.SetAsync(CacheKey, viewModel);
-            return RedirectToRoute(RouteConstants.AdminSearchLearnersRecords, new { pageNumber = viewModel.PageNumber });
+            return RedirectToRoute(RouteConstants.AdminSearchLearnersRecords, new { pageNumber = searchCriteriaViewModel.PageNumber });
+        }
+
+        [HttpPost]
+        [Route("admin/search-learner-records-clear-key", Name = RouteConstants.SubmitAdminSearchLearnerClearKey)]
+        public async Task<IActionResult> AdminSearchLearnerClearKeyAsync()
+        {
+            //var viewModel = await _cacheService.GetAsync<AdminSearchLearnerViewModel>(CacheKey);
+            //viewModel.ClearSearchKey();
+
+            await _cacheService.RemoveAsync<AdminSearchLearnerViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AdminSearchLearnersRecords);
         }
     }
 }

@@ -132,6 +132,9 @@
   <data name="Clear_Search" xml:space="preserve">
     <value>Clear search</value>
   </data>
+  <data name="Error_Summary_Header" xml:space="preserve">
+    <value>There is a problem</value>
+  </data>
   <data name="Filters_Awarding_Organisation" xml:space="preserve">
     <value>Awarding organisation</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="Filters_Start_Year" xml:space="preserve">
     <value>Start year</value>
+  </data>
+  <data name="Heading_SearchKey_Not_Found" xml:space="preserve">
+    <value>{0} not found</value>
   </data>
   <data name="Heading_Search_Learners_Records" xml:space="preserve">
     <value>Search learner records</value>
@@ -159,7 +165,16 @@
   <data name="Para_Enter_ULN_Or_Learner_Last_Name" xml:space="preserve">
     <value>Enter a ULN or learner last name to search and/or you can apply filters to narrow your results.</value>
   </data>
+  <data name="Para_We_Cannot_Find_Learner_Surname" xml:space="preserve">
+    <value>We cannot find a learner for this last name. This might be because the spelling is wrong. We can only provide exact matches.</value>
+  </data>
+  <data name="Para_We_Cannot_Find_Learner_ULN" xml:space="preserve">
+    <value>We cannot find a learner for this ULN. This might be because the ULN is wrong or the learner is not yet registered.</value>
+  </data>
   <data name="Search_By_Uln_Or_Learner_Lastname" xml:space="preserve">
     <value>Search by ULN or learner last name</value>
+  </data>
+  <data name="Validation_Enter_Valid_ULN_Or_Learners_Last_Name" xml:space="preserve">
+    <value>Enter a 10-digit ULN or learner’s last name</value>
   </data>
 </root>

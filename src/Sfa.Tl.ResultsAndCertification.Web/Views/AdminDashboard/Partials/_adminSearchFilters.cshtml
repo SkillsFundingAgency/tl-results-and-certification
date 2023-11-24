@@ -63,11 +63,6 @@
 
     <div class="govuk-button-group">
         <button id="applyFiltersButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminSearchLearners.Button_Apply_Filters</button>
-
-        @if (Model?.IsApplyFiltersSelected == true)
-        {
-            <button id="clearFiltersButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.SearchLearnerClearFilters">@AdminSearchLearners.Button_Clear_Filters</button>
-        }
-
+        <button id="clearFiltersButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.SearchLearnerClearFilters">@AdminSearchLearners.Button_Clear_Filters</button>
     </div>
 </form>
