@@ -9,17 +9,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 {
     public class AdminSearchLearnerViewModel
     {
-        public AdminSearchLearnerViewModel(AdminSearchLearnerFiltersViewModel searchLearnerFilters)
+        public AdminSearchLearnerViewModel(AdminSearchLearnerFiltersViewModel adminSearchLearnerFiltersViewModel)
         {
-            SearchLearnerCriteria = new AdminSearchLearnerCriteriaViewModel
-            {
-                SearchLearnerFilters = searchLearnerFilters
-            };
+            SearchLearnerCriteria.SearchLearnerFilters = adminSearchLearnerFiltersViewModel;
         }
 
-        public AdminSearchLearnerCriteriaViewModel SearchLearnerCriteria { get; set; }
+        public AdminSearchLearnerViewModel(AdminSearchLearnerCriteriaViewModel searchLearnerCriteria, AdminSearchLearnerDetailsListViewModel searchLearnerDetailsList)
+        {
+            SearchLearnerCriteria = searchLearnerCriteria;
+            SearchLearnerDetailsList = searchLearnerDetailsList;
+        }
 
-        public AdminSearchLearnerDetailsListViewModel SearchLearnerDetailsList { get; set; }
+        public AdminSearchLearnerCriteriaViewModel SearchLearnerCriteria { get; set; } = new AdminSearchLearnerCriteriaViewModel();
+
+        public AdminSearchLearnerDetailsListViewModel SearchLearnerDetailsList { get; set; } = new AdminSearchLearnerDetailsListViewModel();
+
+        public bool SearchKeyOrFiltersApplied
+            => SearchLearnerCriteria?.IsSearchKeyApplied == true || SearchLearnerCriteria?.SearchLearnerFilters?.IsApplyFiltersSelected == true;
+
+        public PaginationModel Pagination => new()
+        {
+            PagerInfo = SearchLearnerDetailsList?.PagerInfo,
+            RouteName = RouteConstants.AdminSearchLearnersRecords,
+            PaginationSummary = AdminSearchLearners.PaginationSummary_Text
+        };
 
         public BreadcrumbModel Breadcrumb => new()
         {
@@ -29,18 +42,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
                 new BreadcrumbItem { DisplayName = BreadcrumbContent.Search_Learner_Records }
             }
         };
-
-        public PaginationModel Pagination
-        {
-            get
-            {
-                return new PaginationModel
-                {
-                    PagerInfo = SearchLearnerDetailsList?.PagerInfo,
-                    RouteName = RouteConstants.AdminSearchLearnersRecords,
-                    PaginationSummary = AdminSearchLearners.PaginationSummary_Text
-                };
-            }
-        }
     }
 }

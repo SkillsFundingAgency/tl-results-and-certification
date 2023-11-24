@@ -1,6 +1,7 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.AdminSearchLearnerViewModel
 
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Common.Extensions
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
 
 @{
@@ -20,12 +21,38 @@
     <div class="govuk-grid-column-one-half">
         <partial name="Partials/_adminSearchKey.cshtml" model="Model.SearchLearnerCriteria" />
 
-        <label class="govuk-label govuk-label--m">
-            @AdminSearchLearners.Heading_Start_Search
-        </label>
+        @if (Model.SearchKeyOrFiltersApplied)
+        {
+            @if (Model?.SearchLearnerDetailsList?.LearnerDetails != null && Model.SearchLearnerDetailsList.LearnerDetails.Count > 0)
+            {
+                <div class="learner-records">
+                    @if (Model.Pagination.PagerInfo.TotalPages > 0)
+                    {
+                        <h2 class="govuk-body">@string.Format(Model.Pagination.PaginationSummary, @Model.Pagination.PagerInfo.RecordFrom, @Model.Pagination.PagerInfo.RecordTo, @Model.Pagination.PagerInfo.TotalItems)</h2>
+                    }
+                    <dl class="govuk-summary-list">
+                        @foreach (var learner in Model.SearchLearnerDetailsList.LearnerDetails)
+                        {
+                            <partial name="Partials/_adminLearnerDetailsCard.cshtml" model="learner" />
+                        }
+                    </dl>
+                </div>
+                <vc:pagination model=@Model.Pagination></vc:pagination>
+            }
+            else
+            {
+                <partial name="Partials/_noMatchingSearchResults.cshtml" />
+            }
+        }
+        else
+        {
+            <label class="govuk-label govuk-label--m">
+                @AdminSearchLearners.Heading_Start_Search
+            </label>
 
-        <p class="govuk-body">
-            @AdminSearchLearners.Para_Enter_ULN_Or_Learner_Last_Name
-        </p>
+            <p class="govuk-body">
+                @AdminSearchLearners.Para_Enter_ULN_Or_Learner_Last_Name
+            </p>
+        }
     </div>
 </div>

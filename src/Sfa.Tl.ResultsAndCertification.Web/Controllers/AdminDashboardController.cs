@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -25,8 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("admin/search-learner-records/{pageNumber}", Name = RouteConstants.AdminSearchLearnersRecords)]
-        public async Task<IActionResult> AdminSearchLearnersAsync(int pageNumber = default)
+        [Route("admin/search-learner-records/{pageNumber:int?}", Name = RouteConstants.AdminSearchLearnersRecords)]
+        public async Task<IActionResult> AdminSearchLearnersAsync(int? pageNumber = default)
         {
             AdminSearchLearnerFiltersViewModel filters = await _loader.GetAdminSearchLearnerFiltersAsync();
 
@@ -39,61 +40,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (searchCriteria == null)
             {
-                var viewModel = new AdminSearchLearnerViewModel(filters);
-                return View(viewModel);
+                return View(new AdminSearchLearnerViewModel(filters));
+            }
+
+            searchCriteria.PageNumber = pageNumber;
+
+            if (searchCriteria.SearchLearnerFilters != null)
+            {
+                searchCriteria.SearchLearnerFilters.AwardingOrganisations?.ToList().ForEach(tl => tl.Name = filters.AwardingOrganisations.FirstOrDefault(x => x.Id == tl.Id)?.Name);
+                searchCriteria.SearchLearnerFilters.AcademicYears?.ToList().ForEach(s => s.Name = filters.AcademicYears.FirstOrDefault(x => x.Id == s.Id)?.Name);
             }
             else
             {
-                AdminSearchLearnerDetailsListViewModel learnerDetailsListViewModel = await _loader.GetAdminSearchLearnerDetailsListAsync(searchCriteria);
-
-                var viewModel = new AdminSearchLearnerViewModel(filters)
-                {
-                    SearchLearnerDetailsList = learnerDetailsListViewModel
-                };
-
-                return View(viewModel);
+                searchCriteria.SearchLearnerFilters = filters;
             }
+
+            AdminSearchLearnerDetailsListViewModel learnerDetailsListViewModel = await _loader.GetAdminSearchLearnerDetailsListAsync(searchCriteria);
+            return View(new AdminSearchLearnerViewModel(searchCriteria, learnerDetailsListViewModel));
+
         }
-
-        //[HttpGet]
-        //[Route("admin/search-learner-records/{pageNumber}", Name = RouteConstants.AdminSearchLearnersRecords)]
-        //public async Task<IActionResult> AdminSearchLearnersAsync(int pageNumber)
-        //{
-        //    AdminSearchLearnerFiltersViewModel filters = await _loader.GetAdminSearchLearnerFiltersAsync();
-
-        //    if (filters == null)
-        //    {
-        //        return RedirectToRoute(RouteConstants.PageNotFound);
-        //    }
-
-        //    var searchCriteria = await _cacheService.GetAsync<AdminSearchLearnerCriteriaViewModel>(CacheKey);
-
-        //    if (searchCriteria == null)
-        //    {
-        //        searchCriteria = new AdminSearchLearnerCriteriaViewModel { PageNumber = pageNumber };
-        //    }
-        //    else
-        //    {
-        //        searchCriteria.PageNumber = pageNumber;
-
-        //        AdminSearchLearnerDetailsListViewModel learnerDetailsListViewModel = await _loader.GetAdminSearchLearnerDetailsListAsync(searchCriteria);
-
-        //        var viewModel = new AdminSearchLearnerViewModel(filters)
-        //        {
-        //            SearchLearnerDetailsList = learnerDetailsListViewModel
-        //        };
-
-        //        return View(viewModel);
-
-        //        //if (searchCriteria.SearchLearnerFilters != null)
-        //        //{
-        //        //    searchCriteria.SearchLearnerFilters.Tlevels?.ToList().ForEach(tl => tl.Name = searchFilters.Tlevels.FirstOrDefault(x => x.Id == tl.Id)?.Name);
-        //        //    searchCriteria.SearchLearnerFilters.Status?.ToList().ForEach(s => s.Name = searchFilters.Status.FirstOrDefault(x => x.Id == s.Id)?.Name);
-        //        //}
-        //    }
-
-            
-        //}
 
         [HttpPost]
         [Route("admin/search-learner-records", Name = RouteConstants.SubmitAdminSearchLearnersRecords)]
@@ -111,35 +76,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             await _cacheService.SetAsync(CacheKey, viewModel);
             return RedirectToRoute(RouteConstants.AdminSearchLearnersRecords, new { pageNumber = viewModel.PageNumber });
-
-            //var request = new AdminSearchLearnerRequest
-            //{
-            //    SearchKey = viewModel.SearchKey,
-            //    PageNumber = viewModel.PageNumber,
-            //    SelectedAcademicYears = viewModel.SearchLearnerFilters.AcademicYears.Where(p => p.IsSelected).Select(p => p.Id).ToList(),
-            //    SelectedAwardingOrganisations = viewModel.SearchLearnerFilters.AwardingOrganisations.Where(p => p.IsSelected).Select(p => p.Id).ToList()
-            //};
-
-            //AdminSearchLearnerDetailsListViewModel learnerDetailsListViewModel = await _loader.GetAdminSearchLearnerDetailsListAsync(request);
-
-            //return View(viewModel);
         }
-
-        /*
-         * [HttpPost]
-        [Route("manage-learners/{academicYear}", Name = RouteConstants.SubmitSearchLearnerDetails)]
-        public async Task<IActionResult> SearchLearnerDetailsAsync(SearchCriteriaViewModel viewModel)
-        {
-            var searchCriteria = await _cacheService.GetAsync<SearchCriteriaViewModel>(CacheKey);
-
-            // populate if any filter are applied from cache
-            if (searchCriteria != null)
-                viewModel.SearchLearnerFilters = searchCriteria.SearchLearnerFilters;
-
-            viewModel.IsSearchKeyApplied = true;
-            await _cacheService.SetAsync(CacheKey, viewModel);
-            return RedirectToRoute(RouteConstants.SearchLearnerDetails, new { academicYear = viewModel.AcademicYear });
-        }
-         */
     }
 }

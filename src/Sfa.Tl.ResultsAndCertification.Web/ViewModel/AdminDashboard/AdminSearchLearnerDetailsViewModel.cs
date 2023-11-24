@@ -2,7 +2,11 @@
 {
     public class AdminSearchLearnerDetailsViewModel
     {
+        public int ProfileId { get; set; }
+
         public long Uln { get; set; }
+
+        public string LearnerName { get; set; }
 
         public string Provider { get; set; }
 

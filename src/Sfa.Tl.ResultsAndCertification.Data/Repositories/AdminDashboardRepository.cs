@@ -87,7 +87,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     Uln = x.TqRegistrationProfile.UniqueLearnerNumber,
                     Firstname = x.TqRegistrationProfile.Firstname,
                     Lastname = x.TqRegistrationProfile.Lastname,
-                    Provider = x.TqProvider.TlProvider.Name,
+                    Provider = x.TqProvider.TlProvider.DisplayName,
                     ProviderUkprn = x.TqProvider.TlProvider.UkPrn,
                     AwardingOrganisation = x.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.Name,
                     AcademicYear = x.AcademicYear

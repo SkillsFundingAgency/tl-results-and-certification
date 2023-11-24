@@ -13,10 +13,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AwardingOrganisations, opts => opts.MapFrom(s => s.AwardingOrganisations))
                 .ForMember(d => d.AcademicYears, opts => opts.MapFrom(s => s.AcademicYears));
 
+            CreateMap<AdminSearchLearnerDetail, AdminSearchLearnerDetailsViewModel>()
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
+                .ForMember(d => d.Provider, opts => opts.MapFrom(s => $"{s.Provider} ({s.ProviderUkprn})"))
+                .ForMember(d => d.AwardingOrganisation, opts => opts.MapFrom(s => s.AwardingOrganisation))
+                .ForMember(d => d.StartYear, opts => opts.MapFrom(s => s.AcademicYear));
+
             CreateMap<PagedResponse<AdminSearchLearnerDetail>, AdminSearchLearnerDetailsListViewModel>()
                .ForMember(d => d.TotalRecords, opts => opts.MapFrom(s => s.TotalRecords))
                .ForMember(d => d.LearnerDetails, opts => opts.MapFrom(s => s.Records))
-               .ForMember(d => d.PagerInfo, opts => opts.MapFrom(s => s.PagerInfo));
+               .ForMember(d => d.PagerInfo, opts => opts.MapFrom(s => s.PagerInfo))
+               .ForMember(d => d.LearnerDetails, opts => opts.MapFrom(s => s.Records));
         }
     }
 }
