@@ -15,8 +15,10 @@
 <h1 class="govuk-heading-xl">@AdminSearchLearners.Heading_Search_Learners_Records</h1>
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-half filter-border">
-        <partial name="Partials/_adminSearchFilters.cshtml" model="Model.SearchLearnerCriteria.SearchLearnerFilters" />
+    <div class="govuk-grid-column-one-half">
+        <div class="filter-border">
+            <partial name="Partials/_adminSearchFilters.cshtml" model="Model.SearchCriteria" />
+        </div>
     </div>
     <div class="govuk-grid-column-one-half">
         <partial name="Partials/_adminSearchKey.cshtml" model="Model.SearchLearnerCriteria" />
