@@ -22,11 +22,11 @@
     <div class="govuk-grid-column-one-half">
         <partial name="Partials/_adminSearchKey.cshtml" model="Model.SearchCriteria" />
 
-        <label class="govuk-label govuk-label--m">
+        <div class="govuk-label govuk-label--m">
             @SearchLearners.Heading_Start_Search
-        </label>
+        </div>
 
-        <p class="govuk-body">
+        <p id="enter-uln-or-lastname" class="govuk-body">
             @SearchLearners.Para_Enter_ULN_Or_Learner_Last_Name
         </p>
     </div>
