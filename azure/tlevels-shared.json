@@ -59,10 +59,13 @@
             "metadata": {
                 "description": ""
             }
+        },
+        "sqlFirewallIpAddresses": {
+            "type": "array"
         }
     },
     "variables": {
-        "deploymentUrlBase": "https://raw.githubusercontent.com/DFE-Digital/operations-devops-deployment/reasc-staging-slot/ArmTemplates/",
+        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/master/ArmTemplates/",
         "resourceNamePrefix": "[toLower(parameters('environmentNameAbbreviation'))]",
         "sqlServerName": "[concat(variables('resourceNamePrefix'), '-shared-sql')]",
         "sharedStorageAccountName": "[replace(concat(variables('resourceNamePrefix'), 'sharedstr'), '-', '')]",
@@ -167,6 +170,9 @@
                 "parameters": {
                     "storageAccountName": {
                         "value": "[variables('sharedStorageAccountName')]"
+                    },
+                    "storageKind": {
+                        "value": "StorageV2"
                     }
                 }
             }
@@ -216,7 +222,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'),'app-service-plan-ase.json')]",
+                    "uri": "[concat(variables('deploymentUrlBase'),'app-service-plan.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -248,6 +254,9 @@
                 "parameters": {
                     "storageAccountName": {
                         "value": "[variables('configStorageAccountName')]"
+                    },
+                    "storageKind": {
+                        "value": "StorageV2"
                     }
                 }
             }
@@ -288,6 +297,37 @@
                 "sku": "[parameters('redisCacheSku')]",
                 "enableNonSslPort": false,
                 "minimumTlsVersion": "1.2"
+            }
+        },
+        {
+            "apiVersion": "2020-10-01",
+            "name": "[concat('sql-server-firewall-rules','-', parameters('environmentNameAbbreviation'), copyIndex())]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'sql-server-firewall-rules.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "firewallRuleNamePrefix": {
+                        "value": "[parameters('sqlFirewallIpAddresses')[copyIndex()].name]"
+                    },
+                    "startIpAddress": {
+                        "value": "[parameters('sqlFirewallIpAddresses')[copyIndex()].startIpAddress]"
+                    },
+                    "endIpAddress": {
+                        "value": "[parameters('sqlFirewallIpAddresses')[copyIndex()].endIpAddress]"
+                    },
+                    "serverName": {
+                        "value": "[variables('sqlServerName')]"
+                    }
+                }
+            },
+            "copy": {
+                "count": "[length(parameters('sqlFirewallIpAddresses'))]",
+                "name": "firewallrulecopy",
+                "mode": "Parallel"
             }
         }
     ],
