@@ -27,6 +27,7 @@ jobs:
                 armParameterOverrideString: '-environmentNameAbbreviation "${{parameters.baseName}}" 
                   -sqlServerAdminUsername "$(SQLServerAdminUsername)"
                   -sqlServerAdminPassword "$(SQLServerAdminPassword)"
+                  -sqlServerReplicaAdminPassword "$(sqlServerReplicaAdminPassword)"
                   -sqlServerActiveDirectoryAdminLogin "$(SQLServerActiveDirectoryAdminLogin)"
                   -sqlServerActiveDirectoryAdminObjectId "$(SQLServerActiveDirectoryAdminObjectId)"
                   -threatDetectionEmailAddress "$(ThreatDetectionEmailAddress)"

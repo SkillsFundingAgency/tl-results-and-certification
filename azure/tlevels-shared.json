@@ -11,6 +11,9 @@
         "sqlServerAdminPassword": {
             "type": "securestring"
         },
+        "sqlServerReplicaAdminPassword": {
+            "type": "securestring"
+        },
         "sqlServerActiveDirectoryAdminLogin": {
             "type": "string"
         },
@@ -65,9 +68,10 @@
         }
     },
     "variables": {
-        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/master/ArmTemplates/",
+        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/feature/TLD-295-add-replica-db/ArmTemplates/",
         "resourceNamePrefix": "[toLower(parameters('environmentNameAbbreviation'))]",
         "sqlServerName": "[concat(variables('resourceNamePrefix'), '-shared-sql')]",
+        "sqlServerReplicaName": "[concat(variables('resourceNamePrefix'), '-shared-sql-replica')]",
         "sharedStorageAccountName": "[replace(concat(variables('resourceNamePrefix'), 'sharedstr'), '-', '')]",
         "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-shared-asp')]",
         "configStorageAccountName": "[replace(concat(variables('resourceNamePrefix'), 'configstr'), '-', '')]",
@@ -208,6 +212,41 @@
                     },
                     "sqlStorageAccountName": {
                         "value": "[variables('sharedStorageAccountName')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[concat('shared-storage-account','-', parameters('environmentNameAbbreviation'))]"
+            ]
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "[concat('sql-server','-', parameters('environmentNameAbbreviation'),'-replica')]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'sql-server.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "sqlServerName": {
+                        "value": "[variables('sqlServerReplicaName')]"
+                    },
+                    "sqlServerAdminUserName": {
+                        "value": "[parameters('sqlServerAdminUsername')]"
+                    },
+                    "sqlServerAdminPassword": {
+                        "value": "[parameters('sqlServerReplicaAdminPassword')]"
+                    },
+                    "sqlServerActiveDirectoryAdminLogin": {
+                        "value": "[parameters('sqlServerActiveDirectoryAdminLogin')]"
+                    },
+                    "sqlServerActiveDirectoryAdminObjectId": {
+                        "value": "[parameters('sqlServerActiveDirectoryAdminObjectId')]"
+                    },
+                    "threatDetectionEmailAddress": {
+                        "value": "[parameters('threatDetectionEmailAddress')]"
                     }
                 }
             },
