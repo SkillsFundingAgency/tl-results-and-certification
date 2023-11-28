@@ -3,6 +3,7 @@
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 @using Sfa.Tl.ResultsAndCertification.Common.Extensions
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+@using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Enum;
 
 @{
     ViewData["Title"] = AdminSearchLearners.Page_Title;
@@ -23,10 +24,22 @@
     <div class="govuk-grid-column-one-half">
         <partial name="Partials/_adminSearchKey.cshtml" model="Model.SearchLearnerCriteria" />
 
-        @if (Model.SearchKeyOrFiltersApplied)
+        @switch (Model.State)
         {
-            if (Model.ContainsLearnerResults)
-            {
+            case AdminSearchState.PageFirstDisplayed:
+
+                <label class="govuk-label govuk-label--m">
+                    @AdminSearchLearners.Heading_Start_Search
+                </label>
+
+                <p class="govuk-body">
+                    @AdminSearchLearners.Para_Enter_ULN_Or_Learner_Last_Name
+                </p>
+
+                break;
+
+            case AdminSearchState.ResultsFound:
+
                 <div class="learner-records">
                     @if (Model.Pagination.PagerInfo.TotalPages > 0)
                     {
@@ -44,38 +57,27 @@
                 {
                     <vc:pagination model=@Model.Pagination></vc:pagination>
                 }
-            }
-            else if (Model.OnlySearchKeyApplied)
-            {
-                <label class="govuk-label govuk-label--m">
-                    @string.Format(AdminSearchLearners.Heading_SearchKey_Not_Found, Model.SearchLearnerCriteria.SearchKey)
-                </label>
 
-                <p class="govuk-body">
-                    @if (Model.IsSearchKeyUln)
-                    {
-                        @AdminSearchLearners.Para_We_Cannot_Find_Learner_ULN
-                    }
-                    else
-                    {
-                        @AdminSearchLearners.Para_We_Cannot_Find_Learner_Surname
-                    }
-                </p>
-            }
-            else
-            {
-                <partial name="Partials/_adminNoMatchingSearchResults.cshtml" />
-            }
-        }
-        else
-        {
-            <label class="govuk-label govuk-label--m">
-                @AdminSearchLearners.Heading_Start_Search
-            </label>
+                break;
 
-            <p class="govuk-body">
-                @AdminSearchLearners.Para_Enter_ULN_Or_Learner_Last_Name
-            </p>
+            case AdminSearchState.ResultsNotFound:
+
+                if (Model.OnlySearchKeyApplied)
+                {
+                    <label class="govuk-label govuk-label--m">
+                        @Model.LearnersNotFoundHeader
+                    </label>
+
+                    <p class="govuk-body">
+                        @Model.LearnersNotFoundMessage
+                    </p>
+                }
+                else
+                {
+                    <partial name="Partials/_adminNoMatchingSearchResults.cshtml" />
+                }
+
+                break;
         }
     </div>
 </div>

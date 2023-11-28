@@ -2,7 +2,7 @@
 {
     public class AdminSearchLearnerDetail
     {
-        public int ProfileId { get; set; }
+        public int RegistrationPathwayId { get; set; }
         public long Uln { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }

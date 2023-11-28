@@ -2,7 +2,7 @@
 {
     public class AdminSearchLearnerDetailsViewModel
     {
-        public int ProfileId { get; set; }
+        public int RegistrationPathwayId { get; set; }
 
         public long Uln { get; set; }
 

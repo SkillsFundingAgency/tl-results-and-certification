@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Enum;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -50,6 +51,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             searchCriteria.PageNumber = pageNumber;
 
             AdminSearchLearnerDetailsListViewModel learnerDetailsListViewModel = await _loader.GetAdminSearchLearnerDetailsListAsync(searchCriteria);
+            viewModel.SetLearnerDetails(learnerDetailsListViewModel);
+
             viewModel.SearchLearnerDetailsList = learnerDetailsListViewModel;
 
             await _cacheService.SetAsync(CacheKey, viewModel);

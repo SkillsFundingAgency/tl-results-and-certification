@@ -84,7 +84,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             IQueryable<AdminSearchLearnerDetail> learnerRecordsQueryable = registrationPathwayQueryable
                 .Select(x => new AdminSearchLearnerDetail
                 {
-                    ProfileId = x.TqRegistrationProfile.Id,
+                    RegistrationPathwayId = x.Id,
                     Uln = x.TqRegistrationProfile.UniqueLearnerNumber,
                     Firstname = x.TqRegistrationProfile.Firstname,
                     Lastname = x.TqRegistrationProfile.Lastname,

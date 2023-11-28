@@ -2,8 +2,8 @@
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Pagination;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Enum;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -22,20 +22,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
             SearchLearnerCriteria.SearchLearnerFilters = adminSearchLearnerFiltersViewModel;
         }
 
-        public AdminSearchLearnerViewModel(AdminSearchLearnerCriteriaViewModel searchLearnerCriteria, AdminSearchLearnerDetailsListViewModel searchLearnerDetailsList)
-        {
-            SearchLearnerCriteria = searchLearnerCriteria;
-            SearchLearnerDetailsList = searchLearnerDetailsList;
-        }
-
         public AdminSearchLearnerCriteriaViewModel SearchLearnerCriteria { get; set; } = new AdminSearchLearnerCriteriaViewModel();
 
         public AdminSearchLearnerDetailsListViewModel SearchLearnerDetailsList { get; set; } = new AdminSearchLearnerDetailsListViewModel();
 
-        public string ErrorMessage { get; set; }
+        public AdminSearchState State { get; set; } = AdminSearchState.PageFirstDisplayed;
 
-        public bool SearchKeyOrFiltersApplied
-            => SearchLearnerCriteria?.IsSearchKeyApplied == true || SearchLearnerCriteria?.SearchLearnerFilters?.IsApplyFiltersSelected == true;
+        public string LearnersNotFoundHeader { get; set; }
+
+        public string LearnersNotFoundMessage { get; set; }
+
+        public string ErrorMessage { get; set; }
 
         public bool OnlySearchKeyApplied
             => SearchLearnerCriteria?.IsSearchKeyApplied == true || SearchLearnerCriteria?.SearchLearnerFilters?.IsApplyFiltersSelected != true;
@@ -53,14 +50,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 
         public void ClearSearchKey()
         {
-            if (SearchLearnerCriteria == null)
-            {
-                return;
-            }
+            SearchLearnerCriteria ??= new AdminSearchLearnerCriteriaViewModel();
+
+            State = AdminSearchState.PageFirstDisplayed;
 
             SearchLearnerCriteria.IsSearchKeyApplied = false;
             SearchLearnerCriteria.SearchKey = string.Empty;
             IsSearchKeyValid = false;
+
             ErrorMessage = string.Empty;
         }
 
@@ -80,6 +77,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
             {
                 IsSearchKeyValid = true;
                 ErrorMessage = string.Empty;
+            }
+        }
+
+        public void SetLearnerDetails(AdminSearchLearnerDetailsListViewModel learnerDetailsListViewModel)
+        {
+            SearchLearnerDetailsList = learnerDetailsListViewModel;
+
+            if (ContainsLearnerResults)
+            {
+                State = AdminSearchState.ResultsFound;
+                LearnersNotFoundHeader = string.Empty;
+                LearnersNotFoundMessage = string.Empty;
+            }
+            else
+            {
+                State = AdminSearchState.ResultsNotFound;
+                LearnersNotFoundHeader = string.Format(AdminSearchLearners.Heading_SearchKey_Not_Found, SearchLearnerCriteria?.SearchKey);
+                LearnersNotFoundMessage = IsSearchKeyUln ? AdminSearchLearners.Para_We_Cannot_Find_Learner_ULN : AdminSearchLearners.Para_We_Cannot_Find_Learner_Surname;
             }
         }
 
