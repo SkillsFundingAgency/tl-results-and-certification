@@ -385,6 +385,10 @@
             "type": "string",
             "value": "[variables('sqlServerName')]"
         },
+        "sharedSQLServerReplicaName": {
+            "type": "string",
+            "value": "[variables('sqlServerReplicaName')]"
+        },
         "sharedStorageConnectionString": {
             "type": "string",
             "value": "[reference(concat('shared-storage-account','-', parameters('environmentNameAbbreviation'))).outputs.storageConnectionString.value]"

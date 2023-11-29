@@ -20,6 +20,9 @@
         "sharedSQLServerName": {
             "type": "string"
         },
+        "sharedSQLServerReplicaName": {
+            "type": "string"
+        },
         "sqlDatabaseSkuName": {
             "type": "string"
         },
@@ -99,7 +102,9 @@
         "functionAppName": "[concat(parameters('resourceNamePrefix'), '-func')]",
         "sqlDatabaseName": "[concat(parameters('resourceNamePrefix'), '-sqldb')]",
         "IntTestSQLDatabaseName": "[concat(parameters('resourceNamePrefix'), '-inttest-sqldb')]",
-        "storageAccountName": "[replace(concat(parameters('resourceNamePrefix'), 'str'), '-', '')]"
+        "storageAccountName": "[replace(concat(parameters('resourceNamePrefix'), 'str'), '-', '')]",
+        "sqlServerNames": "[createArray(parameters('sharedSQLServerName'), parameters('sharedSQLServerReplicaName'))]"
+
     },
     "resources": [
         {
@@ -498,7 +503,7 @@
         },
         {
             "apiVersion": "2017-05-10",
-            "name": "[concat('sql-database','-', parameters('environmentNameAbbreviation'))]",
+            "name": "[concat('sql-database','-', parameters('environmentNameAbbreviation'), copyIndex())]",
             "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -512,7 +517,7 @@
                         "value": "[variables('sqlDatabaseName')]"
                     },
                     "sqlServerName": {
-                        "value": "[parameters('sharedSQLServerName')]"
+                        "value": "[variables('sqlServerNames')[copyIndex()]]"
                     },
                     "databaseSkuName": {
                         "value": "[parameters('sqlDatabaseSkuName')]"
@@ -524,6 +529,11 @@
                         "value": "[parameters('sqlserverlessAutoPauseDelay')]"
                     }
                 }
+            },
+            "copy": {
+                "count": "[length(variables('sqlServerNames'))]",
+                "name": "firewallrulecopy",
+                "mode": "Parallel"
             }
         },
         {
