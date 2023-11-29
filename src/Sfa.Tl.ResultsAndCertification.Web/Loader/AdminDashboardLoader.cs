@@ -32,8 +32,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             {
                 SearchKey = adminSearchCriteria.SearchKey,
                 PageNumber = adminSearchCriteria.PageNumber,
-                SelectedAcademicYears = adminSearchCriteria.SearchLearnerFilters.AcademicYears.Where(p => p.IsSelected).Select(p => p.Id).ToList(),
-                SelectedAwardingOrganisations = adminSearchCriteria.SearchLearnerFilters.AwardingOrganisations.Where(p => p.IsSelected).Select(p => p.Id).ToList()
+                SelectedAcademicYears = adminSearchCriteria.SearchLearnerFilters?.AcademicYears?.Where(p => p.IsSelected).Select(p => p.Id).ToList(),
+                SelectedAwardingOrganisations = adminSearchCriteria.SearchLearnerFilters?.AwardingOrganisations?.Where(p => p.IsSelected).Select(p => p.Id).ToList()
             };
 
             PagedResponse<AdminSearchLearnerDetail> apiResponse = await _internalApiClient.GetAdminSearchLearnerDetailsAsync(request);

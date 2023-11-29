@@ -25,8 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<PagedResponse<AdminSearchLearnerDetail>, AdminSearchLearnerDetailsListViewModel>()
                .ForMember(d => d.TotalRecords, opts => opts.MapFrom(s => s.TotalRecords))
                .ForMember(d => d.LearnerDetails, opts => opts.MapFrom(s => s.Records))
-               .ForMember(d => d.PagerInfo, opts => opts.MapFrom(s => s.PagerInfo))
-               .ForMember(d => d.LearnerDetails, opts => opts.MapFrom(s => s.Records));
+               .ForMember(d => d.PagerInfo, opts => opts.MapFrom(s => s.PagerInfo));
         }
     }
 }
