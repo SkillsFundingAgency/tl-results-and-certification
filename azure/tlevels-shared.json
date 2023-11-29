@@ -248,6 +248,9 @@
                     },
                     "threatDetectionEmailAddress": {
                         "value": "[parameters('threatDetectionEmailAddress')]"
+                    },
+                    "sqlStorageAccountName": {
+                        "value": "[variables('sharedStorageAccountName')]"
                     }
                 }
             },
