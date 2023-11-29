@@ -37,7 +37,8 @@ jobs:
                   -azureWebsitesRPObjectId "$(AzureWebsitesRPObjectId)"
                   -keyVaultReadWriteObjectIds "$(KeyVaultReadWriteObjectIds)"
                   -keyVaultFullAccessObjectIds "$(keyVaultFullAccessObjectIds)"
-                  -sqlFirewallIpAddressesPredefined $(sqlFirewallIpAddresses)'
+                  -sqlFirewallIpAddressesPredefined $(sqlFirewallIpAddresses)
+                  -enableReplica $(enableReplica)'
                 tags: $(Tags)
                 processOutputs: true
             - pwsh: Write-Host "##vso[task.setvariable variable=SharedResourceGroup;isOutput=true]$(SharedResourceGroup)"

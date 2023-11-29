@@ -65,6 +65,13 @@
         },
         "sqlFirewallIpAddressesPredefined": {
             "type": "array"
+        },
+        "enableReplica": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Enables the replica database to be deployed"
+            }
         }
     },
     "variables": {
@@ -72,7 +79,7 @@
         "resourceNamePrefix": "[toLower(parameters('environmentNameAbbreviation'))]",
         "sqlServerName": "[concat(variables('resourceNamePrefix'), '-shared-sql')]",
         "sqlServerReplicaName": "[concat(variables('resourceNamePrefix'), '-shared-sql-replica')]",
-        "sqlServerNames": "[createArray(variables('sqlServerName'), variables('sqlServerReplicaName'))]",
+        "sqlServerNames": "[if(equals(parameters('enableReplica'), true()), createArray(variables('sqlServerName'), variables('sqlServerReplicaName')), createArray(variables('sqlServerName')))]",
         "sharedStorageAccountName": "[replace(concat(variables('resourceNamePrefix'), 'sharedstr'), '-', '')]",
         "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-shared-asp')]",
         "configStorageAccountName": "[replace(concat(variables('resourceNamePrefix'), 'configstr'), '-', '')]",
@@ -221,6 +228,7 @@
             ]
         },
         {
+            "condition": "[equals(parameters('enableReplica'), true())]",
             "apiVersion": "2017-05-10",
             "name": "[concat('sql-server','-', parameters('environmentNameAbbreviation'),'-replica')]",
             "type": "Microsoft.Resources/deployments",
@@ -361,6 +369,10 @@
                     }
                 }
             },
+            "dependsOn": [
+                "[concat('sql-server','-', parameters('environmentNameAbbreviation'))]",
+                "[concat('sql-server','-', parameters('environmentNameAbbreviation'),'-replica')]"
+            ],
             "copy": {
                 "count": "[length(variables('sqlServerNames'))]",
                 "name": "firewallrulecopy",

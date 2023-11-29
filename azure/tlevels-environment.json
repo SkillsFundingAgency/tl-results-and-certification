@@ -92,6 +92,13 @@
         },
 		"overallResultCalculationTrigger": {
             "type": "string"            
+        },
+        "enableReplica": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Enables the replica database to be deployed"
+            }
         }
     },
     "variables": {
@@ -102,9 +109,7 @@
         "functionAppName": "[concat(parameters('resourceNamePrefix'), '-func')]",
         "sqlDatabaseName": "[concat(parameters('resourceNamePrefix'), '-sqldb')]",
         "IntTestSQLDatabaseName": "[concat(parameters('resourceNamePrefix'), '-inttest-sqldb')]",
-        "storageAccountName": "[replace(concat(parameters('resourceNamePrefix'), 'str'), '-', '')]",
-        "sqlServerNames": "[createArray(parameters('sharedSQLServerName'), parameters('sharedSQLServerReplicaName'))]"
-
+        "storageAccountName": "[replace(concat(parameters('resourceNamePrefix'), 'str'), '-', '')]"
     },
     "resources": [
         {
@@ -503,7 +508,7 @@
         },
         {
             "apiVersion": "2017-05-10",
-            "name": "[concat('sql-database','-', parameters('environmentNameAbbreviation'), copyIndex())]",
+            "name": "[concat('sql-database','-', parameters('environmentNameAbbreviation'),'-','shared')]",
             "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -517,7 +522,7 @@
                         "value": "[variables('sqlDatabaseName')]"
                     },
                     "sqlServerName": {
-                        "value": "[variables('sqlServerNames')[copyIndex()]]"
+                        "value": "[parameters('sharedSQLServerName')]"
                     },
                     "databaseSkuName": {
                         "value": "[parameters('sqlDatabaseSkuName')]"
@@ -529,11 +534,37 @@
                         "value": "[parameters('sqlserverlessAutoPauseDelay')]"
                     }
                 }
-            },
-            "copy": {
-                "count": "[length(variables('sqlServerNames'))]",
-                "name": "firewallrulecopy",
-                "mode": "Parallel"
+            }
+        },
+        {
+            "condition": "[equals(parameters('enableReplica'), true())]",
+            "apiVersion": "2017-05-10",
+            "name": "[concat('sql-database','-', parameters('environmentNameAbbreviation'),'-','replica')]",
+            "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'sql-database.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "databaseName": {
+                        "value": "[variables('sqlDatabaseName')]"
+                    },
+                    "sqlServerName": {
+                        "value": "[parameters('sharedSQLServerReplicaName')]"
+                    },
+                    "databaseSkuName": {
+                        "value": "[parameters('sqlDatabaseSkuName')]"
+                    },
+                    "databaseTier": {
+                        "value": "[parameters('sqlDatabaseTier')]"
+                    },
+                    "serverlessAutoPauseDelay": {
+                        "value": "[parameters('sqlserverlessAutoPauseDelay')]"
+                    }
+                }
             }
         },
         {

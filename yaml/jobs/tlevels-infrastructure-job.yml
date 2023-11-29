@@ -59,7 +59,8 @@ jobs:
             -ucasTransferEntriesTrigger "$(ucasTransferEntriesTrigger)"
             -ucasTransferResultsTrigger "$(ucasTransferResultsTrigger)"
             -ucasTransferAmendmentsTrigger "$(ucasTransferAmendmentsTrigger)"
-            -overallResultCalculationTrigger "$(overallResultCalculationTrigger)"'
+            -overallResultCalculationTrigger "$(overallResultCalculationTrigger)"
+            -enableReplica $(enableReplica)'
           tags: $(Tags) 
           processOutputs: true
 
