@@ -7,7 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Enum;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -61,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("admin/search-learner-records-search-key", Name = RouteConstants.SubmitAdminSearchLearnersRecordsApplySearchKey)]
-        public async Task<IActionResult> SubmitAdminSearchLearnerApplyFiltersAsync(AdminSearchLearnerCriteriaViewModel searchCriteriaViewModel)
+        public async Task<IActionResult> SubmitAdminSearchLearnerApplySearchKeyAsync(AdminSearchLearnerCriteriaViewModel searchCriteriaViewModel)
         {
             var viewModel = await _cacheService.GetAsync<AdminSearchLearnerViewModel>(CacheKey);
             viewModel.SetSearchKey(searchCriteriaViewModel.SearchKey);
@@ -74,9 +73,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/search-learner-records-clear-key", Name = RouteConstants.SubmitAdminSearchLearnerClearKey)]
         public async Task<IActionResult> AdminSearchLearnerClearKeyAsync()
         {
-            //var viewModel = await _cacheService.GetAsync<AdminSearchLearnerViewModel>(CacheKey);
-            //viewModel.ClearSearchKey();
-
             await _cacheService.RemoveAsync<AdminSearchLearnerViewModel>(CacheKey);
             return RedirectToRoute(RouteConstants.AdminSearchLearnersRecords);
         }
