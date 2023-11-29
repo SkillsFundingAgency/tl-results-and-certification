@@ -63,15 +63,16 @@
                 "description": ""
             }
         },
-        "sqlFirewallIpAddresses": {
+        "sqlFirewallIpAddressesPredefined": {
             "type": "array"
         }
     },
     "variables": {
-        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/feature/TLD-295-add-replica-db/ArmTemplates/",
+        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/feature/TLD-295-rework-SQL-firewall-rules/ArmTemplates/",
         "resourceNamePrefix": "[toLower(parameters('environmentNameAbbreviation'))]",
         "sqlServerName": "[concat(variables('resourceNamePrefix'), '-shared-sql')]",
         "sqlServerReplicaName": "[concat(variables('resourceNamePrefix'), '-shared-sql-replica')]",
+        "sqlServerNames": "[createArray(variables('sqlServerName'), variables('sqlServerReplicaName'))]",
         "sharedStorageAccountName": "[replace(concat(variables('resourceNamePrefix'), 'sharedstr'), '-', '')]",
         "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-shared-asp')]",
         "configStorageAccountName": "[replace(concat(variables('resourceNamePrefix'), 'configstr'), '-', '')]",
@@ -349,22 +350,16 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "firewallRuleNamePrefix": {
-                        "value": "[parameters('sqlFirewallIpAddresses')[copyIndex()].name]"
-                    },
-                    "startIpAddress": {
-                        "value": "[parameters('sqlFirewallIpAddresses')[copyIndex()].startIpAddress]"
-                    },
-                    "endIpAddress": {
-                        "value": "[parameters('sqlFirewallIpAddresses')[copyIndex()].endIpAddress]"
+                    "sqlFirewallIpAddressesPredefined": {
+                        "value": "[parameters('sqlFirewallIpAddressesPredefined')]"
                     },
                     "serverName": {
-                        "value": "[variables('sqlServerName')]"
+                        "value": "[variables('sqlServerNames')[copyIndex()]]"
                     }
                 }
             },
             "copy": {
-                "count": "[length(parameters('sqlFirewallIpAddresses'))]",
+                "count": "[length(variables('sqlServerNames'))]",
                 "name": "firewallrulecopy",
                 "mode": "Parallel"
             }
