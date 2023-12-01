@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to Home.
+        ///   Looks up a localized string similar to Back to home.
         /// </summary>
         public static string Button_Back_To_Home {
             get {
@@ -76,15 +76,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         public static string Core_Code_Value {
             get {
                 return ResourceManager.GetString("Core_Code_Value", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Learner’s details.
-        /// </summary>
-        public static string Heading_Learner_Details {
-            get {
-                return ResourceManager.GetString("Heading_Learner_Details", resourceCulture);
             }
         }
         
@@ -116,15 +107,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Statement of achievement details.
-        /// </summary>
-        public static string Heading_Soa_Details {
-            get {
-                return ResourceManager.GetString("Heading_Soa_Details", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Your organisation’s postal address.
         /// </summary>
         public static string Heading_Your_Organisation_Address {
@@ -143,25 +125,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date requested: {0}.
-        /// </summary>
-        public static string Inset_Date_Requested {
-            get {
-                return ResourceManager.GetString("Inset_Date_Requested", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A request has already been submitted for this learner. If you don&apos;t receive the statement of achievement after three weeks, .
-        /// </summary>
-        public static string Inset_Para_Contact_Us_After_Three_Weeks {
-            get {
-                return ResourceManager.GetString("Inset_Para_Contact_Us_After_Three_Weeks", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to contact us.
+        ///   Looks up a localized string similar to contact us..
         /// </summary>
         public static string Inset_Para_Contact_Us_Link {
             get {
@@ -170,20 +134,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  or submit a new request..
+        ///   Looks up a localized string similar to If you have not received the statement of achievement after 3 weeks then .
         /// </summary>
-        public static string Inset_Para_Submit_New_Request {
+        public static string Inset_Para_If_You_Have_Not_Received {
             get {
-                return ResourceManager.GetString("Inset_Para_Submit_New_Request", resourceCulture);
+                return ResourceManager.GetString("Inset_Para_If_You_Have_Not_Received", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Requested by: {0}.
+        ///   Looks up a localized string similar to A statement of achievement has already been requested fot this learner..
         /// </summary>
-        public static string Inset_Requested_By {
+        public static string Inset_Para_Request_Already_Submitted {
             get {
-                return ResourceManager.GetString("Inset_Requested_By", resourceCulture);
+                return ResourceManager.GetString("Inset_Para_Request_Already_Submitted", resourceCulture);
             }
         }
         
