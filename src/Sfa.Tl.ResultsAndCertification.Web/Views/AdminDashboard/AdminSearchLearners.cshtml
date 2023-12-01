@@ -62,7 +62,7 @@
 
             case AdminSearchState.ResultsNotFound:
 
-                if (Model.OnlySearchKeyApplied)
+                if (Model.OnlySearchKeyApplied && Model.IsSearchKeyValid)
                 {
                     <h2 class="govuk-heading-m wrap">
                         @Model.LearnersNotFoundHeader

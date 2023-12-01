@@ -80,6 +80,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
             }
         }
 
+        public void ClearLearnerDetails()
+        {
+            SearchLearnerDetailsList?.LearnerDetails?.Clear();
+            State = AdminSearchState.ResultsNotFound;
+        }
+
         public void SetLearnerDetails(AdminSearchLearnerDetailsListViewModel learnerDetailsListViewModel)
         {
             SearchLearnerDetailsList = learnerDetailsListViewModel;
