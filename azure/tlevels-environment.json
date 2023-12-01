@@ -503,7 +503,6 @@
             "dependsOn": [
                 "[concat('function-app-certificate','-', parameters('environmentNameAbbreviation'))]",
                 "[concat('app-insights','-', parameters('environmentNameAbbreviation'))]"
-
             ]
         },
         {
@@ -538,7 +537,7 @@
         },
         {
             "condition": "[equals(parameters('enableReplica'), true())]",
-            "apiVersion": "2017-05-10",
+            "apiVersion": "2022-09-01",
             "name": "[concat('sql-database','-', parameters('environmentNameAbbreviation'),'-','replica')]",
             "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
             "type": "Microsoft.Resources/deployments",
@@ -563,9 +562,21 @@
                     },
                     "serverlessAutoPauseDelay": {
                         "value": "[parameters('sqlserverlessAutoPauseDelay')]"
+                    },
+                    "createMode":{
+                        "value": "Secondary"
+                    },
+                    "sourceDatabaseId":{
+                        "value": "[reference(concat('sql-database','-', parameters('environmentNameAbbreviation'),'-','shared')).outputs.sqlDatabaseResourceId.value]"
+                    },
+                    "requestedBackupStorageRedundancy": {
+                        "value": "Local"
                     }
                 }
-            }
+            },
+            "dependsOn": [
+                "[concat('sql-database','-', parameters('environmentNameAbbreviation'),'-','shared')]"
+            ]
         },
         {
             "apiVersion": "2017-05-10",
@@ -598,7 +609,7 @@
             }
         },
         {
-            "apiVersion": "2017-05-10",
+            "apiVersion": "2022-09-01",
             "name": "[concat('sql-server-firewall-rules','-', parameters('environmentNameAbbreviation'))]",
             "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
             "type": "Microsoft.Resources/deployments",
