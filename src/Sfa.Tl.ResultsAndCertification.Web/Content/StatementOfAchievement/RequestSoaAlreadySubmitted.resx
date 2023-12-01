@@ -120,23 +120,8 @@
   <data name="Button_Back_To_Home" xml:space="preserve">
     <value>Back to home</value>
   </data>
-  <data name="Core_Code_Value" xml:space="preserve">
-    <value>&lt;p class='govuk-body'&gt;{0}&lt;/p&gt; &lt;p class='govuk-body'&gt;Grade: {1}&lt;/p&gt;</value>
-  </data>
-  <data name="Heading_Learner_Technical_Qualification" xml:space="preserve">
-    <value>Learner’s technical qualification details</value>
-  </data>
-  <data name="Heading_Learner_Tlevel_Component_Achievements" xml:space="preserve">
-    <value>Learner’s T Level component achievements</value>
-  </data>
   <data name="Heading_Soa_Already_Requested" xml:space="preserve">
     <value>Statement of achievement has already been requested</value>
-  </data>
-  <data name="Heading_Your_Organisation_Address" xml:space="preserve">
-    <value>Your organisation’s postal address</value>
-  </data>
-  <data name="Html_Line_Break" xml:space="preserve">
-    <value>&lt;br&gt;</value>
   </data>
   <data name="Inset_Para_Contact_Us_Link" xml:space="preserve">
     <value>contact us.</value>
@@ -146,12 +131,6 @@
   </data>
   <data name="Inset_Para_Request_Already_Submitted" xml:space="preserve">
     <value>A statement of achievement has already been requested fot this learner.</value>
-  </data>
-  <data name="Occupational_Specialism_Value" xml:space="preserve">
-    <value>&lt;p class='govuk-body'&gt;{0}&lt;/p&gt; &lt;p class='govuk-body'&gt;Grade: {1}&lt;/p&gt;</value>
-  </data>
-  <data name="Organisation_Address_Value" xml:space="preserve">
-    <value>&lt;p class='govuk-body'&gt;{0}&lt;/p&gt;</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Request statement of achievement – Statement of achievement already requested page</value>

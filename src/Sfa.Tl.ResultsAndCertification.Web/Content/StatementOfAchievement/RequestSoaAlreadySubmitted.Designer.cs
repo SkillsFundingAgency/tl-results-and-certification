@@ -71,56 +71,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p class=&apos;govuk-body&apos;&gt;{0}&lt;/p&gt; &lt;p class=&apos;govuk-body&apos;&gt;Grade: {1}&lt;/p&gt;.
-        /// </summary>
-        public static string Core_Code_Value {
-            get {
-                return ResourceManager.GetString("Core_Code_Value", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Learner’s technical qualification details.
-        /// </summary>
-        public static string Heading_Learner_Technical_Qualification {
-            get {
-                return ResourceManager.GetString("Heading_Learner_Technical_Qualification", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Learner’s T Level component achievements.
-        /// </summary>
-        public static string Heading_Learner_Tlevel_Component_Achievements {
-            get {
-                return ResourceManager.GetString("Heading_Learner_Tlevel_Component_Achievements", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Statement of achievement has already been requested.
         /// </summary>
         public static string Heading_Soa_Already_Requested {
             get {
                 return ResourceManager.GetString("Heading_Soa_Already_Requested", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Your organisation’s postal address.
-        /// </summary>
-        public static string Heading_Your_Organisation_Address {
-            get {
-                return ResourceManager.GetString("Heading_Your_Organisation_Address", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;br&gt;.
-        /// </summary>
-        public static string Html_Line_Break {
-            get {
-                return ResourceManager.GetString("Html_Line_Break", resourceCulture);
             }
         }
         
@@ -148,24 +103,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         public static string Inset_Para_Request_Already_Submitted {
             get {
                 return ResourceManager.GetString("Inset_Para_Request_Already_Submitted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;p class=&apos;govuk-body&apos;&gt;{0}&lt;/p&gt; &lt;p class=&apos;govuk-body&apos;&gt;Grade: {1}&lt;/p&gt;.
-        /// </summary>
-        public static string Occupational_Specialism_Value {
-            get {
-                return ResourceManager.GetString("Occupational_Specialism_Value", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;p class=&apos;govuk-body&apos;&gt;{0}&lt;/p&gt;.
-        /// </summary>
-        public static string Organisation_Address_Value {
-            get {
-                return ResourceManager.GetString("Organisation_Address_Value", resourceCulture);
             }
         }
         

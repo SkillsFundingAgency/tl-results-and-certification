@@ -1,15 +1,14 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using SoaRequestedAlreadyContent = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaAlreadySubmitted;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
-using Sfa.Tl.ResultsAndCertification.Web.Helpers;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
+using SoaRequestedAlreadyContent = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaAlreadySubmitted;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
 {
@@ -62,19 +61,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
                 };
             }
         }
-        
+
         public bool IsValid(int requestAllowedInDays)
         {
             return PathwayStatus == RegistrationPathwayStatus.Withdrawn && CommonHelper.IsSoaAlreadyRequested(requestAllowedInDays, RequestedOn);
-        }
-
-        private string FormatedAddress
-        {
-            get
-            {
-                var addressLines = new List<string> { SnapshotDetails.ProviderAddress?.OrganisationName, SnapshotDetails.ProviderAddress?.AddressLine1, SnapshotDetails.ProviderAddress?.AddressLine2, SnapshotDetails.ProviderAddress?.Town, SnapshotDetails.ProviderAddress?.Postcode };
-                return string.Join(SoaRequestedAlreadyContent.Html_Line_Break, addressLines.Where(x => !string.IsNullOrWhiteSpace(x)));
-            }
         }
     }
 }
