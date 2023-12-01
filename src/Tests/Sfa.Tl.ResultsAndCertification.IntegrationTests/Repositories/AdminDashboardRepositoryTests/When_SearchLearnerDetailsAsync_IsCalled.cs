@@ -321,19 +321,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
             TqProvider pearsonProviderOne = SeedProvider(pearson, 1, "pearson-provider-01");
             TqProvider pearsonProviderTwo = SeedProvider(pearson, 2, "pearson-provider-02");
 
-            TqRegistrationProfile pearsonProviderOneLearnerOne = SeedRegistrationProfile(11, "John", "Smith", "01/01/2000".ToDateTime());
+            TqRegistrationProfile pearsonProviderOneLearnerOne = SeedRegistrationProfile(11, "John", "Smith", new DateTime(2000, 1, 1));
             SeedRegistrationPathway(pearsonProviderOneLearnerOne, pearsonProviderOne, 2020, RegistrationPathwayStatus.Active);
 
-            TqRegistrationProfile pearsonProviderOneLearnerTwo = SeedRegistrationProfile(12, "Jessica", "Johnson", "17/05/2002".ToDateTime());
+            TqRegistrationProfile pearsonProviderOneLearnerTwo = SeedRegistrationProfile(12, "Jessica", "Johnson", new DateTime(2002, 5, 17));
             SeedRegistrationPathway(pearsonProviderOneLearnerTwo, pearsonProviderOne, 2021, RegistrationPathwayStatus.Withdrawn);
 
-            TqRegistrationProfile pearsonProviderTwoLearnerOne = SeedRegistrationProfile(21, "Peter", "Smith", "06/08/1999".ToDateTime());
+            TqRegistrationProfile pearsonProviderTwoLearnerOne = SeedRegistrationProfile(21, "Peter", "Smith", new DateTime(1999, 8, 6));
             SeedRegistrationPathway(pearsonProviderTwoLearnerOne, pearsonProviderTwo, 2022, RegistrationPathwayStatus.Withdrawn, RegistrationPathwayStatus.Active);
 
             TqAwardingOrganisation ncfe = SeedAwardingOrganisation(EnumAwardingOrganisation.Ncfe);
             TqProvider ncfeProviderOne = SeedProvider(ncfe, 3, "ncfe-provider-01");
 
-            TqRegistrationProfile ncfeProviderOneLearnerOne = SeedRegistrationProfile(31, "Eric", "Johnson", "01/03/2003".ToDateTime());
+            TqRegistrationProfile ncfeProviderOneLearnerOne = SeedRegistrationProfile(31, "Eric", "Johnson", new DateTime(2003, 3, 1));
             SeedRegistrationPathway(ncfeProviderOneLearnerOne, ncfeProviderOne, 2021, RegistrationPathwayStatus.Withdrawn, RegistrationPathwayStatus.Withdrawn);
 
             DbContext.SaveChanges();
