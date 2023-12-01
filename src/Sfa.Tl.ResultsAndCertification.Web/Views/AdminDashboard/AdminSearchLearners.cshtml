@@ -12,7 +12,7 @@
 @section NavigationBar {
     <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
 }
-<partial name="Partials/_errorSummary.cshtml" model="Model.ErrorMessage" />
+<partial name="Partials/_adminSearchKeyErrorSummary.cshtml" model="Model.ErrorMessage" />
 <h1 class="govuk-heading-xl">@AdminSearchLearners.Heading_Search_Learners_Records</h1>
 
 <div class="govuk-grid-row">
@@ -64,9 +64,9 @@
 
                 if (Model.OnlySearchKeyApplied)
                 {
-                    <label class="govuk-label govuk-label--m">
+                    <h2 class="govuk-heading-m wrap">
                         @Model.LearnersNotFoundHeader
-                    </label>
+                    </h2>
 
                     <p class="govuk-body">
                         @Model.LearnersNotFoundMessage

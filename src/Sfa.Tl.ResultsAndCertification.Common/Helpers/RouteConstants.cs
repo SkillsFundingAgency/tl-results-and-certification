@@ -403,8 +403,9 @@
 
         #region Admin Dashboard
 
+        public const string AdminHome = "AdminHome";
         public const string AdminSearchLearnersRecords = "AdminSearchLearnersRecords";
-        public const string SubmitAdminSearchLearnersRecordsApplySearchKey = "SubmitAdminSearchLearnersRecordsApplySearchKey";
+        public const string SubmitAdminSearchLearnerRecordsApplySearchKey = "SubmitAdminSearchLearnerRecordsApplySearchKey";
         public const string SubmitAdminSearchLearnerClearKey = "SubmitAdminSearchLearnerClearKey";
 
         #endregion

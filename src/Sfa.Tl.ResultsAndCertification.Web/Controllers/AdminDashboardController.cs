@@ -26,6 +26,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("admin/home", Name = RouteConstants.AdminHome)]
+        public async Task<IActionResult> AdminHome()
+        {
+            await _cacheService.RemoveAsync<AdminSearchLearnerViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.Home);
+        }
+
+        [HttpGet]
         [Route("admin/search-learner-records/{pageNumber:int?}", Name = RouteConstants.AdminSearchLearnersRecords)]
         public async Task<IActionResult> AdminSearchLearnersAsync(int? pageNumber = default)
         {
@@ -59,8 +67,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("admin/search-learner-records-search-key", Name = RouteConstants.SubmitAdminSearchLearnersRecordsApplySearchKey)]
-        public async Task<IActionResult> SubmitAdminSearchLearnerApplySearchKeyAsync(AdminSearchLearnerCriteriaViewModel searchCriteriaViewModel)
+        [Route("admin/search-learner-records-search-key", Name = RouteConstants.SubmitAdminSearchLearnerRecordsApplySearchKey)]
+        public async Task<IActionResult> SubmitAdminSearchLearnersRecordsApplySearchKeyAsync(AdminSearchLearnerCriteriaViewModel searchCriteriaViewModel)
         {
             var viewModel = await _cacheService.GetAsync<AdminSearchLearnerViewModel>(CacheKey);
             viewModel.SetSearchKey(searchCriteriaViewModel.SearchKey);

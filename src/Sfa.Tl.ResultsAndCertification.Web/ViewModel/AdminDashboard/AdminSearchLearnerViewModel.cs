@@ -109,7 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         {
             BreadcrumbItems = new List<BreadcrumbItem>
             {
-                new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
+                new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.AdminHome },
                 new BreadcrumbItem { DisplayName = BreadcrumbContent.Search_Learner_Records }
             }
         };
