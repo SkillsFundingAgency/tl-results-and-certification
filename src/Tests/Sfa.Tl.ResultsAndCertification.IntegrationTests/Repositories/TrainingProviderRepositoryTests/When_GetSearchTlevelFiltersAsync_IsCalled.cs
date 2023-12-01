@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingProviderRepositoryTests
 {

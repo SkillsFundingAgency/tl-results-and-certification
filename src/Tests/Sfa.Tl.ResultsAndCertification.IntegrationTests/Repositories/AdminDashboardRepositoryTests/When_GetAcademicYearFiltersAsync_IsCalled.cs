@@ -1,14 +1,14 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using AcademicYear = Sfa.Tl.ResultsAndCertification.Domain.Models.AcademicYear;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDashboardRepositoryTests
 {
@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
     {
         private readonly AdminDashboardRepository _repository;
 
-        private IList<AdminFilter> _actualResult;
+        private IList<FilterLookupData> _actualResult;
 
         public When_GetAcademicYearFiltersAsync_IsCalled()
         {
@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Returns_Expected_Results(DateTime searchDate, IList<AdminFilter> expectedResult)
+        public async Task Then_Returns_Expected_Results(DateTime searchDate, IList<FilterLookupData> expectedResult)
         {
             await WhenAsync(searchDate);
 
@@ -49,46 +49,46 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
             _actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
-        private static readonly Dictionary<DateTime, List<AdminFilter>> _data = new()
+        private static readonly Dictionary<DateTime, List<FilterLookupData>> _data = new()
         {
-            ["05/02/1900".ToDateTime()] = new List<AdminFilter>(),
-            ["05/02/2021".ToDateTime()] = new List<AdminFilter>
+            ["05/02/1900".ToDateTime()] = new List<FilterLookupData>(),
+            ["05/02/2021".ToDateTime()] = new List<FilterLookupData>
             {
-                new AdminFilter { Id = 2020, Name = "2020 to 2021", IsSelected = false }
+                new FilterLookupData { Id = 2020, Name = "2020 to 2021", IsSelected = false }
             },
-            ["05/02/2022".ToDateTime()] = new List<AdminFilter>
+            ["05/02/2022".ToDateTime()] = new List<FilterLookupData>
             {
-                new AdminFilter { Id = 2020, Name = "2020 to 2021", IsSelected = false },
-                new AdminFilter { Id = 2021, Name = "2021 to 2022", IsSelected = false }
+                new FilterLookupData { Id = 2020, Name = "2020 to 2021", IsSelected = false },
+                new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false }
             },
-            ["05/02/2023".ToDateTime()] = new List<AdminFilter>
+            ["05/02/2023".ToDateTime()] = new List<FilterLookupData>
             {
-                new AdminFilter { Id = 2020, Name = "2020 to 2021", IsSelected = false },
-                new AdminFilter { Id = 2021, Name = "2021 to 2022", IsSelected = false },
-                new AdminFilter { Id = 2022, Name = "2022 to 2023", IsSelected = false }
+                new FilterLookupData { Id = 2020, Name = "2020 to 2021", IsSelected = false },
+                new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false },
+                new FilterLookupData { Id = 2022, Name = "2022 to 2023", IsSelected = false }
             },
-            ["05/02/2024".ToDateTime()] = new List<AdminFilter>
+            ["05/02/2024".ToDateTime()] = new List<FilterLookupData>
             {
-               new AdminFilter { Id = 2020, Name = "2020 to 2021", IsSelected = false },
-               new AdminFilter { Id = 2021, Name = "2021 to 2022", IsSelected = false },
-               new AdminFilter { Id = 2022, Name = "2022 to 2023", IsSelected = false },
-               new AdminFilter { Id = 2023, Name = "2023 to 2024", IsSelected = false }
+               new FilterLookupData { Id = 2020, Name = "2020 to 2021", IsSelected = false },
+               new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false },
+               new FilterLookupData { Id = 2022, Name = "2022 to 2023", IsSelected = false },
+               new FilterLookupData { Id = 2023, Name = "2023 to 2024", IsSelected = false }
             },
-            ["10/9/2024".ToDateTime()] = new List<AdminFilter>
+            ["10/9/2024".ToDateTime()] = new List<FilterLookupData>
             {
-               new AdminFilter { Id = 2020, Name = "2020 to 2021", IsSelected = false },
-               new AdminFilter { Id = 2021, Name = "2021 to 2022", IsSelected = false },
-               new AdminFilter { Id = 2022, Name = "2022 to 2023", IsSelected = false },
-               new AdminFilter { Id = 2023, Name = "2023 to 2024", IsSelected = false },
-               new AdminFilter { Id = 2024, Name = "2024 to 2025", IsSelected = false }
+               new FilterLookupData { Id = 2020, Name = "2020 to 2021", IsSelected = false },
+               new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false },
+               new FilterLookupData { Id = 2022, Name = "2022 to 2023", IsSelected = false },
+               new FilterLookupData { Id = 2023, Name = "2023 to 2024", IsSelected = false },
+               new FilterLookupData { Id = 2024, Name = "2024 to 2025", IsSelected = false }
             },
-            ["11/9/2025".ToDateTime()] = new List<AdminFilter>
+            ["11/9/2025".ToDateTime()] = new List<FilterLookupData>
             {
-               new AdminFilter { Id = 2021, Name = "2021 to 2022", IsSelected = false },
-               new AdminFilter { Id = 2022, Name = "2022 to 2023", IsSelected = false },
-               new AdminFilter { Id = 2023, Name = "2023 to 2024", IsSelected = false },
-               new AdminFilter { Id = 2024, Name = "2024 to 2025", IsSelected = false },
-               new AdminFilter { Id = 2025, Name = "2025 to 2026", IsSelected = false }
+               new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false },
+               new FilterLookupData { Id = 2022, Name = "2022 to 2023", IsSelected = false },
+               new FilterLookupData { Id = 2023, Name = "2023 to 2024", IsSelected = false },
+               new FilterLookupData { Id = 2024, Name = "2024 to 2025", IsSelected = false },
+               new FilterLookupData { Id = 2025, Name = "2025 to 2026", IsSelected = false }
             }
         };
 

@@ -444,6 +444,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return GetAsync<AdminSearchLearnerFilters>(requestUri);
         }
 
+        public Task<PagedResponse<AdminSearchLearnerDetail>> GetAdminSearchLearnerDetailsAsync(AdminSearchLearnerRequest request)
+        {
+            var requestUri = ApiConstants.GetAdminSearchLearnerDetailsUri;
+            return PostAsync<AdminSearchLearnerRequest, PagedResponse<AdminSearchLearnerDetail>>(requestUri, request);
+        }
+
         #endregion
 
         #region Private Methods
