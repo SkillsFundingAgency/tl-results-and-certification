@@ -130,7 +130,7 @@
     <value>If you have not received the statement of achievement after 3 weeks then </value>
   </data>
   <data name="Inset_Para_Request_Already_Submitted" xml:space="preserve">
-    <value>A statement of achievement has already been requested fot this learner.</value>
+    <value>A statement of achievement has already been requested for this learner.</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Request statement of achievement – Statement of achievement already requested page</value>

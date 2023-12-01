@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A statement of achievement has already been requested fot this learner..
+        ///   Looks up a localized string similar to A statement of achievement has already been requested for this learner..
         /// </summary>
         public static string Inset_Para_Request_Already_Submitted {
             get {
