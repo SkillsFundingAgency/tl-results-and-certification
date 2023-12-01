@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class RequestSoaAlreadySubmitted {
@@ -215,47 +215,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Core (code).
+        ///   Looks up a localized string similar to Date requested.
         /// </summary>
-        public static string Title_Core_Code_Text {
+        public static string Title_DateRequested_Text {
             get {
-                return ResourceManager.GetString("Title_Core_Code_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Date of birth.
-        /// </summary>
-        public static string Title_DateofBirth_Text {
-            get {
-                return ResourceManager.GetString("Title_DateofBirth_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Department.
-        /// </summary>
-        public static string Title_Department_Text {
-            get {
-                return ResourceManager.GetString("Title_Department_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to English and maths.
-        /// </summary>
-        public static string Title_English_And_Maths_Text {
-            get {
-                return ResourceManager.GetString("Title_English_And_Maths_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Industry placement.
-        /// </summary>
-        public static string Title_Industry_Placement_Text {
-            get {
-                return ResourceManager.GetString("Title_Industry_Placement_Text", resourceCulture);
+                return ResourceManager.GetString("Title_DateRequested_Text", resourceCulture);
             }
         }
         
@@ -269,38 +233,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Occupational specialism (code).
+        ///   Looks up a localized string similar to Requested by.
         /// </summary>
-        public static string Title_Occupational_Specialism_Text {
+        public static string Title_RequestedBy_Text {
             get {
-                return ResourceManager.GetString("Title_Occupational_Specialism_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Organisation’s address.
-        /// </summary>
-        public static string Title_Organisation_Address_Text {
-            get {
-                return ResourceManager.GetString("Title_Organisation_Address_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Provider (UKPRN).
-        /// </summary>
-        public static string Title_Provider_Text {
-            get {
-                return ResourceManager.GetString("Title_Provider_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to T Level title.
-        /// </summary>
-        public static string Title_Tlevel_Title_Text {
-            get {
-                return ResourceManager.GetString("Title_Tlevel_Title_Text", resourceCulture);
+                return ResourceManager.GetString("Title_RequestedBy_Text", resourceCulture);
             }
         }
         

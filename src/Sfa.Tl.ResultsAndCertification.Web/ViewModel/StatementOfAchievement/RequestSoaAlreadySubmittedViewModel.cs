@@ -21,84 +21,32 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         public DateTime RequestedOn { get; set; }
         public string RequestedDate { get { return RequestedOn.ToDobFormat(); } }
 
-        public SummaryItemModel SummaryUln => new SummaryItemModel
+        public SummaryItemModel SummaryUln => new()
         {
             Id = "uln",
             Title = SoaRequestedAlreadyContent.Title_Uln_Text,
             Value = SnapshotDetails.Uln.ToString()
         };
 
-        public SummaryItemModel SummaryLearnerName => new SummaryItemModel
+        public SummaryItemModel SummaryLearnerName => new()
         {
             Id = "learnername",
             Title = SoaRequestedAlreadyContent.Title_Name_Text,
             Value = SnapshotDetails.Name
         };
 
-        public SummaryItemModel SummaryDateofBirth => new SummaryItemModel
+        public SummaryItemModel SummaryDateRequested => new()
         {
-            Id = "dateofbirth",
-            Title = SoaRequestedAlreadyContent.Title_DateofBirth_Text,
-            Value = SnapshotDetails.Dateofbirth
+            Id = "daterequested",
+            Title = SoaRequestedAlreadyContent.Title_DateRequested_Text,
+            Value = RequestedDate
         };
 
-        public SummaryItemModel SummaryProvider => new SummaryItemModel
+        public SummaryItemModel SummaryRequestedBy => new()
         {
-            Id = "providername",
-            Title = SoaRequestedAlreadyContent.Title_Provider_Text,
-            Value = SnapshotDetails.ProviderName
-        };
-
-        public SummaryItemModel SummaryTlevelTitle => new SummaryItemModel
-        {
-            Id = "tleveltitle",
-            Title = SoaRequestedAlreadyContent.Title_Tlevel_Title_Text,
-            Value = SnapshotDetails.TlevelTitle
-        };
-
-        public SummaryItemModel SummaryCoreCode => new SummaryItemModel
-        {
-            Id = "corecode",
-            Title = SoaRequestedAlreadyContent.Title_Core_Code_Text,
-            Value = string.Format(SoaRequestedAlreadyContent.Core_Code_Value, SnapshotDetails.Core, SnapshotDetails.CoreGrade),
-            IsRawHtml = true
-        };
-
-        public SummaryItemModel SummarySpecialismCode => new SummaryItemModel
-        {
-            Id = "specialismcode",
-            Title = SoaRequestedAlreadyContent.Title_Occupational_Specialism_Text,
-            Value = string.Format(SoaRequestedAlreadyContent.Occupational_Specialism_Value, SnapshotDetails.Specialism, SnapshotDetails.SpecialismGrade),
-            IsRawHtml = true
-        };
-
-        public SummaryItemModel SummaryEnglishAndMaths => new SummaryItemModel
-        {
-            Id = "englishandmaths",
-            Title = SoaRequestedAlreadyContent.Title_English_And_Maths_Text,
-            Value = SnapshotDetails.EnglishAndMaths
-        };
-
-        public SummaryItemModel SummaryIndustryPlacement => new SummaryItemModel
-        {
-            Id = "industryplacement",
-            Title = SoaRequestedAlreadyContent.Title_Industry_Placement_Text,
-            Value = SnapshotDetails.IndustryPlacement
-        };
-
-        public SummaryItemModel SummaryDepartment => new SummaryItemModel
-        {
-            Id = "department",
-            Title = SoaRequestedAlreadyContent.Title_Department_Text,
-            Value = SnapshotDetails.ProviderAddress?.DepartmentName
-        };
-
-        public SummaryItemModel SummaryAddress => new SummaryItemModel
-        {
-            Id = "address",
-            Title = SoaRequestedAlreadyContent.Title_Organisation_Address_Text,
-            Value = string.Format(SoaRequestedAlreadyContent.Organisation_Address_Value, FormatedAddress),
-            IsRawHtml = true
+            Id = "requestedby",
+            Title = SoaRequestedAlreadyContent.Title_RequestedBy_Text,
+            Value = RequestedBy
         };
 
         public BreadcrumbModel Breadcrumb
