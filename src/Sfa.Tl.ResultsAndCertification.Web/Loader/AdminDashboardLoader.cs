@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Lrs.LearnerService.Api.Client;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
@@ -21,6 +22,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var apiResponse = await _internalApiClient.GetAdminSearchLearnerFiltersAsync();
             return _mapper.Map<AdminSearchLearnerFiltersViewModel>(apiResponse);
+        }
+
+        public async Task<AdminChangeStartYearViewModel> GetAdminLearnerDetailsAsync(int profileId)
+        {
+            var apiResponse = await _internalApiClient.GetAdminLearnerRecordAsync(profileId);
+            return _mapper.Map<AdminChangeStartYearViewModel>(apiResponse);
         }
     }
 }

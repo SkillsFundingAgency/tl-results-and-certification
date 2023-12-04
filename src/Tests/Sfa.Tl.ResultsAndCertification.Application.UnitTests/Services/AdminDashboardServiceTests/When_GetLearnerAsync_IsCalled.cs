@@ -7,44 +7,35 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDashboardServiceTests
 {
-    public class When_GetFiltersAsync_IsCalled : BaseTest<AdminDashboardService>
+    public class When_GetLearnerAsync_IsCalled : BaseTest<AdminDashboardService>
     {
         private AdminDashboardService _adminDashboardService;
 
-        private AdminSearchLearnerFilters _expectedResult;
-        private AdminSearchLearnerFilters _actualResult;
+        private AdminLearnerRecord _expectedResult;
+        private AdminLearnerRecord _actualResult;
 
         public override void Setup()
         {
-            var mockAwardingOrganisationFilters = new List<AdminFilter>
+            _expectedResult = new AdminLearnerRecord
             {
-                new AdminFilter { Id = 1, Name = "Ncfe", IsSelected = false },
-                new AdminFilter { Id = 2, Name = "Pearson", IsSelected = false }
-            };
-
-            var mockAcademicYearFilters = new List<AdminFilter>
-            {
-                new AdminFilter { Id = 2021, Name = "2021 to 2022", IsSelected = false },
-                new AdminFilter { Id = 2022, Name = "2022 to 2023", IsSelected = false }
-            };
-
-            _expectedResult = new AdminSearchLearnerFilters
-            {
-                AwardingOrganisations = mockAwardingOrganisationFilters,
-                AcademicYears = mockAcademicYearFilters
+                FirstName = "John",
+                LastName = "Smith",
+                Uln = 1234567890,
+                Provider = "Barnsley College",
+                StartYear = "2022 to 2023",
+                TLevel = "Building Services Engineering"
             };
 
             var today = new DateTime(2023, 1, 1);
 
             var repository = Substitute.For<IAdminDashboardRepository>();
-            repository.GetAwardingOrganisationFiltersAsync().Returns(mockAwardingOrganisationFilters);
-            repository.GetAcademicYearFiltersAsync(today).Returns(mockAcademicYearFilters);
+
+            repository.GetLearnerRecordAsync(Arg.Any<int>());
 
             var systemProvider = Substitute.For<ISystemProvider>();
             systemProvider.UtcToday.Returns(today);
@@ -60,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
 
         public override async Task When()
         {
-            _actualResult = await _adminDashboardService.GetAdminSearchLearnerFiltersAsync();
+            _actualResult = await _adminDashboardService.GetAdminLearnerRecordAsync(Arg.Any<int>());
         }
 
         [Fact]

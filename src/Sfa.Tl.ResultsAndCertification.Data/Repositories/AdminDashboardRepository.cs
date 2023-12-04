@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using System;
 using System.Collections.Generic;
@@ -34,5 +35,20 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Select(x => new AdminFilter { Id = x.Year, Name = $"{x.Year} to {x.Year + 1}", IsSelected = false })
                 .ToListAsync();
         }
+
+        public async Task<TqRegistrationPathway> GetLearnerRecordAsync(int profileId)
+        {
+            return await _dbContext.TqRegistrationPathway
+                .Include(p => p.TqRegistrationSpecialisms)
+                .Include(p => p.TqRegistrationProfile)
+                .Include(p => p.TqProvider)
+                    .ThenInclude(p => p.TlProvider)
+                .Include(p => p.TqProvider)
+                    .ThenInclude(p => p.TqAwardingOrganisation)
+                    .ThenInclude(p => p.TlPathway)
+            .Where(p => p.TqRegistrationProfileId == profileId)
+           .FirstOrDefaultAsync();
+        }
+
     }
 }

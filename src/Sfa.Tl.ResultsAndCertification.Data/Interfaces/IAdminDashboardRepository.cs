@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+﻿using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,5 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
         Task<IList<AdminFilter>> GetAwardingOrganisationFiltersAsync();
 
         Task<IList<AdminFilter>> GetAcademicYearFiltersAsync(DateTime searchDate);
+
+        Task<TqRegistrationPathway> GetLearnerRecordAsync(int profileId);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Lrs.LearnerService.Api.Client;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -25,6 +26,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             AdminSearchLearnerFiltersViewModel filters = await _loader.GetAdminSearchLearnerFiltersAsync();
             
             var viewModel = new AdminSearchLearnerViewModel(filters);
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("admin/change-start-year/{profileId}", Name = RouteConstants.AdminChangeStartYear)]
+        public async Task<IActionResult> AdminChangeStartYearAsync(int profileId)
+        {
+            var viewModel = await _loader.GetAdminLearnerDetailsAsync(profileId);
             return View(viewModel);
         }
     }

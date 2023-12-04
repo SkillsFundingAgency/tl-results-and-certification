@@ -1,6 +1,8 @@
-﻿using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+﻿using AutoMapper;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using System.Threading.Tasks;
 
@@ -10,11 +12,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     {
         private readonly IAdminDashboardRepository _adminDashboardRepository;
         private readonly ISystemProvider _systemProvider;
+        private readonly IMapper _mapper;
 
-        public AdminDashboardService(IAdminDashboardRepository adminDashboardRepository, ISystemProvider systemProvider)
+        public AdminDashboardService(IAdminDashboardRepository adminDashboardRepository, ISystemProvider systemProvider, IMapper mapper)
         {
             _adminDashboardRepository = adminDashboardRepository;
             _systemProvider = systemProvider;
+            _mapper = mapper;
         }
 
         public async Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync()
@@ -25,5 +29,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 AcademicYears = await _adminDashboardRepository.GetAcademicYearFiltersAsync(_systemProvider.UtcToday)
             };
         }
+
+        public async Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int profileId)
+        {
+            var result = await _adminDashboardRepository.GetLearnerRecordAsync(profileId);
+            return _mapper.Map<AdminLearnerRecord>(result);
+        }
     }
+
 }

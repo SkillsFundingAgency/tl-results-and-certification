@@ -119,6 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         #region Admin dashboard
 
         Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync();
+        Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int profileId);
 
         #endregion
     }

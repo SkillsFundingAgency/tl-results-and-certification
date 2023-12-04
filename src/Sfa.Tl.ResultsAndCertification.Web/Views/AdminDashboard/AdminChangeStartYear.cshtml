@@ -1,0 +1,45 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.AdminChangeStartYearViewModel
+
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+
+@{
+    ViewData["Title"] = ChangeStartYear.Page_Title;
+}
+
+@section NavigationBar
+    {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+        <form class="form" asp-route="AdminChangeStartYear">
+            <div class="record-header">
+                <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+                    @ChangeStartYear.Heading_Change_Start_Year
+                </h1>
+            </div>
+
+            <h2 class="govuk-heading-m">
+                @ChangeStartYear.Heading_Personal_Details
+            </h2>
+
+            <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+                <vc:summary-item model=Model.SummaryLearner></vc:summary-item>
+                <vc:summary-item model=Model.SummaryULN></vc:summary-item>
+                <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+                <vc:summary-item model=Model.SummaryTlevel></vc:summary-item>
+                <vc:summary-item model=Model.SummaryStartYear></vc:summary-item>
+            </dl>
+
+            <h2 class="govuk-heading-m">@ChangeStartYear.Heading_What_Should_The_Start_Year_Be</h2>
+
+            <div class="govuk-button-group">
+                <button id="acceptAndSendButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ChangeStartYear.Button_Continue</button>
+                <button id="cancelButton" class="govuk-button govuk-body" data-module="govuk-button" >@ChangeStartYear.Button_Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+

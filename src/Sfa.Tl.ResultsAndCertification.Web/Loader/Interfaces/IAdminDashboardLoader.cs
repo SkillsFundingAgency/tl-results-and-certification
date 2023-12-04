@@ -6,5 +6,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
     public interface IAdminDashboardLoader
     {
         Task<AdminSearchLearnerFiltersViewModel> GetAdminSearchLearnerFiltersAsync();
+        Task<AdminChangeStartYearViewModel> GetAdminLearnerDetailsAsync(int id);
+
     }
 }
