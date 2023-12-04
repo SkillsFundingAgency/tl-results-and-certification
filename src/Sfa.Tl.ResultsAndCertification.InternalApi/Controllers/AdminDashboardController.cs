@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
@@ -24,6 +25,15 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return _adminDashboardService.GetAdminSearchLearnerFiltersAsync();
         }
+
+        [HttpGet]
+        [Route("GetLearnerRecord/{profileid}", Name = RouteConstants.LearnerRecord)]
+        public async Task<AdminLearnerRecord> GetLearnerRecordAsync(int profileId)
+        {
+            return await _adminDashboardService.GetLearnerRecordAsync(profileId);
+        }
+
+
 
         [HttpPost]
         [Route("GetAdminSearchLearnerDetails")]

@@ -298,7 +298,7 @@
         public const string SubmitAddAddressNotFound = "SubmitAddAddressNotFound";
         public const string RequestReplacementDocument = "RequestReplacementDocument";
         public const string SubmitRequestReplacementDocument = "SubmitRequestReplacementDocument";
-
+        public const string LearnerRecord = "LearnerRecord";
         #endregion
 
         #region Statement of achievement
