@@ -41,6 +41,11 @@
 
 
   <ItemGroup>
+    <Compile Update="Content\AdminDashboard\LearnerRecord.Designer.cs">
+      <DependentUpon>LearnerRecord.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Content\AdminDashboard\SearchLearners.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1025,6 +1030,11 @@
 
 
   <ItemGroup>
+    <EmbeddedResource Update="Content\AdminDashboard\LearnerRecord.resx">
+      <SubType>Designer</SubType>
+      <LastGenOutput>LearnerRecord.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\AdminDashboard\SearchLearners.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SearchLearners.Designer.cs</LastGenOutput>

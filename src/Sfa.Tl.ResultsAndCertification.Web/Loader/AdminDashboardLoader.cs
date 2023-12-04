@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -22,5 +24,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var apiResponse = await _internalApiClient.GetAdminSearchLearnerFiltersAsync();
             return _mapper.Map<AdminSearchLearnerFiltersViewModel>(apiResponse);
         }
-    }
+
+        public async Task<LearnerRecordViewModel> GetLearnerRecordAsync<LearnerRecordViewModel>(int profileId)
+        {
+            var response = await _internalApiClient.GetLearnerRecordAsync(profileId);
+            return _mapper.Map<LearnerRecordViewModel>(response);
+        }
+
+        
+}
 }

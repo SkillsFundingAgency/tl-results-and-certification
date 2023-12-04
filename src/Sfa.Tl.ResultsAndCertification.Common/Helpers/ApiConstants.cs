@@ -124,5 +124,7 @@
 
         // Admin dashboard
         public const string GetAdminSearchLearnerFiltersUri = "/api/admindashboard/GetAdminSearchLearnerFilters";
+        public const string GetAdminLearnerRecordUri = "/api/admindashboard/GetLearnerRecord/{0}";
+
     }
 }
