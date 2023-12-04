@@ -49,10 +49,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var searchCriteria = viewModel.SearchLearnerCriteria;
 
-            if (searchCriteria.IsSearchKeyApplied && !viewModel.IsSearchKeyValid)
-            {
-                ModelState.AddModelError(nameof(viewModel.SearchLearnerCriteria.SearchKey), AdminSearchLearners.Validation_Enter_Valid_ULN_Or_Learners_Last_Name);
-                
+            if (!searchCriteria.IsSearchKeyApplied)
+            {                
                 viewModel.ClearLearnerDetails();
                 return View(viewModel);
             }

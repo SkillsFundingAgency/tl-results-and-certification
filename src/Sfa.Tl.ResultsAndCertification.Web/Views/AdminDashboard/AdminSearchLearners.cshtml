@@ -12,7 +12,7 @@
 @section NavigationBar {
     <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
 }
-<partial name="Partials/_adminSearchKeyErrorSummary.cshtml" model="Model.ErrorMessage" />
+
 <h1 class="govuk-heading-xl">@AdminSearchLearners.Heading_Search_Learners_Records</h1>
 
 <div class="govuk-grid-row">
@@ -26,7 +26,7 @@
 
         @switch (Model.State)
         {
-            case AdminSearchState.PageFirstDisplayed:
+            case AdminSearchState.NoSearch:
 
                 <label class="govuk-label govuk-label--m">
                     @AdminSearchLearners.Heading_Start_Search
@@ -62,20 +62,7 @@
 
             case AdminSearchState.ResultsNotFound:
 
-                if (Model.OnlySearchKeyApplied && Model.IsSearchKeyValid)
-                {
-                    <h2 class="govuk-heading-m wrap">
-                        @Model.LearnersNotFoundHeader
-                    </h2>
-
-                    <p class="govuk-body">
-                        @Model.LearnersNotFoundMessage
-                    </p>
-                }
-                else
-                {
-                    <partial name="Partials/_adminNoMatchingSearchResults.cshtml" />
-                }
+                <partial name="Partials/_adminNoMatchingSearchResults.cshtml" />
 
                 break;
         }
