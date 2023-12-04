@@ -1,10 +1,12 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
 
 <div class="govuk-!-font-size-19">
-    <h2 class="govuk-body govuk-!-font-weight-bold">@NoMatchingSearchResults.Heading_No_Matching_Results</h2>
+    <h2 class="govuk-heading-m">@NoMatchingSearchResults.Heading_No_Matching_Results</h2>
     <p class="govuk-body">@NoMatchingSearchResults.List_Title_Improve_Your_Search_By</p>
     <ul class="govuk-list govuk-list--bullet">
+        <li>@NoMatchingSearchResults.List_Item_Enter_ULN</li>
+        <li>@NoMatchingSearchResults.List_Item_Only_Registered_Learners</li>
+        <li>@NoMatchingSearchResults.List_Item_Checking_Lastnames_Spelling</li>
         <li>@NoMatchingSearchResults.List_Item_Removing_Filters</li>
-        <li>@NoMatchingSearchResults.List_Item_Double_Checking_Spelling</li>
     </ul>
 </div>
