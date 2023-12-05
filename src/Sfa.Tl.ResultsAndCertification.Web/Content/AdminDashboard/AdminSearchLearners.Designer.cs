@@ -160,15 +160,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} not found.
-        /// </summary>
-        public static string Heading_SearchKey_Not_Found {
-            get {
-                return ResourceManager.GetString("Heading_SearchKey_Not_Found", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Start a search.
         /// </summary>
         public static string Heading_Start_Search {
@@ -205,38 +196,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to We cannot find a learner for this last name. This might be because the spelling is wrong. We can only provide exact matches..
-        /// </summary>
-        public static string Para_We_Cannot_Find_Learner_Surname {
-            get {
-                return ResourceManager.GetString("Para_We_Cannot_Find_Learner_Surname", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to We cannot find a learner for this ULN. This might be because the ULN is wrong or the learner is not yet registered..
-        /// </summary>
-        public static string Para_We_Cannot_Find_Learner_ULN {
-            get {
-                return ResourceManager.GetString("Para_We_Cannot_Find_Learner_ULN", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Search by ULN or learner last name.
         /// </summary>
         public static string Search_By_Uln_Or_Learner_Lastname {
             get {
                 return ResourceManager.GetString("Search_By_Uln_Or_Learner_Lastname", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter a 10-digit ULN or learner’s last name.
-        /// </summary>
-        public static string Validation_Enter_Valid_ULN_Or_Learners_Last_Name {
-            get {
-                return ResourceManager.GetString("Validation_Enter_Valid_ULN_Or_Learners_Last_Name", resourceCulture);
             }
         }
     }
