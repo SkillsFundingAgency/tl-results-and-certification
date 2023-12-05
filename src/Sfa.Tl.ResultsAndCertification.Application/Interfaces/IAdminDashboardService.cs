@@ -8,7 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     {
         Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync();
 
-        Task<AdminLearnerRecord> GetLearnerRecordAsync(int profileId);
+        Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayid);
 
         Task<PagedResponse<AdminSearchLearnerDetail>> GetAdminSearchLearnerDetailsAsync(AdminSearchLearnerRequest request);
     }

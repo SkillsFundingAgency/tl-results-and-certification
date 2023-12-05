@@ -126,12 +126,6 @@
   <data name="Back_To_Home_Text" xml:space="preserve">
     <value>&lt; Back to home</value>
   </data>
-  <data name="Back_To_List_Of_Learners_Text" xml:space="preserve">
-    <value>Back to list of learners</value>
-  </data>
-  <data name="Button_Request_Replacement_Document" xml:space="preserve">
-    <value>Request replacement document</value>
-  </data>
   <data name="Hidden_Action_Text_English" xml:space="preserve">
     <value> english status</value>
   </data>
@@ -141,38 +135,11 @@
   <data name="Hidden_Action_Text_Maths" xml:space="preserve">
     <value> maths status</value>
   </data>
-  <data name="Notification_Heading" xml:space="preserve">
-    <value>Additional information needed for this learner</value>
-  </data>
-  <data name="Notification_Link_Add_English" xml:space="preserve">
-    <value>Add English level details</value>
-  </data>
-  <data name="Notification_Link_Add_Ip" xml:space="preserve">
-    <value>Add industry placement details</value>
-  </data>
-  <data name="Notification_Link_Add_Maths" xml:space="preserve">
-    <value>Add maths level details</value>
-  </data>
-  <data name="Notification_Title" xml:space="preserve">
-    <value>Important</value>
-  </data>
-  <data name="Overall_Results_Display_From" xml:space="preserve">
-    <value>Results will be displayed from the day before results day and will only be available for active final year learners.</value>
-  </data>
   <data name="Page_Title" xml:space="preserve">
     <value> - Learner record – Admin – Manage T Level results – GOV.UK</value>
   </data>
   <data name="Personal_Details_Text" xml:space="preserve">
     <value>Personal details</value>
-  </data>
-  <data name="Reinstate_Message_Template" xml:space="preserve">
-    <value>You've told us that you want to reinstate {0} onto this T Level.</value>
-  </data>
-  <data name="Reprint_Document_Arrive_In_3_Weeks" xml:space="preserve">
-    <value>The document may take up to 3 weeks to arrive.</value>
-  </data>
-  <data name="Reprint_Document_Requested_On" xml:space="preserve">
-    <value>Replacement document requested on</value>
   </data>
   <data name="Search_Again_Text" xml:space="preserve">
     <value>Search again</value>
@@ -201,18 +168,6 @@
   <data name="Status_Tag_Record_Complete" xml:space="preserve">
     <value>Record Complete</value>
   </data>
-  <data name="Success_Header_English_Status_Added" xml:space="preserve">
-    <value>English status added</value>
-  </data>
-  <data name="Success_Header_Maths_Status_Added" xml:space="preserve">
-    <value>Maths status added</value>
-  </data>
-  <data name="Success_Message_English_Status_Added" xml:space="preserve">
-    <value>&lt;p class="govuk-body"&gt;&lt;a class="govuk-notification-banner__link" href="/contact-us"&gt;Contact us&lt;/a&gt; if the English status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;</value>
-  </data>
-  <data name="Success_Message_Maths_Status_Added" xml:space="preserve">
-    <value>&lt;p class="govuk-body"&gt;&lt;a class="govuk-notification-banner__link" href="/contact-us"&gt;Contact us&lt;/a&gt; if the maths status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;</value>
-  </data>
   <data name="Title_AoName_Text" xml:space="preserve">
     <value>Awarding organisation</value>
   </data>
@@ -228,17 +183,8 @@
   <data name="Title_Maths_Text" xml:space="preserve">
     <value>Maths</value>
   </data>
-  <data name="Title_OverallResult_Text" xml:space="preserve">
-    <value>Result</value>
-  </data>
-  <data name="Title_Provider_Name_Text" xml:space="preserve">
-    <value>Provider</value>
-  </data>
   <data name="Title_Provider_Ukprn_Name_Text" xml:space="preserve">
     <value>Provider (UKPRN)</value>
-  </data>
-  <data name="Title_Provider_Ukprn_Text" xml:space="preserve">
-    <value>UKPRN</value>
   </data>
   <data name="Title_StartYear_Text" xml:space="preserve">
     <value>Start year</value>
@@ -254,11 +200,5 @@
   </data>
   <data name="Uln_Text" xml:space="preserve">
     <value>ULN </value>
-  </data>
-  <data name="Withdrawn_Message_Told_AO_No_Template" xml:space="preserve">
-    <value>You've told us that {0} has withdrawn from this T Level. You should also contact {1} to let them know.</value>
-  </data>
-  <data name="Withdrawn_Message_Told_AO_Yes_Template" xml:space="preserve">
-    <value>You've told us that {0} has withdrawn from this T Level. We will update their status to Withdrawn once {1} confirms the change.</value>
   </data>
 </root>

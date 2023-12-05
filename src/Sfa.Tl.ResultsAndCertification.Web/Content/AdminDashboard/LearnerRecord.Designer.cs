@@ -87,23 +87,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Back to list of learners.
-        /// </summary>
-        public static string Back_To_List_Of_Learners_Text {
-            get {
-                return ResourceManager.GetString("Back_To_List_Of_Learners_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Request replacement document.
-        /// </summary>
-        public static string Button_Request_Replacement_Document {
-            get {
-                return ResourceManager.GetString("Button_Request_Replacement_Document", resourceCulture);
-            }
-        }
         
         /// <summary>
         ///   Looks up a localized string similar to  english status.
@@ -132,60 +115,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Additional information needed for this learner.
-        /// </summary>
-        public static string Notification_Heading {
-            get {
-                return ResourceManager.GetString("Notification_Heading", resourceCulture);
-            }
-        }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Add English level details.
-        /// </summary>
-        public static string Notification_Link_Add_English {
-            get {
-                return ResourceManager.GetString("Notification_Link_Add_English", resourceCulture);
-            }
-        }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Add industry placement details.
-        /// </summary>
-        public static string Notification_Link_Add_Ip {
-            get {
-                return ResourceManager.GetString("Notification_Link_Add_Ip", resourceCulture);
-            }
-        }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Add maths level details.
-        /// </summary>
-        public static string Notification_Link_Add_Maths {
-            get {
-                return ResourceManager.GetString("Notification_Link_Add_Maths", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Important.
-        /// </summary>
-        public static string Notification_Title {
-            get {
-                return ResourceManager.GetString("Notification_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Results will be displayed from the day before results day and will only be available for active final year learners..
-        /// </summary>
-        public static string Overall_Results_Display_From {
-            get {
-                return ResourceManager.GetString("Overall_Results_Display_From", resourceCulture);
-            }
-        }
-        
+                        
         /// <summary>
         ///   Looks up a localized string similar to  - Learner record – Admin – Manage T Level results – GOV.UK.
         /// </summary>
@@ -204,33 +137,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to You&apos;ve told us that you want to reinstate {0} onto this T Level..
-        /// </summary>
-        public static string Reinstate_Message_Template {
-            get {
-                return ResourceManager.GetString("Reinstate_Message_Template", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The document may take up to 3 weeks to arrive..
-        /// </summary>
-        public static string Reprint_Document_Arrive_In_3_Weeks {
-            get {
-                return ResourceManager.GetString("Reprint_Document_Arrive_In_3_Weeks", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Replacement document requested on.
-        /// </summary>
-        public static string Reprint_Document_Requested_On {
-            get {
-                return ResourceManager.GetString("Reprint_Document_Requested_On", resourceCulture);
-            }
-        }
-        
+                     
         /// <summary>
         ///   Looks up a localized string similar to Search again.
         /// </summary>
@@ -311,42 +218,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
                 return ResourceManager.GetString("Status_Tag_Record_Complete", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to English status added.
-        /// </summary>
-        public static string Success_Header_English_Status_Added {
-            get {
-                return ResourceManager.GetString("Success_Header_English_Status_Added", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Maths status added.
-        /// </summary>
-        public static string Success_Header_Maths_Status_Added {
-            get {
-                return ResourceManager.GetString("Success_Header_Maths_Status_Added", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;p class=&quot;govuk-body&quot;&gt;&lt;a class=&quot;govuk-notification-banner__link&quot; href=&quot;/contact-us&quot;&gt;Contact us&lt;/a&gt; if the English status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;.
-        /// </summary>
-        public static string Success_Message_English_Status_Added {
-            get {
-                return ResourceManager.GetString("Success_Message_English_Status_Added", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;p class=&quot;govuk-body&quot;&gt;&lt;a class=&quot;govuk-notification-banner__link&quot; href=&quot;/contact-us&quot;&gt;Contact us&lt;/a&gt; if the maths status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;.
-        /// </summary>
-        public static string Success_Message_Maths_Status_Added {
-            get {
-                return ResourceManager.GetString("Success_Message_Maths_Status_Added", resourceCulture);
-            }
-        }
+       
         
         /// <summary>
         ///   Looks up a localized string similar to Awarding organisation.
@@ -393,23 +265,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Result.
-        /// </summary>
-        public static string Title_OverallResult_Text {
-            get {
-                return ResourceManager.GetString("Title_OverallResult_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Provider.
-        /// </summary>
-        public static string Title_Provider_Name_Text {
-            get {
-                return ResourceManager.GetString("Title_Provider_Name_Text", resourceCulture);
-            }
-        }
         
         /// <summary>
         ///   Looks up a localized string similar to Provider (UKPRN).
@@ -419,15 +274,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
                 return ResourceManager.GetString("Title_Provider_Ukprn_Name_Text", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UKPRN.
-        /// </summary>
-        public static string Title_Provider_Ukprn_Text {
-            get {
-                return ResourceManager.GetString("Title_Provider_Ukprn_Text", resourceCulture);
-            }
-        }
+              
         
         /// <summary>
         ///   Looks up a localized string similar to Start year.
@@ -474,22 +321,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to You&apos;ve told us that {0} has withdrawn from this T Level. You should also contact {1} to let them know..
-        /// </summary>
-        public static string Withdrawn_Message_Told_AO_No_Template {
-            get {
-                return ResourceManager.GetString("Withdrawn_Message_Told_AO_No_Template", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You&apos;ve told us that {0} has withdrawn from this T Level. We will update their status to Withdrawn once {1} confirms the change..
-        /// </summary>
-        public static string Withdrawn_Message_Told_AO_Yes_Template {
-            get {
-                return ResourceManager.GetString("Withdrawn_Message_Told_AO_Yes_Template", resourceCulture);
-            }
-        }
     }
 }

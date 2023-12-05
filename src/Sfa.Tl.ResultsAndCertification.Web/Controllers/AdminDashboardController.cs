@@ -41,13 +41,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("admin/learner-record/{profileid}", Name = RouteConstants.LearnerRecord)]
-        public async Task<IActionResult> LearnerRecordAsync(int profileId)
+        [Route("admin/learner-record/{pathwayid}", Name = RouteConstants.AdminSearchLearners)]
+        public async Task<IActionResult> AdminLearnerRecordAsync(int pathwayid)
         {
-            var viewModel = await _loader.GetLearnerRecordAsync<LearnerRecordViewModel>(profileId);
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(pathwayid);
             if (viewModel == null || !viewModel.IsLearnerRegistered)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({User.GetUkPrn()}, {pathwayid}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             viewModel.InformationBanner = await _cacheService.GetAndRemoveAsync<InformationBannerModel>(InformationCacheKey);

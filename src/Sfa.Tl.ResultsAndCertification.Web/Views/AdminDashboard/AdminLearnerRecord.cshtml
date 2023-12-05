@@ -1,11 +1,11 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord.LearnerRecordViewModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord.AdminLearnerRecordViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 @using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 @using Sfa.Tl.ResultsAndCertification.Common.Extensions
 
 @{
-    ViewData["Title"] = Model.LearnerName + LearnerRecord.Title_TLevel_Text;
+    ViewData["Title"] = Model.LearnerName + LearnerRecord.Page_Title;
 }
 
 @section NavigationBar
@@ -51,7 +51,7 @@
         </dl>
 
         <div class="govuk-button-group">
-            <a id="searchAgainButton" class="govuk-button" role="button" asp-route="@RouteConstants.Home">@LearnerRecord.Search_Again_Text</a>
+            <a id="searchAgainButton" class="govuk-button" role="button" asp-route="@RouteConstants.AdminSearchLearnersRecords">@LearnerRecord.Search_Again_Text</a>
             </div>
     </div>
 </div>

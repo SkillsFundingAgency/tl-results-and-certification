@@ -43,9 +43,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         }
 
 
-        public async Task<LearnerRecordViewModel> GetLearnerRecordAsync<LearnerRecordViewModel>(int profileId)
+        public async Task<LearnerRecordViewModel> GetAdminLearnerRecordAsync<LearnerRecordViewModel>(int pathwayid)
         {
-            var response = await _internalApiClient.GetLearnerRecordAsync(profileId);
+            var response = await _internalApiClient.GetAdminLearnerRecordAsync(pathwayid);
             return _mapper.Map<LearnerRecordViewModel>(response);
         }
     }

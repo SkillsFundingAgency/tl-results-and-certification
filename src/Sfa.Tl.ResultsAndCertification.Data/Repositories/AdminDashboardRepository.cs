@@ -42,9 +42,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .ToListAsync();
         }
 
-        public async Task<AdminLearnerRecord> GetLearnerRecordAsync(int profileId)
+        public async Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayid)
         {
-            long? pathwayId = null;
+           
             var learnerRecordQuerable = from tqPathway in _dbContext.TqRegistrationPathway
                                         join tqProfile in _dbContext.TqRegistrationProfile on tqPathway.TqRegistrationProfileId equals tqProfile.Id
                                         join tqProvider in _dbContext.TqProvider on tqPathway.TqProviderId equals tqProvider.Id
@@ -52,12 +52,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         join tqAo in _dbContext.TqAwardingOrganisation on tqProvider.TqAwardingOrganisationId equals tqAo.Id
                                         join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
                                         orderby tqPathway.CreatedOn descending
-                                        let printCertificate = tqPathway.PrintCertificates.Where(p => p.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
-                                                                                                && (p.Type == PrintCertificateType.StatementOfAchievement || p.Type == PrintCertificateType.Certificate))
-                                                                                          .OrderByDescending(c => c.CreatedOn).FirstOrDefault() // Fetching certificate for only active pathway
-                                        let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()
-                                        let overallResult = tqPathway.OverallResults.FirstOrDefault(o => o.IsOptedin && (tqPathway.Status == RegistrationPathwayStatus.Withdrawn) ? o.EndDate != null : o.EndDate == null)
-                                        where tqProfile.Id == profileId 
+                                        let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()                                       
+                                        where tqPathway.Id == pathwayid
                                         select new AdminLearnerRecord
                                         {
                                             ProfileId = tqProfile.Id,
@@ -81,7 +77,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             IndustryPlacementDetails = ipRecord != null ? ipRecord.Details : null,
                                            
                                         };
-            var learnerRecordDetails = pathwayId.HasValue ? await learnerRecordQuerable.FirstOrDefaultAsync(p => p.RegistrationPathwayId == pathwayId) : await learnerRecordQuerable.FirstOrDefaultAsync();
+            var learnerRecordDetails =  await learnerRecordQuerable.FirstOrDefaultAsync();
             return learnerRecordDetails;
         }
 

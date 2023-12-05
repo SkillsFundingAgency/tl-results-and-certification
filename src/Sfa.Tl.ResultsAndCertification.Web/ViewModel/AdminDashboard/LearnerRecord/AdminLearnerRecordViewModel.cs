@@ -19,7 +19,7 @@ using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.Training
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord
 {
-    public class LearnerRecordViewModel
+    public class AdminLearnerRecordViewModel
     {
         // Header
         public int ProfileId { get; set; }
