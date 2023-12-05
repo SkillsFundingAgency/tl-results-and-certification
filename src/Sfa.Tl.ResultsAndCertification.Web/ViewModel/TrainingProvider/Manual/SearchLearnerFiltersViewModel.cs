@@ -1,4 +1,4 @@
-﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
+﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using System.Collections.Generic;
 using System.Linq;
 

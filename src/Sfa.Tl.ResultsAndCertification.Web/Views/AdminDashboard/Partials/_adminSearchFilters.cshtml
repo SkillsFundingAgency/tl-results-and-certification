@@ -1,16 +1,16 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.AdminSearchLearnerCriteriaViewModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.AdminSearchLearnerFiltersViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 <form asp-route="@RouteConstants.SubmitSearchLearnerApplyFilters">
 
-    <h2 class="govuk-heading-m govuk-!-padding-top-4">@SearchLearners.Filters_Heading </h2>
+    <h2 class="govuk-heading-m govuk-!-padding-top-4">@AdminSearchLearners.Filters_Heading </h2>
 
     <div class="govuk-form-group">
         <label class="govuk-label govuk-label--s" for="search">
-            @SearchLearners.Filters_Provider_Name
+            @AdminSearchLearners.Filters_Provider_Name
         </label>
-        <p class="govuk-visually-hidden">@SearchLearners.AutoComplete_Help_Text</p>
+        <p class="govuk-visually-hidden">@AdminSearchLearners.AutoComplete_Help_Text</p>
         <span sfa-validation-for="Provider"></span>
         <input id="search" name="Search" class="govuk-input" asp-for="Provider" />
     </div>
@@ -18,19 +18,19 @@
     <div class="govuk-form-group">
         <fieldset class="govuk-fieldset">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-margin-bottom-0">
-                @SearchLearners.Filters_Awarding_Organisation
+                @AdminSearchLearners.Filters_Awarding_Organisation
             </legend>
             <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-                @foreach (var awardingOrganisation in Model?.SearchLearnerFilters?.AwardingOrganisations?.Select((value, i) => (value, i)))
+                @foreach (var awardingOrganisation in Model?.AwardingOrganisations?.Select((value, i) => (value, i)))
                 {
                     var elementId = (awardingOrganisation.i > 0) ? "selectedawardingorganisation-" + awardingOrganisation.i : "selectedawardingorganisation";
                     <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchLearnerFilters.AwardingOrganisations[awardingOrganisation.i].IsSelected">
+                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.AwardingOrganisations[awardingOrganisation.i].IsSelected">
                         <label class="govuk-label govuk-checkboxes__label" for="@elementId">
                             @awardingOrganisation.value.Name
                         </label>
                     </div>
-                    <input type="hidden" asp-for="@Model.SearchLearnerFilters.AwardingOrganisations[@awardingOrganisation.i].Id" />
+                    <input type="hidden" asp-for="@Model.AwardingOrganisations[@awardingOrganisation.i].Id" />
                 }
             </div>
         </fieldset>
@@ -39,31 +39,26 @@
     <div class="govuk-form-group">
         <fieldset class="govuk-fieldset">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-margin-bottom-0">
-                    @SearchLearners.Filters_Start_Year
+                @AdminSearchLearners.Filters_Start_Year
             </legend>
             <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-                @foreach (var academicYear in Model?.SearchLearnerFilters?.AcademicYears?.Select((value, i) => (value, i)))
+                @foreach (var academicYear in Model?.AcademicYears?.Select((value, i) => (value, i)))
                 {
                     var elementId = (academicYear.i > 0) ? "selectedacademicyear-" + academicYear.i : "selectedacademicyear";
                     <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchLearnerFilters.AcademicYears[academicYear.i].IsSelected">
+                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.AcademicYears[academicYear.i].IsSelected">
                         <label class="govuk-label govuk-checkboxes__label" for="@elementId">
                             @academicYear.value.Name
                         </label>
                     </div>
-                    <input type="hidden" asp-for="@Model.SearchLearnerFilters.AcademicYears[@academicYear.i].Id" />
+                    <input type="hidden" asp-for="@Model.AcademicYears[@academicYear.i].Id" />
                 }
             </div>
         </fieldset>
     </div>
 
     <div class="govuk-button-group">
-        <button id="applyFiltersButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@SearchLearners.Button_Apply_Filters</button>
-
-        @* @if (Model.SearchLearnerFilters?.IsApplyFiltersSelected == true)
-        {*@
-        <button id="clearFiltersButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.SearchLearnerClearFilters">@SearchLearners.Button_Clear_Filters</button>
-        @*}*@
-
+        <button id="applyFiltersButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminSearchLearners.Button_Apply_Filters</button>
+        <button id="clearFiltersButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.SearchLearnerClearFilters">@AdminSearchLearners.Button_Clear_Filters</button>
     </div>
 </form>

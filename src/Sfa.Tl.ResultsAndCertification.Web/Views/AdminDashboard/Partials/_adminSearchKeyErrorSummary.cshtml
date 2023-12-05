@@ -1,0 +1,15 @@
+﻿@model string
+
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+
+@if (!string.IsNullOrWhiteSpace(Model))
+{
+    <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary" autofocus>
+        <h2 class="govuk-error-summary__title" id="error-summary-title">@AdminSearchLearners.Error_Summary_Header</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#searchkey">@Model</a></li>
+            </ul>
+        </div>
+    </div>
+}

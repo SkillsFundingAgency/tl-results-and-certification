@@ -4,11 +4,13 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System;
 using System.Threading.Tasks;
 using Xunit;
+using static System.Net.WebRequestMethods;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDashboardServiceTests
 {
@@ -18,9 +20,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
 
         private AdminLearnerRecord _expectedResult;
         private AdminLearnerRecord _actualResult;
+        private int ProfileId = 1;
 
         public override void Setup()
         {
+            var mockRegistrationPathway = Substitute.For<TqRegistrationPathway>();
+
             _expectedResult = new AdminLearnerRecord
             {
                 FirstName = "John",
@@ -34,13 +39,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
             var today = new DateTime(2023, 1, 1);
 
             var repository = Substitute.For<IAdminDashboardRepository>();
-
-            repository.GetLearnerRecordAsync(Arg.Any<int>());
+            repository.GetLearnerRecordAsync(Arg.Any<int>()).Returns(mockRegistrationPathway);
 
             var systemProvider = Substitute.For<ISystemProvider>();
             systemProvider.UtcToday.Returns(today);
-
+            
             var mapper = Substitute.For<IMapper>();
+            mapper.Map<AdminLearnerRecord>(mockRegistrationPathway).Returns(_expectedResult);
 
             _adminDashboardService = new AdminDashboardService(repository, systemProvider, mapper);
         }
@@ -51,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
 
         public override async Task When()
         {
-            _actualResult = await _adminDashboardService.GetAdminLearnerRecordAsync(Arg.Any<int>());
+            _actualResult = await _adminDashboardService.GetAdminLearnerRecordAsync(ProfileId);
         }
 
         [Fact]

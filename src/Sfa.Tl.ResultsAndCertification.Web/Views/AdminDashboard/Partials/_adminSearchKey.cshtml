@@ -2,22 +2,19 @@
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
-<form asp-route="@RouteConstants.SubmitSearchLearnerDetails">
+<form asp-route="@RouteConstants.SubmitAdminSearchLearnerRecordsApplySearchKey">
     <div class="govuk-form-group">
+        <div sfa-validation-for="SearchKey" sfa-validation-class="govuk-form-group--error">
+            <label class="govuk-label" for="searchkey">
+                <h2 class="govuk-heading-m">@AdminSearchLearners.Search_By_Uln_Or_Learner_Lastname</h2>
+            </label>
 
-        <label class="govuk-label" for="searchkey">
-            <h2 class="govuk-heading-m">@SearchLearners.Search_By_Uln_Or_Learner_Lastname</h2>
-        </label>
-
-        <input id="searchkey" class="govuk-input govuk-!-width-full-width search-uln" type="search" asp-for="@Model.SearchKey" maxlength="100">
-
+            <span sfa-validation-for="SearchKey"></span>
+            <input id="searchkey" class="govuk-input govuk-!-width-full-width search-uln" type="search" asp-for="@Model.SearchKey" maxlength="100">
+        </div>
         <div class="govuk-button-group govuk-!-margin-top-2">
-            <button id="searchButton" class="govuk-button uln-search-button" data-module="govuk-button" data-prevent-double-click="true">@SearchLearners.Button_Search</button>
-
-            @*@if (Model.IsSearchKeyApplied)
-            {*@
-                <button id="clearSearchButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.SearchLearnerClearKey">@SearchLearners.Clear_Search</button>
-            @*}*@
+            <button id="searchButton" class="govuk-button uln-search-button" data-module="govuk-button" data-prevent-double-click="true">@AdminSearchLearners.Button_Search</button>
+            <button id="clearSearchButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.SubmitAdminSearchLearnerClearKey">@AdminSearchLearners.Clear_Search</button>
         </div>
     </div>
 </form>

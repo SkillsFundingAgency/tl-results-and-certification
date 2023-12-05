@@ -8,11 +8,9 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
 using System;
-using System.Collections.Generic;
 using Xunit;
-using ContentAlreadyRequested = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaAlreadySubmitted;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
-using System.Linq;
+using ContentAlreadyRequested = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaAlreadySubmitted;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAchievementControllerTests.RequestSoaAlreadySubmitted
 {
@@ -97,41 +95,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
             model.SummaryLearnerName.Title.Should().Be(ContentAlreadyRequested.Title_Name_Text);
             model.SummaryLearnerName.Value.Should().Be(_soaPrintDetails.Name);
 
-            // DateofBirth
-            model.SummaryDateofBirth.Title.Should().Be(ContentAlreadyRequested.Title_DateofBirth_Text);
-            model.SummaryDateofBirth.Value.Should().Be(_soaPrintDetails.Dateofbirth);
+            // Date requested
+            model.SummaryDateRequested.Title.Should().Be(ContentAlreadyRequested.Title_DateRequested_Text);
+            model.SummaryDateRequested.Value.Should().Be(_mockLearnerDetails.RequestedDate);
 
-            // ProviderName
-            model.SummaryProvider.Title.Should().Be(ContentAlreadyRequested.Title_Provider_Text);
-            model.SummaryProvider.Value.Should().Be(_soaPrintDetails.ProviderName);
-
-            // TLevelTitle
-            model.SummaryTlevelTitle.Title.Should().Be(ContentAlreadyRequested.Title_Tlevel_Title_Text);
-            model.SummaryTlevelTitle.Value.Should().Be(_soaPrintDetails.TlevelTitle);
-
-            // CoreCode
-            model.SummaryCoreCode.Title.Should().Be(ContentAlreadyRequested.Title_Core_Code_Text);
-            model.SummaryCoreCode.Value.Should().Be(string.Format(ContentAlreadyRequested.Core_Code_Value, _soaPrintDetails.Core, _soaPrintDetails.CoreGrade));
-
-            // SpecialismCode
-            model.SummarySpecialismCode.Title.Should().Be(ContentAlreadyRequested.Title_Occupational_Specialism_Text);
-            model.SummarySpecialismCode.Value.Should().Be(string.Format(ContentAlreadyRequested.Occupational_Specialism_Value, _soaPrintDetails.Specialism, _soaPrintDetails.SpecialismGrade));
-
-            // EnglishAndMaths
-            model.SummaryEnglishAndMaths.Title.Should().Be(ContentAlreadyRequested.Title_English_And_Maths_Text);
-            model.SummaryEnglishAndMaths.Value.Should().Be(_soaPrintDetails.EnglishAndMaths);
-
-            // Industry Placement
-            model.SummaryIndustryPlacement.Title.Should().Be(ContentAlreadyRequested.Title_Industry_Placement_Text);
-            model.SummaryIndustryPlacement.Value.Should().Be(_soaPrintDetails.IndustryPlacement);
-
-            // Department
-            model.SummaryDepartment.Title.Should().Be(ContentAlreadyRequested.Title_Department_Text);
-            model.SummaryDepartment.Value.Should().Be(_address.DepartmentName);
-
-            // Address
-            model.SummaryAddress.Title.Should().Be(ContentAlreadyRequested.Title_Organisation_Address_Text);
-            model.SummaryAddress.Value.Should().Be(string.Format(ContentAlreadyRequested.Organisation_Address_Value, FormatedAddress));
+            // Requested by
+            model.SummaryRequestedBy.Title.Should().Be(ContentAlreadyRequested.Title_RequestedBy_Text);
+            model.SummaryRequestedBy.Value.Should().Be(_mockLearnerDetails.RequestedBy);
 
             // Breadcrum 
             model.Breadcrumb.Should().NotBeNull();
@@ -139,17 +109,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 
             model.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(BreadcrumbContent.Home);
             model.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Home);
-            model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Request_Statement_Of_Achievement);
-            model.Breadcrumb.BreadcrumbItems[1].RouteName.Should().Be(RouteConstants.RequestStatementOfAchievement);
-        }
-
-        private string FormatedAddress
-        {
-            get
-            {
-                var addressLines = new List<string> { _address.OrganisationName, _address.AddressLine1, _address.AddressLine2, _address.Town, _address.Postcode };
-                return string.Join(ContentAlreadyRequested.Html_Line_Break, addressLines.Where(x => !string.IsNullOrWhiteSpace(x)));
-            }
-        }
+            model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Request_Statement_Of_Achievement);        }
     }
 }

@@ -117,34 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Button_Back_To_Home" xml:space="preserve">
-    <value>Back to home</value>
+  <data name="Heading_No_Matching_Results" xml:space="preserve">
+    <value>There are no matching results</value>
   </data>
-  <data name="Heading_Soa_Already_Requested" xml:space="preserve">
-    <value>Statement of achievement has already been requested</value>
+  <data name="List_Item_Double_Checking_Spelling" xml:space="preserve">
+    <value>double-checking your spelling</value>
   </data>
-  <data name="Inset_Para_Contact_Us_Link" xml:space="preserve">
-    <value>contact us.</value>
+  <data name="List_Item_Removing_Filters" xml:space="preserve">
+    <value>removing filters</value>
   </data>
-  <data name="Inset_Para_If_You_Have_Not_Received" xml:space="preserve">
-    <value>If you have not received the statement of achievement after 3 weeks then </value>
-  </data>
-  <data name="Inset_Para_Request_Already_Submitted" xml:space="preserve">
-    <value>A statement of achievement has already been requested for this learner.</value>
-  </data>
-  <data name="Page_Title" xml:space="preserve">
-    <value>Request statement of achievement – Statement of achievement already requested page</value>
-  </data>
-  <data name="Title_DateRequested_Text" xml:space="preserve">
-    <value>Date requested</value>
-  </data>
-  <data name="Title_Name_Text" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Title_RequestedBy_Text" xml:space="preserve">
-    <value>Requested by</value>
-  </data>
-  <data name="Title_Uln_Text" xml:space="preserve">
-    <value>ULN</value>
+  <data name="List_Title_Improve_Your_Search_By" xml:space="preserve">
+    <value>Improve your search results by:</value>
   </data>
 </root>

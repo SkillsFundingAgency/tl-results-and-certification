@@ -4,8 +4,6 @@
     {
         public AdminSearchLearnerFiltersViewModel SearchLearnerFilters { get; set; }
 
-        public string Provider { get; set; }
-
         public string SearchKey { get; set; }
 
         public int? PageNumber { get; set; }

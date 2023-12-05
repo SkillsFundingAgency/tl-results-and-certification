@@ -1,33 +1,83 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.AdminSearchLearnerViewModel
 
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Common.Extensions
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+@using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Enum;
 
 @{
-    ViewData["Title"] = SearchLearners.Page_Title;
+    ViewData["Title"] = AdminSearchLearners.Page_Title;
 }
 
 @section NavigationBar {
     <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
 }
-
-<h1 class="govuk-heading-xl">@SearchLearners.Heading_Search_Learners_Records</h1>
+<partial name="Partials/_adminSearchKeyErrorSummary.cshtml" model="Model.ErrorMessage" />
+<h1 class="govuk-heading-xl">@AdminSearchLearners.Heading_Search_Learners_Records</h1>
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
         <div class="filter-border">
-            <partial name="Partials/_adminSearchFilters.cshtml" model="Model.SearchCriteria" />
+            <partial name="Partials/_adminSearchFilters.cshtml" model="Model.SearchLearnerCriteria.SearchLearnerFilters" />
         </div>
     </div>
     <div class="govuk-grid-column-one-half">
-        <partial name="Partials/_adminSearchKey.cshtml" model="Model.SearchCriteria" />
+        <partial name="Partials/_adminSearchKey.cshtml" model="Model.SearchLearnerCriteria" />
 
-        <div class="govuk-label govuk-label--m">
-            @SearchLearners.Heading_Start_Search
-        </div>
+        @switch (Model.State)
+        {
+            case AdminSearchState.PageFirstDisplayed:
 
-        <p class="govuk-body">
-            @SearchLearners.Para_Enter_ULN_Or_Learner_Last_Name
-        </p>
+                <label class="govuk-label govuk-label--m">
+                    @AdminSearchLearners.Heading_Start_Search
+                </label>
+
+                <p class="govuk-body">
+                    @AdminSearchLearners.Para_Enter_ULN_Or_Learner_Last_Name
+                </p>
+
+                break;
+
+            case AdminSearchState.ResultsFound:
+
+                <div class="learner-records">
+                    @if (Model.Pagination.PagerInfo.TotalPages > 0)
+                    {
+                        <h2 class="govuk-body">@string.Format(Model.Pagination.PaginationSummary, @Model.Pagination.PagerInfo.RecordFrom, @Model.Pagination.PagerInfo.RecordTo, @Model.Pagination.PagerInfo.TotalItems)</h2>
+                    }
+                    <dl class="govuk-summary-list">
+                        @foreach (var learner in Model.SearchLearnerDetailsList.LearnerDetails)
+                        {
+                            <partial name="Partials/_adminLearnerDetailsCard.cshtml" model="learner" />
+                        }
+                    </dl>
+                </div>
+
+                @if (Model.ContainsMultipleLearnerResultsPages)
+                {
+                    <vc:pagination model=@Model.Pagination></vc:pagination>
+                }
+
+                break;
+
+            case AdminSearchState.ResultsNotFound:
+
+                if (Model.OnlySearchKeyApplied)
+                {
+                    <h2 class="govuk-heading-m wrap">
+                        @Model.LearnersNotFoundHeader
+                    </h2>
+
+                    <p class="govuk-body">
+                        @Model.LearnersNotFoundMessage
+                    </p>
+                }
+                else
+                {
+                    <partial name="Partials/_adminNoMatchingSearchResults.cshtml" />
+                }
+
+                break;
+        }
     </div>
 </div>

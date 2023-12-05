@@ -403,7 +403,10 @@
 
         #region Admin Dashboard
 
-        public const string AdminSearchLearners = "AdminSearchLearners";
+        public const string AdminHome = "AdminHome";
+        public const string AdminSearchLearnersRecords = "AdminSearchLearnersRecords";
+        public const string SubmitAdminSearchLearnerRecordsApplySearchKey = "SubmitAdminSearchLearnerRecordsApplySearchKey";
+        public const string SubmitAdminSearchLearnerClearKey = "SubmitAdminSearchLearnerClearKey";
         public const string AdminChangeStartYear = "AdminChangeStartYear";
 
         #endregion

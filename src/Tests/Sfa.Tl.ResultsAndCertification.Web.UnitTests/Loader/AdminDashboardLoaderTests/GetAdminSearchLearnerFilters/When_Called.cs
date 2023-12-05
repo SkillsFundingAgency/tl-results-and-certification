@@ -4,6 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
@@ -36,14 +37,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
         {
             var expectedApiResult = new AdminSearchLearnerFilters
             {
-                AwardingOrganisations = new List<AdminFilter>
+                AwardingOrganisations = new List<FilterLookupData>
                 {
-                    new AdminFilter { Id = 1, Name = "Ncfe", IsSelected = false },
-                    new AdminFilter { Id = 2, Name = "Pearson", IsSelected = false }
+                    new FilterLookupData { Id = 1, Name = "Ncfe", IsSelected = false },
+                    new FilterLookupData { Id = 2, Name = "Pearson", IsSelected = false }
                 },
-                AcademicYears = new List<AdminFilter>
+                AcademicYears = new List<FilterLookupData>
                 {
-                    new AdminFilter { Id = 1, Name = "2020 to 2021", IsSelected = false }
+                    new FilterLookupData { Id = 1, Name = "2020 to 2021", IsSelected = false }
                 }
             };
 
@@ -51,14 +52,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
 
             _expectedResult = new AdminSearchLearnerFiltersViewModel
             {
-                AwardingOrganisations = new List<AdminFilter>
+                AwardingOrganisations = new List<FilterLookupData>
                 {
-                    new AdminFilter { Id = 1, Name = "Ncfe", IsSelected = false },
-                    new AdminFilter { Id = 2, Name = "Pearson", IsSelected = false }
+                    new FilterLookupData { Id = 1, Name = "Ncfe", IsSelected = false },
+                    new FilterLookupData { Id = 2, Name = "Pearson", IsSelected = false }
                 },
-                AcademicYears = new List<AdminFilter>
+                AcademicYears = new List<FilterLookupData>
                 {
-                    new AdminFilter { Id = 1, Name = "2020 to 2021", IsSelected = false }
+                    new FilterLookupData { Id = 1, Name = "2020 to 2021", IsSelected = false }
                 }
             };
         }
