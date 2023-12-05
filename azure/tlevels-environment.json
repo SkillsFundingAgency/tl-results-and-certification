@@ -69,8 +69,8 @@
         "learnerGenderTrigger": {
             "type": "string"
         },
-		"certificatePrintingBatchesCreateTrigger": {
-            "type": "string"            
+        "certificatePrintingBatchesCreateTrigger": {
+            "type": "string"
         },
         "certificatePrintingRequestTrigger": {
             "type": "string"
@@ -90,8 +90,8 @@
         "ucasTransferAmendmentsTrigger": {
             "type": "string"
         },
-		"overallResultCalculationTrigger": {
-            "type": "string"            
+        "overallResultCalculationTrigger": {
+            "type": "string"
         },
         "enableReplica": {
             "type": "bool",
@@ -451,7 +451,7 @@
                                 "name": "LearnerGenderTrigger",
                                 "value": "[parameters('learnerGenderTrigger')]"
                             },
-							{
+                            {
                                 "name": "CertificatePrintingBatchesCreateTrigger",
                                 "value": "[parameters('certificatePrintingBatchesCreateTrigger')]"
                             },
@@ -479,10 +479,10 @@
                                 "name": "UcasTransferAmendmentsTrigger",
                                 "value": "[parameters('ucasTransferAmendmentsTrigger')]"
                             },
-							{
+                            {
                                 "name": "OverallResultCalculationTrigger",
                                 "value": "[parameters('overallResultCalculationTrigger')]"
-                            },							
+                            },
                             {
                                 "name": "WEBSITE_LOAD_CERTIFICATES",
                                 "value": "1"
@@ -563,10 +563,10 @@
                     "serverlessAutoPauseDelay": {
                         "value": "[parameters('sqlserverlessAutoPauseDelay')]"
                     },
-                    "createMode":{
+                    "createMode": {
                         "value": "Secondary"
                     },
-                    "sourceDatabaseId":{
+                    "sourceDatabaseId": {
                         "value": "[reference(concat('sql-database','-', parameters('environmentNameAbbreviation'),'-','shared')).outputs.sqlDatabaseResourceId.value]"
                     },
                     "requestedBackupStorageRedundancy": {

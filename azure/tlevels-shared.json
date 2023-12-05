@@ -267,6 +267,62 @@
             ]
         },
         {
+            "apiVersion": "2022-09-01",
+            "name": "[concat('key-vault-secret-',parameters('environmentNameAbbreviation'), '-admin-username', copyIndex())]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'), 'keyvault-secret.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "keyVaultName": {
+                        "value": "[variables('keyVaultName')]"
+                    },
+                    "secretName": {
+                        "value": "[concat(variables('sqlServerNames')[copyIndex()],'-admin-username')]"
+                    },
+                    "secretValue": {
+                        "value": "[parameters('sqlServerAdminUserName')]"
+                    }
+                }
+            },
+            "copy": {
+                "count": "[length(variables('sqlServerNames'))]",
+                "name": "firewallrulecopy",
+                "mode": "Parallel"
+            }
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "name": "[concat('key-vault-secret-',parameters('environmentNameAbbreviation'), '-admin-password', copyIndex())]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'), 'keyvault-secret.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "keyVaultName": {
+                        "value": "[variables('keyVaultName')]"
+                    },
+                    "secretName": {
+                        "value": "[concat(variables('sqlServerNames')[copyIndex()],'-admin-password')]"
+                    },
+                    "secretValue": {
+                        "value": "[parameters('sqlServerAdminPassword')]"
+                    }
+                }
+            },
+            "copy": {
+                "count": "[length(variables('sqlServerNames'))]",
+                "name": "firewallrulecopy",
+                "mode": "Parallel"
+            }
+        },
+        {
             "apiVersion": "2017-05-10",
             "name": "[concat('app-service-plan','-', parameters('environmentNameAbbreviation'))]",
             "type": "Microsoft.Resources/deployments",
