@@ -298,7 +298,6 @@
         public const string SubmitAddAddressNotFound = "SubmitAddAddressNotFound";
         public const string RequestReplacementDocument = "RequestReplacementDocument";
         public const string SubmitRequestReplacementDocument = "SubmitRequestReplacementDocument";
-
         #endregion
 
         #region Statement of achievement
@@ -406,6 +405,9 @@
         public const string AdminSearchLearnersRecords = "AdminSearchLearnersRecords";
         public const string SubmitAdminSearchLearnerRecordsApplySearchKey = "SubmitAdminSearchLearnerRecordsApplySearchKey";
         public const string SubmitAdminSearchLearnerClearKey = "SubmitAdminSearchLearnerClearKey";
+        public const string AdminSearchLearners = "AdminSearchLearners";
+        public const string AdminLearnerRecord = "AdminLearnerRecord";
+
 
         #endregion
     }
