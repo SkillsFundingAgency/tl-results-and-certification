@@ -28,9 +28,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
         }
 
-        public async Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayid)
+        public async Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayId)
         {
-            return await _adminDashboardRepository.GetAdminLearnerRecordAsync(pathwayid);
+            return await _adminDashboardRepository.GetAdminLearnerRecordAsync(pathwayId);
         }
 
         public Task<PagedResponse<AdminSearchLearnerDetail>> GetAdminSearchLearnerDetailsAsync(AdminSearchLearnerRequest request)

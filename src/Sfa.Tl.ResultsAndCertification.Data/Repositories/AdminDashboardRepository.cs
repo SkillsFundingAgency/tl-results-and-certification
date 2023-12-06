@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .ToListAsync();
         }
 
-        public async Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayid)
+        public async Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayId)
         {
            
             var learnerRecordQuerable = from tqPathway in _dbContext.TqRegistrationPathway
@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
                                         orderby tqPathway.CreatedOn descending
                                         let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()                                       
-                                        where tqPathway.Id == pathwayid
+                                        where tqPathway.Id == pathwayId
                                         select new AdminLearnerRecord
                                         {
                                             ProfileId = tqProfile.Id,
