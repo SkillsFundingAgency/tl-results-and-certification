@@ -44,20 +44,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("request-statement-of-achievement", Name = RouteConstants.RequestStatementOfAchievement)]
-        public async Task<IActionResult> RequestStatementOfAchievementAsync()
-        {
-            if (!IsSoaAvailable())
-                return RedirectToRoute(RouteConstants.StatementsOfAchievementNotAvailable);
-
-            if (!await IsAddressAvailable())
-                return RedirectToRoute(RouteConstants.PostalAddressMissing);
-
-            await _cacheService.RemoveAsync<RequestSoaUniqueLearnerNumberViewModel>(CacheKey);
-            return View(new RequestStatementOfAchievementViewModel());
-        }
-
-        [HttpGet]
         [Route("postal-address-missing", Name = RouteConstants.PostalAddressMissing)]
         public IActionResult PostalAddressMissing()
         {
