@@ -9,10 +9,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
     {
         public string Provider { get; set; } = string.Empty;
 
-        public IList<FilterLookupData> AwardingOrganisations { get; set; }
+        public IList<FilterLookupData> AwardingOrganisations { get; set; } = new List<FilterLookupData>();
 
-        public IList<FilterLookupData> AcademicYears { get; set; }
+        public IList<FilterLookupData> AcademicYears { get; set; } = new List<FilterLookupData>();
 
-        public bool IsApplyFiltersSelected { get; set; }
+        public bool IsApplyFiltersSelected
+            => !string.IsNullOrWhiteSpace(Provider)
+            || (!AwardingOrganisations.IsNullOrEmpty() && AwardingOrganisations.Any(p => p.IsSelected))
+            || (!AcademicYears.IsNullOrEmpty() && AcademicYears.Any(p => p.IsSelected));
     }
 }

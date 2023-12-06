@@ -8,6 +8,8 @@
 
         public int? PageNumber { get; set; }
 
-        public bool IsSearchKeyApplied { get; set; }
+        public bool IsSearchKeyApplied => !string.IsNullOrWhiteSpace(SearchKey);
+
+        public bool AreFiltersApplied => SearchLearnerFilters?.IsApplyFiltersSelected == true;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+﻿using Microsoft.IdentityModel.Tokens;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Pagination;
@@ -11,6 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 {
     public class AdminSearchLearnerViewModel
     {
+        private const int FirstPage = 1;
         private const int LearnerResultsPageSize = 10;
 
         public AdminSearchLearnerViewModel() { }
@@ -26,9 +28,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 
         public AdminSearchState State { get; set; } = AdminSearchState.NoSearch;
 
-        public bool OnlySearchKeyApplied
-            => SearchLearnerCriteria?.IsSearchKeyApplied == true || SearchLearnerCriteria?.SearchLearnerFilters?.IsApplyFiltersSelected != true;
-
         public bool ContainsLearnerResults
             => SearchLearnerDetailsList?.LearnerDetails != null && SearchLearnerDetailsList.LearnerDetails.Any();
 
@@ -39,20 +38,65 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         {
             SearchLearnerCriteria ??= new AdminSearchLearnerCriteriaViewModel();
 
-            SearchLearnerCriteria.IsSearchKeyApplied = !string.IsNullOrWhiteSpace(searchKey);
             SearchLearnerCriteria.SearchKey = searchKey;
+            SearchLearnerCriteria.PageNumber = FirstPage;
         }
 
-        public void ClearLearnerDetails()
+        public void ClearSearchKey()
         {
-            SearchLearnerDetailsList?.LearnerDetails?.Clear();
-            State = AdminSearchState.NoSearch;
+            SearchLearnerCriteria ??= new AdminSearchLearnerCriteriaViewModel();
+
+            SearchLearnerCriteria.SearchKey = string.Empty;
+            SearchLearnerCriteria.PageNumber = FirstPage;
+        }
+
+        public void SetFilters(AdminSearchLearnerFiltersViewModel filtersViewModel)
+        {
+            SearchLearnerCriteria ??= new AdminSearchLearnerCriteriaViewModel();
+            SearchLearnerCriteria.SearchLearnerFilters ??= new AdminSearchLearnerFiltersViewModel();
+
+            SearchLearnerCriteria.SearchLearnerFilters = filtersViewModel;
+            SearchLearnerCriteria.PageNumber = FirstPage;
+        }
+
+        public void ClearFilters()
+        {
+            SearchLearnerCriteria ??= new AdminSearchLearnerCriteriaViewModel();
+            SearchLearnerCriteria.SearchLearnerFilters ??= new AdminSearchLearnerFiltersViewModel();
+
+            AdminSearchLearnerFiltersViewModel filters = SearchLearnerCriteria.SearchLearnerFilters;
+
+            filters.Provider = string.Empty;
+
+            if (!filters.AwardingOrganisations.IsNullOrEmpty())
+            {
+                foreach (var filter in filters.AwardingOrganisations)
+                {
+                    filter.IsSelected = false;
+                }
+            }
+
+            if (!filters.AcademicYears.IsNullOrEmpty())
+            {
+                foreach (var filter in filters.AcademicYears)
+                {
+                    filter.IsSelected = false;
+                }
+            }
+
+            SearchLearnerCriteria.PageNumber = FirstPage;
         }
 
         public void SetLearnerDetails(AdminSearchLearnerDetailsListViewModel learnerDetailsListViewModel)
         {
             SearchLearnerDetailsList = learnerDetailsListViewModel;
             State = ContainsLearnerResults ? AdminSearchState.ResultsFound : AdminSearchState.ResultsNotFound;
+        }
+
+        public void ClearLearnerDetails()
+        {
+            SearchLearnerDetailsList?.LearnerDetails?.Clear();
+            State = AdminSearchState.NoSearch;
         }
 
         public PaginationModel Pagination => new()

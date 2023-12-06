@@ -406,6 +406,8 @@
         public const string AdminSearchLearnersRecords = "AdminSearchLearnersRecords";
         public const string SubmitAdminSearchLearnerRecordsApplySearchKey = "SubmitAdminSearchLearnerRecordsApplySearchKey";
         public const string SubmitAdminSearchLearnerClearKey = "SubmitAdminSearchLearnerClearKey";
+        public const string SubmitAdminSearchLearnerRecordsApplyFilters = "SubmitAdminSearchLearnerRecordsApplyFilters";
+        public const string SubmitAdminSearchLearnerClearFilters = "SubmitAdminSearchLearnerClearFilters";
 
         #endregion
     }
