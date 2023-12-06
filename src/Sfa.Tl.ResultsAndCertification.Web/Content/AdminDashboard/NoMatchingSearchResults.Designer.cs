@@ -71,11 +71,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to double-checking your spelling.
+        ///   Looks up a localized string similar to checking the spelling of last names.
         /// </summary>
-        public static string List_Item_Double_Checking_Spelling {
+        public static string List_Item_Checking_Lastnames_Spelling {
             get {
-                return ResourceManager.GetString("List_Item_Double_Checking_Spelling", resourceCulture);
+                return ResourceManager.GetString("List_Item_Checking_Lastnames_Spelling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to entering a ULN with 10 digits.
+        /// </summary>
+        public static string List_Item_Enter_ULN {
+            get {
+                return ResourceManager.GetString("List_Item_Enter_ULN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to only searching for registered learners.
+        /// </summary>
+        public static string List_Item_Only_Registered_Learners {
+            get {
+                return ResourceManager.GetString("List_Item_Only_Registered_Learners", resourceCulture);
             }
         }
         

@@ -2,7 +2,7 @@
 {
     public enum AdminSearchState
     {
-        PageFirstDisplayed,
+        NoSearch,
         ResultsFound,
         ResultsNotFound
     }

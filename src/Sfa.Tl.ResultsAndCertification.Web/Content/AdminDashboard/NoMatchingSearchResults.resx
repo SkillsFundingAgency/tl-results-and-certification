@@ -120,8 +120,14 @@
   <data name="Heading_No_Matching_Results" xml:space="preserve">
     <value>There are no matching results</value>
   </data>
-  <data name="List_Item_Double_Checking_Spelling" xml:space="preserve">
-    <value>double-checking your spelling</value>
+  <data name="List_Item_Checking_Lastnames_Spelling" xml:space="preserve">
+    <value>checking the spelling of last names</value>
+  </data>
+  <data name="List_Item_Enter_ULN" xml:space="preserve">
+    <value>entering a ULN with 10 digits</value>
+  </data>
+  <data name="List_Item_Only_Registered_Learners" xml:space="preserve">
+    <value>only searching for registered learners</value>
   </data>
   <data name="List_Item_Removing_Filters" xml:space="preserve">
     <value>removing filters</value>
