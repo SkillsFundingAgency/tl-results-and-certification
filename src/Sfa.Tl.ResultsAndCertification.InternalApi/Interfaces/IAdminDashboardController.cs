@@ -12,4 +12,4 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
         Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayid);
 
     }
-    }
+}
