@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetAdminLearnerRecord/{pathwayid}", Name = RouteConstants.LearnerRecord)]
+        [Route("GetAdminLearnerRecord/{pathwayid}")]
         public async Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayid)
         {
             return await _adminDashboardService.GetAdminLearnerRecordAsync(pathwayid);
