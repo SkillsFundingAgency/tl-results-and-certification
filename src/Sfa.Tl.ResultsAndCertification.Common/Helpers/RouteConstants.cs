@@ -406,6 +406,7 @@
         public const string SubmitAdminSearchLearnerRecordsApplySearchKey = "SubmitAdminSearchLearnerRecordsApplySearchKey";
         public const string SubmitAdminSearchLearnerClearKey = "SubmitAdminSearchLearnerClearKey";
         public const string AdminSearchLearners = "AdminSearchLearners";
+        public const string AdminLearnerRecord = "AdminLearnerRecord";
 
 
         #endregion

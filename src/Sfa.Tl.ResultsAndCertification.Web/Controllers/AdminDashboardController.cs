@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("admin/learner-record/{pathwayid}", Name = RouteConstants.AdminSearchLearners)]
+        [Route("admin/learner-record/{pathwayid}", Name = RouteConstants.AdminLearnerRecord)]
         public async Task<IActionResult> AdminLearnerRecordAsync(int pathwayId)
         {
             var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(pathwayId);
