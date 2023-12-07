@@ -107,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
             // ProviderName
            
-            model.SummaryProviderName.Value.Should().Be(Mockresult.ProviderName+ "(" + Mockresult.ProviderUkprn.ToString()+")");
+            model.SummaryProviderName.Value.Should().Be(Mockresult.ProviderName+ " (" + Mockresult.ProviderUkprn.ToString()+")");
 
             // ProviderUkprn
            model.SummaryProviderUkprn.Value.Should().Be(Mockresult.ProviderUkprn.ToString());
