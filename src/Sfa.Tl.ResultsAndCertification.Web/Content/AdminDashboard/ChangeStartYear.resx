@@ -123,6 +123,12 @@
   <data name="Button_Continue" xml:space="preserve">
     <value>Continue</value>
   </data>
+  <data name="Error_Summary_Header" xml:space="preserve">
+    <value>There is a problem</value>
+  </data>
+  <data name="Error_Summary_Text" xml:space="preserve">
+    <value>Select the correct start year</value>
+  </data>
   <data name="Heading_Change_Start_Year" xml:space="preserve">
     <value>Change start year</value>
   </data>
@@ -149,5 +155,8 @@
   </data>
   <data name="Title_ULN_Text" xml:space="preserve">
     <value>ULN</value>
+  </data>
+  <data name="Validation_Message" xml:space="preserve">
+    <value>Select the correct start year</value>
   </data>
 </root>

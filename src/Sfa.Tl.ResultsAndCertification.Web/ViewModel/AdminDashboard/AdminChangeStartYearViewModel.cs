@@ -1,16 +1,16 @@
-﻿using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using System.Collections.Generic;
-using ChangeStarYear = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.ChangeStartYear;
-
-using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
+using System.ComponentModel.DataAnnotations;
+//using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
+using ChangeStarYear = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.ChangeStartYear;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 {
     public class AdminChangeStartYearViewModel
     {
+        public int ProfileId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public long Uln { get; set; }
@@ -22,6 +22,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public string DisplayAcademicYear { get; set; }
         public List<int> AcademicStartYearsToBe { get; set; }
         public string Learner => $"{FirstName} {LastName}";
+
+        [Required(ErrorMessageResourceType = typeof(ChangeStarYear), ErrorMessageResourceName = "Validation_Message")]
+        public bool? IsAcademicYearToBeSelected { get; set; }
 
         public BackLinkModel BackLink => new()
         {
@@ -46,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         {
             Id = "provider",
             Title = ChangeStarYear.Title_Provider_Text,
-            Value = $"{Provider}({Ukprn})" 
+            Value = $"{Provider} ({Ukprn})"
         };
 
         public SummaryItemModel SummaryTlevel => new()

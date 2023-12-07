@@ -6,7 +6,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
 {
     public class AdminLearnerRecord
     {
-        public string FirstName { get;set; }
+        public int ProfileId { get; set; }
+        public string FirstName { get; set; }
         public string LastName { get; set; }
         public long Uln { get; set; }
         public string Provider { get; set; }
@@ -15,5 +16,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
         public int TLevelStartYear { get; set; }
         public int AcademicYear { get; set; }
         public string DisplayAcademicYear { get; set; }
+        public List<int> AcademicStartYearsToBe { get; set; }
     }
 }

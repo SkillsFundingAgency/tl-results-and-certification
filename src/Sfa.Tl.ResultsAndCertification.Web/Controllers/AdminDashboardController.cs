@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -93,13 +94,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AdminChangeStartYearAsync(int profileId)
         {
             var viewModel = await _loader.GetAdminLearnerDetailsAsync(profileId);
-            var _academicYearToBe = new List<int>();
-
-            for (int i = viewModel.AcademicYear - 1, j = 1; i >= viewModel.TlevelStartYear && j < 2; i--, j++)
-                _academicYearToBe.Add(i);
-
-            viewModel.AcademicStartYearsToBe = _academicYearToBe;
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/submit-change-start-year", Name = RouteConstants.SubmitAdminChangeStartYear)]
+        public async Task<IActionResult> AdminChangeStartYearAsync(AdminChangeStartYearViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            return View(model);
+
         }
     }
 }

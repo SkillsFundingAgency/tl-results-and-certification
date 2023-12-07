@@ -408,6 +408,7 @@
         public const string SubmitAdminSearchLearnerRecordsApplySearchKey = "SubmitAdminSearchLearnerRecordsApplySearchKey";
         public const string SubmitAdminSearchLearnerClearKey = "SubmitAdminSearchLearnerClearKey";
         public const string AdminChangeStartYear = "AdminChangeStartYear";
+        public const string SubmitAdminChangeStartYear = "SubmitAdminChangeStartYear";
 
         #endregion
     }

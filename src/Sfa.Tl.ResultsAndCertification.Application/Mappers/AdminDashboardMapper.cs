@@ -14,6 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
         public AdminDashboardMapper()
         {
             CreateMap<TqRegistrationPathway, AdminLearnerRecord>()
+                .ForMember(p => p.ProfileId, opts => opts.MapFrom(p => p.TqRegistrationProfile.Id))
                 .ForMember(p => p.Uln, opts => opts.MapFrom(p => p.TqRegistrationProfile.UniqueLearnerNumber))
                 .ForMember(p => p.FirstName, opts => opts.MapFrom(p => p.TqRegistrationProfile.Firstname))
                 .ForMember(p => p.LastName, opts => opts.MapFrom(p => p.TqRegistrationProfile.Lastname))

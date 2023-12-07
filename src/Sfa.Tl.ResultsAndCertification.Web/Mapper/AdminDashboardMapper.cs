@@ -28,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PagerInfo, opts => opts.MapFrom(s => s.PagerInfo));
 
             CreateMap<AdminLearnerRecord, AdminChangeStartYearViewModel>()
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                 .ForMember(d => d.FirstName, opts => opts.MapFrom(s => s.FirstName))
                 .ForMember(d => d.LastName, opts => opts.MapFrom(s => s.LastName))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
@@ -36,7 +37,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.Tlevel, opts => opts.MapFrom(s => s.TLevel))
                 .ForMember(d => d.TlevelStartYear, opts => opts.MapFrom(s => s.TLevelStartYear))
                 .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
-                .ForMember(d => d.DisplayAcademicYear, opts => opts.MapFrom(s => s.DisplayAcademicYear));
+                .ForMember(d => d.DisplayAcademicYear, opts => opts.MapFrom(s => s.DisplayAcademicYear))
+                .ForMember(d => d.AcademicStartYearsToBe, opts => opts.MapFrom(s => s.AcademicStartYearsToBe));
         }
     }
 }

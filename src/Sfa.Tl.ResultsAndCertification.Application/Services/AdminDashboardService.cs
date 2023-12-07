@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
@@ -37,8 +38,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int profileId)
         {
+            var _academicYearToBe = new List<int>();
+
             var result = await _adminDashboardRepository.GetLearnerRecordAsync(profileId);
-            return _mapper.Map<AdminLearnerRecord>(result);
+            var _adminLearnerRecord = _mapper.Map<AdminLearnerRecord>(result);
+
+            for (int i = _adminLearnerRecord.AcademicYear - 1, j = 1; i >= _adminLearnerRecord.TLevelStartYear && j <= 2; i--, j++)
+                _academicYearToBe.Add(i);
+
+            _adminLearnerRecord.AcademicStartYearsToBe = _academicYearToBe;
+
+            return _adminLearnerRecord;
         }
     }
 

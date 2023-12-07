@@ -79,6 +79,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is a problem.
+        /// </summary>
+        public static string Error_Summary_Header {
+            get {
+                return ResourceManager.GetString("Error_Summary_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the correct start year.
+        /// </summary>
+        public static string Error_Summary_Text {
+            get {
+                return ResourceManager.GetString("Error_Summary_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change start year.
         /// </summary>
         public static string Heading_Change_Start_Year {
@@ -156,6 +174,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static string Title_ULN_Text {
             get {
                 return ResourceManager.GetString("Title_ULN_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the correct start year.
+        /// </summary>
+        public static string Validation_Message {
+            get {
+                return ResourceManager.GetString("Validation_Message", resourceCulture);
             }
         }
     }
