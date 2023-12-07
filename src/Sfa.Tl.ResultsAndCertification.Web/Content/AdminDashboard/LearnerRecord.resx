@@ -117,43 +117,88 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Enter_UniqueLearnerNumber_Label" xml:space="preserve">
-    <value>Enter the unique learner number (ULN)</value>
+  <data name="Action_Text_Link_Add" xml:space="preserve">
+    <value>Add</value>
   </data>
-  <data name="Link_2020_To_2021" xml:space="preserve">
-    <value>2020 to 2021</value>
+  <data name="Action_Text_Link_Change" xml:space="preserve">
+    <value>Change</value>
   </data>
-  <data name="Link_2021_To_2022" xml:space="preserve">
-    <value>2021 to 2022</value>
+  <data name="Back_To_Home_Text" xml:space="preserve">
+    <value>&lt; Back to home</value>
   </data>
-  <data name="Link_2022_To_2023" xml:space="preserve">
-    <value>2022 to 2023</value>
+  <data name="Hidden_Action_Text_English" xml:space="preserve">
+    <value> english status</value>
   </data>
-  <data name="Link_2023_To_2024" xml:space="preserve">
-    <value>2023 to 2024</value>
+  <data name="Hidden_Action_Text_Industry_Placement" xml:space="preserve">
+    <value> industry placement information</value>
   </data>
-  <data name="List_All_Learners_By_Start_Year" xml:space="preserve">
-    <value>List all active learners by start year</value>
+  <data name="Hidden_Action_Text_Maths" xml:space="preserve">
+    <value> maths status</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Search learner records</value>
+    <value> - Learner record – Admin</value>
   </data>
-  <data name="Search_Button" xml:space="preserve">
-    <value>Search</value>
+  <data name="Personal_Details_Text" xml:space="preserve">
+    <value>Personal details</value>
   </data>
-  <data name="Search_For_The_Learner_You_Want_To_Manage" xml:space="preserve">
-    <value>Or search for the learner you want to manage</value>
+  <data name="Search_Again_Text" xml:space="preserve">
+    <value>Search again</value>
   </data>
-  <data name="Search_Learner_Records_Heading" xml:space="preserve">
-    <value>Search learner records</value>
+  <data name="Section_Heading_Core_Component" xml:space="preserve">
+    <value>Core component</value>
   </data>
-  <data name="Uln_Must_10_Digit_Hint" xml:space="preserve">
-    <value>ULN must be 10 digits long</value>
+  <data name="Section_Heading_Industry_Placement" xml:space="preserve">
+    <value>Industry placement</value>
   </data>
-  <data name="Uln_Not_Valid_Validation_Message" xml:space="preserve">
-    <value>Enter a valid 10-digit ULN</value>
+  <data name="Section_Heading_Level2_Maths_English" xml:space="preserve">
+    <value>Level 2 maths and English</value>
   </data>
-  <data name="Uln_Required_Validation_Message" xml:space="preserve">
-    <value>Enter a ULN with 10 digits</value>
+  <data name="Section_Heading_OccupationalSpecialism" xml:space="preserve">
+    <value>Occupational specialism(s)</value>
+  </data>
+  <data name="Section_Heading_Overall_Result_Tlevel" xml:space="preserve">
+    <value>Overall T Level result</value>
+  </data>
+  <data name="Start_Year_Value" xml:space="preserve">
+    <value>{0} to {1}</value>
+  </data>
+  <data name="Status_Tag_Incomplete" xml:space="preserve">
+    <value>Record Incomplete</value>
+  </data>
+  <data name="Status_Tag_Record_Complete" xml:space="preserve">
+    <value>Record Complete</value>
+  </data>
+  <data name="Title_AoName_Text" xml:space="preserve">
+    <value>Awarding organisation</value>
+  </data>
+  <data name="Title_DateofBirth_Text" xml:space="preserve">
+    <value>Date of birth</value>
+  </data>
+  <data name="Title_English_Text" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Title_IP_Status_Text" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Title_Maths_Text" xml:space="preserve">
+    <value>Maths</value>
+  </data>
+  <data name="Title_Provider_Ukprn_Name_Text" xml:space="preserve">
+    <value>Provider (UKPRN)</value>
+  </data>
+  <data name="Title_StartYear_Text" xml:space="preserve">
+    <value>Start year</value>
+  </data>
+  <data name="Title_TLevel_Status_Text" xml:space="preserve">
+    <value>T Level status</value>
+  </data>
+  <data name="Title_TLevel_Text" xml:space="preserve">
+    <value>T Level</value>
+  </data>
+  <data name="TLevel_Status_Pending_Withdrawal_Text" xml:space="preserve">
+    <value>Pending Withdrawal</value>
+  </data>
+  <data name="Uln_Text" xml:space="preserve">
+    <value>ULN </value>
   </data>
 </root>

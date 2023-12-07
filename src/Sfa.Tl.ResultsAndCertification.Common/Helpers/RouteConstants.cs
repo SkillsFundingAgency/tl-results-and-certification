@@ -298,12 +298,10 @@
         public const string SubmitAddAddressNotFound = "SubmitAddAddressNotFound";
         public const string RequestReplacementDocument = "RequestReplacementDocument";
         public const string SubmitRequestReplacementDocument = "SubmitRequestReplacementDocument";
-
         #endregion
 
         #region Statement of achievement
 
-        public const string RequestStatementOfAchievement = "RequestStatementOfAchievement";
         public const string StatementsOfAchievementNotAvailable = "StatementsOfAchievementNotAvailable";
         public const string PostalAddressMissing = "PostalAddressMissing";
         public const string RequestSoaUniqueLearnerNumber = "RequestSoaUniqueLearnerNumber";
@@ -407,8 +405,11 @@
         public const string AdminSearchLearnersRecords = "AdminSearchLearnersRecords";
         public const string SubmitAdminSearchLearnerRecordsApplySearchKey = "SubmitAdminSearchLearnerRecordsApplySearchKey";
         public const string SubmitAdminSearchLearnerClearKey = "SubmitAdminSearchLearnerClearKey";
+        public const string AdminSearchLearners = "AdminSearchLearners";
+        public const string AdminLearnerRecord = "AdminLearnerRecord";
         public const string AdminChangeStartYear = "AdminChangeStartYear";
         public const string SubmitAdminChangeStartYear = "SubmitAdminChangeStartYear";
+
 
         #endregion
     }

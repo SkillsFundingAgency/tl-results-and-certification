@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
 
         private AdminLearnerRecord _expectedResult;
         private AdminLearnerRecord _actualResult;
-        private int ProfileId = 1;
+        private int PathwayId = 1;
 
         public override void Setup()
         {
@@ -31,9 +31,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
                 FirstName = "John",
                 LastName = "Smith",
                 Uln = 1234567890,
-                Provider = "Barnsley College",
+                ProviderName = "Barnsley College",
                 AcademicYear = 2022,
-                TLevel = "Building Services Engineering"
+                TlevelName = "Building Services Engineering"
             };
 
             var today = new DateTime(2023, 1, 1);
@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
 
         public override async Task When()
         {
-            _actualResult = await _adminDashboardService.GetAdminLearnerRecordAsync(ProfileId);
+            _actualResult = await _adminDashboardService.GetAdminLearnerRecordAsync(PathwayId);
         }
 
         [Fact]

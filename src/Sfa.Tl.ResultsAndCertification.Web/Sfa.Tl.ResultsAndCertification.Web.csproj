@@ -41,6 +41,11 @@
 
 
   <ItemGroup>
+    <Compile Update="Content\AdminDashboard\LearnerRecord.Designer.cs">
+      <DependentUpon>LearnerRecord.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Content\AdminDashboard\AdminSearchLearnerDetails.Designer.cs">
 		<DesignTime>True</DesignTime>
 		<AutoGen>True</AutoGen>

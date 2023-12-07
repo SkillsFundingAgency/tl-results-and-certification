@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
@@ -33,11 +34,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetAdminLearnerRecord/{profileId}")]
-        public Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int profileId)
+        [Route("GetAdminLearnerRecord/{pathwayid}")]
+        public async Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayId)
         {
-            return _adminDashboardService.GetAdminLearnerRecordAsync(profileId);
+            return await _adminDashboardService.GetAdminLearnerRecordAsync(pathwayId);
         }
+
 
     }
 }

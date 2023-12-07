@@ -14,9 +14,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public long Uln { get; set; }
-        public string Provider { get; set; }
-        public int Ukprn { get; set; }
-        public string Tlevel { get; set; }
+        public string ProviderName { get; set; }
+        public int ProviderUkprn { get; set; }
+        public string TlevelName { get; set; }
         public int TlevelStartYear { get; set; }
         public int AcademicYear { get; set; }
         public string DisplayAcademicYear { get; set; }
@@ -49,14 +49,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         {
             Id = "provider",
             Title = ChangeStarYear.Title_Provider_Text,
-            Value = $"{Provider} ({Ukprn})"
+            Value = $"{ProviderName} ({ProviderUkprn})"
         };
 
         public SummaryItemModel SummaryTlevel => new()
         {
             Id = "tlevel",
             Title = ChangeStarYear.Title_TLevel_Text,
-            Value = Tlevel
+            Value = TlevelName
         };
         public SummaryItemModel SummaryAcademicYear => new()
         {
