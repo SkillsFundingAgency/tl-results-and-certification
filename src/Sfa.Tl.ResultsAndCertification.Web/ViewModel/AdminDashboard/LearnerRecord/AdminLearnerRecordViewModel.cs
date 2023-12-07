@@ -84,7 +84,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
         {
             Id = "providername",
             Title = LearnerRecordDetailsContent.Title_Provider_Ukprn_Name_Text,
-            Value = string.Concat(ProviderName, "(", ProviderUkprn.ToString(),")"),
+            Value = string.Concat(ProviderName," " ,"(", ProviderUkprn.ToString(),")"),
         };
 
         public SummaryItemModel SummaryProviderUkprn => new SummaryItemModel
@@ -149,7 +149,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
                 Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
                 Value = GetIndustryPlacementDisplayText,
                 ActionText = IsIndustryPlacementAdded ? LearnerRecordDetailsContent.Action_Text_Link_Change : LearnerRecordDetailsContent.Action_Text_Link_Add,
-                RouteName = IsIndustryPlacementAdded ? RouteConstants.ChangeIndustryPlacement : RouteConstants.AddIndustryPlacement,
+                RouteName = RouteConstants.ChangeIndustryPlacement,
                 RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
                 HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement
             };
