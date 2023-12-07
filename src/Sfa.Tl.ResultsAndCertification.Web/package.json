@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "accessible-autocomplete": "^2.0.2",
-    "govuk-frontend": "^4.6.0",
+    "govuk-frontend": "^3.4.0",
     "jquery": "^3.5.0",
     "dart-sass": "1.16.0-dev"
   },
