@@ -120,6 +120,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync();
 
+        Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayId);
+
         Task<PagedResponse<AdminSearchLearnerDetail>> GetAdminSearchLearnerDetailsAsync(AdminSearchLearnerRequest request);
 
         #endregion
