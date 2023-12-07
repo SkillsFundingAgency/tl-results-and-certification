@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using Xunit;
 using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.LearnerRecord;
 using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
+using IndustryPlacement = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.LearnerRecordGet
 {
@@ -127,9 +128,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             // Summary Industry Placement
             model.SummaryIndustryPlacementStatus.Should().NotBeNull();
             model.SummaryIndustryPlacementStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_IP_Status_Text);
-            model.SummaryIndustryPlacementStatus.Value.Should().Be(SubjectStatusContent.Not_Yet_Recevied_Display_Text);
+            model.SummaryIndustryPlacementStatus.Value.Should().Be(IndustryPlacement.Completed_Display_Text);
             model.SummaryIndustryPlacementStatus.HiddenActionText.Should().Be(LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement);
-            model.SummaryIndustryPlacementStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Action_Text_Link_Add);
+            model.SummaryIndustryPlacementStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Action_Text_Link_Change);
             
             // Summary Maths StatusHidden_Action_Text_Maths
             model.SummaryMathsStatus.Should().NotBeNull();
