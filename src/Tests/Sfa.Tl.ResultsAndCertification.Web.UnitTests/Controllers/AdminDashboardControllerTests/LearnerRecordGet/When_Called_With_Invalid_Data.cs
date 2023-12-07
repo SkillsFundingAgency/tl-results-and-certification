@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         public override void Given()
         {
             PathwayId = 0;
-            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(PathwayId).Returns(Mockresult);
+            AdminDashboardLoader.GetAdminLearnerRecordAsync(PathwayId).Returns(Mockresult);
         }
 
         public async override Task When()
@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(PathwayId);
+            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync(PathwayId);
         }
 
         [Fact]

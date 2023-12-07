@@ -5,8 +5,6 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +42,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayId)
         {
-           
             var learnerRecordQuerable = from tqPathway in _dbContext.TqRegistrationPathway
                                         join tqProfile in _dbContext.TqRegistrationProfile on tqPathway.TqRegistrationProfileId equals tqProfile.Id
                                         join tqProvider in _dbContext.TqProvider on tqPathway.TqProviderId equals tqProvider.Id
@@ -52,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         join tqAo in _dbContext.TqAwardingOrganisation on tqProvider.TqAwardingOrganisationId equals tqAo.Id
                                         join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
                                         orderby tqPathway.CreatedOn descending
-                                        let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()                                       
+                                        let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()
                                         where tqPathway.Id == pathwayId
                                         select new AdminLearnerRecord
                                         {
@@ -75,14 +72,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             IndustryPlacementId = ipRecord != null ? ipRecord.Id : 0,
                                             IndustryPlacementStatus = ipRecord != null ? ipRecord.Status : null,
                                             IndustryPlacementDetails = ipRecord != null ? ipRecord.Details : null,
-                                           
+
                                         };
-            var learnerRecordDetails =  await learnerRecordQuerable.FirstOrDefaultAsync();
+
+            var learnerRecordDetails = await learnerRecordQuerable.FirstOrDefaultAsync();
             return learnerRecordDetails;
         }
-
-
-
 
         public async Task<PagedResponse<AdminSearchLearnerDetail>> SearchLearnerDetailsAsync(AdminSearchLearnerRequest request)
         {

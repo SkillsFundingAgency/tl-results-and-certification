@@ -8,7 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
     {
         Task<AdminSearchLearnerFiltersViewModel> GetAdminSearchLearnerFiltersAsync();
 
-        Task<LearnerRecordViewModel> GetAdminLearnerRecordAsync<LearnerRecordViewModel>(int pathwayId);
+        Task<AdminLearnerRecordViewModel> GetAdminLearnerRecordAsync(int pathwayId);
 
         Task<AdminSearchLearnerDetailsListViewModel> GetAdminSearchLearnerDetailsListAsync(AdminSearchLearnerCriteriaViewModel adminSearchCriteria);
     }

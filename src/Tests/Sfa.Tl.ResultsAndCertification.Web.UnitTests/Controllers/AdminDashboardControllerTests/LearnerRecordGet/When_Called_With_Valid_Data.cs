@@ -1,20 +1,13 @@
-﻿using AutoMapper;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
-using Sfa.Tl.ResultsAndCertification.Web.Controllers;
-using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.LearnerRecord;
@@ -22,7 +15,7 @@ using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.Training
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.LearnerRecordGet
 {
-    public class When_Called_With_Valid_Data:AdminDashboardControllerTestBase
+    public class When_Called_With_Valid_Data : AdminDashboardControllerTestBase
     {
         private Dictionary<string, string> _routeAttributes;
         public int PathwayId { get; set; }
@@ -35,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             PathwayId = 10;
             Mockresult = new AdminLearnerRecordViewModel
             {
-                
+
                 RegistrationPathwayId = 15,
                 Uln = 1235469874,
                 LearnerName = "John Smith",
@@ -49,12 +42,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 EnglishStatus = SubjectStatus.NotSpecified,
                 IsLearnerRegistered = true,
                 IndustryPlacementId = 10,
-                IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified                
+                IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified
             };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.PathwayId, Mockresult.RegistrationPathwayId.ToString() } };
 
-            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(PathwayId).Returns(Mockresult);
+            AdminDashboardLoader.GetAdminLearnerRecordAsync(PathwayId).Returns(Mockresult);
             ResultsAndCertificationConfiguration.DocumentRerequestInDays = 21;
         }
 
@@ -63,11 +56,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             Result = await Controller.AdminLearnerRecordAsync(PathwayId);
         }
 
-
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(PathwayId);
+            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync(PathwayId);
         }
 
         [Fact]
@@ -99,18 +91,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             model.IsEnglishAdded.Should().BeFalse();
             model.IsIndustryPlacementAdded.Should().BeFalse();
             model.IsStatusCompleted.Should().BeFalse();
-          
 
             // DateofBirth
             model.SummaryDateofBirth.Title.Should().Be(LearnerRecordDetailsContent.Title_DateofBirth_Text);
             model.SummaryDateofBirth.Value.Should().Be(Mockresult.DateofBirth.ToDobFormat());
 
             // ProviderName
-           
-            model.SummaryProviderName.Value.Should().Be(Mockresult.ProviderName+ " (" + Mockresult.ProviderUkprn.ToString()+")");
+            model.SummaryProviderName.Value.Should().Be(Mockresult.ProviderName + " (" + Mockresult.ProviderUkprn.ToString() + ")");
 
             // ProviderUkprn
-           model.SummaryProviderUkprn.Value.Should().Be(Mockresult.ProviderUkprn.ToString());
+            model.SummaryProviderUkprn.Value.Should().Be(Mockresult.ProviderUkprn.ToString());
 
             // TLevelTitle
             model.SummaryTlevelTitle.Title.Should().Be(LearnerRecordDetailsContent.Title_TLevel_Text);
@@ -130,25 +120,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             model.SummaryIndustryPlacementStatus.Value.Should().Be(SubjectStatusContent.Not_Yet_Recevied_Display_Text);
             model.SummaryIndustryPlacementStatus.HiddenActionText.Should().Be(LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement);
             model.SummaryIndustryPlacementStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Action_Text_Link_Add);
-            
+
             // Summary Maths StatusHidden_Action_Text_Maths
             model.SummaryMathsStatus.Should().NotBeNull();
             model.SummaryMathsStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_Maths_Text);
             model.SummaryMathsStatus.Value.Should().Be(SubjectStatusContent.Not_Yet_Recevied_Display_Text);
-            
 
             // Summary English Status
             model.SummaryEnglishStatus.Should().NotBeNull();
             model.SummaryEnglishStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_English_Text);
             model.SummaryMathsStatus.Value.Should().Be(SubjectStatusContent.Not_Yet_Recevied_Display_Text);
-           
+
             // Back link
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.AdminSearchLearnersRecords);
         }
-
-
-
-
     }
 }
