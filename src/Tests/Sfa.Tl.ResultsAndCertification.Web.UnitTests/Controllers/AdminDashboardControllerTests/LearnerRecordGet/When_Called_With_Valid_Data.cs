@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 EnglishStatus = SubjectStatus.NotSpecified,
                 IsLearnerRegistered = true,
                 IndustryPlacementId = 10,
-                IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified                
+                IndustryPlacementStatus = IndustryPlacementStatus.Completed                
             };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.PathwayId, Mockresult.RegistrationPathwayId.ToString() } };
@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
             model.IsMathsAdded.Should().BeFalse();
             model.IsEnglishAdded.Should().BeFalse();
-            model.IsIndustryPlacementAdded.Should().BeFalse();
+            model.IsIndustryPlacementAdded.Should().BeTrue();
             model.IsStatusCompleted.Should().BeFalse();
           
 
