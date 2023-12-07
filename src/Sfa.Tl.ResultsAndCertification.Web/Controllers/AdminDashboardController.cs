@@ -8,6 +8,8 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -51,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var searchCriteria = viewModel.SearchLearnerCriteria;
 
             if (!searchCriteria.IsSearchKeyApplied)
-            {                
+            {
                 viewModel.ClearLearnerDetails();
                 return View(viewModel);
             }
@@ -85,12 +87,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.RemoveAsync<AdminSearchLearnerViewModel>(CacheKey);
             return RedirectToRoute(RouteConstants.AdminSearchLearnersRecords);
         }
-       
+
         [HttpGet]
         [Route("admin/change-start-year/{profileId}", Name = RouteConstants.AdminChangeStartYear)]
         public async Task<IActionResult> AdminChangeStartYearAsync(int profileId)
         {
             var viewModel = await _loader.GetAdminLearnerDetailsAsync(profileId);
+            var _academicYearToBe = new List<int>();
+
+            for (int i = viewModel.AcademicYear - 1, j = 1; i >= viewModel.TlevelStartYear && j < 2; i--, j++)
+                _academicYearToBe.Add(i);
+
+            viewModel.AcademicStartYearsToBe = _academicYearToBe;
             return View(viewModel);
         }
     }

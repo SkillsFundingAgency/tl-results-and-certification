@@ -30,14 +30,44 @@
                 <vc:summary-item model=Model.SummaryULN></vc:summary-item>
                 <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
                 <vc:summary-item model=Model.SummaryTlevel></vc:summary-item>
-                <vc:summary-item model=Model.SummaryStartYear></vc:summary-item>
+                <vc:summary-item model=Model.SummaryAcademicYear></vc:summary-item>
             </dl>
 
-            <h2 class="govuk-heading-m">@ChangeStartYear.Heading_What_Should_The_Start_Year_Be</h2>
-
+            @{
+                if (Model.AcademicStartYearsToBe.Count() > 0)
+                {
+                    <div class="govuk-form-group govuk-!-margin-top-8">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <h2 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
+                                    @ChangeStartYear.Heading_What_Should_The_Start_Year_Be
+                                </h2>
+                            </legend>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                @foreach (var year in Model.AcademicStartYearsToBe)
+                                {
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="whereDoYouLive" name="whereDoYouLive" type="radio" value="england">
+                                        <label class="govuk-label govuk-radios__label" for="whereDoYouLive">
+                                            @($"{year} to {year + 1}")
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                        </fieldset>
+                    </div>
+                }
+                else
+                {
+                    <div class="govuk-form-group govuk-!-margin-top-8">
+                        <h2 class="govuk-heading-m">Start year cannot be changed</h2>
+                        <p class="govuk-body">You cannot change the start year for this learner</p>
+                    </div>
+                }
+            }
             <div class="govuk-button-group">
                 <button id="acceptAndSendButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ChangeStartYear.Button_Continue</button>
-                <button id="cancelButton" class="govuk-button govuk-body" data-module="govuk-button" >@ChangeStartYear.Button_Cancel</button>
+                <button id="cancelButton" class="govuk-button govuk-body" data-module="govuk-button">@ChangeStartYear.Button_Cancel</button>
             </div>
         </form>
     </div>

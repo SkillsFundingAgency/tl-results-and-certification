@@ -27,7 +27,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.LearnerDetails, opts => opts.MapFrom(s => s.Records))
                .ForMember(d => d.PagerInfo, opts => opts.MapFrom(s => s.PagerInfo));
 
-            CreateMap<AdminLearnerRecord, AdminChangeStartYearViewModel>();
+            CreateMap<AdminLearnerRecord, AdminChangeStartYearViewModel>()
+                .ForMember(d => d.FirstName, opts => opts.MapFrom(s => s.FirstName))
+                .ForMember(d => d.LastName, opts => opts.MapFrom(s => s.LastName))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.Provider, opts => opts.MapFrom(s => s.Provider))
+                .ForMember(d => d.Ukprn, opts => opts.MapFrom(s => s.Ukprn))
+                .ForMember(d => d.Tlevel, opts => opts.MapFrom(s => s.TLevel))
+                .ForMember(d => d.TlevelStartYear, opts => opts.MapFrom(s => s.TLevelStartYear))
+                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
+                .ForMember(d => d.DisplayAcademicYear, opts => opts.MapFrom(s => s.DisplayAcademicYear));
         }
     }
 }

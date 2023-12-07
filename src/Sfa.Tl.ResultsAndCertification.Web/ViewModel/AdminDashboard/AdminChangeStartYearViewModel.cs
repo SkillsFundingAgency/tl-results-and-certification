@@ -15,8 +15,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public string LastName { get; set; }
         public long Uln { get; set; }
         public string Provider { get; set; }
+        public int Ukprn { get; set; }
         public string Tlevel { get; set; }
-        public string StartYear { get; set; }
+        public int TlevelStartYear { get; set; }
+        public int AcademicYear { get; set; }
+        public string DisplayAcademicYear { get; set; }
+        public List<int> AcademicStartYearsToBe { get; set; }
         public string Learner => $"{FirstName} {LastName}";
 
         public BackLinkModel BackLink => new()
@@ -42,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         {
             Id = "provider",
             Title = ChangeStarYear.Title_Provider_Text,
-            Value = Provider
+            Value = $"{Provider}({Ukprn})" 
         };
 
         public SummaryItemModel SummaryTlevel => new()
@@ -51,11 +55,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
             Title = ChangeStarYear.Title_TLevel_Text,
             Value = Tlevel
         };
-        public SummaryItemModel SummaryStartYear => new()
+        public SummaryItemModel SummaryAcademicYear => new()
         {
-            Id = "startyear",
+            Id = "academicyear",
             Title = ChangeStarYear.Title_StartYear_Text,
-            Value = StartYear
+            Value = DisplayAcademicYear
         };
     }
 }

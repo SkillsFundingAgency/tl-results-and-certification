@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
                 LastName = "Smith",
                 Uln = 1234567890,
                 Provider = "Barnsley College",
-                StartYear = "2022 to 2023",
+                AcademicYear = 2022,
                 TLevel = "Building Services Engineering"
             };
 

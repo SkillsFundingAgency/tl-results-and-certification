@@ -10,7 +10,10 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
         public string LastName { get; set; }
         public long Uln { get; set; }
         public string Provider { get; set; }
+        public int Ukprn { get; set; }
         public string TLevel { get; set; }
-        public string StartYear { get; set; }
+        public int TLevelStartYear { get; set; }
+        public int AcademicYear { get; set; }
+        public string DisplayAcademicYear { get; set; }
     }
 }
