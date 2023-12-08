@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Lrs.LearnerService.Api.Client;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
@@ -41,7 +42,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             PagedResponse<AdminSearchLearnerDetail> apiResponse = await _internalApiClient.GetAdminSearchLearnerDetailsAsync(request);
             return _mapper.Map<AdminSearchLearnerDetailsListViewModel>(apiResponse);
         }
-
 
         public async Task<LearnerRecordViewModel> GetAdminLearnerRecordAsync<LearnerRecordViewModel>(int pathwayId)
         {
