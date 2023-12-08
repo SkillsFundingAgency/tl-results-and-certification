@@ -124,6 +124,60 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This is because the learner has been withdrawn..
+        /// </summary>
+        public static string Message_Start_Year_Cannot_Be_Changed_Learner_Has_Been_Withdrawn {
+            get {
+                return ResourceManager.GetString("Message_Start_Year_Cannot_Be_Changed_Learner_Has_Been_Withdrawn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is because the learner started their course more than 4 years ago..
+        /// </summary>
+        public static string Message_Start_Year_Cannot_Be_Changed_Learner_Started_Course_More_Than_4_Years {
+            get {
+                return ResourceManager.GetString("Message_Start_Year_Cannot_Be_Changed_Learner_Started_Course_More_Than_4_Years", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You cannot change the start year for this learner.
+        /// </summary>
+        public static string Message_Start_Year_Cannot_Be_Changed_Line1 {
+            get {
+                return ResourceManager.GetString("Message_Start_Year_Cannot_Be_Changed_Line1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is because the overall result has already been calculated. You can request a development ticket for further help..
+        /// </summary>
+        public static string Message_Start_Year_Cannot_Be_Changed_Overall_Result_Already_Calculated {
+            get {
+                return ResourceManager.GetString("Message_Start_Year_Cannot_Be_Changed_Overall_Result_Already_Calculated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start year cannot be changed..
+        /// </summary>
+        public static string Message_Start_Year_Cannot_Be_Changed_Title {
+            get {
+                return ResourceManager.GetString("Message_Start_Year_Cannot_Be_Changed_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is because this T Level only became available in this academic year..
+        /// </summary>
+        public static string Message_Start_Year_Cannot_Be_Changed_Tlevel_Became_Available_This_Academic_Year {
+            get {
+                return ResourceManager.GetString("Message_Start_Year_Cannot_Be_Changed_Tlevel_Became_Available_This_Academic_Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change start year – Admin – Manage T Level results – GOV.UK.
         /// </summary>
         public static string Page_Title {

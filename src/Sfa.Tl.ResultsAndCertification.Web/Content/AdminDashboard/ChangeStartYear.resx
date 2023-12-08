@@ -138,6 +138,24 @@
   <data name="Heading_What_Should_The_Start_Year_Be" xml:space="preserve">
     <value>What should the start year be?</value>
   </data>
+  <data name="Message_Start_Year_Cannot_Be_Changed_Learner_Has_Been_Withdrawn" xml:space="preserve">
+    <value>This is because the learner has been withdrawn.</value>
+  </data>
+  <data name="Message_Start_Year_Cannot_Be_Changed_Learner_Started_Course_More_Than_4_Years" xml:space="preserve">
+    <value>This is because the learner started their course more than 4 years ago.</value>
+  </data>
+  <data name="Message_Start_Year_Cannot_Be_Changed_Line1" xml:space="preserve">
+    <value>You cannot change the start year for this learner</value>
+  </data>
+  <data name="Message_Start_Year_Cannot_Be_Changed_Overall_Result_Already_Calculated" xml:space="preserve">
+    <value>This is because the overall result has already been calculated. You can request a development ticket for further help.</value>
+  </data>
+  <data name="Message_Start_Year_Cannot_Be_Changed_Title" xml:space="preserve">
+    <value>Start year cannot be changed.</value>
+  </data>
+  <data name="Message_Start_Year_Cannot_Be_Changed_Tlevel_Became_Available_This_Academic_Year" xml:space="preserve">
+    <value>This is because this T Level only became available in this academic year.</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Change start year – Admin – Manage T Level results – GOV.UK</value>
   </data>
