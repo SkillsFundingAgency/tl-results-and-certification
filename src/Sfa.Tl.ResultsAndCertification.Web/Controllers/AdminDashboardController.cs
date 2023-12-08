@@ -5,8 +5,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
-using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
@@ -20,12 +18,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     public class AdminDashboardController : Controller
     {
         private readonly ITrainingProviderLoader _trainingProviderLoader;
-        private readonly ICacheService _cacheService;       
+        private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
         private readonly IAdminDashboardLoader _loader;
         private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TrainingProviderCacheKey); } }
         private string InformationCacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TrainingProviderInformationCacheKey); } }
-        
+
         public AdminDashboardController(IAdminDashboardLoader loader, ICacheService cacheService, ILogger<AdminDashboardController> logger)
         {
             _loader = loader;
@@ -57,7 +55,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        [Route("admin/search-learner-records-clear", Name = RouteConstants.AdminSearchLearnersRecordsClear)]
+        public async Task<IActionResult> AdminSearchLearnersRecordsClearAsync()
+        {
+            await _cacheService.RemoveAsync<AdminSearchLearnerViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AdminSearchLearnersRecords);
+        }
 
+        [HttpGet]
         [Route("admin/search-learner-records/{pageNumber:int?}", Name = RouteConstants.AdminSearchLearnersRecords)]
         public async Task<IActionResult> AdminSearchLearnersAsync(int? pageNumber = default)
         {
@@ -74,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var searchCriteria = viewModel.SearchLearnerCriteria;
 
             if (!searchCriteria.IsSearchKeyApplied)
-            {                
+            {
                 viewModel.ClearLearnerDetails();
                 return View(viewModel);
             }
