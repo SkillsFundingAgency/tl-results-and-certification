@@ -72,7 +72,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetAdminLearnerRecordAsync(PathwayId);
+            ActualResult = await Loader.GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(PathwayId);
         }
 
         [Fact]

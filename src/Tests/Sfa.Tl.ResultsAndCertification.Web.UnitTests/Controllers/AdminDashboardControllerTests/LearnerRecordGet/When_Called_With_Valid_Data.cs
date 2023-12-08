@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
             _routeAttributes = new Dictionary<string, string> { { Constants.PathwayId, Mockresult.RegistrationPathwayId.ToString() } };
 
-            AdminDashboardLoader.GetAdminLearnerRecordAsync(PathwayId).Returns(Mockresult);
+            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(PathwayId).Returns(Mockresult);
             ResultsAndCertificationConfiguration.DocumentRerequestInDays = 21;
         }
 
@@ -60,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync(PathwayId);
+            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(PathwayId);
         }
 
         [Fact]

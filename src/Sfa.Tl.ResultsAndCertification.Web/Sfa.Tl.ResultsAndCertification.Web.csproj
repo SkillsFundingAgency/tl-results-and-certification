@@ -47,6 +47,16 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Content\AdminDashboard\AdminSearchLearnerDetails.Designer.cs">
+		<DesignTime>True</DesignTime>
+		<AutoGen>True</AutoGen>
+		<DependentUpon>AdminSearchLearnerDetails.resx</DependentUpon>
+	</Compile>
+    <Compile Update="Content\AdminDashboard\ChangeStartYear.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ChangeStartYear.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\AdminDashboard\SearchLearners.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>AdminSearchLearnerDetails.resx</DependentUpon>
@@ -55,11 +65,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>AdminSearchLearners.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\AdminDashboard\NoMatchingSearchResults.Designer.cs">
-      <DependentUpon>NoMatchingSearchResults.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Content\Assessment\AddCoreAssessmentEntry.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -1040,6 +1045,18 @@
 
 
   <ItemGroup>
+    <EmbeddedResource Update="Content\AdminDashboard\AdminSearchLearnerDetails.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AdminSearchLearnerDetails.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\AdminDashboard\AdminSearchLearners.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AdminSearchLearners.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\AdminDashboard\ChangeStartYear.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ChangeStartYear.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\AdminDashboard\SearchLearners.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>

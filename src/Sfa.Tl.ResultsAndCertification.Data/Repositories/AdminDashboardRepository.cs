@@ -54,6 +54,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         select new AdminLearnerRecord
                                         {
                                             ProfileId = tqProfile.Id,
+                                            FirstName = tqProfile.Firstname,
+                                            LastName = tqProfile.Lastname,
                                             RegistrationPathwayId = tqPathway.Id,
                                             TlPathwayId = tlPathway.Id,
                                             Uln = tqProfile.UniqueLearnerNumber,
@@ -62,6 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             ProviderName = tlProvider.Name,
                                             ProviderUkprn = tlProvider.UkPrn,
                                             TlevelName = tlPathway.Name,
+                                            TlevelStartYear = tlPathway.StartYear,
                                             AcademicYear = tqPathway.AcademicYear,
                                             AwardingOrganisationName = tqAo.TlAwardingOrganisaton.DisplayName,
                                             MathsStatus = tqProfile.MathsStatus,
@@ -139,5 +142,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             List<AdminSearchLearnerDetail> learnerRecords = await learnerRecordsQueryable.ToListAsync();
             return new PagedResponse<AdminSearchLearnerDetail> { Records = learnerRecords, TotalRecords = totalCount, PagerInfo = pager };
         }
+
     }
 }

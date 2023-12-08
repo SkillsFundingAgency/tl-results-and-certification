@@ -34,10 +34,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<AdminSearchLearnerDetailsListViewModel>(apiResponse);
         }
 
-        public async Task<AdminLearnerRecordViewModel> GetAdminLearnerRecordAsync(int pathwayId)
+        public async Task<T> GetAdminLearnerRecordAsync<T>(int pathwayId)
         {
             var response = await _internalApiClient.GetAdminLearnerRecordAsync(pathwayId);
-            return _mapper.Map<AdminLearnerRecordViewModel>(response);
+            return _mapper.Map<T>(response);
         }
     }
 }

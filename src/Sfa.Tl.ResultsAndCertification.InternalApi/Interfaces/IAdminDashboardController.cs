@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
     {
         Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync();
 
-        Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayid);
+        Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayId);
 
     }
 }
