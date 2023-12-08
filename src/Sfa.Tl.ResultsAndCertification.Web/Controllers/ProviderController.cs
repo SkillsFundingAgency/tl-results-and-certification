@@ -65,6 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = RolesExtensions.RequireProviderEditorOrAdminDashboardAccess)]
         [Route("search-provider/{name}", Name = RouteConstants.ProviderNameLookup)]
         public async Task<JsonResult> GetProviderLookupDataAsync(string name)
         {

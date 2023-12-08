@@ -30,6 +30,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
         // Admin Dashboard Policy Names
         public const string RequireAdminDashboardAccess = "RequireAdminDashboardAccess";
 
+        // Mixed Policy Names
+        public const string RequireProviderEditorOrAdminDashboardAccess = "RequireProviderEditorOrAdminDashboardAccess";
+
         //Admin Dashboard Access
         public const string AdminDashboardAccess = "Admin Dashboard Access";
 

@@ -13,6 +13,7 @@
         <p class="govuk-visually-hidden">@AdminSearchLearners.AutoComplete_Help_Text</p>
         <span sfa-validation-for="Provider"></span>
         <input id="search" name="Search" class="govuk-input" asp-for="Provider" />
+        <input id="previousSearch" type="hidden" asp-for="Provider" />
     </div>
 
     <div class="govuk-form-group">
