@@ -51,6 +51,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        [Route("admin/search-learner-records-clear", Name = RouteConstants.AdminSearchLearnersRecordsClear)]
+        public async Task<IActionResult> AdminSearchLearnersRecordsClearAsync()
+        {
+            await _cacheService.RemoveAsync<AdminSearchLearnerViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AdminSearchLearnersRecords);
+        }
+
+        [HttpGet]
         [Route("admin/search-learner-records/{pageNumber:int?}", Name = RouteConstants.AdminSearchLearnersRecords)]
         public async Task<IActionResult> AdminSearchLearnersAsync(int? pageNumber = default)
         {

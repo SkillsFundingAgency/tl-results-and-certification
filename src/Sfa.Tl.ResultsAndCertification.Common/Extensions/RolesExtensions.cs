@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
@@ -39,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
         public static bool HasAccessToService(this ClaimsPrincipal user)
         {
             var hasAccess = user.Claims.SingleOrDefault(c => c.Type == CustomClaimTypes.HasAccessToService)?.Value;
-            
+
             if (bool.TryParse(hasAccess, out var result))
             {
                 return result;
@@ -88,6 +89,34 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
         {
             var userType = user.Claims.SingleOrDefault(c => c.Type == CustomClaimTypes.LoginUserType)?.Value;
             return EnumExtensions.IsValidValue<LoginUserType>(userType) ? EnumExtensions.GetEnum<LoginUserType>(userType) : (LoginUserType?)null;
+        }
+
+        public static bool HasLoginUserTypeClaimAndRole(this ClaimsPrincipal user, LoginUserType userType, string role, params string[] extraRoles)
+        {
+            return user.HasLoginUserTypeClaim(userType) && user.HasRole(role, extraRoles);
+        }
+
+        private static bool HasRole(this ClaimsPrincipal user, string role, params string[] extraRoles)
+        {
+            if (string.IsNullOrWhiteSpace(role))
+            {
+                return false;
+            }
+
+            var roles = new List<string> { role };
+
+            if (!extraRoles.IsNullOrEmpty())
+            {
+                roles.AddRange(extraRoles);
+            }
+
+            return roles.All(r => user.IsInRole(role));
+        }
+
+        private static bool HasLoginUserTypeClaim(this ClaimsPrincipal user, LoginUserType userType)
+        {
+            LoginUserType? loginUserType = user.GetLoggedInUserType();
+            return loginUserType.HasValue ? loginUserType.Value == userType : false;
         }
     }
 }

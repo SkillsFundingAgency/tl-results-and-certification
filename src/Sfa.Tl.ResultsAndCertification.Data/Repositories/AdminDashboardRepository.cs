@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
                 Expression<Func<TqRegistrationPathway, bool>> expression = isSearchKeyUln
                     ? p => p.TqRegistrationProfile.UniqueLearnerNumber == request.SearchKey.ToLong()
-                    : p => EF.Functions.Like(p.TqRegistrationProfile.Lastname, request.SearchKey.ToLower());
+                    : p => EF.Functions.Like(p.TqRegistrationProfile.Lastname.Trim(), request.SearchKey.ToLower());
 
                 registrationPathwayQueryable = registrationPathwayQueryable.Where(expression);
             }

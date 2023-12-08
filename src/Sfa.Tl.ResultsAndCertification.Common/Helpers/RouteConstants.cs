@@ -403,6 +403,7 @@
 
         public const string AdminHome = "AdminHome";
         public const string AdminSearchLearnersRecords = "AdminSearchLearnersRecords";
+        public const string AdminSearchLearnersRecordsClear = "AdminSearchLearnersRecordsClear";
         public const string SubmitAdminSearchLearnerRecordsApplySearchKey = "SubmitAdminSearchLearnerRecordsApplySearchKey";
         public const string SubmitAdminSearchLearnerClearKey = "SubmitAdminSearchLearnerClearKey";
         public const string SubmitAdminSearchLearnerRecordsApplyFilters = "SubmitAdminSearchLearnerRecordsApplyFilters";
