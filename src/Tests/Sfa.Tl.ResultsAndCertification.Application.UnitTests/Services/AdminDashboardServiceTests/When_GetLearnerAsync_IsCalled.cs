@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 using static System.Net.WebRequestMethods;
@@ -24,7 +25,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
 
         public override void Setup()
         {
-            var mockRegistrationPathway = Substitute.For<TqRegistrationPathway>();
+            var mockAdminLearnerRecord = Substitute.For<AdminLearnerRecord>();
+            mockAdminLearnerRecord.AcademicYear = 2022;
+            mockAdminLearnerRecord.TlevelStartYear = 2020;
 
             _expectedResult = new AdminLearnerRecord
             {
@@ -33,19 +36,22 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
                 Uln = 1234567890,
                 ProviderName = "Barnsley College",
                 AcademicYear = 2022,
-                TlevelName = "Building Services Engineering"
+                DisplayAcademicYear = "2022 to 2023",
+                TlevelStartYear = 2020,
+                TlevelName = "Building Services Engineering",
+                AcademicStartYearsToBe = new List<int> { 2021, 2020 }
             };
 
             var today = new DateTime(2023, 1, 1);
 
             var repository = Substitute.For<IAdminDashboardRepository>();
-            repository.GetLearnerRecordAsync(Arg.Any<int>()).Returns(mockRegistrationPathway);
+            repository.GetAdminLearnerRecordAsync(Arg.Any<int>()).Returns(mockAdminLearnerRecord);
 
             var systemProvider = Substitute.For<ISystemProvider>();
             systemProvider.UtcToday.Returns(today);
             
             var mapper = Substitute.For<IMapper>();
-            mapper.Map<AdminLearnerRecord>(mockRegistrationPathway).Returns(_expectedResult);
+            mapper.Map<AdminLearnerRecord>(mockAdminLearnerRecord).Returns(_expectedResult);
 
             _adminDashboardService = new AdminDashboardService(repository, systemProvider, mapper);
         }
@@ -64,6 +70,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
         {
             _actualResult.Should().NotBeNull();
             _actualResult.Should().BeEquivalentTo(_expectedResult);
+            _actualResult.AcademicStartYearsToBe.Count.Should().Be(2);
+            _actualResult.AcademicStartYearsToBe.Should().Contain(new List<int>() { 2021, 2020 });
+            _actualResult.DisplayAcademicYear.Should().BeEquivalentTo("2022 to 2023");
         }
     }
 }

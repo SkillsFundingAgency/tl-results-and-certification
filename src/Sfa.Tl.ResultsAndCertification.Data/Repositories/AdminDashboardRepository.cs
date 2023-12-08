@@ -144,19 +144,5 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return new PagedResponse<AdminSearchLearnerDetail> { Records = learnerRecords, TotalRecords = totalCount, PagerInfo = pager };
         }
 
-        public async Task<TqRegistrationPathway> GetLearnerRecordAsync(int profileId)
-        {
-            return await _dbContext.TqRegistrationPathway
-                .Include(p => p.TqRegistrationSpecialisms)
-                .Include(p => p.TqRegistrationProfile)
-                .Include(p => p.TqProvider)
-                    .ThenInclude(p => p.TlProvider)
-                .Include(p => p.TqProvider)
-                    .ThenInclude(p => p.TqAwardingOrganisation)
-                    .ThenInclude(p => p.TlPathway)
-            .Where(p => p.TqRegistrationProfileId == profileId)
-           .FirstOrDefaultAsync();
-        }
-
     }
 }
