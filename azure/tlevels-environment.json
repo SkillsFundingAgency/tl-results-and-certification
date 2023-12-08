@@ -204,6 +204,9 @@
                     },
                     "keyVaultResourceGroup": {
                         "value": "[parameters('sharedEnvResourceGroup')]"
+                    },
+                    "serverFarmId": {
+                        "value": "[resourceId(parameters('sharedEnvResourceGroup'),'Microsoft.Web/serverFarms',parameters('sharedASPName'))]"
                     }
                 }
             }
@@ -290,6 +293,9 @@
                     },
                     "keyVaultResourceGroup": {
                         "value": "[parameters('sharedEnvResourceGroup')]"
+                    },
+                    "serverFarmId": {
+                        "value": "[resourceId(parameters('sharedEnvResourceGroup'),'Microsoft.Web/serverFarms',parameters('sharedASPName'))]"
                     }
                 }
             }
@@ -377,6 +383,9 @@
                     },
                     "keyVaultResourceGroup": {
                         "value": "[parameters('sharedEnvResourceGroup')]"
+                    },
+                    "serverFarmId": {
+                        "value": "[resourceId(parameters('sharedEnvResourceGroup'),'Microsoft.Web/serverFarms',parameters('sharedASPName'))]"
                     }
                 }
             }
