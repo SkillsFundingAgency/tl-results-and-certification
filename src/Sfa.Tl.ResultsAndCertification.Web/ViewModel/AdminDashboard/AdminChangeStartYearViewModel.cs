@@ -24,8 +24,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public string Learner => $"{FirstName} {LastName}";
 
         [Required(ErrorMessageResourceType = typeof(ChangeStarYear), ErrorMessageResourceName = "Validation_Message")]
-        public bool? IsAcademicYearToBeSelected { get; set; }
-
+      
+        public string AcademicStartYearNew { get; set; }
+      
         public BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.SearchLearnerRecord

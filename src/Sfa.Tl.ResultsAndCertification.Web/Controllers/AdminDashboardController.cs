@@ -23,8 +23,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
         private readonly IAdminDashboardLoader _loader;
-        private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TrainingProviderCacheKey); } }
-        private string InformationCacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TrainingProviderInformationCacheKey); } }
+        private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey); } }
+        private string InformationCacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardInformationCacheKey); } }
 
         public AdminDashboardController(IAdminDashboardLoader loader, ICacheService cacheService, ILogger<AdminDashboardController> logger)
         {
@@ -121,10 +121,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/change-start-year/{pathwayId}", Name = RouteConstants.AdminChangeStartYear)]
         public async Task<IActionResult> AdminChangeStartYearAsync(int pathwayId)
         {
-            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(pathwayId);
+                      var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(pathwayId);
 
             if (viewModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
+            await _cacheService.SetAsync<AdminChangeStartYearViewModel>(CacheKey, viewModel);
 
             return View(viewModel);
         }
@@ -133,11 +134,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/submit-change-start-year", Name = RouteConstants.SubmitAdminChangeStartYear)]
         public async Task<IActionResult> AdminChangeStartYearAsync(AdminChangeStartYearViewModel model)
         {
-            if (!ModelState.IsValid)
-                return View(model);
+             var _academicStartYearNew = model.AcademicStartYearNew;
 
-            return View(model);
+             var viewModel = await _cacheService.GetAsync<AdminChangeStartYearViewModel>(CacheKey);
 
+             if (viewModel.AcademicStartYearsToBe.Count > 0 &&
+                 string.IsNullOrEmpty(model.AcademicStartYearNew))
+             {
+                 model.AcademicStartYearsToBe = viewModel.AcademicStartYearsToBe;
+                 return View(viewModel);
+             }
+
+             model.AcademicStartYearNew = _academicStartYearNew;
+
+             return View(model); // This should be re-direct to next page.
         }
     }
 }
