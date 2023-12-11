@@ -52,6 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<AdminSearchLearnerCriteriaViewModel, AdminSearchLearnerRequest>()
                 .ForMember(d => d.SearchKey, opts => opts.MapFrom(s => s.SearchKey))
                 .ForMember(d => d.PageNumber, opts => opts.MapFrom(s => s.PageNumber))
+                .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => GetSelectedProviderId(s)))
                 .ForMember(d => d.SelectedAcademicYears, opts => opts.MapFrom(s => GetSelectedAcademicYearIds(s)))
                 .ForMember(d => d.SelectedAwardingOrganisations, opts => opts.MapFrom(s => GetSelectedAwardingOrganisationIds(s)));
 
@@ -69,9 +70,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AcademicStartYearsToBe, opts => opts.MapFrom(s => s.AcademicStartYearsToBe));
         }
 
+        private int? GetSelectedProviderId(AdminSearchLearnerCriteriaViewModel searchCriteria)
+            => searchCriteria?.SearchLearnerFilters?.SelectedProviderId;
+
         private List<int> GetSelectedAcademicYearIds(AdminSearchLearnerCriteriaViewModel searchCriteria)
             => GetSelectedFilterIds(searchCriteria?.SearchLearnerFilters?.AcademicYears);
-
 
         private List<int> GetSelectedAwardingOrganisationIds(AdminSearchLearnerCriteriaViewModel searchCriteria)
             => GetSelectedFilterIds(searchCriteria?.SearchLearnerFilters?.AwardingOrganisations);

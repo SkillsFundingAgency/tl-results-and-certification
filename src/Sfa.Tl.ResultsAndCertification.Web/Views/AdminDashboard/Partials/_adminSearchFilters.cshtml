@@ -6,14 +6,14 @@
 
     <h2 class="govuk-heading-m govuk-!-padding-top-4">@AdminSearchLearners.Filters_Heading </h2>
 
-    <div class="govuk-form-group">
+    <div class="govuk-form-group" sfa-validation-for="Search" sfa-validation-class="govuk-form-group--error">
         <label class="govuk-label govuk-label--s" for="search">
             @AdminSearchLearners.Filters_Provider_Name
         </label>
         <p class="govuk-visually-hidden">@AdminSearchLearners.AutoComplete_Help_Text</p>
-        <span sfa-validation-for="Provider"></span>
-        <input id="search" name="Search" class="govuk-input" asp-for="Provider" />
-        <input id="previousSearch" type="hidden" asp-for="Provider" />
+        <span sfa-validation-for="Search"></span>
+        <input id="search" name="Search" class="govuk-input" asp-for="Search" />
+        <input id="previousSearch" type="hidden" asp-for="Search" />
     </div>
 
     <div class="govuk-form-group">

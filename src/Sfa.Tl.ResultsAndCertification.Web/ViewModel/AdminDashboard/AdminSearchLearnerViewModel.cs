@@ -66,7 +66,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 
             AdminSearchLearnerFiltersViewModel filters = SearchLearnerCriteria.SearchLearnerFilters;
 
-            filters.Provider = string.Empty;
+            filters.Search = string.Empty;
+            filters.SelectedProviderId = null;
 
             if (!filters.AwardingOrganisations.IsNullOrEmpty())
             {

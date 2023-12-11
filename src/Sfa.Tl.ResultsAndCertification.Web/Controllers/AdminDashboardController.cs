@@ -1,5 +1,4 @@
-﻿using Lrs.LearnerService.Api.Client;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
@@ -9,11 +8,11 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -21,14 +20,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     public class AdminDashboardController : Controller
     {
         private readonly IAdminDashboardLoader _loader;
+        private readonly IProviderLoader _providerLoader;
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
 
         private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey); } }
 
-        public AdminDashboardController(IAdminDashboardLoader loader, ICacheService cacheService, ILogger<AdminDashboardController> logger)
+        public AdminDashboardController(
+            IAdminDashboardLoader loader,
+            IProviderLoader providerLoader,
+            ICacheService cacheService,
+            ILogger<AdminDashboardController> logger)
         {
             _loader = loader;
+            _providerLoader = providerLoader;
             _cacheService = cacheService;
             _logger = logger;
         }
@@ -96,27 +101,39 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("admin/search-learner-records-search-key", Name = RouteConstants.SubmitAdminSearchLearnerRecordsApplySearchKey)]
-        public Task<IActionResult> SubmitAdminSearchLearnersRecordsApplySearchKeyAsync(AdminSearchLearnerCriteriaViewModel searchCriteriaViewModel)
-            => RunAsync(p => p.SetSearchKey(searchCriteriaViewModel.SearchKey));
+        public Task<IActionResult> AdminSearchLearnersRecordsApplySearchKeyAsync(AdminSearchLearnerCriteriaViewModel searchCriteriaViewModel)
+            => RunAsync(RouteConstants.SubmitAdminSearchLearnerRecordsApplySearchKey, p => p.SetSearchKey(searchCriteriaViewModel.SearchKey));
 
         [HttpPost]
         [Route("admin/search-learner-records-clear-key", Name = RouteConstants.SubmitAdminSearchLearnerClearKey)]
         public Task<IActionResult> AdminSearchLearnerClearKeyAsync()
-            => RunAsync(p => p.ClearSearchKey());
+            => RunAsync(RouteConstants.SubmitAdminSearchLearnerClearKey, p => p.ClearSearchKey());
 
         [HttpPost]
         [Route("admin/search-learner-records-filters", Name = RouteConstants.SubmitAdminSearchLearnerRecordsApplyFilters)]
-        public Task<IActionResult> SubmitAdminSearchLearnerRecordsApplyFiltersAsync(AdminSearchLearnerFiltersViewModel filtersViewModel)
-            => RunAsync(p => p.SetFilters(filtersViewModel));
+        public async Task<IActionResult> AdminSearchLearnerRecordsApplyFiltersAsync(AdminSearchLearnerFiltersViewModel filtersViewModel)
+        {
+            int? providerId = await GetFilterProviderId(filtersViewModel.Search);
+            filtersViewModel.SelectedProviderId = providerId;
+
+            return await RunAsync(RouteConstants.SubmitAdminSearchLearnerRecordsApplyFilters, p => p.SetFilters(filtersViewModel));
+        }
 
         [HttpPost]
         [Route("admin/search-learner-records-clear-filters", Name = RouteConstants.SubmitAdminSearchLearnerClearFilters)]
         public Task<IActionResult> AdminSearchLearnerClearFiltersAsync()
-            => RunAsync(p => p.ClearFilters());
+            => RunAsync(RouteConstants.SubmitAdminSearchLearnerClearFilters, p => p.ClearFilters());
 
-        public async Task<IActionResult> RunAsync(Action<AdminSearchLearnerViewModel> action)
+        private async Task<IActionResult> RunAsync(string endpoint, Action<AdminSearchLearnerViewModel> action)
         {
             var viewModel = await _cacheService.GetAsync<AdminSearchLearnerViewModel>(CacheKey);
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No AdminSearchLearnerViewModel cache data found. Method: {endpoint}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
             action(viewModel);
 
             await _cacheService.SetAsync(CacheKey, viewModel);
@@ -144,6 +161,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return View(model);
 
+        }
+
+        private async Task<int?> GetFilterProviderId(string providerName)
+        {
+            if (string.IsNullOrWhiteSpace(providerName))
+            {
+                return null;
+            }
+
+            IEnumerable<ProviderLookupData> providerData = await _providerLoader.GetProviderLookupDataAsync(providerName, isExactMatch: true);
+            if (!providerData.IsNullOrEmpty() && providerData.Count() == 1)
+            {
+                return providerData.Single().Id;
+            }
+
+            return 0;
         }
     }
 }

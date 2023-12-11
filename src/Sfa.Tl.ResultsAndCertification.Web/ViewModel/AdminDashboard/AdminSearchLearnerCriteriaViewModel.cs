@@ -4,7 +4,7 @@
     {
         public AdminSearchLearnerFiltersViewModel SearchLearnerFilters { get; set; }
 
-        public string SearchKey { get; set; }
+        public string SearchKey { get; set; } = string.Empty;
 
         public int? PageNumber { get; set; }
 

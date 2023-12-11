@@ -116,9 +116,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 registrationPathwayQueryable = registrationPathwayQueryable.Where(p => request.SelectedAcademicYears.Contains(p.AcademicYear));
             }
 
-            if (request.ProviderUkprn.HasValue)
+            if (request.ProviderId.HasValue)
             {
-                registrationPathwayQueryable = registrationPathwayQueryable.Where(p => request.ProviderUkprn == p.TqProvider.TlProvider.UkPrn);
+                registrationPathwayQueryable = registrationPathwayQueryable.Where(p => request.ProviderId == p.TqProvider.TlProviderId);
             }
 
             int filteredRecordsCount = await registrationPathwayQueryable.CountAsync();
