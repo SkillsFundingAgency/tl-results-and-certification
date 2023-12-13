@@ -46,19 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(RouteConstants.Home);
         }
 
-        [HttpGet]
-        [Route("admin/learner-record/{pathwayid}", Name = RouteConstants.AdminLearnerRecord)]
-        public async Task<IActionResult> AdminLearnerRecordAsync(int pathwayId)
-        {
-            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(pathwayId);
-            if (viewModel == null || !viewModel.IsLearnerRegistered)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({pathwayId}), User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(viewModel);
-        }
+        #region Search learner
 
         [HttpGet]
         [Route("admin/search-learner-records-clear", Name = RouteConstants.AdminSearchLearnersRecordsClear)]
@@ -140,38 +128,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(RouteConstants.AdminSearchLearnersRecords, new { pageNumber = viewModel.SearchLearnerCriteria.PageNumber });
         }
 
-        [HttpGet]
-        [Route("admin/change-start-year/{pathwayId}", Name = RouteConstants.AdminChangeStartYear)]
-        public async Task<IActionResult> AdminChangeStartYearAsync(int pathwayId)
-        {
-                      var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(pathwayId);
-
-            if (viewModel == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            await _cacheService.SetAsync<AdminChangeStartYearViewModel>(CacheKey, viewModel);
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("admin/submit-change-start-year", Name = RouteConstants.SubmitAdminChangeStartYear)]
-        public async Task<IActionResult> AdminChangeStartYearAsync(AdminChangeStartYearViewModel model)
-        {
-             var _academicStartYearNew = model.AcademicStartYearNew;
-
-             var viewModel = await _cacheService.GetAsync<AdminChangeStartYearViewModel>(CacheKey);
-
-             if (viewModel.AcademicStartYearsToBe.Count > 0 &&
-                 string.IsNullOrEmpty(model.AcademicStartYearNew))
-             {
-                 model.AcademicStartYearsToBe = viewModel.AcademicStartYearsToBe;
-                 return View(viewModel);
-             }
-
-             model.AcademicStartYearNew = _academicStartYearNew;
-
-        }
-
         private async Task<int?> GetFilterProviderId(string providerName)
         {
             if (string.IsNullOrWhiteSpace(providerName))
@@ -186,6 +142,55 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return 0;
+        }
+
+        #endregion
+
+        [HttpGet]
+        [Route("admin/learner-record/{pathwayid}", Name = RouteConstants.AdminLearnerRecord)]
+        public async Task<IActionResult> AdminLearnerRecordAsync(int pathwayId)
+        {
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(pathwayId);
+            if (viewModel == null || !viewModel.IsLearnerRegistered)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({pathwayId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("admin/change-start-year/{pathwayId}", Name = RouteConstants.AdminChangeStartYear)]
+        public async Task<IActionResult> AdminChangeStartYearAsync(int pathwayId)
+        {
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(pathwayId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            await _cacheService.SetAsync<AdminChangeStartYearViewModel>(CacheKey, viewModel);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/submit-change-start-year", Name = RouteConstants.SubmitAdminChangeStartYear)]
+        public async Task<IActionResult> AdminChangeStartYearAsync(AdminChangeStartYearViewModel model)
+        {
+            var _academicStartYearNew = model.AcademicStartYearNew;
+
+            var viewModel = await _cacheService.GetAsync<AdminChangeStartYearViewModel>(CacheKey);
+
+            if (viewModel.AcademicStartYearsToBe.Count > 0 &&
+                string.IsNullOrEmpty(model.AcademicStartYearNew))
+            {
+                model.AcademicStartYearsToBe = viewModel.AcademicStartYearsToBe;
+                return View(viewModel);
+            }
+
+            model.AcademicStartYearNew = _academicStartYearNew;
+
+            return View(model); // This should be re-direct to next page.
         }
     }
 }
