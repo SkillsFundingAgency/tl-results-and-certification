@@ -54,13 +54,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.AdminDashboardCacheKey);
             InformationCacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.AdminDashboardCacheKey);
         }
-
-        protected FilterLookupData CreateFilter(int id, string name, bool isSelected = false)
-            => new()
-            {
-                Id = id,
-                Name = name,
-                IsSelected = isSelected
-            };
     }
 }

@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminSearchLearnerClearFiltersPost
 {
-    public class When_Called_And_Cache_Contains_Valid_Data : AdminDashboardControllerTestBase
+    public class When_Called_And_Cache_Contains_Valid_Data : AdminSearchLearnerTestBase
     {
         private const string PageNumberKey = "pageNumber";
         private const int PageNumber = 1;
