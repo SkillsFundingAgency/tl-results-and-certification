@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             {
                 pathwayQueryable = request.SearchKey.IsLong()
                     ? pathwayQueryable.Where(p => p.TqRegistrationProfile.UniqueLearnerNumber == request.SearchKey.ToLong())
-                    : pathwayQueryable.Where(p => EF.Functions.Like(p.TqRegistrationProfile.Lastname, $"{request.SearchKey.ToLower()}"));
+                    : pathwayQueryable.Where(p => EF.Functions.Like(p.TqRegistrationProfile.Lastname.Trim(), $"{request.SearchKey.ToLower()}"));
             }
 
             if (request.AcademicYear != null && request.AcademicYear.Any())

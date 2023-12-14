@@ -118,85 +118,31 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Button_Back_To_Home" xml:space="preserve">
-    <value>Back to Home</value>
-  </data>
-  <data name="Core_Code_Value" xml:space="preserve">
-    <value>&lt;p class='govuk-body'&gt;{0}&lt;/p&gt; &lt;p class='govuk-body'&gt;Grade: {1}&lt;/p&gt;</value>
-  </data>
-  <data name="Heading_Learner_Details" xml:space="preserve">
-    <value>Learner’s details</value>
-  </data>
-  <data name="Heading_Learner_Technical_Qualification" xml:space="preserve">
-    <value>Learner’s technical qualification details</value>
-  </data>
-  <data name="Heading_Learner_Tlevel_Component_Achievements" xml:space="preserve">
-    <value>Learner’s T Level component achievements</value>
+    <value>Back to home</value>
   </data>
   <data name="Heading_Soa_Already_Requested" xml:space="preserve">
     <value>Statement of achievement has already been requested</value>
   </data>
-  <data name="Heading_Soa_Details" xml:space="preserve">
-    <value>Statement of achievement details</value>
-  </data>
-  <data name="Heading_Your_Organisation_Address" xml:space="preserve">
-    <value>Your organisation’s postal address</value>
-  </data>
-  <data name="Html_Line_Break" xml:space="preserve">
-    <value>&lt;br&gt;</value>
-  </data>
-  <data name="Inset_Date_Requested" xml:space="preserve">
-    <value>Date requested: {0}</value>
-  </data>
-  <data name="Inset_Para_Contact_Us_After_Three_Weeks" xml:space="preserve">
-    <value>A request has already been submitted for this learner. If you don't receive the statement of achievement after three weeks, </value>
-  </data>
   <data name="Inset_Para_Contact_Us_Link" xml:space="preserve">
-    <value>contact us</value>
+    <value>contact us.</value>
   </data>
-  <data name="Inset_Para_Submit_New_Request" xml:space="preserve">
-    <value> or submit a new request.</value>
+  <data name="Inset_Para_If_You_Have_Not_Received" xml:space="preserve">
+    <value>If you have not received the statement of achievement after 3 weeks then </value>
   </data>
-  <data name="Inset_Requested_By" xml:space="preserve">
-    <value>Requested by: {0}</value>
-  </data>
-  <data name="Occupational_Specialism_Value" xml:space="preserve">
-    <value>&lt;p class='govuk-body'&gt;{0}&lt;/p&gt; &lt;p class='govuk-body'&gt;Grade: {1}&lt;/p&gt;</value>
-  </data>
-  <data name="Organisation_Address_Value" xml:space="preserve">
-    <value>&lt;p class='govuk-body'&gt;{0}&lt;/p&gt;</value>
+  <data name="Inset_Para_Request_Already_Submitted" xml:space="preserve">
+    <value>A statement of achievement has already been requested for this learner.</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Request statement of achievement – Statement of achievement already requested page</value>
   </data>
-  <data name="Title_Core_Code_Text" xml:space="preserve">
-    <value>Core (code)</value>
-  </data>
-  <data name="Title_DateofBirth_Text" xml:space="preserve">
-    <value>Date of birth</value>
-  </data>
-  <data name="Title_Department_Text" xml:space="preserve">
-    <value>Department</value>
-  </data>
-  <data name="Title_English_And_Maths_Text" xml:space="preserve">
-    <value>English and maths</value>
-  </data>
-  <data name="Title_Industry_Placement_Text" xml:space="preserve">
-    <value>Industry placement</value>
+  <data name="Title_DateRequested_Text" xml:space="preserve">
+    <value>Date requested</value>
   </data>
   <data name="Title_Name_Text" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="Title_Occupational_Specialism_Text" xml:space="preserve">
-    <value>Occupational specialism (code)</value>
-  </data>
-  <data name="Title_Organisation_Address_Text" xml:space="preserve">
-    <value>Organisation’s address</value>
-  </data>
-  <data name="Title_Provider_Text" xml:space="preserve">
-    <value>Provider (UKPRN)</value>
-  </data>
-  <data name="Title_Tlevel_Title_Text" xml:space="preserve">
-    <value>T Level title</value>
+  <data name="Title_RequestedBy_Text" xml:space="preserve">
+    <value>Requested by</value>
   </data>
   <data name="Title_Uln_Text" xml:space="preserve">
     <value>ULN</value>

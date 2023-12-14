@@ -15,5 +15,7 @@
         public const string SoaCacheKey = "StatementOfAchievement";
         public const string PrsCacheKey = "PostResultsService";
         public const string IpCacheKey = "IndustryPlacement";
+        public const string AdminDashboardCacheKey = "AdminDashboard";
+        public const string AdminDashboardInformationCacheKey = "AdminDashboardInformation";
     }
 }

@@ -41,6 +41,26 @@
 
 
   <ItemGroup>
+    <Compile Update="Content\AdminDashboard\LearnerRecord.Designer.cs">
+      <DependentUpon>LearnerRecord.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Content\AdminDashboard\AdminSearchLearnerDetails.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AdminSearchLearnerDetails.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\AdminDashboard\AdminSearchLearners.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AdminSearchLearners.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\AdminDashboard\NoMatchingSearchResults.Designer.cs">
+      <DependentUpon>NoMatchingSearchResults.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Content\Assessment\AddCoreAssessmentEntry.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -120,6 +140,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>UploadUnsuccessful.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\Dashboard\AdminDashboard.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AdminDashboard.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Dashboard\AoDashboard.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -1015,6 +1040,9 @@
 
 
   <ItemGroup>
+    <EmbeddedResource Update="Content\AdminDashboard\SearchLearners.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\Assessment\AddCoreAssessmentEntry.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AddCoreAssessmentEntry.Designer.cs</LastGenOutput>
@@ -1078,6 +1106,10 @@
     <EmbeddedResource Update="Content\Assessment\UploadUnsuccessful.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UploadUnsuccessful.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Dashboard\AdminDashboard.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AdminDashboard.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Dashboard\AoDashboard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -75,6 +75,17 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
+            },
+            new AcademicYear
+            {
+                Name = "2025/26",
+                Year = 2025,
+                StartDate = "2025/09/01".ToDateTime(),
+                EndDate = "2026/08/31".ToDateTime(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
             }
         };
     }

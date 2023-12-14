@@ -33,10 +33,15 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var requestUri = FormatRequestUri(ApiConstants.UcasTokenUri);
             string requestParameters = string.Format(ApiConstants.UcasTokenParameters, _configuration.UcasApiSettings.GrantType, _configuration.UcasApiSettings.Username, _configuration.UcasApiSettings.Password);
-            var tokenResponse = await PostAsync<string, UcasTokenResponse>(requestUri, requestParameters);
-            if (string.IsNullOrWhiteSpace(tokenResponse?.AccessToken))
-                throw new ApplicationException($"Ucas - Failed to retrive api token. Error = {tokenResponse.Error}; ErrorMessage = {tokenResponse.ErrorDescription}");
-            return tokenResponse?.AccessToken;
+
+            (bool isSuccess, UcasTokenResponse response) = await PostAsync<string, UcasTokenResponse>(requestUri, requestParameters);
+
+            if (!isSuccess)
+            {
+                throw new ApplicationException($"Ucas - Failed to retrive api token. Error = {response.Error}; ErrorMessage = {response.ErrorDescription}");
+            }
+
+            return response.AccessToken;
         }
 
         public async Task<string> SendDataAsync(UcasDataRequest request)
@@ -56,20 +61,25 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
                 }, ApiConstants.FormDataFile, request.FileName);
 
                 var requestUri = FormatRequestUri(string.Format(ApiConstants.UcasFileUri, _configuration.UcasApiSettings.FolderId));
-                var response = await PostAsync<MultipartFormDataContent, UcasDataResponse>(requestUri, content);
+                (bool isSuccess, UcasDataResponse response) = await PostAsync<MultipartFormDataContent, UcasDataResponse>(requestUri, content);
 
-                if (string.IsNullOrWhiteSpace(response.Id))
-                    throw new ApplicationException($"Ucas - Failed to send data. Error Response : {JsonConvert.SerializeObject(response)}");
+                if (!isSuccess)
+                {
+                    throw new ApplicationException($"Ucas - Failed to send data. Error = {response.Title}; Error code = {response.ErrorCode}; ErrorMessage = {response.Detail}");
+                }
 
                 return response.Id;
             }
         }
 
-        private async Task<TResponse> PostAsync<TRequest, TResponse>(string requestUri, TRequest content)
+        private async Task<(bool IsSuccess, TResponse Content)> PostAsync<TRequest, TResponse>(string requestUri, TRequest content)
         {
-            var response = await _httpClient.PostAsync(requestUri, CreateHttpContent(content));
-            var respContent = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<TResponse>(respContent);
+            HttpResponseMessage httpResponseMessage = await _httpClient.PostAsync(requestUri, CreateHttpContent(content));
+
+            bool isSuccess = httpResponseMessage.IsSuccessStatusCode;
+            TResponse response = await httpResponseMessage.Content.ReadAsAsync<TResponse>();
+
+            return (isSuccess, response);
         }
 
         /// <summary>

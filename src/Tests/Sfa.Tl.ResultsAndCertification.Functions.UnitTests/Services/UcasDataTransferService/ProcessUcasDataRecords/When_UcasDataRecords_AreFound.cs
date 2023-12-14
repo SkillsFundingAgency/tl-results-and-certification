@@ -1,5 +1,4 @@
-﻿using AutoMapper.Configuration.Annotations;
-using NSubstitute;
+﻿using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Ucas;
@@ -24,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
             UcasApiClient.SendDataAsync(Arg.Any<UcasDataRequest>()).Returns(ucasFileId);
         }
 
-        [Fact (Skip = "Skiping the file to send to Ucas API")]
+        [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
             UcasApiClient.Received(1).SendDataAsync(Arg.Is<UcasDataRequest>(x => x.FileName.EndsWith(Common.Helpers.Constants.FileExtensionTxt) &&
@@ -33,7 +32,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
 
             BlobStorageService.Received(1).UploadFromByteArrayAsync(Arg.Is<BlobStorageData>(x => x.ContainerName.Equals(DocumentType.Ucas.ToString().ToLower()) &&
                x.SourceFilePath == UcasDataType.Entries.ToString().ToLower() &&
-               x.BlobFileName.StartsWith($"{ucasFileId}-") &&
+               x.BlobFileName.EndsWith(Common.Helpers.Constants.FileExtensionTxt) &&
+               x.BlobFileName.Length == 40 &&
                x.FileData != null &&
                x.UserName.Equals(Common.Helpers.Constants.FunctionPerformedBy)));
         }
