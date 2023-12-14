@@ -26,13 +26,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             return _adminDashboardService.GetAdminSearchLearnerFiltersAsync();
         }
 
-        [HttpPost]
-        [Route("GetAdminSearchLearnerDetails")]
-        public Task<PagedResponse<AdminSearchLearnerDetail>> GetAdminSearchLearnerDetailsAsync(AdminSearchLearnerRequest request)
-        {
-            return _adminDashboardService.GetAdminSearchLearnerDetailsAsync(request);
-        }
-
         [HttpGet]
         [Route("GetAdminLearnerRecord/{pathwayid}")]
         public async Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayId)
@@ -41,5 +34,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
 
+
+        [HttpPost]
+        [Route("GetAdminSearchLearnerDetails")]
+        public Task<PagedResponse<AdminSearchLearnerDetail>> GetAdminSearchLearnerDetailsAsync(AdminSearchLearnerRequest request)
+        {
+            return _adminDashboardService.GetAdminSearchLearnerDetailsAsync(request);
+        }
     }
 }

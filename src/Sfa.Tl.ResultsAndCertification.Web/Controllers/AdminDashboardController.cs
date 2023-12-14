@@ -1,5 +1,4 @@
-﻿using Lrs.LearnerService.Api.Client;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
@@ -12,7 +11,6 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -115,39 +113,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             await _cacheService.RemoveAsync<AdminSearchLearnerViewModel>(CacheKey);
             return RedirectToRoute(RouteConstants.AdminSearchLearnersRecords);
-        }
-
-        [HttpGet]
-        [Route("admin/change-start-year/{pathwayId}", Name = RouteConstants.AdminChangeStartYear)]
-        public async Task<IActionResult> AdminChangeStartYearAsync(int pathwayId)
-        {
-                      var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(pathwayId);
-
-            if (viewModel == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            await _cacheService.SetAsync<AdminChangeStartYearViewModel>(CacheKey, viewModel);
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("admin/submit-change-start-year", Name = RouteConstants.SubmitAdminChangeStartYear)]
-        public async Task<IActionResult> AdminChangeStartYearAsync(AdminChangeStartYearViewModel model)
-        {
-             var _academicStartYearNew = model.AcademicStartYearNew;
-
-             var viewModel = await _cacheService.GetAsync<AdminChangeStartYearViewModel>(CacheKey);
-
-             if (viewModel.AcademicStartYearsToBe.Count > 0 &&
-                 string.IsNullOrEmpty(model.AcademicStartYearNew))
-             {
-                 model.AcademicStartYearsToBe = viewModel.AcademicStartYearsToBe;
-                 return View(viewModel);
-             }
-
-             model.AcademicStartYearNew = _academicStartYearNew;
-
-             return View(model); // This should be re-direct to next page.
         }
     }
 }
