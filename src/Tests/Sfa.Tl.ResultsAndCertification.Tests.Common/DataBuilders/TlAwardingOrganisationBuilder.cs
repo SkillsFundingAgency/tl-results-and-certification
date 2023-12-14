@@ -46,6 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
         {
             new Domain.Models.TlAwardingOrganisation
             {
+                Id = 1,
                 UkPrn = 10009696,
                 DisplayName = "Ncfe",
                 Name = "Ncfe",
@@ -56,7 +57,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 ModifiedOn = Constants.ModifiedOn
             },
             new Domain.Models.TlAwardingOrganisation
-            {
+            {   
+                Id = 2,
                 UkPrn = 10011881,
                 DisplayName = "Pearson",
                 Name = "Pearson",

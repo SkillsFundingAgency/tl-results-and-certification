@@ -10,19 +10,22 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     public interface ICommonService
     {
         Task<IEnumerable<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory);
+        
         Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn);
 
         // FunctionLog
         Task<bool> CreateFunctionLog(FunctionLogDetails model);
+        
         Task<bool> UpdateFunctionLog(FunctionLogDetails model);
 
         Task<bool> SendFunctionJobFailedNotification(string jobName, string errorMessage);
-        Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync();
-        Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync();
-        bool IsUcasTransferEntriesTriggerDateValid();
-        bool IsUcasTransferResultssTriggerDateValid();
-        bool IsIndustryPlacementTriggerDateValid();
-        DateTime CurrentDate { get; }
         
+        Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync();
+        
+        Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync();
+       
+        bool IsIndustryPlacementTriggerDateValid();
+       
+        DateTime CurrentDate { get; }
     }
 }

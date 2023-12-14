@@ -11,6 +11,9 @@
         "sqlServerAdminPassword": {
             "type": "securestring"
         },
+        "sqlServerReplicaAdminPassword": {
+            "type": "securestring"
+        },
         "sqlServerActiveDirectoryAdminLogin": {
             "type": "string"
         },
@@ -60,14 +63,23 @@
                 "description": ""
             }
         },
-        "sqlFirewallIpAddresses": {
+        "sqlFirewallIpAddressesPredefined": {
             "type": "array"
+        },
+        "enableReplica": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Enables the replica database to be deployed"
+            }
         }
     },
     "variables": {
         "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/master/ArmTemplates/",
         "resourceNamePrefix": "[toLower(parameters('environmentNameAbbreviation'))]",
         "sqlServerName": "[concat(variables('resourceNamePrefix'), '-shared-sql')]",
+        "sqlServerReplicaName": "[concat(variables('resourceNamePrefix'), '-shared-sql-replica')]",
+        "sqlServerNames": "[if(equals(parameters('enableReplica'), true()), createArray(variables('sqlServerName'), variables('sqlServerReplicaName')), createArray(variables('sqlServerName')))]",
         "sharedStorageAccountName": "[replace(concat(variables('resourceNamePrefix'), 'sharedstr'), '-', '')]",
         "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-shared-asp')]",
         "configStorageAccountName": "[replace(concat(variables('resourceNamePrefix'), 'configstr'), '-', '')]",
@@ -216,6 +228,101 @@
             ]
         },
         {
+            "condition": "[equals(parameters('enableReplica'), true())]",
+            "apiVersion": "2017-05-10",
+            "name": "[concat('sql-server','-', parameters('environmentNameAbbreviation'),'-replica')]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'sql-server.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "sqlServerName": {
+                        "value": "[variables('sqlServerReplicaName')]"
+                    },
+                    "sqlServerAdminUserName": {
+                        "value": "[parameters('sqlServerAdminUsername')]"
+                    },
+                    "sqlServerAdminPassword": {
+                        "value": "[parameters('sqlServerReplicaAdminPassword')]"
+                    },
+                    "sqlServerActiveDirectoryAdminLogin": {
+                        "value": "[parameters('sqlServerActiveDirectoryAdminLogin')]"
+                    },
+                    "sqlServerActiveDirectoryAdminObjectId": {
+                        "value": "[parameters('sqlServerActiveDirectoryAdminObjectId')]"
+                    },
+                    "threatDetectionEmailAddress": {
+                        "value": "[parameters('threatDetectionEmailAddress')]"
+                    },
+                    "sqlStorageAccountName": {
+                        "value": "[variables('sharedStorageAccountName')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[concat('shared-storage-account','-', parameters('environmentNameAbbreviation'))]"
+            ]
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "name": "[concat('key-vault-secret-',parameters('environmentNameAbbreviation'), '-admin-username', copyIndex())]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'), 'keyvault-secret.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "keyVaultName": {
+                        "value": "[variables('keyVaultName')]"
+                    },
+                    "secretName": {
+                        "value": "[concat(variables('sqlServerNames')[copyIndex()],'-admin-username')]"
+                    },
+                    "secretValue": {
+                        "value": "[parameters('sqlServerAdminUserName')]"
+                    }
+                }
+            },
+            "copy": {
+                "count": "[length(variables('sqlServerNames'))]",
+                "name": "firewallrulecopy",
+                "mode": "Parallel"
+            }
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "name": "[concat('key-vault-secret-',parameters('environmentNameAbbreviation'), '-admin-password', copyIndex())]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'), 'keyvault-secret.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "keyVaultName": {
+                        "value": "[variables('keyVaultName')]"
+                    },
+                    "secretName": {
+                        "value": "[concat(variables('sqlServerNames')[copyIndex()],'-admin-password')]"
+                    },
+                    "secretValue": {
+                        "value": "[parameters('sqlServerAdminPassword')]"
+                    }
+                }
+            },
+            "copy": {
+                "count": "[length(variables('sqlServerNames'))]",
+                "name": "firewallrulecopy",
+                "mode": "Parallel"
+            }
+        },
+        {
             "apiVersion": "2017-05-10",
             "name": "[concat('app-service-plan','-', parameters('environmentNameAbbreviation'))]",
             "type": "Microsoft.Resources/deployments",
@@ -310,22 +417,20 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "firewallRuleNamePrefix": {
-                        "value": "[parameters('sqlFirewallIpAddresses')[copyIndex()].name]"
-                    },
-                    "startIpAddress": {
-                        "value": "[parameters('sqlFirewallIpAddresses')[copyIndex()].startIpAddress]"
-                    },
-                    "endIpAddress": {
-                        "value": "[parameters('sqlFirewallIpAddresses')[copyIndex()].endIpAddress]"
+                    "sqlFirewallIpAddressesPredefined": {
+                        "value": "[parameters('sqlFirewallIpAddressesPredefined')]"
                     },
                     "serverName": {
-                        "value": "[variables('sqlServerName')]"
+                        "value": "[variables('sqlServerNames')[copyIndex()]]"
                     }
                 }
             },
+            "dependsOn": [
+                "[concat('sql-server','-', parameters('environmentNameAbbreviation'))]",
+                "[concat('sql-server','-', parameters('environmentNameAbbreviation'),'-replica')]"
+            ],
             "copy": {
-                "count": "[length(parameters('sqlFirewallIpAddresses'))]",
+                "count": "[length(variables('sqlServerNames'))]",
                 "name": "firewallrulecopy",
                 "mode": "Parallel"
             }
@@ -347,6 +452,10 @@
         "sharedSQLServerName": {
             "type": "string",
             "value": "[variables('sqlServerName')]"
+        },
+        "sharedSQLServerReplicaName": {
+            "type": "string",
+            "value": "[variables('sqlServerReplicaName')]"
         },
         "sharedStorageConnectionString": {
             "type": "string",

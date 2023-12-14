@@ -32,5 +32,10 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Authentication
         /// <summary>Gets or sets a value indicating whether this instance has access to service.</summary>
         /// <value><c>true</c> if this instance has access to service; otherwise, <c>false</c>.</value>
         public bool HasAccessToService { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets the roles.
+        /// </summary>
+        public string Organisation { get; set; }
     }   
 }

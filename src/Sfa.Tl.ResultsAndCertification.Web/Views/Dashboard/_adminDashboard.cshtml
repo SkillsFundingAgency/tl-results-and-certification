@@ -1,0 +1,35 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Dashboard.DashboardViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+<div class="govuk-grid-row">
+   <div class="govuk-grid-column-full">
+      <div class="govuk-form-group">
+         <h1 class="govuk-heading-xl govuk-!-margin-bottom-9">
+            @AdminDashboard.Header_Admin_Dashboard
+         </h1>
+      </div>
+   </div>
+</div>
+<div class="govuk-grid-row">
+   <div class="govuk-grid-column-full">
+      <ul class="homepage-services-and-info__list">
+         <li class="chevron-card">
+            <div class="chevron-card__wrapper">
+               <h2 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                  <a class="govuk-link chevron-card__link" asp-route="@RouteConstants.AdminSearchLearnersRecordsClear">@AdminDashboard.Tile_Search_Learner_Records_Heading</a>
+               </h2>
+               <p class="govuk-body chevron-card__description">@AdminDashboard.Tile_Search_Learner_Records_Search_For_And_Update</p>
+            </div>
+         </li>
+         <li class="chevron-card">
+            <div class="chevron-card__wrapper">
+               <h2 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                  <a class="govuk-link chevron-card__link" @*asp-route="@RouteConstants.TlevelsDashboard"*@>@AdminDashboard.Tile_View_Change_Log</a>
+               </h2>
+               <p class="govuk-body chevron-card__description">@AdminDashboard.Tile_View_Change_Log_View_Changes</p>
+            </div>
+         </li>
+      </ul>
+   </div>
+</div>

@@ -20,6 +20,9 @@
         "sharedSQLServerName": {
             "type": "string"
         },
+        "sharedSQLServerReplicaName": {
+            "type": "string"
+        },
         "sqlDatabaseSkuName": {
             "type": "string"
         },
@@ -66,8 +69,8 @@
         "learnerGenderTrigger": {
             "type": "string"
         },
-		"certificatePrintingBatchesCreateTrigger": {
-            "type": "string"            
+        "certificatePrintingBatchesCreateTrigger": {
+            "type": "string"
         },
         "certificatePrintingRequestTrigger": {
             "type": "string"
@@ -87,8 +90,15 @@
         "ucasTransferAmendmentsTrigger": {
             "type": "string"
         },
-		"overallResultCalculationTrigger": {
-            "type": "string"            
+        "overallResultCalculationTrigger": {
+            "type": "string"
+        },
+        "enableReplica": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Enables the replica database to be deployed"
+            }
         }
     },
     "variables": {
@@ -441,7 +451,7 @@
                                 "name": "LearnerGenderTrigger",
                                 "value": "[parameters('learnerGenderTrigger')]"
                             },
-							{
+                            {
                                 "name": "CertificatePrintingBatchesCreateTrigger",
                                 "value": "[parameters('certificatePrintingBatchesCreateTrigger')]"
                             },
@@ -469,10 +479,10 @@
                                 "name": "UcasTransferAmendmentsTrigger",
                                 "value": "[parameters('ucasTransferAmendmentsTrigger')]"
                             },
-							{
+                            {
                                 "name": "OverallResultCalculationTrigger",
                                 "value": "[parameters('overallResultCalculationTrigger')]"
-                            },							
+                            },
                             {
                                 "name": "WEBSITE_LOAD_CERTIFICATES",
                                 "value": "1"
@@ -493,12 +503,11 @@
             "dependsOn": [
                 "[concat('function-app-certificate','-', parameters('environmentNameAbbreviation'))]",
                 "[concat('app-insights','-', parameters('environmentNameAbbreviation'))]"
-
             ]
         },
         {
             "apiVersion": "2017-05-10",
-            "name": "[concat('sql-database','-', parameters('environmentNameAbbreviation'))]",
+            "name": "[concat('sql-database','-', parameters('environmentNameAbbreviation'),'-','shared')]",
             "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -525,6 +534,49 @@
                     }
                 }
             }
+        },
+        {
+            "condition": "[equals(parameters('enableReplica'), true())]",
+            "apiVersion": "2022-09-01",
+            "name": "[concat('sql-database','-', parameters('environmentNameAbbreviation'),'-','replica')]",
+            "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'sql-database.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "databaseName": {
+                        "value": "[variables('sqlDatabaseName')]"
+                    },
+                    "sqlServerName": {
+                        "value": "[parameters('sharedSQLServerReplicaName')]"
+                    },
+                    "databaseSkuName": {
+                        "value": "[parameters('sqlDatabaseSkuName')]"
+                    },
+                    "databaseTier": {
+                        "value": "[parameters('sqlDatabaseTier')]"
+                    },
+                    "serverlessAutoPauseDelay": {
+                        "value": "[parameters('sqlserverlessAutoPauseDelay')]"
+                    },
+                    "createMode": {
+                        "value": "Secondary"
+                    },
+                    "sourceDatabaseId": {
+                        "value": "[reference(concat('sql-database','-', parameters('environmentNameAbbreviation'),'-','shared')).outputs.sqlDatabaseResourceId.value]"
+                    },
+                    "requestedBackupStorageRedundancy": {
+                        "value": "Local"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[concat('sql-database','-', parameters('environmentNameAbbreviation'),'-','shared')]"
+            ]
         },
         {
             "apiVersion": "2017-05-10",
@@ -557,7 +609,7 @@
             }
         },
         {
-            "apiVersion": "2017-05-10",
+            "apiVersion": "2022-09-01",
             "name": "[concat('sql-server-firewall-rules','-', parameters('environmentNameAbbreviation'))]",
             "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
             "type": "Microsoft.Resources/deployments",

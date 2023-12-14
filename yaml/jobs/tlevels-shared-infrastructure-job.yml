@@ -27,6 +27,7 @@ jobs:
                 armParameterOverrideString: '-environmentNameAbbreviation "${{parameters.baseName}}" 
                   -sqlServerAdminUsername "$(SQLServerAdminUsername)"
                   -sqlServerAdminPassword "$(SQLServerAdminPassword)"
+                  -sqlServerReplicaAdminPassword "$(sqlServerReplicaAdminPassword)"
                   -sqlServerActiveDirectoryAdminLogin "$(SQLServerActiveDirectoryAdminLogin)"
                   -sqlServerActiveDirectoryAdminObjectId "$(SQLServerActiveDirectoryAdminObjectId)"
                   -threatDetectionEmailAddress "$(ThreatDetectionEmailAddress)"
@@ -36,7 +37,8 @@ jobs:
                   -azureWebsitesRPObjectId "$(AzureWebsitesRPObjectId)"
                   -keyVaultReadWriteObjectIds "$(KeyVaultReadWriteObjectIds)"
                   -keyVaultFullAccessObjectIds "$(keyVaultFullAccessObjectIds)"
-                  -sqlFirewallIpAddresses $(sqlFirewallIpAddresses)'
+                  -sqlFirewallIpAddressesPredefined $(sqlFirewallIpAddresses)
+                  -enableReplica $(enableReplica)'
                 tags: $(Tags)
                 processOutputs: true
             - pwsh: Write-Host "##vso[task.setvariable variable=SharedResourceGroup;isOutput=true]$(SharedResourceGroup)"

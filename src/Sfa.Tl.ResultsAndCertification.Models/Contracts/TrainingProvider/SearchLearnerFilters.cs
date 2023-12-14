@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
 {
