@@ -1,10 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
 {
@@ -36,6 +31,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
         public int IndustryPlacementId { get; set; }
         public IndustryPlacementStatus? IndustryPlacementStatus { get; set; }
         public string IndustryPlacementDetails { get; set; }
-        
+
     }
 }

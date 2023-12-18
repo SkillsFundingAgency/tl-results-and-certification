@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
-using Newtonsoft.Json;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 {
@@ -33,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.EnglishStatus, opts => opts.MapFrom(s => s.EnglishStatus))
                .ForMember(d => d.IsLearnerRegistered, opts => opts.MapFrom(s => s.IsLearnerRegistered))
                .ForMember(d => d.IndustryPlacementId, opts => opts.MapFrom(s => s.IndustryPlacementId))
-               .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));              
+               .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
 
             CreateMap<AdminSearchLearnerDetail, AdminSearchLearnerDetailsViewModel>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
@@ -47,6 +49,32 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.TotalRecords, opts => opts.MapFrom(s => s.TotalRecords))
                .ForMember(d => d.LearnerDetails, opts => opts.MapFrom(s => s.Records))
                .ForMember(d => d.PagerInfo, opts => opts.MapFrom(s => s.PagerInfo));
+
+            CreateMap<AdminSearchLearnerCriteriaViewModel, AdminSearchLearnerRequest>()
+                .ForMember(d => d.SearchKey, opts => opts.MapFrom(s => s.SearchKey))
+                .ForMember(d => d.PageNumber, opts => opts.MapFrom(s => s.PageNumber))
+                .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => GetSelectedProviderId(s)))
+                .ForMember(d => d.SelectedAcademicYears, opts => opts.MapFrom(s => GetSelectedAcademicYearIds(s)))
+                .ForMember(d => d.SelectedAwardingOrganisations, opts => opts.MapFrom(s => GetSelectedAwardingOrganisationIds(s)));
+        }
+
+        private int? GetSelectedProviderId(AdminSearchLearnerCriteriaViewModel searchCriteria)
+            => searchCriteria?.SearchLearnerFilters?.SelectedProviderId;
+
+        private List<int> GetSelectedAcademicYearIds(AdminSearchLearnerCriteriaViewModel searchCriteria)
+            => GetSelectedFilterIds(searchCriteria?.SearchLearnerFilters?.AcademicYears);
+
+        private List<int> GetSelectedAwardingOrganisationIds(AdminSearchLearnerCriteriaViewModel searchCriteria)
+            => GetSelectedFilterIds(searchCriteria?.SearchLearnerFilters?.AwardingOrganisations);
+
+        private List<int> GetSelectedFilterIds(IList<FilterLookupData> filters)
+        {
+            if (filters.IsNullOrEmpty())
+            {
+                return new List<int>();
+            }
+
+            return filters.Where(p => p.IsSelected).Select(p => p.Id).ToList();
         }
     }
 }

@@ -2,8 +2,8 @@
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.Provider;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
+using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.Provider;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider
 {

@@ -1,7 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using System.Threading.Tasks;
@@ -28,14 +27,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
         }
 
-        public async Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayId)
-        {
-            return await _adminDashboardRepository.GetAdminLearnerRecordAsync(pathwayId);
-        }
-
         public Task<PagedResponse<AdminSearchLearnerDetail>> GetAdminSearchLearnerDetailsAsync(AdminSearchLearnerRequest request)
         {
             return _adminDashboardRepository.SearchLearnerDetailsAsync(request);
+        }
+
+        public async Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayId)
+        {
+            return await _adminDashboardRepository.GetAdminLearnerRecordAsync(pathwayId);
         }
     }
 }

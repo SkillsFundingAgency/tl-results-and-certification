@@ -6,10 +6,12 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -17,16 +19,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     [Authorize(Policy = RolesExtensions.RequireAdminDashboardAccess)]
     public class AdminDashboardController : Controller
     {
-        private readonly ITrainingProviderLoader _trainingProviderLoader;
+        private readonly IAdminDashboardLoader _loader;
+        private readonly IProviderLoader _providerLoader;
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
-        private readonly IAdminDashboardLoader _loader;
-        private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey); } }
-        private string InformationCacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardInformationCacheKey); } }
 
-        public AdminDashboardController(IAdminDashboardLoader loader, ICacheService cacheService, ILogger<AdminDashboardController> logger)
+        private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey); } }
+
+        public AdminDashboardController(
+            IAdminDashboardLoader loader,
+            IProviderLoader providerLoader,
+            ICacheService cacheService,
+            ILogger<AdminDashboardController> logger)
         {
             _loader = loader;
+            _providerLoader = providerLoader;
             _cacheService = cacheService;
             _logger = logger;
         }
@@ -39,21 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(RouteConstants.Home);
         }
 
-        [HttpGet]
-        [Route("admin/learner-record/{pathwayid}", Name = RouteConstants.AdminLearnerRecord)]
-        public async Task<IActionResult> AdminLearnerRecordAsync(int pathwayId)
-        {
-            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(pathwayId);
-            if (viewModel == null || !viewModel.IsLearnerRegistered)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({pathwayId}), User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-            viewModel.InformationBanner = await _cacheService.GetAndRemoveAsync<InformationBannerModel>(InformationCacheKey);
-            viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
-
-            return View(viewModel);
-        }
+        #region Search learner
 
         [HttpGet]
         [Route("admin/search-learner-records-clear", Name = RouteConstants.AdminSearchLearnersRecordsClear)]
@@ -79,7 +72,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var searchCriteria = viewModel.SearchLearnerCriteria;
 
-            if (!searchCriteria.IsSearchKeyApplied)
+            if (!searchCriteria.IsSearchKeyApplied && !searchCriteria.AreFiltersApplied)
             {
                 viewModel.ClearLearnerDetails();
                 return View(viewModel);
@@ -98,21 +91,75 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("admin/search-learner-records-search-key", Name = RouteConstants.SubmitAdminSearchLearnerRecordsApplySearchKey)]
-        public async Task<IActionResult> SubmitAdminSearchLearnersRecordsApplySearchKeyAsync(AdminSearchLearnerCriteriaViewModel searchCriteriaViewModel)
-        {
-            var viewModel = await _cacheService.GetAsync<AdminSearchLearnerViewModel>(CacheKey);
-            viewModel.SetSearchKey(searchCriteriaViewModel.SearchKey);
-
-            await _cacheService.SetAsync(CacheKey, viewModel);
-            return RedirectToRoute(RouteConstants.AdminSearchLearnersRecords, new { pageNumber = searchCriteriaViewModel.PageNumber });
-        }
+        public Task<IActionResult> AdminSearchLearnersRecordsApplySearchKeyAsync(AdminSearchLearnerCriteriaViewModel searchCriteriaViewModel)
+            => RunAsync(RouteConstants.SubmitAdminSearchLearnerRecordsApplySearchKey, p => p.SetSearchKey(searchCriteriaViewModel.SearchKey));
 
         [HttpPost]
         [Route("admin/search-learner-records-clear-key", Name = RouteConstants.SubmitAdminSearchLearnerClearKey)]
-        public async Task<IActionResult> AdminSearchLearnerClearKeyAsync()
+        public Task<IActionResult> AdminSearchLearnerClearKeyAsync()
+            => RunAsync(RouteConstants.SubmitAdminSearchLearnerClearKey, p => p.ClearSearchKey());
+
+        [HttpPost]
+        [Route("admin/search-learner-records-filters", Name = RouteConstants.SubmitAdminSearchLearnerRecordsApplyFilters)]
+        public async Task<IActionResult> AdminSearchLearnerRecordsApplyFiltersAsync(AdminSearchLearnerFiltersViewModel filtersViewModel)
         {
-            await _cacheService.RemoveAsync<AdminSearchLearnerViewModel>(CacheKey);
-            return RedirectToRoute(RouteConstants.AdminSearchLearnersRecords);
+            int? providerId = await GetFilterProviderId(filtersViewModel.Search);
+            filtersViewModel.SelectedProviderId = providerId;
+
+            return await RunAsync(RouteConstants.SubmitAdminSearchLearnerRecordsApplyFilters, p => p.SetFilters(filtersViewModel));
+        }
+
+        [HttpPost]
+        [Route("admin/search-learner-records-clear-filters", Name = RouteConstants.SubmitAdminSearchLearnerClearFilters)]
+        public Task<IActionResult> AdminSearchLearnerClearFiltersAsync()
+            => RunAsync(RouteConstants.SubmitAdminSearchLearnerClearFilters, p => p.ClearFilters());
+
+        private async Task<IActionResult> RunAsync(string endpoint, Action<AdminSearchLearnerViewModel> action)
+        {
+            var viewModel = await _cacheService.GetAsync<AdminSearchLearnerViewModel>(CacheKey);
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No AdminSearchLearnerViewModel cache data found. Method: {endpoint}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            action(viewModel);
+
+            await _cacheService.SetAsync(CacheKey, viewModel);
+            return RedirectToRoute(RouteConstants.AdminSearchLearnersRecords, new { pageNumber = viewModel.SearchLearnerCriteria.PageNumber });
+        }
+
+        private async Task<int?> GetFilterProviderId(string providerName)
+        {
+            if (string.IsNullOrWhiteSpace(providerName))
+            {
+                return null;
+            }
+
+            IEnumerable<ProviderLookupData> providerData = await _providerLoader.GetProviderLookupDataAsync(providerName, isExactMatch: true);
+            if (!providerData.IsNullOrEmpty() && providerData.Count() == 1)
+            {
+                return providerData.Single().Id;
+            }
+
+            return 0;
+        }
+
+        #endregion
+
+        [HttpGet]
+        [Route("admin/learner-record/{pathwayid}", Name = RouteConstants.AdminLearnerRecord)]
+        public async Task<IActionResult> AdminLearnerRecordAsync(int pathwayId)
+        {
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(pathwayId);
+            if (viewModel == null || !viewModel.IsLearnerRegistered)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({pathwayId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
         }
     }
 }

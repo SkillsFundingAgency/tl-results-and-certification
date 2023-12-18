@@ -289,7 +289,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
                         {
                             SearchKey = "Johnson",
                             SelectedAcademicYears = new List<int> { 2021 },
-                            ProviderUkprn = 1
+                            ProviderId = 1
                         },
                         new PagedResponse<AdminSearchLearnerDetail>
                         {

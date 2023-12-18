@@ -2,7 +2,7 @@
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
-<form asp-route="@RouteConstants.SubmitSearchLearnerApplyFilters">
+<form asp-route="@RouteConstants.SubmitAdminSearchLearnerRecordsApplyFilters">
 
     <h2 class="govuk-heading-m govuk-!-padding-top-4">@AdminSearchLearners.Filters_Heading </h2>
 
@@ -11,8 +11,8 @@
             @AdminSearchLearners.Filters_Provider_Name
         </label>
         <p class="govuk-visually-hidden">@AdminSearchLearners.AutoComplete_Help_Text</p>
-        <span sfa-validation-for="Provider"></span>
-        <input id="search" name="Search" class="govuk-input" asp-for="Provider" />
+        <input id="search" name="Search" class="govuk-input" asp-for="Search" />
+        <input id="previousSearch" type="hidden" asp-for="Search" />
     </div>
 
     <div class="govuk-form-group">
@@ -31,6 +31,7 @@
                         </label>
                     </div>
                     <input type="hidden" asp-for="@Model.AwardingOrganisations[@awardingOrganisation.i].Id" />
+                    <input type="hidden" asp-for="@Model.AwardingOrganisations[@awardingOrganisation.i].Name" />
                 }
             </div>
         </fieldset>
@@ -52,6 +53,7 @@
                         </label>
                     </div>
                     <input type="hidden" asp-for="@Model.AcademicYears[@academicYear.i].Id" />
+                    <input type="hidden" asp-for="@Model.AcademicYears[@academicYear.i].Name" />
                 }
             </div>
         </fieldset>
@@ -59,6 +61,6 @@
 
     <div class="govuk-button-group">
         <button id="applyFiltersButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminSearchLearners.Button_Apply_Filters</button>
-        <button id="clearFiltersButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.SearchLearnerClearFilters">@AdminSearchLearners.Button_Clear_Filters</button>
+        <button id="clearFiltersButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.SubmitAdminSearchLearnerClearFilters">@AdminSearchLearners.Button_Clear_Filters</button>
     </div>
 </form>

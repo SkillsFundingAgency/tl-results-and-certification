@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> YourProvidersAsync()
         {
             var viewModel = await _providerLoader.GetYourProvidersAsync(User.GetUkPrn());
-            
+
             if (viewModel == null || viewModel.Providers == null || viewModel.Providers.Count == 0)
             {
                 _logger.LogInformation(LogEvent.ProviersNotFound, $"No provideproviders found. Method: GetTqAoProviderDetailsAsync(Ukprn: {User.GetUkPrn()}), User: {User.GetUserEmail()}");
@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("find-provider/{isback:bool?}", Name = RouteConstants.FindProvider)]
         public async Task<IActionResult> FindProviderAsync(bool isback = false)
         {
-            var yourProvidersExists  = await _providerLoader.IsAnyProviderSetupCompletedAsync(User.GetUkPrn());
+            var yourProvidersExists = await _providerLoader.IsAnyProviderSetupCompletedAsync(User.GetUkPrn());
             var viewModel = new FindProviderViewModel { ShowViewProvidersLink = yourProvidersExists };
 
             viewModel.Search = isback ? TempData.Get<string>(Constants.FindProviderSearchCriteria) : null;
@@ -61,18 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             var hasAnyTlevelSetup = await _providerLoader.HasAnyTlevelSetupForProviderAsync(User.GetUkPrn(), viewModel.SelectedProviderId);
-            return RedirectToRoute( hasAnyTlevelSetup ? RouteConstants.ProviderTlevels : RouteConstants.SelectProviderTlevels, new { providerId = viewModel.SelectedProviderId });
-        }
-
-        [HttpGet]
-        [Route("search-provider/{name}", Name = RouteConstants.ProviderNameLookup)]
-        public async Task<JsonResult> GetProviderLookupDataAsync(string name)
-        {
-            if (string.IsNullOrEmpty(name) || name.Length < 3)
-                return Json(string.Empty);
-
-            var providersData = await _providerLoader.GetProviderLookupDataAsync(name, isExactMatch: false);
-            return Json(providersData);
+            return RedirectToRoute(hasAnyTlevelSetup ? RouteConstants.ProviderTlevels : RouteConstants.SelectProviderTlevels, new { providerId = viewModel.SelectedProviderId });
         }
 
         [HttpGet]
@@ -101,7 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                return await GetSelectProviderTlevelsAsync(viewModel.ProviderId, viewModel.IsAddTlevel); 
+                return await GetSelectProviderTlevelsAsync(viewModel.ProviderId, viewModel.IsAddTlevel);
             }
 
             var isSuccess = await _providerLoader.AddProviderTlevelsAsync(viewModel);
@@ -113,7 +102,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
-                _logger.LogWarning(LogEvent.ProviderTlevelNotAdded, 
+                _logger.LogWarning(LogEvent.ProviderTlevelNotAdded,
                     $"Unable to add provider T level. Method: AddProviderTlevelsAsync, Ukprn: {User.GetUkPrn()}, Provider: {viewModel.ProviderId}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
@@ -140,7 +129,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _providerLoader.GetTqProviderTlevelDetailsAsync(User.GetUkPrn(), id);
 
-            if(viewModel == null)
+            if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.ProviderTlevelNotFound, $"No provider T level found. Method: GetTqProviderTlevelDetailsAsync({User.GetUkPrn()}, {id}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -162,14 +151,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(viewModel);
 
-            if(viewModel.CanRemoveTlevel == false)
+            if (viewModel.CanRemoveTlevel == false)
                 return RedirectToRoute(RouteConstants.ProviderTlevels, new { providerId = viewModel.TlProviderId, navigation = !viewModel.ShowBackToProvidersLink });
 
             var isSuccess = await _providerLoader.RemoveTqProviderTlevelAsync(User.GetUkPrn(), viewModel.Id);
 
             if (isSuccess)
             {
-                if(viewModel.ShowBackToProvidersLink)
+                if (viewModel.ShowBackToProvidersLink)
                 {
                     var providersViewModel = await _providerLoader.GetTqAoProviderDetailsAsync(User.GetUkPrn());
                     viewModel.ShowBackToProvidersLink = providersViewModel != null && providersViewModel.Count > 0;
@@ -208,7 +197,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (viewModel == null || viewModel.Tlevels == null)
             {
-                _logger.LogWarning(LogEvent.ProviersNotFound, 
+                _logger.LogWarning(LogEvent.ProviersNotFound,
                     $"No provider found. Method: GetViewProviderTlevelViewModelAsync(Ukprn: {User.GetUkPrn()}, ProviderId: {providerId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
@@ -235,7 +224,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                     $"No provider found. Method: GetSelectProviderTlevelsAsync(Ukprn: {User.GetUkPrn()}, ProviderId: {providerId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-            else if(viewModel.Tlevels.Count == 0)
+            else if (viewModel.Tlevels.Count == 0)
             {
                 _logger.LogInformation(LogEvent.ProviderTlevelNotFound,
                     $"No provider T levels found. Method: GetSelectProviderTlevelsAsync(Ukprn: {User.GetUkPrn()}, ProviderId: {providerId}), User: {User.GetUserEmail()}");
@@ -244,7 +233,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             viewModel.IsAddTlevel = isAddTlevel;
 
-            if(!viewModel.IsAddTlevel)
+            if (!viewModel.IsAddTlevel)
             {
                 TempData.Set(Constants.FindProviderSearchCriteria, viewModel.DisplayName);
             }

@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -30,15 +27,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<AdminSearchLearnerDetailsListViewModel> GetAdminSearchLearnerDetailsListAsync(AdminSearchLearnerCriteriaViewModel adminSearchCriteria)
         {
-            var request = new AdminSearchLearnerRequest
-            {
-                SearchKey = adminSearchCriteria.SearchKey,
-                PageNumber = adminSearchCriteria.PageNumber,
-                SelectedAcademicYears = adminSearchCriteria.SearchLearnerFilters?.AcademicYears?.Where(p => p.IsSelected).Select(p => p.Id).ToList(),
-                SelectedAwardingOrganisations = adminSearchCriteria.SearchLearnerFilters?.AwardingOrganisations?.Where(p => p.IsSelected).Select(p => p.Id).ToList()
-            };
+            var adminSearchLearnerRequest = _mapper.Map<AdminSearchLearnerRequest>(adminSearchCriteria);
+            PagedResponse<AdminSearchLearnerDetail> apiResponse = await _internalApiClient.GetAdminSearchLearnerDetailsAsync(adminSearchLearnerRequest);
 
-            PagedResponse<AdminSearchLearnerDetail> apiResponse = await _internalApiClient.GetAdminSearchLearnerDetailsAsync(request);
             return _mapper.Map<AdminSearchLearnerDetailsListViewModel>(apiResponse);
         }
 
