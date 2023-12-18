@@ -1,5 +1,4 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
@@ -9,8 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<AdminSearchLearnerFiltersViewModel> GetAdminSearchLearnerFiltersAsync();
 
         Task<AdminSearchLearnerDetailsListViewModel> GetAdminSearchLearnerDetailsListAsync(AdminSearchLearnerCriteriaViewModel adminSearchCriteria);
-        
-        Task<LearnerRecordViewModel> GetAdminLearnerRecordAsync<LearnerRecordViewModel>(int pathwayId);
 
+        Task<LearnerRecordViewModel> GetAdminLearnerRecordAsync<LearnerRecordViewModel>(int pathwayId);
     }
 }

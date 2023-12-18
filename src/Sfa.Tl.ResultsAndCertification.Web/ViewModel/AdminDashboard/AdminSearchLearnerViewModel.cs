@@ -28,6 +28,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 
         public AdminSearchState State { get; set; } = AdminSearchState.NoSearch;
 
+        public bool OnlySearchKeyApplied
+            => SearchLearnerCriteria?.IsSearchKeyApplied == true || SearchLearnerCriteria?.SearchLearnerFilters?.IsApplyFiltersSelected != true;
+
         public bool ContainsLearnerResults
             => SearchLearnerDetailsList?.LearnerDetails != null && SearchLearnerDetailsList.LearnerDetails.Any();
 

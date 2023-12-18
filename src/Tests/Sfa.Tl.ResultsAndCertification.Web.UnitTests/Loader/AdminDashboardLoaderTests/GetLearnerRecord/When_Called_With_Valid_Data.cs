@@ -48,10 +48,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
         {
             PathwayId = 1;
 
-
+           
 
             _expectedApiResult = new Models.Contracts.AdminDashboard.AdminLearnerRecord
-            {
+            { 
                 ProfileId = PathwayId,
                 RegistrationPathwayId = 222,
                 Uln = 786787689,
@@ -65,7 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
                 EnglishStatus = Common.Enum.SubjectStatus.Achieved,
                 IsLearnerRegistered = true,
                 IndustryPlacementId = 1,
-                IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed
+                IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed                
             };
             _internalApiClient.GetAdminLearnerRecordAsync(PathwayId).Returns(_expectedApiResult);
         }

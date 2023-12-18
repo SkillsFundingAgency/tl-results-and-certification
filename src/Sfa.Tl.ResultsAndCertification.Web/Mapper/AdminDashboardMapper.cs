@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
@@ -19,22 +20,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AcademicYears, opts => opts.MapFrom(s => s.AcademicYears));
 
             CreateMap<AdminLearnerRecord, AdminLearnerRecordViewModel>()
-                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
-                .ForMember(d => d.TlPathwayId, opts => opts.MapFrom(s => s.TlPathwayId))
-                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
-                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
-                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
-                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
-                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
-                .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.TlevelName))
-                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
-                .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => s.AwardingOrganisationName))
-                .ForMember(d => d.MathsStatus, opts => opts.MapFrom(s => s.MathsStatus))
-                .ForMember(d => d.EnglishStatus, opts => opts.MapFrom(s => s.EnglishStatus))
-                .ForMember(d => d.IsLearnerRegistered, opts => opts.MapFrom(s => s.IsLearnerRegistered))
-                .ForMember(d => d.IndustryPlacementId, opts => opts.MapFrom(s => s.IndustryPlacementId))
-                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
+                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+               .ForMember(d => d.TlPathwayId, opts => opts.MapFrom(s => s.TlPathwayId))
+               .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
+               .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
+               .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
+               .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
+               .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.TlevelName))
+               .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
+               .ForMember(d => d.AwardingOrganisationName, opts => opts.MapFrom(s => s.AwardingOrganisationName))
+               .ForMember(d => d.MathsStatus, opts => opts.MapFrom(s => s.MathsStatus))
+               .ForMember(d => d.EnglishStatus, opts => opts.MapFrom(s => s.EnglishStatus))
+               .ForMember(d => d.IsLearnerRegistered, opts => opts.MapFrom(s => s.IsLearnerRegistered))
+               .ForMember(d => d.IndustryPlacementId, opts => opts.MapFrom(s => s.IndustryPlacementId))
+               .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
 
             CreateMap<AdminSearchLearnerDetail, AdminSearchLearnerDetailsViewModel>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
@@ -55,19 +56,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => GetSelectedProviderId(s)))
                 .ForMember(d => d.SelectedAcademicYears, opts => opts.MapFrom(s => GetSelectedAcademicYearIds(s)))
                 .ForMember(d => d.SelectedAwardingOrganisations, opts => opts.MapFrom(s => GetSelectedAwardingOrganisationIds(s)));
-
-            CreateMap<AdminLearnerRecord, AdminChangeStartYearViewModel>()
-                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-                .ForMember(d => d.FirstName, opts => opts.MapFrom(s => s.FirstName))
-                .ForMember(d => d.LastName, opts => opts.MapFrom(s => s.LastName))
-                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
-                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
-                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
-                .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.TlevelName))
-                .ForMember(d => d.TlevelStartYear, opts => opts.MapFrom(s => s.TlevelStartYear))
-                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
-                .ForMember(d => d.DisplayAcademicYear, opts => opts.MapFrom(s => s.DisplayAcademicYear))
-                .ForMember(d => d.AcademicStartYearsToBe, opts => opts.MapFrom(s => s.AcademicStartYearsToBe));
         }
 
         private int? GetSelectedProviderId(AdminSearchLearnerCriteriaViewModel searchCriteria)

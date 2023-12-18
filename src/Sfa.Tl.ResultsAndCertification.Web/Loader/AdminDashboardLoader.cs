@@ -4,7 +4,6 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -34,10 +33,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<AdminSearchLearnerDetailsListViewModel>(apiResponse);
         }
 
-        public async Task<T> GetAdminLearnerRecordAsync<T>(int pathwayId)
+
+        public async Task<LearnerRecordViewModel> GetAdminLearnerRecordAsync<LearnerRecordViewModel>(int pathwayId)
         {
             var response = await _internalApiClient.GetAdminLearnerRecordAsync(pathwayId);
-            return _mapper.Map<T>(response);
+            return _mapper.Map<LearnerRecordViewModel>(response);
         }
     }
 }

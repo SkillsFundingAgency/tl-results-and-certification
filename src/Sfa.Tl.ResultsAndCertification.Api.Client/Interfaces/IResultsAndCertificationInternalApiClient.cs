@@ -119,8 +119,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         #region Admin dashboard
 
         Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync();
-        Task<PagedResponse<AdminSearchLearnerDetail>> GetAdminSearchLearnerDetailsAsync(AdminSearchLearnerRequest request);
+
         Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayId);
+
+        Task<PagedResponse<AdminSearchLearnerDetail>> GetAdminSearchLearnerDetailsAsync(AdminSearchLearnerRequest request);
 
         #endregion
     }

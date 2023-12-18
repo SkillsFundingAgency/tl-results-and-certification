@@ -25,6 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly ILogger _logger;
 
         private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey); } }
+        private string InformationCacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardInformationCacheKey); } }
 
         public AdminDashboardController(
             IAdminDashboardLoader loader,
@@ -82,6 +83,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             AdminSearchLearnerDetailsListViewModel learnerDetailsListViewModel = await _loader.GetAdminSearchLearnerDetailsListAsync(searchCriteria);
             viewModel.SetLearnerDetails(learnerDetailsListViewModel);
+
+            viewModel.SearchLearnerDetailsList = learnerDetailsListViewModel;
 
             await _cacheService.SetAsync(CacheKey, viewModel);
             return View(viewModel);

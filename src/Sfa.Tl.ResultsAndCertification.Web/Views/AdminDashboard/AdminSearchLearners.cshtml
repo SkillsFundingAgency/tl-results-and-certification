@@ -46,7 +46,10 @@
             case AdminSearchState.ResultsFound:
 
                 <div class="learner-records">
-                    <h2 class="govuk-body">@string.Format(Model.Pagination.PaginationSummary, @Model.Pagination.PagerInfo.RecordFrom, @Model.Pagination.PagerInfo.RecordTo, @Model.Pagination.PagerInfo.TotalItems)</h2>
+                    @if (Model.Pagination.PagerInfo.TotalPages > 0)
+                    {
+                        <h2 class="govuk-body">@string.Format(Model.Pagination.PaginationSummary, @Model.Pagination.PagerInfo.RecordFrom, @Model.Pagination.PagerInfo.RecordTo, @Model.Pagination.PagerInfo.TotalItems)</h2>
+                    }
                     <dl class="govuk-summary-list">
                         @foreach (var learner in Model.SearchLearnerDetailsList.LearnerDetails)
                         {

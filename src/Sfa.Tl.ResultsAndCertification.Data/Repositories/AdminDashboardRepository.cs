@@ -5,6 +5,8 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayId)
         {
+
             var learnerRecordQuerable = from tqPathway in _dbContext.TqRegistrationPathway
                                         join tqProfile in _dbContext.TqRegistrationProfile on tqPathway.TqRegistrationProfileId equals tqProfile.Id
                                         join tqProvider in _dbContext.TqProvider on tqPathway.TqProviderId equals tqProvider.Id
@@ -54,8 +57,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         select new AdminLearnerRecord
                                         {
                                             ProfileId = tqProfile.Id,
-                                            FirstName = tqProfile.Firstname,
-                                            LastName = tqProfile.Lastname,
                                             RegistrationPathwayId = tqPathway.Id,
                                             TlPathwayId = tlPathway.Id,
                                             Uln = tqProfile.UniqueLearnerNumber,
@@ -64,7 +65,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             ProviderName = tlProvider.Name,
                                             ProviderUkprn = tlProvider.UkPrn,
                                             TlevelName = tlPathway.Name,
-                                            TlevelStartYear = tlPathway.StartYear,
                                             AcademicYear = tqPathway.AcademicYear,
                                             AwardingOrganisationName = tqAo.TlAwardingOrganisaton.DisplayName,
                                             MathsStatus = tqProfile.MathsStatus,
@@ -77,7 +77,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             IndustryPlacementDetails = ipRecord != null ? ipRecord.Details : null,
 
                                         };
-
             var learnerRecordDetails = await learnerRecordQuerable.FirstOrDefaultAsync();
             return learnerRecordDetails;
         }
