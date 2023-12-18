@@ -13,6 +13,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -120,9 +121,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [HttpGet]
         [Route("admin/change-start-year/{pathwayId}", Name = RouteConstants.AdminChangeStartYear)]
         public async Task<IActionResult> AdminChangeStartYearAsync(int pathwayId)
-        {
+        {          
             var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(pathwayId);
-
+         
             if (viewModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
@@ -130,7 +131,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("admin/submit-change-start-year", Name = RouteConstants.SubmitAdminChangeStartYear)]
+        [Route("admin/change-start-year/{pathwayId}", Name = RouteConstants.SubmitAdminChangeStartYear)]
         public async Task<IActionResult> AdminChangeStartYearAsync(AdminChangeStartYearViewModel model)
         {
             if (!ModelState.IsValid)

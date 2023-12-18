@@ -59,7 +59,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.TlevelStartYear, opts => opts.MapFrom(s => s.TlevelStartYear))
                 .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
                 .ForMember(d => d.DisplayAcademicYear, opts => opts.MapFrom(s => s.DisplayAcademicYear))
-                .ForMember(d => d.AcademicStartYearsToBe, opts => opts.MapFrom(s => s.AcademicStartYearsToBe));
+                .ForMember(d => d.AcademicStartYearsToBe, opts => opts.MapFrom(s => s.AcademicStartYearsToBe))
+                .ForMember(d => d.RegistrationPathwayId, opts=>opts.MapFrom(s=>s.RegistrationPathwayId))
+                .ForMember(d => d.LearnerRegistrationPathwayStatus, opts => opts.MapFrom(s => s.RegistrationPathwayStatus))
+                .ForMember(d => d.OverallCalculationStatus, opts => opts.MapFrom(s => s.OverallCalculationStatus));
+
         }
     }
 }

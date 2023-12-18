@@ -39,5 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
 
         public string DisplayAcademicYear { get; set; }
         public List<int> AcademicStartYearsToBe { get; set; }
+        
+        public CalculationStatus? OverallCalculationStatus { get; set; }
     }
 }

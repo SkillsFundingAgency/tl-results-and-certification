@@ -51,7 +51,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         join tqAo in _dbContext.TqAwardingOrganisation on tqProvider.TqAwardingOrganisationId equals tqAo.Id
                                         join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
                                         orderby tqPathway.CreatedOn descending
-                                        let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()                                       
+                                        let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()
+                                        let overallResult = tqPathway.OverallResults.FirstOrDefault(o => o.IsOptedin && (tqPathway.Status == RegistrationPathwayStatus.Withdrawn) ? o.EndDate != null : o.EndDate == null)
                                         where tqPathway.Id == pathwayId
                                         select new AdminLearnerRecord
                                         {
@@ -77,7 +78,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             IndustryPlacementId = ipRecord != null ? ipRecord.Id : 0,
                                             IndustryPlacementStatus = ipRecord != null ? ipRecord.Status : null,
                                             IndustryPlacementDetails = ipRecord != null ? ipRecord.Details : null,
-                                           
+                                            OverallCalculationStatus = overallResult != null ? overallResult.CalculationStatus : null,
+
                                         };
             var learnerRecordDetails =  await learnerRecordQuerable.FirstOrDefaultAsync();
             return learnerRecordDetails;
