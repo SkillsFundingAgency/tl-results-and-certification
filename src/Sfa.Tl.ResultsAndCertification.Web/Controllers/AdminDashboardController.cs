@@ -25,7 +25,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly ILogger _logger;
 
         private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey); } }
-        private string InformationCacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardInformationCacheKey); } }
 
         public AdminDashboardController(
             IAdminDashboardLoader loader,
@@ -161,39 +160,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return View(viewModel);
-        }
-
-        [HttpGet]
-        [Route("admin/change-start-year/{pathwayId}", Name = RouteConstants.AdminChangeStartYear)]
-        public async Task<IActionResult> AdminChangeStartYearAsync(int pathwayId)
-        {
-            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(pathwayId);
-
-            if (viewModel == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            await _cacheService.SetAsync<AdminChangeStartYearViewModel>(CacheKey, viewModel);
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("admin/submit-change-start-year", Name = RouteConstants.SubmitAdminChangeStartYear)]
-        public async Task<IActionResult> AdminChangeStartYearAsync(AdminChangeStartYearViewModel model)
-        {
-            var _academicStartYearNew = model.AcademicStartYearNew;
-
-            var viewModel = await _cacheService.GetAsync<AdminChangeStartYearViewModel>(CacheKey);
-
-            if (viewModel.AcademicStartYearsToBe.Count > 0 &&
-                string.IsNullOrEmpty(model.AcademicStartYearNew))
-            {
-                model.AcademicStartYearsToBe = viewModel.AcademicStartYearsToBe;
-                return View(viewModel);
-            }
-
-            model.AcademicStartYearNew = _academicStartYearNew;
-
-            return View(model); // This should be re-direct to next page.
         }
     }
 }
