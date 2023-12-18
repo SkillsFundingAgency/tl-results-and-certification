@@ -12,7 +12,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminSearchLearnersGet
 {
-    public class When_Cache_Not_Empty_Only_Search_Filters_Applied : AdminSearchLearnerTestBase
+    public class When_Cache_Not_Empty_Only_Filters_Applied : AdminSearchLearnerTestBase
     {
         private AdminSearchLearnerViewModel _searchLearnerViewModel;
         private AdminSearchLearnerCriteriaViewModel _criteriaViewModel;
