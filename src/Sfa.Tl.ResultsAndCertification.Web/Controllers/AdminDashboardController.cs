@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
         
-        private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TrainingProviderCacheKey); } }       
+        private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey); } }       
 
         public AdminDashboardController(
             IAdminDashboardLoader loader,

@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
            
             // Back link
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.SearchLearnerRecord);
+            model.BackLink.RouteName.Should().Be(RouteConstants.AdminLearnerRecord);
         }
 
 
