@@ -90,6 +90,11 @@
                             <p class="govuk-body">@ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Line1</p>
                            
                             <p class="govuk-body">@Model.StartYearCannotChangeMessage</p>
+                            
+                            @if(@Model.DisplayDevlopmentTicketMessage)
+                            {
+                            <p class="govuk-body">@ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Devlopment_Ticket</p>
+                            }
                            
                             <div class="govuk-button-group">
                                 <a id="returnButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@ChangeStartYear.Button_Return</a>

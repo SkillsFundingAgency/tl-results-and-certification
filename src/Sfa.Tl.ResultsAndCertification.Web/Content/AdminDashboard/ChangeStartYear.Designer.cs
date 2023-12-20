@@ -133,6 +133,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You can request a development ticket for further help..
+        /// </summary>
+        public static string Message_Start_Year_Cannot_Be_Changed_Devlopment_Ticket {
+            get {
+                return ResourceManager.GetString("Message_Start_Year_Cannot_Be_Changed_Devlopment_Ticket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This is because the learner has been withdrawn..
         /// </summary>
         public static string Message_Start_Year_Cannot_Be_Changed_Learner_Has_Been_Withdrawn {
@@ -160,7 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This is because the overall result has already been calculated. You can request a development ticket for further help..
+        ///   Looks up a localized string similar to This is because the overall result has already been calculated..
         /// </summary>
         public static string Message_Start_Year_Cannot_Be_Changed_Overall_Result_Already_Calculated {
             get {
