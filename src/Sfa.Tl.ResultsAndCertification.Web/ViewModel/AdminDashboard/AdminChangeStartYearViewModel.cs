@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 {
     public class AdminChangeStartYearViewModel
     {
-        public int ProfileId { get; set; }
+        public int PathwayId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public long Uln { get; set; }
@@ -24,9 +24,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public string Learner => $"{FirstName} {LastName}";
 
         [Required(ErrorMessageResourceType = typeof(ChangeStarYear), ErrorMessageResourceName = "Validation_Message")]
-      
-        public string AcademicStartYearNew { get; set; }
-      
+        public string AcademicYearTo { get; set; }
+
         public BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.SearchLearnerRecord

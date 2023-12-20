@@ -13,6 +13,10 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
+using Resource = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -118,36 +122,60 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("admin/change-start-year/{pathwayId}", Name = RouteConstants.AdminChangeStartYear)]
-        public async Task<IActionResult> AdminChangeStartYearAsync(int pathwayId)
+        [Route("admin/change-start-year/{pathwayId}", Name = RouteConstants.ChangeStartYear)]
+        public async Task<IActionResult> ChangeStartYearAsync(int pathwayId)
         {
-                      var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(pathwayId);
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(pathwayId);
 
             if (viewModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
-            await _cacheService.SetAsync<AdminChangeStartYearViewModel>(CacheKey, viewModel);
 
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("admin/submit-change-start-year", Name = RouteConstants.SubmitAdminChangeStartYear)]
-        public async Task<IActionResult> AdminChangeStartYearAsync(AdminChangeStartYearViewModel model)
+        [Route("admin/submit-change-start-year", Name = RouteConstants.SubmitChangeStartYear)]
+        public async Task<IActionResult> ChangeStartYearAsync(AdminChangeStartYearViewModel model)
         {
-             var _academicStartYearNew = model.AcademicStartYearNew;
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(model.PathwayId);
 
-             var viewModel = await _cacheService.GetAsync<AdminChangeStartYearViewModel>(CacheKey);
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
 
-             if (viewModel.AcademicStartYearsToBe.Count > 0 &&
-                 string.IsNullOrEmpty(model.AcademicStartYearNew))
-             {
-                 model.AcademicStartYearsToBe = viewModel.AcademicStartYearsToBe;
-                 return View(viewModel);
-             }
+            viewModel.AcademicYearTo = model.AcademicYearTo;
+            await _cacheService.SetAsync<AdminChangeStartYearViewModel>(CacheKey, viewModel);
 
-             model.AcademicStartYearNew = _academicStartYearNew;
+            return RedirectToAction(nameof(RouteConstants.ReviewChangeStartYear), new { pathwayId = model.PathwayId });
+        }
 
-             return View(model); // This should be re-direct to next page.
+        [HttpGet]
+        [Route("admin/review-change-start-year/{pathwayId}", Name = RouteConstants.ReviewChangeStartYear)]
+        public async Task<IActionResult> ReviewChangeStartYearAsync(int pathwayId)
+        {
+            var _cachedModel = await _cacheService.GetAsync<AdminChangeStartYearViewModel>(CacheKey);
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<ReviewChangeStartYearViewModel>(pathwayId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            viewModel.AcademicYearTo = _cachedModel.AcademicYearTo;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/submit-review-change-start-year", Name = RouteConstants.SubmitReviewChangeStartYear)]
+        public async Task<IActionResult> ReviewChangeStartYearAsync(ReviewChangeStartYearViewModel model)
+        {
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<ReviewChangeStartYearViewModel>(model.PathwayId);
+
+            if (!ModelState.IsValid)
+                return View(model);
+
+            await Task.CompletedTask;
+
+            return View(model);
         }
     }
 }

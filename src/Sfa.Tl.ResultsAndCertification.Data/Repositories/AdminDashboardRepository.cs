@@ -55,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         where tqPathway.Id == pathwayId
                                         select new AdminLearnerRecord
                                         {
-                                            ProfileId = tqProfile.Id,
+                                            PathwayId = pathwayId,
                                             FirstName = tqProfile.Firstname,
                                             LastName = tqProfile.Lastname,
                                             RegistrationPathwayId = tqPathway.Id,

@@ -408,8 +408,10 @@
         public const string SubmitAdminSearchLearnerClearKey = "SubmitAdminSearchLearnerClearKey";
         public const string AdminSearchLearners = "AdminSearchLearners";
         public const string AdminLearnerRecord = "AdminLearnerRecord";
-        public const string AdminChangeStartYear = "AdminChangeStartYear";
-        public const string SubmitAdminChangeStartYear = "SubmitAdminChangeStartYear";
+        public const string ChangeStartYear = "ChangeStartYear";
+        public const string SubmitChangeStartYear = "SubmitChangeStartYear";
+        public const string ReviewChangeStartYear = "ReviewChangeStartYear";
+        public const string SubmitReviewChangeStartYear = "SubmitReviewChangeStartYear";
 
 
         #endregion

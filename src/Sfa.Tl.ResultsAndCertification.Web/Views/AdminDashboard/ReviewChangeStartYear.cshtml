@@ -1,0 +1,104 @@
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.ReviewChangeStartYearViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+
+@{
+    ViewData["Title"] = ReviewChangeStartYear.Page_Title;
+}
+
+@section NavigationBar
+    {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="record-header">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+            @ReviewChangeStartYear.Heading_Change_Start_Year
+        </h1>
+    </div>
+    <partial name="_ValidationSummary" />
+    <h2 class="govuk-heading-m">
+        @ReviewChangeStartYear.Heading_Personal_Details
+    </h2>
+
+    <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+        <vc:summary-item model=Model.SummaryLearner></vc:summary-item>
+        <vc:summary-item model=Model.SummaryULN></vc:summary-item>
+        <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+        <vc:summary-item model=Model.SummaryTlevel></vc:summary-item>
+    </dl>
+
+    <h2 class="govuk-heading-m">
+        @ReviewChangeStartYear.Heading_Change_Summary
+    </h2>
+
+    <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">@ReviewChangeStartYear.Title_Change_Summary_Change_Text</dt>
+            <dt class="govuk-summary-list__key">@ReviewChangeStartYear.Title_Change_Summary_From_Text</dt>
+            <dt class="govuk-summary-list__key">@ReviewChangeStartYear.Title_Change_Summary_To_Text</dt>
+            <dt class="govuk-summary-list__key"></dt>
+        </div>
+        <vc:summary-item model=Model.SummaryAcademicYear></vc:summary-item>
+    </dl>
+
+    <div class="govuk-inset-text">
+        @ReviewChangeStartYear.Message_Inset_Text
+    </div>
+    <form asp-route="@RouteConstants.SubmitReviewChangeStartYear">
+        <input type="hidden" asp-for="PathwayId" />
+        <input type="hidden" asp-for="AcademicYearTo" />
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                    <h2 class="govuk-fieldset__heading">
+                        @ReviewChangeStartYear.Heading_Who_has_asked_for_change
+                    </h2>
+                </legend>
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-label--s" for="contactname">@ReviewChangeStartYear.Title_Contact_Name_Text</label>
+                    <input id="contactname" class="govuk-input govuk-input--width-20" asp-for="ContactName" sfa-validation-class="govuk-input-error" sfa-validation-for="ContactName" type="text">
+                </div>
+                <div class="govuk-form-group" id-"requestdate">
+                    <label class="govuk-label govuk-label--s" for="dateofrequest">@ReviewChangeStartYear.Title_Date_Of_Request</label>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="day">@ReviewChangeStartYear.Title_Day_Text</label>
+                            <input id="day" asp-for="Day" sfa-validation-for="Day" sfa-validation-class="govuk-input--error" class="govuk-input govuk-date-input__input govuk-input--width-2" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="month">@ReviewChangeStartYear.Title_Month_Text</label>
+                            <input id="month" asp-for="Month" sfa-validation-for="Month" sfa-validation-class="govuk-input--error" class="govuk-input govuk-date-input__input govuk-input--width-2" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="year">@ReviewChangeStartYear.Title_Year_Text</label>
+                            <input id="year" asp-for="Year" sfa-validation-for="Year" sfa-validation-class="govuk-input--error" class="govuk-input govuk-date-input__input govuk-input--width-4" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+                <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="2000">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-label--s" for="changereason">@ReviewChangeStartYear.Title_Reason_For_Change_Text</label>
+                        <textarea class="govuk-textarea govuk-js-character-count" id="changereason" name="changereason" rows="5" maxlength="2000" asp-for="ChangeReason"></textarea>
+                        <div id="changereason-info" class="govuk-hint govuk-js-character-count__message">
+                            You can enter up to 2000 characters
+                        </div>
+                    </div>
+                </div>
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-label--s" for="zenticketid">@ReviewChangeStartYear.Title_Zendesk_Ticket_Id</label>
+                    <input id="zenticketid" class="govuk-input govuk-input--width-10" asp-for="ZendeskId" type="text" maxlength="10">
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ReviewChangeStartYear.Button_Submit</button>
+            <button id="cancelButton" class="govuk-button govuk-body govuk-button govuk-button--secondary" data-module="govuk-button">@ReviewChangeStartYear.Button_Cancel</button>
+        </div>
+    </form>
+</div>

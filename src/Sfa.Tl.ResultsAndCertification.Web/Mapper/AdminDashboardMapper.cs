@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AcademicYears, opts => opts.MapFrom(s => s.AcademicYears));
 
             CreateMap<AdminLearnerRecord, AdminLearnerRecordViewModel>()
-                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.PathwayId))
                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
                .ForMember(d => d.TlPathwayId, opts => opts.MapFrom(s => s.TlPathwayId))
                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PagerInfo, opts => opts.MapFrom(s => s.PagerInfo));
 
             CreateMap<AdminLearnerRecord, AdminChangeStartYearViewModel>()
-                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
                 .ForMember(d => d.FirstName, opts => opts.MapFrom(s => s.FirstName))
                 .ForMember(d => d.LastName, opts => opts.MapFrom(s => s.LastName))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
@@ -60,6 +60,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
                 .ForMember(d => d.DisplayAcademicYear, opts => opts.MapFrom(s => s.DisplayAcademicYear))
                 .ForMember(d => d.AcademicStartYearsToBe, opts => opts.MapFrom(s => s.AcademicStartYearsToBe));
+
+            CreateMap<AdminLearnerRecord, ReviewChangeStartYearViewModel>()
+                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
+                .ForMember(d => d.FirstName, opts => opts.MapFrom(s => s.FirstName))
+                .ForMember(d => d.LastName, opts => opts.MapFrom(s => s.LastName))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
+                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
+                .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.TlevelName))
+                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
+                .ForMember(d => d.DisplayAcademicYear, opts => opts.MapFrom(s => s.DisplayAcademicYear));
         }
     }
 }

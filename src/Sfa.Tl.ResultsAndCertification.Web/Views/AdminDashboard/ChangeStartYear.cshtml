@@ -14,7 +14,16 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
-        <form asp-route="@RouteConstants.SubmitAdminChangeStartYear" method="post">
+        <form asp-route="@RouteConstants.SubmitChangeStartYear" method="post">
+            <input type="hidden" asp-for="PathwayId" />
+            <input type="hidden" asp-for="Learner" />
+            <input type="hidden" asp-for="Uln" />
+            <input type="hidden" asp-for="ProviderName" />
+            <input type="hidden" asp-for="ProviderUkprn" />
+            <input type="hidden" asp-for="TlevelName" />
+            <input type="hidden" asp-for="TlevelStartYear" />
+            <input type="hidden" asp-for="TlevelStartYear" />
+
             <div class="record-header">
                 <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
                     @ChangeStartYear.Heading_Change_Start_Year
@@ -33,7 +42,7 @@
                 <vc:summary-item model=Model.SummaryAcademicYear></vc:summary-item>
             </dl>
 
-            <div class="govuk-form-group" sfa-validation-for="AcademicStartYearNew" sfa-validation-class="govuk-form-group--error">
+            <div class="govuk-form-group" sfa-validation-for="AcademicYearTo" sfa-validation-class="govuk-form-group--error">
                 @{
                     if (Model.AcademicStartYearsToBe.Count() > 0)
                     {
@@ -45,11 +54,11 @@
                                     </h2>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
-                                    <span sfa-validation-for="AcademicStartYearNew"></span>
+                                    <span sfa-validation-for="AcademicYearTo"></span>
                                     @foreach (var year in Model.AcademicStartYearsToBe)
                                     {
                                         <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="academicstartyearnew_@year" asp-for="AcademicStartYearNew" type="radio" value="@year">
+                                            <input class="govuk-radios__input" id="academicstartyearnew_@year" asp-for="AcademicYearTo" type="radio" value="@year">
                                             <label class="govuk-label govuk-radios__label" for="academicstartyearnew_@year">
                                                 @($"{year} to {year + 1}")
                                             </label>

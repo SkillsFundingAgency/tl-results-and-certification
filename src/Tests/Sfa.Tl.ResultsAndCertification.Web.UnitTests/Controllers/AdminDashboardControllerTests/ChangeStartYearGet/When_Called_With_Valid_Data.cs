@@ -1,16 +1,12 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
-using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.LearnerRecord;
-using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ChangeStartYearGet
 {
@@ -38,12 +34,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 AcademicStartYearsToBe = new List<int>() { 2021, 2020}
             };
 
-            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(PathwayId).Returns(Mockresult);
+            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(Arg.Any<int>()).Returns(Mockresult);
         }
 
         public async override Task When()
         {
-            Result = await Controller.AdminChangeStartYearAsync(PathwayId);
+            Result = await Controller.ChangeStartYearAsync(PathwayId);
         }
 
 
@@ -61,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
             var model = (Result as ViewResult).Model as AdminChangeStartYearViewModel;
 
-            model.ProfileId.Should().Be(Mockresult.ProfileId);
+            model.PathwayId.Should().Be(Mockresult.PathwayId);
             model.Uln.Should().Be(Mockresult.Uln);
             model.Learner.Should().Be(Mockresult.Learner);
             model.FirstName.Should().Be(Mockresult.FirstName);
@@ -99,9 +95,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.SearchLearnerRecord);
         }
-
-
-
-
     }
 }
