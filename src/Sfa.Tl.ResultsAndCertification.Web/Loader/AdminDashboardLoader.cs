@@ -31,15 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<AdminSearchLearnerDetailsListViewModel> GetAdminSearchLearnerDetailsListAsync(AdminSearchLearnerCriteriaViewModel adminSearchCriteria)
         {
-            var request = new AdminSearchLearnerRequest
-            {
-                SearchKey = adminSearchCriteria.SearchKey,
-                PageNumber = adminSearchCriteria.PageNumber,
-                SelectedAcademicYears = adminSearchCriteria.SearchLearnerFilters?.AcademicYears?.Where(p => p.IsSelected).Select(p => p.Id).ToList(),
-                SelectedAwardingOrganisations = adminSearchCriteria.SearchLearnerFilters?.AwardingOrganisations?.Where(p => p.IsSelected).Select(p => p.Id).ToList()
-            };
-
-            PagedResponse<AdminSearchLearnerDetail> apiResponse = await _internalApiClient.GetAdminSearchLearnerDetailsAsync(request);
+            var adminSearchLearnerRequest = _mapper.Map<AdminSearchLearnerRequest>(adminSearchCriteria);
+            PagedResponse<AdminSearchLearnerDetail> apiResponse = await _internalApiClient.GetAdminSearchLearnerDetailsAsync(adminSearchLearnerRequest);
             return _mapper.Map<AdminSearchLearnerDetailsListViewModel>(apiResponse);
         }
 

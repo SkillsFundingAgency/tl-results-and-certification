@@ -6,7 +6,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
     {
         public string SearchKey { get; set; }
 
-        public long? ProviderUkprn { get; set; }
+        public int? ProviderId { get; set; }
 
         public IList<int> SelectedAcademicYears { get; set; }
 

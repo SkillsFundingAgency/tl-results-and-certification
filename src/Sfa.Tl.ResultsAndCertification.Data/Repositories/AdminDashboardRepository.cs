@@ -44,6 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayId)
         {
+
             var learnerRecordQuerable = from tqPathway in _dbContext.TqRegistrationPathway
                                         join tqProfile in _dbContext.TqRegistrationProfile on tqPathway.TqRegistrationProfileId equals tqProfile.Id
                                         join tqProvider in _dbContext.TqProvider on tqPathway.TqProviderId equals tqProvider.Id
@@ -119,9 +120,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 registrationPathwayQueryable = registrationPathwayQueryable.Where(p => request.SelectedAcademicYears.Contains(p.AcademicYear));
             }
 
-            if (request.ProviderUkprn.HasValue)
+            if (request.ProviderId.HasValue)
             {
-                registrationPathwayQueryable = registrationPathwayQueryable.Where(p => request.ProviderUkprn == p.TqProvider.TlProvider.UkPrn);
+                registrationPathwayQueryable = registrationPathwayQueryable.Where(p => request.ProviderId == p.TqProvider.TlProviderId);
             }
 
             int filteredRecordsCount = await registrationPathwayQueryable.CountAsync();

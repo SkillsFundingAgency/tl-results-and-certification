@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.GetProviderLookupData
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderLookupControllerTests.GetProviderLookupData
 {
     public class When_ProviderName_IsValid : When_FindProviderAsync_Post_Action_Is_Called
     {
         private List<ProviderLookupData> expectedResults;
-        
-        public override void Given() 
+
+        public override void Given()
         {
             expectedResults = new List<ProviderLookupData>
             {

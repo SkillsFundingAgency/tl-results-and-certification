@@ -1,22 +1,20 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.GetProviderLookupData
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderLookupControllerTests.GetProviderLookupData
 {
     public abstract class When_FindProviderAsync_Post_Action_Is_Called : BaseTest<ProviderController>
     {
         // DI Mocks
         protected IProviderLoader ProviderLoader;
-        protected ILogger<ProviderController> Logger;
 
         // input, output and other mock variables
-        protected ProviderController Controller;
+        protected ProviderLookupController Controller;
         protected JsonResult Result;
         protected IHttpContextAccessor HttpContextAccessor;
 
@@ -26,8 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         {
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             ProviderLoader = Substitute.For<IProviderLoader>();
-            Logger = Substitute.For<ILogger<ProviderController>>();
-            Controller = new ProviderController(ProviderLoader, Logger);
+            Controller = new ProviderLookupController(ProviderLoader);
         }
 
         public async override Task When()

@@ -25,6 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
         public string AwardingOrganisationName { get; set; }
         public SubjectStatus? MathsStatus { get; set; }
         public SubjectStatus? EnglishStatus { get; set; }
+
         public bool IsLearnerRegistered { get; set; }
         public RegistrationPathwayStatus RegistrationPathwayStatus { get; set; }
         public bool IsPendingWithdrawal { get; set; }

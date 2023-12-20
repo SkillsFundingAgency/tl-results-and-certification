@@ -406,7 +406,8 @@
         public const string AdminSearchLearnersRecordsClear = "AdminSearchLearnersRecordsClear";
         public const string SubmitAdminSearchLearnerRecordsApplySearchKey = "SubmitAdminSearchLearnerRecordsApplySearchKey";
         public const string SubmitAdminSearchLearnerClearKey = "SubmitAdminSearchLearnerClearKey";
-        public const string AdminSearchLearners = "AdminSearchLearners";
+        public const string SubmitAdminSearchLearnerRecordsApplyFilters = "SubmitAdminSearchLearnerRecordsApplyFilters";
+        public const string SubmitAdminSearchLearnerClearFilters = "SubmitAdminSearchLearnerClearFilters";
         public const string AdminLearnerRecord = "AdminLearnerRecord";
         public const string AdminChangeStartYear = "AdminChangeStartYear";
         public const string SubmitAdminChangeStartYear = "SubmitAdminChangeStartYear";

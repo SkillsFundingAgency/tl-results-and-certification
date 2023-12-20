@@ -8,8 +8,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     public interface IAdminDashboardService
     {
         Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync();
+       
+        Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayId);
 
         Task<PagedResponse<AdminSearchLearnerDetail>> GetAdminSearchLearnerDetailsAsync(AdminSearchLearnerRequest request);
-        Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayId);
     }
 }

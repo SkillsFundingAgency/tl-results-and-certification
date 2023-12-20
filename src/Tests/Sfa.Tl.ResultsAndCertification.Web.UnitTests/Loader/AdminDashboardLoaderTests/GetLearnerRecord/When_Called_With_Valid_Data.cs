@@ -23,6 +23,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
     {
         private IResultsAndCertificationInternalApiClient _internalApiClient;
         private AdminDashboardLoader Loader;
+
+        private AdminSearchLearnerDetailsListViewModel _expectedResult;
+        private AdminSearchLearnerDetailsListViewModel _actualResult;
         private int PathwayId;
 
         public override void Setup()
@@ -44,7 +47,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
         public override void Given()
         {
             PathwayId = 1;
-        
+
+           
 
             _expectedApiResult = new Models.Contracts.AdminDashboard.AdminLearnerRecord
             { 
