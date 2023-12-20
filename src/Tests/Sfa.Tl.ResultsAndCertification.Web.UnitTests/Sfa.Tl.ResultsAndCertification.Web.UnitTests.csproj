@@ -68,12 +68,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Sfa.Tl.ResultsAndCertification.Web\Sfa.Tl.ResultsAndCertification.Web.csproj" />
-    <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Tests.Common\Sfa.Tl.ResultsAndCertification.Tests.Common.csproj" />
+    <Folder Include="Controllers\HelpControllerTests\ServiceUnavailable\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\HelpControllerTests\ServiceUnavailable\" />
+    <ProjectReference Include="..\..\Sfa.Tl.ResultsAndCertification.Web\Sfa.Tl.ResultsAndCertification.Web.csproj" />
+    <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Tests.Common\Sfa.Tl.ResultsAndCertification.Tests.Common.csproj" />
   </ItemGroup>
 
 </Project>

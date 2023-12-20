@@ -40,7 +40,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public void SetSearchKey(string searchKey)
         {
             SearchLearnerCriteria ??= new AdminSearchLearnerCriteriaViewModel();
-
             SearchLearnerCriteria.SearchKey = searchKey;
             SearchLearnerCriteria.PageNumber = FirstPage;
         }

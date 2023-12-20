@@ -53,10 +53,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
                                         orderby tqPathway.CreatedOn descending
                                         let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()
+                                        let overallResult = tqPathway.OverallResults.FirstOrDefault(o => o.IsOptedin && (tqPathway.Status == RegistrationPathwayStatus.Withdrawn) ? o.EndDate != null : o.EndDate == null)
                                         where tqPathway.Id == pathwayId
                                         select new AdminLearnerRecord
                                         {
                                             ProfileId = tqProfile.Id,
+                                            FirstName = tqProfile.Firstname,
+                                            LastName = tqProfile.Lastname,
                                             RegistrationPathwayId = tqPathway.Id,
                                             TlPathwayId = tlPathway.Id,
                                             Uln = tqProfile.UniqueLearnerNumber,
@@ -65,6 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             ProviderName = tlProvider.Name,
                                             ProviderUkprn = tlProvider.UkPrn,
                                             TlevelName = tlPathway.Name,
+                                            TlevelStartYear = tlPathway.StartYear,
                                             AcademicYear = tqPathway.AcademicYear,
                                             AwardingOrganisationName = tqAo.TlAwardingOrganisaton.DisplayName,
                                             MathsStatus = tqProfile.MathsStatus,
@@ -75,9 +79,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             IndustryPlacementId = ipRecord != null ? ipRecord.Id : 0,
                                             IndustryPlacementStatus = ipRecord != null ? ipRecord.Status : null,
                                             IndustryPlacementDetails = ipRecord != null ? ipRecord.Details : null,
+                                            OverallCalculationStatus = overallResult != null ? overallResult.CalculationStatus : null,
 
                                         };
-            var learnerRecordDetails = await learnerRecordQuerable.FirstOrDefaultAsync();
+            var learnerRecordDetails =  await learnerRecordQuerable.FirstOrDefaultAsync();
             return learnerRecordDetails;
         }
 

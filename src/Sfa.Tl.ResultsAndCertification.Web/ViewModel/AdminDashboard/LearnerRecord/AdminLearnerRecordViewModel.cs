@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
@@ -107,8 +108,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
             Title = LearnerRecordDetailsContent.Title_StartYear_Text,
             Value = StartYear,
             ActionText = LearnerRecordDetailsContent.Action_Text_Link_Change,
-           // RouteName = TLevelStatusChangeRouteName,
-           // RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
+            RouteName = RouteConstants.AdminChangeStartYear,
+           RouteAttributes = new Dictionary<string, string> { { Constants.PathwayId, RegistrationPathwayId.ToString() } }
         };
 
         public SummaryItemModel SummaryAoName => new SummaryItemModel

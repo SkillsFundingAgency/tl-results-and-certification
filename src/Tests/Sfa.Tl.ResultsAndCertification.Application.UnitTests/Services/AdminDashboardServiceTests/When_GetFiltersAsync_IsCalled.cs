@@ -50,7 +50,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
             var systemProvider = Substitute.For<ISystemProvider>();
             systemProvider.UtcToday.Returns(today);
 
-            _adminDashboardService = new AdminDashboardService(repository, systemProvider);
+            var mapper = Substitute.For<IMapper>();
+
+            _adminDashboardService = new AdminDashboardService(repository, systemProvider, mapper);
         }
 
         public override void Given()

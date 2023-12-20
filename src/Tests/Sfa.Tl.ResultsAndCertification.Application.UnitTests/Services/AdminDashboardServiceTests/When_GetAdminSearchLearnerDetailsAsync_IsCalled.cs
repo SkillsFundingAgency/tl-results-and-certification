@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using AutoMapper;
+using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
@@ -45,8 +46,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
             var systemProvider = Substitute.For<ISystemProvider>();
 
             repository.SearchLearnerDetailsAsync(Arg.Any<AdminSearchLearnerRequest>()).Returns(_expectedResult);
+            var mapper = Substitute.For<IMapper>();
 
-            _adminDashboardService = new AdminDashboardService(repository, systemProvider);
+            _adminDashboardService = new AdminDashboardService(repository, systemProvider, mapper);
         }
 
         public override void Given()
