@@ -51,27 +51,7 @@
                 @{
                     if (Model.AcademicStartYearsToBe.Count() > 0 && !Model.IsOverallResultCalculated && !Model.IsLearnerWithdrawn && !Model.IsLearnerRegisteredFourYearsAgo && !Model.IsTlevelStartedSameAsStartYear)
                     {
-                        <div class="govuk-form-group govuk-!-margin-top-8">
-                            <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h2 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
-                                        @ChangeStartYear.Heading_What_Should_The_Start_Year_Be
-                                    </h2>
-                                </legend>
-                                <div class="govuk-radios" data-module="govuk-radios">
-                                    <span sfa-validation-for="AcademicYearTo"></span>
-                                    @foreach (var year in Model.AcademicStartYearsToBe)
-                                    {
-                                        <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="academicstartyearnew_@year" asp-for="AcademicYearTo" type="radio" value="@year">
-                                            <label class="govuk-label govuk-radios__label" for="academicstartyearnew_@year">
-                                                @($"{year} to {year + 1}")
-                                            </label>
-                                        </div>
-                                    }
-                                </div>
-                            </fieldset>
-                        </div>
+                        <partial name="Partials/_academicYearsSelection.cshtml" model="Model" />
                     }
                     else
                     {
@@ -79,13 +59,17 @@
                             <h2 class="govuk-heading-m">@ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Title</h2>
                             <p class="govuk-body">@ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Line1</p>
                             <p class="govuk-body">@Model.StartYearCannotChangeMessage</p>
+                            @if (@Model.DisplayDevlopmentTicketMessage)
+                            {
+                                <p class="govuk-body">@ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Devlopment_Ticket</p>
+                            }
+
+                            <div class="govuk-button-group">
+                                <a id="returnButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@ChangeStartYear.Button_Return</a>
+                            </div>
                         </div>
                     }
                 }
-            </div>
-            <div class="govuk-button-group">
-                <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ChangeStartYear.Button_Continue</button>
-                <button id="cancelButton" class="govuk-button govuk-body govuk-button govuk-button--secondary" data-module="govuk-button">@ChangeStartYear.Button_Cancel</button>
             </div>
         </form>
     </div>
