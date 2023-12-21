@@ -85,6 +85,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 
         public bool IsLearnerRegisteredFourYearsAgo => (DateTime.Now.Year - AcademicYear) > 4;
 
+        public bool DisplayDevlopmentTicketMessage => IsOverallResultCalculated;
+
         public string StartYearCannotChangeMessage
         {
             get
