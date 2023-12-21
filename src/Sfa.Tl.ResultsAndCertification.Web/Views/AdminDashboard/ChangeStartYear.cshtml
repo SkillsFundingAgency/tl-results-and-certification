@@ -22,7 +22,12 @@
             <input type="hidden" asp-for="ProviderUkprn" />
             <input type="hidden" asp-for="TlevelName" />
             <input type="hidden" asp-for="TlevelStartYear" />
-            <input type="hidden" asp-for="TlevelStartYear" />
+            <input type="hidden" asp-for="AcademicYear" />
+            <input type="hidden" asp-for="DisplayAcademicYear" />
+            @for (int i = 0; i < @Model.AcademicStartYearsToBe.Count(); i++)
+            {
+                <input type="hidden" asp-for="AcademicStartYearsToBe[i]" />
+            }
 
             <div class="record-header">
                 <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
@@ -44,7 +49,7 @@
 
             <div class="govuk-form-group" sfa-validation-for="AcademicYearTo" sfa-validation-class="govuk-form-group--error">
                 @{
-                    if (Model.AcademicStartYearsToBe.Count() > 0)
+                    if (Model.AcademicStartYearsToBe.Count() > 0 && !Model.IsOverallResultCalculated && !Model.IsLearnerWithdrawn && !Model.IsLearnerRegisteredFourYearsAgo && !Model.IsTlevelStartedSameAsStartYear)
                     {
                         <div class="govuk-form-group govuk-!-margin-top-8">
                             <fieldset class="govuk-fieldset">
@@ -73,7 +78,7 @@
                         <div class="govuk-form-group govuk-!-margin-top-8">
                             <h2 class="govuk-heading-m">@ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Title</h2>
                             <p class="govuk-body">@ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Line1</p>
-                            <p class="govuk-body">@ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Tlevel_Became_Available_This_Academic_Year</p>
+                            <p class="govuk-body">@Model.StartYearCannotChangeMessage</p>
                         </div>
                     }
                 }

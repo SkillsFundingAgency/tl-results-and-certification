@@ -26,6 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         protected ICacheService CacheService;
         protected ILogger<AdminDashboardController> Logger;
         protected AdminDashboardController Controller;
+        protected IProviderLoader ProviderLoader;
         protected IHttpContextAccessor HttpContextAccessor;
         protected AdminChangeStartYearViewModel AdminChangeStartYearViewModel;
 
@@ -36,8 +37,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             AdminDashboardLoader = Substitute.For<IAdminDashboardLoader>();
             CacheService = Substitute.For<ICacheService>();
+            ProviderLoader = Substitute.For<IProviderLoader>();
             Logger = Substitute.For<ILogger<AdminDashboardController>>();
-            Controller = new AdminDashboardController(AdminDashboardLoader, CacheService, Logger);
+            Controller = new AdminDashboardController(AdminDashboardLoader, ProviderLoader ,CacheService, Logger);
 
             ProfileId = 1;
             AoUkprn = 1234567890;

@@ -123,6 +123,9 @@
   <data name="Button_Continue" xml:space="preserve">
     <value>Continue</value>
   </data>
+  <data name="Button_Return" xml:space="preserve">
+    <value>Return to learner record</value>
+  </data>
   <data name="Error_Summary_Header" xml:space="preserve">
     <value>There is a problem</value>
   </data>

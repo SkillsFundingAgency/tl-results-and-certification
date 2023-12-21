@@ -118,6 +118,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web
 
                 // Admin Dashboard Access Policies                
                 options.AddPolicy(RolesExtensions.RequireAdminDashboardAccess, policy => { policy.RequireRole(RolesExtensions.AdminDashboardAccess); policy.RequireClaim(CustomClaimTypes.LoginUserType, ((int)LoginUserType.Admin).ToString()); });
+
+
+                options.AddPolicy(RolesExtensions.RequireProviderEditorOrAdminDashboardAccess,
+                    policy => policy.RequireAssertion(p =>
+                        p.User.HasLoginUserTypeClaimAndRole(LoginUserType.AwardingOrganisation, RolesExtensions.SiteAdministrator, RolesExtensions.ProvidersEditor)
+                        || p.User.HasLoginUserTypeClaimAndRole(LoginUserType.Admin, RolesExtensions.AdminDashboardAccess)));
             });
 
             services.AddWebDataProtection(ResultsAndCertificationConfiguration, _env);

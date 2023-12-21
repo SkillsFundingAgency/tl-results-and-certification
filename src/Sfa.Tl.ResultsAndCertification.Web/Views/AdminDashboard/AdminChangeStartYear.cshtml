@@ -1,0 +1,107 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.AdminChangeStartYearViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+
+@{
+    ViewData["Title"] = ChangeStartYear.Page_Title;
+}
+
+@section NavigationBar
+    {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+        <partial name="_ValidationSummary" />
+        <form asp-route="@RouteConstants.SubmitChangeStartYear" >
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <input type="hidden" asp-for="Uln" value="@Model.Uln" />           
+            <input type="hidden" asp-for="AcademicYear" value="@Model.AcademicYear" />
+            <input type="hidden" asp-for="PathwayId" value="@Model.PathwayId" />
+            <input type="hidden" asp-for="RegistrationPathwayId" value="@Model.RegistrationPathwayId" />
+            <input type="hidden" asp-for="ProviderName" value="@Model.ProviderName" />
+            <input type="hidden" asp-for="ProviderUkprn" value="@Model.ProviderUkprn" />
+            @for (int i = 0; i < @Model.AcademicStartYearsToBe.Count(); i++)
+            {
+                <input type="hidden" asp-for="AcademicStartYearsToBe[i]" />
+            }
+            <input type="hidden" asp-for="TlevelName" value="@Model.TlevelName" />
+            <input type="hidden" asp-for="DisplayAcademicYear" value="@Model.DisplayAcademicYear" />
+            <input type="hidden" asp-for="Learner" value="@Model.Learner" />
+
+
+
+            <div class="govuk-form-group" sfa-validation-for="AcademicYearTo" sfa-validation-class="govuk-form-group--error">
+
+                <div class="record-header">
+                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+                        @ChangeStartYear.Heading_Change_Start_Year
+                    </h1>
+                </div>
+
+                <h2 class="govuk-heading-m">
+                    @ChangeStartYear.Heading_Personal_Details
+                </h2>
+
+                <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+                    <vc:summary-item model=Model.SummaryLearner></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryULN></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryTlevel></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryAcademicYear></vc:summary-item>
+                </dl>
+
+                @{
+                    if (Model.AcademicStartYearsToBe.Count() > 0 && !Model.IsOverallResultCalculated && !Model.IsLearnerWithdrawn && !Model.IsLearnerRegisteredFourYearsAgo && !Model.IsTlevelStartedSameAsStartYear)
+                    {
+                        <div class="govuk-form-group govuk-!-margin-top-8">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h2 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
+                                        @ChangeStartYear.Heading_What_Should_The_Start_Year_Be
+                                    </h2>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <span sfa-validation-for="AcademicYearTo"></span>
+                                    @foreach (var year in Model.AcademicStartYearsToBe)
+                                    {
+                                        <div class="govuk-radios__item">
+                                            
+                                            <input class="govuk-radios__input" id="isAcademicyeartobeselected" asp-for="AcademicYearTo" type="radio" value="@year">
+                                            <label class="govuk-label govuk-radios__label" for="IsAcademicYearToBeSelected-@year">
+                                                @($"{year} to {year + 1}")
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="govuk-button-group">
+                            <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ChangeStartYear.Button_Continue</button>
+                            <a id="cancelButton" class="govuk-button govuk-body" data-module="govuk-button" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@ChangeStartYear.Button_Cancel</a>
+                        </div>
+                    }
+                    else 
+                    {
+                        <div class="govuk-form-group govuk-!-margin-top-8">
+                            <h2 class="govuk-heading-m">@ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Title</h2>
+                            <p class="govuk-body">@ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Line1</p>
+                           
+                            <p class="govuk-body">@Model.StartYearCannotChangeMessage</p>
+                           
+                            <div class="govuk-button-group">
+                                <a id="returnButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@ChangeStartYear.Button_Return</a>
+                                
+                            </div>
+
+                        </div>
+                    }
+                }
+            </div>
+           
+        </form>
+    </div>
+</div>
+

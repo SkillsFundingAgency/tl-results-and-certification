@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.GetProviderLookupData
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderLookupControllerTests.GetProviderLookupData
 {
-    public class When_ProviderName_InvalidLength : When_FindProviderAsync_Post_Action_Is_Called
+    public class When_ProviderName_IsEmpty : When_FindProviderAsync_Post_Action_Is_Called
     {
         public override void Given()
         {
-            ProviderName = "Lo";
+            ProviderName = string.Empty;
         }
 
         [Fact]

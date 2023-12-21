@@ -1,12 +1,11 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using System.Collections.Generic;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
-using System.ComponentModel.DataAnnotations;
-//using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
-using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 {
@@ -37,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.ChangeStartYear,
-            RouteAttributes = new Dictionary<string, string>() { { Constants.PathwayId, PathwayId.ToString() } }
+            RouteAttributes = new Dictionary<string, string>() { { Constants.PathwayId, PathwayId.ToString() }, { Constants.IsBack, "true" } }
         };
 
         public SummaryItemModel SummaryLearner => new()
@@ -75,7 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
             Value2 = $"{AcademicYearTo} to {AcademicYearTo + 1}",
             ActionText = ReviewChangeStartYear.Link_Change_Text,
             RouteName = RouteConstants.ChangeStartYear,
-            RouteAttributes = new Dictionary<string, string>() { { Constants.PathwayId, PathwayId.ToString() } }
+            RouteAttributes = new Dictionary<string, string>() { { Constants.PathwayId, PathwayId.ToString() },{ Constants.IsBack, "true" } }
         };
 
         public SummaryItemModel SummaryContactName => new()
