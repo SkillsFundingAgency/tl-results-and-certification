@@ -227,7 +227,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             await Task.CompletedTask;
 
-            return View(model);
+            return RedirectToAction(nameof(AdminHome));
         }
     }
 }

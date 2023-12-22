@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.AdminChangeStartYearViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 
 <div class="govuk-form-group govuk-!-margin-top-8">
     <fieldset class="govuk-fieldset">
@@ -24,5 +25,5 @@
 </div>
 <div class="govuk-button-group">
     <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ChangeStartYear.Button_Continue</button>
-    <button id="cancelButton" class="govuk-button govuk-body govuk-button govuk-button--secondary" data-module="govuk-button">@ChangeStartYear.Button_Cancel</button>
+    <a id="returnButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@ChangeStartYear.Button_Cancel</a>
 </div>

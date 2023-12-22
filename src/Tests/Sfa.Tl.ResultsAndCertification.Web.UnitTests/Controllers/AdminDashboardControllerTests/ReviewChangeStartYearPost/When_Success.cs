@@ -27,23 +27,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 Month = "01",
                 Year = "1970"
             };
-
-            //MockResult = new ReviewChangeStartYearViewModel()
-            //{
-            //    PathwayId = 1,
-            //    FirstName = "firstname",
-            //    LastName = "lastname",
-            //    Uln = 1100000001,
-            //    ProviderName = "provider-name",
-            //    ProviderUkprn = 10000536,
-            //    TlevelName = "t-level-name",
-            //    AcademicYear = 2022,
-            //    AcademicYearTo = "2021",
-            //    DisplayAcademicYear = "2021 to 2022",
-            //    ContactName = "contact-name"
-            //};
-            
-            //AdminDashboardLoader.GetAdminLearnerRecordAsync<ReviewChangeStartYearViewModel>(Arg.Any<int>()).Returns(MockResult);
         }
 
         [Fact]
