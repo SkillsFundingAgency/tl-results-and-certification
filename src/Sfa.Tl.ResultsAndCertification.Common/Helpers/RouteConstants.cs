@@ -409,8 +409,10 @@
         public const string SubmitAdminSearchLearnerRecordsApplyFilters = "SubmitAdminSearchLearnerRecordsApplyFilters";
         public const string SubmitAdminSearchLearnerClearFilters = "SubmitAdminSearchLearnerClearFilters";
         public const string AdminLearnerRecord = "AdminLearnerRecord";
-        public const string AdminChangeStartYear = "AdminChangeStartYear";
-        public const string SubmitAdminChangeStartYear = "SubmitAdminChangeStartYear";
+        public const string ChangeStartYear = "ChangeStartYear";
+        public const string SubmitChangeStartYear = "SubmitChangeStartYear";
+        public const string ReviewChangeStartYear = "ReviewChangeStartYear";
+        public const string SubmitReviewChangeStartYear = "SubmitReviewChangeStartYear";
 
 
         #endregion

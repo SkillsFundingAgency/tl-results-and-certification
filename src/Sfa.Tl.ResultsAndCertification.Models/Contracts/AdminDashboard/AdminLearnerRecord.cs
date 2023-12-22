@@ -1,15 +1,12 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
 {
     public class AdminLearnerRecord
     {
-        public int ProfileId { get; set; }
+        public int PathwayId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int RegistrationPathwayId { get; set; }

@@ -1,23 +1,20 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using System.Collections.Generic;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
-using System.ComponentModel.DataAnnotations;
-//using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
-using ChangeStarYear = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.ChangeStartYear;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
-using Sfa.Tl.ResultsAndCertification.Web.Content.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using ChangeStarYear = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.ChangeStartYear;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 {
     public class AdminChangeStartYearViewModel
     {
-        public int ProfileId { get; set; }       
+        public int ProfileId { get; set; }
         public int RegistrationPathwayId { get; set; }
-        public int PathwayId { get { return RegistrationPathwayId; } set { RegistrationPathwayId = this.PathwayId; } }
+        public int PathwayId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public long Uln { get; set; }
@@ -36,13 +33,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 
 
         [Required(ErrorMessageResourceType = typeof(ChangeStarYear), ErrorMessageResourceName = "Validation_Message")]
-        public bool? IsAcademicYearToBeSelected { get; set; }
+        public string AcademicYearTo { get; set; }
 
         public BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.AdminLearnerRecord,
-            RouteAttributes = new Dictionary<string, string> { { Constants.PathwayId, RegistrationPathwayId.ToString() } }    
-         };
+            RouteAttributes = new Dictionary<string, string> { { Constants.PathwayId, RegistrationPathwayId.ToString() } }
+        };
 
         public SummaryItemModel SummaryLearner => new()
         {
@@ -95,12 +92,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
             {
                 if (IsLearnerWithdrawn) return ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Learner_Has_Been_Withdrawn;
                 else if (IsOverallResultCalculated) return ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Overall_Result_Already_Calculated;
-                else if (IsTlevelStartedSameAsStartYear) return ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Tlevel_Became_Available_This_Academic_Year;               
+                else if (IsTlevelStartedSameAsStartYear) return ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Tlevel_Became_Available_This_Academic_Year;
                 else if (IsLearnerRegisteredFourYearsAgo) return ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Learner_Started_Course_More_Than_4_Years;
                 else return string.Empty;
             }
         }
-
-
     }
 }

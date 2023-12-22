@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
             _mockHttpResult = new AdminLearnerRecord
             {
-                ProfileId = 1,
+                PathwayId = 1,
                 Uln = 1234567890,
                 Name = "John Smith",
                 DateofBirth = System.DateTime.UtcNow.AddYears(-29),

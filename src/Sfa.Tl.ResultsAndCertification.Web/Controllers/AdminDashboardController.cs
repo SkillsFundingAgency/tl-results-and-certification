@@ -1,11 +1,11 @@
-﻿using Lrs.LearnerService.Api.Client;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
@@ -16,8 +16,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -28,8 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly IProviderLoader _providerLoader;
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
-        
-        private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey); } }       
+        private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey); } }
+        private string InformationCacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardInformationCacheKey); } }
 
         public AdminDashboardController(
             IAdminDashboardLoader loader,
@@ -51,8 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(RouteConstants.Home);
         }
 
-        #region Search learner       
-
+        #region Search learner   
         [HttpGet]
         [Route("admin/search-learner-records-clear", Name = RouteConstants.AdminSearchLearnersRecordsClear)]
         public async Task<IActionResult> AdminSearchLearnersRecordsClearAsync()
@@ -154,6 +151,39 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         #endregion
 
         [HttpGet]
+        [Route("admin/change-start-year/{pathwayId}/{isBack:bool?}", Name = RouteConstants.ChangeStartYear)]
+        public async Task<IActionResult> ChangeStartYearAsync(int pathwayId, bool isBack = false)
+        {
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(pathwayId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            if (isBack)
+                viewModel.AcademicYearTo = TempData.Get<string>(Constants.AcademicYearTo) ?? viewModel.AcademicYearTo;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/submit-change-start-year", Name = RouteConstants.SubmitChangeStartYear)]
+        public async Task<IActionResult> ChangeStartYearAsync(AdminChangeStartYearViewModel model)
+        {
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(model.PathwayId);
+            
+            if (viewModel.AcademicStartYearsToBe.Count() == 0 && !ModelState.IsValid) 
+                ModelState[nameof(model.AcademicYearTo)].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Skipped;
+
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            await _cacheService.SetAsync<AdminChangeStartYearViewModel>(CacheKey, model);
+            return RedirectToAction(nameof(RouteConstants.ReviewChangeStartYear), new { pathwayId = model.PathwayId });
+        }
+
+        [HttpGet]
         [Route("admin/learner-record/{pathwayid}", Name = RouteConstants.AdminLearnerRecord)]
         public async Task<IActionResult> AdminLearnerRecordAsync(int pathwayId)
         {
@@ -163,30 +193,41 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({pathwayId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
+            viewModel.InformationBanner = await _cacheService.GetAndRemoveAsync<InformationBannerModel>(InformationCacheKey);
+            viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
+
+
             return View(viewModel);
         }
 
-        [HttpPost]
-        [Route("admin/change-start-year/{pathwayId}", Name = RouteConstants.SubmitAdminChangeStartYear)]
-        public async Task<IActionResult> AdminChangeStartYearAsync(AdminChangeStartYearViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            return View(model);
-
-        }
-
         [HttpGet]
-        [Route("admin/change-start-year/{pathwayId}", Name = RouteConstants.AdminChangeStartYear)]
-        public async Task<IActionResult> AdminChangeStartYearAsync(int pathwayId)
+        [Route("admin/review-change-start-year/{pathwayId}", Name = RouteConstants.ReviewChangeStartYear)]
+        public async Task<IActionResult> ReviewChangeStartYearAsync(int pathwayId)
         {
-            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(pathwayId);
+            var _cachedModel = await _cacheService.GetAsync<AdminChangeStartYearViewModel>(CacheKey);
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<ReviewChangeStartYearViewModel>(pathwayId);
 
             if (viewModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            TempData.Set(Constants.AcademicYearTo, _cachedModel.AcademicYearTo);
+
+            viewModel.AcademicYearTo = _cachedModel.AcademicYearTo;
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/submit-review-change-start-year", Name = RouteConstants.SubmitReviewChangeStartYear)]
+        public async Task<IActionResult> ReviewChangeStartYearAsync(ReviewChangeStartYearViewModel model)
+        {
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<ReviewChangeStartYearViewModel>(model.PathwayId);
+
+            if (!ModelState.IsValid)
+                return View(model);
+
+            await Task.CompletedTask;
+
+            return View(model);
         }
     }
 }

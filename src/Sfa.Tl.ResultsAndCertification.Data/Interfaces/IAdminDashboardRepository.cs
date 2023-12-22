@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+﻿using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using System;
 using System.Collections.Generic;

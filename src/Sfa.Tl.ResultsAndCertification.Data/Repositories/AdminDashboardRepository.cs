@@ -5,8 +5,6 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         where tqPathway.Id == pathwayId
                                         select new AdminLearnerRecord
                                         {
-                                            ProfileId = tqProfile.Id,
+                                            PathwayId = pathwayId,
                                             FirstName = tqProfile.Firstname,
                                             LastName = tqProfile.Lastname,
                                             RegistrationPathwayId = tqPathway.Id,

@@ -39,5 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _adminDashboardService.GetAdminLearnerRecordAsync(pathwayId);
         }
+
+
     }
 }

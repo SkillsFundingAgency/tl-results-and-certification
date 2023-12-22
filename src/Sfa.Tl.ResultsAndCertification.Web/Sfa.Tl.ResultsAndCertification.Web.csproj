@@ -5,6 +5,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Content Remove="Views\AdminDashboard\AdminChangeStartYear.cshtml" />
 		<Content Remove="__azurite_db_blob_extent__.json" />
 		<Content Remove="__azurite_db_blob__.json" />
 	</ItemGroup>
@@ -41,6 +42,11 @@
 
 
 	<ItemGroup>
+		<Compile Update="Content\AdminDashboard\ReviewChangeStartYear.Designer.cs">
+			<DependentUpon>ReviewChangeStartYear.resx</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminDashboard\LearnerRecord.Designer.cs">
 			<DependentUpon>LearnerRecord.resx</DependentUpon>
 			<DesignTime>True</DesignTime>
@@ -1045,6 +1051,11 @@
 
 
 	<ItemGroup>
+		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangeStartYear.resx">
+			<SubType>Designer</SubType>
+			<LastGenOutput>ReviewChangeStartYear.Designer.cs</LastGenOutput>
+			<Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\AdminSearchLearnerDetails.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>AdminSearchLearnerDetails.Designer.cs</LastGenOutput>

@@ -1,0 +1,76 @@
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.AdminChangeStartYearViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+
+@{
+    ViewData["Title"] = ChangeStartYear.Page_Title;
+}
+
+@section NavigationBar
+    {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+        <form asp-route="@RouteConstants.SubmitChangeStartYear" method="post">
+            <input type="hidden" asp-for="PathwayId" />
+            <input type="hidden" asp-for="Learner" />
+            <input type="hidden" asp-for="Uln" />
+            <input type="hidden" asp-for="ProviderName" />
+            <input type="hidden" asp-for="ProviderUkprn" />
+            <input type="hidden" asp-for="TlevelName" />
+            <input type="hidden" asp-for="TlevelStartYear" />
+            <input type="hidden" asp-for="AcademicYear" />
+            <input type="hidden" asp-for="DisplayAcademicYear" />
+            @for (int i = 0; i < @Model.AcademicStartYearsToBe.Count(); i++)
+            {
+                <input type="hidden" asp-for="AcademicStartYearsToBe[i]" />
+            }
+
+            <div class="record-header">
+                <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+                    @ChangeStartYear.Heading_Change_Start_Year
+                </h1>
+            </div>
+            <partial name="_ValidationSummary" />
+            <h2 class="govuk-heading-m">
+                @ChangeStartYear.Heading_Personal_Details
+            </h2>
+
+            <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+                <vc:summary-item model=Model.SummaryLearner></vc:summary-item>
+                <vc:summary-item model=Model.SummaryULN></vc:summary-item>
+                <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+                <vc:summary-item model=Model.SummaryTlevel></vc:summary-item>
+                <vc:summary-item model=Model.SummaryAcademicYear></vc:summary-item>
+            </dl>
+
+            <div class="govuk-form-group" sfa-validation-for="AcademicYearTo" sfa-validation-class="govuk-form-group--error">
+                @{
+                    if (Model.AcademicStartYearsToBe.Count() > 0 && !Model.IsOverallResultCalculated && !Model.IsLearnerWithdrawn && !Model.IsLearnerRegisteredFourYearsAgo && !Model.IsTlevelStartedSameAsStartYear)
+                    {
+                        <partial name="Partials/_academicYearsSelection.cshtml" model="Model" />
+                    }
+                    else
+                    {
+                        <div class="govuk-form-group govuk-!-margin-top-8">
+                            <h2 class="govuk-heading-m">@ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Title</h2>
+                            <p class="govuk-body">@ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Line1</p>
+                            <p class="govuk-body">@Model.StartYearCannotChangeMessage</p>
+                            @if (@Model.DisplayDevlopmentTicketMessage)
+                            {
+                                <p class="govuk-body">@ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Devlopment_Ticket</p>
+                            }
+
+                            <div class="govuk-button-group">
+                                <a id="returnButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@ChangeStartYear.Button_Return</a>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </form>
+    </div>
+</div>

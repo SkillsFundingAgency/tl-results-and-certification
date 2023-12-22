@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
         public async override Task When()
         {
-            Result = await Controller.AdminChangeStartYearAsync(PathwayId);
+            Result = await Controller.ChangeStartYearAsync(PathwayId);
         }
 
 

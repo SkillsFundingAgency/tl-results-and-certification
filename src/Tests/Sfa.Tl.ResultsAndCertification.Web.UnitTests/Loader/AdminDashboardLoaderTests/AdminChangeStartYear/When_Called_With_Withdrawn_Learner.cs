@@ -41,12 +41,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
         {
             PathwayId = 1;
 
-
-
             _expectedApiResult = new Models.Contracts.AdminDashboard.AdminLearnerRecord
             {
-                ProfileId = PathwayId,
-                RegistrationPathwayId = 222,
+                PathwayId = PathwayId,
+                RegistrationPathwayId = 1,
                 Uln = 786787689,
                 Name = "John smith",
                 DateofBirth = DateTime.UtcNow.AddYears(-15),
@@ -81,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
         public void Then_Returns_Expected_Results()
         {
             ActualResult.Should().NotBeNull();
-            ActualResult.ProfileId.Should().Be(_expectedApiResult.ProfileId);
+            ActualResult.PathwayId.Should().Be(_expectedApiResult.RegistrationPathwayId);
             ActualResult.RegistrationPathwayId.Should().Be(_expectedApiResult.RegistrationPathwayId);
             ActualResult.Uln.Should().Be(_expectedApiResult.Uln);
             ActualResult.Learner.Should().Be($"{_expectedApiResult.FirstName} {_expectedApiResult.LastName}");

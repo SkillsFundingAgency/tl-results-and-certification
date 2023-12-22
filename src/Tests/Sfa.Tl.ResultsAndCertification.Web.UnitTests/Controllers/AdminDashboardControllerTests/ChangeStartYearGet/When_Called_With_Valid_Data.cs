@@ -38,12 +38,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 AcademicStartYearsToBe = new List<int>() { 2021, 2020}
             };
 
-            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(PathwayId).Returns(Mockresult);
+            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(Arg.Any<int>()).Returns(Mockresult);
         }
 
         public async override Task When()
         {
-            Result = await Controller.AdminChangeStartYearAsync(PathwayId);
+            Result = await Controller.ChangeStartYearAsync(PathwayId);
         }
 
 
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
             var model = (Result as ViewResult).Model as AdminChangeStartYearViewModel;
 
-            model.ProfileId.Should().Be(Mockresult.ProfileId);
+            model.PathwayId.Should().Be(Mockresult.PathwayId);
             model.Uln.Should().Be(Mockresult.Uln);
             model.Learner.Should().Be(Mockresult.Learner);
             model.FirstName.Should().Be(Mockresult.FirstName);
