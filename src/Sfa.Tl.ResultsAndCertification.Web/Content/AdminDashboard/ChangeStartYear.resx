@@ -151,7 +151,7 @@
     <value>This is because the learner started their course more than 4 years ago.</value>
   </data>
   <data name="Message_Start_Year_Cannot_Be_Changed_Line1" xml:space="preserve">
-    <value>You cannot change the start year for this learner</value>
+    <value>You cannot change the start year for this learner.</value>
   </data>
   <data name="Message_Start_Year_Cannot_Be_Changed_Overall_Result_Already_Calculated" xml:space="preserve">
     <value>This is because the overall result has already been calculated.</value>
@@ -163,7 +163,7 @@
     <value>This is because this T Level only became available in this academic year.</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Change start year – Admin – Manage T Level results – GOV.UK</value>
+    <value>Change start year – Admin</value>
   </data>
   <data name="Title_Learner_Text" xml:space="preserve">
     <value>Learner</value>
