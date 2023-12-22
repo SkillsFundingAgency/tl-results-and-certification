@@ -2,15 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
-using Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Registration.LearnerName;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
-using StackExchange.Redis;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 

@@ -229,30 +229,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return View(model);
         }
-
-        //[HttpGet]
-        //[Route("admin/change-start-year/{pathwayId}", Name = RouteConstants.ChangeStartYear)]
-        //public async Task<IActionResult> AdminChangeStartYearAsync(int pathwayId)
-        //{
-        //    var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(pathwayId);
-
-        //    if (viewModel == null)
-        //        return RedirectToRoute(RouteConstants.PageNotFound);
-
-        //    return View(viewModel);
-        //}
-
-        //[HttpPost]
-        //[Route("admin/change-start-year/{pathwayId}", Name = RouteConstants.SubmitChangeStartYear)]
-        //public async Task<IActionResult> AdminChangeStartYearAsync(AdminChangeStartYearViewModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return View(model);
-
-        //    await Task.CompletedTask;
-
-        //    return View(model);
-
-        //}
     }
 }
