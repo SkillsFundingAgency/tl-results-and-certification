@@ -160,7 +160,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You cannot change the start year for this learner.
+        ///   Looks up a localized string similar to You cannot change the start year for this learner..
         /// </summary>
         public static string Message_Start_Year_Cannot_Be_Changed_Line1 {
             get {
@@ -196,7 +196,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change start year – Admin – Manage T Level results – GOV.UK.
+        ///   Looks up a localized string similar to Change start year – Admin.
         /// </summary>
         public static string Page_Title {
             get {
