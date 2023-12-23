@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ReviewChangeStartYearGet
 {
-    public class When_Called_With_Valid_Data : AdminDashboardControllerTestBase
+    public class When_Called_With_Valid_Data : TestSetup
     {
         public int PathwayId { get; set; }
         public IActionResult Result { get; private set; }
@@ -23,23 +23,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             Mockresult = new ReviewChangeStartYearViewModel
             {
                 Uln = 1235469874,
-                FirstName = "John",
-                LastName = "Smith",
-                ProviderName = "Barnsley College",
+                FirstName = "firstname",
+                LastName = "lastname",
+                ProviderName = "provider-name",
                 ProviderUkprn = 58794528,
-                TlevelName = "Tlevel in Test Pathway Name",
+                TlevelName = "t-level-name",
                 AcademicYear = 2020,
                 DisplayAcademicYear = "2021 to 2022",
-                ContactName = "Lorem Ipsum",
+                ContactName = "contact-name",
                 Day = "01",
                 Month = "01",
                 Year = "1970",
-                ChangeReason = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
-                        "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, " +
-                        "when an unknown printer took a galley of type and scrambled it to make a type specimen book. " +
-                        "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
-                        "It was popularised in the 1960s with the release of Letraset sheets containing " +
-                        "Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                ChangeReason = "change-reason",
                 ZendeskId = "1234567890"
             };
 
