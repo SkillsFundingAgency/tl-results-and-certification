@@ -154,7 +154,7 @@
     <value>You cannot change the start year for this learner.</value>
   </data>
   <data name="Message_Start_Year_Cannot_Be_Changed_Overall_Result_Already_Calculated" xml:space="preserve">
-    <value>This is because the overall result has already been calculated.</value>
+    <value>This is because the overall result has already been calculated. You can request a development ticket for further help.</value>
   </data>
   <data name="Message_Start_Year_Cannot_Be_Changed_Title" xml:space="preserve">
     <value>Start year cannot be changed</value>
