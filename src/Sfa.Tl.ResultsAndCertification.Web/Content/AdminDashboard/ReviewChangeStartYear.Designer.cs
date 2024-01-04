@@ -151,7 +151,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Review changes to start year – Admin – Manage T Level results – GOV.UK.
+        ///   Looks up a localized string similar to You can enter up to 2,000 characters.
+        /// </summary>
+        public static string Message_You_Can_Enter_Up_To_Characters {
+            get {
+                return ResourceManager.GetString("Message_You_Can_Enter_Up_To_Characters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have 2,000 characters remaining.
+        /// </summary>
+        public static string Message_You_Have_Characters_Remaining {
+            get {
+                return ResourceManager.GetString("Message_You_Have_Characters_Remaining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Review changes to start year – Admin.
         /// </summary>
         public static string Page_Title {
             get {

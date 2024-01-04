@@ -147,8 +147,14 @@
   <data name="Message_Inset_Text" xml:space="preserve">
     <value>Any assessment entries or results assigned to this learner will remain active.</value>
   </data>
+  <data name="Message_You_Can_Enter_Up_To_Characters" xml:space="preserve">
+    <value>You can enter up to 2,000 characters</value>
+  </data>
+  <data name="Message_You_Have_Characters_Remaining" xml:space="preserve">
+    <value>You have 2,000 characters remaining</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Review changes to start year – Admin – Manage T Level results – GOV.UK</value>
+    <value>Review changes to start year – Admin</value>
   </data>
   <data name="Title_Change_Summary_Change_Text" xml:space="preserve">
     <value>Change</value>

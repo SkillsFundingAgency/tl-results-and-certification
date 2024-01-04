@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Utilities.CustomValidatio
     {
         public override void Given()
         {
-            model = new RequiredDateViewModel { Day = "01", Month = "01", Year = "2024" };
+            model = new RequiredDateViewModel { Day = "01", Month = "01", Year = "2050" };
             validationContext = new ValidationContext(model);
         }
 

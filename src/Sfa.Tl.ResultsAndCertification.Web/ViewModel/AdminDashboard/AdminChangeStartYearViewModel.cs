@@ -30,8 +30,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 
         public CalculationStatus OverallCalculationStatus { get; set; }
 
-
-
         [Required(ErrorMessageResourceType = typeof(ChangeStarYear), ErrorMessageResourceName = "Validation_Message")]
         public string AcademicYearTo { get; set; }
 

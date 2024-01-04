@@ -1,4 +1,10 @@
-﻿using NSubstitute;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
+using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Xunit;
 
@@ -33,15 +39,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         public void Then_Expected_Methods_AreCalled()
         {
             AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<ReviewChangeStartYearViewModel>(Arg.Any<int>());
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(p => p.Message == LearnerRecord.Message_Notification_Success), CacheExpiryTime.XSmall);
         }
 
-        // Todo
-        //[Fact]
-        //public void Then_Redirected_To_ReviewChangeStartYear()
-        //{
-        //    var route = Result as RedirectToActionResult;
-        //    route.ActionName.Should().Be(nameof(RouteConstants.ReviewChangeStartYear));
-        //    route.RouteValues[Constants.PathwayId].Should().Be(ReviewChangeStartYearViewModel.PathwayId);
-        //}
+        [Fact]
+        public void Then_Redirected_To_AdminLearnerRecord()
+        {
+            var route = Result as RedirectToActionResult;
+            route.ActionName.Should().Be(nameof(RouteConstants.AdminLearnerRecord));
+            route.RouteValues[Constants.PathwayId].Should().Be(ReviewChangeStartYearViewModel.PathwayId);
+        }
     }
 }

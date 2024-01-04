@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
@@ -16,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LearnerRecord = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.LearnerRecord;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -161,7 +164,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (isBack)
                 viewModel.AcademicYearTo = TempData.Get<string>(Constants.AcademicYearTo) ?? viewModel.AcademicYearTo;
-
+           
             return View(viewModel);
         }
 
@@ -193,15 +196,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({pathwayId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
+
             viewModel.InformationBanner = await _cacheService.GetAndRemoveAsync<InformationBannerModel>(InformationCacheKey);
             viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
-
 
             return View(viewModel);
         }
 
         [HttpGet]
-        [Route("admin/review-change-start-year/{pathwayId}", Name = RouteConstants.ReviewChangeStartYear)]
+        [Route("admin/review-changes-start-year/{pathwayId}", Name = RouteConstants.ReviewChangeStartYear)]
         public async Task<IActionResult> ReviewChangeStartYearAsync(int pathwayId)
         {
             var _cachedModel = await _cacheService.GetAsync<AdminChangeStartYearViewModel>(CacheKey);
@@ -217,7 +220,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("admin/submit-review-change-start-year", Name = RouteConstants.SubmitReviewChangeStartYear)]
+        [Route("admin/submit-review-changes-start-year", Name = RouteConstants.SubmitReviewChangeStartYear)]
         public async Task<IActionResult> ReviewChangeStartYearAsync(ReviewChangeStartYearViewModel model)
         {
             var viewModel = await _loader.GetAdminLearnerRecordAsync<ReviewChangeStartYearViewModel>(model.PathwayId);
@@ -225,9 +228,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            await Task.CompletedTask;
+            await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
+            {
+                DisplayMessageBody = true,
+                Message = LearnerRecord.Message_Notification_Success
+            },
+            CacheExpiryTime.XSmall);
 
-            return RedirectToAction(nameof(AdminHome));
+            await Task.CompletedTask;
+            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.PathwayId });
         }
     }
 }
