@@ -1051,6 +1051,10 @@
 
 
 	<ItemGroup>
+		<EmbeddedResource Update="Content\AdminDashboard\LearnerRecord.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>LearnerRecord.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangeStartYear.resx">
 			<SubType>Designer</SubType>
 			<LastGenOutput>ReviewChangeStartYear.Designer.cs</LastGenOutput>
