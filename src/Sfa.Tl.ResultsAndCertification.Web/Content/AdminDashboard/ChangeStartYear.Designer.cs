@@ -178,7 +178,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start year cannot be changed..
+        ///   Looks up a localized string similar to Start year cannot be changed.
         /// </summary>
         public static string Message_Start_Year_Cannot_Be_Changed_Title {
             get {
