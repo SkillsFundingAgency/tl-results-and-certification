@@ -42,6 +42,11 @@
 
 
 	<ItemGroup>
+		<Compile Update="Content\AdminDashboard\ChangeIndustryPlacementHours.Designer.cs">
+		  <DependentUpon>ChangeIndustryPlacementHours.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminDashboard\ReviewChangeStartYear.Designer.cs">
 			<DependentUpon>ReviewChangeStartYear.resx</DependentUpon>
 			<DesignTime>True</DesignTime>
@@ -1051,6 +1056,10 @@
 
 
 	<ItemGroup>
+		<EmbeddedResource Update="Content\AdminDashboard\ChangeIndustryPlacementHours.resx">
+		  <LastGenOutput>ChangeIndustryPlacementHours.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\LearnerRecord.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>LearnerRecord.Designer.cs</LastGenOutput>

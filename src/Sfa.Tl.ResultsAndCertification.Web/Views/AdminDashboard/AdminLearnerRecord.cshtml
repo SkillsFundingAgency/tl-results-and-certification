@@ -23,7 +23,7 @@
     <div class="govuk-grid-column-full">
         <div class="record-header">
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
-                @Model.LearnerName               
+                @Model.LearnerName
             </h1>
         </div>
 
@@ -36,7 +36,7 @@
             <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
             <vc:summary-item model=Model.SummaryAoName></vc:summary-item>
             <vc:summary-item model=Model.SummaryStartYear></vc:summary-item>
-          
+
         </dl>
 
         <h2 class="govuk-heading-m">@LearnerRecord.Section_Heading_Industry_Placement</h2>
@@ -52,6 +52,6 @@
 
         <div class="govuk-button-group">
             <a id="searchAgainButton" class="govuk-button" role="button" asp-route="@RouteConstants.AdminSearchLearnersRecords">@LearnerRecord.Search_Again_Text</a>
-            </div>
+        </div>
     </div>
 </div>

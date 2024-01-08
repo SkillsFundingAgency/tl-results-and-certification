@@ -164,7 +164,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (isBack)
                 viewModel.AcademicYearTo = TempData.Get<string>(Constants.AcademicYearTo) ?? viewModel.AcademicYearTo;
-           
+
             return View(viewModel);
         }
 
@@ -173,8 +173,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> ChangeStartYearAsync(AdminChangeStartYearViewModel model)
         {
             var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(model.PathwayId);
-            
-            if (viewModel.AcademicStartYearsToBe.Count() == 0 && !ModelState.IsValid) 
+
+            if (viewModel.AcademicStartYearsToBe.Count() == 0 && !ModelState.IsValid)
                 ModelState[nameof(model.AcademicYearTo)].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Skipped;
 
             if (!ModelState.IsValid)
@@ -237,6 +237,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             await Task.CompletedTask;
             return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.PathwayId });
+        }
+
+        [HttpGet]
+        [Route("admin/industry-placement-hours/{pathwayId}", Name = RouteConstants.AdminChangeIndustryPlacement)]
+        public IActionResult ChangeIndustryPlacementHoursAsync(int pathwayId)
+        {
+            var viewModel = new ChangeIndustryPlacementHoursViewModel
+            {
+                TqRegistrationPathwayId = pathwayId
+            };
+
+            return View(viewModel);
         }
     }
 }
