@@ -135,6 +135,9 @@
   <data name="Hidden_Action_Text_Maths" xml:space="preserve">
     <value> maths status</value>
   </data>
+  <data name="Message_Notification_Success" xml:space="preserve">
+    <value>Start year updated</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value> - Learner record – Admin</value>
   </data>

@@ -22,15 +22,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public string AcademicYearTo { get; set; }
         public string DisplayAcademicYear { get; set; }
         public string Learner => $"{FirstName} {LastName}";
+
         [Required(ErrorMessageResourceType = typeof(ErrorResource.ReviewChangeStartYear), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
         public string ContactName { get; set; }
+
         [DateValidator(Property = nameof(RequestDate), ErrorResourceType = typeof(ErrorResource.ReviewChangeStartYear), ErrorResourceName = "Validation_Date_When_Change_Requested_Blank_Text")]
         public string RequestDate => $"{Day}/{Month}/{Year}";
         public string Day { get; set; }
         public string Month { get; set; }
         public string Year { get; set; }
+
         [Required(ErrorMessageResourceType = typeof(ErrorResource.ReviewChangeStartYear), ErrorMessageResourceName = "Validation_Reason_For_Change_Blank_Text")]
         public string ChangeReason { get; set; }
+
         public string ZendeskId { get; set; }
 
         public BackLinkModel BackLink => new()
@@ -71,10 +75,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
             Id = "academicyear",
             Title = ReviewChangeStartYear.Title_StartYear_Text,
             Value = DisplayAcademicYear,
-            Value2 = $"{AcademicYearTo} to {AcademicYearTo + 1}",
+            Value2 = $"{AcademicYearTo} to {(int.TryParse(AcademicYearTo, out int academicYearToInt) ? academicYearToInt + 1 : default)}",
             ActionText = ReviewChangeStartYear.Link_Change_Text,
             RouteName = RouteConstants.ChangeStartYear,
-            RouteAttributes = new Dictionary<string, string>() { { Constants.PathwayId, PathwayId.ToString() },{ Constants.IsBack, "true" } }
+            RouteAttributes = new Dictionary<string, string>() { { Constants.PathwayId, PathwayId.ToString() }, { Constants.IsBack, "true" } }
         };
 
         public SummaryItemModel SummaryContactName => new()

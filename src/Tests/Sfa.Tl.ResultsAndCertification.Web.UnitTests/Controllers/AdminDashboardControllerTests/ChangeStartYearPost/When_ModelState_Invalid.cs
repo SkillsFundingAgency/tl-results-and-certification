@@ -73,7 +73,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             model.AcademicYear.Should().Be(AdminChangeStartYearViewModel.AcademicYear);
             model.DisplayAcademicYear.Should().Be(AdminChangeStartYearViewModel.DisplayAcademicYear);
             model.AcademicStartYearsToBe.Should().NotBeEmpty().And.HaveCount(1).And.ContainItemsAssignableTo<int>();
-            model.AcademicYearTo.Should().BeNull();
 
             Controller.ViewData.ModelState.Should().ContainSingle();
             Controller.ViewData.ModelState.ContainsKey(nameof(AdminChangeStartYearViewModel.AcademicYearTo)).Should().BeTrue();

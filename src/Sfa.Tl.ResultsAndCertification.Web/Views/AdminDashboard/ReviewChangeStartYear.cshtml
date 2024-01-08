@@ -7,7 +7,7 @@
 }
 
 @section NavigationBar
-    {
+{
     <vc:back-link model=Model.BackLink></vc:back-link>
 }
 
@@ -48,7 +48,15 @@
     </div>
     <form asp-route="@RouteConstants.SubmitReviewChangeStartYear">
         <input type="hidden" asp-for="PathwayId" />
+        <input type="hidden" asp-for="FirstName" />
+        <input type="hidden" asp-for="LastName" />
+        <input type="hidden" asp-for="Uln" />
+        <input type="hidden" asp-for="ProviderName" />
+        <input type="hidden" asp-for="ProviderUkprn" />
+        <input type="hidden" asp-for="TlevelName" />
         <input type="hidden" asp-for="AcademicYearTo" />
+        <input type="hidden" asp-for="AcademicYear" />
+        <input type="hidden" asp-for="DisplayAcademicYear" />
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
@@ -85,9 +93,7 @@
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-label--s" for="changereason">@ReviewChangeStartYear.Title_Reason_For_Change_Text</label>
                         <textarea class="govuk-textarea govuk-js-character-count" id="changereason" name="changereason" rows="5" maxlength="2000" asp-for="ChangeReason"></textarea>
-                        <div id="changereason-info" class="govuk-hint govuk-js-character-count__message">
-                            You can enter up to 2000 characters
-                        </div>
+                        <partial name="Partials/_changeReasonCharacterHint.cshtml" />
                     </div>
                 </div>
                 <div class="govuk-form-group">
