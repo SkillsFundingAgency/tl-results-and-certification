@@ -124,6 +124,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         Task<PagedResponse<AdminSearchLearnerDetail>> GetAdminSearchLearnerDetailsAsync(AdminSearchLearnerRequest request);
 
+        Task<bool> ProcessChangeStartYear(ReviewChangeStartYearRequest request);
+
         #endregion
     }
 }

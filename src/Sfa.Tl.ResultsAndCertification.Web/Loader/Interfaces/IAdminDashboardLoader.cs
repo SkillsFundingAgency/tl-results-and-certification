@@ -11,5 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 
         Task<LearnerRecordViewModel> GetAdminLearnerRecordAsync<LearnerRecordViewModel>(int pathwayId);
 
+        Task<bool> ProcessChangeStartYear(ReviewChangeStartYearViewModel reviewChangeStartYearViewModel);
+
     }
 }

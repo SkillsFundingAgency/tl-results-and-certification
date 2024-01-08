@@ -1,11 +1,20 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
@@ -15,12 +24,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IAdminDashboardRepository _adminDashboardRepository;
         private readonly ISystemProvider _systemProvider;
         private readonly IMapper _mapper;
+        private readonly IRepository<TqRegistrationPathway> _tqRegistrationPathwayRepository;
+        private readonly ILogger _logger;
+        private readonly IRepository<ChangeLog> _changeLog;
 
-        public AdminDashboardService(IAdminDashboardRepository adminDashboardRepository, ISystemProvider systemProvider, IMapper mapper)
+        public AdminDashboardService(IAdminDashboardRepository adminDashboardRepository,
+            ISystemProvider systemProvider,
+            IMapper mapper,
+            IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
+            ILogger logger,
+            IRepository<ChangeLog> changeLog)
         {
             _adminDashboardRepository = adminDashboardRepository;
             _systemProvider = systemProvider;
             _mapper = mapper;
+            _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
+            _logger = logger;
+            _changeLog = changeLog;
         }
 
         public async Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync()
@@ -51,6 +71,33 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             return _adminLearnerRecord;
         }
+
+        public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)
+        {
+            var pathway = await _tqRegistrationPathwayRepository.GetManyAsync(p => p.Id == request.PathwayId                                                                              
+                                                                              && (p.Status == RegistrationPathwayStatus.Active))
+                                                                 .OrderByDescending(p => p.CreatedOn)
+                                                                 .FirstOrDefaultAsync();
+
+            if (pathway == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to update tqregistrationpathwayid for pathwayid = {request.PathwayId}. Method: ProcessChangeStartYearAsync({request})");
+                return false;
+            }
+
+            pathway.AcademicYear = request.AcademicYear;
+        
+            var  status = await _tqRegistrationPathwayRepository.UpdateWithSpecifedColumnsOnlyAsync(pathway, u => u.AcademicYear, u => u.ModifiedBy, u => u.ModifiedOn);
+
+            var changeLog = new ChangeLog();
+
+            if (status > 0) await _changeLog.CreateAsync(changeLog);
+            
+            return status > 0;
+        }
+
+
+
     }
 
 }

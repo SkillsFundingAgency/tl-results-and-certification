@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
@@ -224,6 +225,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (!ModelState.IsValid)
                 return View(model);
+            var isSuccess = await _loader.ProcessChangeStartYearAsync(User.GetUkPrn(), cacheModel);
 
             await Task.CompletedTask;
 

@@ -83,6 +83,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.TlevelName))
                 .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
                 .ForMember(d => d.DisplayAcademicYear, opts => opts.MapFrom(s => s.DisplayAcademicYear));
+
+            CreateMap<ReviewChangeStartYearRequest, ReviewChangeStartYearViewModel>()
+               .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
+               .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+               .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
+               .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.TlevelName))
+               .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
+               .ForMember(d => d.DisplayAcademicYear, opts => opts.MapFrom(s => s.DisplayAcademicYear));
+
+
         }
 
         private int? GetSelectedProviderId(AdminSearchLearnerCriteriaViewModel searchCriteria)
