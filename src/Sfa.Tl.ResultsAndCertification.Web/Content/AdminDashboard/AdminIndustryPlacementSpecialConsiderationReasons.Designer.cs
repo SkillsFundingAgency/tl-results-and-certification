@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ChangeIndustryPlacementHours {
+    public class AdminIndustryPlacementSpecialConsiderationReasons {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ChangeIndustryPlacementHours() {
+        internal AdminIndustryPlacementSpecialConsiderationReasons() {
         }
         
         /// <summary>
@@ -39,8 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.ChangeIndustryPlacement" +
-                            "Hours", typeof(ChangeIndustryPlacementHours).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.AdminIndustryPlacementS" +
+                            "pecialConsiderationReasons", typeof(AdminIndustryPlacementSpecialConsiderationReasons).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -80,38 +80,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to How many industry placement hours did this learner complete?.
+        ///   Looks up a localized string similar to These are the only approved reasons for applying special consideration. Select one or more reasons..
         /// </summary>
-        public static string Heading_How_Many_Hours_Did_Complete {
+        public static string Hint_We_Will_Ask_You_To_Declare {
             get {
-                return ResourceManager.GetString("Heading_How_Many_Hours_Did_Complete", resourceCulture);
+                return ResourceManager.GetString("Hint_We_Will_Ask_You_To_Declare", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Must be between 1 and 999.
-        /// </summary>
-        public static string Hint_Must_Between_1_999 {
-            get {
-                return ResourceManager.GetString("Hint_Must_Between_1_999", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to hours.
-        /// </summary>
-        public static string Input_Suffix_Hours {
-            get {
-                return ResourceManager.GetString("Input_Suffix_Hours", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Industry placement hours – Admin.
+        ///   Looks up a localized string similar to Industry placement incomplete – Admin.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Why did this learner not complete their full industry placement hours?.
+        /// </summary>
+        public static string Question_Why_Did_This_Learner_Not_Complete_Their_Full_Ip_Hours {
+            get {
+                return ResourceManager.GetString("Question_Why_Did_This_Learner_Not_Complete_Their_Full_Ip_Hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a reason for applying special consideration.
+        /// </summary>
+        public static string Validation_Message_Select_One_Or_More_Reasons {
+            get {
+                return ResourceManager.GetString("Validation_Message_Select_One_Or_More_Reasons", resourceCulture);
             }
         }
     }

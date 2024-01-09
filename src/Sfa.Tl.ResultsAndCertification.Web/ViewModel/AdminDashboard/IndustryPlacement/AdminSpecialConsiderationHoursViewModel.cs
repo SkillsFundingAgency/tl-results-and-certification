@@ -1,17 +1,16 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using System.ComponentModel.DataAnnotations;
+using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 
-using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement;
-
-namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
+namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement
 {
-    public class ChangeIndustryPlacementHoursViewModel
+    public class AdminIndustryPlacementSpecialConsiderationHoursViewModel
     {
         public int TqRegistrationPathwayId { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(ErrorResource.IpSpecialConsiderationHours), ErrorMessageResourceName = "Hours_Required_Validation_Message")]
-        [RegularExpression(Constants.IpSpecialConsiderationHoursRegex, ErrorMessageResourceType = typeof(ErrorResource.IpSpecialConsiderationHours), ErrorMessageResourceName = "Hours_Must_Be_Between_1_999")]
+        [Required(ErrorMessageResourceType = typeof(ErrorResource.AdminIndustryPlacementSpecialConsiderationHours), ErrorMessageResourceName = "Hours_Validation_Message")]
+        [RegularExpression(Constants.IpSpecialConsiderationHoursRegex, ErrorMessageResourceType = typeof(ErrorResource.AdminIndustryPlacementSpecialConsiderationHours), ErrorMessageResourceName = "Hours_Validation_Message")]
         public string Hours { get; set; }
 
         public BackLinkModel BackLink

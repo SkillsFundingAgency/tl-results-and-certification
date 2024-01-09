@@ -6,12 +6,12 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using System;
@@ -26,6 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     public class AdminDashboardController : Controller
     {
         private readonly IAdminDashboardLoader _loader;
+        private readonly IIndustryPlacementLoader _industryPlacementLoader;
+
         private readonly IProviderLoader _providerLoader;
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
@@ -35,11 +37,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public AdminDashboardController(
             IAdminDashboardLoader loader,
             IProviderLoader providerLoader,
+            IIndustryPlacementLoader industryPlacementLoader,
             ICacheService cacheService,
             ILogger<AdminDashboardController> logger)
         {
             _loader = loader;
             _providerLoader = providerLoader;
+            _industryPlacementLoader = industryPlacementLoader;
             _cacheService = cacheService;
             _logger = logger;
         }
@@ -240,12 +244,36 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("admin/industry-placement-hours/{pathwayId}", Name = RouteConstants.AdminChangeIndustryPlacement)]
-        public IActionResult ChangeIndustryPlacementHoursAsync(int pathwayId)
+        [Route("admin/industry-placement-hours/{pathwayId}", Name = RouteConstants.AdminIndustryPlacementSpecialConsiderationHours)]
+        public IActionResult AdminIndustryPlacementSpecialConsiderationHoursAsync(int pathwayId)
         {
-            var viewModel = new ChangeIndustryPlacementHoursViewModel
+            var viewModel = new AdminIndustryPlacementSpecialConsiderationHoursViewModel
             {
-                TqRegistrationPathwayId = pathwayId
+                TqRegistrationPathwayId = pathwayId // This should go one level up.
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/industry-placement-hours", Name = RouteConstants.SubmitAdminIndustryPlacementSpecialConsiderationHours)]
+        public IActionResult AdminIndustryPlacementSpecialConsiderationHoursAsync(AdminIndustryPlacementSpecialConsiderationHoursViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            return RedirectToRoute(RouteConstants.AdminIndustryPlacementSpecialConsiderationReasons, new { pathwayId = 1000 });
+        }
+
+        [HttpGet]
+        [Route("admin/industry-placement-incomplete/{pathwayId}", Name = RouteConstants.AdminIndustryPlacementSpecialConsiderationReasons)]
+        public async Task<IActionResult> AdminIndustryPlacementSpecialConsiderationReasonsAsync(int pathwayId)
+        {
+            var viewModel = new AdminIndustryPlacementSpecialConsiderationReasonsViewModel
+            {
+                ReasonsList = await _industryPlacementLoader.GetSpecialConsiderationReasonsListAsync(2021) // Year should come from the cache.
             };
 
             return View(viewModel);

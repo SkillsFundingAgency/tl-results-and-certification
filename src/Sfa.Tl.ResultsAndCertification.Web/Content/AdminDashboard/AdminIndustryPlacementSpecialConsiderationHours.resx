@@ -129,6 +129,9 @@
   <data name="Hint_Must_Between_1_999" xml:space="preserve">
     <value>Must be between 1 and 999</value>
   </data>
+  <data name="Hours_Validation_Message" xml:space="preserve">
+    <value>Enter a whole number between 1 and 999</value>
+  </data>
   <data name="Input_Suffix_Hours" xml:space="preserve">
     <value>hours</value>
   </data>

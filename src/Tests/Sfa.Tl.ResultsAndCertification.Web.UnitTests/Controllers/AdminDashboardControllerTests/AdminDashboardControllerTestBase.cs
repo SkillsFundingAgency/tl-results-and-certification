@@ -19,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         // Dependencies
         protected IAdminDashboardLoader AdminDashboardLoader;
         protected IProviderLoader ProviderLoader;
+        protected IIndustryPlacementLoader IndustryPlacementLoader;
         protected ICacheService CacheService;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected ILogger<AdminDashboardController> Logger;
@@ -35,10 +36,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         {
             AdminDashboardLoader = Substitute.For<IAdminDashboardLoader>();
             ProviderLoader = Substitute.For<IProviderLoader>();
+            IndustryPlacementLoader = Substitute.For<IIndustryPlacementLoader>();
             CacheService = Substitute.For<ICacheService>();
             ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration { DocumentRerequestInDays = 21 };
             Logger = Substitute.For<ILogger<AdminDashboardController>>();
-            Controller = new AdminDashboardController(AdminDashboardLoader, ProviderLoader, CacheService, Logger);
+            Controller = new AdminDashboardController(AdminDashboardLoader, ProviderLoader, IndustryPlacementLoader, CacheService, Logger);
 
             ProviderUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<AdminDashboardController>(Controller)
@@ -53,6 +55,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.AdminDashboardCacheKey);
             InformationCacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.AdminDashboardCacheKey);
         }
-               
     }
 }

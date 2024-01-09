@@ -42,8 +42,13 @@
 
 
 	<ItemGroup>
-		<Compile Update="Content\AdminDashboard\ChangeIndustryPlacementHours.Designer.cs">
-		  <DependentUpon>ChangeIndustryPlacementHours.resx</DependentUpon>
+		<Compile Update="Content\AdminDashboard\AdminIndustryPlacementSpecialConsiderationReasons.Designer.cs">
+		  <DependentUpon>AdminIndustryPlacementSpecialConsiderationReasons.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminDashboard\AdminIndustryPlacementSpecialConsiderationHours.Designer.cs">
+		  <DependentUpon>AdminIndustryPlacementSpecialConsiderationHours.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
@@ -1056,8 +1061,12 @@
 
 
 	<ItemGroup>
-		<EmbeddedResource Update="Content\AdminDashboard\ChangeIndustryPlacementHours.resx">
-		  <LastGenOutput>ChangeIndustryPlacementHours.Designer.cs</LastGenOutput>
+		<EmbeddedResource Update="Content\AdminDashboard\AdminIndustryPlacementSpecialConsiderationReasons.resx">
+		  <LastGenOutput>AdminIndustryPlacementSpecialConsiderationReasons.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminDashboard\AdminIndustryPlacementSpecialConsiderationHours.resx">
+		  <LastGenOutput>AdminIndustryPlacementSpecialConsiderationHours.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\LearnerRecord.resx">

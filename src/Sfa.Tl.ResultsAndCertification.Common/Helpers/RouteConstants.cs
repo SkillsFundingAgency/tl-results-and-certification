@@ -413,7 +413,9 @@
         public const string SubmitChangeStartYear = "SubmitChangeStartYear";
         public const string ReviewChangeStartYear = "ReviewChangeStartYear";
         public const string SubmitReviewChangeStartYear = "SubmitReviewChangeStartYear";
-        public const string AdminChangeIndustryPlacement = "AdminChangeIndustryPlacement";
+        public const string AdminIndustryPlacementSpecialConsiderationHours = "AdminIndustryPlacementSpecialConsiderationHours";
+        public const string SubmitAdminIndustryPlacementSpecialConsiderationHours = "SubmitAdminIndustryPlacementSpecialConsiderationHours";
+        public const string AdminIndustryPlacementSpecialConsiderationReasons = "AdminIndustryPlacementSpecialConsiderationReasons";
 
         #endregion
     }
