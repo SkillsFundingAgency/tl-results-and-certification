@@ -278,5 +278,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return View(viewModel);
         }
+
+        [HttpPost]
+        [Route("admin/industry-placement-incomplete/{pathwayId}", Name = RouteConstants.SubmitAdminIndustryPlacementSpecialConsiderationReasons)]
+        public IActionResult AdminIndustryPlacementSpecialConsiderationReasonsAsync(AdminIndustryPlacementSpecialConsiderationReasonsViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            return RedirectToRoute(string.Empty);
+        }
     }
 }

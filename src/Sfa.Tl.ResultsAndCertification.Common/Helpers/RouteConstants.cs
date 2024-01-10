@@ -416,6 +416,7 @@
         public const string AdminIndustryPlacementSpecialConsiderationHours = "AdminIndustryPlacementSpecialConsiderationHours";
         public const string SubmitAdminIndustryPlacementSpecialConsiderationHours = "SubmitAdminIndustryPlacementSpecialConsiderationHours";
         public const string AdminIndustryPlacementSpecialConsiderationReasons = "AdminIndustryPlacementSpecialConsiderationReasons";
+        public const string SubmitAdminIndustryPlacementSpecialConsiderationReasons = "SubmitAdminIndustryPlacementSpecialConsiderationReasons";
 
         #endregion
     }
