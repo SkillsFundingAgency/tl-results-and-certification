@@ -65,7 +65,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.LearnerRegistrationPathwayStatus, opts => opts.MapFrom(s => s.RegistrationPathwayStatus))
                 .ForMember(d => d.OverallCalculationStatus, opts => opts.MapFrom(s => s.OverallCalculationStatus));
 
-
             CreateMap<AdminSearchLearnerCriteriaViewModel, AdminSearchLearnerRequest>()
                 .ForMember(d => d.SearchKey, opts => opts.MapFrom(s => s.SearchKey))
                 .ForMember(d => d.PageNumber, opts => opts.MapFrom(s => s.PageNumber))
@@ -83,6 +82,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.TlevelName))
                 .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
                 .ForMember(d => d.DisplayAcademicYear, opts => opts.MapFrom(s => s.DisplayAcademicYear));
+
+            CreateMap<AdminLearnerRecord, AdminChangeIndustryPlacementViewModel>()
+                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
+                .ForMember(d => d.FirstName, opts => opts.MapFrom(s => s.FirstName))
+                .ForMember(d => d.LastName, opts => opts.MapFrom(s => s.LastName))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
+                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
+                .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.TlevelName))
+                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
+                .ForMember(d => d.DisplayAcademicYear, opts => opts.MapFrom(s => s.DisplayAcademicYear))
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+                .ForMember(d => d.LearnerRegistrationPathwayStatus, opts => opts.MapFrom(s => s.RegistrationPathwayStatus))
+                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
         }
 
         private int? GetSelectedProviderId(AdminSearchLearnerCriteriaViewModel searchCriteria)
