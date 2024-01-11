@@ -237,9 +237,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 DisplayMessageBody = true,
                 Message = LearnerRecord.Message_Notification_Success
             },
-            CacheExpiryTime.XSmall);
+            CacheExpiryTime.XSmall); 
 
-            await Task.CompletedTask;
+            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.PathwayId });
+        }
+
+        [HttpGet]
+        [Route("admin/admin-change-industry-placement/{pathwayId}", Name = RouteConstants.AdminChangeIndustryPlacement)]
+        public async Task<IActionResult> ChangeIndustryPlacementAsync(int pathwayId)
+        {
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeIndustryPlacementViewModel>(pathwayId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/admin-submit-change-industry-placement", Name = RouteConstants.AdminSubmitChangeIndustryPlacement)]
+        public async Task<IActionResult> ChangeIndustryPlacementAsync(AdminChangeIndustryPlacementViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.PathwayId });
         }
 
