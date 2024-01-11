@@ -239,7 +239,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("admin/admin-change-industry-placement/{pathwayId}", Name = RouteConstants.AdminChangeIndustryPlacement)]
+        [Route("admin/change-industry-placement/{pathwayId}", Name = RouteConstants.AdminChangeIndustryPlacement)]
         public async Task<IActionResult> ChangeIndustryPlacementAsync(int pathwayId)
         {
             var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeIndustryPlacementViewModel>(pathwayId);
@@ -251,7 +251,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("admin/admin-submit-change-industry-placement", Name = RouteConstants.AdminSubmitChangeIndustryPlacement)]
+        [Route("admin/submit-change-industry-placement", Name = RouteConstants.AdminSubmitChangeIndustryPlacement)]
         public async Task<IActionResult> ChangeIndustryPlacementAsync(AdminChangeIndustryPlacementViewModel model)
         {
             if (!ModelState.IsValid)
