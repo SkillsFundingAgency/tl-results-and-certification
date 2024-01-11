@@ -28,9 +28,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
 
             Loader = new AdminDashboardLoader(_internalApiClient, mapper);
         }
-
-
-        private Models.OverallResults.OverallResultDetail _expectedOverallResult;
         private Models.Contracts.AdminDashboard.AdminLearnerRecord _expectedApiResult;
 
         protected AdminChangeIndustryPlacementViewModel ActualResult { get; set; }

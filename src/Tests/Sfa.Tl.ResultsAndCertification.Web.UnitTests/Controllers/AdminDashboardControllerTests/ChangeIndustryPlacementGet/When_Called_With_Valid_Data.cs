@@ -11,9 +11,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
-        public int PathwayId { get; set; }
-        public IActionResult Result { get; private set; }
-        protected AdminChangeIndustryPlacementViewModel AdminChangeIndustryPlacementViewModel = null;
         protected AdminChangeIndustryPlacementViewModel Mockresult = null;
 
         public override void Given()
@@ -34,11 +31,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             };
 
             AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeIndustryPlacementViewModel>(PathwayId).Returns(Mockresult);
-        }
-
-        public async override Task When()
-        {
-            Result = await Controller.ChangeIndustryPlacementAsync(PathwayId);
         }
 
         [Fact]

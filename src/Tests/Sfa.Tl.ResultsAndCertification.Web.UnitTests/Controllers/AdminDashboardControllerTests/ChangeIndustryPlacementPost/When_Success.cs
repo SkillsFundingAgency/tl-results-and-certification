@@ -30,11 +30,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             };
         }
 
-        [Fact]
-        public void Then_Expected_Methods_AreCalled()
-        {
-            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<AdminChangeIndustryPlacementViewModel>(Arg.Any<int>());
-        }
 
         [Fact]
         public void Then_Redirected_To_AdminLearnerRecord()

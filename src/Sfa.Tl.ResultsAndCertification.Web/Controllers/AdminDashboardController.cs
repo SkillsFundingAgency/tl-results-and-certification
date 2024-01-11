@@ -254,13 +254,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/admin-submit-change-industry-placement", Name = RouteConstants.AdminSubmitChangeIndustryPlacement)]
         public async Task<IActionResult> ChangeIndustryPlacementAsync(AdminChangeIndustryPlacementViewModel model)
         {
-            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeIndustryPlacementViewModel>(model.PathwayId);
-
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            await Task.CompletedTask;
             return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.PathwayId });
         }
     }

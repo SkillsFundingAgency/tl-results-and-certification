@@ -10,21 +10,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 {
     public class When_Called_With_Invalid_Data: TestSetup
     {
-        public int PathwayId { get; set; }
-        
         protected AdminChangeIndustryPlacementViewModel Mockresult = null;
-        public IActionResult Result { get; private set; }
-
 
         public override void Given()
         {
             PathwayId = 0;
             AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeIndustryPlacementViewModel>(PathwayId).Returns(Mockresult);
-        }
-
-        public async override Task When()
-        {
-            Result = await Controller.ChangeIndustryPlacementAsync(PathwayId);
         }
 
         [Fact]
