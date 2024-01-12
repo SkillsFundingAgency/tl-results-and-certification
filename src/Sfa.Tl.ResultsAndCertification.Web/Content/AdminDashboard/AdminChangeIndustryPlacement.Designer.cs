@@ -197,6 +197,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not yet recieved.
+        /// </summary>
+        public static string Status_Not_Yet_Recieved {
+            get {
+                return ResourceManager.GetString("Status_Not_Yet_Recieved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yes, completed.
         /// </summary>
         public static string Status_Yes_Completed {
@@ -211,15 +220,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static string Status_Yes_Completed_with_Special_Consideration {
             get {
                 return ResourceManager.GetString("Status_Yes_Completed_with_Special_Consideration", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Not yet recieved.
-        /// </summary>
-        public static string Staut_Not_Yet_Recieved {
-            get {
-                return ResourceManager.GetString("Staut_Not_Yet_Recieved", resourceCulture);
             }
         }
         

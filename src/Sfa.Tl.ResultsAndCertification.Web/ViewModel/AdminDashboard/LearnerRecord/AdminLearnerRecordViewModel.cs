@@ -144,8 +144,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
                 Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
                 Value = GetIndustryPlacementDisplayText,
                 ActionText = LearnerRecordDetailsContent.Action_Text_Link_Change,
-                RouteName = RouteConstants.AdminChangeIndustryPlacement,
-                RouteAttributes = new Dictionary<string, string> { { Constants.PathwayId, RegistrationPathwayId.ToString() } },
+                RouteName = RouteConstants.AdminChangeIndustryPlacementClear,
+                RouteAttributes = new Dictionary<string, string> { { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() } },
                 HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement
             };
 

@@ -1,7 +1,7 @@
-﻿@model AdminIndustryPlacementSpecialConsiderationHoursViewModel
+﻿@model AdminIpSpecialConsiderationHoursViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
-@using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
+@using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement
 
 @{
     ViewData["Title"] = AdminIndustryPlacementSpecialConsiderationHours.Page_Title;
@@ -14,7 +14,7 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <form asp-route="@RouteConstants.SubmitAdminIndustryPlacementSpecialConsiderationHours">
-            <input type="hidden" asp-for="TqRegistrationPathwayId" />
+            <input type="hidden" asp-for="RegistrationPathwayId" />
 
             <partial name="_ValidationSummary" />
 
@@ -33,7 +33,7 @@
 
             <div class="govuk-button-group govuk-!-margin-top-2">
                 <button id="btnContinue" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminIndustryPlacementSpecialConsiderationHours.Button_Continue</button>
-                <button id="btnCancel" class="govuk-button govuk-button--secondary" @*asp-route="@RouteConstants.SubmitAdminSearchLearnerClearKey"*@>@AdminIndustryPlacementSpecialConsiderationHours.Button_Cancel</button>
+                <a id="btnCancel" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminIndustryPlacementSpecialConsiderationHours.Button_Cancel</a>
             </div>
         </form>
     </div>

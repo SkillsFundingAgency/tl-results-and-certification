@@ -156,6 +156,9 @@
   <data name="Page_Title" xml:space="preserve">
     <value>Change industry placement – Admin</value>
   </data>
+  <data name="Status_Not_Yet_Recieved" xml:space="preserve">
+    <value>Not yet recieved</value>
+  </data>
   <data name="Status_No_They_Still_Need_To_Complete_It" xml:space="preserve">
     <value>No, they still need to complete it</value>
   </data>
@@ -167,9 +170,6 @@
   </data>
   <data name="Status_Yes_Completed_with_Special_Consideration" xml:space="preserve">
     <value>Yes, completed with special consideration</value>
-  </data>
-  <data name="Staut_Not_Yet_Recieved" xml:space="preserve">
-    <value>Not yet recieved</value>
   </data>
   <data name="Title_Industry_Placement_Status" xml:space="preserve">
     <value>Industry placement status</value>

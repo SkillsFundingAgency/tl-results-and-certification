@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,17 +84,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
                 .ForMember(d => d.DisplayAcademicYear, opts => opts.MapFrom(s => s.DisplayAcademicYear));
 
-            CreateMap<AdminLearnerRecord, AdminChangeIndustryPlacementViewModel>()
-                .ForMember(d => d.FirstName, opts => opts.MapFrom(s => s.FirstName))
-                .ForMember(d => d.LastName, opts => opts.MapFrom(s => s.LastName))
+            CreateMap<AdminLearnerRecord, AdminIpCompletionViewModel>()
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
-                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
-                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
+                .ForMember(d => d.Provider, opts => opts.MapFrom(s => $"{s.ProviderName} ({s.ProviderUkprn})"))
                 .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.TlevelName))
                 .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
-                .ForMember(d => d.DisplayAcademicYear, opts => opts.MapFrom(s => s.DisplayAcademicYear))
-                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
-                .ForMember(d => d.LearnerRegistrationPathwayStatus, opts => opts.MapFrom(s => s.RegistrationPathwayStatus))
+                .ForMember(d => d.StartYear, opts => opts.MapFrom(s => string.Format(AdminSearchLearnerDetails.Start_Year_Value, s.AcademicYear, s.AcademicYear + 1)))
                 .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
         }
 

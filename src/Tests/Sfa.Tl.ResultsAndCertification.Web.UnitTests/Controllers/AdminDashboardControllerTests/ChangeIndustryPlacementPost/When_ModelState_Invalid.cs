@@ -1,46 +1,42 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ChangeIndustryPlacementPost
 {
     public class When_ModelState_Invalid : TestSetup
     {
-        protected AdminChangeIndustryPlacementViewModel MockResult = null;
+        protected AdminIpCompletionViewModel MockResult = null;
 
         public override void Given()
         {
-            AdminChangeIndustryPlacementViewModel = new AdminChangeIndustryPlacementViewModel()
+            AdminChangeIndustryPlacementViewModel = new AdminIpCompletionViewModel
             {
-                PathwayId = 1,
-                FirstName = "firstname",
-                LastName = "lastname",
+                RegistrationPathwayId = 1,
+                LearnerName = "firstname lastname",
                 Uln = 1100000001,
-                ProviderName = "provider-name",
-                ProviderUkprn = 10000536,
+                Provider = "provider-name (10000536)",
                 TlevelName = "t-level-name",
                 AcademicYear = 2022,
-                DisplayAcademicYear = "2021 to 2022",
+                StartYear = "2021 to 2022",
                 IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed
             };
 
-            MockResult = new AdminChangeIndustryPlacementViewModel()
+            MockResult = new AdminIpCompletionViewModel()
             {
-                PathwayId = 1,
-                FirstName = "firstname",
-                LastName = "lastname",
+                RegistrationPathwayId = 1,
+                LearnerName = "firstname lastname",
                 Uln = 1100000001,
-                ProviderName = "provider-name",
-                ProviderUkprn = 10000536,
+                Provider = "provider-name (10000536)",
                 TlevelName = "t-level-name",
                 AcademicYear = 2022,
-                DisplayAcademicYear = "2021 to 2022",
+                StartYear = "2021 to 2022",
                 IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed
             };
 
-            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeIndustryPlacementViewModel>(Arg.Any<int>()).Returns(MockResult);
+            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminIpCompletionViewModel>(Arg.Any<int>()).Returns(MockResult);
 
             Controller.ModelState.AddModelError(nameof(AdminChangeIndustryPlacementViewModel.IndustryPlacementStatus), Content.AdminDashboard.AdminChangeIndustryPlacement.Validation_Message);
         }
@@ -51,21 +47,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             Result.Should().BeOfType(typeof(ViewResult));
 
             var viewResult = Result as ViewResult;
-            viewResult.Model.Should().BeOfType(typeof(AdminChangeIndustryPlacementViewModel));
+            viewResult.Model.Should().BeOfType(typeof(AdminIpCompletionViewModel));
 
-            var model = viewResult.Model as AdminChangeIndustryPlacementViewModel;
+            var model = viewResult.Model as AdminIpCompletionViewModel;
 
             model.Should().NotBeNull();
-            model.PathwayId.Should().Be(AdminChangeIndustryPlacementViewModel.PathwayId);
-            model.FirstName.Should().Be(AdminChangeIndustryPlacementViewModel.FirstName);
-            model.LastName.Should().Be(AdminChangeIndustryPlacementViewModel.LastName);
+            model.RegistrationPathwayId.Should().Be(AdminChangeIndustryPlacementViewModel.RegistrationPathwayId);
+            model.LearnerName.Should().Be(AdminChangeIndustryPlacementViewModel.LearnerName);
             model.Uln.Should().Be(AdminChangeIndustryPlacementViewModel.Uln);
-            model.ProviderName.Should().Be(AdminChangeIndustryPlacementViewModel.ProviderName);
-            model.ProviderUkprn.Should().Be(AdminChangeIndustryPlacementViewModel.ProviderUkprn);
+            model.Provider.Should().Be(AdminChangeIndustryPlacementViewModel.Provider);
             model.TlevelName.Should().Be(AdminChangeIndustryPlacementViewModel.TlevelName);
             model.AcademicYear.Should().Be(AdminChangeIndustryPlacementViewModel.AcademicYear);
             model.IndustryPlacementStatus.Should().Be(AdminChangeIndustryPlacementViewModel.IndustryPlacementStatus);
-            model.DisplayAcademicYear.Should().Be(AdminChangeIndustryPlacementViewModel.DisplayAcademicYear);
+            model.StartYear.Should().Be(AdminChangeIndustryPlacementViewModel.StartYear);
 
             Controller.ViewData.ModelState.Should().HaveCount(1);
             Controller.ViewData.ModelState.ContainsKey(nameof(AdminChangeIndustryPlacementViewModel.IndustryPlacementStatus)).Should().BeTrue();

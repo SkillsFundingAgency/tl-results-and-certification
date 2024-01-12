@@ -32,7 +32,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         public void Then_Expected_Methods_AreCalled()
         {
             AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<ReviewChangeStartYearViewModel>(PathwayId);
-            CacheService.Received(1).GetAsync<AdminChangeStartYearViewModel>(CacheKey);
         }
 
         [Fact]

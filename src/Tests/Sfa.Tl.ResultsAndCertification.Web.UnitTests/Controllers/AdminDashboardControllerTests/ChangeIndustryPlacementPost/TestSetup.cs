@@ -10,7 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using System;
 using System.Threading.Tasks;
 
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
     public abstract class TestSetup : AdminDashboardControllerTestBase
     {
         protected int ProfileId;
-        protected AdminChangeIndustryPlacementViewModel AdminChangeIndustryPlacementViewModel;
+        protected AdminIpCompletionViewModel AdminChangeIndustryPlacementViewModel;
 
         public IActionResult Result { get; private set; }
 

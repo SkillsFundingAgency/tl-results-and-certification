@@ -12,7 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 {
     public class When_Success : TestSetup
     {
-        private ReviewChangeStartYearViewModel MockResult = null;
         public override void Given()
         {
             ReviewChangeStartYearViewModel = new ReviewChangeStartYearViewModel()
@@ -38,7 +37,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<ReviewChangeStartYearViewModel>(Arg.Any<int>());
             CacheService.Received(1).SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(p => p.Message == LearnerRecord.Message_Notification_Success), CacheExpiryTime.XSmall);
         }
 
