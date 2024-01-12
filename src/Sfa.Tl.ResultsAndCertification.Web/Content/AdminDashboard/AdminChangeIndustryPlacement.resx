@@ -136,7 +136,7 @@
     <value>Select whether the learner has completed their industry placement</value>
   </data>
   <data name="Heading_Change_Industry_Placement" xml:space="preserve">
-    <value>Change Industry Placement</value>
+    <value>Change industry placement</value>
   </data>
   <data name="Heading_Has_This_Learner_Completed_Their_Placement" xml:space="preserve">
     <value>Has this learner completed their industry placement?</value>
