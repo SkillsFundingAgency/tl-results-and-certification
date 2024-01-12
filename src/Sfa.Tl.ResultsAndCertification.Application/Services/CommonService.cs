@@ -142,9 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             if (model != null)
             {
-                var isSuccess = await _changeLogRepository.CreateAsync(model) > 0;
-
-                return isSuccess;
+                return await _changeLogRepository.CreateAsync(model) > 0;                 
             }
             return false;
         }
