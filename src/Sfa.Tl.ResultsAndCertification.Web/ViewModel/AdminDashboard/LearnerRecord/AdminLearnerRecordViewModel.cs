@@ -145,7 +145,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
                 Value = GetIndustryPlacementDisplayText,
                 ActionText = LearnerRecordDetailsContent.Action_Text_Link_Change,
                 RouteName = RouteConstants.AdminChangeIndustryPlacement,
-                RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, RegistrationPathwayId.ToString() } },
+                RouteAttributes = new Dictionary<string, string> { { Constants.PathwayId, RegistrationPathwayId.ToString() } },
                 HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement
             };
 
