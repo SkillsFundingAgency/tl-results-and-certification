@@ -1,5 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Domain=Sfa.Tl.ResultsAndCertification.Domain.Models;
+using DomainModel = Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using System;
@@ -29,6 +29,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
        
         DateTime CurrentDate { get; }
 
-        Task<bool> AddChangelog(Domain.Models.ChangeLog changeLog);
+        Task<bool> AddChangelog(DomainModel.ChangeLog changeLog);
     }
 }
