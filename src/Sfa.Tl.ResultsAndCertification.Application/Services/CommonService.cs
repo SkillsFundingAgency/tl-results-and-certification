@@ -23,6 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IMapper _mapper;
         private readonly IRepository<TlLookup> _tlLookupRepository;
         private readonly IRepository<FunctionLog> _functionLogRepository;
+        private readonly IRepository<ChangeLog> _changeLogRepository;
         private readonly ICommonRepository _commonRepository;
         private readonly INotificationService _notificationService;
         private readonly ResultsAndCertificationConfiguration _configuration;
@@ -33,7 +34,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             IRepository<TlLookup> tlLookupRepository,
             IRepository<FunctionLog> functionLogRepository,
             ICommonRepository commonRepository, INotificationService notificationService,
-            ResultsAndCertificationConfiguration configuration)
+            ResultsAndCertificationConfiguration configuration,
+            IRepository<ChangeLog> changeLogRepository)
         {
             _logger = logger;
             _mapper = mapper;
@@ -42,6 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _commonRepository = commonRepository;
             _notificationService = notificationService;
             _configuration = configuration;
+            _changeLogRepository = changeLogRepository;
         }
 
         public async Task<IEnumerable<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory)
@@ -134,5 +137,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return await _commonRepository.GetAcademicYearsAsync();
         }
+
+        public async Task<bool> AddChangelog(ChangeLog model)
+        {
+            if (model != null)
+            {
+                var isSuccess = await _changeLogRepository.CreateAsync(model) > 0;
+
+                return isSuccess;
+            }
+            return false;
+        }
+
     }
 }

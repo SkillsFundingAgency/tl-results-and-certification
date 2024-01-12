@@ -22,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public string AcademicYearTo { get; set; }
         public string DisplayAcademicYear { get; set; }
         public string Learner => $"{FirstName} {LastName}";
+        public string LoggedInUser { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ErrorResource.ReviewChangeStartYear), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
         public string ContactName { get; set; }

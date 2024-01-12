@@ -18,6 +18,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using LearnerRecord = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.LearnerRecord;
 
@@ -224,21 +225,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/submit-review-changes-start-year", Name = RouteConstants.SubmitReviewChangeStartYear)]
         public async Task<IActionResult> ReviewChangeStartYearAsync(ReviewChangeStartYearViewModel model)
         {
-            var viewModel = await _loader.GetAdminLearnerRecordAsync<ReviewChangeStartYearViewModel>(model.PathwayId);
+           model.LoggedInUser = $"{this.User.FindFirstValue(ClaimTypes.GivenName)} {this.User.FindFirstValue(ClaimTypes.Surname)}";
 
-            if (!ModelState.IsValid)
-                return View(model);
-            var isSuccess = await _loader.ProcessChangeStartYearAsync(User.GetUkPrn(), cacheModel);
+           var isSuccess = await _loader.ProcessChangeStartYearAsync(model);
 
-            await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
+            if (isSuccess)
             {
-                DisplayMessageBody = true,
-                Message = LearnerRecord.Message_Notification_Success
-            },
-            CacheExpiryTime.XSmall);
+                await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
+                {
+                    DisplayMessageBody = true,
+                    Message = LearnerRecord.Message_Notification_Success
+                },
+                CacheExpiryTime.XSmall);
 
-            await Task.CompletedTask;
-            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.PathwayId });
+                await Task.CompletedTask;
+                return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.PathwayId });
+            }
+            else { return RedirectToRoute(RouteConstants.ProblemWithService); }
         }
     }
 }

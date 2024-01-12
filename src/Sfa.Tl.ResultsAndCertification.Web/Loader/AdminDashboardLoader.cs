@@ -38,10 +38,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<T>(response);
         }
 
-        public async Task<bool> ProcessChangeStartYear(ReviewChangeStartYearViewModel reviewChangeStartYearViewModel)
+        public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel reviewChangeStartYearViewModel)
         {
             var reviewChangeStartYearRequest = _mapper.Map<ReviewChangeStartYearRequest>(reviewChangeStartYearViewModel);
-            var response = await _internalApiClient.ProcessChangeStartYear(reviewChangeStartYearRequest);
+            var response = await _internalApiClient.ProcessChangeStartYearAsync(reviewChangeStartYearRequest);
             return _mapper.Map<bool>(response);
         }
 

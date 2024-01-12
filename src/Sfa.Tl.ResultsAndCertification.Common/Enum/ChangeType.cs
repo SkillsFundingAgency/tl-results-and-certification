@@ -2,7 +2,7 @@
 {
     public enum ChangeType
     {
-        StartYear = 0,
-        IndustryPlacement = 1
+        StartYear = 1,
+        IndustryPlacement = 2
     }
 }

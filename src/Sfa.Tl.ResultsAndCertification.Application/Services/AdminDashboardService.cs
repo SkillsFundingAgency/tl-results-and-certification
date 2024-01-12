@@ -25,22 +25,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly ISystemProvider _systemProvider;
         private readonly IMapper _mapper;
         private readonly IRepository<TqRegistrationPathway> _tqRegistrationPathwayRepository;
-        private readonly ILogger _logger;
-        private readonly IRepository<ChangeLog> _changeLog;
+        private readonly ICommonService _commonService;
 
         public AdminDashboardService(IAdminDashboardRepository adminDashboardRepository,
             ISystemProvider systemProvider,
             IMapper mapper,
             IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
-            ILogger logger,
-            IRepository<ChangeLog> changeLog)
+            ICommonService commonService)
         {
             _adminDashboardRepository = adminDashboardRepository;
             _systemProvider = systemProvider;
             _mapper = mapper;
             _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
-            _logger = logger;
-            _changeLog = changeLog;
+            _commonService = commonService;
         }
 
         public async Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync()
@@ -74,30 +71,33 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)
         {
-            var pathway = await _tqRegistrationPathwayRepository.GetManyAsync(p => p.Id == request.PathwayId                                                                              
+            var pathway = await _tqRegistrationPathwayRepository.GetManyAsync(p => p.Id == request.PathwayId
                                                                               && (p.Status == RegistrationPathwayStatus.Active))
                                                                  .OrderByDescending(p => p.CreatedOn)
                                                                  .FirstOrDefaultAsync();
+            pathway.AcademicYear = request.AcademicYearTo;
+            var status = await _tqRegistrationPathwayRepository.UpdateWithSpecifedColumnsOnlyAsync(pathway, u => u.AcademicYear, u => u.ModifiedBy, u => u.ModifiedOn);
 
-            if (pathway == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to update tqregistrationpathwayid for pathwayid = {request.PathwayId}. Method: ProcessChangeStartYearAsync({request})");
-                return false;
-            }
-
-            pathway.AcademicYear = request.AcademicYear;
-        
-            var  status = await _tqRegistrationPathwayRepository.UpdateWithSpecifedColumnsOnlyAsync(pathway, u => u.AcademicYear, u => u.ModifiedBy, u => u.ModifiedOn);
-
-            var changeLog = new ChangeLog();
-
-            if (status > 0) await _changeLog.CreateAsync(changeLog);
-            
-            return status > 0;
+            if (status > 0)
+                return await _commonService.AddChangelog(CreateChangeLogRequest(request));
+            return false;
         }
 
-
-
+        private static ChangeLog CreateChangeLogRequest(ReviewChangeStartYearRequest request)
+        {
+            var changeLog = new ChangeLog()
+            {
+                ChangeType = (int)ChangeType.StartYear,
+                ReasonForChange = request.ChangeReason,
+                DateOfRequest = Convert.ToDateTime(request.RequestDate),
+                Details = JsonConvert.SerializeObject(request.changeStartYearDetails),
+                ZendeskTicketID = request.ZendeskId,
+                Name = request.ContactName,
+                TqRegistrationPathwayId = request.PathwayId,
+                CreatedBy = string.IsNullOrEmpty(request.CreatedBy) ? "System" : request.CreatedBy
+            };
+            return changeLog;
+        }
     }
 
 }
