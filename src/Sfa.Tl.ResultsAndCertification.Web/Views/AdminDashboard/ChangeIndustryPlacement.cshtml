@@ -1,0 +1,108 @@
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.AdminChangeIndustryPlacementViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+@using Sfa.Tl.ResultsAndCertification.Common.Enum
+
+@{
+    ViewData["Title"] = AdminChangeIndustryPlacement.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+        <form asp-route="@RouteConstants.AdminSubmitChangeIndustryPlacement" method="post">
+            <input type="hidden" asp-for="PathwayId" />
+            <input type="hidden" asp-for="Learner" />
+            <input type="hidden" asp-for="Uln" />
+            <input type="hidden" asp-for="ProviderName" />
+            <input type="hidden" asp-for="ProviderUkprn" />
+            <input type="hidden" asp-for="TlevelName" />
+            <input type="hidden" asp-for="AcademicYear" />
+            <input type="hidden" asp-for="DisplayAcademicYear" />
+
+            <div class="record-header">
+                <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+                    @AdminChangeIndustryPlacement.Heading_Change_Industry_Placement
+                </h1>
+            </div>
+            <partial name="_ValidationSummary" />
+            <h2 class="govuk-heading-m">
+                @AdminChangeIndustryPlacement.Heading_Personal_Details
+            </h2>
+
+            <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+                <vc:summary-item model=Model.SummaryLearner></vc:summary-item>
+                <vc:summary-item model=Model.SummaryULN></vc:summary-item>
+                <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+                <vc:summary-item model=Model.SummaryTlevel></vc:summary-item>
+                <vc:summary-item model=Model.SummaryAcademicYear></vc:summary-item>
+                <vc:summary-item model=Model.SummaryIndustryPlacementStatus></vc:summary-item>
+            </dl>
+
+            <div class="govuk-form-group govuk-!-margin-top-8" sfa-validation-for="IndustryPlacementStatus" sfa-validation-class="govuk-form-group--error">
+                @{
+                    if (!Model.IsLearnerRegisteredFourYearsAgo)
+                    {
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <h2 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
+                                    @AdminChangeIndustryPlacement.Heading_Has_This_Learner_Completed_Their_Placement
+                                </h2>
+                            </legend>
+                            <div class="govuk-radios">
+                                <span sfa-validation-for="IndustryPlacementStatus"></span>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="industryplacementstatus" asp-for="IndustryPlacementStatus" type="radio" value="@IndustryPlacementStatus.Completed">
+                                    <label class="govuk-label govuk-radios__label" for="industryplacementstatus">
+                                        @AdminChangeIndustryPlacement.Status_Yes_Completed
+                                    </label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="industryplacementstatus-cwspc" asp-for="IndustryPlacementStatus" type="radio" value="@IndustryPlacementStatus.CompletedWithSpecialConsideration">
+                                    <label class="govuk-label govuk-radios__label" for="industryplacementstatus-cwspc">
+                                        @AdminChangeIndustryPlacement.Status_Yes_Completed_with_Special_Consideration
+                                    </label>
+
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="industryplacementstatus-notcompleted" asp-for="IndustryPlacementStatus" type="radio" value="@IndustryPlacementStatus.NotCompleted">
+                                    <label class="govuk-label govuk-radios__label" for="industryplacementstatus-notcompleted">
+                                        @AdminChangeIndustryPlacement.Status_No_They_Still_Need_To_Complete_It
+                                    </label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="industryplacementstatus-will-not-complete" asp-for="IndustryPlacementStatus" type="radio" value="@IndustryPlacementStatus.WillNotComplete">
+                                    <label class="govuk-label govuk-radios__label" for="industryplacementstatus-will-not-complete">
+                                        @AdminChangeIndustryPlacement.Status_No_They_Will_Not_Complete_It
+                                    </label>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="govuk-button-group govuk-!-margin-top-4">
+                            <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminChangeIndustryPlacement.Button_Continue</button>
+                            <a id="returnButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.PathwayId">@AdminChangeIndustryPlacement.Button_Cancel</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="govuk-form-group govuk-!-margin-top-8">
+                            <h2 class="govuk-heading-m">@AdminChangeIndustryPlacement.Message_Industry_Placement_Cannot_Be_Changed</h2>
+                            <p class="govuk-body">@AdminChangeIndustryPlacement.Message_You_Cannot_Change_Industry_Placement_For_This_Learner</p>
+                            <p class="govuk-body">@AdminChangeIndustryPlacement.Message_This_Is_Because_The_Learner_Started_Their__Course</p>
+                            
+                            <div class="govuk-button-group">
+                                <a id="returnButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminChangeIndustryPlacement.Button_Return</a>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </form>
+    </div>
+</div>
