@@ -197,6 +197,51 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not yet received.
+        /// </summary>
+        public static string Status_Not_Yet_Recieved_Text {
+            get {
+                return ResourceManager.GetString("Status_Not_Yet_Recieved_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Placement completed.
+        /// </summary>
+        public static string Status_Placement_Completed_Text {
+            get {
+                return ResourceManager.GetString("Status_Placement_Completed_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Placement completed with special consideration.
+        /// </summary>
+        public static string Status_Placement_Completed_With_Special_Consideration_Text {
+            get {
+                return ResourceManager.GetString("Status_Placement_Completed_With_Special_Consideration_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Placement will not be completed.
+        /// </summary>
+        public static string Status_Placement_Will_Not_Be_Completed_Text {
+            get {
+                return ResourceManager.GetString("Status_Placement_Will_Not_Be_Completed_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Placement still to be completed.
+        /// </summary>
+        public static string Status_Still_To_Be_Completed_Text {
+            get {
+                return ResourceManager.GetString("Status_Still_To_Be_Completed_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yes, completed.
         /// </summary>
         public static string Status_Yes_Completed {
@@ -211,15 +256,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static string Status_Yes_Completed_with_Special_Consideration {
             get {
                 return ResourceManager.GetString("Status_Yes_Completed_with_Special_Consideration", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Not yet recieved.
-        /// </summary>
-        public static string Staut_Not_Yet_Recieved {
-            get {
-                return ResourceManager.GetString("Staut_Not_Yet_Recieved", resourceCulture);
             }
         }
         
