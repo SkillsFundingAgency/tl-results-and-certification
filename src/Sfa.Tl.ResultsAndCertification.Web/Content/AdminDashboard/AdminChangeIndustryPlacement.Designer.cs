@@ -116,7 +116,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change Industry Placement.
+        ///   Looks up a localized string similar to Change industry placement.
         /// </summary>
         public static string Heading_Change_Industry_Placement {
             get {
