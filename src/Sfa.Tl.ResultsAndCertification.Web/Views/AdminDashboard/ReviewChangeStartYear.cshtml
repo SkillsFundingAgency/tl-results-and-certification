@@ -47,7 +47,7 @@
         @ReviewChangeStartYear.Message_Inset_Text
     </div>
     <form asp-route="@RouteConstants.SubmitReviewChangeStartYear">
-        <input type="hidden" asp-for="PathwayId" />
+        <input type="hidden" asp-for="RegistrationPathwayId" />
         <input type="hidden" asp-for="FirstName" />
         <input type="hidden" asp-for="LastName" />
         <input type="hidden" asp-for="Uln" />
@@ -104,7 +104,7 @@
         </div>
         <div class="govuk-button-group">
             <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ReviewChangeStartYear.Button_Submit</button>
-            <a id="returnButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.PathwayId">@ReviewChangeStartYear.Button_Cancel</a>
+            <a id="returnButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@ReviewChangeStartYear.Button_Cancel</a>
         </div>
     </form>
 </div>

@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)
         {
-            var pathway = await _tqRegistrationPathwayRepository.GetManyAsync(p => p.Id == request.PathwayId
+            var pathway = await _tqRegistrationPathwayRepository.GetManyAsync(p => p.Id == request.RegistrationPathwayId
                                                                               && (p.Status == RegistrationPathwayStatus.Active))
                                                                  .OrderByDescending(p => p.CreatedOn)
                                                                  .FirstOrDefaultAsync();
@@ -90,10 +90,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 ChangeType = (int)ChangeType.StartYear,
                 ReasonForChange = request.ChangeReason,
                 DateOfRequest = Convert.ToDateTime(request.RequestDate),
-                Details = JsonConvert.SerializeObject(request.changeStartYearDetails),
+                Details = JsonConvert.SerializeObject(request.ChangeStartYearDetails),
                 ZendeskTicketID = request.ZendeskId,
                 Name = request.ContactName,
-                TqRegistrationPathwayId = request.PathwayId,
+                TqRegistrationPathwayId = request.RegistrationPathwayId,
                 CreatedBy = string.IsNullOrEmpty(request.CreatedBy) ? "System" : request.CreatedBy
             };
             return changeLog;

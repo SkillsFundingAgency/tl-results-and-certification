@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             var isSuccess = true;
             ReviewChangeStartYearViewModel = new ReviewChangeStartYearViewModel()
             {
-                PathwayId = 1,
+                RegistrationPathwayId = 1,
                 FirstName = "firstname",
                 LastName = "lastname",
                 Uln = 1100000001,
@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         {
             var route = Result as RedirectToActionResult;
             route.ActionName.Should().Be(nameof(RouteConstants.AdminLearnerRecord));
-            route.RouteValues[Constants.PathwayId].Should().Be(ReviewChangeStartYearViewModel.PathwayId);
+            route.RouteValues[Constants.PathwayId].Should().Be(ReviewChangeStartYearViewModel.RegistrationPathwayId);
         }
     }
 }

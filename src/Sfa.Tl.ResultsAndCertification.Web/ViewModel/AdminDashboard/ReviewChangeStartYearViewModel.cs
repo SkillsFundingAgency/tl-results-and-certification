@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 {
     public class ReviewChangeStartYearViewModel
     {
-        public int PathwayId { get; set; }
+        public int RegistrationPathwayId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public long Uln { get; set; }
@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.ChangeStartYear,
-            RouteAttributes = new Dictionary<string, string>() { { Constants.PathwayId, PathwayId.ToString() }, { Constants.IsBack, "true" } }
+            RouteAttributes = new Dictionary<string, string>() { { Constants.PathwayId, RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
         };
 
         public SummaryItemModel SummaryLearner => new()
@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
             Value2 = $"{AcademicYearTo} to {(int.TryParse(AcademicYearTo, out int academicYearToInt) ? academicYearToInt + 1 : default)}",
             ActionText = ReviewChangeStartYear.Link_Change_Text,
             RouteName = RouteConstants.ChangeStartYear,
-            RouteAttributes = new Dictionary<string, string>() { { Constants.PathwayId, PathwayId.ToString() }, { Constants.IsBack, "true" } }
+            RouteAttributes = new Dictionary<string, string>() { { Constants.PathwayId, RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
         };
 
         public SummaryItemModel SummaryContactName => new()

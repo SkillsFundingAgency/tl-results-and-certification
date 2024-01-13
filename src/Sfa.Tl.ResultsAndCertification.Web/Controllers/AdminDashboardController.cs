@@ -237,9 +237,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                     Message = LearnerRecord.Message_Notification_Success
                 },
                 CacheExpiryTime.XSmall);
-
-                await Task.CompletedTask;
-                return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.PathwayId });
+               
+                return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
             }
             else { return RedirectToRoute(RouteConstants.ProblemWithService); }
         }

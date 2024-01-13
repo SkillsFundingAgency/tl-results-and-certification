@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             var isSuccess = false;
             ReviewChangeStartYearViewModel = new ReviewChangeStartYearViewModel()
             {
-                PathwayId = 1,
+                RegistrationPathwayId = 1,
                 FirstName = "firstname",
                 LastName = "lastname",
                 Uln = 1100000001,

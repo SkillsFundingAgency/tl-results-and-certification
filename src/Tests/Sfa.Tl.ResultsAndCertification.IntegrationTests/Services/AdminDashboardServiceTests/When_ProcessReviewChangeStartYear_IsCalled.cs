@@ -52,8 +52,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
                 AcademicYearTo = 2021,
                 ChangeReason = "Test Reason",
                 ContactName = "Test User",
-                PathwayId = 1,
-                changeStartYearDetails = new ChangeStartYearDetails() { StartYearFrom = 2022, StartYearTo = 2021 },
+                RegistrationPathwayId = 1,
+                ChangeStartYearDetails = new ChangeStartYearDetails() { StartYearFrom = 2022, StartYearTo = 2021 },
                 RequestDate = DateTime.Now.ToShortDateString(),
                 ZendeskId = "1234567890",
                 CreatedBy = "System"
@@ -148,11 +148,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
 
             expectedRegistrationPathway.Should().NotBeNull();
 
-            var actualIndustryPlacement = DbContext.TqRegistrationPathway.FirstOrDefault(ip => ip.Id == request.PathwayId);
+            var actualIndustryPlacement = DbContext.TqRegistrationPathway.FirstOrDefault(ip => ip.Id == request.RegistrationPathwayId);
 
 
             // Assert
-            request.PathwayId.Should().Be(actualIndustryPlacement.Id);
+            request.RegistrationPathwayId.Should().Be(actualIndustryPlacement.Id);
             request.AcademicYearTo.Should().Be(actualIndustryPlacement.AcademicYear);
             
         }
@@ -171,8 +171,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
                 AcademicYearTo = 2021,
                 ChangeReason = "Test Reason",
                 ContactName = "Test User",
-                PathwayId = 1,
-                changeStartYearDetails = new ChangeStartYearDetails() { StartYearFrom = 2022, StartYearTo = 2021 },
+                RegistrationPathwayId = 1,
+                ChangeStartYearDetails = new ChangeStartYearDetails() { StartYearFrom = 2022, StartYearTo = 2021 },
                 RequestDate = DateTime.Now.ToShortDateString(),
                 ZendeskId = "1234567890",
                 CreatedBy = "System"

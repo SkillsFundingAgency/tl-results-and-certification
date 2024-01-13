@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
 {
     public class ReviewChangeStartYearRequest
     {
-        public int PathwayId { get; set; }        
+        public int RegistrationPathwayId { get; set; }        
         public long Uln { get; set; }       
         public int AcademicYear { get; set; }
         public int AcademicYearTo { get; set; }
@@ -21,6 +21,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
         public string ZendeskId { get; set; }
         public string CreatedBy { get; set; }
 
-       public ChangeStartYearDetails changeStartYearDetails { get; set; }
+       public ChangeStartYearDetails ChangeStartYearDetails { get; set; }
     }
 }

@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
             var model = (Result as ViewResult).Model as ReviewChangeStartYearViewModel;
 
-            model.PathwayId.Should().Be(Mockresult.PathwayId);
+            model.RegistrationPathwayId.Should().Be(Mockresult.RegistrationPathwayId);
             model.Uln.Should().Be(Mockresult.Uln);
             model.Learner.Should().Be(Mockresult.Learner);
             model.FirstName.Should().Be(Mockresult.FirstName);
