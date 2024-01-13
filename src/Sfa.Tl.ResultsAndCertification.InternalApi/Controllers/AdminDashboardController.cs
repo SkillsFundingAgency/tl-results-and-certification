@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpPost]
         [Route("ProcessChangeStartYear")]
-        public async Task<bool> ProcessChangeStarteYearAsync(ReviewChangeStartYearRequest request)
+        public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)
         {
             return await _adminDashboardService.ProcessChangeStartYearAsync(request);
         }
