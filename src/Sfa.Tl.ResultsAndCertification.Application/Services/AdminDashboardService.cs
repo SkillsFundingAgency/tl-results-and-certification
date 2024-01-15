@@ -71,10 +71,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)
         {
-            var pathway = await _tqRegistrationPathwayRepository.GetManyAsync(p => p.Id == request.RegistrationPathwayId
-                                                                              && (p.Status == RegistrationPathwayStatus.Active))
-                                                                 .OrderByDescending(p => p.CreatedOn)
-                                                                 .FirstOrDefaultAsync();
+            var pathway = await _tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.Id == request.RegistrationPathwayId);
+
+            if (pathway == null) return false;
+
             pathway.AcademicYear = request.AcademicYearTo;
             var status = await _tqRegistrationPathwayRepository.UpdateWithSpecifedColumnsOnlyAsync(pathway, u => u.AcademicYear, u => u.ModifiedBy, u => u.ModifiedOn);
 
