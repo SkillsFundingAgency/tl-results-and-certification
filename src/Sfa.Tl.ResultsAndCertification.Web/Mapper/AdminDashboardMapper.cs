@@ -73,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.SelectedAwardingOrganisations, opts => opts.MapFrom(s => GetSelectedAwardingOrganisationIds(s)));
 
             CreateMap<AdminLearnerRecord, ReviewChangeStartYearViewModel>()
-                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.PathwayId))
                 .ForMember(d => d.FirstName, opts => opts.MapFrom(s => s.FirstName))
                 .ForMember(d => d.LastName, opts => opts.MapFrom(s => s.LastName))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
@@ -95,6 +95,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
                 .ForMember(d => d.LearnerRegistrationPathwayStatus, opts => opts.MapFrom(s => s.RegistrationPathwayStatus))
                 .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
+
+            CreateMap<ReviewChangeStartYearViewModel, ReviewChangeStartYearRequest>()
+               .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+               .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+               .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))               
+               .ForMember(d => d.AcademicYearTo, opts => opts.MapFrom(s => s.AcademicYearTo))
+               .ForMember(d => d.ContactName, opts => opts.MapFrom(s => s.ContactName))
+               .ForMember(d => d.ChangeReason, opts => opts.MapFrom(s => s.ChangeReason))
+               .ForMember(d => d.RequestDate, opts => opts.MapFrom(s => s.RequestDate))
+               .ForMember(d => d.ZendeskId, opts => opts.MapFrom(s => s.ZendeskId))
+               .ForMember(d => d.ChangeStartYearDetails, opts => opts.MapFrom(s => s))
+               .ForMember(d => d.CreatedBy, opts => opts.MapFrom(s => s.LoggedInUser))
+               .ForMember(d => d.DisplayAcademicYear, opts => opts.MapFrom(s => s.DisplayAcademicYear));
+
+            CreateMap<ReviewChangeStartYearViewModel, ChangeStartYearDetails>()
+                 .ForMember(d => d.StartYearFrom, opts => opts.MapFrom(s => s.AcademicYear))
+             .ForMember(d => d.StartYearTo, opts => opts.MapFrom(s => s.AcademicYearTo));
+
+
         }
 
         private int? GetSelectedProviderId(AdminSearchLearnerCriteriaViewModel searchCriteria)

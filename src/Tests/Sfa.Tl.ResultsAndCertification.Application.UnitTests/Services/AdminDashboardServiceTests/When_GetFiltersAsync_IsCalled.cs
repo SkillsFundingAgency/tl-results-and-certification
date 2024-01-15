@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
@@ -50,9 +53,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
             var systemProvider = Substitute.For<ISystemProvider>();
             systemProvider.UtcToday.Returns(today);
 
-            var mapper = Substitute.For<IMapper>();
+            var mapper = Substitute.For<IMapper>();           
+            var tqRegistrationPathwayRepository = Substitute.For<IRepository<TqRegistrationPathway>>();
+            var commonService = Substitute.For<ICommonService>();
 
-            _adminDashboardService = new AdminDashboardService(repository, systemProvider, mapper);
+
+            _adminDashboardService = new AdminDashboardService(repository, systemProvider, mapper, tqRegistrationPathwayRepository, commonService);
         }
 
         public override void Given()

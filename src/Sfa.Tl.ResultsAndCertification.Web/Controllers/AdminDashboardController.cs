@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
@@ -17,6 +18,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using LearnerRecord = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.LearnerRecord;
 
@@ -223,19 +225,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/submit-review-changes-start-year", Name = RouteConstants.SubmitReviewChangeStartYear)]
         public async Task<IActionResult> ReviewChangeStartYearAsync(ReviewChangeStartYearViewModel model)
         {
-            var viewModel = await _loader.GetAdminLearnerRecordAsync<ReviewChangeStartYearViewModel>(model.PathwayId);
+           model.LoggedInUser = $"{this.User.FindFirstValue(ClaimTypes.GivenName)} {this.User.FindFirstValue(ClaimTypes.Surname)}";
 
-            if (!ModelState.IsValid)
-                return View(model);
+           var isSuccess = await _loader.ProcessChangeStartYearAsync(model);
 
-            await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
+            if (isSuccess)
             {
-                DisplayMessageBody = true,
-                Message = LearnerRecord.Message_Notification_Success
-            },
-            CacheExpiryTime.XSmall); 
-
-            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.PathwayId });
+                await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
+                {
+                    DisplayMessageBody = true,
+                    Message = LearnerRecord.Message_Notification_Success
+                },
+                CacheExpiryTime.XSmall);
+               
+                return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
+            }
+            else { return RedirectToRoute(RouteConstants.ProblemWithService); }
         }
 
         [HttpGet]
@@ -260,5 +265,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.PathwayId });
         }
+
+
     }
 }
