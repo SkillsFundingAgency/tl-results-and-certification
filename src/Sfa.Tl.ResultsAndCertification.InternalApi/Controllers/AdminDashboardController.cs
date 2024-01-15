@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
@@ -40,6 +42,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             return await _adminDashboardService.GetAdminLearnerRecordAsync(pathwayId);
         }
 
-
+        [HttpPost]
+        [Route("ProcessChangeStartYear")]
+        public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)
+        {
+            return await _adminDashboardService.ProcessChangeStartYearAsync(request);
+        }
     }
 }

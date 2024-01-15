@@ -84,11 +84,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPl
 
         public string GetIndustryPlacementDisplayText => IndustryPlacementStatus switch
         {
-            IpStatus.Completed => AdminChangeIndustryPlacement.Status_Yes_Completed,
-            IpStatus.CompletedWithSpecialConsideration => AdminChangeIndustryPlacement.Status_Yes_Completed_with_Special_Consideration,
-            IpStatus.NotCompleted => AdminChangeIndustryPlacement.Status_No_They_Still_Need_To_Complete_It,
-            IpStatus.WillNotComplete => AdminChangeIndustryPlacement.Status_No_They_Will_Not_Complete_It,
-            _ => AdminChangeIndustryPlacement.Status_Not_Yet_Recieved,
+            IpStatus.Completed => AdminChangeIndustryPlacement.Status_Placement_Completed_Text,
+            IpStatus.CompletedWithSpecialConsideration => AdminChangeIndustryPlacement.Status_Placement_Completed_With_Special_Consideration_Text,
+            IpStatus.NotCompleted => AdminChangeIndustryPlacement.Status_Still_To_Be_Completed_Text,
+            IpStatus.WillNotComplete => AdminChangeIndustryPlacement.Status_Placement_Will_Not_Be_Completed_Text,
+            _ => AdminChangeIndustryPlacement.Status_Not_Yet_Recieved_Text,
         };
     }
 }

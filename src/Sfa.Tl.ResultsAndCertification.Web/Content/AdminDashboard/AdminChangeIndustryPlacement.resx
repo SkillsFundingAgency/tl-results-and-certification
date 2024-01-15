@@ -136,7 +136,7 @@
     <value>Select whether the learner has completed their industry placement</value>
   </data>
   <data name="Heading_Change_Industry_Placement" xml:space="preserve">
-    <value>Change Industry Placement</value>
+    <value>Change industry placement</value>
   </data>
   <data name="Heading_Has_This_Learner_Completed_Their_Placement" xml:space="preserve">
     <value>Has this learner completed their industry placement?</value>
@@ -156,14 +156,26 @@
   <data name="Page_Title" xml:space="preserve">
     <value>Change industry placement – Admin</value>
   </data>
-  <data name="Status_Not_Yet_Recieved" xml:space="preserve">
-    <value>Not yet recieved</value>
+  <data name="Status_Not_Yet_Recieved_Text" xml:space="preserve">
+    <value>Not yet received</value>
   </data>
   <data name="Status_No_They_Still_Need_To_Complete_It" xml:space="preserve">
     <value>No, they still need to complete it</value>
   </data>
   <data name="Status_No_They_Will_Not_Complete_It" xml:space="preserve">
     <value>No, they will not complete it</value>
+  </data>
+  <data name="Status_Placement_Completed_Text" xml:space="preserve">
+    <value>Placement completed</value>
+  </data>
+  <data name="Status_Placement_Completed_With_Special_Consideration_Text" xml:space="preserve">
+    <value>Placement completed with special consideration</value>
+  </data>
+  <data name="Status_Placement_Will_Not_Be_Completed_Text" xml:space="preserve">
+    <value>Placement will not be completed</value>
+  </data>
+  <data name="Status_Still_To_Be_Completed_Text" xml:space="preserve">
+    <value>Placement still to be completed</value>
   </data>
   <data name="Status_Yes_Completed" xml:space="preserve">
     <value>Yes, completed</value>
