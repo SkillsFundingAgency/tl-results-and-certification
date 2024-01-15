@@ -382,9 +382,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
+            if (cachedModel.HoursViewModel == null || string.IsNullOrWhiteSpace(cachedModel.HoursViewModel.Hours))
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
             cachedModel.ReasonsViewModel = model;
             await _cacheService.SetAsync(CacheKey, cachedModel);
 
+            // TODO: Update the route when the review industry placement page is built.
             return RedirectToRoute(string.Empty);
         }
     }
