@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
-using NSubstitute;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Xunit;
 
@@ -12,60 +14,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
         public override void Given()
         {
-            AdminChangeIndustryPlacementViewModel = new AdminIpCompletionViewModel
-            {
-                RegistrationPathwayId = 1,
-                LearnerName = "firstname lastname",
-                Uln = 1100000001,
-                Provider = "provider-name (10000536)",
-                TlevelName = "t-level-name",
-                AcademicYear = 2022,
-                StartYear = "2021 to 2022",
-                IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed
-            };
-
-            MockResult = new AdminIpCompletionViewModel()
-            {
-                RegistrationPathwayId = 1,
-                LearnerName = "firstname lastname",
-                Uln = 1100000001,
-                Provider = "provider-name (10000536)",
-                TlevelName = "t-level-name",
-                AcademicYear = 2022,
-                StartYear = "2021 to 2022",
-                IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed
-            };
-
-            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminIpCompletionViewModel>(Arg.Any<int>()).Returns(MockResult);
-
-            Controller.ModelState.AddModelError(nameof(AdminChangeIndustryPlacementViewModel.IndustryPlacementStatus), Content.AdminDashboard.AdminChangeIndustryPlacement.Validation_Message);
+            ViewModel = CreateViewModel(null as IndustryPlacementStatus?);
+            Controller.ModelState.AddModelError(nameof(ViewModel.IndustryPlacementStatus), AdminChangeIndustryPlacement.Validation_Message);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            Result.Should().BeOfType(typeof(ViewResult));
-
-            var viewResult = Result as ViewResult;
-            viewResult.Model.Should().BeOfType(typeof(AdminIpCompletionViewModel));
-
-            var model = viewResult.Model as AdminIpCompletionViewModel;
+            var model = Result.ShouldBeViewResult<AdminIpCompletionViewModel>();
 
             model.Should().NotBeNull();
-            model.RegistrationPathwayId.Should().Be(AdminChangeIndustryPlacementViewModel.RegistrationPathwayId);
-            model.LearnerName.Should().Be(AdminChangeIndustryPlacementViewModel.LearnerName);
-            model.Uln.Should().Be(AdminChangeIndustryPlacementViewModel.Uln);
-            model.Provider.Should().Be(AdminChangeIndustryPlacementViewModel.Provider);
-            model.TlevelName.Should().Be(AdminChangeIndustryPlacementViewModel.TlevelName);
-            model.AcademicYear.Should().Be(AdminChangeIndustryPlacementViewModel.AcademicYear);
-            model.IndustryPlacementStatus.Should().Be(AdminChangeIndustryPlacementViewModel.IndustryPlacementStatus);
-            model.StartYear.Should().Be(AdminChangeIndustryPlacementViewModel.StartYear);
+            model.RegistrationPathwayId.Should().Be(ViewModel.RegistrationPathwayId);
+            model.LearnerName.Should().Be(ViewModel.LearnerName);
+            model.Uln.Should().Be(ViewModel.Uln);
+            model.Provider.Should().Be(ViewModel.Provider);
+            model.TlevelName.Should().Be(ViewModel.TlevelName);
+            model.AcademicYear.Should().Be(ViewModel.AcademicYear);
+            model.StartYear.Should().Be(ViewModel.StartYear);
+            model.IndustryPlacementStatus.Should().Be(ViewModel.IndustryPlacementStatus);
 
-            Controller.ViewData.ModelState.Should().HaveCount(1);
-            Controller.ViewData.ModelState.ContainsKey(nameof(AdminChangeIndustryPlacementViewModel.IndustryPlacementStatus)).Should().BeTrue();
-
-            var modelState = Controller.ViewData.ModelState[nameof(AdminChangeIndustryPlacementViewModel.IndustryPlacementStatus)];
-            modelState.Errors[0].ErrorMessage.Should().Be(Content.AdminDashboard.AdminChangeIndustryPlacement.Validation_Message);
+            ModelStateDictionary modelState = Controller.ViewData.ModelState;
+            modelState.Should().HaveCount(1);
+            modelState.Should().ContainKey(nameof(ViewModel.IndustryPlacementStatus));
+            modelState[nameof(ViewModel.IndustryPlacementStatus)].Errors[0].ErrorMessage.Should().Be(AdminChangeIndustryPlacement.Validation_Message);
         }
     }
 }

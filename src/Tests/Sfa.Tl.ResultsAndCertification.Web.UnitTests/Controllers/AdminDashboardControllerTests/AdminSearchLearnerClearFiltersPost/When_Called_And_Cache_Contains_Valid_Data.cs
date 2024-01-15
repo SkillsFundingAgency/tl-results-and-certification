@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,12 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         [Fact]
         public void Then_Redirected_To_AdminSearchLearnersRecords()
         {
-            _result.Should().BeOfType<RedirectToRouteResult>();
-
-            var result = _result as RedirectToRouteResult;
-            result.RouteName.Should().Be(RouteConstants.AdminSearchLearnersRecords);
-            result.RouteValues.Should().ContainKey(PageNumberKey);
-            result.RouteValues[PageNumberKey].Should().Be(_viewModel.SearchLearnerCriteria.PageNumber);
+            _result.ShouldBeRedirectToRouteResult(RouteConstants.AdminSearchLearnersRecords, (PageNumberKey, _viewModel.SearchLearnerCriteria.PageNumber));
         }
     }
 }
