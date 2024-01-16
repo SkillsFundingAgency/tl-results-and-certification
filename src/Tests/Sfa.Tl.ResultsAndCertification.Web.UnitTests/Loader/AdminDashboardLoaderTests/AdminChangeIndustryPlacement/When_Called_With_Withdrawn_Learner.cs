@@ -5,7 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
         }
         private Models.Contracts.AdminDashboard.AdminLearnerRecord _expectedApiResult;
 
-        protected AdminChangeIndustryPlacementViewModel ActualResult { get; set; }
+        protected AdminIpCompletionViewModel ActualResult { get; set; }
 
         public override void Given()
         {
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetAdminLearnerRecordAsync<AdminChangeIndustryPlacementViewModel>(PathwayId);
+            ActualResult = await Loader.GetAdminLearnerRecordAsync<AdminIpCompletionViewModel>(PathwayId);
         }
 
         [Fact]
@@ -74,14 +74,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
         public void Then_Returns_Expected_Results()
         {
             ActualResult.Should().NotBeNull();
-            ActualResult.PathwayId.Should().Be(_expectedApiResult.RegistrationPathwayId);
             ActualResult.RegistrationPathwayId.Should().Be(_expectedApiResult.RegistrationPathwayId);
             ActualResult.Uln.Should().Be(_expectedApiResult.Uln);
-            ActualResult.Learner.Should().Be($"{_expectedApiResult.FirstName} {_expectedApiResult.LastName}");
-            ActualResult.ProviderName.Should().Be(_expectedApiResult.ProviderName);
+            ActualResult.LearnerName.Should().Be($"{_expectedApiResult.FirstName} {_expectedApiResult.LastName}");
+            ActualResult.Provider.Should().Be($"{_expectedApiResult.ProviderName} ({_expectedApiResult.ProviderUkprn})");
             ActualResult.TlevelName.Should().Be(_expectedApiResult.TlevelName);
-            ActualResult.LearnerRegistrationPathwayStatus.Should().Be(_expectedApiResult.RegistrationPathwayStatus.ToString());
         }
     }
 }
-

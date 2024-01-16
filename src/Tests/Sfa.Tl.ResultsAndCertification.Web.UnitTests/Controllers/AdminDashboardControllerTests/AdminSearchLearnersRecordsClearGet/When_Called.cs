@@ -12,10 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
     {
         private IActionResult _result;
 
-        public override void Given()
-        {
-        }
-
         public override async Task When()
         {
             _result = await Controller.AdminSearchLearnersRecordsClearAsync();

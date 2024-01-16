@@ -5,7 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
     {
         private IResultsAndCertificationInternalApiClient _internalApiClient;
         private AdminDashboardLoader Loader;
-        private AdminChangeIndustryPlacementViewModel _actualResult;
+        private AdminIpCompletionViewModel _actualResult;
         private int PathwayId;
 
         public override void Setup()
@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
 
         public async override Task When()
         {
-            _actualResult = await Loader.GetAdminLearnerRecordAsync<AdminChangeIndustryPlacementViewModel>(PathwayId);
+            _actualResult = await Loader.GetAdminLearnerRecordAsync<AdminIpCompletionViewModel>(PathwayId);
         }
 
         [Fact]

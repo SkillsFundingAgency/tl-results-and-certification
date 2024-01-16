@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
+using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using System;
@@ -27,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         protected ILogger<AdminDashboardController> Logger;
         protected AdminDashboardController Controller;
         protected IProviderLoader ProviderLoader;
+        protected IIndustryPlacementLoader IndustryPlacementLoader;
         protected IHttpContextAccessor HttpContextAccessor;
         protected AdminChangeStartYearViewModel AdminChangeStartYearViewModel;
 
@@ -38,8 +40,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             AdminDashboardLoader = Substitute.For<IAdminDashboardLoader>();
             CacheService = Substitute.For<ICacheService>();
             ProviderLoader = Substitute.For<IProviderLoader>();
+            IndustryPlacementLoader = Substitute.For<IIndustryPlacementLoader>();
             Logger = Substitute.For<ILogger<AdminDashboardController>>();
-            Controller = new AdminDashboardController(AdminDashboardLoader, ProviderLoader ,CacheService, Logger);
+            Controller = new AdminDashboardController(AdminDashboardLoader, ProviderLoader, IndustryPlacementLoader, CacheService, Logger);
 
             ProfileId = 1;
             AoUkprn = 1234567890;

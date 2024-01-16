@@ -1,7 +1,6 @@
-﻿using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using System.Threading.Tasks;
 using Xunit;
@@ -30,8 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         [Fact]
         public void Then_Redirected_To_Home()
         {
-            _result.Should().BeOfType<RedirectToRouteResult>()
-                .Which.RouteName.Should().Be(RouteConstants.Home);
+            _result.ShouldBeRedirectHome();
         }
     }
 }

@@ -6,13 +6,13 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using System;
@@ -28,20 +28,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     public class AdminDashboardController : Controller
     {
         private readonly IAdminDashboardLoader _loader;
+        private readonly IIndustryPlacementLoader _industryPlacementLoader;
+
         private readonly IProviderLoader _providerLoader;
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
+
         private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey); } }
         private string InformationCacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardInformationCacheKey); } }
 
         public AdminDashboardController(
             IAdminDashboardLoader loader,
             IProviderLoader providerLoader,
+            IIndustryPlacementLoader industryPlacementLoader,
             ICacheService cacheService,
             ILogger<AdminDashboardController> logger)
         {
             _loader = loader;
             _providerLoader = providerLoader;
+            _industryPlacementLoader = industryPlacementLoader;
             _cacheService = cacheService;
             _logger = logger;
         }
@@ -54,7 +59,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(RouteConstants.Home);
         }
 
-        #region Search learner   
+        #region Search learner
+
         [HttpGet]
         [Route("admin/search-learner-records-clear", Name = RouteConstants.AdminSearchLearnersRecordsClear)]
         public async Task<IActionResult> AdminSearchLearnersRecordsClearAsync()
@@ -166,7 +172,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (isBack)
                 viewModel.AcademicYearTo = TempData.Get<string>(Constants.AcademicYearTo) ?? viewModel.AcademicYearTo;
-           
+
             return View(viewModel);
         }
 
@@ -175,8 +181,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> ChangeStartYearAsync(AdminChangeStartYearViewModel model)
         {
             var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(model.PathwayId);
-            
-            if (viewModel.AcademicStartYearsToBe.Count() == 0 && !ModelState.IsValid) 
+
+            if (viewModel.AcademicStartYearsToBe.Count == 0 && !ModelState.IsValid)
                 ModelState[nameof(model.AcademicYearTo)].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Skipped;
 
             if (!ModelState.IsValid)
@@ -209,12 +215,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/review-changes-start-year/{pathwayId}", Name = RouteConstants.ReviewChangeStartYear)]
         public async Task<IActionResult> ReviewChangeStartYearAsync(int pathwayId)
         {
-            var _cachedModel = await _cacheService.GetAsync<AdminChangeStartYearViewModel>(CacheKey);
             var viewModel = await _loader.GetAdminLearnerRecordAsync<ReviewChangeStartYearViewModel>(pathwayId);
 
             if (viewModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            var _cachedModel = await _cacheService.GetAsync<AdminChangeStartYearViewModel>(CacheKey);
             TempData.Set(Constants.AcademicYearTo, _cachedModel.AcademicYearTo);
 
             viewModel.AcademicYearTo = _cachedModel.AcademicYearTo;
@@ -244,26 +250,155 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("admin/change-industry-placement/{pathwayId}", Name = RouteConstants.AdminChangeIndustryPlacement)]
-        public async Task<IActionResult> ChangeIndustryPlacementAsync(int pathwayId)
+        [Route("admin/change-industry-placement-clear/{registrationPathwayId}", Name = RouteConstants.AdminChangeIndustryPlacementClear)]
+        public async Task<IActionResult> ChangeIndustryPlacementClearAsync(int registrationPathwayId)
         {
-            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeIndustryPlacementViewModel>(pathwayId);
+            await _cacheService.RemoveAsync<AdminChangeIpViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AdminChangeIndustryPlacement, new { registrationPathwayId });
+        }
+
+        [HttpGet]
+        [Route("admin/change-industry-placement/{registrationPathwayId}", Name = RouteConstants.AdminChangeIndustryPlacement)]
+        public async Task<IActionResult> ChangeIndustryPlacementAsync(int registrationPathwayId)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
+
+            if (cachedModel != null)
+            {
+                return View(cachedModel.AdminIpCompletion);
+            }
+
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminIpCompletionViewModel>(registrationPathwayId);
 
             if (viewModel == null)
+            {
                 return RedirectToRoute(RouteConstants.PageNotFound);
+            }
 
             return View(viewModel);
         }
 
         [HttpPost]
         [Route("admin/submit-change-industry-placement", Name = RouteConstants.AdminSubmitChangeIndustryPlacement)]
-        public async Task<IActionResult> ChangeIndustryPlacementAsync(AdminChangeIndustryPlacementViewModel model)
+        public async Task<IActionResult> ChangeIndustryPlacementAsync(AdminIpCompletionViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.PathwayId });
+
+            if (model.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
+            {
+                var cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
+
+                var modelToCache = cachedModel ?? new AdminChangeIpViewModel();
+                modelToCache.AdminIpCompletion = model;
+
+                await _cacheService.SetAsync(CacheKey, modelToCache);
+                return RedirectToAction(nameof(RouteConstants.AdminIndustryPlacementSpecialConsiderationHours));
+            }
+
+            await _cacheService.SetAsync(CacheKey, new AdminChangeIpViewModel { AdminIpCompletion = model });
+            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
+        }
+
+        [HttpGet]
+        [Route("admin/industry-placement-hours", Name = RouteConstants.AdminIndustryPlacementSpecialConsiderationHours)]
+        public async Task<IActionResult> AdminIndustryPlacementSpecialConsiderationHoursAsync()
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
+
+            if (cachedModel?.AdminIpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            if (cachedModel.HoursViewModel != null)
+            {
+                return View(cachedModel.HoursViewModel);
+            }
+
+            var viewModel = new AdminIpSpecialConsiderationHoursViewModel
+            {
+                RegistrationPathwayId = cachedModel.AdminIpCompletion.RegistrationPathwayId
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/industry-placement-hours", Name = RouteConstants.SubmitAdminIndustryPlacementSpecialConsiderationHours)]
+        public async Task<IActionResult> AdminIndustryPlacementSpecialConsiderationHoursAsync(AdminIpSpecialConsiderationHoursViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
+
+            if (cachedModel?.AdminIpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            cachedModel.HoursViewModel = model;
+            await _cacheService.SetAsync(CacheKey, cachedModel);
+
+            return RedirectToRoute(RouteConstants.AdminIndustryPlacementSpecialConsiderationReasons);
+        }
+
+        [HttpGet]
+        [Route("admin/industry-placement-incomplete", Name = RouteConstants.AdminIndustryPlacementSpecialConsiderationReasons)]
+        public async Task<IActionResult> AdminIndustryPlacementSpecialConsiderationReasonsAsync()
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
+
+            if (cachedModel?.AdminIpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            if (cachedModel?.ReasonsViewModel != null)
+            {
+                return View(cachedModel.ReasonsViewModel);
+            }
+
+            var viewModel = new AdminIpSpecialConsiderationReasonsViewModel
+            {
+                RegistrationPathwayId = cachedModel.AdminIpCompletion.RegistrationPathwayId,
+                ReasonsList = await _industryPlacementLoader.GetSpecialConsiderationReasonsListAsync(cachedModel.AdminIpCompletion.AcademicYear)
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/industry-placement-incomplete", Name = RouteConstants.SubmitAdminIndustryPlacementSpecialConsiderationReasons)]
+        public async Task<IActionResult> AdminIndustryPlacementSpecialConsiderationReasonsAsync(AdminIpSpecialConsiderationReasonsViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
+
+            if (cachedModel?.AdminIpCompletion?.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            if (cachedModel.HoursViewModel == null || string.IsNullOrWhiteSpace(cachedModel.HoursViewModel.Hours))
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            cachedModel.ReasonsViewModel = model;
+            await _cacheService.SetAsync(CacheKey, cachedModel);
+
+            // TODO: Update the route when the review industry placement page is built.
+            return RedirectToRoute(string.Empty);
         }
 
 

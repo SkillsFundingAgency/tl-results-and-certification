@@ -112,6 +112,7 @@
         public const string AppealOutcomeKnownTypeId = "outcomeKnownTypeId";
         public const string IsAppealOutcomeJourney = "isAppealOutcomeJourney";
         public const string AcademicYear = "academicYear";
+        public const string RegistrationPathwayId = "registrationPathwayId";
 
         // Assessments
         public const int AssessmentEndInYears = 4;
