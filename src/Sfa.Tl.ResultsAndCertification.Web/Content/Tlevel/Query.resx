@@ -123,8 +123,8 @@
   <data name="Heading_Tell_Us_What_Is_Wrong" xml:space="preserve">
     <value>Tell us what is wrong with this T Levels details</value>
   </data>
-  <data name="Hint_Message_Must_Be_1000_Or_Less" xml:space="preserve">
-    <value>Your message must be 1,000 characters or fewer.</value>
+  <data name="Hint_Message_Must_Be_2000_Or_Less" xml:space="preserve">
+    <value>You can enter up to 2,000 characters</value>
   </data>
   <data name="Hint_You_Do_Not_Need_Include_Above_Info" xml:space="preserve">
     <value>You do not need to include any of the above information.</value>

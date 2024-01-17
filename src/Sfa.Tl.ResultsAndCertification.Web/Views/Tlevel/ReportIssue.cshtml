@@ -6,7 +6,7 @@
 }
 
 @section NavigationBar
-{
+    {
     <vc:back-link model=Model.BackLink></vc:back-link>
 }
 
@@ -27,16 +27,18 @@
                 <vc:summary-List model=Model.SummarySpecialisms></vc:summary-List>
             </dl>
 
-            <div class="govuk-form-group" sfa-validation-for="Query" sfa-validation-class="govuk-form-group--error">
-                <fieldset class="govuk-fieldset">
-                    <h2 class="govuk-label-wrapper">
-                        <label class="govuk-label govuk-label--m" for="query">@Query.Heading_Tell_Us_What_Is_Wrong</label>
-                    </h2>
-                    <div id="query-hint" class="govuk-hint">@Query.Hint_You_Do_Not_Need_Include_Above_Info</div>
-                    <div id="query-hint-char-limit" class="govuk-hint">@Query.Hint_Message_Must_Be_1000_Or_Less</div>
-                    <span sfa-validation-for="Query"></span>
-                    <textarea class="govuk-textarea" id="query" asp-for="Query" rows="5" aria-describedby="query-hint"></textarea>
-                </fieldset>
+            <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="2000">
+                <div class="govuk-form-group" sfa-validation-for="Query" sfa-validation-class="govuk-form-group--error">
+                    <fieldset class="govuk-fieldset">
+                        <h2 class="govuk-label-wrapper">
+                            <label class="govuk-label govuk-label--m" for="query">@Query.Heading_Tell_Us_What_Is_Wrong</label>
+                        </h2>
+                        <div id="query-hint" class="govuk-hint">@Query.Hint_You_Do_Not_Need_Include_Above_Info</div>
+                        <span sfa-validation-for="Query"></span>
+                        <textarea class="govuk-textarea govuk-js-character-count" id="query" asp-for="Query" rows="5" maxlength="2000"></textarea>
+                        <div id="query-info" class="govuk-hint govuk-js-character-count__message">@Query.Hint_Message_Must_Be_2000_Or_Less</div>
+                    </fieldset>
+                </div>
             </div>
 
             <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@Query.Submit_Button</button>
