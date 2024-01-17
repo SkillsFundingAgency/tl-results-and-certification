@@ -100,9 +100,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         /// <summary>
         ///   Looks up a localized string similar to You can enter up to 2,000 characters.
         /// </summary>
-        public static string Hint_Your_Message_Must_Be_2000_Char_Or_Fewer {
+        public static string Hint_Your_Message_You_Can_Enter_Up_To_2000_Characters {
             get {
-                return ResourceManager.GetString("Hint_Your_Message_Must_Be_2000_Char_Or_Fewer", resourceCulture);
+                return ResourceManager.GetString("Hint_Your_Message_You_Can_Enter_Up_To_2000_Characters", resourceCulture);
             }
         }
         

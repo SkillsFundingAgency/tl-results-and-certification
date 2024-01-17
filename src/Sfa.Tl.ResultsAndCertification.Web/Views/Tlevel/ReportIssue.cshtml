@@ -36,11 +36,10 @@
                         <div id="query-hint" class="govuk-hint">@Query.Hint_You_Do_Not_Need_Include_Above_Info</div>
                         <span sfa-validation-for="Query"></span>
                         <textarea class="govuk-textarea govuk-js-character-count" id="query" asp-for="Query" rows="5" maxlength="2000"></textarea>
-                        <div id="query-info" class="govuk-hint govuk-js-character-count__message">@Query.Hint_Message_Must_Be_2000_Or_Less</div>
+                        <div id="query-info" class="govuk-hint govuk-js-character-count__message">@Query.Hint_Your_Message_You_Can_Enter_Up_To_2000_Characters</div>
                     </fieldset>
                 </div>
             </div>
-
             <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@Query.Submit_Button</button>
         </form>
     </div>
