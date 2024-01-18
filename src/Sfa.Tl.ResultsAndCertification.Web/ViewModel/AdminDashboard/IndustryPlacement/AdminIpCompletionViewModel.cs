@@ -1,6 +1,4 @@
-﻿using Microsoft.OpenApi.Extensions;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
@@ -9,28 +7,28 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
+namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement
 {
-    public class AdminChangeIndustryPlacementViewModel
+    public class AdminIpCompletionViewModel
     {
-        public int ProfileId { get; set; }
         public int RegistrationPathwayId { get; set; }
-        public int PathwayId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+
+        public string LearnerName { get; set; }
+
         public long Uln { get; set; }
-        public string ProviderName { get; set; }
-        public int ProviderUkprn { get; set; }
+
+        public string Provider { get; set; }
+
         public string TlevelName { get; set; }
+
         public int AcademicYear { get; set; }
-        public string DisplayAcademicYear { get; set; } 
-        public string Learner => $"{FirstName} {LastName}";
-        public string LearnerRegistrationPathwayStatus { get; set; }
+
+        public string StartYear { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(AdminChangeIndustryPlacement), ErrorMessageResourceName = "Validation_Message")]
-        public IndustryPlacementStatus? IndustryPlacementStatus { get; set; }
+        public IpStatus? IndustryPlacementStatus { get; set; }
 
-        public bool IsLearnerRegisteredFourYearsAgo => (DateTime.Now.Year - AcademicYear) > 4;
+        public bool IsLearnerRegisteredFourYearsAgo => DateTime.Now.Year - AcademicYear > 4;
 
         public BackLinkModel BackLink => new()
         {
@@ -38,11 +36,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
             RouteAttributes = new Dictionary<string, string> { { Constants.PathwayId, RegistrationPathwayId.ToString() } }
         };
 
+        #region Summary
+
         public SummaryItemModel SummaryLearner => new()
         {
             Id = "learner",
             Title = AdminChangeIndustryPlacement.Title_Learner_Text,
-            Value = Learner
+            Value = LearnerName
         };
 
         public SummaryItemModel SummaryULN => new()
@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         {
             Id = "provider",
             Title = AdminChangeIndustryPlacement.Title_Provider_Text,
-            Value = $"{ProviderName} ({ProviderUkprn})"
+            Value = Provider
         };
 
         public SummaryItemModel SummaryTlevel => new()
@@ -65,11 +65,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
             Title = AdminChangeIndustryPlacement.Title_TLevel_Text,
             Value = TlevelName
         };
+
         public SummaryItemModel SummaryAcademicYear => new()
         {
             Id = "academicyear",
             Title = AdminChangeIndustryPlacement.Title_StartYear_Text,
-            Value = DisplayAcademicYear
+            Value = StartYear
         };
 
         public SummaryItemModel SummaryIndustryPlacementStatus => new()
@@ -79,6 +80,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
             Value = GetIndustryPlacementDisplayText
         };
 
+        #endregion
+
         public string GetIndustryPlacementDisplayText => IndustryPlacementStatus switch
         {
             IpStatus.Completed => AdminChangeIndustryPlacement.Status_Placement_Completed_Text,
@@ -87,6 +90,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
             IpStatus.WillNotComplete => AdminChangeIndustryPlacement.Status_Placement_Will_Not_Be_Completed_Text,
             _ => AdminChangeIndustryPlacement.Status_Not_Yet_Recieved_Text,
         };
-
     }
 }

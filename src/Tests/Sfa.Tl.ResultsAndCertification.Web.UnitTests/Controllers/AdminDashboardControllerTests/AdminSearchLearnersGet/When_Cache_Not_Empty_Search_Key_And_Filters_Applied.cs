@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Pagination;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Enum;
@@ -94,11 +95,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            _result.Should().NotBeNull().And.BeOfType<ViewResult>();
-            var viewResult = _result as ViewResult;
-
-            viewResult.Model.Should().NotBeNull().And.BeOfType<AdminSearchLearnerViewModel>();
-            var model = viewResult.Model as AdminSearchLearnerViewModel;
+            var model = _result.ShouldBeViewResult<AdminSearchLearnerViewModel>();
 
             model.State.Should().Be(AdminSearchState.ResultsNotFound);
             model.ContainsLearnerResults.Should().BeFalse();

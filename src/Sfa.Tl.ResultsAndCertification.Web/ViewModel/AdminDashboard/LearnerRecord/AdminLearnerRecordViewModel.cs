@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
         public int IndustryPlacementId { get; set; }
         public IpStatus IndustryPlacementStatus { get; set; }
 
-             
+
         public string StartYear => string.Format(LearnerRecordDetailsContent.Start_Year_Value, AcademicYear, AcademicYear + 1);
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
         public RegistrationPathwayStatus RegistrationPathwayStatus { get; set; }
         public bool IsPendingWithdrawal { get; set; }
         public NotificationBannerModel SuccessBanner { get; set; }
-              
+
         #region Summary Header
 
         public SummaryItemModel SummaryTLevelStatus => new SummaryItemModel
@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
         {
             Id = "providername",
             Title = LearnerRecordDetailsContent.Title_Provider_Ukprn_Name_Text,
-            Value = string.Concat(ProviderName," " ,"(", ProviderUkprn.ToString(),")"),
+            Value = string.Concat(ProviderName, " ", "(", ProviderUkprn.ToString(), ")"),
         };
 
         public SummaryItemModel SummaryProviderUkprn => new SummaryItemModel
@@ -103,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
             Value = StartYear,
             ActionText = LearnerRecordDetailsContent.Action_Text_Link_Change,
             RouteName = RouteConstants.ChangeStartYear,
-           RouteAttributes = new Dictionary<string, string> { { Constants.PathwayId, RegistrationPathwayId.ToString() } }
+            RouteAttributes = new Dictionary<string, string> { { Constants.PathwayId, RegistrationPathwayId.ToString() } }
         };
 
         public SummaryItemModel SummaryAoName => new SummaryItemModel
@@ -138,18 +138,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
 
         // Industry Placement
         public SummaryItemModel SummaryIndustryPlacementStatus =>
-            new SummaryItemModel
+            new()
             {
                 Id = "industryplacement",
                 Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
                 Value = GetIndustryPlacementDisplayText,
                 ActionText = LearnerRecordDetailsContent.Action_Text_Link_Change,
-                RouteName = RouteConstants.AdminChangeIndustryPlacement,
-                RouteAttributes = new Dictionary<string, string> { { Constants.PathwayId, RegistrationPathwayId.ToString() } },
+                RouteName = RouteConstants.AdminChangeIndustryPlacementClear,
+                RouteAttributes = new Dictionary<string, string> { { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() } },
                 HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement
             };
 
-       
+
         public BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.AdminSearchLearnersRecords
@@ -167,7 +167,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
                 _ => SubjectStatusContent.Not_Yet_Recevied_Display_Text,
             };
         }
-        
+
         private string GetIndustryPlacementDisplayText => IndustryPlacementStatus switch
         {
             IpStatus.Completed => IndustryPlacementStatusContent.Completed_Display_Text,
@@ -183,7 +183,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
         private string TLevelStatusValue
             => IsPendingWithdrawal ? LearnerRecordDetailsContent.TLevel_Status_Pending_Withdrawal_Text : RegistrationPathwayStatus.ToString();
 
-      
+
         private string TLevelStatusChangeRouteName
         {
             get
