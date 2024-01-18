@@ -16,11 +16,12 @@
             <input type="hidden" asp-for="@Model.IsFromAddressMissing"/>
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@AddAddressPostcode.Caption_Add_Address</span>
+                <h1 class="govuk-heading-xl">
+                    @AddAddressPostcode.Heading_What_Is_Your_Address
+                </h1>
                 <div class="govuk-form-group" sfa-validation-for="Postcode" sfa-validation-class="govuk-form-group--error">                     
                         <div class="govuk-form-group">
-                        <h1 class="govuk-heading-xl">
-                            @AddAddressPostcode.Heading_What_Is_Your_Address
-                        </h1>
+                       
                         <div class="govuk-form-group">
                             <label for="postcode">
                                 <h2 class="govuk-body-l govuk-!-font-weight-bold govuk-!-margin-top-3 govuk-!-margin-bottom-3">@AddAddressPostcode.Label_Enter_Postcode</h2>
