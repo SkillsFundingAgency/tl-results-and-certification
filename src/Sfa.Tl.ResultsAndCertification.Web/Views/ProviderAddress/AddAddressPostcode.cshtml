@@ -16,13 +16,11 @@
             <input type="hidden" asp-for="@Model.IsFromAddressMissing"/>
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@AddAddressPostcode.Caption_Add_Address</span>
-                <div class="govuk-form-group" sfa-validation-for="Postcode" sfa-validation-class="govuk-form-group--error">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                            <h1 class="govuk-fieldset__heading">
-                                @AddAddressPostcode.Heading_What_Is_Your_Address
-                            </h1>
-                        </legend>
+                <div class="govuk-form-group" sfa-validation-for="Postcode" sfa-validation-class="govuk-form-group--error">                     
+                        <div class="govuk-form-group">
+                        <h1 class="govuk-heading-xl">
+                            @AddAddressPostcode.Heading_What_Is_Your_Address
+                        </h1>
                         <div class="govuk-form-group">
                             <label for="postcode">
                                 <h2 class="govuk-body-l govuk-!-font-weight-bold govuk-!-margin-top-3 govuk-!-margin-bottom-3">@AddAddressPostcode.Label_Enter_Postcode</h2>
@@ -30,7 +28,7 @@
                             <span sfa-validation-for="Postcode"></span>
                             <input class="govuk-input govuk-input--width-10" id="postcode" asp-for="Postcode" maxlength="8" aria-required="true"/>
                         </div>
-                    </fieldset>
+                   </div>
                 </div>
             </div>
             <button id="findAddressButton" type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AddAddressPostcode.Button_Find_Address</button>

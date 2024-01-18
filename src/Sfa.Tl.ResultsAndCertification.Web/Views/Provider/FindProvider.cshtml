@@ -19,12 +19,9 @@
         <partial name="_ValidationSummary" />
         <form class="form" id="FindProviderForm" asp-route="SubmitFindProvider">
             <div class="govuk-form-group">
-                <fieldset class="govuk-fieldset">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">
-                        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-5">
+                <h1 class="govuk-heading-xl">
                             @FindProvider.Page_Heading
                         </h1>
-                    </legend>
                     <div class="govuk-form-group" sfa-validation-for="Search" sfa-validation-class="govuk-form-group--error">
                         <label class="govuk-label" for="search">
                             @FindProvider.Provider_Input_Field_Label
@@ -34,7 +31,7 @@
                         <input id="search" name="Search" class="govuk-input" asp-for="Search" />
                         <input id="previousSearch" type="hidden" asp-for="Search" />
                     </div>
-                </fieldset>
+               
             </div>
 
             <details class="govuk-details" data-module="govuk-details" closed>
