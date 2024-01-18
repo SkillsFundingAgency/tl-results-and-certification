@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public string ContactName { get; set; }
 
         [DateValidator(Property = nameof(RequestDate), ErrorResourceType = typeof(ErrorResource.ReviewChangeStartYear), ErrorResourceName = "Validation_Date_When_Change_Requested_Blank_Text")]
-        public string RequestDate => $"{Day}/{Month}/{Year}";
+        public string RequestDate => $"{Year}/{Month}/{Day}";
         public string Day { get; set; }
         public string Month { get; set; }
         public string Year { get; set; }
