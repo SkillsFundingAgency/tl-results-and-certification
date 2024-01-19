@@ -2,7 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ReviewChangeStartYearPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminReviewChangeStartYearPost
 {
     public abstract class TestSetup : AdminDashboardControllerTestBase
     {

@@ -69,6 +69,7 @@
         public const string RequestSoaConfirmation = "RequestSoaConfirmation";
         public const string UserSessionActivityId = "UserSessionActivityId";
         public const string AcademicYearTo = "AcademicYearTo";
+        public const string IndustryPlacementStatusTo = "IndustryPlacementStatusTo";
 
         // Registration Data Index Constants
         public const int RegistrationProfileStartIndex = 100000;

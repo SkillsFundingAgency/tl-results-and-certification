@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
         public async override Task When()
         {
-            Result = await Controller.ChangeIndustryPlacementAsync(ViewModel);
+            Result = await Controller.AdminChangeIndustryPlacementAsync(ViewModel);
         }
 
         protected AdminIpCompletionViewModel CreateViewModel(IndustryPlacementStatus? industryPlacementStatus)
@@ -27,7 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 TlevelName = "Education and Early Years",
                 AcademicYear = 2020,
                 StartYear = "2021 to 2022",
-                IndustryPlacementStatus = industryPlacementStatus
+                IndustryPlacementStatus = industryPlacementStatus,
+                IndustryPlacementStatusTo = industryPlacementStatus
             };
         }
     }

@@ -420,7 +420,8 @@
         public const string SubmitAdminIndustryPlacementSpecialConsiderationHours = "SubmitAdminIndustryPlacementSpecialConsiderationHours";
         public const string AdminIndustryPlacementSpecialConsiderationReasons = "AdminIndustryPlacementSpecialConsiderationReasons";
         public const string SubmitAdminIndustryPlacementSpecialConsiderationReasons = "SubmitAdminIndustryPlacementSpecialConsiderationReasons";
-
+        public const string AdminReviewChangesIndustryPlacement = "AdminReviewChangesIndustryPlacement";
+        public const string SubmitReviewChangesIndustryPlacement = "SubmitReviewChangesIndustryPlacement";
         #endregion
     }
 }

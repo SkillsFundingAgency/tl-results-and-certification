@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             {
                 RegistrationPathwayId = 1,
                 AcademicYear = 2022,
-                IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration
+                IndustryPlacementStatusTo = IndustryPlacementStatus.CompletedWithSpecialConsideration
             }
         };
 

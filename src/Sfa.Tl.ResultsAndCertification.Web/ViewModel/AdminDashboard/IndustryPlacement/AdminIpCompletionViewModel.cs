@@ -26,6 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPl
         public string StartYear { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(AdminChangeIndustryPlacement), ErrorMessageResourceName = "Validation_Message")]
+        public IpStatus? IndustryPlacementStatusTo { get; set; }
+
         public IpStatus? IndustryPlacementStatus { get; set; }
 
         public bool IsLearnerRegisteredFourYearsAgo => DateTime.Now.Year - AcademicYear > 4;
@@ -37,6 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPl
         };
 
         #region Summary
+
 
         public SummaryItemModel SummaryLearner => new()
         {
@@ -77,12 +80,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPl
         {
             Id = "industryplacement",
             Title = AdminChangeIndustryPlacement.Title_Industry_Placement_Status,
-            Value = GetIndustryPlacementDisplayText
+            Value = GetIndustryPlacementDisplayText(IndustryPlacementStatus)
         };
 
         #endregion
 
-        public string GetIndustryPlacementDisplayText => IndustryPlacementStatus switch
+        public string GetIndustryPlacementDisplayText(IpStatus? status) => status switch
         {
             IpStatus.Completed => AdminChangeIndustryPlacement.Status_Placement_Completed_Text,
             IpStatus.CompletedWithSpecialConsideration => AdminChangeIndustryPlacement.Status_Placement_Completed_With_Special_Consideration_Text,
