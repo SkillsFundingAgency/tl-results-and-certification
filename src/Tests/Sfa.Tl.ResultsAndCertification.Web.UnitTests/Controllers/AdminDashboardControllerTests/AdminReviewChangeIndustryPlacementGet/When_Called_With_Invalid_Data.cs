@@ -17,12 +17,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         }
 
         [Fact]
-        public void Then_Expected_Methods_AreCalled()
-        {
-            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<AdminReviewChangesIndustryPlacementViewModel>(PathwayId);
-        }
-
-        [Fact]
         public void Then_Redirected_To_PageNotFound()
         {
             var actualRouteName = (Result as RedirectToRouteResult).RouteName;

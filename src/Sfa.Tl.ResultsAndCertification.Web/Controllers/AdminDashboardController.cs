@@ -405,19 +405,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [HttpGet]
         [Route("admin/review-changes-industry-placement/{pathwayId}", Name = RouteConstants.AdminReviewChangesIndustryPlacement)]
         public async Task<IActionResult> AdminReviewChangesIndustryPlacementAsync(int pathwayId)
-        {   
-            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminReviewChangesIndustryPlacementViewModel>(pathwayId);
-
-            if (viewModel == null) 
-            {
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
+        {
+            AdminReviewChangesIndustryPlacementViewModel viewModel = new() { RegistrationPathwayId = pathwayId };
 
             var _cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
 
-            viewModel.AdminChangeIpViewModel = _cachedModel ?? new AdminChangeIpViewModel();
+            if (_cachedModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            viewModel.AdminChangeIpViewModel = _cachedModel;
 
             await _cacheService.SetAsync<AdminReviewChangesIndustryPlacementViewModel>(CacheKey, viewModel);
+
             return View(viewModel);
         }
 

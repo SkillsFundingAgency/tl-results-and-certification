@@ -40,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPl
 
         #region Summary
 
+
         public SummaryItemModel SummaryLearner => new()
         {
             Id = "learner",
@@ -79,12 +80,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPl
         {
             Id = "industryplacement",
             Title = AdminChangeIndustryPlacement.Title_Industry_Placement_Status,
-            Value = GetIndustryPlacementDisplayText
+            Value = GetIndustryPlacementDisplayText(IndustryPlacementStatus)
         };
 
         #endregion
 
-        public string GetIndustryPlacementDisplayText => IndustryPlacementStatus switch
+        public string GetIndustryPlacementDisplayText(IpStatus? status) => status switch
         {
             IpStatus.Completed => AdminChangeIndustryPlacement.Status_Placement_Completed_Text,
             IpStatus.CompletedWithSpecialConsideration => AdminChangeIndustryPlacement.Status_Placement_Completed_With_Special_Consideration_Text,

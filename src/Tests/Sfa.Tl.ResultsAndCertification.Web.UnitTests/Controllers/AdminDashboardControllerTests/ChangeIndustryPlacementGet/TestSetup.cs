@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
             // Industry placement
             model.SummaryIndustryPlacementStatus.Title.Should().Be(AdminChangeIndustryPlacement.Title_Industry_Placement_Status);
-            model.SummaryIndustryPlacementStatus.Value.Should().Be(ipCompletionModel.GetIndustryPlacementDisplayText);
+            model.SummaryIndustryPlacementStatus.Value.Should().Be(ipCompletionModel.GetIndustryPlacementDisplayText(ipCompletionModel.IndustryPlacementStatus));
 
             // Back link
             model.BackLink.Should().NotBeNull();
