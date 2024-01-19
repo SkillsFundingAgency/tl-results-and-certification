@@ -1,82 +1,51 @@
-﻿using AutoMapper;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
-using Sfa.Tl.ResultsAndCertification.Web.Loader;
-using Sfa.Tl.ResultsAndCertification.Web.Mapper;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
-using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoaderTests.AdminChangeIndustryPlacement
 {
-    public class When_Called_With_Valid_Data : BaseTest<AdminDashboardLoader>
+    public class When_Called_With_Valid_Data : AdminDashboardLoaderTestsBase
     {
-        private IResultsAndCertificationInternalApiClient _internalApiClient;
-        private AdminDashboardLoader Loader;
-        private int PathwayId;
+        private const int RegistrationPathwayId = 1;
 
-        public override void Setup()
-        {
-            _internalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
-
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(AdminDashboardMapper).Assembly));
-            var mapper = new AutoMapper.Mapper(mapperConfig);
-
-            Loader = new AdminDashboardLoader(_internalApiClient, mapper);
-        }
-
-        private Models.Contracts.AdminDashboard.AdminLearnerRecord _expectedApiResult;
-
-        protected AdminIpCompletionViewModel ActualResult { get; set; }
+        private AdminLearnerRecord _apiResult;
+        private AdminIpCompletionViewModel _result;
 
         public override void Given()
         {
-            PathwayId = 1;
-
-            _expectedApiResult = new Models.Contracts.AdminDashboard.AdminLearnerRecord
-            {
-                PathwayId = PathwayId,
-                RegistrationPathwayId = 1,
-                Uln = 786787689,
-                Name = "John smith",
-                DateofBirth = DateTime.UtcNow.AddYears(-15),
-                ProviderName = "Barnsley College",
-                TlevelName = "Education and Early Years(60358294)",
-                AcademicYear = 2023,
-                AwardingOrganisationName = "NCFE",
-                MathsStatus = Common.Enum.SubjectStatus.Achieved,
-                EnglishStatus = Common.Enum.SubjectStatus.Achieved,
-                IsLearnerRegistered = true,
-                IndustryPlacementId = 1,
-                IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed
-            };
-            _internalApiClient.GetAdminLearnerRecordAsync(PathwayId).Returns(_expectedApiResult);
+            _apiResult = CreateAdminLearnerRecord(RegistrationPathwayId);
+            ApiClient.GetAdminLearnerRecordAsync(RegistrationPathwayId).Returns(_apiResult);
         }
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetAdminLearnerRecordAsync<AdminIpCompletionViewModel>(PathwayId);
+            _result = await Loader.GetAdminLearnerRecordAsync<AdminIpCompletionViewModel>(RegistrationPathwayId);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            _internalApiClient.Received(1).GetAdminLearnerRecordAsync(PathwayId);
+            ApiClient.Received(1).GetAdminLearnerRecordAsync(RegistrationPathwayId);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            ActualResult.Should().NotBeNull();
-            ActualResult.RegistrationPathwayId.Should().Be(_expectedApiResult.RegistrationPathwayId);
-            ActualResult.Uln.Should().Be(_expectedApiResult.Uln);
-            ActualResult.LearnerName.Should().Be($"{_expectedApiResult.FirstName} {_expectedApiResult.LastName}");
-            ActualResult.Provider.Should().Be($"{_expectedApiResult.ProviderName} ({_expectedApiResult.ProviderUkprn})");
-            ActualResult.TlevelName.Should().Be(_expectedApiResult.TlevelName);
-            ActualResult.IndustryPlacementStatus.Should().Be(_expectedApiResult.IndustryPlacementStatus);           
+            _result.Should().NotBeNull();
+
+            _result.RegistrationPathwayId.Should().Be(_apiResult.RegistrationPathwayId);
+            _result.LearnerName.Should().Be($"{_apiResult.Firstname} {_apiResult.Lastname}");
+            _result.Uln.Should().Be(_apiResult.Uln);
+            _result.Provider.Should().Be($"{_apiResult.Pathway.Provider.Name} ({_apiResult.Pathway.Provider.Ukprn})");
+            _result.TlevelName.Should().Be(_apiResult.Pathway.Name);
+            _result.AcademicYear.Should().Be(_apiResult.Pathway.AcademicYear);
+            _result.StartYear.Should().Be($"{_apiResult.Pathway.AcademicYear} to {_apiResult.Pathway.AcademicYear + 1}");
+            _result.IndustryPlacementStatus.Should().Be(_apiResult.Pathway.IndustryPlacements.Single().Status);
+            _result.IndustryPlacementStatusTo.Should().NotHaveValue();
         }
     }
 }

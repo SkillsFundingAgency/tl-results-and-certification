@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
@@ -49,14 +48,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
             var systemProvider = Substitute.For<ISystemProvider>();
 
             repository.SearchLearnerDetailsAsync(Arg.Any<AdminSearchLearnerRequest>()).Returns(_expectedResult);
-            var mapper = Substitute.For<IMapper>();
             var tqRegistrationPathwayRepository = Substitute.For<IRepository<TqRegistrationPathway>>();
             var commonService = Substitute.For<ICommonService>();
+            var mapper = Substitute.For<IMapper>();
 
-
-            _adminDashboardService = new AdminDashboardService(repository, systemProvider, mapper, tqRegistrationPathwayRepository, commonService);
+            _adminDashboardService = new AdminDashboardService(repository, tqRegistrationPathwayRepository, systemProvider, commonService, mapper);
         }
-
 
         public override void Given()
         {

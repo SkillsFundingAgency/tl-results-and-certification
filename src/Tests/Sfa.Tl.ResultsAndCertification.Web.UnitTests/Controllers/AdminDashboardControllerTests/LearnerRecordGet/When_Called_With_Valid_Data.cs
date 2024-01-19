@@ -79,7 +79,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
             var model = (Result as ViewResult).Model as AdminLearnerRecordViewModel;
 
-            model.ProfileId.Should().Be(Mockresult.ProfileId);
             model.RegistrationPathwayId.Should().Be(Mockresult.RegistrationPathwayId);
             model.Uln.Should().Be(Mockresult.Uln);
             model.LearnerName.Should().Be(Mockresult.LearnerName);
