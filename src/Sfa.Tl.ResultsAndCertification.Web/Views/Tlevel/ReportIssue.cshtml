@@ -27,7 +27,7 @@
                 <vc:summary-List model=Model.SummarySpecialisms></vc:summary-List>
             </dl>
 
-            <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="2000">
+            <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="1000">
                 <div class="govuk-form-group" sfa-validation-for="Query" sfa-validation-class="govuk-form-group--error">
                     <fieldset class="govuk-fieldset">
                         <h2 class="govuk-label-wrapper">
@@ -35,8 +35,8 @@
                         </h2>
                         <div id="query-hint" class="govuk-hint">@Query.Hint_You_Do_Not_Need_Include_Above_Info</div>
                         <span sfa-validation-for="Query"></span>
-                        <textarea class="govuk-textarea govuk-js-character-count" id="query" asp-for="Query" rows="5" maxlength="2000"></textarea>
-                        <div id="query-info" class="govuk-hint govuk-js-character-count__message">@Query.Hint_Your_Message_You_Can_Enter_Up_To_2000_Characters</div>
+                        <textarea class="govuk-textarea govuk-js-character-count" id="query" asp-for="Query" rows="5" maxlength="1000"></textarea>
+                        <div id="query-info" class="govuk-hint govuk-js-character-count__message">@Query.Hint_Your_Message_You_Can_Enter_Up_To_1000_Characters</div>
                     </fieldset>
                 </div>
             </div>
