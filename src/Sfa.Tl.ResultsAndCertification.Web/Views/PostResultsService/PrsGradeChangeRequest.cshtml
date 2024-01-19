@@ -36,7 +36,7 @@
             <p class="govuk-body">@PrsGradeChangeRequest.Para_If_You_Need_To_Change_A_Grade</p>
             <p class="govuk-body">@PrsGradeChangeRequest.Para_This_Change_Will_Take_Upto</p>
 
-            <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="2000">
+            <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="1000">
                 <div class="govuk-form-group" sfa-validation-for="ChangeRequestData" sfa-validation-class="govuk-form-group--error">
                     <fieldset class="govuk-fieldset">
                         <h2 class="govuk-label-wrapper"><label class="govuk-label govuk-label--m" for="changerequestdata">@PrsGradeChangeRequest.Heading_Please_Tell_Us_Why</label></h2>
@@ -44,9 +44,9 @@
                             @PrsGradeChangeRequest.Para_Hint_Text_Please_Do_Not_Add_Any_Details
                         </div>
                         <span sfa-validation-for="ChangeRequestData"></span>
-                        <textarea id="changerequestdata" maxlength="2000" class="govuk-textarea govuk-js-character-count" asp-for="ChangeRequestData" rows="5" aria-describedby="more-detail-hint"></textarea>
+                        <textarea id="changerequestdata" maxlength="1000" class="govuk-textarea govuk-js-character-count" asp-for="ChangeRequestData" rows="5" aria-describedby="more-detail-hint"></textarea>
                         <div id="changerequestdata-info" class="govuk-hint govuk-js-character-count__message">
-                            @PrsGradeChangeRequest.Hint_Your_Message_You_Can_Enter_Up_To_2000_Characters
+                            @PrsGradeChangeRequest.Hint_Your_Message_You_Can_Enter_Up_To_1000_Characters
                         </div>
                     </fieldset>
                 </div>
