@@ -15,12 +15,9 @@
         <partial name="_ValidationSummary" />
         <form asp-route="@RouteConstants.SubmitPrsSearchLearner">
             <div class="govuk-form-group">
-                <fieldset class="govuk-fieldset">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">
-                        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-5">
+                <h1 class="govuk-heading-xl">
                             @PrsSearchLearner.Heading_Search_For_A_Learner
                         </h1>
-                    </legend>
                     <p class="govuk-body">@PrsSearchLearner.Search_For_The_Learner_Who_Requested_Review_Or_Appeal</p>
                     <div class="govuk-form-group" sfa-validation-for="SearchUln" sfa-validation-class="govuk-form-group--error">
                         <label class="govuk-label" for="searchuln">
@@ -30,7 +27,6 @@
                         <span sfa-validation-for="SearchUln"></span>
                         <input id="searchuln" class="govuk-input govuk-input--width-10" asp-for="SearchUln" inputmode="numeric" maxlength="10">
                     </div>
-                </fieldset>
             </div>
             <button id="searchButton" type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsSearchLearner.Search_Button</button>
         </form>
