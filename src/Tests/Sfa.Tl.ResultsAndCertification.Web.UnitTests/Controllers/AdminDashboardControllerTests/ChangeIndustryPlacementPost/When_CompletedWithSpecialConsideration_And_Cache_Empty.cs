@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         }
 
         [Fact]
-        public void Then_Redirected_To_AdminLearnerRecord()
+        public void Then_Redirected_To_AdminIndustryPlacementSpecialConsiderationHours()
         {
             Result.ShouldBeRedirectToActionResult(RouteConstants.AdminIndustryPlacementSpecialConsiderationHours);
         }

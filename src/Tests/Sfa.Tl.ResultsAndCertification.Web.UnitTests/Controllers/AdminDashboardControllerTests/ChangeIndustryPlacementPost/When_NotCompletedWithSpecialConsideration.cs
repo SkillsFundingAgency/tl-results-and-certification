@@ -29,9 +29,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         }
 
         [Fact]
-        public void Then_Redirected_To_AdminLearnerRecord()
+        public void Then_Redirected_To_ReviewChangesIndustryPlacement()
         {
-            Result.ShouldBeRedirectToActionResult(RouteConstants.AdminLearnerRecord, (Constants.PathwayId, ViewModel.RegistrationPathwayId));
+            Result.ShouldBeRedirectToActionResult(RouteConstants.AdminReviewChangesIndustryPlacement, (Constants.PathwayId, ViewModel.RegistrationPathwayId));
         }
     }
 }

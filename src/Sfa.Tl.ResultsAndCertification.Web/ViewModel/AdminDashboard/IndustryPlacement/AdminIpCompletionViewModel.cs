@@ -26,6 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPl
         public string StartYear { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(AdminChangeIndustryPlacement), ErrorMessageResourceName = "Validation_Message")]
+        public IpStatus? IndustryPlacementStatusTo { get; set; }
+
         public IpStatus? IndustryPlacementStatus { get; set; }
 
         public bool IsLearnerRegisteredFourYearsAgo => DateTime.Now.Year - AcademicYear > 4;

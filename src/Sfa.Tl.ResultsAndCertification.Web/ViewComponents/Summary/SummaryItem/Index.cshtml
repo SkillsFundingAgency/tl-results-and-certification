@@ -2,9 +2,18 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <div class="govuk-summary-list__row @Model.BorderBottomCssClass">
-    <dt class="govuk-summary-list__key @Model.BorderBottomCssClass">
-        @Html.Raw(@Model?.Title)
-    </dt>
+    @if (!string.IsNullOrWhiteSpace(Model?.Title2))
+    {
+        <dt class="govuk-summary-list__value @Model.BorderBottomCssClass">
+            @Html.Raw(@Model?.Title2)
+        </dt>
+    }
+    else
+    {
+        <dt class="govuk-summary-list__key @Model.BorderBottomCssClass">
+            @Html.Raw(@Model?.Title)
+        </dt>
+    }
 
     <dd class="govuk-summary-list__value @Model.BorderBottomCssClass">
         @if (Model?.IsRawHtml == true)

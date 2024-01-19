@@ -111,6 +111,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                  .ForMember(d => d.StartYearFrom, opts => opts.MapFrom(s => s.AcademicYear))
              .ForMember(d => d.StartYearTo, opts => opts.MapFrom(s => s.AcademicYearTo));
 
+            CreateMap<AdminLearnerRecord, AdminReviewChangesIndustryPlacementViewModel>()
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.PathwayId))
+                .ForMember(d => d.FirstName, opts => opts.MapFrom(s => s.FirstName))
+                .ForMember(d => d.LastName, opts => opts.MapFrom(s => s.LastName))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
+                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
+                .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.TlevelName));
 
         }
 

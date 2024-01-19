@@ -1,22 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
-using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Xunit;
-using FluentAssertions;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ReviewChangeStartYearPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminReviewChangeStartYearPost
 {
-    public class When_Failed : TestSetup
+    public class When_Success : TestSetup
     {
         private ReviewChangeStartYearViewModel MockResult = null;
         private NotificationBannerModel _expectedNotificationBannerModel;
         public override void Given()
         {
-            var isSuccess = false;
+            var isSuccess = true;
             ReviewChangeStartYearViewModel = new ReviewChangeStartYearViewModel()
             {
                 RegistrationPathwayId = 1,
@@ -27,8 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 ProviderUkprn = 10000536,
                 TlevelName = "t-level-name",
                 AcademicYear = 2022,
-                AcademicYearTo = "2022",
-                DisplayAcademicYear = "2022 to 2023",
+                AcademicYearTo = "2021",
+                DisplayAcademicYear = "2021 to 2022",
                 ContactName = "contact-name",
                 ChangeReason = "change-reason",
                 Day = "01",
@@ -36,8 +36,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 Year = "1970"
             };
 
-           
-            AdminDashboardLoader.ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel).Returns(isSuccess = false);
+            _expectedNotificationBannerModel = new NotificationBannerModel
+            {
+                Message = LearnerRecord.Message_Notification_Success,
+                DisplayMessageBody = true,
+                IsRawHtml = true
+            };
+
+            AdminDashboardLoader.ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel).Returns(isSuccess = true);
 
         }
 
@@ -45,16 +51,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         public void Then_Expected_Methods_AreCalled()
         {
             AdminDashboardLoader.Received(1).ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel);
-           
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(p => p.Message == LearnerRecord.Message_Notification_Success), CacheExpiryTime.XSmall);
         }
 
         [Fact]
-        public void Then_Redirected_To_ProblemWithService()
+        public void Then_Redirected_To_AdminLearnerRecord()
         {
-            var route = Result as RedirectToRouteResult;
-            route.RouteName.Should().Be(RouteConstants.ProblemWithService);
-            route.RouteValues.Should().BeNullOrEmpty();
-
+            var route = Result as RedirectToActionResult;
+            route.ActionName.Should().Be(nameof(RouteConstants.AdminLearnerRecord));
+            route.RouteValues[Constants.PathwayId].Should().Be(ReviewChangeStartYearViewModel.RegistrationPathwayId);
         }
     }
 }

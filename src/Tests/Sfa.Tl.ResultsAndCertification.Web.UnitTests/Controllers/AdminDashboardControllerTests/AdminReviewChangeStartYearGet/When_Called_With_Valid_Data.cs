@@ -7,7 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ReviewChangeStartYearGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminReviewChangeStartYearGet
 {
     public class When_Called_With_Valid_Data : TestSetup
     {

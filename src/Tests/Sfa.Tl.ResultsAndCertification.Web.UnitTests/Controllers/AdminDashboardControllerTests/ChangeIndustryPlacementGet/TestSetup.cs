@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
         public async override Task When()
         {
-            Result = await Controller.ChangeIndustryPlacementAsync(RegistrationPathwayId);
+            Result = await Controller.AdminChangeIndustryPlacementAsync(RegistrationPathwayId);
         }
 
         protected void AssertViewResult()

@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             AdminIpCompletion = new AdminIpCompletionViewModel
             {
                 RegistrationPathwayId = 1,
-                IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration
+                IndustryPlacementStatusTo = IndustryPlacementStatus.CompletedWithSpecialConsideration
             }
         };
 

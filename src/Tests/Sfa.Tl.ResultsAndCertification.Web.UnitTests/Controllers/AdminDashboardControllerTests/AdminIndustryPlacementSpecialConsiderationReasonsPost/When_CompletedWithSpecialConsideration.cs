@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             AdminIpCompletion = new AdminIpCompletionViewModel
             {
                 RegistrationPathwayId = RegistrationPathwayId,
-                IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration
+                IndustryPlacementStatusTo = IndustryPlacementStatus.CompletedWithSpecialConsideration
             },
             HoursViewModel = new AdminIpSpecialConsiderationHoursViewModel
             {
@@ -57,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         public void Then_Returns_Expected()
         {
             // TODO: Update the route when the review industry placement page is built.
-            Result.ShouldBeRedirectToRouteResult(string.Empty);
+            Result.ShouldBeRedirectToRouteResult(nameof(RouteConstants.AdminReviewChangesIndustryPlacement));
         }
     }
 }

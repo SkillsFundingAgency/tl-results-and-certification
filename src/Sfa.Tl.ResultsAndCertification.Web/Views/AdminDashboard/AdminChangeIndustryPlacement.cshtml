@@ -24,6 +24,7 @@
             <input type="hidden" asp-for="TlevelName" />
             <input type="hidden" asp-for="AcademicYear" />
             <input type="hidden" asp-for="StartYear" />
+            <input type="hidden" asp-for="IndustryPlacementStatus" />
 
             <div class="record-header">
                 <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
@@ -44,45 +45,45 @@
                 <vc:summary-item model=Model.SummaryIndustryPlacementStatus></vc:summary-item>
             </dl>
 
-            <div class="govuk-form-group govuk-!-margin-top-8" sfa-validation-for="IndustryPlacementStatus" sfa-validation-class="govuk-form-group--error">
-            @{
-                if (!Model.IsLearnerRegisteredFourYearsAgo)
-                {
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                            <h2 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
-                            @AdminChangeIndustryPlacement.Heading_Has_This_Learner_Completed_Their_Placement
-                            </h2>
-                        </legend>
-                        <div class="govuk-radios">
-                            <span sfa-validation-for="IndustryPlacementStatus"></span>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="industryplacementstatus" asp-for="IndustryPlacementStatus" type="radio" value="@IndustryPlacementStatus.Completed">
-                                <label class="govuk-label govuk-radios__label" for="industryplacementstatus">
-                                @AdminChangeIndustryPlacement.Status_Yes_Completed
-                                </label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="industryplacementstatus-cwspc" asp-for="IndustryPlacementStatus" type="radio" value="@IndustryPlacementStatus.CompletedWithSpecialConsideration">
-                                <label class="govuk-label govuk-radios__label" for="industryplacementstatus-cwspc">
-                                @AdminChangeIndustryPlacement.Status_Yes_Completed_with_Special_Consideration
-                                </label>
+            <div class="govuk-form-group govuk-!-margin-top-8" sfa-validation-for="IndustryPlacementStatusTo" sfa-validation-class="govuk-form-group--error">
+                @{
+                    if (!Model.IsLearnerRegisteredFourYearsAgo)
+                    {
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <h2 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
+                                    @AdminChangeIndustryPlacement.Heading_Has_This_Learner_Completed_Their_Placement
+                                </h2>
+                            </legend>
+                            <div class="govuk-radios">
+                                <span sfa-validation-for="IndustryPlacementStatusTo"></span>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="industryplacementstatus" asp-for="IndustryPlacementStatusTo" type="radio" value="@IndustryPlacementStatus.Completed">
+                                    <label class="govuk-label govuk-radios__label" for="industryplacementstatus">
+                                        @AdminChangeIndustryPlacement.Status_Yes_Completed
+                                    </label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="industryplacementstatus-cwspc" asp-for="IndustryPlacementStatusTo" type="radio" value="@IndustryPlacementStatus.CompletedWithSpecialConsideration">
+                                    <label class="govuk-label govuk-radios__label" for="industryplacementstatus-cwspc">
+                                        @AdminChangeIndustryPlacement.Status_Yes_Completed_with_Special_Consideration
+                                    </label>
 
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="industryplacementstatus-notcompleted" asp-for="IndustryPlacementStatusTo" type="radio" value="@IndustryPlacementStatus.NotCompleted">
+                                    <label class="govuk-label govuk-radios__label" for="industryplacementstatus-notcompleted">
+                                        @AdminChangeIndustryPlacement.Status_No_They_Still_Need_To_Complete_It
+                                    </label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="industryplacementstatus-will-not-complete" asp-for="IndustryPlacementStatusTo" type="radio" value="@IndustryPlacementStatus.WillNotComplete">
+                                    <label class="govuk-label govuk-radios__label" for="industryplacementstatus-will-not-complete">
+                                        @AdminChangeIndustryPlacement.Status_No_They_Will_Not_Complete_It
+                                    </label>
+                                </div>
                             </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="industryplacementstatus-notcompleted" asp-for="IndustryPlacementStatus" type="radio" value="@IndustryPlacementStatus.NotCompleted">
-                                <label class="govuk-label govuk-radios__label" for="industryplacementstatus-notcompleted">
-                                @AdminChangeIndustryPlacement.Status_No_They_Still_Need_To_Complete_It
-                                </label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="industryplacementstatus-will-not-complete" asp-for="IndustryPlacementStatus" type="radio" value="@IndustryPlacementStatus.WillNotComplete">
-                                <label class="govuk-label govuk-radios__label" for="industryplacementstatus-will-not-complete">
-                                @AdminChangeIndustryPlacement.Status_No_They_Will_Not_Complete_It
-                                </label>
-                            </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
 
                     <div class="govuk-button-group govuk-!-margin-top-4">
                         <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminChangeIndustryPlacement.Button_Continue</button>
