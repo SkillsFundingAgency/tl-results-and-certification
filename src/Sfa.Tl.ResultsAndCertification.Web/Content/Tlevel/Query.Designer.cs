@@ -88,11 +88,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can enter up to 2,000 characters.
+        ///   Looks up a localized string similar to You can enter up to 1,000 characters.
         /// </summary>
-        public static string Hint_Your_Message_You_Can_Enter_Up_To_2000_Characters {
+        public static string Hint_Your_Message_You_Can_Enter_Up_To_1000_Characters {
             get {
-                return ResourceManager.GetString("Hint_Your_Message_You_Can_Enter_Up_To_2000_Characters", resourceCulture);
+                return ResourceManager.GetString("Hint_Your_Message_You_Can_Enter_Up_To_1000_Characters", resourceCulture);
             }
         }
         
@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The maximum character limit 10000 exceeded.
+        ///   Looks up a localized string similar to The maximum character limit 1000 exceeded.
         /// </summary>
         public static string Query_CharLimitExceeded_Validation_Message {
             get {
