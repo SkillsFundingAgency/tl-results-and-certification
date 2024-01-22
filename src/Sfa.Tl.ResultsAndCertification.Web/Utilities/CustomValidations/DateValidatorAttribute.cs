@@ -23,10 +23,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations
             if (dateTokens.Count() != 3)
                 throw new Exception($"Invalid usage of DateValidationAttribute. Parameters Value: {value}, PropertyName {Property}");
 
-            var day = dateTokens[0];
+            var year = dateTokens[0];
             var month = dateTokens[1];
-            var year = dateTokens[2];
-
+            var day = dateTokens[2];
+            
             // All empty
             if (string.IsNullOrWhiteSpace(day) && string.IsNullOrWhiteSpace(month) && string.IsNullOrWhiteSpace(year))
                 return new ValidationResult(string.Format(GetResourceMessage("Validation_Date_When_Change_Requested_Blank_Text"), propVal));
