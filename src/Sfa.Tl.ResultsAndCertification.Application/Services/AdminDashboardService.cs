@@ -83,6 +83,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return false;
         }
 
+        public async Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeRequest request)
+        {
+            var pathway = await _tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.Id == request.RegistrationPathwayId);
+
+            if (pathway == null) return false;
+
+            pathway.AcademicYear = request.AcademicYearTo;
+            var status = await _tqRegistrationPathwayRepository.UpdateWithSpecifedColumnsOnlyAsync(pathway, u => u.AcademicYear, u => u.ModifiedBy, u => u.ModifiedOn);
+
+            if (status > 0)
+                return await _commonService.AddChangelog(CreateChangeLogRequest(request));
+            return false;
+        }
+
+
+
+
         private static ChangeLog CreateChangeLogRequest(ReviewChangeStartYearRequest request)
         {
             var changeLog = new ChangeLog()
