@@ -42,9 +42,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPl
         public SummaryItemModel SummaryIndustryPlacement => new()
         {
             Id = "industryplacementstatus",
-            Title2 = AdminChangeIpViewModel?.AdminIpCompletion?.IndustryPlacementStatusTo == IpStatus.CompletedWithSpecialConsideration ? ReviewChangesIndustryPlacement.Title_Industry_Placement_Status : ReviewChangesIndustryPlacement.Title_Status_Text,
+            Title = AdminChangeIpViewModel?.AdminIpCompletion?.IndustryPlacementStatusTo == IpStatus.CompletedWithSpecialConsideration ? ReviewChangesIndustryPlacement.Title_Industry_Placement_Status : ReviewChangesIndustryPlacement.Title_Status_Text,
             Value = AdminChangeIpViewModel.AdminIpCompletion.GetIndustryPlacementDisplayText(AdminChangeIpViewModel?.AdminIpCompletion?.IndustryPlacementStatus),
             Value2 = AdminChangeIpViewModel.AdminIpCompletion.GetIndustryPlacementDisplayText(AdminChangeIpViewModel?.AdminIpCompletion?.IndustryPlacementStatusTo),
+            TagCssClass = AdminChangeIpViewModel?.AdminIpCompletion?.IndustryPlacementStatusTo == IpStatus.CompletedWithSpecialConsideration ? "govuk-summary-list__value" : default,
             ActionText = ReviewChangesIndustryPlacement.Link_Change_Text,
             RouteName = RouteConstants.AdminChangeIndustryPlacement,
             RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
@@ -53,9 +54,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPl
         public SummaryItemModel SummaryNoOfHours => new()
         {
             Id = "noofhours",
-            Title2 = ReviewChangesIndustryPlacement.Title_Number_Of_Hours,
+            Title = ReviewChangesIndustryPlacement.Title_Number_Of_Hours,
             Value = AdminChangeIpViewModel.AdminIpCompletion.GetIndustryPlacementDisplayText(AdminChangeIpViewModel?.AdminIpCompletion?.IndustryPlacementStatus),
             Value2 = AdminChangeIpViewModel?.HoursViewModel?.Hours.ToString(),
+            TagCssClass = "govuk-summary-list__value",
             ActionText = ReviewChangesIndustryPlacement.Link_Change_Text,
             RouteName = RouteConstants.AdminIndustryPlacementSpecialConsiderationHours,
             RouteAttributes = new Dictionary<string, string>() { { Constants.PathwayId, RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
@@ -65,9 +67,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPl
            .Where(e => e.IsSelected).Select(e => new SummaryItemModel
            {
                Id = "ipreasonslist",
-               Title2 = ReviewChangesIndustryPlacement.Title_Reasons_For_Reduced_Hours,
+               Title = ReviewChangesIndustryPlacement.Title_Reasons_For_Reduced_Hours,
                Value = AdminChangeIpViewModel.AdminIpCompletion.GetIndustryPlacementDisplayText(AdminChangeIpViewModel?.AdminIpCompletion?.IndustryPlacementStatus),
                Value2 = e.Name,
+               TagCssClass = "govuk-summary-list__value",
                ActionText = ReviewChangesIndustryPlacement.Link_Change_Text,
                RouteName = RouteConstants.AdminIndustryPlacementSpecialConsiderationReasons,
                RouteAttributes = new Dictionary<string, string>() { { Constants.PathwayId, RegistrationPathwayId.ToString() } }
