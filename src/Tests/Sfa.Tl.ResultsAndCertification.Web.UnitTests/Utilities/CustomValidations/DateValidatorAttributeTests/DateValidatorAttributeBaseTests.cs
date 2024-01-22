@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Utilities.CustomValidatio
         public class RequiredDateViewModel
         {
             [DateValidator(Property = nameof(RequiredDate), ErrorResourceType = typeof(ErrorResource.ReviewChangeStartYear), ErrorResourceName = "Validation_Date_When_Change_Requested_Blank_Text")]
-            public string RequiredDate => $"{Day}/{Month}/{Year}";
+            public string RequiredDate => $"{Year}/{Month}/{Day}";
             public string Day { get; set; }
             public string Month { get; set; }
             public string Year { get; set; }
