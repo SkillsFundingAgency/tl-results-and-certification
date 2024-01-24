@@ -232,6 +232,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/submit-review-changes-start-year", Name = RouteConstants.SubmitReviewChangeStartYear)]
         public async Task<IActionResult> ReviewChangeStartYearAsync(ReviewChangeStartYearViewModel model)
         {
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             model.LoggedInUser = $"{this.User.FindFirstValue(ClaimTypes.GivenName)} {this.User.FindFirstValue(ClaimTypes.Surname)}";
 
             var isSuccess = await _loader.ProcessChangeStartYearAsync(model);
@@ -406,7 +411,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/review-changes-industry-placement/{pathwayId}", Name = RouteConstants.AdminReviewChangesIndustryPlacement)]
         public async Task<IActionResult> AdminReviewChangesIndustryPlacementAsync(int pathwayId)
         {
-            AdminReviewChangesIndustryPlacementViewModel viewModel = new() { RegistrationPathwayId = pathwayId };
+            AdminReviewChangesIndustryPlacementViewModel viewModel = new();
 
             var _cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
 

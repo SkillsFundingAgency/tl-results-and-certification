@@ -92,12 +92,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.TlevelName))
                 .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
                 .ForMember(d => d.StartYear, opts => opts.MapFrom(s => string.Format(AdminSearchLearnerDetails.Start_Year_Value, s.AcademicYear, s.AcademicYear + 1)))
-                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
+                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus))
+                .ForMember(d => d.IndustryPlacementStatusTo, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
 
             CreateMap<ReviewChangeStartYearViewModel, ReviewChangeStartYearRequest>()
                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
-               .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))               
+               .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
                .ForMember(d => d.AcademicYearTo, opts => opts.MapFrom(s => s.AcademicYearTo))
                .ForMember(d => d.ContactName, opts => opts.MapFrom(s => s.ContactName))
                .ForMember(d => d.ChangeReason, opts => opts.MapFrom(s => s.ChangeReason))
@@ -110,16 +111,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<ReviewChangeStartYearViewModel, ChangeStartYearDetails>()
                  .ForMember(d => d.StartYearFrom, opts => opts.MapFrom(s => s.AcademicYear))
              .ForMember(d => d.StartYearTo, opts => opts.MapFrom(s => s.AcademicYearTo));
-
-            //CreateMap<AdminLearnerRecord, AdminReviewChangesIndustryPlacementViewModel>()
-            //    .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.PathwayId))
-            //    .ForMember(d => d.FirstName, opts => opts.MapFrom(s => s.FirstName))
-            //    .ForMember(d => d.LastName, opts => opts.MapFrom(s => s.LastName))
-            //    .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
-            //    .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
-            //    .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
-            //    .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.TlevelName));
-
         }
 
         private int? GetSelectedProviderId(AdminSearchLearnerCriteriaViewModel searchCriteria)
