@@ -179,6 +179,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;{0}&lt;/p&gt;.
+        /// </summary>
+        public static string Para_Item {
+            get {
+                return ResourceManager.GetString("Para_Item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change.
         /// </summary>
         public static string Title_Change_Summary_Change_Text {

@@ -411,7 +411,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/review-changes-industry-placement/{pathwayId}", Name = RouteConstants.AdminReviewChangesIndustryPlacement)]
         public async Task<IActionResult> AdminReviewChangesIndustryPlacementAsync(int pathwayId)
         {
-            AdminReviewChangesIndustryPlacementViewModel viewModel = new() { RegistrationPathwayId = pathwayId };
+            AdminReviewChangesIndustryPlacementViewModel viewModel = new();
 
             var _cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
 

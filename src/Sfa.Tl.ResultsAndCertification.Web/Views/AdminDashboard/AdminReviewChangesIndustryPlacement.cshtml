@@ -34,23 +34,19 @@
         @ReviewChangesIndustryPlacement.Heading_Change_Summary
     </h2>
 
-    <dl class="govuk-summary-list govuk-!-margin-bottom-8">
-        <div class="govuk-summary-list__row">
+    <div class="govuk-summary-list__row">
+
+        <dl class="govuk-summary-list govuk-!-margin-bottom-8">
             <dt class="govuk-summary-list__key">@ReviewChangesIndustryPlacement.Title_Change_Summary_Change_Text</dt>
             <dt class="govuk-summary-list__key">@ReviewChangesIndustryPlacement.Title_Change_Summary_From_Text</dt>
             <dt class="govuk-summary-list__key">@ReviewChangesIndustryPlacement.Title_Change_Summary_To_Text</dt>
             <dt class="govuk-summary-list__key"></dt>
-        </div>
-        <vc:summary-item model=Model.SummaryIndustryPlacement></vc:summary-item>
-        @if (Model.AdminChangeIpViewModel.AdminIpCompletion.IndustryPlacementStatusTo == Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration)
-        {
-            <vc:summary-item model=Model.SummaryNoOfHours></vc:summary-item>
-            @foreach (var rowItem in Model.SummaryIPReasonsList)
+            @foreach (var rowItem in Model.GetIpSummaryDetailsList())
             {
                 <vc:summary-item model=rowItem></vc:summary-item>
             }
-        }
-    </dl>
+        </dl>
+    </div>
 
     <form asp-route="@RouteConstants.SubmitReviewChangesIndustryPlacement">
         <input type="hidden" asp-for="AdminChangeIpViewModel.AdminIpCompletion.RegistrationPathwayId" />
@@ -58,7 +54,7 @@
         <input type="hidden" asp-for="AdminChangeIpViewModel.AdminIpCompletion.Uln" />
         <input type="hidden" asp-for="AdminChangeIpViewModel.AdminIpCompletion.Provider" />
         <input type="hidden" asp-for="AdminChangeIpViewModel.AdminIpCompletion.TlevelName" />
-        <input type="hidden" asp-for="AdminChangeIpViewModel.AdminIpCompletion.TlevelName" />
+        <input type="hidden" asp-for="AdminChangeIpViewModel.AdminIpCompletion.IndustryPlacementStatusTo" />
 
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset">
@@ -108,7 +104,7 @@
 
         <div class="govuk-button-group">
             <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ReviewChangesIndustryPlacement.Button_Submit</button>
-            <a id="returnButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@ReviewChangesIndustryPlacement.Button_Cancel</a>
+            <a id="returnButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.AdminChangeIpViewModel.AdminIpCompletion.RegistrationPathwayId">@ReviewChangesIndustryPlacement.Button_Cancel</a>
         </div>
     </form>
 </div>
