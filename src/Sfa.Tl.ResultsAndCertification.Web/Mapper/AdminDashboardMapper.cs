@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
                 .ForMember(d => d.Provider, opts => opts.MapFrom(s => $"{s.Provider} ({s.ProviderUkprn})"))
                 .ForMember(d => d.AwardingOrganisation, opts => opts.MapFrom(s => s.AwardingOrganisation))
-                .ForMember(d => d.StartYear, opts => opts.MapFrom(s => string.Format(AdminSearchLearnerDetails.Start_Year_Value, s.AcademicYear, s.AcademicYear + 1)));
+                .ForMember(d => d.StartYear, opts => opts.MapFrom(s => GetDisplayAcademicYear(s.AcademicYear)));
 
             CreateMap<PagedResponse<AdminSearchLearnerDetail>, AdminSearchLearnerDetailsListViewModel>()
                 .ForMember(d => d.TotalRecords, opts => opts.MapFrom(s => s.TotalRecords))
@@ -95,7 +95,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.Pathway.Name))
                 .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.Pathway.AcademicYear))
                 .ForMember(d => d.StartYear, opts => opts.MapFrom(s => GetDisplayAcademicYear(s.Pathway.AcademicYear)))
-                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => GetIndustryPlacementStatus(s)));
+                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => GetIndustryPlacementStatus(s)))
+                .ForMember(d => d.IndustryPlacementStatusTo, opts => opts.MapFrom(s => GetIndustryPlacementStatus(s)));
 
             CreateMap<ReviewChangeStartYearViewModel, ReviewChangeStartYearRequest>()
                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))

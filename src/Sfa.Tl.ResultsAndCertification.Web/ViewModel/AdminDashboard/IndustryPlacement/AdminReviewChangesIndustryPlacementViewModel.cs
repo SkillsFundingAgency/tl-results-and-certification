@@ -3,6 +3,8 @@ using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,7 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPl
 {
     public class AdminReviewChangesIndustryPlacementViewModel
     {
-        public int RegistrationPathwayId { get; set; }
 
         public AdminChangeIpViewModel AdminChangeIpViewModel { get; set; }
 
@@ -20,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPl
         public string ContactName { get; set; }
 
         [DateValidator(Property = nameof(RequestDate), ErrorResourceType = typeof(ReviewChangesIndustryPlacement), ErrorResourceName = "Validation_Date_When_Change_Requested_Blank_Text")]
-        public string RequestDate => $"{Day}/{Month}/{Year}";
+        public string RequestDate => $"{Year}/{Month}/{Day}";
 
         public string Day { get; set; }
 
@@ -35,44 +36,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPl
 
         public BackLinkModel BackLink => new()
         {
-            RouteName = RouteConstants.AdminChangeIndustryPlacement,
-            RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
+            RouteName = AdminChangeIpViewModel.AdminIpCompletion.IndustryPlacementStatusTo == IpStatus.CompletedWithSpecialConsideration ? RouteConstants.AdminIndustryPlacementSpecialConsiderationReasons : RouteConstants.AdminChangeIndustryPlacement,
+            RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, AdminChangeIpViewModel.AdminIpCompletion.RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
         };
 
-        public SummaryItemModel SummaryIndustryPlacement => new()
-        {
-            Id = "industryplacementstatus",
-            Title2 = AdminChangeIpViewModel?.AdminIpCompletion?.IndustryPlacementStatusTo == IpStatus.CompletedWithSpecialConsideration ? ReviewChangesIndustryPlacement.Title_Industry_Placement_Status : ReviewChangesIndustryPlacement.Title_Status_Text,
-            Value = AdminChangeIpViewModel.AdminIpCompletion.GetIndustryPlacementDisplayText(AdminChangeIpViewModel?.AdminIpCompletion?.IndustryPlacementStatus),
-            Value2 = AdminChangeIpViewModel.AdminIpCompletion.GetIndustryPlacementDisplayText(AdminChangeIpViewModel?.AdminIpCompletion?.IndustryPlacementStatusTo),
-            ActionText = ReviewChangesIndustryPlacement.Link_Change_Text,
-            RouteName = RouteConstants.AdminChangeIndustryPlacement,
-            RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
-        };
-
-        public SummaryItemModel SummaryNoOfHours => new()
-        {
-            Id = "noofhours",
-            Title2 = ReviewChangesIndustryPlacement.Title_Number_Of_Hours,
-            Value = AdminChangeIpViewModel.AdminIpCompletion.GetIndustryPlacementDisplayText(AdminChangeIpViewModel?.AdminIpCompletion?.IndustryPlacementStatus),
-            Value2 = AdminChangeIpViewModel?.HoursViewModel?.Hours.ToString(),
-            ActionText = ReviewChangesIndustryPlacement.Link_Change_Text,
-            RouteName = RouteConstants.AdminIndustryPlacementSpecialConsiderationHours,
-            RouteAttributes = new Dictionary<string, string>() { { Constants.PathwayId, RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
-        };
-
-        public List<SummaryItemModel> SummaryIPReasonsList => AdminChangeIpViewModel?.ReasonsViewModel?.ReasonsList
-           .Where(e => e.IsSelected).Select(e => new SummaryItemModel
-           {
-               Id = "ipreasonslist",
-               Title2 = ReviewChangesIndustryPlacement.Title_Reasons_For_Reduced_Hours,
-               Value = AdminChangeIpViewModel.AdminIpCompletion.GetIndustryPlacementDisplayText(AdminChangeIpViewModel?.AdminIpCompletion?.IndustryPlacementStatus),
-               Value2 = e.Name,
-               ActionText = ReviewChangesIndustryPlacement.Link_Change_Text,
-               RouteName = RouteConstants.AdminIndustryPlacementSpecialConsiderationReasons,
-               RouteAttributes = new Dictionary<string, string>() { { Constants.PathwayId, RegistrationPathwayId.ToString() } }
-           })
-           .ToList();
+        #region Summary Item
 
         public SummaryItemModel SummaryContactName => new()
         {
@@ -111,5 +79,72 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPl
             Title = ReviewChangesIndustryPlacement.Title_Zendesk_Ticket_Id,
             Value = ZendeskId
         };
+
+        public List<SummaryItemModel> GetIpSummaryDetailsList()
+        {
+            var detailsList = new List<SummaryItemModel>();
+            var ipCompletion = AdminChangeIpViewModel?.AdminIpCompletion;
+
+            // Status Row
+            detailsList.Add(new()
+            {
+                Id = "industryplacementstatus",
+                Title = ipCompletion.IndustryPlacementStatusTo == IpStatus.CompletedWithSpecialConsideration ? ReviewChangesIndustryPlacement.Title_Industry_Placement_Status : ReviewChangesIndustryPlacement.Title_Status_Text,
+                Value = ipCompletion.GetIndustryPlacementDisplayText(ipCompletion?.IndustryPlacementStatus),
+                Value2 = ipCompletion.GetIndustryPlacementDisplayText(ipCompletion?.IndustryPlacementStatusTo),
+                TitleCss = ipCompletion?.IndustryPlacementStatusTo == IpStatus.CompletedWithSpecialConsideration ? "govuk-summary-list__value" : default,
+                ActionText = ReviewChangesIndustryPlacement.Link_Change_Text,
+                RouteName = RouteConstants.AdminChangeIndustryPlacement,
+                RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, AdminChangeIpViewModel.AdminIpCompletion.RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
+            });
+
+            if (ipCompletion?.IndustryPlacementStatusTo == IpStatus.CompletedWithSpecialConsideration)
+            {
+                // SpecialConsideration Rows
+                AddSummaryItemForSpecialConsideration(detailsList);
+            }
+
+            return detailsList;
+        }
+
+        private bool AddSummaryItemForSpecialConsideration(List<SummaryItemModel> detailsList)
+        {
+            // Hours Row
+            detailsList.Add(new()
+            {
+                Id = "noofhours",
+                Title = ReviewChangesIndustryPlacement.Title_Number_Of_Hours,
+                Value = AdminChangeIpViewModel.AdminIpCompletion.GetIndustryPlacementDisplayText(AdminChangeIpViewModel?.AdminIpCompletion?.IndustryPlacementStatus),
+                Value2 = AdminChangeIpViewModel?.HoursViewModel?.Hours.ToString(),
+                TitleCss = "govuk-summary-list__value",
+                ActionText = ReviewChangesIndustryPlacement.Link_Change_Text,
+                RouteName = RouteConstants.AdminIndustryPlacementSpecialConsiderationHours,
+                RouteAttributes = new Dictionary<string, string>() { { Constants.PathwayId, AdminChangeIpViewModel.AdminIpCompletion.RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
+            });
+
+            // Reasons Row
+            var selectedReasons = AdminChangeIpViewModel?.ReasonsViewModel?.ReasonsList.Where(x => x.IsSelected).Select(x => x.Name);
+            detailsList.Add(new SummaryItemModel
+            {
+                Id = "ipreasonslist",
+                Title = ReviewChangesIndustryPlacement.Title_Reasons_For_Reduced_Hours,
+                Value = AdminChangeIpViewModel.AdminIpCompletion.GetIndustryPlacementDisplayText(AdminChangeIpViewModel?.AdminIpCompletion?.IndustryPlacementStatus),
+                Value2 = ConvertListToRawHtmlString(selectedReasons),
+                TitleCss = "govuk-summary-list__value",
+                ActionText = ReviewChangesIndustryPlacement.Link_Change_Text,
+                RouteName = RouteConstants.AdminIndustryPlacementSpecialConsiderationReasons,
+                RouteAttributes = new Dictionary<string, string>() { { Constants.PathwayId, AdminChangeIpViewModel.AdminIpCompletion.RegistrationPathwayId.ToString() } }
+            });
+
+            return true;
+        }
+
+        #endregion
+
+        private static string ConvertListToRawHtmlString(IEnumerable<string> selectedList)
+        {
+            var htmlRawList = selectedList.Select(x => string.Format(ReviewChangesIndustryPlacement.Para_Item, x));
+            return string.Join(string.Empty, htmlRawList);
+        }
     }
 }

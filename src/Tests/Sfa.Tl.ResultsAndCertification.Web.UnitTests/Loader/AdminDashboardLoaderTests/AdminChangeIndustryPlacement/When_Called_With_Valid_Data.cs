@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using System.Linq;
@@ -44,8 +45,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
             _result.TlevelName.Should().Be(_apiResult.Pathway.Name);
             _result.AcademicYear.Should().Be(_apiResult.Pathway.AcademicYear);
             _result.StartYear.Should().Be($"{_apiResult.Pathway.AcademicYear} to {_apiResult.Pathway.AcademicYear + 1}");
-            _result.IndustryPlacementStatus.Should().Be(_apiResult.Pathway.IndustryPlacements.Single().Status);
-            _result.IndustryPlacementStatusTo.Should().NotHaveValue();
+
+            IndustryPlacementStatus industryPlacementStatus = _apiResult.Pathway.IndustryPlacements.Single().Status;
+            _result.IndustryPlacementStatus.Should().Be(industryPlacementStatus);
+            _result.IndustryPlacementStatusTo.Should().Be(industryPlacementStatus);
         }
     }
 }

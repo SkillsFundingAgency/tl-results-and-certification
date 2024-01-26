@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Xunit;
 
@@ -22,7 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 Uln = 1235469874,
                 LearnerName = "firstname",
                 Provider = "provider-name",
-                TlevelName = "t-level-name"
+                TlevelName = "t-level-name",
+                IndustryPlacementStatusTo = Common.Enum.IndustryPlacementStatus.Completed
             };
 
             AdminChangeIpViewModel adminChangeIpViewModel = new()
@@ -55,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
             var model = (Result as ViewResult).Model as AdminReviewChangesIndustryPlacementViewModel;
 
-            model.AdminChangeIpViewModel.AdminIpCompletion.RegistrationPathwayId.Should().Be(Mockresult.RegistrationPathwayId);
+            model.AdminChangeIpViewModel.AdminIpCompletion.RegistrationPathwayId.Should().Be(Mockresult.AdminChangeIpViewModel.AdminIpCompletion.RegistrationPathwayId);
             model.AdminChangeIpViewModel.AdminIpCompletion.Uln.Should().Be(Mockresult.AdminChangeIpViewModel.AdminIpCompletion.Uln);
             model.AdminChangeIpViewModel.AdminIpCompletion.Provider.Should().Be(Mockresult.AdminChangeIpViewModel.AdminIpCompletion.Provider);
             model.AdminChangeIpViewModel.AdminIpCompletion.TlevelName.Should().Be(Mockresult.AdminChangeIpViewModel.AdminIpCompletion.TlevelName);
