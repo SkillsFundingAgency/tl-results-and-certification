@@ -147,6 +147,9 @@
   <data name="Message_Inset_Text" xml:space="preserve">
     <value>Any assessment entries or results assigned to this learner will remain active.</value>
   </data>
+  <data name="Message_Notification_Success" xml:space="preserve">
+    <value>Industry placement status updated</value>
+  </data>
   <data name="Message_You_Can_Enter_Up_To_Characters" xml:space="preserve">
     <value>You can enter up to 2,000 characters</value>
   </data>

@@ -32,7 +32,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPl
         [Required(ErrorMessageResourceType = typeof(ReviewChangesIndustryPlacement), ErrorMessageResourceName = "Validation_Reason_For_Change_Blank_Text")]
         public string ChangeReason { get; set; }
 
+        public string LoggedInUser { get; set; }
         public string ZendeskId { get; set; }
+
+        public List<int> SelectedReasons => AdminChangeIpViewModel?.ReasonsViewModel?.ReasonsList.Where(x => x.IsSelected).Select(x => x.Id).ToList();
 
         public BackLinkModel BackLink => new()
         {

@@ -56,9 +56,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
             var mapper = Substitute.For<IMapper>();           
             var tqRegistrationPathwayRepository = Substitute.For<IRepository<TqRegistrationPathway>>();
             var commonService = Substitute.For<ICommonService>();
+            var industryPlacementRepository = Substitute.For<IRepository<IndustryPlacement>>();
 
-
-            _adminDashboardService = new AdminDashboardService(repository, systemProvider, mapper, tqRegistrationPathwayRepository, commonService);
+            _adminDashboardService = new AdminDashboardService(repository, systemProvider, mapper, tqRegistrationPathwayRepository, commonService, industryPlacementRepository);
         }
 
         public override void Given()

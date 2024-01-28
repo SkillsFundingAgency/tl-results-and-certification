@@ -53,8 +53,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
             var tqRegistrationPathwayRepository = Substitute.For<IRepository<TqRegistrationPathway>>();
             var commonService = Substitute.For<ICommonService>();
 
-
-            _adminDashboardService = new AdminDashboardService(repository, systemProvider, mapper, tqRegistrationPathwayRepository, commonService);
+            var industryPlacementRepository = Substitute.For<IRepository<IndustryPlacement>>();
+            _adminDashboardService = new AdminDashboardService(repository, systemProvider, mapper, tqRegistrationPathwayRepository, commonService, industryPlacementRepository);
         }
 
 

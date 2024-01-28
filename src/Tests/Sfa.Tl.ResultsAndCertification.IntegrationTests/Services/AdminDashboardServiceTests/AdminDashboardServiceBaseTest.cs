@@ -72,7 +72,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         protected INotificationService NotificationService;
         protected ISystemProvider SystemProvider;
 
-       
+        protected IList<IpLookup> IpLookup;
+
 
         protected virtual void CreateMapper()
         {
@@ -210,6 +211,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             });
         }
 
-        
+        public void SeedSpecialConsiderationsLookupData()
+        {
+            IpLookup = IpLookupDataProvider.CreateIpLookupList(DbContext, null, IpLookupType.SpecialConsideration, true);
+            DbContext.SaveChanges();
+        }
+
     }
 }

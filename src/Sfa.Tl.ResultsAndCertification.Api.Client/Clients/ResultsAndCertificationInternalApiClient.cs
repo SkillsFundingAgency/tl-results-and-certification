@@ -461,6 +461,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<ReviewChangeStartYearRequest, bool>(ApiConstants.ProcessChangeStartYearUri, request);
         }
 
+        public async Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeRequest request)
+        {
+            return await PostAsync<ReviewChangeRequest, bool>(ApiConstants.ProcessChangeIPUri, request);
+        }
+
 
         #endregion
 

@@ -47,10 +47,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             
         }
 
-        public async Task<bool> ProcessChangeIPAsync(AdminChangeIpViewModel adminChangeIpViewModel)
+        public async Task<bool> ProcessChangeIndustryPlacementAsync(AdminReviewChangesIndustryPlacementViewModel adminChangeIpViewModel)
         {
-            var reviewChangeStartYearRequest = _mapper.Map<ReviewChangeStartYearRequest>(reviewChangeStartYearViewModel);
-            return await _internalApiClient.ProcessChangeStartYearAsync(reviewChangeStartYearRequest);
+            var reviewChangeStartYearRequest = _mapper.Map<ReviewChangeRequest>(adminChangeIpViewModel);
+            return await _internalApiClient.ProcessChangeIndustryPlacementAsync(reviewChangeStartYearRequest);
 
         }
 
