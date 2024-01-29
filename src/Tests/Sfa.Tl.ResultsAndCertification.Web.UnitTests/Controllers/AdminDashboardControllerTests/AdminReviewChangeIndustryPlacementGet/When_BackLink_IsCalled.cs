@@ -41,6 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             };
 
             AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminReviewChangesIndustryPlacementViewModel>(PathwayId).Returns(Mockresult);
+            CacheService.GetAsync<AdminChangeIpViewModel>(CacheKey).Returns(adminChangeIpViewModel);
         }
 
         [Fact]
@@ -53,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
             // Back link
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.AdminIndustryPlacementSpecialConsiderationReasons);
+            model.BackLink.RouteName.Should().Be(RouteConstants.AdminChangeIndustryPlacement);
         }
     }
 }
