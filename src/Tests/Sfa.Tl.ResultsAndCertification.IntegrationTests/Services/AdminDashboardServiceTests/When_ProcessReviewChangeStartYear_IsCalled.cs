@@ -112,14 +112,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         {
             return Task.CompletedTask;
         }
-        public async Task WhenAsync(ReviewChangeStartYearRequest request)
+        public async Task WhenAsync(ReviewChangeRequest request)
         {
             _actualResult = await AdminDashboardService.ProcessChangeStartYearAsync(request);
         }
 
         [Theory()]
         [MemberData(nameof(Data))]
-        public async Task Then_Expected_Results_Are_Returned(ReviewChangeStartYearRequest request, bool expectedResponse,long uln)
+        public async Task Then_Expected_Results_Are_Returned(ReviewChangeRequest request, bool expectedResponse,long uln)
         {
             await WhenAsync(request);
 
@@ -138,7 +138,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
 
             // Assert
             request.RegistrationPathwayId.Should().Be(actualIndustryPlacement.Id);
-            request.AcademicYearTo.Should().Be(actualIndustryPlacement.AcademicYear);
+            request.ChangeStartYearDetails.StartYearTo.Should().Be(actualIndustryPlacement.AcademicYear);
             
         }
 
@@ -150,10 +150,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
                 return new[]
                 {
                     // Uln not found
-                    new object[] { new ReviewChangeStartYearRequest()
+                    new object[] { new ReviewChangeRequest()
                     {
-                AcademicYear = 2022,
-                AcademicYearTo = 2021,
                 ChangeReason = "Test Reason",
                 ContactName = "Test User",
                 RegistrationPathwayId = 1,

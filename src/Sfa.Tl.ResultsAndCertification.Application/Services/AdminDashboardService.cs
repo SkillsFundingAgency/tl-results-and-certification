@@ -79,13 +79,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _adminLearnerRecord;
         }
 
-        public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)
+        public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeRequest request)
         {
             var pathway = await _tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.Id == request.RegistrationPathwayId);
+            request.ChangeType = ChangeType.StartYear;
 
             if (pathway == null) return false;
 
-            pathway.AcademicYear = request.AcademicYearTo;
+            pathway.AcademicYear = request.ChangeStartYearDetails.StartYearTo;
             var status = await _tqRegistrationPathwayRepository.UpdateWithSpecifedColumnsOnlyAsync(pathway, u => u.AcademicYear, u => u.ModifiedBy, u => u.ModifiedOn);
 
             if (status > 0)
@@ -124,24 +125,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         }
 
 
-
-
-        private static ChangeLog CreateChangeLogRequest(ReviewChangeStartYearRequest request)
-        {
-            var changeLog = new ChangeLog()
-            {
-                ChangeType = (int)ChangeType.StartYear,
-                ReasonForChange = request.ChangeReason,
-                DateOfRequest = Convert.ToDateTime(request.RequestDate),
-                Details = JsonConvert.SerializeObject(request.ChangeStartYearDetails),
-                ZendeskTicketID = request.ZendeskId,
-                Name = request.ContactName,
-                TqRegistrationPathwayId = request.RegistrationPathwayId,
-                CreatedBy = string.IsNullOrEmpty(request.CreatedBy) ? SystemUser : request.CreatedBy
-            };
-            return changeLog;
-        }
-
         private ChangeLog CreateChangeLogRequest(ReviewChangeRequest request)
         {
             var changeLog = new ChangeLog()
@@ -164,6 +147,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 )
             {
                 case ChangeType.IndustryPlacement: return JsonConvert.SerializeObject(request.ChangeIPDetails);
+                case ChangeType.StartYear: return JsonConvert.SerializeObject(request.ChangeStartYearDetails);
                 default: return string.Empty;
             }
         }

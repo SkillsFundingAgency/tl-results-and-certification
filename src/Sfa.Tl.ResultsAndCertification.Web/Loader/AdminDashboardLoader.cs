@@ -42,8 +42,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel reviewChangeStartYearViewModel)
         {
-            var reviewChangeStartYearRequest = _mapper.Map<ReviewChangeStartYearRequest>(reviewChangeStartYearViewModel);
-            return await _internalApiClient.ProcessChangeStartYearAsync(reviewChangeStartYearRequest);
+            var reviewChangeRequest = _mapper.Map<ReviewChangeRequest>(reviewChangeStartYearViewModel);
+            return await _internalApiClient.ProcessChangeStartYearAsync(reviewChangeRequest);
             
         }
 

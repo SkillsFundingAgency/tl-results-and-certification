@@ -456,9 +456,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<AdminLearnerRecord>(requestUri);
         }
 
-        public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)
+        public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeRequest request)
         {
-            return await PostAsync<ReviewChangeStartYearRequest, bool>(ApiConstants.ProcessChangeStartYearUri, request);
+            return await PostAsync<ReviewChangeRequest, bool>(ApiConstants.ProcessChangeStartYearUri, request);
         }
 
         public async Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeRequest request)
