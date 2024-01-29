@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using System;
 using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers

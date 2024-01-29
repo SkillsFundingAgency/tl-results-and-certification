@@ -1,0 +1,59 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord.AdminAssessmentDetailsViewModel
+
+@if (!Model.IsSpecialismRegistered)
+{
+    <h2 class="govuk-heading-m">@LearnerRecord.Occupational_Specialism_Heading</h2>
+    <p class="govuk-body">
+        @LearnerRecord.This_Learner_Does_Not_Have_Occupational_Specialism_Recorded
+    </p>
+
+    <p class="govuk-body govuk-!-margin-bottom-9">
+        <a class="govuk-link" asp-route="RouteConstants.RegistrationDetails" asp-route-profileId="@Model.RegistrationPathwayId">@LearnerRecord.Link_Add_An_Occupational_Specialism</a>
+    </p>
+}
+else
+{
+    @if (Model.IsSpecialismEntryEligible == false)
+    {
+        @foreach (var specialism in Model.DisplaySpecialisms)
+        {
+            <h2 class="govuk-heading-m">@string.Format(LearnerRecord.Specialism_Heading_Text, specialism.DisplayName)</h2>
+            <p class="govuk-body govuk-!-margin-bottom-9">
+                @string.Format(LearnerRecord.You_Cannot_Register_Learner_For_Occupational_Specialism_Until, Model.NextAvailableSpecialismSeries?.ToLowerInvariant())
+            </p>
+        }
+    }
+    else
+    {
+        @foreach (var specialism in Model.DisplaySpecialisms)
+        {
+            <h2 class="govuk-heading-m">@string.Format(LearnerRecord.Specialism_Heading_Text, specialism.DisplayName)</h2>
+            var specialismId = !string.IsNullOrWhiteSpace(specialism.CombinedSpecialismId) ? specialism.CombinedSpecialismId : specialism.Id.ToString();
+
+            @if (specialism.NeedResultForPreviousAssessmentEntry)
+            {
+                <p class="govuk-body govuk-!-margin-bottom-9">
+                    @LearnerRecord.You_Must <a class="govuk-link" asp-route="RouteConstants.ResultDetails" asp-route-profileId="Model.ProfileId">@LearnerRecord.Add_Result_To_Learners_Previous_Assessment</a> @LearnerRecord.Before_Entering_New_Assessment_Details
+                </p>
+            }
+            else if (specialism.HasCurrentAssessmentEntry)
+            {
+              @*  <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                    <vc:summary-item model=Model.GetSummaryExamPeriod(specialism)></vc:summary-item>
+                    <vc:summary-item model=Model.GetSummaryLastUpdatedOn(specialism)></vc:summary-item>
+                    <vc:summary-item model=Model.GetSummaryLastUpdatedBy(specialism)></vc:summary-item>
+                </dl>*@
+            }
+            else
+            {
+                <p class="govuk-body">
+                    @LearnerRecord.This_Learner_Does_Not_Have_Occupational_Specialism_Recorded
+                </p>
+                <p class="govuk-body govuk-!-margin-bottom-9">
+                    <a class="govuk-link" asp-route="RouteConstants.AddSpecialismAssessmentEntry" asp-route-profileId="Model.ProfileId" asp-route-specialismsId="@specialismId">@string.Format(LearnerRecord.Add_An_Assessment_Entry_For, specialism.DisplayName)</a>
+                </p>
+            }
+        }
+    }
+}

@@ -50,6 +50,11 @@
             <vc:summary-item model=Model.SummaryEnglishStatus></vc:summary-item>
         </dl>
 
+        <section id="add-entries">
+            <partial name="Partials/_coreComponent.cshtml" model="Model.AssessmentDetails" />
+            <partial name="Partials/_occupationalSpecialism.cshtml" model="Model.AssessmentDetails" />
+        </section>
+
         <div class="govuk-button-group">
             <a id="searchAgainButton" class="govuk-button" role="button" asp-route="@RouteConstants.AdminSearchLearnersRecords">@LearnerRecord.Search_Again_Text</a>
         </div>

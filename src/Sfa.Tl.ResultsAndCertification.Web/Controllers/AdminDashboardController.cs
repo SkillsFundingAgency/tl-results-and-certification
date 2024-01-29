@@ -160,6 +160,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         #endregion
 
+        [HttpGet]
+        [Route("admin/learner-record/{pathwayid}", Name = RouteConstants.AdminLearnerRecord)]
+        public async Task<IActionResult> AdminLearnerRecordAsync(int pathwayId)
+        {
+            AdminLearnerRecordViewModel viewModel = await _loader.GetAdminLearnerRecordAsync(pathwayId);
+            if (viewModel == null || !viewModel.IsLearnerRegistered)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({pathwayId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            viewModel.InformationBanner = await _cacheService.GetAndRemoveAsync<InformationBannerModel>(InformationCacheKey);
+            viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
+
+            return View(viewModel);
+        }
+
         #region Change Start Year
 
         [HttpGet]
@@ -193,23 +210,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             await _cacheService.SetAsync<AdminChangeStartYearViewModel>(CacheKey, model);
             return RedirectToAction(nameof(RouteConstants.ReviewChangeStartYear), new { pathwayId = model.PathwayId });
-        }
-
-        [HttpGet]
-        [Route("admin/learner-record/{pathwayid}", Name = RouteConstants.AdminLearnerRecord)]
-        public async Task<IActionResult> AdminLearnerRecordAsync(int pathwayId)
-        {
-            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(pathwayId);
-            if (viewModel == null || !viewModel.IsLearnerRegistered)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({pathwayId}), User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            viewModel.InformationBanner = await _cacheService.GetAndRemoveAsync<InformationBannerModel>(InformationCacheKey);
-            viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
-
-            return View(viewModel);
         }
 
         [HttpGet]

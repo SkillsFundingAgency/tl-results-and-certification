@@ -123,8 +123,20 @@
   <data name="Action_Text_Link_Change" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="Add_An_Assessment_Entry_For" xml:space="preserve">
+    <value>Add an assessment entry for {0}</value>
+  </data>
+  <data name="Add_Result_To_Learners_Previous_Assessment" xml:space="preserve">
+    <value>add a result to this learner's previous assessment</value>
+  </data>
   <data name="Back_To_Home_Text" xml:space="preserve">
     <value>&lt; Back to home</value>
+  </data>
+  <data name="Before_Entering_New_Assessment_Details" xml:space="preserve">
+    <value>before entering new assessment details.</value>
+  </data>
+  <data name="Core_Heading_Text" xml:space="preserve">
+    <value>Core (code): {0}</value>
   </data>
   <data name="Hidden_Action_Text_English" xml:space="preserve">
     <value> english status</value>
@@ -135,8 +147,17 @@
   <data name="Hidden_Action_Text_Maths" xml:space="preserve">
     <value> maths status</value>
   </data>
+  <data name="Link_Add_An_Occupational_Specialism" xml:space="preserve">
+    <value>Add an occupational specialism to this learner's record</value>
+  </data>
   <data name="Message_Notification_Success" xml:space="preserve">
     <value>Start year updated</value>
+  </data>
+  <data name="No_Assessment_Entries_Have_Been_Recorded" xml:space="preserve">
+    <value>No assessment entries have yet been recorded.</value>
+  </data>
+  <data name="Occupational_Specialism_Heading" xml:space="preserve">
+    <value>Occupational specialism</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value> - Learner record – Admin</value>
@@ -162,6 +183,9 @@
   <data name="Section_Heading_Overall_Result_Tlevel" xml:space="preserve">
     <value>Overall T Level result</value>
   </data>
+  <data name="Specialism_Heading_Text" xml:space="preserve">
+    <value>Specialism (code): {0}</value>
+  </data>
   <data name="Start_Year_Value" xml:space="preserve">
     <value>{0} to {1}</value>
   </data>
@@ -170,6 +194,9 @@
   </data>
   <data name="Status_Tag_Record_Complete" xml:space="preserve">
     <value>Record Complete</value>
+  </data>
+  <data name="This_Learner_Does_Not_Have_Occupational_Specialism_Recorded" xml:space="preserve">
+    <value>This learner does not have an occupational specialism recorded on this service.</value>
   </data>
   <data name="Title_AoName_Text" xml:space="preserve">
     <value>Awarding organisation</value>
@@ -203,5 +230,14 @@
   </data>
   <data name="Uln_Text" xml:space="preserve">
     <value>ULN </value>
+  </data>
+  <data name="You_Cannot_Register_Learner_For_Core_Assessment_Until" xml:space="preserve">
+    <value>You cannot register this learner for a core component assessment until the {0} window opens.</value>
+  </data>
+  <data name="You_Cannot_Register_Learner_For_Occupational_Specialism_Until" xml:space="preserve">
+    <value>You cannot register this learner for an occupational specialism assessment until the {0} window opens.</value>
+  </data>
+  <data name="You_Must" xml:space="preserve">
+    <value>You must</value>
   </data>
 </root>

@@ -155,9 +155,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
         public InformationBannerModel InformationBanner { get; set; }
 
         // Core Component
-        public string CoreComponentDisplayName { get; set; }
-        public bool IsCoreAssessmentEntryRegistered { get { return CoreComponentExams.Any(x => x.AssessmentId > 0); } }
-        public IList<AdminComponentExamViewModel> CoreComponentExams { get; set; }
+        public AdminAssessmentDetailsViewModel AssessmentDetails { get; set; }
 
         private static string GetSubjectStatus(SubjectStatus subjectStatus)
         {

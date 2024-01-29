@@ -38,7 +38,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.RegistrationPathwayStatus, opts => opts.MapFrom(s => s.Pathway.Status))
                 .ForMember(d => d.IsLearnerRegistered, opts => opts.MapFrom(s => s.IsRegistered))
                 .ForMember(d => d.IndustryPlacementId, opts => opts.MapFrom(s => GetIndustryPlacementId(s)))
-                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => GetIndustryPlacementStatus(s)));
+                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => GetIndustryPlacementStatus(s)))
+                .ForMember(d => d.AssessmentDetails, opts => opts.MapFrom(s => s.Pathway));
+
+            CreateMap<Pathway, AdminAssessmentDetailsViewModel>()
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items["registrationPathwayId"]))
+                .ForMember(d => d.IsCoreEntryEligible, opts => opts.MapFrom((src, dest, destMember, context) => src.Status == RegistrationPathwayStatus.Active && (int)context.Items["currentCoreAssessmentSeriesId"] > 0))
+                .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.Name} ({s.LarId})"))
+                .ForMember(d => d.NextAvailableCoreSeries, opts => opts.MapFrom((src, dest, destMember, context) => context.Items["coreSeriesName"]))
+                .ForMember(d => d.PathwayAssessment, opts => opts.MapFrom((src, dest, destMember, context) => src.PathwayAssessments.FirstOrDefault(a => a.SeriesId == (int)context.Items["currentCoreAssessmentSeriesId"])))
+                .ForMember(d => d.PreviousPathwayAssessment, opts => opts.MapFrom((src, dest, destMember, context) => src.PathwayAssessments.Where(a => a.SeriesId != (int)context.Items["currentCoreAssessmentSeriesId"]).OrderByDescending(a => a.SeriesId).FirstOrDefault()))
+                .ForMember(d => d.SpecialismDetails, opts => opts.MapFrom(s => s.Specialisms))
+                .ForMember(d => d.IsSpecialismEntryEligible, opts => opts.MapFrom((src, dest, destMember, context) => src.Status == RegistrationPathwayStatus.Active && (int)context.Items["currentSpecialismAssessmentSeriesId"] > 0))
+                .ForMember(d => d.NextAvailableSpecialismSeries, opts => opts.MapFrom((src, dest, destMember, context) => context.Items["specialismSeriesName"]));
+
+            CreateMap<Specialism, AdminSpecialismViewModel>()
+               .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
+               .ForMember(d => d.LarId, opts => opts.MapFrom(s => s.LarId))
+               .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => $"{s.Name} ({s.LarId})"))
+               .ForMember(d => d.CurrentSpecialismAssessmentSeriesId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items != null && context.Items["currentSpecialismAssessmentSeriesId"] != null ? (int?)context.Items["currentSpecialismAssessmentSeriesId"] : null))
+               .ForMember(d => d.TlSpecialismCombinations, opts => opts.MapFrom(s => s.TlSpecialismCombinations))
+               .ForMember(d => d.Assessments, opts => opts.MapFrom(s => s.Assessments));
 
             CreateMap<AdminSearchLearnerDetail, AdminSearchLearnerDetailsViewModel>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))

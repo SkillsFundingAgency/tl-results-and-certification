@@ -1,42 +1,36 @@
-﻿using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using System.Threading.Tasks;
 using Xunit;
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ChangeStartYearGet
 {
-    public class When_Called_With_Invalid_Data: AdminDashboardControllerTestBase
+    public class When_Called_With_Invalid_Data : AdminDashboardControllerTestBase
     {
-        public int PathwayId { get; set; }
-        protected AdminChangeStartYearViewModel Mockresult = null;
-        public IActionResult Result { get; private set; }
-
+        private const int RegistrationPathwayId = 1;
+        private IActionResult Result;
 
         public override void Given()
         {
-            PathwayId = 0;
-            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(PathwayId).Returns(Mockresult);
+            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(RegistrationPathwayId).Returns(null as AdminChangeStartYearViewModel);
         }
 
         public async override Task When()
         {
-            Result = await Controller.AdminLearnerRecordAsync(PathwayId);
+            Result = await Controller.ChangeStartYearAsync(RegistrationPathwayId);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(PathwayId);
+            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(RegistrationPathwayId);
         }
 
         [Fact]
         public void Then_Redirected_To_PageNotFound()
         {
-            var actualRouteName = (Result as RedirectToRouteResult).RouteName;
-            actualRouteName.Should().Be(RouteConstants.PageNotFound);
+            Result.ShouldBeRedirectPageNotFound();
         }
     }
 }
