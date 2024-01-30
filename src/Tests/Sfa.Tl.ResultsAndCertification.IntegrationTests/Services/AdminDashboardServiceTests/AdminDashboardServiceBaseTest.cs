@@ -73,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         protected ISystemProvider SystemProvider;
 
         protected IList<IpLookup> IpLookup;
-
+       
 
         protected virtual void CreateMapper()
         {
@@ -216,6 +216,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             IpLookup = IpLookupDataProvider.CreateIpLookupList(DbContext, null, IpLookupType.SpecialConsideration, true);
             DbContext.SaveChanges();
         }
-
+        
     }
 }

@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AcademicYears, opts => opts.MapFrom(s => s.AcademicYears));
 
             CreateMap<AdminLearnerRecord, AdminLearnerRecordViewModel>()
-               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.PathwayId))
+                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
                .ForMember(d => d.TlPathwayId, opts => opts.MapFrom(s => s.TlPathwayId))
                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
