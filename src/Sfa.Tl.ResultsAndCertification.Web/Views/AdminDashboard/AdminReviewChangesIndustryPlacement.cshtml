@@ -1,0 +1,110 @@
+@model AdminReviewChangesIndustryPlacementViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+
+@{
+    ViewData["Title"] = ReviewChangesIndustryPlacement.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="record-header">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+            @ReviewChangesIndustryPlacement.Heading_Change_Start_Year
+        </h1>
+    </div>
+    <partial name="_ValidationSummary" />
+    <h2 class="govuk-heading-m">
+        @ReviewChangesIndustryPlacement.Heading_Personal_Details
+    </h2>
+
+    <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+        <vc:summary-item model=Model.AdminChangeIpViewModel.AdminIpCompletion.SummaryLearner></vc:summary-item>
+        <vc:summary-item model=Model.AdminChangeIpViewModel.AdminIpCompletion.SummaryULN></vc:summary-item>
+        <vc:summary-item model=Model.AdminChangeIpViewModel.AdminIpCompletion.SummaryProvider></vc:summary-item>
+        <vc:summary-item model=Model.AdminChangeIpViewModel.AdminIpCompletion.SummaryTlevel></vc:summary-item>
+    </dl>
+
+    <h2 class="govuk-heading-m">
+        @ReviewChangesIndustryPlacement.Heading_Change_Summary
+    </h2>
+
+    <div class="govuk-summary-list__row">
+
+        <dl class="govuk-summary-list govuk-!-margin-bottom-8">
+            <dt class="govuk-summary-list__key">@ReviewChangesIndustryPlacement.Title_Change_Summary_Change_Text</dt>
+            <dt class="govuk-summary-list__key">@ReviewChangesIndustryPlacement.Title_Change_Summary_From_Text</dt>
+            <dt class="govuk-summary-list__key">@ReviewChangesIndustryPlacement.Title_Change_Summary_To_Text</dt>
+            <dt class="govuk-summary-list__key"></dt>
+            @foreach (var rowItem in Model.GetIpSummaryDetailsList())
+            {
+                <vc:summary-item model=rowItem></vc:summary-item>
+            }
+        </dl>
+    </div>
+
+    <form asp-route="@RouteConstants.SubmitReviewChangesIndustryPlacement">
+        <input type="hidden" asp-for="AdminChangeIpViewModel.AdminIpCompletion.RegistrationPathwayId" />
+        <input type="hidden" asp-for="AdminChangeIpViewModel.AdminIpCompletion.LearnerName" />
+        <input type="hidden" asp-for="AdminChangeIpViewModel.AdminIpCompletion.Uln" />
+        <input type="hidden" asp-for="AdminChangeIpViewModel.AdminIpCompletion.Provider" />
+        <input type="hidden" asp-for="AdminChangeIpViewModel.AdminIpCompletion.TlevelName" />
+        <input type="hidden" asp-for="AdminChangeIpViewModel.AdminIpCompletion.IndustryPlacementStatusTo" />
+
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                    <h2 class="govuk-fieldset__heading">
+                        @ReviewChangesIndustryPlacement.Heading_Who_has_asked_for_change
+                    </h2>
+                </legend>
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-label--s" for="contactname">@ReviewChangesIndustryPlacement.Title_Contact_Name_Text</label>
+                    <input id="contactname" class="govuk-input govuk-input--width-20" asp-for="ContactName" sfa-validation-class="govuk-input-error" sfa-validation-for="ContactName" type="text">
+                </div>
+                <div class="govuk-form-group" id-"requestdate">
+                    <label class="govuk-label govuk-label--s" for="dateofrequest">@ReviewChangesIndustryPlacement.Title_Date_Of_Request</label>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="day">@ReviewChangesIndustryPlacement.Title_Day_Text</label>
+                            <input id="day" asp-for="Day" sfa-validation-for="Day" sfa-validation-class="govuk-input--error" class="govuk-input govuk-date-input__input govuk-input--width-2" maxlength="2" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="month">@ReviewChangesIndustryPlacement.Title_Month_Text</label>
+                            <input id="month" asp-for="Month" sfa-validation-for="Month" sfa-validation-class="govuk-input--error" class="govuk-input govuk-date-input__input govuk-input--width-2" maxlength="2" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="year">@ReviewChangesIndustryPlacement.Title_Year_Text</label>
+                            <input id="year" asp-for="Year" sfa-validation-for="Year" sfa-validation-class="govuk-input--error" class="govuk-input govuk-date-input__input govuk-input--width-4" maxlength="4" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+                <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="2000">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-label--s" for="changereason">@ReviewChangesIndustryPlacement.Title_Reason_For_Change_Text</label>
+                        <textarea class="govuk-textarea govuk-js-character-count" id="changereason" name="changereason" rows="5" maxlength="2000" asp-for="ChangeReason"></textarea>
+                        <partial name="Partials/_changeReasonCharacterHint.cshtml" />
+                    </div>
+                </div>
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-label--s" for="zenticketid">@ReviewChangesIndustryPlacement.Title_Zendesk_Ticket_Id</label>
+                    <input id="zenticketid" class="govuk-input govuk-input--width-10" asp-for="ZendeskId" type="text" maxlength="10">
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="govuk-button-group">
+            <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ReviewChangesIndustryPlacement.Button_Submit</button>
+            <a id="returnButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.AdminChangeIpViewModel.AdminIpCompletion.RegistrationPathwayId">@ReviewChangesIndustryPlacement.Button_Cancel</a>
+        </div>
+    </form>
+</div>

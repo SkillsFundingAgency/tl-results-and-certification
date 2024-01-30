@@ -75,6 +75,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         protected ILogger<INotificationService> NotificationServiceLogger;
         protected INotificationService NotificationService;
         protected IMapper CommonMapper;
+        protected ILogger<GenericRepository<ChangeLog>> ChangeLogRepositoryLogger;
+        protected IRepository<ChangeLog> ChangeLogRepository;
 
         public BulkRegistrationsTextFixture()
         {
@@ -107,8 +109,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             NotificationTemplateRepositoryLogger = new Logger<GenericRepository<NotificationTemplate>>(new NullLoggerFactory());
             NotificationTemplateRepository = new GenericRepository<NotificationTemplate>(NotificationTemplateRepositoryLogger, DbContext);
             NotificationService = new NotificationService(NotificationTemplateRepository, NotificationsClient, NotificationLogger);
+            ChangeLogRepositoryLogger = new Logger<GenericRepository<ChangeLog>>(new NullLoggerFactory());
+            ChangeLogRepository = new GenericRepository<ChangeLog>(ChangeLogRepositoryLogger, DbContext);
 
-            CommonService = new CommonService(CommonServiceLogger, CommonMapper, TlLookupRepository, FunctionLogRepository, CommonRepository, NotificationService, Configuration);
+            CommonService = new CommonService(CommonServiceLogger, CommonMapper, TlLookupRepository, FunctionLogRepository, CommonRepository, NotificationService, Configuration, ChangeLogRepository);
             RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, CommonService, RegistrationMapper, RegistrationRepositoryLogger);
             
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null);
