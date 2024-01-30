@@ -406,10 +406,22 @@
         public const string AdminSearchLearnersRecordsClear = "AdminSearchLearnersRecordsClear";
         public const string SubmitAdminSearchLearnerRecordsApplySearchKey = "SubmitAdminSearchLearnerRecordsApplySearchKey";
         public const string SubmitAdminSearchLearnerClearKey = "SubmitAdminSearchLearnerClearKey";
-        public const string AdminSearchLearners = "AdminSearchLearners";
+        public const string SubmitAdminSearchLearnerRecordsApplyFilters = "SubmitAdminSearchLearnerRecordsApplyFilters";
+        public const string SubmitAdminSearchLearnerClearFilters = "SubmitAdminSearchLearnerClearFilters";
         public const string AdminLearnerRecord = "AdminLearnerRecord";
-
-
+        public const string ChangeStartYear = "ChangeStartYear";
+        public const string SubmitChangeStartYear = "SubmitChangeStartYear";
+        public const string ReviewChangeStartYear = "ReviewChangeStartYear";
+        public const string SubmitReviewChangeStartYear = "SubmitReviewChangeStartYear";
+        public const string AdminChangeIndustryPlacementClear = "AdminChangeIndustryPlacementClear";
+        public const string AdminChangeIndustryPlacement = "AdminChangeIndustryPlacement";
+        public const string AdminSubmitChangeIndustryPlacement = "AdminSubmitChangeIndustryPlacement";
+        public const string AdminIndustryPlacementSpecialConsiderationHours = "AdminIndustryPlacementSpecialConsiderationHours";
+        public const string SubmitAdminIndustryPlacementSpecialConsiderationHours = "SubmitAdminIndustryPlacementSpecialConsiderationHours";
+        public const string AdminIndustryPlacementSpecialConsiderationReasons = "AdminIndustryPlacementSpecialConsiderationReasons";
+        public const string SubmitAdminIndustryPlacementSpecialConsiderationReasons = "SubmitAdminIndustryPlacementSpecialConsiderationReasons";
+        public const string AdminReviewChangesIndustryPlacement = "AdminReviewChangesIndustryPlacement";
+        public const string SubmitReviewChangesIndustryPlacement = "SubmitReviewChangesIndustryPlacement";
         #endregion
     }
 }

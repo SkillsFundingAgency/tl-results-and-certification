@@ -14,12 +14,9 @@
         <partial name="_ValidationSummary" />
         <form asp-route="SubmitSearchAssessments">
             <div class="govuk-form-group">
-                <fieldset class="govuk-fieldset">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">
-                        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-5">
+                <h1 class="govuk-heading-xl">
                             @SearchAssessments.Search_For_Learner_Heading_Text
                         </h1>
-                    </legend>
                     <p class="govuk-body">@SearchAssessments.Search_Info_Text</p>
                     <div class="govuk-form-group" sfa-validation-for="SearchUln" sfa-validation-class="govuk-form-group--error">
                         <label class="govuk-label" for="searchuln">@SearchAssessments.Enter_Uln_Field_Text</label>
@@ -27,7 +24,6 @@
                         <span sfa-validation-for="SearchUln"></span>
                         <input class="govuk-input govuk-input--width-20" id="searchuln" asp-for="SearchUln" maxlength="10" inputmode="numeric" aria-required="true">
                     </div>
-                </fieldset>
             </div>
             <button id="searchButton" type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@SearchAssessments.Search_Button_Text</button>
         </form>

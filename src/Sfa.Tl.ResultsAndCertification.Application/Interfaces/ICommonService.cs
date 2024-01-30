@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using DomainModel = Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using System;
@@ -27,5 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         bool IsIndustryPlacementTriggerDateValid();
        
         DateTime CurrentDate { get; }
+
+        Task<bool> AddChangelog(DomainModel.ChangeLog changeLog);
     }
 }

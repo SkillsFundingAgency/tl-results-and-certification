@@ -51,7 +51,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         protected ILogger<GenericRepository<TqRegistrationSpecialism>> TqRegistrationSpecialismRepositoryLogger;
         protected ICommonService CommonService;
         protected IMapper RegistrationMapper;
-
+        protected ILogger<GenericRepository<ChangeLog>> ChangeLogRepositoryLogger;
+        protected IRepository<ChangeLog> ChangeLogRepository;
         protected virtual void CreateMapper()
         {
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(RegistrationMapper).Assembly));
@@ -78,8 +79,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var notificationService = new NotificationService(notificationTemplateRepository, notificationsClient, notificationLogger);
 
             var configuration = new ResultsAndCertificationConfiguration { TlevelQueriedSupportEmailAddress = "test@test.com" };
-
-            CommonService = new CommonService(commonServiceLogger, commonMapper, tlLookupRepository, functionLogRepository, commonRepository, notificationService, configuration);
+            ChangeLogRepositoryLogger = new Logger<GenericRepository<ChangeLog>>(new NullLoggerFactory());
+            ChangeLogRepository = new GenericRepository<ChangeLog>(ChangeLogRepositoryLogger, DbContext);
+            ChangeLogRepositoryLogger = new Logger<GenericRepository<ChangeLog>>(new NullLoggerFactory());
+            ChangeLogRepository = new GenericRepository<ChangeLog>(ChangeLogRepositoryLogger, DbContext);
+            CommonService = new CommonService(commonServiceLogger, commonMapper, tlLookupRepository, functionLogRepository, commonRepository, notificationService, configuration, ChangeLogRepository);
         } 
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)

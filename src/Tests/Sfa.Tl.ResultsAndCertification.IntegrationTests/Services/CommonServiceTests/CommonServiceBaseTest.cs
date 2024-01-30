@@ -35,6 +35,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CommonService
         protected ILogger<GenericRepository<NotificationTemplate>> NotificationTemplateRepositoryLogger;
         protected ILogger<INotificationService> NotificationServiceLogger;
         protected INotificationService NotificationService;
+        protected ILogger<GenericRepository<ChangeLog>> ChangeLogRepositoryLogger;
+        protected IRepository<ChangeLog> ChangeLogRepository;
 
         protected virtual void CreateMapper()
         {

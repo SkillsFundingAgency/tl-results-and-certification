@@ -1,8 +1,10 @@
-﻿using NSubstitute;
+﻿using FluentAssertions;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System;
 using System.Collections.Generic;
@@ -42,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
             _mockHttpResult = new AdminLearnerRecord
             {
-                ProfileId = 1,
+                PathwayId = 1,
                 Uln = 1234567890,
                 Name = "John Smith",
                 DateofBirth = System.DateTime.UtcNow.AddYears(-29),
