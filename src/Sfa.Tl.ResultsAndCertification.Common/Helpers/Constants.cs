@@ -68,6 +68,8 @@
         public const string AddAddressConfirmation = "AddAddressConfirmation";
         public const string RequestSoaConfirmation = "RequestSoaConfirmation";
         public const string UserSessionActivityId = "UserSessionActivityId";
+        public const string AcademicYearTo = "AcademicYearTo";
+        public const string IndustryPlacementStatusTo = "IndustryPlacementStatusTo";
 
         // Registration Data Index Constants
         public const int RegistrationProfileStartIndex = 100000;
@@ -111,6 +113,7 @@
         public const string AppealOutcomeKnownTypeId = "outcomeKnownTypeId";
         public const string IsAppealOutcomeJourney = "isAppealOutcomeJourney";
         public const string AcademicYear = "academicYear";
+        public const string RegistrationPathwayId = "registrationPathwayId";
 
         // Assessments
         public const int AssessmentEndInYears = 4;

@@ -51,6 +51,30 @@ stages:
       serviceConnection: $(testServiceConnection)
       applicationName: resac
 
+######################## TEST 3 ##############################################
+  - template: tlevels-shared-stage.yml
+    parameters:
+      environmentTagName: Test3
+      stageName: Test3
+      dependencies:
+        - build
+      environmentName: tst3
+      sharedEnvironmentId: t03
+      serviceConnection: $(testServiceConnection)
+      applicationName: resac
+    
+  - template: tlevels-stage.yml
+    parameters:
+      environmentTagName: Test3
+      stageName: Test3
+      dependencies:
+        - DeploySharedInfrastructure_t03
+      environmentName: tst3
+      environmentId: t03
+      sharedEnvironmentId: t03
+      serviceConnection: $(testServiceConnection)
+      applicationName: resac
+
 ######################## Pre Prod ##############################################
   - template: tlevels-shared-stage.yml
     parameters:

@@ -87,7 +87,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
             }
         }
         
-        
         /// <summary>
         ///   Looks up a localized string similar to  english status.
         /// </summary>
@@ -115,12 +114,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
             }
         }
         
-        
-        
-        
-                        
         /// <summary>
-        ///   Looks up a localized string similar to  - Learner record – Admin – Manage T Level results – GOV.UK.
+        ///   Looks up a localized string similar to Start year updated.
+        /// </summary>
+        public static string Message_Notification_Success {
+            get {
+                return ResourceManager.GetString("Message_Notification_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  - Learner record – Admin.
         /// </summary>
         public static string Page_Title {
             get {
@@ -137,7 +141,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
             }
         }
         
-                     
         /// <summary>
         ///   Looks up a localized string similar to Search again.
         /// </summary>
@@ -218,7 +221,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
                 return ResourceManager.GetString("Status_Tag_Record_Complete", resourceCulture);
             }
         }
-       
         
         /// <summary>
         ///   Looks up a localized string similar to Awarding organisation.
@@ -265,7 +267,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
             }
         }
         
-        
         /// <summary>
         ///   Looks up a localized string similar to Provider (UKPRN).
         /// </summary>
@@ -274,7 +275,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
                 return ResourceManager.GetString("Title_Provider_Ukprn_Name_Text", resourceCulture);
             }
         }
-              
         
         /// <summary>
         ///   Looks up a localized string similar to Start year.
@@ -320,6 +320,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
                 return ResourceManager.GetString("Uln_Text", resourceCulture);
             }
         }
-        
     }
 }

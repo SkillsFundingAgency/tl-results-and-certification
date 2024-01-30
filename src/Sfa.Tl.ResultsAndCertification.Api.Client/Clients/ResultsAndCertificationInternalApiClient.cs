@@ -456,6 +456,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<AdminLearnerRecord>(requestUri);
         }
 
+        public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)
+        {
+            return await PostAsync<ReviewChangeStartYearRequest, bool>(ApiConstants.ProcessChangeStartYearUri, request);
+        }
+
+
         #endregion
 
         #region Private Methods

@@ -288,6 +288,9 @@
                     }
                 }
             },
+             "dependsOn": [
+                "[concat('key-vault','-', parameters('environmentNameAbbreviation'))]"
+            ],
             "copy": {
                 "count": "[length(variables('sqlServerNames'))]",
                 "name": "firewallrulecopy",
@@ -316,6 +319,9 @@
                     }
                 }
             },
+             "dependsOn": [
+                "[concat('key-vault','-', parameters('environmentNameAbbreviation'))]"
+            ],
             "copy": {
                 "count": "[length(variables('sqlServerNames'))]",
                 "name": "firewallrulecopy",
