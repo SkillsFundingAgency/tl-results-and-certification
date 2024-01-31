@@ -152,6 +152,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Industry placement status updated.
+        /// </summary>
+        public static string Message_Notification_Success {
+            get {
+                return ResourceManager.GetString("Message_Notification_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You can enter up to 2,000 characters.
         /// </summary>
         public static string Message_You_Can_Enter_Up_To_Characters {

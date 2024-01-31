@@ -1,10 +1,11 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+﻿using Microsoft.AspNetCore.Http;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -31,8 +32,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPl
 
         [Required(ErrorMessageResourceType = typeof(ReviewChangesIndustryPlacement), ErrorMessageResourceName = "Validation_Reason_For_Change_Blank_Text")]
         public string ChangeReason { get; set; }
-
+        public string CreatedBy { get; set; } = Environment.UserName;
         public string ZendeskId { get; set; }
+
+        public List<int> SelectedReasons => AdminChangeIpViewModel?.ReasonsViewModel?.ReasonsList.Where(x => x.IsSelected).Select(x => x.Id).ToList();
 
         public BackLinkModel BackLink => new()
         {

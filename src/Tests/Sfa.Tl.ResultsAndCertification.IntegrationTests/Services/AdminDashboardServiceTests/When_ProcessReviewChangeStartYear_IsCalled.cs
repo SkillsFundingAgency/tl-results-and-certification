@@ -23,18 +23,15 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Service;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
+using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboardServiceTests
 {
-    public class When_ProcessReviewChangeStartYear_IsCalled: AdminDashboardServiceBaseTest
+    public class When_ProcessReviewChangeStartYear_IsCalled : AdminDashboardServiceBaseTest
     {
-        private IList<TqRegistrationPathway> _tqRegistrationPathways;
+
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
-        private LearnerRecord _result;
-
         private List<TqRegistrationProfile> _registrations;
-
-        private static ReviewChangeStartYearRequest reviewChangeStartYearRequest;
 
         public override void Given()
         {
@@ -43,21 +40,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             _ulns = new Dictionary<long, RegistrationPathwayStatus>
             {
                 { 1111111111, RegistrationPathwayStatus.Active },
-                { 1111111112, RegistrationPathwayStatus.Active },                
+                { 1111111112, RegistrationPathwayStatus.Active },
             };
 
-             reviewChangeStartYearRequest = new ReviewChangeStartYearRequest()
-            {
-                AcademicYear = 2022,
-                AcademicYearTo = 2021,
-                ChangeReason = "Test Reason",
-                ContactName = "Test User",
-                RegistrationPathwayId = 1,
-                ChangeStartYearDetails = new ChangeStartYearDetails() { StartYearFrom = 2022, StartYearTo = 2021 },
-                RequestDate = DateTime.Now.ToShortDateString(),
-                ZendeskId = "1234567890",
-                CreatedBy = "System"
-            };
 
             // Create mapper
             CreateMapper();
@@ -78,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             var tqSpecialismResultsSeedData = new List<TqSpecialismResult>();
             var industryPlacementUln = 1111111111;
             var profilesWithPrsStatus = new List<(long, PrsStatus?)> { (1111111111, null), (1111111112, null), (1111111113, null), (1111111114, PrsStatus.BeingAppealed), (1111111115, null) };
-           
+
 
             DbContext.SaveChanges();
             DetachAll();
@@ -94,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             FunctionLogRepositoryLogger = new Logger<GenericRepository<FunctionLog>>(new NullLoggerFactory());
             FunctionLogRepository = new GenericRepository<FunctionLog>(FunctionLogRepositoryLogger, DbContext);
             CommonRepository = new CommonRepository(DbContext);
-             
+
 
             NotificationsClient = Substitute.For<IAsyncNotificationClient>();
             NotificationLogger = new Logger<NotificationService>(new NullLoggerFactory());
@@ -109,9 +94,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             AdminDashboardRepository = new AdminDashboardRepository(DbContext);
             RegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
             RegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(RegistrationPathwayRepositoryLogger, DbContext);
-           
+            var industryPlacementRepository = Substitute.For<IRepository<Domain.Models.IndustryPlacement>>();
 
-            AdminDashboardService = new AdminDashboardService(AdminDashboardRepository, SystemProvider, Mapper, RegistrationPathwayRepository, commonService);
+            AdminDashboardService = new AdminDashboardService(AdminDashboardRepository, SystemProvider, Mapper, RegistrationPathwayRepository, commonService, industryPlacementRepository);
 
         }
 
@@ -134,7 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
 
         [Theory()]
         [MemberData(nameof(Data))]
-        public async Task Then_Expected_Results_Are_Returned(ReviewChangeStartYearRequest request, bool expectedResponse,long uln)
+        public async Task Then_Expected_Results_Are_Returned(ReviewChangeStartYearRequest request, bool expectedResponse, long uln)
         {
             await WhenAsync(request);
 
@@ -153,8 +138,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
 
             // Assert
             request.RegistrationPathwayId.Should().Be(actualIndustryPlacement.Id);
-            request.AcademicYearTo.Should().Be(actualIndustryPlacement.AcademicYear);
-            
+            request.ChangeStartYearDetails.StartYearTo.Should().Be(actualIndustryPlacement.AcademicYear);
+
         }
 
 
@@ -167,8 +152,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
                     // Uln not found
                     new object[] { new ReviewChangeStartYearRequest()
                     {
-                AcademicYear = 2022,
-                AcademicYearTo = 2021,
                 ChangeReason = "Test Reason",
                 ContactName = "Test User",
                 RegistrationPathwayId = 1,
@@ -177,50 +160,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
                 ZendeskId = "1234567890",
                 CreatedBy = "System"
                     },
-                        true,1111111111 }                 
+                        true,1111111111 }
 
                 };
             }
-        }
-
-        private void SeedIndustyPlacementData(int uln)
-        {
-            var pathway = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln).TqRegistrationPathways.FirstOrDefault();
-            IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, IndustryPlacementStatus.Completed);
-        }
-
-        public List<TqRegistrationProfile> SeedRegistrationsData(Dictionary<long, RegistrationPathwayStatus> ulns, TqProvider tqProvider = null, bool isCouplet = false)
-        {
-            var profiles = new List<TqRegistrationProfile>();
-
-            foreach (var uln in ulns)
-            {
-                profiles.Add(SeedRegistrationData(uln.Key, uln.Value, tqProvider, isCouplet));
-            }
-            return profiles;
-        }
-
-        public TqRegistrationProfile SeedRegistrationData(long uln, RegistrationPathwayStatus status = RegistrationPathwayStatus.Active, TqProvider tqProvider = null, bool isCouplet = false)
-        {
-            var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
-            var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
-            var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProvider);
-            var tqRegistrationSpecialisms = isCouplet ? RegistrationsDataProvider.CreateTqRegistrationSpecialisms(DbContext, tqRegistrationPathway)
-                : new List<TqRegistrationSpecialism> { RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialisms.First()) };
-
-            if (status == RegistrationPathwayStatus.Withdrawn)
-            {
-                tqRegistrationPathway.Status = status;
-                tqRegistrationPathway.EndDate = DateTime.UtcNow.AddDays(-1);
-                foreach (var tqRegistrationSpecialism in tqRegistrationSpecialisms)
-                {
-                    tqRegistrationSpecialism.IsOptedin = true;
-                    tqRegistrationSpecialism.EndDate = DateTime.UtcNow.AddDays(-1);
-                }
-            }
-
-            DbContext.SaveChanges();
-            return profile;
         }
 
 
