@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
 {
-    public  class ReviewChangeRequest
+    public abstract class ReviewChangeRequest
     {
         public int RegistrationPathwayId { get; set; }
         public string ContactName { get; set; }
@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
         public string ZendeskId { get; set; }
         public string CreatedBy { get; set; }
         public string Details { get; set; }
-        public ChangeType ChangeType { get; set;}
-      
+        public abstract ChangeType ChangeType { get; set; }
+
     }
 }

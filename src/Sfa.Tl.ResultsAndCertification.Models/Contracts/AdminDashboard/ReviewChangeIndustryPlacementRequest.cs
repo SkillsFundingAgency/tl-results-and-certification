@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
 {
-    public class ReviewChangeIndustryPlacementRequest :ReviewChangeRequest
+    public class ReviewChangeIndustryPlacementRequest : ReviewChangeRequest
     {
         public ChangeIPDetails ChangeIPDetails { get; set; }
+        public override ChangeType ChangeType { get; set; } = ChangeType.IndustryPlacement;
     }
 }

@@ -12,5 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
     public class ReviewChangeStartYearRequest :ReviewChangeRequest
     {
       public ChangeStartYearDetails ChangeStartYearDetails { get; set; }
+
+      public override ChangeType ChangeType { get; set; } = ChangeType.StartYear;
     }
 }
