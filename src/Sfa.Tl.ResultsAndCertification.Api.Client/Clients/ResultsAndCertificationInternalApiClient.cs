@@ -456,14 +456,14 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<AdminLearnerRecord>(requestUri);
         }
 
-        public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeRequest request)
+        public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)
         {
-            return await PostAsync<ReviewChangeRequest, bool>(ApiConstants.ProcessChangeStartYearUri, request);
+            return await PostAsync<ReviewChangeStartYearRequest, bool>(ApiConstants.ProcessChangeStartYearUri, request);
         }
 
-        public async Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeRequest request)
+        public async Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request)
         {
-            return await PostAsync<ReviewChangeRequest, bool>(ApiConstants.ProcessChangeIPUri, request);
+            return await PostAsync<ReviewChangeIndustryPlacementRequest, bool>(ApiConstants.ProcessChangeIPUri, request);
         }
 
 

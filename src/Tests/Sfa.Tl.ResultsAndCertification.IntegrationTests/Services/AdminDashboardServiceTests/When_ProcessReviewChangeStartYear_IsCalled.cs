@@ -112,14 +112,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         {
             return Task.CompletedTask;
         }
-        public async Task WhenAsync(ReviewChangeRequest request)
+        public async Task WhenAsync(ReviewChangeStartYearRequest request)
         {
             _actualResult = await AdminDashboardService.ProcessChangeStartYearAsync(request);
         }
 
         [Theory()]
         [MemberData(nameof(Data))]
-        public async Task Then_Expected_Results_Are_Returned(ReviewChangeRequest request, bool expectedResponse, long uln)
+        public async Task Then_Expected_Results_Are_Returned(ReviewChangeStartYearRequest request, bool expectedResponse, long uln)
         {
             await WhenAsync(request);
 
@@ -150,7 +150,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
                 return new[]
                 {
                     // Uln not found
-                    new object[] { new ReviewChangeRequest()
+                    new object[] { new ReviewChangeStartYearRequest()
                     {
                 ChangeReason = "Test Reason",
                 ContactName = "Test User",

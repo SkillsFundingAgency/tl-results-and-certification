@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpPost]
         [Route("ProcessChangeStartYear")]
-        public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeRequest request)
+        public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)
         {
             return await _adminDashboardService.ProcessChangeStartYearAsync(request);
         }
@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpPost]
         [Route("ProcessChangeIndustryPlacement")]
-        public async Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeRequest request)
+        public async Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request)
         {
             return await _adminDashboardService.ProcessChangeIndustryPlacementAsync(request);
         }

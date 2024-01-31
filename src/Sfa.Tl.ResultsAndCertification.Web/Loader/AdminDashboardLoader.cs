@@ -42,14 +42,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel reviewChangeStartYearViewModel)
         {
-            var reviewChangeRequest = _mapper.Map<ReviewChangeRequest>(reviewChangeStartYearViewModel);
+            var reviewChangeRequest = _mapper.Map<ReviewChangeStartYearRequest>(reviewChangeStartYearViewModel);
             return await _internalApiClient.ProcessChangeStartYearAsync(reviewChangeRequest);
             
         }
 
         public async Task<bool> ProcessChangeIndustryPlacementAsync(AdminReviewChangesIndustryPlacementViewModel adminChangeIpViewModel)
         {
-            var reviewChangeStartYearRequest = _mapper.Map<ReviewChangeRequest>(adminChangeIpViewModel);
+            var reviewChangeStartYearRequest = _mapper.Map<ReviewChangeIndustryPlacementRequest>(adminChangeIpViewModel);
             return await _internalApiClient.ProcessChangeIndustryPlacementAsync(reviewChangeStartYearRequest);
 
         }

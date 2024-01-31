@@ -122,14 +122,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
     {
         return Task.CompletedTask;
     }
-    public async Task WhenAsync(ReviewChangeRequest request)
+    public async Task WhenAsync(ReviewChangeIndustryPlacementRequest request)
     {
         _actualResult = await AdminDashboardService.ProcessChangeIndustryPlacementAsync(request);
     }
 
     [Theory()]
     [MemberData(nameof(Data))]
-    public async Task Then_Expected_Results_Are_Returned(ReviewChangeRequest request, bool expectedResponse, long uln)
+    public async Task Then_Expected_Results_Are_Returned(ReviewChangeIndustryPlacementRequest request, bool expectedResponse, long uln)
     {
         await WhenAsync(request);
 
@@ -165,7 +165,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             return new[]
             {
                    
-                    new object[] { new ReviewChangeRequest()
+                    new object[] { new ReviewChangeIndustryPlacementRequest()
                     {
                 ChangeReason = "Test Reason",
                 ContactName = "Test User",
@@ -177,7 +177,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
                     },
                         true,1111111114,
                     },
-                     new object[] { new ReviewChangeRequest()
+                     new object[] { new ReviewChangeIndustryPlacementRequest()
                     {
                 ChangeReason = "Test Reason1",
                 ContactName = "Test User1",
@@ -189,7 +189,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
                     },
                         true,1111111115,
                     },
-                     new object[] { new ReviewChangeRequest()
+                     new object[] { new ReviewChangeIndustryPlacementRequest    ()
                     {
                 ChangeReason = "Test Reason1",
                 ContactName = "Test User1",

@@ -17,7 +17,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
         public string CreatedBy { get; set; }
         public string Details { get; set; }
         public ChangeType ChangeType { get; set;}
-        public ChangeIPDetails ChangeIPDetails { get; set; }
-        public ChangeStartYearDetails ChangeStartYearDetails { get; set; }
+      
     }
 }

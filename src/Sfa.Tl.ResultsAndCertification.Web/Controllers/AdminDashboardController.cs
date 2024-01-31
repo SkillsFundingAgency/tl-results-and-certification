@@ -237,9 +237,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(model);
             }
-
-            model.LoggedInUser = $"{this.User.FindFirstValue(ClaimTypes.GivenName)} {this.User.FindFirstValue(ClaimTypes.Surname)}";
-
             var isSuccess = await _loader.ProcessChangeStartYearAsync(model);
 
             if (isSuccess)
@@ -431,15 +428,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/submit-review-changes-industry-placement", Name = RouteConstants.SubmitReviewChangesIndustryPlacement)]
         public async Task<IActionResult> AdminReviewChangesIndustryPlacementAsync(AdminReviewChangesIndustryPlacementViewModel model)
         {
-            var _cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
-            model.AdminChangeIpViewModel = _cachedModel ?? new AdminChangeIpViewModel();
-
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            model.LoggedInUser = $"{this.User.FindFirstValue(ClaimTypes.GivenName)} {this.User.FindFirstValue(ClaimTypes.Surname)}";
-
+            var _cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
+            model.AdminChangeIpViewModel = _cachedModel ?? new AdminChangeIpViewModel(); 
             var isSuccess = await _loader.ProcessChangeIndustryPlacementAsync(model);
 
             if (isSuccess)

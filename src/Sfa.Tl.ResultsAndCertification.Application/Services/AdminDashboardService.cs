@@ -78,37 +78,35 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _adminLearnerRecord;
         }
 
-        public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeRequest request)
+        public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)
         {
             var pathway = await _tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.Id == request.RegistrationPathwayId);
-            request.ChangeType = ChangeType.StartYear;
-
             if (pathway == null) return false;
 
             pathway.AcademicYear = request.ChangeStartYearDetails.StartYearTo;
             var status = await _tqRegistrationPathwayRepository.UpdateWithSpecifedColumnsOnlyAsync(pathway, u => u.AcademicYear, u => u.ModifiedBy, u => u.ModifiedOn);
 
             if (status > 0)
-                return await _commonService.AddChangelog(CreateChangeLogRequest(request));
+                return await _commonService.AddChangelog(CreateChangeLogRequest(request, JsonConvert.SerializeObject((request.ChangeStartYearDetails))));
             return false;
         }
 
-        public async Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeRequest request)
+        public async Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request)
         {
             var industryPlacement = await _industryPlacementRepository.GetFirstOrDefaultAsync(p => p.TqRegistrationPathwayId == request.RegistrationPathwayId);
-            request.ChangeType = ChangeType.IndustryPlacement;
             int status;
 
+            
             if (industryPlacement == null)
             {
-                industryPlacement = new IndustryPlacement()
-                {
-                    CreatedBy = request.CreatedBy,
-                    TqRegistrationPathwayId = request.RegistrationPathwayId,
-                    Status = request.ChangeIPDetails.IndustryPlacementStatusTo,
-                    Details = request.ChangeIPDetails.IndustryPlacementStatusTo== Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration ? JsonConvert.SerializeObject(ConstructIndustryPlacementDetails(request.ChangeIPDetails)) :null
-                };
-                status = await _industryPlacementRepository.CreateAsync(industryPlacement);
+                    industryPlacement = new IndustryPlacement()
+                    {
+                        CreatedBy = request.CreatedBy,
+                        TqRegistrationPathwayId = request.RegistrationPathwayId,
+                        Status = request.ChangeIPDetails.IndustryPlacementStatusTo,
+                        Details = request.ChangeIPDetails.IndustryPlacementStatusTo == Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration ? JsonConvert.SerializeObject(ConstructIndustryPlacementDetails(request.ChangeIPDetails)) : null
+                    };
+                    status = await _industryPlacementRepository.CreateAsync(industryPlacement); 
             }
             else
             {
@@ -119,19 +117,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 status = await _industryPlacementRepository.UpdateWithSpecifedColumnsOnlyAsync(industryPlacement, u => u.Status, u => u.Details, u => u.ModifiedBy, u => u.ModifiedOn);
             }
             if (status > 0)
-                return await _commonService.AddChangelog(CreateChangeLogRequest(request));
+                return await _commonService.AddChangelog(CreateChangeLogRequest(request, JsonConvert.SerializeObject(request.ChangeIPDetails)));
             return false;
         }
 
 
-        private ChangeLog CreateChangeLogRequest(ReviewChangeRequest request)
+        private ChangeLog CreateChangeLogRequest(ReviewChangeRequest request,string details)
         {
             var changeLog = new ChangeLog()
             {
                 ChangeType = (int)request.ChangeType,
                 ReasonForChange = request.ChangeReason,
                 DateOfRequest = Convert.ToDateTime(request.RequestDate),
-                Details = GetDetails(request),
+                Details = details,
                 ZendeskTicketID = request.ZendeskId,
                 Name = request.ContactName,
                 TqRegistrationPathwayId = request.RegistrationPathwayId,
@@ -139,17 +137,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
             return changeLog;
         }
-
-        private  string GetDetails(ReviewChangeRequest request)
-        {
-            switch ((request.ChangeType)
-)
-            {
-                case ChangeType.IndustryPlacement: return JsonConvert.SerializeObject(request.ChangeIPDetails);
-                case ChangeType.StartYear: return JsonConvert.SerializeObject(request.ChangeStartYearDetails);
-                default: return string.Empty;
-            }
-        }
+         
 
         private IndustryPlacementDetails ConstructIndustryPlacementDetails(ChangeIPDetails change)
         {

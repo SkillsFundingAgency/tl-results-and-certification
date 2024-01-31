@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 ChangeReason = "Test Reason",
                 ContactName = "Test User",
                 ZendeskId = "1234567890",
-                LoggedInUser = "System",
+                CreatedBy = "System",
                 AdminChangeIpViewModel = new AdminChangeIpViewModel()
                 {
                     AdminIpCompletion = new AdminIpCompletionViewModel()
