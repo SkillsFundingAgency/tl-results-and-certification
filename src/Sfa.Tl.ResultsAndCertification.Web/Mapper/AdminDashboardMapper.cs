@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -96,19 +99,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.IndustryPlacementStatusTo, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
 
 
-            
+
             CreateMap<ReviewChangeStartYearViewModel, ReviewChangeRequest>()
                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
                .ForMember(d => d.ContactName, opts => opts.MapFrom(s => s.ContactName))
                .ForMember(d => d.ChangeReason, opts => opts.MapFrom(s => s.ChangeReason))
                .ForMember(d => d.RequestDate, opts => opts.MapFrom(s => s.RequestDate))
-               .ForMember(d => d.ZendeskId, opts => opts.MapFrom(s => s.ZendeskId))               
-               .ForMember(d => d.CreatedBy, opts => opts.MapFrom(s => s.CreatedBy));
+               .ForMember(d => d.ZendeskId, opts => opts.MapFrom(s => s.ZendeskId));
+               
 
             CreateMap<ReviewChangeStartYearViewModel, ReviewChangeStartYearRequest>()
-               .ForMember(d => d.ChangeStartYearDetails, opts => opts.MapFrom(s => s));
-           
-               
+               .ForMember(d => d.ChangeStartYearDetails, opts => opts.MapFrom(s => s))
+               .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<ReviewChangeStartYearViewModel, ReviewChangeStartYearRequest>>());
+
+
 
             CreateMap<ReviewChangeStartYearViewModel, ChangeStartYearDetails>()
                .ForMember(d => d.StartYearFrom, opts => opts.MapFrom(s => s.AcademicYear))
@@ -119,12 +123,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ContactName, opts => opts.MapFrom(s => s.ContactName))
                 .ForMember(d => d.ChangeReason, opts => opts.MapFrom(s => s.ChangeReason))
                 .ForMember(d => d.RequestDate, opts => opts.MapFrom(s => s.RequestDate))
-                .ForMember(d => d.ZendeskId, opts => opts.MapFrom(s => s.ZendeskId))
-                .ForMember(d => d.CreatedBy, opts => opts.MapFrom(s => s.CreatedBy))                
+                .ForMember(d => d.ZendeskId, opts => opts.MapFrom(s => s.ZendeskId))                
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.AdminChangeIpViewModel.AdminIpCompletion.RegistrationPathwayId));
 
             CreateMap<AdminReviewChangesIndustryPlacementViewModel, ReviewChangeIndustryPlacementRequest>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.AdminChangeIpViewModel.AdminIpCompletion.RegistrationPathwayId))
+                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<AdminReviewChangesIndustryPlacementViewModel, ReviewChangeIndustryPlacementRequest>>())
                 .ForMember(d => d.ChangeIPDetails, opts => opts.MapFrom(s => s));
 
 
