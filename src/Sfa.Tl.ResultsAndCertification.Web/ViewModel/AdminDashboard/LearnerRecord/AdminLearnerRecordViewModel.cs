@@ -7,7 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
 using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
 using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.LearnerRecord;

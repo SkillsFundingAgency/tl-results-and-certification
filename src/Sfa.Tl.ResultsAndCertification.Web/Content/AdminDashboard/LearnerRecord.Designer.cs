@@ -88,6 +88,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add result.
+        /// </summary>
+        public static string Add_Result_Action_Link_Text {
+            get {
+                return ResourceManager.GetString("Add_Result_Action_Link_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to add a result to this learner&apos;s previous assessment.
         /// </summary>
         public static string Add_Result_To_Learners_Previous_Assessment {
@@ -115,7 +124,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Core (code): {0}.
+        ///   Looks up a localized string similar to Remove entry.
+        /// </summary>
+        public static string Button_Remove_Entry_Action {
+            get {
+                return ResourceManager.GetString("Button_Remove_Entry_Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open ROMM.
+        /// </summary>
+        public static string Button_Remove_Open_Romm_Action {
+            get {
+                return ResourceManager.GetString("Button_Remove_Open_Romm_Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change result.
+        /// </summary>
+        public static string Change_Result_Action_Link_Text {
+            get {
+                return ResourceManager.GetString("Change_Result_Action_Link_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Core component: {0}.
         /// </summary>
         public static string Core_Heading_Text {
             get {
@@ -259,7 +295,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Specialism (code): {0}.
+        ///   Looks up a localized string similar to Occupational specialism: {0}.
         /// </summary>
         public static string Specialism_Heading_Text {
             get {
@@ -291,6 +327,51 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static string Status_Tag_Record_Complete {
             get {
                 return ResourceManager.GetString("Status_Tag_Record_Complete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        public static string Table_Column_Action {
+            get {
+                return ResourceManager.GetString("Table_Column_Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exam period.
+        /// </summary>
+        public static string Table_Column_Exam_Period {
+            get {
+                return ResourceManager.GetString("Table_Column_Exam_Period", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grade.
+        /// </summary>
+        public static string Table_Column_Grade {
+            get {
+                return ResourceManager.GetString("Table_Column_Grade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last updated.
+        /// </summary>
+        public static string Table_Column_Last_Updated {
+            get {
+                return ResourceManager.GetString("Table_Column_Last_Updated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated by.
+        /// </summary>
+        public static string Table_Column_Updated_By {
+            get {
+                return ResourceManager.GetString("Table_Column_Updated_By", resourceCulture);
             }
         }
         

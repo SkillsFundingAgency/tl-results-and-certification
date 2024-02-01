@@ -126,6 +126,9 @@
   <data name="Add_An_Assessment_Entry_For" xml:space="preserve">
     <value>Add an assessment entry for {0}</value>
   </data>
+  <data name="Add_Result_Action_Link_Text" xml:space="preserve">
+    <value>Add result</value>
+  </data>
   <data name="Add_Result_To_Learners_Previous_Assessment" xml:space="preserve">
     <value>add a result to this learner's previous assessment</value>
   </data>
@@ -135,8 +138,17 @@
   <data name="Before_Entering_New_Assessment_Details" xml:space="preserve">
     <value>before entering new assessment details.</value>
   </data>
+  <data name="Button_Remove_Entry_Action" xml:space="preserve">
+    <value>Remove entry</value>
+  </data>
+  <data name="Button_Remove_Open_Romm_Action" xml:space="preserve">
+    <value>Open ROMM</value>
+  </data>
+  <data name="Change_Result_Action_Link_Text" xml:space="preserve">
+    <value>Change result</value>
+  </data>
   <data name="Core_Heading_Text" xml:space="preserve">
-    <value>Core (code): {0}</value>
+    <value>Core component: {0}</value>
   </data>
   <data name="Hidden_Action_Text_English" xml:space="preserve">
     <value> english status</value>
@@ -184,7 +196,7 @@
     <value>Overall T Level result</value>
   </data>
   <data name="Specialism_Heading_Text" xml:space="preserve">
-    <value>Specialism (code): {0}</value>
+    <value>Occupational specialism: {0}</value>
   </data>
   <data name="Start_Year_Value" xml:space="preserve">
     <value>{0} to {1}</value>
@@ -194,6 +206,21 @@
   </data>
   <data name="Status_Tag_Record_Complete" xml:space="preserve">
     <value>Record Complete</value>
+  </data>
+  <data name="Table_Column_Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Table_Column_Exam_Period" xml:space="preserve">
+    <value>Exam period</value>
+  </data>
+  <data name="Table_Column_Grade" xml:space="preserve">
+    <value>Grade</value>
+  </data>
+  <data name="Table_Column_Last_Updated" xml:space="preserve">
+    <value>Last updated</value>
+  </data>
+  <data name="Table_Column_Updated_By" xml:space="preserve">
+    <value>Updated by</value>
   </data>
   <data name="This_Learner_Does_Not_Have_Occupational_Specialism_Recorded" xml:space="preserve">
     <value>This learner does not have an occupational specialism recorded on this service.</value>
