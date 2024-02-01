@@ -1,8 +1,10 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
@@ -22,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public string AcademicYearTo { get; set; }
         public string DisplayAcademicYear { get; set; }
         public string Learner => $"{FirstName} {LastName}";
-        public string LoggedInUser { get; set; }
+        public string CreatedBy { get; set; } = Environment.UserName;
 
         [Required(ErrorMessageResourceType = typeof(ErrorResource.ReviewChangeStartYear), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
         public string ContactName { get; set; }

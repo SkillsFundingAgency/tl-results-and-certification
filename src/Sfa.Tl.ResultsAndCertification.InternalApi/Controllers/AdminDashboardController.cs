@@ -48,5 +48,15 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _adminDashboardService.ProcessChangeStartYearAsync(request);
         }
+
+
+        [HttpPost]
+        [Route("ProcessChangeIndustryPlacement")]
+        public async Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request)
+        {
+            return await _adminDashboardService.ProcessChangeIndustryPlacementAsync(request);
+        }
+
     }
+
 }

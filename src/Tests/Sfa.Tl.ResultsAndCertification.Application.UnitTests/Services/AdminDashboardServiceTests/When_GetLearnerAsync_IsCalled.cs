@@ -56,9 +56,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
             mapper.Map<AdminLearnerRecord>(mockAdminLearnerRecord).Returns(_expectedResult);
             var tqRegistrationPathwayRepository = Substitute.For<IRepository<TqRegistrationPathway>>();
             var commonService = Substitute.For<ICommonService>();
+            var industryPlacementRepository = Substitute.For<IRepository<IndustryPlacement>>();
 
 
-            _adminDashboardService = new AdminDashboardService(repository, systemProvider, mapper, tqRegistrationPathwayRepository,commonService);
+            _adminDashboardService = new AdminDashboardService(repository, systemProvider, mapper, tqRegistrationPathwayRepository,commonService, industryPlacementRepository);
 
         }
 
