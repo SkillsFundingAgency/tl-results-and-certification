@@ -164,7 +164,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/learner-record/{pathwayid}", Name = RouteConstants.AdminLearnerRecord)]
         public async Task<IActionResult> AdminLearnerRecordAsync(int pathwayId)
         {
-            AdminLearnerRecordViewModel viewModel = await _loader.GetAdminLearnerRecordAsync(pathwayId);
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(pathwayId);
             if (viewModel == null || !viewModel.IsLearnerRegistered)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({pathwayId}), User: {User.GetUserEmail()}");

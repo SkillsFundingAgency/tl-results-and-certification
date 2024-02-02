@@ -61,6 +61,51 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add outcome.
+        /// </summary>
+        public static string Action_Button_Add_Outcome {
+            get {
+                return ResourceManager.GetString("Action_Button_Add_Outcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add ROMM.
+        /// </summary>
+        public static string Action_Button_Add_Romm {
+            get {
+                return ResourceManager.GetString("Action_Button_Add_Romm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open appeal.
+        /// </summary>
+        public static string Action_Button_Open_Appeal {
+            get {
+                return ResourceManager.GetString("Action_Button_Open_Appeal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove entry.
+        /// </summary>
+        public static string Action_Button_Remove_Entry {
+            get {
+                return ResourceManager.GetString("Action_Button_Remove_Entry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request change.
+        /// </summary>
+        public static string Action_Button_Request_Change {
+            get {
+                return ResourceManager.GetString("Action_Button_Request_Change", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string Action_Text_Link_Add {
@@ -480,33 +525,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static string Uln_Text {
             get {
                 return ResourceManager.GetString("Uln_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You cannot register this learner for a core component assessment until the {0} window opens..
-        /// </summary>
-        public static string You_Cannot_Register_Learner_For_Core_Assessment_Until {
-            get {
-                return ResourceManager.GetString("You_Cannot_Register_Learner_For_Core_Assessment_Until", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You cannot register this learner for an occupational specialism assessment until the {0} window opens..
-        /// </summary>
-        public static string You_Cannot_Register_Learner_For_Occupational_Specialism_Until {
-            get {
-                return ResourceManager.GetString("You_Cannot_Register_Learner_For_Occupational_Specialism_Until", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You must.
-        /// </summary>
-        public static string You_Must {
-            get {
-                return ResourceManager.GetString("You_Must", resourceCulture);
             }
         }
     }

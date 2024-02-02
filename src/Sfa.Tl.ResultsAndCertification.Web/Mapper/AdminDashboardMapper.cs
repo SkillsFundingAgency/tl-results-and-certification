@@ -1,16 +1,21 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.TableButton;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LearnerRecordContent = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.LearnerRecord;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 {
@@ -42,20 +47,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AssessmentDetails, opts => opts.MapFrom(s => s.Pathway));
 
             CreateMap<Pathway, AdminAssessmentDetailsViewModel>()
-                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items["registrationPathwayId"]))
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items[Constants.RegistrationPathwayId]))
                 .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.Name} ({s.LarId})"))
                 .ForMember(d => d.PathwayAssessments, opts => opts.MapFrom(s => s.PathwayAssessments))
                 .ForMember(d => d.SpecialismDetails, opts => opts.MapFrom(s => s.Specialisms));
 
             CreateMap<Assessment, AdminAssessmentViewModel>()
-                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items["registrationPathwayId"]))
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items[Constants.RegistrationPathwayId]))
                 .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => s.SeriesName))
                 .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.Result != null ? s.Result.Grade : null))
+                .ForMember(d => d.PrsDisplayText, opts => opts.MapFrom(s => GetPrsDisplayText(s)))
                 .ForMember(d => d.LastUpdated, opts => opts.MapFrom(s => s.Result != null ? s.Result.LastUpdatedOn.ToDobFormat() : null))
-                .ForMember(d => d.UpdatedBy, opts => opts.MapFrom(s => s.Result != null ? s.Result.LastUpdatedBy : null));
+                .ForMember(d => d.UpdatedBy, opts => opts.MapFrom(s => s.Result != null ? s.Result.LastUpdatedBy : null))
+                .ForMember(d => d.ActionButton, opt => opt.MapFrom<AdminAssessmentResultTableButtonResolver>());
 
             CreateMap<Specialism, AdminSpecialismViewModel>()
-               .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items["registrationPathwayId"]))
+               .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items[Constants.RegistrationPathwayId]))
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => $"{s.Name} ({s.LarId})"))
                .ForMember(d => d.Assessments, opts => opts.MapFrom(s => s.Assessments));
@@ -187,6 +194,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             }
 
             return options;
+        }
+
+        private string GetPrsDisplayText(Assessment assessment)
+        {
+            if (string.IsNullOrWhiteSpace(assessment?.Result?.GradeCode))
+            {
+                return string.Empty;
+            }
+
+            bool canChangeResult = CommonHelper.IsValidGradeForChangeResult(assessment?.Result?.GradeCode, assessment.ComponentType);
+
+            if (canChangeResult)
+            {
+                return string.Empty;
+            }
+
+            return CommonHelper.GetPrsStatusDisplayText(assessment?.Result?.PrsStatus, assessment.RommEndDate, assessment.AppealEndDate);
         }
     }
 }

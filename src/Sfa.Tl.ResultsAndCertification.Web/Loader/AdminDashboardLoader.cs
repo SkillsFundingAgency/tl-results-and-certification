@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -33,22 +33,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<AdminSearchLearnerDetailsListViewModel>(apiResponse);
         }
 
-        public async Task<AdminLearnerRecordViewModel> GetAdminLearnerRecordAsync(int registrationPathwayId)
+        public async Task<TLearnerRecordViewModel> GetAdminLearnerRecordAsync<TLearnerRecordViewModel>(int registrationPathwayId)
         {
             AdminLearnerRecord learnerRecord = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
 
-            AdminLearnerRecordViewModel response = _mapper.Map<AdminLearnerRecordViewModel>(learnerRecord, opt =>
+            TLearnerRecordViewModel response = _mapper.Map<TLearnerRecordViewModel>(learnerRecord, opt =>
             {
-                opt.Items["registrationPathwayId"] = learnerRecord.RegistrationPathwayId;
+                opt.Items[Constants.RegistrationPathwayId] = learnerRecord.RegistrationPathwayId;
             });
 
             return response;
-        }
-
-        public async Task<TLearnerRecordViewModel> GetAdminLearnerRecordAsync<TLearnerRecordViewModel>(int registrationPathwayId)
-        {
-            var response = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
-            return _mapper.Map<TLearnerRecordViewModel>(response);
         }
 
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel reviewChangeStartYearViewModel)

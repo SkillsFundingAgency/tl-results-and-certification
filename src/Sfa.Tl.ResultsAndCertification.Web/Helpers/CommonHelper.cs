@@ -32,12 +32,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
 
         public static bool IsAppealsAllowed(DateTime? appealsEndDate)
         {
-            return appealsEndDate.HasValue && DateTime.Today <= appealsEndDate.Value;
+            return IsAppealsAllowed(appealsEndDate, DateTime.Today);
+        }
+
+        public static bool IsAppealsAllowed(DateTime? appealsEndDate, DateTime today)
+        {
+            return appealsEndDate.HasValue && today <= appealsEndDate.Value;
         }
 
         public static string GetPrsStatusDisplayText(PrsStatus? prsStatus, DateTime? rommEndDate, DateTime? appealsEndDate)
         {
-            if((prsStatus == null || prsStatus == PrsStatus.NotSpecified) && rommEndDate.HasValue && IsRommAllowed(rommEndDate) == false)
+            if ((prsStatus == null || prsStatus == PrsStatus.NotSpecified) && rommEndDate.HasValue && IsRommAllowed(rommEndDate) == false)
                 return FormatPrsStatusDisplayHtml(Constants.RedTagClassName, PrsStatusContent.Final_Display_Text);
 
             if (prsStatus == PrsStatus.UnderReview)
@@ -48,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
 
             if (prsStatus == PrsStatus.Final || !IsAppealsAllowed(appealsEndDate))
                 return FormatPrsStatusDisplayHtml(Constants.RedTagClassName, PrsStatusContent.Final_Display_Text);
-            
+
             return string.Empty;
         }
 
@@ -96,8 +101,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
         private static int GetStartYearOffset(int academicYear, int tlevelStartYear, ComponentType componentType)
         {
             var isTlevelStartYearSameAsAcademicYear = academicYear == tlevelStartYear;
-            var startYearOffset = componentType == ComponentType.Specialism 
-                                ? (isTlevelStartYearSameAsAcademicYear ? Constants.SpecialismAssessmentStartInYears : 0) 
+            var startYearOffset = componentType == ComponentType.Specialism
+                                ? (isTlevelStartYearSameAsAcademicYear ? Constants.SpecialismAssessmentStartInYears : 0)
                                 : Constants.CoreAssessmentStartInYears;
             return startYearOffset;
         }

@@ -117,6 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Action_Button_Add_Outcome" xml:space="preserve">
+    <value>Add outcome</value>
+  </data>
+  <data name="Action_Button_Add_Romm" xml:space="preserve">
+    <value>Add ROMM</value>
+  </data>
+  <data name="Action_Button_Open_Appeal" xml:space="preserve">
+    <value>Open appeal</value>
+  </data>
+  <data name="Action_Button_Remove_Entry" xml:space="preserve">
+    <value>Remove entry</value>
+  </data>
+  <data name="Action_Button_Request_Change" xml:space="preserve">
+    <value>Request change</value>
+  </data>
   <data name="Action_Text_Link_Add" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -257,14 +272,5 @@
   </data>
   <data name="Uln_Text" xml:space="preserve">
     <value>ULN </value>
-  </data>
-  <data name="You_Cannot_Register_Learner_For_Core_Assessment_Until" xml:space="preserve">
-    <value>You cannot register this learner for a core component assessment until the {0} window opens.</value>
-  </data>
-  <data name="You_Cannot_Register_Learner_For_Occupational_Specialism_Until" xml:space="preserve">
-    <value>You cannot register this learner for an occupational specialism assessment until the {0} window opens.</value>
-  </data>
-  <data name="You_Must" xml:space="preserve">
-    <value>You must</value>
   </data>
 </root>

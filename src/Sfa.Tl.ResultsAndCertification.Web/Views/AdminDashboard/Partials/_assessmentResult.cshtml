@@ -21,17 +21,28 @@
             </td>
             <td class="govuk-table__cell">
                 <span>
-                    @if (string.IsNullOrWhiteSpace(assessment.Grade))
+                    @if (assessment.HasGrade)
                     {
-                        <a class="govuk-link" asp-route="Model.ResultRouteName">
-                            @LearnerRecord.Add_Result_Action_Link_Text
-                        </a>
+                        if (string.IsNullOrWhiteSpace(assessment.PrsDisplayText))
+                        {
+                            <span class="govuk-!-margin-right-2">@assessment.Grade</span>
+                            <a class="govuk-link" asp-route="Model.ResultRouteName">
+                                @LearnerRecord.Change_Result_Action_Link_Text
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.Raw(string.Format("<span class='govuk-!-margin-right-2'>{0}</span>{1}", assessment.Grade, assessment.PrsDisplayText))
+                            <br/>
+                            <a class="govuk-link" asp-route="Model.ResultRouteName">
+                                @LearnerRecord.Change_Result_Action_Link_Text
+                            </a>
+                        }
                     }
                     else
                     {
-                        <span class="govuk-!-margin-right-2">@assessment.Grade</span>
                         <a class="govuk-link" asp-route="Model.ResultRouteName">
-                            @LearnerRecord.Change_Result_Action_Link_Text
+                            @LearnerRecord.Add_Result_Action_Link_Text
                         </a>
                     }
                 </span>
@@ -43,9 +54,7 @@
                 @assessment.UpdatedBy
             </td>
             <td class="govuk-table__cell">
-                <a class="govuk-button govuk-button--secondary" href="">
-                    @LearnerRecord.Button_Remove_Entry_Action
-                </a>
+                <vc:table-button model=assessment.ActionButton></vc:table-button>
             </td>
         </tr>
     }
