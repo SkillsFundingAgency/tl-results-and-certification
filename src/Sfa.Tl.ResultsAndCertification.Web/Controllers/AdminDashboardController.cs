@@ -244,7 +244,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
                 {
                     DisplayMessageBody = true,
-                    Message = LearnerRecord.Message_Notification_Success
+                    Message = LearnerRecord.Message_Notification_Success,
+                    IsRawHtml=true
                 },
                 CacheExpiryTime.XSmall);
 
@@ -441,7 +442,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
                 {
                     DisplayMessageBody = true,
-                    Message = ReviewChangesIndustryPlacement.Message_Notification_Success
+                    Message = ReviewChangesIndustryPlacement.Message_Notification_Success,
+                    IsRawHtml = true,
                 },
                 CacheExpiryTime.XSmall);
 
