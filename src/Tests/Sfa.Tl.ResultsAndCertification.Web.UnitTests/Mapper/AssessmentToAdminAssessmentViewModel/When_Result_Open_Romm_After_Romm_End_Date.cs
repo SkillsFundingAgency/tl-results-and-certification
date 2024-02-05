@@ -1,14 +1,16 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using System;
 using Xunit;
 using LearnerRecord = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.LearnerRecord;
+using PrsStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminAssessmentViewModel
 {
-    public class When_Result_Add_Romm_Before_Romm_End_Date : AdminDashboardMapperTestBase
+    public class When_Result_Open_Romm_After_Romm_End_Date : AdminDashboardMapperTestBase
     {
         private readonly int _registrationPathwayId = 1;
         private readonly DateTime _today = new(2024, 2, 2);
@@ -17,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminA
         {
             SeriesName = "Summer 2023",
             ComponentType = ComponentType.Core,
-            RommEndDate = new(2024, 2, 5),
+            RommEndDate = new(2024, 2, 1),
             AppealEndDate = new(2024, 2, 10),
             Result = new Result
             {
@@ -43,12 +45,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminA
             Result.RegistrationPathwayId.Should().Be(RegistrationPathwayId);
             Result.ExamPeriod.Should().Be(_assessment.SeriesName);
             Result.Grade.Should().Be(_assessment.Result.Grade);
-            Result.PrsDisplayText.Should().BeEmpty();
+            Result.PrsDisplayText.Should().ContainAll(new[] { Constants.RedTagClassName, PrsStatusContent.Final_Display_Text });
             Result.LastUpdated.Should().Be(_assessment.Result.LastUpdatedOn.ToDobFormat());
             Result.UpdatedBy.Should().Be(_assessment.Result.LastUpdatedBy);
+            Result.IsResultChangeAllowed.Should().BeTrue();
 
             Result.ActionButton.Should().NotBeNull();
-            Result.ActionButton.Text.Should().Be(LearnerRecord.Action_Button_Add_Romm);
+            Result.ActionButton.Text.Should().Be(LearnerRecord.Action_Button_Open_Romm);
         }
     }
 }

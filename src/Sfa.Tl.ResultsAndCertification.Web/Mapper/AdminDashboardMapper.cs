@@ -59,6 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PrsDisplayText, opts => opts.MapFrom(s => GetPrsDisplayText(s)))
                 .ForMember(d => d.LastUpdated, opts => opts.MapFrom(s => s.Result != null ? s.Result.LastUpdatedOn.ToDobFormat() : null))
                 .ForMember(d => d.UpdatedBy, opts => opts.MapFrom(s => s.Result != null ? s.Result.LastUpdatedBy : null))
+                .ForMember(d => d.IsResultChangeAllowed, opt => opt.MapFrom<AdminAssessmentIsResultChangeAllowedResolver>())
                 .ForMember(d => d.ActionButton, opt => opt.MapFrom<AdminAssessmentResultTableButtonResolver>());
 
             CreateMap<Specialism, AdminSpecialismViewModel>()

@@ -46,6 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminA
             Result.PrsDisplayText.Should().BeEmpty();
             Result.LastUpdated.Should().Be(_assessment.Result.LastUpdatedOn.ToDobFormat());
             Result.UpdatedBy.Should().Be(_assessment.Result.LastUpdatedBy);
+            Result.IsResultChangeAllowed.Should().BeTrue();
 
             Result.ActionButton.Should().NotBeNull();
             Result.ActionButton.Text.Should().Be(LearnerRecord.Action_Button_Open_Appeal);

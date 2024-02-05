@@ -20,81 +20,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver
 
         public TableButtonModel Resolve(Assessment source, AdminAssessmentViewModel destination, TableButtonModel destMember, ResolutionContext context)
         {
-            if (source?.Result == null)
+            AdminAssessmentResultStatus status = source.GetAdminAssessmentResultStatus(_systemProvider.Today);
+
+            return status switch
             {
-                return null;
-            }
+                AdminAssessmentResultStatus.WithoutGrade
+                    => new TableButtonModel(LearnerRecordContent.Action_Button_Remove_Entry, "admin-remove-entry-route", null),
 
-            Result result = source.Result;
-            bool hasGrade = !string.IsNullOrWhiteSpace(result.Grade);
+                AdminAssessmentResultStatus.OpenRommAllowed
+                    => new TableButtonModel(LearnerRecordContent.Action_Button_Open_Romm, "admin-remove-entry-route", null),
 
-            if (!hasGrade)
-            {
-                return new TableButtonModel
-                {
-                    Text = LearnerRecordContent.Action_Button_Remove_Entry,
-                    Route = "admin-remove-entry-route"
-                };
-            }
+                AdminAssessmentResultStatus.AddRommOutcomeAllowed
+                    => new TableButtonModel(LearnerRecordContent.Action_Button_Add_Outcome, "admin-add-romm-outcome-route", null),
 
-            PrsStatus? prsStatus = result.PrsStatus;
+                AdminAssessmentResultStatus.OpenAppealAllowed
+                    => new TableButtonModel(LearnerRecordContent.Action_Button_Open_Appeal, "admin-add-appeal-route", null),
 
-            bool isValidGradeForPrsJourney = CommonHelper.IsValidGradeForPrsJourney(result.GradeCode, source.ComponentType);
+                AdminAssessmentResultStatus.AddAppealOutcomeAllowed
+                    => new TableButtonModel(LearnerRecordContent.Action_Button_Add_Outcome, "admin-add-appeal-outcome-route", null),
 
-            bool isAddRommAllowed = hasGrade && (!prsStatus.HasValue || prsStatus == PrsStatus.NotSpecified) && CommonHelper.IsAppealsAllowed(source.AppealEndDate, _systemProvider.Today) && isValidGradeForPrsJourney;
-            if (isAddRommAllowed)
-            {
-                return new TableButtonModel
-                {
-                    Text = LearnerRecordContent.Action_Button_Add_Romm,
-                    Route = "admin-add-romm-route"
-                };
-            }
-
-            bool isAddRommOutcomeAllowed = prsStatus == PrsStatus.UnderReview && isValidGradeForPrsJourney;
-            if (isAddRommOutcomeAllowed)
-            {
-                return new TableButtonModel
-                {
-                    Text = LearnerRecordContent.Action_Button_Add_Outcome,
-                    Route = "admin-add-romm-outcome-route"
-                };
-            }
-
-            bool isOpenAppealAllowed = prsStatus == PrsStatus.Reviewed && CommonHelper.IsAppealsAllowed(source.AppealEndDate, _systemProvider.Today) && isValidGradeForPrsJourney;
-            if (isOpenAppealAllowed)
-            {
-                return new TableButtonModel
-                {
-                    Text = LearnerRecordContent.Action_Button_Open_Appeal,
-                    Route = "admin-add-appeal-route"
-                };
-            }
-
-            bool isAddAppealOutcomeAllowed = prsStatus == PrsStatus.BeingAppealed && isValidGradeForPrsJourney;
-            if (isAddAppealOutcomeAllowed)
-            {
-                return new TableButtonModel
-                {
-                    Text = LearnerRecordContent.Action_Button_Add_Outcome,
-                    Route = "admin-add-appeal-outcome-route"
-                };
-            }
-
-            //bool isRequestChangeAllowed = isValidGradeForPrsJourney && (((!prsStatus.HasValue || prsStatus == PrsStatus.NotSpecified) && !CommonHelper.IsRommAllowed(source.RommEndDate))
-            //                               || (prsStatus == PrsStatus.Reviewed && !CommonHelper.IsAppealsAllowed(source.AppealEndDate))
-            //                               || prsStatus == PrsStatus.Final);
-
-            //if (isRequestChangeAllowed)
-            //{
-            //    return new TableButtonModel
-            //    {
-            //        Text = LearnerRecordContent.Action_Button_Request_Change,
-            //        Route = "admin-request-change-route"
-            //    };
-            //}
-
-            return null;
+                _ => null
+            };
         }
     }
 }

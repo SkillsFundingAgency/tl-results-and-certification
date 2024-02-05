@@ -48,6 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminA
             Result.PrsDisplayText.Should().ContainAll(new[] { Constants.BlueTagClassName, PrsStatusContent.Under_Review_Display_Text });
             Result.LastUpdated.Should().Be(_assessment.Result.LastUpdatedOn.ToDobFormat());
             Result.UpdatedBy.Should().Be(_assessment.Result.LastUpdatedBy);
+            Result.IsResultChangeAllowed.Should().BeFalse();
 
             Result.ActionButton.Should().NotBeNull();
             Result.ActionButton.Text.Should().Be(LearnerRecord.Action_Button_Add_Outcome);

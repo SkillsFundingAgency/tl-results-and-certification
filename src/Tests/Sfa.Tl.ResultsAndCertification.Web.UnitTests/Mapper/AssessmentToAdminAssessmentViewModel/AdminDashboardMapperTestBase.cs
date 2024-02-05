@@ -30,7 +30,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminA
             MapperConfiguration configuration = new(cfg =>
             {
                 cfg.AddProfile<AdminDashboardMapper>();
-                cfg.ConstructServicesUsing(type => Equals(type, typeof(AdminAssessmentResultTableButtonResolver)) ? new AdminAssessmentResultTableButtonResolver(_systemProvider) : null);
+                cfg.ConstructServicesUsing(type =>
+                {
+                    if (Equals(type, typeof(AdminAssessmentResultTableButtonResolver)))
+                    {
+                        return new AdminAssessmentResultTableButtonResolver(_systemProvider);
+                    }
+                    else if (Equals(type, typeof(AdminAssessmentIsResultChangeAllowedResolver)))
+                    {
+                        return new AdminAssessmentIsResultChangeAllowedResolver(_systemProvider);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                });
             });
 
             Mapper = configuration.CreateMapper();

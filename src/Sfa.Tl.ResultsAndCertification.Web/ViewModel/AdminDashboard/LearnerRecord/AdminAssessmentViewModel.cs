@@ -19,6 +19,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
 
         public string UpdatedBy { get; set; }
 
+        public bool IsResultChangeAllowed { get; set; }
+
         public TableButtonModel ActionButton { get; set; }
     }
 }
