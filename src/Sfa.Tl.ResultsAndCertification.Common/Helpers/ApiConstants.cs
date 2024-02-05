@@ -127,6 +127,7 @@
         public const string GetAdminSearchLearnerDetailsUri = "/api/admindashboard/GetAdminSearchLearnerDetails";
         public const string GetAdminLearnerRecordUri = "/api/admindashboard/GetAdminLearnerRecord/{0}";
         public const string ProcessChangeStartYearUri = "/api/admindashboard/ProcessChangeStartYear";
+        public const string ProcessChangeIPUri = "/api/admindashboard/ProcessChangeIndustryPlacement";
 
     }
 }

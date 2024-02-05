@@ -126,6 +126,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request);
 
+        Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request);
+
         #endregion
     }
 }

@@ -178,7 +178,7 @@
     <value>Add an occupational specialism to this learner's record</value>
   </data>
   <data name="Message_Notification_Success" xml:space="preserve">
-    <value>Start year updated</value>
+    <value>&lt;b&gt;Start year updated&lt;/b&gt;</value>
   </data>
   <data name="No_Assessment_Entries_Have_Been_Recorded" xml:space="preserve">
     <value>No assessment entries have yet been recorded.</value>

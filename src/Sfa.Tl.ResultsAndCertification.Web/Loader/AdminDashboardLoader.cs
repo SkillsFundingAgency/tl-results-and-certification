@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -47,8 +48,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel reviewChangeStartYearViewModel)
         {
-            var reviewChangeStartYearRequest = _mapper.Map<ReviewChangeStartYearRequest>(reviewChangeStartYearViewModel);
-            return await _internalApiClient.ProcessChangeStartYearAsync(reviewChangeStartYearRequest);
+            var reviewChangeRequest = _mapper.Map<ReviewChangeStartYearRequest>(reviewChangeStartYearViewModel);
+            return await _internalApiClient.ProcessChangeStartYearAsync(reviewChangeRequest);
+            
+        }
+
+        public async Task<bool> ProcessChangeIndustryPlacementAsync(AdminReviewChangesIndustryPlacementViewModel adminChangeIpViewModel)
+        {
+            var reviewChangeStartYearRequest = _mapper.Map<ReviewChangeIndustryPlacementRequest>(adminChangeIpViewModel);
+            return await _internalApiClient.ProcessChangeIndustryPlacementAsync(reviewChangeStartYearRequest);
+
         }
     }
 }

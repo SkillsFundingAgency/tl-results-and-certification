@@ -240,8 +240,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Start year updated.
+        /// <summary>        ///   Looks up a localized string similar to &lt;b&gt;Start year updated&lt;/b&gt;.
         /// </summary>
         public static string Message_Notification_Success {
             get {
