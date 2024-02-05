@@ -146,15 +146,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
                 HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement
             };
 
+        public InformationBannerModel InformationBanner { get; set; }
+
+        public AdminAssessmentDetailsViewModel AssessmentDetails { get; set; }
+
         public BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.AdminSearchLearnersRecords
         };
-
-        public InformationBannerModel InformationBanner { get; set; }
-
-        // Core Component
-        public AdminAssessmentDetailsViewModel AssessmentDetails { get; set; }
 
         private static string GetSubjectStatus(SubjectStatus subjectStatus)
         {
