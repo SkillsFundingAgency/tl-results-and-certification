@@ -1,6 +1,15 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
+﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+
+namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 {
-    public class AdminReviewChangeAssessmentViewModel
+    public class AdminReviewChangesAssessmentViewModel
     {
         public int RegistrationPathwayId { get; set; }
         public string FirstName { get; set; }
@@ -15,16 +24,16 @@
         public string Learner => $"{FirstName} {LastName}";
         public string LoggedInUser { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(ErrorResource.ReviewChangeStartYear), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
+        [Required(ErrorMessageResourceType = typeof(ReviewChangeAssessment), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
         public string ContactName { get; set; }
 
-        [DateValidator(Property = nameof(RequestDate), ErrorResourceType = typeof(ErrorResource.ReviewChangeStartYear), ErrorResourceName = "Validation_Date_When_Change_Requested_Blank_Text")]
+        [DateValidator(Property = nameof(RequestDate), ErrorResourceType = typeof(ReviewChangeAssessment), ErrorResourceName = "Validation_Date_When_Change_Requested_Blank_Text")]
         public string RequestDate => $"{Year}/{Month}/{Day}";
         public string Day { get; set; }
         public string Month { get; set; }
         public string Year { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(ErrorResource.ReviewChangeStartYear), ErrorMessageResourceName = "Validation_Reason_For_Change_Blank_Text")]
+        [Required(ErrorMessageResourceType = typeof(ReviewChangeAssessment), ErrorMessageResourceName = "Validation_Reason_For_Change_Blank_Text")]
         public string ChangeReason { get; set; }
 
         public string ZendeskId { get; set; }

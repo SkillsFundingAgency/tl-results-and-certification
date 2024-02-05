@@ -452,5 +452,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
            
         }
         #endregion
+
+        #region Change Assessment
+        [HttpGet]
+        [Route("admin/review-changes-assesment-entry/{pathwayId}", Name = RouteConstants.AdminReviewChangesAssessmentEntry)]
+        public async Task<IActionResult> AdminReviewChangesAssessmentEntryAsync(int pathwayId)
+        {
+            AdminReviewChangesAssessmentViewModel viewModel = new();
+
+            var _cachedModel = await _cacheService.GetAsync<AdminReviewChangesAssessmentViewModel>(CacheKey);
+
+            if (_cachedModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            viewModel = _cachedModel;
+
+            await _cacheService.SetAsync<AdminReviewChangesAssessmentViewModel>(CacheKey, viewModel);
+
+            return View(viewModel);
+        }
+
+        #endregion
     }
 }

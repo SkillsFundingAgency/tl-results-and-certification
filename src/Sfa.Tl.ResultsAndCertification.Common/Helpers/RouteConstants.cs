@@ -422,6 +422,8 @@
         public const string SubmitAdminIndustryPlacementSpecialConsiderationReasons = "SubmitAdminIndustryPlacementSpecialConsiderationReasons";
         public const string AdminReviewChangesIndustryPlacement = "AdminReviewChangesIndustryPlacement";
         public const string SubmitReviewChangesIndustryPlacement = "SubmitReviewChangesIndustryPlacement";
+
+        public const string AdminReviewChangesAssessmentEntry = "AdminReviewChangesAssessmentEntry";
         #endregion
     }
 }
