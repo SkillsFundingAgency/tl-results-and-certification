@@ -7,13 +7,13 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.TableButton;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using LearnerRecordContent = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.LearnerRecord;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver
+namespace Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver.AdminAssessmentResult
 {
-    public class AdminAssessmentResultTableButtonResolver : IValueResolver<Assessment, AdminAssessmentViewModel, TableButtonModel>
+    public class TableButtonResolver : IValueResolver<Assessment, AdminAssessmentViewModel, TableButtonModel>
     {
         private readonly ISystemProvider _systemProvider;
 
-        public AdminAssessmentResultTableButtonResolver(ISystemProvider systemProvider)
+        public TableButtonResolver(ISystemProvider systemProvider)
         {
             _systemProvider = systemProvider;
         }

@@ -8,7 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Mapper;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using System;
 using System.Threading.Tasks;
-using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver.AdminAssessmentResult;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminAssessmentViewModel
 {
@@ -32,13 +32,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminA
                 cfg.AddProfile<AdminDashboardMapper>();
                 cfg.ConstructServicesUsing(type =>
                 {
-                    if (Equals(type, typeof(AdminAssessmentResultTableButtonResolver)))
+                    if (Equals(type, typeof(TableButtonResolver)))
                     {
-                        return new AdminAssessmentResultTableButtonResolver(_systemProvider);
+                        return new TableButtonResolver(_systemProvider);
                     }
-                    else if (Equals(type, typeof(AdminAssessmentIsResultChangeAllowedResolver)))
+                    else if (Equals(type, typeof(IsChangeAllowedResolver)))
                     {
-                        return new AdminAssessmentIsResultChangeAllowedResolver(_systemProvider);
+                        return new IsChangeAllowedResolver(_systemProvider);
                     }
                     else
                     {

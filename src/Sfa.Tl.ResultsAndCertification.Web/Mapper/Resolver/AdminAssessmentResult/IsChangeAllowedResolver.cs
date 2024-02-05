@@ -6,9 +6,9 @@ using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using System.Linq;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver
+namespace Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver.AdminAssessmentResult
 {
-    public class AdminAssessmentIsResultChangeAllowedResolver : IValueResolver<Assessment, AdminAssessmentViewModel, bool>
+    public class IsChangeAllowedResolver : IValueResolver<Assessment, AdminAssessmentViewModel, bool>
     {
         private readonly ISystemProvider _systemProvider;
 
@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver
             AdminAssessmentResultStatus.OpenAppealAllowed
         };
 
-        public AdminAssessmentIsResultChangeAllowedResolver(ISystemProvider systemProvider)
+        public IsChangeAllowedResolver(ISystemProvider systemProvider)
         {
             _systemProvider = systemProvider;
         }

@@ -7,7 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver.AdminAssessmentResult;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.TableButton;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
@@ -59,8 +59,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PrsDisplayText, opts => opts.MapFrom(s => GetPrsDisplayText(s)))
                 .ForMember(d => d.LastUpdated, opts => opts.MapFrom(s => s.Result != null ? s.Result.LastUpdatedOn.ToDobFormat() : null))
                 .ForMember(d => d.UpdatedBy, opts => opts.MapFrom(s => s.Result != null ? s.Result.LastUpdatedBy : null))
-                .ForMember(d => d.IsResultChangeAllowed, opt => opt.MapFrom<AdminAssessmentIsResultChangeAllowedResolver>())
-                .ForMember(d => d.ActionButton, opt => opt.MapFrom<AdminAssessmentResultTableButtonResolver>());
+                .ForMember(d => d.IsResultChangeAllowed, opt => opt.MapFrom<IsChangeAllowedResolver>())
+                .ForMember(d => d.ActionButton, opt => opt.MapFrom<TableButtonResolver>());
 
             CreateMap<Specialism, AdminSpecialismViewModel>()
                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items[Constants.RegistrationPathwayId]))
