@@ -29,8 +29,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
 
         public Pathway Pathway { get; set; }
 
-        public IEnumerable<Assessments> AvailableAssessments { get; set; }
-
         public AwardingOrganisation AwardingOrganisation { get; set; }
+
+        public IEnumerable<Assessments> AvailableAssessments { get; set; }
     }
 }

@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed
             };
 
-            AdminDashboardLoader.GetAdminLearnerRecordAsync(RegistrationPathwayId).Returns(_loaderResult);
+            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(RegistrationPathwayId).Returns(_loaderResult);
             ResultsAndCertificationConfiguration.DocumentRerequestInDays = 21;
         }
 
@@ -55,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync(RegistrationPathwayId);
+            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(RegistrationPathwayId);
         }
 
         [Fact]

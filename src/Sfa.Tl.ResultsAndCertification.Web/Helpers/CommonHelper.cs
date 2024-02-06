@@ -32,7 +32,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
 
         public static bool IsAppealsAllowed(DateTime? appealsEndDate)
         {
-            return appealsEndDate.HasValue && DateTime.Today <= appealsEndDate.Value;
+            return IsAppealsAllowed(appealsEndDate, DateTime.Today);
+        }
+
+        public static bool IsAppealsAllowed(DateTime? appealsEndDate, DateTime today)
+        {
+            return appealsEndDate.HasValue && today <= appealsEndDate.Value;
         }
 
         public static string GetPrsStatusDisplayText(PrsStatus? prsStatus, DateTime? rommEndDate, DateTime? appealsEndDate)

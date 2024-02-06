@@ -1,15 +1,8 @@
-﻿using AutoMapper;
-using FluentAssertions;
-using Microsoft.Extensions.Logging;
+﻿using FluentAssertions;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
-using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
-using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,14 +10,12 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDashboardServiceTests
 {
-    public class When_GetFiltersAsync_IsCalled : BaseTest<AdminDashboardService>
+    public class When_GetFiltersAsync_IsCalled : AdminDashboardServiceBaseTest
     {
-        private AdminDashboardService _adminDashboardService;
-
         private AdminSearchLearnerFilters _expectedResult;
         private AdminSearchLearnerFilters _actualResult;
 
-        public override void Setup()
+        public override void Given()
         {
             var mockAwardingOrganisationFilters = new List<FilterLookupData>
             {
@@ -45,28 +36,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
             };
 
             var today = new DateTime(2023, 1, 1);
+            SystemProvider.UtcToday.Returns(today);
 
-            var repository = Substitute.For<IAdminDashboardRepository>();
-            repository.GetAwardingOrganisationFiltersAsync().Returns(mockAwardingOrganisationFilters);
-            repository.GetAcademicYearFiltersAsync(today).Returns(mockAcademicYearFilters);
-
-            var systemProvider = Substitute.For<ISystemProvider>();
-            systemProvider.UtcToday.Returns(today);
-
-            var tqRegistrationPathwayRepository = Substitute.For<IRepository<TqRegistrationPathway>>();
-            var commonService = Substitute.For<ICommonService>();
-            var mapper = Substitute.For<IMapper>();
-
-            _adminDashboardService = new AdminDashboardService(repository, tqRegistrationPathwayRepository, systemProvider, commonService, mapper);
-        }
-
-        public override void Given()
-        {
+            AdminDashboardRepository.GetAwardingOrganisationFiltersAsync().Returns(mockAwardingOrganisationFilters);
+            AdminDashboardRepository.GetAcademicYearFiltersAsync(today).Returns(mockAcademicYearFilters);
         }
 
         public override async Task When()
         {
-            _actualResult = await _adminDashboardService.GetAdminSearchLearnerFiltersAsync();
+            _actualResult = await AdminDashboardService.GetAdminSearchLearnerFiltersAsync();
         }
 
         [Fact]

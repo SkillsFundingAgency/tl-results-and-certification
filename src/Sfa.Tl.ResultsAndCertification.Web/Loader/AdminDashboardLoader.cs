@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
@@ -10,7 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,34 +42,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<AdminSearchLearnerDetailsListViewModel>(apiResponse);
         }
 
-        public async Task<AdminLearnerRecordViewModel> GetAdminLearnerRecordAsync(int registrationPathwayId)
+        public async Task<TLearnerRecordViewModel> GetAdminLearnerRecordAsync<TLearnerRecordViewModel>(int registrationPathwayId)
         {
-            Task<AdminLearnerRecord> learnerRecordTask = _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
-            Task<IList<AssessmentSeriesDetails>> assessmentSeriesTask = _internalApiClient.GetAssessmentSeriesAsync();
+            AdminLearnerRecord learnerRecord = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
 
-            await Task.WhenAll(learnerRecordTask, assessmentSeriesTask);
-
-            AdminLearnerRecord learnerRecord = learnerRecordTask.Result;
-            IList<AssessmentSeriesDetails> assessmentSeries = assessmentSeriesTask.Result;
-
-            Pathway pathway = learnerRecord.Pathway;
-
-            AdminLearnerRecordViewModel response = _mapper.Map<AdminLearnerRecordViewModel>(learnerRecord, opt =>
+            TLearnerRecordViewModel response = _mapper.Map<TLearnerRecordViewModel>(learnerRecord, opt =>
             {
-                opt.Items["registrationPathwayId"] = learnerRecord.RegistrationPathwayId;
-                opt.Items["currentCoreAssessmentSeriesId"] = CommonHelper.GetValidAssessmentSeries(assessmentSeries, pathway.AcademicYear, pathway.StartYear, ComponentType.Core)?.FirstOrDefault()?.Id ?? 0;
-                opt.Items["coreSeriesName"] = CommonHelper.GetNextAvailableAssessmentSeries(assessmentSeries, pathway.AcademicYear, pathway.StartYear, ComponentType.Core)?.Name;
-                opt.Items["currentSpecialismAssessmentSeriesId"] = CommonHelper.GetValidAssessmentSeries(assessmentSeries, pathway.AcademicYear, pathway.StartYear, ComponentType.Specialism)?.FirstOrDefault()?.Id ?? 0;
-                opt.Items["specialismSeriesName"] = CommonHelper.GetNextAvailableAssessmentSeries(assessmentSeries, pathway.AcademicYear, pathway.StartYear, ComponentType.Specialism)?.Name;
+                opt.Items[Constants.RegistrationPathwayId] = learnerRecord.RegistrationPathwayId;
             });
 
             return response;
-        }
-
-        public async Task<TLearnerRecordViewModel> GetAdminLearnerRecordAsync<TLearnerRecordViewModel>(int registrationPathwayId)
-        {
-            var response = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
-            return _mapper.Map<TLearnerRecordViewModel>(response);
         }
 
         public async Task<AdminCoreAssessmentViewModel> GetAdminLearnerRecordWithCoreAssesments(int registrationPathwayId)
@@ -97,8 +80,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel reviewChangeStartYearViewModel)
         {
-            var reviewChangeStartYearRequest = _mapper.Map<ReviewChangeStartYearRequest>(reviewChangeStartYearViewModel);
-            return await _internalApiClient.ProcessChangeStartYearAsync(reviewChangeStartYearRequest);
+            var reviewChangeRequest = _mapper.Map<ReviewChangeStartYearRequest>(reviewChangeStartYearViewModel);
+            return await _internalApiClient.ProcessChangeStartYearAsync(reviewChangeRequest);
+
+        }
+
+        public async Task<bool> ProcessChangeIndustryPlacementAsync(AdminReviewChangesIndustryPlacementViewModel adminChangeIpViewModel)
+        {
+            var reviewChangeStartYearRequest = _mapper.Map<ReviewChangeIndustryPlacementRequest>(adminChangeIpViewModel);
+            return await _internalApiClient.ProcessChangeIndustryPlacementAsync(reviewChangeStartYearRequest);
+
         }
     }
 }

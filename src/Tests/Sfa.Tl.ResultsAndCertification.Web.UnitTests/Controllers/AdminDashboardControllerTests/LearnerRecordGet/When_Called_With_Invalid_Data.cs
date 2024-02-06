@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using System.Threading.Tasks;
 using Xunit;
+
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.LearnerRecordGet
 {
     public class When_Called_With_Invalid_Data: AdminDashboardControllerTestBase
@@ -13,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
         public override void Given()
         {
-            AdminDashboardLoader.GetAdminLearnerRecordAsync(RegistrationPathwayId).Returns(null as AdminLearnerRecordViewModel);
+            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(RegistrationPathwayId).Returns(null as AdminLearnerRecordViewModel);
         }
 
         public async override Task When()
@@ -24,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync(RegistrationPathwayId);
+            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(RegistrationPathwayId);
         }
 
         [Fact]

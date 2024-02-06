@@ -16,8 +16,6 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboardServiceTests
 {
@@ -72,6 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         protected INotificationService NotificationService;
         protected ISystemProvider SystemProvider;
 
+        protected IList<IpLookup> IpLookup;
        
 
         protected virtual void CreateMapper()
@@ -210,6 +209,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             });
         }
 
+        public void SeedSpecialConsiderationsLookupData()
+        {
+            IpLookup = IpLookupDataProvider.CreateIpLookupList(DbContext, null, IpLookupType.SpecialConsideration, true);
+            DbContext.SaveChanges();
+        }
         
     }
 }

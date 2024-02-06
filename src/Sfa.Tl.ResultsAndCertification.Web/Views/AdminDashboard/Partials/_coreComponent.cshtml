@@ -1,37 +1,25 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
 @model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord.AdminAssessmentDetailsViewModel
 
-<h2 class="govuk-heading-m">@string.Format(LearnerRecord.Core_Heading_Text, Model.PathwayDisplayName)</h2>
-
-@if (Model.IsCoreEntryEligible == false)
+@if (Model.HasAssessmentEntries)
 {
-    <p class="govuk-body govuk-!-margin-bottom-9">
-        @string.Format(LearnerRecord.You_Cannot_Register_Learner_For_Core_Assessment_Until, Model.NextAvailableCoreSeries?.ToLowerInvariant())
-    </p>
+    <table class="govuk-table responsive-table govuk-!-margin-bottom-6">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+            @string.Format(LearnerRecord.Core_Heading_Text, Model.PathwayDisplayName)
+        </caption>
+        <partial name="_assessmentResult.cshtml" model="Model.PathwayAssessments" />
+    </table>
 }
 else
 {
-    @if (Model.NeedCoreResultForPreviousAssessmentEntry)
-    {
-        <p class="govuk-body govuk-!-margin-bottom-9">
-            @LearnerRecord.You_Must <a class="govuk-link" asp-route="RouteConstants.ResultDetails" asp-route-profileId="@Model.RegistrationPathwayId">@LearnerRecord.Add_Result_To_Learners_Previous_Assessment</a> @LearnerRecord.Before_Entering_New_Assessment_Details
-        </p>
-    }
-    else if (Model.HasCurrentCoreAssessmentEntry)
-    {
-       @* <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-            <vc:summary-item model=Model.SummaryExamPeriod></vc:summary-item>
-            <vc:summary-item model=Model.SummaryLastUpdatedOn></vc:summary-item>
-            <vc:summary-item model=Model.SummaryLastUpdatedBy></vc:summary-item>
-        </dl>*@
-    }
-    else
-    {
-        <p class="govuk-body">
-            @LearnerRecord.No_Assessment_Entries_Have_Been_Recorded
-        </p>
-        <p class="govuk-body govuk-!-margin-bottom-9">
-            <a class="govuk-link" asp-route="RouteConstants.AddCoreAssessmentEntry" asp-route-profileId="@Model.RegistrationPathwayId">@string.Format(LearnerRecord.Add_An_Assessment_Entry_For, Model.PathwayDisplayName)</a>
-        </p>
+    <h2 class="govuk-heading-m">@string.Format(LearnerRecord.Core_Heading_Text, Model.PathwayDisplayName)</h2>
+    <p class="govuk-body">
+        @LearnerRecord.No_Assessment_Entries_Have_Been_Recorded
+    </p>
+}
+
+<p class="govuk-body govuk-!-margin-bottom-9">
+    <a class="govuk-link" asp-route="RouteConstants.AddCoreAssessmentEntry" asp-route-profileId="@Model.RegistrationPathwayId">@string.Format(LearnerRecord.Add_An_Assessment_Entry_For, Model.PathwayDisplayName)</a>
+</p>
     }
 }

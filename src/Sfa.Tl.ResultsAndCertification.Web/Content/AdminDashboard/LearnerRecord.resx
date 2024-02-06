@@ -117,6 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Action_Button_Add_Outcome" xml:space="preserve">
+    <value>Add outcome</value>
+  </data>
+  <data name="Action_Button_Open_Appeal" xml:space="preserve">
+    <value>Open appeal</value>
+  </data>
+  <data name="Action_Button_Open_Romm" xml:space="preserve">
+    <value>Open ROMM</value>
+  </data>
+  <data name="Action_Button_Remove_Entry" xml:space="preserve">
+    <value>Remove entry</value>
+  </data>
+  <data name="Action_Button_Request_Change" xml:space="preserve">
+    <value>Request change</value>
+  </data>
   <data name="Action_Text_Link_Add" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -125,6 +140,9 @@
   </data>
   <data name="Add_An_Assessment_Entry_For" xml:space="preserve">
     <value>Add an assessment entry for {0}</value>
+  </data>
+  <data name="Add_Result_Action_Link_Text" xml:space="preserve">
+    <value>Add result</value>
   </data>
   <data name="Add_Result_To_Learners_Previous_Assessment" xml:space="preserve">
     <value>add a result to this learner's previous assessment</value>
@@ -135,8 +153,17 @@
   <data name="Before_Entering_New_Assessment_Details" xml:space="preserve">
     <value>before entering new assessment details.</value>
   </data>
+  <data name="Button_Remove_Entry_Action" xml:space="preserve">
+    <value>Remove entry</value>
+  </data>
+  <data name="Button_Remove_Open_Romm_Action" xml:space="preserve">
+    <value>Open ROMM</value>
+  </data>
+  <data name="Change_Result_Action_Link_Text" xml:space="preserve">
+    <value>Change result</value>
+  </data>
   <data name="Core_Heading_Text" xml:space="preserve">
-    <value>Core (code): {0}</value>
+    <value>Core component: {0}</value>
   </data>
   <data name="Hidden_Action_Text_English" xml:space="preserve">
     <value> english status</value>
@@ -151,7 +178,7 @@
     <value>Add an occupational specialism to this learner's record</value>
   </data>
   <data name="Message_Notification_Success" xml:space="preserve">
-    <value>Start year updated</value>
+    <value>&lt;b&gt;Start year updated&lt;/b&gt;</value>
   </data>
   <data name="No_Assessment_Entries_Have_Been_Recorded" xml:space="preserve">
     <value>No assessment entries have yet been recorded.</value>
@@ -184,7 +211,7 @@
     <value>Overall T Level result</value>
   </data>
   <data name="Specialism_Heading_Text" xml:space="preserve">
-    <value>Specialism (code): {0}</value>
+    <value>Occupational specialism: {0}</value>
   </data>
   <data name="Start_Year_Value" xml:space="preserve">
     <value>{0} to {1}</value>
@@ -194,6 +221,21 @@
   </data>
   <data name="Status_Tag_Record_Complete" xml:space="preserve">
     <value>Record Complete</value>
+  </data>
+  <data name="Table_Column_Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Table_Column_Exam_Period" xml:space="preserve">
+    <value>Exam period</value>
+  </data>
+  <data name="Table_Column_Grade" xml:space="preserve">
+    <value>Grade</value>
+  </data>
+  <data name="Table_Column_Last_Updated" xml:space="preserve">
+    <value>Last updated</value>
+  </data>
+  <data name="Table_Column_Updated_By" xml:space="preserve">
+    <value>Updated by</value>
   </data>
   <data name="This_Learner_Does_Not_Have_Occupational_Specialism_Recorded" xml:space="preserve">
     <value>This learner does not have an occupational specialism recorded on this service.</value>
@@ -230,14 +272,5 @@
   </data>
   <data name="Uln_Text" xml:space="preserve">
     <value>ULN </value>
-  </data>
-  <data name="You_Cannot_Register_Learner_For_Core_Assessment_Until" xml:space="preserve">
-    <value>You cannot register this learner for a core component assessment until the {0} window opens.</value>
-  </data>
-  <data name="You_Cannot_Register_Learner_For_Occupational_Specialism_Until" xml:space="preserve">
-    <value>You cannot register this learner for an occupational specialism assessment until the {0} window opens.</value>
-  </data>
-  <data name="You_Must" xml:space="preserve">
-    <value>You must</value>
   </data>
 </root>
