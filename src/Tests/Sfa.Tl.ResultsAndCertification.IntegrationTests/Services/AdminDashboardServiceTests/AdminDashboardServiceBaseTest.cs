@@ -16,8 +16,6 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboardServiceTests
 {
@@ -38,10 +36,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         protected IList<TlLookup> TlLookup;
         public IList<AcademicYear> AcademicYears;
 
-        protected IMapper Mapper;
         protected IRepository<TqRegistrationPathway> RegistrationPathwayRepository;
         protected ILogger<GenericRepository<TqRegistrationPathway>> RegistrationPathwayRepositoryLogger;
-     
+
+        protected IMapper Mapper;
+
         protected ICommonService commonService;
         protected CommonService CommonService;
         protected ILogger<CommonService> CommonServiceLogger;
@@ -58,8 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         protected IRepository<ChangeLog> ChangeLogRepository;
         protected ILogger<ILearnerRepository> LearnerRepositoryLogger;
         protected ILearnerRepository LearnerRepository;
-        protected IMapper LearnerMapper;
-
+        
         protected IAdminDashboardService AdminDashboardService;
         protected IAdminDashboardRepository AdminDashboardRepository;
 
@@ -78,7 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         protected virtual void CreateMapper()
         {
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(LearnerMapper).Assembly));
-            LearnerMapper = new Mapper(mapperConfig);
+            Mapper = new Mapper(mapperConfig);
         }
 
         protected virtual void CreateCommonMapper()

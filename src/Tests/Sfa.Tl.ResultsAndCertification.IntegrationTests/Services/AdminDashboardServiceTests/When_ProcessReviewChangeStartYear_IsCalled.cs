@@ -1,29 +1,22 @@
 ﻿using FluentAssertions;
-using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using Notify.Interfaces;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Services.System.Service;
+using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using AutoMapper;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers;
-using Notify.Interfaces;
-using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
-using Sfa.Tl.ResultsAndCertification.Common.Services.System.Service;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
-using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboardServiceTests
 {
@@ -95,18 +88,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             RegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
             RegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(RegistrationPathwayRepositoryLogger, DbContext);
             var industryPlacementRepository = Substitute.For<IRepository<Domain.Models.IndustryPlacement>>();
-
-            AdminDashboardService = new AdminDashboardService(AdminDashboardRepository, SystemProvider, Mapper, RegistrationPathwayRepository, commonService, industryPlacementRepository);
-
+            AdminDashboardService = new AdminDashboardService(AdminDashboardRepository, RegistrationPathwayRepository, industryPlacementRepository, SystemProvider, commonService, Mapper);
         }
-
         private bool _actualResult;
-
-        protected virtual void CreateMapper()
-        {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(AdminDashboardMapper).Assembly));
-            Mapper = new Mapper(mapperConfig);
-        }
 
         public override Task When()
         {

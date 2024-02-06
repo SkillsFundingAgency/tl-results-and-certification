@@ -17,7 +17,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
     public class AdminLearnerRecordViewModel
     {
         // Header
-        public int ProfileId { get; set; }
         public int RegistrationPathwayId { get; set; }
         public int TlPathwayId { get; set; }
         public long Uln { get; set; }
@@ -33,7 +32,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
 
         public int IndustryPlacementId { get; set; }
         public IpStatus IndustryPlacementStatus { get; set; }
-
 
         public string StartYear => string.Format(LearnerRecordDetailsContent.Start_Year_Value, AcademicYear, AcademicYear + 1);
 
@@ -116,6 +114,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
         #endregion
 
         # region Summary English & Maths
+
         public SummaryItemModel SummaryMathsStatus =>
             new SummaryItemModel
             {
@@ -124,7 +123,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
                 Value = GetSubjectStatus(MathsStatus),
             };
 
-
         public SummaryItemModel SummaryEnglishStatus =>
             new SummaryItemModel
             {
@@ -132,7 +130,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
                 Title = LearnerRecordDetailsContent.Title_English_Text,
                 Value = GetSubjectStatus(EnglishStatus),
             };
-
 
         #endregion
 
@@ -149,13 +146,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
                 HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement
             };
 
+        public InformationBannerModel InformationBanner { get; set; }
+
+        public AdminAssessmentDetailsViewModel AssessmentDetails { get; set; }
 
         public BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.AdminSearchLearnersRecords
         };
 
-        public InformationBannerModel InformationBanner { get; set; }
         private static string GetSubjectStatus(SubjectStatus subjectStatus)
         {
             return subjectStatus switch
@@ -182,21 +181,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
 
         private string TLevelStatusValue
             => IsPendingWithdrawal ? LearnerRecordDetailsContent.TLevel_Status_Pending_Withdrawal_Text : RegistrationPathwayStatus.ToString();
-
-
-        private string TLevelStatusChangeRouteName
-        {
-            get
-            {
-                string routeName = string.Empty;
-
-                if (RegistrationPathwayStatus == RegistrationPathwayStatus.Active)
-                {
-                    routeName = IsPendingWithdrawal ? RouteConstants.ChangeBackToActiveStatus : RouteConstants.AddWithdrawnStatus;
-                }
-
-                return routeName;
-            }
-        }
     }
 }

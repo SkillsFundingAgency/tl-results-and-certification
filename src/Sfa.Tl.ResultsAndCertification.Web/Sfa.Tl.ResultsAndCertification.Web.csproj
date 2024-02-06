@@ -57,6 +57,11 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="Content\AdminDashboard\LearnerRecord.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>LearnerRecord.resx</DependentUpon>
+		</Compile>
 		<Compile Update="Content\AdminDashboard\ReviewChangesIndustryPlacement.Designer.cs">
 		  <DependentUpon>ReviewChangesIndustryPlacement.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -67,8 +72,8 @@
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 		</Compile>
-		<Compile Update="Content\AdminDashboard\LearnerRecord.Designer.cs">
-			<DependentUpon>LearnerRecord.resx</DependentUpon>
+		<Compile Update="Content\AdminDashboard\AdminLearnerRecord.Designer.cs">
+			<DependentUpon>AdminLearnerRecord.resx</DependentUpon>
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 		</Compile>
@@ -1082,6 +1087,10 @@
 		<EmbeddedResource Update="Content\AdminDashboard\AdminIndustryPlacementSpecialConsiderationHours.resx">
 		  <LastGenOutput>AdminIndustryPlacementSpecialConsiderationHours.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminDashboard\AdminLearnerRecord.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>AdminLearnerRecord.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\LearnerRecord.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>

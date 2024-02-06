@@ -10,8 +10,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
     public interface IAdminDashboardRepository
     {
         Task<IList<FilterLookupData>> GetAwardingOrganisationFiltersAsync();
+
         Task<IList<FilterLookupData>> GetAcademicYearFiltersAsync(DateTime searchDate);
-        Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayId);
+
+        Task<TqRegistrationPathway> GetLearnerRecordAsync(int registrationPathwayId);
+
         Task<PagedResponse<AdminSearchLearnerDetail>> SearchLearnerDetailsAsync(AdminSearchLearnerRequest request);
     }
 }
