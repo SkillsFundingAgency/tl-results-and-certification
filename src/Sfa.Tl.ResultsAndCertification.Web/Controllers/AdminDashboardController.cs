@@ -442,5 +442,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(model);
         }
         #endregion
+
+        #region Assesment Entry
+
+        [HttpGet]
+        [Route("admin/add-assessment-entry/{registrationPathwayId}", Name = RouteConstants.AdminAddAssessmentEntry)]
+        public async Task<IActionResult> AdminAddCoreAssessmentEntryAsync(int registrationPathwayId)
+        {
+            var viewModel = await _loader.GetAdminLearnerRecordWithCoreAssesments(registrationPathwayId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        #endregion
     }
 }

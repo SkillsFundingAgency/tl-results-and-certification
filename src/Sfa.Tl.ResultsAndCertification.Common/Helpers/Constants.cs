@@ -120,6 +120,7 @@
         public const int CoreAssessmentStartInYears = 0;
         public const int SpecialismAssessmentStartInYears = 1;
         public const string SpecialismAssessmentIds = "specialismAssessmentIds";
+        public const int AdminAssessmentEntryLimit = 2;
 
         public const int MaxFileSizeInMb = 5;
 
@@ -193,7 +194,7 @@
         public const string PathwayComponentGradeUnclassifiedCode = "PCG7";
         public const string PathwayComponentGradeQpendingResultCode = "PCG8";
         public const string PathwayComponentGradeXNoResultCode = "PCG9";
-        
+
         public const string SpecialismComponentGradeUnclassifiedCode = "SCG4";
         public const string SpecialismComponentGradeQpendingResultCode = "SCG5";
         public const string SpecialismComponentGradeXNoResultCode = "SCG6";

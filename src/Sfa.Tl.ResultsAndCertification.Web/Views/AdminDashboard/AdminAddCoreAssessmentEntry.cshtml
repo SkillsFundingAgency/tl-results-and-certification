@@ -1,0 +1,107 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment.AdminCoreAssessmentViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+
+@{
+    ViewData["Title"] = @AdminAddCoreAssessmentEntry.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+        <form asp-route="@RouteConstants.AdminSubmitChangeIndustryPlacement" method="post">
+            <div class="record-header">
+                <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+                    @AdminAddCoreAssessmentEntry.Heading_Add_Assessment_Entry
+                </h1>
+            </div>
+            <partial name="_ValidationSummary" />
+            <h2 class="govuk-heading-m">
+                @AdminAddCoreAssessmentEntry.Heading_Personal_Details
+            </h2>
+
+            <dl class="govuk-summary-list govuk-!-margin-bottom-8">
+                <vc:summary-item model=Model.SummaryLearner></vc:summary-item>
+                <vc:summary-item model=Model.SummaryULN></vc:summary-item>
+                <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+                <vc:summary-item model=Model.SummaryTlevel></vc:summary-item>
+                <vc:summary-item model=Model.SummaryAcademicYear></vc:summary-item>
+            </dl>
+
+            <section id="add-entries">
+                <h2 class="govuk-heading-m">@string.Format(AdminAddCoreAssessmentEntry.Section_Heading_Core_Component, Model.PathwayDisplayName)</h2>
+                @if (Model.HasCoreAssessmentEntries)
+                {
+                    <table class="govuk-table responsive-table">
+                        <partial name="Partials/_examTableHeader.cshtml" />
+                        <tbody>
+                            @foreach (var exam in Model.PathwayAssessments)
+                            {
+                                <partial name="Partials/_examTableResults.cshtml" model="exam" />
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p class="govuk-body">
+                        @AdminAddCoreAssessmentEntry.No_Assessment_Entries_Have_Been_Recorded
+                    </p>
+                }
+            </section>
+
+            @if (Model.HasReachedAssessmentsThreashold)
+            {
+                <div>
+                    <h2 class="govuk-heading-m govuk-!-margin-top-7">
+                        @AdminAddCoreAssessmentEntry.You_Cannot_Add_An_Assessment_Entry_For_This_Learner
+                    </h2>
+                    <p class="govuk-body">
+                        @AdminAddCoreAssessmentEntry.This_Is_Because_There_Are_Already_Assessment_Entries
+                    </p>
+                </div>
+            }
+            else if (Model.IsLearnerRegisteredFourYearsAgo)
+            {
+                <h2 class="govuk-heading-m">
+                    @AdminAddCoreAssessmentEntry.You_Cannot_Add_An_Assessment_Entry_For_This_Learner
+                </h2>
+                <p class="govuk-body">
+                    @AdminAddCoreAssessmentEntry.This_Is_Because_The_Previous_Exam_Period_More_Than_4_Years
+                </p>
+            }
+            else
+            {
+                <div class="govuk-form-group govuk-!-margin-top-8">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                            <h2 class="govuk-fieldset__heading">
+                                @AdminAddCoreAssessmentEntry.Heading_Do_You_Want_To_Add_An_Assessment_Entry
+                            </h2>
+                        </legend>
+                        @foreach (var assessment in Model.AvailablePathwayAssessment)
+                        {
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="pathwayassessments" asp-for="LearnerName" type="radio" value="pathwayassessment">
+                                <label class="govuk-label govuk-radios__label" for="pathwayassessments">
+                                    @assessment.SeriesName
+                                </label>
+                            </div>
+                        }
+                    </fieldset>
+                </div>
+
+                <div class="govuk-button-group">
+                    <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ChangeStartYear.Button_Continue</button>
+                    <a id="returnButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@ChangeStartYear.Button_Cancel</a>
+                </div>
+            }
+
+        </form>
+    </div>
+</div>

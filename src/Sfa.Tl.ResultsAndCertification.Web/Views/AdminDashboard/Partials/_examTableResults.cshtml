@@ -1,0 +1,25 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner.Assessment
+@using Sfa.Tl.ResultsAndCertification.Common.Extensions
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+<tr class="govuk-table__row">
+    <td class="govuk-table__cell">
+        <span class="responsive-table__heading" aria-hidden="true">@AdminAddCoreAssessmentEntry.Title_Exam_Period_Text</span>
+        @Model.SeriesName
+    </td>
+    <td class="govuk-table__cell">
+        <span class="responsive-table__heading" aria-hidden="true">@AdminAddCoreAssessmentEntry.Title_Grade_Text</span>
+        <span>
+            <span class='govuk-!-margin-right-2'>@Model.Result?.Grade</span>
+        </span>
+    </td>
+    <td class="govuk-table__cell">
+        <span class="responsive-table__heading" aria-hidden="true">@AdminAddCoreAssessmentEntry.Title_Last_Updated_On_Text</span>
+        @Model.Result?.LastUpdatedOn.ToDobFormat()
+    </td>
+    <td class="govuk-table__cell">
+        <span class="responsive-table__heading" aria-hidden="true">@AdminAddCoreAssessmentEntry.Title_Last_Updated_By_Text</span>
+        @Model.Result?.LastUpdatedBy
+    </td>
+</tr>

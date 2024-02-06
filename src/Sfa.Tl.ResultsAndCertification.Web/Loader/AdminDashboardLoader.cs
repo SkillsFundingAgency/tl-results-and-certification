@@ -4,10 +4,12 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Comparer;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,11 +71,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<TLearnerRecordViewModel>(response);
         }
 
+        public async Task<AdminCoreAssessmentViewModel> GetAdminLearnerRecordWithCoreAssesments(int registrationPathwayId)
+        {
+            Task<AdminLearnerRecord> learnerRecordTask = _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
+            Task<IList<AssessmentSeriesDetails>> assessmentSeriesTask = _internalApiClient.GetAssessmentSeriesAsync();
+
+            await Task.WhenAll(learnerRecordTask, assessmentSeriesTask);
+
+            AdminLearnerRecord learnerRecord = learnerRecordTask.Result;
+            IList<AssessmentSeriesDetails> assessmentSeries = assessmentSeriesTask.Result;
+
+            var availableAssessmentSeries = CommonHelper.GetValidAssessmentSeries(
+                assessmentSeries, learnerRecord.Pathway.AcademicYear, learnerRecord.Pathway.StartYear, ComponentType.Core, true)
+                .Select(a => new Assessment()
+                {
+                    SeriesId = a.Id,
+                    SeriesName = a.Name,
+                    ComponentType = a.ComponentType
+                });
+
+            learnerRecord.AvailableAssessments = availableAssessmentSeries.Except(learnerRecord.Pathway.PathwayAssessments, new AssessmentComparer()).ToList();
+
+            return _mapper.Map<AdminCoreAssessmentViewModel>(learnerRecord);
+        }
+
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel reviewChangeStartYearViewModel)
         {
             var reviewChangeStartYearRequest = _mapper.Map<ReviewChangeStartYearRequest>(reviewChangeStartYearViewModel);
             return await _internalApiClient.ProcessChangeStartYearAsync(reviewChangeStartYearRequest);
-
         }
     }
 }

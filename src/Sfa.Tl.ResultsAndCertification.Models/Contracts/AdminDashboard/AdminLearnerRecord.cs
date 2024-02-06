@@ -1,6 +1,8 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using System;
+using System.Collections.Generic;
+using Assessments = Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner.Assessment;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
 {
@@ -26,6 +28,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
         public CalculationStatus? OverallCalculationStatus { get; set; }
 
         public Pathway Pathway { get; set; }
+
+        public IEnumerable<Assessments> AvailableAssessments { get; set; }
 
         public AwardingOrganisation AwardingOrganisation { get; set; }
     }

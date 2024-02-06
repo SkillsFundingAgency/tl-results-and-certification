@@ -1,16 +1,21 @@
 ﻿using AutoMapper;
+using Microsoft.VisualBasic;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 {
@@ -134,6 +139,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<ReviewChangeStartYearViewModel, ChangeStartYearDetails>()
                 .ForMember(d => d.StartYearFrom, opts => opts.MapFrom(s => s.AcademicYear))
                 .ForMember(d => d.StartYearTo, opts => opts.MapFrom(s => s.AcademicYearTo));
+
+            CreateMap<AdminLearnerRecord, AdminCoreAssessmentViewModel>()
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.Provider, opts => opts.MapFrom(s => $"{s.Pathway.Provider.Name} ({s.Pathway.Provider.Ukprn})"))
+                .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.Pathway.Name))
+                .ForMember(d => d.StartYear, opts => opts.MapFrom(s => s.Pathway.AcademicYear))
+                .ForMember(d => d.DisplayStartYear, opts => opts.MapFrom(s => GetDisplayAcademicYear(s.Pathway.AcademicYear)))
+                .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.Pathway.Name} ({s.Pathway.LarId})"))
+                .ForMember(d => d.AvailablePathwayAssessment, opts => opts.MapFrom(s => s.AvailableAssessments.OrderByDescending(s => s.SeriesId)))
+                .ForMember(d => d.HasCoreAssessmentEntries, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments.Any()))
+                .ForMember(d => d.PathwayAssessments, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments));
         }
 
         private int? GetSelectedProviderId(AdminSearchLearnerCriteriaViewModel searchCriteria)
