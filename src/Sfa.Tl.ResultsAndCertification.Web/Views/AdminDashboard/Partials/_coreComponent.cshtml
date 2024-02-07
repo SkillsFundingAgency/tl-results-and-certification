@@ -1,3 +1,4 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
 @model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord.AdminAssessmentDetailsViewModel
 
@@ -19,7 +20,5 @@ else
 }
 
 <p class="govuk-body govuk-!-margin-bottom-9">
-    <a class="govuk-link" asp-route="RouteConstants.AddCoreAssessmentEntry" asp-route-profileId="@Model.RegistrationPathwayId">@string.Format(LearnerRecord.Add_An_Assessment_Entry_For, Model.PathwayDisplayName)</a>
+    <a class="govuk-link" asp-route="@RouteConstants.AdminCoreComponentAssessmentEntry" asp-route-registrationPathwayId="@Model.RegistrationPathwayId">@string.Format(LearnerRecord.Add_An_Assessment_Entry_For, Model.PathwayDisplayName)</a>
 </p>
-    }
-}

@@ -147,6 +147,9 @@
   <data name="Section_Heading_Core_Component" xml:space="preserve">
     <value>Core component: {0}</value>
   </data>
+  <data name="Section_Heading_Occupational Specialism" xml:space="preserve">
+    <value>Occupational specialism: {0}</value>
+  </data>
   <data name="This_Is_Because_There_Are_Already_Assessment_Entries" xml:space="preserve">
     <value>This is because there are already assessment entries for both the current and previous exam periods.</value>
   </data>

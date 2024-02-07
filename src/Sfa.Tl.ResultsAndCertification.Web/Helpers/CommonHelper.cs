@@ -68,14 +68,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
                                                  currentDate >= s.StartDate && currentDate <= s.EndDate)
                                          ?.OrderBy(a => a.Id)?.ToList();
 
-            if (series != null && includePreviousSeries)
+            if (series != null && series.Count > 0 && includePreviousSeries)
             {
-                var previeousAssessmentDate = series.Select(e => e.StartDate).FirstOrDefault().AddDays(-1);
+                var previousAssessmentDate = series.Select(e => e.StartDate).FirstOrDefault().AddDays(-1);
 
                 var prevSeries = assessmentSeries?.Where(s => s.ComponentType == componentType &&
                                                          s.Year >= academicYear + startYearOffset &&
                                                          s.Year <= academicYear + Constants.AssessmentEndInYears &&
-                                                         s.EndDate == previeousAssessmentDate).FirstOrDefault();
+                                                         s.EndDate == previousAssessmentDate).FirstOrDefault();
 
                 if (prevSeries != null)
                 {

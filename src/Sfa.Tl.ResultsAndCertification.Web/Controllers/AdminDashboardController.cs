@@ -18,7 +18,6 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using LearnerRecord = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.LearnerRecord;
 
@@ -458,10 +457,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         #region Assesment Entry
 
         [HttpGet]
-        [Route("admin/add-assessment-entry/{registrationPathwayId}", Name = RouteConstants.AdminAddAssessmentEntry)]
-        public async Task<IActionResult> AdminAddCoreAssessmentEntryAsync(int registrationPathwayId)
+        [Route("admin/add-assessment-entry-core/{registrationPathwayId}", Name = RouteConstants.AdminCoreComponentAssessmentEntry)]
+        public async Task<IActionResult> AdminCoreComponentAssessmentEntry(int registrationPathwayId)
         {
-            var viewModel = await _loader.GetAdminLearnerRecordWithCoreAssesments(registrationPathwayId);
+            var viewModel = await _loader.GetAdminLearnerRecordWithCoreComponents(registrationPathwayId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("admin/add-assessment-entry-specialism/{registrationPathwayId}/{specialismsId}", Name = RouteConstants.AdminOccupationalSpecialisAssessmentEntry)]
+        public async Task<IActionResult> AdminOccupationalSpecialismAssessmentEntry(int registrationPathwayId, int specialismsId)
+        {
+            var viewModel = await _loader.GetAdminLearnerRecordWithOccupationalSpecialism(registrationPathwayId, specialismsId);
 
             if (viewModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);

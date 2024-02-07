@@ -13,7 +13,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 
         Task<TLearnerRecordViewModel> GetAdminLearnerRecordAsync<TLearnerRecordViewModel>(int registrationPathwayId);
 
-        public Task<AdminCoreAssessmentViewModel> GetAdminLearnerRecordWithCoreAssesments(int registrationPathwayId);
+        public Task<AdminCoreComponentViewModel> GetAdminLearnerRecordWithCoreComponents(int registrationPathwayId);
+
+        public Task<AdminOccupationalSpecialismViewModel> GetAdminLearnerRecordWithOccupationalSpecialism(int registrationPathwayId, int specialismsId);
 
         Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel reviewChangeStartYearViewModel);
 

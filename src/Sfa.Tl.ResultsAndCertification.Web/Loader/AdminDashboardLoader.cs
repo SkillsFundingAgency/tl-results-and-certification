@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return response;
         }
 
-        public async Task<AdminCoreAssessmentViewModel> GetAdminLearnerRecordWithCoreAssesments(int registrationPathwayId)
+        public async Task<AdminCoreComponentViewModel> GetAdminLearnerRecordWithCoreComponents(int registrationPathwayId)
         {
             Task<AdminLearnerRecord> learnerRecordTask = _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
             Task<IList<AssessmentSeriesDetails>> assessmentSeriesTask = _internalApiClient.GetAssessmentSeriesAsync();
@@ -64,18 +64,55 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             AdminLearnerRecord learnerRecord = learnerRecordTask.Result;
             IList<AssessmentSeriesDetails> assessmentSeries = assessmentSeriesTask.Result;
 
-            var availableAssessmentSeries = CommonHelper.GetValidAssessmentSeries(
+            var activeAssessmentIncludingPreviousYear = CommonHelper.GetValidAssessmentSeries(
                 assessmentSeries, learnerRecord.Pathway.AcademicYear, learnerRecord.Pathway.StartYear, ComponentType.Core, true)
                 .Select(a => new Assessment()
                 {
                     SeriesId = a.Id,
-                    SeriesName = a.Name,
-                    ComponentType = a.ComponentType
+                    SeriesName = a.Name
                 });
 
-            learnerRecord.AvailableAssessments = availableAssessmentSeries.Except(learnerRecord.Pathway.PathwayAssessments, new AssessmentComparer()).ToList();
+            var validAssessments = activeAssessmentIncludingPreviousYear.Except(learnerRecord.Pathway.PathwayAssessments, new AssessmentComparer()).ToList();
 
-            return _mapper.Map<AdminCoreAssessmentViewModel>(learnerRecord);
+            AdminCoreComponentViewModel response = _mapper.Map<AdminCoreComponentViewModel>(learnerRecord, opt =>
+            {
+                opt.Items[Constants.AdminValidAssessmentSeries] = validAssessments;
+                opt.Items[Constants.RegistrationPathwayId] = learnerRecord.RegistrationPathwayId;
+            });
+
+            return response;
+        }
+
+        public async Task<AdminOccupationalSpecialismViewModel> GetAdminLearnerRecordWithOccupationalSpecialism(int registrationPathwayId, int specialismId)
+        {
+            Task<AdminLearnerRecord> learnerRecordTask = _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
+            Task<IList<AssessmentSeriesDetails>> assessmentSeriesTask = _internalApiClient.GetAssessmentSeriesAsync();
+
+            await Task.WhenAll(learnerRecordTask, assessmentSeriesTask);
+
+            AdminLearnerRecord learnerRecord = learnerRecordTask.Result;
+            IList<AssessmentSeriesDetails> assessmentSeries = assessmentSeriesTask.Result;
+
+            var activeAssessmentIncludingPreviousYear = CommonHelper.GetValidAssessmentSeries(assessmentSeries, learnerRecord.Pathway.AcademicYear, learnerRecord.Pathway.StartYear, ComponentType.Specialism, true)
+                .Select(a => new Assessment()
+                {
+                    SeriesId = a.Id,
+                    SeriesName = a.Name
+                });
+
+            var specialism = learnerRecord.Pathway?.Specialisms.FirstOrDefault(p => p.Id == specialismId);
+
+            // exclude the existing ones where learner has entry.
+            var validAssessments = activeAssessmentIncludingPreviousYear.Except(specialism.Assessments, new AssessmentComparer());
+
+            AdminOccupationalSpecialismViewModel response = _mapper.Map<AdminOccupationalSpecialismViewModel>(learnerRecord, opt =>
+            {
+                opt.Items[Constants.AdminSpecialismAssessmentId] = specialismId;
+                opt.Items[Constants.AdminValidAssessmentSeries] = validAssessments ?? default;
+                opt.Items[Constants.RegistrationPathwayId] = learnerRecord.RegistrationPathwayId;
+            });
+
+            return response;
         }
 
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel reviewChangeStartYearViewModel)

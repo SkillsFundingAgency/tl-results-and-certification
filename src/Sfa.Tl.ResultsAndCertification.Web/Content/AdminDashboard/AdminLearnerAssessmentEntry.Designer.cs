@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class AdminAddCoreAssessmentEntry {
+    public class AdminLearnerAssessmentEntry {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AdminAddCoreAssessmentEntry() {
+        internal AdminLearnerAssessmentEntry() {
         }
         
         /// <summary>
@@ -39,8 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.AdminAddCoreAssessmentE" +
-                            "ntry", typeof(AdminAddCoreAssessmentEntry).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.AdminLearnerAssessmentE" +
+                            "ntry", typeof(AdminLearnerAssessmentEntry).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -148,6 +148,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static string Section_Heading_Core_Component {
             get {
                 return ResourceManager.GetString("Section_Heading_Core_Component", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Occupational specialism: {0}.
+        /// </summary>
+        public static string Section_Heading_Occupational_Specialism {
+            get {
+                return ResourceManager.GetString("Section_Heading_Occupational Specialism", resourceCulture);
             }
         }
         
