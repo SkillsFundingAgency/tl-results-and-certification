@@ -8,14 +8,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
     {
         public static AdminAssessmentResultStatus GetAdminAssessmentResultStatus(this Assessment assessment, DateTime today)
         {
-            if (assessment?.Result == null)
+            if (assessment == null)
             {
                 return AdminAssessmentResultStatus.NotSpecified;
             }
 
             Result result = assessment.Result;
             
-            bool hasGrade = !string.IsNullOrWhiteSpace(result.Grade);
+            bool hasGrade = result != null && !string.IsNullOrWhiteSpace(result.Grade);
             if (!hasGrade)
             {
                 return AdminAssessmentResultStatus.WithoutGrade;
