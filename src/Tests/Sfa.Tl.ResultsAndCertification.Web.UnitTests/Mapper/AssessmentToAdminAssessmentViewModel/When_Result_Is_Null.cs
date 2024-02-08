@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using System;
 using Xunit;
+using LearnerRecord = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.LearnerRecord;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminAssessmentViewModel
 {
@@ -34,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminA
             Result.PrsDisplayText.Should().BeEmpty();
             Result.LastUpdated.Should().BeNull();
             Result.UpdatedBy.Should().BeNull();
-            Result.ActionButton.Should().BeNull();
+            Result.ActionButton.Text.Should().Be(LearnerRecord.Action_Button_Remove_Entry);
         }
     }
 }
