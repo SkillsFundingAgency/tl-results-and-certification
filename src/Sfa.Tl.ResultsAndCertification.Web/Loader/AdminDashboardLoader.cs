@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             AdminSearchLearnerFilters apiResponse = await _internalApiClient.GetAdminSearchLearnerFiltersAsync();
             return _mapper.Map<AdminSearchLearnerFiltersViewModel>(apiResponse);
         }
-
+     
         public async Task<AdminSearchLearnerDetailsListViewModel> GetAdminSearchLearnerDetailsListAsync(AdminSearchLearnerCriteriaViewModel adminSearchCriteria)
         {
             var adminSearchLearnerRequest = _mapper.Map<AdminSearchLearnerRequest>(adminSearchCriteria);
@@ -85,6 +85,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<AdminOccupationalSpecialismViewModel> GetAdminLearnerRecordWithOccupationalSpecialism(int registrationPathwayId, int specialismId)
         {
+
+            List<Assessment> validAssessments = new();
+
             Task<AdminLearnerRecord> learnerRecordTask = _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
             Task<IList<AssessmentSeriesDetails>> assessmentSeriesTask = _internalApiClient.GetAssessmentSeriesAsync();
 
@@ -99,11 +102,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                     SeriesId = a.Id,
                     SeriesName = a.Name
                 });
-
+            
             var specialism = learnerRecord.Pathway?.Specialisms.FirstOrDefault(p => p.Id == specialismId);
 
-            // exclude the existing ones where learner has entry.
-            var validAssessments = activeAssessmentIncludingPreviousYear.Except(specialism.Assessments, new AssessmentComparer());
+            if (specialism != null)
+            {
+                // exclude the existing ones where learner has entry.
+                validAssessments = activeAssessmentIncludingPreviousYear.Except(specialism.Assessments, new AssessmentComparer()).ToList();
+            }
 
             AdminOccupationalSpecialismViewModel response = _mapper.Map<AdminOccupationalSpecialismViewModel>(learnerRecord, opt =>
             {
