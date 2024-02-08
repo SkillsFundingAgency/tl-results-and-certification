@@ -97,6 +97,11 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>AdminSearchLearners.resx</DependentUpon>
 		</Compile>
+		<Compile Update="Content\AdminDashboard\Shared\PersonalDetails.Designer.cs">
+		  <DependentUpon>PersonalDetails.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\Assessment\AddCoreAssessmentEntry.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
@@ -1120,6 +1125,10 @@
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\SearchLearners.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminDashboard\Shared\PersonalDetails.resx">
+		  <LastGenOutput>PersonalDetails.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\Assessment\AddCoreAssessmentEntry.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
