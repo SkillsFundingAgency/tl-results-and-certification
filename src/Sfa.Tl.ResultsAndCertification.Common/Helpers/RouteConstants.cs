@@ -425,6 +425,9 @@
         public const string RemoveAssessmentEntryCoreClear = "RemoveAssessmentEntryCoreClear";
         public const string RemoveAssessmentEntryCore = "RemoveAssessmentEntryCore";
         public const string SubmitRemoveAssessmentEntryCore = "SubmitRemoveAssessmentEntryCore";
+        public const string RemoveAssessmentSpecialismEntryClear = "RemoveAssessmentSpecialismEntryClear";
+        public const string RemoveAssessmentSpecialismEntry = "RemoveAssessmentSpecialismEntry";
+        public const string SubmitRemoveAssessmentSpecialismEntry = "SubmitRemoveAssessmentSpecialismEntry";
         #endregion
     }
 }

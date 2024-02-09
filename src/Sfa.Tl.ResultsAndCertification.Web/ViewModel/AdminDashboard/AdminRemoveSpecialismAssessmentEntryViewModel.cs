@@ -7,13 +7,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 {
-    public class AdminRemovePathwayAssessmentEntryViewModel
+    public class AdminRemoveSpecialismAssessmentEntryViewModel
     {
         public int RegistrationPathwayId { get; set; }
 
-        public int PathwayAssessmentId { get; set; }
+        public int SpecialismAssessmentId { get; set; }
 
-        public string PathwayName { get; set; }
+        public string SpecialismName { get; set; }
 
         #region Personal details
 

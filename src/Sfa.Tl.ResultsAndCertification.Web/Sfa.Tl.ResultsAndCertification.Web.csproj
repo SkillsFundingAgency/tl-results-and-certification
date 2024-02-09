@@ -42,6 +42,11 @@
 
 
 	<ItemGroup>
+		<Compile Update="Content\AdminDashboard\RemoveAssessmentEntrySpecialism.Designer.cs">
+		  <DependentUpon>RemoveAssessmentEntrySpecialism.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminDashboard\RemoveAssessmentEntryCore.Designer.cs">
 		  <DependentUpon>RemoveAssessmentEntryCore.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -1081,6 +1086,10 @@
 
 
 	<ItemGroup>
+		<EmbeddedResource Update="Content\AdminDashboard\RemoveAssessmentEntrySpecialism.resx">
+		  <LastGenOutput>RemoveAssessmentEntrySpecialism.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\RemoveAssessmentEntryCore.resx">
 		  <LastGenOutput>RemoveAssessmentEntryCore.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
