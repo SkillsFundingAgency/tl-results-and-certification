@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
 {
@@ -23,7 +24,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
         public string DisplayStartYear { get; set; }
 
         public string PathwayDisplayName { get; set; }
-     
+
+        [Required(ErrorMessageResourceType = typeof(AdminLearnerAssessmentEntry), ErrorMessageResourceName = "Validation_Message")]
+        public string AssessmentYearTo { get; set; }
+
+
         public BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.AdminLearnerRecord,

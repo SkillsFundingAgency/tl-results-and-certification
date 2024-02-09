@@ -181,10 +181,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.Pathway.Name))
                 .ForMember(d => d.StartYear, opts => opts.MapFrom(s => s.Pathway.AcademicYear))
                 .ForMember(d => d.DisplayStartYear, opts => opts.MapFrom(s => GetDisplayAcademicYear(s.Pathway.AcademicYear)))
-                .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.Pathway.Name} ({s.Pathway.LarId})"));
-                //.ForMember(d => d.SpecialismAssessmentId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items[Constants.AdminSpecialismAssessmentId]))
-                //.ForMember(d => d.ValidPathwayAssessmentSeries,  opts => opts.MapFrom((src, dest, destMember, context) => context.Items[Constants.AdminValidAssessmentSeries]))
-                //.ForMember(d => d.AssessmentDetails, opts => opts.MapFrom(s => s.Pathway));
+                .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.Pathway.Name} ({s.Pathway.LarId})"))
+                .ForMember(d => d.SpecialismAssessmentId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items[Constants.AdminSpecialismAssessmentId]))
+                .ForMember(d => d.ValidPathwayAssessmentSeries, opts => opts.MapFrom((src, dest, destMember, context) => context.Items[Constants.AdminValidAssessmentSeries]))
+                .ForMember(d => d.AssessmentDetails, opts => opts.MapFrom(s => s.Pathway));
         }
 
         private int? GetSelectedProviderId(AdminSearchLearnerCriteriaViewModel searchCriteria)

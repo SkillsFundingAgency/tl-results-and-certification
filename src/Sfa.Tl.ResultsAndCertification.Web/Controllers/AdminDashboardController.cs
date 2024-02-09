@@ -12,6 +12,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
@@ -232,7 +233,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/submit-review-changes-start-year", Name = RouteConstants.SubmitReviewChangeStartYear)]
         public async Task<IActionResult> ReviewChangeStartYearAsync(ReviewChangeStartYearViewModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
@@ -244,7 +245,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 {
                     DisplayMessageBody = true,
                     Message = LearnerRecord.Message_Notification_Success,
-                    IsRawHtml=true
+                    IsRawHtml = true
                 },
                 CacheExpiryTime.XSmall);
 
@@ -433,7 +434,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
             var _cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
-            model.AdminChangeIpViewModel = _cachedModel ?? new AdminChangeIpViewModel(); 
+            model.AdminChangeIpViewModel = _cachedModel ?? new AdminChangeIpViewModel();
             var isSuccess = await _loader.ProcessChangeIndustryPlacementAsync(model);
 
             if (isSuccess)
@@ -450,7 +451,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else { return RedirectToAction(RouteConstants.ProblemWithService); }
 
-           
+
         }
         #endregion
 
@@ -468,6 +469,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        [Route("admin/submit-add-assessment-entry-core", Name = RouteConstants.SubmitCoreComponentAssessmentEntry)]
+        public async Task<IActionResult> AdminCoreComponentAssessmentEntry(AdminCoreComponentViewModel model)
+        {
+            var adminCoreComponent = await _loader.GetAdminLearnerRecordWithCoreComponents(model.RegistrationPathwayId);
+
+            if (!ModelState.IsValid)
+            {
+                return View(adminCoreComponent);
+            }
+
+            // Todo: Redirect to success page
+            return View(adminCoreComponent);
+        }
+
         [HttpGet]
         [Route("admin/add-assessment-entry-specialism/{registrationPathwayId}/{specialismsId}", Name = RouteConstants.AdminOccupationalSpecialisAssessmentEntry)]
         public async Task<IActionResult> AdminOccupationalSpecialismAssessmentEntry(int registrationPathwayId, int specialismsId)
@@ -478,6 +494,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/submit-add-assessment-entry-specialism", Name = RouteConstants.SubmitOccupationalSpecialisAssessmentEntry)]
+        public async Task<IActionResult> AdminOccupationalSpecialismAssessmentEntry(AdminOccupationalSpecialismViewModel model)
+        {
+            var adminOccupationalSpecialism = await _loader.GetAdminLearnerRecordWithOccupationalSpecialism(model.RegistrationPathwayId, model.SpecialismAssessmentId);
+
+            if (!ModelState.IsValid)
+            {
+                return View(adminOccupationalSpecialism);
+            }
+
+            // Todo: Redirect to success page
+            return View(adminOccupationalSpecialism);
         }
 
         #endregion

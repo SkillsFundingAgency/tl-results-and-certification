@@ -14,7 +14,9 @@
 
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
-        <form asp-route="@RouteConstants.AdminSubmitChangeIndustryPlacement" method="post">
+        <form asp-route="@RouteConstants.SubmitOccupationalSpecialisAssessmentEntry" method="post">
+            <input type="hidden" asp-for="RegistrationPathwayId" />
+            <input type="hidden" asp-for="SpecialismAssessmentId" />
             <div class="record-header">
                 <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
                     @AdminLearnerAssessmentEntry.Heading_Add_Assessment_Entry
@@ -65,7 +67,7 @@
                     @AdminLearnerAssessmentEntry.This_Is_Because_The_Previous_Exam_Period_More_Than_4_Years
                 </p>
 
-               
+
             }
             else if (Model.HasReachedAssessmentsThreashold)
             {
@@ -80,28 +82,30 @@
             }
             else
             {
-                <div class="govuk-form-group govuk-!-margin-top-8">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                            <h2 class="govuk-fieldset__heading">
-                                @AdminLearnerAssessmentEntry.Heading_Do_You_Want_To_Add_An_Assessment_Entry
-                            </h2>
-                        </legend>
-                        @foreach (var assessment in Model.ValidPathwayAssessmentSeries)
-                        {
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="pathwayassessments" asp-for="LearnerName" type="radio" value="pathwayassessment">
-                                <label class="govuk-label govuk-radios__label" for="pathwayassessments">
-                                    @assessment.SeriesName
-                                </label>
-                            </div>
-                        }
-                    </fieldset>
-                </div>
+                <div class="govuk-form-group" sfa-validation-for="LearnerName" sfa-validation-class="govuk-form-group--error">
+                    <div class="govuk-form-group govuk-!-margin-top-8">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                <h2 class="govuk-fieldset__heading">
+                                    @AdminLearnerAssessmentEntry.Heading_Do_You_Want_To_Add_An_Assessment_Entry
+                                </h2>
+                            </legend>
+                            @foreach (var assessment in Model.ValidPathwayAssessmentSeries)
+                            {
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="assessments_@assessment.SeriesId" asp-for="AssessmentYearTo" type="radio" value="@assessment.SeriesId">
+                                    <label class="govuk-label govuk-radios__label" for="assessments_@assessment.SeriesId">
+                                        @assessment.SeriesName
+                                    </label>
+                                </div>
+                            }
+                        </fieldset>
+                    </div>
 
-                <div class="govuk-button-group">
-                    <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ChangeStartYear.Button_Continue</button>
-                    <a id="returnButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@ChangeStartYear.Button_Cancel</a>
+                    <div class="govuk-button-group">
+                        <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ChangeStartYear.Button_Continue</button>
+                        <a id="returnButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@ChangeStartYear.Button_Cancel</a>
+                    </div>
                 </div>
             }
 

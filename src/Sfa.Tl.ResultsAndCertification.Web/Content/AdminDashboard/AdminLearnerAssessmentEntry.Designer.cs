@@ -269,6 +269,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select the exam period you want to add an assessment entry to.
+        /// </summary>
+        public static string Validation_Message {
+            get {
+                return ResourceManager.GetString("Validation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You cannot add an assessment entry for this learner..
         /// </summary>
         public static string You_Cannot_Add_An_Assessment_Entry_For_This_Learner {
