@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.Comparer
         {
             unchecked
             {
-                var hashCode = assessment.SeriesId.GetHashCode();
+                var hashCode = assessment.SeriesName.GetHashCode();
                 return hashCode;
             }
         }
