@@ -114,6 +114,7 @@
         public const string IsAppealOutcomeJourney = "isAppealOutcomeJourney";
         public const string AcademicYear = "academicYear";
         public const string RegistrationPathwayId = "registrationPathwayId";
+        public const string PathwayAssessmentId = "pathwayAssessmentId";
 
         // Assessments
         public const int AssessmentEndInYears = 4;

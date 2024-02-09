@@ -7,7 +7,7 @@
         <caption class="govuk-table__caption govuk-table__caption--m">
             @string.Format(LearnerRecord.Core_Heading_Text, Model.PathwayDisplayName)
         </caption>
-        <partial name="_assessmentResult.cshtml" model="Model.PathwayAssessments" />
+        <partial name="_assessmentsTable.cshtml" model="Model.PathwayAssessments" />
     </table>
 }
 else

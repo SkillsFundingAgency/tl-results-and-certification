@@ -117,6 +117,36 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Button_Continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="Button_Return_To_Learner_Record" xml:space="preserve">
+    <value>Return to learner record</value>
+  </data>
+  <data name="Core_Heading_Text" xml:space="preserve">
+    <value>Core component: {0}</value>
+  </data>
+  <data name="Heading_Do_You_Want_To_Remove_This_Assessment_Entry" xml:space="preserve">
+    <value>Do you want to remove this assessment entry?</value>
+  </data>
+  <data name="Heading_Personal_Details" xml:space="preserve">
+    <value>Personal details</value>
+  </data>
+  <data name="Heading_Remove_Assessment_Entry" xml:space="preserve">
+    <value>Remove assessment entry</value>
+  </data>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Remove assessment entry – Admin – Manage T Level results – GOV.UK</value>
+  </data>
+  <data name="Radio_Button_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Radio_Button_Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
   <data name="Summary_Learner_Id" xml:space="preserve">
     <value>learner</value>
   </data>
@@ -146,5 +176,26 @@
   </data>
   <data name="Summary_ULN_Text" xml:space="preserve">
     <value>ULN</value>
+  </data>
+  <data name="Table_Column_Exam_Period" xml:space="preserve">
+    <value>Exam period</value>
+  </data>
+  <data name="Table_Column_Grade" xml:space="preserve">
+    <value>Grade</value>
+  </data>
+  <data name="Table_Column_Last_Updated" xml:space="preserve">
+    <value>Last updated</value>
+  </data>
+  <data name="Table_Column_Updated_By" xml:space="preserve">
+    <value>Updated by</value>
+  </data>
+  <data name="Validation_Message" xml:space="preserve">
+    <value>Select yes to remove this assessment entry</value>
+  </data>
+  <data name="Warning_Body_This_Is_Because_The_Learner_Already_Has_Result" xml:space="preserve">
+    <value>This is because the learner already has a result for this assessment.</value>
+  </data>
+  <data name="Warning_Header_You_Cannot_Remove_An_Assessment_Entry_For_This_Learner" xml:space="preserve">
+    <value>You cannot remove an assessment entry for this learner.</value>
   </data>
 </root>

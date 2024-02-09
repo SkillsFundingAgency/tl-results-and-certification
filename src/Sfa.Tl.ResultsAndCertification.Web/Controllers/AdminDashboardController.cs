@@ -233,7 +233,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/submit-review-changes-start-year", Name = RouteConstants.SubmitReviewChangeStartYear)]
         public async Task<IActionResult> ReviewChangeStartYearAsync(ReviewChangeStartYearViewModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
@@ -245,7 +245,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 {
                     DisplayMessageBody = true,
                     Message = LearnerRecord.Message_Notification_Success,
-                    IsRawHtml=true
+                    IsRawHtml = true
                 },
                 CacheExpiryTime.XSmall);
 
@@ -434,7 +434,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
             var _cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
-            model.AdminChangeIpViewModel = _cachedModel ?? new AdminChangeIpViewModel(); 
+            model.AdminChangeIpViewModel = _cachedModel ?? new AdminChangeIpViewModel();
             var isSuccess = await _loader.ProcessChangeIndustryPlacementAsync(model);
 
             if (isSuccess)
@@ -451,8 +451,59 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else { return RedirectToAction(RouteConstants.ProblemWithService); }
 
-           
+
         }
+        #endregion
+
+        #region Assessments
+
+        [HttpGet]
+        [Route("admin/remove-assessment-entry-core-clear/{registrationPathwayId}/{pathwayAssessmentId}", Name = RouteConstants.RemoveAssessmentEntryCoreClear)]
+        public async Task<IActionResult> RemoveAssessmentEntryCoreClearAsync(int registrationPathwayId, int pathwayAssessmentId)
+        {
+            await _cacheService.RemoveAsync<AdminRemovePathwayAssessmentEntryViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.RemoveAssessmentEntryCore, new { registrationPathwayId, pathwayAssessmentId });
+        }
+
+        [HttpGet]
+        [Route("admin/remove-assessment-entry-core/{registrationPathwayId}/{pathwayAssessmentId}", Name = RouteConstants.RemoveAssessmentEntryCore)]
+        public async Task<IActionResult> RemoveAssessmentEntryCoreAsync(int registrationPathwayId, int pathwayAssessmentId)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminRemovePathwayAssessmentEntryViewModel>(CacheKey);
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
+            AdminRemovePathwayAssessmentEntryViewModel viewModel = await _loader.GetRemovePathwayAssessmentEntryAsync(registrationPathwayId, pathwayAssessmentId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No core assessment details found. Method: RemoveAssessmentEntryCoreAsync({registrationPathwayId}, {pathwayAssessmentId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/remove-assessment-entry-core/{registrationPathwayId}/{pathwayAssessmentId}", Name = RouteConstants.SubmitRemoveAssessmentEntryCore)]
+        public async Task<IActionResult> RemoveAssessmentEntryCoreAsync(AdminRemovePathwayAssessmentEntryViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            bool noSelected = model.DoYouWantToRemoveThisAssessmentEntry.HasValue && !model.DoYouWantToRemoveThisAssessmentEntry.Value;
+            if (noSelected)
+            {
+                return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
+            }
+
+            await Task.CompletedTask;
+            return RedirectToRoute(RouteConstants.PageNotFound);
+        }
+
         #endregion
     }
 }

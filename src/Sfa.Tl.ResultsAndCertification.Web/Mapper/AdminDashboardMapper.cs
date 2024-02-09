@@ -53,11 +53,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<Assessment, AdminAssessmentViewModel>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items[Constants.RegistrationPathwayId]))
+                .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.Id))
+                .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => s.ComponentType))
                 .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => s.SeriesName))
                 .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.Result != null ? s.Result.Grade : null))
                 .ForMember(d => d.PrsDisplayText, opts => opts.MapFrom(s => GetPrsDisplayText(s)))
-                .ForMember(d => d.LastUpdated, opts => opts.MapFrom(s => s.Result != null ? s.Result.LastUpdatedOn.ToDobFormat() : null))
-                .ForMember(d => d.UpdatedBy, opts => opts.MapFrom(s => s.Result != null ? s.Result.LastUpdatedBy : null))
+                .ForMember(d => d.LastUpdated, opts => opts.MapFrom(s => s.LastUpdatedOn.ToDobFormat()))
+                .ForMember(d => d.UpdatedBy, opts => opts.MapFrom(s => s.LastUpdatedBy))
                 .ForMember(d => d.IsResultChangeAllowed, opt => opt.MapFrom<IsChangeAllowedResolver>())
                 .ForMember(d => d.ActionButton, opt => opt.MapFrom<TableButtonResolver>());
 
@@ -157,6 +159,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.IndustryPlacementStatusTo, opts => opts.MapFrom(s => s.AdminChangeIpViewModel.AdminIpCompletion.IndustryPlacementStatusTo))
                 .ForMember(d => d.HoursSpentOnPlacementTo, opts => opts.MapFrom(s => s.AdminChangeIpViewModel.HoursViewModel.Hours))
                 .ForMember(d => d.SpecialConsiderationReasonsTo, opts => opts.MapFrom(s => s.SelectedReasons));
+
+            CreateMap<AdminLearnerRecord, AdminRemovePathwayAssessmentEntryViewModel>()
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.Pathway.Name} ({s.Pathway.LarId})"))
+                .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.Provider, opts => opts.MapFrom(s => $"{s.Pathway.Provider.Name} ({s.Pathway.Provider.Ukprn})"))
+                .ForMember(d => d.Tlevel, opts => opts.MapFrom(s => s.Pathway.Name))
+                .ForMember(d => d.StartYear, opts => opts.MapFrom(s => GetDisplayAcademicYear(s.Pathway.AcademicYear)))
+                .ForMember(d => d.ExamPeriod, opts => opts.MapFrom((src, dest, destMember, context) => GetPathwayAssessmentPropertyValue(src, (int)context.Items[Constants.AssessmentId], p => p?.SeriesName)))
+                .ForMember(d => d.Grade, opts => opts.MapFrom((src, dest, destMember, context) => GetPathwayAssessmentPropertyValue(src, (int)context.Items[Constants.AssessmentId], p => p?.Result?.Grade)))
+                .ForMember(d => d.LastUpdated, opts => opts.MapFrom((src, dest, destMember, context) => GetPathwayAssessmentPropertyValue(src, (int)context.Items[Constants.AssessmentId], p => p?.LastUpdatedOn.ToDobFormat())))
+                .ForMember(d => d.UpdatedBy, opts => opts.MapFrom((src, dest, destMember, context) => GetPathwayAssessmentPropertyValue(src, (int)context.Items[Constants.AssessmentId], p => p?.LastUpdatedBy)))
+                .ForMember(d => d.CanAssessmentEntryBeRemoved, opts => opts.MapFrom((src, dest, destMember, context) => GetPathwayAssessmentPropertyValue(src, (int)context.Items[Constants.AssessmentId], p => p?.Result == null)));
         }
 
         private int? GetSelectedProviderId(AdminSearchLearnerCriteriaViewModel searchCriteria)
@@ -227,6 +243,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             }
 
             return CommonHelper.GetPrsStatusDisplayText(assessment?.Result?.PrsStatus, assessment.RommEndDate, assessment.AppealEndDate);
+        }
+
+        private T GetPathwayAssessmentPropertyValue<T>(AdminLearnerRecord learnerRecord, int assessmentId, Func<Assessment, T> getPropertyValue)
+        {
+            var pathwayAssessment = learnerRecord?.Pathway?.PathwayAssessments?.SingleOrDefault(p => p.Id == assessmentId);
+            return getPropertyValue(pathwayAssessment);
         }
     }
 }

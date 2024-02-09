@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var reviewChangeRequest = _mapper.Map<ReviewChangeStartYearRequest>(reviewChangeStartYearViewModel);
             return await _internalApiClient.ProcessChangeStartYearAsync(reviewChangeRequest);
-            
+
         }
 
         public async Task<bool> ProcessChangeIndustryPlacementAsync(AdminReviewChangesIndustryPlacementViewModel adminChangeIpViewModel)
@@ -58,6 +58,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var reviewChangeStartYearRequest = _mapper.Map<ReviewChangeIndustryPlacementRequest>(adminChangeIpViewModel);
             return await _internalApiClient.ProcessChangeIndustryPlacementAsync(reviewChangeStartYearRequest);
 
+        }
+
+        public async Task<AdminRemovePathwayAssessmentEntryViewModel> GetRemovePathwayAssessmentEntryAsync(int registrationPathwayId, int pathwayAssessmentId)
+        {
+            AdminLearnerRecord learnerRecord = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
+            
+            return _mapper.Map<AdminRemovePathwayAssessmentEntryViewModel>(learnerRecord, opt =>
+            {
+                opt.Items[Constants.RegistrationPathwayId] = registrationPathwayId;
+                opt.Items[Constants.AssessmentId] = pathwayAssessmentId;
+            });
         }
     }
 }
