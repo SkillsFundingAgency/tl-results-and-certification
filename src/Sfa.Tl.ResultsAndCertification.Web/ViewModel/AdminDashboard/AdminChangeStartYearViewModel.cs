@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public string LastName { get; set; }
         public long Uln { get; set; }
         public string ProviderName { get; set; }
-        public int ProviderUkprn { get; set; }
+        public long ProviderUkprn { get; set; }
         public string TlevelName { get; set; }
         public int TlevelStartYear { get; set; }
         public int AcademicYear { get; set; }

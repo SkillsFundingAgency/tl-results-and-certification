@@ -152,7 +152,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Industry placement status updated.
+        ///   Looks up a localized string similar to &lt;b&gt;Industry placement status updated&lt;/b&gt;.
         /// </summary>
         public static string Message_Notification_Success {
             get {

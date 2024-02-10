@@ -1,15 +1,8 @@
-﻿using AutoMapper;
-using FluentAssertions;
-using Microsoft.Extensions.Logging;
+﻿using FluentAssertions;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
-using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
-using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,14 +10,12 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDashboardServiceTests
 {
-    public class When_GetAdminSearchLearnerDetailsAsync_IsCalled : BaseTest<AdminDashboardService>
+    public class When_GetAdminSearchLearnerDetailsAsync_IsCalled : AdminDashboardServiceBaseTest
     {
-        private AdminDashboardService _adminDashboardService;
-
         private PagedResponse<AdminSearchLearnerDetail> _expectedResult;
         private PagedResponse<AdminSearchLearnerDetail> _actualResult;
 
-        public override void Setup()
+        public override void Given()
         {
             _expectedResult = new PagedResponse<AdminSearchLearnerDetail>
             {
@@ -45,27 +36,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
                 PagerInfo = new Pager(1, 1, 10)
             };
 
-            var repository = Substitute.For<IAdminDashboardRepository>();
-            var systemProvider = Substitute.For<ISystemProvider>();
-
-            repository.SearchLearnerDetailsAsync(Arg.Any<AdminSearchLearnerRequest>()).Returns(_expectedResult);
-            var mapper = Substitute.For<IMapper>();
-            var tqRegistrationPathwayRepository = Substitute.For<IRepository<TqRegistrationPathway>>();
-            var commonService = Substitute.For<ICommonService>();
-
-            var industryPlacementRepository = Substitute.For<IRepository<IndustryPlacement>>();
-            _adminDashboardService = new AdminDashboardService(repository, systemProvider, mapper, tqRegistrationPathwayRepository, commonService, industryPlacementRepository);
-        }
-
-
-        public override void Given()
-        {
+            AdminDashboardRepository.SearchLearnerDetailsAsync(Arg.Any<AdminSearchLearnerRequest>()).Returns(_expectedResult);
         }
 
         public override async Task When()
         {
             var request = new AdminSearchLearnerRequest { SearchKey = "Johnson" };
-            _actualResult = await _adminDashboardService.GetAdminSearchLearnerDetailsAsync(request);
+            _actualResult = await AdminDashboardService.GetAdminSearchLearnerDetailsAsync(request);
         }
 
         [Fact]

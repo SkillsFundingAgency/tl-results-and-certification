@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
@@ -34,10 +34,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<AdminSearchLearnerDetailsListViewModel>(apiResponse);
         }
 
-        public async Task<T> GetAdminLearnerRecordAsync<T>(int pathwayId)
+        public async Task<TLearnerRecordViewModel> GetAdminLearnerRecordAsync<TLearnerRecordViewModel>(int registrationPathwayId)
         {
-            var response = await _internalApiClient.GetAdminLearnerRecordAsync(pathwayId);
-            return _mapper.Map<T>(response);
+            AdminLearnerRecord learnerRecord = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
+
+            TLearnerRecordViewModel response = _mapper.Map<TLearnerRecordViewModel>(learnerRecord, opt =>
+            {
+                opt.Items[Constants.RegistrationPathwayId] = learnerRecord.RegistrationPathwayId;
+            });
+
+            return response;
         }
 
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel reviewChangeStartYearViewModel)
@@ -53,7 +59,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.ProcessChangeIndustryPlacementAsync(reviewChangeStartYearRequest);
 
         }
-
-
     }
 }

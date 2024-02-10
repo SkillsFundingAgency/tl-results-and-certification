@@ -2,30 +2,23 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Net;
-using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
-using FluentAssertions;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_GetAdminLearnerRecord_Called: BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_GetAdminLearnerRecord_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
-        private readonly long _ukprn = 12345678;
         private readonly int _pathwayId = 1;
-        private readonly RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Active;
         protected AdminLearnerRecord _mockHttpResult;
 
         private ITokenServiceClient _tokenServiceClient;
@@ -44,23 +37,49 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
             _mockHttpResult = new AdminLearnerRecord
             {
-                PathwayId = 1,
-                Uln = 1234567890,
-                Name = "John Smith",
-                DateofBirth = System.DateTime.UtcNow.AddYears(-29),
-                ProviderName = "NCFE",
                 RegistrationPathwayId = 1,
-                TlPathwayId = 1,
-                ProviderUkprn = 1008900,
-                TlevelName = "",
-                AcademicYear = 2021
-
+                Uln = 1234567890,
+                Firstname = "John",
+                Lastname = "Smith",
+                DateofBirth = new DateTime(2005, 1, 23),
+                MathsStatus = SubjectStatus.Achieved,
+                EnglishStatus = SubjectStatus.Achieved,
+                OverallCalculationStatus = CalculationStatus.Completed,
+                Pathway = new Pathway
+                {
+                    Id = 1,
+                    LarId = "6100008X",
+                    Name = "T Level in Finance",
+                    AcademicYear = 2020,
+                    IndustryPlacements = new IndustryPlacement[]
+                   {
+                        new IndustryPlacement
+                        {
+                            Id = 5,
+                            Status = IndustryPlacementStatus.Completed
+                        },
+                   },
+                    Provider = new Provider
+                    {
+                        Id = 2,
+                        Ukprn = 10000536,
+                        Name = "Barnsley College",
+                        DisplayName = "Barnsley College"
+                    }
+                },
+                AwardingOrganisation = new AwardingOrganisation
+                {
+                    Id = 1,
+                    Ukprn = 10009696,
+                    Name = "Ncfe",
+                    DisplayName = "NCFE"
+                }
             };
         }
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<AdminLearnerRecord>(_mockHttpResult, string.Format(ApiConstants.GetAdminLearnerRecordUri,_pathwayId), HttpStatusCode.OK));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<AdminLearnerRecord>(_mockHttpResult, string.Format(ApiConstants.GetAdminLearnerRecordUri, _pathwayId), HttpStatusCode.OK));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
@@ -72,12 +91,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            _result.Should().NotBeNull();
-            _result.Uln.Should().Be(_mockHttpResult.Uln);
-            _result.Name.Should().Be(_mockHttpResult.Name);
-            _result.TlevelName.Should().Be(_mockHttpResult.TlevelName);
-            _result.DateofBirth.Should().Be(_mockHttpResult.DateofBirth);
-            _result.AcademicYear.Should().Be(_mockHttpResult.AcademicYear);
+            _result.Should().BeEquivalentTo(_mockHttpResult);
         }
     }
 }
