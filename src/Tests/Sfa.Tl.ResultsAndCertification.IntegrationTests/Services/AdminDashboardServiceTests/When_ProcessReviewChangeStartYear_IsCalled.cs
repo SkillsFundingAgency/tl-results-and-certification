@@ -24,11 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
     {
 
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
-        private LearnerRecord _result;
-
         private List<TqRegistrationProfile> _registrations;
-
-        private static ReviewChangeStartYearRequest reviewChangeStartYearRequest;
 
         public override void Given()
         {
@@ -40,18 +36,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
                 { 1111111112, RegistrationPathwayStatus.Active },
             };
 
-             reviewChangeStartYearRequest = new ReviewChangeStartYearRequest()
-            {
-                AcademicYear = 2022,
-                AcademicYearTo = 2021,
-                ChangeReason = "Test Reason",
-                ContactName = "Test User",
-                RegistrationPathwayId = 1,
-                ChangeStartYearDetails = new ChangeStartYearDetails() { StartYearFrom = 2022, StartYearTo = 2021 },
-                RequestDate = DateTime.Now.ToShortDateString(),
-                ZendeskId = "1234567890",
-                CreatedBy = "System"
-            };
 
             // Create mapper
             CreateMapper();
@@ -152,8 +136,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
                     // Uln not found
                     new object[] { new ReviewChangeStartYearRequest()
                     {
-                AcademicYear = 2022,
-                AcademicYearTo = 2021,
                 ChangeReason = "Test Reason",
                 ContactName = "Test User",
                 RegistrationPathwayId = 1,
@@ -166,46 +148,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
 
                 };
             }
-        }
-
-        private void SeedIndustyPlacementData(int uln)
-        {
-            var pathway = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln).TqRegistrationPathways.FirstOrDefault();
-            IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, IndustryPlacementStatus.Completed);
-        }
-
-        public List<TqRegistrationProfile> SeedRegistrationsData(Dictionary<long, RegistrationPathwayStatus> ulns, TqProvider tqProvider = null, bool isCouplet = false)
-        {
-            var profiles = new List<TqRegistrationProfile>();
-
-            foreach (var uln in ulns)
-            {
-                profiles.Add(SeedRegistrationData(uln.Key, uln.Value, tqProvider, isCouplet));
-            }
-            return profiles;
-        }
-
-        public TqRegistrationProfile SeedRegistrationData(long uln, RegistrationPathwayStatus status = RegistrationPathwayStatus.Active, TqProvider tqProvider = null, bool isCouplet = false)
-        {
-            var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
-            var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
-            var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProvider);
-            var tqRegistrationSpecialisms = isCouplet ? RegistrationsDataProvider.CreateTqRegistrationSpecialisms(DbContext, tqRegistrationPathway)
-                : new List<TqRegistrationSpecialism> { RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialisms.First()) };
-
-            if (status == RegistrationPathwayStatus.Withdrawn)
-            {
-                tqRegistrationPathway.Status = status;
-                tqRegistrationPathway.EndDate = DateTime.UtcNow.AddDays(-1);
-                foreach (var tqRegistrationSpecialism in tqRegistrationSpecialisms)
-                {
-                    tqRegistrationSpecialism.IsOptedin = true;
-                    tqRegistrationSpecialism.EndDate = DateTime.UtcNow.AddDays(-1);
-                }
-            }
-
-            DbContext.SaveChanges();
-            return profile;
         }
 
 
