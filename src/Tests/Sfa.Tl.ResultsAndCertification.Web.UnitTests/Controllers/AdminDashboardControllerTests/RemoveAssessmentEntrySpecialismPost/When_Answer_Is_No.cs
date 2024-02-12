@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         }
 
         [Fact]
-        public void Then_Redirected_To_PageNotFound()
+        public void Then_Redirected_To_AdminLearnerRecord()
         {
             Result.ShouldBeRedirectToRouteResult(RouteConstants.AdminLearnerRecord, (Constants.PathwayId, RegistrationPathwayId));
         }
