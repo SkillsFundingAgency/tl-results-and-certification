@@ -72,30 +72,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
                             Id= 250,
                             Status = IndustryPlacementStatus.Completed
                         }
-                    },
-                    PathwayAssessments = new Assessment[]
-                    {
-                        new Assessment
-                        {
-                            Id = 1000,
-                            SeriesId = 1,
-                            SeriesName = "Autum 2023",
-                            ResultEndDate = new DateTime(2024, 1, 1),
-                            RommEndDate = new DateTime(2024, 2, 1),
-                            AppealEndDate = new DateTime(2024, 3, 1),
-                            LastUpdatedOn = new DateTime(2023, 9, 15),
-                            LastUpdatedBy = "test-user",
-                            ComponentType = ComponentType.Core,
-                            Result = new Result
-                            {
-                                Id = 4567,
-                                Grade = "A",
-                                GradeCode = "PCG2",
-                                PrsStatus = PrsStatus.NotSpecified,
-                                LastUpdatedOn = new DateTime(2023, 12, 31),
-                                LastUpdatedBy = "test-user"
-                            }
-                        }
                     }
                 }
             };

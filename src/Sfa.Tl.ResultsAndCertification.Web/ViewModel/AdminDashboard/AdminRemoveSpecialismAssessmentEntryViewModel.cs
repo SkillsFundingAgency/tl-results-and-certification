@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 
         public bool CanAssessmentEntryBeRemoved { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(RemoveAssessmentEntryCore), ErrorMessageResourceName = "Validation_Message")]
+        [Required(ErrorMessageResourceType = typeof(RemoveAssessmentEntrySpecialism), ErrorMessageResourceName = "Validation_Message")]
         public bool? DoYouWantToRemoveThisAssessmentEntry { get; set; }
 
         public BackLinkModel BackLink => new()

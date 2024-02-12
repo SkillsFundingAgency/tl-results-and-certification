@@ -555,18 +555,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             bool noSelected = model.DoYouWantToRemoveThisAssessmentEntry.HasValue && !model.DoYouWantToRemoveThisAssessmentEntry.Value;
             if (noSelected)
             {
+                await _cacheService.RemoveAsync<AdminRemovePathwayAssessmentEntryViewModel>(CacheKey);
                 return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
             }
 
-            await Task.CompletedTask;
-            return RedirectToRoute(RouteConstants.PageNotFound);
+            await _cacheService.SetAsync(CacheKey, model);
+            return RedirectToRoute(RouteConstants.PageNotFound); // TODO: Redirect to review page
         }
 
         [HttpGet]
         [Route("admin/remove-assessment-entry-specialism-clear/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.RemoveAssessmentSpecialismEntryClear)]
         public async Task<IActionResult> RemoveAssessmentEntrySpecialismClearAsync(int registrationPathwayId, int assessmentId)
         {
-            await _cacheService.RemoveAsync<AdminRemovePathwayAssessmentEntryViewModel>(CacheKey);
+            await _cacheService.RemoveAsync<AdminRemoveSpecialismAssessmentEntryViewModel>(CacheKey);
             return RedirectToRoute(RouteConstants.RemoveAssessmentSpecialismEntry, new { registrationPathwayId, assessmentId });
         }
 
@@ -602,11 +603,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             bool noSelected = model.DoYouWantToRemoveThisAssessmentEntry.HasValue && !model.DoYouWantToRemoveThisAssessmentEntry.Value;
             if (noSelected)
             {
+                await _cacheService.RemoveAsync<AdminRemoveSpecialismAssessmentEntryViewModel>(CacheKey);
                 return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
             }
 
-            await Task.CompletedTask;
-            return RedirectToRoute(RouteConstants.PageNotFound);
+            await _cacheService.SetAsync(CacheKey, model);
+            return RedirectToRoute(RouteConstants.PageNotFound); // TODO: Redirect to review page
         }
 
         #endregion

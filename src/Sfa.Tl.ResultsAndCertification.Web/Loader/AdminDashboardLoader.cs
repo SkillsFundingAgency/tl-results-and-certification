@@ -34,12 +34,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             AdminSearchLearnerFilters apiResponse = await _internalApiClient.GetAdminSearchLearnerFiltersAsync();
             return _mapper.Map<AdminSearchLearnerFiltersViewModel>(apiResponse);
         }
-     
+
         public async Task<AdminSearchLearnerDetailsListViewModel> GetAdminSearchLearnerDetailsListAsync(AdminSearchLearnerCriteriaViewModel adminSearchCriteria)
         {
             var adminSearchLearnerRequest = _mapper.Map<AdminSearchLearnerRequest>(adminSearchCriteria);
             PagedResponse<AdminSearchLearnerDetail> apiResponse = await _internalApiClient.GetAdminSearchLearnerDetailsAsync(adminSearchLearnerRequest);
-            
+
             return _mapper.Map<AdminSearchLearnerDetailsListViewModel>(apiResponse);
         }
 
@@ -103,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                     SeriesId = a.Id,
                     SeriesName = a.Name
                 });
-            
+
             var specialism = learnerRecord.Pathway?.Specialisms.FirstOrDefault(p => p.Id == specialismId);
 
             if (specialism != null)
@@ -146,7 +146,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             return _mapper.Map<TRemoveAssessmentEntryViewModel>(learnerRecord, opt =>
             {
-                opt.Items[Constants.RegistrationPathwayId] = registrationPathwayId;
                 opt.Items[Constants.AssessmentId] = assessmentId;
             });
         }
