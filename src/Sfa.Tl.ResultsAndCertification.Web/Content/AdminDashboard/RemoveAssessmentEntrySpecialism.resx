@@ -136,7 +136,7 @@
     <value>Remove assessment entry</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Remove assessment entry – Admin – Manage T Level results – GOV.UK</value>
+    <value>Remove assessment entry – Admin</value>
   </data>
   <data name="Radio_Button_No" xml:space="preserve">
     <value>No</value>
@@ -193,9 +193,9 @@
     <value>Select yes to remove this assessment entry</value>
   </data>
   <data name="Warning_Body_This_Is_Because_The_Learner_Already_Has_Result" xml:space="preserve">
-    <value>This is because the learner already has a result for this assessment.</value>
+    <value>You cannot remove an assessment entry for this learner. This is because the learner already has a result for this assessment.</value>
   </data>
   <data name="Warning_Header_You_Cannot_Remove_An_Assessment_Entry_For_This_Learner" xml:space="preserve">
-    <value>You cannot remove an assessment entry for this learner.</value>
+    <value>Assessment entry cannot be removed</value>
   </data>
 </root>

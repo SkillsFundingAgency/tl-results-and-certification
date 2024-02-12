@@ -116,7 +116,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove assessment entry – Admin – Manage T Level results – GOV.UK.
+        ///   Looks up a localized string similar to Remove assessment entry – Admin.
         /// </summary>
         public static string Page_Title {
             get {
@@ -287,7 +287,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This is because the learner already has a result for this assessment..
+        ///   Looks up a localized string similar to You cannot remove an assessment entry for this learner. This is because the learner already has a result for this assessment..
         /// </summary>
         public static string Warning_Body_This_Is_Because_The_Learner_Already_Has_Result {
             get {
@@ -296,7 +296,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You cannot remove an assessment entry for this learner..
+        ///   Looks up a localized string similar to Assessment entry cannot be removed.
         /// </summary>
         public static string Warning_Header_You_Cannot_Remove_An_Assessment_Entry_For_This_Learner {
             get {
