@@ -57,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
             return string.Empty;
         }
 
-        public static IList<AssessmentSeriesDetails> GetValidAssessmentSeries(IList<AssessmentSeriesDetails> assessmentSeries, int academicYear, int tlevelStartYear, ComponentType componentType)
+        public static IList<AssessmentSeriesDetails> GetValidAssessmentSeries(IList<AssessmentSeriesDetails> assessmentSeries, int academicYear, int tlevelStartYear, ComponentType componentType, bool includePreviousSeries = false)
         {
             var currentDate = DateTime.UtcNow.Date;
             int startYearOffset = GetStartYearOffset(academicYear, tlevelStartYear, componentType);
@@ -67,6 +67,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
                                                  s.Year <= academicYear + Constants.AssessmentEndInYears &&
                                                  currentDate >= s.StartDate && currentDate <= s.EndDate)
                                          ?.OrderBy(a => a.Id)?.ToList();
+
+            if (series != null && series.Count > 0 && includePreviousSeries)
+            {
+                var previousAssessmentDate = series.Select(e => e.StartDate).FirstOrDefault().AddDays(-1);
+
+                var prevSeries = assessmentSeries?.Where(s => s.ComponentType == componentType &&
+                                                         s.Year >= academicYear + startYearOffset &&
+                                                         s.Year <= academicYear + Constants.AssessmentEndInYears &&
+                                                         s.EndDate == previousAssessmentDate).FirstOrDefault();
+
+                if (prevSeries != null)
+                {
+                    series.Add(prevSeries);
+                }
+            }
 
             return series;
         }

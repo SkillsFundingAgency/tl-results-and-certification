@@ -42,6 +42,11 @@
 
 
 	<ItemGroup>
+		<Compile Update="Content\AdminDashboard\AdminLearnerAssessmentEntry.Designer.cs">
+		  <DependentUpon>AdminLearnerAssessmentEntry.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminDashboard\AdminChangeIndustryPlacement.Designer.cs">
 		  <DependentUpon>AdminChangeIndustryPlacement.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -1076,6 +1081,10 @@
 
 
 	<ItemGroup>
+		<EmbeddedResource Update="Content\AdminDashboard\AdminLearnerAssessmentEntry.resx">
+		  <LastGenOutput>AdminLearnerAssessmentEntry.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\AdminChangeIndustryPlacement.resx">
 		  <LastGenOutput>AdminChangeIndustryPlacement.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
