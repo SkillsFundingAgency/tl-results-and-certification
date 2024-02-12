@@ -1,0 +1,38 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+@using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord
+@model IEnumerable<AdminAssessmentViewModel>
+
+<thead role="rowgroup">
+    <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">@AdminLearnerAssessmentEntry.Title_Exam_Period_Text</th>
+        <th scope="col" class="govuk-table__header">@AdminLearnerAssessmentEntry.Title_Grade_Text</th>
+        <th scope="col" class="govuk-table__header">@AdminLearnerAssessmentEntry.Title_Last_Updated_On_Text</th>
+        <th scope="col" class="govuk-table__header">@AdminLearnerAssessmentEntry.Title_Last_Updated_By_Text</th>
+    </tr>
+</thead>
+
+<tbody>
+    @foreach (var assessment in Model)
+    {
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+                <span class="responsive-table__heading" aria-hidden="true">@AdminLearnerAssessmentEntry.Title_Exam_Period_Text</span>
+                @assessment.ExamPeriod
+            </td>
+            <td class="govuk-table__cell">
+                <span class="responsive-table__heading" aria-hidden="true">@AdminLearnerAssessmentEntry.Title_Grade_Text</span>
+                <span>
+                    <span class='govuk-!-margin-right-2'>@assessment.Grade</span>
+                </span>
+            </td>
+            <td class="govuk-table__cell">
+                <span class="responsive-table__heading" aria-hidden="true">@AdminLearnerAssessmentEntry.Title_Last_Updated_On_Text</span>
+                @assessment.LastUpdated
+            </td>
+            <td class="govuk-table__cell">
+                <span class="responsive-table__heading" aria-hidden="true">@AdminLearnerAssessmentEntry.Title_Last_Updated_By_Text</span>
+                @assessment.UpdatedBy
+            </td>
+        </tr>
+    }
+</tbody>

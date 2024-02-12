@@ -1,4 +1,5 @@
-﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+﻿@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
 @model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord.AdminAssessmentDetailsViewModel
 
 @if (!Model.HasSpecialismRegistered)
@@ -11,7 +12,7 @@
 else
 {
     @foreach (var specialism in Model.SpecialismDetails)
-    {
+    {   
         var specialismId = !string.IsNullOrWhiteSpace(specialism.CombinedSpecialismId) ? specialism.CombinedSpecialismId : specialism.Id.ToString();
 
         if (specialism.HasAssessmentEntries)
@@ -31,8 +32,8 @@ else
             </p>
         }
 
-        <p class="govuk-body">
-            <a class="govuk-link" asp-route="RouteConstants.AddSpecialismAssessmentEntry" asp-route-profileId="Model.ProfileId" asp-route-specialismsId="@specialismId">@string.Format(LearnerRecord.Add_An_Assessment_Entry_For, specialism.DisplayName)</a>
+        <p class="govuk-body govuk-!-margin-bottom-9">
+            <a class="govuk-link" asp-route="@RouteConstants.AdminOccupationalSpecialisAssessmentEntry" asp-route-registrationPathwayId="@Model.RegistrationPathwayId" asp-route-specialismsId="@specialismId">@string.Format(LearnerRecord.Add_An_Assessment_Entry_For, specialism.DisplayName)</a>
         </p>
     }
 }

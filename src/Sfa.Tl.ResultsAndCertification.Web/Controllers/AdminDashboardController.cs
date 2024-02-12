@@ -12,13 +12,13 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using LearnerRecord = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.LearnerRecord;
 
@@ -453,6 +453,64 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
 
         }
+        #endregion
+
+        #region Assesment Entry
+
+        [HttpGet]
+        [Route("admin/add-assessment-entry-core/{registrationPathwayId}", Name = RouteConstants.AdminCoreComponentAssessmentEntry)]
+        public async Task<IActionResult> AdminCoreComponentAssessmentEntry(int registrationPathwayId)
+        {
+            var viewModel = await _loader.GetAdminLearnerRecordWithCoreComponents(registrationPathwayId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/submit-add-assessment-entry-core", Name = RouteConstants.SubmitCoreComponentAssessmentEntry)]
+        public async Task<IActionResult> AdminCoreComponentAssessmentEntry(AdminCoreComponentViewModel model)
+        {
+            var adminCoreComponent = await _loader.GetAdminLearnerRecordWithCoreComponents(model.RegistrationPathwayId);
+
+            if (!ModelState.IsValid)
+            {
+                return View(adminCoreComponent);
+            }
+
+            // Todo: Redirect to success page
+            return View(adminCoreComponent);
+        }
+
+        [HttpGet]
+        [Route("admin/add-assessment-entry-specialism/{registrationPathwayId}/{specialismsId}", Name = RouteConstants.AdminOccupationalSpecialisAssessmentEntry)]
+        public async Task<IActionResult> AdminOccupationalSpecialismAssessmentEntry(int registrationPathwayId, int specialismsId)
+        {
+            var viewModel = await _loader.GetAdminLearnerRecordWithOccupationalSpecialism(registrationPathwayId, specialismsId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/submit-add-assessment-entry-specialism", Name = RouteConstants.SubmitOccupationalSpecialisAssessmentEntry)]
+        public async Task<IActionResult> AdminOccupationalSpecialismAssessmentEntry(AdminOccupationalSpecialismViewModel model)
+        {
+            var adminOccupationalSpecialism = await _loader.GetAdminLearnerRecordWithOccupationalSpecialism(model.RegistrationPathwayId, model.SpecialismAssessmentId);
+
+            if (!ModelState.IsValid)
+            {
+                return View(adminOccupationalSpecialism);
+            }
+
+            // Todo: Redirect to success page
+            return View(adminOccupationalSpecialism);
+        }
+
         #endregion
 
         #region Remove assessments
