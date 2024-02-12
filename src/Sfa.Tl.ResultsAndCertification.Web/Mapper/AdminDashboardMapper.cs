@@ -170,7 +170,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.Pathway.Name} ({s.Pathway.LarId})"))
                 .ForMember(d => d.ValidPathwayAssessmentSeries, opts => opts.MapFrom((src, dest, destMember, context) => context.Items[Constants.AdminValidAssessmentSeries]))
                 .ForMember(d => d.HasCoreAssessmentEntries, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments.Any()))
-                .ForMember(d => d.PathwayAssessments, opts => opts.MapFrom(s => s.Pathway.PathwayAssessments))
                 .ForMember(d => d.AssessmentDetails, opts => opts.MapFrom(s => s.Pathway));
 
             CreateMap<AdminLearnerRecord, AdminOccupationalSpecialismViewModel>()

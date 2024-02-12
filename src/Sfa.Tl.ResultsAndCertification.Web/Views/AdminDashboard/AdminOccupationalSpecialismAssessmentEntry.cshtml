@@ -14,7 +14,7 @@
 
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
-        <form asp-route="@RouteConstants.SubmitOccupationalSpecialisAssessmentEntry" method="post">
+        <form asp-route="@RouteConstants.SubmitOccupationalSpecialisAssessmentEntry">
             <input type="hidden" asp-for="RegistrationPathwayId" />
             <input type="hidden" asp-for="SpecialismAssessmentId" />
             <div class="record-header">
@@ -37,7 +37,7 @@
 
             <section id="add-entries">
 
-                @foreach (var specialism in Model.SpecialismsAssesments)
+                @foreach (var specialism in Model.AssessmentDetails.SpecialismDetails.Where(s => s.Id == Model.SpecialismAssessmentId))
                 {
                     <h2 class="govuk-heading-m">
                         @string.Format(AdminLearnerAssessmentEntry.Section_Heading_Occupational_Specialism, specialism.DisplayName)
