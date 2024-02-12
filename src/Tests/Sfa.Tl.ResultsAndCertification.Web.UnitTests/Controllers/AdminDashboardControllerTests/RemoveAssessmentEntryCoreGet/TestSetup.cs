@@ -6,20 +6,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 {
     public abstract class TestSetup : AdminDashboardControllerTestBase
     {
-        protected const int RegistrationPathwayId = 1, AssessmentId = 1;
+        protected const int RegistrationPathwayId = 1;
 
         protected IActionResult Result { get; private set; }
 
         public async override Task When()
         {
-            Result = await Controller.RemoveAssessmentEntryCoreAsync(RegistrationPathwayId, AssessmentId);
+            Result = await Controller.RemoveAssessmentEntryCoreAsync(RegistrationPathwayId);
         }
 
         protected static AdminRemovePathwayAssessmentEntryViewModel ViewModel
             => new()
             {
                 RegistrationPathwayId = RegistrationPathwayId,
-                PathwayAssessmentId = AssessmentId,
+                PathwayAssessmentId = 100,
                 PathwayName = "Healthcare Science (6037083X)",
                 Learner = "John Smith",
                 Uln = 1080808080,

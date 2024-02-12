@@ -134,19 +134,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.ProcessChangeIndustryPlacementAsync(reviewChangeStartYearRequest);
         }
 
-        public Task<AdminRemovePathwayAssessmentEntryViewModel> GetRemovePathwayAssessmentEntryAsync(int registrationPathwayId, int pathwayAssessmentId)
-            => GetRemoveAssessmentEntryAsync<AdminRemovePathwayAssessmentEntryViewModel>(registrationPathwayId, pathwayAssessmentId);
+        public async Task<AdminRemovePathwayAssessmentEntryViewModel> GetRemovePathwayAssessmentEntryAsync(int registrationPathwayId)
+        {
+            AdminLearnerRecord learnerRecord = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
+            return _mapper.Map<AdminRemovePathwayAssessmentEntryViewModel>(learnerRecord);
+        }
 
-        public Task<AdminRemoveSpecialismAssessmentEntryViewModel> GetRemoveSpecialismAssessmentEntryAsync(int registrationPathwayId, int specialismAssessmentId)
-            => GetRemoveAssessmentEntryAsync<AdminRemoveSpecialismAssessmentEntryViewModel>(registrationPathwayId, specialismAssessmentId);
-
-        private async Task<TRemoveAssessmentEntryViewModel> GetRemoveAssessmentEntryAsync<TRemoveAssessmentEntryViewModel>(int registrationPathwayId, int assessmentId)
+        public async Task<AdminRemoveSpecialismAssessmentEntryViewModel> GetRemoveSpecialismAssessmentEntryAsync(int registrationPathwayId, int specialismAssessmentId)
         {
             AdminLearnerRecord learnerRecord = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
 
-            return _mapper.Map<TRemoveAssessmentEntryViewModel>(learnerRecord, opt =>
+            return _mapper.Map<AdminRemoveSpecialismAssessmentEntryViewModel>(learnerRecord, opt =>
             {
-                opt.Items[Constants.AssessmentId] = assessmentId;
+                opt.Items[Constants.AssessmentId] = specialismAssessmentId;
             });
         }
     }

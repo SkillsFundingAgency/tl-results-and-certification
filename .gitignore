@@ -377,5 +377,3 @@ MigrationBackup/
 
 # Ignore main.css created by gulp
 **/Frontend/src/stylesheets/css/main.css
-/src/Sfa.Tl.ResultsAndCertification.Web/web.config
-/src/Sfa.Tl.ResultsAndCertification.Web/Properties/launchSettings.json

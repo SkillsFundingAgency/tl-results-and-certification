@@ -10,8 +10,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
     public class When_Called_With_Invalid_Data : AdminDashboardLoaderTestsBase
     {
         private const int RegistrationPathwayId = 1;
-        private const int PathwayAssessmentId = 125;
-
         private AdminRemovePathwayAssessmentEntryViewModel _result;
 
         public override void Given()
@@ -21,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
 
         public async override Task When()
         {
-            _result = await Loader.GetRemovePathwayAssessmentEntryAsync(RegistrationPathwayId, PathwayAssessmentId);
+            _result = await Loader.GetRemovePathwayAssessmentEntryAsync(RegistrationPathwayId);
         }
 
         [Fact]

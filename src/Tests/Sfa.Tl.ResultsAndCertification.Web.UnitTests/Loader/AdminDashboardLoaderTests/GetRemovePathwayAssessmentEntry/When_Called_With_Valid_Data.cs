@@ -19,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
         private const int RegistrationPathwayId = 1;
         private const int PathwayAssessmentId = 125;
 
+
         private AdminLearnerRecord _apiResult;
         private AdminRemovePathwayAssessmentEntryViewModel _result;
 
@@ -30,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
 
         public async override Task When()
         {
-            _result = await Loader.GetRemovePathwayAssessmentEntryAsync(RegistrationPathwayId, PathwayAssessmentId);
+            _result = await Loader.GetRemovePathwayAssessmentEntryAsync(RegistrationPathwayId);
         }
 
         [Fact]
@@ -48,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
             Provider provider = _apiResult.Pathway.Provider;
 
             _result.RegistrationPathwayId.Should().Be(RegistrationPathwayId);
-            _result.PathwayAssessmentId.Should().Be(PathwayAssessmentId);
+            _result.PathwayAssessmentId.Should().Be(pathwayAssessment.Id);
             _result.PathwayName.Should().Be($"{_apiResult.Pathway.Name} ({_apiResult.Pathway.LarId})");
 
             _result.Learner.Should().Be($"{_apiResult.Firstname} {_apiResult.Lastname}");

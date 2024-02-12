@@ -21,7 +21,7 @@ else
                 <caption class="govuk-table__caption govuk-table__caption--m">
                     @string.Format(LearnerRecord.Specialism_Heading_Text, specialism.DisplayName)
                 </caption>
-                <partial name="_assessmentsTable.cshtml" model="specialism.Assessments" />
+                <partial name="_assessmentResult.cshtml" model="specialism.Assessments" />
             </table>
         }
         else
