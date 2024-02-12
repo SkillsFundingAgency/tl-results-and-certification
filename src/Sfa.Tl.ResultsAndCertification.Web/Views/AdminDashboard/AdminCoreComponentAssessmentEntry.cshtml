@@ -32,15 +32,16 @@
                 <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
                 <vc:summary-item model=Model.SummaryTlevel></vc:summary-item>
                 <vc:summary-item model=Model.SummaryAcademicYear></vc:summary-item>
-            </dl>
+            </dl>   
 
             <section id="add-entries">
+                <h2 class="govuk-heading-m">
+                    @string.Format(AdminLearnerAssessmentEntry.Section_Heading_Occupational_Specialism, Model.PathwayDisplayName)
+                </h2>
+
                 @if (Model.HasCoreAssessmentEntries)
                 {
                     <table class="govuk-table responsive-table">
-                        <caption class="govuk-table__caption govuk-table__caption--m  govuk-!-margin-top-6">
-                            @string.Format(AdminLearnerAssessmentEntry.Section_Heading_Core_Component, Model.PathwayDisplayName)
-                        </caption>
                         <partial name="Partials/_examTableResults.cshtml" model="Model.AssessmentDetails.PathwayAssessments" />
                     </table>
                 }
