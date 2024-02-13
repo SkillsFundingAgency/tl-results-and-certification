@@ -516,16 +516,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         #region Remove assessments
 
         [HttpGet]
-        [Route("admin/remove-assessment-entry-core-clear/{registrationPathwayId}", Name = RouteConstants.RemoveAssessmentEntryCoreClear)]
-        public async Task<IActionResult> RemoveAssessmentEntryCoreClearAsync(int registrationPathwayId)
+        [Route("admin/remove-assessment-entry-core-clear/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.RemoveAssessmentEntryCoreClear)]
+        public async Task<IActionResult> RemoveAssessmentEntryCoreClearAsync(int registrationPathwayId, int assessmentId)
         {
             await _cacheService.RemoveAsync<AdminRemovePathwayAssessmentEntryViewModel>(CacheKey);
-            return RedirectToRoute(RouteConstants.RemoveAssessmentEntryCore, new { registrationPathwayId });
+            return RedirectToRoute(RouteConstants.RemoveAssessmentEntryCore, new { registrationPathwayId, assessmentId });
         }
 
         [HttpGet]
-        [Route("admin/remove-assessment-entry-core/{registrationPathwayId}", Name = RouteConstants.RemoveAssessmentEntryCore)]
-        public async Task<IActionResult> RemoveAssessmentEntryCoreAsync(int registrationPathwayId)
+        [Route("admin/remove-assessment-entry-core/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.RemoveAssessmentEntryCore)]
+        public async Task<IActionResult> RemoveAssessmentEntryCoreAsync(int registrationPathwayId, int assessmentId)
         {
             var cachedModel = await _cacheService.GetAsync<AdminRemovePathwayAssessmentEntryViewModel>(CacheKey);
             if (cachedModel != null)
@@ -533,10 +533,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(cachedModel);
             }
 
-            AdminRemovePathwayAssessmentEntryViewModel viewModel = await _loader.GetRemovePathwayAssessmentEntryAsync(registrationPathwayId);
+            AdminRemovePathwayAssessmentEntryViewModel viewModel = await _loader.GetRemovePathwayAssessmentEntryAsync(registrationPathwayId, assessmentId);
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No core assessment details found. Method: RemoveAssessmentEntryCoreAsync({registrationPathwayId}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No core assessment details found. Method: RemoveAssessmentEntryCoreAsync({registrationPathwayId}, {assessmentId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 

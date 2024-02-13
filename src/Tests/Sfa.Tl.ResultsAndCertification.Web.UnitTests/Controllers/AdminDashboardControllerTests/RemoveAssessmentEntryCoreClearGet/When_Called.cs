@@ -10,13 +10,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 {
     public class When_Called : AdminDashboardControllerTestBase
     {
-        private const int RegistrationPathwayId = 1;
+        private const int RegistrationPathwayId = 1, AssessmentId = 1;
 
         private IActionResult _result;
 
         public async override Task When()
         {
-            _result = await Controller.RemoveAssessmentEntryCoreClearAsync(RegistrationPathwayId);
+            _result = await Controller.RemoveAssessmentEntryCoreClearAsync(RegistrationPathwayId, AssessmentId);
         }
 
         [Fact]

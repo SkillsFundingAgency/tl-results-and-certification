@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
 
         public async override Task When()
         {
-            _result = await Loader.GetRemovePathwayAssessmentEntryAsync(RegistrationPathwayId);
+            _result = await Loader.GetRemovePathwayAssessmentEntryAsync(RegistrationPathwayId, PathwayAssessmentId);
         }
 
         [Fact]
