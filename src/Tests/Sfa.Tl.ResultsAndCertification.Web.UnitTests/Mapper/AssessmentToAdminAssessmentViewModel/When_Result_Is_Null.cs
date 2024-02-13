@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using System;
 using Xunit;
@@ -16,6 +17,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminA
         {
             SeriesName = "Summer 2023",
             ComponentType = ComponentType.Core,
+            LastUpdatedOn = new DateTime(2023, 12, 31),
+            LastUpdatedBy = "Steve Morris",
             Result = null
         };
 
@@ -33,8 +36,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminA
             Result.ExamPeriod.Should().Be(_assessment.SeriesName);
             Result.Grade.Should().BeNull();
             Result.PrsDisplayText.Should().BeEmpty();
-            Result.LastUpdated.Should().BeNull();
-            Result.UpdatedBy.Should().BeNull();
+            Result.LastUpdated.Should().Be(_assessment.LastUpdatedOn.ToDobFormat());
+            Result.UpdatedBy.Should().Be(_assessment.LastUpdatedBy);
             Result.ActionButton.Text.Should().Be(LearnerRecord.Action_Button_Remove_Entry);
         }
     }
