@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         public void Then_Expected_Methods_AreCalled()
         {
             CacheService.Received(1).GetAsync<AdminRemovePathwayAssessmentEntryViewModel>(CacheKey);
-            AdminDashboardLoader.DidNotReceive().GetRemovePathwayAssessmentEntryAsync(RegistrationPathwayId);
+            AdminDashboardLoader.DidNotReceive().GetRemovePathwayAssessmentEntryAsync(RegistrationPathwayId, AssessmentId);
         }
 
         [Fact]
