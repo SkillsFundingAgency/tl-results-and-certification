@@ -17,14 +17,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminA
         {
             SeriesName = "Summer 2023",
             ComponentType = ComponentType.Core,
+            LastUpdatedOn = new DateTime(2023, 12, 31),
+            LastUpdatedBy = "Steve Morris",
             Result = new Result
             {
                 Id = 1,
                 Grade = string.Empty,
                 GradeCode = string.Empty,
-                PrsStatus = PrsStatus.NotSpecified,
-                LastUpdatedOn = new DateTime(2023, 12, 31),
-                LastUpdatedBy = "Steve Morris"
+                PrsStatus = PrsStatus.NotSpecified
             }
         };
 
@@ -42,8 +42,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminA
             Result.ExamPeriod.Should().Be(_assessment.SeriesName);
             Result.Grade.Should().BeEmpty();
             Result.PrsDisplayText.Should().BeEmpty();
-            Result.LastUpdated.Should().Be(_assessment.Result.LastUpdatedOn.ToDobFormat());
-            Result.UpdatedBy.Should().Be(_assessment.Result.LastUpdatedBy);
+            Result.LastUpdated.Should().Be(_assessment.LastUpdatedOn.ToDobFormat());
+            Result.UpdatedBy.Should().Be(_assessment.LastUpdatedBy);
             Result.IsResultChangeAllowed.Should().BeFalse();
 
             Result.ActionButton.Should().NotBeNull();

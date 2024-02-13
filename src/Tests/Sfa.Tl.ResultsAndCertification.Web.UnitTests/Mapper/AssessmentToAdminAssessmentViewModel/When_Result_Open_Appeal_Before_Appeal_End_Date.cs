@@ -1,10 +1,12 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using System;
 using Xunit;
 using LearnerRecord = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.LearnerRecord;
+using PrsStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminAssessmentViewModel
 {
@@ -19,14 +21,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminA
             ComponentType = ComponentType.Core,
             RommEndDate = new(2024, 2, 1),
             AppealEndDate = new(2024, 2, 10),
+            LastUpdatedOn = new DateTime(2023, 12, 31),
+            LastUpdatedBy = "Steve Morris",
             Result = new Result
             {
                 Id = 1,
                 Grade = "A",
                 GradeCode = "PCG2",
-                PrsStatus = PrsStatus.Reviewed,
-                LastUpdatedOn = new DateTime(2023, 12, 31),
-                LastUpdatedBy = "Steve Morris"
+                PrsStatus = PrsStatus.Reviewed
             }
         };
 
@@ -43,9 +45,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminA
             Result.RegistrationPathwayId.Should().Be(RegistrationPathwayId);
             Result.ExamPeriod.Should().Be(_assessment.SeriesName);
             Result.Grade.Should().Be(_assessment.Result.Grade);
-            Result.PrsDisplayText.Should().BeEmpty();
-            Result.LastUpdated.Should().Be(_assessment.Result.LastUpdatedOn.ToDobFormat());
-            Result.UpdatedBy.Should().Be(_assessment.Result.LastUpdatedBy);
+            Result.PrsDisplayText.Should().ContainAll(new[] { Constants.RedTagClassName, PrsStatusContent.Final_Display_Text });
+            Result.LastUpdated.Should().Be(_assessment.LastUpdatedOn.ToDobFormat());
+            Result.UpdatedBy.Should().Be(_assessment.LastUpdatedBy);
             Result.IsResultChangeAllowed.Should().BeTrue();
 
             Result.ActionButton.Should().NotBeNull();
