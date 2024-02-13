@@ -129,11 +129,11 @@
   <data name="Copyright_Link_Text" xml:space="preserve">
     <value>© Crown copyright</value>
   </data>
-  <data name="Esfa_Link_Info_Text" xml:space="preserve">
+  <data name="DfE_Link_Info_Text" xml:space="preserve">
     <value>Built by the</value>
   </data>
-  <data name="Esfa_Link_Text" xml:space="preserve">
-    <value>Education and Skills Funding Agency</value>
+  <data name="DfE_Link_Text" xml:space="preserve">
+    <value>Department for Education</value>
   </data>
   <data name="Heading_Support_Links_Text" xml:space="preserve">
     <value>Support links</value>
