@@ -187,11 +187,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change result.
+        ///   Looks up a localized string similar to Change.
         /// </summary>
         public static string Change_Result_Action_Link_Text {
             get {
                 return ResourceManager.GetString("Change_Result_Action_Link_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  result.
+        /// </summary>
+        public static string Change_Result_Action_Link_Text_Hidden {
+            get {
+                return ResourceManager.GetString("Change_Result_Action_Link_Text_Hidden", resourceCulture);
             }
         }
         
@@ -240,7 +249,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
             }
         }
         
-        /// <summary>        ///   Looks up a localized string similar to &lt;b&gt;Start year updated&lt;/b&gt;.
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;b&gt;Start year updated&lt;/b&gt;.
         /// </summary>
         public static string Message_Notification_Success {
             get {
@@ -524,33 +534,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static string Uln_Text {
             get {
                 return ResourceManager.GetString("Uln_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You cannot register this learner for a core component assessment until the {0} window opens..
-        /// </summary>
-        public static string You_Cannot_Register_Learner_For_Core_Assessment_Until {
-            get {
-                return ResourceManager.GetString("You_Cannot_Register_Learner_For_Core_Assessment_Until", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You cannot register this learner for an occupational specialism assessment until the {0} window opens..
-        /// </summary>
-        public static string You_Cannot_Register_Learner_For_Occupational_Specialism_Until {
-            get {
-                return ResourceManager.GetString("You_Cannot_Register_Learner_For_Occupational_Specialism_Until", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You must.
-        /// </summary>
-        public static string You_Must {
-            get {
-                return ResourceManager.GetString("You_Must", resourceCulture);
             }
         }
     }
