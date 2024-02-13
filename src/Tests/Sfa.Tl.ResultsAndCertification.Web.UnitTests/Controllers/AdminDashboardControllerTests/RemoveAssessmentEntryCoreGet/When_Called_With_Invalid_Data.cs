@@ -12,14 +12,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             AdminRemovePathwayAssessmentEntryViewModel nullModel = null;
 
             CacheService.GetAsync<AdminRemovePathwayAssessmentEntryViewModel>(CacheKey).Returns(nullModel);
-            AdminDashboardLoader.GetRemovePathwayAssessmentEntryAsync(RegistrationPathwayId).Returns(nullModel);
+            AdminDashboardLoader.GetRemovePathwayAssessmentEntryAsync(RegistrationPathwayId, AssessmentId).Returns(nullModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
             CacheService.Received(1).GetAsync<AdminRemovePathwayAssessmentEntryViewModel>(CacheKey);
-            AdminDashboardLoader.Received(1).GetRemovePathwayAssessmentEntryAsync(RegistrationPathwayId);
+            AdminDashboardLoader.Received(1).GetRemovePathwayAssessmentEntryAsync(RegistrationPathwayId, AssessmentId);
         }
 
         [Fact]
