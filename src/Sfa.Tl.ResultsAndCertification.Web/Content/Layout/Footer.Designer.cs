@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Layout {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Built by the.
+        ///   Looks up a localized string similar to Built by.
         /// </summary>
         public static string DfE_Link_Info_Text {
             get {
