@@ -80,6 +80,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Return to learner record.
+        /// </summary>
+        public static string Button_Return {
+            get {
+                return ResourceManager.GetString("Button_Return", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There is a problem.
         /// </summary>
         public static string Error_Summary_Header {
