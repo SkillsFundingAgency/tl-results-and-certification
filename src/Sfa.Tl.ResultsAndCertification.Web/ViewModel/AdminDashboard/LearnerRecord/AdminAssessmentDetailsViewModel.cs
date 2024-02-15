@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
 
         public bool HasAssessmentEntries => !PathwayAssessments.IsNullOrEmpty();
 
-        public IEnumerable<AdminAssessmentViewModel> PathwayAssessments { get; set; }
+        public IList<AdminAssessmentViewModel> PathwayAssessments { get; set; }
 
         #endregion
 
@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
 
         public bool HasSpecialismRegistered => !SpecialismDetails.IsNullOrEmpty();
 
-        public IEnumerable<AdminSpecialismViewModel> SpecialismDetails { get; set; }
+        public IList<AdminSpecialismViewModel> SpecialismDetails { get; set; }
 
         #endregion
     }
