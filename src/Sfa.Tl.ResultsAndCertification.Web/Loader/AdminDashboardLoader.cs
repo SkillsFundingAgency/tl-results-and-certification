@@ -12,6 +12,8 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -134,6 +136,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.ProcessChangeIndustryPlacementAsync(reviewChangeStartYearRequest);
         }
 
+        #region Remove assessment
+
         public Task<AdminRemovePathwayAssessmentEntryViewModel> GetRemovePathwayAssessmentEntryAsync(int registrationPathwayId, int pathwayAssessmentId)
            => GetRemoveAssessmentEntryAsync<AdminRemovePathwayAssessmentEntryViewModel>(registrationPathwayId, pathwayAssessmentId);
 
@@ -149,5 +153,50 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 opt.Items[Constants.AssessmentId] = assessmentId;
             });
         }
+
+        #endregion
+
+        #region Add result
+
+        public Task<AdminAddPathwayResultViewModel> GetAdminAddPathwayResultAsync(int registrationPathwayId, int assessmentId)
+            => GetAdminAddResultAsync<AdminAddPathwayResultViewModel>(registrationPathwayId, assessmentId, LookupCategory.PathwayComponentGrade);
+
+        public async Task LoadAdminAddPathwayResultGrades(AdminAddPathwayResultViewModel model)
+            => model.Grades = await GetAdminAddResultGrades(LookupCategory.PathwayComponentGrade);
+
+        public Task<AdminAddSpecialismResultViewModel> GetAdminAddSpecialismResultAsync(int registrationPathwayId, int assessmentId)
+            => GetAdminAddResultAsync<AdminAddSpecialismResultViewModel>(registrationPathwayId, assessmentId, LookupCategory.SpecialismComponentGrade);
+
+        public async Task LoadAdminAddSpecialismResultGrades(AdminAddSpecialismResultViewModel model)
+            => model.Grades = await GetAdminAddResultGrades(LookupCategory.SpecialismComponentGrade);
+
+        private async Task<TAddResultViewModel> GetAdminAddResultAsync<TAddResultViewModel>(int registrationPathwayId, int assessmentId, LookupCategory lookupCategory)
+            where TAddResultViewModel : class
+        {
+            Task<AdminLearnerRecord> learnerRecordTask = _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
+            Task<IList<LookupData>> gradesTask = _internalApiClient.GetLookupDataAsync(lookupCategory);
+
+            await Task.WhenAll(learnerRecordTask, gradesTask);
+
+            AdminLearnerRecord learnerRecord = learnerRecordTask.Result;
+            IList<LookupData> grades = gradesTask.Result;
+
+            if (learnerRecord == null || grades == null)
+                return null;
+
+            return _mapper.Map<TAddResultViewModel>(learnerRecord, opt =>
+            {
+                opt.Items[Constants.AssessmentId] = assessmentId;
+                opt.Items["grades"] = grades;
+            });
+        }
+
+        public async Task<List<LookupViewModel>> GetAdminAddResultGrades(LookupCategory lookupCategory)
+        {
+            IList<LookupData> grades = await _internalApiClient.GetLookupDataAsync(lookupCategory);
+            return _mapper.Map<List<LookupViewModel>>(grades);
+        }
+
+        #endregion
     }
 }

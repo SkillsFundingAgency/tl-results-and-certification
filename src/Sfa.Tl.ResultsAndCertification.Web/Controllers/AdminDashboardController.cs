@@ -15,6 +15,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using System;
 using System.Collections.Generic;
@@ -605,6 +606,53 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 await _cacheService.RemoveAsync<AdminRemoveSpecialismAssessmentEntryViewModel>(CacheKey);
                 return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
+            }
+
+            await _cacheService.SetAsync(CacheKey, model);
+            return RedirectToRoute(RouteConstants.PageNotFound); // TODO: Redirect to review page
+        }
+
+        #endregion
+
+        #region Add result
+
+        [HttpGet]
+        [Route("admin/add-assessment-result-core-clear/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.AdminAddPathwayResultClear)]
+        public async Task<IActionResult> AdminAddPathwayResultClearAsync(int registrationPathwayId, int assessmentId)
+        {
+            await _cacheService.RemoveAsync<AdminAddPathwayResultViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AdminAddPathwayResult, new { registrationPathwayId, assessmentId });
+        }
+
+        [HttpGet]
+        [Route("admin/add-assessment-result-core/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.AdminAddPathwayResult)]
+        public async Task<IActionResult> AdminAddPathwayResultAsync(int registrationPathwayId, int assessmentId)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminAddPathwayResultViewModel>(CacheKey);
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
+            AdminAddPathwayResultViewModel viewModel = await _loader.GetAdminAddPathwayResultAsync(registrationPathwayId, assessmentId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No core result details found. Method: AddResultCoreAsync({registrationPathwayId}, {assessmentId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/add-assessment-result-core", Name = RouteConstants.SubmitAdminAddSpecialismResult)]
+        public async Task<IActionResult> AdminAddPathwayResultAsync(AdminAddPathwayResultViewModel model)
+        {
+            await _loader.LoadAdminAddPathwayResultGrades(model);
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
             }
 
             await _cacheService.SetAsync(CacheKey, model);

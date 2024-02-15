@@ -12,26 +12,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoaderTests.GetRemovePathwayAssessmentEntry
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoaderTests.GetRemoveSpecialismAssessmentEntry
 {
     public class When_Called_With_Valid_Data : AdminDashboardLoaderTestsBase
     {
         private const int RegistrationPathwayId = 1;
-        private const int PathwayAssessmentId = 125;
+        private const int SpecialismAssessmentId = 999;
 
 
         private AdminLearnerRecord _apiResult;
-        private AdminRemovePathwayAssessmentEntryViewModel _result;
+        private AdminRemoveSpecialismAssessmentEntryViewModel _result;
 
         public override void Given()
         {
-            _apiResult = CreateAdminLearnerRecordWithPathwayAssessment(RegistrationPathwayId, PathwayAssessmentId);
+            _apiResult = CreateAdminLearnerRecordWithSpecialismAssessment(RegistrationPathwayId, SpecialismAssessmentId);
             ApiClient.GetAdminLearnerRecordAsync(RegistrationPathwayId).Returns(_apiResult);
         }
 
         public async override Task When()
         {
-            _result = await Loader.GetRemovePathwayAssessmentEntryAsync(RegistrationPathwayId, PathwayAssessmentId);
+            _result = await Loader.GetRemoveSpecialismAssessmentEntryAsync(RegistrationPathwayId, SpecialismAssessmentId);
         }
 
         [Fact]
@@ -45,12 +45,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
         {
             _result.Should().NotBeNull();
 
-            Assessment pathwayAssessment = _apiResult.Pathway.PathwayAssessments.First();
+            Specialism specialism = _apiResult.Pathway.Specialisms.First(p => p.Assessments.Any(a => a.Id == SpecialismAssessmentId));
+            Assessment specialismAssessment = specialism.Assessments.First(a => a.Id == SpecialismAssessmentId);
             Provider provider = _apiResult.Pathway.Provider;
 
             _result.RegistrationPathwayId.Should().Be(RegistrationPathwayId);
-            _result.PathwayAssessmentId.Should().Be(pathwayAssessment.Id);
-            _result.PathwayName.Should().Be($"{_apiResult.Pathway.Name} ({_apiResult.Pathway.LarId})");
+            _result.SpecialismAssessmentId.Should().Be(SpecialismAssessmentId);
+            _result.SpecialismName.Should().Be($"{specialism.Name} ({specialism.LarId})");
 
             _result.Learner.Should().Be($"{_apiResult.Firstname} {_apiResult.Lastname}");
             _result.Uln.Should().Be(_apiResult.Uln);
@@ -78,10 +79,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
             _result.SummaryStartYear.Title.Should().Be(RemoveAssessmentEntryCore.Summary_StartYear_Text);
             _result.SummaryStartYear.Value.Should().Be(_result.StartYear);
 
-            _result.ExamPeriod.Should().Be(pathwayAssessment.SeriesName);
+            _result.ExamPeriod.Should().Be(specialismAssessment.SeriesName);
             _result.Grade.Should().BeNull();
-            _result.LastUpdated.Should().Be(pathwayAssessment.LastUpdatedOn.ToDobFormat());
-            _result.UpdatedBy.Should().Be(pathwayAssessment.LastUpdatedBy);
+            _result.LastUpdated.Should().Be(specialismAssessment.LastUpdatedOn.ToDobFormat());
+            _result.UpdatedBy.Should().Be(specialismAssessment.LastUpdatedBy);
 
             _result.CanAssessmentEntryBeRemoved.Should().BeTrue();
             _result.DoYouWantToRemoveThisAssessmentEntry.Should().NotHaveValue();

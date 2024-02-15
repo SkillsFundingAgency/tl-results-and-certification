@@ -1,6 +1,8 @@
-﻿using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
@@ -24,5 +26,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<AdminRemovePathwayAssessmentEntryViewModel> GetRemovePathwayAssessmentEntryAsync(int registrationPathwayId, int pathwayAssessmentId);
 
         Task<AdminRemoveSpecialismAssessmentEntryViewModel> GetRemoveSpecialismAssessmentEntryAsync(int registrationPathwayId, int specialismAssessmentId);
+
+        Task<AdminAddPathwayResultViewModel> GetAdminAddPathwayResultAsync(int registrationPathwayId, int assessmentId);
+
+        Task<AdminAddSpecialismResultViewModel> GetAdminAddSpecialismResultAsync(int registrationPathwayId, int assessmentId);
+
+        Task LoadAdminAddPathwayResultGrades(AdminAddPathwayResultViewModel model);
+
+        Task LoadAdminAddSpecialismResultGrades(AdminAddSpecialismResultViewModel model);
     }
 }
