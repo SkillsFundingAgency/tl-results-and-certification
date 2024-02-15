@@ -79,6 +79,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Core Component.
+        /// </summary>
+        public static string Core_Component {
+            get {
+                return ResourceManager.GetString("Core_Component", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There is a problem.
         /// </summary>
         public static string Error_Summary_Header {
@@ -169,11 +178,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Occupational Specialism.
+        /// </summary>
+        public static string Occupational_Specialism {
+            get {
+                return ResourceManager.GetString("Occupational_Specialism", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Review changes to assessment entry – Admin.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No assessment entry recorded for.
+        /// </summary>
+        public static string Text_No_Assement_Message {
+            get {
+                return ResourceManager.GetString("Text_No_Assement_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assessment.
+        /// </summary>
+        public static string Title_Change_Assessment_Text {
+            get {
+                return ResourceManager.GetString("Title_Change_Assessment_Text", resourceCulture);
             }
         }
         

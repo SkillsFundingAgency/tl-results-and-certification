@@ -17,6 +17,10 @@
         <form asp-route="@RouteConstants.SubmitOccupationalSpecialisAssessmentEntry" method="post">
             <input type="hidden" asp-for="RegistrationPathwayId" />
             <input type="hidden" asp-for="SpecialismAssessmentId" />
+            @for (int i = 0; i < @Model.ValidPathwayAssessmentSeries.Count(); i++)
+            {
+                <input type="hidden" asp-for="ValidPathwayAssessmentSeries[i]" />
+            }
             <div class="record-header">
                 <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
                     @AdminLearnerAssessmentEntry.Heading_Add_Assessment_Entry

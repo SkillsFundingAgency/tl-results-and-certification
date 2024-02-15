@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
 
         public IEnumerable<PathwayAssessments> PathwayAssessments { get; set; }
 
-        public IEnumerable<PathwayAssessments> ValidPathwayAssessmentSeries { get; set; }
+        public List<PathwayAssessments> ValidPathwayAssessmentSeries { get; set; }
 
         public bool IsLearnerRegisteredFourYearsAgo => DateTime.Now.Year - StartYear > 4;
 
@@ -23,5 +23,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
 
         public bool HasReachedAssessmentsThreashold => PathwayAssessments?.Count() == Constants.AdminAssessmentEntryLimit &&
             !ValidPathwayAssessmentSeries.Any();
+
+        public string SeriesName { get; set; }
+
+        public string CoreChangeTo => ValidPathwayAssessmentSeries.Where(t => t.SeriesName == AssessmentYearTo).FirstOrDefault().SeriesName;
+
     }
 }
