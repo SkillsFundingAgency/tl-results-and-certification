@@ -488,12 +488,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/submit-add-assessment-entry-core", Name = RouteConstants.SubmitCoreComponentAssessmentEntry)]
         public async Task<IActionResult> AdminCoreComponentAssessmentEntry(AdminCoreComponentViewModel model)
         {
+            var adminCoreComponent = await _loader.GetAdminLearnerRecordWithCoreComponents(model.RegistrationPathwayId);
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(adminCoreComponent);
             }
-
-            var adminCoreComponent = await _loader.GetAdminLearnerRecordWithCoreComponents(model.RegistrationPathwayId);
+          
             adminCoreComponent.AssessmentYearTo = model.AssessmentYearTo;
             await _cacheService.SetAsync<AdminCoreComponentViewModel>(CacheKey, adminCoreComponent);
             return RedirectToAction(nameof(RouteConstants.AdminReviewChangesCoreAssessmentEntry), new { registrationPathwayId = model.RegistrationPathwayId });
@@ -506,12 +506,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/submit-add-assessment-entry-specialism", Name = RouteConstants.SubmitOccupationalSpecialisAssessmentEntry)]
         public async Task<IActionResult> AdminOccupationalSpecialismAssessmentEntry(AdminOccupationalSpecialismViewModel model)
         {
+            var adminOccupationalSpecialism = await _loader.GetAdminLearnerRecordWithOccupationalSpecialism(model.RegistrationPathwayId, model.SpecialismAssessmentId);
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(adminOccupationalSpecialism);
             }
-
-            var adminOccupationalSpecialism = await _loader.GetAdminLearnerRecordWithOccupationalSpecialism(model.RegistrationPathwayId, model.SpecialismAssessmentId);
+           
             adminOccupationalSpecialism.SpecialismAssessmentName = model.SpecialismAssessmentName;
             adminOccupationalSpecialism.AssessmentYearTo = model.AssessmentYearTo;
 

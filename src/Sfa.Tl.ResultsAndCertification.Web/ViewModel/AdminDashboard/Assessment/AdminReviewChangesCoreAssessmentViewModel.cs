@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
         public string Day { get; set; }
         public string Month { get; set; }
         public string Year { get; set; }
-        public string CoreChangeTo => AdminCoreComponentViewModel.ValidPathwayAssessmentSeries.Where(t => t.SeriesName == AdminCoreComponentViewModel.AssessmentYearTo).FirstOrDefault().SeriesName;
+        public string CoreChangeTo => AdminCoreComponentViewModel.AssessmentYearTo;
 
         [Required(ErrorMessageResourceType = typeof(ReviewChangeAssessment), ErrorMessageResourceName = "Validation_Reason_For_Change_Blank_Text")]
         public string ChangeReason { get; set; }
