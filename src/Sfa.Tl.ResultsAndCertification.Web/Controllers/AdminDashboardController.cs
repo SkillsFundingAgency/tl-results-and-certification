@@ -472,8 +472,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
-       
-
         [HttpGet]
         [Route("admin/add-assessment-entry-specialism/{registrationPathwayId}/{specialismsId}", Name = RouteConstants.AdminOccupationalSpecialisAssessmentEntry)]
         public async Task<IActionResult> AdminOccupationalSpecialismAssessmentEntry(int registrationPathwayId, int specialismsId)
@@ -533,10 +531,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-            //var coreModel = await _loader.GetAdminLearnerRecordWithCoreComponents(registrationPathwayId);
-            //_cachedModel.ValidPathwayAssessmentSeries = coreModel.ValidPathwayAssessmentSeries;
             viewModel.AdminCoreComponentViewModel = _cachedModel;
-
             await _cacheService.SetAsync<AdminReviewChangesCoreAssessmentViewModel>(CacheKey, viewModel);
             return View(viewModel);
         }
@@ -688,6 +683,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         #endregion
 
-      
+
     }
 }
