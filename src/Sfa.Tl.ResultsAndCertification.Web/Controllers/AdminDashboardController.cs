@@ -564,7 +564,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("admin/review-remove-assessment-entry-core/{registrationPathwayId}", Name = RouteConstants.AdminReviewRemoveCoreAssessmentEntry)]
+        [Route("admin/review-remove-assessment-entry-core", Name = RouteConstants.AdminReviewRemoveCoreAssessmentEntry)]
         public async Task<IActionResult> AdminReviewRemoveCoreAssessmentEntryAsync()
         {
             var cachedModel = await _cacheService.GetAsync<AdminRemovePathwayAssessmentEntryViewModel>(CacheKey);
