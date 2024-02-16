@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class TermsAndConditions {
@@ -187,7 +187,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to However, the ESFA accepts no liability for:.
+        ///   Looks up a localized string similar to However, DfE accepts no liability for:.
         /// </summary>
         public static string However_Esfa_Accept_No_Liability_For_Text {
             get {
@@ -295,7 +295,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This service is run by the Education and Skills Funding Agency (ESFA), an executive agency of the Department for Education (DfE). We comply with the.
+        ///   Looks up a localized string similar to This service is run by the Department for Education (DfE). We comply with the.
         /// </summary>
         public static string This_Service_Is_Run_By_Text {
             get {
