@@ -42,8 +42,17 @@
         </div>
         <vc:summary-item model=Model.SummaryAssessment></vc:summary-item>
     </dl>
-    <form asp-route="@RouteConstants.SubmitReviewChangesSpecialismAssessmentEntry">
+    <form asp-route="@RouteConstants.SubmitReviewChangesSpecialismAssessmentEntry" method="post" >
         <input type="hidden" asp-for="RegistrationPathwayId" />
+        <input type="hidden" asp-for="AdminOccupationalSpecialismViewModel.RegistrationPathwayId" />
+        <input type="hidden" asp-for="AdminOccupationalSpecialismViewModel.LearnerName" />
+        <input type="hidden" asp-for="AdminOccupationalSpecialismViewModel.DisplayStartYear" />
+        <input type="hidden" asp-for="AdminOccupationalSpecialismViewModel.Provider" />
+        <input type="hidden" asp-for="AdminOccupationalSpecialismViewModel.Uln" />
+        <input type="hidden" asp-for="AdminOccupationalSpecialismViewModel.AssessmentYearTo" />
+        <input type="hidden" asp-for="AdminOccupationalSpecialismViewModel.PathwayDisplayName" />
+        <input type="hidden" asp-for="AdminOccupationalSpecialismViewModel.SpecialismAssessmentName" />
+       
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">

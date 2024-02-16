@@ -21,11 +21,6 @@
             <input type="hidden" asp-for="Provider" />
             <input type="hidden" asp-for="TlevelName" />
             <input type="hidden" asp-for="DisplayStartYear" />
-            @for (int i = 0; i < @Model.ValidPathwayAssessmentSeries.Count(); i++)
-            {                
-                <input type="hidden" asp-for="ValidPathwayAssessmentSeries[i].SeriesId" />
-                <input type="hidden" asp-for="ValidPathwayAssessmentSeries[i].SeriesName" />
-            }
             <div class="record-header">
                 <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
                     @AdminLearnerAssessmentEntry.Heading_Add_Assessment_Entry
@@ -96,7 +91,7 @@
                             {
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="assessments_@assessment.SeriesId" asp-for="AssessmentYearTo" type="radio" value="@assessment.SeriesName">
-                                    <label class="govuk-label govuk-radios__label" asp-for="SeriesName" for="assessment_@assessment.SeriesId">
+                                    <label class="govuk-label govuk-radios__label"  for="assessment_@assessment.SeriesId">
                                         @assessment.SeriesName
                                     </label>
                                 </div>

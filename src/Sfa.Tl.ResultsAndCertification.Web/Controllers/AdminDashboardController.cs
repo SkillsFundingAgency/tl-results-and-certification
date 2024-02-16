@@ -519,6 +519,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             var adminOccupationalSpecialism = await _loader.GetAdminLearnerRecordWithOccupationalSpecialism(model.RegistrationPathwayId, model.SpecialismAssessmentId);
+            adminOccupationalSpecialism.SpecialismAssessmentName = model.SpecialismAssessmentName;
             adminOccupationalSpecialism.AssessmentYearTo = model.AssessmentYearTo;
 
 
@@ -576,6 +577,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        [Route("admin/submit-review-changes-assessment-entry-specialism", Name = RouteConstants.SubmitReviewChangesSpecialismAssessmentEntry)]
+        public async Task<IActionResult> AdminReviewChangesSpecialismAssessmentEntry(AdminReviewChangesSpecialismAssessmentViewModel model)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminReviewChangesSpecialismAssessmentViewModel>(CacheKey);
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { registrationPathwayId = model.RegistrationPathwayId });
+
+        }
 
 
         #endregion

@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
         public AdminCoreComponentViewModel AdminCoreComponentViewModel { get; set; }
         public int RegistrationPathwayId { get;set; }
         [Required(ErrorMessageResourceType = typeof(ReviewChangeAssessment), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
-       // [MaxLength(100, ErrorMessageResourceType = typeof(ReviewChangeAssessment), ErrorMessageResourceName = "Validation_Firstname_Max_Length")]
+       
         public string ContactName { get; set; }
 
         [DateValidator(Property = nameof(RequestDate), ErrorResourceType = typeof(ReviewChangeAssessment), ErrorResourceName = "Validation_Date_When_Change_Requested_Blank_Text")]
@@ -23,8 +23,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
         public string Day { get; set; }
         public string Month { get; set; }
         public string Year { get; set; }
-       
-      
+        public string CoreChangeTo => AdminCoreComponentViewModel.ValidPathwayAssessmentSeries.Where(t => t.SeriesName == AdminCoreComponentViewModel.AssessmentYearTo).FirstOrDefault().SeriesName;
+
         [Required(ErrorMessageResourceType = typeof(ReviewChangeAssessment), ErrorMessageResourceName = "Validation_Reason_For_Change_Blank_Text")]
         public string ChangeReason { get; set; }
         public string ZendeskId { get; set; }
@@ -73,9 +73,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
         {
             Id = "assessment",
             Title = $"{ReviewChangeAssessment.Core_Component}:{AdminCoreComponentViewModel.PathwayDisplayName}",
-            Value = $"{ReviewChangeAssessment.Text_No_Assement_Message} {AdminCoreComponentViewModel.CoreChangeTo}",
-            Value2 = AdminCoreComponentViewModel.CoreChangeTo,
+            Value = $"{ReviewChangeAssessment.Text_No_Assement_Message} {CoreChangeTo}",
+            Value2 = CoreChangeTo,
             ActionText = ReviewChangeAssessment.Link_Change_Text,
+            TitleCss = "govuk-summary-list__value",
             RouteName = RouteConstants.AdminCoreComponentAssessmentEntry,
             RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, AdminCoreComponentViewModel.RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
         };
