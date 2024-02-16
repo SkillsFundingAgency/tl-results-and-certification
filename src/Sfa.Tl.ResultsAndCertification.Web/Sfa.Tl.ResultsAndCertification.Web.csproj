@@ -77,6 +77,11 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>LearnerRecord.resx</DependentUpon>
 		</Compile>
+		<Compile Update="Content\AdminDashboard\AdminReviewRemoveAssessmentEntry.Designer.cs">
+		  <DependentUpon>AdminReviewRemoveAssessmentEntry.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminDashboard\ReviewChangesIndustryPlacement.Designer.cs">
 		  <DependentUpon>ReviewChangesIndustryPlacement.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -1122,6 +1127,11 @@
 		<EmbeddedResource Update="Content\AdminDashboard\LearnerRecord.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>LearnerRecord.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminDashboard\AdminReviewRemoveAssessmentEntry.resx">
+		  <SubType>Designer</SubType>
+		  <LastGenOutput>AdminReviewRemoveAssessmentEntry.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangesIndustryPlacement.resx">
 		  <SubType>Designer</SubType>
