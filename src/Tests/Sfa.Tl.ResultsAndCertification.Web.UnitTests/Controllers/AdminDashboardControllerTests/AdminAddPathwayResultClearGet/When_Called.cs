@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         }
 
         [Fact]
-        public void Then_Redirected_To_RemoveAssessmentEntryCore()
+        public void Then_Redirected_To_AdminAddPathwayResult()
         {
             _result.ShouldBeRedirectToRouteResult(
                 RouteConstants.AdminAddPathwayResult, 

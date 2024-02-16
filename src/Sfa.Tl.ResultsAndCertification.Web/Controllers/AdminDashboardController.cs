@@ -645,7 +645,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("admin/add-assessment-result-core", Name = RouteConstants.SubmitAdminAddSpecialismResult)]
+        [Route("admin/add-assessment-result-core", Name = RouteConstants.SubmitAdminAddPathwayResult)]
         public async Task<IActionResult> AdminAddPathwayResultAsync(AdminAddPathwayResultViewModel model)
         {
             await _loader.LoadAdminAddPathwayResultGrades(model);
@@ -665,6 +665,41 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             await _cacheService.RemoveAsync<AdminAddSpecialismResultViewModel>(CacheKey);
             return RedirectToRoute(RouteConstants.AdminAddSpecialismResult, new { registrationPathwayId, assessmentId });
+        }
+
+        [HttpGet]
+        [Route("admin/add-assessment-result-specialism/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.AdminAddSpecialismResult)]
+        public async Task<IActionResult> AdminAddSpecialismResultAsync(int registrationPathwayId, int assessmentId)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminAddSpecialismResultViewModel>(CacheKey);
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
+            AdminAddSpecialismResultViewModel viewModel = await _loader.GetAdminAddSpecialismResultAsync(registrationPathwayId, assessmentId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No core result details found. Method: AdminAddSpecialismResultAsync({registrationPathwayId}, {assessmentId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/add-assessment-result-specialism", Name = RouteConstants.SubmitAdminAddSpecialismResult)]
+        public async Task<IActionResult> AdminAddSpecialismResultAsync(AdminAddSpecialismResultViewModel model)
+        {
+            await _loader.LoadAdminAddSpecialismResultGrades(model);
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await _cacheService.SetAsync(CacheKey, model);
+            return RedirectToRoute(RouteConstants.PageNotFound); // TODO: Redirect to review page
         }
 
         #endregion

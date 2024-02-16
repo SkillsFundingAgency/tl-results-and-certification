@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            CacheService.Received(1).RemoveAsync<AdminAddPathwayResultViewModel>(CacheKey);
+            CacheService.Received(1).RemoveAsync<AdminAddSpecialismResultViewModel>(CacheKey);
         }
 
         [Fact]
-        public void Then_Redirected_To_RemoveAssessmentEntryCore() // *****
+        public void Then_Redirected_To_AdminAddSpecialismResult()
         {
             _result.ShouldBeRedirectToRouteResult(
-                RouteConstants.AdminAddPathwayResult, 
+                RouteConstants.AdminAddSpecialismResult,
                 (Constants.RegistrationPathwayId, RegistrationPathwayId),
                 (Constants.AssessmentId, AssessmentId));
         }

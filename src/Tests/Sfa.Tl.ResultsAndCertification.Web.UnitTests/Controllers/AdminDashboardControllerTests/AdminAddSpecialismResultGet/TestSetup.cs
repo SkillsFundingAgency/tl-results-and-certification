@@ -1,19 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
+using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminAddPathwayResultPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminAddSpecialismResultGet
 {
     public abstract class TestSetup : AdminDashboardControllerTestBase
     {
         protected const int RegistrationPathwayId = 1, AssessmentId = 1;
-        protected IActionResult Result;
 
-        protected static AdminAddPathwayResultViewModel CreateViewModel(string selectedGradeCode = null)
+        protected IActionResult Result { get; private set; }
+
+        public async override Task When()
+        {
+            Result = await Controller.AdminAddSpecialismResultAsync(RegistrationPathwayId, AssessmentId);
+        }
+
+        protected static AdminAddSpecialismResultViewModel ViewModel
             => new()
             {
                 RegistrationPathwayId = RegistrationPathwayId,
-                PathwayAssessmentId = AssessmentId,
-                PathwayName = "Healthcare Science (6037083X)",
+                SpecialismAssessmentId = AssessmentId,
+                SpecialismName = "Plastering (ZTLOS025)",
                 Learner = "John Smith",
                 Uln = 1080808080,
                 Provider = "Barnsley College (10000536)",
@@ -21,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 StartYear = "2023 to 2024",
                 ExamPeriod = "Summer 2024",
                 Grade = string.Empty,
-                SelectedGradeCode = selectedGradeCode
+                SelectedGradeCode = "PCG1"
             };
     }
 }

@@ -70,8 +70,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
 
         #endregion
 
-        public bool CanResultBeAdded { get; set; }
-
         [Required(ErrorMessageResourceType = typeof(AdminAddSpecialismResult), ErrorMessageResourceName = "Validation_Message")]
         public string SelectedGradeCode { get; set; }
 

@@ -16,7 +16,6 @@
 
             <input type="hidden" asp-for="RegistrationPathwayId" />
             <input type="hidden" asp-for="PathwayAssessmentId" />
-            <input type="hidden" asp-for="CanResultBeAdded" />
 
             <!-- Add assessment result page header -->
             <div class="record-header">
@@ -63,49 +62,35 @@
                 </dl>
             </div>
 
-            @if (Model.CanResultBeAdded)
-            {
-                <!-- Select the grade -->
-                <div class="govuk-form-group govuk-!-margin-top-2" sfa-validation-for="SelectedGradeCode" sfa-validation-class="govuk-form-group--error">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                            <h2 class="govuk-fieldset__heading">
-                                @AdminAddPathwayResult.Heading_Select_Grade
-                            </h2>
-                        </legend>
 
-                        <span sfa-validation-for="SelectedGradeCode"></span>
-                        @foreach (var grade in Model?.Grades?.Select((value, i) => (value, i)))
-                        {
-                            var elementId = (grade.i > 0) ? "selectedgradecode-" + grade.i : "selectedgradecode";
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="@elementId" type="radio" asp-for="@Model.SelectedGradeCode" value="@Model.Grades[grade.i].Code">
-                                <label class="govuk-label govuk-radios__label" for="@elementId">
-                                    @grade.value.Value
-                                </label>
-                            </div>
-                        }
-                    </fieldset>
-                </div>
+            <!-- Select the grade -->
+            <div class="govuk-form-group govuk-!-margin-top-2" sfa-validation-for="SelectedGradeCode" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h2 class="govuk-fieldset__heading">
+                            @AdminAddPathwayResult.Heading_Select_Grade
+                        </h2>
+                    </legend>
 
-                <!-- Continue / Cancel buttons -->
-                <div class="govuk-button-group">
-                    <button id="btnContinue" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminAddPathwayResult.Button_Continue</button>
-                    <a id="btnCancel" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminAddPathwayResult.Button_Cancel</a>
-                </div>
-            }
-            else
-            {
-                <!-- You cannot remove an assessment entry for this learner -->
-                @* <div class="govuk-form-group">
-            <h2 class="govuk-heading-m">@AdminAddPathwayResult.Warning_Header_You_Cannot_Remove_An_Assessment_Entry_For_This_Learner</h2>
-            <p class="govuk-body">@AdminAddPathwayResult.Warning_Body_This_Is_Because_The_Learner_Already_Has_Result</p>
-
-            <div class="govuk-button-group">
-            <a id="btnReturnToLearnerRecord" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminAddPathwayResult.Button_Return_To_Learner_Record</a>
+                    <span sfa-validation-for="SelectedGradeCode"></span>
+                    @foreach (var grade in Model?.Grades?.Select((value, i) => (value, i)))
+                    {
+                        var elementId = (grade.i > 0) ? "selectedgradecode-" + grade.i : "selectedgradecode";
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="@elementId" type="radio" asp-for="@Model.SelectedGradeCode" value="@Model.Grades[grade.i].Code">
+                            <label class="govuk-label govuk-radios__label" for="@elementId">
+                                @grade.value.Value
+                            </label>
+                        </div>
+                    }
+                </fieldset>
             </div>
-            </div>*@
-            }
+
+            <!-- Continue / Cancel buttons -->
+            <div class="govuk-button-group">
+                <button id="btnContinue" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminAddPathwayResult.Button_Continue</button>
+                <a id="btnCancel" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminAddPathwayResult.Button_Cancel</a>
+            </div>
         </form>
     </div>
 </div>

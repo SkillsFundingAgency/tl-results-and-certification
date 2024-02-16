@@ -434,6 +434,7 @@
         public const string SubmitOccupationalSpecialisAssessmentEntry = "SubmitOccupationalSpecialisAssessmentEntry";
         public const string AdminAddPathwayResultClear = "AdminAddPathwayResultClear";
         public const string AdminAddPathwayResult = "AdminAddPathwayResult";
+        public const string SubmitAdminAddPathwayResult = "SubmitAdminAddPathwayResult";
         public const string AdminAddSpecialismResultClear = "AdminAddSpecialismResultClear";
         public const string AdminAddSpecialismResult = "AdminAddSpecialismResult";
         public const string SubmitAdminAddSpecialismResult = "SubmitAdminAddSpecialismResult";
