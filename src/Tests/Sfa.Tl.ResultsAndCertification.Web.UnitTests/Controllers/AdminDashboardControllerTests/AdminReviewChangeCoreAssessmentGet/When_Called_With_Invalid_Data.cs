@@ -13,7 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
     public class When_Called_With_Invalid_Data: TestSetup
     {
         protected AdminReviewChangesCoreAssessmentViewModel Mockresult = null;
-        protected AdminCoreComponentViewModel AdminCoreComponentViewModel = null;
 
         public override void Given()
         {
