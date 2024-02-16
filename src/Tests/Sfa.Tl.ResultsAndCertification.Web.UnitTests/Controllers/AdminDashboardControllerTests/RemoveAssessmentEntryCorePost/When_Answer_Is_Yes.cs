@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         [Fact]
         public void Then_Redirected_To_ReviewRemoveCoreAssessmentPage()
         {
-            Result.ShouldBeRedirectToRouteResult(RouteConstants.AdminReviewRemoveCoreAssessmentEntry, (Constants.RegistrationPathwayId, RegistrationPathwayId));
+            Result.ShouldBeRedirectToRouteResult(RouteConstants.AdminReviewRemoveCoreAssessmentEntry);
         }
     }
 }

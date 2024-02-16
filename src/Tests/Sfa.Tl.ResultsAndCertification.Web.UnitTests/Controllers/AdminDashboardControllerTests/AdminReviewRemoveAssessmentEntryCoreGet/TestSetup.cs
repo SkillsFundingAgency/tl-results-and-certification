@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
         public async override Task When()
         {
-            Result = await Controller.AdminReviewRemoveCoreAssessmentEntryAsync(PathwayId);
+            Result = await Controller.AdminReviewRemoveCoreAssessmentEntryAsync();
         }
     }
 }

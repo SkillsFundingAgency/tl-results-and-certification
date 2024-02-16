@@ -560,12 +560,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             await _cacheService.SetAsync(CacheKey, model);
-            return RedirectToRoute(RouteConstants.AdminReviewRemoveCoreAssessmentEntry, new { registrationPathwayId = model.RegistrationPathwayId });
+            return RedirectToRoute(RouteConstants.AdminReviewRemoveCoreAssessmentEntry);
         }
 
         [HttpGet]
         [Route("admin/review-remove-assessment-entry-core/{registrationPathwayId}", Name = RouteConstants.AdminReviewRemoveCoreAssessmentEntry)]
-        public async Task<IActionResult> AdminReviewRemoveCoreAssessmentEntryAsync(int registrationPathwayId)
+        public async Task<IActionResult> AdminReviewRemoveCoreAssessmentEntryAsync()
         {
             var cachedModel = await _cacheService.GetAsync<AdminRemovePathwayAssessmentEntryViewModel>(CacheKey);
 
