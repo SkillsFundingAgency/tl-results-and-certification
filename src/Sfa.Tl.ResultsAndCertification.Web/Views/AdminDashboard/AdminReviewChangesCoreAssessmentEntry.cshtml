@@ -50,10 +50,10 @@
         <input type="hidden" asp-for="AdminCoreComponentViewModel.Uln" />
         <input type="hidden" asp-for="AdminCoreComponentViewModel.AssessmentYearTo" />
         <input type="hidden" asp-for="AdminCoreComponentViewModel.PathwayDisplayName" />
-        @for (int i = 0; i < @Model.AdminCoreComponentViewModel.ValidPathwayAssessmentSeries.Count(); i++)
+        @for (int i = 0; i < @Model.AdminCoreComponentViewModel.ValidPathwayAssessmentSeries.ToList().Count(); i++)
         {
-            <input type="hidden" asp-for="AdminCoreComponentViewModel.ValidPathwayAssessmentSeries[i].SeriesId" />
-            <input type="hidden" asp-for="AdminCoreComponentViewModel.ValidPathwayAssessmentSeries[i].SeriesName" />
+            <input type="hidden" asp-for="AdminCoreComponentViewModel.ValidPathwayAssessmentSeries.ToList()[i].SeriesId" />
+            <input type="hidden" asp-for="AdminCoreComponentViewModel.ValidPathwayAssessmentSeries.ToList()[i].SeriesName" />
         }
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset">
