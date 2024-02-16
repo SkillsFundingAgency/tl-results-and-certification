@@ -1,9 +1,9 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result.AdminAddPathwayResultViewModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result.AdminAddSpecialismResultViewModel
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
 
 @{
-    ViewData["Title"] = AdminAddPathwayResult.Page_Title;
+    ViewData["Title"] = AdminAddSpecialismResult.Page_Title;
 }
 
 @section NavigationBar {
@@ -15,13 +15,13 @@
         <form asp-route="@RouteConstants.SubmitAdminAddSpecialismResult">
 
             <input type="hidden" asp-for="RegistrationPathwayId" />
-            <input type="hidden" asp-for="PathwayAssessmentId" />
+            <input type="hidden" asp-for="SpecialismAssessmentId" />
             <input type="hidden" asp-for="CanResultBeAdded" />
 
             <!-- Add assessment result page header -->
             <div class="record-header">
                 <h1 class="govuk-heading-xl">
-                    @AdminAddPathwayResult.Heading_Add_Assessment_Result
+                    @AdminAddSpecialismResult.Heading_Add_Assessment_Result
                 </h1>
             </div>
 
@@ -36,7 +36,7 @@
 
             <div class="govuk-!-margin-bottom-9">
                 <h2 class="govuk-heading-m">
-                    @AdminAddPathwayResult.Heading_Personal_Details
+                    @AdminAddSpecialismResult.Heading_Personal_Details
                 </h2>
 
                 <dl class="govuk-summary-list">
@@ -49,13 +49,13 @@
             </div>
 
             <!-- Core component -->
-            <input type="hidden" asp-for="PathwayName" />
+            <input type="hidden" asp-for="SpecialismName" />
             <input type="hidden" asp-for="ExamPeriod" />
             <input type="hidden" asp-for="Grade" />
 
             <div class="govuk-!-margin-bottom-9">
                 <h2 class="govuk-heading-m">
-                    @string.Format(AdminAddPathwayResult.Core_Heading_Text, Model.PathwayName)
+                    @string.Format(AdminAddSpecialismResult.Specialism_Heading_Text, Model.SpecialismName)
                 </h2>
                 <dl class="govuk-summary-list">
                     <vc:summary-item model=Model.SummaryExamPeriod></vc:summary-item>
@@ -70,7 +70,7 @@
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                             <h2 class="govuk-fieldset__heading">
-                                @AdminAddPathwayResult.Heading_Select_Grade
+                                @AdminAddSpecialismResult.Heading_Select_Grade
                             </h2>
                         </legend>
 
@@ -90,19 +90,19 @@
 
                 <!-- Continue / Cancel buttons -->
                 <div class="govuk-button-group">
-                    <button id="btnContinue" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminAddPathwayResult.Button_Continue</button>
-                    <a id="btnCancel" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminAddPathwayResult.Button_Cancel</a>
+                    <button id="btnContinue" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminAddSpecialismResult.Button_Continue</button>
+                    <a id="btnCancel" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminAddSpecialismResult.Button_Cancel</a>
                 </div>
             }
             else
             {
                 <!-- You cannot remove an assessment entry for this learner -->
                 @* <div class="govuk-form-group">
-            <h2 class="govuk-heading-m">@AdminAddPathwayResult.Warning_Header_You_Cannot_Remove_An_Assessment_Entry_For_This_Learner</h2>
-            <p class="govuk-body">@AdminAddPathwayResult.Warning_Body_This_Is_Because_The_Learner_Already_Has_Result</p>
+            <h2 class="govuk-heading-m">@AdminAddSpecialismResult.Warning_Header_You_Cannot_Remove_An_Assessment_Entry_For_This_Learner</h2>
+            <p class="govuk-body">@AdminAddSpecialismResult.Warning_Body_This_Is_Because_The_Learner_Already_Has_Result</p>
 
             <div class="govuk-button-group">
-            <a id="btnReturnToLearnerRecord" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminAddPathwayResult.Button_Return_To_Learner_Record</a>
+            <a id="btnReturnToLearnerRecord" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminAddSpecialismResult.Button_Return_To_Learner_Record</a>
             </div>
             </div>*@
             }

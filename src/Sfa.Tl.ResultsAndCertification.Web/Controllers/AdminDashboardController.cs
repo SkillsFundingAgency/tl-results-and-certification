@@ -659,6 +659,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(RouteConstants.PageNotFound); // TODO: Redirect to review page
         }
 
+        [HttpGet]
+        [Route("admin/add-assessment-result-specialism-clear/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.AdminAddSpecialismResultClear)]
+        public async Task<IActionResult> AdminAddSpecialismResultClearAsync(int registrationPathwayId, int assessmentId)
+        {
+            await _cacheService.RemoveAsync<AdminAddSpecialismResultViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AdminAddSpecialismResult, new { registrationPathwayId, assessmentId });
+        }
+
         #endregion
     }
 }
