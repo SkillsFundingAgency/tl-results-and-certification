@@ -87,6 +87,11 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="Content\AdminDashboard\ReviewChangeAssessment.Designer.cs">
+		  <DependentUpon>ReviewChangeAssessment.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminDashboard\ReviewChangeStartYear.Designer.cs">
 			<DependentUpon>ReviewChangeStartYear.resx</DependentUpon>
 			<DesignTime>True</DesignTime>
@@ -1136,6 +1141,11 @@
 		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangesIndustryPlacement.resx">
 		  <SubType>Designer</SubType>
 		  <LastGenOutput>ReviewChangesIndustryPlacement.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangeAssessment.resx">
+		  <SubType>Designer</SubType>
+		  <LastGenOutput>ReviewChangeAssessment.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangeStartYear.resx">

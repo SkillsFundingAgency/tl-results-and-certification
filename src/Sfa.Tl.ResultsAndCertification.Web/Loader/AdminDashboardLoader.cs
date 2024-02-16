@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             AdminSearchLearnerFilters apiResponse = await _internalApiClient.GetAdminSearchLearnerFiltersAsync();
             return _mapper.Map<AdminSearchLearnerFiltersViewModel>(apiResponse);
         }
-
+     
         public async Task<AdminSearchLearnerDetailsListViewModel> GetAdminSearchLearnerDetailsListAsync(AdminSearchLearnerCriteriaViewModel adminSearchCriteria)
         {
             var adminSearchLearnerRequest = _mapper.Map<AdminSearchLearnerRequest>(adminSearchCriteria);
