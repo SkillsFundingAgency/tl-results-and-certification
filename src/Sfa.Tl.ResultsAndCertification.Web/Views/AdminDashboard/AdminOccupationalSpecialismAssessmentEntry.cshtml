@@ -10,6 +10,15 @@
     <vc:back-link model=Model.BackLink></vc:back-link>
 }
 
+@functions {
+    async Task DisplayButtonReturnToLearnerView()
+    {
+        <div class="govuk-button-group">
+            <a id="returnButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminLearnerAssessmentEntry.Button_Return</a>
+        </div>
+    }
+}
+
 <div class="govuk-grid-row">
 
     <div class="govuk-grid-column-two-thirds-from-desktop">
@@ -37,7 +46,7 @@
 
             <section id="add-entries">
 
-                @foreach (var specialism in Model.SpecialismsAssesments)
+                @foreach (var specialism in Model.AssessmentDetails.SpecialismDetails.Where(s => s.Id == Model.SpecialismAssessmentId))
                 {
                     <h2 class="govuk-heading-m">
                         @string.Format(AdminLearnerAssessmentEntry.Section_Heading_Occupational_Specialism, specialism.DisplayName)
@@ -61,14 +70,17 @@
 
             @if (Model.IsLearnerRegisteredFourYearsAgo)
             {
-                <h2 class="govuk-heading-m govuk-!-margin-top-7">
-                    @AdminLearnerAssessmentEntry.You_Cannot_Add_An_Assessment_Entry_For_This_Learner
-                </h2>
-                <p class="govuk-body">
-                    @AdminLearnerAssessmentEntry.This_Is_Because_The_Previous_Exam_Period_More_Than_4_Years
-                </p>
-
-
+                <div>
+                    <h2 class="govuk-heading-m govuk-!-margin-top-7">
+                        @AdminLearnerAssessmentEntry.You_Cannot_Add_An_Assessment_Entry_For_This_Learner
+                    </h2>
+                    <p class="govuk-body">
+                        @AdminLearnerAssessmentEntry.This_Is_Because_The_Previous_Exam_Period_More_Than_4_Years
+                    </p>
+                    @{
+                        await DisplayButtonReturnToLearnerView();
+                    }
+                </div>
             }
             else if (Model.HasReachedAssessmentsThreashold)
             {
@@ -79,6 +91,9 @@
                     <p class="govuk-body">
                         @AdminLearnerAssessmentEntry.This_Is_Because_There_Are_Already_Assessment_Entries
                     </p>
+                    @{
+                        await DisplayButtonReturnToLearnerView();
+                    }
                 </div>
             }
             else

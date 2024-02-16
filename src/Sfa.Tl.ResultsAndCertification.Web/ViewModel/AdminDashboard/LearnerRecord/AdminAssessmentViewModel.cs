@@ -1,10 +1,15 @@
-﻿using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.TableButton;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.TableButton;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord
 {
     public class AdminAssessmentViewModel
     {
         public int RegistrationPathwayId { get; set; }
+
+        public int AssessmentId { get; set; }
+
+        public ComponentType ComponentType { get; set; }
 
         public string ExamPeriod { get; set; }
 

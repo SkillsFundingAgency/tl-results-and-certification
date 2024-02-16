@@ -422,6 +422,16 @@
         public const string SubmitAdminIndustryPlacementSpecialConsiderationReasons = "SubmitAdminIndustryPlacementSpecialConsiderationReasons";
         public const string AdminReviewChangesIndustryPlacement = "AdminReviewChangesIndustryPlacement";
         public const string SubmitReviewChangesIndustryPlacement = "SubmitReviewChangesIndustryPlacement";
+        public const string RemoveAssessmentEntryCoreClear = "RemoveAssessmentEntryCoreClear";
+        public const string RemoveAssessmentEntryCore = "RemoveAssessmentEntryCore";
+        public const string SubmitRemoveAssessmentEntryCore = "SubmitRemoveAssessmentEntryCore";
+        public const string RemoveAssessmentSpecialismEntryClear = "RemoveAssessmentSpecialismEntryClear";
+        public const string RemoveAssessmentSpecialismEntry = "RemoveAssessmentSpecialismEntry";
+        public const string SubmitRemoveAssessmentSpecialismEntry = "SubmitRemoveAssessmentSpecialismEntry";
+        public const string AdminCoreComponentAssessmentEntry = "AdminCoreComponentAssessmentEntry";
+        public const string SubmitCoreComponentAssessmentEntry = "SubmitCoreComponentAssessmentEntry";
+        public const string AdminOccupationalSpecialisAssessmentEntry = "AdminOccupationalSpecialisAssessmentEntry";
+        public const string SubmitOccupationalSpecialisAssessmentEntry = "SubmitOccupationalSpecialisAssessmentEntry";
         public const string AdminCoreComponentAssessmentEntry = "AdminCoreComponentAssessmentEntry";
         public const string SubmitCoreComponentAssessmentEntry = "SubmitCoreComponentAssessmentEntry";
         public const string AdminOccupationalSpecialisAssessmentEntry = "AdminOccupationalSpecialisAssessmentEntry";

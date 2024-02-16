@@ -123,76 +123,79 @@
   <data name="Button_Continue" xml:space="preserve">
     <value>Continue</value>
   </data>
-  <data name="Button_Return" xml:space="preserve">
+  <data name="Button_Return_To_Learner_Record" xml:space="preserve">
     <value>Return to learner record</value>
   </data>
-  <data name="Error_Summary_Header" xml:space="preserve">
-    <value>There is a problem</value>
+  <data name="Core_Heading_Text" xml:space="preserve">
+    <value>Core component: {0}</value>
   </data>
-  <data name="Error_Summary_Text" xml:space="preserve">
-    <value>Select whether the learner has completed their industry placement</value>
-  </data>
-  <data name="Heading_Add_Assessment_Entry" xml:space="preserve">
-    <value>Add assessment entry</value>
-  </data>
-  <data name="Heading_Do_You_Want_To_Add_An_Assessment_Entry" xml:space="preserve">
-    <value>Do you want to add an assessment entry to this exam period?</value>
+  <data name="Heading_Do_You_Want_To_Remove_This_Assessment_Entry" xml:space="preserve">
+    <value>Do you want to remove this assessment entry?</value>
   </data>
   <data name="Heading_Personal_Details" xml:space="preserve">
     <value>Personal details</value>
   </data>
-  <data name="No_Assessment_Entries_Have_Been_Recorded" xml:space="preserve">
-    <value>No assessment entries have yet been recorded.</value>
+  <data name="Heading_Remove_Assessment_Entry" xml:space="preserve">
+    <value>Remove assessment entry</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Add assessment entry – Admin</value>
+    <value>Remove assessment entry – Admin</value>
   </data>
-  <data name="Section_Heading_Core_Component" xml:space="preserve">
-    <value>Core component: {0}</value>
+  <data name="Radio_Button_No" xml:space="preserve">
+    <value>No</value>
   </data>
-  <data name="Section_Heading_Occupational Specialism" xml:space="preserve">
-    <value>Occupational specialism: {0}</value>
+  <data name="Radio_Button_Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
-  <data name="This_Is_Because_There_Are_Already_Assessment_Entries" xml:space="preserve">
-    <value>This is because there are already assessment entries for both the current and previous exam periods.</value>
+  <data name="Summary_Learner_Id" xml:space="preserve">
+    <value>learner</value>
   </data>
-  <data name="This_Is_Because_There_Are_No_Previous_Exam_Periods" xml:space="preserve">
-    <value>This is because there are no previous exam periods for this learner.</value>
-  </data>
-  <data name="This_Is_Because_The_Previous_Exam_Period_More_Than_4_Years" xml:space="preserve">
-    <value>This is because the previous exam period would be more than 4 years after the learner’s start date.</value>
-  </data>
-  <data name="Title_Exam_Period_Text" xml:space="preserve">
-    <value>Exam period</value>
-  </data>
-  <data name="Title_Grade_Text" xml:space="preserve">
-    <value>Grade</value>
-  </data>
-  <data name="Title_Last_Updated_By_Text" xml:space="preserve">
-    <value>Updated by</value>
-  </data>
-  <data name="Title_Last_Updated_On_Text" xml:space="preserve">
-    <value>Last updated</value>
-  </data>
-  <data name="Title_Learner_Text" xml:space="preserve">
+  <data name="Summary_Learner_Text" xml:space="preserve">
     <value>Learner</value>
   </data>
-  <data name="Title_Provider_Text" xml:space="preserve">
+  <data name="Summary_Provider_Id" xml:space="preserve">
+    <value>provider</value>
+  </data>
+  <data name="Summary_Provider_Text" xml:space="preserve">
     <value>Provider (UKPRN)</value>
   </data>
-  <data name="Title_StartYear_Text" xml:space="preserve">
+  <data name="Summary_StartYear_Id" xml:space="preserve">
+    <value>startyear</value>
+  </data>
+  <data name="Summary_StartYear_Text" xml:space="preserve">
     <value>Start year</value>
   </data>
-  <data name="Title_TLevel_Text" xml:space="preserve">
+  <data name="Summary_TLevel_Id" xml:space="preserve">
+    <value>tlevel</value>
+  </data>
+  <data name="Summary_TLevel_Text" xml:space="preserve">
     <value>T Level</value>
   </data>
-  <data name="Title_ULN_Text" xml:space="preserve">
+  <data name="Summary_ULN_Id" xml:space="preserve">
+    <value>uln</value>
+  </data>
+  <data name="Summary_ULN_Text" xml:space="preserve">
     <value>ULN</value>
   </data>
-  <data name="Validation_Message" xml:space="preserve">
-    <value>Select the exam period you want to add an assessment entry to</value>
+  <data name="Table_Column_Exam_Period" xml:space="preserve">
+    <value>Exam period</value>
   </data>
-  <data name="You_Cannot_Add_An_Assessment_Entry_For_This_Learner" xml:space="preserve">
-    <value>You cannot add an assessment entry for this learner.</value>
+  <data name="Table_Column_Grade" xml:space="preserve">
+    <value>Grade</value>
+  </data>
+  <data name="Table_Column_Last_Updated" xml:space="preserve">
+    <value>Last updated</value>
+  </data>
+  <data name="Table_Column_Updated_By" xml:space="preserve">
+    <value>Updated by</value>
+  </data>
+  <data name="Validation_Message" xml:space="preserve">
+    <value>Select yes to remove this assessment entry</value>
+  </data>
+  <data name="Warning_Body_This_Is_Because_The_Learner_Already_Has_Result" xml:space="preserve">
+    <value>You cannot remove an assessment entry for this learner. This is because the learner already has a result for this assessment.</value>
+  </data>
+  <data name="Warning_Header_You_Cannot_Remove_An_Assessment_Entry_For_This_Learner" xml:space="preserve">
+    <value>Assessment entry cannot be removed</value>
   </data>
 </root>

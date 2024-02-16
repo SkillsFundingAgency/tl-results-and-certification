@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
         private AdminCoreComponentViewModel _result;
 
         public override void Given()
-        {
+        {   
             _apiResultLearnerRecord = CreateAdminLearnerRecord(RegistrationPathwayId);
             ApiClient.GetAdminLearnerRecordAsync(RegistrationPathwayId).Returns(_apiResultLearnerRecord);
 
