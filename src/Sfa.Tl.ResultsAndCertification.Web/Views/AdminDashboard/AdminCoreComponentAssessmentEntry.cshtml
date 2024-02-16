@@ -25,6 +25,11 @@
 
         <form asp-route="@RouteConstants.SubmitCoreComponentAssessmentEntry" method="post">
             <input type="hidden" asp-for="RegistrationPathwayId" />
+            <input type="hidden" asp-for="LearnerName" />
+            <input type="hidden" asp-for="Uln" />
+            <input type="hidden" asp-for="Provider" />
+            <input type="hidden" asp-for="TlevelName" />
+            <input type="hidden" asp-for="DisplayStartYear" />
             <div class="record-header">
                 <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
                     @AdminLearnerAssessmentEntry.Heading_Add_Assessment_Entry
@@ -51,7 +56,7 @@
                 @if (Model.HasCoreAssessmentEntries)
                 {
                     <table class="govuk-table responsive-table">
-                        <partial name="Partials/_examTableResults.cshtml" model="Model.AssessmentDetails.PathwayAssessments" />
+                       <partial name="Partials/_examTableResults.cshtml" model="Model.AssessmentDetails.PathwayAssessments" />
                     </table>
                 }
                 else
@@ -105,8 +110,8 @@
                             @foreach (var assessment in Model.ValidPathwayAssessmentSeries)
                             {
                                 <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="assessments_@assessment.SeriesId" asp-for="AssessmentYearTo" type="radio" value="@assessment.SeriesId">
-                                    <label class="govuk-label govuk-radios__label" for="assessment_@assessment.SeriesId">
+                                    <input class="govuk-radios__input" id="assessments_@assessment.SeriesId" asp-for="AssessmentYearTo" type="radio" value="@assessment.SeriesName">
+                                    <label class="govuk-label govuk-radios__label"  for="assessment_@assessment.SeriesId">
                                         @assessment.SeriesName
                                     </label>
                                 </div>
