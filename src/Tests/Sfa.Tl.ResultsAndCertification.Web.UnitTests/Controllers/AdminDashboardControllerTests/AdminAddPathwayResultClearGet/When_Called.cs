@@ -2,11 +2,11 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.RemoveAssessmentEntryCoreClearGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminAddPathwayResultClearGet
 {
     public class When_Called : AdminDashboardControllerTestBase
     {
@@ -16,20 +16,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
         public async override Task When()
         {
-            _result = await Controller.RemoveAssessmentEntryCoreClearAsync(RegistrationPathwayId, AssessmentId);
+            _result = await Controller.AdminAddPathwayResultClearAsync(RegistrationPathwayId, AssessmentId);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            CacheService.Received(1).RemoveAsync<AdminRemovePathwayAssessmentEntryViewModel>(CacheKey);
+            CacheService.Received(1).RemoveAsync<AdminAddPathwayResultViewModel>(CacheKey);
         }
 
         [Fact]
         public void Then_Redirected_To_RemoveAssessmentEntryCore()
         {
             _result.ShouldBeRedirectToRouteResult(
-                RouteConstants.RemoveAssessmentEntryCore, 
+                RouteConstants.AdminAddPathwayResult, 
                 (Constants.RegistrationPathwayId, RegistrationPathwayId),
                 (Constants.AssessmentId, AssessmentId));
         }
