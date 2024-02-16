@@ -437,6 +437,10 @@
         public const string SubmitReviewChangesCoreAssessmentEntry = "SubmitReviewChangesCoreAssessmentEntry";
         public const string AdminReviewChangesSpecialismAssessmentEntry = "AdminReviewChangesSpecialismAssessmentEntry";
         public const string SubmitReviewChangesSpecialismAssessmentEntry = "SubmitReviewChangesSpecialismAssessmentEntry";
+        public const string AdminReviewRemoveCoreAssessmentEntry = "AdminReviewRemoveCoreAssessmentEntry";
+        public const string SubmitReviewRemoveCoreAssessmentEntry = "SubmitReviewRemoveCoreAssessmentEntry";
+        public const string AdminReviewRemoveSpecialismAssessmentEntry = "AdminReviewRemoveSpecialismAssessmentEntry";
+        public const string SubmitReviewRemoveSpecialismAssessmentEntry = "SubmitReviewRemoveSpecialismAssessmentEntry";
         #endregion
     }
 }
