@@ -432,11 +432,7 @@
         public const string SubmitCoreComponentAssessmentEntry = "SubmitCoreComponentAssessmentEntry";
         public const string AdminOccupationalSpecialisAssessmentEntry = "AdminOccupationalSpecialisAssessmentEntry";
         public const string SubmitOccupationalSpecialisAssessmentEntry = "SubmitOccupationalSpecialisAssessmentEntry";
-        public const string AdminCoreComponentAssessmentEntry = "AdminCoreComponentAssessmentEntry";
-        public const string SubmitCoreComponentAssessmentEntry = "SubmitCoreComponentAssessmentEntry";
-        public const string AdminOccupationalSpecialisAssessmentEntry = "AdminOccupationalSpecialisAssessmentEntry";
-        public const string SubmitOccupationalSpecialisAssessmentEntry = "SubmitOccupationalSpecialisAssessmentEntry";
-
+       
         public const string AdminReviewChangesCoreAssessmentEntry = "AdminReviewChangesCoreAssessmentEntry";
         public const string SubmitReviewChangesCoreAssessmentEntry = "SubmitReviewChangesCoreAssessmentEntry";
         public const string AdminReviewChangesSpecialismAssessmentEntry = "AdminReviewChangesSpecialismAssessmentEntry";
