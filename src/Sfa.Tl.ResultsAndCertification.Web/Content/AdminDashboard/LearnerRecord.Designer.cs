@@ -187,20 +187,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change.
+        ///   Looks up a localized string similar to Change result.
         /// </summary>
         public static string Change_Result_Action_Link_Text {
             get {
                 return ResourceManager.GetString("Change_Result_Action_Link_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  result.
-        /// </summary>
-        public static string Change_Result_Action_Link_Text_Hidden {
-            get {
-                return ResourceManager.GetString("Change_Result_Action_Link_Text_Hidden", resourceCulture);
             }
         }
         
