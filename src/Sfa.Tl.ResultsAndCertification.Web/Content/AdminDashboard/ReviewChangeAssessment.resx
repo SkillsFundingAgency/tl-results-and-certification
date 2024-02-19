@@ -117,97 +117,118 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Accept_Responsibility_For_All_Activities_Text" xml:space="preserve">
-    <value>accept responsibility for all activities associated with your email and password, and your account</value>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-  <data name="Agree_To_Comply_Text" xml:space="preserve">
-    <value>agree to comply with any amendments to these Terms and Conditions</value>
+  <data name="Button_Submit" xml:space="preserve">
+    <value>Submit</value>
   </data>
-  <data name="Agree_To_Indemnify_Text" xml:space="preserve">
-    <value>agree to indemnify the DfE against any losses, expenses, damages or claims we may incur as a result of any failure by you to comply with the obligations set out in these terms</value>
+  <data name="Core_Component" xml:space="preserve">
+    <value>Core Component</value>
   </data>
-  <data name="As_Training_Provider_Text" xml:space="preserve">
-    <value>As a training provider or awarding organisation you must:</value>
+  <data name="Error_Summary_Header" xml:space="preserve">
+    <value>There is a problem</value>
   </data>
-  <data name="A_Users_Rights_To_User_This_Service_Text" xml:space="preserve">
-    <value>A user’s rights to use this service may be removed or amended if you are found to be in breach of these terms and conditions. Our decision in the event of a breach shall be final.</value>
+  <data name="Error_Summary_Text" xml:space="preserve">
+    <value>Select the correct start year</value>
   </data>
-  <data name="By_Using_The_Mange_TLevels_Text" xml:space="preserve">
-    <value>By using the Manage T Level results service you agree to these terms and conditions.</value>
+  <data name="Heading_Change_Start_Year" xml:space="preserve">
+    <value>Review changes to assessment entry</value>
   </data>
-  <data name="Comply_With_The_Uk_Computer_Text" xml:space="preserve">
-    <value>comply with the UK Computer Misuse Act 1990</value>
+  <data name="Heading_Change_Summary" xml:space="preserve">
+    <value>Change summary</value>
   </data>
-  <data name="Contact_Us_If_You_Are_Aware_Text" xml:space="preserve">
-    <value>contact us if you're aware of any security breach</value>
+  <data name="Heading_Personal_Details" xml:space="preserve">
+    <value>Personal details</value>
   </data>
-  <data name="Delay_Or_Failure_In_Receiving_Data_Text" xml:space="preserve">
-    <value>delay or failure in receiving data</value>
+  <data name="Heading_Who_has_asked_for_change" xml:space="preserve">
+    <value>Who has asked for this change?</value>
   </data>
-  <data name="Endeavour_To_Ensure_Text" xml:space="preserve">
-    <value>and endeavour to ensure that the service is continuously available, virus free and that the information we provide is accurate and complete.</value>
+  <data name="Link_Change_Text" xml:space="preserve">
+    <value>Change</value>
   </data>
-  <data name="Ensure_That_Any_Personal_Data_Text" xml:space="preserve">
-    <value>ensure that any personal data (as defined under the EU General Data Protection Regulation (GDPR) and the Data Protection Act 2018) is protected, used only for the purposes for which it was obtained and disposed of appropriately</value>
+  <data name="Message_Inset_Text" xml:space="preserve">
+    <value>Any assessment entries or results assigned to this learner will remain active.</value>
   </data>
-  <data name="Ensure_Users_Given_Editor_Roles_Text" xml:space="preserve">
-    <value>ensure users given editor roles have delegated authority on behalf of the organisation to enter and remove providers offering T Levels, register students, enter student results and request certificates</value>
+  <data name="Message_You_Can_Enter_Up_To_Characters" xml:space="preserve">
+    <value>You can enter up to 2,000 characters</value>
   </data>
-  <data name="Ensure_Users_Given_Site_Administrator_Text" xml:space="preserve">
-    <value>ensure users given site administrator roles have delegated authority on behalf of the organisation to confirm T Level details, enter providers offering T Levels, register students, enter student results and request certificates</value>
+  <data name="Message_You_Have_Characters_Remaining" xml:space="preserve">
+    <value>You have 2,000 characters remaining</value>
   </data>
-  <data name="Enuser_Users_Given_Reviewer_Roles_Text" xml:space="preserve">
-    <value>ensure users given reviewer roles have delegated authority on behalf of the organisation to confirm T Level details</value>
-  </data>
-  <data name="However_Esfa_Accept_No_Liability_For_Text" xml:space="preserve">
-    <value>However, DfE accepts no liability for:</value>
-  </data>
-  <data name="Keep_Your_Dfe_Signin_Account_Details_Text" xml:space="preserve">
-    <value>keep your DfE Sign-in account details confidential and secure</value>
-  </data>
-  <data name="Loss_Of_Any_Data_Text" xml:space="preserve">
-    <value>loss of any data</value>
-  </data>
-  <data name="Loss_Or_Damage_Araising_Text" xml:space="preserve">
-    <value>loss or damage arising from the use of the service or reliance on its content</value>
-  </data>
-  <data name="Not_Use_Manage_TLevel_Results_Text" xml:space="preserve">
-    <value>not use Manage T Level results for any unlawful purpose</value>
-  </data>
-  <data name="Opens_In_New_Window_Or_Tab_Text" xml:space="preserve">
-    <value>(opens in a new window or tab)</value>
-  </data>
-  <data name="Our_Responsibilities_Text" xml:space="preserve">
-    <value>Our responsibilities</value>
+  <data name="Occupational_Specialism" xml:space="preserve">
+    <value>Occupational Specialism</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Terms and conditions</value>
+    <value>Review changes to assessment entry – Admin</value>
   </data>
-  <data name="Section_Heading" xml:space="preserve">
-    <value>Terms and conditions</value>
+  <data name="Text_No_Assement_Message" xml:space="preserve">
+    <value>No assessment entry recorded for</value>
   </data>
-  <data name="Sign_In_From_Only_One_PC_Text" xml:space="preserve">
-    <value>sign in from only one PC at a time</value>
+  <data name="Title_Change_Assessment_Text" xml:space="preserve">
+    <value>Assessment</value>
   </data>
-  <data name="Singout_Of_Manage_TLevels_Results_Text" xml:space="preserve">
-    <value>sign out of Manage T Levels results using the sign-out function when you have finished your session</value>
+  <data name="Title_Change_Summary_Change_Text" xml:space="preserve">
+    <value>Change</value>
   </data>
-  <data name="The_Content_And_Availability_Text" xml:space="preserve">
-    <value>the content and availability of external websites that link to the service or which are linked from it</value>
+  <data name="Title_Change_Summary_From_Text" xml:space="preserve">
+    <value>From</value>
   </data>
-  <data name="This_Service_Is_Run_By_Text" xml:space="preserve">
-    <value>This service is run by Department for Education (DfE). We comply with the</value>
+  <data name="Title_Change_Summary_To_Text" xml:space="preserve">
+    <value>To</value>
   </data>
-  <data name="Uk_Data_Protection_Act_2018_Text" xml:space="preserve">
-    <value>UK Data Protection Act 2018</value>
+  <data name="Title_Contact_Name_Text" xml:space="preserve">
+    <value>Contact name</value>
   </data>
-  <data name="Your_Information_Will_Be_Used_Text" xml:space="preserve">
-    <value>Your information will be used to establish your identity and permissions when using a DfE service.</value>
+  <data name="Title_Date_Of_Request" xml:space="preserve">
+    <value>Date of request</value>
   </data>
-  <data name="Your_Responsibilities_Text" xml:space="preserve">
-    <value>Your responsibilities</value>
+  <data name="Title_Day_Text" xml:space="preserve">
+    <value>Day</value>
   </data>
-  <data name="You_Being_Unable_To_Access_The_Service_Text" xml:space="preserve">
-    <value>you being unable to access the service (for example owing to excessive demand or because we've taken the service down for maintenance)</value>
+  <data name="Title_Learner_Text" xml:space="preserve">
+    <value>Learner</value>
+  </data>
+  <data name="Title_Month_Text" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="Title_Provider_Text" xml:space="preserve">
+    <value>Provider (UKPRN)</value>
+  </data>
+  <data name="Title_Reason_For_Change_Text" xml:space="preserve">
+    <value>Reason for change</value>
+  </data>
+  <data name="Title_StartYear_Text" xml:space="preserve">
+    <value>Start year</value>
+  </data>
+  <data name="Title_TLevel_Text" xml:space="preserve">
+    <value>T Level</value>
+  </data>
+  <data name="Title_ULN_Text" xml:space="preserve">
+    <value>ULN</value>
+  </data>
+  <data name="Title_Year_Text" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="Title_Zendesk_Ticket_Id" xml:space="preserve">
+    <value>Zendesk ticket ID (optional)</value>
+  </data>
+  <data name="Validation_Contact_Name_Blank_Text" xml:space="preserve">
+    <value>Enter the name of the contact who requested this change</value>
+  </data>
+  <data name="Validation_Date_When_Change_Requested_Blank_Text" xml:space="preserve">
+    <value>Enter the date when the change was requested</value>
+  </data>
+  <data name="Validation_Date_When_Change_Requested_Future_Date_Text" xml:space="preserve">
+    <value>Date must be today or in the past</value>
+  </data>
+  <data name="Validation_Date_When_Change_Requested_Invalid_Text" xml:space="preserve">
+    <value>Date must be a real date</value>
+  </data>
+  <data name="Validation_Message" xml:space="preserve">
+    <value>Select the correct start year</value>
+  </data>
+  <data name="Validation_Reason_For_Change_Blank_Text" xml:space="preserve">
+    <value>Enter the reason why this change is needed</value>
   </data>
 </root>

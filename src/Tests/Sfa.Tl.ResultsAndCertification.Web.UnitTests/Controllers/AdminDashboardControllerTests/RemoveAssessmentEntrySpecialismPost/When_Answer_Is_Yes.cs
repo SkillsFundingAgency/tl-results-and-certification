@@ -1,4 +1,5 @@
 ﻿using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using System.Threading.Tasks;
@@ -28,9 +29,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         }
 
         [Fact]
-        public void Then_Redirected_To_PageNotFound()
+        public void Then_Redirected_To_ReviewRemoveSpecialismPage()
         {
-            Result.ShouldBeRedirectPageNotFound();
+            Result.ShouldBeRedirectToRouteResult(RouteConstants.AdminReviewRemoveSpecialismAssessmentEntry);
         }
     }
 }
