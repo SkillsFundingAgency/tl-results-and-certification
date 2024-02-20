@@ -17,5 +17,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
         public bool IsLearnerRegisteredFourYearsAgo => DateTime.Now.Year - StartYear > 4;
 
         public bool HasReachedAssessmentsThreashold => ValidPathwayAssessmentSeries != null && !ValidPathwayAssessmentSeries.Any();
+
+        public List<AdminSpecialismViewModel> SpecialismsAssesments => AssessmentDetails?.SpecialismDetails.Where(e => e.Id == SpecialismAssessmentId).ToList();
+
+        public string SpecialismAssessmentName { get; set; }
+
     }
 }

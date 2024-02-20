@@ -295,7 +295,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This service is run by the Department for Education (DfE). We comply with the.
+        ///   Looks up a localized string similar to This service is run by Department for Education (DfE). We comply with the.
         /// </summary>
         public static string This_Service_Is_Run_By_Text {
             get {

@@ -23,7 +23,7 @@
 
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
-        <form asp-route="@RouteConstants.SubmitOccupationalSpecialisAssessmentEntry">
+        <form asp-route="@RouteConstants.SubmitOccupationalSpecialisAssessmentEntry" method="post">
             <input type="hidden" asp-for="RegistrationPathwayId" />
             <input type="hidden" asp-for="SpecialismAssessmentId" />
             <div class="record-header">
@@ -50,6 +50,7 @@
                 {
                     <h2 class="govuk-heading-m">
                         @string.Format(AdminLearnerAssessmentEntry.Section_Heading_Occupational_Specialism, specialism.DisplayName)
+                        <input type="hidden" name="SpecialismAssessmentName" value="@specialism.DisplayName">
                     </h2>
 
                     @if (specialism.Assessments.Any())
@@ -108,7 +109,7 @@
                             @foreach (var assessment in Model.ValidPathwayAssessmentSeries)
                             {
                                 <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="assessments_@assessment.SeriesId" asp-for="AssessmentYearTo" type="radio" value="@assessment.SeriesId">
+                                    <input class="govuk-radios__input" id="assessments_@assessment.SeriesId" asp-for="AssessmentYearTo" type="radio" value="@assessment.SeriesName">
                                     <label class="govuk-label govuk-radios__label" for="assessments_@assessment.SeriesId">
                                         @assessment.SeriesName
                                     </label>
