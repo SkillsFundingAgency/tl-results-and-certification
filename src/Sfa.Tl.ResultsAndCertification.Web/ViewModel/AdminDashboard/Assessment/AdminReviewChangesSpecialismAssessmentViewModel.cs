@@ -15,7 +15,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
         public AdminOccupationalSpecialismViewModel AdminOccupationalSpecialismViewModel { get; set; }
         public int RegistrationPathwayId { get; set; }
 
+
         [Required(ErrorMessageResourceType = typeof(ReviewChangeAssessment), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
+        [MaxLength(100, ErrorMessageResourceType = typeof(ReviewChangeAssessment), ErrorMessageResourceName = "Validation_Contact_Name_Max_Length")]
         public string ContactName { get; set; }
 
         [DateValidator(Property = nameof(RequestDate), ErrorResourceType = typeof(ReviewChangeAssessment), ErrorResourceName = "Validation_Date_When_Change_Requested_Blank_Text")]

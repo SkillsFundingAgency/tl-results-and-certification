@@ -216,6 +216,9 @@
   <data name="Validation_Contact_Name_Blank_Text" xml:space="preserve">
     <value>Enter the name of the contact who requested this change</value>
   </data>
+  <data name="Validation_Contact_Name_Max_Length" xml:space="preserve">
+    <value>Contact name must be 100 characters or fewer</value>
+  </data>
   <data name="Validation_Date_When_Change_Requested_Blank_Text" xml:space="preserve">
     <value>Enter the date when the change was requested</value>
   </data>
