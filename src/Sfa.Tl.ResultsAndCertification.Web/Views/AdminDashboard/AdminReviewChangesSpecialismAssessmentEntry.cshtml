@@ -63,7 +63,7 @@
                 </legend>
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-label--s" for="contactname">@ReviewChangeAssessment.Title_Contact_Name_Text</label>
-                    <input id="contactname" class="govuk-input govuk-input--width-20" asp-for="ContactName" sfa-validation-class="govuk-input-error" sfa-validation-for="ContactName" type="text">
+                    <input id="contactname" class="govuk-input govuk-input--width-20" asp-for="ContactName" sfa-validation-class="govuk-input-error" maxlength="100" sfa-validation-for="ContactName" type="text">
                 </div>
                 <div class="govuk-form-group" id-"requestdate">
                     <label class="govuk-label govuk-label--s" for="dateofrequest">@ReviewChangeAssessment.Title_Date_Of_Request</label>
