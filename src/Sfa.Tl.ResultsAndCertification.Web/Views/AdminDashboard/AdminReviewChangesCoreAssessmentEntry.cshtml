@@ -60,39 +60,39 @@
                     </h2>
                 </legend>
                 <div class="govuk-form-group">
-                    <label class="govuk-label govuk-label--s">@ReviewChangeAssessment.Title_Contact_Name_Text</label>
+                    <label class="govuk-label govuk-label--s" for="contactname">@ReviewChangeAssessment.Title_Contact_Name_Text</label>
                     <input id="contactname" class="govuk-input govuk-input--width-20" asp-for="ContactName" sfa-validation-class="govuk-input-error" sfa-validation-for="ContactName" maxlength="101" type="text">
                 </div>
                 <div class="govuk-form-group" id-"requestdate">
                     <label class="govuk-label govuk-label--s" for="dateofrequest">@ReviewChangeAssessment.Title_Date_Of_Request</label>
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" >@ReviewChangeAssessment.Title_Day_Text</label>
+                            <label class="govuk-label govuk-date-input__label" for="day" >@ReviewChangeAssessment.Title_Day_Text</label>
                             <input id="day" asp-for="Day" sfa-validation-for="Day" sfa-validation-class="govuk-input--error" class="govuk-input govuk-date-input__input govuk-input--width-2" inputmode="numeric" maxlength="2">
                         </div>
                     </div>
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" >@ReviewChangeAssessment.Title_Month_Text</label>
+                            <label class="govuk-label govuk-date-input__label" for="month" >@ReviewChangeAssessment.Title_Month_Text</label>
                             <input id="month" asp-for="Month" sfa-validation-for="Month" sfa-validation-class="govuk-input--error" class="govuk-input govuk-date-input__input govuk-input--width-2" inputmode="numeric" maxlength="2">
                         </div>
                     </div>
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" >@ReviewChangeAssessment.Title_Year_Text</label>
+                            <label class="govuk-label govuk-date-input__label" for="year" >@ReviewChangeAssessment.Title_Year_Text</label>
                             <input id="year" asp-for="Year" sfa-validation-for="Year" sfa-validation-class="govuk-input--error" class="govuk-input govuk-date-input__input govuk-input--width-4" inputmode="numeric" maxlength="4">
                         </div>
                     </div>
                 </div>
                 <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="2000">
                     <div class="govuk-form-group">
-                        <label class="govuk-label govuk-label--s" >@ReviewChangeAssessment.Title_Reason_For_Change_Text</label>
+                        <label class="govuk-label govuk-label--s" for="changereason" >@ReviewChangeAssessment.Title_Reason_For_Change_Text</label>
                         <textarea class="govuk-textarea govuk-js-character-count" id="changereason" name="changereason" rows="5" maxlength="2000" asp-for="ChangeReason"></textarea>
                         <partial name="Partials/_changeReasonCharacterHint.cshtml" />
                     </div>
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label govuk-label--s" >@ReviewChangeAssessment.Title_Zendesk_Ticket_Id</label>
+                    <label class="govuk-label govuk-label--s" for="zenticketid" >@ReviewChangeAssessment.Title_Zendesk_Ticket_Id</label>
                     <input id="zenticketid" class="govuk-input govuk-input--width-10" asp-for="ZendeskId" type="text" maxlength="10">
                 </div>
             </fieldset>
