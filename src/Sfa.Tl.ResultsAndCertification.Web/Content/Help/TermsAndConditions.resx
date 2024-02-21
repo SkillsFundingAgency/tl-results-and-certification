@@ -160,7 +160,7 @@
     <value>ensure users given reviewer roles have delegated authority on behalf of the organisation to confirm T Level details</value>
   </data>
   <data name="However_Esfa_Accept_No_Liability_For_Text" xml:space="preserve">
-    <value>However, the ESFA accepts no liability for:</value>
+    <value>However, DfE accepts no liability for:</value>
   </data>
   <data name="Keep_Your_Dfe_Signin_Account_Details_Text" xml:space="preserve">
     <value>keep your DfE Sign-in account details confidential and secure</value>
@@ -196,7 +196,7 @@
     <value>the content and availability of external websites that link to the service or which are linked from it</value>
   </data>
   <data name="This_Service_Is_Run_By_Text" xml:space="preserve">
-    <value>This service is run by the Education and Skills Funding Agency (ESFA), an executive agency of the Department for Education (DfE). We comply with the</value>
+    <value>This service is run by Department for Education (DfE). We comply with the</value>
   </data>
   <data name="Uk_Data_Protection_Act_2018_Text" xml:space="preserve">
     <value>UK Data Protection Act 2018</value>

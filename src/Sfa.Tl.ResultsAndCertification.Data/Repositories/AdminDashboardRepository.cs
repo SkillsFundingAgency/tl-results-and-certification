@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,48 +41,54 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .ToListAsync();
         }
 
-        public async Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayId)
+        public async Task<TqRegistrationPathway> GetLearnerRecordAsync(int registrationPathwayId)
         {
+            IQueryable<TqRegistrationPathway> query = _dbContext.TqRegistrationPathway
+                .Include(x => x.TqPathwayAssessments.Where(pa => pa.IsOptedin && pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? pa.EndDate != null : pa.EndDate == null))
+                    .ThenInclude(x => x.AssessmentSeries)
+                .Include(x => x.TqPathwayAssessments.Where(pa => pa.IsOptedin && pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? pa.EndDate != null : pa.EndDate == null))
+                    .ThenInclude(x => x.TqPathwayResults.Where(pr => pr.IsOptedin && pr.TqPathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? pr.EndDate != null : pr.EndDate == null))
+                    .ThenInclude(x => x.TlLookup)
+                .Include(x => x.TqRegistrationProfile)
+                .Include(x => x.TqProvider)
+                    .ThenInclude(x => x.TqAwardingOrganisation)
+                    .ThenInclude(x => x.TlPathway)
+                .Include(x => x.TqProvider)
+                    .ThenInclude(x => x.TlProvider)
+                .Include(x => x.TqProvider)
+                    .ThenInclude(x => x.TqAwardingOrganisation)
+                    .ThenInclude(x => x.TlAwardingOrganisaton)
+                .Include(x => x.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin && rs.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? rs.EndDate != null : rs.EndDate == null))
+                    .ThenInclude(x => x.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? sa.EndDate != null : sa.EndDate == null))
+                    .ThenInclude(x => x.TqSpecialismResults.Where(sr => sr.IsOptedin && sr.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? sr.EndDate != null : sr.EndDate == null))
+                    .ThenInclude(x => x.TlLookup)
+                .Include(x => x.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin && rs.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? rs.EndDate != null : rs.EndDate == null))
+                    .ThenInclude(x => x.TlSpecialism)
+                    .ThenInclude(x => x.TlPathwaySpecialismCombinations)
+                .Include(x => x.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin && rs.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? rs.EndDate != null : rs.EndDate == null))
+                    .ThenInclude(x => x.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? sa.EndDate != null : sa.EndDate == null))
+                    .ThenInclude(x => x.AssessmentSeries)
+            .Include(x => x.IndustryPlacements)
+            .Include(x => x.OverallResults.Where(o => o.IsOptedin && (o.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn) ? o.EndDate != null : o.EndDate == null))
+            .OrderByDescending(o => o.CreatedOn);
 
-            var learnerRecordQuerable = from tqPathway in _dbContext.TqRegistrationPathway
-                                        join tqProfile in _dbContext.TqRegistrationProfile on tqPathway.TqRegistrationProfileId equals tqProfile.Id
-                                        join tqProvider in _dbContext.TqProvider on tqPathway.TqProviderId equals tqProvider.Id
-                                        join tlProvider in _dbContext.TlProvider on tqProvider.TlProviderId equals tlProvider.Id
-                                        join tqAo in _dbContext.TqAwardingOrganisation on tqProvider.TqAwardingOrganisationId equals tqAo.Id
-                                        join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
-                                        orderby tqPathway.CreatedOn descending
-                                        let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()
-                                        let overallResult = tqPathway.OverallResults.FirstOrDefault(o => o.IsOptedin && (tqPathway.Status == RegistrationPathwayStatus.Withdrawn) ? o.EndDate != null : o.EndDate == null)
-                                        where tqPathway.Id == pathwayId
-                                        select new AdminLearnerRecord
-                                        {
-                                            PathwayId = pathwayId,
-                                            FirstName = tqProfile.Firstname,
-                                            LastName = tqProfile.Lastname,
-                                            RegistrationPathwayId = tqPathway.Id,
-                                            TlPathwayId = tlPathway.Id,
-                                            Uln = tqProfile.UniqueLearnerNumber,
-                                            Name = tqProfile.Firstname + " " + tqProfile.Lastname,
-                                            DateofBirth = tqProfile.DateofBirth,
-                                            ProviderName = tlProvider.Name,
-                                            ProviderUkprn = tlProvider.UkPrn,
-                                            TlevelName = tlPathway.Name,
-                                            TlevelStartYear = tlPathway.StartYear,
-                                            AcademicYear = tqPathway.AcademicYear,
-                                            AwardingOrganisationName = tqAo.TlAwardingOrganisaton.DisplayName,
-                                            MathsStatus = tqProfile.MathsStatus,
-                                            EnglishStatus = tqProfile.EnglishStatus,
-                                            IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn,
-                                            RegistrationPathwayStatus = tqPathway.Status,
-                                            IsPendingWithdrawal = tqPathway.IsPendingWithdrawal,
-                                            IndustryPlacementId = ipRecord != null ? ipRecord.Id : 0,
-                                            IndustryPlacementStatus = ipRecord != null ? ipRecord.Status : null,
-                                            IndustryPlacementDetails = ipRecord != null ? ipRecord.Details : null,
-                                            OverallCalculationStatus = overallResult != null ? overallResult.CalculationStatus : null,
+            TqRegistrationPathway regPathway = await query.FirstOrDefaultAsync(p => p.Id == registrationPathwayId &&
+            (
+                p.Status == RegistrationPathwayStatus.Active ||
+                p.Status == RegistrationPathwayStatus.Withdrawn
+            ));
 
-                                        };
-            var learnerRecordDetails =  await learnerRecordQuerable.FirstOrDefaultAsync();
-            return learnerRecordDetails;
+            if (regPathway == null)
+                return null;
+
+            // Sort core and specialism assessments.
+            regPathway.TqPathwayAssessments = regPathway.TqPathwayAssessments?.OrderByDescending(x => x.AssessmentSeriesId).ThenByDescending(x => x.CreatedOn).ToList();
+            regPathway.TqRegistrationSpecialisms?.ToList().ForEach(s =>
+            {
+                s.TqSpecialismAssessments = s.TqSpecialismAssessments?.OrderByDescending(x => x.AssessmentSeriesId).ThenByDescending(x => x.CreatedOn).ToList();
+            });
+
+            return regPathway;
         }
 
         public async Task<PagedResponse<AdminSearchLearnerDetail>> SearchLearnerDetailsAsync(AdminSearchLearnerRequest request)
@@ -144,6 +151,5 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             List<AdminSearchLearnerDetail> learnerRecords = await learnerRecordsQueryable.ToListAsync();
             return new PagedResponse<AdminSearchLearnerDetail> { Records = learnerRecords, TotalRecords = totalCount, PagerInfo = pager };
         }
-
     }
 }

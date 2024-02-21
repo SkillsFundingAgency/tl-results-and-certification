@@ -1,0 +1,130 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment.AdminCoreComponentViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+
+@{
+    ViewData["Title"] = AdminLearnerAssessmentEntry.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+@functions {
+    async Task DisplayButtonReturnToLearnerView()
+    {
+        <div class="govuk-button-group">
+            <a id="returnButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminLearnerAssessmentEntry.Button_Return</a>
+        </div>
+    }
+}
+
+<div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+        <form asp-route="@RouteConstants.SubmitCoreComponentAssessmentEntry" method="post">
+            <input type="hidden" asp-for="RegistrationPathwayId" />
+            <input type="hidden" asp-for="LearnerName" />
+            <input type="hidden" asp-for="Uln" />
+            <input type="hidden" asp-for="Provider" />
+            <input type="hidden" asp-for="TlevelName" />
+            <input type="hidden" asp-for="DisplayStartYear" />
+            <div class="record-header">
+                <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+                    @AdminLearnerAssessmentEntry.Heading_Add_Assessment_Entry
+                </h1>
+            </div>
+            <partial name="_ValidationSummary" />
+            <h2 class="govuk-heading-m">
+                @AdminLearnerAssessmentEntry.Heading_Personal_Details
+            </h2>
+
+            <dl class="govuk-summary-list">
+                <vc:summary-item model=Model.SummaryLearner></vc:summary-item>
+                <vc:summary-item model=Model.SummaryULN></vc:summary-item>
+                <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+                <vc:summary-item model=Model.SummaryTlevel></vc:summary-item>
+                <vc:summary-item model=Model.SummaryAcademicYear></vc:summary-item>
+            </dl>
+
+            <section id="add-entries">
+                <h2 class="govuk-heading-m">
+                    @string.Format(AdminLearnerAssessmentEntry.Section_Heading_Core_Component, Model.PathwayDisplayName)
+                </h2>
+
+                @if (Model.HasCoreAssessmentEntries)
+                {
+                    <table class="govuk-table responsive-table">
+                       <partial name="Partials/_examTableResults.cshtml" model="Model.AssessmentDetails.PathwayAssessments" />
+                    </table>
+                }
+                else
+                {
+                    <p class="govuk-body">
+                        @AdminLearnerAssessmentEntry.No_Assessment_Entries_Have_Been_Recorded
+                    </p>
+                }
+            </section>
+
+            @if (Model.HasReachedAssessmentsThreashold)
+            {
+                <div>
+                    <h2 class="govuk-heading-m govuk-!-margin-top-7">
+                        @AdminLearnerAssessmentEntry.You_Cannot_Add_An_Assessment_Entry_For_This_Learner
+                    </h2>
+                    <p class="govuk-body">
+                        @AdminLearnerAssessmentEntry.This_Is_Because_There_Are_Already_Assessment_Entries
+                    </p>
+
+                    @{
+                        await DisplayButtonReturnToLearnerView();
+                    }
+                </div>
+            }
+            else if (Model.IsLearnerRegisteredFourYearsAgo)
+            {
+                <div>
+                    <h2 class="govuk-heading-m  govuk-!-margin-top-7">
+                        @AdminLearnerAssessmentEntry.You_Cannot_Add_An_Assessment_Entry_For_This_Learner
+                    </h2>
+                    <p class="govuk-body">
+                        @AdminLearnerAssessmentEntry.This_Is_Because_The_Previous_Exam_Period_More_Than_4_Years
+                    </p>
+
+                    @{
+                        await DisplayButtonReturnToLearnerView();
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="govuk-form-group" sfa-validation-for="AssessmentYearTo" sfa-validation-class="govuk-form-group--error">
+                    <div class="govuk-form-group govuk-!-margin-top-8">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                <h2 class="govuk-fieldset__heading">
+                                    @AdminLearnerAssessmentEntry.Heading_Do_You_Want_To_Add_An_Assessment_Entry
+                                </h2>
+                            </legend>
+                            @foreach (var assessment in Model.ValidPathwayAssessmentSeries)
+                            {
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="assessments_@assessment.SeriesId" asp-for="AssessmentYearTo" type="radio" value="@assessment.SeriesName">
+                                    <label class="govuk-label govuk-radios__label"  for="assessments_@assessment.SeriesId">
+                                        @assessment.SeriesName
+                                    </label>
+                                </div>
+                            }
+                        </fieldset>
+                    </div>
+
+                    <div class="govuk-button-group">
+                        <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ChangeStartYear.Button_Continue</button>
+                        <a id="returnButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@ChangeStartYear.Button_Cancel</a>
+                    </div>
+                </div>
+            }
+        </form>
+    </div>
+</div>

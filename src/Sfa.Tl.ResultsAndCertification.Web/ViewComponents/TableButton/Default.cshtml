@@ -1,0 +1,10 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents;
+@model Sfa.Tl.ResultsAndCertification.Web.ViewComponents.TableButton.TableButtonModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@if (Model != null)
+{
+    <a class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0" role="button" asp-route="@Model.Route" asp-all-route-data="@Model.RouteAttributes">
+        @Model.Text
+    </a>
+}

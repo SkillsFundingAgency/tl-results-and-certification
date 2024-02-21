@@ -42,6 +42,21 @@
 
 
 	<ItemGroup>
+		<Compile Update="Content\AdminDashboard\AdminLearnerAssessmentEntry.Designer.cs">
+		  <DependentUpon>AdminLearnerAssessmentEntry.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminDashboard\RemoveAssessmentEntrySpecialism.Designer.cs">
+		  <DependentUpon>RemoveAssessmentEntrySpecialism.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminDashboard\RemoveAssessmentEntryCore.Designer.cs">
+		  <DependentUpon>RemoveAssessmentEntryCore.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminDashboard\AdminChangeIndustryPlacement.Designer.cs">
 		  <DependentUpon>AdminChangeIndustryPlacement.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -57,8 +72,23 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="Content\AdminDashboard\LearnerRecord.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>LearnerRecord.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Content\AdminDashboard\AdminReviewRemoveAssessmentEntry.Designer.cs">
+		  <DependentUpon>AdminReviewRemoveAssessmentEntry.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminDashboard\ReviewChangesIndustryPlacement.Designer.cs">
 		  <DependentUpon>ReviewChangesIndustryPlacement.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminDashboard\ReviewChangeAssessment.Designer.cs">
+		  <DependentUpon>ReviewChangeAssessment.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
@@ -67,8 +97,8 @@
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 		</Compile>
-		<Compile Update="Content\AdminDashboard\LearnerRecord.Designer.cs">
-			<DependentUpon>LearnerRecord.resx</DependentUpon>
+		<Compile Update="Content\AdminDashboard\AdminLearnerRecord.Designer.cs">
+			<DependentUpon>AdminLearnerRecord.resx</DependentUpon>
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 		</Compile>
@@ -1071,6 +1101,18 @@
 
 
 	<ItemGroup>
+		<EmbeddedResource Update="Content\AdminDashboard\AdminLearnerAssessmentEntry.resx">
+		  <LastGenOutput>AdminLearnerAssessmentEntry.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminDashboard\RemoveAssessmentEntrySpecialism.resx">
+		  <LastGenOutput>RemoveAssessmentEntrySpecialism.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminDashboard\RemoveAssessmentEntryCore.resx">
+		  <LastGenOutput>RemoveAssessmentEntryCore.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\AdminChangeIndustryPlacement.resx">
 		  <LastGenOutput>AdminChangeIndustryPlacement.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1083,13 +1125,27 @@
 		  <LastGenOutput>AdminIndustryPlacementSpecialConsiderationHours.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminDashboard\AdminLearnerRecord.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>AdminLearnerRecord.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\LearnerRecord.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>LearnerRecord.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminDashboard\AdminReviewRemoveAssessmentEntry.resx">
+		  <SubType>Designer</SubType>
+		  <LastGenOutput>AdminReviewRemoveAssessmentEntry.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangesIndustryPlacement.resx">
 		  <SubType>Designer</SubType>
 		  <LastGenOutput>ReviewChangesIndustryPlacement.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangeAssessment.resx">
+		  <SubType>Designer</SubType>
+		  <LastGenOutput>ReviewChangeAssessment.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangeStartYear.resx">
