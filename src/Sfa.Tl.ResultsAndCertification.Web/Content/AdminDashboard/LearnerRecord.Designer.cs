@@ -240,6 +240,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
             }
         }
         
+        /// <summary>        ///   Looks up a localized string similar to &lt;b&gt;Start year updated&lt;/b&gt;.
+        /// </summary>
+        public static string Link_Add_An_Occupational_Specialism {
+            get {
+                return ResourceManager.GetString("Link_Add_An_Occupational_Specialism", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to &lt;b&gt;Start year updated&lt;/b&gt;.
         /// </summary>
@@ -525,6 +533,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static string Uln_Text {
             get {
                 return ResourceManager.GetString("Uln_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You cannot register this learner for a core component assessment until the {0} window opens..
+        /// </summary>
+        public static string You_Cannot_Register_Learner_For_Core_Assessment_Until {
+            get {
+                return ResourceManager.GetString("You_Cannot_Register_Learner_For_Core_Assessment_Until", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You cannot register this learner for an occupational specialism assessment until the {0} window opens..
+        /// </summary>
+        public static string You_Cannot_Register_Learner_For_Occupational_Specialism_Until {
+            get {
+                return ResourceManager.GetString("You_Cannot_Register_Learner_For_Occupational_Specialism_Until", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must.
+        /// </summary>
+        public static string You_Must {
+            get {
+                return ResourceManager.GetString("You_Must", resourceCulture);
             }
         }
     }
