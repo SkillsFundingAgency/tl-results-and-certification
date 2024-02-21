@@ -358,6 +358,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contact name must be 100 characters or fewer.
+        /// </summary>
+        public static string Validation_Contact_Name_Max_Length {
+            get {
+                return ResourceManager.GetString("Validation_Contact_Name_Max_Length", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter the date when the change was requested.
         /// </summary>
         public static string Validation_Date_When_Change_Requested_Blank_Text {
