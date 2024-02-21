@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.DotNet.Scaffolding.Shared.Project;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
@@ -457,6 +455,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
 
         }
+
         #endregion
 
         #region Assesment Entry
@@ -494,7 +493,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(adminCoreComponent);
             }
-          
+
             adminCoreComponent.AssessmentYearTo = model.AssessmentYearTo;
             await _cacheService.SetAsync<AdminCoreComponentViewModel>(CacheKey, adminCoreComponent);
             return RedirectToAction(nameof(RouteConstants.AdminReviewChangesCoreAssessmentEntry), new { registrationPathwayId = model.RegistrationPathwayId });
@@ -512,7 +511,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(adminOccupationalSpecialism);
             }
-           
+
             adminOccupationalSpecialism.SpecialismAssessmentName = model.SpecialismAssessmentName;
             adminOccupationalSpecialism.AssessmentYearTo = model.AssessmentYearTo;
 
@@ -642,7 +641,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (cachedModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
-            
+
             AdminReviewRemoveCoreAssessmentEntryViewModel viewModel = new()
             {
                 PathwayAssessmentViewModel = cachedModel
@@ -784,7 +783,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             await _cacheService.SetAsync(CacheKey, model);
-            return RedirectToRoute(RouteConstants.PageNotFound); // TODO: Redirect to review page
+            return RedirectToRoute(RouteConstants.AdminAddPathwayResultReviewChanges);
+        }
+
+        [HttpGet]
+        [Route("admin/review-changes-assessment-result-core", Name = RouteConstants.AdminAddPathwayResultReviewChanges)]
+        public async Task<IActionResult> AdminAddPathwayResultReviewChangesAsync()
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminAddPathwayResultViewModel>(CacheKey);
+
+            if (cachedModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            AdminAddPathwayResultReviewChangesViewModel viewModel = _loader.CreateAdminAddPathwayResultReviewChanges(cachedModel);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/review-changes-assessment-result-core", Name = RouteConstants.SubmitAdminAddPathwayResultReviewChanges)]
+        public async Task<IActionResult> AdminAddPathwayResultReviewChangesAsync(AdminAddPathwayResultReviewChangesViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            return RedirectToRoute(RouteConstants.PageNotFound);
         }
 
         [HttpGet]

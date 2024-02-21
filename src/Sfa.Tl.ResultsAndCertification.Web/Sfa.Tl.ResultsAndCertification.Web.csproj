@@ -92,6 +92,11 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="Content\AdminDashboard\AdminAddPathwayResultReviewChanges.Designer.cs">
+		  <DependentUpon>AdminAddPathwayResultReviewChanges.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminDashboard\ReviewChangesIndustryPlacement.Designer.cs">
 		  <DependentUpon>ReviewChangesIndustryPlacement.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -1154,6 +1159,11 @@
 		<EmbeddedResource Update="Content\AdminDashboard\AdminReviewRemoveAssessmentEntry.resx">
 		  <SubType>Designer</SubType>
 		  <LastGenOutput>AdminReviewRemoveAssessmentEntry.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminDashboard\AdminAddPathwayResultReviewChanges.resx">
+		  <SubType>Designer</SubType>
+		  <LastGenOutput>AdminAddPathwayResultReviewChanges.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangesIndustryPlacement.resx">

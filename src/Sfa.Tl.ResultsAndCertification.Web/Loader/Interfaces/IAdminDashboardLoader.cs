@@ -1,5 +1,4 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+﻿using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
@@ -34,5 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task LoadAdminAddPathwayResultGrades(AdminAddPathwayResultViewModel model);
 
         Task LoadAdminAddSpecialismResultGrades(AdminAddSpecialismResultViewModel model);
+
+        AdminAddPathwayResultReviewChangesViewModel CreateAdminAddPathwayResultReviewChanges(AdminAddPathwayResultViewModel model);
     }
 }

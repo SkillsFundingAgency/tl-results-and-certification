@@ -1,10 +1,12 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
 {
@@ -56,14 +58,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
 
         public SummaryItemModel SummaryGrade
            => CreateSummaryItemModel(
-               AdminAddPathwayResult.Summary_Grade_Id, 
-               AdminAddPathwayResult.Summary_Grade_Text, 
+               AdminAddPathwayResult.Summary_Grade_Id,
+               AdminAddPathwayResult.Summary_Grade_Text,
                string.IsNullOrWhiteSpace(Grade) ? AdminAddPathwayResult.No_Grade_Entered : Grade);
 
         #endregion
 
         [Required(ErrorMessageResourceType = typeof(AdminAddPathwayResult), ErrorMessageResourceName = "Validation_Message")]
         public string SelectedGradeCode { get; set; }
+
+        public string SelectedGradeValue
+            => Grades?.FirstOrDefault(g => g.Code == SelectedGradeCode)?.Value;
 
         public List<LookupViewModel> Grades { get; set; }
 

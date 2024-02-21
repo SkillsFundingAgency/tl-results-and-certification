@@ -444,9 +444,12 @@
         public const string AdminAddPathwayResultClear = "AdminAddPathwayResultClear";
         public const string AdminAddPathwayResult = "AdminAddPathwayResult";
         public const string SubmitAdminAddPathwayResult = "SubmitAdminAddPathwayResult";
+        public const string AdminAddPathwayResultReviewChanges = "AdminAddPathwayResultReviewChanges";
+        public const string SubmitAdminAddPathwayResultReviewChanges = "SubmitAdminAddPathwayResultReviewChanges";
         public const string AdminAddSpecialismResultClear = "AdminAddSpecialismResultClear";
         public const string AdminAddSpecialismResult = "AdminAddSpecialismResult";
         public const string SubmitAdminAddSpecialismResult = "SubmitAdminAddSpecialismResult";
+        
         #endregion
     }
 }
