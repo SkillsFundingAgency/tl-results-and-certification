@@ -97,20 +97,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Layout {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Built by the.
+        ///   Looks up a localized string similar to Built by.
         /// </summary>
-        public static string Esfa_Link_Info_Text {
+        public static string DfE_Link_Info_Text {
             get {
-                return ResourceManager.GetString("Esfa_Link_Info_Text", resourceCulture);
+                return ResourceManager.GetString("DfE_Link_Info_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Education and Skills Funding Agency.
+        ///   Looks up a localized string similar to Department for Education.
         /// </summary>
-        public static string Esfa_Link_Text {
+        public static string DfE_Link_Text {
             get {
-                return ResourceManager.GetString("Esfa_Link_Text", resourceCulture);
+                return ResourceManager.GetString("DfE_Link_Text", resourceCulture);
             }
         }
         
@@ -153,8 +153,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Layout {
         /// <summary>
         ///   Looks up a localized string similar to opens in a new tab.
         /// </summary>
-        public static string Opens_In_New_Tab_Text
-        {
+        public static string Opens_In_New_Tab_Text {
             get {
                 return ResourceManager.GetString("Opens_In_New_Tab_Text", resourceCulture);
             }

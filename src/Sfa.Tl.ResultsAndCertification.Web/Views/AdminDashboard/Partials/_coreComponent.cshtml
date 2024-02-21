@@ -1,0 +1,24 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord.AdminAssessmentDetailsViewModel
+
+@if (Model.HasAssessmentEntries)
+{
+    <table class="govuk-table responsive-table govuk-!-margin-bottom-6">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+            @string.Format(LearnerRecord.Core_Heading_Text, Model.PathwayDisplayName)
+        </caption>
+        <partial name="_assessmentResult.cshtml" model="Model.PathwayAssessments" />
+    </table>
+}
+else
+{
+    <h2 class="govuk-heading-m">@string.Format(LearnerRecord.Core_Heading_Text, Model.PathwayDisplayName)</h2>
+    <p class="govuk-body">
+        @LearnerRecord.No_Assessment_Entries_Have_Been_Recorded
+    </p>
+}
+
+<p class="govuk-body govuk-!-margin-bottom-9">
+    <a class="govuk-link" asp-route="@RouteConstants.AdminCoreComponentAssessmentEntry" asp-route-registrationPathwayId="@Model.RegistrationPathwayId">@string.Format(LearnerRecord.Add_An_Assessment_Entry_For, Model.PathwayDisplayName)</a>
+</p>

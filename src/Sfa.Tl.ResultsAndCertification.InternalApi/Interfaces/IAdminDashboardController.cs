@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
@@ -9,9 +7,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
     {
         Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync();
 
-        Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int pathwayId);
+        Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int registrationPathwayId);
 
         Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request);
-
+        Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request);
     }
 }
