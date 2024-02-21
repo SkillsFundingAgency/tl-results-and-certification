@@ -1,23 +1,26 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.DotNet.Scaffolding.Shared.Project;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
+using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using LearnerRecord = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.LearnerRecord;
 
@@ -160,6 +163,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         #endregion
 
+        [HttpGet]
+        [Route("admin/learner-record/{pathwayid}", Name = RouteConstants.AdminLearnerRecord)]
+        public async Task<IActionResult> AdminLearnerRecordAsync(int pathwayId)
+        {
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(pathwayId);
+            if (viewModel == null || !viewModel.IsLearnerRegistered)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({pathwayId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            viewModel.InformationBanner = await _cacheService.GetAndRemoveAsync<InformationBannerModel>(InformationCacheKey);
+            viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
+
+            return View(viewModel);
+        }
+
         #region Change Start Year
 
         [HttpGet]
@@ -196,23 +216,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("admin/learner-record/{pathwayid}", Name = RouteConstants.AdminLearnerRecord)]
-        public async Task<IActionResult> AdminLearnerRecordAsync(int pathwayId)
-        {
-            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(pathwayId);
-            if (viewModel == null || !viewModel.IsLearnerRegistered)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({pathwayId}), User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            viewModel.InformationBanner = await _cacheService.GetAndRemoveAsync<InformationBannerModel>(InformationCacheKey);
-            viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
-
-            return View(viewModel);
-        }
-
-        [HttpGet]
         [Route("admin/review-changes-start-year/{pathwayId}", Name = RouteConstants.ReviewChangeStartYear)]
         public async Task<IActionResult> ReviewChangeStartYearAsync(int pathwayId)
         {
@@ -232,13 +235,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/submit-review-changes-start-year", Name = RouteConstants.SubmitReviewChangeStartYear)]
         public async Task<IActionResult> ReviewChangeStartYearAsync(ReviewChangeStartYearViewModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
-
-            model.LoggedInUser = $"{this.User.FindFirstValue(ClaimTypes.GivenName)} {this.User.FindFirstValue(ClaimTypes.Surname)}";
-
             var isSuccess = await _loader.ProcessChangeStartYearAsync(model);
 
             if (isSuccess)
@@ -246,7 +246,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
                 {
                     DisplayMessageBody = true,
-                    Message = LearnerRecord.Message_Notification_Success
+                    Message = LearnerRecord.Message_Notification_Success,
+                    IsRawHtml = true
                 },
                 CacheExpiryTime.XSmall);
 
@@ -430,17 +431,316 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/submit-review-changes-industry-placement", Name = RouteConstants.SubmitReviewChangesIndustryPlacement)]
         public async Task<IActionResult> AdminReviewChangesIndustryPlacementAsync(AdminReviewChangesIndustryPlacementViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             var _cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
             model.AdminChangeIpViewModel = _cachedModel ?? new AdminChangeIpViewModel();
+            var isSuccess = await _loader.ProcessChangeIndustryPlacementAsync(model);
 
+            if (isSuccess)
+            {
+                await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
+                {
+                    DisplayMessageBody = true,
+                    Message = ReviewChangesIndustryPlacement.Message_Notification_Success,
+                    IsRawHtml = true,
+                },
+                CacheExpiryTime.XSmall);
+
+                return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.AdminChangeIpViewModel.AdminIpCompletion.RegistrationPathwayId });
+            }
+            else { return RedirectToAction(RouteConstants.ProblemWithService); }
+
+
+
+        }
+        #endregion
+
+        #region Assesment Entry
+
+        [HttpGet]
+        [Route("admin/add-assessment-entry-core/{registrationPathwayId}", Name = RouteConstants.AdminCoreComponentAssessmentEntry)]
+        public async Task<IActionResult> AdminCoreComponentAssessmentEntry(int registrationPathwayId)
+        {
+            var viewModel = await _loader.GetAdminLearnerRecordWithCoreComponents(registrationPathwayId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("admin/add-assessment-entry-specialism/{registrationPathwayId}/{specialismsId}", Name = RouteConstants.AdminOccupationalSpecialisAssessmentEntry)]
+        public async Task<IActionResult> AdminOccupationalSpecialismAssessmentEntry(int registrationPathwayId, int specialismsId)
+        {
+            var viewModel = await _loader.GetAdminLearnerRecordWithOccupationalSpecialism(registrationPathwayId, specialismsId);
+
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/submit-add-assessment-entry-core", Name = RouteConstants.SubmitCoreComponentAssessmentEntry)]
+        public async Task<IActionResult> AdminCoreComponentAssessmentEntry(AdminCoreComponentViewModel model)
+        {
+            var adminCoreComponent = await _loader.GetAdminLearnerRecordWithCoreComponents(model.RegistrationPathwayId);
+            if (!ModelState.IsValid)
+            {
+                return View(adminCoreComponent);
+            }
+          
+            adminCoreComponent.AssessmentYearTo = model.AssessmentYearTo;
+            await _cacheService.SetAsync<AdminCoreComponentViewModel>(CacheKey, adminCoreComponent);
+            return RedirectToAction(nameof(RouteConstants.AdminReviewChangesCoreAssessmentEntry), new { registrationPathwayId = model.RegistrationPathwayId });
+
+        }
+
+
+
+        [HttpPost]
+        [Route("admin/submit-add-assessment-entry-specialism", Name = RouteConstants.SubmitOccupationalSpecialisAssessmentEntry)]
+        public async Task<IActionResult> AdminOccupationalSpecialismAssessmentEntry(AdminOccupationalSpecialismViewModel model)
+        {
+            var adminOccupationalSpecialism = await _loader.GetAdminLearnerRecordWithOccupationalSpecialism(model.RegistrationPathwayId, model.SpecialismAssessmentId);
+            if (!ModelState.IsValid)
+            {
+                return View(adminOccupationalSpecialism);
+            }
+           
+            adminOccupationalSpecialism.SpecialismAssessmentName = model.SpecialismAssessmentName;
+            adminOccupationalSpecialism.AssessmentYearTo = model.AssessmentYearTo;
+
+
+            await _cacheService.SetAsync<AdminOccupationalSpecialismViewModel>(CacheKey, adminOccupationalSpecialism);
+            return RedirectToAction(nameof(RouteConstants.AdminReviewChangesSpecialismAssessmentEntry), new { registrationPathwayId = model.RegistrationPathwayId });
+
+        }
+
+        [HttpGet]
+        [Route("admin/review-changes-assesment-entry-core/{registrationPathwayId}", Name = RouteConstants.AdminReviewChangesCoreAssessmentEntry)]
+        public async Task<IActionResult> AdminReviewChangesCoreAssessmentEntry(int registrationPathwayId)
+        {
+            AdminReviewChangesCoreAssessmentViewModel viewModel = new();
+            var _cachedModel = await _cacheService.GetAsync<AdminCoreComponentViewModel>(CacheKey);
+            if (_cachedModel is null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            viewModel.AdminCoreComponentViewModel = _cachedModel;
+            await _cacheService.SetAsync<AdminReviewChangesCoreAssessmentViewModel>(CacheKey, viewModel);
+            return View(viewModel);
+        }
+
+
+        [HttpPost]
+        [Route("admin/submit-review-changes-assessment-entry-core", Name = RouteConstants.SubmitReviewChangesCoreAssessmentEntry)]
+        public async Task<IActionResult> AdminReviewChangesCoreAssessmentEntry(AdminReviewChangesCoreAssessmentViewModel model)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminReviewChangesCoreAssessmentViewModel>(CacheKey);
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            // Todo following the saving industry placement.
+            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { registrationPathwayId = model.RegistrationPathwayId });
+
+        }
+
+        [HttpGet]
+        [Route("admin/review-changes-assesment-entry-specialism/{registrationPathwayId}", Name = RouteConstants.AdminReviewChangesSpecialismAssessmentEntry)]
+        public async Task<IActionResult> AdminReviewChangesSpecialismAssessmentEntry(int registrationPathwayId)
+        {
+            AdminReviewChangesSpecialismAssessmentViewModel viewModel = new();
+            var _cachedModel = await _cacheService.GetAsync<AdminOccupationalSpecialismViewModel>(CacheKey);
+            if (_cachedModel is null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            viewModel.AdminOccupationalSpecialismViewModel = _cachedModel;
+
+            await _cacheService.SetAsync<AdminReviewChangesSpecialismAssessmentViewModel>(CacheKey, viewModel);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/submit-review-changes-assessment-entry-specialism", Name = RouteConstants.SubmitReviewChangesSpecialismAssessmentEntry)]
+        public async Task<IActionResult> AdminReviewChangesSpecialismAssessmentEntry(AdminReviewChangesSpecialismAssessmentViewModel model)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminReviewChangesSpecialismAssessmentViewModel>(CacheKey);
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { registrationPathwayId = model.RegistrationPathwayId });
+
+        }
+
+        #endregion
+
+        #region Remove assessments
+
+        [HttpGet]
+        [Route("admin/remove-assessment-entry-core-clear/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.RemoveAssessmentEntryCoreClear)]
+        public async Task<IActionResult> RemoveAssessmentEntryCoreClearAsync(int registrationPathwayId, int assessmentId)
+        {
+            await _cacheService.RemoveAsync<AdminRemovePathwayAssessmentEntryViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.RemoveAssessmentEntryCore, new { registrationPathwayId, assessmentId });
+        }
+
+        [HttpGet]
+        [Route("admin/remove-assessment-entry-core/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.RemoveAssessmentEntryCore)]
+        public async Task<IActionResult> RemoveAssessmentEntryCoreAsync(int registrationPathwayId, int assessmentId)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminRemovePathwayAssessmentEntryViewModel>(CacheKey);
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
+            AdminRemovePathwayAssessmentEntryViewModel viewModel = await _loader.GetRemovePathwayAssessmentEntryAsync(registrationPathwayId, assessmentId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No core assessment details found. Method: RemoveAssessmentEntryCoreAsync({registrationPathwayId}, {assessmentId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/remove-assessment-entry-core", Name = RouteConstants.SubmitRemoveAssessmentEntryCore)]
+        public async Task<IActionResult> RemoveAssessmentEntryCoreAsync(AdminRemovePathwayAssessmentEntryViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            bool noSelected = model.DoYouWantToRemoveThisAssessmentEntry.HasValue && !model.DoYouWantToRemoveThisAssessmentEntry.Value;
+            if (noSelected)
+            {
+                await _cacheService.RemoveAsync<AdminRemovePathwayAssessmentEntryViewModel>(CacheKey);
+                return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
+            }
+
+            await _cacheService.SetAsync(CacheKey, model);
+            return RedirectToRoute(RouteConstants.AdminReviewRemoveCoreAssessmentEntry);
+        }
+
+        [HttpGet]
+        [Route("admin/review-remove-assessment-entry-core", Name = RouteConstants.AdminReviewRemoveCoreAssessmentEntry)]
+        public async Task<IActionResult> AdminReviewRemoveCoreAssessmentEntryAsync()
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminRemovePathwayAssessmentEntryViewModel>(CacheKey);
+
+            if (cachedModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            
+            AdminReviewRemoveCoreAssessmentEntryViewModel viewModel = new()
+            {
+                PathwayAssessmentViewModel = cachedModel
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/review-remove-assessment-entry-core", Name = RouteConstants.SubmitReviewRemoveCoreAssessmentEntry)]
+        public async Task<IActionResult> AdminReviewRemoveCoreAssessmentEntryAsync(AdminReviewRemoveCoreAssessmentEntryViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             return View(model);
         }
+
+        [HttpGet]
+        [Route("admin/remove-assessment-entry-specialism-clear/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.RemoveAssessmentSpecialismEntryClear)]
+        public async Task<IActionResult> RemoveAssessmentEntrySpecialismClearAsync(int registrationPathwayId, int assessmentId)
+        {
+            await _cacheService.RemoveAsync<AdminRemoveSpecialismAssessmentEntryViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.RemoveAssessmentSpecialismEntry, new { registrationPathwayId, assessmentId });
+        }
+
+        [HttpGet]
+        [Route("admin/remove-assessment-entry-specialism/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.RemoveAssessmentSpecialismEntry)]
+        public async Task<IActionResult> RemoveAssessmentEntrySpecialismAsync(int registrationPathwayId, int assessmentId)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminRemoveSpecialismAssessmentEntryViewModel>(CacheKey);
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
+            AdminRemoveSpecialismAssessmentEntryViewModel viewModel = await _loader.GetRemoveSpecialismAssessmentEntryAsync(registrationPathwayId, assessmentId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No specialism assessment details found. Method: RemoveSpecialismEntryCoreAsync({registrationPathwayId}, {assessmentId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/remove-assessment-entry-specialism", Name = RouteConstants.SubmitRemoveAssessmentSpecialismEntry)]
+        public async Task<IActionResult> RemoveAssessmentEntrySpecialismAsync(AdminRemoveSpecialismAssessmentEntryViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            bool noSelected = model.DoYouWantToRemoveThisAssessmentEntry.HasValue && !model.DoYouWantToRemoveThisAssessmentEntry.Value;
+            if (noSelected)
+            {
+                await _cacheService.RemoveAsync<AdminRemoveSpecialismAssessmentEntryViewModel>(CacheKey);
+                return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
+            }
+
+            await _cacheService.SetAsync(CacheKey, model);
+            return RedirectToRoute(RouteConstants.AdminReviewRemoveSpecialismAssessmentEntry, new { registrationPathwayId = model.RegistrationPathwayId.ToString() });
+        }
+
+        [HttpGet]
+        [Route("admin/review-remove-assessment-entry-specialism/{registrationPathwayId}", Name = RouteConstants.AdminReviewRemoveSpecialismAssessmentEntry)]
+        public async Task<IActionResult> AdminReviewRemoveSpecialismAssessmentEntryAsync(int registrationPathwayId)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminRemoveSpecialismAssessmentEntryViewModel>(CacheKey);
+
+            if (cachedModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            AdminReviewRemoveSpecialismAssessmentEntryViewModel viewModel = new()
+            {
+                PathwayAssessmentViewModel = cachedModel
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/review-remove-assessment-entry-specialism", Name = RouteConstants.SubmitReviewRemoveSpecialismAssessmentEntry)]
+        public async Task<IActionResult> AdminReviewRemoveSpecialismAssessmentEntryAsync(AdminReviewRemoveSpecialismAssessmentEntryViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            return View(model);
+        }
+
         #endregion
+
+
     }
 }

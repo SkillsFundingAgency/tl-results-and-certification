@@ -1,59 +1,37 @@
-﻿using AutoMapper;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
-using Sfa.Tl.ResultsAndCertification.Web.Loader;
-using Sfa.Tl.ResultsAndCertification.Web.Mapper;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoaderTests.AdminChangeStartYear
 {
-    public class When_Called_With_Invalid_Data : BaseTest<AdminDashboardLoader>
+    public class When_Called_With_Invalid_Data : AdminDashboardLoaderTestsBase
     {
-        private IResultsAndCertificationInternalApiClient _internalApiClient;
-        private AdminDashboardLoader Loader;
-        private AdminChangeStartYearViewModel _actualResult;
-        private int PathwayId;
-
-        public override void Setup()
-        {
-            _internalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
-
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(AdminDashboardMapper).Assembly));
-            var mapper = new AutoMapper.Mapper(mapperConfig);
-
-            Loader = new AdminDashboardLoader(_internalApiClient, mapper);
-        }
+        private const int RegistrationPathwayId = 1;
+        private AdminChangeStartYearViewModel _result;
 
         public override void Given()
         {
-            PathwayId = -1;
+            ApiClient.GetAdminLearnerRecordAsync(RegistrationPathwayId).Returns(null as AdminLearnerRecord);
         }
 
         public async override Task When()
         {
-            _actualResult = await Loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(PathwayId);
+            _result = await Loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(RegistrationPathwayId);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            _internalApiClient.Received(1).GetAdminLearnerRecordAsync(Arg.Any<int>());
+            ApiClient.Received(1).GetAdminLearnerRecordAsync(RegistrationPathwayId);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            _actualResult.Should().BeNull();
+            _result.Should().BeNull();
         }
     }
 }
-

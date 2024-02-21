@@ -16,6 +16,8 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Configuration;
+using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
+using Sfa.Tl.ResultsAndCertification.Common.Services.System.Service;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication;
 using Sfa.Tl.ResultsAndCertification.Web.Filters;
@@ -119,7 +121,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 // Admin Dashboard Access Policies                
                 options.AddPolicy(RolesExtensions.RequireAdminDashboardAccess, policy => { policy.RequireRole(RolesExtensions.AdminDashboardAccess); policy.RequireClaim(CustomClaimTypes.LoginUserType, ((int)LoginUserType.Admin).ToString()); });
 
-
                 options.AddPolicy(RolesExtensions.RequireProviderEditorOrAdminDashboardAccess,
                     policy => policy.RequireAssertion(p =>
                         p.User.HasLoginUserTypeClaimAndRole(LoginUserType.AwardingOrganisation, RolesExtensions.SiteAdministrator, RolesExtensions.ProvidersEditor)
@@ -194,6 +195,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddTransient<IIndustryPlacementLoader, IndustryPlacementLoader>();
             services.AddTransient<IDownloadOverallResultsLoader, DownloadOverallResultsLoader>();
             services.AddTransient<IAdminDashboardLoader, AdminDashboardLoader>();
+            services.AddTransient<ISystemProvider, SystemProvider>();
         }
     }
 }

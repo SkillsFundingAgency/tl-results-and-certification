@@ -12,13 +12,16 @@
         <div class="govuk-notification-banner__content">
             @if (Model.DisplayMessageBody)
             {
-                <p class="govuk-notification-banner__heading">
-                    @Model.HeaderMessage
+                if (!string.IsNullOrEmpty(@Model.HeaderMessage))
+                {
+                    <p class="govuk-notification-banner__heading">
+                        @Model.HeaderMessage
                 </p>
+                }
 
                 @if (Model.IsRawHtml)
                 {
-                    @Html.Raw(Model.Message)
+                    <p class="govuk-body"> @Html.Raw(Model.Message)</p>
                 }
                 else
                 {
