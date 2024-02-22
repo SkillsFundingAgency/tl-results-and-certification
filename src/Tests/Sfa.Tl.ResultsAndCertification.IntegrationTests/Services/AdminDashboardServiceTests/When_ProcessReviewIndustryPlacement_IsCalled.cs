@@ -101,8 +101,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             RegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
             RegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(RegistrationPathwayRepositoryLogger, DbContext);
             var industryPlacementRepository = Substitute.For<IRepository<Domain.Models.IndustryPlacement>>();
+            var pathwayAssessmentRepository = Substitute.For<IRepository<Domain.Models.TqPathwayAssessment>>();
+            var specialismAssessmentRepository = Substitute.For<IRepository<Domain.Models.TqSpecialismAssessment>>();
 
-            AdminDashboardService = new AdminDashboardService(AdminDashboardRepository, RegistrationPathwayRepository, industryPlacementRepository, SystemProvider, CommonService, Mapper);
+            AdminDashboardService = new AdminDashboardService(
+                AdminDashboardRepository, 
+                RegistrationPathwayRepository, 
+                industryPlacementRepository, 
+                pathwayAssessmentRepository,
+                specialismAssessmentRepository,
+                SystemProvider, 
+                CommonService, 
+                Mapper);
 
         }
 

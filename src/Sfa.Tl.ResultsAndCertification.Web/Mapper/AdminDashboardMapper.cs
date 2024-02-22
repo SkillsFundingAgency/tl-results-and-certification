@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
@@ -13,6 +14,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -222,6 +224,32 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.LastUpdated, opts => opts.MapFrom((src, dest, destMember, context) => GetSpecialismAssessmentPropertyValue(src, (int)context.Items[Constants.AssessmentId], p => p?.LastUpdatedOn.ToDobFormat())))
                 .ForMember(d => d.UpdatedBy, opts => opts.MapFrom((src, dest, destMember, context) => GetSpecialismAssessmentPropertyValue(src, (int)context.Items[Constants.AssessmentId], p => p?.LastUpdatedBy)))
                 .ForMember(d => d.CanAssessmentEntryBeRemoved, opts => opts.MapFrom((src, dest, destMember, context) => GetSpecialismAssessmentPropertyValue(src, (int)context.Items[Constants.AssessmentId], p => p?.Result == null)));
+
+            CreateMap<AdminReviewRemoveCoreAssessmentEntryViewModel, ReviewRemoveAssessmentEntryRequest>()
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.PathwayAssessmentViewModel.RegistrationPathwayId))
+                .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentViewModel.PathwayAssessmentId))
+                .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Core))
+                .ForPath(d => d.ChangeAssessmentDetails.PathwayName, opts => opts.MapFrom(s => s.PathwayAssessmentViewModel.PathwayName))
+                .ForPath(d => d.ChangeAssessmentDetails.From, opts => opts.MapFrom(s => s.PathwayAssessmentViewModel.ExamPeriod))
+                .ForPath(d => d.ChangeAssessmentDetails.To, opts => opts.MapFrom(s => string.Format(AdminReviewRemoveAssessmentEntry.Label_No_Assessment_Entry_Recorded, s.PathwayAssessmentViewModel.ExamPeriod)))
+                .ForMember(d => d.ContactName, opts => opts.MapFrom(s => s.ContactName))
+                .ForMember(d => d.RequestDate, opts => opts.MapFrom(s => s.RequestDate))
+                .ForMember(d => d.ChangeReason, opts => opts.MapFrom(s => s.ChangeReason))
+                .ForMember(d => d.ZendeskId, opts => opts.MapFrom(s => s.ZendeskId))
+                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<AdminReviewRemoveCoreAssessmentEntryViewModel, ReviewRemoveAssessmentEntryRequest>>());
+
+            CreateMap<AdminReviewRemoveSpecialismAssessmentEntryViewModel, ReviewRemoveAssessmentEntryRequest>()
+               .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.PathwayAssessmentViewModel.RegistrationPathwayId))
+               .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentViewModel.SpecialismAssessmentId))
+               .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Specialism))
+               .ForPath(d => d.ChangeSpecialismAssessmentDetails.SpecialismName, opts => opts.MapFrom(s => s.PathwayAssessmentViewModel.SpecialismName))
+               .ForPath(d => d.ChangeSpecialismAssessmentDetails.From, opts => opts.MapFrom(s => s.PathwayAssessmentViewModel.ExamPeriod))
+               .ForPath(d => d.ChangeSpecialismAssessmentDetails.To, opts => opts.MapFrom(s => string.Format(AdminReviewRemoveAssessmentEntry.Label_No_Assessment_Entry_Recorded, s.PathwayAssessmentViewModel.ExamPeriod)))
+               .ForMember(d => d.ContactName, opts => opts.MapFrom(s => s.ContactName))
+               .ForMember(d => d.RequestDate, opts => opts.MapFrom(s => s.RequestDate))
+               .ForMember(d => d.ChangeReason, opts => opts.MapFrom(s => s.ChangeReason))
+               .ForMember(d => d.ZendeskId, opts => opts.MapFrom(s => s.ZendeskId))
+               .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<AdminReviewRemoveSpecialismAssessmentEntryViewModel, ReviewRemoveAssessmentEntryRequest>>());
         }
 
         private int? GetSelectedProviderId(AdminSearchLearnerCriteriaViewModel searchCriteria)
