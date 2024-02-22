@@ -433,12 +433,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var _cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
             model.AdminChangeIpViewModel = _cachedModel ?? new AdminChangeIpViewModel();
-
+            
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-
             var isSuccess = await _loader.ProcessChangeIndustryPlacementAsync(model);
 
             if (isSuccess)
