@@ -455,7 +455,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
 
         }
-
         #endregion
 
         #region Assesment Entry
@@ -493,7 +492,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(adminCoreComponent);
             }
-
+          
             adminCoreComponent.AssessmentYearTo = model.AssessmentYearTo;
             await _cacheService.SetAsync<AdminCoreComponentViewModel>(CacheKey, adminCoreComponent);
             return RedirectToAction(nameof(RouteConstants.AdminReviewChangesCoreAssessmentEntry), new { registrationPathwayId = model.RegistrationPathwayId });
@@ -511,7 +510,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(adminOccupationalSpecialism);
             }
-
+           
             adminOccupationalSpecialism.SpecialismAssessmentName = model.SpecialismAssessmentName;
             adminOccupationalSpecialism.AssessmentYearTo = model.AssessmentYearTo;
 
@@ -641,7 +640,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (cachedModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
-
+            
             AdminReviewRemoveCoreAssessmentEntryViewModel viewModel = new()
             {
                 PathwayAssessmentViewModel = cachedModel
@@ -857,5 +856,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         #endregion
+
+
     }
 }

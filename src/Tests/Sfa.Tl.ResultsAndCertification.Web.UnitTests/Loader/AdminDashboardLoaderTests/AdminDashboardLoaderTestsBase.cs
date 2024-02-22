@@ -103,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
         }
 
         protected AdminLearnerRecord CreateAdminLearnerRecordWithSpecialismAssessment(int registrationPathwayId, int specialismAssessmentId)
-        {
+                    {
             var learnerRecord = CreateAdminLearnerRecord(registrationPathwayId);
 
             learnerRecord.Pathway.Specialisms = new[]
@@ -126,8 +126,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
                             LastUpdatedOn = new DateTime(2023, 9, 15),
                             LastUpdatedBy = "test-user",
                             ComponentType = ComponentType.Core
-                        }
                     }
+                }
                 }
             };
 

@@ -1,9 +1,4 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
 {
@@ -16,7 +11,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
         public string ZendeskId { get; set; }
         public string CreatedBy { get; set; }
         public string Details { get; set; }
-        public abstract ChangeType ChangeType { get; set; }
-
+        public abstract ChangeType ChangeType { get; }
     }
 }

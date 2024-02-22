@@ -1,18 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
 {
-    public class ReviewChangeStartYearRequest :ReviewChangeRequest
+    public class ReviewChangeStartYearRequest : ReviewChangeRequest
     {
-      public ChangeStartYearDetails ChangeStartYearDetails { get; set; }
+        public ChangeStartYearDetails ChangeStartYearDetails { get; set; }
 
-      public override ChangeType ChangeType { get; set; } = ChangeType.StartYear;
+        public override ChangeType ChangeType => ChangeType.StartYear;
     }
 }
