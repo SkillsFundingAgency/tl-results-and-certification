@@ -35,5 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task LoadAdminAddSpecialismResultGrades(AdminAddSpecialismResultViewModel model);
 
         AdminAddPathwayResultReviewChangesViewModel CreateAdminAddPathwayResultReviewChanges(AdminAddPathwayResultViewModel model);
+
+        Task<bool> ProcessChangeIndustryPlacementAsync(AdminAddPathwayResultReviewChangesViewModel model);
     }
 }

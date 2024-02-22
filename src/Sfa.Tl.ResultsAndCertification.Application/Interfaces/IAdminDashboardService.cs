@@ -13,6 +13,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int registrationPathwayId);
 
         Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request);
+
         Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request);
+
+        Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request);
     }
 }

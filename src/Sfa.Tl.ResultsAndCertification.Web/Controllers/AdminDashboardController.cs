@@ -455,6 +455,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
 
         }
+
         #endregion
 
         #region Assesment Entry
@@ -492,7 +493,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(adminCoreComponent);
             }
-          
+
             adminCoreComponent.AssessmentYearTo = model.AssessmentYearTo;
             await _cacheService.SetAsync<AdminCoreComponentViewModel>(CacheKey, adminCoreComponent);
             return RedirectToAction(nameof(RouteConstants.AdminReviewChangesCoreAssessmentEntry), new { registrationPathwayId = model.RegistrationPathwayId });
@@ -510,7 +511,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(adminOccupationalSpecialism);
             }
-           
+
             adminOccupationalSpecialism.SpecialismAssessmentName = model.SpecialismAssessmentName;
             adminOccupationalSpecialism.AssessmentYearTo = model.AssessmentYearTo;
 
@@ -640,7 +641,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (cachedModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
-            
+
             AdminReviewRemoveCoreAssessmentEntryViewModel viewModel = new()
             {
                 PathwayAssessmentViewModel = cachedModel
@@ -809,7 +810,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
-            return RedirectToRoute(RouteConstants.PageNotFound);
+            bool success = await _loader.ProcessChangeIndustryPlacementAsync(model);
+            if (!success)
+            {
+                return RedirectToAction(RouteConstants.ProblemWithService);
+            }
+
+            var notificationBanner = new AdminNotificationBannerModel(AdminAddPathwayResultReviewChanges.Notification_Message_Asessment_Result_Added);
+            await _cacheService.SetAsync<NotificationBannerModel>(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
         }
 
         [HttpGet]
@@ -856,7 +866,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         #endregion
-
-
     }
 }

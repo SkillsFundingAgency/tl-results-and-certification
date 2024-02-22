@@ -150,6 +150,9 @@
   <data name="Link_Change_Text" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="Notification_Message_Asessment_Result_Added" xml:space="preserve">
+    <value>An assessment result has been added</value>
+  </data>
   <data name="No_Grade_Entered" xml:space="preserve">
     <value>No grade entered</value>
   </data>

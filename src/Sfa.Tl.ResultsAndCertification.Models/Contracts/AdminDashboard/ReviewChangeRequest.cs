@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
 {
@@ -6,11 +7,11 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
     {
         public int RegistrationPathwayId { get; set; }
         public string ContactName { get; set; }
-        public string RequestDate { get; set; }
+        public DateTime RequestDate { get; set; }
         public string ChangeReason { get; set; }
         public string ZendeskId { get; set; }
         public string CreatedBy { get; set; }
-        public string Details { get; set; }
+
         public abstract ChangeType ChangeType { get; }
     }
 }

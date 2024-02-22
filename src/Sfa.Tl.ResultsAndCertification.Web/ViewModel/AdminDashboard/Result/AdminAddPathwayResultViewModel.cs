@@ -65,10 +65,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
         #endregion
 
         [Required(ErrorMessageResourceType = typeof(AdminAddPathwayResult), ErrorMessageResourceName = "Validation_Message")]
-        public string SelectedGradeCode { get; set; }
+        public int? SelectedGradeId { get; set; }
 
         public string SelectedGradeValue
-            => Grades?.FirstOrDefault(g => g.Code == SelectedGradeCode)?.Value;
+            => Grades?.FirstOrDefault(g => g.Id == SelectedGradeId)?.Value;
 
         public List<LookupViewModel> Grades { get; set; }
 

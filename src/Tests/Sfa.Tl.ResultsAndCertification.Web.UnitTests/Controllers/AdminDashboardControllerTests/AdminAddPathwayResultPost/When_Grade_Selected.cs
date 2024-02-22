@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
         public override void Given()
         {
-            _viewModel = CreateViewModel(selectedGradeCode: "PCG1");
+            _viewModel = CreateViewModel(selectedGradeId: 1);
         }
 
         public async override Task When()

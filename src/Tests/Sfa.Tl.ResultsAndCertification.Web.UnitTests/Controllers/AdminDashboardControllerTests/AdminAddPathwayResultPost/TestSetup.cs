@@ -8,7 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         protected const int RegistrationPathwayId = 1, AssessmentId = 1;
         protected IActionResult Result;
 
-        protected static AdminAddPathwayResultViewModel CreateViewModel(string selectedGradeCode = null)
+        protected static AdminAddPathwayResultViewModel CreateViewModel(int? selectedGradeId = null)
             => new()
             {
                 RegistrationPathwayId = RegistrationPathwayId,
@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 StartYear = "2023 to 2024",
                 ExamPeriod = "Summer 2024",
                 Grade = string.Empty,
-                SelectedGradeCode = selectedGradeCode
+                SelectedGradeId = selectedGradeId
             };
     }
 }

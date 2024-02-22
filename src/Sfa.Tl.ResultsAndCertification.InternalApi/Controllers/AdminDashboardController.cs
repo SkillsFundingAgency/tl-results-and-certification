@@ -57,6 +57,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             return await _adminDashboardService.ProcessChangeIndustryPlacementAsync(request);
         }
 
+        [HttpPost]
+        [Route("ProcessAdminAddPathwayResult")]
+        public Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request)
+            => _adminDashboardService.ProcessAdminAddPathwayResultAsync(request);
     }
-
 }

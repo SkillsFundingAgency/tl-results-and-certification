@@ -170,6 +170,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An assessment result has been added.
+        /// </summary>
+        public static string Notification_Message_Asessment_Result_Added {
+            get {
+                return ResourceManager.GetString("Notification_Message_Asessment_Result_Added", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Review changes to assessment result – Admin.
         /// </summary>
         public static string Page_Title {

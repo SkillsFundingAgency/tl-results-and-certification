@@ -466,6 +466,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<ReviewChangeIndustryPlacementRequest, bool>(ApiConstants.ProcessChangeIPUri, request);
         }
 
+        public Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request)
+            => PostAsync<AddPathwayResultRequest, bool>(ApiConstants.ProcessAdminAddPathwayResult, request);
 
         #endregion
 

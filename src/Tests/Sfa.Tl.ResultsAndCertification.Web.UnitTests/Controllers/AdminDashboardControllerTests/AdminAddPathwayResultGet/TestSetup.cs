@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 StartYear = "2023 to 2024",
                 ExamPeriod = "Summer 2024",
                 Grade = string.Empty,
-                SelectedGradeCode = "PCG1"
+                SelectedGradeId = 1
             };
     }
 }

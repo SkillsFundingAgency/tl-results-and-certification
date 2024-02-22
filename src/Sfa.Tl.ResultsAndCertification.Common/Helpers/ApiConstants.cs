@@ -128,6 +128,6 @@
         public const string GetAdminLearnerRecordUri = "/api/admindashboard/GetAdminLearnerRecord/{0}";
         public const string ProcessChangeStartYearUri = "/api/admindashboard/ProcessChangeStartYear";
         public const string ProcessChangeIPUri = "/api/admindashboard/ProcessChangeIndustryPlacement";
-
+        public const string ProcessAdminAddPathwayResult = "/api/admindashboard/ProcessAdminAddPathwayResult";
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Common.Utils;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
@@ -17,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
 
         public string PathwayName { get; set; }
 
-        public string SelectedGradeCode { get; set; }
+        public int SelectedGradeId { get; set; }
 
         public string SelectedGradeValue { get; set; }
 
@@ -83,14 +82,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
         [Required(ErrorMessageResourceType = typeof(AdminAddPathwayResultReviewChanges), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
         public string ContactName { get; set; }
 
-        [InputDateValidation(
-            Property = nameof(DateOfRequest),
-            ResourceType = typeof(ReviewChangeAssessment),
-            BlankTextResourceName = "Validation_Date_When_Change_Requested_Blank_Text",
-            InvalidDateResourceName = "Validation_Date_When_Change_Requested_Invalid_Text",
-            FutureDateResourceName = "Validation_Date_When_Change_Requested_Future_Date_Text")]
-        public InputDate DateOfRequest
-            => new(Day, Month, Year);
+        [DateValidator(Property = nameof(DateOfRequest), ErrorResourceType = typeof(AdminAddPathwayResultReviewChanges))]
+        public string DateOfRequest
+            => $"{Year}/{Month}/{Day}";
 
         public string Day { get; set; }
 

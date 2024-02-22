@@ -200,6 +200,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public AdminAddPathwayResultReviewChangesViewModel CreateAdminAddPathwayResultReviewChanges(AdminAddPathwayResultViewModel model)
             => _mapper.Map<AdminAddPathwayResultReviewChangesViewModel>(model);
 
+        public Task<bool> ProcessChangeIndustryPlacementAsync(AdminAddPathwayResultReviewChangesViewModel model)
+        {
+            var request = _mapper.Map<AddPathwayResultRequest>(model);
+            return _internalApiClient.ProcessAdminAddPathwayResultAsync(request);
+        }
+
         #endregion
     }
 }
