@@ -191,7 +191,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             });
         }
 
-        public async Task<List<LookupViewModel>> GetAdminAddResultGrades(LookupCategory lookupCategory)
+        private async Task<List<LookupViewModel>> GetAdminAddResultGrades(LookupCategory lookupCategory)
         {
             IList<LookupData> grades = await _internalApiClient.GetLookupDataAsync(lookupCategory);
             return _mapper.Map<List<LookupViewModel>>(grades);
