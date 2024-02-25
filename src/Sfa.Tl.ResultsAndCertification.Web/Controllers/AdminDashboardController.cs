@@ -6,7 +6,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
@@ -660,7 +659,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
-            var isSuccess = await _loader.RemoveAssessmentEntry(model);
+            var isSuccess = await _loader.ProcessRemoveAssessmentEntry(model);
 
             if (isSuccess)
             {
@@ -754,7 +753,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
-            var isSuccess = await _loader.RemoveSpecialismAssessmentEntryAsync(model);
+            var isSuccess = await _loader.ProcessRemoveSpecialismAssessmentEntryAsync(model);
 
             if (isSuccess)
             {

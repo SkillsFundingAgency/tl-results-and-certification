@@ -1,5 +1,4 @@
-﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using System.Threading.Tasks;
 
@@ -17,9 +16,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 
         Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request);
 
-        Task<bool> RemovePathwayAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
+        Task<bool> ProcessRemovePathwayAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
 
-        Task<bool> RemoveSpecialismAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
+        Task<bool> ProcessRemoveSpecialismAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
         
     }
 }
