@@ -10,7 +10,6 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
@@ -43,6 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _tqSpecialismAssessmentRepository = TqSpecialismAssessment;
             _systemProvider = systemProvider;
             _commonService = commonService;
+            _mapper = mapper;
             _mapper = mapper;
         }
 

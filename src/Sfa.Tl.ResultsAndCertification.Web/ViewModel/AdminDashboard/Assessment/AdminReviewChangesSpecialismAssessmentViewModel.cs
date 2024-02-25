@@ -15,7 +15,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
         public AdminOccupationalSpecialismViewModel AdminOccupationalSpecialismViewModel { get; set; }
         public int RegistrationPathwayId { get; set; }
 
+
         [Required(ErrorMessageResourceType = typeof(ReviewChangeAssessment), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
+        [MaxLength(100, ErrorMessageResourceType = typeof(ReviewChangeAssessment), ErrorMessageResourceName = "Validation_Contact_Name_Max_Length")]
         public string ContactName { get; set; }
 
         [DateValidator(Property = nameof(RequestDate), ErrorResourceType = typeof(ReviewChangeAssessment), ErrorResourceName = "Validation_Date_When_Change_Requested_Blank_Text")]
@@ -32,7 +34,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
         public BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.AdminOccupationalSpecialisAssessmentEntry,
-            RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, AdminOccupationalSpecialismViewModel.RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
+            RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, AdminOccupationalSpecialismViewModel.RegistrationPathwayId.ToString() }, 
+                                                                { Constants.SpecialismsId, AdminOccupationalSpecialismViewModel.SpecialismAssessmentId.ToString() } }
         };
         public SummaryItemModel SummaryLearner => new()
         {
@@ -77,9 +80,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
             Value = $"{ReviewChangeAssessment.Text_No_Assement_Message} {CoreChangeTo.ToLower()}",
             Value2 = CoreChangeTo,
             ActionText = ReviewChangeAssessment.Link_Change_Text,
-            RouteName = RouteConstants.AdminCoreComponentAssessmentEntry,
+            RouteName = RouteConstants.AdminOccupationalSpecialisAssessmentEntry,
             TitleCss = "govuk-summary-list__value",
-            RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, AdminOccupationalSpecialismViewModel.RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
+            RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, AdminOccupationalSpecialismViewModel.RegistrationPathwayId.ToString() }, 
+                                                                { Constants.SpecialismsId, AdminOccupationalSpecialismViewModel.SpecialismAssessmentId.ToString() } }
         };
 
         public SummaryItemModel SummaryContactName => new()
