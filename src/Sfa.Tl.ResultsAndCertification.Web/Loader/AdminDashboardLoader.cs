@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             AdminSearchLearnerFilters apiResponse = await _internalApiClient.GetAdminSearchLearnerFiltersAsync();
             return _mapper.Map<AdminSearchLearnerFiltersViewModel>(apiResponse);
         }
-     
+
         public async Task<AdminSearchLearnerDetailsListViewModel> GetAdminSearchLearnerDetailsListAsync(AdminSearchLearnerCriteriaViewModel adminSearchCriteria)
         {
             var adminSearchLearnerRequest = _mapper.Map<AdminSearchLearnerRequest>(adminSearchCriteria);
@@ -73,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                     SeriesName = a.Name
                 });
 
-             var validAssessments = activeAssessmentIncludingPreviousYear.Except(learnerRecord.Pathway.PathwayAssessments, new AssessmentComparer()).ToList();
+            var validAssessments = activeAssessmentIncludingPreviousYear.Except(learnerRecord.Pathway.PathwayAssessments, new AssessmentComparer()).ToList();
 
             AdminCoreComponentViewModel response = _mapper.Map<AdminCoreComponentViewModel>(learnerRecord, opt =>
             {
@@ -148,6 +148,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             {
                 opt.Items[Constants.AssessmentId] = assessmentId;
             });
+        }
+
+        public async Task<bool> ProcessAddCoreAssessmentRequestAsync(AdminReviewChangesCoreAssessmentViewModel adminReviewChangesCoreAssessmentViewModel)
+        {
+            var reviewAddCoreAssessmentRequest = _mapper.Map<ReviewAddCoreAssessmentRequest>(adminReviewChangesCoreAssessmentViewModel);
+            return await _internalApiClient.ProcessAddCoreAssessmentRequestAsync(reviewAddCoreAssessmentRequest);
+        }
+
+        public async Task<bool> ProcessAddSpecialismAssessmentRequestAsync(AdminReviewChangesSpecialismAssessmentViewModel adminReviewChangesSpeciaismAssessmentViewModel)
+        {
+            var reviewAddSpecialismAssessmentRequest = _mapper.Map<ReviewAddSpecialismAssessmentRequest>(adminReviewChangesSpeciaismAssessmentViewModel);
+            return await _internalApiClient.ProcessAddSpecialismAssessmentRequestAsync(reviewAddSpecialismAssessmentRequest);
         }
     }
 }

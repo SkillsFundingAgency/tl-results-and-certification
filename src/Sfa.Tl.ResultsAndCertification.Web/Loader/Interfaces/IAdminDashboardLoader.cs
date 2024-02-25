@@ -24,5 +24,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<AdminRemovePathwayAssessmentEntryViewModel> GetRemovePathwayAssessmentEntryAsync(int registrationPathwayId, int pathwayAssessmentId);
 
         Task<AdminRemoveSpecialismAssessmentEntryViewModel> GetRemoveSpecialismAssessmentEntryAsync(int registrationPathwayId, int specialismAssessmentId);
+
+        Task<bool> ProcessAddCoreAssessmentRequestAsync(AdminReviewChangesCoreAssessmentViewModel adminReviewChangesCoreAssessmentViewModel);
+
+        Task<bool> ProcessAddSpecialismAssessmentRequestAsync(AdminReviewChangesSpecialismAssessmentViewModel adminReviewChangesSpecialismAssessmentViewModel);
     }
 }

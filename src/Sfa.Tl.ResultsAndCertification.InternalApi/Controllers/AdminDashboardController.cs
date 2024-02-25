@@ -57,6 +57,20 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             return await _adminDashboardService.ProcessChangeIndustryPlacementAsync(request);
         }
 
+        [HttpPost]
+        [Route("ProcessAddCoreAssessmentRequest")]
+        public async Task<bool> ProcessAddCoreAssessmentRequestAsync(ReviewAddCoreAssessmentRequest request)
+        {
+            return await _adminDashboardService.ProcessAddCoreAssessmentAsync(request);
+        }
+
+        [HttpPost]
+        [Route("ProcessAddSpecialismAssessmentRequest")]
+        public async Task<bool> ProcessAddSpecialismAssessmentRequestAsync(ReviewAddSpecialismAssessmentRequest request)
+        {
+            return await _adminDashboardService.ProcessAddSpecialismAssessmentAsync(request);
+        }
+
     }
 
 }

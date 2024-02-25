@@ -222,6 +222,40 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.LastUpdated, opts => opts.MapFrom((src, dest, destMember, context) => GetSpecialismAssessmentPropertyValue(src, (int)context.Items[Constants.AssessmentId], p => p?.LastUpdatedOn.ToDobFormat())))
                 .ForMember(d => d.UpdatedBy, opts => opts.MapFrom((src, dest, destMember, context) => GetSpecialismAssessmentPropertyValue(src, (int)context.Items[Constants.AssessmentId], p => p?.LastUpdatedBy)))
                 .ForMember(d => d.CanAssessmentEntryBeRemoved, opts => opts.MapFrom((src, dest, destMember, context) => GetSpecialismAssessmentPropertyValue(src, (int)context.Items[Constants.AssessmentId], p => p?.Result == null)));
+
+
+            CreateMap<AdminReviewChangesCoreAssessmentViewModel, ReviewChangeRequest>()
+                   .ForMember(d => d.ContactName, opts => opts.MapFrom(s => s.ContactName))
+                   .ForMember(d => d.ChangeReason, opts => opts.MapFrom(s => s.ChangeReason))
+                   .ForMember(d => d.RequestDate, opts => opts.MapFrom(s => s.RequestDate))
+                   .ForMember(d => d.ZendeskId, opts => opts.MapFrom(s => s.ZendeskId));
+
+            CreateMap<AdminReviewChangesCoreAssessmentViewModel, ReviewAddCoreAssessmentRequest>()
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.AdminCoreComponentViewModel.RegistrationPathwayId))
+                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<AdminReviewChangesCoreAssessmentViewModel, ReviewAddCoreAssessmentRequest>>())
+                .ForMember(d => d.AddCoreAssessmentDetails, opts => opts.MapFrom(s => s));
+
+            CreateMap<AdminReviewChangesCoreAssessmentViewModel, AddCoreAssessmentDetails>()
+               .ForMember(d => d.CoreAssessmentFrom, opts => opts.MapFrom(s =>  $"{Constants.NoAssessmentRecorded} {s.AdminCoreComponentViewModel.AssessmentYearTo.ToLower()}"))
+               .ForMember(d => d.CoreAssessmentTo, opts => opts.MapFrom(s => s.AdminCoreComponentViewModel.AssessmentYearTo))
+               .ForMember(d => d.AssessmentSeriesId, opts => opts.MapFrom(s => s.AdminCoreComponentViewModel.AssessmentSeriesId));
+
+            CreateMap<AdminReviewChangesSpecialismAssessmentViewModel, ReviewChangeRequest>()
+                  .ForMember(d => d.ContactName, opts => opts.MapFrom(s => s.ContactName))
+                  .ForMember(d => d.ChangeReason, opts => opts.MapFrom(s => s.ChangeReason))
+                  .ForMember(d => d.RequestDate, opts => opts.MapFrom(s => s.RequestDate))
+                  .ForMember(d => d.ZendeskId, opts => opts.MapFrom(s => s.ZendeskId));
+
+            CreateMap<AdminReviewChangesSpecialismAssessmentViewModel, ReviewAddSpecialismAssessmentRequest>()
+           .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.AdminOccupationalSpecialismViewModel.RegistrationPathwayId))
+           .ForMember(d => d.SpecialismId, opts => opts.MapFrom(s => s.AdminOccupationalSpecialismViewModel.SpecialismAssessmentId))
+           .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<AdminReviewChangesSpecialismAssessmentViewModel, ReviewAddSpecialismAssessmentRequest>>())
+           .ForMember(d => d.AddSpecialismDetails, opts => opts.MapFrom(s => s));
+
+            CreateMap<AdminReviewChangesSpecialismAssessmentViewModel, AddSpecialismDetails>()
+              .ForMember(d => d.SpecialismAssessmentFrom, opts => opts.MapFrom(s => $"{Constants.NoAssessmentRecorded} {s.AdminOccupationalSpecialismViewModel.AssessmentYearTo.ToLower()}"))
+              .ForMember(d => d.SpecialismAssessmentTo, opts => opts.MapFrom(s => s.AdminOccupationalSpecialismViewModel.AssessmentYearTo))
+              .ForMember(d => d.AssessmentSeriesId, opts => opts.MapFrom(s => s.AdminOccupationalSpecialismViewModel.AssessmentSeriesId));
         }
 
         private int? GetSelectedProviderId(AdminSearchLearnerCriteriaViewModel searchCriteria)

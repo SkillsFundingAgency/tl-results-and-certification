@@ -431,12 +431,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/submit-review-changes-industry-placement", Name = RouteConstants.SubmitReviewChangesIndustryPlacement)]
         public async Task<IActionResult> AdminReviewChangesIndustryPlacementAsync(AdminReviewChangesIndustryPlacementViewModel model)
         {
+            var _cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
+            model.AdminChangeIpViewModel = _cachedModel ?? new AdminChangeIpViewModel();
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            var _cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
-            model.AdminChangeIpViewModel = _cachedModel ?? new AdminChangeIpViewModel();
+           
             var isSuccess = await _loader.ProcessChangeIndustryPlacementAsync(model);
 
             if (isSuccess)
@@ -494,8 +495,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(adminCoreComponent);
             }
           
-            adminCoreComponent.AssessmentYearTo = model.AssessmentYearTo;
-            await _cacheService.SetAsync<AdminCoreComponentViewModel>(CacheKey, adminCoreComponent);
+           // adminCoreComponent.AssessmentYearTo = model.AssessmentYearTo;
+            //adminCoreComponent.AssessmentSeriesId = model.AssessmentSeriesId;
+            await _cacheService.SetAsync<AdminCoreComponentViewModel>(CacheKey, model);
             return RedirectToAction(nameof(RouteConstants.AdminReviewChangesCoreAssessmentEntry), new { registrationPathwayId = model.RegistrationPathwayId });
 
         }
@@ -511,12 +513,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(adminOccupationalSpecialism);
             }
-           
-            adminOccupationalSpecialism.SpecialismAssessmentName = model.SpecialismAssessmentName;
-            adminOccupationalSpecialism.AssessmentYearTo = model.AssessmentYearTo;
 
-
-            await _cacheService.SetAsync<AdminOccupationalSpecialismViewModel>(CacheKey, adminOccupationalSpecialism);
+            await _cacheService.SetAsync<AdminOccupationalSpecialismViewModel>(CacheKey, model);
             return RedirectToAction(nameof(RouteConstants.AdminReviewChangesSpecialismAssessmentEntry), new { registrationPathwayId = model.RegistrationPathwayId });
 
         }
@@ -546,9 +544,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(model);
             }
+            var isSuccess = await _loader.ProcessAddCoreAssessmentRequestAsync(model);
 
-            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { registrationPathwayId = model.RegistrationPathwayId });
+            if (isSuccess)
+            {
+                await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
+                {
+                    DisplayMessageBody = true,
+                    Message = ReviewChangeAssessment.Message_Notification_Success,
+                    IsRawHtml = true,
+                },
+                CacheExpiryTime.XSmall);
 
+                return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.AdminCoreComponentViewModel.RegistrationPathwayId });
+            }
+            else { return RedirectToAction(RouteConstants.ProblemWithService); }
         }
 
         [HttpGet]
@@ -577,7 +587,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
-            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { registrationPathwayId = model.RegistrationPathwayId });
+            var isSuccess = await _loader.ProcessAddSpecialismAssessmentRequestAsync(model);
+
+            if (isSuccess)
+            {
+                await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
+                {
+                    DisplayMessageBody = true,
+                    Message = ReviewChangeAssessment.Message_Notification_Success,
+                    IsRawHtml = true,
+                },
+                CacheExpiryTime.XSmall);
+
+                return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.AdminOccupationalSpecialismViewModel.RegistrationPathwayId });
+            }
+            else { return RedirectToAction(RouteConstants.ProblemWithService); }
 
         }
 

@@ -10,6 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
@@ -19,6 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IAdminDashboardRepository _adminDashboardRepository;
         private readonly IRepository<TqRegistrationPathway> _tqRegistrationPathwayRepository;
         private readonly IRepository<IndustryPlacement> _industryPlacementRepository;
+        private readonly IRepository<TqPathwayAssessment> _tqPathwayAssessmentRepository;
+        private readonly IRepository<TqSpecialismAssessment> _tqSpecialismAssessmentRepository;
         private readonly ISystemProvider _systemProvider;
         private readonly ICommonService _commonService;
         private readonly IMapper _mapper;
@@ -27,6 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             IAdminDashboardRepository adminDashboardRepository,
             IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
             IRepository<IndustryPlacement> industryPlacementRepository,
+            IRepository<TqPathwayAssessment> tqPathwayAssessment,
+            IRepository<TqSpecialismAssessment> TqSpecialismAssessment,
             ISystemProvider systemProvider,
             ICommonService commonService,
             IMapper mapper)
@@ -34,6 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _adminDashboardRepository = adminDashboardRepository;
             _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
             _industryPlacementRepository = industryPlacementRepository;
+            _tqPathwayAssessmentRepository = tqPathwayAssessment;
+            _tqSpecialismAssessmentRepository = TqSpecialismAssessment;
             _systemProvider = systemProvider;
             _commonService = commonService;
             _mapper = mapper;
@@ -71,6 +78,65 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return await _commonService.AddChangelog(CreateChangeLogRequest(request, JsonConvert.SerializeObject((request.ChangeStartYearDetails))));
             return false;
         }
+
+
+        public async Task<bool> ProcessAddCoreAssessmentAsync(ReviewAddCoreAssessmentRequest request)
+        {
+            var pathway = await _tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.Id == request.RegistrationPathwayId);
+            if (pathway == null) return false;
+            int status;
+
+            var pathwayAssessment = new TqPathwayAssessment
+            {
+                CreatedBy = request.CreatedBy,
+                TqRegistrationPathwayId = request.RegistrationPathwayId,
+                AssessmentSeriesId = request.AddCoreAssessmentDetails.AssessmentSeriesId,
+                IsOptedin = true,
+                StartDate = DateTime.Now
+            };
+
+            status = await _tqPathwayAssessmentRepository.CreateAsync(pathwayAssessment);
+
+            if (status > 0)
+            {
+                return await _commonService.AddChangelog(CreateChangeLogRequest(request, JsonConvert.SerializeObject(request.AddCoreAssessmentDetails)));
+            }
+
+            return false;
+
+        }
+
+        public async Task<bool> ProcessAddSpecialismAssessmentAsync(ReviewAddSpecialismAssessmentRequest request)
+        {
+            var pathway = await _tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.Id == request.RegistrationPathwayId);
+            if (pathway == null) return false;
+            int status;
+
+           // var registrationSpecialism = pathway.TqRegistrationSpecialisms.Where(t => t.IsOptedin && t.EndDate is null && t.TlSpecialismId== request.SpecialismId).FirstOrDefault().Id;
+
+            var specialismAssessment = new TqSpecialismAssessment
+            {
+                CreatedBy = request.CreatedBy,
+                TqRegistrationSpecialismId = request.SpecialismId,
+                AssessmentSeriesId = request.AddSpecialismDetails.AssessmentSeriesId,
+                IsOptedin = true,
+                StartDate = DateTime.Now
+            };
+
+            status = await _tqSpecialismAssessmentRepository.CreateAsync(specialismAssessment);
+
+            if (status > 0)
+            {
+                return await _commonService.AddChangelog(CreateChangeLogRequest(request, JsonConvert.SerializeObject(request.AddSpecialismDetails)));
+            }
+
+            return false;
+
+        }
+
+
+
+
 
         public async Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request)
         {

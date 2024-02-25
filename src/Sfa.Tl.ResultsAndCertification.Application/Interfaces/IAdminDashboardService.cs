@@ -7,12 +7,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     public interface IAdminDashboardService
     {
         Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync();
-       
         Task<PagedResponse<AdminSearchLearnerDetail>> GetAdminSearchLearnerDetailsAsync(AdminSearchLearnerRequest request);
-
         Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int registrationPathwayId);
-
         Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request);
         Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request);
+        Task<bool> ProcessAddCoreAssessmentAsync(ReviewAddCoreAssessmentRequest request);
+        Task<bool> ProcessAddSpecialismAssessmentAsync(ReviewAddSpecialismAssessmentRequest request);
+
     }
 }

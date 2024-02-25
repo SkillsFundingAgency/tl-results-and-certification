@@ -3,6 +3,7 @@
     public enum ChangeType
     {
         StartYear = 1,
-        IndustryPlacement = 2
+        IndustryPlacement = 2,
+        AddAssessment = 3,
     }
 }

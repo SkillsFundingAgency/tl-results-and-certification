@@ -73,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
         {
             Id = "assessment",
             Title = $"{ReviewChangeAssessment.Core_Component}:{AdminCoreComponentViewModel.PathwayDisplayName}",
-            Value = $"{ReviewChangeAssessment.Text_No_Assement_Message} {CoreChangeTo}",
+            Value = $"{ReviewChangeAssessment.Text_No_Assement_Message} {CoreChangeTo.ToLower()}",
             Value2 = CoreChangeTo,
             ActionText = ReviewChangeAssessment.Link_Change_Text,
             TitleCss = "govuk-summary-list__value",

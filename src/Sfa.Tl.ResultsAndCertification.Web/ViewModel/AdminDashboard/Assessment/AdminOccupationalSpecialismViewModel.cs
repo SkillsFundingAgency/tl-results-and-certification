@@ -22,5 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
 
         public string SpecialismAssessmentName { get; set; }
 
+        public int AssessmentSeriesId { get; set; }
+
     }
 }

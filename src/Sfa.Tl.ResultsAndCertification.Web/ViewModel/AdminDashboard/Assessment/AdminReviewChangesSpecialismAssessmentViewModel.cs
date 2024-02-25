@@ -74,7 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
         {
             Id = "assessment",
             Title = $"{ReviewChangeAssessment.Occupational_Specialism}:{SpecialismDisplayName}",
-            Value = $"{ReviewChangeAssessment.Text_No_Assement_Message} {CoreChangeTo}",
+            Value = $"{ReviewChangeAssessment.Text_No_Assement_Message} {CoreChangeTo.ToLower()}",
             Value2 = CoreChangeTo,
             ActionText = ReviewChangeAssessment.Link_Change_Text,
             RouteName = RouteConstants.AdminCoreComponentAssessmentEntry,
