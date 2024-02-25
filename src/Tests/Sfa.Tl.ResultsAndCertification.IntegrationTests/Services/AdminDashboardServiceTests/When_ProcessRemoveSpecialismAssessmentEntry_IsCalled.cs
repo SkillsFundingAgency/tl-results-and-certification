@@ -85,16 +85,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             SeedPathwayResultsData(tqPathwayResultsSeedData);
 
             SystemProvider = Substitute.For<ISystemProvider>();
+            PathwayAssessmentRepositoryLogger = Substitute.For <ILogger<GenericRepository<TqPathwayAssessment>>>();
+            PathwayAssessmentRepository = Substitute.For<IRepository<TqPathwayAssessment>>();
+            IndustryPlacementRepository = Substitute.For<IRepository<IndustryPlacement>>();
+            AssessmentRepositoryLogger = Substitute.For<ILogger<AssessmentRepository>>();
+            AssessmentSeriesRepositoryLogger = Substitute.For<ILogger<GenericRepository<AssessmentSeries>>>();
             ChangeLogRepository = new GenericRepository<ChangeLog>(ChangeLogRepositoryLogger, DbContext);
             CommonService = new CommonService(CommonServiceLogger, CommonMapper, TlLookupRepository, FunctionLogRepository, CommonRepository, NotificationService, Configuration, ChangeLogRepository);
-            IndustryPlacementRepository = Substitute.For<IRepository<IndustryPlacement>>();
-            AssessmentRepositoryLogger = new Logger<AssessmentRepository>(new NullLoggerFactory());
-            AssessmentSeriesRepositoryLogger = new Logger<GenericRepository<AssessmentSeries>>(new NullLoggerFactory());
             AssessmentRepository = new AssessmentRepository(AssessmentRepositoryLogger, DbContext);
             AssessmentSeriesRepository = new GenericRepository<AssessmentSeries>(AssessmentSeriesRepositoryLogger, DbContext);
             SpecialismAssessmentRepository = new GenericRepository<TqSpecialismAssessment>(SpecialismAssessmentRepositoryLogger, DbContext);
-            PathwayAssessmentRepositoryLogger = new Logger<GenericRepository<TqPathwayAssessment>>(new NullLoggerFactory());
-            PathwayAssessmentRepository = new GenericRepository<TqPathwayAssessment>(PathwayAssessmentRepositoryLogger, DbContext);
             AssessmentService = new AssessmentService(AssessmentRepository, PathwayAssessmentRepository, SpecialismAssessmentRepository, AssessmentSeriesRepository, AssessmentMapper, AssessmentRepositoryLogger);
             AdminDashboardService = new AdminDashboardService(AdminDashboardRepository, RegistrationPathwayRepository, IndustryPlacementRepository, PathwayAssessmentRepository, SpecialismAssessmentRepository, SystemProvider, CommonService, Mapper);
         }
