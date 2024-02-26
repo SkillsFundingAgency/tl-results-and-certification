@@ -5,6 +5,7 @@
         StartYear = 1,
         IndustryPlacement = 2,
         AssessmentEntryRemove = 3,
-        AddAssessment = 4,
+        AddPathwayResult = 4
+        AddAssessment = 5,
     }
 }

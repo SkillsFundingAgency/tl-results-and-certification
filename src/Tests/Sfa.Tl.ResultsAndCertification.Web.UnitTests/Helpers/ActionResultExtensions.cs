@@ -23,6 +23,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers
 
             if (!values.IsNullOrEmpty())
             {
+                redirectToRouteResult.RouteValues.Should().HaveCount(values.Length);
+
                 foreach (var (key, value) in values)
                 {
                     redirectToRouteResult.RouteValues.Should().ContainEquivalentOf(new KeyValuePair<string, object>(key, value));
@@ -40,6 +42,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers
 
             if (!values.IsNullOrEmpty())
             {
+                redirectToRouteResult.RouteValues.Should().HaveCount(values.Length);
+
                 foreach (var (key, value) in values)
                 {
                     redirectToRouteResult.RouteValues.Should().ContainEquivalentOf(new KeyValuePair<string, object>(key, value));

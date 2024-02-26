@@ -1,5 +1,4 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using DomainModel = Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using System;
@@ -11,24 +10,22 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     public interface ICommonService
     {
         Task<IEnumerable<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory);
-        
+
         Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn);
 
         // FunctionLog
         Task<bool> CreateFunctionLog(FunctionLogDetails model);
-        
+
         Task<bool> UpdateFunctionLog(FunctionLogDetails model);
 
         Task<bool> SendFunctionJobFailedNotification(string jobName, string errorMessage);
-        
-        Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync();
-        
-        Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync();
-       
-        bool IsIndustryPlacementTriggerDateValid();
-       
-        DateTime CurrentDate { get; }
 
-        Task<bool> AddChangelog(DomainModel.ChangeLog changeLog);
+        Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync();
+
+        Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync();
+
+        bool IsIndustryPlacementTriggerDateValid();
+
+        DateTime CurrentDate { get; }
     }
 }

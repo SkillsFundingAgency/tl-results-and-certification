@@ -28,6 +28,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Service;
 using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Builder;
+using Sfa.Tl.ResultsAndCertification.Data.Factory;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Extensions;
@@ -125,7 +126,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddAutoMapper(typeof(Startup).Assembly.GetReferencedAssemblies().Where(a => a.FullName.Contains("Sfa.Tl.ResultsAndCertification.Application")).Select(Assembly.Load));
             RegisterApplicationServices(services);
 
-            ValidatorOptions.Global.DisplayNameResolver = (type, memberInfo, expression) => {
+            ValidatorOptions.Global.DisplayNameResolver = (type, memberInfo, expression) =>
+            {
                 return memberInfo.GetCustomAttribute<System.ComponentModel.DataAnnotations.DisplayAttribute>()?.GetName();
             };
         }
@@ -154,6 +156,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<ICommonService, CommonService>();
             services.AddTransient<IAdminDashboardRepository, AdminDashboardRepository>();
             services.AddTransient<ISystemProvider, SystemProvider>();
+            services.AddTransient<IRepositoryFactory, RepositoryFactory>();
 
             // Bulk Registrations
             services.AddTransient<IDataParser<RegistrationCsvRecordResponse>, RegistrationParser>();

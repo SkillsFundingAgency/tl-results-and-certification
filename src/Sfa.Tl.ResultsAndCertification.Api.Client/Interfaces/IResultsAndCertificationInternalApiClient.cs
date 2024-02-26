@@ -136,6 +136,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         
         Task<bool> RemoveSpecialAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
 
+        Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request);
+
         #endregion
     }
 }

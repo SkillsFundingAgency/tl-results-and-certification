@@ -42,7 +42,7 @@
                     }
                     else
                     {
-                        <a class="govuk-link" asp-route="Model.ResultRouteName">
+                        <a class="govuk-link" asp-route="@assessment.AddResultRouteName" asp-route-registrationpathwayid="@assessment.RegistrationPathwayId" asp-route-assessmentid="@assessment.AssessmentId">
                             @LearnerRecord.Add_Result_Action_Link_Text
                         </a>
                     }

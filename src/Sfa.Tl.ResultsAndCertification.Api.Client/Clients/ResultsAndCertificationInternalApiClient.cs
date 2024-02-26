@@ -485,7 +485,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<ReviewRemoveAssessmentEntryRequest, bool>(ApiConstants.ReviewRemoveAssessmentEntryUri, request);
         }
 
-
+        public Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request)
+            => PostAsync<AddPathwayResultRequest, bool>(ApiConstants.ProcessAdminAddPathwayResult, request);
 
         #endregion
 
