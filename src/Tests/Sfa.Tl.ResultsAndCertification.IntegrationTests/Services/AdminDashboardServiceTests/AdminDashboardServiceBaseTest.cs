@@ -23,6 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
     {
         protected long AoUkprn = 10011881;
         protected LearnerService LearnerService;
+        protected AssessmentService AssessmentService;
         protected TlRoute Route;
         protected TlPathway Pathway;
         protected IList<TlSpecialism> Specialisms;
@@ -30,6 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         protected TlAwardingOrganisation TlAwardingOrganisation;
         protected TqAwardingOrganisation TqAwardingOrganisation;
         protected TqProvider TqProvider;
+        protected ChangeLog ChangeLog;
         protected IList<TlProvider> TlProviders;
         protected IList<TqProvider> TqProviders;
         protected IList<AssessmentSeries> AssessmentSeries;
@@ -41,8 +43,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
 
         protected IMapper Mapper;
 
-        protected ICommonService commonService;
-        protected CommonService CommonService;
+        protected ICommonService CommonService;
+        //protected CommonService CommonService;
         protected ILogger<CommonService> CommonServiceLogger;
       
         protected IRepository<TlLookup> TlLookupRepository;
@@ -51,6 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         protected ResultsAndCertificationConfiguration Configuration;
 
         protected IMapper CommonMapper;
+        protected IMapper AssessmentMapper;
         protected ILogger<GenericRepository<TlLookup>> TlLookupRepositoryLogger;
         protected ILogger<GenericRepository<FunctionLog>> FunctionLogRepositoryLogger;
         protected ILogger<GenericRepository<ChangeLog>> ChangeLogRepositoryLogger;
@@ -60,6 +63,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         
         protected IAdminDashboardService AdminDashboardService;
         protected IAdminDashboardRepository AdminDashboardRepository;
+
+        protected IAssessmentRepository AssessmentRepository;
+        protected ILogger<AssessmentRepository> AssessmentRepositoryLogger;
+        protected IRepository<TqPathwayAssessment> PathwayAssessmentRepository;
+        protected IRepository<IndustryPlacement> IndustryPlacementRepository;
+        protected IRepository<TqSpecialismAssessment> SpecialismAssessmentRepository;
+        protected IRepository<AssessmentSeries> AssessmentSeriesRepository;
+        protected ILogger<GenericRepository<AssessmentSeries>> AssessmentSeriesRepositoryLogger;
+        protected ILogger<GenericRepository<TqPathwayAssessment>> PathwayAssessmentRepositoryLogger;
+        protected ILogger<GenericRepository<TqSpecialismAssessment>> SpecialismAssessmentRepositoryLogger;
 
 
         protected IAsyncNotificationClient NotificationsClient;
@@ -133,10 +146,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             DbContext.SaveChanges();
             return profile;
         }
-
-       
-
-       
 
         public List<TqPathwayAssessment> GetPathwayAssessmentsDataToProcess(List<TqRegistrationPathway> pathwayRegistrations, bool seedPathwayAssessmentsAsActive = true, bool isHistorical = false, string assessmentSeriesName = "Summer 2021")
         {
@@ -214,6 +223,62 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             IpLookup = IpLookupDataProvider.CreateIpLookupList(DbContext, null, IpLookupType.SpecialConsideration, true);
             DbContext.SaveChanges();
         }
-        
+
+        public List<TqPathwayAssessment> SeedPathwayAssessmentsData(List<TqPathwayAssessment> pathwayAssessments, bool saveChanges = true)
+        {
+            var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessments(DbContext, pathwayAssessments);
+            if (saveChanges)
+                DbContext.SaveChanges();
+
+            return tqPathwayAssessment;
+        }
+
+        public List<TqSpecialismAssessment> SeedSpecialismAssessmentsData(List<TqSpecialismAssessment> specialismAssessments, bool saveChanges = true)
+        {
+            var tqSpecialismAssessments = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessments(DbContext, specialismAssessments);
+            if (saveChanges)
+                DbContext.SaveChanges();
+
+            return tqSpecialismAssessments;
+        }
+
+        public List<TqPathwayResult> SeedPathwayResultsData(List<TqPathwayResult> pathwayResults, bool saveChanges = true)
+        {
+            var tqPathwayResult = TqPathwayResultDataProvider.CreateTqPathwayResults(DbContext, pathwayResults);
+            if (saveChanges)
+                DbContext.SaveChanges();
+
+            return tqPathwayResult;
+        }
+
+        public List<TqSpecialismAssessment> GetSpecialismAssessmentsDataToProcess(List<TqRegistrationSpecialism> specialismRegistrations, bool seedSpecialismAssessmentsAsActive = true, bool isHistorical = false, string assessmentSeriesName = "Summer 2021")
+        {
+            var tqSpecialismAssessments = new List<TqSpecialismAssessment>();
+
+            foreach (var (specialismRegistration, index) in specialismRegistrations.Select((value, i) => (value, i)))
+            {
+                if (isHistorical)
+                {
+                    // Historical record
+                    var specialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, AssessmentSeries[index]);
+                    specialismAssessment.IsOptedin = false;
+                    specialismAssessment.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                    var tqSpecialismAssessmentHistorical = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, specialismAssessment);
+                    tqSpecialismAssessments.Add(tqSpecialismAssessmentHistorical);
+                }
+
+                var activeSpecialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, AssessmentSeries[index]);
+                var tqSpecialismAssessment = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, activeSpecialismAssessment);
+                if (!seedSpecialismAssessmentsAsActive)
+                {
+                    tqSpecialismAssessment.IsOptedin = specialismRegistration.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn;
+                    tqSpecialismAssessment.EndDate = DateTime.UtcNow;
+                }
+                tqSpecialismAssessments.Add(tqSpecialismAssessment);
+
+            }
+            return tqSpecialismAssessments;
+        }
     }
 }

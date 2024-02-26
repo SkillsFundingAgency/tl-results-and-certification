@@ -132,6 +132,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         Task<bool> ProcessAddSpecialismAssessmentRequestAsync(ReviewAddSpecialismAssessmentRequest request);
 
+        Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
+        
+        Task<bool> RemoveSpecialAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
+
         #endregion
     }
 }

@@ -10,9 +10,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<PagedResponse<AdminSearchLearnerDetail>> GetAdminSearchLearnerDetailsAsync(AdminSearchLearnerRequest request);
         Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int registrationPathwayId);
         Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request);
+
         Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request);
         Task<bool> ProcessAddCoreAssessmentAsync(ReviewAddCoreAssessmentRequest request);
         Task<bool> ProcessAddSpecialismAssessmentAsync(ReviewAddSpecialismAssessmentRequest request);
 
+
+        Task<bool> ProcessRemovePathwayAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
+
+        Task<bool> ProcessRemoveSpecialismAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
+        
     }
 }

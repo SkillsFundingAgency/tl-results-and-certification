@@ -130,6 +130,7 @@
         public const string ProcessChangeIPUri = "/api/admindashboard/ProcessChangeIndustryPlacement";
         public const string ProcessAddCoreAssessmentUri = "/api/admindashboard/ProcessAddCoreAssessmentRequest";
         public const string ProcessAddSpecialismAssessmentUri = "/api/admindashboard/ProcessAddSpecialismAssessmentRequest";
+        public const string ReviewRemoveAssessmentEntryUri = "/api/admindashboard/ReviewRemoveAssessmentEntry";
 
     }
 }

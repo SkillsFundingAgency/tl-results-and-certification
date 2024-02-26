@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -10,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
@@ -198,6 +200,55 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 HoursSpentOnPlacement = change.HoursSpentOnPlacementTo,
                 SpecialConsiderationReasons = !change.SpecialConsiderationReasonsTo.IsNullOrEmpty() ? change.SpecialConsiderationReasonsTo : new List<int?>()
             };
+        }
+
+        public async Task<bool> ProcessRemovePathwayAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest model)
+        {
+            var pathwayAssessment = await _pathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin
+                                                                                              && pa.EndDate == null && (pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active ||
+                                                                                              pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn)
+                                                                                              && !pa.TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null));
+            if (pathwayAssessment == null) return false;
+
+            pathwayAssessment.IsOptedin = false;
+            pathwayAssessment.EndDate = DateTime.UtcNow;
+            pathwayAssessment.ModifiedOn = DateTime.UtcNow;
+            pathwayAssessment.ModifiedBy = model.CreatedBy;
+
+            var isSuccess = await _pathwayAssessmentRepository.UpdateAsync(pathwayAssessment) > 0;
+
+            if (isSuccess)
+            {
+                return await _commonService.AddChangelog(CreateChangeLogRequest(model, JsonConvert.SerializeObject(model.ChangeAssessmentDetails)));
+            }
+
+            return false;
+        }
+
+        public async Task<bool> ProcessRemoveSpecialismAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest model)
+        {
+            if (model.AssessmentId == 0) return false;
+
+            var specialismAssessment = await _specialismAssessmentRepository.GetFirstOrDefaultAsync(sa => sa.Id == model.AssessmentId && sa.IsOptedin
+                                                                                    && sa.EndDate == null
+                                                                                    && (sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active ||
+                                                                                    sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn));
+            if (specialismAssessment == null) return false;
+
+
+            specialismAssessment.IsOptedin = false;
+            specialismAssessment.EndDate = DateTime.UtcNow;
+            specialismAssessment.ModifiedOn = DateTime.UtcNow;
+            specialismAssessment.ModifiedBy = model.CreatedBy;
+
+            var isSuccess = await _specialismAssessmentRepository.UpdateAsync(specialismAssessment) > 0;
+
+            if (isSuccess)
+            {
+                return await _commonService.AddChangelog(CreateChangeLogRequest(model, JsonConvert.SerializeObject(model.ChangeSpecialismAssessmentDetails)));
+            }
+
+            return false;
         }
     }
 }

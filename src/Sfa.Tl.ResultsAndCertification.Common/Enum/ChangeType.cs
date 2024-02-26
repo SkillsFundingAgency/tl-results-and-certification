@@ -4,6 +4,7 @@
     {
         StartYear = 1,
         IndustryPlacement = 2,
-        AddAssessment = 3,
+        AssessmentEntryRemove = 3,
+        AddAssessment = 4,
     }
 }

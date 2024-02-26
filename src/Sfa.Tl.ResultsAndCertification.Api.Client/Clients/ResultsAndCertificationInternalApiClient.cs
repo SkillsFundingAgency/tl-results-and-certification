@@ -475,6 +475,17 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             return await PostAsync<ReviewAddSpecialismAssessmentRequest, bool>(ApiConstants.ProcessAddSpecialismAssessmentUri, request);
         }
+        public async Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request)
+        {
+            return await PostAsync<ReviewRemoveAssessmentEntryRequest, bool>(ApiConstants.ReviewRemoveAssessmentEntryUri, request);
+        }
+
+        public async Task<bool> RemoveSpecialAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request)
+        {
+            return await PostAsync<ReviewRemoveAssessmentEntryRequest, bool>(ApiConstants.ReviewRemoveAssessmentEntryUri, request);
+        }
+
+
 
         #endregion
 
