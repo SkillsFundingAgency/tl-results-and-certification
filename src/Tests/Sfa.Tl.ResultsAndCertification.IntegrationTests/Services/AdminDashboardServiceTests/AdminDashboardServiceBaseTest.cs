@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Service;
 using Sfa.Tl.ResultsAndCertification.Data.Factory;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
@@ -20,9 +21,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
     public abstract class AdminDashboardServiceBaseTest : BaseTest<TqRegistrationPathway>
     {
         protected TqProvider TqProvider;
+        protected ISystemProvider SystemProvider;
 
         private IList<TlSpecialism> _specialisms;
         private IList<AcademicYear> _academicYears;
+        protected IList<AssessmentSeries> AssessmentSeries;
 
         protected IAdminDashboardService AdminDashboardService;
 
@@ -30,10 +33,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         {
             var adminDashboardRepository = new AdminDashboardRepository(DbContext);
             var repositoryFactory = new RepositoryFactory(new NullLoggerFactory(), DbContext);
-            var systemProvider = new SystemProvider();
+            SystemProvider = new SystemProvider();
             var mapper = CreateMapper();
 
-            AdminDashboardService = new AdminDashboardService(adminDashboardRepository, repositoryFactory, systemProvider, mapper);
+            AdminDashboardService = new AdminDashboardService(adminDashboardRepository, repositoryFactory, SystemProvider, mapper);
         }
 
         private static Mapper CreateMapper()
@@ -51,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             var tqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, _pathway, tlAwardingOrganisation);
             var tlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, tqAwardingOrganisation, tlProvider);
-            AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
+            AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
             _academicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
 

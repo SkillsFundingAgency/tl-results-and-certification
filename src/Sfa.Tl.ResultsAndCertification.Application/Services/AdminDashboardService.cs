@@ -115,6 +115,62 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return false;
         }
 
+        public async Task<bool> ProcessRemovePathwayAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest model)
+        {
+            var pathwayAssessmentRepository = _repositoryFactory.GetRepository<TqPathwayAssessment>();
+
+            var pathwayAssessment = await pathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin
+                                                                                              && pa.EndDate == null && (pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active ||
+                                                                                              pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn)
+                                                                                              && !pa.TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null));
+            if (pathwayAssessment == null) return false;
+
+            DateTime utcNow = _systemProvider.UtcNow;
+
+            pathwayAssessment.IsOptedin = false;
+            pathwayAssessment.EndDate = utcNow;
+            pathwayAssessment.ModifiedOn = utcNow;
+            pathwayAssessment.ModifiedBy = model.CreatedBy;
+
+            var isSuccess = await pathwayAssessmentRepository.UpdateAsync(pathwayAssessment) > 0;
+
+            if (isSuccess)
+            {
+                var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
+                return await changeLongRepository.CreateAsync(CreateChangeLog(model, model.ChangeAssessmentDetails)) > 0;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> ProcessRemoveSpecialismAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest model)
+        {
+            var specialismAssessmentRepository = _repositoryFactory.GetRepository<TqSpecialismAssessment>();
+
+            var specialismAssessment = await specialismAssessmentRepository.GetFirstOrDefaultAsync(sa => sa.Id == model.AssessmentId && sa.IsOptedin
+                                                                                    && sa.EndDate == null
+                                                                                    && (sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active ||
+                                                                                    sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn));
+            if (specialismAssessment == null) return false;
+
+            DateTime utcNow = _systemProvider.UtcNow;
+
+            specialismAssessment.IsOptedin = false;
+            specialismAssessment.EndDate = utcNow;
+            specialismAssessment.ModifiedOn = utcNow;
+            specialismAssessment.ModifiedBy = model.CreatedBy;
+
+            var isSuccess = await specialismAssessmentRepository.UpdateAsync(specialismAssessment) > 0;
+
+            if (isSuccess)
+            {
+                var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
+                return await changeLongRepository.CreateAsync(CreateChangeLog(model, model.ChangeSpecialismAssessmentDetails)) > 0;
+            }
+
+            return false;
+        }
+
         public async Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request)
         {
             var pathwayAssessmentRepo = _repositoryFactory.GetRepository<TqPathwayAssessment>();
@@ -175,55 +231,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 HoursSpentOnPlacement = change.HoursSpentOnPlacementTo,
                 SpecialConsiderationReasons = !change.SpecialConsiderationReasonsTo.IsNullOrEmpty() ? change.SpecialConsiderationReasonsTo : new List<int?>()
             };
-        }
-
-        public async Task<bool> ProcessRemovePathwayAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest model)
-        {
-            var pathwayAssessment = await _pathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin
-                                                                                              && pa.EndDate == null && (pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active ||
-                                                                                              pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn)
-                                                                                              && !pa.TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null));
-            if (pathwayAssessment == null) return false;
-
-            pathwayAssessment.IsOptedin = false;
-            pathwayAssessment.EndDate = DateTime.UtcNow;
-            pathwayAssessment.ModifiedOn = DateTime.UtcNow;
-            pathwayAssessment.ModifiedBy = model.CreatedBy;
-
-            var isSuccess = await _pathwayAssessmentRepository.UpdateAsync(pathwayAssessment) > 0;
-
-            if (isSuccess)
-            {
-                return await _commonService.AddChangelog(CreateChangeLogRequest(model, JsonConvert.SerializeObject(model.ChangeAssessmentDetails)));
-            }
-
-            return false;
-        }
-
-        public async Task<bool> ProcessRemoveSpecialismAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest model)
-        {
-            if (model.AssessmentId == 0) return false;
-
-            var specialismAssessment = await _specialismAssessmentRepository.GetFirstOrDefaultAsync(sa => sa.Id == model.AssessmentId && sa.IsOptedin
-                                                                                    && sa.EndDate == null
-                                                                                    && (sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active ||
-                                                                                    sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn));
-            if (specialismAssessment == null) return false;
-
-
-            specialismAssessment.IsOptedin = false;
-            specialismAssessment.EndDate = DateTime.UtcNow;
-            specialismAssessment.ModifiedOn = DateTime.UtcNow;
-            specialismAssessment.ModifiedBy = model.CreatedBy;
-
-            var isSuccess = await _specialismAssessmentRepository.UpdateAsync(specialismAssessment) > 0;
-
-            if (isSuccess)
-            {
-                return await _commonService.AddChangelog(CreateChangeLogRequest(model, JsonConvert.SerializeObject(model.ChangeSpecialismAssessmentDetails)));
-            }
-
-            return false;
         }
     }
 }
