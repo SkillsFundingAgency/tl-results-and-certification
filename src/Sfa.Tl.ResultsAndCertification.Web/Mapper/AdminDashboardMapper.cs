@@ -262,7 +262,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<AdminAddPathwayResultReviewChangesViewModel, AddPathwayResultRequest>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
                 .ForMember(d => d.PathwayAssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
-                .ForMember(d => d.SelectedGradeId, opts => opts.MapFrom(s => s.SelectedGradeId))
+                .ForMember(d => d.SelectedGradeId, opts => opts.MapFrom(s => s.SelectedGradeId));
 
             CreateMap<AdminReviewChangesCoreAssessmentViewModel, ReviewChangeRequest>()
                    .ForMember(d => d.ContactName, opts => opts.MapFrom(s => s.ContactName))
@@ -305,10 +305,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForPath(d => d.ChangeAssessmentDetails.From, opts => opts.MapFrom(s => s.PathwayAssessmentViewModel.ExamPeriod))
                 .ForPath(d => d.ChangeAssessmentDetails.To, opts => opts.MapFrom(s => string.Format(AdminReviewRemoveAssessmentEntry.Label_No_Assessment_Entry_Recorded, s.PathwayAssessmentViewModel.ExamPeriod)))
                 .ForMember(d => d.ContactName, opts => opts.MapFrom(s => s.ContactName))
-                .ForMember(d => d.RequestDate, opts => opts.MapFrom(s => Convert.ToDateTime(s.DateOfRequest)))
+                .ForMember(d => d.RequestDate, opts => opts.MapFrom(s => s.RequestDate))
                 .ForMember(d => d.ChangeReason, opts => opts.MapFrom(s => s.ChangeReason))
-                .ForMember(d => d.ZendeskId, opts => opts.MapFrom(s => s.ZendeskTicketId))
-                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<AdminAddPathwayResultReviewChangesViewModel, AddPathwayResultRequest>>());
+                .ForMember(d => d.ZendeskId, opts => opts.MapFrom(s => s.ZendeskId))
+                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<AdminReviewRemoveCoreAssessmentEntryViewModel, ReviewRemoveAssessmentEntryRequest>>());
 
             CreateMap<AdminLearnerRecord, AdminAddSpecialismResultViewModel>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))

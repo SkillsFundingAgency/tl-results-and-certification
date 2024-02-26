@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
+using System;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoaderTests.AdminAddSpecialismAssessmentEntry
@@ -43,9 +44,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
                 .ProcessAddSpecialismAssessmentRequestAsync(Arg.Is<ReviewAddSpecialismAssessmentRequest>(
                     x => x.RegistrationPathwayId == ViewModel.AdminOccupationalSpecialismViewModel.RegistrationPathwayId && 
                     x.ChangeReason == ViewModel.ChangeReason && 
-                    x.ChangeType == Common.Enum.ChangeType.AddAssessment &&
+                    x.ChangeType == Common.Enum.ChangeType.AssessmentEntryAdd &&
                     x.ContactName == ViewModel.ContactName &&
-                    x.RequestDate == $"{ViewModel.Year}/{ViewModel.Month}/{ViewModel.Day}" &&
+                    x.RequestDate == Convert.ToDateTime(ViewModel.RequestDate) &&
                     x.ZendeskId == ViewModel.ZendeskId &&
                     x.AddSpecialismDetails.SpecialismAssessmentTo == ViewModel.AdminOccupationalSpecialismViewModel.AssessmentYearTo &&
                     x.AddSpecialismDetails.SpecialismAssessmentFrom == $"No assessment entry recorded for {ViewModel.AdminOccupationalSpecialismViewModel.AssessmentYearTo.ToLower()}" &&

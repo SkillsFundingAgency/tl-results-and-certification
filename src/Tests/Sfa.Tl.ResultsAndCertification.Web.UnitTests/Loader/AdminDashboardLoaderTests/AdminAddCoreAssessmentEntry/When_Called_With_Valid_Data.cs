@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
+using System;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoaderTests.AdminAddCoreAssessmentEntry
@@ -36,6 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
                 Day = "01",
                 Month = "01",
                 Year = "1970",
+                 
                 ZendeskId ="122356761"
                 
             };
@@ -45,9 +47,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
                 .ProcessAddCoreAssessmentRequestAsync(Arg.Is<ReviewAddCoreAssessmentRequest>(
                     x => x.RegistrationPathwayId == ViewModel.AdminCoreComponentViewModel.RegistrationPathwayId && 
                     x.ChangeReason == ViewModel.ChangeReason && 
-                    x.ChangeType == Common.Enum.ChangeType.AddAssessment &&
+                    x.ChangeType == Common.Enum.ChangeType.AssessmentEntryAdd &&
                     x.ContactName == ViewModel.ContactName &&
-                    x.RequestDate == $"{ViewModel.Year}/{ViewModel.Month}/{ViewModel.Day}" &&
+                    x.RequestDate == Convert.ToDateTime(ViewModel.RequestDate) &&
                     x.ZendeskId == ViewModel.ZendeskId &&
                     x.AddCoreAssessmentDetails.CoreAssessmentTo == ViewModel.AdminCoreComponentViewModel.AssessmentYearTo &&
                     x.AddCoreAssessmentDetails.CoreAssessmentFrom == $"No assessment entry recorded for {ViewModel.AdminCoreComponentViewModel.AssessmentYearTo.ToLower()}" &&

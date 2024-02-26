@@ -10,6 +10,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
     public class ReviewAddCoreAssessmentRequest: ReviewChangeRequest
     {
         public AddCoreAssessmentDetails AddCoreAssessmentDetails { get; set; }
-        public override ChangeType ChangeType { get; set; } = ChangeType.AddAssessment;
+        public override ChangeType ChangeType => ChangeType.AssessmentEntryAdd;
     }
 }

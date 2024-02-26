@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
     public class ReviewAddSpecialismAssessmentRequest:ReviewChangeRequest
     {
         public AddSpecialismDetails AddSpecialismDetails { get; set; }
-        public override ChangeType ChangeType { get; set; } = ChangeType.AddAssessment;
+        public override ChangeType ChangeType => ChangeType.AssessmentEntryAdd;
         public int SpecialismId { get; set; }
     }
 }
