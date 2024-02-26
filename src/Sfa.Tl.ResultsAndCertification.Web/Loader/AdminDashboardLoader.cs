@@ -149,5 +149,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 opt.Items[Constants.AssessmentId] = assessmentId;
             });
         }
+
+        public async Task<bool> ProcessRemoveAssessmentEntry(AdminReviewRemoveCoreAssessmentEntryViewModel model)
+        {
+            var reviewRemoveAssessmentEntryRequest = _mapper.Map<ReviewRemoveAssessmentEntryRequest>(model);
+            return await _internalApiClient.RemoveAssessmentEntryAsync(reviewRemoveAssessmentEntryRequest);
+        }
+
+        public async Task<bool> ProcessRemoveSpecialismAssessmentEntryAsync(AdminReviewRemoveSpecialismAssessmentEntryViewModel model)
+        {
+            var reviewRemoveSpecialismEntryRequest = _mapper.Map<ReviewRemoveAssessmentEntryRequest>(model);
+            return await _internalApiClient.RemoveSpecialAssessmentEntryAsync(reviewRemoveSpecialismEntryRequest);
+        }
     }
 }

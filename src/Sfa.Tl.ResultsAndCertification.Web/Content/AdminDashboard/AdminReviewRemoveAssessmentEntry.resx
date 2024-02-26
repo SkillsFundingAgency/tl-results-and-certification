@@ -151,7 +151,7 @@
     <value>Change</value>
   </data>
   <data name="Message_Notification_Success" xml:space="preserve">
-    <value>&lt;b&gt;Industry placement status updated&lt;/b&gt;</value>
+    <value>&lt;b&gt;An assessment entry has been removed&lt;/b&gt;</value>
   </data>
   <data name="Message_You_Can_Enter_Up_To_Characters" xml:space="preserve">
     <value>You can enter up to 2,000 characters</value>

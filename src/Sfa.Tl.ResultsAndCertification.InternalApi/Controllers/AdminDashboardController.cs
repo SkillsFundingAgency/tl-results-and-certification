@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Application.Services;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
@@ -57,6 +55,18 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             return await _adminDashboardService.ProcessChangeIndustryPlacementAsync(request);
         }
 
+        [HttpPost]
+        [Route("ReviewRemoveAssessmentEntry")]
+        public async Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest model)
+        {
+            return model.ComponentType switch
+            {
+                ComponentType.Core => await _adminDashboardService.ProcessRemovePathwayAssessmentEntryAsync(model),
+                ComponentType.Specialism => await _adminDashboardService.ProcessRemoveSpecialismAssessmentEntryAsync(model),
+                ComponentType.NotSpecified => false,
+                _ => false
+            };
+        }
     }
 
 }

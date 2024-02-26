@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
@@ -94,15 +93,25 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             NotificationService = new NotificationService(NotificationTemplateRepository, NotificationsClient, NotificationLogger);
             ChangeLogRepositoryLogger = new Logger<GenericRepository<ChangeLog>>(new NullLoggerFactory());
             ChangeLogRepository = new GenericRepository<ChangeLog>(ChangeLogRepositoryLogger, DbContext);
-            commonService = new CommonService(CommonServiceLogger, CommonMapper, TlLookupRepository, FunctionLogRepository, CommonRepository, NotificationService, Configuration, ChangeLogRepository);
+            CommonService = new CommonService(CommonServiceLogger, CommonMapper, TlLookupRepository, FunctionLogRepository, CommonRepository, NotificationService, Configuration, ChangeLogRepository);
             SystemProvider = new SystemProvider();
 
             AdminDashboardRepository = new AdminDashboardRepository(DbContext);
             RegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
             RegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(RegistrationPathwayRepositoryLogger, DbContext);
             var industryPlacementRepository = Substitute.For<IRepository<Domain.Models.IndustryPlacement>>();
+            var pathwayAssessmentRepository = Substitute.For<IRepository<Domain.Models.TqPathwayAssessment>>();
+            var specialismAssessmentRepository = Substitute.For<IRepository<Domain.Models.TqSpecialismAssessment>>();
 
-            AdminDashboardService = new AdminDashboardService(AdminDashboardRepository, RegistrationPathwayRepository, industryPlacementRepository, SystemProvider, CommonService, Mapper);
+            AdminDashboardService = new AdminDashboardService(
+                AdminDashboardRepository, 
+                RegistrationPathwayRepository, 
+                industryPlacementRepository, 
+                pathwayAssessmentRepository,
+                specialismAssessmentRepository,
+                SystemProvider, 
+                CommonService, 
+                Mapper);
 
         }
 

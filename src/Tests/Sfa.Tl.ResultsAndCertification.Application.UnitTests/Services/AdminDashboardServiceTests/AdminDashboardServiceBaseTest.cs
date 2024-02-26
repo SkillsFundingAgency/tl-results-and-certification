@@ -15,8 +15,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
     public abstract class AdminDashboardServiceBaseTest : BaseTest<AdminDashboardService>
     {
         protected IAdminDashboardRepository AdminDashboardRepository;
-        protected IRepository<TqRegistrationPathway> RegistrationPathwayRepo;
-        protected IRepository<IndustryPlacement> IndustryPlacementRepo;
+        protected IRepository<TqRegistrationPathway> RegistrationPathwayRepository;
+        protected IRepository<IndustryPlacement> IndustryPlacementRepository;
+        protected IRepository<TqPathwayAssessment> PathwayAssessmentRepository;
+        protected IRepository<TqSpecialismAssessment> SpecialismAssessmentRepository;
         protected ISystemProvider SystemProvider;
         protected ICommonService CommonService;
         protected IMapper Mapper;
@@ -28,8 +30,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
             var today = new DateTime(2023, 1, 1);
 
             AdminDashboardRepository = Substitute.For<IAdminDashboardRepository>();
-            RegistrationPathwayRepo = Substitute.For<IRepository<TqRegistrationPathway>>();
-            IndustryPlacementRepo = Substitute.For<IRepository<IndustryPlacement>>();
+            RegistrationPathwayRepository = Substitute.For<IRepository<TqRegistrationPathway>>();
+            IndustryPlacementRepository = Substitute.For<IRepository<IndustryPlacement>>();
+            PathwayAssessmentRepository = Substitute.For<IRepository<Domain.Models.TqPathwayAssessment>>();
+            SpecialismAssessmentRepository = Substitute.For<IRepository<Domain.Models.TqSpecialismAssessment>>();
 
             SystemProvider = Substitute.For<ISystemProvider>();
             SystemProvider.UtcToday.Returns(today);
@@ -37,7 +41,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
             CommonService = Substitute.For<ICommonService>();
             Mapper = CreateMapper();
 
-            AdminDashboardService = new AdminDashboardService(AdminDashboardRepository, RegistrationPathwayRepo, IndustryPlacementRepo, SystemProvider, CommonService, Mapper);
+            AdminDashboardService = new AdminDashboardService(
+                AdminDashboardRepository, 
+                RegistrationPathwayRepository, 
+                IndustryPlacementRepository, 
+                PathwayAssessmentRepository,
+                SpecialismAssessmentRepository,
+                SystemProvider, 
+                CommonService, 
+                Mapper);
         }
 
         private static AutoMapper.Mapper CreateMapper()
