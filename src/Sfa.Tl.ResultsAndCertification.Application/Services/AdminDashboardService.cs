@@ -204,7 +204,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> ProcessRemovePathwayAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest model)
         {
-            var pathwayAssessment = await _pathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin
+            var pathwayAssessment = await _tqPathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin
                                                                                               && pa.EndDate == null && (pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active ||
                                                                                               pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn)
                                                                                               && !pa.TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null));
@@ -215,7 +215,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             pathwayAssessment.ModifiedOn = DateTime.UtcNow;
             pathwayAssessment.ModifiedBy = model.CreatedBy;
 
-            var isSuccess = await _pathwayAssessmentRepository.UpdateAsync(pathwayAssessment) > 0;
+            var isSuccess = await _tqPathwayAssessmentRepository.UpdateAsync(pathwayAssessment) > 0;
 
             if (isSuccess)
             {
@@ -229,7 +229,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             if (model.AssessmentId == 0) return false;
 
-            var specialismAssessment = await _specialismAssessmentRepository.GetFirstOrDefaultAsync(sa => sa.Id == model.AssessmentId && sa.IsOptedin
+            var specialismAssessment = await _tqSpecialismAssessmentRepository.GetFirstOrDefaultAsync(sa => sa.Id == model.AssessmentId && sa.IsOptedin
                                                                                     && sa.EndDate == null
                                                                                     && (sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active ||
                                                                                     sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn));
@@ -241,7 +241,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             specialismAssessment.ModifiedOn = DateTime.UtcNow;
             specialismAssessment.ModifiedBy = model.CreatedBy;
 
-            var isSuccess = await _specialismAssessmentRepository.UpdateAsync(specialismAssessment) > 0;
+            var isSuccess = await _tqSpecialismAssessmentRepository.UpdateAsync(specialismAssessment) > 0;
 
             if (isSuccess)
             {
