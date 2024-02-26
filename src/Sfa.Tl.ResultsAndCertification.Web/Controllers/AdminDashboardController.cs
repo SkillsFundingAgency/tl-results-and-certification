@@ -430,12 +430,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/submit-review-changes-industry-placement", Name = RouteConstants.SubmitReviewChangesIndustryPlacement)]
         public async Task<IActionResult> AdminReviewChangesIndustryPlacementAsync(AdminReviewChangesIndustryPlacementViewModel model)
         {
+            var _cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
+            model.AdminChangeIpViewModel = _cachedModel ?? new AdminChangeIpViewModel();
+
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            var _cachedModel = await _cacheService.GetAsync<AdminChangeIpViewModel>(CacheKey);
-            model.AdminChangeIpViewModel = _cachedModel ?? new AdminChangeIpViewModel();
+            
             var isSuccess = await _loader.ProcessChangeIndustryPlacementAsync(model);
 
             if (isSuccess)
@@ -659,7 +661,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
-            return View(model);
+            var isSuccess = await _loader.ProcessRemoveAssessmentEntry(model);
+
+            if (isSuccess)
+            {
+                await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
+                {
+                    DisplayMessageBody = true,
+                    Message = AdminReviewRemoveAssessmentEntry.Message_Notification_Success,
+                    IsRawHtml = true,
+                },
+                CacheExpiryTime.XSmall);
+
+                return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.PathwayAssessmentViewModel.RegistrationPathwayId });
+            }
+            else
+            {
+                return RedirectToAction(RouteConstants.ProblemWithService);
+            }
         }
 
         [HttpGet]
@@ -736,7 +755,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
-            return View(model);
+            var isSuccess = await _loader.ProcessRemoveSpecialismAssessmentEntryAsync(model);
+
+            if (isSuccess)
+            {
+                await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
+                {
+                    DisplayMessageBody = true,
+                    Message = AdminReviewRemoveAssessmentEntry.Message_Notification_Success,
+                    IsRawHtml = true,
+                },
+                CacheExpiryTime.XSmall);
+
+                return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.PathwayAssessmentViewModel.RegistrationPathwayId });
+            }
+            else
+            {
+                return RedirectToAction(RouteConstants.ProblemWithService);
+            }
         }
 
         #endregion

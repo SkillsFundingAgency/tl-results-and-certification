@@ -128,6 +128,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request);
 
+        Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
+        
+        Task<bool> RemoveSpecialAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
+
         Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request);
 
         #endregion
