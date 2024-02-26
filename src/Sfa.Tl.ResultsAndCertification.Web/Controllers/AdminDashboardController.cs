@@ -496,8 +496,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(adminCoreComponent);
             }
           
-           // adminCoreComponent.AssessmentYearTo = model.AssessmentYearTo;
-            //adminCoreComponent.AssessmentSeriesId = model.AssessmentSeriesId;
             await _cacheService.SetAsync<AdminCoreComponentViewModel>(CacheKey, model);
             return RedirectToAction(nameof(RouteConstants.AdminReviewChangesCoreAssessmentEntry), new { registrationPathwayId = model.RegistrationPathwayId });
 

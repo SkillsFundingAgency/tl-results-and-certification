@@ -112,8 +112,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (pathway == null) return false;
             int status;
 
-           // var registrationSpecialism = pathway.TqRegistrationSpecialisms.Where(t => t.IsOptedin && t.EndDate is null && t.TlSpecialismId== request.SpecialismId).FirstOrDefault().Id;
-
             var specialismAssessment = new TqSpecialismAssessment
             {
                 CreatedBy = request.CreatedBy,
