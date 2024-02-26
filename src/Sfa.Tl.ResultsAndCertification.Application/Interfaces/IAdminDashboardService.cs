@@ -20,5 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 
         Task<bool> ProcessRemoveSpecialismAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
         
+
+        Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request);
     }
 }

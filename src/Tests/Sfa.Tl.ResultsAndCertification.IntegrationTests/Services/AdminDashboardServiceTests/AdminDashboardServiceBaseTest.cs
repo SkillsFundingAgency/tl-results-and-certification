@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
-using Microsoft.Extensions.Logging;
-using Notify.Interfaces;
+using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
-using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Services.System.Service;
+using Sfa.Tl.ResultsAndCertification.Data.Factory;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -21,95 +20,44 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
 {
     public abstract class AdminDashboardServiceBaseTest : BaseTest<TqRegistrationPathway>
     {
-        protected long AoUkprn = 10011881;
-        protected LearnerService LearnerService;
-        protected AssessmentService AssessmentService;
-        protected TlRoute Route;
-        protected TlPathway Pathway;
-        protected IList<TlSpecialism> Specialisms;
-        protected TlProvider TlProvider;
-        protected TlAwardingOrganisation TlAwardingOrganisation;
-        protected TqAwardingOrganisation TqAwardingOrganisation;
         protected TqProvider TqProvider;
-        protected ChangeLog ChangeLog;
-        protected IList<TlProvider> TlProviders;
-        protected IList<TqProvider> TqProviders;
-        protected IList<AssessmentSeries> AssessmentSeries;
-        protected IList<TlLookup> TlLookup;
-        public IList<AcademicYear> AcademicYears;
-
-        protected IRepository<TqRegistrationPathway> RegistrationPathwayRepository;
-        protected ILogger<GenericRepository<TqRegistrationPathway>> RegistrationPathwayRepositoryLogger;
-
-        protected IMapper Mapper;
-
-        protected ICommonService CommonService;
-        //protected CommonService CommonService;
-        protected ILogger<CommonService> CommonServiceLogger;
-      
-        protected IRepository<TlLookup> TlLookupRepository;
-        protected IRepository<FunctionLog> FunctionLogRepository;
-        protected ICommonRepository CommonRepository;
-        protected ResultsAndCertificationConfiguration Configuration;
-
-        protected IMapper CommonMapper;
-        protected IMapper AssessmentMapper;
-        protected ILogger<GenericRepository<TlLookup>> TlLookupRepositoryLogger;
-        protected ILogger<GenericRepository<FunctionLog>> FunctionLogRepositoryLogger;
-        protected ILogger<GenericRepository<ChangeLog>> ChangeLogRepositoryLogger;
-        protected IRepository<ChangeLog> ChangeLogRepository;
-        protected ILogger<ILearnerRepository> LearnerRepositoryLogger;
-        protected ILearnerRepository LearnerRepository;
-        
-        protected IAdminDashboardService AdminDashboardService;
-        protected IAdminDashboardRepository AdminDashboardRepository;
-
-        protected IAssessmentRepository AssessmentRepository;
-        protected ILogger<AssessmentRepository> AssessmentRepositoryLogger;
-        protected IRepository<TqPathwayAssessment> PathwayAssessmentRepository;
-        protected IRepository<IndustryPlacement> IndustryPlacementRepository;
-        protected IRepository<TqSpecialismAssessment> SpecialismAssessmentRepository;
-        protected IRepository<AssessmentSeries> AssessmentSeriesRepository;
-        protected ILogger<GenericRepository<AssessmentSeries>> AssessmentSeriesRepositoryLogger;
-        protected ILogger<GenericRepository<TqPathwayAssessment>> PathwayAssessmentRepositoryLogger;
-        protected ILogger<GenericRepository<TqSpecialismAssessment>> SpecialismAssessmentRepositoryLogger;
-
-
-        protected IAsyncNotificationClient NotificationsClient;
-        protected ILogger<NotificationService> NotificationLogger;
-        protected IRepository<NotificationTemplate> NotificationTemplateRepository;
-        protected ILogger<GenericRepository<NotificationTemplate>> NotificationTemplateRepositoryLogger;
-        protected ILogger<INotificationService> NotificationServiceLogger;
-        protected INotificationService NotificationService;
         protected ISystemProvider SystemProvider;
 
-        protected IList<IpLookup> IpLookup;
-       
+        private IList<TlSpecialism> _specialisms;
+        private IList<AcademicYear> _academicYears;
+        protected IList<AssessmentSeries> AssessmentSeries;
 
-        protected virtual void CreateMapper()
+        protected IAdminDashboardService AdminDashboardService;
+
+        protected void CreateAdminDasboardService()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(LearnerMapper).Assembly));
-            Mapper = new Mapper(mapperConfig);
+            var adminDashboardRepository = new AdminDashboardRepository(DbContext);
+            var repositoryFactory = new RepositoryFactory(new NullLoggerFactory(), DbContext);
+            SystemProvider = new SystemProvider();
+            var mapper = CreateMapper();
+
+            AdminDashboardService = new AdminDashboardService(adminDashboardRepository, repositoryFactory, SystemProvider, mapper);
         }
 
-        protected virtual void CreateCommonMapper()
+        private static Mapper CreateMapper()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CommonMapper).Assembly));
-            CommonMapper = new Mapper(mapperConfig);
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(LearnerMapper).Assembly));
+            return new Mapper(mapperConfig);
         }
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
         {
-            TlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, awardingOrganisation);
-            Route = TlevelDataProvider.CreateTlRoute(DbContext, awardingOrganisation);
-            Pathway = TlevelDataProvider.CreateTlPathway(DbContext, awardingOrganisation, Route);
-            Specialisms = TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, Pathway);
-            TqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, Pathway, TlAwardingOrganisation);
-            TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
-            TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
+            var tlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, awardingOrganisation);
+            var route = TlevelDataProvider.CreateTlRoute(DbContext, awardingOrganisation);
+            var _pathway = TlevelDataProvider.CreateTlPathway(DbContext, awardingOrganisation, route);
+            _specialisms = TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, _pathway);
+            var tqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, _pathway, tlAwardingOrganisation);
+            var tlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
+            TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, tqAwardingOrganisation, tlProvider);
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
-            TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
-            AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
+            TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
+            _academicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
+
             DbContext.SaveChangesAsync();
         }
 
@@ -130,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProvider);
             var tqRegistrationSpecialisms = isCouplet ? RegistrationsDataProvider.CreateTqRegistrationSpecialisms(DbContext, tqRegistrationPathway)
-                : new List<TqRegistrationSpecialism> { RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialisms.First()) };
+                : new List<TqRegistrationSpecialism> { RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, _specialisms.First()) };
 
             if (status == RegistrationPathwayStatus.Withdrawn)
             {
@@ -214,13 +162,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             ulns.ToList().ForEach(uln =>
             {
                 var registration = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln);
-                registration.TqRegistrationPathways.FirstOrDefault().AcademicYear = AcademicYears.FirstOrDefault(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate).Year + 1;
+                registration.TqRegistrationPathways.FirstOrDefault().AcademicYear = _academicYears.FirstOrDefault(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate).Year + 1;
             });
         }
 
         public void SeedSpecialConsiderationsLookupData()
         {
-            IpLookup = IpLookupDataProvider.CreateIpLookupList(DbContext, null, IpLookupType.SpecialConsideration, true);
+            IpLookupDataProvider.CreateIpLookupList(DbContext, null, IpLookupType.SpecialConsideration, true);
             DbContext.SaveChanges();
         }
 

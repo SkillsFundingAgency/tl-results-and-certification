@@ -67,6 +67,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
                 _ => false
             };
         }
+        [HttpPost]
+        [Route("ProcessAdminAddPathwayResult")]
+        public Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request)
+            => _adminDashboardService.ProcessAdminAddPathwayResultAsync(request);
     }
-
 }

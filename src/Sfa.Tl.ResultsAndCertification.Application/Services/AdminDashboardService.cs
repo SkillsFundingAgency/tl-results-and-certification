@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
+using Sfa.Tl.ResultsAndCertification.Data.Factory;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
@@ -19,31 +20,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     public class AdminDashboardService : IAdminDashboardService
     {
         private readonly IAdminDashboardRepository _adminDashboardRepository;
-        private readonly IRepository<TqRegistrationPathway> _tqRegistrationPathwayRepository;
-        private readonly IRepository<IndustryPlacement> _industryPlacementRepository;
-        private readonly IRepository<TqPathwayAssessment> _pathwayAssessmentRepository;
-        private readonly IRepository<TqSpecialismAssessment> _specialismAssessmentRepository;
+        private readonly IRepositoryFactory _repositoryFactory;
         private readonly ISystemProvider _systemProvider;
-        private readonly ICommonService _commonService;
         private readonly IMapper _mapper;
 
         public AdminDashboardService(
             IAdminDashboardRepository adminDashboardRepository,
-            IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
-            IRepository<IndustryPlacement> industryPlacementRepository,
-            IRepository<TqPathwayAssessment> pathwayAssessmentRepository,
-            IRepository<TqSpecialismAssessment> specialismAssessmentRepository,
-        ISystemProvider systemProvider,
-            ICommonService commonService,
+            IRepositoryFactory repositoryFactory,
+            ISystemProvider systemProvider,
             IMapper mapper)
         {
             _adminDashboardRepository = adminDashboardRepository;
-            _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
-            _industryPlacementRepository = industryPlacementRepository;
-            _pathwayAssessmentRepository = pathwayAssessmentRepository;
-            _specialismAssessmentRepository = specialismAssessmentRepository;
+            _repositoryFactory = repositoryFactory;
             _systemProvider = systemProvider;
-            _commonService = commonService;
             _mapper = mapper;
         }
 
@@ -69,20 +58,30 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)
         {
-            var pathway = await _tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.Id == request.RegistrationPathwayId);
+            var tqRegistrationPathwayRepository = _repositoryFactory.GetRepository<TqRegistrationPathway>();
+
+            var pathway = await tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.Id == request.RegistrationPathwayId);
             if (pathway == null) return false;
 
             pathway.AcademicYear = request.ChangeStartYearDetails.StartYearTo;
-            var status = await _tqRegistrationPathwayRepository.UpdateWithSpecifedColumnsOnlyAsync(pathway, u => u.AcademicYear, u => u.ModifiedBy, u => u.ModifiedOn);
+            bool updated = await tqRegistrationPathwayRepository.UpdateWithSpecifedColumnsOnlyAsync(pathway, u => u.AcademicYear, u => u.ModifiedBy, u => u.ModifiedOn) > 0;
 
-            if (status > 0)
-                return await _commonService.AddChangelog(CreateChangeLogRequest(request, JsonConvert.SerializeObject((request.ChangeStartYearDetails))));
+            if (updated)
+            {
+                var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
+                var changeLog = CreateChangeLog(request, request.ChangeStartYearDetails);
+
+                return await changeLongRepository.CreateAsync(changeLog) > 0;
+            }
+
             return false;
         }
 
         public async Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request)
         {
-            var industryPlacement = await _industryPlacementRepository.GetFirstOrDefaultAsync(p => p.TqRegistrationPathwayId == request.RegistrationPathwayId);
+            var industryPlacementRepository = _repositoryFactory.GetRepository<IndustryPlacement>();
+
+            var industryPlacement = await industryPlacementRepository.GetFirstOrDefaultAsync(p => p.TqRegistrationPathwayId == request.RegistrationPathwayId);
             int status;
 
             if (industryPlacement == null)
@@ -95,7 +94,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     Details = request.ChangeIPDetails.IndustryPlacementStatusTo == Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration ? JsonConvert.SerializeObject(ConstructIndustryPlacementDetails(request.ChangeIPDetails)) : null
                 };
 
-                status = await _industryPlacementRepository.CreateAsync(industryPlacement);
+                status = await industryPlacementRepository.CreateAsync(industryPlacement);
             }
             else
             {
@@ -104,18 +103,108 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 industryPlacement.Status = request.ChangeIPDetails.IndustryPlacementStatusTo;
                 industryPlacement.Details = request.ChangeIPDetails.IndustryPlacementStatusTo == Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration ? JsonConvert.SerializeObject(ConstructIndustryPlacementDetails(request.ChangeIPDetails)) : null;
 
-                status = await _industryPlacementRepository.UpdateWithSpecifedColumnsOnlyAsync(industryPlacement, u => u.Status, u => u.Details, u => u.ModifiedBy, u => u.ModifiedOn);
+                status = await industryPlacementRepository.UpdateWithSpecifedColumnsOnlyAsync(industryPlacement, u => u.Status, u => u.Details, u => u.ModifiedBy, u => u.ModifiedOn);
             }
 
             if (status > 0)
             {
-                return await _commonService.AddChangelog(CreateChangeLogRequest(request, JsonConvert.SerializeObject(request.ChangeIPDetails)));
+                var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
+                return await changeLongRepository.CreateAsync(CreateChangeLog(request, request.ChangeIPDetails)) > 0;
             }
 
             return false;
         }
 
-        private ChangeLog CreateChangeLogRequest(ReviewChangeRequest request, string details)
+        public async Task<bool> ProcessRemovePathwayAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest model)
+        {
+            var pathwayAssessmentRepository = _repositoryFactory.GetRepository<TqPathwayAssessment>();
+
+            var pathwayAssessment = await pathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin
+                                                                                              && pa.EndDate == null && (pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active ||
+                                                                                              pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn)
+                                                                                              && !pa.TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null));
+            if (pathwayAssessment == null) return false;
+
+            DateTime utcNow = _systemProvider.UtcNow;
+
+            pathwayAssessment.IsOptedin = false;
+            pathwayAssessment.EndDate = utcNow;
+            pathwayAssessment.ModifiedOn = utcNow;
+            pathwayAssessment.ModifiedBy = model.CreatedBy;
+
+            var isSuccess = await pathwayAssessmentRepository.UpdateAsync(pathwayAssessment) > 0;
+
+            if (isSuccess)
+            {
+                var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
+                return await changeLongRepository.CreateAsync(CreateChangeLog(model, model.ChangeAssessmentDetails)) > 0;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> ProcessRemoveSpecialismAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest model)
+        {
+            var specialismAssessmentRepository = _repositoryFactory.GetRepository<TqSpecialismAssessment>();
+
+            var specialismAssessment = await specialismAssessmentRepository.GetFirstOrDefaultAsync(sa => sa.Id == model.AssessmentId && sa.IsOptedin
+                                                                                    && sa.EndDate == null
+                                                                                    && (sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active ||
+                                                                                    sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn));
+            if (specialismAssessment == null) return false;
+
+            DateTime utcNow = _systemProvider.UtcNow;
+
+            specialismAssessment.IsOptedin = false;
+            specialismAssessment.EndDate = utcNow;
+            specialismAssessment.ModifiedOn = utcNow;
+            specialismAssessment.ModifiedBy = model.CreatedBy;
+
+            var isSuccess = await specialismAssessmentRepository.UpdateAsync(specialismAssessment) > 0;
+
+            if (isSuccess)
+            {
+                var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
+                return await changeLongRepository.CreateAsync(CreateChangeLog(model, model.ChangeSpecialismAssessmentDetails)) > 0;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request)
+        {
+            var pathwayAssessmentRepo = _repositoryFactory.GetRepository<TqPathwayAssessment>();
+
+            TqPathwayAssessment pathwayAssessment = await pathwayAssessmentRepo.GetSingleOrDefaultAsync(p => p.Id == request.PathwayAssessmentId);
+            if (pathwayAssessment == null)
+            {
+                return false;
+            }
+
+            var pathwayResultRepo = _repositoryFactory.GetRepository<TqPathwayResult>();
+            DateTime utcNow = _systemProvider.UtcNow;
+
+            bool created = await pathwayResultRepo.CreateAsync(new TqPathwayResult
+            {
+                TqPathwayAssessmentId = request.PathwayAssessmentId,
+                TlLookupId = request.SelectedGradeId,
+                IsOptedin = true,
+                StartDate = utcNow,
+                EndDate = pathwayAssessment.EndDate.HasValue ? utcNow : null,
+                IsBulkUpload = false,
+                CreatedBy = request.CreatedBy
+            }) > 0;
+
+            if (created)
+            {
+                var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
+                return await changeLongRepository.CreateAsync(CreateChangeLog(request, new { request.PathwayAssessmentId, request.SelectedGradeId })) > 0;
+            }
+
+            return false;
+        }
+
+        private ChangeLog CreateChangeLog(ReviewChangeRequest request, object details)
         {
             const string SystemUser = "System";
 
@@ -123,8 +212,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 ChangeType = (int)request.ChangeType,
                 ReasonForChange = request.ChangeReason,
-                DateOfRequest = Convert.ToDateTime(request.RequestDate),
-                Details = details,
+                DateOfRequest = request.RequestDate,
+                Details = JsonConvert.SerializeObject(details),
                 ZendeskTicketID = request.ZendeskId,
                 Name = request.ContactName,
                 TqRegistrationPathwayId = request.RegistrationPathwayId,
@@ -142,55 +231,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 HoursSpentOnPlacement = change.HoursSpentOnPlacementTo,
                 SpecialConsiderationReasons = !change.SpecialConsiderationReasonsTo.IsNullOrEmpty() ? change.SpecialConsiderationReasonsTo : new List<int?>()
             };
-        }
-
-        public async Task<bool> ProcessRemovePathwayAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest model)
-        {
-            var pathwayAssessment = await _pathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin
-                                                                                              && pa.EndDate == null && (pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active ||
-                                                                                              pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn)
-                                                                                              && !pa.TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null));
-            if (pathwayAssessment == null) return false;
-
-            pathwayAssessment.IsOptedin = false;
-            pathwayAssessment.EndDate = DateTime.UtcNow;
-            pathwayAssessment.ModifiedOn = DateTime.UtcNow;
-            pathwayAssessment.ModifiedBy = model.CreatedBy;
-
-            var isSuccess = await _pathwayAssessmentRepository.UpdateAsync(pathwayAssessment) > 0;
-
-            if (isSuccess)
-            {
-                return await _commonService.AddChangelog(CreateChangeLogRequest(model, JsonConvert.SerializeObject(model.ChangeAssessmentDetails)));
-            }
-
-            return false;
-        }
-
-        public async Task<bool> ProcessRemoveSpecialismAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest model)
-        {
-            if (model.AssessmentId == 0) return false;
-
-            var specialismAssessment = await _specialismAssessmentRepository.GetFirstOrDefaultAsync(sa => sa.Id == model.AssessmentId && sa.IsOptedin
-                                                                                    && sa.EndDate == null
-                                                                                    && (sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active ||
-                                                                                    sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn));
-            if (specialismAssessment == null) return false;
-
-
-            specialismAssessment.IsOptedin = false;
-            specialismAssessment.EndDate = DateTime.UtcNow;
-            specialismAssessment.ModifiedOn = DateTime.UtcNow;
-            specialismAssessment.ModifiedBy = model.CreatedBy;
-
-            var isSuccess = await _specialismAssessmentRepository.UpdateAsync(specialismAssessment) > 0;
-
-            if (isSuccess)
-            {
-                return await _commonService.AddChangelog(CreateChangeLogRequest(model, JsonConvert.SerializeObject(model.ChangeSpecialismAssessmentDetails)));
-            }
-
-            return false;
         }
     }
 }

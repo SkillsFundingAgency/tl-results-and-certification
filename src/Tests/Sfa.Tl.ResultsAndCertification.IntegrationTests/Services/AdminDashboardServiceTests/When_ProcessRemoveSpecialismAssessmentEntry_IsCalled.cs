@@ -1,14 +1,6 @@
 ﻿using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
-using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
-using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
-using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -42,9 +34,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
                 { 1111111114, RegistrationPathwayStatus.Active },
                 { 1111111115, RegistrationPathwayStatus.Active },
             };
-
-            // Create mapper
-            CreateMapper();
 
             // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
@@ -84,19 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
 
             SeedPathwayResultsData(tqPathwayResultsSeedData);
 
-            SystemProvider = Substitute.For<ISystemProvider>();
-            PathwayAssessmentRepositoryLogger = Substitute.For <ILogger<GenericRepository<TqPathwayAssessment>>>();
-            PathwayAssessmentRepository = Substitute.For<IRepository<TqPathwayAssessment>>();
-            IndustryPlacementRepository = Substitute.For<IRepository<IndustryPlacement>>();
-            AssessmentRepositoryLogger = Substitute.For<ILogger<AssessmentRepository>>();
-            AssessmentSeriesRepositoryLogger = Substitute.For<ILogger<GenericRepository<AssessmentSeries>>>();
-            ChangeLogRepository = new GenericRepository<ChangeLog>(ChangeLogRepositoryLogger, DbContext);
-            CommonService = new CommonService(CommonServiceLogger, CommonMapper, TlLookupRepository, FunctionLogRepository, CommonRepository, NotificationService, Configuration, ChangeLogRepository);
-            AssessmentRepository = new AssessmentRepository(AssessmentRepositoryLogger, DbContext);
-            AssessmentSeriesRepository = new GenericRepository<AssessmentSeries>(AssessmentSeriesRepositoryLogger, DbContext);
-            SpecialismAssessmentRepository = new GenericRepository<TqSpecialismAssessment>(SpecialismAssessmentRepositoryLogger, DbContext);
-            AssessmentService = new AssessmentService(AssessmentRepository, PathwayAssessmentRepository, SpecialismAssessmentRepository, AssessmentSeriesRepository, AssessmentMapper, AssessmentRepositoryLogger);
-            AdminDashboardService = new AdminDashboardService(AdminDashboardRepository, RegistrationPathwayRepository, IndustryPlacementRepository, PathwayAssessmentRepository, SpecialismAssessmentRepository, SystemProvider, CommonService, Mapper);
+            CreateAdminDasboardService();
         }
 
         public override Task When()
@@ -117,12 +94,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             {
                 AssessmentId = AssessmentId,
                 ComponentType = ComponentType.Specialism,
-                ChangeType = ChangeType.AssessmentEntryRemove,
                 RegistrationPathwayId = RegistrationPathwayId,
                 CreatedBy = "Admin User",
                 ChangeReason = "Change Reason",
                 ContactName = "Test User",
-                RequestDate = SystemProvider.Today.ToDobFormat(),
+                RequestDate = SystemProvider.Today,
                 ZendeskId = "123456789",
                 ChangeSpecialismAssessmentDetails = new()
                 {
@@ -156,7 +132,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             actualChangeLog.Name.Should().Be(ReviewRemoveAssessmentEntryRequest.ContactName);
             actualChangeLog.CreatedBy.Should().Be(ReviewRemoveAssessmentEntryRequest.CreatedBy);
             actualChangeLog.ReasonForChange.Should().Be(ReviewRemoveAssessmentEntryRequest.ChangeReason);
-            actualChangeLog.DateOfRequest.Should().Be(ReviewRemoveAssessmentEntryRequest.RequestDate.ToDateTime());
+            actualChangeLog.DateOfRequest.Should().Be(ReviewRemoveAssessmentEntryRequest.RequestDate);
             actualChangeLog.ZendeskTicketID.Should().Be(ReviewRemoveAssessmentEntryRequest.ZendeskId);
 
             actualChangeDetails.Should().NotBeNull();

@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
 
         public override void Given()
         {
-            _apiResult = CreateAdminLearnerRecord(RegistrationPathwayId, PathwayAssessmentId);
+            _apiResult = CreateAdminLearnerRecordWithPathwayAssessment(RegistrationPathwayId, PathwayAssessmentId);
             ApiClient.GetAdminLearnerRecordAsync(RegistrationPathwayId).Returns(_apiResult);
         }
 
@@ -79,11 +79,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
             _result.SummaryStartYear.Value.Should().Be(_result.StartYear);
 
             _result.ExamPeriod.Should().Be(pathwayAssessment.SeriesName);
-            _result.Grade.Should().Be(pathwayAssessment.Result.Grade);
+            _result.Grade.Should().BeNull();
             _result.LastUpdated.Should().Be(pathwayAssessment.LastUpdatedOn.ToDobFormat());
             _result.UpdatedBy.Should().Be(pathwayAssessment.LastUpdatedBy);
 
-            _result.CanAssessmentEntryBeRemoved.Should().BeFalse();
+            _result.CanAssessmentEntryBeRemoved.Should().BeTrue();
             _result.DoYouWantToRemoveThisAssessmentEntry.Should().NotHaveValue();
 
             BackLinkModel backLink = _result.BackLink;
