@@ -204,6 +204,39 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return false;
         }
 
+        public async Task<bool> ProcessAdminAddSpecialismResultAsync(AddSpecialismResultRequest request)
+        {
+            var specialismAssessmentRepo = _repositoryFactory.GetRepository<TqSpecialismAssessment>();
+
+            TqSpecialismAssessment specialismAssessment = await specialismAssessmentRepo.GetSingleOrDefaultAsync(p => p.Id == request.SpecialismAssessmentId);
+            if (specialismAssessment == null)
+            {
+                return false;
+            }
+
+            var specialismResultRepo = _repositoryFactory.GetRepository<TqSpecialismResult>();
+            DateTime utcNow = _systemProvider.UtcNow;
+
+            bool created = await specialismResultRepo.CreateAsync(new TqSpecialismResult
+            {
+                TqSpecialismAssessmentId = request.SpecialismAssessmentId,
+                TlLookupId = request.SelectedGradeId,
+                IsOptedin = true,
+                StartDate = utcNow,
+                EndDate = specialismAssessment.EndDate.HasValue ? utcNow : null,
+                IsBulkUpload = false,
+                CreatedBy = request.CreatedBy
+            }) > 0;
+
+            if (created)
+            {
+                var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
+                return await changeLongRepository.CreateAsync(CreateChangeLog(request, new { request.SpecialismAssessmentId, request.SelectedGradeId })) > 0;
+            }
+
+            return false;
+        }
+
         private ChangeLog CreateChangeLog(ReviewChangeRequest request, object details)
         {
             const string SystemUser = "System";

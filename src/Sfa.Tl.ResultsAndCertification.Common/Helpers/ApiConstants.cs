@@ -131,5 +131,6 @@
         public const string ReviewRemoveAssessmentEntryUri = "/api/admindashboard/ReviewRemoveAssessmentEntry";
 
         public const string ProcessAdminAddPathwayResult = "/api/admindashboard/ProcessAdminAddPathwayResult";
+        public const string ProcessAdminAddSpecialismResult = "/api/admindashboard/ProcessAdminAddSpecialismResult";
     }
 }

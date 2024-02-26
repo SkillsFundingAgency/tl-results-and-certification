@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -8,8 +9,13 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoaderTests
 {
@@ -28,7 +34,36 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
 
         private AutoMapper.Mapper CreateMapper()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(AdminDashboardMapper).Assembly));
+            string Givenname = "test";
+            string Surname = "user";
+            string Email = "test.user@test.com";
+
+            IHttpContextAccessor httpContextAccessor = Substitute.For<IHttpContextAccessor>();
+
+            httpContextAccessor.HttpContext.Returns(new DefaultHttpContext
+            {
+                User = new ClaimsPrincipal(new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.GivenName, Givenname),
+                    new Claim(ClaimTypes.Surname, Surname),
+                    new Claim(ClaimTypes.Email, Email)
+                }))
+            });
+
+            var mapperConfig = new MapperConfiguration(c =>
+                {
+                    c.AddMaps(typeof(AdminDashboardMapper).Assembly);
+                    c.ConstructServicesUsing(type =>
+                        type.Equals(typeof(UserNameResolver<ReviewChangeStartYearViewModel, ReviewChangeStartYearRequest>))
+                        ? new UserNameResolver<ReviewChangeStartYearViewModel, ReviewChangeStartYearRequest>(httpContextAccessor) : null);
+                    c.ConstructServicesUsing(type =>
+                        type.Equals(typeof(UserNameResolver<AdminReviewChangesIndustryPlacementViewModel, ReviewChangeIndustryPlacementRequest>))
+                        ? new UserNameResolver<AdminReviewChangesIndustryPlacementViewModel, ReviewChangeIndustryPlacementRequest>(httpContextAccessor) : null);
+                    c.ConstructServicesUsing(type =>
+                        type.Equals(typeof(UserNameResolver<AdminAddPathwayResultReviewChangesViewModel, AddPathwayResultRequest>)) 
+                        ? new UserNameResolver<AdminAddPathwayResultReviewChangesViewModel, AddPathwayResultRequest>(httpContextAccessor) : null);
+                });
+
             return new AutoMapper.Mapper(mapperConfig);
         }
 
@@ -103,7 +138,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
         }
 
         protected AdminLearnerRecord CreateAdminLearnerRecordWithSpecialismAssessment(int registrationPathwayId, int specialismAssessmentId)
-                    {
+        {
             var learnerRecord = CreateAdminLearnerRecord(registrationPathwayId);
 
             learnerRecord.Pathway.Specialisms = new[]
