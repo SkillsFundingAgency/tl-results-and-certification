@@ -466,6 +466,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/add-assessment-entry-core/{registrationPathwayId}", Name = RouteConstants.AdminCoreComponentAssessmentEntry)]
         public async Task<IActionResult> AdminCoreComponentAssessmentEntry(int registrationPathwayId)
         {
+
+            var cachedModel = await _cacheService.GetAsync<AdminCoreComponentViewModel>(CacheKey);
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
+
             var viewModel = await _loader.GetAdminLearnerRecordWithCoreComponents(registrationPathwayId);
 
             if (viewModel == null)
@@ -478,6 +486,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/add-assessment-entry-specialism/{registrationPathwayId}/{specialismsId}", Name = RouteConstants.AdminOccupationalSpecialisAssessmentEntry)]
         public async Task<IActionResult> AdminOccupationalSpecialismAssessmentEntry(int registrationPathwayId, int specialismsId)
         {
+            var cachedModel = await _cacheService.GetAsync<AdminOccupationalSpecialismViewModel>(CacheKey);
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
             var viewModel = await _loader.GetAdminLearnerRecordWithOccupationalSpecialism(registrationPathwayId, specialismsId);
 
             if (viewModel == null)
@@ -495,7 +509,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(adminCoreComponent);
             }
-          
+            model.ValidPathwayAssessmentSeries = adminCoreComponent.ValidPathwayAssessmentSeries;
             await _cacheService.SetAsync<AdminCoreComponentViewModel>(CacheKey, model);
             return RedirectToAction(nameof(RouteConstants.AdminReviewChangesCoreAssessmentEntry), new { registrationPathwayId = model.RegistrationPathwayId });
 
@@ -512,7 +526,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(adminOccupationalSpecialism);
             }
-
+            model.AssessmentDetails = adminOccupationalSpecialism.AssessmentDetails;
+            model.ValidPathwayAssessmentSeries = adminOccupationalSpecialism.ValidPathwayAssessmentSeries;
             await _cacheService.SetAsync<AdminOccupationalSpecialismViewModel>(CacheKey, model);
             return RedirectToAction(nameof(RouteConstants.AdminReviewChangesSpecialismAssessmentEntry), new { registrationPathwayId = model.RegistrationPathwayId });
 
@@ -603,6 +618,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             else { return RedirectToAction(RouteConstants.ProblemWithService); }
 
         }
+
+
+        [HttpGet]
+        [Route("admin/add-assessment-core-entry-clear/{registrationPathwayId}", Name = RouteConstants.AdminCoreComponentAssessmentEntryClear)]
+        public async Task<IActionResult> AdminCoreComponentAssessmentEntryClearAsync(int registrationPathwayId)
+        {
+            await _cacheService.RemoveAsync<AdminCoreComponentViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AdminCoreComponentAssessmentEntry, new { registrationPathwayId });
+        }
+
+        [HttpGet]
+        [Route("admin/add-assessment-specialism-entry-clear/{registrationPathwayId}/{specialismsId}", Name = RouteConstants.AdminOccupationalSpecialisAssessmentEntryClear)]
+        public async Task<IActionResult> AdminOccupationalSpecialisAssessmentEntryClearAsync(int registrationPathwayId, int specialismsId)
+        {
+            await _cacheService.RemoveAsync<AdminOccupationalSpecialismViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AdminOccupationalSpecialisAssessmentEntry, new { registrationPathwayId, specialismsId });
+        }
+
 
         #endregion
 

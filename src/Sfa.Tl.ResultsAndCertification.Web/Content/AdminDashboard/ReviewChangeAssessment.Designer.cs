@@ -187,6 +187,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No assessment entry recorded for.
+        /// </summary>
+        public static string No_Assessment_Recorded {
+            get {
+                return ResourceManager.GetString("No_Assessment_Recorded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Occupational Specialism.
         /// </summary>
         public static string Occupational_Specialism {

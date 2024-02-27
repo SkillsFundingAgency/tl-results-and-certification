@@ -159,6 +159,9 @@
   <data name="Message_You_Have_Characters_Remaining" xml:space="preserve">
     <value>You have 2,000 characters remaining</value>
   </data>
+  <data name="No_Assessment_Recorded" xml:space="preserve">
+    <value>No assessment entry recorded for</value>
+  </data>
   <data name="Occupational_Specialism" xml:space="preserve">
     <value>Occupational Specialism</value>
   </data>

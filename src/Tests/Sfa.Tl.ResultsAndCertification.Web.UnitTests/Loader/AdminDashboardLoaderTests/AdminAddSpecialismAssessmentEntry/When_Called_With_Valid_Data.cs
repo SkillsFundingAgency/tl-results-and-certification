@@ -2,6 +2,7 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System;
@@ -49,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
                     x.RequestDate == Convert.ToDateTime(ViewModel.RequestDate) &&
                     x.ZendeskId == ViewModel.ZendeskId &&
                     x.AddSpecialismDetails.SpecialismAssessmentTo == ViewModel.AdminOccupationalSpecialismViewModel.AssessmentYearTo &&
-                    x.AddSpecialismDetails.SpecialismAssessmentFrom == $"No assessment entry recorded for {ViewModel.AdminOccupationalSpecialismViewModel.AssessmentYearTo.ToLower()}" &&
+                    x.AddSpecialismDetails.SpecialismAssessmentFrom == $"{ReviewChangeAssessment.No_Assessment_Recorded} {ViewModel.AdminOccupationalSpecialismViewModel.AssessmentYearTo.ToLower()}" &&
                     x.AddSpecialismDetails.AssessmentSeriesId == ViewModel.AdminOccupationalSpecialismViewModel.AssessmentSeriesId))
                     
                 .Returns(true);
