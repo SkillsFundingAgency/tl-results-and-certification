@@ -131,7 +131,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (status > 0)
             {
-               // return await _commonService.AddChangelog(CreateChangeLogRequest(request, JsonConvert.SerializeObject(request.AddSpecialismDetails)));
                 var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
                 var changeLog = CreateChangeLog(request, request.AddSpecialismDetails);
 
