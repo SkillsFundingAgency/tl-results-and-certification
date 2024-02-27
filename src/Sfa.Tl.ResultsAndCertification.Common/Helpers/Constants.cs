@@ -161,7 +161,6 @@
         public const string CommaSeparator = ",";
         public const string NotReceived = "NR";
         public const string NotSpecified = "NotSpecified";
-        //public const string NoAssessmentRecorded = "No assessment entry recorded for";
 
         // Function Name Constants
         public const string FetchLearnerGender = "FetchLearnerGender";
