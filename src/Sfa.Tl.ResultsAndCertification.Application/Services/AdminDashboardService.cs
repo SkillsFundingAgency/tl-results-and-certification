@@ -77,6 +77,74 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return false;
         }
 
+
+        public async Task<bool> ProcessAddCoreAssessmentAsync(ReviewAddCoreAssessmentRequest request)
+        {
+            var tqRegistrationPathwayRepository = _repositoryFactory.GetRepository<TqRegistrationPathway>();
+            var pathway = await tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.Id == request.RegistrationPathwayId);
+            if (pathway == null) return false;
+            int status;
+
+            var pathwayAssessment = new TqPathwayAssessment
+            {
+                CreatedBy = request.CreatedBy,
+                TqRegistrationPathwayId = request.RegistrationPathwayId,
+                AssessmentSeriesId = request.AddCoreAssessmentDetails.AssessmentSeriesId,
+                IsOptedin = true,
+                StartDate = DateTime.Now
+            };
+
+            var tqPathwayAssesmentRepository = _repositoryFactory.GetRepository<TqPathwayAssessment>();
+            status = await tqPathwayAssesmentRepository.CreateAsync(pathwayAssessment);
+
+            if (status > 0)
+            {
+             
+                var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
+                var changeLog = CreateChangeLog(request, request.AddCoreAssessmentDetails);
+
+                return await changeLongRepository.CreateAsync(changeLog) > 0;
+            }
+
+            return false;
+
+        }
+
+        public async Task<bool> ProcessAddSpecialismAssessmentAsync(ReviewAddSpecialismAssessmentRequest request)
+        {
+            var tqRegistrationPathwayRepository = _repositoryFactory.GetRepository<TqRegistrationPathway>();
+            var pathway = await tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.Id == request.RegistrationPathwayId);
+            if (pathway == null) return false;
+            int status;
+
+            var specialismAssessment = new TqSpecialismAssessment
+            {
+                CreatedBy = request.CreatedBy,
+                TqRegistrationSpecialismId = request.SpecialismId,
+                AssessmentSeriesId = request.AddSpecialismDetails.AssessmentSeriesId,
+                IsOptedin = true,
+                StartDate = DateTime.Now
+            };
+
+            var tqPathwaySpecialismAssesmentRepository = _repositoryFactory.GetRepository<TqSpecialismAssessment>();
+            status = await tqPathwaySpecialismAssesmentRepository.CreateAsync(specialismAssessment);
+
+            if (status > 0)
+            {
+                var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
+                var changeLog = CreateChangeLog(request, request.AddSpecialismDetails);
+
+                return await changeLongRepository.CreateAsync(changeLog) > 0;
+            }
+
+            return false;
+
+        }
+
+
+
+
+
         public async Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request)
         {
             var industryPlacementRepository = _repositoryFactory.GetRepository<IndustryPlacement>();

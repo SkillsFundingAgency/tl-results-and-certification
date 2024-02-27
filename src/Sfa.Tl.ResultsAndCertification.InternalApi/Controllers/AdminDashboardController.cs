@@ -56,6 +56,20 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpPost]
+        [Route("ProcessAddCoreAssessmentRequest")]
+        public async Task<bool> ProcessAddCoreAssessmentRequestAsync(ReviewAddCoreAssessmentRequest request)
+        {
+            return await _adminDashboardService.ProcessAddCoreAssessmentAsync(request);
+        }
+
+        [HttpPost]
+        [Route("ProcessAddSpecialismAssessmentRequest")]
+        public async Task<bool> ProcessAddSpecialismAssessmentRequestAsync(ReviewAddSpecialismAssessmentRequest request)
+        {
+            return await _adminDashboardService.ProcessAddSpecialismAssessmentAsync(request);
+        }
+
+        [HttpPost]
         [Route("ReviewRemoveAssessmentEntry")]
         public async Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest model)
         {

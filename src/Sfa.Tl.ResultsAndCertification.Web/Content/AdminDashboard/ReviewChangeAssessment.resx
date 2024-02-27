@@ -150,11 +150,17 @@
   <data name="Message_Inset_Text" xml:space="preserve">
     <value>Any assessment entries or results assigned to this learner will remain active.</value>
   </data>
+  <data name="Message_Notification_Success" xml:space="preserve">
+    <value>&lt;b&gt; An assessment entry has been added&lt;/b&gt;</value>
+  </data>
   <data name="Message_You_Can_Enter_Up_To_Characters" xml:space="preserve">
     <value>You can enter up to 2,000 characters</value>
   </data>
   <data name="Message_You_Have_Characters_Remaining" xml:space="preserve">
     <value>You have 2,000 characters remaining</value>
+  </data>
+  <data name="No_Assessment_Recorded" xml:space="preserve">
+    <value>No assessment entry recorded for</value>
   </data>
   <data name="Occupational_Specialism" xml:space="preserve">
     <value>Occupational Specialism</value>

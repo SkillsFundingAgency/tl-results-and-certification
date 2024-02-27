@@ -33,7 +33,7 @@ else
         }
 
         <p class="govuk-body govuk-!-margin-bottom-9">
-            <a class="govuk-link" asp-route="@RouteConstants.AdminOccupationalSpecialisAssessmentEntry" asp-route-registrationPathwayId="@Model.RegistrationPathwayId" asp-route-specialismsId="@specialismId">@string.Format(LearnerRecord.Add_An_Assessment_Entry_For, specialism.DisplayName)</a>
+            <a class="govuk-link" asp-route="@RouteConstants.AdminOccupationalSpecialisAssessmentEntryClear" asp-route-registrationPathwayId="@Model.RegistrationPathwayId" asp-route-specialismsId="@specialismId">@string.Format(LearnerRecord.Add_An_Assessment_Entry_For, specialism.DisplayName)</a>
         </p>
     }
 }
