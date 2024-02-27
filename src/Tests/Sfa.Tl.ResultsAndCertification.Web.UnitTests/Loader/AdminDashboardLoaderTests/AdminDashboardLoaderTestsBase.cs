@@ -53,15 +53,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
             var mapperConfig = new MapperConfiguration(c =>
                 {
                     c.AddMaps(typeof(AdminDashboardMapper).Assembly);
+
                     c.ConstructServicesUsing(type =>
-                        type.Equals(typeof(UserNameResolver<ReviewChangeStartYearViewModel, ReviewChangeStartYearRequest>))
-                        ? new UserNameResolver<ReviewChangeStartYearViewModel, ReviewChangeStartYearRequest>(httpContextAccessor) : null);
-                    c.ConstructServicesUsing(type =>
-                        type.Equals(typeof(UserNameResolver<AdminReviewChangesIndustryPlacementViewModel, ReviewChangeIndustryPlacementRequest>))
-                        ? new UserNameResolver<AdminReviewChangesIndustryPlacementViewModel, ReviewChangeIndustryPlacementRequest>(httpContextAccessor) : null);
-                    c.ConstructServicesUsing(type =>
-                        type.Equals(typeof(UserNameResolver<AdminAddPathwayResultReviewChangesViewModel, AddPathwayResultRequest>)) 
-                        ? new UserNameResolver<AdminAddPathwayResultReviewChangesViewModel, AddPathwayResultRequest>(httpContextAccessor) : null);
+                       {
+                           if (type.Equals(typeof(UserNameResolver<ReviewChangeStartYearViewModel, ReviewChangeStartYearRequest>)))
+                           {
+                               return new UserNameResolver<ReviewChangeStartYearViewModel, ReviewChangeStartYearRequest>(httpContextAccessor);
+                           }
+                           else if (type.Equals(typeof(UserNameResolver<AdminReviewChangesIndustryPlacementViewModel, ReviewChangeIndustryPlacementRequest>)))
+                           {
+                               return new UserNameResolver<AdminReviewChangesIndustryPlacementViewModel, ReviewChangeIndustryPlacementRequest>(httpContextAccessor);
+                           }
+                           else if (type.Equals(typeof(UserNameResolver<AdminAddPathwayResultReviewChangesViewModel, AddPathwayResultRequest>)))
+                           {
+                               return new UserNameResolver<AdminAddPathwayResultReviewChangesViewModel, AddPathwayResultRequest>(httpContextAccessor);
+                           }
+                           else if (type.Equals(typeof(UserNameResolver<AdminAddSpecialismResultReviewChangesViewModel, AddSpecialismResultRequest>)))
+                           {
+                               return new UserNameResolver<AdminAddSpecialismResultReviewChangesViewModel, AddSpecialismResultRequest>(httpContextAccessor);
+                           }
+                           else
+                           {
+                               return null;
+                           }
+                       });
                 });
 
             return new AutoMapper.Mapper(mapperConfig);

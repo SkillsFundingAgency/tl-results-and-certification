@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
             Value = AdminAddSpecialismResultReviewChanges.No_Grade_Entered,
             Value2 = SelectedGradeValue,
             ActionText = AdminAddSpecialismResultReviewChanges.Link_Change_Text,
-            RouteName = RouteConstants.AdminAddPathwayResult,
+            RouteName = RouteConstants.AdminAddSpecialismResult,
             RouteAttributes = new Dictionary<string, string>()
             {
                 { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() },

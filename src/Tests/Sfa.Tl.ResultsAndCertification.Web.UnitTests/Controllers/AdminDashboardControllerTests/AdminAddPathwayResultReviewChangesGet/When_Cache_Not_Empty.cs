@@ -8,8 +8,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 {
     public class When_Cache_Not_Empty : TestSetup
     {
-        private AdminAddPathwayResultViewModel _model = ViewModel;
-        private AdminAddPathwayResultReviewChangesViewModel _reviewChangesModel = new();
+        private readonly AdminAddPathwayResultViewModel _model = ViewModel;
+        private readonly AdminAddPathwayResultReviewChangesViewModel _reviewChangesModel = new();
 
         public override void Given()
         {

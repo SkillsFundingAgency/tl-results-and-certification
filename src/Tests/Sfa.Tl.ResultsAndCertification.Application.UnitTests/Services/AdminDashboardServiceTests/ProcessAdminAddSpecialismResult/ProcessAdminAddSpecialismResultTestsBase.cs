@@ -1,5 +1,4 @@
-﻿using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDashboardServiceTests.ProcessAdminAddSpecialismResult
@@ -18,19 +17,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminDas
                 ChangeReason = "change-reason",
                 ZendeskId = "1234567890",
                 CreatedBy = "created-by"
-            };
-        }
-
-        protected static TqSpecialismAssessment CreateSpecialismAssessment(int registrationSpecialismId, int assessmentSeriesId, DateTime? endDate)
-        {
-            return new()
-            {
-                TqRegistrationSpecialismId = registrationSpecialismId,
-                AssessmentSeriesId = assessmentSeriesId,
-                StartDate = new DateTime(2021, 1, 1),
-                EndDate = endDate,
-                IsOptedin = true,
-                IsBulkUpload = false
             };
         }
     }

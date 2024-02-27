@@ -4,7 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoaderTests.CreateAdminAddPathwayResultReview
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoaderTests.ProcessAddSpecialismResultReviewChanges
 {
     public class When_Called_With_Invalid_Data : AdminDashboardLoaderTestsBase
     {
@@ -16,13 +16,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
 
         public async override Task When()
         {
-            _result = await Loader.ProcessAddPathwayResultReviewChangesAsync(null);
+            _result = await Loader.ProcessAddSpecialismResultReviewChangesAsync(null);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            ApiClient.DidNotReceive().ProcessAdminAddPathwayResultAsync(Arg.Any<AddPathwayResultRequest>());
+            ApiClient.DidNotReceive().ProcessAdminAddSpecialismResultAsync(Arg.Any<AddSpecialismResultRequest>());
         }
 
         [Fact]

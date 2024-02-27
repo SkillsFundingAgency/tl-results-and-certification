@@ -2,7 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminAddSpecialismResultGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminAddSpecialismResultReviewChangesGet
 {
     public abstract class TestSetup : AdminDashboardControllerTestBase
     {
@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
         public async override Task When()
         {
-            Result = await Controller.AdminAddSpecialismResultAsync(RegistrationPathwayId, AssessmentId);
+            Result = await Controller.AdminAddSpecialismResultReviewChangesAsync();
         }
 
         protected static AdminAddSpecialismResultViewModel ViewModel
@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             {
                 RegistrationPathwayId = RegistrationPathwayId,
                 SpecialismAssessmentId = AssessmentId,
-                SpecialismName = "Plastering (ZTLOS025)",
+                SpecialismName = "Assisting with Healthcare Science (ZTLOS018)",
                 Learner = "John Smith",
                 Uln = 1080808080,
                 Provider = "Barnsley College (10000536)",
@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 StartYear = "2023 to 2024",
                 ExamPeriod = "Summer 2024",
                 Grade = string.Empty,
-                SelectedGradeId = 10
+                SelectedGradeId = 1
             };
     }
 }

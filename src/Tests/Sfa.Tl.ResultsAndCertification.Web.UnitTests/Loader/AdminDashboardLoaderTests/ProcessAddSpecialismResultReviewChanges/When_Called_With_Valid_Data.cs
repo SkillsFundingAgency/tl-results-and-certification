@@ -5,14 +5,14 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoaderTests.CreateAdminAddPathwayResultReview
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoaderTests.ProcessAddSpecialismResultReviewChanges
 {
     public class When_Called_With_Valid_Data : AdminDashboardLoaderTestsBase
     {
-        private readonly AdminAddPathwayResultReviewChangesViewModel _model = new()
+        private readonly AdminAddSpecialismResultReviewChangesViewModel _model = new()
         {
             RegistrationPathwayId = 1,
-            PathwayAssessmentId = 1,
+            SpecialismAssessmentId = 1,
             SelectedGradeId = 1,
             ContactName = "test-contact-name",
             Day = "01",
@@ -26,18 +26,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
 
         public override void Given()
         {
-            ApiClient.ProcessAdminAddPathwayResultAsync(Arg.Any<AddPathwayResultRequest>()).Returns(true);
+            ApiClient.ProcessAdminAddSpecialismResultAsync(Arg.Any<AddSpecialismResultRequest>()).Returns(true);
         }
 
         public async override Task When()
         {
-            _result = await Loader.ProcessAddPathwayResultReviewChangesAsync(_model);
+            _result = await Loader.ProcessAddSpecialismResultReviewChangesAsync(_model);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            ApiClient.Received(1).ProcessAdminAddPathwayResultAsync(Arg.Any<AddPathwayResultRequest>());
+            ApiClient.Received(1).ProcessAdminAddSpecialismResultAsync(Arg.Any<AddSpecialismResultRequest>());
         }
 
         [Fact]

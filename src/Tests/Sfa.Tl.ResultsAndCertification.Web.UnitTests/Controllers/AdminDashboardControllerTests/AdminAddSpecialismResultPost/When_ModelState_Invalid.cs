@@ -7,41 +7,41 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminAddPathwayResultPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminAddSpecialismResultPost
 {
     public class When_ModelState_Invalid : TestSetup
     {
-        private AdminAddPathwayResultViewModel _viewModel;
-        private const string ErrorKey = "AdminAddPathwayResult";
+        private AdminAddSpecialismResultViewModel _viewModel;
+        private const string ErrorKey = "AdminAddSpecialismResult";
 
         public override void Given()
         {
             _viewModel = CreateViewModel();
-            Controller.ModelState.AddModelError(ErrorKey, AdminAddPathwayResult.Validation_Message);
+            Controller.ModelState.AddModelError(ErrorKey, AdminAddSpecialismResult.Validation_Message);
         }
 
         public async override Task When()
         {
-            Result = await Controller.AdminAddPathwayResultAsync(_viewModel);
+            Result = await Controller.AdminAddSpecialismResultAsync(_viewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AdminDashboardLoader.Received(1).LoadAdminAddPathwayResultGrades(_viewModel);
+            AdminDashboardLoader.Received(1).LoadAdminAddSpecialismResultGrades(_viewModel);
             CacheService.DidNotReceive().SetAsync(CacheKey, _viewModel);
         }
 
         [Fact]
         public void Then_Returns_Expected()
         {
-            var model = Result.ShouldBeViewResult<AdminAddPathwayResultViewModel>();
+            var model = Result.ShouldBeViewResult<AdminAddSpecialismResultViewModel>();
             model.Should().BeEquivalentTo(_viewModel);
 
             ModelStateDictionary modelState = Controller.ViewData.ModelState;
             modelState.Should().HaveCount(1);
             modelState.Should().ContainKey(ErrorKey);
-            modelState[ErrorKey].Errors[0].ErrorMessage.Should().Be(AdminAddPathwayResult.Validation_Message);
+            modelState[ErrorKey].Errors[0].ErrorMessage.Should().Be(AdminAddSpecialismResult.Validation_Message);
         }
     }
 }
