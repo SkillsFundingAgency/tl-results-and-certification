@@ -138,6 +138,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request);
 
+        Task<bool> ProcessAdminAddSpecialismResultAsync(AddSpecialismResultRequest request);
+
         #endregion
     }
 }

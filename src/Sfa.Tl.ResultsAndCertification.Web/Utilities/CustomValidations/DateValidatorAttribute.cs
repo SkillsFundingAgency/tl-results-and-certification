@@ -65,6 +65,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations
                 return false;
             }
 
+            bool validNumbers = IsBetween(parsedYear, 1000, 9999) && IsBetween(parsedMonth, 1, 12) && IsBetween(parsedDay, 1, 31);
+            if (!validNumbers)
+            {
+                return false;
+            }
+
             try
             {
                 parsed = new DateTime(parsedYear, parsedMonth, parsedDay);
@@ -79,6 +85,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations
 
         private static bool IsNumericText(string value, out int parsed)
             => int.TryParse(value, out parsed);
+
+        private static bool IsBetween(int number, int from, int to)
+            => number >= from && number <= to;
 
         private ValidationResult CreateValidationResult(string resourceName)
         {

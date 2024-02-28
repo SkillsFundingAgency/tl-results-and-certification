@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
             _result.ExamPeriod.Should().Be(specialismAssessment.SeriesName);
             _result.Grade.Should().BeNull();
 
-            _result.SelectedGradeCode.Should().BeNull();
+            _result.SelectedGradeId.Should().BeNull();
             _result.Grades.Should().BeEquivalentTo(_grades);
 
             BackLinkModel backLink = _result.BackLink;

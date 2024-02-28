@@ -488,6 +488,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         public Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request)
             => PostAsync<AddPathwayResultRequest, bool>(ApiConstants.ProcessAdminAddPathwayResult, request);
 
+        public Task<bool> ProcessAdminAddSpecialismResultAsync(AddSpecialismResultRequest request)
+            => PostAsync<AddSpecialismResultRequest, bool>(ApiConstants.ProcessAdminAddSpecialismResult, request);
+
         #endregion
 
         #region Private Methods
