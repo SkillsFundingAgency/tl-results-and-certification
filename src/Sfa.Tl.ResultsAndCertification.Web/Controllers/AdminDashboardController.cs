@@ -466,6 +466,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/add-assessment-entry-core/{registrationPathwayId}", Name = RouteConstants.AdminCoreComponentAssessmentEntry)]
         public async Task<IActionResult> AdminCoreComponentAssessmentEntry(int registrationPathwayId)
         {
+
+            var cachedModel = await _cacheService.GetAsync<AdminCoreComponentViewModel>(CacheKey);
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
+
             var viewModel = await _loader.GetAdminLearnerRecordWithCoreComponents(registrationPathwayId);
 
             if (viewModel == null)
@@ -478,6 +486,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/add-assessment-entry-specialism/{registrationPathwayId}/{specialismsId}", Name = RouteConstants.AdminOccupationalSpecialisAssessmentEntry)]
         public async Task<IActionResult> AdminOccupationalSpecialismAssessmentEntry(int registrationPathwayId, int specialismsId)
         {
+            var cachedModel = await _cacheService.GetAsync<AdminOccupationalSpecialismViewModel>(CacheKey);
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
             var viewModel = await _loader.GetAdminLearnerRecordWithOccupationalSpecialism(registrationPathwayId, specialismsId);
 
             if (viewModel == null)
@@ -495,9 +509,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(adminCoreComponent);
             }
-
-            adminCoreComponent.AssessmentYearTo = model.AssessmentYearTo;
-            await _cacheService.SetAsync<AdminCoreComponentViewModel>(CacheKey, adminCoreComponent);
+            model.ValidPathwayAssessmentSeries = adminCoreComponent.ValidPathwayAssessmentSeries;
+            await _cacheService.SetAsync<AdminCoreComponentViewModel>(CacheKey, model);
             return RedirectToAction(nameof(RouteConstants.AdminReviewChangesCoreAssessmentEntry), new { registrationPathwayId = model.RegistrationPathwayId });
 
         }
@@ -513,12 +526,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(adminOccupationalSpecialism);
             }
-
-            adminOccupationalSpecialism.SpecialismAssessmentName = model.SpecialismAssessmentName;
-            adminOccupationalSpecialism.AssessmentYearTo = model.AssessmentYearTo;
-
-
-            await _cacheService.SetAsync<AdminOccupationalSpecialismViewModel>(CacheKey, adminOccupationalSpecialism);
+            model.AssessmentDetails = adminOccupationalSpecialism.AssessmentDetails;
+            model.ValidPathwayAssessmentSeries = adminOccupationalSpecialism.ValidPathwayAssessmentSeries;
+            await _cacheService.SetAsync<AdminOccupationalSpecialismViewModel>(CacheKey, model);
             return RedirectToAction(nameof(RouteConstants.AdminReviewChangesSpecialismAssessmentEntry), new { registrationPathwayId = model.RegistrationPathwayId });
 
         }
@@ -548,9 +558,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(model);
             }
+            var isSuccess = await _loader.ProcessAddCoreAssessmentRequestAsync(model);
 
-            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { registrationPathwayId = model.RegistrationPathwayId });
+            if (isSuccess)
+            {
+                await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
+                {
+                    DisplayMessageBody = true,
+                    Message = ReviewChangeAssessment.Message_Notification_Success,
+                    IsRawHtml = true,
+                },
+                CacheExpiryTime.XSmall);
 
+                return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.AdminCoreComponentViewModel.RegistrationPathwayId });
+            }
+            else { return RedirectToAction(RouteConstants.ProblemWithService); }
         }
 
         [HttpGet]
@@ -579,9 +601,41 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
-            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { registrationPathwayId = model.RegistrationPathwayId });
+            var isSuccess = await _loader.ProcessAddSpecialismAssessmentRequestAsync(model);
+
+            if (isSuccess)
+            {
+                await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
+                {
+                    DisplayMessageBody = true,
+                    Message = ReviewChangeAssessment.Message_Notification_Success,
+                    IsRawHtml = true,
+                },
+                CacheExpiryTime.XSmall);
+
+                return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.AdminOccupationalSpecialismViewModel.RegistrationPathwayId });
+            }
+            else { return RedirectToAction(RouteConstants.ProblemWithService); }
 
         }
+
+
+        [HttpGet]
+        [Route("admin/add-assessment-core-entry-clear/{registrationPathwayId}", Name = RouteConstants.AdminCoreComponentAssessmentEntryClear)]
+        public async Task<IActionResult> AdminCoreComponentAssessmentEntryClearAsync(int registrationPathwayId)
+        {
+            await _cacheService.RemoveAsync<AdminCoreComponentViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AdminCoreComponentAssessmentEntry, new { registrationPathwayId });
+        }
+
+        [HttpGet]
+        [Route("admin/add-assessment-specialism-entry-clear/{registrationPathwayId}/{specialismsId}", Name = RouteConstants.AdminOccupationalSpecialisAssessmentEntryClear)]
+        public async Task<IActionResult> AdminOccupationalSpecialisAssessmentEntryClearAsync(int registrationPathwayId, int specialismsId)
+        {
+            await _cacheService.RemoveAsync<AdminOccupationalSpecialismViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AdminOccupationalSpecialisAssessmentEntry, new { registrationPathwayId, specialismsId });
+        }
+
 
         #endregion
 

@@ -154,6 +154,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             });
         }
 
+        public async Task<bool> ProcessAddCoreAssessmentRequestAsync(AdminReviewChangesCoreAssessmentViewModel adminReviewChangesCoreAssessmentViewModel)
+        {
+            var reviewAddCoreAssessmentRequest = _mapper.Map<ReviewAddCoreAssessmentRequest>(adminReviewChangesCoreAssessmentViewModel);
+            return await _internalApiClient.ProcessAddCoreAssessmentRequestAsync(reviewAddCoreAssessmentRequest);
+        }
+
+        public async Task<bool> ProcessAddSpecialismAssessmentRequestAsync(AdminReviewChangesSpecialismAssessmentViewModel adminReviewChangesSpeciaismAssessmentViewModel)
+        {
+            var reviewAddSpecialismAssessmentRequest = _mapper.Map<ReviewAddSpecialismAssessmentRequest>(adminReviewChangesSpeciaismAssessmentViewModel);
+            return await _internalApiClient.ProcessAddSpecialismAssessmentRequestAsync(reviewAddSpecialismAssessmentRequest);
+        }
+
         public async Task<bool> ProcessRemoveAssessmentEntry(AdminReviewRemoveCoreAssessmentEntryViewModel model)
         {
             var reviewRemoveAssessmentEntryRequest = _mapper.Map<ReviewRemoveAssessmentEntryRequest>(model);

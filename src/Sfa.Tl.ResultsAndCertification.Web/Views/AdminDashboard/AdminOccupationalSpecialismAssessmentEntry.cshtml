@@ -26,6 +26,12 @@
         <form asp-route="@RouteConstants.SubmitOccupationalSpecialisAssessmentEntry" method="post">
             <input type="hidden" asp-for="RegistrationPathwayId" />
             <input type="hidden" asp-for="SpecialismAssessmentId" />
+            <input type="hidden" asp-for="LearnerName" />
+            <input type="hidden" asp-for="Uln" />
+            <input type="hidden" asp-for="Provider" />
+            <input type="hidden" asp-for="TlevelName" />
+            <input type="hidden" asp-for="DisplayStartYear" />
+            <input type="hidden" asp-for="StartYear" />
             <div class="record-header">
                 <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
                     @AdminLearnerAssessmentEntry.Heading_Add_Assessment_Entry
@@ -113,6 +119,7 @@
                                     <label class="govuk-label govuk-radios__label" for="assessments_@assessment.SeriesId">
                                         @assessment.SeriesName
                                     </label>
+                                    <input type="radio" class="govuk-radios__input" type="hidden" asp-for="AssessmentSeriesId" value="@assessment.SeriesId" />
                                 </div>
                             }
                         </fieldset>

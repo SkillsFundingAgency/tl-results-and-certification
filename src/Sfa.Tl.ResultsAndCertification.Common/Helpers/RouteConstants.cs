@@ -452,6 +452,10 @@
         public const string AdminAddSpecialismResultReviewChanges = "AdminAddSpecialismResultReviewChanges";
         public const string SubmitAdminAddSpecialismResultReviewChanges = "SubmitAdminAddSpecialismResultReviewChanges";
 
+        public const string AdminCoreComponentAssessmentEntryClear = "AdminCoreComponentAssessmentEntryClear";
+        public const string AdminOccupationalSpecialisAssessmentEntryClear = "AdminOccupationalSpecialisAssessmentEntryClear";
+        
+
         #endregion
     }
 }
