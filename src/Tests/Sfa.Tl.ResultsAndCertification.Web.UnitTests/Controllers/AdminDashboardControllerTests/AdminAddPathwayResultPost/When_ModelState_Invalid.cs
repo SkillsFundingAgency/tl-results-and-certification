@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using System.Threading.Tasks;
 using Xunit;

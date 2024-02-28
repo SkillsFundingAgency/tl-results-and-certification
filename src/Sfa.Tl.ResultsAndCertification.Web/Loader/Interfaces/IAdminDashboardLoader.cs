@@ -44,6 +44,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 
         AdminAddPathwayResultReviewChangesViewModel CreateAdminAddPathwayResultReviewChanges(AdminAddPathwayResultViewModel model);
 
-        Task<bool> ProcessChangeIndustryPlacementAsync(AdminAddPathwayResultReviewChangesViewModel model);
+        Task<bool> ProcessAddPathwayResultReviewChangesAsync(AdminAddPathwayResultReviewChangesViewModel model);
+
+        AdminAddSpecialismResultReviewChangesViewModel CreateAdminAddSpecialismResultReviewChanges(AdminAddSpecialismResultViewModel model);
+
+        Task<bool> ProcessAddSpecialismResultReviewChangesAsync(AdminAddSpecialismResultReviewChangesViewModel model);
     }
 }

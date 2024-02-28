@@ -449,6 +449,9 @@
         public const string AdminAddSpecialismResultClear = "AdminAddSpecialismResultClear";
         public const string AdminAddSpecialismResult = "AdminAddSpecialismResult";
         public const string SubmitAdminAddSpecialismResult = "SubmitAdminAddSpecialismResult";
+        public const string AdminAddSpecialismResultReviewChanges = "AdminAddSpecialismResultReviewChanges";
+        public const string SubmitAdminAddSpecialismResultReviewChanges = "SubmitAdminAddSpecialismResultReviewChanges";
+
         public const string AdminCoreComponentAssessmentEntryClear = "AdminCoreComponentAssessmentEntryClear";
         public const string AdminOccupationalSpecialisAssessmentEntryClear = "AdminOccupationalSpecialisAssessmentEntryClear";
         

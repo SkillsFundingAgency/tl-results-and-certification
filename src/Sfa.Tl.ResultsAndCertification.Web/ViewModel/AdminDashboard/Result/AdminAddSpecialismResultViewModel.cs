@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
 {
@@ -71,7 +72,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
         #endregion
 
         [Required(ErrorMessageResourceType = typeof(AdminAddSpecialismResult), ErrorMessageResourceName = "Validation_Message")]
-        public string SelectedGradeCode { get; set; }
+        public int? SelectedGradeId { get; set; }
+
+        public string SelectedGradeValue
+            => Grades?.FirstOrDefault(g => g.Id == SelectedGradeId)?.Value;
 
         public List<LookupViewModel> Grades { get; set; }
 

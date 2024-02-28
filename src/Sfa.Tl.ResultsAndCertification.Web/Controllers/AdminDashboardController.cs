@@ -831,7 +831,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         #endregion
 
-        #region Add result
+        #region Add pathway result
 
         [HttpGet]
         [Route("admin/add-assessment-result-core-clear/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.AdminAddPathwayResultClear)]
@@ -900,7 +900,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
-            bool success = await _loader.ProcessChangeIndustryPlacementAsync(model);
+            bool success = await _loader.ProcessAddPathwayResultReviewChangesAsync(model);
             if (!success)
             {
                 return RedirectToAction(RouteConstants.ProblemWithService);
@@ -911,6 +911,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
         }
+
+        #endregion
+
+        #region Add specialism result
 
         [HttpGet]
         [Route("admin/add-assessment-result-specialism-clear/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.AdminAddSpecialismResultClear)]
@@ -952,7 +956,43 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             await _cacheService.SetAsync(CacheKey, model);
-            return RedirectToRoute(RouteConstants.PageNotFound); // TODO: Redirect to review page
+            return RedirectToRoute(RouteConstants.AdminAddSpecialismResultReviewChanges);
+        }
+
+        [HttpGet]
+        [Route("admin/review-changes-assessment-result-specialism", Name = RouteConstants.AdminAddSpecialismResultReviewChanges)]
+        public async Task<IActionResult> AdminAddSpecialismResultReviewChangesAsync()
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminAddSpecialismResultViewModel>(CacheKey);
+
+            if (cachedModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            AdminAddSpecialismResultReviewChangesViewModel viewModel = _loader.CreateAdminAddSpecialismResultReviewChanges(cachedModel);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/review-changes-assessment-result-specialism", Name = RouteConstants.SubmitAdminAddSpecialismResultReviewChanges)]
+        public async Task<IActionResult> AdminAddSpecialismResultReviewChangesAsync(AdminAddSpecialismResultReviewChangesViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            bool success = await _loader.ProcessAddSpecialismResultReviewChangesAsync(model);
+            if (!success)
+            {
+                return RedirectToAction(RouteConstants.ProblemWithService);
+            }
+
+            var notificationBanner = new AdminNotificationBannerModel(AdminAddSpecialismResultReviewChanges.Notification_Message_Asessment_Result_Added);
+            await _cacheService.SetAsync<NotificationBannerModel>(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
         }
 
         #endregion

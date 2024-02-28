@@ -224,10 +224,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public AdminAddPathwayResultReviewChangesViewModel CreateAdminAddPathwayResultReviewChanges(AdminAddPathwayResultViewModel model)
             => _mapper.Map<AdminAddPathwayResultReviewChangesViewModel>(model);
 
-        public Task<bool> ProcessChangeIndustryPlacementAsync(AdminAddPathwayResultReviewChangesViewModel model)
+        public Task<bool> ProcessAddPathwayResultReviewChangesAsync(AdminAddPathwayResultReviewChangesViewModel model)
         {
+            if (model == null)
+            {
+                return Task.FromResult(false);
+            }
+
             var request = _mapper.Map<AddPathwayResultRequest>(model);
             return _internalApiClient.ProcessAdminAddPathwayResultAsync(request);
+        }
+
+        public AdminAddSpecialismResultReviewChangesViewModel CreateAdminAddSpecialismResultReviewChanges(AdminAddSpecialismResultViewModel model)
+            => _mapper.Map<AdminAddSpecialismResultReviewChangesViewModel>(model);
+
+        public Task<bool> ProcessAddSpecialismResultReviewChangesAsync(AdminAddSpecialismResultReviewChangesViewModel model)
+        {
+            if (model == null)
+            {
+                return Task.FromResult(false);
+            }
+
+            var request = _mapper.Map<AddSpecialismResultRequest>(model);
+            return _internalApiClient.ProcessAdminAddSpecialismResultAsync(request);
         }
 
         #endregion
