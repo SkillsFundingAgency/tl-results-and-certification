@@ -31,6 +31,7 @@
             <input type="hidden" asp-for="TlevelName" />
             <input type="hidden" asp-for="DisplayStartYear" />
              <input type="hidden" asp-for="StartYear" />
+              <input type="hidden" asp-for="PathwayDisplayName" />
              @for (int i = 0; i < @Model.ValidPathwayAssessmentSeries.ToList().Count(); i++)
             {
                <input type="hidden" asp-for="ValidPathwayAssessmentSeries.ToList()[i].Id" />
