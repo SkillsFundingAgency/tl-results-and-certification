@@ -184,7 +184,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var pathwayResultRepo = _repositoryFactory.GetRepository<TqPathwayResult>();
             DateTime utcNow = _systemProvider.UtcNow;
 
-            bool created = await pathwayResultRepo.CreateAsync(new TqPathwayResult
+            var pathwayResult = new TqPathwayResult
             {
                 TqPathwayAssessmentId = request.PathwayAssessmentId,
                 TlLookupId = request.SelectedGradeId,
@@ -193,12 +193,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 EndDate = pathwayAssessment.EndDate.HasValue ? utcNow : null,
                 IsBulkUpload = false,
                 CreatedBy = request.CreatedBy
-            }) > 0;
+            };
 
+            bool created = await pathwayResultRepo.CreateAsync(pathwayResult) > 0;
+            
             if (created)
             {
                 var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
-                return await changeLongRepository.CreateAsync(CreateChangeLog(request, new { request.PathwayAssessmentId, request.SelectedGradeId })) > 0;
+                return await changeLongRepository.CreateAsync(CreateChangeLog(request, new { PathwayResultId = pathwayResult.Id })) > 0;
             }
 
             return false;
@@ -217,7 +219,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var specialismResultRepo = _repositoryFactory.GetRepository<TqSpecialismResult>();
             DateTime utcNow = _systemProvider.UtcNow;
 
-            bool created = await specialismResultRepo.CreateAsync(new TqSpecialismResult
+            var specialismResult = new TqSpecialismResult
             {
                 TqSpecialismAssessmentId = request.SpecialismAssessmentId,
                 TlLookupId = request.SelectedGradeId,
@@ -226,12 +228,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 EndDate = specialismAssessment.EndDate.HasValue ? utcNow : null,
                 IsBulkUpload = false,
                 CreatedBy = request.CreatedBy
-            }) > 0;
+            };
+
+            bool created = await specialismResultRepo.CreateAsync(specialismResult) > 0;
 
             if (created)
             {
                 var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
-                return await changeLongRepository.CreateAsync(CreateChangeLog(request, new { request.SpecialismAssessmentId, request.SelectedGradeId })) > 0;
+                return await changeLongRepository.CreateAsync(CreateChangeLog(request, new { SpecialismResultId = specialismResult.Id })) > 0;
             }
 
             return false;

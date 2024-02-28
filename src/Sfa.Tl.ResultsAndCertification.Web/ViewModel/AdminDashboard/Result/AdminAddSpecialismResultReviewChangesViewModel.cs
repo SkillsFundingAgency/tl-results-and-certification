@@ -99,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
 
         public BackLinkModel BackLink => new()
         {
-            RouteName = RouteConstants.AdminAddPathwayResult,
+            RouteName = RouteConstants.AdminAddSpecialismResult,
             RouteAttributes = new Dictionary<string, string>()
             {
                 { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() },

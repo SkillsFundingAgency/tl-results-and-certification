@@ -30,6 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Utilities.CustomValidatio
         [InlineData("0", "2", "1", false)]
         [InlineData("2023", "2", "29", false)]
         [InlineData("2024", "2", "30", false)]
+        [InlineData("999", "2", "30", false)]
 
         // Future
         [InlineData("2024", "3", "2", false)]
