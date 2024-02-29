@@ -83,13 +83,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var tqRegistrationPathwayRepository = _repositoryFactory.GetRepository<TqRegistrationPathway>();
             var pathway = await tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.Id == request.RegistrationPathwayId);
             if (pathway == null) return false;
+            var tqAssessmentSeriesRepository = _repositoryFactory.GetRepository<AssessmentSeries>();
+            var assessmentSeries = await tqAssessmentSeriesRepository.GetFirstOrDefaultAsync(a => a.Name == request.AddCoreAssessmentDetails.CoreAssessmentTo && a.ComponentType == ComponentType.Core);
+
             int status;
             DateTime utcNow = _systemProvider.UtcNow;
             var pathwayAssessment = new TqPathwayAssessment
             {
                 CreatedBy = request.CreatedBy,
                 TqRegistrationPathwayId = request.RegistrationPathwayId,
-                AssessmentSeriesId = request.AddCoreAssessmentDetails.AssessmentSeriesId,
+                AssessmentSeriesId = assessmentSeries.Id,
                 IsOptedin = true,
                 EndDate = pathway.Status == RegistrationPathwayStatus.Withdrawn ? utcNow : null,
                 StartDate = utcNow
@@ -116,6 +119,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var tqRegistrationPathwayRepository = _repositoryFactory.GetRepository<TqRegistrationPathway>();
             var pathway = await tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.Id == request.RegistrationPathwayId);
             if (pathway == null) return false;
+            var tqAssessmentSeriesRepository = _repositoryFactory.GetRepository<AssessmentSeries>();
+            var assessmentSeries = await tqAssessmentSeriesRepository.GetFirstOrDefaultAsync(a => a.Name == request.AddSpecialismDetails.SpecialismAssessmentTo && a.ComponentType == ComponentType.Specialism);
+
             int status;
             DateTime utcNow = _systemProvider.UtcNow;
 
@@ -123,7 +129,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 CreatedBy = request.CreatedBy,
                 TqRegistrationSpecialismId = request.SpecialismId,
-                AssessmentSeriesId = request.AddSpecialismDetails.AssessmentSeriesId,
+                AssessmentSeriesId = assessmentSeries.Id,
                 IsOptedin = true,
                 EndDate = pathway.Status == RegistrationPathwayStatus.Withdrawn ? utcNow : null,
                 StartDate = utcNow
