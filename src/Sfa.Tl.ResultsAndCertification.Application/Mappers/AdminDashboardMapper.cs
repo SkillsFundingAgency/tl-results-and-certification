@@ -20,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.TqRegistrationProfile.DateofBirth))
                 .ForMember(d => d.MathsStatus, opts => opts.MapFrom(s => s.TqRegistrationProfile.MathsStatus))
                 .ForMember(d => d.EnglishStatus, opts => opts.MapFrom(s => s.TqRegistrationProfile.EnglishStatus))
+                .ForMember(d => d.IsPendingWithdrawl, opts => opts.MapFrom(s => s.IsPendingWithdrawal))
                 .ForMember(d => d.Pathway, opts => opts.MapFrom(s => s))
                 .ForMember(d => d.AwardingOrganisation, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton))
                 .ForMember(d => d.OverallCalculationStatus, opts => opts.MapFrom(s => GetOverallCalculationStatus(s.OverallResults)));

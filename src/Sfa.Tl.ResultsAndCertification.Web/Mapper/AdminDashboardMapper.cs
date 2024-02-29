@@ -49,7 +49,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.IsLearnerRegistered, opts => opts.MapFrom(s => s.IsRegistered))
                 .ForMember(d => d.IndustryPlacementId, opts => opts.MapFrom(s => GetIndustryPlacementId(s)))
                 .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => GetIndustryPlacementStatus(s)))
-                .ForMember(d => d.AssessmentDetails, opts => opts.MapFrom(s => s.Pathway));
+                .ForMember(d => d.AssessmentDetails, opts => opts.MapFrom(s => s.Pathway))
+                .ForMember(d => d.IsPendingWithdrawal, opts => opts.MapFrom(s => s.IsPendingWithdrawl));
 
             CreateMap<Pathway, AdminAssessmentDetailsViewModel>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items[Constants.RegistrationPathwayId]))
