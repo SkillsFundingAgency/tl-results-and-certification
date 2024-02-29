@@ -23,6 +23,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
 
         public bool HasReachedAssessmentsThreashold => AssessmentDetails?.PathwayAssessments?.Count() == Constants.AdminAssessmentEntryLimit && !ValidPathwayAssessmentSeries.Any();
 
-        public int AssessmentSeriesId { get; set; } 
     }
 }

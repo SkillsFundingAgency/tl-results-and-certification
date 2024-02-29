@@ -278,9 +278,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AddCoreAssessmentDetails, opts => opts.MapFrom(s => s));
 
             CreateMap<AdminReviewChangesCoreAssessmentViewModel, AddCoreAssessmentDetails>()
-               .ForMember(d => d.CoreAssessmentFrom, opts => opts.MapFrom(s =>  $"{ReviewChangeAssessment.No_Assessment_Recorded} {s.AdminCoreComponentViewModel.AssessmentYearTo.ToLower()}"))
-               .ForMember(d => d.CoreAssessmentTo, opts => opts.MapFrom(s => s.AdminCoreComponentViewModel.AssessmentYearTo))
-               .ForMember(d => d.AssessmentSeriesId, opts => opts.MapFrom(s => s.AdminCoreComponentViewModel.AssessmentSeriesId));
+               .ForMember(d => d.CoreAssessmentFrom, opts => opts.MapFrom(s => $"{ReviewChangeAssessment.No_Assessment_Recorded} {s.AdminCoreComponentViewModel.AssessmentYearTo.ToLower()}"))
+               .ForMember(d => d.CoreAssessmentTo, opts => opts.MapFrom(s => s.AdminCoreComponentViewModel.AssessmentYearTo));
+               
 
             CreateMap<AdminReviewChangesSpecialismAssessmentViewModel, ReviewChangeRequest>()
                   .ForMember(d => d.ContactName, opts => opts.MapFrom(s => s.ContactName))
@@ -296,8 +296,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<AdminReviewChangesSpecialismAssessmentViewModel, AddSpecialismDetails>()
               .ForMember(d => d.SpecialismAssessmentFrom, opts => opts.MapFrom(s => $"{ReviewChangeAssessment.No_Assessment_Recorded} {s.AdminOccupationalSpecialismViewModel.AssessmentYearTo.ToLower()}"))
-              .ForMember(d => d.SpecialismAssessmentTo, opts => opts.MapFrom(s => s.AdminOccupationalSpecialismViewModel.AssessmentYearTo))
-              .ForMember(d => d.AssessmentSeriesId, opts => opts.MapFrom(s => s.AdminOccupationalSpecialismViewModel.AssessmentSeriesId));
+              .ForMember(d => d.SpecialismAssessmentTo, opts => opts.MapFrom(s => s.AdminOccupationalSpecialismViewModel.AssessmentYearTo));
+              
 
             CreateMap<AdminReviewRemoveCoreAssessmentEntryViewModel, ReviewRemoveAssessmentEntryRequest>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.PathwayAssessmentViewModel.RegistrationPathwayId))

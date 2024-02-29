@@ -28,7 +28,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
                     DisplayStartYear = "2022 to 2023",
                     RegistrationPathwayId = 1,
                     AssessmentYearTo = "Autumn 2023",
-                    AssessmentSeriesId=6
                     
                 },
 
@@ -50,8 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
                     x.RequestDate == Convert.ToDateTime(ViewModel.RequestDate) &&
                     x.ZendeskId == ViewModel.ZendeskId &&
                     x.AddSpecialismDetails.SpecialismAssessmentTo == ViewModel.AdminOccupationalSpecialismViewModel.AssessmentYearTo &&
-                    x.AddSpecialismDetails.SpecialismAssessmentFrom == $"{ReviewChangeAssessment.No_Assessment_Recorded} {ViewModel.AdminOccupationalSpecialismViewModel.AssessmentYearTo.ToLower()}" &&
-                    x.AddSpecialismDetails.AssessmentSeriesId == ViewModel.AdminOccupationalSpecialismViewModel.AssessmentSeriesId))
+                    x.AddSpecialismDetails.SpecialismAssessmentFrom == $"{ReviewChangeAssessment.No_Assessment_Recorded} {ViewModel.AdminOccupationalSpecialismViewModel.AssessmentYearTo.ToLower()}"))
                     
                 .Returns(true);
         }
