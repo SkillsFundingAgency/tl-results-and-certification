@@ -19,6 +19,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
         public bool IsRegistered
             => Pathway != null && Pathway.Status == RegistrationPathwayStatus.Active || Pathway.Status == RegistrationPathwayStatus.Withdrawn;
 
+        public bool IsPendingWithdrawl { get; set; }
+
         public SubjectStatus? MathsStatus { get; set; }
 
         public SubjectStatus? EnglishStatus { get; set; }
