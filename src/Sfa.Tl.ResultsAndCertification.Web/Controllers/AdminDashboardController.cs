@@ -996,5 +996,97 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         #endregion
+
+        #region change result
+        [HttpGet]
+        [Route("admin/change-assessment-result-core/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.AdminChangePathwayResult)]
+        public async Task<IActionResult> AdminChangePathwayResultAsync(int registrationPathwayId, int assessmentId)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminChangePathwayResultViewModel>(CacheKey);
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
+            AdminChangePathwayResultViewModel viewModel = await _loader.GetAdminChangePathwayResultAsync(registrationPathwayId, assessmentId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No core result details found. Method: AddResultCoreAsync({registrationPathwayId}, {assessmentId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/change-assessment-result-core", Name = RouteConstants.SubmitAdminChangePathwayResult)]
+        public async Task<IActionResult> AdminChangePathwayResultAsync(AdminChangePathwayResultViewModel model)
+        {
+            await _loader.LoadAdminChangePathwayResultGrades(model);
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await _cacheService.SetAsync(CacheKey, model);
+            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });// need to change this
+        }
+
+        [HttpGet]
+        [Route("admin/change-assessment-result-core-clear/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.AdminChangePathwayResultClear)]
+        public async Task<IActionResult> AdminChangePathwayResultClearAsync(int registrationPathwayId, int assessmentId)
+        {
+            await _cacheService.RemoveAsync<AdminChangePathwayResultViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AdminChangePathwayResult, new { registrationPathwayId, assessmentId });
+        }
+
+
+        [HttpGet]
+        [Route("admin/change-assessment-result-specialism/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.AdminChangeSpecialismResult)]
+        public async Task<IActionResult> AdminChangeSpecialismResultAsync(int registrationPathwayId, int assessmentId)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminChangeSpecialismResultViewModel>(CacheKey);
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
+            AdminChangeSpecialismResultViewModel viewModel = await _loader.GetAdminChangeSpecialismResultAsync(registrationPathwayId, assessmentId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No core result details found. Method: AddResultCoreAsync({registrationPathwayId}, {assessmentId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+
+        [HttpPost]
+        [Route("admin/change-assessment-result-specialism", Name = RouteConstants.SubmitAdminChangeSpecialismResult)]
+        public async Task<IActionResult> AdminChangeSpecialismResultAsync(AdminChangeSpecialismResultViewModel model)
+        {
+            await _loader.LoadAdminChangeSpecialismResultGrades(model);
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await _cacheService.SetAsync(CacheKey, model);
+            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });// need to change this
+        }
+
+        [HttpGet]
+        [Route("admin/change-assessment-result-specialism-clear/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.AdminChangeSpecialismResultClear)]
+        public async Task<IActionResult> AdminChangeSpecialismResultClearAsync(int registrationPathwayId, int assessmentId)
+        {
+            await _cacheService.RemoveAsync<AdminChangeSpecialismResultViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AdminChangeSpecialismResult, new { registrationPathwayId, assessmentId });
+        }
+
+
+        #endregion
     }
 }

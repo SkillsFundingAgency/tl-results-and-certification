@@ -454,7 +454,15 @@
 
         public const string AdminCoreComponentAssessmentEntryClear = "AdminCoreComponentAssessmentEntryClear";
         public const string AdminOccupationalSpecialisAssessmentEntryClear = "AdminOccupationalSpecialisAssessmentEntryClear";
-        
+
+        public const string AdminChangePathwayResult = "AdminChangePathwayResult";
+        public const string AdminChangePathwayResultClear = "AdminChangePathwayResultClear";
+        public const string SubmitAdminChangePathwayResult = "SubmitAdminChangePathwayResult";
+        public const string AdminChangeSpecialismResult = "AdminChangeSpecialismResult";
+        public const string AdminChangeSpecialismResultClear = "AdminChangeSpecialismResultClear";
+        public const string SubmitAdminChangeSpecialismResult = "SubmitAdminChangeSpecialismResult";
+        public const string AdminChangeSpecialismResultReviewChanges = "AdminChangeSpecialismResultReviewChanges";
+        public const string AdminChangePathwayResultReviewChanges = "AdminAddPathwayResultReviewChanges";
 
         #endregion
     }

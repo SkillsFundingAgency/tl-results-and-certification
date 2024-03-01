@@ -34,8 +34,8 @@
 
                         if (assessment.IsResultChangeAllowed)
                         {
-                            <br />
-                            <a class="govuk-link" asp-route="Model.ResultRouteName">
+                           
+                            <a class="govuk-link" asp-route="@assessment.ChangeResultRoute" asp-route-registrationpathwayid="@assessment.RegistrationPathwayId" asp-route-assessmentid="@assessment.AssessmentId">
                                 @LearnerRecord.Change_Result_Action_Link_Text
                             </a>
                         }

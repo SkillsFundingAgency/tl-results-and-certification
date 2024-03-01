@@ -15,6 +15,8 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacem
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -194,7 +196,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task LoadAdminAddSpecialismResultGrades(AdminAddSpecialismResultViewModel model)
             => model.Grades = await GetAdminAddResultGrades(LookupCategory.SpecialismComponentGrade);
 
-        private async Task<TAddResultViewModel> GetAdminAddResultAsync<TAddResultViewModel>(int registrationPathwayId, int assessmentId, LookupCategory lookupCategory)
+        private async Task<TAddResultViewModel> GetAdminAddResultAsync<TAddResultViewModel>(int registrationPathwayId, int assessmentId, LookupCategory lookupCategory, bool ischange = false)
             where TAddResultViewModel : class
         {
             Task<AdminLearnerRecord> learnerRecordTask = _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
@@ -204,6 +206,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             AdminLearnerRecord learnerRecord = learnerRecordTask.Result;
             IList<LookupData> grades = gradesTask.Result;
+            if (ischange)
+            {
+                grades.Insert(grades.Count, new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageSpecialismResult.Option_Remove_Result });
+            }
 
             if (learnerRecord == null || grades == null)
                 return null;
@@ -248,6 +254,42 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var request = _mapper.Map<AddSpecialismResultRequest>(model);
             return _internalApiClient.ProcessAdminAddSpecialismResultAsync(request);
         }
+
+        #endregion
+
+        #region change Result
+        public async Task<AdminChangePathwayResultViewModel> GetAdminChangePathwayResultAsync(int registrationPathwayId, int assessmentId)
+        {
+            var viewmodel = await GetAdminAddResultAsync<AdminChangePathwayResultViewModel>(registrationPathwayId, assessmentId, LookupCategory.PathwayComponentGrade, true);
+            viewmodel.Grades.Remove(viewmodel.Grades.Where(t => t.Value == viewmodel.Grade).FirstOrDefault());
+            return viewmodel;
+
+        }
+
+        public async Task LoadAdminChangePathwayResultGrades(AdminChangePathwayResultViewModel model)
+          => model.Grades = await GetAdminChangeResultGrades(LookupCategory.PathwayComponentGrade, model.Grade);
+
+
+        private async Task<List<LookupViewModel>> GetAdminChangeResultGrades(LookupCategory lookupCategory, string grade)
+        {
+            IList<LookupData> grades = await _internalApiClient.GetLookupDataAsync(lookupCategory);
+            grades.Remove(grades.Where(t => t.Value == grade).FirstOrDefault());
+            grades.Insert(grades.Count, new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageSpecialismResult.Option_Remove_Result });
+            return _mapper.Map<List<LookupViewModel>>(grades);
+        }
+
+        public async Task<AdminChangeSpecialismResultViewModel> GetAdminChangeSpecialismResultAsync(int registrationPathwayId, int assessmentId)
+        {
+            var viewmodel = await GetAdminAddResultAsync<AdminChangeSpecialismResultViewModel>(registrationPathwayId, assessmentId, LookupCategory.SpecialismComponentGrade, true);
+            viewmodel.Grades.Remove(viewmodel.Grades.Where(t => t.Value == viewmodel.Grade).FirstOrDefault());
+            return viewmodel;
+
+        }
+
+        public async Task LoadAdminChangeSpecialismResultGrades(AdminChangeSpecialismResultViewModel model)
+         => model.Grades = await GetAdminChangeResultGrades(LookupCategory.SpecialismComponentGrade, model.Grade);
+
+
 
         #endregion
     }
