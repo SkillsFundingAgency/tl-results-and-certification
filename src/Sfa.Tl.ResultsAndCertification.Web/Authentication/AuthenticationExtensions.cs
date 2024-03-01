@@ -140,8 +140,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         // and validated the identity token
                         OnTokenValidated = context =>
                         {
-                            var factory = context.GetService<ITokenValidatedStrategy>();
-                            return factory.GetOnTokenValidatedTask(context);
+                            var resolver = context.GetService<TokenValidatedStrategyResolver>();
+                            ITokenValidatedStrategy strategy = resolver(config.FreezePeriodStartDate, config.FreezePeriodEndDate);
+
+                            return strategy.GetOnTokenValidatedTask(context);
                         }
                     };
                 });

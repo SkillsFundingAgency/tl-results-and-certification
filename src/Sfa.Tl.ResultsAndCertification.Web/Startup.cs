@@ -18,6 +18,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Configuration;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Service;
+using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies;
@@ -92,7 +93,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 });
                 config.Filters.Add<SessionActivityFilterAttribute>();
                 config.Filters.Add<CustomExceptionFilterAttribute>();
-                config.Filters.Add<FreezePeriodFilterAttribute>();
             });
 
             if (_env.IsDevelopment())
@@ -106,8 +106,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 services.AddSingleton<ICacheService, RedisCacheService>();
             }
 
-            services.AddSingleton<ITokenValidatedStrategy, TokenValidatedStrategy>();
-            
+            services.AddSingleton<TokenValidatedStrategy>();
+            services.AddSingleton<FreezePeriodTokenValidatedStrategy>();
+
+            services.AddSingleton<TokenValidatedStrategyResolver>(serviceProvider => (from, to) =>
+            {
+                var freezePeriod = new DateTimeRange
+                {
+                    From = from,
+                    To = to
+                };
+
+                var systemProvider = serviceProvider.GetService<ISystemProvider>();
+                bool isFreezePeriodNow = freezePeriod.Contains(systemProvider.UtcNow);
+
+                return isFreezePeriodNow
+                    ? serviceProvider.GetService<FreezePeriodTokenValidatedStrategy>()
+                    : serviceProvider.GetService<TokenValidatedStrategy>();
+            });
+
             services.AddWebAuthentication(ResultsAndCertificationConfiguration, _env);
             services.AddAuthorization(options =>
             {
