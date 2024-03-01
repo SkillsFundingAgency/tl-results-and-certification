@@ -93,6 +93,24 @@
         "overallResultCalculationTrigger": {
             "type": "string"
         },
+        "industryPlacementExtractTrigger": {
+            "type": "string"
+        },
+        "analystOverallResultExtractTrigger": {
+            "type": "string"
+        },
+        "analystCoreResultExtractTrigger": {
+            "type": "string"
+        },
+        "coreRommExtractTrigger": {
+            "type": "string"
+        },
+        "specialismRommExtractTrigger": {
+            "type": "string"
+        },
+        "providerAddressExtractTrigger": {
+            "type": "string"
+        },
         "enableReplica": {
             "type": "bool",
             "defaultValue": false,
@@ -515,6 +533,30 @@
                             {
                                 "name": "OverallResultCalculationTrigger",
                                 "value": "[parameters('overallResultCalculationTrigger')]"
+                            },
+                            {
+                                "name": "IndustryPlacementExtractTrigger",
+                                "value": "[parameters('industryPlacementExtractTrigger')]"
+                            },
+                            {
+                                "name": "AnalystOverallResultExtractTrigger",
+                                "value": "[parameters('analystOverallResultExtractTrigger')]"
+                            },
+                            {
+                                "name": "AnalystCoreResultExtractTrigger",
+                                "value": "[parameters('analystCoreResultExtractTrigger')]"
+                            },
+                            {
+                                "name": "CoreRommExtractTrigger",
+                                "value": "[parameters('coreRommExtractTrigger')]"
+                            },
+                            {
+                                "name": "SpecialismRommExtractTrigger",
+                                "value": "[parameters('specialismRommExtractTrigger')]"
+                            },
+                            {
+                                "name": "ProviderAddressExtractTrigger",
+                                "value": "[parameters('ProviderAddressExtractTrigger')]"
                             },
                             {
                                 "name": "WEBSITE_LOAD_CERTIFICATES",
