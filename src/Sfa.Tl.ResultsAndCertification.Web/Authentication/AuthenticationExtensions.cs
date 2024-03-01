@@ -5,19 +5,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Linq;
-using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication.Local;
+using Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
@@ -145,66 +138,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         // that event is called after the OIDC middleware received the authorisation code,
                         // redeemed it for an access token and a refresh token,
                         // and validated the identity token
-                        OnTokenValidated = async ctx =>
+                        OnTokenValidated = context =>
                         {
-                            var claims = new List<Claim>();
-                            var organisation = JObject.Parse(ctx.Principal.FindFirst("Organisation").Value);
-
-                            if (organisation.HasValues)
-                            {
-                                var organisationId = organisation.SelectToken("id").ToString();
-                                var userId = ctx.Principal.FindFirst("sub").Value;
-
-                                var dfeSignInApiClient = ctx.HttpContext.RequestServices.GetService<IDfeSignInApiClient>();
-                                var userInfo = await dfeSignInApiClient.GetDfeSignInUserInfo(organisationId, userId);
-                              
-                                if (userInfo.HasAccessToService)
-                                {
-                                    var internalApiClient = ctx.HttpContext.RequestServices.GetService<IResultsAndCertificationInternalApiClient>();
-
-                                    var loggedInUserTypeResponse = !userInfo.Ukprn.HasValue ? new LoggedInUserTypeInfo { UserType = LoginUserType.Admin } : userInfo.Ukprn.Value == 1
-                                                                    ? new LoggedInUserTypeInfo { Ukprn = userInfo.Ukprn.Value, UserType = LoginUserType.AwardingOrganisation }
-                                                                    : await internalApiClient.GetLoggedInUserTypeInfoAsync(userInfo.Ukprn.Value);
-
-                                    if (loggedInUserTypeResponse != null && loggedInUserTypeResponse.UserType != LoginUserType.NotSpecified)
-                                    {
-                                        claims.AddRange(new List<Claim>
-                                        {
-                                            new Claim(CustomClaimTypes.UserId, userId),
-                                            new Claim(CustomClaimTypes.OrganisationId, organisationId),
-                                            new Claim(CustomClaimTypes.Ukprn, userInfo.Ukprn.HasValue ? userInfo.Ukprn.Value.ToString() : string.Empty),
-                                            new Claim(ClaimTypes.GivenName, ctx.Principal.FindFirst("given_name").Value),
-                                            new Claim(ClaimTypes.Surname, ctx.Principal.FindFirst("family_name").Value),
-                                            new Claim(ClaimTypes.Email, ctx.Principal.FindFirst("email").Value),
-                                            new Claim(CustomClaimTypes.HasAccessToService, userInfo.HasAccessToService.ToString()),
-                                            new Claim(CustomClaimTypes.LoginUserType, ((int)loggedInUserTypeResponse.UserType).ToString())
-                                        });
-
-                                        if (userInfo.Roles != null && userInfo.Roles.Any())
-                                        {
-                                            claims.AddRange(userInfo.Roles.Select(role => new Claim(ClaimTypes.Role, role.Name)));
-                                        }
-                                    }
-
-                                }
-                                else
-                                { claims.Add(new Claim(CustomClaimTypes.HasAccessToService, "true")); }
-                            }
-                            else
-                            {
-                                claims.Add(new Claim(CustomClaimTypes.HasAccessToService, "false"));
-                            }
-
-                            ctx.Principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "DfE-SignIn"));
-
-                            // so that we don't issue a session cookie but one with a fixed expiration
-                            ctx.Properties.IsPersistent = true;
-                            ctx.Properties.ExpiresUtc = DateTime.UtcNow.Add(overallSessionTimeout);
+                            var factory = context.GetService<ITokenValidatedStrategy>();
+                            return factory.GetOnTokenValidatedTask(context);
                         }
                     };
                 });
                 return services;
             }
         }
+
+        private static TService GetService<TService>(this TokenValidatedContext context) where TService : class
+             => context?.HttpContext?.RequestServices?.GetService<TService>();
     }
 }

@@ -20,6 +20,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Service;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication;
+using Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies;
 using Sfa.Tl.ResultsAndCertification.Web.Filters;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
@@ -101,10 +102,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             }
             else
             {
-                services.AddSingleton<IConnectionMultiplexer>(x => ConnectionMultiplexer.Connect(_env.IsDevelopment() ? "localhost" : ResultsAndCertificationConfiguration.RedisSettings.CacheConnection));
+                services.AddSingleton<IConnectionMultiplexer>(x => ConnectionMultiplexer.Connect(ResultsAndCertificationConfiguration.RedisSettings.CacheConnection));
                 services.AddSingleton<ICacheService, RedisCacheService>();
             }
 
+            services.AddSingleton<ITokenValidatedStrategy, TokenValidatedStrategy>();
+            
             services.AddWebAuthentication(ResultsAndCertificationConfiguration, _env);
             services.AddAuthorization(options =>
             {
