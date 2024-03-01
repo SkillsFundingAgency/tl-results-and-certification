@@ -31,6 +31,7 @@
             <input type="hidden" asp-for="TlevelName" />
             <input type="hidden" asp-for="DisplayStartYear" />
              <input type="hidden" asp-for="StartYear" />
+              <input type="hidden" asp-for="PathwayDisplayName" />
              @for (int i = 0; i < @Model.ValidPathwayAssessmentSeries.ToList().Count(); i++)
             {
                <input type="hidden" asp-for="ValidPathwayAssessmentSeries.ToList()[i].Id" />
@@ -120,8 +121,7 @@
                                     <input class="govuk-radios__input" id="assessments_@assessment.SeriesId" asp-for="AssessmentYearTo" type="radio" value="@assessment.SeriesName">
                                     <label class="govuk-label govuk-radios__label"  for="assessment_@assessment.SeriesId">
                                         @assessment.SeriesName
-                                    </label>
-                                    <input type="radio" class="govuk-radios__input" type="hidden" asp-for="AssessmentSeriesId" value="@assessment.SeriesId" />
+                                    </label>                                  
                                 </div>
                             }
                         </fieldset>

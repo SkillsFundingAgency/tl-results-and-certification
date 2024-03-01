@@ -83,15 +83,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var tqRegistrationPathwayRepository = _repositoryFactory.GetRepository<TqRegistrationPathway>();
             var pathway = await tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.Id == request.RegistrationPathwayId);
             if (pathway == null) return false;
-            int status;
+            var tqAssessmentSeriesRepository = _repositoryFactory.GetRepository<AssessmentSeries>();
+            var assessmentSeries = await tqAssessmentSeriesRepository.GetFirstOrDefaultAsync(a => a.Name == request.AddCoreAssessmentDetails.CoreAssessmentTo && a.ComponentType == ComponentType.Core);
 
+            int status;
+            DateTime utcNow = _systemProvider.UtcNow;
             var pathwayAssessment = new TqPathwayAssessment
             {
                 CreatedBy = request.CreatedBy,
                 TqRegistrationPathwayId = request.RegistrationPathwayId,
-                AssessmentSeriesId = request.AddCoreAssessmentDetails.AssessmentSeriesId,
+                AssessmentSeriesId = assessmentSeries.Id,
                 IsOptedin = true,
-                StartDate = DateTime.Now
+                EndDate = pathway.Status == RegistrationPathwayStatus.Withdrawn ? utcNow : null,
+                StartDate = utcNow
             };
 
             var tqPathwayAssesmentRepository = _repositoryFactory.GetRepository<TqPathwayAssessment>();
@@ -115,15 +119,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var tqRegistrationPathwayRepository = _repositoryFactory.GetRepository<TqRegistrationPathway>();
             var pathway = await tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.Id == request.RegistrationPathwayId);
             if (pathway == null) return false;
+            var tqAssessmentSeriesRepository = _repositoryFactory.GetRepository<AssessmentSeries>();
+            var assessmentSeries = await tqAssessmentSeriesRepository.GetFirstOrDefaultAsync(a => a.Name == request.AddSpecialismDetails.SpecialismAssessmentTo && a.ComponentType == ComponentType.Specialism);
+
             int status;
+            DateTime utcNow = _systemProvider.UtcNow;
 
             var specialismAssessment = new TqSpecialismAssessment
             {
                 CreatedBy = request.CreatedBy,
                 TqRegistrationSpecialismId = request.SpecialismId,
-                AssessmentSeriesId = request.AddSpecialismDetails.AssessmentSeriesId,
+                AssessmentSeriesId = assessmentSeries.Id,
                 IsOptedin = true,
-                StartDate = DateTime.Now
+                EndDate = pathway.Status == RegistrationPathwayStatus.Withdrawn ? utcNow : null,
+                StartDate = utcNow
             };
 
             var tqPathwaySpecialismAssesmentRepository = _repositoryFactory.GetRepository<TqSpecialismAssessment>();
@@ -187,9 +196,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var pathwayAssessmentRepository = _repositoryFactory.GetRepository<TqPathwayAssessment>();
 
-            var pathwayAssessment = await pathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin
-                                                                                              && pa.EndDate == null && (pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active ||
-                                                                                              pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn)
+            var pathwayAssessment = await pathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin                                                                                             
                                                                                               && !pa.TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null));
             if (pathwayAssessment == null) return false;
 
@@ -215,10 +222,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var specialismAssessmentRepository = _repositoryFactory.GetRepository<TqSpecialismAssessment>();
 
-            var specialismAssessment = await specialismAssessmentRepository.GetFirstOrDefaultAsync(sa => sa.Id == model.AssessmentId && sa.IsOptedin
-                                                                                    && sa.EndDate == null
-                                                                                    && (sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active ||
-                                                                                    sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn));
+            var specialismAssessment = await specialismAssessmentRepository.GetFirstOrDefaultAsync(sa => sa.Id == model.AssessmentId && sa.IsOptedin);
             if (specialismAssessment == null) return false;
 
             DateTime utcNow = _systemProvider.UtcNow;

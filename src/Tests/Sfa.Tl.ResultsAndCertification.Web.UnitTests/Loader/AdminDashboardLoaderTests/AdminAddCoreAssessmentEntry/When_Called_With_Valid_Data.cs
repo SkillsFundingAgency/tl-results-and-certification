@@ -29,8 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
                     StartYear = 2022,
                     DisplayStartYear = "2022 to 2023",
                     RegistrationPathwayId = 1,
-                    AssessmentYearTo = "Autumn 2023",
-                    AssessmentSeriesId=6
+                    AssessmentYearTo = "Autumn 2023"
                     
                 },
 
@@ -53,8 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
                     x.RequestDate == Convert.ToDateTime(ViewModel.RequestDate) &&
                     x.ZendeskId == ViewModel.ZendeskId &&
                     x.AddCoreAssessmentDetails.CoreAssessmentTo == ViewModel.AdminCoreComponentViewModel.AssessmentYearTo &&
-                    x.AddCoreAssessmentDetails.CoreAssessmentFrom == $"{ReviewChangeAssessment.No_Assessment_Recorded} {ViewModel.AdminCoreComponentViewModel.AssessmentYearTo.ToLower()}" &&
-                    x.AddCoreAssessmentDetails.AssessmentSeriesId == ViewModel.AdminCoreComponentViewModel.AssessmentSeriesId))
+                    x.AddCoreAssessmentDetails.CoreAssessmentFrom == $"{ReviewChangeAssessment.No_Assessment_Recorded} {ViewModel.AdminCoreComponentViewModel.AssessmentYearTo.ToLower()}"))
                     
                 .Returns(true);
         }
