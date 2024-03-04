@@ -64,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
 
         #endregion
 
-        public SummaryItemModel SummarySelectedGrade => new()
+        public AdminReviewSummaryItemModel SummarySelectedGrade => new()
         {
             Id = AdminAddSpecialismResultReviewChanges.Summary_Selected_Grade_Id,
             Title = AdminAddSpecialismResultReviewChanges.Summary_Grade_Text,
