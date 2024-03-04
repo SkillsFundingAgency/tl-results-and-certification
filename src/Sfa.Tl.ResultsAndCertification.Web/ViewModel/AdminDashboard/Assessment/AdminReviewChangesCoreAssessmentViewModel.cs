@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
         public SummaryItemModel SummaryAssessment => new()
         {
             Id = "assessment",
-            Title = $"{ReviewChangeAssessment.Core_Component}:{AdminCoreComponentViewModel.PathwayDisplayName}",
+            Title = $"{ReviewChangeAssessment.Core_Component}: {AdminCoreComponentViewModel.PathwayDisplayName}",
             Value = $"{ReviewChangeAssessment.Text_No_Assement_Message} {CoreChangeTo.ToLower()}",
             Value2 = CoreChangeTo,
             ActionText = ReviewChangeAssessment.Link_Change_Text,
