@@ -42,6 +42,16 @@
 
 
 	<ItemGroup>
+		<Compile Update="Content\AdminDashboard\AdminChangeSpecialismResult.Designer.cs">
+		  <DependentUpon>AdminChangeSpecialismResult.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminDashboard\AdminChangePathwayResult.Designer.cs">
+		  <DependentUpon>AdminChangePathwayResult.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminDashboard\AdminAddPathwayResult.Designer.cs">
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
@@ -1121,6 +1131,14 @@
 
 
 	<ItemGroup>
+		<EmbeddedResource Update="Content\AdminDashboard\AdminChangeSpecialismResult.resx">
+		  <LastGenOutput>AdminChangeSpecialismResult.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminDashboard\AdminChangePathwayResult.resx">
+		  <LastGenOutput>AdminChangePathwayResult.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\AdminAddPathwayResult.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>AdminAddPathwayResult.Designer.cs</LastGenOutput>
