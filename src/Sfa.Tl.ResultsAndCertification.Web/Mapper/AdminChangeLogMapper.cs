@@ -12,7 +12,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<PagedResponse<AdminSearchChangeLog>, AdminSearchChangeLogViewModel>()
                 .ForMember(d => d.TotalRecords, opts => opts.MapFrom(s => s.TotalRecords))
                 .ForMember(d => d.ChangeLogDetails, opts => opts.MapFrom(s => s.Records))
-                .ForMember(d => d.PagerInfo, opts => opts.MapFrom(s => s.PagerInfo));
+                .ForMember(d => d.PagerInfo, opts => opts.MapFrom(s => s.PagerInfo))
+                .ForMember(d => d.SearchCriteriaViewModel, opts => opts.MapFrom((src, dest, destMember, context) =>
+                    new AdminSearchChangeLogCriteriaViewModel
+                    {
+                        SearchKey = (string)context.Items["searchKey"],
+                        PageNumber = (int?)context.Items["pageNumber"]
+                    }));
 
             CreateMap<AdminSearchChangeLog, AdminSearchChangeLogDetailsViewModel>()
                 .ForMember(d => d.ChangeLogId, opts => opts.MapFrom(s => s.ChangeLogId))

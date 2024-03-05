@@ -30,7 +30,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             };
 
             PagedResponse<AdminSearchChangeLog> apiResponse = await _internalApiClient.SearchChangeLogsAsync(request);
-            return _mapper.Map<AdminSearchChangeLogViewModel>(apiResponse);
+            return _mapper.Map<AdminSearchChangeLogViewModel>(apiResponse, opt =>
+            {
+                opt.Items["searchKey"] = searchKey;
+                opt.Items["pageNumber"] = pageNumber;
+            });
+
         }
     }
 }

@@ -65,6 +65,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminChangeLogLoad
                         Provider = "Barnsley College (10000536)",
                         LastUpdatedBy = "admin-user-01"
                     }
+                },
+                SearchCriteriaViewModel = new AdminSearchChangeLogCriteriaViewModel
+                {
+                    SearchKey = "Johnson",
+                    PageNumber = 1
                 }
             };
         }
