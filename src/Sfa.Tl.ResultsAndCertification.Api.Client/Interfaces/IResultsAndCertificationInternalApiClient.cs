@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
@@ -133,12 +134,18 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<bool> ProcessAddSpecialismAssessmentRequestAsync(ReviewAddSpecialismAssessmentRequest request);
 
         Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
-        
+
         Task<bool> RemoveSpecialAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
 
         Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request);
 
         Task<bool> ProcessAdminAddSpecialismResultAsync(AddSpecialismResultRequest request);
+
+        #endregion
+
+        #region Admin change log
+
+        Task<PagedResponse<AdminSearchChangeLog>> SearchChangeLogsAsync(AdminSearchChangeLogRequest request);
 
         #endregion
     }

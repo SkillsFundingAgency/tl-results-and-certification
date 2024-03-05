@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
@@ -475,6 +476,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             return await PostAsync<ReviewAddSpecialismAssessmentRequest, bool>(ApiConstants.ProcessAddSpecialismAssessmentUri, request);
         }
+        
         public async Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request)
         {
             return await PostAsync<ReviewRemoveAssessmentEntryRequest, bool>(ApiConstants.ReviewRemoveAssessmentEntryUri, request);
@@ -490,6 +492,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public Task<bool> ProcessAdminAddSpecialismResultAsync(AddSpecialismResultRequest request)
             => PostAsync<AddSpecialismResultRequest, bool>(ApiConstants.ProcessAdminAddSpecialismResult, request);
+
+        #endregion
+
+        #region Admin change log
+
+        public Task<PagedResponse<AdminSearchChangeLog>> SearchChangeLogsAsync(AdminSearchChangeLogRequest request)
+        {
+            var requestUri = ApiConstants.SearchChangeLogs;
+            return PostAsync<AdminSearchChangeLogRequest, PagedResponse<AdminSearchChangeLog>>(requestUri, request);
+        }
 
         #endregion
 
