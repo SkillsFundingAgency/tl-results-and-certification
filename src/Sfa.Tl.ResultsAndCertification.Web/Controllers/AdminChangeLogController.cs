@@ -7,11 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -51,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = await _cacheService.GetAsync<AdminSearchChangeLogViewModel>(CacheKey);
             if (viewModel == null)
             {
-                AdminSearchChangeLogViewModel loadedViewModel = await _loader.SearchChangeLogsAsync(string.Empty, null);
+                AdminSearchChangeLogViewModel loadedViewModel = await _loader.SearchChangeLogsAsync();
 
                 await _cacheService.SetAsync(CacheKey, loadedViewModel);
                 return View(loadedViewModel);

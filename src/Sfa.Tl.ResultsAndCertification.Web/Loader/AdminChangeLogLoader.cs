@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _mapper = mapper;
         }
 
-        public async Task<AdminSearchChangeLogViewModel> SearchChangeLogsAsync(string searchKey, int? pageNumber)
+        public async Task<AdminSearchChangeLogViewModel> SearchChangeLogsAsync(string searchKey = "", int? pageNumber = null)
         {
             AdminSearchChangeLogRequest request = new()
             {
