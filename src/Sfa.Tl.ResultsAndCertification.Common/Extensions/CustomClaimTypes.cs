@@ -35,6 +35,11 @@
         /// <summary>
         /// The user type
         /// </summary>
-        public const string LoginUserType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/loginusertype";      
+        public const string LoginUserType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/loginusertype";
+
+        /// <summary>
+        /// The in freeze period
+        /// </summary>
+        public const string InFreezePeriod = "http://schemas.microsoft.com/ws/2008/06/identity/claims/infreezeperiod";
     }
 }

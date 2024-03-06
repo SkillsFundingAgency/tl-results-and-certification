@@ -13,7 +13,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
-{    
+{
     public class AccountController : Controller
     {
         private readonly ILogger _logger;
@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             _configuration = configuration;
             _cacheService = cacheService;
-            _logger = logger;            
+            _logger = logger;
         }
 
         [AllowAnonymous]
@@ -46,6 +46,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
+                if (User.IsInFreezePeriod())
+                {
+                    return RedirectToAction(nameof(HelpController.ServiceUnavailable), Constants.HelpController);
+                };
+
                 return !HttpContext.User.HasAccessToService()
                     ? RedirectToAction(nameof(ErrorController.ServiceAccessDenied), Constants.ErrorController)
                     : RedirectToAction(nameof(DashboardController.Index), Constants.DashboardController);
@@ -92,8 +97,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("account-profile", Name = RouteConstants.AccountProfile)]
         public IActionResult Profile()
         {
-            if (_configuration == null || 
-                _configuration.DfeSignInSettings == null || 
+            if (_configuration == null ||
+                _configuration.DfeSignInSettings == null ||
                 string.IsNullOrEmpty(_configuration.DfeSignInSettings.ProfileUrl))
             {
                 _logger.LogWarning(LogEvent.ConfigurationMissing, $"Unable to read config: DfeSignInSettings.ProfileUrl, User: {User?.GetUserEmail()}");

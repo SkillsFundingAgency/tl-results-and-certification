@@ -48,6 +48,17 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             return false;
         }
 
+        public static bool IsInFreezePeriod(this ClaimsPrincipal user)
+        {
+            var hasAccess = user.Claims.SingleOrDefault(c => c.Type == CustomClaimTypes.InFreezePeriod)?.Value;
+
+            if (bool.TryParse(hasAccess, out var result))
+            {
+                return result;
+            }
+            return false;
+        }
+
         public static bool HasSiteAdministratorRole(this ClaimsPrincipal user)
         {
             return user.IsInRole(SiteAdministrator);
