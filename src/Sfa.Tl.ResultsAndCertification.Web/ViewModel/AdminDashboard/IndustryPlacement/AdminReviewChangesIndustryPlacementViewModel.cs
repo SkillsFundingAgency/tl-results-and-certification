@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPl
         [Required(ErrorMessageResourceType = typeof(ReviewChangesIndustryPlacement), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
         public string ContactName { get; set; }
 
-        [DateValidator(Property = nameof(RequestDate), ErrorResourceType = typeof(ReviewChangesIndustryPlacement), ErrorResourceName = "Validation_Date_When_Change_Requested_Blank_Text")]
+        [DateValidator(Property = nameof(RequestDate), ErrorResourceType = typeof(ReviewChangesIndustryPlacement))]
         public string RequestDate => $"{Year}/{Month}/{Day}";
 
         public string Day { get; set; }

@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
         [Required(ErrorMessageResourceType = typeof(AdminReviewRemoveAssessmentEntry), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
         public string ContactName { get; set; }
 
-        [DateValidator(Property = nameof(RequestDate), ErrorResourceType = typeof(AdminReviewRemoveAssessmentEntry), ErrorResourceName = "Validation_Date_When_Change_Requested_Blank_Text")]
+        [DateValidator(Property = nameof(RequestDate), ErrorResourceType = typeof(AdminReviewRemoveAssessmentEntry))]
         public string RequestDate => $"{Year}/{Month}/{Day}";
 
         public string Day { get; set; }

@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
-using Microsoft.Extensions.Logging;
-using Notify.Interfaces;
+using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
-using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Services.System.Service;
+using Sfa.Tl.ResultsAndCertification.Data.Factory;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -21,82 +20,44 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
 {
     public abstract class AdminDashboardServiceBaseTest : BaseTest<TqRegistrationPathway>
     {
-        protected long AoUkprn = 10011881;
-        protected LearnerService LearnerService;
-        protected TlRoute Route;
-        protected TlPathway Pathway;
-        protected IList<TlSpecialism> Specialisms;
-        protected TlProvider TlProvider;
-        protected TlAwardingOrganisation TlAwardingOrganisation;
-        protected TqAwardingOrganisation TqAwardingOrganisation;
         protected TqProvider TqProvider;
-        protected IList<TlProvider> TlProviders;
-        protected IList<TqProvider> TqProviders;
-        protected IList<AssessmentSeries> AssessmentSeries;
-        protected IList<TlLookup> TlLookup;
-        public IList<AcademicYear> AcademicYears;
-
-        protected IRepository<TqRegistrationPathway> RegistrationPathwayRepository;
-        protected ILogger<GenericRepository<TqRegistrationPathway>> RegistrationPathwayRepositoryLogger;
-
-        protected IMapper Mapper;
-
-        protected ICommonService commonService;
-        protected CommonService CommonService;
-        protected ILogger<CommonService> CommonServiceLogger;
-      
-        protected IRepository<TlLookup> TlLookupRepository;
-        protected IRepository<FunctionLog> FunctionLogRepository;
-        protected ICommonRepository CommonRepository;
-        protected ResultsAndCertificationConfiguration Configuration;
-
-        protected IMapper CommonMapper;
-        protected ILogger<GenericRepository<TlLookup>> TlLookupRepositoryLogger;
-        protected ILogger<GenericRepository<FunctionLog>> FunctionLogRepositoryLogger;
-        protected ILogger<GenericRepository<ChangeLog>> ChangeLogRepositoryLogger;
-        protected IRepository<ChangeLog> ChangeLogRepository;
-        protected ILogger<ILearnerRepository> LearnerRepositoryLogger;
-        protected ILearnerRepository LearnerRepository;
-        
-        protected IAdminDashboardService AdminDashboardService;
-        protected IAdminDashboardRepository AdminDashboardRepository;
-
-
-        protected IAsyncNotificationClient NotificationsClient;
-        protected ILogger<NotificationService> NotificationLogger;
-        protected IRepository<NotificationTemplate> NotificationTemplateRepository;
-        protected ILogger<GenericRepository<NotificationTemplate>> NotificationTemplateRepositoryLogger;
-        protected ILogger<INotificationService> NotificationServiceLogger;
-        protected INotificationService NotificationService;
         protected ISystemProvider SystemProvider;
 
-        protected IList<IpLookup> IpLookup;
-       
+        private IList<TlSpecialism> _specialisms;
+        private IList<AcademicYear> _academicYears;
+        protected IList<AssessmentSeries> AssessmentSeries;
 
-        protected virtual void CreateMapper()
+        protected IAdminDashboardService AdminDashboardService;
+
+        protected void CreateAdminDasboardService()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(LearnerMapper).Assembly));
-            Mapper = new Mapper(mapperConfig);
+            var adminDashboardRepository = new AdminDashboardRepository(DbContext);
+            var repositoryFactory = new RepositoryFactory(new NullLoggerFactory(), DbContext);
+            SystemProvider = new SystemProvider();
+            var mapper = CreateMapper();
+
+            AdminDashboardService = new AdminDashboardService(adminDashboardRepository, repositoryFactory, SystemProvider, mapper);
         }
 
-        protected virtual void CreateCommonMapper()
+        private static Mapper CreateMapper()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CommonMapper).Assembly));
-            CommonMapper = new Mapper(mapperConfig);
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(LearnerMapper).Assembly));
+            return new Mapper(mapperConfig);
         }
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
         {
-            TlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, awardingOrganisation);
-            Route = TlevelDataProvider.CreateTlRoute(DbContext, awardingOrganisation);
-            Pathway = TlevelDataProvider.CreateTlPathway(DbContext, awardingOrganisation, Route);
-            Specialisms = TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, Pathway);
-            TqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, Pathway, TlAwardingOrganisation);
-            TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
-            TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
+            var tlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, awardingOrganisation);
+            var route = TlevelDataProvider.CreateTlRoute(DbContext, awardingOrganisation);
+            var _pathway = TlevelDataProvider.CreateTlPathway(DbContext, awardingOrganisation, route);
+            _specialisms = TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, _pathway);
+            var tqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, _pathway, tlAwardingOrganisation);
+            var tlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
+            TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, tqAwardingOrganisation, tlProvider);
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
-            TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
-            AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
+            TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
+            _academicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
+
             DbContext.SaveChangesAsync();
         }
 
@@ -117,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProvider);
             var tqRegistrationSpecialisms = isCouplet ? RegistrationsDataProvider.CreateTqRegistrationSpecialisms(DbContext, tqRegistrationPathway)
-                : new List<TqRegistrationSpecialism> { RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialisms.First()) };
+                : new List<TqRegistrationSpecialism> { RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, _specialisms.First()) };
 
             if (status == RegistrationPathwayStatus.Withdrawn)
             {
@@ -133,10 +94,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             DbContext.SaveChanges();
             return profile;
         }
-
-       
-
-       
 
         public List<TqPathwayAssessment> GetPathwayAssessmentsDataToProcess(List<TqRegistrationPathway> pathwayRegistrations, bool seedPathwayAssessmentsAsActive = true, bool isHistorical = false, string assessmentSeriesName = "Summer 2021")
         {
@@ -205,15 +162,71 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             ulns.ToList().ForEach(uln =>
             {
                 var registration = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln);
-                registration.TqRegistrationPathways.FirstOrDefault().AcademicYear = AcademicYears.FirstOrDefault(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate).Year + 1;
+                registration.TqRegistrationPathways.FirstOrDefault().AcademicYear = _academicYears.FirstOrDefault(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate).Year + 1;
             });
         }
 
         public void SeedSpecialConsiderationsLookupData()
         {
-            IpLookup = IpLookupDataProvider.CreateIpLookupList(DbContext, null, IpLookupType.SpecialConsideration, true);
+            IpLookupDataProvider.CreateIpLookupList(DbContext, null, IpLookupType.SpecialConsideration, true);
             DbContext.SaveChanges();
         }
-        
+
+        public List<TqPathwayAssessment> SeedPathwayAssessmentsData(List<TqPathwayAssessment> pathwayAssessments, bool saveChanges = true)
+        {
+            var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessments(DbContext, pathwayAssessments);
+            if (saveChanges)
+                DbContext.SaveChanges();
+
+            return tqPathwayAssessment;
+        }
+
+        public List<TqSpecialismAssessment> SeedSpecialismAssessmentsData(List<TqSpecialismAssessment> specialismAssessments, bool saveChanges = true)
+        {
+            var tqSpecialismAssessments = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessments(DbContext, specialismAssessments);
+            if (saveChanges)
+                DbContext.SaveChanges();
+
+            return tqSpecialismAssessments;
+        }
+
+        public List<TqPathwayResult> SeedPathwayResultsData(List<TqPathwayResult> pathwayResults, bool saveChanges = true)
+        {
+            var tqPathwayResult = TqPathwayResultDataProvider.CreateTqPathwayResults(DbContext, pathwayResults);
+            if (saveChanges)
+                DbContext.SaveChanges();
+
+            return tqPathwayResult;
+        }
+
+        public List<TqSpecialismAssessment> GetSpecialismAssessmentsDataToProcess(List<TqRegistrationSpecialism> specialismRegistrations, bool seedSpecialismAssessmentsAsActive = true, bool isHistorical = false, string assessmentSeriesName = "Summer 2021")
+        {
+            var tqSpecialismAssessments = new List<TqSpecialismAssessment>();
+
+            foreach (var (specialismRegistration, index) in specialismRegistrations.Select((value, i) => (value, i)))
+            {
+                if (isHistorical)
+                {
+                    // Historical record
+                    var specialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, AssessmentSeries[index]);
+                    specialismAssessment.IsOptedin = false;
+                    specialismAssessment.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                    var tqSpecialismAssessmentHistorical = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, specialismAssessment);
+                    tqSpecialismAssessments.Add(tqSpecialismAssessmentHistorical);
+                }
+
+                var activeSpecialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, AssessmentSeries[index]);
+                var tqSpecialismAssessment = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, activeSpecialismAssessment);
+                if (!seedSpecialismAssessmentsAsActive)
+                {
+                    tqSpecialismAssessment.IsOptedin = specialismRegistration.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn;
+                    tqSpecialismAssessment.EndDate = DateTime.UtcNow;
+                }
+                tqSpecialismAssessments.Add(tqSpecialismAssessment);
+
+            }
+            return tqSpecialismAssessments;
+        }
     }
 }

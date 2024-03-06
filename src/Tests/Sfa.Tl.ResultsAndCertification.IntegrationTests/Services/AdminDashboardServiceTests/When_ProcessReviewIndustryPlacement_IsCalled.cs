@@ -1,20 +1,9 @@
-﻿using AutoMapper;
-using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
+﻿using FluentAssertions;
 using Newtonsoft.Json;
-using Notify.Interfaces;
-using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Services.System.Service;
-using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System;
@@ -27,33 +16,24 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
 {
     public class When_ProcessReviewIndustryPlacement_IsCalled : AdminDashboardServiceBaseTest
     {
-
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<IndustryPlacementData> _industryPlacementDatas;
-        private LearnerRecord _result;
         private IList<TqRegistrationProfile> _profiles;
 
         public override void Given()
         {
-            // Parameters
-            AoUkprn = 10011881;
-
-            // Create mapper
-            CreateMapper();
-            CreateCommonMapper();
-
             // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
 
             _ulns = new Dictionary<long, RegistrationPathwayStatus>
-        {
-            { 1111111111, RegistrationPathwayStatus.Active },
-            { 1111111112, RegistrationPathwayStatus.Withdrawn },
-            { 1111111113, RegistrationPathwayStatus.Active },
-            { 1111111114, RegistrationPathwayStatus.Active },
-            { 1111111115, RegistrationPathwayStatus.Active },
-            { 1111111116, RegistrationPathwayStatus.Active },
-        };
+            {
+                { 1111111111, RegistrationPathwayStatus.Active },
+                { 1111111112, RegistrationPathwayStatus.Withdrawn },
+                { 1111111113, RegistrationPathwayStatus.Active },
+                { 1111111114, RegistrationPathwayStatus.Active },
+                { 1111111115, RegistrationPathwayStatus.Active },
+                { 1111111116, RegistrationPathwayStatus.Active },
+            };
 
             // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
@@ -62,48 +42,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             _profiles = SeedRegistrationsData(_ulns, TqProvider);
 
             _industryPlacementDatas = new List<IndustryPlacementData>
-        {
-            new IndustryPlacementData { Uln = 1111111111, IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted, Details = null },
-            new IndustryPlacementData { Uln = 1111111114, IndustryPlacementStatus = IndustryPlacementStatus.Completed, Details = null },
-            new IndustryPlacementData { Uln = 1111111115, IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration, Details = new IndustryPlacementDetails { HoursSpentOnPlacement = 100, SpecialConsiderationReasons = new List<int?> { 1, 2 } } },
-
-        };
+            {
+                new IndustryPlacementData { Uln = 1111111111, IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted, Details = null },
+                new IndustryPlacementData { Uln = 1111111114, IndustryPlacementStatus = IndustryPlacementStatus.Completed, Details = null },
+                new IndustryPlacementData { Uln = 1111111115, IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration, Details = new IndustryPlacementDetails { HoursSpentOnPlacement = 100, SpecialConsiderationReasons = new List<int?> { 1, 2 } } },
+            };
 
             SeedIndustyPlacementData(_industryPlacementDatas);
 
             DbContext.SaveChanges();
             DetachAll();
 
-            Configuration = new ResultsAndCertificationConfiguration
-            {
-                TlevelQueriedSupportEmailAddress = "test@test.com"
-            };
-
-            CommonServiceLogger = new Logger<CommonService>(new NullLoggerFactory());
-            TlLookupRepositoryLogger = new Logger<GenericRepository<TlLookup>>(new NullLoggerFactory());
-            TlLookupRepository = new GenericRepository<TlLookup>(TlLookupRepositoryLogger, DbContext);
-            FunctionLogRepositoryLogger = new Logger<GenericRepository<FunctionLog>>(new NullLoggerFactory());
-            FunctionLogRepository = new GenericRepository<FunctionLog>(FunctionLogRepositoryLogger, DbContext);
-            CommonRepository = new CommonRepository(DbContext);
-
-
-            NotificationsClient = Substitute.For<IAsyncNotificationClient>();
-            NotificationLogger = new Logger<NotificationService>(new NullLoggerFactory());
-            NotificationTemplateRepositoryLogger = new Logger<GenericRepository<NotificationTemplate>>(new NullLoggerFactory());
-            NotificationTemplateRepository = new GenericRepository<NotificationTemplate>(NotificationTemplateRepositoryLogger, DbContext);
-            NotificationService = new NotificationService(NotificationTemplateRepository, NotificationsClient, NotificationLogger);
-            ChangeLogRepositoryLogger = new Logger<GenericRepository<ChangeLog>>(new NullLoggerFactory());
-            ChangeLogRepository = new GenericRepository<ChangeLog>(ChangeLogRepositoryLogger, DbContext);
-            commonService = new CommonService(CommonServiceLogger, CommonMapper, TlLookupRepository, FunctionLogRepository, CommonRepository, NotificationService, Configuration, ChangeLogRepository);
-            SystemProvider = new SystemProvider();
-
-            AdminDashboardRepository = new AdminDashboardRepository(DbContext);
-            RegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
-            RegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(RegistrationPathwayRepositoryLogger, DbContext);
-            var industryPlacementRepository = Substitute.For<IRepository<Domain.Models.IndustryPlacement>>();
-
-            AdminDashboardService = new AdminDashboardService(AdminDashboardRepository, RegistrationPathwayRepository, industryPlacementRepository, SystemProvider, CommonService, Mapper);
-
+            CreateAdminDasboardService();
         }
 
         private bool _actualResult;
@@ -120,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
 
         [Theory()]
         [MemberData(nameof(Data))]
-        public async Task Then_Expected_Results_Are_Returned(ReviewChangeIndustryPlacementRequest request, bool expectedResponse, long uln)
+        public async Task Then_Expected_Results_Are_Returned(ReviewChangeIndustryPlacementRequest request, bool expectedResponse)
         {
             await WhenAsync(request);
 
@@ -131,7 +81,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             }
 
             var actualIndustryPlacement = DbContext.IndustryPlacement.FirstOrDefault(ip => ip.Id == request.RegistrationPathwayId);
-
 
             request.RegistrationPathwayId.Should().Be(actualIndustryPlacement.Id);
             if (request.ChangeIPDetails.IndustryPlacementStatusTo == IndustryPlacementStatus.Completed || request.ChangeIPDetails.IndustryPlacementStatusTo == IndustryPlacementStatus.NotCompleted)
@@ -145,7 +94,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
                 var actualDetails = JsonConvert.DeserializeObject<IndustryPlacementDetails>(actualIndustryPlacement.Details);
                 request.ChangeIPDetails.HoursSpentOnPlacementTo.Should().Be(actualDetails.HoursSpentOnPlacement);
             }
-
         }
 
         public static IEnumerable<object[]> Data
@@ -154,46 +102,57 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             {
                 return new[]
                 {
-
-                    new object[] { new ReviewChangeIndustryPlacementRequest()
+                    new object[]
                     {
-                ChangeReason = "Test Reason",
-                ContactName = "Test User",
-                RegistrationPathwayId = 1,
-                ChangeIPDetails = new ChangeIPDetails(){ IndustryPlacementStatusTo = IndustryPlacementStatus.NotCompleted },
-                RequestDate = DateTime.Now.ToShortDateString(),
-                ZendeskId = "1234567890",
-                CreatedBy = "System"
-                    },
-                        true,1111111114,
-                    },
-                     new object[] { new ReviewChangeIndustryPlacementRequest()
+                        new ReviewChangeIndustryPlacementRequest
+                        {
+                            ChangeReason = "Test Reason",
+                            ContactName = "Test User",
+                            RegistrationPathwayId = 1,
+                            ChangeIPDetails = new ChangeIPDetails
+                            {
+                                IndustryPlacementStatusTo = IndustryPlacementStatus.NotCompleted
+                            },
+                            RequestDate = DateTime.Now,
+                            ZendeskId = "1234567890",
+                            CreatedBy = "System"
+                        },
+                        true                    },
+                    new object[]
                     {
-                ChangeReason = "Test Reason1",
-                ContactName = "Test User1",
-                RegistrationPathwayId = 2,
-                ChangeIPDetails = new ChangeIPDetails(){ IndustryPlacementStatusTo = IndustryPlacementStatus.Completed },
-                RequestDate = DateTime.Now.ToShortDateString(),
-                ZendeskId = "768568909",
-                CreatedBy = "System"
-                    },
-                        true,1111111115,
-                    },
-                     new object[] { new ReviewChangeIndustryPlacementRequest    ()
+                       new ReviewChangeIndustryPlacementRequest
+                       {
+                           ChangeReason = "Test Reason1",
+                           ContactName = "Test User1",
+                           RegistrationPathwayId = 2,
+                           ChangeIPDetails = new ChangeIPDetails
+                           {
+                               IndustryPlacementStatusTo = IndustryPlacementStatus.Completed
+                           },
+                           RequestDate = DateTime.Now,
+                           ZendeskId = "768568909",
+                           CreatedBy = "System"
+                       },
+                       true                    },
+                    new object[]
                     {
-                ChangeReason = "Test Reason1",
-                ContactName = "Test User1",
-                RegistrationPathwayId = 3,
-                Details = JsonConvert.SerializeObject(new ChangeIPDetails() { IndustryPlacementStatusTo=IndustryPlacementStatus.CompletedWithSpecialConsideration }),
-                ChangeIPDetails = new ChangeIPDetails(){ IndustryPlacementStatusTo = IndustryPlacementStatus.CompletedWithSpecialConsideration, HoursSpentOnPlacementTo=100, SpecialConsiderationReasonsTo= new List<int?>(){1,2} },
-                RequestDate = DateTime.Now.ToShortDateString(),
-                ZendeskId = "768568909",
-                CreatedBy = "System"
-                    },
-                        true,1111111115,
+                        new ReviewChangeIndustryPlacementRequest
+                        {
+                            ChangeReason = "Test Reason1",
+                            ContactName = "Test User1",
+                            RegistrationPathwayId = 3,
+                            ChangeIPDetails = new ChangeIPDetails
+                            {
+                                IndustryPlacementStatusTo = IndustryPlacementStatus.CompletedWithSpecialConsideration,
+                                HoursSpentOnPlacementTo=100,
+                                SpecialConsiderationReasonsTo = new List<int?>{ 1, 2 }
+                            },
+                            RequestDate = DateTime.Now,
+                            ZendeskId = "768568909",
+                            CreatedBy = "System"
+                        },
+                        true
                     }
-
-
                 };
             }
         }

@@ -1,13 +1,21 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoaderTests
 {
@@ -26,7 +34,51 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
 
         private AutoMapper.Mapper CreateMapper()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(AdminDashboardMapper).Assembly));
+            string Givenname = "test";
+            string Surname = "user";
+            string Email = "test.user@test.com";
+
+            IHttpContextAccessor httpContextAccessor = Substitute.For<IHttpContextAccessor>();
+
+            httpContextAccessor.HttpContext.Returns(new DefaultHttpContext
+            {
+                User = new ClaimsPrincipal(new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.GivenName, Givenname),
+                    new Claim(ClaimTypes.Surname, Surname),
+                    new Claim(ClaimTypes.Email, Email)
+                }))
+            });
+
+            var mapperConfig = new MapperConfiguration(c =>
+                {
+                    c.AddMaps(typeof(AdminDashboardMapper).Assembly);
+
+                    c.ConstructServicesUsing(type =>
+                       {
+                           if (type.Equals(typeof(UserNameResolver<ReviewChangeStartYearViewModel, ReviewChangeStartYearRequest>)))
+                           {
+                               return new UserNameResolver<ReviewChangeStartYearViewModel, ReviewChangeStartYearRequest>(httpContextAccessor);
+                           }
+                           else if (type.Equals(typeof(UserNameResolver<AdminReviewChangesIndustryPlacementViewModel, ReviewChangeIndustryPlacementRequest>)))
+                           {
+                               return new UserNameResolver<AdminReviewChangesIndustryPlacementViewModel, ReviewChangeIndustryPlacementRequest>(httpContextAccessor);
+                           }
+                           else if (type.Equals(typeof(UserNameResolver<AdminAddPathwayResultReviewChangesViewModel, AddPathwayResultRequest>)))
+                           {
+                               return new UserNameResolver<AdminAddPathwayResultReviewChangesViewModel, AddPathwayResultRequest>(httpContextAccessor);
+                           }
+                           else if (type.Equals(typeof(UserNameResolver<AdminAddSpecialismResultReviewChangesViewModel, AddSpecialismResultRequest>)))
+                           {
+                               return new UserNameResolver<AdminAddSpecialismResultReviewChangesViewModel, AddSpecialismResultRequest>(httpContextAccessor);
+                           }
+                           else
+                           {
+                               return null;
+                           }
+                       });
+                });
+
             return new AutoMapper.Mapper(mapperConfig);
         }
 
@@ -77,7 +129,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
             };
         }
 
-        protected AdminLearnerRecord CreateAdminLearnerRecord(int registrationPathwayId, int pathwayAssessmentId)
+        protected AdminLearnerRecord CreateAdminLearnerRecordWithPathwayAssessment(int registrationPathwayId, int pathwayAssessmentId)
         {
             var learnerRecord = CreateAdminLearnerRecord(registrationPathwayId);
 
@@ -93,20 +145,147 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
                     AppealEndDate = new DateTime(2024, 3, 1),
                     LastUpdatedOn = new DateTime(2023, 9, 15),
                     LastUpdatedBy = "test-user",
-                    ComponentType = ComponentType.Core,
-                    Result = new Result
-                    {
-                        Id = 4567,
-                        Grade = "A",
-                        GradeCode = "PCG2",
-                        PrsStatus = PrsStatus.NotSpecified,
-                        LastUpdatedOn = new DateTime(2023, 12, 31),
-                        LastUpdatedBy = "test-user"
-                    }
+                    ComponentType = ComponentType.Core
                 }
             };
 
             return learnerRecord;
+        }
+
+        protected AdminLearnerRecord CreateAdminLearnerRecordWithSpecialismAssessment(int registrationPathwayId, int specialismAssessmentId)
+        {
+            var learnerRecord = CreateAdminLearnerRecord(registrationPathwayId);
+
+            learnerRecord.Pathway.Specialisms = new[]
+            {
+                new Specialism
+                {
+                    Id = 1,
+                    LarId = "ZTLOS001",
+                    Name = "Surveying and Design for Construction and the Built Environment",
+                    Assessments = new[]
+                    {
+                        new Assessment
+                        {
+                            Id = specialismAssessmentId,
+                            SeriesId = 1,
+                            SeriesName = "Autum 2023",
+                            ResultEndDate = new DateTime(2024, 1, 1),
+                            RommEndDate = new DateTime(2024, 2, 1),
+                            AppealEndDate = new DateTime(2024, 3, 1),
+                            LastUpdatedOn = new DateTime(2023, 9, 15),
+                            LastUpdatedBy = "test-user",
+                            ComponentType = ComponentType.Core
+                    }
+                }
+                }
+            };
+
+            return learnerRecord;
+        }
+
+        protected List<LookupData> CreatePathwayGrades()
+        {
+            return new List<LookupData>
+            {
+                new LookupData
+                {
+                    Id = 1,
+                    Code = "PCG1",
+                    Value = "A*"
+                },
+                new LookupData
+                {
+                    Id = 2,
+                    Code = "PCG2",
+                    Value = "A"
+                },
+                new LookupData
+                {
+                    Id = 3,
+                    Code = "PCG3",
+                    Value = "B"
+                },
+                new LookupData
+                {
+                    Id = 4,
+                    Code = "PCG4",
+                    Value = "C"
+                },
+                new LookupData
+                {
+                    Id = 5,
+                    Code = "PCG5",
+                    Value = "D"
+                },
+                new LookupData
+                {
+                    Id = 6,
+                    Code = "PCG6",
+                    Value = "E"
+                },
+                new LookupData
+                {
+                    Id = 7,
+                    Code = "PCG7",
+                    Value = "Unclassified"
+                },
+                new LookupData
+                {
+                    Id = 25,
+                    Code = "PCG8",
+                    Value = "Q - pending result"
+                },
+                new LookupData
+                {
+                    Id = 26,
+                    Code = "PCG9",
+                    Value = "X - no result"
+                }
+            };
+        }
+
+        protected List<LookupData> CreateSpecialismGrades()
+        {
+            return new List<LookupData>
+            {
+                new LookupData
+                {
+                    Id = 10,
+                    Code = "SCG1",
+                    Value = "Distinction"
+                },
+                new LookupData
+                {
+                    Id = 11,
+                    Code = "SCG2",
+                    Value = "Merit"
+                },
+                new LookupData
+                {
+                    Id = 12,
+                    Code = "SCG3",
+                    Value = "Pass"
+                },
+                new LookupData
+                {
+                    Id = 13,
+                    Code = "SCG4",
+                    Value = "Unclassified"
+                },
+                new LookupData
+                {
+                    Id = 14,
+                    Code = "SCG5",
+                    Value = "Q - pending result"
+                },
+                new LookupData
+                {
+                    Id = 15,
+                    Code = "SCG6",
+                    Value = "X - no result"
+                }
+            };
         }
     }
 }
