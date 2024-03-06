@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                         },
                         new PagedResponse<AdminSearchChangeLog>
                         {
-                           TotalRecords = 4,
+                           TotalRecords = 5,
                            Records = new List<AdminSearchChangeLog>
                            {
                                new AdminSearchChangeLog
@@ -68,7 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                    DateAndTimeOfChange = new DateTime(2024, 1, 1),
                                    LearnerFirstname = "John",
                                    LearnerLastname = "Smith",
-                                   Uln = 11,
+                                   Uln = 1100000000,
                                    ProviderName = "pearson-provider-01",
                                    ProviderUkprn = 1,
                                    ZendeskTicketID = "zendesk-ticket-01",
@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                    DateAndTimeOfChange = new DateTime(2024, 3, 1),
                                    LearnerFirstname = "Jessica",
                                    LearnerLastname = "Johnson",
-                                   Uln = 12,
+                                   Uln = 1200000000,
                                    ProviderName = "pearson-provider-01",
                                    ProviderUkprn = 1,
                                    ZendeskTicketID = "zendesk-ticket-02",
@@ -92,7 +92,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                    DateAndTimeOfChange = new DateTime(2022, 12, 31),
                                    LearnerFirstname = "Peter",
                                    LearnerLastname = "Smith",
-                                   Uln = 21,
+                                   Uln = 2100000000,
                                    ProviderName = "pearson-provider-02",
                                    ProviderUkprn = 2,
                                    ZendeskTicketID = "zendesk-ticket-03",
@@ -104,14 +104,26 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                    DateAndTimeOfChange = new DateTime(2020, 6, 15),
                                    LearnerFirstname = "Eric",
                                    LearnerLastname = "Johnson",
-                                   Uln = 31,
+                                   Uln = 3100000000,
                                    ProviderName = "ncfe-provider-01",
                                    ProviderUkprn = 3,
                                    ZendeskTicketID = "zendesk-ticket-04",
                                    LastUpdatedBy = "admin-user-04"
+                               },
+                               new AdminSearchChangeLog
+                               {
+                                   ChangeLogId = 5,
+                                   DateAndTimeOfChange = new DateTime(2024, 4, 6),
+                                   LearnerFirstname = "Sue",
+                                   LearnerLastname = "Baker",
+                                   Uln = 3200000000,
+                                   ProviderName = "ncfe-provider-01",
+                                   ProviderUkprn = 3,
+                                   ZendeskTicketID = "1200000000",
+                                   LastUpdatedBy = "admin-user-05"
                                }
                            },
-                           PagerInfo = new Pager(4, 0, 10)
+                           PagerInfo = new Pager(5, 0, 10)
                         }
                     },
                     new object[]
@@ -122,7 +134,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                         },
                         new PagedResponse<AdminSearchChangeLog>
                         {
-                           TotalRecords = 4,
+                           TotalRecords = 5,
                            Records = new List<AdminSearchChangeLog>(),
                            PagerInfo = new Pager(0, 0, 10)
                         }
@@ -131,11 +143,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                     {
                         new AdminSearchChangeLogRequest
                         {
-                            SearchKey = "11"
+                            SearchKey = "1100000000"
                         },
                         new PagedResponse<AdminSearchChangeLog>
                         {
-                           TotalRecords = 4,
+                           TotalRecords = 5,
                            Records = new List<AdminSearchChangeLog>
                            {
                                new AdminSearchChangeLog
@@ -144,7 +156,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                    DateAndTimeOfChange = new DateTime(2024, 1, 1),
                                    LearnerFirstname = "John",
                                    LearnerLastname = "Smith",
-                                   Uln = 11,
+                                   Uln = 1100000000,
                                    ProviderName = "pearson-provider-01",
                                    ProviderUkprn = 1,
                                    ZendeskTicketID = "zendesk-ticket-01",
@@ -162,7 +174,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                         },
                         new PagedResponse<AdminSearchChangeLog>
                         {
-                           TotalRecords = 4,
+                           TotalRecords = 5,
                            Records = new List<AdminSearchChangeLog>
                            {
                                new AdminSearchChangeLog
@@ -171,7 +183,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                    DateAndTimeOfChange = new DateTime(2024, 1, 1),
                                    LearnerFirstname = "John",
                                    LearnerLastname = "Smith",
-                                   Uln = 11,
+                                   Uln = 1100000000,
                                    ProviderName = "pearson-provider-01",
                                    ProviderUkprn = 1,
                                    ZendeskTicketID = "zendesk-ticket-01",
@@ -183,7 +195,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                    DateAndTimeOfChange = new DateTime(2022, 12, 31),
                                    LearnerFirstname = "Peter",
                                    LearnerLastname = "Smith",
-                                   Uln = 21,
+                                   Uln = 2100000000,
                                    ProviderName = "pearson-provider-02",
                                    ProviderUkprn = 2,
                                    ZendeskTicketID = "zendesk-ticket-03",
@@ -201,7 +213,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                         },
                         new PagedResponse<AdminSearchChangeLog>
                         {
-                           TotalRecords = 4,
+                           TotalRecords = 5,
                            Records = new List<AdminSearchChangeLog>
                            {
                                new AdminSearchChangeLog
@@ -210,7 +222,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                    DateAndTimeOfChange = new DateTime(2020, 6, 15),
                                    LearnerFirstname = "Eric",
                                    LearnerLastname = "Johnson",
-                                   Uln = 31,
+                                   Uln = 3100000000,
                                    ProviderName = "ncfe-provider-01",
                                    ProviderUkprn = 3,
                                    ZendeskTicketID = "zendesk-ticket-04",
@@ -218,6 +230,45 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                }
                            },
                            PagerInfo = new Pager(1, 0, 10)
+                        }
+                    },
+                    new object[]
+                    {
+                        new AdminSearchChangeLogRequest
+                        {
+                            SearchKey = "1200000000"
+                        },
+                        new PagedResponse<AdminSearchChangeLog>
+                        {
+                           TotalRecords = 5,
+                           Records = new List<AdminSearchChangeLog>
+                           {
+                               new AdminSearchChangeLog
+                               {
+                                   ChangeLogId = 2,
+                                   DateAndTimeOfChange = new DateTime(2024, 3, 1),
+                                   LearnerFirstname = "Jessica",
+                                   LearnerLastname = "Johnson",
+                                   Uln = 1200000000,
+                                   ProviderName = "pearson-provider-01",
+                                   ProviderUkprn = 1,
+                                   ZendeskTicketID = "zendesk-ticket-02",
+                                   LastUpdatedBy = "admin-user-02"
+                               },
+                               new AdminSearchChangeLog
+                               {
+                                   ChangeLogId = 5,
+                                   DateAndTimeOfChange = new DateTime(2024, 4, 6),
+                                   LearnerFirstname = "Sue",
+                                   LearnerLastname = "Baker",
+                                   Uln = 3200000000,
+                                   ProviderName = "ncfe-provider-01",
+                                   ProviderUkprn = 3,
+                                   ZendeskTicketID = "1200000000",
+                                   LastUpdatedBy = "admin-user-05"
+                               }
+                           },
+                           PagerInfo = new Pager(2, 0, 10)
                         }
                     }
                 };
@@ -231,24 +282,28 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
             TqProvider pearsonProviderOne = SeedProvider(pearson, 1, "pearson-provider-01");
             TqProvider pearsonProviderTwo = SeedProvider(pearson, 2, "pearson-provider-02");
 
-            TqRegistrationProfile pearsonProviderOneLearnerOne = SeedRegistrationProfile(11, "John", "Smith", new DateTime(2000, 1, 1));
+            TqRegistrationProfile pearsonProviderOneLearnerOne = SeedRegistrationProfile(1100000000, "John", "Smith", new DateTime(2000, 1, 1));
             TqRegistrationPathway pearsonProviderOneLearnerOneRegPathway = SeedRegistrationPathway(pearsonProviderOneLearnerOne, pearsonProviderOne, 2020, RegistrationPathwayStatus.Active);
             SeedChangeLog(pearsonProviderOneLearnerOneRegPathway, ChangeType.StartYear, "admin-user-01", new DateTime(2024, 1, 1), "zendesk-ticket-01");
 
-            TqRegistrationProfile pearsonProviderOneLearnerTwo = SeedRegistrationProfile(12, "Jessica", "Johnson", new DateTime(2002, 5, 17));
+            TqRegistrationProfile pearsonProviderOneLearnerTwo = SeedRegistrationProfile(1200000000, "Jessica", "Johnson", new DateTime(2002, 5, 17));
             TqRegistrationPathway pearsonProviderOneLearnerTwoRegPathway = SeedRegistrationPathway(pearsonProviderOneLearnerTwo, pearsonProviderOne, 2021, RegistrationPathwayStatus.Withdrawn);
             SeedChangeLog(pearsonProviderOneLearnerTwoRegPathway, ChangeType.IndustryPlacement, "admin-user-02", new DateTime(2024, 3, 1), "zendesk-ticket-02");
 
-            TqRegistrationProfile pearsonProviderTwoLearnerOne = SeedRegistrationProfile(21, "Peter", "Smith", new DateTime(1999, 8, 6));
+            TqRegistrationProfile pearsonProviderTwoLearnerOne = SeedRegistrationProfile(2100000000, "Peter", "Smith", new DateTime(1999, 8, 6));
             TqRegistrationPathway pearsonProviderTwoLearnerOneRegPathway = SeedRegistrationPathway(pearsonProviderTwoLearnerOne, pearsonProviderTwo, 2022, RegistrationPathwayStatus.Active);
             SeedChangeLog(pearsonProviderTwoLearnerOneRegPathway, ChangeType.AddPathwayResult, "admin-user-03", new DateTime(2022, 12, 31), "zendesk-ticket-03");
 
             TqAwardingOrganisation ncfe = SeedAwardingOrganisation(EnumAwardingOrganisation.Ncfe);
             TqProvider ncfeProviderOne = SeedProvider(ncfe, 3, "ncfe-provider-01");
 
-            TqRegistrationProfile ncfeProviderOneLearnerOne = SeedRegistrationProfile(31, "Eric", "Johnson", new DateTime(2003, 3, 1));
+            TqRegistrationProfile ncfeProviderOneLearnerOne = SeedRegistrationProfile(3100000000, "Eric", "Johnson", new DateTime(2003, 3, 1));
             TqRegistrationPathway ncfeProviderOneLearnerOneRegPathway = SeedRegistrationPathway(ncfeProviderOneLearnerOne, ncfeProviderOne, 2021, RegistrationPathwayStatus.Withdrawn);
             SeedChangeLog(ncfeProviderOneLearnerOneRegPathway, ChangeType.AssessmentEntryAdd, "admin-user-04", new DateTime(2020, 6, 15), "zendesk-ticket-04");
+
+            TqRegistrationProfile ncfeProviderOneLearnerTwo = SeedRegistrationProfile(3200000000, "Sue", "Baker", new DateTime(2005, 11, 30));
+            TqRegistrationPathway ncfeProviderOneLearnerTwoRegPathway = SeedRegistrationPathway(ncfeProviderOneLearnerTwo, ncfeProviderOne, 2023, RegistrationPathwayStatus.Active);
+            SeedChangeLog(ncfeProviderOneLearnerTwoRegPathway, ChangeType.AddSpecialismResult, "admin-user-05", new DateTime(2024, 4, 6), "1200000000");
 
             DbContext.SaveChanges();
         }

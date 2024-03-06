@@ -34,20 +34,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
             if (!string.IsNullOrWhiteSpace(request.SearchKey))
             {
-                bool isSearchKeyUln = request.SearchKey.IsLong();
-                if (isSearchKeyUln)
-                {
-                    Expression<Func<ChangeLog, bool>> ulnExpression = p => p.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == request.SearchKey.ToLong();
-                    changeLogQueryable = changeLogQueryable.Where(ulnExpression);
-                }
-                else
-                {
-                    Expression<Func<ChangeLog, bool>> surnameOrZendeskTicketIdExpression =
-                        p => EF.Functions.Like(p.TqRegistrationPathway.TqRegistrationProfile.Lastname.Trim(), request.SearchKey)
+                Expression<Func<ChangeLog, bool>> queryExpression =
+                        p => (request.SearchKey.IsLong() && p.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == request.SearchKey.ToLong())
+                        || EF.Functions.Like(p.TqRegistrationPathway.TqRegistrationProfile.Lastname.Trim(), request.SearchKey)
                         || EF.Functions.Like(p.ZendeskTicketID.Trim(), request.SearchKey);
 
-                    changeLogQueryable = changeLogQueryable.Where(surnameOrZendeskTicketIdExpression);
-                }
+                changeLogQueryable = changeLogQueryable.Where(queryExpression);
             }
 
             int filteredRecordsCount = await changeLogQueryable.CountAsync();
