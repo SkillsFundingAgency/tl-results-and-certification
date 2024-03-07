@@ -160,6 +160,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;b&gt; An assessment entry has been added&lt;/b&gt;.
+        /// </summary>
+        public static string Message_Notification_Success {
+            get {
+                return ResourceManager.GetString("Message_Notification_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You can enter up to 2,000 characters.
         /// </summary>
         public static string Message_You_Can_Enter_Up_To_Characters {
@@ -174,6 +183,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static string Message_You_Have_Characters_Remaining {
             get {
                 return ResourceManager.GetString("Message_You_Have_Characters_Remaining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No assessment entry recorded for.
+        /// </summary>
+        public static string No_Assessment_Recorded {
+            get {
+                return ResourceManager.GetString("No_Assessment_Recorded", resourceCulture);
             }
         }
         

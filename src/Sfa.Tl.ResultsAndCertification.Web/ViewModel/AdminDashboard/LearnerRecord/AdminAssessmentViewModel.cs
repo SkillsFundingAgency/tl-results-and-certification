@@ -27,5 +27,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
         public bool IsResultChangeAllowed { get; set; }
 
         public TableButtonModel ActionButton { get; set; }
+
+        public string AddResultRouteName { get; set; }
+
+        public string ChangeResultRoute { get; set; }
     }
 }

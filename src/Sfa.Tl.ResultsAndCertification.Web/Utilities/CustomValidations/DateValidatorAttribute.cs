@@ -1,8 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
-using System.Linq;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations
 {
@@ -10,103 +9,90 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations
     {
         public string Property { get; set; }
         public Type ErrorResourceType { get; set; }
-        public string ErrorResourceName { get; set; }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            object instance = validationContext.ObjectInstance;
-            Type type = instance.GetType();
-            var propVal = type.GetProperty(Property).GetValue(instance);
+            if (value is null || value is not string)
+            {
+                return ValidationResult.Success;
+            }
 
-            // Validate input parameters
-            var dateTokens = value.ToString().Split("/");
-            if (dateTokens.Count() != 3)
-                throw new Exception($"Invalid usage of DateValidationAttribute. Parameters Value: {value}, PropertyName {Property}");
+            string[] tokens = ((string)value).Split("/");
 
-            var year = dateTokens[0];
-            var month = dateTokens[1];
-            var day = dateTokens[2];
-            
-            // All empty
-            if (string.IsNullOrWhiteSpace(day) && string.IsNullOrWhiteSpace(month) && string.IsNullOrWhiteSpace(year))
-                return new ValidationResult(string.Format(GetResourceMessage("Validation_Date_When_Change_Requested_Blank_Text"), propVal));
+            if (tokens.Length != 3)
+            {
+                return ValidationResult.Success;
+            }
 
-            // Day and Month empty
-            if (string.IsNullOrWhiteSpace(day) && string.IsNullOrWhiteSpace(month))
-                return new ValidationResult(string.Format(GetResourceMessage("Validation_Date_When_Change_Requested_Blank_Text"), propVal));
+            string year = tokens[0];
+            string month = tokens[1];
+            string day = tokens[2];
 
-            // Day and Year empty
-            if (string.IsNullOrWhiteSpace(day) && string.IsNullOrWhiteSpace(year))
-                return new ValidationResult(string.Format(GetResourceMessage("Validation_Date_When_Change_Requested_Blank_Text"), propVal));
+            if (ContainsBlankText(year, month, day))
+            {
+                return CreateValidationResult("Validation_Date_When_Change_Requested_Blank_Text");
+            }
 
-            // Month and Year empty
-            if (string.IsNullOrWhiteSpace(month) && string.IsNullOrWhiteSpace(year))
-                return new ValidationResult(string.Format(GetResourceMessage("Validation_Date_When_Change_Requested_Blank_Text"), propVal));
+            if (!IsValidDate(year, month, day, out DateTime dateTime))
+            {
+                return CreateValidationResult("Validation_Date_When_Change_Requested_Invalid_Text");
+            }
 
-            // Day empty
-            if (string.IsNullOrWhiteSpace(day))
-                return new ValidationResult(string.Format(GetResourceMessage("Validation_Date_When_Change_Requested_Blank_Text"), propVal));
+            var systemProvider = (ISystemProvider)validationContext.GetService(typeof(ISystemProvider));
 
-            // Month empty
-            if (string.IsNullOrWhiteSpace(month))
-                return new ValidationResult(string.Format(GetResourceMessage("Validation_Date_When_Change_Requested_Blank_Text"), propVal));
-
-            // Year empty
-            if (string.IsNullOrWhiteSpace(year))
-                return new ValidationResult(string.Format(GetResourceMessage("Validation_Date_When_Change_Requested_Blank_Text"), propVal));
-
-            day = day.PadLeft(2, '0');
-            month = month.PadLeft(2, '0');
-
-            // Invalid Day/Month/Year
-            var isYearValid = (year.TrimStart('0').Length == 4) && string.Concat("01", "01", year).IsDateTimeWithFormat();
-            var isMonthValid = string.Concat("01", month, 2020).IsDateTimeWithFormat();
-
-            bool isDayValid;
-            if (isMonthValid && isYearValid)
-                isDayValid = string.Concat(day, month, year).IsDateTimeWithFormat();
-            else
-                isDayValid = string.Concat(day, "01", 2020).IsDateTimeWithFormat();
-
-            // Month and Year invalid
-            if (!isMonthValid && !isYearValid && int.TryParse(day, out int intDay) && (intDay >= 1 && intDay <= 31))
-                return new ValidationResult(string.Format(GetResourceMessage("Validation_Date_When_Change_Requested_Invalid_Text"), propVal));
-
-            // Day and Year invalid
-            if (!isDayValid && !isYearValid && int.TryParse(month, out int intMonth) && (intMonth >= 1 && intMonth <= 12))
-                return new ValidationResult(string.Format(GetResourceMessage("Validation_Date_When_Change_Requested_Invalid_Text"), propVal));
-
-            // Day and Month invalid
-            if (!isDayValid && !isMonthValid && int.TryParse(year, out int intYear) && (intYear >= 1000 && intYear <= 9999))
-                return new ValidationResult(string.Format(GetResourceMessage("Validation_Date_When_Change_Requested_Invalid_Text"), propVal));
-
-            // Day only invalid
-            if (isMonthValid && isYearValid && !isDayValid)
-                return new ValidationResult(string.Format(GetResourceMessage("Validation_Date_When_Change_Requested_Invalid_Text"), propVal));
-
-            // Month only invalid
-            if (isDayValid && isYearValid && !isMonthValid)
-                return new ValidationResult(string.Format(GetResourceMessage("Validation_Date_When_Change_Requested_Invalid_Text"), propVal));
-
-            // Year only invalid
-            if (isDayValid && isMonthValid && !isYearValid)
-                return new ValidationResult(string.Format(GetResourceMessage("Validation_Date_When_Change_Requested_Invalid_Text"), propVal));
-
-            // Invalid date
-            if (!string.Concat(day, month, year).IsDateTimeWithFormat())
-                return new ValidationResult(string.Format(GetResourceMessage("Validation_Date_When_Change_Requested_Invalid_Text"), propVal));
-
-            // Future date
-            var date = string.Concat(day, month, year).ParseStringToDateTime();
-            if (date > DateTime.UtcNow)
-                return new ValidationResult(string.Format(GetResourceMessage("Validation_Date_When_Change_Requested_Future_Date_Text"), propVal));
+            bool isFutureDate = dateTime > systemProvider.Today;
+            if (isFutureDate)
+            {
+                return CreateValidationResult("Validation_Date_When_Change_Requested_Future_Date_Text");
+            }
 
             return ValidationResult.Success;
         }
 
-        private string GetResourceMessage(string errorResourceName)
+        private static bool ContainsBlankText(string year, string month, string day)
+            => IsBlankText(year) || IsBlankText(month) || IsBlankText(day);
+
+        private static bool IsBlankText(string value)
+            => string.IsNullOrWhiteSpace(value);
+
+        private static bool IsValidDate(string year, string month, string day, out DateTime parsed)
         {
-            return CommonHelper.GetResourceMessage(errorResourceName, ErrorResourceType);
+            parsed = DateTime.MinValue;
+
+            bool allNumeric = IsNumericText(year, out int parsedYear) & IsNumericText(month, out int parsedMonth) & IsNumericText(day, out int parsedDay);
+            if (!allNumeric)
+            {
+                return false;
+            }
+
+            bool validNumbers = IsBetween(parsedYear, 1000, 9999) && IsBetween(parsedMonth, 1, 12) && IsBetween(parsedDay, 1, 31);
+            if (!validNumbers)
+            {
+                return false;
+            }
+
+            try
+            {
+                parsed = new DateTime(parsedYear, parsedMonth, parsedDay);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool IsNumericText(string value, out int parsed)
+            => int.TryParse(value, out parsed);
+
+        private static bool IsBetween(int number, int from, int to)
+            => number >= from && number <= to;
+
+        private ValidationResult CreateValidationResult(string resourceName)
+        {
+            string message = CommonHelper.GetResourceMessage(resourceName, ErrorResourceType);
+            return new ValidationResult(message, new[] { Property });
         }
     }
 }

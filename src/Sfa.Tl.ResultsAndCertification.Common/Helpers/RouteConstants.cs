@@ -441,6 +441,29 @@
         public const string SubmitReviewRemoveCoreAssessmentEntry = "SubmitReviewRemoveCoreAssessmentEntry";
         public const string AdminReviewRemoveSpecialismAssessmentEntry = "AdminReviewRemoveSpecialismAssessmentEntry";
         public const string SubmitReviewRemoveSpecialismAssessmentEntry = "SubmitReviewRemoveSpecialismAssessmentEntry";
+        public const string AdminAddPathwayResultClear = "AdminAddPathwayResultClear";
+        public const string AdminAddPathwayResult = "AdminAddPathwayResult";
+        public const string SubmitAdminAddPathwayResult = "SubmitAdminAddPathwayResult";
+        public const string AdminAddPathwayResultReviewChanges = "AdminAddPathwayResultReviewChanges";
+        public const string SubmitAdminAddPathwayResultReviewChanges = "SubmitAdminAddPathwayResultReviewChanges";
+        public const string AdminAddSpecialismResultClear = "AdminAddSpecialismResultClear";
+        public const string AdminAddSpecialismResult = "AdminAddSpecialismResult";
+        public const string SubmitAdminAddSpecialismResult = "SubmitAdminAddSpecialismResult";
+        public const string AdminAddSpecialismResultReviewChanges = "AdminAddSpecialismResultReviewChanges";
+        public const string SubmitAdminAddSpecialismResultReviewChanges = "SubmitAdminAddSpecialismResultReviewChanges";
+
+        public const string AdminCoreComponentAssessmentEntryClear = "AdminCoreComponentAssessmentEntryClear";
+        public const string AdminOccupationalSpecialisAssessmentEntryClear = "AdminOccupationalSpecialisAssessmentEntryClear";
+
+        public const string AdminChangePathwayResult = "AdminChangePathwayResult";
+        public const string AdminChangePathwayResultClear = "AdminChangePathwayResultClear";
+        public const string SubmitAdminChangePathwayResult = "SubmitAdminChangePathwayResult";
+        public const string AdminChangeSpecialismResult = "AdminChangeSpecialismResult";
+        public const string AdminChangeSpecialismResultClear = "AdminChangeSpecialismResultClear";
+        public const string SubmitAdminChangeSpecialismResult = "SubmitAdminChangeSpecialismResult";
+        public const string AdminChangeSpecialismResultReviewChanges = "AdminChangeSpecialismResultReviewChanges";
+        public const string AdminChangePathwayResultReviewChanges = "AdminAddPathwayResultReviewChanges";
+
         #endregion
     }
 }

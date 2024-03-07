@@ -12,7 +12,11 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             AdminSearchLearnerFilters apiResponse = await _internalApiClient.GetAdminSearchLearnerFiltersAsync();
             return _mapper.Map<AdminSearchLearnerFiltersViewModel>(apiResponse);
         }
-     
+
         public async Task<AdminSearchLearnerDetailsListViewModel> GetAdminSearchLearnerDetailsListAsync(AdminSearchLearnerCriteriaViewModel adminSearchCriteria)
         {
             var adminSearchLearnerRequest = _mapper.Map<AdminSearchLearnerRequest>(adminSearchCriteria);
@@ -73,7 +77,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                     SeriesName = a.Name
                 });
 
-             var validAssessments = activeAssessmentIncludingPreviousYear.Except(learnerRecord.Pathway.PathwayAssessments, new AssessmentComparer()).ToList();
+            var validAssessments = activeAssessmentIncludingPreviousYear.Except(learnerRecord.Pathway.PathwayAssessments, new AssessmentComparer()).ToList();
 
             AdminCoreComponentViewModel response = _mapper.Map<AdminCoreComponentViewModel>(learnerRecord, opt =>
             {
@@ -130,9 +134,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<bool> ProcessChangeIndustryPlacementAsync(AdminReviewChangesIndustryPlacementViewModel adminChangeIpViewModel)
         {
-            var reviewChangeStartYearRequest = _mapper.Map<ReviewChangeIndustryPlacementRequest>(adminChangeIpViewModel);
-            return await _internalApiClient.ProcessChangeIndustryPlacementAsync(reviewChangeStartYearRequest);
+            var reviewIndustryPlacementRequest = _mapper.Map<ReviewChangeIndustryPlacementRequest>(adminChangeIpViewModel);
+            return await _internalApiClient.ProcessChangeIndustryPlacementAsync(reviewIndustryPlacementRequest);
         }
+
+        #region Remove assessment
 
         public Task<AdminRemovePathwayAssessmentEntryViewModel> GetRemovePathwayAssessmentEntryAsync(int registrationPathwayId, int pathwayAssessmentId)
            => GetRemoveAssessmentEntryAsync<AdminRemovePathwayAssessmentEntryViewModel>(registrationPathwayId, pathwayAssessmentId);
@@ -149,5 +155,142 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 opt.Items[Constants.AssessmentId] = assessmentId;
             });
         }
+
+        public async Task<bool> ProcessAddCoreAssessmentRequestAsync(AdminReviewChangesCoreAssessmentViewModel adminReviewChangesCoreAssessmentViewModel)
+        {
+            var reviewAddCoreAssessmentRequest = _mapper.Map<ReviewAddCoreAssessmentRequest>(adminReviewChangesCoreAssessmentViewModel);
+            return await _internalApiClient.ProcessAddCoreAssessmentRequestAsync(reviewAddCoreAssessmentRequest);
+        }
+
+        public async Task<bool> ProcessAddSpecialismAssessmentRequestAsync(AdminReviewChangesSpecialismAssessmentViewModel adminReviewChangesSpeciaismAssessmentViewModel)
+        {
+            var reviewAddSpecialismAssessmentRequest = _mapper.Map<ReviewAddSpecialismAssessmentRequest>(adminReviewChangesSpeciaismAssessmentViewModel);
+            return await _internalApiClient.ProcessAddSpecialismAssessmentRequestAsync(reviewAddSpecialismAssessmentRequest);
+        }
+
+        public async Task<bool> ProcessRemoveAssessmentEntry(AdminReviewRemoveCoreAssessmentEntryViewModel model)
+        {
+            var reviewRemoveAssessmentEntryRequest = _mapper.Map<ReviewRemoveAssessmentEntryRequest>(model);
+            return await _internalApiClient.RemoveAssessmentEntryAsync(reviewRemoveAssessmentEntryRequest);
+        }
+
+        public async Task<bool> ProcessRemoveSpecialismAssessmentEntryAsync(AdminReviewRemoveSpecialismAssessmentEntryViewModel model)
+        {
+            var reviewRemoveSpecialismEntryRequest = _mapper.Map<ReviewRemoveAssessmentEntryRequest>(model);
+            return await _internalApiClient.RemoveSpecialAssessmentEntryAsync(reviewRemoveSpecialismEntryRequest);
+        }
+
+        #endregion
+
+        #region Add result
+
+        public Task<AdminAddPathwayResultViewModel> GetAdminAddPathwayResultAsync(int registrationPathwayId, int assessmentId)
+            => GetAdminAddResultAsync<AdminAddPathwayResultViewModel>(registrationPathwayId, assessmentId, LookupCategory.PathwayComponentGrade);
+
+        public async Task LoadAdminAddPathwayResultGrades(AdminAddPathwayResultViewModel model)
+            => model.Grades = await GetAdminAddResultGrades(LookupCategory.PathwayComponentGrade);
+
+        public Task<AdminAddSpecialismResultViewModel> GetAdminAddSpecialismResultAsync(int registrationPathwayId, int assessmentId)
+            => GetAdminAddResultAsync<AdminAddSpecialismResultViewModel>(registrationPathwayId, assessmentId, LookupCategory.SpecialismComponentGrade);
+
+        public async Task LoadAdminAddSpecialismResultGrades(AdminAddSpecialismResultViewModel model)
+            => model.Grades = await GetAdminAddResultGrades(LookupCategory.SpecialismComponentGrade);
+
+        private async Task<TAddResultViewModel> GetAdminAddResultAsync<TAddResultViewModel>(int registrationPathwayId, int assessmentId, LookupCategory lookupCategory, bool ischange = false)
+            where TAddResultViewModel : class
+        {
+            Task<AdminLearnerRecord> learnerRecordTask = _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
+            Task<IList<LookupData>> gradesTask = _internalApiClient.GetLookupDataAsync(lookupCategory);
+
+            await Task.WhenAll(learnerRecordTask, gradesTask);
+
+            AdminLearnerRecord learnerRecord = learnerRecordTask.Result;
+            IList<LookupData> grades = gradesTask.Result;
+            if (ischange)
+            {
+                grades.Insert(grades.Count, new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageSpecialismResult.Option_Remove_Result });
+            }
+
+            if (learnerRecord == null || grades == null)
+                return null;
+
+            return _mapper.Map<TAddResultViewModel>(learnerRecord, opt =>
+            {
+                opt.Items[Constants.AssessmentId] = assessmentId;
+                opt.Items["grades"] = grades;
+            });
+        }
+
+        private async Task<List<LookupViewModel>> GetAdminAddResultGrades(LookupCategory lookupCategory)
+        {
+            IList<LookupData> grades = await _internalApiClient.GetLookupDataAsync(lookupCategory);
+            return _mapper.Map<List<LookupViewModel>>(grades);
+        }
+
+        public AdminAddPathwayResultReviewChangesViewModel CreateAdminAddPathwayResultReviewChanges(AdminAddPathwayResultViewModel model)
+            => _mapper.Map<AdminAddPathwayResultReviewChangesViewModel>(model);
+
+        public Task<bool> ProcessAddPathwayResultReviewChangesAsync(AdminAddPathwayResultReviewChangesViewModel model)
+        {
+            if (model == null)
+            {
+                return Task.FromResult(false);
+            }
+
+            var request = _mapper.Map<AddPathwayResultRequest>(model);
+            return _internalApiClient.ProcessAdminAddPathwayResultAsync(request);
+        }
+
+        public AdminAddSpecialismResultReviewChangesViewModel CreateAdminAddSpecialismResultReviewChanges(AdminAddSpecialismResultViewModel model)
+            => _mapper.Map<AdminAddSpecialismResultReviewChangesViewModel>(model);
+
+        public Task<bool> ProcessAddSpecialismResultReviewChangesAsync(AdminAddSpecialismResultReviewChangesViewModel model)
+        {
+            if (model == null)
+            {
+                return Task.FromResult(false);
+            }
+
+            var request = _mapper.Map<AddSpecialismResultRequest>(model);
+            return _internalApiClient.ProcessAdminAddSpecialismResultAsync(request);
+        }
+
+        #endregion
+
+        #region change Result
+        public async Task<AdminChangePathwayResultViewModel> GetAdminChangePathwayResultAsync(int registrationPathwayId, int assessmentId)
+        {
+            var viewmodel = await GetAdminAddResultAsync<AdminChangePathwayResultViewModel>(registrationPathwayId, assessmentId, LookupCategory.PathwayComponentGrade, true);
+            viewmodel.Grades.Remove(viewmodel.Grades.Where(t => t.Value == viewmodel.Grade).FirstOrDefault());
+            return viewmodel;
+
+        }
+
+        public async Task LoadAdminChangePathwayResultGrades(AdminChangePathwayResultViewModel model)
+          => model.Grades = await GetAdminChangeResultGrades(LookupCategory.PathwayComponentGrade, model.Grade);
+
+
+        private async Task<List<LookupViewModel>> GetAdminChangeResultGrades(LookupCategory lookupCategory, string grade)
+        {
+            IList<LookupData> grades = await _internalApiClient.GetLookupDataAsync(lookupCategory);
+            grades.Remove(grades.Where(t => t.Value == grade).FirstOrDefault());
+            grades.Insert(grades.Count, new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageSpecialismResult.Option_Remove_Result });
+            return _mapper.Map<List<LookupViewModel>>(grades);
+        }
+
+        public async Task<AdminChangeSpecialismResultViewModel> GetAdminChangeSpecialismResultAsync(int registrationPathwayId, int assessmentId)
+        {
+            var viewmodel = await GetAdminAddResultAsync<AdminChangeSpecialismResultViewModel>(registrationPathwayId, assessmentId, LookupCategory.SpecialismComponentGrade, true);
+            viewmodel.Grades.Remove(viewmodel.Grades.Where(t => t.Value == viewmodel.Grade).FirstOrDefault());
+            return viewmodel;
+
+        }
+
+        public async Task LoadAdminChangeSpecialismResultGrades(AdminChangeSpecialismResultViewModel model)
+         => model.Grades = await GetAdminChangeResultGrades(LookupCategory.SpecialismComponentGrade, model.Grade);
+
+
+
+        #endregion
     }
 }

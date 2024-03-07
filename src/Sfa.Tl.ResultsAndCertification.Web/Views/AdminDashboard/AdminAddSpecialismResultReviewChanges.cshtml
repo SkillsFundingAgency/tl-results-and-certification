@@ -1,0 +1,141 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result.AdminAddSpecialismResultReviewChangesViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+
+@{
+    ViewData["Title"] = AdminAddSpecialismResultReviewChanges.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <form asp-route="@RouteConstants.SubmitAdminAddSpecialismResultReviewChanges">
+
+            <input type="hidden" asp-for="RegistrationPathwayId" />
+            <input type="hidden" asp-for="SpecialismAssessmentId" />
+            <input type="hidden" asp-for="SelectedGradeId" />
+            <input type="hidden" asp-for="SelectedGradeValue" />
+
+            <!-- Review changes to assessment result page header -->
+            <div class="record-header">
+                <h1 class="govuk-heading-xl">
+                    @AdminAddSpecialismResultReviewChanges.Heading_Review_Changes_Assessment_Result
+                </h1>
+            </div>
+
+            <partial name="_ValidationSummary" />
+
+            <!-- Personal details -->
+            <input type="hidden" asp-for="Learner" />
+            <input type="hidden" asp-for="Uln" />
+            <input type="hidden" asp-for="Provider" />
+            <input type="hidden" asp-for="Tlevel" />
+            <input type="hidden" asp-for="StartYear" />
+
+            <div class="govuk-!-margin-bottom-9">
+                <h2 class="govuk-heading-m">
+                    @AdminAddSpecialismResultReviewChanges.Heading_Personal_Details
+                </h2>
+
+                <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+                    <vc:summary-item model=Model.SummaryLearner></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryTlevel></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryStartYear></vc:summary-item>
+                </dl>
+            </div>
+
+            <!-- Occupational specialism -->
+            <input type="hidden" asp-for="SpecialismName" />
+            <input type="hidden" asp-for="ExamPeriod" />
+
+            <div class="govuk-!-margin-bottom-9">
+                <h2 class="govuk-heading-m">
+                    @string.Format(AdminAddSpecialismResultReviewChanges.Specialism_Heading_Text, Model.SpecialismName)
+                </h2>
+                <dl class="govuk-summary-list">
+                    <vc:summary-item model=Model.SummaryExamPeriod></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryGrade></vc:summary-item>
+                </dl>
+            </div>
+
+            <!-- Change summary -->
+            <h2 class="govuk-heading-m">
+                @AdminAddSpecialismResultReviewChanges.Heading_Change_Summary
+            </h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">@AdminAddSpecialismResultReviewChanges.Title_Change_Summary_Change_Text</dt>
+                    <dt class="govuk-summary-list__key">@AdminAddSpecialismResultReviewChanges.Title_Change_Summary_From_Text</dt>
+                    <dt class="govuk-summary-list__key">@AdminAddSpecialismResultReviewChanges.Title_Change_Summary_To_Text</dt>
+                    <dt class="govuk-summary-list__key"></dt>
+                </div>
+                <vc:summary-item model=Model.SummarySelectedGrade></vc:summary-item>
+            </dl>
+
+            <!-- Who asked for this change? -->
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h2 class="govuk-fieldset__heading">
+                            @AdminAddSpecialismResultReviewChanges.Heading_Who_Has_Asked_For_This_Change
+                        </h2>
+                    </legend>
+
+                    <!-- Contact name -->
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-label--s" for="contactname">@AdminAddSpecialismResultReviewChanges.Title_Contact_Name_Text</label>
+                        <input id="contactname" class="govuk-input govuk-input--width-20" asp-for="ContactName" sfa-validation-class="govuk-input-error" sfa-validation-for="ContactName" type="text" maxlength="100">
+                    </div>
+
+                    <!-- Date of request -->
+                    <div class="govuk-form-group" id-"requestdate">
+                        <label class="govuk-label govuk-label--s" for="dateofrequest">@AdminAddSpecialismResultReviewChanges.Title_Date_Of_Request</label>
+                        <div class="govuk-date-input__item">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label govuk-date-input__label" for="day">@AdminAddSpecialismResultReviewChanges.Title_Day_Text</label>
+                                <input id="day" asp-for="Day" sfa-validation-for="Day" sfa-validation-class="govuk-input--error" class="govuk-input govuk-date-input__input govuk-input--width-2" inputmode="numeric" maxlength="2">
+                            </div>
+                        </div>
+                        <div class="govuk-date-input__item">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label govuk-date-input__label" for="month">@AdminAddSpecialismResultReviewChanges.Title_Month_Text</label>
+                                <input id="month" asp-for="Month" sfa-validation-for="Month" sfa-validation-class="govuk-input--error" class="govuk-input govuk-date-input__input govuk-input--width-2" inputmode="numeric" maxlength="2">
+                            </div>
+                        </div>
+                        <div class="govuk-date-input__item">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label govuk-date-input__label" for="year">@AdminAddSpecialismResultReviewChanges.Title_Year_Text</label>
+                                <input id="year" asp-for="Year" sfa-validation-for="Year" sfa-validation-class="govuk-input--error" class="govuk-input govuk-date-input__input govuk-input--width-4" inputmode="numeric" maxlength="4">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reason for change -->
+                    <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="2000">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-label--s" for="changereason">@AdminAddSpecialismResultReviewChanges.Title_Reason_For_Change_Text</label>
+                            <textarea class="govuk-textarea govuk-js-character-count" id="changereason" name="changereason" rows="5" maxlength="2000" asp-for="ChangeReason"></textarea>
+                            <partial name="Partials/_changeReasonCharacterHint.cshtml" />
+                        </div>
+                    </div>
+
+                    <!-- Zendesk ticket ID -->
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-label--s" for="zenticketid">@AdminAddSpecialismResultReviewChanges.Title_Zendesk_Ticket_Id</label>
+                        <input id="zenticketid" class="govuk-input govuk-input--width-10" asp-for="ZendeskTicketId" type="text" maxlength="10">
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="govuk-button-group">
+                <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminAddSpecialismResultReviewChanges.Button_Submit</button>
+                <a id="returnButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminAddSpecialismResultReviewChanges.Button_Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
