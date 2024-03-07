@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminChangeLogLoad
                     new AdminSearchChangeLog
                     {
                         ChangeLogId = 1,
-                        DateAndTimeOfChange = new DateTime(2024, 1, 1),
+                        DateAndTimeOfChange = new DateTime(2023, 8, 31, 9, 31, 0),
                         ZendeskTicketID = "1234567-AB",
                         LearnerFirstname = "Jessica",
                         LearnerLastname = "Johnson",
