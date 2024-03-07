@@ -6,7 +6,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
     {
         public int ChangeLogId { get; set; }
 
-        public DateTime DateAndTimeOfChange { get; set; }
+        public string DateAndTimeOfChange { get; set; }
 
         public string ZendeskTicketID { get; set; }
 

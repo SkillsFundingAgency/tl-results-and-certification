@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog;
+using System;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -32,16 +33,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        //[Route("admin/search-learner-records-clear", Name = RouteConstants.AdminSearchLearnersRecordsClear)]
-        public async Task<IActionResult> AdminSearchLearnersRecordsClearAsync()
+        [Route("admin/change-log-clear", Name = RouteConstants.AdminSearchChangeLogClear)]
+        public async Task<IActionResult> AdminSearchChangeLogClearAsync()
         {
             await _cacheService.RemoveAsync<AdminSearchChangeLogViewModel>(CacheKey);
-            return RedirectToRoute(RouteConstants.AdminSearchLearnersRecords);
+            return RedirectToRoute(RouteConstants.AdminSearchChangeLog);
         }
 
         [HttpGet]
-        //[Route("admin/search-learner-records/{pageNumber:int?}", Name = RouteConstants.AdminSearchLearnersRecords)]
-        public async Task<IActionResult> AdminSearchLearnersAsync(int? pageNumber = default)
+        [Route("admin/change-log/{pageNumber:int?}", Name = RouteConstants.AdminSearchChangeLog)]
+        public async Task<IActionResult> AdminSearchChangeLogAsync(int? pageNumber = default)
         {
             var viewModel = await _cacheService.GetAsync<AdminSearchChangeLogViewModel>(CacheKey);
             if (viewModel == null)
@@ -53,17 +54,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             var searchCriteria = viewModel.SearchCriteriaViewModel;
-
-            if (!searchCriteria.IsSearchKeyApplied)
-            {
-                viewModel.ClearChangeLogDetails();
-                return View(viewModel);
-            }
+            searchCriteria.PageNumber = pageNumber;
 
             AdminSearchChangeLogViewModel adminSearchChangeLogViewModel = await _loader.SearchChangeLogsAsync(searchCriteria.SearchKey, pageNumber);
 
             await _cacheService.SetAsync(CacheKey, adminSearchChangeLogViewModel);
-            return View(viewModel);
+            return View(adminSearchChangeLogViewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/change-log-search-key", Name = RouteConstants.SubmitAdminSearchChangeLogSearchKey)]
+        public Task<IActionResult> AdminSearchChangeLogSearchKeyAsync(AdminSearchChangeLogCriteriaViewModel searchCriteriaViewModel)
+            => RunAsync(RouteConstants.SubmitAdminSearchChangeLogSearchKey, p => p.SetSearchKey(searchCriteriaViewModel.SearchKey));
+
+        [HttpPost]
+        [Route("admin/change-log-clear-key", Name = RouteConstants.SubmitAdminSearchChangeLogClearKey)]
+        public Task<IActionResult> AdminSearchChangeLogClearKeyAsync()
+            => RunAsync(RouteConstants.SubmitAdminSearchChangeLogClearKey, p => p.ClearSearchKey());
+
+        private async Task<IActionResult> RunAsync(string endpoint, Action<AdminSearchChangeLogViewModel> action)
+        {
+            var viewModel = await _cacheService.GetAsync<AdminSearchChangeLogViewModel>(CacheKey);
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No AdminSearchChangeLogViewModel cache data found. Method: {endpoint}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            action(viewModel);
+
+            await _cacheService.SetAsync(CacheKey, viewModel);
+            return RedirectToRoute(RouteConstants.AdminSearchChangeLog, new { pageNumber = viewModel.SearchCriteriaViewModel.PageNumber });
         }
     }
 }

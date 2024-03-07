@@ -69,6 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
 
             services.AddApplicationInsightsTelemetry();
             services.AddControllers();
+            services.AddSwaggerGen();
 
             services.Configure<ApiBehaviorOptions>(options =>
             {
@@ -101,6 +102,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             if (_env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
             else
             {

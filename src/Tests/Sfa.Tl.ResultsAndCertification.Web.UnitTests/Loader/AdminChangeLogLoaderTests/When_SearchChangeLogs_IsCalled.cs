@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminChangeLogLoad
                     new AdminSearchChangeLogDetailsViewModel
                     {
                         ChangeLogId = 1,
-                        DateAndTimeOfChange = new DateTime(2024, 1, 1),
+                        DateAndTimeOfChange = "31 August 2023 9:31am",
                         ZendeskTicketID = "1234567-AB",
                         Learner = "Jessica Johnson (1234567890)",
                         Provider = "Barnsley College (10000536)",

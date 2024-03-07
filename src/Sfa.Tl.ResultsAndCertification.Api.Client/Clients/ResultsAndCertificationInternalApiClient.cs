@@ -476,7 +476,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             return await PostAsync<ReviewAddSpecialismAssessmentRequest, bool>(ApiConstants.ProcessAddSpecialismAssessmentUri, request);
         }
-        
+
         public async Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request)
         {
             return await PostAsync<ReviewRemoveAssessmentEntryRequest, bool>(ApiConstants.ReviewRemoveAssessmentEntryUri, request);
@@ -488,10 +488,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         }
 
         public Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request)
-            => PostAsync<AddPathwayResultRequest, bool>(ApiConstants.ProcessAdminAddPathwayResult, request);
+            => PostAsync<AddPathwayResultRequest, bool>(ApiConstants.ProcessAdminAddPathwayResultUri, request);
 
         public Task<bool> ProcessAdminAddSpecialismResultAsync(AddSpecialismResultRequest request)
-            => PostAsync<AddSpecialismResultRequest, bool>(ApiConstants.ProcessAdminAddSpecialismResult, request);
+            => PostAsync<AddSpecialismResultRequest, bool>(ApiConstants.ProcessAdminAddSpecialismResultUri, request);
 
         #endregion
 
@@ -499,7 +499,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public Task<PagedResponse<AdminSearchChangeLog>> SearchChangeLogsAsync(AdminSearchChangeLogRequest request)
         {
-            var requestUri = ApiConstants.SearchChangeLogs;
+            var requestUri = ApiConstants.SearchChangeLogsUri;
             return PostAsync<AdminSearchChangeLogRequest, PagedResponse<AdminSearchChangeLog>>(requestUri, request);
         }
 

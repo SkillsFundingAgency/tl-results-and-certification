@@ -1,0 +1,83 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog.AdminSearchChangeLogViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog
+
+@{
+    ViewData["Title"] = AdminSearchChangeLog.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+        <!-- Change log -->
+        <h1 class="govuk-heading-xl">@AdminSearchChangeLog.Heading_Change_Log</h1>
+
+        <!-- Search by Zendesk ticket ID, ULN, or learner last name  -->
+        <partial name="Partials/_searchKey.cshtml" model="Model.SearchCriteriaViewModel" />
+
+        @if (!Model.ContainsResults)
+        {
+            <!-- There are no matching results -->
+            <div class="govuk-!-font-size-19">
+                <h2 class="govuk-heading-m">@AdminSearchChangeLog.Heading_No_Matching_Results</h2>
+                <p class="govuk-body">@AdminSearchChangeLog.List_Title_Improve_Your_Search_By</p>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>@AdminSearchChangeLog.List_Item_Checking_Zendesk_Ticket_ID</li>
+                    <li>@AdminSearchChangeLog.List_Item_Enter_ULN</li>
+                    <li>@AdminSearchChangeLog.List_Item_Checking_Lastnames_Spelling</li>
+                </ul>
+            </div>
+        }
+        else
+        {
+            @if (Model.ContainsMultiplePages)
+            {
+                <!-- Viewing X-XX of XXX changes -->
+                <h2 class="govuk-body">@string.Format(Model.Pagination.PaginationSummary, @Model.PagerInfo.RecordFrom, @Model.PagerInfo.RecordTo, @Model.PagerInfo.TotalItems)</h2>
+            }
+
+            <table class="govuk-table responsive-table">
+                <thead role="rowgroup">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">@AdminSearchChangeLog.Table_Column_Date_And_Time_Of_Change</th>
+                        <th scope="col" class="govuk-table__header">@AdminSearchChangeLog.Table_Column_Zendesk_Ticket_Id</th>
+                        <th scope="col" class="govuk-table__header">@AdminSearchChangeLog.Table_Column_Learner_Uln</th>
+                        <th scope="col" class="govuk-table__header">@AdminSearchChangeLog.Table_Column_Provider_Ukprn</th>
+                        <th scope="col" class="govuk-table__header">@AdminSearchChangeLog.Table_Column_Last_Updated_By</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var changeLog in Model.ChangeLogDetails)
+                    {
+                        <tr class="govuk-table__row">
+                            <td class="govuk-table__cell">
+                                @changeLog.DateAndTimeOfChange
+                            </td>
+                            <td class="govuk-table__cell">
+                                @changeLog.ZendeskTicketID
+                            </td>
+                            <td class="govuk-table__cell">
+                                @changeLog.Learner
+                            </td>
+                            <td class="govuk-table__cell">
+                                @changeLog.Provider
+                            </td>
+                            <td class="govuk-table__cell">
+                                @changeLog.LastUpdatedBy
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            @if (Model.ContainsMultiplePages)
+            {
+                <vc:pagination model=@Model.Pagination></vc:pagination>
+            }
+        }
+    </div>
+</div>  

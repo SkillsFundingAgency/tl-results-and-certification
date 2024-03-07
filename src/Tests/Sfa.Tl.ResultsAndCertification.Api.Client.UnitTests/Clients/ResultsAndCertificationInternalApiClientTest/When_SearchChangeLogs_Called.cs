@@ -60,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<PagedResponse<AdminSearchChangeLog>>(_mockApiResponse, ApiConstants.SearchChangeLogs, HttpStatusCode.OK, JsonConvert.SerializeObject(_apiRequest)));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<PagedResponse<AdminSearchChangeLog>>(_mockApiResponse, ApiConstants.SearchChangeLogsUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_apiRequest)));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
