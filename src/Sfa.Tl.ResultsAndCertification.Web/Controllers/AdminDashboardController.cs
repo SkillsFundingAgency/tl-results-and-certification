@@ -437,7 +437,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(model);
             }
-            
             var isSuccess = await _loader.ProcessChangeIndustryPlacementAsync(model);
 
             if (isSuccess)

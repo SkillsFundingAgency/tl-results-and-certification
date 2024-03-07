@@ -48,7 +48,6 @@ jobs:
             -configurationStorageConnectionString "$(ConfigurationStorageConnectionString)"
             -uiCustomHostName "$(UICustomHostName)"
             -uiCertificateName "$(CertificateName)"
-            -functionCertificateName "$(LearningRecordServiceCertificateName)"
             -storageAccountContainerArray "$(storageAccountContainerArray)"
             -learnerVerificationAndLearningEventsTrigger "$(LearnerVerificationAndLearningEventsTrigger)"
             -learnerGenderTrigger "$(learnerGenderTrigger)"
@@ -60,6 +59,12 @@ jobs:
             -ucasTransferResultsTrigger "$(ucasTransferResultsTrigger)"
             -ucasTransferAmendmentsTrigger "$(ucasTransferAmendmentsTrigger)"
             -overallResultCalculationTrigger "$(overallResultCalculationTrigger)"
+            -industryPlacementExtractTrigger "$(industryPlacementExtractTrigger)"
+            -analystOverallResultExtractTrigger "$(analystOverallResultExtractTrigger)"
+            -analystCoreResultExtractTrigger "$(analystCoreResultExtractTrigger)"
+            -coreRommExtractTrigger "$(coreRommExtractTrigger)"
+            -specialismRommExtractTrigger "$(specialismRommExtractTrigger)"
+            -providerAddressExtractTrigger "$(providerAddressExtractTrigger)"
             -enableReplica $(enableReplica)'
           tags: $(Tags) 
           processOutputs: true
