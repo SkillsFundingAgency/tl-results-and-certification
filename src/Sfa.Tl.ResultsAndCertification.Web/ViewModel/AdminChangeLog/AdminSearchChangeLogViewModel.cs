@@ -1,20 +1,17 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Pagination;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using System.Collections.Generic;
-using Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
-using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
 {
     public class AdminSearchChangeLogViewModel
     {
         private const int FirstPage = 1;
-        private const int PageSize = 10;
 
         public AdminSearchChangeLogCriteriaViewModel SearchCriteriaViewModel { get; set; } = new AdminSearchChangeLogCriteriaViewModel();
 
@@ -32,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
         };
 
         public bool ContainsResults
-            => !ChangeLogDetails.IsNullOrEmpty() && ChangeLogDetails.Any();
+            => !ChangeLogDetails.IsNullOrEmpty() && ChangeLogDetails.Count > 0;
 
         public bool ContainsMultiplePages
             => ContainsResults && Pagination?.PagerInfo?.TotalPages > 1;
