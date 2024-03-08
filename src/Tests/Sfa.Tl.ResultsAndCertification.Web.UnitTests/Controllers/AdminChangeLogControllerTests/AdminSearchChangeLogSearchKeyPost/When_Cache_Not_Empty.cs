@@ -77,7 +77,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         public void Then_Expected_Methods_AreCalled()
         {
             CacheService.Received(1).GetAsync<AdminSearchChangeLogViewModel>(CacheKey);
-            CacheService.Received(1).SetAsync(CacheKey, _cachedViewModel);
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<AdminSearchChangeLogViewModel>(p =>
+                p == _cachedViewModel
+                && p.SearchCriteriaViewModel.SearchKey == _viewModel.SearchKey
+                && p.SearchCriteriaViewModel.PageNumber == _viewModel.PageNumber));
 
             AdminChangeLogLoader.ReceivedCalls().Should().BeEmpty();
         }
