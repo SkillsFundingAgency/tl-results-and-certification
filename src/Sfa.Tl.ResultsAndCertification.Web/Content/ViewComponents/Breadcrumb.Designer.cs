@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change log.
+        /// </summary>
+        public static string Change_Log {
+            get {
+                return ResourceManager.GetString("Change_Log", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check the learner’s details.
         /// </summary>
         public static string Check_Learner_Details {

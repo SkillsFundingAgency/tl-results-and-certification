@@ -43,7 +43,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertificat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Functions.UnitTests", "Tests\Sfa.Tl.ResultsAndCertification.Functions.UnitTests\Sfa.Tl.ResultsAndCertification.Functions.UnitTests.csproj", "{960FB856-86D0-4D4B-B38D-FAB5DC3DDF93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfa.Tl.ResultsAndCertification.Application.UnitTests", "Tests\Sfa.Tl.ResultsAndCertification.Application.UnitTests\Sfa.Tl.ResultsAndCertification.Application.UnitTests.csproj", "{7182B539-A781-4044-B44E-00E10566C915}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Application.UnitTests", "Tests\Sfa.Tl.ResultsAndCertification.Application.UnitTests\Sfa.Tl.ResultsAndCertification.Application.UnitTests.csproj", "{7182B539-A781-4044-B44E-00E10566C915}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
