@@ -465,5 +465,14 @@
         public const string AdminChangePathwayResultReviewChanges = "AdminAddPathwayResultReviewChanges";
 
         #endregion
+
+        #region Change logs
+
+        public const string AdminSearchChangeLogClear = "AdminSearchChangeLogClear";
+        public const string AdminSearchChangeLog = "AdminSearchChangeLog";
+        public const string SubmitAdminSearchChangeLogSearchKey = "SubmitAdminSearchChangeLogSearchKey";
+        public const string SubmitAdminSearchChangeLogClearKey = "SubmitAdminSearchChangeLogClearKey";
+
+        #endregion
     }
 }
