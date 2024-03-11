@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
 
         public int? HoursSpentOnPlacement { get; set; }
 
-        public List<int> SpecialConsiderationReasons { get; set; }
+        public List<int?> SpecialConsiderationReasons { get; set; }
 
         public override ChangeType ChangeType => ChangeType.IndustryPlacement;
     }

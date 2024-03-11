@@ -165,7 +165,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ZendeskId, opts => opts.MapFrom(s => s.ZendeskId))
                 .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<AdminReviewChangesIndustryPlacementViewModel, ReviewChangeIndustryPlacementRequest>>())
                 .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.AdminChangeIpViewModel.AdminIpCompletion.IndustryPlacementStatus))
-                .ForMember(d => d.HoursSpentOnPlacement, opts => opts.MapFrom(s => s.AdminChangeIpViewModel.HoursViewModel.Hours))
+                .ForMember(d => d.HoursSpentOnPlacement, opts => opts.MapFrom(s =>
+                    string.IsNullOrWhiteSpace(s.AdminChangeIpViewModel.HoursViewModel.Hours)
+                        ? null as int?
+                        : int.Parse(s.AdminChangeIpViewModel.HoursViewModel.Hours)))
                 .ForMember(d => d.SpecialConsiderationReasons, opts => opts.MapFrom(s => s.SelectedReasons));
 
             CreateMap<AdminLearnerRecord, AdminCoreComponentViewModel>()
