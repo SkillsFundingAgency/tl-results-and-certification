@@ -83,16 +83,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             var actualIndustryPlacement = DbContext.IndustryPlacement.FirstOrDefault(ip => ip.Id == request.RegistrationPathwayId);
 
             request.RegistrationPathwayId.Should().Be(actualIndustryPlacement.Id);
-            if (request.ChangeIPDetails.IndustryPlacementStatusTo == IndustryPlacementStatus.Completed || request.ChangeIPDetails.IndustryPlacementStatusTo == IndustryPlacementStatus.NotCompleted)
+            if (request.IndustryPlacementStatus == IndustryPlacementStatus.Completed || request.IndustryPlacementStatus == IndustryPlacementStatus.NotCompleted)
             {
                 actualIndustryPlacement.Details.Should().BeNull();
             }
-            request.ChangeIPDetails.IndustryPlacementStatusTo.ToString().Should().Be(actualIndustryPlacement.Status.ToString());
+            request.IndustryPlacementStatus.ToString().Should().Be(actualIndustryPlacement.Status.ToString());
 
             if (actualIndustryPlacement.Status == IndustryPlacementStatus.CompletedWithSpecialConsideration)
             {
                 var actualDetails = JsonConvert.DeserializeObject<IndustryPlacementDetails>(actualIndustryPlacement.Details);
-                request.ChangeIPDetails.HoursSpentOnPlacementTo.Should().Be(actualDetails.HoursSpentOnPlacement);
+                request.HoursSpentOnPlacement.Should().Be(actualDetails.HoursSpentOnPlacement);
             }
         }
 
@@ -109,10 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
                             ChangeReason = "Test Reason",
                             ContactName = "Test User",
                             RegistrationPathwayId = 1,
-                            ChangeIPDetails = new ChangeIPDetails
-                            {
-                                IndustryPlacementStatusTo = IndustryPlacementStatus.NotCompleted
-                            },
+                            IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
                             RequestDate = DateTime.Now,
                             ZendeskId = "1234567890",
                             CreatedBy = "System"
@@ -125,10 +122,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
                            ChangeReason = "Test Reason1",
                            ContactName = "Test User1",
                            RegistrationPathwayId = 2,
-                           ChangeIPDetails = new ChangeIPDetails
-                           {
-                               IndustryPlacementStatusTo = IndustryPlacementStatus.Completed
-                           },
+                           IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
                            RequestDate = DateTime.Now,
                            ZendeskId = "768568909",
                            CreatedBy = "System"
@@ -141,12 +135,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
                             ChangeReason = "Test Reason1",
                             ContactName = "Test User1",
                             RegistrationPathwayId = 3,
-                            ChangeIPDetails = new ChangeIPDetails
-                            {
-                                IndustryPlacementStatusTo = IndustryPlacementStatus.CompletedWithSpecialConsideration,
-                                HoursSpentOnPlacementTo=100,
-                                SpecialConsiderationReasonsTo = new List<int?>{ 1, 2 }
-                            },
+                            IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration,
+                            HoursSpentOnPlacement = 100,
+                            SpecialConsiderationReasons = new List<int>{ 1, 2 },
                             RequestDate = DateTime.Now,
                             ZendeskId = "768568909",
                             CreatedBy = "System"

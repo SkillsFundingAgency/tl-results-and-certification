@@ -77,7 +77,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return false;
         }
 
-
         public async Task<bool> ProcessAddCoreAssessmentAsync(ReviewAddCoreAssessmentRequest request)
         {
             var tqRegistrationPathwayRepository = _repositoryFactory.GetRepository<TqRegistrationPathway>();
@@ -103,7 +102,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (status > 0)
             {
-             
+
                 var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
                 var changeLog = CreateChangeLog(request, request.AddCoreAssessmentDetails);
 
@@ -150,15 +149,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         }
 
-
-
-
-
         public async Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request)
         {
             var industryPlacementRepository = _repositoryFactory.GetRepository<IndustryPlacement>();
 
-            var industryPlacement = await industryPlacementRepository.GetFirstOrDefaultAsync(p => p.TqRegistrationPathwayId == request.RegistrationPathwayId);
+            IndustryPlacement industryPlacement = await industryPlacementRepository.GetFirstOrDefaultAsync(p => p.TqRegistrationPathwayId == request.RegistrationPathwayId);
             int status;
 
             if (industryPlacement == null)
@@ -167,8 +162,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     CreatedBy = request.CreatedBy,
                     TqRegistrationPathwayId = request.RegistrationPathwayId,
-                    Status = request.ChangeIPDetails.IndustryPlacementStatusTo,
-                    Details = request.ChangeIPDetails.IndustryPlacementStatusTo == Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration ? JsonConvert.SerializeObject(ConstructIndustryPlacementDetails(request.ChangeIPDetails)) : null
+                    Status = request.IndustryPlacementStatus,
+                    Details = request.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration ? JsonConvert.SerializeObject(ConstructIndustryPlacementDetails(request)) : null
                 };
 
                 status = await industryPlacementRepository.CreateAsync(industryPlacement);
@@ -177,8 +172,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 industryPlacement.ModifiedBy = request.CreatedBy;
                 industryPlacement.ModifiedOn = _systemProvider.UtcNow;
-                industryPlacement.Status = request.ChangeIPDetails.IndustryPlacementStatusTo;
-                industryPlacement.Details = request.ChangeIPDetails.IndustryPlacementStatusTo == Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration ? JsonConvert.SerializeObject(ConstructIndustryPlacementDetails(request.ChangeIPDetails)) : null;
+                industryPlacement.Status = request.IndustryPlacementStatus;
+                industryPlacement.Details = request.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration ? JsonConvert.SerializeObject(ConstructIndustryPlacementDetails(request)) : null;
 
                 status = await industryPlacementRepository.UpdateWithSpecifedColumnsOnlyAsync(industryPlacement, u => u.Status, u => u.Details, u => u.ModifiedBy, u => u.ModifiedOn);
             }
@@ -186,7 +181,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (status > 0)
             {
                 var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
-                return await changeLongRepository.CreateAsync(CreateChangeLog(request, request.ChangeIPDetails)) > 0;
+                return await changeLongRepository.CreateAsync(CreateChangeLog(request, request)) > 0;
             }
 
             return false;
@@ -196,7 +191,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var pathwayAssessmentRepository = _repositoryFactory.GetRepository<TqPathwayAssessment>();
 
-            var pathwayAssessment = await pathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin                                                                                             
+            var pathwayAssessment = await pathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin
                                                                                               && !pa.TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null));
             if (pathwayAssessment == null) return false;
 
@@ -268,7 +263,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
 
             bool created = await pathwayResultRepo.CreateAsync(pathwayResult) > 0;
-            
+
             if (created)
             {
                 var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
@@ -332,13 +327,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return changeLog;
         }
 
-        private IndustryPlacementDetails ConstructIndustryPlacementDetails(ChangeIPDetails change)
+        private IndustryPlacementDetails ConstructIndustryPlacementDetails(ReviewChangeIndustryPlacementRequest request)
         {
             return new IndustryPlacementDetails
             {
-                IndustryPlacementStatus = change.IndustryPlacementStatusTo.ToString(),
-                HoursSpentOnPlacement = change.HoursSpentOnPlacementTo,
-                SpecialConsiderationReasons = !change.SpecialConsiderationReasonsTo.IsNullOrEmpty() ? change.SpecialConsiderationReasonsTo : new List<int?>()
+                IndustryPlacementStatus = request.IndustryPlacementStatus.ToString(),
+                HoursSpentOnPlacement = request.HoursSpentOnPlacement,
+                SpecialConsiderationReasons = !request.SpecialConsiderationReasons.IsNullOrEmpty() ? request.SpecialConsiderationReasons.Select(p => (int?)p).ToList() : new List<int?>()
             };
         }
     }
