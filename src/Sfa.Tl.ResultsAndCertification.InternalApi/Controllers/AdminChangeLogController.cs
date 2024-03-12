@@ -22,5 +22,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         [Route("SearchChangeLogs")]
         public Task<PagedResponse<AdminSearchChangeLog>> SearchChangeLogsAsync(AdminSearchChangeLogRequest request)
             => _adminChangeLogService.SearchChangeLogsAsync(request);
+
+        [HttpGet]
+        [Route("GetAdminChangeLogRecord/{changeLogId}")]
+        public Task<AdminChangeLogRecord> GetAdminChangeLogRecord(int changeLogId)
+            => _adminChangeLogService.GetChangeLogRecordAsync(changeLogId);
     }
 }

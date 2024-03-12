@@ -473,6 +473,8 @@
         public const string SubmitAdminSearchChangeLogSearchKey = "SubmitAdminSearchChangeLogSearchKey";
         public const string SubmitAdminSearchChangeLogClearKey = "SubmitAdminSearchChangeLogClearKey";
 
+        public const string AdminViewChangeRecord = "AdminViewChangeRecord";
+
         #endregion
     }
 }

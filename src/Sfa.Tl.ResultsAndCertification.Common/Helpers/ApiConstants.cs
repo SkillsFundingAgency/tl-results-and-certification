@@ -136,5 +136,6 @@
 
         // Admin change log
         public const string SearchChangeLogsUri = "/api/adminchangelog/SearchChangeLogs";
+        public const string GetAdminChangeLogRecord = "/api/adminchangelog/GetAdminChangeLogRecord/{0}";
     }
 }

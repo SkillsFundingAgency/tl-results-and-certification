@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -501,6 +502,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var requestUri = ApiConstants.SearchChangeLogsUri;
             return PostAsync<AdminSearchChangeLogRequest, PagedResponse<AdminSearchChangeLog>>(requestUri, request);
+        }
+
+        public Task<AdminChangeLogRecord> GetAdminChangeLogRecordAsync(int changeLogId)
+        {
+            return GetAsync<AdminChangeLogRecord>(string.Format(ApiConstants.GetAdminChangeLogRecord, changeLogId));
         }
 
         #endregion

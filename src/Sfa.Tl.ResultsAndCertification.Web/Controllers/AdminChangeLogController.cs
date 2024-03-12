@@ -87,5 +87,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync(CacheKey, viewModel);
             return RedirectToRoute(RouteConstants.AdminSearchChangeLog, new { pageNumber = viewModel.SearchCriteriaViewModel.PageNumber });
         }
+
+        [HttpGet]
+        [Route("admin/view-change-record/{changeLogId}", Name = RouteConstants.AdminViewChangeRecord)]
+        public async Task<IActionResult> AdminViewChangeRecordAsync(int changeLogId)
+        {
+            var result = await _loader.GetAdminViewChangeRecord(changeLogId);
+
+            return View(result);
+        }
     }
 }

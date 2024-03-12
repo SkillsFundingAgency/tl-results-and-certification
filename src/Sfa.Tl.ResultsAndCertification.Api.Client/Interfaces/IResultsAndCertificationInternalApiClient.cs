@@ -147,6 +147,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         Task<PagedResponse<AdminSearchChangeLog>> SearchChangeLogsAsync(AdminSearchChangeLogRequest request);
 
+        Task<AdminChangeLogRecord> GetAdminChangeLogRecordAsync(int changeLogId);
+
         #endregion
     }
 }

@@ -37,5 +37,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             });
 
         }
+
+        public async Task<AdminViewChangeRecordViewModel> GetAdminViewChangeRecord(int changeLogId)
+        {
+            var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);
+            return _mapper.Map<AdminViewChangeRecordViewModel>(changeLogRecord);
+        }
     }
 }

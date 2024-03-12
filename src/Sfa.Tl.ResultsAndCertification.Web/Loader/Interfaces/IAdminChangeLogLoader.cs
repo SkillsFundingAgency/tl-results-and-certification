@@ -6,5 +6,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
     public interface IAdminChangeLogLoader
     {
         Task<AdminSearchChangeLogViewModel> SearchChangeLogsAsync(string searchKey = "", int? pageNumber = null);
+
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangeRecord(int changeLogId);
     }
 }

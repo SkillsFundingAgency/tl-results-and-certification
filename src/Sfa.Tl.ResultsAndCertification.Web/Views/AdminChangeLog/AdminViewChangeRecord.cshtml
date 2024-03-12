@@ -1,0 +1,58 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog.AdminViewChangeRecordViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog
+
+@{
+    ViewData["Title"] = AdminViewChangeRecord.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <div class="record-header">
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+                @string.Format(AdminViewChangeRecord.Heading_Change_Record, @Model.DateAndTimeOfChange)
+            </h1>
+        </div>
+
+        <h2 class="govuk-heading-m">@AdminViewChangeRecord.Title_Log_Details</h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list">
+            <vc:summary-item model=Model.SummaryCreatedBy></vc:summary-item>
+            <vc:summary-item model=Model.SummaryLearner></vc:summary-item>
+            <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+        </dl>
+
+        <h2 class="govuk-heading-m">@AdminViewChangeRecord.Title_Change_Summary</h2>
+
+        <h2 class="govuk-heading-m">@AdminViewChangeRecord.Title_Who_Asked_For_This_Change</h2>
+        <dl class="govuk-summary-list--no-border">
+            <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__key">@AdminViewChangeRecord.Label_Contact_Name</dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__value">@Model.ChangeRequestedBy</dt>
+            </div>
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">@AdminViewChangeRecord.Label_Reason_For_Change</dt>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__value">@Model.ReasonForChange</dt>
+            </div>
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">@AdminViewChangeRecord.Label_Zendesk_Ticket_Id</dt>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__value">@Model.ZendeskTicketID</dt>
+            </div>
+        </dl>
+
+        <div class="govuk-button-group">
+            <a id="returnButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminViewChangeRecord.Button_Search_Again</a>
+        </div>
+    </div>
+</div>
