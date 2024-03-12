@@ -77,7 +77,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return false;
         }
 
-
         public async Task<bool> ProcessAddCoreAssessmentAsync(ReviewAddCoreAssessmentRequest request)
         {
             var tqRegistrationPathwayRepository = _repositoryFactory.GetRepository<TqRegistrationPathway>();
@@ -103,7 +102,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (status > 0)
             {
-             
+
                 var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
                 var changeLog = CreateChangeLog(request, request.AddCoreAssessmentDetails);
 
@@ -150,53 +149,99 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         }
 
-
-
-
-
         public async Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request)
         {
             var industryPlacementRepository = _repositoryFactory.GetRepository<IndustryPlacement>();
+            IndustryPlacement industryPlacement = await industryPlacementRepository.GetSingleOrDefaultAsync(p => p.TqRegistrationPathwayId == request.RegistrationPathwayId);
 
-            var industryPlacement = await industryPlacementRepository.GetFirstOrDefaultAsync(p => p.TqRegistrationPathwayId == request.RegistrationPathwayId);
-            int status;
+            return industryPlacement == null
+                ? await CreateIndustryPlacementAsync(request, industryPlacementRepository)
+                : await UpdateIndustryPlacementAsync(request, industryPlacement, industryPlacementRepository);
+        }
 
-            if (industryPlacement == null)
+        private async Task<bool> CreateIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request, IRepository<IndustryPlacement> industryPlacementRepository)
+        {
+            var newIndustryPlacement = new IndustryPlacement
             {
-                industryPlacement = new IndustryPlacement
+                TqRegistrationPathwayId = request.RegistrationPathwayId,
+                Status = request.IndustryPlacementStatus,
+                Details = CreateIndustryPlacementDetails(request),
+                CreatedBy = request.CreatedBy
+            };
+
+            bool industryPlacementCreated = await industryPlacementRepository.CreateAsync(newIndustryPlacement) > 0;
+            if (industryPlacementCreated)
+            {
+                var changeLogDetails = new ChangeIndustryPlacementRequest
                 {
-                    CreatedBy = request.CreatedBy,
-                    TqRegistrationPathwayId = request.RegistrationPathwayId,
-                    Status = request.ChangeIPDetails.IndustryPlacementStatusTo,
-                    Details = request.ChangeIPDetails.IndustryPlacementStatusTo == Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration ? JsonConvert.SerializeObject(ConstructIndustryPlacementDetails(request.ChangeIPDetails)) : null
+                    IndustryPlacementStatusFrom = IndustryPlacementStatus.NotSpecified,
+                    IndustryPlacementStatusTo = request.IndustryPlacementStatus,
+                    HoursSpentOnPlacementFrom = null,
+                    HoursSpentOnPlacementTo = request.HoursSpentOnPlacement,
+                    SpecialConsiderationReasonsFrom = null,
+                    SpecialConsiderationReasonsTo = request.SpecialConsiderationReasons
                 };
 
-                status = await industryPlacementRepository.CreateAsync(industryPlacement);
-            }
-            else
-            {
-                industryPlacement.ModifiedBy = request.CreatedBy;
-                industryPlacement.ModifiedOn = _systemProvider.UtcNow;
-                industryPlacement.Status = request.ChangeIPDetails.IndustryPlacementStatusTo;
-                industryPlacement.Details = request.ChangeIPDetails.IndustryPlacementStatusTo == Common.Enum.IndustryPlacementStatus.CompletedWithSpecialConsideration ? JsonConvert.SerializeObject(ConstructIndustryPlacementDetails(request.ChangeIPDetails)) : null;
-
-                status = await industryPlacementRepository.UpdateWithSpecifedColumnsOnlyAsync(industryPlacement, u => u.Status, u => u.Details, u => u.ModifiedBy, u => u.ModifiedOn);
-            }
-
-            if (status > 0)
-            {
                 var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
-                return await changeLongRepository.CreateAsync(CreateChangeLog(request, request.ChangeIPDetails)) > 0;
+                return await changeLongRepository.CreateAsync(CreateChangeLog(request, changeLogDetails)) > 0;
             }
 
             return false;
+        }
+
+        private async Task<bool> UpdateIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request, IndustryPlacement existingIndustryPlacement, IRepository<IndustryPlacement> industryPlacementRepository)
+        {
+            IndustryPlacementDetails existingIndustryPlacementDetails = !string.IsNullOrEmpty(existingIndustryPlacement.Details)
+                    ? JsonConvert.DeserializeObject<IndustryPlacementDetails>(existingIndustryPlacement.Details)
+                    : null;
+
+            var changeLogDetails = new ChangeIndustryPlacementRequest
+            {
+                IndustryPlacementStatusFrom = existingIndustryPlacement.Status,
+                IndustryPlacementStatusTo = request.IndustryPlacementStatus,
+                HoursSpentOnPlacementFrom = existingIndustryPlacementDetails?.HoursSpentOnPlacement,
+                HoursSpentOnPlacementTo = request.HoursSpentOnPlacement,
+                SpecialConsiderationReasonsFrom = existingIndustryPlacementDetails?.SpecialConsiderationReasons,
+                SpecialConsiderationReasonsTo = request.SpecialConsiderationReasons
+            };
+
+            existingIndustryPlacement.Status = request.IndustryPlacementStatus;
+            existingIndustryPlacement.Details = CreateIndustryPlacementDetails(request);
+            existingIndustryPlacement.ModifiedBy = request.CreatedBy;
+            existingIndustryPlacement.ModifiedOn = _systemProvider.UtcNow;
+
+            bool industryPlacementUpdated = await industryPlacementRepository.UpdateWithSpecifedColumnsOnlyAsync(existingIndustryPlacement, u => u.Status, u => u.Details, u => u.ModifiedBy, u => u.ModifiedOn) > 0;
+            if (industryPlacementUpdated)
+            {
+                var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
+                return await changeLongRepository.CreateAsync(CreateChangeLog(request, changeLogDetails)) > 0;
+            }
+
+            return false;
+        }
+
+        private string CreateIndustryPlacementDetails(ReviewChangeIndustryPlacementRequest request)
+        {
+            if (request.IndustryPlacementStatus != IndustryPlacementStatus.CompletedWithSpecialConsideration)
+            {
+                return null;
+            }
+
+            var details = new IndustryPlacementDetails
+            {
+                IndustryPlacementStatus = request.IndustryPlacementStatus.ToString(),
+                HoursSpentOnPlacement = request.HoursSpentOnPlacement,
+                SpecialConsiderationReasons = !request.SpecialConsiderationReasons.IsNullOrEmpty() ? request.SpecialConsiderationReasons : new List<int?>()
+            };
+
+            return JsonConvert.SerializeObject(details);
         }
 
         public async Task<bool> ProcessRemovePathwayAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest model)
         {
             var pathwayAssessmentRepository = _repositoryFactory.GetRepository<TqPathwayAssessment>();
 
-            var pathwayAssessment = await pathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin                                                                                             
+            var pathwayAssessment = await pathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin
                                                                                               && !pa.TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null));
             if (pathwayAssessment == null) return false;
 
@@ -268,7 +313,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
 
             bool created = await pathwayResultRepo.CreateAsync(pathwayResult) > 0;
-            
+
             if (created)
             {
                 var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
@@ -330,16 +375,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
 
             return changeLog;
-        }
-
-        private IndustryPlacementDetails ConstructIndustryPlacementDetails(ChangeIPDetails change)
-        {
-            return new IndustryPlacementDetails
-            {
-                IndustryPlacementStatus = change.IndustryPlacementStatusTo.ToString(),
-                HoursSpentOnPlacement = change.HoursSpentOnPlacementTo,
-                SpecialConsiderationReasons = !change.SpecialConsiderationReasonsTo.IsNullOrEmpty() ? change.SpecialConsiderationReasonsTo : new List<int?>()
-            };
         }
     }
 }
