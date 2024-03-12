@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public AdminChangeLogController(
             IAdminChangeLogLoader loader,
             ICacheService cacheService,
-            ILogger<AdminDashboardController> logger)
+            ILogger<AdminChangeLogController> logger)
         {
             _loader = loader;
             _cacheService = cacheService;

@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Pagination;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
@@ -32,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
         };
 
         public bool ContainsResults
-            => !ChangeLogDetails.IsNullOrEmpty() && ChangeLogDetails.Any();
+            => !ChangeLogDetails.IsNullOrEmpty() && ChangeLogDetails.Count > 0;
 
         public bool ContainsMultiplePages
             => ContainsResults && Pagination?.PagerInfo?.TotalPages > 1;

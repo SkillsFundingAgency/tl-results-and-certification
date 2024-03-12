@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AdminChangeLogController : ControllerBase, IAdminChangeLogController
+    public class AdminChangeLogController : ControllerBase
     {
         private readonly IAdminChangeLogService _adminChangeLogService;
 

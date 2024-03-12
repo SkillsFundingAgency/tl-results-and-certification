@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         {
             _dbContext = dbContext;
         }
+
         public async Task<PagedResponse<AdminSearchChangeLog>> SearchChangeLogsAsync(AdminSearchChangeLogRequest request)
         {
             IQueryable<ChangeLog> changeLogQueryable = _dbContext.ChangeLog

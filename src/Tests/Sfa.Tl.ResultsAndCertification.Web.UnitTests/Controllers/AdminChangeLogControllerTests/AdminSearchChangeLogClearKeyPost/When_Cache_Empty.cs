@@ -1,0 +1,42 @@
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
+using NSubstitute;
+using NSubstitute.ReturnsExtensions;
+using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminChangeLogControllerTests;
+using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminSearchChangeLogClearKeyPost
+{
+    public class When_Cache_Empty : AdminChangeLogControllerTestBase
+    {
+        private IActionResult _result;
+
+        public override void Given()
+        {
+            CacheService.GetAsync<AdminSearchChangeLogViewModel>(CacheKey).ReturnsNull();
+        }
+
+        public override async Task When()
+        {
+            _result = await Controller.AdminSearchChangeLogClearKeyAsync();
+        }
+
+        [Fact]
+        public void Then_Expected_Methods_AreCalled()
+        {
+            CacheService.Received(1).GetAsync<AdminSearchChangeLogViewModel>(CacheKey);
+            CacheService.DidNotReceive().SetAsync(Arg.Any<string>(), Arg.Any<AdminSearchChangeLogViewModel>());
+
+            AdminChangeLogLoader.ReceivedCalls().Should().BeEmpty();
+        }
+
+        [Fact]
+        public void Then_Redirected_To_PageNotFound()
+        {
+            _result.ShouldBeRedirectPageNotFound();
+        }
+    }
+}
