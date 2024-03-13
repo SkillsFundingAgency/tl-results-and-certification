@@ -474,5 +474,12 @@
         public const string SubmitAdminSearchChangeLogClearKey = "SubmitAdminSearchChangeLogClearKey";
 
         #endregion
+
+        #region Admin post results
+
+        public const string AdminOpenPathwayRommClear = "AdminOpenPathwayRommClear";
+        public const string AdminOpenPathwayRomm = "AdminOpenPathwayRomm";
+
+        #endregion
     }
 }
