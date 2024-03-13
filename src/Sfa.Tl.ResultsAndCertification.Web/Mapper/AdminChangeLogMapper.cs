@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using System;
@@ -37,18 +38,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<AdminChangeLogRecord, AdminViewChangeRecordViewModel>()
                 .ForMember(d => d.ChangeLogId, opts => opts.MapFrom(s => s.ChangeLogId))
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
-                .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
                 .ForMember(d => d.CreatedBy, opts => opts.MapFrom(s => s.CreatedBy))
                 .ForMember(d => d.ChangeType, opts => opts.MapFrom(s => s.ChangeType))
                 .ForMember(d => d.ChangeDetails, opts => opts.MapFrom(s => s.ChangeDetails))
-                .ForMember(d => d.ChangeStartYearDetails, opts => opts.MapFrom(s => GetDetails<ChangeStartYearDetails>(s.ChangeDetails)))
-                .ForMember(d => d.AddCoreAssessmentDetails, opts => opts.MapFrom(s => GetDetails<AddCoreAssessmentDetails>(s.ChangeDetails)))
                 .ForMember(d => d.ChangeRequestedBy, opts => opts.MapFrom(s => s.ChangeRequestedBy))
                 .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest))
                 .ForMember(d => d.ReasonForChange, opts => opts.MapFrom(s => s.ReasonForChange))
-                .ForMember(d => d.ZendeskTicketID, opts => opts.MapFrom(s => s.ZendeskTicketID))
-                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)));
+                .ForMember(d => d.ZendeskTicketID, opts => opts.MapFrom(s => s.ZendeskTicketID));
+
+            CreateMap<AdminChangeLogRecord, AdminViewChangeRecordStartYearViewModel>()
+                .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
+                .ForMember(d => d.ChangeStartYearDetails, opts => opts.MapFrom(s => GetDetails<ChangeStartYearDetails>(s.ChangeDetails)));
+
+            CreateMap<AdminChangeLogRecord, AdminViewChangeRecordIndustryPlacementViewModel>()
+                .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
+                .ForMember(d => d.ChangeIPDetails, opts => opts.MapFrom(s => GetDetails<ChangeIPDetails>(s.ChangeDetails)));
         }
 
 
@@ -59,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             => $"{dateTime:d MMMM yyyy h:mm}{dateTime.ToString("tt").ToLower()}";
 
         private static string FormatDateTime2(DateTime dateTime)
-            => $"{dateTime:d MMMM yyyy, h:mm}{dateTime.ToString("tt").ToLower()}";
+            => $"{dateTime:d MMMM yyyy, hh:mm}{dateTime.ToString("tt").ToLower()}";
 
     }
 }

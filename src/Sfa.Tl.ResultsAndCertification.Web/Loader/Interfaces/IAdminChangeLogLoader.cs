@@ -7,6 +7,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
     {
         Task<AdminSearchChangeLogViewModel> SearchChangeLogsAsync(string searchKey = "", int? pageNumber = null);
 
-        Task<AdminViewChangeRecordViewModel> GetAdminViewChangeRecord(int changeLogId);
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangeStartYearRecord(int changeLogId);
+
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangeIPRecord(int changeLogId);
     }
 }

@@ -66,30 +66,30 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return new PagedResponse<AdminSearchChangeLog> { Records = changeLogs, TotalRecords = totalCount, PagerInfo = pager };
         }
 
-        public Task<AdminChangeLogRecord> GetChangeLogRecordAsync(int changeLogId)
+        public async Task<AdminChangeLogRecord> GetChangeLogRecordAsync(int changeLogId)
         {
-            return _dbContext.ChangeLog
+            return await _dbContext.ChangeLog
                             .Include(p => p.TqRegistrationPathway)
                             .ThenInclude(p => p.TqRegistrationProfile)
                             .Include(p => p.TqRegistrationPathway)
                             .Where(p => p.Id == changeLogId)
-                            .Select(p => new AdminChangeLogRecord()
-                            {
-                                ChangeLogId = p.Id,
-                                RegistrationPathwayId = p.TqRegistrationPathwayId,
-                                FirstName = p.TqRegistrationPathway.TqRegistrationProfile.Firstname,
-                                LastName = p.TqRegistrationPathway.TqRegistrationProfile.Lastname,
-                                Uln = p.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
-                                CreatedBy = p.CreatedBy,
-                                ChangeType = (ChangeType)p.ChangeType,
-                                ChangeDetails = p.Details,
-                                ChangeRequestedBy = p.Name,
-                                ChangeDateOfRequest = p.DateOfRequest,
-                                ReasonForChange = p.ReasonForChange,
-                                ZendeskTicketID = p.ZendeskTicketID,
-                                DateAndTimeOfChange = p.CreatedOn
-                            })
-                            .FirstOrDefaultAsync();
+                                .Select(p => new AdminChangeLogRecord()
+                                {
+                                    ChangeLogId = p.Id,
+                                    RegistrationPathwayId = p.TqRegistrationPathwayId,
+                                    FirstName = p.TqRegistrationPathway.TqRegistrationProfile.Firstname,
+                                    LastName = p.TqRegistrationPathway.TqRegistrationProfile.Lastname,
+                                    Uln = p.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
+                                    CreatedBy = p.CreatedBy,
+                                    ChangeType = (ChangeType)p.ChangeType,
+                                    ChangeDetails = p.Details,
+                                    ChangeRequestedBy = p.Name,
+                                    ChangeDateOfRequest = p.DateOfRequest,
+                                    ReasonForChange = p.ReasonForChange,
+                                    ZendeskTicketID = p.ZendeskTicketID,
+                                    DateAndTimeOfChange = p.CreatedOn
+                                })
+                                .FirstOrDefaultAsync();
         }
     }
 }

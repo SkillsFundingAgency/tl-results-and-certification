@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
@@ -89,11 +90,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("admin/view-change-record/{changeLogId}", Name = RouteConstants.AdminViewChangeRecord)]
-        public async Task<IActionResult> AdminViewChangeRecordAsync(int changeLogId)
+        [Route("admin/view-change-record-academic-year/{changeLogId}", Name = RouteConstants.AdminViewChangeStartYearRecord)]
+        public async Task<IActionResult> AdminViewChangeRecordStartYearAsync(int changeLogId)
         {
-            var result = await _loader.GetAdminViewChangeRecord(changeLogId);
+            var result = await _loader.GetAdminViewChangeStartYearRecord (changeLogId);
+            return View(result);
+        }
 
+        [HttpGet]
+        [Route("admin/view-change-record-ip/{changeLogId}", Name = RouteConstants.AdminViewChangeIPRecord)]
+        public async Task<IActionResult> AdminViewChangeRecordIPAsync(int changeLogId)
+        {
+            var result = await _loader.GetAdminViewChangeIPRecord(changeLogId);
             return View(result);
         }
     }

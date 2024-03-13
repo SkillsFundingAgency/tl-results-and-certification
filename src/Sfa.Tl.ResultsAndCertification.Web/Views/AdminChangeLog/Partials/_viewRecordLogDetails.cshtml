@@ -1,0 +1,16 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog.AdminViewChangeRecordViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+<div class="record-header">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+        @string.Format(AdminViewChangeRecord.Heading_Change_Record, @Model.DateAndTimeOfChange)
+    </h1>
+</div>
+
+<h2 class="govuk-heading-m">@AdminViewChangeRecord.Title_Log_Details</h2>
+<dl class="govuk-summary-list govuk-!-margin-bottom-6 govuk-summary-list">
+    <vc:summary-item model=Model.SummaryCreatedBy></vc:summary-item>
+    <vc:summary-item model=Model.SummaryLearner></vc:summary-item>
+    <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+</dl>

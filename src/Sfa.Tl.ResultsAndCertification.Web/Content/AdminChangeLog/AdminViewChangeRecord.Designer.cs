@@ -151,6 +151,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;{0}&lt;/p&gt;.
+        /// </summary>
+        public static string Para_Item {
+            get {
+                return ResourceManager.GetString("Para_Item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to academicyear.
+        /// </summary>
+        public static string Summary_Academic_Year_Id {
+            get {
+                return ResourceManager.GetString("Summary_Academic_Year_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to changemadeby.
         /// </summary>
         public static string Summary_CreatedBy_Id {
@@ -237,6 +255,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog {
         public static string Title_Log_Details {
             get {
                 return ResourceManager.GetString("Title_Log_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start year.
+        /// </summary>
+        public static string Title_StartYear {
+            get {
+                return ResourceManager.GetString("Title_StartYear", resourceCulture);
             }
         }
         

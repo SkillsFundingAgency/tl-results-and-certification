@@ -1,0 +1,31 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog.AdminViewChangeRecordViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+<h2 class="govuk-heading-m">@AdminViewChangeRecord.Title_Who_Asked_For_This_Change</h2>
+<dl class="govuk-summary-list--no-border">
+    <div class="govuk-summary-list__row">
+        <dd class="govuk-summary-list__key">@AdminViewChangeRecord.Label_Contact_Name</dd>
+    </div>
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__value">@Model.ChangeRequestedBy</dt>
+    </div>
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">@AdminViewChangeRecord.Label_Reason_For_Change</dt>
+    </div>
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__value">@Model.ReasonForChange</dt>
+    </div>
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">@AdminViewChangeRecord.Label_Zendesk_Ticket_Id</dt>
+    </div>
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__value">@Model.ZendeskTicketID</dt>
+    </div>
+</dl>
+
+<div class="govuk-button-group">
+    <a id="returnButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminViewChangeRecord.Button_Search_Again</a>
+</div>

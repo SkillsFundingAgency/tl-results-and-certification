@@ -1,6 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
@@ -43,24 +42,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
 
         #endregion Change log
 
-        #region Details
-
-        public ChangeStartYearDetails ChangeStartYearDetails { get; set; }
-
-        public AddCoreAssessmentDetails AddCoreAssessmentDetails { get; set; }
-
-        public ChangeIPDetails ChangeIPDetails { get; set; }
-
-        public DetailsChangeAssessmentRemove DetailsChangeAssessmentRemove { get; set; }
-
-        public DetailsSpecialismAssessmentRemove DetailsSpecialismAssessmentRemove { get; set; }
-
-        #endregion Details
-
         public BackLinkModel BackLink => new()
         {
-            RouteName = RouteConstants.AdminLearnerRecord,
-            RouteAttributes = new Dictionary<string, string> { { Constants.PathwayId, "1" } }
+            RouteName = RouteConstants.AdminSearchChangeLogClear
         };
 
         public SummaryItemModel SummaryLearner =>

@@ -147,6 +147,12 @@
   <data name="Page_Title" xml:space="preserve">
     <value>Change record – Admin</value>
   </data>
+  <data name="Para_Item" xml:space="preserve">
+    <value>&lt;p&gt;{0}&lt;/p&gt;</value>
+  </data>
+  <data name="Summary_Academic_Year_Id" xml:space="preserve">
+    <value>academicyear</value>
+  </data>
   <data name="Summary_CreatedBy_Id" xml:space="preserve">
     <value>changemadeby</value>
   </data>
@@ -176,6 +182,9 @@
   </data>
   <data name="Title_Log_Details" xml:space="preserve">
     <value>Log details</value>
+  </data>
+  <data name="Title_StartYear" xml:space="preserve">
+    <value>Start year</value>
   </data>
   <data name="Title_To" xml:space="preserve">
     <value>To</value>
