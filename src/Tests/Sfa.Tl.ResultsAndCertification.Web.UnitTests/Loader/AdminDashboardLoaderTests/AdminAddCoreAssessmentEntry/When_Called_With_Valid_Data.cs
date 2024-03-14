@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
                 .ProcessAddCoreAssessmentRequestAsync(Arg.Is<ReviewAddCoreAssessmentRequest>(
                     x => x.RegistrationPathwayId == ViewModel.AdminCoreComponentViewModel.RegistrationPathwayId && 
                     x.ChangeReason == ViewModel.ChangeReason && 
-                    x.ChangeType == Common.Enum.ChangeType.AssessmentEntryAdd &&
+                    x.ChangeType == Common.Enum.ChangeType.AddPathwayAssessment &&
                     x.ContactName == ViewModel.ContactName &&
                     x.RequestDate == Convert.ToDateTime(ViewModel.RequestDate) &&
                     x.ZendeskId == ViewModel.ZendeskId &&

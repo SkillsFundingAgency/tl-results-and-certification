@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
 {
     public class AdminViewChangeRecordIndustryPlacementViewModel : AdminViewChangeRecordViewModel
     {
-        public ChangeIPDetails ChangeIPDetails { get; set; }
+        public ChangeIndustryPlacementRequest ChangeIPDetails { get; set; }
 
         public IList<string> Reasons { get; set; }
 

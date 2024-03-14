@@ -317,7 +317,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (created)
             {
                 var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
-                return await changeLongRepository.CreateAsync(CreateChangeLog(request, new { PathwayResultId = pathwayResult.Id })) > 0;
+                return await changeLongRepository.CreateAsync(CreateChangeLog(request, new
+                {
+                    PathwayResultId = pathwayResult.Id,
+                    GradeTo = request.GradeTo
+                })) > 0;
             }
 
             return false;
@@ -352,7 +356,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (created)
             {
                 var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
-                return await changeLongRepository.CreateAsync(CreateChangeLog(request, new { SpecialismResultId = specialismResult.Id })) > 0;
+                return await changeLongRepository.CreateAsync(CreateChangeLog(request, new
+                {
+                    SpecialismResultId = specialismResult.Id,
+                    GradeTo = request.GradeTo
+                })) > 0;
             }
 
             return false;

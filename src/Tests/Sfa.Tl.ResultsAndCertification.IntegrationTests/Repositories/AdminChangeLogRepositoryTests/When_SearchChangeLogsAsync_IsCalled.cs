@@ -299,7 +299,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
 
             TqRegistrationProfile ncfeProviderOneLearnerOne = SeedRegistrationProfile(3100000000, "Eric", "Johnson", new DateTime(2003, 3, 1));
             TqRegistrationPathway ncfeProviderOneLearnerOneRegPathway = SeedRegistrationPathway(ncfeProviderOneLearnerOne, ncfeProviderOne, 2021, RegistrationPathwayStatus.Withdrawn);
-            SeedChangeLog(ncfeProviderOneLearnerOneRegPathway, ChangeType.AssessmentEntryAdd, "admin-user-04", new DateTime(2020, 6, 15), "zendesk-ticket-04");
+            SeedChangeLog(ncfeProviderOneLearnerOneRegPathway, ChangeType.AddPathwayAssessment, "admin-user-04", new DateTime(2020, 6, 15), "zendesk-ticket-04");
 
             TqRegistrationProfile ncfeProviderOneLearnerTwo = SeedRegistrationProfile(3200000000, "Sue", "Baker", new DateTime(2005, 11, 30));
             TqRegistrationPathway ncfeProviderOneLearnerTwoRegPathway = SeedRegistrationPathway(ncfeProviderOneLearnerTwo, ncfeProviderOne, 2023, RegistrationPathwayStatus.Active);

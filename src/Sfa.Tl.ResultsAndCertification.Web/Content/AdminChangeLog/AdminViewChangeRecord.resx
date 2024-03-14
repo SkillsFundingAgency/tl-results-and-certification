@@ -123,6 +123,12 @@
   <data name="Button_Search_Again" xml:space="preserve">
     <value>Search again</value>
   </data>
+  <data name="Core_Component" xml:space="preserve">
+    <value>Core Component</value>
+  </data>
+  <data name="Core_Heading_Text" xml:space="preserve">
+    <value>Core component: {0}</value>
+  </data>
   <data name="Heading_Change_Record" xml:space="preserve">
     <value>Change record for {0}</value>
   </data>
@@ -144,14 +150,26 @@
   <data name="Label_Zendesk_Ticket_Id" xml:space="preserve">
     <value>Zendesk ticket ID</value>
   </data>
+  <data name="No_Grade_Entered" xml:space="preserve">
+    <value>No grade entered</value>
+  </data>
+  <data name="Occupational_Specialism" xml:space="preserve">
+    <value>Occupational Specialism</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Change record – Admin</value>
   </data>
   <data name="Para_Item" xml:space="preserve">
     <value>&lt;p&gt;{0}&lt;/p&gt;</value>
   </data>
+  <data name="Specialism_Heading_Text" xml:space="preserve">
+    <value>Occupational specialism: {0}</value>
+  </data>
   <data name="Summary_Academic_Year_Id" xml:space="preserve">
     <value>academicyear</value>
+  </data>
+  <data name="Summary_Assessment_Id" xml:space="preserve">
+    <value>assessment</value>
   </data>
   <data name="Summary_CreatedBy_Id" xml:space="preserve">
     <value>changemadeby</value>
@@ -159,17 +177,35 @@
   <data name="Summary_CreatedBy_Text" xml:space="preserve">
     <value>Change made by</value>
   </data>
+  <data name="Summary_Exam_Period_Id" xml:space="preserve">
+    <value>examperiod</value>
+  </data>
+  <data name="Summary_Exam_Period_Text" xml:space="preserve">
+    <value>Exam period</value>
+  </data>
+  <data name="Summary_Grade_Id" xml:space="preserve">
+    <value>grade</value>
+  </data>
+  <data name="Summary_Grade_Text" xml:space="preserve">
+    <value>Grade</value>
+  </data>
   <data name="Summary_Learner_Id" xml:space="preserve">
     <value>learner</value>
   </data>
   <data name="Summary_Learner_Text" xml:space="preserve">
     <value>Learner</value>
   </data>
+  <data name="Summary_Selected_Grade_Id" xml:space="preserve">
+    <value>selectedgradecode</value>
+  </data>
   <data name="Summary_ULN_Id" xml:space="preserve">
     <value>uln</value>
   </data>
   <data name="Summary_ULN_Text" xml:space="preserve">
     <value>ULN</value>
+  </data>
+  <data name="Text_No_Assement_Message" xml:space="preserve">
+    <value>No assessment entry recorded for</value>
   </data>
   <data name="Title_Change" xml:space="preserve">
     <value>Change</value>

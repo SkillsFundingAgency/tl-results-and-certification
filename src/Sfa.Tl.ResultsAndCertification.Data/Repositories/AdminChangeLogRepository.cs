@@ -68,28 +68,53 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<AdminChangeLogRecord> GetChangeLogRecordAsync(int changeLogId)
         {
-            return await _dbContext.ChangeLog
-                            .Include(p => p.TqRegistrationPathway)
-                            .ThenInclude(p => p.TqRegistrationProfile)
-                            .Include(p => p.TqRegistrationPathway)
-                            .Where(p => p.Id == changeLogId)
-                                .Select(p => new AdminChangeLogRecord()
-                                {
-                                    ChangeLogId = p.Id,
-                                    RegistrationPathwayId = p.TqRegistrationPathwayId,
-                                    FirstName = p.TqRegistrationPathway.TqRegistrationProfile.Firstname,
-                                    LastName = p.TqRegistrationPathway.TqRegistrationProfile.Lastname,
-                                    Uln = p.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
-                                    CreatedBy = p.CreatedBy,
-                                    ChangeType = (ChangeType)p.ChangeType,
-                                    ChangeDetails = p.Details,
-                                    ChangeRequestedBy = p.Name,
-                                    ChangeDateOfRequest = p.DateOfRequest,
-                                    ReasonForChange = p.ReasonForChange,
-                                    ZendeskTicketID = p.ZendeskTicketID,
-                                    DateAndTimeOfChange = p.CreatedOn
-                                })
-                                .FirstOrDefaultAsync();
+            IQueryable<ChangeLog> query =
+                _dbContext.ChangeLog
+                        .Include(p => p.TqRegistrationPathway)
+                            .ThenInclude(p => p.TqPathwayAssessments.Where(pa => pa.IsOptedin))
+                            .ThenInclude(p => p.TqPathwayResults.Where(pr => pr.IsOptedin))
+                            .ThenInclude(p => p.TlLookup)
+                        .Include(p => p.TqRegistrationPathway.TqPathwayAssessments.Where(pa => pa.IsOptedin))
+                        .ThenInclude(p => p.AssessmentSeries)
+                        .Include(p => p.TqRegistrationPathway.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin))
+                            .ThenInclude(p => p.TqSpecialismAssessments.Where(sa => sa.IsOptedin))
+                            .ThenInclude(p => p.TqSpecialismResults)
+                            .ThenInclude(p => p.TlLookup)
+                        .Include(p => p.TqRegistrationPathway.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin))
+                            .ThenInclude(p => p.TqSpecialismAssessments.Where(sa => sa.IsOptedin))
+                            .ThenInclude(p => p.AssessmentSeries)
+                        .Include(p => p.TqRegistrationPathway.TqRegistrationSpecialisms.Where(sa => sa.IsOptedin))
+                            .ThenInclude(p => p.TlSpecialism)
+                        .Include(p => p.TqRegistrationPathway.TqRegistrationProfile)
+                        .Include(p => p.TqRegistrationPathway.TqProvider)
+                            .ThenInclude(p => p.TqAwardingOrganisation)
+                            .ThenInclude(p => p.TlPathway);
+
+            var changlogRecord = await query.Select(p => new AdminChangeLogRecord()
+            {
+                ChangeLogId = p.Id,
+                RegistrationPathwayId = p.TqRegistrationPathwayId,
+                FirstName = p.TqRegistrationPathway.TqRegistrationProfile.Firstname,
+                LastName = p.TqRegistrationPathway.TqRegistrationProfile.Lastname,
+                Uln = p.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
+                PathwayName = p.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.Name,
+                CoreCode = p.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
+                CoreExamPeriod = p.TqRegistrationPathway.TqPathwayAssessments.FirstOrDefault(pa => pa.IsOptedin).AssessmentSeries.Name,
+                SpecialismName = p.TqRegistrationPathway.TqRegistrationSpecialisms.FirstOrDefault(rs => rs.IsOptedin).TlSpecialism.Name,
+                SpecialismCode = p.TqRegistrationPathway.TqRegistrationSpecialisms.FirstOrDefault(rs => rs.IsOptedin).TlSpecialism.LarId,
+                SpecialismExamPeriod = p.TqRegistrationPathway.TqRegistrationSpecialisms.FirstOrDefault(rs => rs.IsOptedin).TqSpecialismAssessments.FirstOrDefault(sa => sa.IsOptedin).AssessmentSeries.Name,
+                CreatedBy = p.CreatedBy,
+                ChangeType = (ChangeType)p.ChangeType,
+                ChangeDetails = p.Details,
+                ChangeRequestedBy = p.Name,
+                ChangeDateOfRequest = p.DateOfRequest,
+                ReasonForChange = p.ReasonForChange,
+                ZendeskTicketID = p.ZendeskTicketID,
+                DateAndTimeOfChange = p.CreatedOn
+            })
+            .Where(p => p.ChangeLogId == changeLogId).FirstOrDefaultAsync();
+
+            return changlogRecord;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog.AdminViewChangeRecordIndustryPlacementViewModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog.AdminViewChangeRecordCoreAssessmentViewModel
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog
 
@@ -24,10 +24,7 @@
                     <dt class="govuk-summary-list__key">@AdminViewChangeRecord.Title_To</dt>
                     <dt class="govuk-summary-list__key"></dt>
                 </div>
-                @foreach (var rowItem in Model.GetIpSummaryDetailsList())
-                {
-                    <vc:summary-item model=rowItem></vc:summary-item>
-                }
+                <vc:summary-item model=Model.SummaryAssessment></vc:summary-item>
             </dl>
         </div>
 

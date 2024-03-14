@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
@@ -102,6 +101,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AdminViewChangeRecordIPAsync(int changeLogId)
         {
             var result = await _loader.GetAdminViewChangeIPRecord(changeLogId);
+            return View(result);
+        }
+
+        [HttpGet]
+        [Route("admin/view-change-record-core-assessment/{changeLogId}", Name = RouteConstants.AdminViewChangeCoreAssessmentRecord)]
+        public async Task<IActionResult> AdminViewChangeRecordCoreAssessmentAsync(int changeLogId)
+        {
+            var result = await _loader.GetAdminViewChangeCoreAssessmentRecord(changeLogId);
+            return View(result);
+        }
+
+        [HttpGet]
+        [Route("admin/view-change-record-specialism-assessment/{changeLogId}", Name = RouteConstants.AdminViewChangeSpecialismAssessmentRecord)]
+        public async Task<IActionResult> AdminViewChangeRecordSpecialismAssessmentAsync(int changeLogId)
+        {
+            var result = await _loader.GetAdminViewChangeSpecialismAssessmentRecord(changeLogId);
+            return View(result);
+        }
+
+        [HttpGet]
+        [Route("admin/view-change-record-add-pathway-result/{changeLogId}", Name = RouteConstants.AdminViewChangeAddPathwayResultRecord)]
+        public async Task<IActionResult> AdminViewChangeRecordAddPathwayResultAsync(int changeLogId)
+        {
+            var result = await _loader.GetAdminViewChangeAddPathwayResultRecord(changeLogId);
+            return View(result);
+        }
+
+        [HttpGet]
+        [Route("admin/view-change-record-add-specialism-result/{changeLogId}", Name = RouteConstants.AdminViewChangeAddSpecialismResultRecord)]
+        public async Task<IActionResult> AdminViewChangeRecordAddSpecialismResultAsync(int changeLogId)
+        {
+            var result = await _loader.GetAdminViewChangeAddSpecialismResultRecord(changeLogId);
             return View(result);
         }
     }

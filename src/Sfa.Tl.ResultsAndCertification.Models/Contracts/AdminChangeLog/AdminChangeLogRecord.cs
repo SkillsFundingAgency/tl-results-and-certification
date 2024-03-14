@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog
@@ -8,6 +9,18 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog
         public int ChangeLogId { get; set; }
 
         public int RegistrationPathwayId { get; set; }
+
+        public string PathwayName { get; set; }
+
+        public string CoreExamPeriod { get; set; }
+
+        public string CoreCode { get; set; }
+
+        public string SpecialismName { get; set; }
+
+        public string SpecialismCode { get; set; }
+
+        public string SpecialismExamPeriod { get; set; }
 
         public string FirstName { get; set; }
 

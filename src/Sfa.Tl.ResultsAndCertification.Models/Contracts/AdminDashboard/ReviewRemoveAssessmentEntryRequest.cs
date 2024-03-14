@@ -12,6 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
 
         public ComponentType ComponentType { get; set; }
 
-        public override ChangeType ChangeType => ChangeType.AssessmentEntryRemove;
+        public override ChangeType ChangeType => ChangeType.RemovePathwayAssessment;
     }
 }

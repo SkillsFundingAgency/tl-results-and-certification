@@ -8,6 +8,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
 
         public int SelectedGradeId { get; set; }
 
+        public string GradeTo { get; set; }
+
         public override ChangeType ChangeType => ChangeType.AddSpecialismResult;
     }
 }

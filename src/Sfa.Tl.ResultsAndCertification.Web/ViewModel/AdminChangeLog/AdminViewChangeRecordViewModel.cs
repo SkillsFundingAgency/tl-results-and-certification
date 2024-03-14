@@ -20,6 +20,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
 
         public long Uln { get; set; }
 
+        public string PathwayName { get; set; }
+
+        public string CoreCode { get; set; }
+
+        public string  SpecialismName { get; set; }
+
+        public string SpecialismCode { get; set; }
+
         #endregion Learner
 
         #region Change log
@@ -32,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
 
         public string ChangeRequestedBy { get; set; }
 
-        public DateTime ChangeDateOfRequest { get; set; }
+        public string ChangeDateOfRequest { get; set; }
 
         public string ReasonForChange { get; set; }
 

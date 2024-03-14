@@ -1,4 +1,4 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog.AdminViewChangeRecordIndustryPlacementViewModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog.AdminViewChangeRecordSpecialismAssessmentViewModel
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog
 
@@ -14,7 +14,6 @@
     <div class="govuk-grid-column-full">
 
         <partial name="Partials/_viewRecordLogDetails.cshtml" />
-
         <div class="govuk-!-margin-top-8">
             <h2 class="govuk-heading-m">@AdminViewChangeRecord.Title_Change_Summary</h2>
             <dl class="govuk-summary-list">
@@ -24,13 +23,10 @@
                     <dt class="govuk-summary-list__key">@AdminViewChangeRecord.Title_To</dt>
                     <dt class="govuk-summary-list__key"></dt>
                 </div>
-                @foreach (var rowItem in Model.GetIpSummaryDetailsList())
-                {
-                    <vc:summary-item model=rowItem></vc:summary-item>
-                }
+                <vc:summary-item model=Model.SummaryAssessment></vc:summary-item>
             </dl>
-        </div>
+            </>
 
-        <partial name="Partials/_viewRecordChangeRequestedDetails.cshtml" />
+            <partial name="Partials/_viewRecordChangeRequestedDetails.cshtml" />
+        </div>
     </div>
-</div>

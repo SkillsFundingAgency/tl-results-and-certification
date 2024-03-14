@@ -79,6 +79,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Core Component.
+        /// </summary>
+        public static string Core_Component {
+            get {
+                return ResourceManager.GetString("Core_Component", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Core component: {0}.
+        /// </summary>
+        public static string Core_Heading_Text {
+            get {
+                return ResourceManager.GetString("Core_Heading_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change record for {0}.
         /// </summary>
         public static string Heading_Change_Record {
@@ -142,6 +160,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No grade entered.
+        /// </summary>
+        public static string No_Grade_Entered {
+            get {
+                return ResourceManager.GetString("No_Grade_Entered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Occupational Specialism.
+        /// </summary>
+        public static string Occupational_Specialism {
+            get {
+                return ResourceManager.GetString("Occupational_Specialism", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change record – Admin.
         /// </summary>
         public static string Page_Title {
@@ -160,11 +196,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Occupational specialism: {0}.
+        /// </summary>
+        public static string Specialism_Heading_Text {
+            get {
+                return ResourceManager.GetString("Specialism_Heading_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to academicyear.
         /// </summary>
         public static string Summary_Academic_Year_Id {
             get {
                 return ResourceManager.GetString("Summary_Academic_Year_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to assessment.
+        /// </summary>
+        public static string Summary_Assessment_Id {
+            get {
+                return ResourceManager.GetString("Summary_Assessment_Id", resourceCulture);
             }
         }
         
@@ -187,6 +241,42 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to examperiod.
+        /// </summary>
+        public static string Summary_Exam_Period_Id {
+            get {
+                return ResourceManager.GetString("Summary_Exam_Period_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exam period.
+        /// </summary>
+        public static string Summary_Exam_Period_Text {
+            get {
+                return ResourceManager.GetString("Summary_Exam_Period_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to grade.
+        /// </summary>
+        public static string Summary_Grade_Id {
+            get {
+                return ResourceManager.GetString("Summary_Grade_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grade.
+        /// </summary>
+        public static string Summary_Grade_Text {
+            get {
+                return ResourceManager.GetString("Summary_Grade_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to learner.
         /// </summary>
         public static string Summary_Learner_Id {
@@ -205,6 +295,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to selectedgradecode.
+        /// </summary>
+        public static string Summary_Selected_Grade_Id {
+            get {
+                return ResourceManager.GetString("Summary_Selected_Grade_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to uln.
         /// </summary>
         public static string Summary_ULN_Id {
@@ -219,6 +318,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog {
         public static string Summary_ULN_Text {
             get {
                 return ResourceManager.GetString("Summary_ULN_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No assessment entry recorded for.
+        /// </summary>
+        public static string Text_No_Assement_Message {
+            get {
+                return ResourceManager.GetString("Text_No_Assement_Message", resourceCulture);
             }
         }
         

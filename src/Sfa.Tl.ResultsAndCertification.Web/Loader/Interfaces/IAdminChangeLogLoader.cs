@@ -10,5 +10,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<AdminViewChangeRecordViewModel> GetAdminViewChangeStartYearRecord(int changeLogId);
 
         Task<AdminViewChangeRecordViewModel> GetAdminViewChangeIPRecord(int changeLogId);
+
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangeCoreAssessmentRecord(int changeLogId);
+
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangeSpecialismAssessmentRecord(int changeLogId);
+
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangeAddPathwayResultRecord(int changeLogId);
+
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangeAddSpecialismResultRecord(int changeLogId);
     }
 }
