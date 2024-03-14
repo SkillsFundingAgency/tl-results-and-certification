@@ -7,13 +7,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
 {
-    public class AdminOpenPathwayRommViewModel
+    public class AdminOpenSpecialismRommViewModel
     {
         public int RegistrationPathwayId { get; set; }
 
-        public int PathwayAssessmentId { get; set; }
+        public int SpecialismAssessmentId { get; set; }
 
-        public string PathwayName { get; set; }
+        public string SpecialismName { get; set; }
 
         #region Personal details
 
@@ -28,19 +28,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
         public string StartYear { get; set; }
 
         public SummaryItemModel SummaryLearner
-            => CreateSummaryItemModel(AdminOpenPathwayRomm.Summary_Learner_Id, AdminOpenPathwayRomm.Summary_Learner_Text, Learner);
+            => CreateSummaryItemModel(AdminOpenSpecialismRomm.Summary_Learner_Id, AdminOpenSpecialismRomm.Summary_Learner_Text, Learner);
 
         public SummaryItemModel SummaryUln
-            => CreateSummaryItemModel(AdminOpenPathwayRomm.Summary_ULN_Id, AdminOpenPathwayRomm.Summary_ULN_Text, Uln.ToString());
+            => CreateSummaryItemModel(AdminOpenSpecialismRomm.Summary_ULN_Id, AdminOpenSpecialismRomm.Summary_ULN_Text, Uln.ToString());
 
         public SummaryItemModel SummaryProvider
-            => CreateSummaryItemModel(AdminOpenPathwayRomm.Summary_Provider_Id, AdminOpenPathwayRomm.Summary_Provider_Text, Provider);
+            => CreateSummaryItemModel(AdminOpenSpecialismRomm.Summary_Provider_Id, AdminOpenSpecialismRomm.Summary_Provider_Text, Provider);
 
         public SummaryItemModel SummaryTlevel
-            => CreateSummaryItemModel(AdminOpenPathwayRomm.Summary_TLevel_Id, AdminOpenPathwayRomm.Summary_TLevel_Text, Tlevel);
+            => CreateSummaryItemModel(AdminOpenSpecialismRomm.Summary_TLevel_Id, AdminOpenSpecialismRomm.Summary_TLevel_Text, Tlevel);
 
         public SummaryItemModel SummaryStartYear
-            => CreateSummaryItemModel(AdminOpenPathwayRomm.Summary_StartYear_Id, AdminOpenPathwayRomm.Summary_StartYear_Text, StartYear);
+            => CreateSummaryItemModel(AdminOpenSpecialismRomm.Summary_StartYear_Id, AdminOpenSpecialismRomm.Summary_StartYear_Text, StartYear);
 
         #endregion
 
@@ -51,17 +51,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
         public string Grade { get; set; }
 
         public SummaryItemModel SummaryExamPeriod
-           => CreateSummaryItemModel(AdminOpenPathwayRomm.Summary_Exam_Period_Id, AdminOpenPathwayRomm.Summary_Exam_Period_Text, ExamPeriod);
+           => CreateSummaryItemModel(AdminOpenSpecialismRomm.Summary_Exam_Period_Id, AdminOpenSpecialismRomm.Summary_Exam_Period_Text, ExamPeriod);
 
         public SummaryItemModel SummaryGrade
            => CreateSummaryItemModel(
-               AdminOpenPathwayRomm.Summary_Grade_Id,
-               AdminOpenPathwayRomm.Summary_Grade_Text,
-               string.IsNullOrWhiteSpace(Grade) ? AdminOpenPathwayRomm.No_Grade_Entered : Grade);
+               AdminOpenSpecialismRomm.Summary_Grade_Id,
+               AdminOpenSpecialismRomm.Summary_Grade_Text,
+               string.IsNullOrWhiteSpace(Grade) ? AdminOpenSpecialismRomm.No_Grade_Entered : Grade);
 
         #endregion
 
-        [Required(ErrorMessageResourceType = typeof(AdminOpenPathwayRomm), ErrorMessageResourceName = "Validation_Message")]
+        [Required(ErrorMessageResourceType = typeof(AdminOpenSpecialismRomm), ErrorMessageResourceName = "Validation_Message")]
         public bool? DoYouWantToOpenRomm { get; set; }
 
         public BackLinkModel BackLink => new()

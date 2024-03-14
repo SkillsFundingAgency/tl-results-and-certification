@@ -21,12 +21,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _mapper = mapper;
         }
 
-        public async Task<AdminOpenPathwayRommViewModel> GetAdminOpenRommAsync(int registrationPathwayId, int assessmentId)
+        public Task<AdminOpenPathwayRommViewModel> GetAdminOpenPathwayRommAsync(int registrationPathwayId, int pathwayAssessmentId)
+            => GetAdminOpenRommAsync<AdminOpenPathwayRommViewModel>(registrationPathwayId, pathwayAssessmentId);
+
+        public Task<AdminOpenSpecialismRommViewModel> GetAdminOpenSpecialismRommAsync(int registrationPathwayId, int specialismAssessmentId)
+            => GetAdminOpenRommAsync<AdminOpenSpecialismRommViewModel>(registrationPathwayId, specialismAssessmentId);
+
+        private async Task<T> GetAdminOpenRommAsync<T>(int registrationPathwayId, int pathwayAssessmentId)
         {
             AdminLearnerRecord learnerRecord = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
-            return _mapper.Map<AdminOpenPathwayRommViewModel>(learnerRecord, opt =>
+            return _mapper.Map<T>(learnerRecord, opt =>
             {
-                opt.Items[Constants.AssessmentId] = assessmentId;
+                opt.Items[Constants.AssessmentId] = pathwayAssessmentId;
             });
         }
     }

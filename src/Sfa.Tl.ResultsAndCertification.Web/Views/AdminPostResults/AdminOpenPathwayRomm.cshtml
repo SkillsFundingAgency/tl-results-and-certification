@@ -3,7 +3,7 @@
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminPostResults
 
 @{
-    ViewData["Title"] = AdminOpenRomm.Page_Title;
+    ViewData["Title"] = AdminOpenPathwayRomm.Page_Title;
 }
 
 @section NavigationBar {
@@ -20,7 +20,7 @@
             <!-- Open a ROMM page header -->
             <div class="record-header">
                 <h1 class="govuk-heading-xl">
-                    @AdminOpenRomm.Heading_Open_A_Romm
+                    @AdminOpenPathwayRomm.Heading_Open_A_Romm
                 </h1>
             </div>
 
@@ -35,7 +35,7 @@
 
             <div class="govuk-!-margin-bottom-9">
                 <h2 class="govuk-heading-m">
-                    @AdminOpenRomm.Heading_Personal_Details
+                    @AdminOpenPathwayRomm.Heading_Personal_Details
                 </h2>
 
                 <dl class="govuk-summary-list">
@@ -54,7 +54,7 @@
 
             <div class="govuk-!-margin-bottom-9">
                 <h2 class="govuk-heading-m">
-                    @string.Format(AdminOpenRomm.Core_Heading_Text, Model.PathwayName)
+                    @string.Format(AdminOpenPathwayRomm.Core_Heading_Text, Model.PathwayName)
                 </h2>
                 <dl class="govuk-summary-list">
                     <vc:summary-item model=Model.SummaryExamPeriod></vc:summary-item>
@@ -68,7 +68,7 @@
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                         <h2 class="govuk-fieldset__heading">
-                            @AdminOpenRomm.Heading_Do_You_Want_To_Open_A_Romm
+                            @AdminOpenPathwayRomm.Heading_Do_You_Want_To_Open_A_Romm
                         </h2>
                     </legend>
 
@@ -77,13 +77,13 @@
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="canremoveassessmententry" asp-for="DoYouWantToOpenRomm" type="radio" value="true">
                             <label class="govuk-label govuk-radios__label" for="canremoveassessmententry">
-                                @AdminOpenRomm.Radio_Button_Yes
+                                @AdminOpenPathwayRomm.Radio_Button_Yes
                             </label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="assessment-entry-remove-no" asp-for="DoYouWantToOpenRomm" type="radio" value="false">
                             <label class="govuk-label govuk-radios__label" for="assessment-entry-remove-no">
-                                @AdminOpenRomm.Radio_Button_No
+                                @AdminOpenPathwayRomm.Radio_Button_No
                             </label>
                         </div>
                     </div>
@@ -93,8 +93,8 @@
 
             <!-- Continue / Cancel buttons -->
             <div class="govuk-button-group">
-                <button id="btnContinue" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminOpenRomm.Button_Continue</button>
-                <a id="btnCancel" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminOpenRomm.Button_Cancel</a>
+                <button id="btnContinue" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminOpenPathwayRomm.Button_Continue</button>
+                <a id="btnCancel" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminOpenPathwayRomm.Button_Cancel</a>
             </div>
         </form>
     </div>

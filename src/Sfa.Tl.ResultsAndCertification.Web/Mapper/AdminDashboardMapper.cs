@@ -164,7 +164,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ChangeReason, opts => opts.MapFrom(s => s.ChangeReason))
                 .ForMember(d => d.ZendeskId, opts => opts.MapFrom(s => s.ZendeskId))
                 .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<AdminReviewChangesIndustryPlacementViewModel, ReviewChangeIndustryPlacementRequest>>())
-                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.AdminChangeIpViewModel.AdminIpCompletion.IndustryPlacementStatus))
+                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.AdminChangeIpViewModel.AdminIpCompletion.IndustryPlacementStatusTo))
                 .ForMember(d => d.HoursSpentOnPlacement, opts => opts.MapFrom(s =>
                     string.IsNullOrWhiteSpace(s.AdminChangeIpViewModel.HoursViewModel.Hours)
                         ? null as int?
