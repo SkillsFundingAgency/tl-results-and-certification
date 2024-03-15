@@ -237,7 +237,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return JsonConvert.SerializeObject(details);
         }
 
-        public async Task<bool> ProcessRemovePathwayAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest model)
+        public async Task<bool> ProcessRemovePathwayAssessmentEntryAsync(ReviewRemoveCoreAssessmentEntryRequest model)
         {
             var pathwayAssessmentRepository = _repositoryFactory.GetRepository<TqPathwayAssessment>();
 
@@ -263,7 +263,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return false;
         }
 
-        public async Task<bool> ProcessRemoveSpecialismAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest model)
+        public async Task<bool> ProcessRemoveSpecialismAssessmentEntryAsync(ReviewRemoveSpecialismAssessmentEntryRequest model)
         {
             var specialismAssessmentRepository = _repositoryFactory.GetRepository<TqSpecialismAssessment>();
 

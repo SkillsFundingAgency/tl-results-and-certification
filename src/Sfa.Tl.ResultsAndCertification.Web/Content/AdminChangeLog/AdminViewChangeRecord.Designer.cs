@@ -133,11 +133,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Core component: {0}.
+        /// </summary>
+        public static string Label_Core_Component {
+            get {
+                return ResourceManager.GetString("Label_Core_Component", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date of request.
         /// </summary>
         public static string Label_Date_Of_Request {
             get {
                 return ResourceManager.GetString("Label_Date_Of_Request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No assessment entry recorded for {0}.
+        /// </summary>
+        public static string Label_No_Assessment_Entry_Recorded {
+            get {
+                return ResourceManager.GetString("Label_No_Assessment_Entry_Recorded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Occupational specialism: {0}.
+        /// </summary>
+        public static string Label_Occupational_Specialism {
+            get {
+                return ResourceManager.GetString("Label_Occupational_Specialism", resourceCulture);
             }
         }
         

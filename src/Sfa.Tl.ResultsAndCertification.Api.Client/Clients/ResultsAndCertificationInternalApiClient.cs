@@ -478,14 +478,14 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<ReviewAddSpecialismAssessmentRequest, bool>(ApiConstants.ProcessAddSpecialismAssessmentUri, request);
         }
 
-        public async Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request)
+        public async Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveCoreAssessmentEntryRequest request)
         {
-            return await PostAsync<ReviewRemoveAssessmentEntryRequest, bool>(ApiConstants.ReviewRemoveAssessmentEntryUri, request);
+            return await PostAsync<ReviewRemoveCoreAssessmentEntryRequest, bool>(ApiConstants.ReviewRemoveCoreAssessmentEntryUri, request);
         }
 
-        public async Task<bool> RemoveSpecialAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request)
+        public async Task<bool> RemoveSpecialAssessmentEntryAsync(ReviewRemoveSpecialismAssessmentEntryRequest request)
         {
-            return await PostAsync<ReviewRemoveAssessmentEntryRequest, bool>(ApiConstants.ReviewRemoveAssessmentEntryUri, request);
+            return await PostAsync<ReviewRemoveSpecialismAssessmentEntryRequest, bool>(ApiConstants.ReviewRemoveSpecialismAssessmentEntryUri, request);
         }
 
         public Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request)

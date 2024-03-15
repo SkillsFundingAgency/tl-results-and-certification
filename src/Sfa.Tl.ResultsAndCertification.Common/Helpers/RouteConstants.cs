@@ -479,6 +479,9 @@
         public const string AdminViewChangeSpecialismAssessmentRecord = "AdminViewChangeSpecialismAssessmentRecord";
         public const string AdminViewChangeAddPathwayResultRecord = "AdminViewChangeAddPathwayResultRecord";
         public const string AdminViewChangeAddSpecialismResultRecord = "AdminViewChangeAddSpecialismResultRecord";
+        public const string AdminViewChangeRemoveCoreAssessmentRecord = "AdminViewChangeRemoveCoreAssessmentRecord";
+        public const string AdminViewChangeRemoveSpecialismAssessmentRecord = "AdminViewChangeRemoveSpecialismAssessmentRecord";
+
 
         #endregion
     }

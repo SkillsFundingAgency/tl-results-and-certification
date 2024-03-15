@@ -83,6 +83,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.CoreCode})"))
                 .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
                 .ForMember(d => d.SpecialismDetails, opts => opts.MapFrom(s => GetDetails<AddSpecialismResultRequest>(s.ChangeDetails)));
+
+            CreateMap<AdminChangeLogRecord, AdminViewChangeRecordRemoveCoreAssessmentViewModel>()
+               .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+               .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.CoreCode))
+               .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.CoreCode})"))
+               .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
+               .ForMember(d => d.DetailsChangeAssessment, opts => opts.MapFrom(s => GetDetails<DetailsChangeAssessmentRemove>(s.ChangeDetails)));
+
+            CreateMap<AdminChangeLogRecord, AdminViewChangeRecordRemoveSpecialismAssessmentViewModel>()
+               .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+               .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.CoreCode))
+               .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.CoreCode})"))
+               .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
+               .ForMember(d => d.DetailsChangeAssessment, opts => opts.MapFrom(s => GetDetails<DetailsSpecialismAssessmentRemove>(s.ChangeDetails)));
         }
 
         private T GetDetails<T>(string details)

@@ -77,6 +77,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<AdminViewChangeRecordSpecialismAssessmentViewModel>(changeLogRecord);
         }
 
+        public async Task<AdminViewChangeRecordViewModel> GetAdminViewChangeRemoveCoreAssessmentRecord(int changeLogId)
+        {
+            var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);
+            return _mapper.Map<AdminViewChangeRecordRemoveCoreAssessmentViewModel>(changeLogRecord);
+        }
+
+        public async Task<AdminViewChangeRecordViewModel> GetAdminViewChangeRemoveSpecialismAssessmentRecord(int changeLogId)
+        {
+            var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);
+            return _mapper.Map<AdminViewChangeRecordRemoveSpecialismAssessmentViewModel>(changeLogRecord);
+        }
+
         public async Task<AdminViewChangeRecordViewModel> GetAdminViewChangeAddPathwayResultRecord(int changeLogId)
         {
             var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);

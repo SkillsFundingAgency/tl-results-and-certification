@@ -141,8 +141,17 @@
   <data name="Label_Contact_Name" xml:space="preserve">
     <value>Contact name</value>
   </data>
+  <data name="Label_Core_Component" xml:space="preserve">
+    <value>Core component: {0}</value>
+  </data>
   <data name="Label_Date_Of_Request" xml:space="preserve">
     <value>Date of request</value>
+  </data>
+  <data name="Label_No_Assessment_Entry_Recorded" xml:space="preserve">
+    <value>No assessment entry recorded for {0}</value>
+  </data>
+  <data name="Label_Occupational_Specialism" xml:space="preserve">
+    <value>Occupational specialism: {0}</value>
   </data>
   <data name="Label_Reason_For_Change" xml:space="preserve">
     <value>Reason for change</value>
