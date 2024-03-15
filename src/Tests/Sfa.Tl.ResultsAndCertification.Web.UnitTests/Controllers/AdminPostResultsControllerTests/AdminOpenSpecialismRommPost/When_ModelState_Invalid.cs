@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminPostResu
         [Fact]
         public void Then_Returns_Expected()
         {
-            var model = Result.ShouldBeViewResult<AdminOpenPathwayRommViewModel>();
+            var model = Result.ShouldBeViewResult<AdminOpenSpecialismRommViewModel>();
             model.Should().BeEquivalentTo(_viewModel);
 
             ModelStateDictionary modelState = Controller.ViewData.ModelState;
