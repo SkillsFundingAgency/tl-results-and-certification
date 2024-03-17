@@ -7,6 +7,7 @@
         AssessmentEntryAdd = 3,
         AssessmentEntryRemove = 4,        
         AddPathwayResult = 5,
-        AddSpecialismResult = 6
+        AddSpecialismResult = 6,
+        ChangePathwayResult =7
     }
 }

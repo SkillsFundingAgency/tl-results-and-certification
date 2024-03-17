@@ -134,5 +134,8 @@
 
         public const string ProcessAdminAddPathwayResult = "/api/admindashboard/ProcessAdminAddPathwayResult";
         public const string ProcessAdminAddSpecialismResult = "/api/admindashboard/ProcessAdminAddSpecialismResult";
+
+        public const string ProcessAdminChangePathwayResult = "/api/admindashboard/ProcessAdminChangePathwayResult";
+        public const string ProcessAdminChangeSpecialismResult = "/api/admindashboard/ProcessAdminChangeSpecialismResult";
     }
 }

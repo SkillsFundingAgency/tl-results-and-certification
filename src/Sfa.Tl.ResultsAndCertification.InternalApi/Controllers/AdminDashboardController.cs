@@ -91,5 +91,15 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         [Route("ProcessAdminAddSpecialismResult")]
         public Task<bool> ProcessAdminAddSpecialismResultAsync(AddSpecialismResultRequest request)
             => _adminDashboardService.ProcessAdminAddSpecialismResultAsync(request);
+
+        [HttpPost]
+        [Route("ProcessAdminChangePathwayResult")]
+        public Task<bool> ProcessAdminChangePathwayResultAsync(ChangePathwayResultRequest request)
+          => _adminDashboardService.ProcessAdminChangePathwayResultAsync(request);
+
+        [HttpPost]
+        [Route("ProcessAdminChangeSpecialismResult")]
+        public Task<bool> ProcessAdminChangeSpecialismResultAsync(ChangeSpecialismResultRequest request)
+         => _adminDashboardService.ProcessAdminChangeSpecialismResultAsync(request);
     }
 }

@@ -8,20 +8,19 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
 {
-    public class AdminChangePathwayResultReviewChangesViewModel
+    public class AdminChangeSpecialismResultReviewChangesViewModel
     {
         public int RegistrationPathwayId { get; set; }
 
-        public int PathwayAssessmentId { get; set; }
+        public int SpecialismAssessmentId { get; set; }
 
-        public int PathwayResultId { get; set; }
+        public int SpecialismResultId { get; set; }
 
-        public string PathwayName { get; set; }
+        public string SpecialismName { get; set; }
 
         public int SelectedGradeId { get; set; }
 
         public string SelectedGradeValue { get; set; }
-
         public string Grade { get; set; }
 
         #region Personal details
@@ -37,19 +36,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
         public string StartYear { get; set; }
 
         public SummaryItemModel SummaryLearner
-            => CreateSummaryItemModel(AdminChangePathwayResult.Summary_Learner_Id, AdminChangePathwayResult.Summary_Learner_Text, Learner);
+            => CreateSummaryItemModel(AdminAddPathwayResult.Summary_Learner_Id, AdminAddPathwayResult.Summary_Learner_Text, Learner);
 
         public SummaryItemModel SummaryUln
-            => CreateSummaryItemModel(AdminChangePathwayResult.Summary_ULN_Id, AdminChangePathwayResult.Summary_ULN_Text, Uln.ToString());
+            => CreateSummaryItemModel(AdminAddPathwayResult.Summary_ULN_Id, AdminAddPathwayResult.Summary_ULN_Text, Uln.ToString());
 
         public SummaryItemModel SummaryProvider
-            => CreateSummaryItemModel(AdminChangePathwayResult.Summary_Provider_Id, AdminChangePathwayResult.Summary_Provider_Text, Provider);
+            => CreateSummaryItemModel(AdminAddPathwayResult.Summary_Provider_Id, AdminAddPathwayResult.Summary_Provider_Text, Provider);
 
         public SummaryItemModel SummaryTlevel
-            => CreateSummaryItemModel(AdminChangePathwayResult.Summary_TLevel_Id, AdminChangePathwayResult.Summary_TLevel_Text, Tlevel);
+            => CreateSummaryItemModel(AdminAddPathwayResult.Summary_TLevel_Id, AdminAddPathwayResult.Summary_TLevel_Text, Tlevel);
 
         public SummaryItemModel SummaryStartYear
-            => CreateSummaryItemModel(AdminChangePathwayResult.Summary_StartYear_Id, AdminChangePathwayResult.Summary_StartYear_Text, StartYear);
+            => CreateSummaryItemModel(AdminAddPathwayResult.Summary_StartYear_Id, AdminAddPathwayResult.Summary_StartYear_Text, StartYear);
 
         #endregion
 
@@ -58,35 +57,35 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
         public string ExamPeriod { get; set; }
 
         public SummaryItemModel SummaryExamPeriod
-           => CreateSummaryItemModel(AdminChangePathwayResult.Summary_Exam_Period_Id, AdminChangePathwayResult.Summary_Exam_Period_Text, ExamPeriod);
+           => CreateSummaryItemModel(AdminAddPathwayResult.Summary_Exam_Period_Id, AdminAddPathwayResult.Summary_Exam_Period_Text, ExamPeriod);
 
         public SummaryItemModel SummaryGrade
            => CreateSummaryItemModel(
-               AdminChangePathwayResult.Summary_Grade_Id,
-               AdminChangePathwayResult.Summary_Grade_Text,
+               AdminAddPathwayResult.Summary_Grade_Id,
+               AdminAddPathwayResult.Summary_Grade_Text,
                Grade);
 
         #endregion
 
         public AdminReviewSummaryItemModel SummarySelectedGrade => new()
         {
-            Id = AdminChangePathwayResultReviewChanges.Summary_Selected_Grade_Id,
-            Title = AdminChangePathwayResultReviewChanges.Summary_Grade_Text,
+            Id = AdminAddSpecialismResultReviewChanges.Summary_Selected_Grade_Id,
+            Title = AdminAddSpecialismResultReviewChanges.Summary_Grade_Text,
             Value = Grade,
             Value2 = SelectedGradeValue,
-            ActionText = AdminChangePathwayResultReviewChanges.Link_Change_Text,
-            RouteName = RouteConstants.AdminChangePathwayResult,
+            ActionText = AdminAddSpecialismResultReviewChanges.Link_Change_Text,
+            RouteName = RouteConstants.AdminChangeSpecialismResult,
             RouteAttributes = new Dictionary<string, string>()
             {
                 { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() },
-                { Constants.AssessmentId, PathwayAssessmentId.ToString() }
+                { Constants.AssessmentId, SpecialismAssessmentId.ToString() }
             }
         };
 
-        [Required(ErrorMessageResourceType = typeof(AdminChangePathwayResultReviewChanges), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
+        [Required(ErrorMessageResourceType = typeof(AdminAddSpecialismResultReviewChanges), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
         public string ContactName { get; set; }
 
-        [DateValidator(Property = nameof(DateOfRequest), ErrorResourceType = typeof(AdminChangePathwayResultReviewChanges))]
+        [DateValidator(Property = nameof(DateOfRequest), ErrorResourceType = typeof(AdminAddSpecialismResultReviewChanges))]
         public string DateOfRequest
             => $"{Year}/{Month}/{Day}";
 
@@ -96,18 +95,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
 
         public string Year { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(AdminChangePathwayResultReviewChanges), ErrorMessageResourceName = "Validation_Reason_For_Change_Blank_Text")]
+        [Required(ErrorMessageResourceType = typeof(AdminAddSpecialismResultReviewChanges), ErrorMessageResourceName = "Validation_Reason_For_Change_Blank_Text")]
         public string ChangeReason { get; set; }
 
         public string ZendeskTicketId { get; set; }
 
         public BackLinkModel BackLink => new()
         {
-            RouteName = RouteConstants.AdminChangePathwayResult,
+            RouteName = RouteConstants.AdminChangeSpecialismResult,
             RouteAttributes = new Dictionary<string, string>()
             {
                 { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() },
-                { Constants.AssessmentId, PathwayAssessmentId.ToString() }
+                { Constants.AssessmentId, SpecialismAssessmentId.ToString() }
             }
         };
 

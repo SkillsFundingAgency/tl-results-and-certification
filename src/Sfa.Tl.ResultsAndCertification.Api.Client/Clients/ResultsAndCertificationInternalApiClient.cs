@@ -491,6 +491,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         public Task<bool> ProcessAdminAddSpecialismResultAsync(AddSpecialismResultRequest request)
             => PostAsync<AddSpecialismResultRequest, bool>(ApiConstants.ProcessAdminAddSpecialismResult, request);
 
+        public Task<bool> ProcessAdminChangePathwayResultAsync(ChangePathwayResultRequest request)
+          => PostAsync<ChangePathwayResultRequest, bool>(ApiConstants.ProcessAdminChangePathwayResult, request);
+
+        public Task<bool> ProcessAdminChangeSpecialismResultAsync(ChangeSpecialismResultRequest request)
+          => PostAsync<ChangeSpecialismResultRequest, bool>(ApiConstants.ProcessAdminChangeSpecialismResult, request);
+
         #endregion
 
         #region Private Methods
