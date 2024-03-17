@@ -3,7 +3,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
-using System;
 using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
@@ -24,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
 
         public string CoreCode { get; set; }
 
-        public string  SpecialismName { get; set; }
+        public string SpecialismName { get; set; }
 
         public string SpecialismCode { get; set; }
 
