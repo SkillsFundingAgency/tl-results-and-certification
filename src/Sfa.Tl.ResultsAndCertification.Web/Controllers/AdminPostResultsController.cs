@@ -68,6 +68,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
+            bool noSelected = model.DoYouWantToOpenRomm.HasValue && model.DoYouWantToOpenRomm.Value == false;
+            if (noSelected)
+            {
+                return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
+            }
+
             await Task.CompletedTask;
             return View(model);
         }
@@ -107,6 +113,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
             {
                 return View(model);
+            }
+
+            bool noSelected = model.DoYouWantToOpenRomm.HasValue && model.DoYouWantToOpenRomm.Value == false;
+            if (noSelected)
+            {
+                return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
             }
 
             await Task.CompletedTask;
