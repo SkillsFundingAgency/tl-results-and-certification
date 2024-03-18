@@ -130,11 +130,13 @@
         public const string ProcessChangeIPUri = "/api/admindashboard/ProcessChangeIndustryPlacement";
         public const string ProcessAddCoreAssessmentUri = "/api/admindashboard/ProcessAddCoreAssessmentRequest";
         public const string ProcessAddSpecialismAssessmentUri = "/api/admindashboard/ProcessAddSpecialismAssessmentRequest";
-        public const string ReviewRemoveAssessmentEntryUri = "/api/admindashboard/ReviewRemoveAssessmentEntry";
+        public const string ReviewRemoveCoreAssessmentEntryUri = "/api/admindashboard/ReviewRemoveCoreAssessmentEntry";
+        public const string ReviewRemoveSpecialismAssessmentEntryUri = "/api/admindashboard/ReviewRemoveSpecialismAssessmentEntry";
         public const string ProcessAdminAddPathwayResultUri = "/api/admindashboard/ProcessAdminAddPathwayResult";
         public const string ProcessAdminAddSpecialismResultUri = "/api/admindashboard/ProcessAdminAddSpecialismResult";
 
         // Admin change log
         public const string SearchChangeLogsUri = "/api/adminchangelog/SearchChangeLogs";
+        public const string GetAdminChangeLogRecord = "/api/adminchangelog/GetAdminChangeLogRecord/{0}";
     }
 }

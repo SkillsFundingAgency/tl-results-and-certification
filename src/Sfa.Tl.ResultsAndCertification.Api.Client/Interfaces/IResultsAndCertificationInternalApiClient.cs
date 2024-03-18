@@ -133,9 +133,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         Task<bool> ProcessAddSpecialismAssessmentRequestAsync(ReviewAddSpecialismAssessmentRequest request);
 
-        Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
+        Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveCoreAssessmentEntryRequest request);
 
-        Task<bool> RemoveSpecialAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
+        Task<bool> RemoveSpecialAssessmentEntryAsync(ReviewRemoveSpecialismAssessmentEntryRequest request);
 
         Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request);
 
@@ -146,6 +146,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         #region Admin change log
 
         Task<PagedResponse<AdminSearchChangeLog>> SearchChangeLogsAsync(AdminSearchChangeLogRequest request);
+
+        Task<AdminChangeLogRecord> GetAdminChangeLogRecordAsync(int changeLogId);
 
         #endregion
     }

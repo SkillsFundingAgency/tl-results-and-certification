@@ -13,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
         Task<bool> ProcessAddCoreAssessmentRequestAsync(ReviewAddCoreAssessmentRequest request);
         Task<bool> ProcessAddSpecialismAssessmentRequestAsync(ReviewAddSpecialismAssessmentRequest request);
 
-        Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
+        Task<bool> RemoveCoreAssessmentEntryAsync(ReviewRemoveCoreAssessmentEntryRequest request);
+        Task<bool> RemoveSpecialismAssessmentEntryAsync(ReviewRemoveSpecialismAssessmentEntryRequest request);
     }
 }

@@ -168,13 +168,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<bool> ProcessRemoveAssessmentEntry(AdminReviewRemoveCoreAssessmentEntryViewModel model)
         {
-            var reviewRemoveAssessmentEntryRequest = _mapper.Map<ReviewRemoveAssessmentEntryRequest>(model);
+            var reviewRemoveAssessmentEntryRequest = _mapper.Map<ReviewRemoveCoreAssessmentEntryRequest>(model);
             return await _internalApiClient.RemoveAssessmentEntryAsync(reviewRemoveAssessmentEntryRequest);
         }
 
         public async Task<bool> ProcessRemoveSpecialismAssessmentEntryAsync(AdminReviewRemoveSpecialismAssessmentEntryViewModel model)
         {
-            var reviewRemoveSpecialismEntryRequest = _mapper.Map<ReviewRemoveAssessmentEntryRequest>(model);
+            var reviewRemoveSpecialismEntryRequest = _mapper.Map<ReviewRemoveSpecialismAssessmentEntryRequest>(model);
             return await _internalApiClient.RemoveSpecialAssessmentEntryAsync(reviewRemoveSpecialismEntryRequest);
         }
 

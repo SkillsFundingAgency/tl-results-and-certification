@@ -432,7 +432,7 @@
         public const string SubmitCoreComponentAssessmentEntry = "SubmitCoreComponentAssessmentEntry";
         public const string AdminOccupationalSpecialisAssessmentEntry = "AdminOccupationalSpecialisAssessmentEntry";
         public const string SubmitOccupationalSpecialisAssessmentEntry = "SubmitOccupationalSpecialisAssessmentEntry";
-       
+
         public const string AdminReviewChangesCoreAssessmentEntry = "AdminReviewChangesCoreAssessmentEntry";
         public const string SubmitReviewChangesCoreAssessmentEntry = "SubmitReviewChangesCoreAssessmentEntry";
         public const string AdminReviewChangesSpecialismAssessmentEntry = "AdminReviewChangesSpecialismAssessmentEntry";
@@ -472,6 +472,16 @@
         public const string AdminSearchChangeLog = "AdminSearchChangeLog";
         public const string SubmitAdminSearchChangeLogSearchKey = "SubmitAdminSearchChangeLogSearchKey";
         public const string SubmitAdminSearchChangeLogClearKey = "SubmitAdminSearchChangeLogClearKey";
+
+        public const string AdminViewChangeStartYearRecord = "AdminViewChangeStartYearRecord";
+        public const string AdminViewChangeIPRecord = "AdminViewChangeIPRecord";
+        public const string AdminViewChangeCoreAssessmentRecord = "AdminViewChangeCoreAssessmentRecord";
+        public const string AdminViewChangeSpecialismAssessmentRecord = "AdminViewChangeSpecialismAssessmentRecord";
+        public const string AdminViewChangeAddPathwayResultRecord = "AdminViewChangeAddPathwayResultRecord";
+        public const string AdminViewChangeAddSpecialismResultRecord = "AdminViewChangeAddSpecialismResultRecord";
+        public const string AdminViewChangeRemoveCoreAssessmentRecord = "AdminViewChangeRemoveCoreAssessmentRecord";
+        public const string AdminViewChangeRemoveSpecialismAssessmentRecord = "AdminViewChangeRemoveSpecialismAssessmentRecord";
+
 
         #endregion
     }

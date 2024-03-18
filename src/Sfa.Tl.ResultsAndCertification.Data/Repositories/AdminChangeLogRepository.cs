@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -63,6 +64,67 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
             List<AdminSearchChangeLog> changeLogs = await searchChangeLogQueryable.ToListAsync();
             return new PagedResponse<AdminSearchChangeLog> { Records = changeLogs, TotalRecords = totalCount, PagerInfo = pager };
+        }
+
+        public async Task<AdminChangeLogRecord> GetChangeLogRecordAsync(int changeLogId)
+        {
+            IQueryable<ChangeLog> query =
+                _dbContext.ChangeLog
+                        .Include(p => p.TqRegistrationPathway)
+                            .ThenInclude(p => p.TqPathwayAssessments.Where(pa => pa.IsOptedin))
+                            .ThenInclude(p => p.TqPathwayResults.Where(pr => pr.IsOptedin))
+                            .ThenInclude(p => p.TlLookup)
+                        .Include(p => p.TqRegistrationPathway.TqPathwayAssessments.Where(pa => pa.IsOptedin))
+                        .ThenInclude(p => p.AssessmentSeries)
+                        .Include(p => p.TqRegistrationPathway.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin))
+                            .ThenInclude(p => p.TqSpecialismAssessments.Where(sa => sa.IsOptedin))
+                            .ThenInclude(p => p.TqSpecialismResults)
+                            .ThenInclude(p => p.TlLookup)
+                        .Include(p => p.TqRegistrationPathway.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin))
+                            .ThenInclude(p => p.TqSpecialismAssessments.Where(sa => sa.IsOptedin))
+                            .ThenInclude(p => p.AssessmentSeries)
+                        .Include(p => p.TqRegistrationPathway.TqRegistrationSpecialisms.Where(sa => sa.IsOptedin))
+                            .ThenInclude(p => p.TlSpecialism)
+                        .Include(p => p.TqRegistrationPathway.TqRegistrationProfile)
+                        .Include(p => p.TqRegistrationPathway.TqProvider)
+                            .ThenInclude(p => p.TqAwardingOrganisation)
+                            .ThenInclude(p => p.TlPathway)
+                        .Where(p => p.Id == changeLogId);
+
+
+            ChangeLog changeLog = await query.FirstOrDefaultAsync();
+
+            TqRegistrationProfile registrationProfile = changeLog.TqRegistrationPathway.TqRegistrationProfile;
+            TlPathway pathway = changeLog.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway;
+            AssessmentSeries assessmentSeries = changeLog.TqRegistrationPathway.TqPathwayAssessments.FirstOrDefault()?.AssessmentSeries;
+            TlSpecialism specialism = changeLog.TqRegistrationPathway.TqRegistrationSpecialisms.FirstOrDefault()?.TlSpecialism;
+            AssessmentSeries specialismSeries = changeLog.TqRegistrationPathway.TqRegistrationSpecialisms.FirstOrDefault()?.TqSpecialismAssessments?.FirstOrDefault()?.AssessmentSeries;
+
+
+            var changlogRecord = new AdminChangeLogRecord()
+            {
+                ChangeLogId = changeLog.Id,
+                RegistrationPathwayId = changeLog.TqRegistrationPathwayId,
+                FirstName = registrationProfile.Firstname,
+                LastName = registrationProfile.Lastname,
+                Uln = registrationProfile.UniqueLearnerNumber,
+                PathwayName = pathway.Name,
+                CoreCode = pathway.LarId,
+                CoreExamPeriod = assessmentSeries == null ? string.Empty : assessmentSeries.Name,
+                SpecialismName = specialism.Name,
+                SpecialismCode = specialism.LarId,
+                SpecialismExamPeriod = specialismSeries.Name,
+                CreatedBy = changeLog.CreatedBy,
+                ChangeType = (ChangeType)changeLog.ChangeType,
+                ChangeDetails = changeLog.Details,
+                ChangeRequestedBy = changeLog.Name,
+                ChangeDateOfRequest = changeLog.DateOfRequest,
+                ReasonForChange = changeLog.ReasonForChange,
+                ZendeskTicketID = changeLog.ZendeskTicketID,
+                DateAndTimeOfChange = changeLog.CreatedOn
+            };
+
+            return changlogRecord;
         }
     }
 }

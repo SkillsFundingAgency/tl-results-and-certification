@@ -7,5 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
     public interface IAdminChangeLogRepository
     {
         Task<PagedResponse<AdminSearchChangeLog>> SearchChangeLogsAsync(AdminSearchChangeLogRequest request);
+
+        Task<AdminChangeLogRecord> GetChangeLogRecordAsync(int changeLogId);
     }
 }

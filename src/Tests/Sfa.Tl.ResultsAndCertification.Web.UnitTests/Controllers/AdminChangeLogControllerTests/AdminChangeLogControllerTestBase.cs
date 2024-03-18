@@ -22,6 +22,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminChangeLo
         protected string CacheKey;
         protected AdminChangeLogController Controller;
 
+        internal readonly int ChangeLogId = 1;
+
         public override void Setup()
         {
             AdminChangeLogLoader = Substitute.For<IAdminChangeLogLoader>();

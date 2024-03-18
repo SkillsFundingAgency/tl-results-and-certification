@@ -17,5 +17,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public Task<PagedResponse<AdminSearchChangeLog>> SearchChangeLogsAsync(AdminSearchChangeLogRequest request)
             => _adminChangeLogRepository.SearchChangeLogsAsync(request);
+
+        public Task<AdminChangeLogRecord> GetChangeLogRecordAsync(int changeLogId)
+            => _adminChangeLogRepository.GetChangeLogRecordAsync(changeLogId);
     }
 }

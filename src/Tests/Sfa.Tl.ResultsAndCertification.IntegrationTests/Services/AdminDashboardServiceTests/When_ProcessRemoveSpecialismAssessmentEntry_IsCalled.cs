@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
     public class When_ProcessRemoveSpecialismAssessmentEntry_IsCalled : AdminDashboardServiceBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
-        private ReviewRemoveAssessmentEntryRequest ReviewRemoveAssessmentEntryRequest;
+        private ReviewRemoveSpecialismAssessmentEntryRequest ReviewRemoveAssessmentEntryRequest;
         private List<TqRegistrationProfile> _registrations;
         private List<TqSpecialismAssessment> _specialismAssessments;
 
@@ -90,7 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             AssessmentId = specialismAssessment.Id;
             RegistrationPathwayId = specialismAssessment.TqRegistrationSpecialism.TqRegistrationPathwayId;
 
-            ReviewRemoveAssessmentEntryRequest = new ReviewRemoveAssessmentEntryRequest
+            ReviewRemoveAssessmentEntryRequest = new ReviewRemoveSpecialismAssessmentEntryRequest
             {
                 AssessmentId = AssessmentId,
                 ComponentType = ComponentType.Specialism,
