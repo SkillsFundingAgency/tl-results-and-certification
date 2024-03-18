@@ -161,6 +161,16 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>AdminSearchLearners.resx</DependentUpon>
 		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminOpenSpecialismRomm.Designer.cs">
+		  <DependentUpon>AdminOpenSpecialismRomm.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminOpenPathwayRomm.Designer.cs">
+		  <DependentUpon>AdminOpenPathwayRomm.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\Assessment\AddCoreAssessmentEntry.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
@@ -1240,6 +1250,14 @@
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\SearchLearners.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenSpecialismRomm.resx">
+		  <LastGenOutput>AdminOpenSpecialismRomm.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenPathwayRomm.resx">
+		  <LastGenOutput>AdminOpenPathwayRomm.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\Assessment\AddCoreAssessmentEntry.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
