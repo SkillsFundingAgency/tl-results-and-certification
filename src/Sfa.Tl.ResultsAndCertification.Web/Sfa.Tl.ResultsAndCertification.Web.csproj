@@ -41,6 +41,11 @@
 
 
 	<ItemGroup>
+		<Compile Update="Content\AdminChangeLog\AdminViewChangeRecord.Designer.cs">
+		  <DependentUpon>AdminViewChangeRecord.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminChangeLog\AdminSearchChangeLog.Designer.cs">
 		  <DependentUpon>AdminSearchChangeLog.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -1145,6 +1150,10 @@
 
 
 	<ItemGroup>
+		<EmbeddedResource Update="Content\AdminChangeLog\AdminViewChangeRecord.resx">
+		  <LastGenOutput>AdminViewChangeRecord.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminChangeLog\AdminSearchChangeLog.resx">
 		  <LastGenOutput>AdminSearchChangeLog.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>

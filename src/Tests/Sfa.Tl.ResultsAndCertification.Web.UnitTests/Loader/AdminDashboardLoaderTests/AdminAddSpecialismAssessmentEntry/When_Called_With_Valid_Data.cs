@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
                 .ProcessAddSpecialismAssessmentRequestAsync(Arg.Is<ReviewAddSpecialismAssessmentRequest>(
                     x => x.RegistrationPathwayId == ViewModel.AdminOccupationalSpecialismViewModel.RegistrationPathwayId && 
                     x.ChangeReason == ViewModel.ChangeReason && 
-                    x.ChangeType == Common.Enum.ChangeType.AssessmentEntryAdd &&
+                    x.ChangeType == Common.Enum.ChangeType.AddSpecialismAssessment &&
                     x.ContactName == ViewModel.ContactName &&
                     x.RequestDate == Convert.ToDateTime(ViewModel.RequestDate) &&
                     x.ZendeskId == ViewModel.ZendeskId &&

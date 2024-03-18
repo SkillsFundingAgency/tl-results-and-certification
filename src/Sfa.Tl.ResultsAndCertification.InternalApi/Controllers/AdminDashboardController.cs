@@ -70,17 +70,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpPost]
-        [Route("ReviewRemoveAssessmentEntry")]
-        public async Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest model)
-        {
-            return model.ComponentType switch
-            {
-                ComponentType.Core => await _adminDashboardService.ProcessRemovePathwayAssessmentEntryAsync(model),
-                ComponentType.Specialism => await _adminDashboardService.ProcessRemoveSpecialismAssessmentEntryAsync(model),
-                ComponentType.NotSpecified => false,
-                _ => false
-            };
-        }
+        [Route("ReviewRemoveCoreAssessmentEntry")]
+        public async Task<bool> RemoveCoreAssessmentEntryAsync(ReviewRemoveCoreAssessmentEntryRequest model)
+            => await _adminDashboardService.ProcessRemovePathwayAssessmentEntryAsync(model);
+
+        [HttpPost]
+        [Route("ReviewRemoveSpecialismAssessmentEntry")]
+        public async Task<bool> RemoveSpecialismAssessmentEntryAsync(ReviewRemoveSpecialismAssessmentEntryRequest model)
+            => await _adminDashboardService.ProcessRemoveSpecialismAssessmentEntryAsync(model);
 
         [HttpPost]
         [Route("ProcessAdminAddPathwayResult")]

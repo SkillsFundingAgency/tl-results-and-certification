@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             changeLog.ChangeType.Should().Be((int)_request.ChangeType);
             changeLog.ReasonForChange.Should().Be(_request.ChangeReason);
             changeLog.DateOfRequest.Should().Be(_request.RequestDate);
-            changeLog.Details.Should().Be(JsonConvert.SerializeObject(new { SpecialismResultId = specialismResult.Id }));
+            changeLog.Details.Should().Be(JsonConvert.SerializeObject(new { SpecialismResultId = specialismResult.Id, GradeTo = _request.GradeTo }));
             changeLog.ZendeskTicketID.Should().Be(_request.ZendeskId);
             changeLog.Name.Should().Be(_request.ContactName);
             changeLog.CreatedBy.Should().Be(_request.CreatedBy);

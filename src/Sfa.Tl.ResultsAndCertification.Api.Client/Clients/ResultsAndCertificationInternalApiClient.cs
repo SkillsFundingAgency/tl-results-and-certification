@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -477,14 +478,14 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<ReviewAddSpecialismAssessmentRequest, bool>(ApiConstants.ProcessAddSpecialismAssessmentUri, request);
         }
 
-        public async Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request)
+        public async Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveCoreAssessmentEntryRequest request)
         {
-            return await PostAsync<ReviewRemoveAssessmentEntryRequest, bool>(ApiConstants.ReviewRemoveAssessmentEntryUri, request);
+            return await PostAsync<ReviewRemoveCoreAssessmentEntryRequest, bool>(ApiConstants.ReviewRemoveCoreAssessmentEntryUri, request);
         }
 
-        public async Task<bool> RemoveSpecialAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request)
+        public async Task<bool> RemoveSpecialAssessmentEntryAsync(ReviewRemoveSpecialismAssessmentEntryRequest request)
         {
-            return await PostAsync<ReviewRemoveAssessmentEntryRequest, bool>(ApiConstants.ReviewRemoveAssessmentEntryUri, request);
+            return await PostAsync<ReviewRemoveSpecialismAssessmentEntryRequest, bool>(ApiConstants.ReviewRemoveSpecialismAssessmentEntryUri, request);
         }
 
         public Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request)
@@ -508,6 +509,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public Task<bool> ProcessAdminChangeSpecialismResultAsync(ChangeSpecialismResultRequest request)
           => PostAsync<ChangeSpecialismResultRequest, bool>(ApiConstants.ProcessAdminChangeSpecialismResult, request);
+
+        public Task<AdminChangeLogRecord> GetAdminChangeLogRecordAsync(int changeLogId)
+        {
+            return GetAsync<AdminChangeLogRecord>(string.Format(ApiConstants.GetAdminChangeLogRecord, changeLogId));
+        }
 
         #endregion
 

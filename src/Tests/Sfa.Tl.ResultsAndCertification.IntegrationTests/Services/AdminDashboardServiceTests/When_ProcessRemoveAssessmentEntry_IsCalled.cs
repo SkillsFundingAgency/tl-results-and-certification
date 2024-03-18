@@ -1,14 +1,6 @@
 ﻿using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
-using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
-using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
-using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -23,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
     public class When_ProcessRemoveAssessmentEntry_IsCalled : AdminDashboardServiceBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
-        private ReviewRemoveAssessmentEntryRequest ReviewRemoveAssessmentEntryRequest;
+        private ReviewRemoveCoreAssessmentEntryRequest ReviewRemoveAssessmentEntryRequest;
         private List<TqRegistrationProfile> _registrations;
         private List<TqPathwayAssessment> _pathwayAssessments;
 
@@ -92,7 +84,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             AssessmentId = assessment.Id;
             RegistrationPathwayId = assessment.TqRegistrationPathwayId;
 
-            ReviewRemoveAssessmentEntryRequest = new ReviewRemoveAssessmentEntryRequest
+            ReviewRemoveAssessmentEntryRequest = new ReviewRemoveCoreAssessmentEntryRequest
             {
                 AssessmentId = AssessmentId,
                 ComponentType = ComponentType.Core,

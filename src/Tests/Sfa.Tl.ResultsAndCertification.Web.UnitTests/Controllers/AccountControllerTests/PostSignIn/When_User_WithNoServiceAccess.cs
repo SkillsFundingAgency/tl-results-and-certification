@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountControllerTests.PostSignIn
 {
-    public class When_User_WithNoServiceAcess : TestSetup
+    public class When_User_WithNoServiceAccess : TestSetup
     {
         public override void Given()
         {
