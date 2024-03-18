@@ -9,12 +9,13 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
+using ContractIP =Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
@@ -152,17 +153,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request)
         {
-            var industryPlacementRepository = _repositoryFactory.GetRepository<IndustryPlacement>();
-            IndustryPlacement industryPlacement = await industryPlacementRepository.GetSingleOrDefaultAsync(p => p.TqRegistrationPathwayId == request.RegistrationPathwayId);
+            var industryPlacementRepository = _repositoryFactory.GetRepository<Domain.Models.IndustryPlacement>();
+            Domain.Models.IndustryPlacement industryPlacement = await industryPlacementRepository.GetSingleOrDefaultAsync(p => p.TqRegistrationPathwayId == request.RegistrationPathwayId);
 
             return industryPlacement == null
                 ? await CreateIndustryPlacementAsync(request, industryPlacementRepository)
                 : await UpdateIndustryPlacementAsync(request, industryPlacement, industryPlacementRepository);
         }
 
-        private async Task<bool> CreateIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request, IRepository<IndustryPlacement> industryPlacementRepository)
+        private async Task<bool> CreateIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request, IRepository<Domain.Models.IndustryPlacement> industryPlacementRepository)
         {
-            var newIndustryPlacement = new IndustryPlacement
+            var newIndustryPlacement = new Domain.Models.IndustryPlacement
             {
                 TqRegistrationPathwayId = request.RegistrationPathwayId,
                 Status = request.IndustryPlacementStatus,
@@ -190,7 +191,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return false;
         }
 
-        private async Task<bool> UpdateIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request, IndustryPlacement existingIndustryPlacement, IRepository<IndustryPlacement> industryPlacementRepository)
+        private async Task<bool> UpdateIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request, Domain.Models.IndustryPlacement existingIndustryPlacement, IRepository<Domain.Models.IndustryPlacement> industryPlacementRepository)
         {
             IndustryPlacementDetails existingIndustryPlacementDetails = !string.IsNullOrEmpty(existingIndustryPlacement.Details)
                     ? JsonConvert.DeserializeObject<IndustryPlacementDetails>(existingIndustryPlacement.Details)
