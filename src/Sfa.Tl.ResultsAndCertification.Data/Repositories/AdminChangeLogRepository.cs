@@ -92,47 +92,37 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                         .Where(p => p.Id == changeLogId);
 
 
-            var profile = await query.Select(p => p.TqRegistrationPathway.TqRegistrationProfile).FirstOrDefaultAsync();
+            ChangeLog changeLog = await query.FirstOrDefaultAsync();
 
-            var pathway = await query.Select(p => p.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway).FirstOrDefaultAsync();
-
-            var assessment = await query.Select(p => p.TqRegistrationPathway.TqPathwayAssessments
-                                        .FirstOrDefault(p => p.IsOptedin).AssessmentSeries)
-                                            .FirstOrDefaultAsync();
-
-            var specialism = await query.Select(p => p.TqRegistrationPathway.TqRegistrationSpecialisms
-                                        .FirstOrDefault(rs => rs.IsOptedin).TlSpecialism)
-                                            .FirstOrDefaultAsync();
-
-            var specialismSeries = await query.Select(p => p.TqRegistrationPathway.TqRegistrationSpecialisms
-                                                .FirstOrDefault(p => p.IsOptedin)
-                                                .TqSpecialismAssessments
-                                                    .FirstOrDefault(p => p.IsOptedin).AssessmentSeries)
-                                                        .FirstOrDefaultAsync();
+            TqRegistrationProfile registrationProfile = changeLog.TqRegistrationPathway.TqRegistrationProfile;
+            TlPathway pathway = changeLog.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway;
+            AssessmentSeries assessmentSeries = changeLog.TqRegistrationPathway.TqPathwayAssessments.FirstOrDefault()?.AssessmentSeries;
+            TlSpecialism specialism = changeLog.TqRegistrationPathway.TqRegistrationSpecialisms.FirstOrDefault()?.TlSpecialism;
+            AssessmentSeries specialismSeries = changeLog.TqRegistrationPathway.TqRegistrationSpecialisms.FirstOrDefault()?.TqSpecialismAssessments?.FirstOrDefault()?.AssessmentSeries;
 
 
-            var changlogRecord = await query.Select(p => new AdminChangeLogRecord()
+            var changlogRecord = new AdminChangeLogRecord()
             {
-                ChangeLogId = p.Id,
-                RegistrationPathwayId = p.TqRegistrationPathwayId,
-                FirstName = profile.Firstname,
-                LastName = profile.Lastname,
-                Uln = profile.UniqueLearnerNumber,
+                ChangeLogId = changeLog.Id,
+                RegistrationPathwayId = changeLog.TqRegistrationPathwayId,
+                FirstName = registrationProfile.Firstname,
+                LastName = registrationProfile.Lastname,
+                Uln = registrationProfile.UniqueLearnerNumber,
                 PathwayName = pathway.Name,
                 CoreCode = pathway.LarId,
-                CoreExamPeriod = assessment == null ? string.Empty: assessment.Name,
+                CoreExamPeriod = assessmentSeries == null ? string.Empty : assessmentSeries.Name,
                 SpecialismName = specialism.Name,
                 SpecialismCode = specialism.LarId,
                 SpecialismExamPeriod = specialismSeries.Name,
-                CreatedBy = p.CreatedBy,
-                ChangeType = (ChangeType)p.ChangeType,
-                ChangeDetails = p.Details,
-                ChangeRequestedBy = p.Name,
-                ChangeDateOfRequest = p.DateOfRequest,
-                ReasonForChange = p.ReasonForChange,
-                ZendeskTicketID = p.ZendeskTicketID,
-                DateAndTimeOfChange = p.CreatedOn
-            }).FirstOrDefaultAsync();
+                CreatedBy = changeLog.CreatedBy,
+                ChangeType = (ChangeType)changeLog.ChangeType,
+                ChangeDetails = changeLog.Details,
+                ChangeRequestedBy = changeLog.Name,
+                ChangeDateOfRequest = changeLog.DateOfRequest,
+                ReasonForChange = changeLog.ReasonForChange,
+                ZendeskTicketID = changeLog.ZendeskTicketID,
+                DateAndTimeOfChange = changeLog.CreatedOn
+            };
 
             return changlogRecord;
         }
