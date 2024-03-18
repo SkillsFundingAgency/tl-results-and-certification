@@ -131,11 +131,15 @@
         public const string ProcessAddCoreAssessmentUri = "/api/admindashboard/ProcessAddCoreAssessmentRequest";
         public const string ProcessAddSpecialismAssessmentUri = "/api/admindashboard/ProcessAddSpecialismAssessmentRequest";
         public const string ReviewRemoveAssessmentEntryUri = "/api/admindashboard/ReviewRemoveAssessmentEntry";
+        public const string ProcessAdminAddPathwayResultUri = "/api/admindashboard/ProcessAdminAddPathwayResult";
+        public const string ProcessAdminAddSpecialismResultUri = "/api/admindashboard/ProcessAdminAddSpecialismResult";
 
         public const string ProcessAdminAddPathwayResult = "/api/admindashboard/ProcessAdminAddPathwayResult";
         public const string ProcessAdminAddSpecialismResult = "/api/admindashboard/ProcessAdminAddSpecialismResult";
 
         public const string ProcessAdminChangePathwayResult = "/api/admindashboard/ProcessAdminChangePathwayResult";
         public const string ProcessAdminChangeSpecialismResult = "/api/admindashboard/ProcessAdminChangeSpecialismResult";
+        // Admin change log
+        public const string SearchChangeLogsUri = "/api/adminchangelog/SearchChangeLogs";
     }
 }

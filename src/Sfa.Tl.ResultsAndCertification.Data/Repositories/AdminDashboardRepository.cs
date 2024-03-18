@@ -5,7 +5,6 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -110,7 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
                 Expression<Func<TqRegistrationPathway, bool>> expression = isSearchKeyUln
                     ? p => p.TqRegistrationProfile.UniqueLearnerNumber == request.SearchKey.ToLong()
-                    : p => EF.Functions.Like(p.TqRegistrationProfile.Lastname.Trim(), request.SearchKey.ToLower());
+                    : p => EF.Functions.Like(p.TqRegistrationProfile.Lastname.Trim(), request.SearchKey);
 
                 registrationPathwayQueryable = registrationPathwayQueryable.Where(expression);
             }

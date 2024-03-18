@@ -29,7 +29,6 @@
 		<PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
 		<PackageReference Include="NWebsec.AspNetCore.Mvc.TagHelpers" Version="3.0.0" />
 		<PackageReference Include="StackExchange.Redis" Version="2.6.104" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.2" />
 	</ItemGroup>
 
 
@@ -42,6 +41,11 @@
 
 
 	<ItemGroup>
+		<Compile Update="Content\AdminChangeLog\AdminSearchChangeLog.Designer.cs">
+		  <DependentUpon>AdminSearchChangeLog.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminDashboard\AdminChangeSpecialismResultReviewChanges.Designer.cs">
 		  <DependentUpon>AdminChangeSpecialismResultReviewChanges.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -1141,6 +1145,10 @@
 
 
 	<ItemGroup>
+		<EmbeddedResource Update="Content\AdminChangeLog\AdminSearchChangeLog.resx">
+		  <LastGenOutput>AdminSearchChangeLog.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\AdminChangeSpecialismResultReviewChanges.resx">
 		  <SubType>Designer</SubType>
 		  <LastGenOutput>AdminChangeSpecialismResultReviewChanges.Designer.cs</LastGenOutput>

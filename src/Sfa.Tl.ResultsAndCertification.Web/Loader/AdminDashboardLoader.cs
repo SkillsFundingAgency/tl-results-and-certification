@@ -17,8 +17,6 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -259,13 +257,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         #endregion
 
-        #region change Result
+        #region Change result
+
         public async Task<AdminChangePathwayResultViewModel> GetAdminChangePathwayResultAsync(int registrationPathwayId, int assessmentId)
         {
             var viewmodel = await GetAdminAddResultAsync<AdminChangePathwayResultViewModel>(registrationPathwayId, assessmentId, LookupCategory.PathwayComponentGrade, true);
             viewmodel.Grades.Remove(viewmodel.Grades.Where(t => t.Value == viewmodel.Grade).FirstOrDefault());
             return viewmodel;
-
         }
 
         public async Task LoadAdminChangePathwayResultGrades(AdminChangePathwayResultViewModel model)
@@ -285,11 +283,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var viewmodel = await GetAdminAddResultAsync<AdminChangeSpecialismResultViewModel>(registrationPathwayId, assessmentId, LookupCategory.SpecialismComponentGrade, true);
             viewmodel.Grades.Remove(viewmodel.Grades.Where(t => t.Value == viewmodel.Grade).FirstOrDefault());
             return viewmodel;
-
         }
 
         public async Task LoadAdminChangeSpecialismResultGrades(AdminChangeSpecialismResultViewModel model)
-         => model.Grades = await GetAdminChangeResultGrades(LookupCategory.SpecialismComponentGrade, model.Grade);
+            => model.Grades = await GetAdminChangeResultGrades(LookupCategory.SpecialismComponentGrade, model.Grade);
 
 
         public AdminChangePathwayResultReviewChangesViewModel CreateAdminChangePathwayResultReviewChanges(AdminChangePathwayResultViewModel model)

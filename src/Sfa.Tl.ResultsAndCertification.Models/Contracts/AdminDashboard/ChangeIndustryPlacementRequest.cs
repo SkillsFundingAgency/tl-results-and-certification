@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
 {
-    public class ChangeIPDetails
+    public class ChangeIndustryPlacementRequest
     {
         public IndustryPlacementStatus IndustryPlacementStatusFrom { get; set; }
 
@@ -16,6 +16,5 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
         public int? HoursSpentOnPlacementTo { get; set; }
 
         public List<int?> SpecialConsiderationReasonsTo { get; set; }
-
     }
 }
