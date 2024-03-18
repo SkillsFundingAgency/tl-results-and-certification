@@ -379,17 +379,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Id = request.PathwayResultId,
                 TqPathwayAssessmentId = request.ChangePathwayDetails.PathwayAssessmentId,
                 TlLookupId = request.SelectedGradeId,
-                IsOptedin = true,
+                IsOptedin = false,
                 IsBulkUpload = false,
                 ModifiedBy = request.CreatedBy,
                 ModifiedOn = utcNow,
                 CreatedBy = request.CreatedBy,
                 EndDate = utcNow
+               
                 
             };
 
             var created = request.SelectedGradeId > 0 ? await pathwayResultRepo.UpdateWithSpecifedColumnsOnlyAsync(pathwayResult, u => u.TlLookupId, u => u.ModifiedBy) > 0 
-                : await pathwayResultRepo.UpdateWithSpecifedColumnsOnlyAsync(pathwayResult, u => u.ModifiedBy, u => u.ModifiedOn, u=>u.EndDate) > 0;
+                : await pathwayResultRepo.UpdateWithSpecifedColumnsOnlyAsync(pathwayResult, u => u.ModifiedBy, u => u.ModifiedOn, u=>u.EndDate, u=>u.IsOptedin) > 0;
 
             if (created)
             {
@@ -418,7 +419,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Id = request.SpecialismResultId,
                 TqSpecialismAssessmentId = request.ChangeSpecialismDetails.SpecialismAssessmentId,
                 TlLookupId = request.SelectedGradeId,
-                IsOptedin = true,
+                IsOptedin = false,
                 IsBulkUpload = false,
                 ModifiedBy = request.CreatedBy,
                 ModifiedOn = utcNow,
@@ -427,7 +428,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
 
             var created = request.SelectedGradeId > 0 ? await specialismResultRepo.UpdateWithSpecifedColumnsOnlyAsync(specialismResult, u => u.TlLookupId, u => u.ModifiedBy) > 0
-                : await specialismResultRepo.UpdateWithSpecifedColumnsOnlyAsync(specialismResult, u => u.ModifiedBy, u => u.ModifiedOn, u => u.EndDate) > 0;
+                : await specialismResultRepo.UpdateWithSpecifedColumnsOnlyAsync(specialismResult, u => u.ModifiedBy, u => u.ModifiedOn, u => u.EndDate, u => u.IsOptedin) > 0;
 
             if (created)
             {
