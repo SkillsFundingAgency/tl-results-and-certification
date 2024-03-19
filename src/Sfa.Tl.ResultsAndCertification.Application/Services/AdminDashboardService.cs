@@ -370,29 +370,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
 
         public async Task<bool> ProcessAdminChangePathwayResultAsync(ChangePathwayResultRequest request)
-        {
-            var pathwayAssessmentRepo = _repositoryFactory.GetRepository<TqPathwayAssessment>();
+        {           
+            var pathwayResultRepo = _repositoryFactory.GetRepository<TqPathwayResult>();
+            TqPathwayResult pathwayResult = await pathwayResultRepo.GetSingleOrDefaultAsync(p => p.Id == request.ChangePathwayDetails.PathwayResultId);
 
-            TqPathwayAssessment pathwayAssessment = await pathwayAssessmentRepo.GetSingleOrDefaultAsync(p => p.Id == request.ChangePathwayDetails.PathwayAssessmentId);
-            if (pathwayAssessment == null)
+            if (pathwayResult == null)
             {
                 return false;
             }
-
-            var pathwayResultRepo = _repositoryFactory.GetRepository<TqPathwayResult>();
+            var hasEnddate = pathwayResult.EndDate.HasValue;
             DateTime utcNow = _systemProvider.UtcNow;
+            pathwayResult.ModifiedBy = request.CreatedBy;
+            pathwayResult.ModifiedOn = utcNow;
+            pathwayResult.EndDate = utcNow;
+            pathwayResult.IsOptedin = false;
 
-            var pathwayResult = new TqPathwayResult
-            {
-                Id = request.PathwayResultId,
-                TqPathwayAssessmentId = request.ChangePathwayDetails.PathwayAssessmentId,                
-                IsOptedin = false,
-                IsBulkUpload = false,
-                ModifiedBy = request.CreatedBy,
-                ModifiedOn = utcNow,               
-                EndDate = utcNow   
-                
-            };
 
             var updated = await pathwayResultRepo.UpdateWithSpecifedColumnsOnlyAsync(pathwayResult, u => u.ModifiedBy, u => u.ModifiedOn, u=>u.EndDate, u=>u.IsOptedin) > 0;
 
@@ -406,7 +398,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     IsOptedin = true,
                     IsBulkUpload = false,
                     CreatedBy = request.CreatedBy,
-                    EndDate = pathwayAssessment.EndDate.HasValue ? utcNow : null,
+                    EndDate = hasEnddate ? utcNow : null,
 
                 };
 
@@ -426,29 +418,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> ProcessAdminChangeSpecialismResultAsync(ChangeSpecialismResultRequest request)
         {
-            var specialismAssessmentRepo = _repositoryFactory.GetRepository<TqSpecialismAssessment>();
+            var specialismResultRepo = _repositoryFactory.GetRepository<TqSpecialismResult>();
+            
 
-            TqSpecialismAssessment specialismAssessment = await specialismAssessmentRepo.GetSingleOrDefaultAsync(p => p.Id == request.ChangeSpecialismDetails.SpecialismAssessmentId);
-            if (specialismAssessment == null)
+            TqSpecialismResult specialismResult = await specialismResultRepo.GetSingleOrDefaultAsync(p => p.Id == request.ChangeSpecialismDetails.SpecialismResultId);
+            var hasEnddate = specialismResult.EndDate.HasValue;
+            if (specialismResult == null)
             {
                 return false;
             }
-
-            var specialismResultRepo = _repositoryFactory.GetRepository<TqSpecialismResult>();
             DateTime utcNow = _systemProvider.UtcNow;
-
-            var specialismResult = new TqSpecialismResult
-            {
-                Id = request.SpecialismResultId,
-                TqSpecialismAssessmentId = request.ChangeSpecialismDetails.SpecialismAssessmentId,
-                TlLookupId = request.SelectedGradeId,
-                IsOptedin = false,
-                IsBulkUpload = false,
-                ModifiedBy = request.CreatedBy,
-                ModifiedOn = utcNow,
-                CreatedBy = request.CreatedBy,
-                EndDate = utcNow
-            };
+            specialismResult.ModifiedBy = request.CreatedBy;
+            specialismResult.ModifiedOn = utcNow;
+            specialismResult.EndDate = utcNow;
+            specialismResult.IsOptedin = false;
 
             var updated = await specialismResultRepo.UpdateWithSpecifedColumnsOnlyAsync(specialismResult, u => u.ModifiedBy, u => u.ModifiedOn, u => u.EndDate, u => u.IsOptedin) > 0;
 
@@ -462,7 +445,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     IsOptedin = true,
                     IsBulkUpload = false,
                     CreatedBy = request.CreatedBy,
-                    EndDate = specialismAssessment.EndDate.HasValue ? utcNow : null,
+                    EndDate = hasEnddate ? utcNow : null,
 
                 };
 
