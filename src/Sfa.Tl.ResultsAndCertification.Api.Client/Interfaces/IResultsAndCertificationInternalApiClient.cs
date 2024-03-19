@@ -141,6 +141,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         Task<bool> ProcessAdminAddSpecialismResultAsync(AddSpecialismResultRequest request);
 
+        Task<bool> ProcessAdminChangePathwayResultAsync(ChangePathwayResultRequest request);
+
+        Task<bool> ProcessAdminChangeSpecialismResultAsync(ChangeSpecialismResultRequest request);
+
         #endregion
 
         #region Admin change log

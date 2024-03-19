@@ -504,6 +504,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return PostAsync<AdminSearchChangeLogRequest, PagedResponse<AdminSearchChangeLog>>(requestUri, request);
         }
 
+        public Task<bool> ProcessAdminChangePathwayResultAsync(ChangePathwayResultRequest request)
+          => PostAsync<ChangePathwayResultRequest, bool>(ApiConstants.ProcessAdminChangePathwayResult, request);
+
+        public Task<bool> ProcessAdminChangeSpecialismResultAsync(ChangeSpecialismResultRequest request)
+          => PostAsync<ChangeSpecialismResultRequest, bool>(ApiConstants.ProcessAdminChangeSpecialismResult, request);
+
         public Task<AdminChangeLogRecord> GetAdminChangeLogRecordAsync(int changeLogId)
         {
             return GetAsync<AdminChangeLogRecord>(string.Format(ApiConstants.GetAdminChangeLogRecord, changeLogId));

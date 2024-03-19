@@ -20,12 +20,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 
         Task<bool> ProcessAddSpecialismAssessmentAsync(ReviewAddSpecialismAssessmentRequest request);
 
-        Task<bool> ProcessRemovePathwayAssessmentEntryAsync(ReviewRemoveCoreAssessmentEntryRequest request);
+        Task<bool> ProcessRemovePathwayAssessmentEntryAsync(ReviewRemoveCoreAssessmentEntryRequest request);             
 
-        Task<bool> ProcessRemoveSpecialismAssessmentEntryAsync(ReviewRemoveSpecialismAssessmentEntryRequest request);
+        Task<bool> ProcessRemoveSpecialismAssessmentEntryAsync(ReviewRemoveSpecialismAssessmentEntryRequest request);       
         
         Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request);
 
         Task<bool> ProcessAdminAddSpecialismResultAsync(AddSpecialismResultRequest request);
+
+        Task<bool> ProcessAdminChangePathwayResultAsync(ChangePathwayResultRequest request);
+
+        Task<bool> ProcessAdminChangeSpecialismResultAsync(ChangeSpecialismResultRequest request);
     }
 }

@@ -135,6 +135,11 @@
         public const string ProcessAdminAddPathwayResultUri = "/api/admindashboard/ProcessAdminAddPathwayResult";
         public const string ProcessAdminAddSpecialismResultUri = "/api/admindashboard/ProcessAdminAddSpecialismResult";
 
+        public const string ProcessAdminAddPathwayResult = "/api/admindashboard/ProcessAdminAddPathwayResult";
+        public const string ProcessAdminAddSpecialismResult = "/api/admindashboard/ProcessAdminAddSpecialismResult";
+
+        public const string ProcessAdminChangePathwayResult = "/api/admindashboard/ProcessAdminChangePathwayResult";
+        public const string ProcessAdminChangeSpecialismResult = "/api/admindashboard/ProcessAdminChangeSpecialismResult";
         // Admin change log
         public const string SearchChangeLogsUri = "/api/adminchangelog/SearchChangeLogs";
         public const string GetAdminChangeLogRecord = "/api/adminchangelog/GetAdminChangeLogRecord/{0}";
