@@ -10,6 +10,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
     {
         public int PathwayAssessmentId { get; set; }
 
+        public int PathwayResultId { get; set; }
+
         public string SelectedGradeFrom { get; set; }
 
         public string SelectedGradeTo { get; set; }

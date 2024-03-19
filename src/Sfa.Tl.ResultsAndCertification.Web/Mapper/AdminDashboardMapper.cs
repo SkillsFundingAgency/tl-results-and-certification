@@ -442,6 +442,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<AdminChangePathwayResultReviewChangesViewModel, ChangePathwayDetails>()
                 .ForMember(d => d.PathwayAssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
+                .ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))
                 .ForMember(d => d.SelectedGradeFrom, opts => opts.MapFrom(s => s.Grade))
                 .ForMember(d => d.SelectedGradeTo, opts => opts.MapFrom(s => s.SelectedGradeValue));
 
@@ -474,6 +475,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<AdminChangeSpecialismResultReviewChangesViewModel, ChangeSpecialismDetails>()
                 .ForMember(d => d.SpecialismAssessmentId, opts => opts.MapFrom(s => s.SpecialismAssessmentId))
+                .ForMember(d => d.SpecialismResultId, opts => opts.MapFrom(s => s.SpecialismResultId))
                 .ForMember(d => d.SelectedGradeFrom, opts => opts.MapFrom(s => s.Grade))
                 .ForMember(d => d.SelectedGradeTo, opts => opts.MapFrom(s => s.SelectedGradeValue));
 
