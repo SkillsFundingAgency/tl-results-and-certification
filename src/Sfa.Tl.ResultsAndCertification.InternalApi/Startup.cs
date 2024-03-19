@@ -195,6 +195,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<ILearnerService, LearnerService>();
             services.AddTransient<IAdminDashboardService, AdminDashboardService>();
             services.AddTransient<IAdminChangeLogService, AdminChangeLogService>();
+            services.AddTransient<IAdminPostResultsService, AdminPostResultsService>();
 
             // DataExports 
             services.AddTransient<IDataExportLoader, DataExportLoader>();

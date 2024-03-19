@@ -63,39 +63,54 @@
             </div>
 
 
-            <!-- Do you want to open a ROMM? -->
-            <div class="govuk-form-group govuk-!-margin-top-2">
-                <fieldset class="govuk-fieldset">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                        <h2 class="govuk-fieldset__heading">
-                            @AdminOpenPathwayRomm.Heading_Do_You_Want_To_Open_A_Romm
-                        </h2>
-                    </legend>
+            @if (Model.IsValid)
+            {
+                <!-- Do you want to open a ROMM? -->
+                <div class="govuk-form-group govuk-!-margin-top-2">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h2 class="govuk-fieldset__heading">
+                                @AdminOpenPathwayRomm.Heading_Do_You_Want_To_Open_A_Romm
+                            </h2>
+                        </legend>
 
-                    <div class="govuk-radios" sfa-validation-for="DoYouWantToOpenRomm" sfa-validation-class="govuk-form-group--error">
-                        <span sfa-validation-for="DoYouWantToOpenRomm"></span>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="canremoveassessmententry" asp-for="DoYouWantToOpenRomm" type="radio" value="true">
-                            <label class="govuk-label govuk-radios__label" for="canremoveassessmententry">
-                                @AdminOpenPathwayRomm.Radio_Button_Yes
-                            </label>
+                        <div class="govuk-radios" sfa-validation-for="DoYouWantToOpenRomm" sfa-validation-class="govuk-form-group--error">
+                            <span sfa-validation-for="DoYouWantToOpenRomm"></span>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="canremoveassessmententry" asp-for="DoYouWantToOpenRomm" type="radio" value="true">
+                                <label class="govuk-label govuk-radios__label" for="canremoveassessmententry">
+                                    @AdminOpenPathwayRomm.Radio_Button_Yes
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="assessment-entry-remove-no" asp-for="DoYouWantToOpenRomm" type="radio" value="false">
+                                <label class="govuk-label govuk-radios__label" for="assessment-entry-remove-no">
+                                    @AdminOpenPathwayRomm.Radio_Button_No
+                                </label>
+                            </div>
                         </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="assessment-entry-remove-no" asp-for="DoYouWantToOpenRomm" type="radio" value="false">
-                            <label class="govuk-label govuk-radios__label" for="assessment-entry-remove-no">
-                                @AdminOpenPathwayRomm.Radio_Button_No
-                            </label>
-                        </div>
+
+                    </fieldset>
+                </div>
+
+                <!-- Continue / Cancel buttons -->
+                <div class="govuk-button-group">
+                    <button id="btnContinue" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminOpenPathwayRomm.Button_Continue</button>
+                    <a id="btnCancel" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminOpenPathwayRomm.Button_Cancel</a>
+                </div>
+            }
+            else
+            {
+                <!-- You cannot open a ROMM for this learner -->
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">@AdminOpenPathwayRomm.Warning_Header_You_Cannot_Open_A_Romm_For_This_Learner</h2>
+                    <p class="govuk-body">@Model.ErrorMessage</p>
+
+                    <div class="govuk-button-group">
+                        <a id="btnReturnToLearnerRecord" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminOpenPathwayRomm.Button_Return_To_Learner_Record</a>
                     </div>
-
-                </fieldset>
-            </div>
-
-            <!-- Continue / Cancel buttons -->
-            <div class="govuk-button-group">
-                <button id="btnContinue" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminOpenPathwayRomm.Button_Continue</button>
-                <a id="btnCancel" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminOpenPathwayRomm.Button_Cancel</a>
-            </div>
+                </div>
+            }
         </form>
     </div>
 </div>

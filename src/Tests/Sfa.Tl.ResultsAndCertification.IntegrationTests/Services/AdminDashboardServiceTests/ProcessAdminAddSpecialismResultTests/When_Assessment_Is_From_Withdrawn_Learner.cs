@@ -43,6 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             specialismResult.EndDate.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(15));
             specialismResult.IsBulkUpload.Should().BeFalse();
             specialismResult.CreatedBy.Should().Be(_request.CreatedBy);
+            specialismResult.CreatedOn.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(15));
 
             ChangeLog changeLog = await DbContext.ChangeLog.SingleAsync(ip => ip.TqRegistrationPathwayId == _request.RegistrationPathwayId);
             changeLog.TqRegistrationPathwayId.Should().Be(_request.RegistrationPathwayId);

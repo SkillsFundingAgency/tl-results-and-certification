@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminPostResults;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
@@ -148,6 +149,14 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<PagedResponse<AdminSearchChangeLog>> SearchChangeLogsAsync(AdminSearchChangeLogRequest request);
 
         Task<AdminChangeLogRecord> GetAdminChangeLogRecordAsync(int changeLogId);
+
+        #endregion
+
+        #region Admin post results
+
+        Task<bool> ProcessAdminOpenPathwayRommAsync(OpenPathwayRommRequest request);
+
+        Task<bool> ProcessAdminOpenSpecialismRommAsync(OpenSpecialismRommRequest request);
 
         #endregion
     }

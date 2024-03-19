@@ -188,6 +188,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to examperiod.
+        /// </summary>
+        public static string Summary_Exam_Period_Id {
+            get {
+                return ResourceManager.GetString("Summary_Exam_Period_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exam period.
+        /// </summary>
+        public static string Summary_Exam_Period_Text {
+            get {
+                return ResourceManager.GetString("Summary_Exam_Period_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to grade.
+        /// </summary>
+        public static string Summary_Grade_Id {
+            get {
+                return ResourceManager.GetString("Summary_Grade_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Grade.
         /// </summary>
         public static string Summary_Grade_Text {
@@ -197,11 +224,110 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Grade.
+        /// </summary>
+        public static string Summary_Grade_Text1 {
+            get {
+                return ResourceManager.GetString("Summary_Grade_Text1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to learner.
+        /// </summary>
+        public static string Summary_Learner_Id {
+            get {
+                return ResourceManager.GetString("Summary_Learner_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learner.
+        /// </summary>
+        public static string Summary_Learner_Text {
+            get {
+                return ResourceManager.GetString("Summary_Learner_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to provider.
+        /// </summary>
+        public static string Summary_Provider_Id {
+            get {
+                return ResourceManager.GetString("Summary_Provider_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provider (UKPRN).
+        /// </summary>
+        public static string Summary_Provider_Text {
+            get {
+                return ResourceManager.GetString("Summary_Provider_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to selectedgradecode.
         /// </summary>
         public static string Summary_Selected_Grade_Id {
             get {
                 return ResourceManager.GetString("Summary_Selected_Grade_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to startyear.
+        /// </summary>
+        public static string Summary_StartYear_Id {
+            get {
+                return ResourceManager.GetString("Summary_StartYear_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start year.
+        /// </summary>
+        public static string Summary_StartYear_Text {
+            get {
+                return ResourceManager.GetString("Summary_StartYear_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tlevel.
+        /// </summary>
+        public static string Summary_TLevel_Id {
+            get {
+                return ResourceManager.GetString("Summary_TLevel_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Level.
+        /// </summary>
+        public static string Summary_TLevel_Text {
+            get {
+                return ResourceManager.GetString("Summary_TLevel_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to uln.
+        /// </summary>
+        public static string Summary_ULN_Id {
+            get {
+                return ResourceManager.GetString("Summary_ULN_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ULN.
+        /// </summary>
+        public static string Summary_ULN_Text {
+            get {
+                return ResourceManager.GetString("Summary_ULN_Text", resourceCulture);
             }
         }
         

@@ -33,19 +33,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
         public string StartYear { get; set; }
 
         public SummaryItemModel SummaryLearner
-            => CreateSummaryItemModel(AdminAddPathwayResult.Summary_Learner_Id, AdminAddPathwayResult.Summary_Learner_Text, Learner);
+            => CreateSummaryItemModel(AdminAddPathwayResultReviewChanges.Summary_Learner_Id, AdminAddPathwayResultReviewChanges.Summary_Learner_Text, Learner);
 
         public SummaryItemModel SummaryUln
-            => CreateSummaryItemModel(AdminAddPathwayResult.Summary_ULN_Id, AdminAddPathwayResult.Summary_ULN_Text, Uln.ToString());
+            => CreateSummaryItemModel(AdminAddPathwayResultReviewChanges.Summary_ULN_Id, AdminAddPathwayResultReviewChanges.Summary_ULN_Text, Uln.ToString());
 
         public SummaryItemModel SummaryProvider
-            => CreateSummaryItemModel(AdminAddPathwayResult.Summary_Provider_Id, AdminAddPathwayResult.Summary_Provider_Text, Provider);
+            => CreateSummaryItemModel(AdminAddPathwayResultReviewChanges.Summary_Provider_Id, AdminAddPathwayResultReviewChanges.Summary_Provider_Text, Provider);
 
         public SummaryItemModel SummaryTlevel
-            => CreateSummaryItemModel(AdminAddPathwayResult.Summary_TLevel_Id, AdminAddPathwayResult.Summary_TLevel_Text, Tlevel);
+            => CreateSummaryItemModel(AdminAddPathwayResultReviewChanges.Summary_TLevel_Id, AdminAddPathwayResultReviewChanges.Summary_TLevel_Text, Tlevel);
 
         public SummaryItemModel SummaryStartYear
-            => CreateSummaryItemModel(AdminAddPathwayResult.Summary_StartYear_Id, AdminAddPathwayResult.Summary_StartYear_Text, StartYear);
+            => CreateSummaryItemModel(AdminAddPathwayResultReviewChanges.Summary_StartYear_Id, AdminAddPathwayResultReviewChanges.Summary_StartYear_Text, StartYear);
 
         #endregion
 
@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
         public string ExamPeriod { get; set; }
 
         public SummaryItemModel SummaryExamPeriod
-           => CreateSummaryItemModel(AdminAddPathwayResult.Summary_Exam_Period_Id, AdminAddPathwayResult.Summary_Exam_Period_Text, ExamPeriod);
+           => CreateSummaryItemModel(AdminAddPathwayResultReviewChanges.Summary_Exam_Period_Id, AdminAddPathwayResultReviewChanges.Summary_Exam_Period_Text, ExamPeriod);
 
         public SummaryItemModel SummaryGrade
            => CreateSummaryItemModel(

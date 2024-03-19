@@ -161,6 +161,16 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>AdminSearchLearners.resx</DependentUpon>
 		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminOpenSpecialismRommReviewChanges.Designer.cs">
+		  <DependentUpon>AdminOpenSpecialismRommReviewChanges.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminOpenPathwayRommReviewChanges.Designer.cs">
+		  <DependentUpon>AdminOpenPathwayRommReviewChanges.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminPostResults\AdminOpenSpecialismRomm.Designer.cs">
 		  <DependentUpon>AdminOpenSpecialismRomm.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -1250,6 +1260,14 @@
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\SearchLearners.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenSpecialismRommReviewChanges.resx">
+		  <LastGenOutput>AdminOpenSpecialismRommReviewChanges.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenPathwayRommReviewChanges.resx">
+		  <LastGenOutput>AdminOpenPathwayRommReviewChanges.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenSpecialismRomm.resx">
 		  <LastGenOutput>AdminOpenSpecialismRomm.Designer.cs</LastGenOutput>

@@ -138,5 +138,10 @@
         // Admin change log
         public const string SearchChangeLogsUri = "/api/adminchangelog/SearchChangeLogs";
         public const string GetAdminChangeLogRecord = "/api/adminchangelog/GetAdminChangeLogRecord/{0}";
+
+        // Admin post results
+        public const string ProcessAdminOpenPathwayRomm = "/api/adminpostresults/ProcessAdminOpenPathwayRomm";
+        public const string ProcessAdminOpenSpecialismRomm = "/api/adminpostresults/ProcessAdminOpenSpecialismRomm";
+
     }
 }

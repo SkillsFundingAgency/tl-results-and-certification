@@ -42,6 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             pathwayResult.EndDate.Should().BeNull();
             pathwayResult.IsBulkUpload.Should().BeFalse();
             pathwayResult.CreatedBy.Should().Be(_request.CreatedBy);
+            pathwayResult.CreatedOn.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(15));
 
             ChangeLog changeLog = await DbContext.ChangeLog.SingleAsync(ip => ip.TqRegistrationPathwayId == _request.RegistrationPathwayId);
             changeLog.TqRegistrationPathwayId.Should().Be(_request.RegistrationPathwayId);
