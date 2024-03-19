@@ -385,23 +385,38 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var pathwayResult = new TqPathwayResult
             {
                 Id = request.PathwayResultId,
-                TqPathwayAssessmentId = request.ChangePathwayDetails.PathwayAssessmentId,
-                TlLookupId = request.SelectedGradeId,
+                TqPathwayAssessmentId = request.ChangePathwayDetails.PathwayAssessmentId,                
                 IsOptedin = false,
                 IsBulkUpload = false,
                 ModifiedBy = request.CreatedBy,
-                ModifiedOn = utcNow,
-                CreatedBy = request.CreatedBy,
-                EndDate = utcNow
-               
+                ModifiedOn = utcNow,               
+                EndDate = utcNow   
                 
             };
 
-            var created = request.SelectedGradeId > 0 ? await pathwayResultRepo.UpdateWithSpecifedColumnsOnlyAsync(pathwayResult, u => u.TlLookupId, u => u.ModifiedBy) > 0 
-                : await pathwayResultRepo.UpdateWithSpecifedColumnsOnlyAsync(pathwayResult, u => u.ModifiedBy, u => u.ModifiedOn, u=>u.EndDate, u=>u.IsOptedin) > 0;
+            var updated = await pathwayResultRepo.UpdateWithSpecifedColumnsOnlyAsync(pathwayResult, u => u.ModifiedBy, u => u.ModifiedOn, u=>u.EndDate, u=>u.IsOptedin) > 0;
 
-            if (created)
+            if (request.SelectedGradeId > 0)
             {
+                var createPathwayResult = new TqPathwayResult
+                {
+                    TqPathwayAssessmentId = request.ChangePathwayDetails.PathwayAssessmentId,
+                    TlLookupId = request.SelectedGradeId,
+                    StartDate = utcNow,
+                    IsOptedin = true,
+                    IsBulkUpload = false,
+                    CreatedBy = request.CreatedBy,
+                    EndDate = pathwayAssessment.EndDate.HasValue ? utcNow : null,
+
+                };
+
+                bool created = await pathwayResultRepo.CreateAsync(createPathwayResult) > 0;
+                request.ChangePathwayDetails.PathwayResultId = createPathwayResult.Id;
+            }
+
+
+            if (updated)
+            {                
                 var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
                 return await changeLongRepository.CreateAsync(CreateChangeLog(request, request.ChangePathwayDetails)) > 0;
             }
@@ -435,10 +450,28 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 EndDate = utcNow
             };
 
-            var created = request.SelectedGradeId > 0 ? await specialismResultRepo.UpdateWithSpecifedColumnsOnlyAsync(specialismResult, u => u.TlLookupId, u => u.ModifiedBy) > 0
-                : await specialismResultRepo.UpdateWithSpecifedColumnsOnlyAsync(specialismResult, u => u.ModifiedBy, u => u.ModifiedOn, u => u.EndDate, u => u.IsOptedin) > 0;
+            var updated = await specialismResultRepo.UpdateWithSpecifedColumnsOnlyAsync(specialismResult, u => u.ModifiedBy, u => u.ModifiedOn, u => u.EndDate, u => u.IsOptedin) > 0;
 
-            if (created)
+            if (request.SelectedGradeId > 0)
+            {
+                var createSpecialsimResult = new TqSpecialismResult
+                {
+                    TqSpecialismAssessmentId = request.ChangeSpecialismDetails.SpecialismAssessmentId,
+                    TlLookupId = request.SelectedGradeId,
+                    StartDate = utcNow,
+                    IsOptedin = true,
+                    IsBulkUpload = false,
+                    CreatedBy = request.CreatedBy,
+                    EndDate = specialismAssessment.EndDate.HasValue ? utcNow : null,
+
+                };
+
+                bool created = await specialismResultRepo.CreateAsync(createSpecialsimResult) > 0;
+                request.ChangeSpecialismDetails.SpecialismResultId = createSpecialsimResult.Id;
+            }
+
+
+            if (updated)
             {
                 var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
                 return await changeLongRepository.CreateAsync(CreateChangeLog(request, request.ChangeSpecialismDetails)) > 0;
