@@ -9,6 +9,7 @@
         RemovePathwayAssessment = 5,
         RemoveSpecialismAssessment = 6,
         AddPathwayResult = 7,
-        AddSpecialismResult = 8
+        AddSpecialismResult = 8,
+        ChangePathwayResult = 9
     }
 }
