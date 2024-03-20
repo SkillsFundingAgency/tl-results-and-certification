@@ -1,4 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog.AdminSearchChangeLogViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Enum
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog
 
 @{
@@ -55,7 +57,7 @@
                     {
                         <tr class="govuk-table__row">
                             <td class="govuk-table__cell">
-                                @changeLog.DateAndTimeOfChange
+                                <vc:change-record model="@changeLog.ChangeRecordLink" />
                             </td>
                             <td class="govuk-table__cell">
                                 @changeLog.ZendeskTicketID

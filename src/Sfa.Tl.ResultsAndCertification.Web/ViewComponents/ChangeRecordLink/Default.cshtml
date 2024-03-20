@@ -1,0 +1,10 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents;
+@model Sfa.Tl.ResultsAndCertification.Web.ViewComponents.ChangeRecordLink.ChangeRecordModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@if (Model != null)
+{
+    <a id="link" class="govuk-link" asp-route="@Model.Route" asp-all-route-data="@Model.RouteAttributes">
+        @Model.Text
+    </a>
+}

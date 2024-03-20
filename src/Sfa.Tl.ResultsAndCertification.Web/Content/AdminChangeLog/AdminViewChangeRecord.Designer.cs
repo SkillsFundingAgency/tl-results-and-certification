@@ -115,6 +115,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to industryplacementstatus.
+        /// </summary>
+        public static string Industry_Placement_Status_Id {
+            get {
+                return ResourceManager.GetString("Industry_Placement_Status_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ipreasonslist.
+        /// </summary>
+        public static string IP_Reasons_List_Id {
+            get {
+                return ResourceManager.GetString("IP_Reasons_List_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change made by.
         /// </summary>
         public static string Label_Change_Made_By {
@@ -192,6 +210,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog {
         public static string No_Grade_Entered {
             get {
                 return ResourceManager.GetString("No_Grade_Entered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to noofhours.
+        /// </summary>
+        public static string No_Of_Hours_Id {
+            get {
+                return ResourceManager.GetString("No_Of_Hours_Id", resourceCulture);
             }
         }
         
@@ -385,6 +412,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Industry placement status.
+        /// </summary>
+        public static string Title_Industry_Placement_Status {
+            get {
+                return ResourceManager.GetString("Title_Industry_Placement_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log details.
         /// </summary>
         public static string Title_Log_Details {
@@ -394,11 +430,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of hours.
+        /// </summary>
+        public static string Title_Number_Of_Hours {
+            get {
+                return ResourceManager.GetString("Title_Number_Of_Hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reasons for reduced hours.
+        /// </summary>
+        public static string Title_Reasons_For_Reduced_Hours {
+            get {
+                return ResourceManager.GetString("Title_Reasons_For_Reduced_Hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start year.
         /// </summary>
         public static string Title_StartYear {
             get {
                 return ResourceManager.GetString("Title_StartYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Title_Status_Text {
+            get {
+                return ResourceManager.GetString("Title_Status_Text", resourceCulture);
             }
         }
         

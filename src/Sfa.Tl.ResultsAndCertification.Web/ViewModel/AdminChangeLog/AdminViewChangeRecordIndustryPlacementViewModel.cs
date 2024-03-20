@@ -1,9 +1,9 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System.Collections.Generic;
 using System.Linq;
-using Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog;
 using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
@@ -21,8 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
             // Status Row
             detailsList.Add(new()
             {
-                Id = "industryplacementstatus",
-                Title = ChangeIPDetails.IndustryPlacementStatusTo == IpStatus.CompletedWithSpecialConsideration ? ReviewChangesIndustryPlacement.Title_Industry_Placement_Status : ReviewChangesIndustryPlacement.Title_Status_Text,
+                Id = AdminViewChangeRecord.Industry_Placement_Status_Id,
+                Title = ChangeIPDetails.IndustryPlacementStatusTo == IpStatus.CompletedWithSpecialConsideration ? AdminViewChangeRecord.Title_Industry_Placement_Status : AdminViewChangeRecord.Title_Status_Text,
                 Value = GetIndustryPlacementDisplayText(ChangeIPDetails.IndustryPlacementStatusFrom),
                 Value2 = GetIndustryPlacementDisplayText(ChangeIPDetails.IndustryPlacementStatusTo),
                 TitleCss = ChangeIPDetails.IndustryPlacementStatusTo == IpStatus.CompletedWithSpecialConsideration ? "govuk-summary-list__value" : default
@@ -42,8 +42,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
             // Hours Row
             detailsList.Add(new()
             {
-                Id = "noofhours",
-                Title = ReviewChangesIndustryPlacement.Title_Number_Of_Hours,
+                Id = AdminViewChangeRecord.No_Of_Hours_Id,
+                Title = AdminViewChangeRecord.Title_Number_Of_Hours,
                 Value = GetIndustryPlacementDisplayText(ChangeIPDetails.IndustryPlacementStatusFrom),
                 Value2 = ChangeIPDetails.HoursSpentOnPlacementTo.ToString(),
                 TitleCss = "govuk-summary-list__value"
@@ -52,8 +52,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
             // Reasons Row
             detailsList.Add(new SummaryItemModel
             {
-                Id = "ipreasonslist",
-                Title = ReviewChangesIndustryPlacement.Title_Reasons_For_Reduced_Hours,
+                Id = AdminViewChangeRecord.IP_Reasons_List_Id,
+                Title = AdminViewChangeRecord.Title_Reasons_For_Reduced_Hours,
                 Value = GetIndustryPlacementDisplayText(ChangeIPDetails.IndustryPlacementStatusTo),
                 Value2 = ConvertListToRawHtmlString(Reasons),
                 TitleCss = "govuk-summary-list__value"

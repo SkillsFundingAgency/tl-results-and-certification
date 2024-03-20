@@ -50,6 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Select(x => new AdminSearchChangeLog
                 {
                     ChangeLogId = x.Id,
+                    ChangeType = x.ChangeType,
                     DateAndTimeOfChange = x.CreatedOn,
                     ZendeskTicketID = x.ZendeskTicketID,
                     LearnerFirstname = x.TqRegistrationPathway.TqRegistrationProfile.Firstname,
@@ -113,7 +114,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 CoreExamPeriod = assessmentSeries == null ? string.Empty : assessmentSeries.Name,
                 SpecialismName = specialism.Name,
                 SpecialismCode = specialism.LarId,
-                SpecialismExamPeriod = specialismSeries.Name,
+                SpecialismExamPeriod = specialismSeries?.Name,
                 CreatedBy = changeLog.CreatedBy,
                 ChangeType = (ChangeType)changeLog.ChangeType,
                 ChangeDetails = changeLog.Details,
