@@ -76,7 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminChangeLo
             model.ZendeskTicketID.Should().Be(Mockresult.ZendeskTicketID);
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.AdminSearchChangeLogClear);
+            model.BackLink.RouteName.Should().Be(RouteConstants.AdminSearchChangeLog);
         }
 
         private AdminViewChangeRecordStartYearViewModel CreateViewModel() => new()

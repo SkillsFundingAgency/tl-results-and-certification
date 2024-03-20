@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog;
@@ -26,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminChangeLogLoad
                     new AdminSearchChangeLog
                     {
                         ChangeLogId = 1,
+                        ChangeType = (int)ChangeType.StartYear,
                         DateAndTimeOfChange = new DateTime(2023, 8, 31, 9, 31, 0),
                         ZendeskTicketID = "1234567-AB",
                         LearnerFirstname = "Jessica",
@@ -60,6 +63,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminChangeLogLoad
                     {
                         ChangeLogId = 1,
                         DateAndTimeOfChange = "31 August 2023 9:31am",
+                        ChangeType = (int)ChangeType.StartYear,
+                        ChangeRecordLink = new(){
+                            Route = RouteConstants.AdminViewChangeStartYearRecord,
+                            RouteAttributes = new Dictionary<string, string>(){ { Constants.ChangeLogId, "1" } },
+                            Text = "31 August 2023 9:31am"
+                        },
                         ZendeskTicketID = "1234567-AB",
                         Learner = "Jessica Johnson (1234567890)",
                         Provider = "Barnsley College (10000536)",
