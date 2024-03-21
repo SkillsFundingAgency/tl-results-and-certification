@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -14,6 +15,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -285,6 +287,39 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task LoadAdminChangeSpecialismResultGrades(AdminChangeSpecialismResultViewModel model)
             => model.Grades = await GetAdminChangeResultGrades(LookupCategory.SpecialismComponentGrade, model.Grade);
+
+
+        public AdminChangePathwayResultReviewChangesViewModel CreateAdminChangePathwayResultReviewChanges(AdminChangePathwayResultViewModel model)
+       => _mapper.Map<AdminChangePathwayResultReviewChangesViewModel>(model);
+
+        public Task<bool> ProcessChangePathwayResultReviewChangesAsync(AdminChangePathwayResultReviewChangesViewModel model)
+        {
+            if (model == null)
+            {
+                return Task.FromResult(false);
+            }
+
+            var request = _mapper.Map<ChangePathwayResultRequest>(model);
+
+            return _internalApiClient.ProcessAdminChangePathwayResultAsync(request);
+        }
+
+
+        public AdminChangeSpecialismResultReviewChangesViewModel CreateAdminChangeSpecialismResultReviewChanges(AdminChangeSpecialismResultViewModel model)
+     => _mapper.Map<AdminChangeSpecialismResultReviewChangesViewModel>(model);
+
+
+        public Task<bool> ProcessChangeSpecialismResultReviewChangesAsync(AdminChangeSpecialismResultReviewChangesViewModel model)
+        {
+
+            if (model == null)
+            {
+                return Task.FromResult(false);
+            }
+            var request = _mapper.Map<ChangeSpecialismResultRequest>(model);
+
+            return _internalApiClient.ProcessAdminChangeSpecialismResultAsync(request);
+        }
 
         #endregion
     }

@@ -51,6 +51,16 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="Content\AdminDashboard\AdminChangeSpecialismResultReviewChanges.Designer.cs">
+		  <DependentUpon>AdminChangeSpecialismResultReviewChanges.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminDashboard\AdminChangePathwayResultReviewChanges.Designer.cs">
+		  <DependentUpon>AdminChangePathwayResultReviewChanges.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminDashboard\AdminChangeSpecialismResult.Designer.cs">
 		  <DependentUpon>AdminChangeSpecialismResult.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -1166,6 +1176,16 @@
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminChangeLog\AdminSearchChangeLog.resx">
 		  <LastGenOutput>AdminSearchChangeLog.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminDashboard\AdminChangeSpecialismResultReviewChanges.resx">
+		  <SubType>Designer</SubType>
+		  <LastGenOutput>AdminChangeSpecialismResultReviewChanges.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminDashboard\AdminChangePathwayResultReviewChanges.resx">
+		  <SubType>Designer</SubType>
+		  <LastGenOutput>AdminChangePathwayResultReviewChanges.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\AdminChangeSpecialismResult.resx">
