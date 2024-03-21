@@ -33,6 +33,22 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             DateTime utcNow = _systemProvider.UtcNow;
 
+            existingPathwayResult.IsOptedin = false;
+            existingPathwayResult.EndDate = utcNow;
+            existingPathwayResult.ModifiedBy = request.CreatedBy;
+            existingPathwayResult.ModifiedOn = utcNow;
+
+            bool updated = await pathwayResultRepo.UpdateWithSpecifedColumnsOnlyAsync(existingPathwayResult,
+                p => p.IsOptedin,
+                p => p.EndDate,
+                p => p.ModifiedBy,
+                p => p.ModifiedOn) > 0;
+
+            if (!updated)
+            {
+                return false;
+            }
+
             var newPathwayResult = new TqPathwayResult
             {
                 TqPathwayAssessmentId = existingPathwayResult.TqPathwayAssessmentId,
@@ -47,22 +63,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             bool created = await pathwayResultRepo.CreateAsync(newPathwayResult) > 0;
             if (!created)
-            {
-                return false;
-            }
-
-            existingPathwayResult.IsOptedin = false;
-            existingPathwayResult.EndDate = utcNow;
-            existingPathwayResult.ModifiedBy = request.CreatedBy;
-            existingPathwayResult.ModifiedOn = utcNow;
-
-            bool updated = await pathwayResultRepo.UpdateWithSpecifedColumnsOnlyAsync(existingPathwayResult,
-                p => p.IsOptedin,
-                p => p.EndDate,
-                p => p.ModifiedBy,
-                p => p.ModifiedOn) > 0;
-
-            if (!updated)
             {
                 return false;
             }
@@ -85,6 +85,22 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             DateTime utcNow = _systemProvider.UtcNow;
 
+            existingSpecialismResult.IsOptedin = false;
+            existingSpecialismResult.EndDate = utcNow;
+            existingSpecialismResult.ModifiedBy = request.CreatedBy;
+            existingSpecialismResult.ModifiedOn = utcNow;
+
+            bool updated = await specialismResultRepo.UpdateWithSpecifedColumnsOnlyAsync(existingSpecialismResult,
+                p => p.IsOptedin,
+                p => p.EndDate,
+                p => p.ModifiedBy,
+                p => p.ModifiedOn) > 0;
+
+            if (!updated)
+            {
+                return false;
+            }
+
             var newSpecialismResult = new TqSpecialismResult
             {
                 TqSpecialismAssessmentId = existingSpecialismResult.TqSpecialismAssessmentId,
@@ -100,22 +116,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             bool created = await specialismResultRepo.CreateAsync(newSpecialismResult) > 0;
 
             if (!created)
-            {
-                return false;
-            }
-
-            existingSpecialismResult.IsOptedin = false;
-            existingSpecialismResult.EndDate = utcNow;
-            existingSpecialismResult.ModifiedBy = request.CreatedBy;
-            existingSpecialismResult.ModifiedOn = utcNow;
-
-            bool updated = await specialismResultRepo.UpdateWithSpecifedColumnsOnlyAsync(existingSpecialismResult,
-                p => p.IsOptedin,
-                p => p.EndDate,
-                p => p.ModifiedBy,
-                p => p.ModifiedOn) > 0;
-
-            if (!updated)
             {
                 return false;
             }

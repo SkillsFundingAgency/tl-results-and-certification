@@ -107,13 +107,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             bool success = await _loader.ProcessAdminOpenPathwayRommAsync(model);
             if (!success)
             {
-                return RedirectToAction(RouteConstants.ProblemWithService);
+                return RedirectToRoute(RouteConstants.ProblemWithService);
             }
 
-            var notificationBanner = new AdminNotificationBannerModel(AdminOpenPathwayRommReviewChanges.Notification_Message_A_Romm_Has_Been_Opened);
-            await _cacheService.SetAsync<NotificationBannerModel>(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+            string adminDashboardCacheKey = CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey);
 
-            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
+            var notificationBanner = new AdminNotificationBannerModel(AdminOpenPathwayRommReviewChanges.Notification_Message_A_Romm_Has_Been_Opened);
+            await _cacheService.SetAsync<NotificationBannerModel>(adminDashboardCacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
         }
 
         [HttpGet]
@@ -179,7 +181,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("admin/review-changes-romm-specialism", Name = RouteConstants.SubmitAdminOpenSpecialismRommReviewChanges)]
-        public async Task<IActionResult> SubmitAdminOpenSpecialismRommReviewChangesAsync(AdminOpenSpecialismRommReviewChangesViewModel model)
+        public async Task<IActionResult> AdminOpenSpecialismRommReviewChangesAsync(AdminOpenSpecialismRommReviewChangesViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -189,13 +191,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             bool success = await _loader.ProcessAdminOpenSpecialismRommAsync(model);
             if (!success)
             {
-                return RedirectToAction(RouteConstants.ProblemWithService);
+                return RedirectToRoute(RouteConstants.ProblemWithService);
             }
 
-            var notificationBanner = new AdminNotificationBannerModel(AdminOpenSpecialismRommReviewChanges.Notification_Message_A_Romm_Has_Been_Opened);
-            await _cacheService.SetAsync<NotificationBannerModel>(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+            string adminDashboardCacheKey = CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey);
 
-            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
+            var notificationBanner = new AdminNotificationBannerModel(AdminOpenSpecialismRommReviewChanges.Notification_Message_A_Romm_Has_Been_Opened);
+            await _cacheService.SetAsync<NotificationBannerModel>(adminDashboardCacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
         }
     }
 }

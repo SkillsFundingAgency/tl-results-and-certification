@@ -1,18 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults;
+using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminPostResultsControllerTests.AdminOpenSpecialismRommPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminPostResultsControllerTests.AdminOpenSpecialismRommReviewChangesGet
 {
     public abstract class TestSetup : AdminPostResultsControllerTestBase
     {
-        protected const int RegistrationPathwayId = 1, AssessmentId = 1, SpecialismResultId = 1876;
-        protected IActionResult Result;
+        protected const int RegistrationPathwayId = 1, SpecialismAssessmentId = 1, SpecialismResultId = 1876;
 
-        protected static AdminOpenSpecialismRommViewModel CreateViewModel(bool? doYouWantToOpenRomm = null)
+        protected IActionResult Result { get; private set; }
+
+        public override async Task When()
+        {
+            Result = await Controller.AdminOpenSpecialismRommReviewChangesAsync();
+        }
+
+        protected static AdminOpenSpecialismRommViewModel CreateViewModel()
             => new()
             {
                 RegistrationPathwayId = RegistrationPathwayId,
-                SpecialismAssessmentId = AssessmentId,
+                SpecialismAssessmentId = SpecialismAssessmentId,
                 SpecialismResultId = SpecialismResultId,
                 SpecialismName = "Assisting with Healthcare Science (ZTLOS018)",
                 Learner = "John Smith",
@@ -21,8 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminPostResu
                 Tlevel = "Healthcare Science",
                 StartYear = "2023 to 2024",
                 ExamPeriod = "Summer 2024",
-                Grade = string.Empty,
-                DoYouWantToOpenRomm = doYouWantToOpenRomm
+                Grade = "Merit"
             };
     }
 }

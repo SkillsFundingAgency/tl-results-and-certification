@@ -1,18 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults;
+using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminPostResultsControllerTests.AdminOpenPathwayRommPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminPostResultsControllerTests.AdminOpenPathwayRommReviewChangesGet
 {
     public abstract class TestSetup : AdminPostResultsControllerTestBase
     {
-        protected const int RegistrationPathwayId = 1, AssessmentId = 1, PathwayResultId = 100;
-        protected IActionResult Result;
+        protected const int RegistrationPathwayId = 1, PathwayAssessmentId = 1, PathwayResultId = 146;
 
-        protected static AdminOpenPathwayRommViewModel CreateViewModel(bool? doYouWantToOpenRomm = null)
+        protected IActionResult Result { get; private set; }
+
+        public override async Task When()
+        {
+            Result = await Controller.AdminOpenPathwayRommReviewChangesAsync();
+        }
+
+        protected static AdminOpenPathwayRommViewModel CreateViewModel()
             => new()
             {
                 RegistrationPathwayId = RegistrationPathwayId,
-                PathwayAssessmentId = AssessmentId,
+                PathwayAssessmentId = PathwayAssessmentId,
                 PathwayResultId = PathwayResultId,
                 PathwayName = "Healthcare Science (6037083X)",
                 Learner = "John Smith",
@@ -21,8 +28,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminPostResu
                 Tlevel = "Healthcare Science",
                 StartYear = "2023 to 2024",
                 ExamPeriod = "Summer 2024",
-                Grade = string.Empty,
-                DoYouWantToOpenRomm = doYouWantToOpenRomm
+                Grade = "A*",
+                DoYouWantToOpenRomm = null
             };
     }
 }

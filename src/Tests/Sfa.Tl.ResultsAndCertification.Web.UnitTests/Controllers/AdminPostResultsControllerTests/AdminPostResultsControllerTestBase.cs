@@ -12,14 +12,14 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminPostResultsControllerTests
 {
-    public abstract class AdminPostResultsControllerTestBase : BaseTest<AdminChangeLogController>
+    public abstract class AdminPostResultsControllerTestBase : BaseTest<AdminPostResultsController>
     {
-        // Dependencies
         protected IAdminPostResultsLoader AdminPostResultsLoader;
         protected ICacheService CacheService;
         protected ILogger<AdminPostResultsController> Logger;
 
         protected string CacheKey;
+        protected string AdminDashboardCacheKey;
         protected AdminPostResultsController Controller;
 
         public override void Setup()
@@ -38,7 +38,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminPostResu
             IHttpContextAccessor httpContextAccessor = Substitute.For<IHttpContextAccessor>();
             httpContextAccessor.HttpContext.Returns(httpContext);
 
-            CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.AdminPostResultsCacheKey);
+            string userId = httpContext.User.GetUserId();
+            CacheKey = CacheKeyHelper.GetCacheKey(userId, CacheConstants.AdminPostResultsCacheKey);
+            AdminDashboardCacheKey = CacheKeyHelper.GetCacheKey(userId, CacheConstants.AdminDashboardCacheKey);
         }
 
         public override void Given()

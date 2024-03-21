@@ -72,7 +72,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
                 Value = AdminOpenSpecialismRommReviewChanges.Change_Summary_From,
                 Value2 = AdminOpenSpecialismRommReviewChanges.Change_Summary_To,
                 ActionText = AdminOpenSpecialismRommReviewChanges.Link_Change_Text,
-                RouteName = RouteConstants.AdminOpenPathwayRomm,
+                RouteName = RouteConstants.AdminOpenSpecialismRomm,
                 RouteAttributes = new Dictionary<string, string>()
                 {
                     { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() },
