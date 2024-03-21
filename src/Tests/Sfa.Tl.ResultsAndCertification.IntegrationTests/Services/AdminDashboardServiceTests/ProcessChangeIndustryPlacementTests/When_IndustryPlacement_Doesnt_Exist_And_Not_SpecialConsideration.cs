@@ -37,9 +37,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             industryPlacement.Status.Should().Be(_request.IndustryPlacementStatus);
             industryPlacement.Details.Should().BeNull();
 
-            ChangeLog changeLog = await DbContext.ChangeLog.SingleAsync(p => p.TqRegistrationPathwayId == _request.RegistrationPathwayId && p.ChangeType == (int)_request.ChangeType);
+            ChangeLog changeLog = await DbContext.ChangeLog.SingleAsync(p => p.TqRegistrationPathwayId == _request.RegistrationPathwayId && p.ChangeType == _request.ChangeType);
             changeLog.TqRegistrationPathwayId.Should().Be(_request.RegistrationPathwayId);
-            changeLog.ChangeType.Should().Be((int)_request.ChangeType);
+            changeLog.ChangeType.Should().Be(_request.ChangeType);
             changeLog.ReasonForChange.Should().Be(_request.ChangeReason);
             changeLog.DateOfRequest.Should().Be(_request.RequestDate);
             changeLog.ZendeskTicketID.Should().Be(_request.ZendeskId);

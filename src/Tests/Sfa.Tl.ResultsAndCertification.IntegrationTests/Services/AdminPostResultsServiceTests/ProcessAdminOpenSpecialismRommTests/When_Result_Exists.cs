@@ -69,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminPostResu
 
             ChangeLog changeLog = await DbContext.ChangeLog.SingleAsync(ip => ip.TqRegistrationPathwayId == _request.RegistrationPathwayId);
             changeLog.TqRegistrationPathwayId.Should().Be(_request.RegistrationPathwayId);
-            changeLog.ChangeType.Should().Be((int)ChangeType.OpenSpecialismRomm);
+            changeLog.ChangeType.Should().Be(ChangeType.OpenSpecialismRomm);
             changeLog.ReasonForChange.Should().Be(_request.ChangeReason);
             changeLog.DateOfRequest.Should().Be(_request.DateOfRequest);
             changeLog.Details.Should().Be(JsonConvert.SerializeObject(new { SpecialismResultId = newSpecialismResultDb.Id }));

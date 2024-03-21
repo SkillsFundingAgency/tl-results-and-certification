@@ -359,7 +359,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
             var changeLog = new ChangeLog
             {
                 TqRegistrationPathwayId = registrationPathway.Id,
-                ChangeType = (int)changeType,
+                ChangeType = changeType,
                 Details = string.Empty,
                 Name = name,
                 CreatedOn = createdOn,

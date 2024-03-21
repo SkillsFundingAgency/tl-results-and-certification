@@ -130,7 +130,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             => new()
             {
                 TqRegistrationPathwayId = request.RegistrationPathwayId,
-                ChangeType = (int)changeType,
+                ChangeType = changeType,
                 Details = JsonConvert.SerializeObject(details),
                 Name = request.ContactName,
                 DateOfRequest = request.DateOfRequest,

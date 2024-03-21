@@ -472,7 +472,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var changeLog = new ChangeLog
             {
-                ChangeType = (int)request.ChangeType,
+                ChangeType = request.ChangeType,
                 ReasonForChange = request.ChangeReason,
                 DateOfRequest = request.RequestDate,
                 Details = JsonConvert.SerializeObject(details),

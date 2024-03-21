@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
 
             ChangeLog changeLog = await DbContext.ChangeLog.SingleAsync(ip => ip.TqRegistrationPathwayId == _request.RegistrationPathwayId);
             changeLog.TqRegistrationPathwayId.Should().Be(_request.RegistrationPathwayId);
-            changeLog.ChangeType.Should().Be((int)_request.ChangeType);
+            changeLog.ChangeType.Should().Be(_request.ChangeType);
             changeLog.ReasonForChange.Should().Be(_request.ChangeReason);
             changeLog.DateOfRequest.Should().Be(_request.RequestDate);
             changeLog.Details.Should().Be(JsonConvert.SerializeObject(new { PathwayResultId = pathwayResult.Id, _request.GradeTo }));
