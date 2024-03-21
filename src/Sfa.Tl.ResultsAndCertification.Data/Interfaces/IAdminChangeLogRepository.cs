@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
+﻿using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using System.Threading.Tasks;
 
@@ -8,6 +9,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
     {
         Task<PagedResponse<AdminSearchChangeLog>> SearchChangeLogsAsync(AdminSearchChangeLogRequest request);
 
-        Task<AdminChangeLogRecord> GetChangeLogRecordAsync(int changeLogId);
+        Task<ChangeLog> GetChangeLogRecordAsync(int changeLogId);
     }
 }

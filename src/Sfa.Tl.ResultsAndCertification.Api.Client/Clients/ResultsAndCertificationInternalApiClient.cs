@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -21,7 +20,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 {
     public class ResultsAndCertificationInternalApiClient : IResultsAndCertificationInternalApiClient
@@ -511,9 +509,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
           => PostAsync<ChangeSpecialismResultRequest, bool>(ApiConstants.ProcessAdminChangeSpecialismResult, request);
 
         public Task<AdminChangeLogRecord> GetAdminChangeLogRecordAsync(int changeLogId)
-        {
-            return GetAsync<AdminChangeLogRecord>(string.Format(ApiConstants.GetAdminChangeLogRecord, changeLogId));
-        }
+            => GetAsync<AdminChangeLogRecord>(string.Format(ApiConstants.GetAdminChangeLogRecord, changeLogId));
 
         #endregion
 

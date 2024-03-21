@@ -37,6 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.Provider, opts => opts.MapFrom(s => $"{s.ProviderName} ({s.ProviderUkprn})"))
                 .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.LastUpdatedBy));
 
+
             CreateMap<AdminChangeLogRecord, AdminViewChangeRecordViewModel>()
                 .ForMember(d => d.ChangeLogId, opts => opts.MapFrom(s => s.ChangeLogId))
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
@@ -81,6 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.CoreCode))
                 .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => s.CoreExamPeriod))
                 .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.CoreCode})"))
+                .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()))
                 .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
                 .ForMember(d => d.PathwayResultDetails, opts => opts.MapFrom(s => GetDetails<AddPathwayResultRequest>(s.ChangeDetails)));
 
