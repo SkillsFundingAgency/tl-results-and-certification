@@ -21,7 +21,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 {
     public class ResultsAndCertificationInternalApiClient : IResultsAndCertificationInternalApiClient
@@ -511,9 +510,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
           => PostAsync<ChangeSpecialismResultRequest, bool>(ApiConstants.ProcessAdminChangeSpecialismResult, request);
 
         public Task<AdminChangeLogRecord> GetAdminChangeLogRecordAsync(int changeLogId)
-        {
-            return GetAsync<AdminChangeLogRecord>(string.Format(ApiConstants.GetAdminChangeLogRecord, changeLogId));
-        }
+            => GetAsync<AdminChangeLogRecord>(string.Format(ApiConstants.GetAdminChangeLogRecord, changeLogId));
 
         #endregion
 

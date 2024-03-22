@@ -76,7 +76,7 @@
         public const string FindSoaLearnerRecordUri = "/api/statementofachievement/FindSoaLearnerRecord/{0}/{1}";
         public const string GetSoaLearnerRecordDetailsUri = "/api/statementofachievement/GetSoaLearnerRecordDetails/{0}/{1}";
         public const string CreateSoaPrintingRequestUri = "/api/statementofachievement/CreateSoaPrintingRequest";
-        public const string GetPrintRequestSnapshotUri = "/api/statementofachievement/GetPrintRequestSnapshot/{0}/{1}/{2}";               
+        public const string GetPrintRequestSnapshotUri = "/api/statementofachievement/GetPrintRequestSnapshot/{0}/{1}/{2}";
 
         // Post Results Service Uri's
         public const string FindPrsLearnerRecordUri = "/api/postresultsservice/FindPrsLearnerRecord/{0}/{1}";
