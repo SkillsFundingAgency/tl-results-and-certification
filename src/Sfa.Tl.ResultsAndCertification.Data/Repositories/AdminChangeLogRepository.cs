@@ -88,8 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Include(p => p.TqRegistrationPathway.TqProvider)
                     .ThenInclude(p => p.TqAwardingOrganisation)
                     .ThenInclude(p => p.TlPathway)
-                .Where(p => p.Id == changeLogId)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(p => p.Id == changeLogId);
         }
     }
 }
