@@ -311,7 +311,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 StartDate = utcNow,
                 EndDate = pathwayAssessment.EndDate.HasValue ? utcNow : null,
                 IsBulkUpload = false,
-                CreatedBy = request.CreatedBy
+                CreatedBy = request.CreatedBy,
+                CreatedOn = utcNow
             };
 
             bool created = await pathwayResultRepo.CreateAsync(pathwayResult) > 0;
@@ -350,7 +351,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 StartDate = utcNow,
                 EndDate = specialismAssessment.EndDate.HasValue ? utcNow : null,
                 IsBulkUpload = false,
-                CreatedBy = request.CreatedBy
+                CreatedBy = request.CreatedBy,
+                CreatedOn = utcNow
             };
 
             bool created = await specialismResultRepo.CreateAsync(specialismResult) > 0;
@@ -470,7 +472,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var changeLog = new ChangeLog
             {
-                ChangeType = (int)request.ChangeType,
+                ChangeType = request.ChangeType,
                 ReasonForChange = request.ChangeReason,
                 DateOfRequest = request.RequestDate,
                 Details = JsonConvert.SerializeObject(details),

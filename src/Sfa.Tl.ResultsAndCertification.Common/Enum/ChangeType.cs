@@ -10,6 +10,9 @@
         RemoveSpecialismAssessment = 6,
         AddPathwayResult = 7,
         AddSpecialismResult = 8,
-        ChangePathwayResult = 9
+        ChangePathwayResult = 9,
+        ChangeSpecialismResult = 10,
+        OpenPathwayRomm = 11,
+        OpenSpecialismRomm = 12
     }
 }

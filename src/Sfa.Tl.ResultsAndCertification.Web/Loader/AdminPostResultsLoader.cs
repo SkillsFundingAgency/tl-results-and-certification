@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminPostResults;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults;
 using System.Threading.Tasks;
@@ -24,8 +25,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public Task<AdminOpenPathwayRommViewModel> GetAdminOpenPathwayRommAsync(int registrationPathwayId, int pathwayAssessmentId)
             => GetAdminOpenRommAsync<AdminOpenPathwayRommViewModel>(registrationPathwayId, pathwayAssessmentId);
 
+        public AdminOpenPathwayRommReviewChangesViewModel GetAdminOpenPathwayRommReviewChangesAsync(AdminOpenPathwayRommViewModel openPathwayRommViewModel)
+            => _mapper.Map<AdminOpenPathwayRommReviewChangesViewModel>(openPathwayRommViewModel);
+
+        public Task<bool> ProcessAdminOpenPathwayRommAsync(AdminOpenPathwayRommReviewChangesViewModel openPathwayRommReviewChangesViewModel)
+        {
+            var request = _mapper.Map<OpenPathwayRommRequest>(openPathwayRommReviewChangesViewModel);
+            return _internalApiClient.ProcessAdminOpenPathwayRommAsync(request);
+        }
+
         public Task<AdminOpenSpecialismRommViewModel> GetAdminOpenSpecialismRommAsync(int registrationPathwayId, int specialismAssessmentId)
             => GetAdminOpenRommAsync<AdminOpenSpecialismRommViewModel>(registrationPathwayId, specialismAssessmentId);
+
+        public AdminOpenSpecialismRommReviewChangesViewModel GetAdminOpenSpecialismRommReviewChangesAsync(AdminOpenSpecialismRommViewModel openSpecialismRommViewModel)
+           => _mapper.Map<AdminOpenSpecialismRommReviewChangesViewModel>(openSpecialismRommViewModel);
+
+        public Task<bool> ProcessAdminOpenSpecialismRommAsync(AdminOpenSpecialismRommReviewChangesViewModel openSpecialismRommReviewChangesViewModel)
+        {
+            var request = _mapper.Map<OpenSpecialismRommRequest>(openSpecialismRommReviewChangesViewModel);
+            return _internalApiClient.ProcessAdminOpenSpecialismRommAsync(request);
+        }
 
         private async Task<T> GetAdminOpenRommAsync<T>(int registrationPathwayId, int pathwayAssessmentId)
         {

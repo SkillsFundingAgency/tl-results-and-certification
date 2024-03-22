@@ -122,7 +122,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             actualPathwayAssessment.ModifiedOn.Should().NotBeNull();
 
             actualChangeLog.Should().NotBeNull();
-            actualChangeLog.ChangeType.Should().Be((int)ReviewRemoveAssessmentEntryRequest.ChangeType);
+            actualChangeLog.ChangeType.Should().Be(ReviewRemoveAssessmentEntryRequest.ChangeType);
             actualChangeLog.Name.Should().Be(ReviewRemoveAssessmentEntryRequest.ContactName);
             actualChangeLog.CreatedBy.Should().Be(ReviewRemoveAssessmentEntryRequest.CreatedBy);
             actualChangeLog.ReasonForChange.Should().Be(ReviewRemoveAssessmentEntryRequest.ChangeReason);

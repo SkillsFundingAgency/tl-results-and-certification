@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Domain.Models
 {
@@ -6,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
     {
         public int TqRegistrationPathwayId { get; set; }
 
-        public int ChangeType { get; set; }
+        public ChangeType ChangeType { get; set; }
 
         public string Details { get; set; }
 

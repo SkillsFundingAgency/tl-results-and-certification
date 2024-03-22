@@ -5,7 +5,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminPostResu
 {
     public abstract class TestSetup : AdminPostResultsControllerTestBase
     {
-        protected const int RegistrationPathwayId = 1, AssessmentId = 1;
+        protected const int RegistrationPathwayId = 1, AssessmentId = 1, SpecialismResultId = 1876;
         protected IActionResult Result;
 
         protected static AdminOpenSpecialismRommViewModel CreateViewModel(bool? doYouWantToOpenRomm = null)
@@ -13,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminPostResu
             {
                 RegistrationPathwayId = RegistrationPathwayId,
                 SpecialismAssessmentId = AssessmentId,
+                SpecialismResultId = SpecialismResultId,
                 SpecialismName = "Assisting with Healthcare Science (ZTLOS018)",
                 Learner = "John Smith",
                 Uln = 1080808080,

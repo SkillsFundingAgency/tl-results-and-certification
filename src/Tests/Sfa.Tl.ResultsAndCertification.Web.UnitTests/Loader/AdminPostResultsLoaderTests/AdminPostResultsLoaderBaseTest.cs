@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminPostResultsLo
             Loader = new AdminPostResultsLoader(ApiClient, mapper);
         }
 
-        protected AdminLearnerRecord CreateAdminLearnerRecord(int registrationPathwayId)
+        protected AdminLearnerRecord CreateAdminLearnerRecord(int registrationPathwayId, RegistrationPathwayStatus status)
         {
             return new AdminLearnerRecord
             {
@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminPostResultsLo
                     Name = "Education and Early Years",
                     StartYear = 2020,
                     AcademicYear = 2023,
-                    Status = RegistrationPathwayStatus.Active,
+                    Status = status,
                     Provider = new Provider
                     {
                         Id = 2,

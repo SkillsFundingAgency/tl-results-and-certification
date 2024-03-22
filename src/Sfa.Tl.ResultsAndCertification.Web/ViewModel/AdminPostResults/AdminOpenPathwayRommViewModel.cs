@@ -13,6 +13,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
 
         public int PathwayAssessmentId { get; set; }
 
+        public int PathwayResultId { get; set; }
+
         public string PathwayName { get; set; }
 
         #region Personal details
@@ -60,6 +62,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
                string.IsNullOrWhiteSpace(Grade) ? AdminOpenPathwayRomm.No_Grade_Entered : Grade);
 
         #endregion
+
+        public bool IsValid
+            => string.IsNullOrEmpty(ErrorMessage);
+
+        public string ErrorMessage { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(AdminOpenPathwayRomm), ErrorMessageResourceName = "Validation_Message")]
         public bool? DoYouWantToOpenRomm { get; set; }

@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminPostResults;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
@@ -510,6 +511,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public Task<AdminChangeLogRecord> GetAdminChangeLogRecordAsync(int changeLogId)
             => GetAsync<AdminChangeLogRecord>(string.Format(ApiConstants.GetAdminChangeLogRecord, changeLogId));
+
+        #endregion
+
+        #region Admin post results
+
+        public Task<bool> ProcessAdminOpenPathwayRommAsync(OpenPathwayRommRequest request)
+             => PostAsync<OpenPathwayRommRequest, bool>(ApiConstants.ProcessAdminOpenPathwayRomm, request);
+
+        public Task<bool> ProcessAdminOpenSpecialismRommAsync(OpenSpecialismRommRequest request)
+             => PostAsync<OpenSpecialismRommRequest, bool>(ApiConstants.ProcessAdminOpenSpecialismRomm, request);
 
         #endregion
 

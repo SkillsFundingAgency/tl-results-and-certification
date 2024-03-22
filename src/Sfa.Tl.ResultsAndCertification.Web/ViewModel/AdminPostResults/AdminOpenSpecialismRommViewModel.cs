@@ -13,6 +13,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
 
         public int SpecialismAssessmentId { get; set; }
 
+        public int SpecialismResultId { get; set; }
+
         public string SpecialismName { get; set; }
 
         #region Personal details
@@ -60,6 +62,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
                string.IsNullOrWhiteSpace(Grade) ? AdminOpenSpecialismRomm.No_Grade_Entered : Grade);
 
         #endregion
+
+        public bool IsValid
+            => string.IsNullOrEmpty(ErrorMessage);
+
+        public string ErrorMessage { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(AdminOpenSpecialismRomm), ErrorMessageResourceName = "Validation_Message")]
         public bool? DoYouWantToOpenRomm { get; set; }

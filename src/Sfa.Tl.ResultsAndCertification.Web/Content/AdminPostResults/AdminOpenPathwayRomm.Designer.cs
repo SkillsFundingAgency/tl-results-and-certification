@@ -293,5 +293,41 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminPostResults {
                 return ResourceManager.GetString("Validation_Message", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is because there is no result..
+        /// </summary>
+        public static string Validation_No_Result {
+            get {
+                return ResourceManager.GetString("Validation_No_Result", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is because the result is still pending..
+        /// </summary>
+        public static string Validation_Result_Pending {
+            get {
+                return ResourceManager.GetString("Validation_Result_Pending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is because the learner has been withdrawn..
+        /// </summary>
+        public static string Validation_Widthdrawn {
+            get {
+                return ResourceManager.GetString("Validation_Widthdrawn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You cannot open a ROMM for this learner..
+        /// </summary>
+        public static string Warning_Header_You_Cannot_Open_A_Romm_For_This_Learner {
+            get {
+                return ResourceManager.GetString("Warning_Header_You_Cannot_Open_A_Romm_For_This_Learner", resourceCulture);
+            }
+        }
     }
 }

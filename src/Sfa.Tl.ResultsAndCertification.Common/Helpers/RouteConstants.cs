@@ -492,10 +492,14 @@
         public const string AdminOpenPathwayRommClear = "AdminOpenPathwayRommClear";
         public const string AdminOpenPathwayRomm = "AdminOpenPathwayRomm";
         public const string SubmitAdminOpenPathwayRomm = "SubmitAdminOpenPathwayRomm";
+        public const string AdminOpenPathwayRommReviewChanges = "AdminOpenPathwayRommReviewChanges";
+        public const string SubmitAdminOpenPathwayRommReviewChanges = "SubmitAdminOpenPathwayRommReviewChanges";
 
         public const string AdminOpenSpecialismRommClear = "AdminOpenSpecialismRommClear";
         public const string AdminOpenSpecialismRomm = "AdminOpenSpecialismRomm";
         public const string SubmitAdminOpenSpecialismRomm = "SubmitAdminOpenSpecialismRomm";
+        public const string AdminOpenSpecialismRommReviewChanges = "AdminOpenSpecialismRommReviewChanges";
+        public const string SubmitAdminOpenSpecialismRommReviewChanges = "SubmitAdminOpenSpecialismRommReviewChanges";
 
         #endregion
     }
