@@ -73,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminCha
             _expectedResult = new ChangeLog()
             {
                 TqRegistrationPathwayId = 1,
-                ChangeType = (int)ChangeType.StartYear,
+                ChangeType = ChangeType.StartYear,
                 Details = "{\"StartYearFrom\":2023,\"StartYearTo\":2021}",
                 Name = "Martin Guptill",
                 DateOfRequest = new DateTime(2024, 01, 01),

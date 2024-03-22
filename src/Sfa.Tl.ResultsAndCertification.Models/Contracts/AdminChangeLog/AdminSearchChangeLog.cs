@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog
 {
@@ -6,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog
     {
         public int ChangeLogId { get; set; }
 
-        public int ChangeType { get; set; }
+        public ChangeType ChangeType { get; set; }
 
         public DateTime DateAndTimeOfChange { get; set; }
 

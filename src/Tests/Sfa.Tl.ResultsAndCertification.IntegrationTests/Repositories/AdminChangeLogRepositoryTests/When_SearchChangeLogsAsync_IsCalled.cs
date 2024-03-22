@@ -65,7 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                new AdminSearchChangeLog
                                {
                                    ChangeLogId = 1,
-                                   ChangeType = (int)ChangeType.StartYear,
+                                   ChangeType = ChangeType.StartYear,
                                    DateAndTimeOfChange = new DateTime(2024, 1, 1),
                                    LearnerFirstname = "John",
                                    LearnerLastname = "Smith",
@@ -78,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                new AdminSearchChangeLog
                                {
                                    ChangeLogId = 2,
-                                   ChangeType = (int)ChangeType.IndustryPlacement,
+                                   ChangeType = ChangeType.IndustryPlacement,
                                    DateAndTimeOfChange = new DateTime(2024, 3, 1),
                                    LearnerFirstname = "Jessica",
                                    LearnerLastname = "Johnson",
@@ -91,7 +91,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                new AdminSearchChangeLog
                                {
                                    ChangeLogId = 3,
-                                   ChangeType = (int)ChangeType.AddPathwayResult,
+                                   ChangeType = ChangeType.AddPathwayResult,
                                    DateAndTimeOfChange = new DateTime(2022, 12, 31),
                                    LearnerFirstname = "Peter",
                                    LearnerLastname = "Smith",
@@ -104,7 +104,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                new AdminSearchChangeLog
                                {
                                    ChangeLogId = 4,
-                                   ChangeType = (int)ChangeType.AddPathwayAssessment,
+                                   ChangeType = ChangeType.AddPathwayAssessment,
                                    DateAndTimeOfChange = new DateTime(2020, 6, 15),
                                    LearnerFirstname = "Eric",
                                    LearnerLastname = "Johnson",
@@ -117,7 +117,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                new AdminSearchChangeLog
                                {
                                    ChangeLogId = 5,
-                                   ChangeType = (int)ChangeType.AddSpecialismResult,
+                                   ChangeType = ChangeType.AddSpecialismResult,
                                    DateAndTimeOfChange = new DateTime(2024, 4, 6),
                                    LearnerFirstname = "Sue",
                                    LearnerLastname = "Baker",
@@ -158,7 +158,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                new AdminSearchChangeLog
                                {
                                    ChangeLogId = 1,
-                                   ChangeType = (int)ChangeType.StartYear,
+                                   ChangeType = ChangeType.StartYear,
                                    DateAndTimeOfChange = new DateTime(2024, 1, 1),
                                    LearnerFirstname = "John",
                                    LearnerLastname = "Smith",
@@ -186,7 +186,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                new AdminSearchChangeLog
                                {
                                    ChangeLogId = 1,
-                                   ChangeType = (int)ChangeType.StartYear,
+                                   ChangeType = ChangeType.StartYear,
                                    DateAndTimeOfChange = new DateTime(2024, 1, 1),
                                    LearnerFirstname = "John",
                                    LearnerLastname = "Smith",
@@ -199,7 +199,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                new AdminSearchChangeLog
                                {
                                    ChangeLogId = 3,
-                                   ChangeType = (int)ChangeType.AddPathwayResult,
+                                   ChangeType = ChangeType.AddPathwayResult,
                                    DateAndTimeOfChange = new DateTime(2022, 12, 31),
                                    LearnerFirstname = "Peter",
                                    LearnerLastname = "Smith",
@@ -227,7 +227,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                new AdminSearchChangeLog
                                {
                                    ChangeLogId = 4,
-                                   ChangeType = (int)ChangeType.AddPathwayAssessment,
+                                   ChangeType = ChangeType.AddPathwayAssessment,
                                    DateAndTimeOfChange = new DateTime(2020, 6, 15),
                                    LearnerFirstname = "Eric",
                                    LearnerLastname = "Johnson",
@@ -255,7 +255,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                new AdminSearchChangeLog
                                {
                                    ChangeLogId = 2,
-                                   ChangeType = (int)ChangeType.IndustryPlacement,
+                                   ChangeType = ChangeType.IndustryPlacement,
                                    DateAndTimeOfChange = new DateTime(2024, 3, 1),
                                    LearnerFirstname = "Jessica",
                                    LearnerLastname = "Johnson",
@@ -268,7 +268,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                new AdminSearchChangeLog
                                {
                                    ChangeLogId = 5,
-                                   ChangeType = (int)ChangeType.AddSpecialismResult,
+                                   ChangeType = ChangeType.AddSpecialismResult,
                                    DateAndTimeOfChange = new DateTime(2024, 4, 6),
                                    LearnerFirstname = "Sue",
                                    LearnerLastname = "Baker",
