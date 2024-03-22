@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
 
         public BackLinkModel BackLink => new()
         {
-            RouteName = RouteConstants.AdminSearchChangeLogClear
+            RouteName = RouteConstants.AdminSearchChangeLog
         };
 
         public SummaryItemModel SummaryLearner =>

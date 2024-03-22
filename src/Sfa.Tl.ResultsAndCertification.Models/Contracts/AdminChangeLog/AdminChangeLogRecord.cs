@@ -1,6 +1,4 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog

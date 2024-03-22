@@ -135,6 +135,12 @@
   <data name="Hidden_Action_Text_Learner_Record" xml:space="preserve">
     <value>learner record</value>
   </data>
+  <data name="Industry_Placement_Status_Id" xml:space="preserve">
+    <value>industryplacementstatus</value>
+  </data>
+  <data name="IP_Reasons_List_Id" xml:space="preserve">
+    <value>ipreasonslist</value>
+  </data>
   <data name="Label_Change_Made_By" xml:space="preserve">
     <value>Change made by</value>
   </data>
@@ -161,6 +167,9 @@
   </data>
   <data name="No_Grade_Entered" xml:space="preserve">
     <value>No grade entered</value>
+  </data>
+  <data name="No_Of_Hours_Id" xml:space="preserve">
+    <value>noofhours</value>
   </data>
   <data name="Occupational_Specialism" xml:space="preserve">
     <value>Occupational Specialism</value>
@@ -225,11 +234,23 @@
   <data name="Title_From" xml:space="preserve">
     <value>From</value>
   </data>
+  <data name="Title_Industry_Placement_Status" xml:space="preserve">
+    <value>Industry placement status</value>
+  </data>
   <data name="Title_Log_Details" xml:space="preserve">
     <value>Log details</value>
   </data>
+  <data name="Title_Number_Of_Hours" xml:space="preserve">
+    <value>Number of hours</value>
+  </data>
+  <data name="Title_Reasons_For_Reduced_Hours" xml:space="preserve">
+    <value>Reasons for reduced hours</value>
+  </data>
   <data name="Title_StartYear" xml:space="preserve">
     <value>Start year</value>
+  </data>
+  <data name="Title_Status_Text" xml:space="preserve">
+    <value>Status</value>
   </data>
   <data name="Title_To" xml:space="preserve">
     <value>To</value>

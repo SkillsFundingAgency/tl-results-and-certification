@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.ChangeRecordLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog;
 using System;
 
@@ -26,11 +29,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<AdminSearchChangeLog, AdminSearchChangeLogDetailsViewModel>()
                 .ForMember(d => d.ChangeLogId, opts => opts.MapFrom(s => s.ChangeLogId))
+                .ForMember(d => d.ChangeType, opts => opts.MapFrom(s => s.ChangeType))
                 .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime(s.DateAndTimeOfChange)))
+                .ForMember(d => d.ChangeRecordLink, opts => opts.MapFrom(s => GetViewChangeRecordLink(s.DateAndTimeOfChange, s.ChangeLogId, (ChangeType)s.ChangeType)))
                 .ForMember(d => d.ZendeskTicketID, opts => opts.MapFrom(s => s.ZendeskTicketID))
                 .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.LearnerFirstname} {s.LearnerLastname} ({s.Uln})"))
                 .ForMember(d => d.Provider, opts => opts.MapFrom(s => $"{s.ProviderName} ({s.ProviderUkprn})"))
                 .ForMember(d => d.LastUpdatedBy, opts => opts.MapFrom(s => s.LastUpdatedBy));
+
 
             CreateMap<AdminChangeLogRecord, AdminViewChangeRecordViewModel>()
                 .ForMember(d => d.ChangeLogId, opts => opts.MapFrom(s => s.ChangeLogId))
@@ -76,6 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.CoreCode))
                 .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => s.CoreExamPeriod))
                 .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.CoreCode})"))
+                .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()))
                 .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
                 .ForMember(d => d.PathwayResultDetails, opts => opts.MapFrom(s => GetDetails<AddPathwayResultRequest>(s.ChangeDetails)));
 
@@ -114,5 +121,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
         private static string FormatDateTime2(DateTime dateTime)
             => $"{dateTime:d MMMM yyyy, hh:mm}{dateTime.ToString("tt").ToLower()}";
 
+        private ChangeRecordModel GetViewChangeRecordLink(DateTime text, int changeLogId, ChangeType changeType) => new ChangeRecordModel()
+        {
+            Text = FormatDateTime(text).ToString(),
+            Route = GetRoute(changeType),
+            RouteAttributes = new System.Collections.Generic.Dictionary<string, string>()
+            {
+                {
+                    Constants.ChangeLogId, changeLogId.ToString()
+                }
+            }
+        };
+
+        private string GetRoute(ChangeType changeType) => changeType switch
+        {
+            ChangeType.StartYear => RouteConstants.AdminViewChangeStartYearRecord,
+            ChangeType.IndustryPlacement => RouteConstants.AdminViewChangeIPRecord,
+            ChangeType.AddPathwayAssessment => RouteConstants.AdminViewChangeCoreAssessmentRecord,
+            ChangeType.AddSpecialismAssessment => RouteConstants.AdminViewChangeSpecialismAssessmentRecord,
+            ChangeType.RemovePathwayAssessment => RouteConstants.AdminViewChangeRemoveCoreAssessmentRecord,
+            ChangeType.RemoveSpecialismAssessment => RouteConstants.AdminViewChangeRemoveSpecialismAssessmentRecord,
+            ChangeType.AddPathwayResult => RouteConstants.AdminViewChangeAddPathwayResultRecord,
+            ChangeType.AddSpecialismResult => RouteConstants.AdminViewChangeAddSpecialismResultRecord,
+            _ => string.Empty
+        };
     }
 }

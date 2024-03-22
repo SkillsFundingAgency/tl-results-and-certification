@@ -6,6 +6,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog
     {
         public int ChangeLogId { get; set; }
 
+        public int ChangeType { get; set; }
+
         public DateTime DateAndTimeOfChange { get; set; }
 
         public string ZendeskTicketID { get; set; }

@@ -5,10 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Pagination;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using System.Collections.Generic;
-using Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
-using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
 {
@@ -56,5 +53,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
                 new BreadcrumbItem { DisplayName = BreadcrumbContent.Change_Log }
             }
         };
+
     }
 }
