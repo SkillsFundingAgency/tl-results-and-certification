@@ -221,10 +221,10 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         public UcasDataSettings UcasDataSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets ovarall results batch settings.
+        /// Gets or sets overall results batch settings.
         /// </summary>
         /// <value>
-        /// The ovarall resutls batch record settings.
+        /// The ovarall results batch record settings.
         /// </value>
         public OverallResultBatchSettings OverallResultBatchSettings { get; set; }
 
@@ -243,6 +243,22 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// The Freeze period end date.
         /// </value>
         public DateTime FreezePeriodEndDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maintenance period start date.
+        /// </summary>
+        /// <value>
+        /// The maintenance period start date.
+        /// </value>
+        public DateTime MaintenancePeriodStartDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maintenance period end date.
+        /// </summary>
+        /// <value>
+        /// The maintenance period end date.
+        /// </value>
+        public DateTime MaintenancePeriodEndDate { get; set; }
 
         /// <summary>
         /// Gets or sets certificate printing batch settings.
