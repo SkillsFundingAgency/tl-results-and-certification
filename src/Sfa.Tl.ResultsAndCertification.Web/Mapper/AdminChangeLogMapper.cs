@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<AdminSearchChangeLog, AdminSearchChangeLogDetailsViewModel>()
                 .ForMember(d => d.ChangeLogId, opts => opts.MapFrom(s => s.ChangeLogId))
                 .ForMember(d => d.ChangeType, opts => opts.MapFrom(s => s.ChangeType))
-                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime(s.DateAndTimeOfChange)))
+                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
                 .ForMember(d => d.ChangeRecordLink, opts => opts.MapFrom(s => GetViewChangeRecordLink(s.DateAndTimeOfChange, s.ChangeLogId, (ChangeType)s.ChangeType)))
                 .ForMember(d => d.ZendeskTicketID, opts => opts.MapFrom(s => s.ZendeskTicketID))
                 .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.LearnerFirstname} {s.LearnerLastname} ({s.Uln})"))
@@ -119,7 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             => $"{dateTime:d MMMM yyyy h:mm}{dateTime.ToString("tt").ToLower()}";
 
         private static string FormatDateTime2(DateTime dateTime)
-            => $"{dateTime:d MMMM yyyy, hh:mm}{dateTime.ToString("tt").ToLower()}";
+            => $"{dateTime:d MMMM yyyy, h:mm}{dateTime.ToString("tt").ToLower()}";
 
         private ChangeRecordModel GetViewChangeRecordLink(DateTime text, int changeLogId, ChangeType changeType) => new ChangeRecordModel()
         {
