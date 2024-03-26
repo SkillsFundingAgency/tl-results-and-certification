@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Help;
+using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -60,16 +61,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        //[HttpGet]
+        //[Route("service-unavailable", Name = RouteConstants.ServiceUnavailable)]
+        //public IActionResult ServiceUnavailable()
+        //{
+        //    var serviceAvailableFrom = _configuration.FreezePeriodEndDate.AddSeconds(1);
+        //    var viewModel = new ServiceUnavailableViewModel
+        //    {
+        //        ServiceAvailableFrom = $"{serviceAvailableFrom.AddMinutes(1).ToString("HH:mmtt").ToLower()} on {serviceAvailableFrom.DayOfWeek} {serviceAvailableFrom:dd MMMM yyyy}"
+        //    };
+        //    return View(viewModel);
+        //}
+
         [HttpGet]
-        [Route("service-unavailable", Name = RouteConstants.ServiceUnavailable)]
-        public IActionResult ServiceUnavailable()
+        [Route("service-unavailable-maintenance", Name = RouteConstants.ServiceUnavailableMaintenance)]
+        public IActionResult ServiceUnavailableMaintenance()
         {
-            var serviceAvailableFrom = _configuration.FreezePeriodEndDate.AddSeconds(1);
-            var viewModel = new ServiceUnavailableViewModel
+            var viewModel = new ServiceUnavailableMaintenanceViewModel
             {
-                ServiceAvailableFrom = $"{serviceAvailableFrom.AddMinutes(1).ToString("HH:mmtt").ToLower()} on {serviceAvailableFrom.DayOfWeek} {serviceAvailableFrom:dd MMMM yyyy}"
+                MaintenancePeriodStartDate = FormatDate(_configuration.FreezePeriodStartDate),
+                MaintenancePeriodEndDate = FormatDate(_configuration.FreezePeriodEndDate)
             };
             return View(viewModel);
+
+            static string FormatDate(DateTime date) => date.ToString("dddd dd MMMM yyyy");
         }
     }
 }

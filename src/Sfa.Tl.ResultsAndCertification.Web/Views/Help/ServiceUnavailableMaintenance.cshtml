@@ -1,0 +1,18 @@
+﻿@inject Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper.IWebConfigurationService ConfigurationService
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Help.ServiceUnavailableMaintenanceViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Help
+
+@{
+    ViewData["Title"] = ServiceUnavailableMaintenance.Page_Title;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">@ServiceUnavailableMaintenance.Heading_Scheduled_Maintenance</h1>
+        <p class="govuk-body">@string.Format(ServiceUnavailableMaintenance.Para_Unavailable_While_Scheduled_Maintenance, Model.MaintenancePeriodStartDate, Model.MaintenancePeriodEndDate)</p>
+        <p class="govuk-body">
+            @ServiceUnavailableMaintenance.Para_If_You_Have_Any_Questions
+            <a class="govuk-link" href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()?subject=@ServiceUnavailableMaintenance.Email_Subject">@ServiceUnavailableMaintenance.Link_Text_Email_Tlevel_Team</a>.
+        </p>
+    </div>
+</div>
