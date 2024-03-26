@@ -245,22 +245,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         public DateTime FreezePeriodEndDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the maintenance period start date.
-        /// </summary>
-        /// <value>
-        /// The maintenance period start date.
-        /// </value>
-        public DateTime MaintenancePeriodStartDate { get; set; }
-
-        /// <summary>
-        /// Gets or sets the maintenance period end date.
-        /// </summary>
-        /// <value>
-        /// The maintenance period end date.
-        /// </value>
-        public DateTime MaintenancePeriodEndDate { get; set; }
-
-        /// <summary>
         /// Gets or sets certificate printing batch settings.
         /// </summary>
         /// <value>
