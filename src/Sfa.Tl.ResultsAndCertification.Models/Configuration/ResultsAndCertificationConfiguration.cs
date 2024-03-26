@@ -221,10 +221,10 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         public UcasDataSettings UcasDataSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets ovarall results batch settings.
+        /// Gets or sets overall results batch settings.
         /// </summary>
         /// <value>
-        /// The ovarall resutls batch record settings.
+        /// The ovarall results batch record settings.
         /// </value>
         public OverallResultBatchSettings OverallResultBatchSettings { get; set; }
 
