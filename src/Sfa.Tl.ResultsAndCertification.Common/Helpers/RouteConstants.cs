@@ -501,6 +501,18 @@
         public const string AdminOpenSpecialismRommReviewChanges = "AdminOpenSpecialismRommReviewChanges";
         public const string SubmitAdminOpenSpecialismRommReviewChanges = "SubmitAdminOpenSpecialismRommReviewChanges";
 
+        public const string AdminOpenPathwayAppealClear = "AdminOpenPathwayAppealClear";
+        public const string AdminOpenPathwayAppeal = "AdminOpenPathwayAppeal";
+        public const string SubmitAdminOpenPathwayAppeal = "SubmitAdminOpenPathwayAppeal";
+        public const string AdminOpenPathwayAppealReviewChanges = "AdminOpenPathwayAppealReviewChanges";
+        public const string SubmitAdminOpenPathwayAppealReviewChanges = "SubmitAdminOpenPathwayAppealReviewChanges";
+
+        public const string AdminOpenSpecialismAppealClear = "AdminOpenSpecialismAppealClear";
+        public const string AdminOpenSpecialismAppeal = "AdminOpenSpecialismAppeal";
+        public const string SubmitAdminOpenSpecialismAppeal = "SubmitAdminOpenSpecialismAppeal";
+        public const string AdminOpenSpecialismAppealReviewChanges = "AdminOpenSpecialismAppealReviewChanges";
+        public const string SubmitAdminOpenSpecialismAppealReviewChanges = "SubmitAdminOpenSpecialismAppealReviewChanges";
+
         #endregion
     }
 }

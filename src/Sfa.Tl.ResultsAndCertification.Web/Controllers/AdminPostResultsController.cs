@@ -10,6 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Content.AdminPostResults;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults;
+using System;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -34,52 +35,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             _logger = logger;
         }
 
+        #region Open ROMM Pathway
+
         [HttpGet]
         [Route("admin/open-romm-core-clear", Name = RouteConstants.AdminOpenPathwayRommClear)]
-        public async Task<IActionResult> AdminOpenPathwayRommClearAsync(int registrationPathwayId, int assessmentId)
-        {
-            await _cacheService.RemoveAsync<AdminOpenPathwayRommViewModel>(CacheKey);
-            return RedirectToRoute(RouteConstants.AdminOpenPathwayRomm, new { registrationPathwayId, assessmentId });
-        }
+        public Task<IActionResult> AdminOpenPathwayRommClearAsync(int registrationPathwayId, int assessmentId)
+            => AdminOpenPathwayPostResultClearAsync<AdminOpenPathwayRommViewModel>(registrationPathwayId, assessmentId, RouteConstants.AdminOpenPathwayRomm);
 
         [HttpGet]
         [Route("admin/open-romm-core", Name = RouteConstants.AdminOpenPathwayRomm)]
-        public async Task<IActionResult> AdminOpenPathwayRommAsync(int registrationPathwayId, int assessmentId)
-        {
-            var cachedModel = await _cacheService.GetAsync<AdminOpenPathwayRommViewModel>(CacheKey);
-            if (cachedModel != null)
-            {
-                return View(cachedModel);
-            }
-
-            AdminOpenPathwayRommViewModel viewModel = await _loader.GetAdminOpenPathwayRommAsync(registrationPathwayId, assessmentId);
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No core result details found. Method: AdminOpenPathwayRommAsync({registrationPathwayId}, {assessmentId}), User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(viewModel);
-        }
+        public Task<IActionResult> AdminOpenPathwayRommAsync(int registrationPathwayId, int assessmentId)
+            => AdminOpenPathwayPostResultAsync(registrationPathwayId, assessmentId, () => _loader.GetAdminOpenPathwayRommAsync(registrationPathwayId, assessmentId), nameof(AdminPostResultsController.AdminOpenPathwayRommAsync));
 
         [HttpPost]
         [Route("admin/open-romm-core", Name = RouteConstants.SubmitAdminOpenPathwayRomm)]
-        public async Task<IActionResult> AdminOpenPathwayRommAsync(AdminOpenPathwayRommViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            bool noSelected = model.DoYouWantToOpenRomm.HasValue && model.DoYouWantToOpenRomm.Value == false;
-            if (noSelected)
-            {
-                return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
-            }
-
-            await _cacheService.SetAsync(CacheKey, model);
-            return RedirectToRoute(RouteConstants.AdminOpenPathwayRommReviewChanges);
-        }
+        public Task<IActionResult> AdminOpenPathwayRommAsync(AdminOpenPathwayRommViewModel model)
+            => AdminOpenPathwayPostResultAsync(model, model.RegistrationPathwayId, model.DoYouWantToOpenRomm, RouteConstants.AdminOpenPathwayRommReviewChanges);
 
         [HttpGet]
         [Route("admin/review-changes-romm-core", Name = RouteConstants.AdminOpenPathwayRommReviewChanges)]
@@ -118,52 +89,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
         }
 
+        #endregion
+
+        #region Open ROMM Specialism
+
         [HttpGet]
         [Route("admin/open-romm-specialism-clear", Name = RouteConstants.AdminOpenSpecialismRommClear)]
-        public async Task<IActionResult> AdminOpenSpecialismRommClearAsync(int registrationPathwayId, int assessmentId)
-        {
-            await _cacheService.RemoveAsync<AdminOpenSpecialismRommViewModel>(CacheKey);
-            return RedirectToRoute(RouteConstants.AdminOpenSpecialismRomm, new { registrationPathwayId, assessmentId });
-        }
+        public Task<IActionResult> AdminOpenSpecialismRommClearAsync(int registrationPathwayId, int assessmentId)
+            => AdminOpenPathwayPostResultClearAsync<AdminOpenSpecialismRommViewModel>(registrationPathwayId, assessmentId, RouteConstants.AdminOpenSpecialismRomm);
 
         [HttpGet]
         [Route("admin/open-romm-specialism", Name = RouteConstants.AdminOpenSpecialismRomm)]
-        public async Task<IActionResult> AdminOpenSpecialismRommAsync(int registrationPathwayId, int assessmentId)
-        {
-            var cachedModel = await _cacheService.GetAsync<AdminOpenSpecialismRommViewModel>(CacheKey);
-            if (cachedModel != null)
-            {
-                return View(cachedModel);
-            }
-
-            AdminOpenSpecialismRommViewModel viewModel = await _loader.GetAdminOpenSpecialismRommAsync(registrationPathwayId, assessmentId);
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No core result details found. Method: AdminOpenSpecialismRommAsync({registrationPathwayId}, {assessmentId}), User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(viewModel);
-        }
+        public Task<IActionResult> AdminOpenSpecialismRommAsync(int registrationPathwayId, int assessmentId)
+            => AdminOpenPathwayPostResultAsync(registrationPathwayId, assessmentId, () => _loader.GetAdminOpenSpecialismRommAsync(registrationPathwayId, assessmentId), nameof(AdminPostResultsController.AdminOpenSpecialismRommAsync));
 
         [HttpPost]
         [Route("admin/open-romm-specialism", Name = RouteConstants.SubmitAdminOpenSpecialismRomm)]
-        public async Task<IActionResult> AdminOpenSpecialismRommAsync(AdminOpenSpecialismRommViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            bool noSelected = model.DoYouWantToOpenRomm.HasValue && model.DoYouWantToOpenRomm.Value == false;
-            if (noSelected)
-            {
-                return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
-            }
-
-            await _cacheService.SetAsync(CacheKey, model);
-            return RedirectToRoute(RouteConstants.AdminOpenSpecialismRommReviewChanges);
-        }
+        public Task<IActionResult> AdminOpenSpecialismRommAsync(AdminOpenSpecialismRommViewModel model)
+            => AdminOpenPathwayPostResultAsync(model, model.RegistrationPathwayId, model.DoYouWantToOpenRomm, RouteConstants.AdminOpenSpecialismRommReviewChanges);
 
         [HttpGet]
         [Route("admin/review-changes-romm-specialism", Name = RouteConstants.AdminOpenSpecialismRommReviewChanges)]
@@ -200,6 +143,77 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync<NotificationBannerModel>(adminDashboardCacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
             return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
+        }
+
+        #endregion
+
+        #region Open Appeal Pathway
+
+        [HttpGet]
+        [Route("admin/open-appeal-core-clear", Name = RouteConstants.AdminOpenPathwayAppealClear)]
+        public Task<IActionResult> AdminOpenPathwayAppealClearAsync(int registrationPathwayId, int assessmentId)
+            => AdminOpenPathwayPostResultClearAsync<AdminOpenPathwayAppealViewModel>(registrationPathwayId, assessmentId, RouteConstants.AdminOpenPathwayAppeal);
+
+        [HttpGet]
+        [Route("admin/open-appeal-core", Name = RouteConstants.AdminOpenPathwayAppeal)]
+        public Task<IActionResult> AdminOpenPathwayAppealAsync(int registrationPathwayId, int assessmentId)
+            => AdminOpenPathwayPostResultAsync(registrationPathwayId, assessmentId, () => _loader.GetAdminOpenPathwayAppealAsync(registrationPathwayId, assessmentId), nameof(AdminPostResultsController.AdminOpenPathwayAppealAsync));
+
+        #endregion
+
+        #region Open Appeal Specialism
+
+        [HttpGet]
+        [Route("admin/open-appeal-specialism-clear", Name = RouteConstants.AdminOpenSpecialismAppealClear)]
+        public Task<IActionResult> AdminOpenSpecialismAppealClearAsync(int registrationPathwayId, int assessmentId)
+            => AdminOpenPathwayPostResultClearAsync<AdminOpenSpecialismAppealViewModel>(registrationPathwayId, assessmentId, RouteConstants.AdminOpenSpecialismAppeal);
+
+        [HttpGet]
+        [Route("admin/open-appeal-specialism", Name = RouteConstants.AdminOpenSpecialismAppeal)]
+        public Task<IActionResult> AdminOpenSpecialismAppealAsync(int registrationPathwayId, int assessmentId)
+            => AdminOpenPathwayPostResultAsync(registrationPathwayId, assessmentId, () => _loader.GetAdminOpenSpecialismAppealAsync(registrationPathwayId, assessmentId), nameof(AdminPostResultsController.AdminOpenPathwayAppealAsync));
+
+        #endregion
+
+        private async Task<IActionResult> AdminOpenPathwayPostResultClearAsync<T>(int registrationPathwayId, int assessmentId, string toRoute)
+        {
+            await _cacheService.RemoveAsync<T>(CacheKey);
+            return RedirectToRoute(toRoute, new { registrationPathwayId, assessmentId });
+        }
+
+        private async Task<IActionResult> AdminOpenPathwayPostResultAsync<T>(int registrationPathwayId, int assessmentId, Func<Task<T>> loaderFunc, string methodName)
+        {
+            var cachedModel = await _cacheService.GetAsync<T>(CacheKey);
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
+            T viewModel = await loaderFunc();
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No core result details found. Method: {methodName}({registrationPathwayId}, {assessmentId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        public async Task<IActionResult> AdminOpenPathwayPostResultAsync<T>(T model, int registrationPathwayId, bool? doYouWantToOpen, string toRoute)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            bool noSelected = doYouWantToOpen.HasValue && doYouWantToOpen.Value == false;
+            if (noSelected)
+            {
+                return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = registrationPathwayId });
+            }
+
+            await _cacheService.SetAsync(CacheKey, model);
+            return RedirectToRoute(toRoute);
         }
     }
 }

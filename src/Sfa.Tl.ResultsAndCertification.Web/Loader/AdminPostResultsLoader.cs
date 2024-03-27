@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         }
 
         public Task<AdminOpenPathwayRommViewModel> GetAdminOpenPathwayRommAsync(int registrationPathwayId, int pathwayAssessmentId)
-            => GetAdminOpenRommAsync<AdminOpenPathwayRommViewModel>(registrationPathwayId, pathwayAssessmentId);
+            => GetAndMapLearnerRecordAsync<AdminOpenPathwayRommViewModel>(registrationPathwayId, pathwayAssessmentId);
 
         public AdminOpenPathwayRommReviewChangesViewModel GetAdminOpenPathwayRommReviewChangesAsync(AdminOpenPathwayRommViewModel openPathwayRommViewModel)
             => _mapper.Map<AdminOpenPathwayRommReviewChangesViewModel>(openPathwayRommViewModel);
@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         }
 
         public Task<AdminOpenSpecialismRommViewModel> GetAdminOpenSpecialismRommAsync(int registrationPathwayId, int specialismAssessmentId)
-            => GetAdminOpenRommAsync<AdminOpenSpecialismRommViewModel>(registrationPathwayId, specialismAssessmentId);
+            => GetAndMapLearnerRecordAsync<AdminOpenSpecialismRommViewModel>(registrationPathwayId, specialismAssessmentId);
 
         public AdminOpenSpecialismRommReviewChangesViewModel GetAdminOpenSpecialismRommReviewChangesAsync(AdminOpenSpecialismRommViewModel openSpecialismRommViewModel)
            => _mapper.Map<AdminOpenSpecialismRommReviewChangesViewModel>(openSpecialismRommViewModel);
@@ -46,7 +46,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _internalApiClient.ProcessAdminOpenSpecialismRommAsync(request);
         }
 
-        private async Task<T> GetAdminOpenRommAsync<T>(int registrationPathwayId, int pathwayAssessmentId)
+        public Task<AdminOpenPathwayAppealViewModel> GetAdminOpenPathwayAppealAsync(int registrationPathwayId, int pathwayAssessmentId)
+            => GetAndMapLearnerRecordAsync<AdminOpenPathwayAppealViewModel>(registrationPathwayId, pathwayAssessmentId);
+
+        public Task<AdminOpenSpecialismAppealViewModel> GetAdminOpenSpecialismAppealAsync(int registrationPathwayId, int pathwayAssessmentId)
+            => GetAndMapLearnerRecordAsync<AdminOpenSpecialismAppealViewModel>(registrationPathwayId, pathwayAssessmentId);
+
+        private async Task<T> GetAndMapLearnerRecordAsync<T>(int registrationPathwayId, int pathwayAssessmentId)
         {
             AdminLearnerRecord learnerRecord = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
             return _mapper.Map<T>(learnerRecord, opt =>
