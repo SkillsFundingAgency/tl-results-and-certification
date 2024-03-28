@@ -270,11 +270,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
           => model.Grades = await GetAdminChangeResultGrades(LookupCategory.PathwayComponentGrade, model.Grade);
 
 
-        private async Task<List<LookupViewModel>> GetAdminChangeResultGrades(LookupCategory lookupCategory, string grade)
+        private async Task<List<LookupViewModel>> GetAdminChangeResultGrades(LookupCategory lookupCategory, string grade, bool isRomm=false)
         {
             IList<LookupData> grades = await _internalApiClient.GetLookupDataAsync(lookupCategory);
             grades.Remove(grades.Where(t => t.Value == grade).FirstOrDefault());
-            grades.Insert(grades.Count, new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageSpecialismResult.Option_Remove_Result });
+            if(!isRomm)grades.Insert(grades.Count, new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageSpecialismResult.Option_Remove_Result });
             return _mapper.Map<List<LookupViewModel>>(grades);
         }
 
@@ -322,5 +322,44 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         }
 
         #endregion
+
+        public async Task<AdminAddRommOutcomeCoreViewModel> GetAdminAddRommOutcomeCoreAsync(int registrationPathwayId, int assessmentId)
+        {
+            var viewmodel = await GetAdminAddResultAsync<AdminAddRommOutcomeCoreViewModel>(registrationPathwayId, assessmentId, LookupCategory.PathwayComponentGrade, false);
+            viewmodel.Grades = GetAdminAddRommOutcomeCoreGrades(viewmodel.Grades);
+            viewmodel.Grades.Remove(viewmodel.Grades.Where(t => t.Value == viewmodel.Grade).FirstOrDefault());
+            return viewmodel;
+        }
+
+        public async Task LoadAdminAddRommOutcomeCoreGrades(AdminAddRommOutcomeCoreViewModel model)
+         => model.Grades = GetAdminAddRommOutcomeCoreGrades(await GetAdminChangeResultGrades(LookupCategory.PathwayComponentGrade, model.Grade,true));
+
+        private List<LookupViewModel> GetAdminAddRommOutcomeCoreGrades(List<LookupViewModel> Grades)
+        {
+            return  Grades.Where(t => !t.Code.Equals(Constants.PathwayComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase)
+            && !t.Code.Equals(Constants.PathwayComponentGradeXNoResultCode, StringComparison.InvariantCultureIgnoreCase)
+            && !t.Code.Equals(Constants.NotReceived, StringComparison.InvariantCultureIgnoreCase)).ToList();
+        }
+
+
+        public async Task<AdminAddRommOutcomeSpecialismViewModel> GetAdminAddRommOutcomeSpecialismAsync(int registrationPathwayId, int assessmentId)
+        {
+            var viewmodel = await GetAdminAddResultAsync<AdminAddRommOutcomeSpecialismViewModel>(registrationPathwayId, assessmentId, LookupCategory.SpecialismComponentGrade, false);
+            viewmodel.Grades = GetAdminAddRommOutcomeSpecialismGrades(viewmodel.Grades);
+            viewmodel.Grades.Remove(viewmodel.Grades.Where(t => t.Value == viewmodel.Grade).FirstOrDefault());
+            return viewmodel;
+        }
+
+        public async Task LoadAdminAddRommOutcomeSpecialismGrades(AdminAddRommOutcomeSpecialismViewModel model)
+        => model.Grades = GetAdminAddRommOutcomeSpecialismGrades(await GetAdminChangeResultGrades(LookupCategory.SpecialismComponentGrade, model.Grade,true));
+
+
+        private List<LookupViewModel> GetAdminAddRommOutcomeSpecialismGrades(List<LookupViewModel> Grades)
+        {
+            return Grades.Where(t => !t.Code.Equals(Constants.SpecialismComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase)
+            && !t.Code.Equals(Constants.SpecialismComponentGradeXNoResultCode, StringComparison.InvariantCultureIgnoreCase)
+            && !t.Code.Equals(Constants.NotReceived, StringComparison.InvariantCultureIgnoreCase)).ToList();
+        }
+
     }
 }

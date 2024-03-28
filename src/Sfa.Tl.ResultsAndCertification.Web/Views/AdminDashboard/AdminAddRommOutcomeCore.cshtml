@@ -1,0 +1,102 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result.AdminAddRommOutcomeCoreViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+
+@{
+    ViewData["Title"] = AdminAddRommOutcomeCore.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="@RouteConstants.SubmitAdminAddRommOutcomeCore">
+
+            <input type="hidden" asp-for="RegistrationPathwayId" />
+            <input type="hidden" asp-for="PathwayAssessmentId" />
+            <input type="hidden" asp-for="PathwayResultId" />
+            <input type="hidden" asp-for="Grade" />
+
+            <!-- Add assessment result page header -->
+            <div class="record-header">
+                <h1 class="govuk-heading-xl">
+                    @AdminAddRommOutcomeCore.Heading_Change_Result_After_ROMM
+                </h1>
+            </div>
+
+            <partial name="_ValidationSummary" />
+
+            <!-- Personal details -->
+            <input type="hidden" asp-for="Learner" />
+            <input type="hidden" asp-for="Uln" />
+            <input type="hidden" asp-for="Provider" />
+            <input type="hidden" asp-for="Tlevel" />
+            <input type="hidden" asp-for="StartYear" />
+
+            <div class="govuk-!-margin-bottom-9">
+                <h2 class="govuk-heading-m">
+                    @AdminAddRommOutcomeCore.Heading_Personal_Details
+                </h2>
+
+                <dl class="govuk-summary-list">
+                    <vc:summary-item model=Model.SummaryLearner></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryTlevel></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryStartYear></vc:summary-item>
+                </dl>
+            </div>
+
+            <!-- Core component -->
+            <input type="hidden" asp-for="PathwayName" />
+            <input type="hidden" asp-for="ExamPeriod" />
+            <input type="hidden" asp-for="Grade" />
+
+            <div class="govuk-!-margin-bottom-9">
+                <h2 class="govuk-heading-m">
+                    @string.Format(AdminAddRommOutcomeCore.Core_Heading_Text, Model.PathwayName)
+                </h2>
+                <dl class="govuk-summary-list">
+                    <vc:summary-item model=Model.SummaryExamPeriod></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryGrade></vc:summary-item>
+                </dl>
+            </div>
+
+
+            <!-- Select the grade -->
+            <div class="govuk-form-group govuk-!-margin-top-2" sfa-validation-for="SelectedGradeId" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h2 class="govuk-fieldset__heading">
+                            @AdminAddRommOutcomeCore.Heading_Select_Grade
+                        </h2>
+                    </legend>
+
+                    <span sfa-validation-for="SelectedGradeId"></span>
+                    @foreach (var grade in Model?.Grades?.Select((value, i) => (value, i)))
+                    {
+                     
+                        var elementId = (grade.i > 0) ? "selectedgradeid-" + grade.i : "selectedgradeid";
+
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="@elementId" type="radio" asp-for="@Model.SelectedGradeId" value="@Model.Grades[grade.i].Id">
+                            <label class="govuk-label govuk-radios__label" for="@elementId">
+                                @grade.value.Value
+                            </label>
+                        </div>
+                    }
+
+
+                </fieldset>
+            </div>
+
+            <!-- Continue / Cancel buttons -->
+            <div class="govuk-button-group">
+                <button id="btnContinue" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminAddRommOutcomeCore.Button_Continue</button>
+                <a id="btnCancel" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminAddRommOutcomeCore.Button_Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

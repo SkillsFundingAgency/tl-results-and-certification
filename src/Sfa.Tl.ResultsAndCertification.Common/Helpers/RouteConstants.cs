@@ -501,6 +501,11 @@
         public const string AdminOpenSpecialismRommReviewChanges = "AdminOpenSpecialismRommReviewChanges";
         public const string SubmitAdminOpenSpecialismRommReviewChanges = "SubmitAdminOpenSpecialismRommReviewChanges";
 
+        public const string AdminAddRommOutcomeCore = "AdminAddRommOutcomeCore";
+        public const string SubmitAdminAddRommOutcomeCore = "SubmitAdminAddRommOutcomeCore";
+        public const string AdminAddRommOutcomeSpecialism = "AdminAddRommOutcomeSpecialism";
+        public const string SubmitAdminAddRommOutcomeSpecialism = "SubmitAdminAddRommOutcomeSpecialism";
+
         #endregion
     }
 }

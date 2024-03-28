@@ -1168,5 +1168,82 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
 
+        #region change romm
+        [HttpGet]
+        [Route("admin/add-romm-outcome-change-grade-core/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.AdminAddRommOutcomeCore)]
+        public async Task<IActionResult> AdminAddRommOutcomeCoreAsync(int registrationPathwayId, int assessmentId)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminAddRommOutcomeCoreViewModel>(CacheKey);
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
+            AdminAddRommOutcomeCoreViewModel viewModel = await _loader.GetAdminAddRommOutcomeCoreAsync(registrationPathwayId, assessmentId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No core result details found. Method: AddResultCoreAsync({registrationPathwayId}, {assessmentId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/add-romm-outcome-change-grade-core", Name = RouteConstants.SubmitAdminAddRommOutcomeCore)]
+        public async Task<IActionResult> AdminAddRommOutcomeCoreAsync(AdminAddRommOutcomeCoreViewModel model)
+        {
+            await _loader.LoadAdminAddRommOutcomeCoreGrades(model);
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await _cacheService.SetAsync(CacheKey, model);
+            return RedirectToRoute(RouteConstants.AdminLearnerRecord, new { model.RegistrationPathwayId }  );
+        }
+
+
+
+        [HttpGet]
+        [Route("admin/add-romm-outcome-change-grade-specialism/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.AdminAddRommOutcomeSpecialism)]
+        public async Task<IActionResult> AdminAddRommOutcomeSpecialismAsync(int registrationPathwayId, int assessmentId)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminAddRommOutcomeSpecialismViewModel>(CacheKey);
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
+            AdminAddRommOutcomeSpecialismViewModel viewModel = await _loader.GetAdminAddRommOutcomeSpecialismAsync(registrationPathwayId, assessmentId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No core result details found. Method: AddResultCoreAsync({registrationPathwayId}, {assessmentId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/add-romm-outcome-change-grade-specialism", Name = RouteConstants.SubmitAdminAddRommOutcomeSpecialism)]
+        public async Task<IActionResult> AdminAddRommOutcomeSpecialismAsync(AdminAddRommOutcomeSpecialismViewModel model)
+        {
+            await _loader.LoadAdminAddRommOutcomeSpecialismGrades(model);
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await _cacheService.SetAsync(CacheKey, model);
+            return RedirectToRoute(RouteConstants.AdminLearnerRecord, new { model.RegistrationPathwayId });
+        }
+
+
+
+        #endregion
+
     }
 }

@@ -51,13 +51,13 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
-		<Compile Update="Content\AdminDashboard\AdminChangeSpecialismResultReviewChanges.Designer.cs">
-		  <DependentUpon>AdminChangeSpecialismResultReviewChanges.resx</DependentUpon>
+		<Compile Update="Content\AdminDashboard\AdminAddRommOutcomeSpecialism.Designer.cs">
+		  <DependentUpon>AdminAddRommOutcomeSpecialism.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
-		<Compile Update="Content\AdminDashboard\AdminChangePathwayResultReviewChanges.Designer.cs">
-		  <DependentUpon>AdminChangePathwayResultReviewChanges.resx</DependentUpon>
+		<Compile Update="Content\AdminDashboard\AdminAddRommOutcomeCore.Designer.cs">
+		  <DependentUpon>AdminAddRommOutcomeCore.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
@@ -170,26 +170,6 @@
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 			<DependentUpon>AdminSearchLearners.resx</DependentUpon>
-		</Compile>
-		<Compile Update="Content\AdminPostResults\AdminOpenSpecialismRommReviewChanges.Designer.cs">
-		  <DependentUpon>AdminOpenSpecialismRommReviewChanges.resx</DependentUpon>
-		  <DesignTime>True</DesignTime>
-		  <AutoGen>True</AutoGen>
-		</Compile>
-		<Compile Update="Content\AdminPostResults\AdminOpenPathwayRommReviewChanges.Designer.cs">
-		  <DependentUpon>AdminOpenPathwayRommReviewChanges.resx</DependentUpon>
-		  <DesignTime>True</DesignTime>
-		  <AutoGen>True</AutoGen>
-		</Compile>
-		<Compile Update="Content\AdminPostResults\AdminOpenSpecialismRomm.Designer.cs">
-		  <DependentUpon>AdminOpenSpecialismRomm.resx</DependentUpon>
-		  <DesignTime>True</DesignTime>
-		  <AutoGen>True</AutoGen>
-		</Compile>
-		<Compile Update="Content\AdminPostResults\AdminOpenPathwayRomm.Designer.cs">
-		  <DependentUpon>AdminOpenPathwayRomm.resx</DependentUpon>
-		  <DesignTime>True</DesignTime>
-		  <AutoGen>True</AutoGen>
 		</Compile>
 		<Compile Update="Content\Assessment\AddCoreAssessmentEntry.Designer.cs">
 			<DesignTime>True</DesignTime>
@@ -1178,14 +1158,12 @@
 		  <LastGenOutput>AdminSearchChangeLog.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminDashboard\AdminChangeSpecialismResultReviewChanges.resx">
-		  <SubType>Designer</SubType>
-		  <LastGenOutput>AdminChangeSpecialismResultReviewChanges.Designer.cs</LastGenOutput>
+		<EmbeddedResource Update="Content\AdminDashboard\AdminAddRommOutcomeSpecialism.resx">
+		  <LastGenOutput>AdminAddRommOutcomeSpecialism.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminDashboard\AdminChangePathwayResultReviewChanges.resx">
-		  <SubType>Designer</SubType>
-		  <LastGenOutput>AdminChangePathwayResultReviewChanges.Designer.cs</LastGenOutput>
+		<EmbeddedResource Update="Content\AdminDashboard\AdminAddRommOutcomeCore.resx">
+		  <LastGenOutput>AdminAddRommOutcomeCore.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\AdminChangeSpecialismResult.resx">
@@ -1280,22 +1258,6 @@
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\SearchLearners.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenSpecialismRommReviewChanges.resx">
-		  <LastGenOutput>AdminOpenSpecialismRommReviewChanges.Designer.cs</LastGenOutput>
-		  <Generator>PublicResXFileCodeGenerator</Generator>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenPathwayRommReviewChanges.resx">
-		  <LastGenOutput>AdminOpenPathwayRommReviewChanges.Designer.cs</LastGenOutput>
-		  <Generator>PublicResXFileCodeGenerator</Generator>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenSpecialismRomm.resx">
-		  <LastGenOutput>AdminOpenSpecialismRomm.Designer.cs</LastGenOutput>
-		  <Generator>PublicResXFileCodeGenerator</Generator>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenPathwayRomm.resx">
-		  <LastGenOutput>AdminOpenPathwayRomm.Designer.cs</LastGenOutput>
-		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\Assessment\AddCoreAssessmentEntry.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
