@@ -64,11 +64,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 
         AdminChangeSpecialismResultReviewChangesViewModel CreateAdminChangeSpecialismResultReviewChanges(AdminChangeSpecialismResultViewModel model);
         Task<bool> ProcessChangeSpecialismResultReviewChangesAsync(AdminChangeSpecialismResultReviewChangesViewModel model);
-
-        Task<AdminAddRommOutcomeCoreViewModel> GetAdminAddRommOutcomeCoreAsync(int registrationPathwayId, int assessmentId);
-        Task LoadAdminAddRommOutcomeCoreGrades(AdminAddRommOutcomeCoreViewModel model);
-
-        Task<AdminAddRommOutcomeSpecialismViewModel> GetAdminAddRommOutcomeSpecialismAsync(int registrationPathwayId, int assessmentId);
-        Task LoadAdminAddRommOutcomeSpecialismGrades(AdminAddRommOutcomeSpecialismViewModel model);
+       
     }
 }

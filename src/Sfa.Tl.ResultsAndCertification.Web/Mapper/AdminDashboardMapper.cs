@@ -14,6 +14,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -480,7 +481,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.SelectedGradeTo, opts => opts.MapFrom(s => s.SelectedGradeValue));
 
 
-            CreateMap<AdminLearnerRecord, AdminAddRommOutcomeCoreViewModel>()
+            CreateMap<AdminLearnerRecord, AdminAddRommOutcomeChangeGradeCoreViewModel>()
               .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
               .ForMember(d => d.PathwayAssessmentId, opts => opts.MapFrom((src, dest, destMember, context) => (int)context.Items[Constants.AssessmentId]))
               .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.Pathway.Name} ({s.Pathway.LarId})"))
@@ -496,7 +497,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
 
 
-            CreateMap<AdminLearnerRecord, AdminAddRommOutcomeSpecialismViewModel>()
+            CreateMap<AdminLearnerRecord, AdminAddRommOutcomeChangeGradeSpecialismViewModel>()
               .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
               .ForMember(d => d.SpecialismAssessmentId, opts => opts.MapFrom((src, dest, destMember, context) => (int)context.Items[Constants.AssessmentId]))
               .ForMember(d => d.SpecialismName, opts => opts.MapFrom((src, dest, destMember, context) =>

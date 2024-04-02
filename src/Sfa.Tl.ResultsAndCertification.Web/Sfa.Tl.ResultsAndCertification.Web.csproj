@@ -51,13 +51,13 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
-		<Compile Update="Content\AdminDashboard\AdminAddRommOutcomeSpecialism.Designer.cs">
-		  <DependentUpon>AdminAddRommOutcomeSpecialism.resx</DependentUpon>
+		<Compile Update="Content\AdminPostResults\AdminAddRommOutcomeChangeGradeSpecialism.Designer.cs">
+		  <DependentUpon>AdminAddRommOutcomeChangeGradeSpecialism.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
-		<Compile Update="Content\AdminDashboard\AdminAddRommOutcomeCore.Designer.cs">
-		  <DependentUpon>AdminAddRommOutcomeCore.resx</DependentUpon>
+		<Compile Update="Content\AdminPostResults\AdminAddRommOutcomeChangeGradeCore.Designer.cs">
+		  <DependentUpon>AdminAddRommOutcomeChangeGradeCore.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
@@ -1188,12 +1188,12 @@
 		  <LastGenOutput>AdminSearchChangeLog.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminDashboard\AdminAddRommOutcomeSpecialism.resx">
-		  <LastGenOutput>AdminAddRommOutcomeSpecialism.Designer.cs</LastGenOutput>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddRommOutcomeChangeGradeSpecialism.resx">
+		  <LastGenOutput>AdminAddRommOutcomeChangeGradeSpecialism.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminDashboard\AdminAddRommOutcomeCore.resx">
-		  <LastGenOutput>AdminAddRommOutcomeCore.Designer.cs</LastGenOutput>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddRommOutcomeChangeGradeCore.resx">
+		  <LastGenOutput>AdminAddRommOutcomeChangeGradeCore.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\AdminChangeSpecialismResult.resx">
