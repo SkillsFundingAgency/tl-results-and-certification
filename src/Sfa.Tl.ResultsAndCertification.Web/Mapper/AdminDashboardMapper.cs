@@ -61,8 +61,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => s.SeriesName))
                 .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.Result != null ? s.Result.Grade : null))
                 .ForMember(d => d.PrsDisplayText, opts => opts.MapFrom(s => GetPrsDisplayText(s)))
-                .ForMember(d => d.LastUpdated, opts => opts.MapFrom(s => s.LastUpdatedOn.ToDobFormat()))
-                .ForMember(d => d.UpdatedBy, opts => opts.MapFrom(s => s.LastUpdatedBy))
+                .ForMember(d => d.LastUpdated, opts => opts.MapFrom(s => (s.Result != null ? s.Result.LastUpdatedOn : s.LastUpdatedOn).ToDobFormat()))
+                .ForMember(d => d.UpdatedBy, opts => opts.MapFrom(s => s.Result != null ? s.Result.LastUpdatedBy : s.LastUpdatedBy))
                 .ForMember(d => d.IsResultChangeAllowed, opt => opt.MapFrom<IsChangeAllowedResolver>())
                 .ForMember(d => d.ActionButton, opt => opt.MapFrom<TableButtonResolver>())
                 .ForMember(d => d.AddResultRouteName, opt => opt.MapFrom(s =>

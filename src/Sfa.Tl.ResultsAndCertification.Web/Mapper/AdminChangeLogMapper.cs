@@ -119,7 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             => $"{dateTime:d MMMM yyyy h:mm}{dateTime.ToString("tt").ToLower()}";
 
         private static string FormatDateTime2(DateTime dateTime)
-            => $"{dateTime:d MMMM yyyy, hh:mm}{dateTime.ToString("tt").ToLower()}";
+            => $"{dateTime:d MMMM yyyy, h:mm}{dateTime.ToString("tt").ToLower()}";
 
         private ChangeRecordModel GetViewChangeRecordLink(DateTime text, int changeLogId, ChangeType changeType) => new ChangeRecordModel()
         {

@@ -24,7 +24,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminA
                 Id = 1,
                 Grade = string.Empty,
                 GradeCode = string.Empty,
-                PrsStatus = PrsStatus.NotSpecified
+                PrsStatus = PrsStatus.NotSpecified,
+                LastUpdatedOn = new DateTime(2024, 1, 10),
+                LastUpdatedBy = "John Smith"
             }
         };
 
@@ -42,8 +44,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminA
             Result.ExamPeriod.Should().Be(_assessment.SeriesName);
             Result.Grade.Should().BeEmpty();
             Result.PrsDisplayText.Should().BeEmpty();
-            Result.LastUpdated.Should().Be(_assessment.LastUpdatedOn.ToDobFormat());
-            Result.UpdatedBy.Should().Be(_assessment.LastUpdatedBy);
+            Result.LastUpdated.Should().Be(_assessment.Result.LastUpdatedOn.ToDobFormat());
+            Result.UpdatedBy.Should().Be(_assessment.Result.LastUpdatedBy);
             Result.IsResultChangeAllowed.Should().BeFalse();
 
             Result.ActionButton.Should().NotBeNull();

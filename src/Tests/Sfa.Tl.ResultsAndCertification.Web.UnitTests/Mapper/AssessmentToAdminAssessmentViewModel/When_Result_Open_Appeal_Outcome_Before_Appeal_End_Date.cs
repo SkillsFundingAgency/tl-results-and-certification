@@ -28,7 +28,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminA
                 Id = 1,
                 Grade = "A",
                 GradeCode = "PCG2",
-                PrsStatus = PrsStatus.BeingAppealed
+                PrsStatus = PrsStatus.BeingAppealed,
+                LastUpdatedOn = new DateTime(2024, 1, 10),
+                LastUpdatedBy = "John Smith"
             }
         };
 
@@ -46,8 +48,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminA
             Result.ExamPeriod.Should().Be(_assessment.SeriesName);
             Result.Grade.Should().Be(_assessment.Result.Grade);
             Result.PrsDisplayText.Should().ContainAll(new[] { Constants.PurpleTagClassName, PrsStatusContent.Being_Appealed_Display_Text });
-            Result.LastUpdated.Should().Be(_assessment.LastUpdatedOn.ToDobFormat());
-            Result.UpdatedBy.Should().Be(_assessment.LastUpdatedBy);
+            Result.LastUpdated.Should().Be(_assessment.Result.LastUpdatedOn.ToDobFormat());
+            Result.UpdatedBy.Should().Be(_assessment.Result.LastUpdatedBy);
             Result.IsResultChangeAllowed.Should().BeFalse();
 
             Result.ActionButton.Should().NotBeNull();

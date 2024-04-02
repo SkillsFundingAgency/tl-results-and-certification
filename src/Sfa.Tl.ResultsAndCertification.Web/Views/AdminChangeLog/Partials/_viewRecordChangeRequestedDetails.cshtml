@@ -8,28 +8,28 @@
 
 <div class="govuk-!-margin-top-4">
     <section class="govuk-body">
-        <h2 class="govuk-heading-s">@AdminViewChangeRecord.Label_Contact_Name</h2>
+        <h3 class="govuk-heading-s">@AdminViewChangeRecord.Label_Contact_Name</h3>
         <p class="govuk-body">@Model.ChangeRequestedBy</p>
     </section>
 
     <section class="govuk-body-s">
-        <p class="govuk-heading-s">@AdminViewChangeRecord.Label_Date_Of_Request</p>
+        <h3 class="govuk-heading-s">@AdminViewChangeRecord.Label_Date_Of_Request</h3>
         <p class="govuk-body">@Model.ChangeDateOfRequest</p>
     </section>
 
     <section class="govuk-body-s">
-        <p class="govuk-heading-s">@AdminViewChangeRecord.Label_Reason_For_Change</p>
+        <h3 class="govuk-heading-s">@AdminViewChangeRecord.Label_Reason_For_Change</h3>
         <p class="govuk-body">@Model.ReasonForChange</p>
     </section>
 
     <section class="govuk-body-s">
-        <p class="govuk-heading-s">@AdminViewChangeRecord.Label_Zendesk_Ticket_Id</p>
+        <h3 class="govuk-heading-s">@AdminViewChangeRecord.Label_Zendesk_Ticket_Id</h3>
         <p class="govuk-body">@Model.ZendeskTicketID</p>
     </section>
 
     <p class="govuk-body-l">
         <div class="govuk-button-group">
-            <a id="returnButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminSearchChangeLogClear">@AdminViewChangeRecord.Button_Search_Again</a>
+            <a id="returnButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminSearchChangeLog">@AdminViewChangeRecord.Button_Search_Again</a>
         </div>
     </p>
 </div>

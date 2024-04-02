@@ -54,5 +54,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 opt.Items[Constants.AssessmentId] = pathwayAssessmentId;
             });
         }
+
+        public Task<AdminAddCoreRommOutcomeViewModel> GetAdminAddPathwayRommOutcomeAsync(int registrationPathwayId, int pathwayAssessmentId)
+            => GetAdminOpenRommAsync<AdminAddCoreRommOutcomeViewModel>(registrationPathwayId, pathwayAssessmentId);
+
+        public Task<AdminAddSpecialismRommOutcomeViewModel> GetAdminAddSpecialismRommOutcomeAsync(int registrationPathwayId, int pathwayAssessmentId)
+            => GetAdminOpenRommAsync<AdminAddSpecialismRommOutcomeViewModel>(registrationPathwayId, pathwayAssessmentId);
     }
 }
