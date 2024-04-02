@@ -463,7 +463,7 @@
         public const string SubmitAdminChangeSpecialismResult = "SubmitAdminChangeSpecialismResult";
         public const string AdminChangeSpecialismResultReviewChanges = "AdminChangeSpecialismResultReviewChanges";
         public const string AdminChangePathwayResultReviewChanges = "AdminChangePathwayResultReviewChanges";
-        public const string SubmitAdminChangePathwayResultReviewChanges = "SubmitAdminChangePathwayResultReviewChanges";       
+        public const string SubmitAdminChangePathwayResultReviewChanges = "SubmitAdminChangePathwayResultReviewChanges";
         public const string SubmitAdminChangeSpecialismResultReviewChanges = "SubmitAdminChangeSpecialismResultReviewChanges";
 
         #endregion
@@ -512,6 +512,14 @@
         public const string SubmitAdminOpenSpecialismAppeal = "SubmitAdminOpenSpecialismAppeal";
         public const string AdminOpenSpecialismAppealReviewChanges = "AdminOpenSpecialismAppealReviewChanges";
         public const string SubmitAdminOpenSpecialismAppealReviewChanges = "SubmitAdminOpenSpecialismAppealReviewChanges";
+
+        public const string AdminAddCoreRommOutcomeClear = "AdminAddCoreRommOutcomeClear";
+        public const string AdminAddCoreRommOutcome = "AdminAddCoreRommOutcome";
+        public const string SubmitAddCoreRommOutcome = "SubmitAddCoreRommOutcome";
+
+        public const string AdminAddSpecialismRommOutcomeClear = "AdminAddSpecialismRommOutcomeClear";
+        public const string AdminAddSpecialismRommOutcome = "AdminAddSpecialismRommOutcome";
+        public const string SubmitAddSpecialismRommOutcome = "SubmitAddSpecialismRommOutcome";
 
         #endregion
     }
