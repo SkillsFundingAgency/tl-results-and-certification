@@ -322,8 +322,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         }
 
         #endregion
-
-       
-
     }
 }
