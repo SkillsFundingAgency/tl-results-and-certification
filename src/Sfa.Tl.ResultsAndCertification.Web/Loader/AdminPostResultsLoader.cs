@@ -106,17 +106,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             && !t.Code.Equals(Constants.NotReceived, StringComparison.InvariantCultureIgnoreCase)).ToList();
         }
 
-        private async Task<List<LookupViewModel>> GetAdminAddResultGrades(LookupCategory lookupCategory)
-        {
-            IList<LookupData> grades = await _internalApiClient.GetLookupDataAsync(lookupCategory);
-            return _mapper.Map<List<LookupViewModel>>(grades);
-        }
-
         private async Task<List<LookupViewModel>> GetAdminChangeResultGrades(LookupCategory lookupCategory, string grade, bool isRomm = false)
         {
             IList<LookupData> grades = await _internalApiClient.GetLookupDataAsync(lookupCategory);
-            grades.Remove(grades.Where(t => t.Value == grade).FirstOrDefault());
-            if (!isRomm) grades.Insert(grades.Count, new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageSpecialismResult.Option_Remove_Result });
+            grades.Remove(grades.FirstOrDefault((t => t.Value == grade)));
+            if (!isRomm) grades.Add(new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageSpecialismResult.Option_Remove_Result });
             return _mapper.Map<List<LookupViewModel>>(grades);
         }
 
@@ -130,13 +124,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             AdminLearnerRecord learnerRecord = learnerRecordTask.Result;
             IList<LookupData> grades = gradesTask.Result;
+            if (learnerRecord == null || grades == null)
+                return null;          
+
             if (ischange)
             {
-                grades.Insert(grades.Count, new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageSpecialismResult.Option_Remove_Result });
+                grades.Add(new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageSpecialismResult.Option_Remove_Result });
             }
-
-            if (learnerRecord == null || grades == null)
-                return null;
+                      
 
             return _mapper.Map<TAddResultViewModel>(learnerRecord, opt =>
             {

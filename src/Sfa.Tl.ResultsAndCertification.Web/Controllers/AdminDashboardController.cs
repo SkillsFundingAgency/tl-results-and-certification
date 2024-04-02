@@ -1167,7 +1167,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
         }
 
-
      
     }
 }
