@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
 
         public BackLinkModel BackLink => new()
         {
-            RouteName = RouteConstants.AdminAddCoreRommOutcome,
+            RouteName = RouteConstants.AdminAddSpecialismRommOutcome,
             RouteAttributes = new Dictionary<string, string> 
             { 
                 { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() },
