@@ -270,11 +270,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
           => model.Grades = await GetAdminChangeResultGrades(LookupCategory.PathwayComponentGrade, model.Grade);
 
 
-        private async Task<List<LookupViewModel>> GetAdminChangeResultGrades(LookupCategory lookupCategory, string grade, bool isRomm=false)
+        private async Task<List<LookupViewModel>> GetAdminChangeResultGrades(LookupCategory lookupCategory, string grade)
         {
             IList<LookupData> grades = await _internalApiClient.GetLookupDataAsync(lookupCategory);
             grades.Remove(grades.Where(t => t.Value == grade).FirstOrDefault());
-            if(!isRomm)grades.Insert(grades.Count, new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageSpecialismResult.Option_Remove_Result });
+            grades.Insert(grades.Count, new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageSpecialismResult.Option_Remove_Result });
             return _mapper.Map<List<LookupViewModel>>(grades);
         }
 
