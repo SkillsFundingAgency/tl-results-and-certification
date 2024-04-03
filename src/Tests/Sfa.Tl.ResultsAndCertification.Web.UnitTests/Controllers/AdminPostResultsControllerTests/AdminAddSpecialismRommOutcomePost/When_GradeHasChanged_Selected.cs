@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminPostResu
         [Fact]
         public void Then_Returns_Expected()
         {
-            Result.ShouldBeRedirectToRouteResult(nameof(RouteConstants.AdminLearnerRecord));
+            Result.ShouldBeRedirectToRouteResult(nameof(RouteConstants.AdminAddRommOutcomeChangeGradeSpecialismClear));
         }
     }
 }

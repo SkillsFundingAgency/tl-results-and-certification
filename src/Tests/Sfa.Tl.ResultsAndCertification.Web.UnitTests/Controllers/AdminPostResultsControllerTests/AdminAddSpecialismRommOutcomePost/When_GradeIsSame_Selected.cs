@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminPostResu
 
         public override void Given()
         {
-            _viewModel = CreateViewModel(whatIsRommOutcome: true);
+            _viewModel = CreateViewModel(whatIsRommOutcome: false);
         }
 
         public async override Task When()

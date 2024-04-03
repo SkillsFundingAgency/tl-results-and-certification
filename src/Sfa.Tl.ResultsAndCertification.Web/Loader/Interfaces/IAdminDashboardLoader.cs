@@ -64,5 +64,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 
         AdminChangeSpecialismResultReviewChangesViewModel CreateAdminChangeSpecialismResultReviewChanges(AdminChangeSpecialismResultViewModel model);
         Task<bool> ProcessChangeSpecialismResultReviewChangesAsync(AdminChangeSpecialismResultReviewChangesViewModel model);
+       
     }
 }
