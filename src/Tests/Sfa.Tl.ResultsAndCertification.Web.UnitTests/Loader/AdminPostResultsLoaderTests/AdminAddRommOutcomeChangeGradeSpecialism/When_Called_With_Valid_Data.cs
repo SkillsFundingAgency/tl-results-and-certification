@@ -99,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminPostResultsLo
             _result.Grades.Should().BeEquivalentTo(_grades);
 
             BackLinkModel backLink = _result.BackLink;
-            backLink.RouteName.Should().Be(RouteConstants.AdminAddCoreRommOutcome);
+            backLink.RouteName.Should().Be(RouteConstants.AdminAddSpecialismRommOutcome);
             backLink.RouteAttributes.Should().BeEquivalentTo(new Dictionary<string, string>
             {
                 [Constants.RegistrationPathwayId] = RegistrationPathwayId.ToString(),
