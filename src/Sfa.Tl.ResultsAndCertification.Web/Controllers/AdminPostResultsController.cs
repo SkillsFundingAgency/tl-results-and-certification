@@ -314,6 +314,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public Task<IActionResult> AdminOpenPathwayAppealAsync(int registrationPathwayId, int assessmentId)
             => GetAdminPostResultAsync(registrationPathwayId, assessmentId, () => _loader.GetAdminOpenPathwayAppealAsync(registrationPathwayId, assessmentId), nameof(AdminPostResultsController.AdminOpenPathwayAppealAsync));
 
+        [HttpPost]
+        [Route("admin/open-appeal-core", Name = RouteConstants.SubmitAdminOpenPathwayAppeal)]
+        public Task<IActionResult> AdminOpenPathwayAppealAsync(AdminOpenPathwayAppealViewModel model)
+            => PostAdminPostResultAsync(model, model.RegistrationPathwayId, model.DoYouWantToOpenAppeal, RouteConstants.AdminOpenPathwayAppealReviewChanges);
+
         #endregion
 
         #region Open Appeal Specialism
@@ -327,6 +332,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/open-appeal-specialism", Name = RouteConstants.AdminOpenSpecialismAppeal)]
         public Task<IActionResult> AdminOpenSpecialismAppealAsync(int registrationPathwayId, int assessmentId)
             => GetAdminPostResultAsync(registrationPathwayId, assessmentId, () => _loader.GetAdminOpenSpecialismAppealAsync(registrationPathwayId, assessmentId), nameof(AdminPostResultsController.AdminOpenPathwayAppealAsync));
+
+        [HttpPost]
+        [Route("admin/open-appeal-specialism", Name = RouteConstants.SubmitAdminOpenSpecialismAppeal)]
+        public Task<IActionResult> AdminOpenSpecialismAppealAsync(AdminOpenSpecialismAppealViewModel model)
+            => PostAdminPostResultAsync(model, model.RegistrationPathwayId, model.DoYouWantToOpenAppeal, RouteConstants.AdminOpenSpecialismAppealReviewChanges);
 
         #endregion
 
