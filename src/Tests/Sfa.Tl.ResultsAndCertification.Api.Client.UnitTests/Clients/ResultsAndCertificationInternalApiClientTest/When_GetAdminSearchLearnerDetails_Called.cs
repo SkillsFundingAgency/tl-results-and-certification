@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         private ResultsAndCertificationConfiguration _configuration;
         private ResultsAndCertificationInternalApiClient _apiClient;
 
-        private AdminSearchLearnerRequest _apiRequest = new() { SearchKey = "Johnson" };
+        private readonly AdminSearchLearnerRequest _apiRequest = new() { SearchKey = "Johnson" };
 
         public override void Setup()
         {

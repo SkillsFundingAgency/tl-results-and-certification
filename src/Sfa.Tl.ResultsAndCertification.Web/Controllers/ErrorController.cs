@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public IActionResult ServiceAccessDenied()
         {
             return User.IsInFreezePeriod()
-                ? RedirectToAction(nameof(HelpController.ServiceUnavailableMaintenance), Constants.HelpController)
+                ? RedirectToAction(nameof(HelpController.ServiceUnavailable), Constants.HelpController)
                 : View();
         }
 

@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ErrorControll
         [Fact]
         public void Then_Redirected_To_ServiceUnavailable()
         {
-            Result.ShouldBeRedirectToActionResult(RouteConstants.ServiceUnavailableMaintenance);
+            Result.ShouldBeRedirectToActionResult(RouteConstants.ServiceUnavailable);
         }
     }
 }

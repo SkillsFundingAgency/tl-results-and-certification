@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 if (User.IsInFreezePeriod())
                 {
-                    return RedirectToAction(nameof(HelpController.ServiceUnavailableMaintenance), Constants.HelpController);
+                    return RedirectToAction(nameof(HelpController.ServiceUnavailable), Constants.HelpController);
                 };
 
                 return !HttpContext.User.HasAccessToService()

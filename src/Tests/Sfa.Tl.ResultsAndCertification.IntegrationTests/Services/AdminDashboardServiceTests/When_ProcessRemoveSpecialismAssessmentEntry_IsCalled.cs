@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
     public class When_ProcessRemoveSpecialismAssessmentEntry_IsCalled : AdminDashboardServiceBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
-        private ReviewRemoveAssessmentEntryRequest ReviewRemoveAssessmentEntryRequest;
+        private ReviewRemoveSpecialismAssessmentEntryRequest ReviewRemoveAssessmentEntryRequest;
         private List<TqRegistrationProfile> _registrations;
         private List<TqSpecialismAssessment> _specialismAssessments;
 
@@ -90,7 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             AssessmentId = specialismAssessment.Id;
             RegistrationPathwayId = specialismAssessment.TqRegistrationSpecialism.TqRegistrationPathwayId;
 
-            ReviewRemoveAssessmentEntryRequest = new ReviewRemoveAssessmentEntryRequest
+            ReviewRemoveAssessmentEntryRequest = new ReviewRemoveSpecialismAssessmentEntryRequest
             {
                 AssessmentId = AssessmentId,
                 ComponentType = ComponentType.Specialism,
@@ -128,7 +128,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             actualPathwayAssessment.ModifiedOn.Should().NotBeNull();
 
             actualChangeLog.Should().NotBeNull();
-            actualChangeLog.ChangeType.Should().Be((int)ReviewRemoveAssessmentEntryRequest.ChangeType);
+            actualChangeLog.ChangeType.Should().Be(ReviewRemoveAssessmentEntryRequest.ChangeType);
             actualChangeLog.Name.Should().Be(ReviewRemoveAssessmentEntryRequest.ContactName);
             actualChangeLog.CreatedBy.Should().Be(ReviewRemoveAssessmentEntryRequest.CreatedBy);
             actualChangeLog.ReasonForChange.Should().Be(ReviewRemoveAssessmentEntryRequest.ChangeReason);

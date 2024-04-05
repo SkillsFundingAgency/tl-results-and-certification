@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountContro
         [Fact]
         public void Then_Redirected_To_ServiceUnavailable()
         {
-            Result.ShouldBeRedirectToActionResult(RouteConstants.ServiceUnavailableMaintenance);
+            Result.ShouldBeRedirectToActionResult(RouteConstants.ServiceUnavailable);
         }
     }
 }

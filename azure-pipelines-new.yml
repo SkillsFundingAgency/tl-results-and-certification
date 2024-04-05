@@ -12,18 +12,21 @@ resources:
 trigger:
   branches:
     include: 
-    - master   
-    - feature/*
-    # - feature/lrs-integration
+    - master
+    - develop
+    - Release*
+    - feature/* 
+    - hotfix/*
+    - bugfix/*
      
 pr: 
-  - feature/* 
   - master
   - develop
+  - Release*
 
 pool:
   name: 'Azure Pipelines'
-  vmImage: 'windows-latest' #'vs2017-win2016'
+  vmImage: 'windows-latest'
   
 variables:
 - template: ./Automation/variables/vars-global.yml@devopsTemplates
