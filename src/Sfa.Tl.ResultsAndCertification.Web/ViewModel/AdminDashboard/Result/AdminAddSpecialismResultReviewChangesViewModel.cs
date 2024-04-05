@@ -33,19 +33,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
         public string StartYear { get; set; }
 
         public SummaryItemModel SummaryLearner
-            => CreateSummaryItemModel(AdminAddPathwayResult.Summary_Learner_Id, AdminAddPathwayResult.Summary_Learner_Text, Learner);
+            => CreateSummaryItemModel(AdminAddSpecialismResultReviewChanges.Summary_Learner_Id, AdminAddSpecialismResultReviewChanges.Summary_Learner_Text, Learner);
 
         public SummaryItemModel SummaryUln
-            => CreateSummaryItemModel(AdminAddPathwayResult.Summary_ULN_Id, AdminAddPathwayResult.Summary_ULN_Text, Uln.ToString());
+            => CreateSummaryItemModel(AdminAddSpecialismResultReviewChanges.Summary_ULN_Id, AdminAddSpecialismResultReviewChanges.Summary_ULN_Text, Uln.ToString());
 
         public SummaryItemModel SummaryProvider
-            => CreateSummaryItemModel(AdminAddPathwayResult.Summary_Provider_Id, AdminAddPathwayResult.Summary_Provider_Text, Provider);
+            => CreateSummaryItemModel(AdminAddSpecialismResultReviewChanges.Summary_Provider_Id, AdminAddSpecialismResultReviewChanges.Summary_Provider_Text, Provider);
 
         public SummaryItemModel SummaryTlevel
-            => CreateSummaryItemModel(AdminAddPathwayResult.Summary_TLevel_Id, AdminAddPathwayResult.Summary_TLevel_Text, Tlevel);
+            => CreateSummaryItemModel(AdminAddSpecialismResultReviewChanges.Summary_TLevel_Id, AdminAddSpecialismResultReviewChanges.Summary_TLevel_Text, Tlevel);
 
         public SummaryItemModel SummaryStartYear
-            => CreateSummaryItemModel(AdminAddPathwayResult.Summary_StartYear_Id, AdminAddPathwayResult.Summary_StartYear_Text, StartYear);
+            => CreateSummaryItemModel(AdminAddSpecialismResultReviewChanges.Summary_StartYear_Id, AdminAddSpecialismResultReviewChanges.Summary_StartYear_Text, StartYear);
 
         #endregion
 

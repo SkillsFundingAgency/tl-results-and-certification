@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+﻿using MessagePack;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
@@ -13,6 +14,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
         public int RegistrationPathwayId { get; set; }
 
         public int PathwayAssessmentId { get; set; }
+
+        public int PathwayResultId { get; set; }
 
         public string PathwayName { get; set; }
 
@@ -52,6 +55,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
         public string ExamPeriod { get; set; }
 
         public string Grade { get; set; }
+
+        public string GradeCode { get; set; }
 
         public SummaryItemModel SummaryExamPeriod
            => CreateSummaryItemModel(AdminChangePathwayResult.Summary_Exam_Period_Id, AdminChangePathwayResult.Summary_Exam_Period_Text, ExamPeriod);

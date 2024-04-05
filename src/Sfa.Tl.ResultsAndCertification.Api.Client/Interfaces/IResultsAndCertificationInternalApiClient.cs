@@ -1,6 +1,8 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminPostResults;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
@@ -132,13 +134,33 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         Task<bool> ProcessAddSpecialismAssessmentRequestAsync(ReviewAddSpecialismAssessmentRequest request);
 
-        Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
-        
-        Task<bool> RemoveSpecialAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request);
+        Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveCoreAssessmentEntryRequest request);
+
+        Task<bool> RemoveSpecialAssessmentEntryAsync(ReviewRemoveSpecialismAssessmentEntryRequest request);
 
         Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request);
 
         Task<bool> ProcessAdminAddSpecialismResultAsync(AddSpecialismResultRequest request);
+
+        Task<bool> ProcessAdminChangePathwayResultAsync(ChangePathwayResultRequest request);
+
+        Task<bool> ProcessAdminChangeSpecialismResultAsync(ChangeSpecialismResultRequest request);
+
+        #endregion
+
+        #region Admin change log
+
+        Task<PagedResponse<AdminSearchChangeLog>> SearchChangeLogsAsync(AdminSearchChangeLogRequest request);
+
+        Task<AdminChangeLogRecord> GetAdminChangeLogRecordAsync(int changeLogId);
+
+        #endregion
+
+        #region Admin post results
+
+        Task<bool> ProcessAdminOpenPathwayRommAsync(OpenPathwayRommRequest request);
+
+        Task<bool> ProcessAdminOpenSpecialismRommAsync(OpenSpecialismRommRequest request);
 
         #endregion
     }

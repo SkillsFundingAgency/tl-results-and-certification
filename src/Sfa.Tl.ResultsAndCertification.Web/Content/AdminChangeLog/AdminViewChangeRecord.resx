@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Action_Text_Link_Change" xml:space="preserve">
+    <value>View learner record</value>
+  </data>
+  <data name="Button_Search_Again" xml:space="preserve">
+    <value>Search again</value>
+  </data>
+  <data name="Core_Component" xml:space="preserve">
+    <value>Core Component</value>
+  </data>
+  <data name="Core_Heading_Text" xml:space="preserve">
+    <value>Core component: {0}</value>
+  </data>
+  <data name="Heading_Change_Record" xml:space="preserve">
+    <value>Change record for {0}</value>
+  </data>
+  <data name="Hidden_Action_Text_Learner_Record" xml:space="preserve">
+    <value>learner record</value>
+  </data>
+  <data name="Industry_Placement_Status_Id" xml:space="preserve">
+    <value>industryplacementstatus</value>
+  </data>
+  <data name="IP_Reasons_List_Id" xml:space="preserve">
+    <value>ipreasonslist</value>
+  </data>
+  <data name="Label_Change_Made_By" xml:space="preserve">
+    <value>Change made by</value>
+  </data>
+  <data name="Label_Contact_Name" xml:space="preserve">
+    <value>Contact name</value>
+  </data>
+  <data name="Label_Core_Component" xml:space="preserve">
+    <value>Core component: {0}</value>
+  </data>
+  <data name="Label_Date_Of_Request" xml:space="preserve">
+    <value>Date of request</value>
+  </data>
+  <data name="Label_No_Assessment_Entry_Recorded" xml:space="preserve">
+    <value>No assessment entry recorded for {0}</value>
+  </data>
+  <data name="Label_Occupational_Specialism" xml:space="preserve">
+    <value>Occupational specialism: {0}</value>
+  </data>
+  <data name="Label_Reason_For_Change" xml:space="preserve">
+    <value>Reason for change</value>
+  </data>
+  <data name="Label_Zendesk_Ticket_Id" xml:space="preserve">
+    <value>Zendesk ticket ID</value>
+  </data>
+  <data name="No_Grade_Entered" xml:space="preserve">
+    <value>No grade entered</value>
+  </data>
+  <data name="No_Of_Hours_Id" xml:space="preserve">
+    <value>noofhours</value>
+  </data>
+  <data name="Occupational_Specialism" xml:space="preserve">
+    <value>Occupational Specialism</value>
+  </data>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Change record – Admin</value>
+  </data>
+  <data name="Para_Item" xml:space="preserve">
+    <value>&lt;p&gt;{0}&lt;/p&gt;</value>
+  </data>
+  <data name="Specialism_Heading_Text" xml:space="preserve">
+    <value>Occupational specialism: {0}</value>
+  </data>
+  <data name="Summary_Academic_Year_Id" xml:space="preserve">
+    <value>academicyear</value>
+  </data>
+  <data name="Summary_Assessment_Id" xml:space="preserve">
+    <value>assessment</value>
+  </data>
+  <data name="Summary_CreatedBy_Id" xml:space="preserve">
+    <value>changemadeby</value>
+  </data>
+  <data name="Summary_CreatedBy_Text" xml:space="preserve">
+    <value>Change made by</value>
+  </data>
+  <data name="Summary_Exam_Period_Id" xml:space="preserve">
+    <value>examperiod</value>
+  </data>
+  <data name="Summary_Exam_Period_Text" xml:space="preserve">
+    <value>Exam period</value>
+  </data>
+  <data name="Summary_Grade_Id" xml:space="preserve">
+    <value>grade</value>
+  </data>
+  <data name="Summary_Grade_Text" xml:space="preserve">
+    <value>Grade</value>
+  </data>
+  <data name="Summary_Learner_Id" xml:space="preserve">
+    <value>learner</value>
+  </data>
+  <data name="Summary_Learner_Text" xml:space="preserve">
+    <value>Learner</value>
+  </data>
+  <data name="Summary_Selected_Grade_Id" xml:space="preserve">
+    <value>selectedgradecode</value>
+  </data>
+  <data name="Summary_ULN_Id" xml:space="preserve">
+    <value>uln</value>
+  </data>
+  <data name="Summary_ULN_Text" xml:space="preserve">
+    <value>ULN</value>
+  </data>
+  <data name="Text_No_Assement_Message" xml:space="preserve">
+    <value>No assessment entry recorded for</value>
+  </data>
+  <data name="Title_Change" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="Title_Change_Summary" xml:space="preserve">
+    <value>Change summary</value>
+  </data>
+  <data name="Title_From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="Title_Industry_Placement_Status" xml:space="preserve">
+    <value>Industry placement status</value>
+  </data>
+  <data name="Title_Log_Details" xml:space="preserve">
+    <value>Log details</value>
+  </data>
+  <data name="Title_Number_Of_Hours" xml:space="preserve">
+    <value>Number of hours</value>
+  </data>
+  <data name="Title_Reasons_For_Reduced_Hours" xml:space="preserve">
+    <value>Reasons for reduced hours</value>
+  </data>
+  <data name="Title_StartYear" xml:space="preserve">
+    <value>Start year</value>
+  </data>
+  <data name="Title_Status_Text" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Title_To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="Title_Who_Asked_For_This_Change" xml:space="preserve">
+    <value>Who asked for this change?</value>
+  </data>
+</root>

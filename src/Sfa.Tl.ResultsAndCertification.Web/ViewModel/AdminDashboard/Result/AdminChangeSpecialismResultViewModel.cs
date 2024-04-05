@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result
         public int RegistrationPathwayId { get; set; }
 
         public int SpecialismAssessmentId { get; set; }
-
+        public int SpecialismResultId { get; set; }
         public string SpecialismName { get; set; }
 
         #region Personal details

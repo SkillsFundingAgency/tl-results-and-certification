@@ -69,6 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
 
             services.AddApplicationInsightsTelemetry();
             services.AddControllers();
+            services.AddSwaggerGen();
 
             services.Configure<ApiBehaviorOptions>(options =>
             {
@@ -101,6 +102,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             if (_env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
             else
             {
@@ -134,6 +138,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
 
         private void RegisterApplicationServices(IServiceCollection services)
         {
+            // Repositories
             services.AddTransient<IBlobStorageService, BlobStorageService>();
             services.AddTransient<IProviderRepository, ProviderRepository>();
             services.AddTransient<IRegistrationRepository, RegistrationRepository>();
@@ -144,7 +149,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IPostResultsServiceRepository, PostResultsServiceRepository>();
             services.AddTransient<ILearnerRepository, LearnerRepository>();
             services.AddTransient<ICommonRepository, CommonRepository>();
+            services.AddTransient<IAdminDashboardRepository, AdminDashboardRepository>();
+            services.AddTransient<IAdminChangeLogRepository, AdminChangeLogRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<IRepositoryFactory, RepositoryFactory>();
+
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
             services.AddTransient<IAwardingOrganisationService, AwardingOrganisationService>();
             services.AddTransient<IProviderService, ProviderService>();
@@ -154,9 +163,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IDocumentUploadHistoryService, DocumentUploadHistoryService>();
             services.AddTransient<ICommonService, CommonService>();
-            services.AddTransient<IAdminDashboardRepository, AdminDashboardRepository>();
             services.AddTransient<ISystemProvider, SystemProvider>();
-            services.AddTransient<IRepositoryFactory, RepositoryFactory>();
 
             // Bulk Registrations
             services.AddTransient<IDataParser<RegistrationCsvRecordResponse>, RegistrationParser>();
@@ -187,6 +194,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IPostResultsServiceService, PostResultsServiceService>();
             services.AddTransient<ILearnerService, LearnerService>();
             services.AddTransient<IAdminDashboardService, AdminDashboardService>();
+            services.AddTransient<IAdminChangeLogService, AdminChangeLogService>();
+            services.AddTransient<IAdminPostResultsService, AdminPostResultsService>();
 
             // DataExports 
             services.AddTransient<IDataExportLoader, DataExportLoader>();

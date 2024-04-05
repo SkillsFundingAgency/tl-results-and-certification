@@ -76,7 +76,7 @@
         public const string FindSoaLearnerRecordUri = "/api/statementofachievement/FindSoaLearnerRecord/{0}/{1}";
         public const string GetSoaLearnerRecordDetailsUri = "/api/statementofachievement/GetSoaLearnerRecordDetails/{0}/{1}";
         public const string CreateSoaPrintingRequestUri = "/api/statementofachievement/CreateSoaPrintingRequest";
-        public const string GetPrintRequestSnapshotUri = "/api/statementofachievement/GetPrintRequestSnapshot/{0}/{1}/{2}";               
+        public const string GetPrintRequestSnapshotUri = "/api/statementofachievement/GetPrintRequestSnapshot/{0}/{1}/{2}";
 
         // Post Results Service Uri's
         public const string FindPrsLearnerRecordUri = "/api/postresultsservice/FindPrsLearnerRecord/{0}/{1}";
@@ -130,9 +130,23 @@
         public const string ProcessChangeIPUri = "/api/admindashboard/ProcessChangeIndustryPlacement";
         public const string ProcessAddCoreAssessmentUri = "/api/admindashboard/ProcessAddCoreAssessmentRequest";
         public const string ProcessAddSpecialismAssessmentUri = "/api/admindashboard/ProcessAddSpecialismAssessmentRequest";
-        public const string ReviewRemoveAssessmentEntryUri = "/api/admindashboard/ReviewRemoveAssessmentEntry";
+        public const string ReviewRemoveCoreAssessmentEntryUri = "/api/admindashboard/ReviewRemoveCoreAssessmentEntry";
+        public const string ReviewRemoveSpecialismAssessmentEntryUri = "/api/admindashboard/ReviewRemoveSpecialismAssessmentEntry";
+        public const string ProcessAdminAddPathwayResultUri = "/api/admindashboard/ProcessAdminAddPathwayResult";
+        public const string ProcessAdminAddSpecialismResultUri = "/api/admindashboard/ProcessAdminAddSpecialismResult";
 
         public const string ProcessAdminAddPathwayResult = "/api/admindashboard/ProcessAdminAddPathwayResult";
         public const string ProcessAdminAddSpecialismResult = "/api/admindashboard/ProcessAdminAddSpecialismResult";
+
+        public const string ProcessAdminChangePathwayResult = "/api/admindashboard/ProcessAdminChangePathwayResult";
+        public const string ProcessAdminChangeSpecialismResult = "/api/admindashboard/ProcessAdminChangeSpecialismResult";
+        // Admin change log
+        public const string SearchChangeLogsUri = "/api/adminchangelog/SearchChangeLogs";
+        public const string GetAdminChangeLogRecord = "/api/adminchangelog/GetAdminChangeLogRecord/{0}";
+
+        // Admin post results
+        public const string ProcessAdminOpenPathwayRomm = "/api/adminpostresults/ProcessAdminOpenPathwayRomm";
+        public const string ProcessAdminOpenSpecialismRomm = "/api/adminpostresults/ProcessAdminOpenSpecialismRomm";
+
     }
 }

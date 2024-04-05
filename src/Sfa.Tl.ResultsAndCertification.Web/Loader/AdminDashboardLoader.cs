@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -14,9 +15,8 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -170,13 +170,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<bool> ProcessRemoveAssessmentEntry(AdminReviewRemoveCoreAssessmentEntryViewModel model)
         {
-            var reviewRemoveAssessmentEntryRequest = _mapper.Map<ReviewRemoveAssessmentEntryRequest>(model);
+            var reviewRemoveAssessmentEntryRequest = _mapper.Map<ReviewRemoveCoreAssessmentEntryRequest>(model);
             return await _internalApiClient.RemoveAssessmentEntryAsync(reviewRemoveAssessmentEntryRequest);
         }
 
         public async Task<bool> ProcessRemoveSpecialismAssessmentEntryAsync(AdminReviewRemoveSpecialismAssessmentEntryViewModel model)
         {
-            var reviewRemoveSpecialismEntryRequest = _mapper.Map<ReviewRemoveAssessmentEntryRequest>(model);
+            var reviewRemoveSpecialismEntryRequest = _mapper.Map<ReviewRemoveSpecialismAssessmentEntryRequest>(model);
             return await _internalApiClient.RemoveSpecialAssessmentEntryAsync(reviewRemoveSpecialismEntryRequest);
         }
 
@@ -257,13 +257,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         #endregion
 
-        #region change Result
+        #region Change result
+
         public async Task<AdminChangePathwayResultViewModel> GetAdminChangePathwayResultAsync(int registrationPathwayId, int assessmentId)
         {
             var viewmodel = await GetAdminAddResultAsync<AdminChangePathwayResultViewModel>(registrationPathwayId, assessmentId, LookupCategory.PathwayComponentGrade, true);
             viewmodel.Grades.Remove(viewmodel.Grades.Where(t => t.Value == viewmodel.Grade).FirstOrDefault());
             return viewmodel;
-
         }
 
         public async Task LoadAdminChangePathwayResultGrades(AdminChangePathwayResultViewModel model)
@@ -283,13 +283,43 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var viewmodel = await GetAdminAddResultAsync<AdminChangeSpecialismResultViewModel>(registrationPathwayId, assessmentId, LookupCategory.SpecialismComponentGrade, true);
             viewmodel.Grades.Remove(viewmodel.Grades.Where(t => t.Value == viewmodel.Grade).FirstOrDefault());
             return viewmodel;
-
         }
 
         public async Task LoadAdminChangeSpecialismResultGrades(AdminChangeSpecialismResultViewModel model)
-         => model.Grades = await GetAdminChangeResultGrades(LookupCategory.SpecialismComponentGrade, model.Grade);
+            => model.Grades = await GetAdminChangeResultGrades(LookupCategory.SpecialismComponentGrade, model.Grade);
 
 
+        public AdminChangePathwayResultReviewChangesViewModel CreateAdminChangePathwayResultReviewChanges(AdminChangePathwayResultViewModel model)
+       => _mapper.Map<AdminChangePathwayResultReviewChangesViewModel>(model);
+
+        public Task<bool> ProcessChangePathwayResultReviewChangesAsync(AdminChangePathwayResultReviewChangesViewModel model)
+        {
+            if (model == null)
+            {
+                return Task.FromResult(false);
+            }
+
+            var request = _mapper.Map<ChangePathwayResultRequest>(model);
+
+            return _internalApiClient.ProcessAdminChangePathwayResultAsync(request);
+        }
+
+
+        public AdminChangeSpecialismResultReviewChangesViewModel CreateAdminChangeSpecialismResultReviewChanges(AdminChangeSpecialismResultViewModel model)
+     => _mapper.Map<AdminChangeSpecialismResultReviewChangesViewModel>(model);
+
+
+        public Task<bool> ProcessChangeSpecialismResultReviewChangesAsync(AdminChangeSpecialismResultReviewChangesViewModel model)
+        {
+
+            if (model == null)
+            {
+                return Task.FromResult(false);
+            }
+            var request = _mapper.Map<ChangeSpecialismResultRequest>(model);
+
+            return _internalApiClient.ProcessAdminChangeSpecialismResultAsync(request);
+        }
 
         #endregion
     }

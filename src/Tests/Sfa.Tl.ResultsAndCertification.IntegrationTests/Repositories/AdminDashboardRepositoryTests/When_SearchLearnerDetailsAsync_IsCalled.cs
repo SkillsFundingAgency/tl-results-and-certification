@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
@@ -22,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
         public override void Given()
         {
             SeedLearnerRegistrations();
+            _adminDashboardRepository = new AdminDashboardRepository(DbContext);
         }
 
         public override Task When()
@@ -337,8 +337,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
             SeedRegistrationPathway(ncfeProviderOneLearnerOne, ncfeProviderOne, 2021, RegistrationPathwayStatus.Withdrawn, RegistrationPathwayStatus.Withdrawn);
 
             DbContext.SaveChanges();
-
-            _adminDashboardRepository = new AdminDashboardRepository(DbContext);
         }
 
         private TqAwardingOrganisation SeedAwardingOrganisation(EnumAwardingOrganisation awardingOrganisation)

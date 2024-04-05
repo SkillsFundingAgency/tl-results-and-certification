@@ -4,7 +4,9 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminPostResults;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
@@ -19,7 +21,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 {
     public class ResultsAndCertificationInternalApiClient : IResultsAndCertificationInternalApiClient
@@ -475,21 +476,51 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             return await PostAsync<ReviewAddSpecialismAssessmentRequest, bool>(ApiConstants.ProcessAddSpecialismAssessmentUri, request);
         }
-        public async Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request)
+
+        public async Task<bool> RemoveAssessmentEntryAsync(ReviewRemoveCoreAssessmentEntryRequest request)
         {
-            return await PostAsync<ReviewRemoveAssessmentEntryRequest, bool>(ApiConstants.ReviewRemoveAssessmentEntryUri, request);
+            return await PostAsync<ReviewRemoveCoreAssessmentEntryRequest, bool>(ApiConstants.ReviewRemoveCoreAssessmentEntryUri, request);
         }
 
-        public async Task<bool> RemoveSpecialAssessmentEntryAsync(ReviewRemoveAssessmentEntryRequest request)
+        public async Task<bool> RemoveSpecialAssessmentEntryAsync(ReviewRemoveSpecialismAssessmentEntryRequest request)
         {
-            return await PostAsync<ReviewRemoveAssessmentEntryRequest, bool>(ApiConstants.ReviewRemoveAssessmentEntryUri, request);
+            return await PostAsync<ReviewRemoveSpecialismAssessmentEntryRequest, bool>(ApiConstants.ReviewRemoveSpecialismAssessmentEntryUri, request);
         }
 
         public Task<bool> ProcessAdminAddPathwayResultAsync(AddPathwayResultRequest request)
-            => PostAsync<AddPathwayResultRequest, bool>(ApiConstants.ProcessAdminAddPathwayResult, request);
+            => PostAsync<AddPathwayResultRequest, bool>(ApiConstants.ProcessAdminAddPathwayResultUri, request);
 
         public Task<bool> ProcessAdminAddSpecialismResultAsync(AddSpecialismResultRequest request)
-            => PostAsync<AddSpecialismResultRequest, bool>(ApiConstants.ProcessAdminAddSpecialismResult, request);
+            => PostAsync<AddSpecialismResultRequest, bool>(ApiConstants.ProcessAdminAddSpecialismResultUri, request);
+
+        #endregion
+
+        #region Admin change log
+
+        public Task<PagedResponse<AdminSearchChangeLog>> SearchChangeLogsAsync(AdminSearchChangeLogRequest request)
+        {
+            var requestUri = ApiConstants.SearchChangeLogsUri;
+            return PostAsync<AdminSearchChangeLogRequest, PagedResponse<AdminSearchChangeLog>>(requestUri, request);
+        }
+
+        public Task<bool> ProcessAdminChangePathwayResultAsync(ChangePathwayResultRequest request)
+          => PostAsync<ChangePathwayResultRequest, bool>(ApiConstants.ProcessAdminChangePathwayResult, request);
+
+        public Task<bool> ProcessAdminChangeSpecialismResultAsync(ChangeSpecialismResultRequest request)
+          => PostAsync<ChangeSpecialismResultRequest, bool>(ApiConstants.ProcessAdminChangeSpecialismResult, request);
+
+        public Task<AdminChangeLogRecord> GetAdminChangeLogRecordAsync(int changeLogId)
+            => GetAsync<AdminChangeLogRecord>(string.Format(ApiConstants.GetAdminChangeLogRecord, changeLogId));
+
+        #endregion
+
+        #region Admin post results
+
+        public Task<bool> ProcessAdminOpenPathwayRommAsync(OpenPathwayRommRequest request)
+             => PostAsync<OpenPathwayRommRequest, bool>(ApiConstants.ProcessAdminOpenPathwayRomm, request);
+
+        public Task<bool> ProcessAdminOpenSpecialismRommAsync(OpenSpecialismRommRequest request)
+             => PostAsync<OpenSpecialismRommRequest, bool>(ApiConstants.ProcessAdminOpenSpecialismRomm, request);
 
         #endregion
 
