@@ -227,7 +227,6 @@
         public const string TermsAndConditions = "TermsAndConditions";
         public const string UserGuide = "UserGuide";
         public const string ServiceUnavailable = "ServiceUnavailable";
-        public const string ServiceUnavailableMaintenance = "ServiceUnavailableMaintenance";
 
         // Document
         public const string RegistrationDataFormatAndRulesGuide = "RegistrationDataFormatAndRulesGuide";

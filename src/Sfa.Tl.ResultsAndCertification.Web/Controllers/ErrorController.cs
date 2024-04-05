@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Error;
@@ -36,9 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("service-access-denied", Name = RouteConstants.ServiceAccessDenied)]
         public IActionResult ServiceAccessDenied()
         {
-            return User.IsInFreezePeriod()
-                ? RedirectToAction(nameof(HelpController.ServiceUnavailableMaintenance), Constants.HelpController)
-                : View();
+            return View();
         }
 
         [AllowAnonymous]
@@ -69,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [AllowAnonymous]
         [Route("error/{statusCode}", Name = RouteConstants.Error)]
         public IActionResult HandleErrorCode(int statusCode)
-        {
+        {   
             switch (statusCode)
             {
                 case 404:
