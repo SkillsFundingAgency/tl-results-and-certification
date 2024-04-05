@@ -115,6 +115,7 @@
         public const string AcademicYear = "academicYear";
         public const string RegistrationPathwayId = "registrationPathwayId";
         public const string SpecialismsId = "specialismsId";
+        public const string ChangeLogId = "changeLogId";
 
         // Assessments
         public const int AssessmentEndInYears = 4;

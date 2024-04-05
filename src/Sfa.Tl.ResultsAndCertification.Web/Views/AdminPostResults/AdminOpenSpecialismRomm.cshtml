@@ -1,0 +1,116 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults.AdminOpenSpecialismRommViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminPostResults
+
+@{
+    ViewData["Title"] = AdminOpenSpecialismRomm.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="RouteConstants.SubmitAdminOpenRomm">
+
+            <input type="hidden" asp-for="RegistrationPathwayId" />
+            <input type="hidden" asp-for="SpecialismAssessmentId" />
+            <input type="hidden" asp-for="SpecialismResultId" />
+
+            <!-- Open a ROMM page header -->
+            <div class="record-header">
+                <h1 class="govuk-heading-xl">
+                    @AdminOpenSpecialismRomm.Heading_Open_A_Romm
+                </h1>
+            </div>
+
+            <partial name="_ValidationSummary" />
+
+            <!-- Personal details -->
+            <input type="hidden" asp-for="Learner" />
+            <input type="hidden" asp-for="Uln" />
+            <input type="hidden" asp-for="Provider" />
+            <input type="hidden" asp-for="Tlevel" />
+            <input type="hidden" asp-for="StartYear" />
+
+            <div class="govuk-!-margin-bottom-9">
+                <h2 class="govuk-heading-m">
+                    @AdminOpenSpecialismRomm.Heading_Personal_Details
+                </h2>
+
+                <dl class="govuk-summary-list">
+                    <vc:summary-item model=Model.SummaryLearner></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryTlevel></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryStartYear></vc:summary-item>
+                </dl>
+            </div>
+
+            <!-- Occupational specialism -->
+            <input type="hidden" asp-for="SpecialismName" />
+            <input type="hidden" asp-for="ExamPeriod" />
+            <input type="hidden" asp-for="Grade" />
+
+            <div class="govuk-!-margin-bottom-9">
+                <h2 class="govuk-heading-m">
+                    @string.Format(AdminOpenSpecialismRomm.Specialism_Heading_Text, Model.SpecialismName)
+                </h2>
+                <dl class="govuk-summary-list">
+                    <vc:summary-item model=Model.SummaryExamPeriod></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryGrade></vc:summary-item>
+                </dl>
+            </div>
+
+            @if (Model.IsValid)
+            {
+                <!-- Do you want to open a ROMM? -->
+                <div class="govuk-form-group govuk-!-margin-top-2">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h2 class="govuk-fieldset__heading">
+                                @AdminOpenSpecialismRomm.Heading_Do_You_Want_To_Open_A_Romm
+                            </h2>
+                        </legend>
+
+                        <div class="govuk-radios" sfa-validation-for="DoYouWantToOpenRomm" sfa-validation-class="govuk-form-group--error">
+                            <span sfa-validation-for="DoYouWantToOpenRomm"></span>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="canremoveassessmententry" asp-for="DoYouWantToOpenRomm" type="radio" value="true">
+                                <label class="govuk-label govuk-radios__label" for="canremoveassessmententry">
+                                    @AdminOpenSpecialismRomm.Radio_Button_Yes
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="assessment-entry-remove-no" asp-for="DoYouWantToOpenRomm" type="radio" value="false">
+                                <label class="govuk-label govuk-radios__label" for="assessment-entry-remove-no">
+                                    @AdminOpenSpecialismRomm.Radio_Button_No
+                                </label>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+
+                <!-- Continue / Cancel buttons -->
+                <div class="govuk-button-group">
+                    <button id="btnContinue" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminOpenSpecialismRomm.Button_Continue</button>
+                    <a id="btnCancel" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminOpenSpecialismRomm.Button_Cancel</a>
+                </div>
+            }
+            else
+            {
+                <!-- You cannot open a ROMM for this learner -->
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">@AdminOpenSpecialismRomm.Warning_Header_You_Cannot_Open_A_Romm_For_This_Learner</h2>
+                    <p class="govuk-body">@Model.ErrorMessage</p>
+
+                    <div class="govuk-button-group">
+                        <a id="btnReturnToLearnerRecord" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminOpenSpecialismRomm.Button_Return_To_Learner_Record</a>
+                    </div>
+                </div>
+            }
+        </form>
+    </div>
+</div>

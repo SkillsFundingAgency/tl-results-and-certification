@@ -28,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
                 RegistrationPathwayId = registrationPathwayId,
                 PathwayAssessmentId = pathwayAssessmentId,
                 SelectedGradeId = 1,
+                GradeTo = "A*",
                 ContactName = "contact-name",
                 RequestDate = new DateTime(2024, 1, 1),
                 ChangeReason = "change-reason",

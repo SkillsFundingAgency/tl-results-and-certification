@@ -432,7 +432,7 @@
         public const string SubmitCoreComponentAssessmentEntry = "SubmitCoreComponentAssessmentEntry";
         public const string AdminOccupationalSpecialisAssessmentEntry = "AdminOccupationalSpecialisAssessmentEntry";
         public const string SubmitOccupationalSpecialisAssessmentEntry = "SubmitOccupationalSpecialisAssessmentEntry";
-       
+
         public const string AdminReviewChangesCoreAssessmentEntry = "AdminReviewChangesCoreAssessmentEntry";
         public const string SubmitReviewChangesCoreAssessmentEntry = "SubmitReviewChangesCoreAssessmentEntry";
         public const string AdminReviewChangesSpecialismAssessmentEntry = "AdminReviewChangesSpecialismAssessmentEntry";
@@ -462,7 +462,60 @@
         public const string AdminChangeSpecialismResultClear = "AdminChangeSpecialismResultClear";
         public const string SubmitAdminChangeSpecialismResult = "SubmitAdminChangeSpecialismResult";
         public const string AdminChangeSpecialismResultReviewChanges = "AdminChangeSpecialismResultReviewChanges";
-        public const string AdminChangePathwayResultReviewChanges = "AdminAddPathwayResultReviewChanges";
+        public const string AdminChangePathwayResultReviewChanges = "AdminChangePathwayResultReviewChanges";
+        public const string SubmitAdminChangePathwayResultReviewChanges = "SubmitAdminChangePathwayResultReviewChanges";
+        public const string SubmitAdminChangeSpecialismResultReviewChanges = "SubmitAdminChangeSpecialismResultReviewChanges";
+
+        #endregion
+
+        #region Change logs
+
+        public const string AdminSearchChangeLogClear = "AdminSearchChangeLogClear";
+        public const string AdminSearchChangeLog = "AdminSearchChangeLog";
+        public const string SubmitAdminSearchChangeLogSearchKey = "SubmitAdminSearchChangeLogSearchKey";
+        public const string SubmitAdminSearchChangeLogClearKey = "SubmitAdminSearchChangeLogClearKey";
+
+        public const string AdminViewChangeStartYearRecord = "AdminViewChangeStartYearRecord";
+        public const string AdminViewChangeIPRecord = "AdminViewChangeIPRecord";
+        public const string AdminViewChangeCoreAssessmentRecord = "AdminViewChangeCoreAssessmentRecord";
+        public const string AdminViewChangeSpecialismAssessmentRecord = "AdminViewChangeSpecialismAssessmentRecord";
+        public const string AdminViewChangeAddPathwayResultRecord = "AdminViewChangeAddPathwayResultRecord";
+        public const string AdminViewChangeAddSpecialismResultRecord = "AdminViewChangeAddSpecialismResultRecord";
+        public const string AdminViewChangeRemoveCoreAssessmentRecord = "AdminViewChangeRemoveCoreAssessmentRecord";
+        public const string AdminViewChangeRemoveSpecialismAssessmentRecord = "AdminViewChangeRemoveSpecialismAssessmentRecord";
+
+
+        #endregion
+
+        #region Admin post results
+
+        public const string AdminOpenPathwayRommClear = "AdminOpenPathwayRommClear";
+        public const string AdminOpenPathwayRomm = "AdminOpenPathwayRomm";
+        public const string SubmitAdminOpenPathwayRomm = "SubmitAdminOpenPathwayRomm";
+        public const string AdminOpenPathwayRommReviewChanges = "AdminOpenPathwayRommReviewChanges";
+        public const string SubmitAdminOpenPathwayRommReviewChanges = "SubmitAdminOpenPathwayRommReviewChanges";
+
+        public const string AdminOpenSpecialismRommClear = "AdminOpenSpecialismRommClear";
+        public const string AdminOpenSpecialismRomm = "AdminOpenSpecialismRomm";
+        public const string SubmitAdminOpenSpecialismRomm = "SubmitAdminOpenSpecialismRomm";
+        public const string AdminOpenSpecialismRommReviewChanges = "AdminOpenSpecialismRommReviewChanges";
+        public const string SubmitAdminOpenSpecialismRommReviewChanges = "SubmitAdminOpenSpecialismRommReviewChanges";
+
+        public const string AdminAddCoreRommOutcomeClear = "AdminAddCoreRommOutcomeClear";
+        public const string AdminAddCoreRommOutcome = "AdminAddCoreRommOutcome";
+        public const string SubmitAddCoreRommOutcome = "SubmitAddCoreRommOutcome";
+
+        public const string AdminAddSpecialismRommOutcomeClear = "AdminAddSpecialismRommOutcomeClear";
+        public const string AdminAddSpecialismRommOutcome = "AdminAddSpecialismRommOutcome";
+        public const string SubmitAddSpecialismRommOutcome = "SubmitAddSpecialismRommOutcome";
+
+        public const string AdminAddRommOutcomeChangeGradeCoreClear = "AdminAddRommOutcomeChangeGradeCoreClear";
+        public const string AdminAddRommOutcomeChangeGradeCore = "AdminAddRommOutcomeChangeGradeCore";
+        public const string SubmitAdminAddRommOutcomeChangeGradeCore = "SubmitAdminAddRommOutcomeChangeGradeCore";
+
+        public const string AdminAddRommOutcomeChangeGradeSpecialismClear = "AdminAddRommOutcomeChangeGradeSpecialismClear";
+        public const string AdminAddRommOutcomeChangeGradeSpecialism = "AdminAddRommOutcomeChangeGradeSpecialism";
+        public const string SubmitAdminAddRommOutcomeChangeGradeSpecialism = "SubmitAdminAddRommOutcomeChangeGradeSpecialism";
 
         #endregion
     }
