@@ -171,6 +171,16 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>AdminSearchLearners.resx</DependentUpon>
 		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminOpenPathwayAppeal.Designer.cs">
+		  <DependentUpon>AdminOpenPathwayAppeal.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminOpenSpecialismAppeal.Designer.cs">
+		  <DependentUpon>AdminOpenSpecialismAppeal.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminPostResults\AdminAddSpecialismRommOutcome.Designer.cs">
 		  <DependentUpon>AdminAddSpecialismRommOutcome.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -1288,6 +1298,22 @@
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\SearchLearners.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenPathwayAppeal.resx">
+		  <LastGenOutput>AdminOpenPathwayAppeal.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenSpecialismAppeal.resx">
+		  <LastGenOutput>AdminOpenSpecialismAppeal.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddSpecialismRommOutcome.resx">
+		  <LastGenOutput>AdminAddSpecialismRommOutcome.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddCoreRommOutcome.resx">
+		  <LastGenOutput>AdminAddCoreRommOutcome.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenSpecialismRommReviewChanges.resx">
 		  <LastGenOutput>AdminOpenSpecialismRommReviewChanges.Designer.cs</LastGenOutput>
