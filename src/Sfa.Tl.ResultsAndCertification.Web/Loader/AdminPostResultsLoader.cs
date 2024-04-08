@@ -78,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var viewmodel = await GetAdminAddResultAsync<AdminAddRommOutcomeChangeGradeCoreViewModel>(registrationPathwayId, assessmentId, LookupCategory.PathwayComponentGrade, false);
             viewmodel.Grades = GetAdminAddRommOutcomeChangeGradeCoreGrades(viewmodel.Grades);
-            viewmodel.Grades.Remove(viewmodel.Grades.Where(t => t.Value == viewmodel.Grade).FirstOrDefault());
+            viewmodel.Grades.Remove(viewmodel.Grades.FirstOrDefault(t => t.Value == viewmodel.Grade));
             return viewmodel;
         }
 
@@ -92,17 +92,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             && !t.Code.Equals(Constants.NotReceived, StringComparison.InvariantCultureIgnoreCase)).ToList();
         }
 
-
         public async Task<AdminAddRommOutcomeChangeGradeSpecialismViewModel> GetAdminAddRommOutcomeChangeGradeSpecialismAsync(int registrationPathwayId, int assessmentId)
         {
             var viewmodel = await GetAdminAddResultAsync<AdminAddRommOutcomeChangeGradeSpecialismViewModel>(registrationPathwayId, assessmentId, LookupCategory.SpecialismComponentGrade, false);
             viewmodel.Grades = GetAdminAddRommOutcomeChangeGradeSpecialismGrades(viewmodel.Grades);
-            viewmodel.Grades.Remove(viewmodel.Grades.Where(t => t.Value == viewmodel.Grade).FirstOrDefault());
+            viewmodel.Grades.Remove(viewmodel.Grades.FirstOrDefault(t => t.Value == viewmodel.Grade));
             return viewmodel;
         }
 
         public async Task LoadAdminAddRommOutcomeChangeGradeSpecialismGrades(AdminAddRommOutcomeChangeGradeSpecialismViewModel model)
-        => model.Grades = GetAdminAddRommOutcomeChangeGradeSpecialismGrades(await GetAdminChangeResultGrades(LookupCategory.SpecialismComponentGrade, model.Grade, true));
+            => model.Grades = GetAdminAddRommOutcomeChangeGradeSpecialismGrades(await GetAdminChangeResultGrades(LookupCategory.SpecialismComponentGrade, model.Grade, true));
 
 
         private List<LookupViewModel> GetAdminAddRommOutcomeChangeGradeSpecialismGrades(List<LookupViewModel> Grades)
@@ -121,7 +120,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         }
 
         private async Task<TAddResultViewModel> GetAdminAddResultAsync<TAddResultViewModel>(int registrationPathwayId, int assessmentId, LookupCategory lookupCategory, bool ischange = false)
-         where TAddResultViewModel : class
+            where TAddResultViewModel : class
         {
             Task<AdminLearnerRecord> learnerRecordTask = _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
             Task<IList<LookupData>> gradesTask = _internalApiClient.GetLookupDataAsync(lookupCategory);
@@ -130,6 +129,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             AdminLearnerRecord learnerRecord = learnerRecordTask.Result;
             IList<LookupData> grades = gradesTask.Result;
+
             if (learnerRecord == null || grades == null)
                 return null;
 
@@ -145,6 +145,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 opt.Items["grades"] = grades;
             });
         }
-
     }
 }
