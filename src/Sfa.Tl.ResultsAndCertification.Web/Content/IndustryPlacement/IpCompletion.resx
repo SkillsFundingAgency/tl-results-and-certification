@@ -142,10 +142,10 @@
     <value>More about</value>
   </data>
   <data name="No_Still_To_Be_Completed_Option_Text" xml:space="preserve">
-    <value>No, they still need to complete it</value>
+    <value>No, they are still working towards completion of their industry placement</value>
   </data>
   <data name="No_Will_Not_Complete_Option_Text" xml:space="preserve">
-    <value>No, they will not complete it</value>
+    <value>No, they will not complete their placement</value>
   </data>
   <data name="Page_Title_Add_Journey" xml:space="preserve">
     <value>Industry placement completion - Manage learner</value>
@@ -164,6 +164,9 @@
   </data>
   <data name="Yes_Completed_Option_Text" xml:space="preserve">
     <value>Yes, completed</value>
+  </data>
+  <data name="Yes_Completed_Option_With_Wording" xml:space="preserve">
+    <value>Yes, completed, or will be completed by 31 July</value>
   </data>
   <data name="Yes_Completed_With_Special_Consideration_Option_Text" xml:space="preserve">
     <value>Yes, completed with special consideration</value>
