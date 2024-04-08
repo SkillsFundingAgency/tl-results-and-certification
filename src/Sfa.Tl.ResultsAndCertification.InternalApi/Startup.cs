@@ -164,6 +164,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IDocumentUploadHistoryService, DocumentUploadHistoryService>();
             services.AddTransient<ICommonService, CommonService>();
             services.AddTransient<ISystemProvider, SystemProvider>();
+            services.AddTransient<IRepositoryFactory, RepositoryFactory>();
 
             // Bulk Registrations
             services.AddTransient<IDataParser<RegistrationCsvRecordResponse>, RegistrationParser>();
