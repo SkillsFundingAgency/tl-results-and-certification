@@ -147,6 +147,9 @@
                     },
                     "storageKind": {
                         "value": "StorageV2"
+                    },
+                    "minimumTlsVersion": {
+                        "value": "TLS1_2"
                     }
                 }
             }
