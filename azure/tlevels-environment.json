@@ -476,15 +476,15 @@
                             },
                             {
                                 "name": "BlobStorageConnectionString",
-                                "value": "[reference(concat('storage-account','-',parameters('environmentNameAbbreviation'))).outputs.storageConnectionString.value]"
+                                "value": "[reference(concat('storage-account','-',parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
                             },
                             {
                                 "name": "AzureWebJobsStorage",
-                                "value": "[reference(concat('storage-account','-',parameters('environmentNameAbbreviation'))).outputs.storageConnectionString.value]"
+                                "value": "[reference(concat('storage-account','-',parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
                             },
                             {
                                 "name": "AzureWebJobsDashboard",
-                                "value": "[reference(concat('storage-account','-',parameters('environmentNameAbbreviation'))).outputs.storageConnectionString.value]"
+                                "value": "[reference(concat('storage-account','-',parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
                             },
                             {
                                 "name": "WEBSITE_TIME_ZONE",
@@ -731,7 +731,7 @@
         },
         "BlobStorageConnectionString": {
             "type": "string",
-            "value": "[reference(concat('storage-account','-', parameters('environmentNameAbbreviation'))).outputs.storageConnectionString.value]"
+            "value": "[reference(concat('storage-account','-', parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
         }
     }
 }
