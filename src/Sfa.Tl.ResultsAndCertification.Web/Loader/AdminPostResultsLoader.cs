@@ -145,5 +145,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 opt.Items["grades"] = grades;
             });
         }
+
+        public async Task<AdminAppealCoreReviewChangesViewModel> GetAdminAppealCoreReviewChangesAsync(int registrationPathwayId, int pathwayAssessmentId)
+        {
+            AdminLearnerRecord learnerRecord = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
+
+            return _mapper.Map<AdminAppealCoreReviewChangesViewModel>(learnerRecord, opt =>
+            {
+                opt.Items[Constants.AssessmentId] = pathwayAssessmentId;
+            });
+
+        }
+
+        public async Task<AdminAppealSpecialismReviewChangesViewModel> GetAdminAppealSpecialismReviewChangesAsync(int registrationPathwayId, int specialismAssessmentId)
+        {
+            AdminLearnerRecord learnerRecord = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
+
+            return _mapper.Map<AdminAppealSpecialismReviewChangesViewModel>(learnerRecord, opt =>
+            {
+                opt.Items[Constants.AssessmentId] = specialismAssessmentId;
+            });
+        }
     }
 }
