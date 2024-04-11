@@ -74,11 +74,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             });
         }
 
-        public Task<AdminAddCoreRommOutcomeViewModel> GetAdminAddPathwayRommOutcomeAsync(int registrationPathwayId, int pathwayAssessmentId)
-            => GetAdminOpenRommAsync<AdminAddCoreRommOutcomeViewModel>(registrationPathwayId, pathwayAssessmentId);
+        //public Task<AdminAddCoreRommOutcomeViewModel> GetAdminAddPathwayRommOutcomeAsync(int registrationPathwayId, int pathwayAssessmentId)
+        //    => GetAdminOpenRommAsync<AdminAddCoreRommOutcomeViewModel>(registrationPathwayId, pathwayAssessmentId);
 
-        public Task<AdminAddSpecialismRommOutcomeViewModel> GetAdminAddSpecialismRommOutcomeAsync(int registrationPathwayId, int pathwayAssessmentId)
-            => GetAdminOpenRommAsync<AdminAddSpecialismRommOutcomeViewModel>(registrationPathwayId, pathwayAssessmentId);
+        //public Task<AdminAddSpecialismRommOutcomeViewModel> GetAdminAddSpecialismRommOutcomeAsync(int registrationPathwayId, int pathwayAssessmentId)
+        //    => GetAdminOpenRommAsync<AdminAddSpecialismRommOutcomeViewModel>(registrationPathwayId, pathwayAssessmentId);
 
 
         public async Task<AdminAddRommOutcomeChangeGradeCoreViewModel> GetAdminAddRommOutcomeChangeGradeCoreAsync(int registrationPathwayId, int assessmentId)
