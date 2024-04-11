@@ -530,6 +530,12 @@
         public const string AdminAddRommOutcomeChangeGradeSpecialism = "AdminAddRommOutcomeChangeGradeSpecialism";
         public const string SubmitAdminAddRommOutcomeChangeGradeSpecialism = "SubmitAdminAddRommOutcomeChangeGradeSpecialism";
 
+        public const string AdminReviewChangesRommOutcomeCore = "AdminReviewChangesRommOutcomeCore";
+        public const string SubmitAdminReviewChangesRommOutcomeCore = "SubmitAdminReviewChangesRommOutcomeCore";
+
+        public const string AdminReviewChangesRommOutcomeSpecialism = "AdminReviewChangesRommOutcomeSpecialism";
+        public const string SubmitAdminReviewChangesRommOutcomeSpecialism = "SubmitAdminReviewChangesRommOutcomeSpecialism";
+
         #endregion
     }
 }

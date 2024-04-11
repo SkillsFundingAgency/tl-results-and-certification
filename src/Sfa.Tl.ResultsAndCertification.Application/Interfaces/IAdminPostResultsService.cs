@@ -8,5 +8,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<bool> ProcessAdminOpenPathwayRommAsync(OpenPathwayRommRequest request);
 
         Task<bool> ProcessAdminOpenSpecialismRommAsync(OpenSpecialismRommRequest request);
+
+        Task<bool> ProcessAdminReviewChangesRommOutcomeCoreAsync(ReviewChangesRommOutcomeCoreRequest request);
+
+        Task<bool> ProcessAdminReviewChangesRommOutcomeSpecialismAsync(ReviewChangesRommOutcomeSpecialismRequest request);
     }
 }
