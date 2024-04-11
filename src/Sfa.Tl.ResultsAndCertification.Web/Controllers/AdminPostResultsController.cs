@@ -343,7 +343,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
-            // Todo open an appeal and show message
+            bool success = await _loader.ProcessAdminOpenCoreAppealAsync(model);
+            if (!success)
+            {
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+            }
 
             return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
         }
@@ -390,7 +394,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
-            // Todo open an appeal and show message
+            bool success = await _loader.ProcessAdminOpenSpecialismAppealAsync(model);
+            if (!success)
+            {
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+            }
 
             return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
         }

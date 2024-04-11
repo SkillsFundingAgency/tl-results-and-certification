@@ -162,6 +162,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         Task<bool> ProcessAdminOpenSpecialismRommAsync(OpenSpecialismRommRequest request);
 
+        Task<bool> ProcessAdminOpenCoreAppealAsync(OpenCoreAppealRequest request);
+
+        Task<bool> ProcessAdminOpenSpecialismAppealAsync(OpenSpecialismAppealRequest request);
+
         #endregion
     }
 }

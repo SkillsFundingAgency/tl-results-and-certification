@@ -65,6 +65,40 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public Task<AdminOpenSpecialismAppealViewModel> GetAdminOpenSpecialismAppealAsync(int registrationPathwayId, int pathwayAssessmentId)
             => GetAndMapLearnerRecordAsync<AdminOpenSpecialismAppealViewModel>(registrationPathwayId, pathwayAssessmentId);
 
+        public async Task<AdminAppealCoreReviewChangesViewModel> GetAdminAppealCoreReviewChangesAsync(int registrationPathwayId, int pathwayAssessmentId)
+        {
+            AdminLearnerRecord learnerRecord = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
+
+            return _mapper.Map<AdminAppealCoreReviewChangesViewModel>(learnerRecord, opt =>
+            {
+                opt.Items[Constants.AssessmentId] = pathwayAssessmentId;
+            });
+
+        }
+
+        public async Task<AdminAppealSpecialismReviewChangesViewModel> GetAdminAppealSpecialismReviewChangesAsync(int registrationPathwayId, int specialismAssessmentId)
+        {
+            AdminLearnerRecord learnerRecord = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
+
+            return _mapper.Map<AdminAppealSpecialismReviewChangesViewModel>(learnerRecord, opt =>
+            {
+                opt.Items[Constants.AssessmentId] = specialismAssessmentId;
+            });
+        }
+
+        public async Task<bool> ProcessAdminOpenCoreAppealAsync(AdminAppealCoreReviewChangesViewModel openppealCoreReviewChangesViewModel)
+        {
+            var request = _mapper.Map<OpenCoreAppealRequest>(openppealCoreReviewChangesViewModel);
+            return await _internalApiClient.ProcessAdminOpenCoreAppealAsync(request);
+        }
+
+        public async Task<bool> ProcessAdminOpenSpecialismAppealAsync(AdminAppealSpecialismReviewChangesViewModel openppealSpecialismReviewChangesViewModel)
+        {
+            var request = _mapper.Map<OpenSpecialismAppealRequest>(openppealSpecialismReviewChangesViewModel);
+            return await _internalApiClient.ProcessAdminOpenSpecialismAppealAsync(request);
+
+        }
+
         private async Task<T> GetAndMapLearnerRecordAsync<T>(int registrationPathwayId, int pathwayAssessmentId)
         {
             AdminLearnerRecord learnerRecord = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
@@ -102,7 +136,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task LoadAdminAddRommOutcomeChangeGradeSpecialismGrades(AdminAddRommOutcomeChangeGradeSpecialismViewModel model)
             => model.Grades = GetAdminAddRommOutcomeChangeGradeSpecialismGrades(await GetAdminChangeResultGrades(LookupCategory.SpecialismComponentGrade, model.Grade, true));
-
 
         private List<LookupViewModel> GetAdminAddRommOutcomeChangeGradeSpecialismGrades(List<LookupViewModel> Grades)
         {
@@ -143,27 +176,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             {
                 opt.Items[Constants.AssessmentId] = assessmentId;
                 opt.Items["grades"] = grades;
-            });
-        }
-
-        public async Task<AdminAppealCoreReviewChangesViewModel> GetAdminAppealCoreReviewChangesAsync(int registrationPathwayId, int pathwayAssessmentId)
-        {
-            AdminLearnerRecord learnerRecord = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
-
-            return _mapper.Map<AdminAppealCoreReviewChangesViewModel>(learnerRecord, opt =>
-            {
-                opt.Items[Constants.AssessmentId] = pathwayAssessmentId;
-            });
-
-        }
-
-        public async Task<AdminAppealSpecialismReviewChangesViewModel> GetAdminAppealSpecialismReviewChangesAsync(int registrationPathwayId, int specialismAssessmentId)
-        {
-            AdminLearnerRecord learnerRecord = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
-
-            return _mapper.Map<AdminAppealSpecialismReviewChangesViewModel>(learnerRecord, opt =>
-            {
-                opt.Items[Constants.AssessmentId] = specialismAssessmentId;
             });
         }
     }

@@ -275,6 +275,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.StartYear, opts => opts.MapFrom(s => $"{s.Pathway.AcademicYear} to {s.Pathway.AcademicYear + 1}"))
                 .ForMember(d => d.ExamPeriod, opts => opts.MapFrom((src, dest, destMember, context) => GetSpecialismAssessmentPropertyValue(src, (int)context.Items[Constants.AssessmentId], p => p?.SeriesName)))
                 .ForMember(d => d.Grade, opts => opts.MapFrom((src, dest, destMember, context) => GetSpecialismAssessmentPropertyValue(src, (int)context.Items[Constants.AssessmentId], p => p?.Result?.Grade)));
+
+            CreateMap<AdminAppealCoreReviewChangesViewModel, OpenCoreAppealRequest>()
+                .ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+                .ForMember(d => d.ContactName, opts => opts.MapFrom(s => s.ContactName))
+                .ForMember(d => d.DateOfRequest, opts => opts.MapFrom(s => Convert.ToDateTime(s.DateOfRequest)))
+                .ForMember(d => d.ChangeReason, opts => opts.MapFrom(s => s.ChangeReason))
+                .ForMember(d => d.ZendeskTicketId, opts => opts.MapFrom(s => s.ZendeskTicketId))
+                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<AdminAppealCoreReviewChangesViewModel, OpenCoreAppealRequest>>());
+
+            CreateMap<AdminAppealSpecialismReviewChangesViewModel, OpenSpecialismAppealRequest>()
+                .ForMember(d => d.SpecialismResultId, opts => opts.MapFrom(s => s.SpecialismResultId))
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+                .ForMember(d => d.ContactName, opts => opts.MapFrom(s => s.ContactName))
+                .ForMember(d => d.DateOfRequest, opts => opts.MapFrom(s => Convert.ToDateTime(s.DateOfRequest)))
+                .ForMember(d => d.ChangeReason, opts => opts.MapFrom(s => s.ChangeReason))
+                .ForMember(d => d.ZendeskTicketId, opts => opts.MapFrom(s => s.ZendeskTicketId))
+                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<AdminAppealSpecialismReviewChangesViewModel, OpenSpecialismAppealRequest>>());
         }
 
         private static T GetPathwayAssessmentPropertyValue<T>(AdminLearnerRecord learnerRecord, int assessmentId, Func<Assessment, T> getPropertyValue)

@@ -25,5 +25,15 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         [Route("ProcessAdminOpenSpecialismRomm")]
         public Task<bool> ProcessAdminOpenSpecialismRommAsync(OpenSpecialismRommRequest request)
              => _adminPostResultsService.ProcessAdminOpenSpecialismRommAsync(request);
+
+        [HttpPost]
+        [Route("ProcessAdminOpenCoreAppeal")]
+        public Task<bool> ProcessAdminOpenCoreAppealAsync(OpenCoreAppealRequest request)
+            => _adminPostResultsService.ProcessAdminOpenCoreAppealAsync(request);
+
+        [HttpPost]
+        [Route("ProcessAdminOpenSpecialismAppeal")]
+        public Task<bool> ProcessAdminOpenSpecialisAppealAsync(OpenSpecialismAppealRequest request)
+            => _adminPostResultsService.ProcessAdminOpenSpecialismAppealAsync(request);
     }
 }

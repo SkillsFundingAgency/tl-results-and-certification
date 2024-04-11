@@ -34,5 +34,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<AdminAppealCoreReviewChangesViewModel> GetAdminAppealCoreReviewChangesAsync(int registrationPathwayId, int pathwayAssessmentId);
 
         Task<AdminAppealSpecialismReviewChangesViewModel> GetAdminAppealSpecialismReviewChangesAsync(int registrationPathwayId, int specialismAssessmentId);
+
+        public Task<bool> ProcessAdminOpenCoreAppealAsync(AdminAppealCoreReviewChangesViewModel openppealCoreReviewChangesViewModel);
+
+        public Task<bool> ProcessAdminOpenSpecialismAppealAsync(AdminAppealSpecialismReviewChangesViewModel openppealSpecialismReviewChangesViewModel);
+
     }
 }
