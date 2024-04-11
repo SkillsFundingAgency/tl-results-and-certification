@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
 
 
-            var newPathwayResult = CreatePathwayRequest(existingPathwayResult.TlLookupId, existingPathwayResult.TqPathwayAssessmentId, utcNow, PrsStatus.UnderReview, request.CreatedBy);
+            var newPathwayResult = CreatePathwayRequest(existingPathwayResult.TlLookupId, existingPathwayResult.TqPathwayAssessmentId, PrsStatus.UnderReview, request.CreatedBy);
 
             bool created = await pathwayResultRepo.CreateAsync(newPathwayResult) > 0;
             if (!created)
@@ -107,8 +107,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
             }
 
-            DateTime utcNow = _systemProvider.UtcNow;
-
             var updated = await UpdatePathwayResultAsync(pathwayResultRepo, existingPathwayResult, request.CreatedBy);
 
             if (!updated)
@@ -116,7 +114,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
             }
 
-            var newPathwayResult = CreatePathwayRequest(request.SelectedGradeId, existingPathwayResult.TqPathwayAssessmentId, utcNow,PrsStatus.Reviewed, request.CreatedBy);
+            var newPathwayResult = CreatePathwayRequest(request.SelectedGradeId, existingPathwayResult.TqPathwayAssessmentId, PrsStatus.Reviewed, request.CreatedBy);
 
             bool created = await pathwayResultRepo.CreateAsync(newPathwayResult) > 0;
             if (!created)
@@ -137,8 +135,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await changeLongRepository.CreateAsync(changeLog) > 0;
         }
 
-        private static TqPathwayResult CreatePathwayRequest(int tlLookUpId, int TqPathwayAssessmentId, DateTime utcNow, PrsStatus prsStatus, string createdBy)
+        private TqPathwayResult CreatePathwayRequest(int tlLookUpId, int TqPathwayAssessmentId, PrsStatus prsStatus, string createdBy)
         {
+            DateTime utcNow = _systemProvider.UtcNow;
+
             return new TqPathwayResult
             {
                 TqPathwayAssessmentId = TqPathwayAssessmentId,
