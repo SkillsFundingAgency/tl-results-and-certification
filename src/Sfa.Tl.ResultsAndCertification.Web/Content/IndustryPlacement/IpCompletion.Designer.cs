@@ -133,7 +133,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No, they still need to complete it.
+        ///   Looks up a localized string similar to No, they are still working towards completion of their industry placement.
         /// </summary>
         public static string No_Still_To_Be_Completed_Option_Text {
             get {
@@ -142,7 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No, they will not complete it.
+        ///   Looks up a localized string similar to No, they will not complete their placement.
         /// </summary>
         public static string No_Will_Not_Complete_Option_Text {
             get {
@@ -201,6 +201,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         public static string Yes_Completed_Option_Text {
             get {
                 return ResourceManager.GetString("Yes_Completed_Option_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes, completed, or will be completed by 31 July.
+        /// </summary>
+        public static string Yes_Completed_Option_With_Wording {
+            get {
+                return ResourceManager.GetString("Yes_Completed_Option_With_Wording", resourceCulture);
             }
         }
         

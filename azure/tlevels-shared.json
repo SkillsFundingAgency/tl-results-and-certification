@@ -465,11 +465,11 @@
         },
         "sharedStorageConnectionString": {
             "type": "string",
-            "value": "[reference(concat('shared-storage-account','-', parameters('environmentNameAbbreviation'))).outputs.storageConnectionString.value]"
+            "value": "[reference(concat('shared-storage-account','-', parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
         },
         "configStorageConnectionString": {
             "type": "string",
-            "value": "[reference(concat('config-storage-account','-', parameters('environmentNameAbbreviation'))).outputs.storageConnectionString.value]"
+            "value": "[reference(concat('config-storage-account','-', parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
         },
         "ConfigStorageAccountName": {
             "type": "string",

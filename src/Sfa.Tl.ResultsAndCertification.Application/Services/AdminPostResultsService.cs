@@ -69,7 +69,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
 
             DateTime utcNow = _systemProvider.UtcNow;
-               
+
+            existingSpecialismResult.IsOptedin = false;
+            existingSpecialismResult.EndDate = utcNow;
+            existingSpecialismResult.ModifiedBy = request.CreatedBy;
+            existingSpecialismResult.ModifiedOn = utcNow;
 
             var updated = await UpdateSpecialismResultAsync(specialismResultRepo, existingSpecialismResult, request.CreatedBy);
 
@@ -186,6 +190,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var newSpecialismResult = CreateSpecialismRequest(request.SelectedGradeId, existingSpecialismResult.TqSpecialismAssessmentId, utcNow, PrsStatus.Reviewed, request.CreatedBy);
 
             bool created = await specialismResultRepo.CreateAsync(newSpecialismResult) > 0;
+
             if (!created)
             {
                 return false;

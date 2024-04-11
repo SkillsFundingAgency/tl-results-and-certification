@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         }
 
         public Task<AdminOpenPathwayRommViewModel> GetAdminOpenPathwayRommAsync(int registrationPathwayId, int pathwayAssessmentId)
-            => GetAdminOpenRommAsync<AdminOpenPathwayRommViewModel>(registrationPathwayId, pathwayAssessmentId);
+            => GetAndMapLearnerRecordAsync<AdminOpenPathwayRommViewModel>(registrationPathwayId, pathwayAssessmentId);
 
         public AdminOpenPathwayRommReviewChangesViewModel GetAdminOpenPathwayRommReviewChangesAsync(AdminOpenPathwayRommViewModel openPathwayRommViewModel)
             => _mapper.Map<AdminOpenPathwayRommReviewChangesViewModel>(openPathwayRommViewModel);
@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         }
 
         public Task<AdminOpenSpecialismRommViewModel> GetAdminOpenSpecialismRommAsync(int registrationPathwayId, int specialismAssessmentId)
-            => GetAdminOpenRommAsync<AdminOpenSpecialismRommViewModel>(registrationPathwayId, specialismAssessmentId);
+            => GetAndMapLearnerRecordAsync<AdminOpenSpecialismRommViewModel>(registrationPathwayId, specialismAssessmentId);
 
         public AdminOpenSpecialismRommReviewChangesViewModel GetAdminOpenSpecialismRommReviewChangesAsync(AdminOpenSpecialismRommViewModel openSpecialismRommViewModel)
            => _mapper.Map<AdminOpenSpecialismRommReviewChangesViewModel>(openSpecialismRommViewModel);
@@ -52,7 +52,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _internalApiClient.ProcessAdminOpenSpecialismRommAsync(request);
         }
 
-        private async Task<T> GetAdminOpenRommAsync<T>(int registrationPathwayId, int pathwayAssessmentId)
+        public Task<AdminAddCoreRommOutcomeViewModel> GetAdminAddPathwayRommOutcomeAsync(int registrationPathwayId, int pathwayAssessmentId)
+            => GetAndMapLearnerRecordAsync<AdminAddCoreRommOutcomeViewModel>(registrationPathwayId, pathwayAssessmentId);
+
+        public Task<AdminAddSpecialismRommOutcomeViewModel> GetAdminAddSpecialismRommOutcomeAsync(int registrationPathwayId, int pathwayAssessmentId)
+            => GetAndMapLearnerRecordAsync<AdminAddSpecialismRommOutcomeViewModel>(registrationPathwayId, pathwayAssessmentId);
+
+
+        public Task<AdminOpenPathwayAppealViewModel> GetAdminOpenPathwayAppealAsync(int registrationPathwayId, int pathwayAssessmentId)
+            => GetAndMapLearnerRecordAsync<AdminOpenPathwayAppealViewModel>(registrationPathwayId, pathwayAssessmentId);
+
+        public Task<AdminOpenSpecialismAppealViewModel> GetAdminOpenSpecialismAppealAsync(int registrationPathwayId, int pathwayAssessmentId)
+            => GetAndMapLearnerRecordAsync<AdminOpenSpecialismAppealViewModel>(registrationPathwayId, pathwayAssessmentId);
+
+        private async Task<T> GetAndMapLearnerRecordAsync<T>(int registrationPathwayId, int pathwayAssessmentId)
         {
             AdminLearnerRecord learnerRecord = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
             return _mapper.Map<T>(learnerRecord, opt =>
@@ -72,7 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var viewmodel = await GetAdminAddResultAsync<AdminAddRommOutcomeChangeGradeCoreViewModel>(registrationPathwayId, assessmentId, LookupCategory.PathwayComponentGrade, false);
             viewmodel.Grades = GetAdminAddRommOutcomeChangeGradeCoreGrades(viewmodel.Grades);
-            viewmodel.Grades.Remove(viewmodel.Grades.Where(t => t.Value == viewmodel.Grade).FirstOrDefault());
+            viewmodel.Grades.Remove(viewmodel.Grades.FirstOrDefault(t => t.Value == viewmodel.Grade));
             return viewmodel;
         }
 
@@ -91,12 +104,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var viewmodel = await GetAdminAddResultAsync<AdminAddRommOutcomeChangeGradeSpecialismViewModel>(registrationPathwayId, assessmentId, LookupCategory.SpecialismComponentGrade, false);
             viewmodel.Grades = GetAdminAddRommOutcomeChangeGradeSpecialismGrades(viewmodel.Grades);
-            viewmodel.Grades.Remove(viewmodel.Grades.Where(t => t.Value == viewmodel.Grade).FirstOrDefault());
+            viewmodel.Grades.Remove(viewmodel.Grades.FirstOrDefault(t => t.Value == viewmodel.Grade));
             return viewmodel;
         }
 
         public async Task LoadAdminAddRommOutcomeChangeGradeSpecialismGrades(AdminAddRommOutcomeChangeGradeSpecialismViewModel model)
-        => model.Grades = GetAdminAddRommOutcomeChangeGradeSpecialismGrades(await GetAdminChangeResultGrades(LookupCategory.SpecialismComponentGrade, model.Grade, true));
+            => model.Grades = GetAdminAddRommOutcomeChangeGradeSpecialismGrades(await GetAdminChangeResultGrades(LookupCategory.SpecialismComponentGrade, model.Grade, true));
 
 
         private List<LookupViewModel> GetAdminAddRommOutcomeChangeGradeSpecialismGrades(List<LookupViewModel> Grades)
@@ -115,7 +128,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         }
 
         private async Task<TAddResultViewModel> GetAdminAddResultAsync<TAddResultViewModel>(int registrationPathwayId, int assessmentId, LookupCategory lookupCategory, bool ischange = false)
-         where TAddResultViewModel : class
+            where TAddResultViewModel : class
         {
             Task<AdminLearnerRecord> learnerRecordTask = _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
             Task<IList<LookupData>> gradesTask = _internalApiClient.GetLookupDataAsync(lookupCategory);
@@ -124,14 +137,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             AdminLearnerRecord learnerRecord = learnerRecordTask.Result;
             IList<LookupData> grades = gradesTask.Result;
+
             if (learnerRecord == null || grades == null)
-                return null;          
+                return null;
 
             if (ischange)
             {
                 grades.Add(new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageSpecialismResult.Option_Remove_Result });
             }
-                      
+
 
             return _mapper.Map<TAddResultViewModel>(learnerRecord, opt =>
             {
