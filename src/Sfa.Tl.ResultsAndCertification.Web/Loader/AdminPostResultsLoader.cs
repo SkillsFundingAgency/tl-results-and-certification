@@ -140,5 +140,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             });
         }
 
+
+        public AdminReviewChangesRommOutcomeCoreViewModel GetAdminReviewChangesRommOutcomeCoreAsync(AdminAddRommOutcomeChangeGradeCoreViewModel addRommOutcomeCoreViewModel)
+          => _mapper.Map<AdminReviewChangesRommOutcomeCoreViewModel>(addRommOutcomeCoreViewModel);
+
+        public Task<bool> ProcessAdminReviewChangesRommOutcomeCoreAsync(AdminReviewChangesRommOutcomeCoreViewModel revieChangeRommOutcomeCoreViewModel)
+        {
+            var request = _mapper.Map<ReviewChangesRommOutcomeCoreRequest>(revieChangeRommOutcomeCoreViewModel);
+            return _internalApiClient.ProcessAdminReviewChangesRommOutcomeCoreAsync(request);
+        }
+
+        public AdminReviewChangesRommOutcomeSpecialismViewModel GetAdminReviewChangesRommOutcomeSpecialismAsync(AdminAddRommOutcomeChangeGradeSpecialismViewModel addRommOutcomeSpecialismViewModel)
+          => _mapper.Map<AdminReviewChangesRommOutcomeSpecialismViewModel>(addRommOutcomeSpecialismViewModel);
+
+        public Task<bool> ProcessAdminReviewChangesRommOutcomeSpecialismAsync(AdminReviewChangesRommOutcomeSpecialismViewModel reviewChangeRommOutcomeSpecialismViewModel)
+        {
+            var request = _mapper.Map<ReviewChangesRommOutcomeSpecialismRequest>(reviewChangeRommOutcomeSpecialismViewModel);
+            return _internalApiClient.ProcessAdminReviewChangesRommOutcomeSpecialismAsync(request);
+        }
+
     }
 }

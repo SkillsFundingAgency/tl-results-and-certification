@@ -147,6 +147,9 @@
         // Admin post results
         public const string ProcessAdminOpenPathwayRomm = "/api/adminpostresults/ProcessAdminOpenPathwayRomm";
         public const string ProcessAdminOpenSpecialismRomm = "/api/adminpostresults/ProcessAdminOpenSpecialismRomm";
+        
+        public const string ProcessAdminReviewChangesRommOutcomeCore = "/api/adminpostresults/ProcessAdminReviewChangesRommOutcomeCore";
+        public const string ProcessAdminReviewChangesRommOutcomeSpecialism = "/api/adminpostresults/ProcessAdminReviewChangesRommOutcomeSpecialism";
 
     }
 }

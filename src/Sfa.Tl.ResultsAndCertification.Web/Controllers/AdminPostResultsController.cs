@@ -330,7 +330,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             await _cacheService.SetAsync(CacheKey, model);
-            return RedirectToRoute(RouteConstants.AdminLearnerRecord, new { pathwayId = model.RegistrationPathwayId });
+            return RedirectToRoute(RouteConstants.AdminReviewChangesRommOutcomeCore);
         }
 
         [HttpGet]
@@ -374,9 +374,87 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             await _cacheService.SetAsync(CacheKey, model);
-            return RedirectToRoute(RouteConstants.AdminLearnerRecord, new { pathwayId = model.RegistrationPathwayId });
+            return RedirectToRoute(RouteConstants.AdminReviewChangesRommOutcomeSpecialism);
         }
 
+
+
+        #endregion
+
+        #region Review Change romm
+        [HttpGet]
+        [Route("admin/add-romm-outcome-change-grade-review-changes-core", Name = RouteConstants.AdminReviewChangesRommOutcomeCore)]
+        public async Task<IActionResult> AdminReviewChangesRommOutcomeCoreAsync()
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminAddRommOutcomeChangeGradeCoreViewModel>(CacheKey);
+            if (cachedModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            AdminReviewChangesRommOutcomeCoreViewModel viewModel = _loader.GetAdminReviewChangesRommOutcomeCoreAsync(cachedModel);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/add-romm-outcome-change-grade-review-changes-core", Name = RouteConstants.SubmitAdminReviewChangesRommOutcomeCore)]
+        public async Task<IActionResult> AdminReviewChangesRommOutcomeCoreAsync(AdminReviewChangesRommOutcomeCoreViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            bool success = await _loader.ProcessAdminReviewChangesRommOutcomeCoreAsync(model);
+            if (!success)
+            {
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+            }
+
+            string adminDashboardCacheKey = CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey);
+
+            var notificationBanner = new AdminNotificationBannerModel(AdminReviewChangesRommOutcomeCore.Notification_Message_Romm_Outcome_Added);
+            await _cacheService.SetAsync<NotificationBannerModel>(adminDashboardCacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
+        }
+
+        [HttpGet]
+        [Route("admin/add-romm-outcome-change-grade-review-changes-specialism", Name = RouteConstants.AdminReviewChangesRommOutcomeSpecialism)]
+        public async Task<IActionResult> AdminReviewChangesRommOutcomeSpecialismAsync()
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminAddRommOutcomeChangeGradeSpecialismViewModel>(CacheKey);
+            if (cachedModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            AdminReviewChangesRommOutcomeSpecialismViewModel viewModel = _loader.GetAdminReviewChangesRommOutcomeSpecialismAsync(cachedModel);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/add-romm-outcome-change-grade-review-changes-specialism", Name = RouteConstants.SubmitAdminReviewChangesRommOutcomeSpecialism)]
+        public async Task<IActionResult> AdminReviewChangesRommOutcomeSpecialismAsync(AdminReviewChangesRommOutcomeSpecialismViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            bool success = await _loader.ProcessAdminReviewChangesRommOutcomeSpecialismAsync(model);
+            if (!success)
+            {
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+            }
+
+            string adminDashboardCacheKey = CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey);
+
+            var notificationBanner = new AdminNotificationBannerModel(AdminReviewChangesRommOutcomeSpecialism.Notification_Message_Romm_Outcome_Added);
+            await _cacheService.SetAsync<NotificationBannerModel>(adminDashboardCacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
+        }
 
 
         #endregion
