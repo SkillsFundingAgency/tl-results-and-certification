@@ -223,6 +223,15 @@
                     },
                     "sqlStorageAccountName": {
                         "value": "[variables('sharedStorageAccountName')]"
+                    },
+                    "sqlStorageAccountAccessKey1": {
+                        "value": "[reference(concat('shared-storage-account','-',parameters('environmentNameAbbreviation'))).outputs.sqlStorageAccountAccessKey1.value]"
+                    },
+                    "sqlStorageAccountAccessKey2": {
+                        "value": "[reference(concat('shared-storage-account','-',parameters('environmentNameAbbreviation'))).outputs.sqlStorageAccountAccessKey2.value]"
+                    },
+                    "isStorageSecondaryKeyInUse": {
+                        "value": "[true()]"
                     }
                 }
             },
@@ -262,6 +271,15 @@
                     },
                     "sqlStorageAccountName": {
                         "value": "[variables('sharedStorageAccountName')]"
+                    },
+                    "sqlStorageAccountAccessKey1": {
+                        "value": "[reference(concat('shared-storage-account','-',parameters('environmentNameAbbreviation'))).outputs.sqlStorageAccountAccessKey1.value]"
+                    },
+                    "sqlStorageAccountAccessKey2": {
+                        "value": "[reference(concat('shared-storage-account','-',parameters('environmentNameAbbreviation'))).outputs.sqlStorageAccountAccessKey2.value]"
+                    },
+                    "isStorageSecondaryKeyInUse": {
+                        "value": "[true()]"
                     }
                 }
             },
