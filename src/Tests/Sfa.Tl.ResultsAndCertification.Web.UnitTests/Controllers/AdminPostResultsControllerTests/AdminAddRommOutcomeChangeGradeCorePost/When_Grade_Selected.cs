@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminPostResu
         [Fact]
         public void Then_Redirected_To_ReviewChangePathwayResult()
         {
-            Result.ShouldBeRedirectToRouteResult(RouteConstants.AdminLearnerRecord);
+            Result.ShouldBeRedirectToRouteResult(RouteConstants.AdminReviewChangesRommOutcomeCore);
         }
     }
 }

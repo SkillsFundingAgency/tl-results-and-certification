@@ -108,6 +108,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             });
         }
 
+        //public Task<AdminAddCoreRommOutcomeViewModel> GetAdminAddPathwayRommOutcomeAsync(int registrationPathwayId, int pathwayAssessmentId)
+        //    => GetAdminOpenRommAsync<AdminAddCoreRommOutcomeViewModel>(registrationPathwayId, pathwayAssessmentId);
+
+        //public Task<AdminAddSpecialismRommOutcomeViewModel> GetAdminAddSpecialismRommOutcomeAsync(int registrationPathwayId, int pathwayAssessmentId)
+        //    => GetAdminOpenRommAsync<AdminAddSpecialismRommOutcomeViewModel>(registrationPathwayId, pathwayAssessmentId);
+
+
         public async Task<AdminAddRommOutcomeChangeGradeCoreViewModel> GetAdminAddRommOutcomeChangeGradeCoreAsync(int registrationPathwayId, int assessmentId)
         {
             var viewmodel = await GetAdminAddResultAsync<AdminAddRommOutcomeChangeGradeCoreViewModel>(registrationPathwayId, assessmentId, LookupCategory.PathwayComponentGrade, false);
@@ -125,6 +132,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             && !t.Code.Equals(Constants.PathwayComponentGradeXNoResultCode, StringComparison.InvariantCultureIgnoreCase)
             && !t.Code.Equals(Constants.NotReceived, StringComparison.InvariantCultureIgnoreCase)).ToList();
         }
+
 
         public async Task<AdminAddRommOutcomeChangeGradeSpecialismViewModel> GetAdminAddRommOutcomeChangeGradeSpecialismAsync(int registrationPathwayId, int assessmentId)
         {
@@ -178,5 +186,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 opt.Items["grades"] = grades;
             });
         }
+
+
+        public AdminReviewChangesRommOutcomeCoreViewModel GetAdminReviewChangesRommOutcomeCoreAsync(AdminAddRommOutcomeChangeGradeCoreViewModel addRommOutcomeCoreViewModel)
+          => _mapper.Map<AdminReviewChangesRommOutcomeCoreViewModel>(addRommOutcomeCoreViewModel);
+
+        public Task<bool> ProcessAdminReviewChangesRommOutcomeCoreAsync(AdminReviewChangesRommOutcomeCoreViewModel revieChangeRommOutcomeCoreViewModel)
+        {
+            var request = _mapper.Map<ReviewChangesRommOutcomeCoreRequest>(revieChangeRommOutcomeCoreViewModel);
+            return _internalApiClient.ProcessAdminReviewChangesRommOutcomeCoreAsync(request);
+        }
+
+        public AdminReviewChangesRommOutcomeSpecialismViewModel GetAdminReviewChangesRommOutcomeSpecialismAsync(AdminAddRommOutcomeChangeGradeSpecialismViewModel addRommOutcomeSpecialismViewModel)
+          => _mapper.Map<AdminReviewChangesRommOutcomeSpecialismViewModel>(addRommOutcomeSpecialismViewModel);
+
+        public Task<bool> ProcessAdminReviewChangesRommOutcomeSpecialismAsync(AdminReviewChangesRommOutcomeSpecialismViewModel reviewChangeRommOutcomeSpecialismViewModel)
+        {
+            var request = _mapper.Map<ReviewChangesRommOutcomeSpecialismRequest>(reviewChangeRommOutcomeSpecialismViewModel);
+            return _internalApiClient.ProcessAdminReviewChangesRommOutcomeSpecialismAsync(request);
+        }
+
     }
 }
