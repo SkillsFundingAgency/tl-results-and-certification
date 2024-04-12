@@ -8,7 +8,7 @@ parameters:
   - name: package
     type: string
 jobs:
-- job: Publish_Function
+- job: PublishFunction
   variables:
     functionAppName: $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.functionAppName'] ]
 

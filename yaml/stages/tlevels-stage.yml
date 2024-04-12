@@ -74,9 +74,9 @@ stages:
           serviceConnection: ${{ parameters.serviceConnection }}
           sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
           appName: 'internalApiAppName'
-          name: 'internalAPI'
+          name: 'InternalAPI'
           dependencies:
-            - Publish_Website
+            - PublishWebsite
             - DeployInfrastructure
             - GenerateConfigs
           package: 'Sfa.Tl.ResultsAndCertification.InternalApi.zip'
@@ -89,12 +89,12 @@ stages:
           dependencies:
             - DeployInfrastructure
             - GenerateConfigs
-            - Publish_internalAPI
+            - PublishInternalAPI
           package:  'Sfa.Tl.ResultsAndCertification.Functions.zip'
       
       - template: ../jobs/tlevels-post-deployment-job.yml
         parameters:
           dependencies:
-            - Publish_Website
-            - Publish_internalAPI
-            - Publish_Function
+            - PublishWebsite
+            - PublishInternalAPI
+            - PublishFunction
