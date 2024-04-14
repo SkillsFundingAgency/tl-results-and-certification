@@ -114,7 +114,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
             }
 
-            var newPathwayResult = CreatePathwayRequest(request.SelectedGradeId, existingPathwayResult.TqPathwayAssessmentId, PrsStatus.Reviewed, request.CreatedBy);
+            var newPathwayResult = CreatePathwayRequest(request.SelectedGradeId ==0 ? existingPathwayResult.TlLookupId: request.SelectedGradeId, existingPathwayResult.TqPathwayAssessmentId, PrsStatus.Reviewed, request.CreatedBy);
 
             bool created = await pathwayResultRepo.CreateAsync(newPathwayResult) > 0;
             if (!created)
@@ -128,7 +128,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 PathwayResultId = newPathwayResult.Id,
                 From = request.ExistingGrade,
-                To = request.SelectedGrade,
+                To =  request.SelectedGrade ?? request.ExistingGrade,
                 PathwayAssessmentId = existingPathwayResult.TqPathwayAssessmentId,
                 RegistrationPathwayId = request.RegistrationPathwayId
             });
@@ -187,7 +187,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
             }
 
-            var newSpecialismResult = CreateSpecialismRequest(request.SelectedGradeId, existingSpecialismResult.TqSpecialismAssessmentId, utcNow, PrsStatus.Reviewed, request.CreatedBy);
+            var newSpecialismResult = CreateSpecialismRequest(request.SelectedGradeId == 0 ? existingSpecialismResult.TlLookupId : request.SelectedGradeId, existingSpecialismResult.TqSpecialismAssessmentId, utcNow, PrsStatus.Reviewed, request.CreatedBy);
 
             bool created = await specialismResultRepo.CreateAsync(newSpecialismResult) > 0;
 
@@ -202,7 +202,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 SpecialismResultId = newSpecialismResult.Id,
                 From = request.ExistingGrade,
-                To = request.SelectedGrade,
+                To = request.SelectedGrade?? request.ExistingGrade,
                 SpecialismAssessmentId = existingSpecialismResult.TqSpecialismAssessmentId,
                 RegistrationPathwayId = request.RegistrationPathwayId
             });

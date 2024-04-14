@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminPostResu
 
         public override async Task When()
         {
-            Result = await Controller.AdminReviewChangesRommOutcomeCoreAsync();
+            Result = await Controller.AdminReviewChangesRommOutcomeCoreAsync(false);
         }
 
         protected static AdminAddRommOutcomeChangeGradeCoreViewModel CreateViewModel()

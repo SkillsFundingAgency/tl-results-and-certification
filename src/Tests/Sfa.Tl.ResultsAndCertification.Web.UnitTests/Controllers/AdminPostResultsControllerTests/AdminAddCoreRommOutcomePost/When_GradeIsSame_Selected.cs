@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminPostResu
         [Fact]
         public void Then_Returns_Expected()
         {
-            Result.ShouldBeRedirectToRouteResult(nameof(RouteConstants.AdminLearnerRecord), (("pathwayId", _viewModel.RegistrationPathwayId)));
+            Result.ShouldBeRedirectToRouteResult(nameof(RouteConstants.AdminReviewChangesRommOutcomeCore), (("isSameGrade", true)));
         }
     }
 }
