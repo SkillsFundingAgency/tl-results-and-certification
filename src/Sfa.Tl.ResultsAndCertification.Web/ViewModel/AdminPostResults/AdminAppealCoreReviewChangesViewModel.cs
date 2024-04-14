@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
                 Value = AdminReviewCoreAppealChanges.Change_Summary_From,
                 Value2 = AdminReviewCoreAppealChanges.Change_Summary_To,
                 ActionText = AdminReviewCoreAppealChanges.Link_Change_Text,
-                RouteName = RouteConstants.AdminOpenPathwayRomm,
+                RouteName = RouteConstants.AdminOpenPathwayAppeal,
                 RouteAttributes = new Dictionary<string, string>()
                 {
                     { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() },
@@ -105,7 +105,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
 
         public BackLinkModel BackLink => new()
         {
-            RouteName = RouteConstants.AdminOpenPathwayRomm,
+            RouteName = RouteConstants.AdminOpenPathwayAppeal,
             RouteAttributes = new Dictionary<string, string>()
             {
                 { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() },

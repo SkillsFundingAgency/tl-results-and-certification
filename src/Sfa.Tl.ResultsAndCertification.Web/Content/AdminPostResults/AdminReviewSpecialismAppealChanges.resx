@@ -159,6 +159,9 @@
   <data name="Message_You_Can_Enter_Up_To_2000_Characters" xml:space="preserve">
     <value>You can enter up to 2,000 characters</value>
   </data>
+  <data name="Notification_Message_Specialism_Appeal_Added" xml:space="preserve">
+    <value>An appeal has been opened</value>
+  </data>
   <data name="No_Grade_Entered" xml:space="preserve">
     <value>No grade entered</value>
   </data>

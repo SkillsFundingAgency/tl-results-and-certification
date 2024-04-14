@@ -349,6 +349,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.ProblemWithService);
             }
 
+            string adminDashboardCacheKey = CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey);
+
+            var notificationBanner = new AdminNotificationBannerModel(AdminReviewCoreAppealChanges.Notification_Message_Core_Appeal_Added);
+            await _cacheService.SetAsync<NotificationBannerModel>(adminDashboardCacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
             return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
         }
 
@@ -399,6 +404,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return RedirectToRoute(RouteConstants.ProblemWithService);
             }
+
+            string adminDashboardCacheKey = CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey);
+
+            var notificationBanner = new AdminNotificationBannerModel(AdminReviewCoreAppealChanges.Notification_Message_Core_Appeal_Added);
+            await _cacheService.SetAsync<NotificationBannerModel>(adminDashboardCacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
             return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
         }

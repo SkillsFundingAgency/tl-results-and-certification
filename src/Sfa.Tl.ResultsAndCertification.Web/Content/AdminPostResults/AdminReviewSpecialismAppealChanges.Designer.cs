@@ -197,6 +197,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminPostResults {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An appeal has been opened.
+        /// </summary>
+        public static string Notification_Message_Specialism_Appeal_Added {
+            get {
+                return ResourceManager.GetString("Notification_Message_Specialism_Appeal_Added", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Occupational Specialism: {0}.
         /// </summary>
         public static string Occupational_Specialism_Heading_Text {
