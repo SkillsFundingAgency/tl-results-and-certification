@@ -151,5 +151,8 @@
         public const string ProcessAdminReviewChangesRommOutcomeCore = "/api/adminpostresults/ProcessAdminReviewChangesRommOutcomeCore";
         public const string ProcessAdminReviewChangesRommOutcomeSpecialism = "/api/adminpostresults/ProcessAdminReviewChangesRommOutcomeSpecialism";
 
+        public const string ProcessAdminOpenCoreAppeal = "/api/adminpostresults/ProcessAdminOpenCoreAppeal";
+        public const string ProcessAdminOpenSpecialismAppeal = "/api/adminpostresults/ProcessAdminOpenSpecialismAppeal";
+
     }
 }
