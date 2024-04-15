@@ -100,11 +100,3 @@ jobs:
           PathtoPublish: '$(build.artifactstagingdirectory)/publish'
           ArtifactName: 'appdrop'
           publishLocation: 'Container'
-
-    - task: GitHubRelease@1
-      displayName: 'GitHub release (create)'
-      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master') , eq(variables['Build.Reason'], 'IndividualCI'))
-      inputs:
-        gitHubConnection: SkillsFundingAgency
-        tagSource: userSpecifiedTag
-        tag: '$(Build.BuildNumber)'

@@ -12,7 +12,7 @@ parameters:
   - name: package
     type: string
 jobs:
-- job: Publish_${{ parameters.name }}
+- job: Publish${{ parameters.name }}
   variables:
     ConfigStorageAccountName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.ConfigStorageAccountName'] ]
     webAppName: $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.${{parameters.appName }}'] ]
