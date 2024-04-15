@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+﻿using Microsoft.AspNetCore.Routing;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminPostResults;
 using Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
@@ -23,6 +24,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
         public string SelectedGradeValue { get; set; }
 
         public string Grade { get; set; }
+
+        public bool IsSameGrade { get; set; }
 
         #region Personal details
 
@@ -73,9 +76,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
             Id = AdminReviewChangesRommOutcomeSpecialism.Summary_Selected_Grade_Id,
             Title = AdminReviewChangesRommOutcomeSpecialism.Summary_Grade_Text,
             Value = Grade,
-            Value2 = SelectedGradeValue,
+            Value2 = IsSameGrade ? Grade : SelectedGradeValue,
             ActionText = AdminReviewChangesRommOutcomeSpecialism.Link_Change_Text,
-            RouteName = RouteConstants.AdminAddSpecialismResult,
+            RouteName = IsSameGrade ? RouteConstants.AdminAddSpecialismRommOutcome : RouteConstants.AdminAddRommOutcomeChangeGradeSpecialism,
             RouteAttributes = new Dictionary<string, string>()
             {
                 { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() },
@@ -103,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
 
         public BackLinkModel BackLink => new()
         {
-            RouteName = RouteConstants.AdminAddSpecialismResult,
+            RouteName = IsSameGrade ? RouteConstants.AdminAddSpecialismRommOutcome : RouteConstants.AdminAddRommOutcomeChangeGradeSpecialism,
             RouteAttributes = new Dictionary<string, string>()
             {
                 { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() },

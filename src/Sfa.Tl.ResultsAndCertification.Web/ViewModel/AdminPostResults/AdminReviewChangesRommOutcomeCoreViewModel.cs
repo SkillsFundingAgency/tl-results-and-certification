@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
 {
@@ -23,6 +24,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
         public string SelectedGradeValue { get; set; }
 
         public string Grade { get; set; }
+
+        public bool IsSameGrade { get; set; }
 
         #region Personal details
 
@@ -73,9 +76,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
             Id = AdminReviewChangesRommOutcomeCore.Summary_Selected_Grade_Id,
             Title = AdminReviewChangesRommOutcomeCore.Summary_Grade_Text,
             Value = Grade,
-            Value2 = SelectedGradeValue,
+            Value2 = IsSameGrade ? Grade: SelectedGradeValue,
             ActionText = AdminReviewChangesRommOutcomeCore.Link_Change_Text,
-            RouteName = RouteConstants.AdminAddPathwayResult,
+            RouteName = IsSameGrade? RouteConstants.AdminAddCoreRommOutcome : RouteConstants.AdminAddRommOutcomeChangeGradeCore,
             RouteAttributes = new Dictionary<string, string>()
             {
                 { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() },
@@ -103,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
 
         public BackLinkModel BackLink => new()
         {
-            RouteName = RouteConstants.AdminAddPathwayResult,
+            RouteName = IsSameGrade ? RouteConstants.AdminAddCoreRommOutcome : RouteConstants.AdminAddRommOutcomeChangeGradeCore,
             RouteAttributes = new Dictionary<string, string>()
             {
                 { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() },

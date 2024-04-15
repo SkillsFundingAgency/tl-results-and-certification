@@ -187,9 +187,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             });
         }
 
-
-        public AdminReviewChangesRommOutcomeCoreViewModel GetAdminReviewChangesRommOutcomeCoreAsync(AdminAddRommOutcomeChangeGradeCoreViewModel addRommOutcomeCoreViewModel)
-          => _mapper.Map<AdminReviewChangesRommOutcomeCoreViewModel>(addRommOutcomeCoreViewModel);
+        public AdminReviewChangesRommOutcomeCoreViewModel GetAdminReviewChangesRommOutcomeCoreAsync<TAddRommOutcomeChangeGradeCoreViewModel>(TAddRommOutcomeChangeGradeCoreViewModel addRommOutcomeCoreViewModel)
+        => _mapper.Map<AdminReviewChangesRommOutcomeCoreViewModel>(addRommOutcomeCoreViewModel);
 
         public Task<bool> ProcessAdminReviewChangesRommOutcomeCoreAsync(AdminReviewChangesRommOutcomeCoreViewModel revieChangeRommOutcomeCoreViewModel)
         {
@@ -197,7 +196,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _internalApiClient.ProcessAdminReviewChangesRommOutcomeCoreAsync(request);
         }
 
-        public AdminReviewChangesRommOutcomeSpecialismViewModel GetAdminReviewChangesRommOutcomeSpecialismAsync(AdminAddRommOutcomeChangeGradeSpecialismViewModel addRommOutcomeSpecialismViewModel)
+        public AdminReviewChangesRommOutcomeSpecialismViewModel GetAdminReviewChangesRommOutcomeSpecialismAsync<TAddRommOutcomeChangeGradeSpecialismViewModel>(TAddRommOutcomeChangeGradeSpecialismViewModel addRommOutcomeSpecialismViewModel)
           => _mapper.Map<AdminReviewChangesRommOutcomeSpecialismViewModel>(addRommOutcomeSpecialismViewModel);
 
         public Task<bool> ProcessAdminReviewChangesRommOutcomeSpecialismAsync(AdminReviewChangesRommOutcomeSpecialismViewModel reviewChangeRommOutcomeSpecialismViewModel)

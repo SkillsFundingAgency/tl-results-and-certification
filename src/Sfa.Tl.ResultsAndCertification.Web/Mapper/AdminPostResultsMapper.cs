@@ -346,6 +346,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ChangeReason, opts => opts.MapFrom(s => s.ChangeReason))
                 .ForMember(d => d.ZendeskTicketId, opts => opts.MapFrom(s => s.ZendeskTicketId))
                 .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<AdminAppealSpecialismReviewChangesViewModel, OpenSpecialismAppealRequest>>());
+
+            CreateMap<AdminAddCoreRommOutcomeViewModel, AdminReviewChangesRommOutcomeCoreViewModel>()
+              .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+              .ForMember(d => d.PathwayAssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
+              .ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))
+              .ForMember(d => d.SummaryGrade, opts => opts.MapFrom(s => s.SummaryGrade))
+              .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.Grade))
+              .ForMember(d => d.Learner, opts => opts.MapFrom(s => s.Learner))
+              .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+              .ForMember(d => d.Provider, opts => opts.MapFrom(s => s.Provider))
+              .ForMember(d => d.Tlevel, opts => opts.MapFrom(s => s.Tlevel))
+              .ForMember(d => d.StartYear, opts => opts.MapFrom(s => s.StartYear))
+              .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => s.ExamPeriod));
+
+
+            CreateMap<AdminAddSpecialismRommOutcomeViewModel, AdminReviewChangesRommOutcomeSpecialismViewModel>()
+              .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+              .ForMember(d => d.SpecialismAssessmentId, opts => opts.MapFrom(s => s.SpecialismAssessmentId))
+              .ForMember(d => d.SpecialismResultId, opts => opts.MapFrom(s => s.SpecialismResultId))
+              .ForMember(d => d.SummaryGrade, opts => opts.MapFrom(s => s.SummaryGrade))
+              .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.Grade))
+              .ForMember(d => d.Learner, opts => opts.MapFrom(s => s.Learner))
+              .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+              .ForMember(d => d.Provider, opts => opts.MapFrom(s => s.Provider))
+              .ForMember(d => d.Tlevel, opts => opts.MapFrom(s => s.Tlevel))
+              .ForMember(d => d.StartYear, opts => opts.MapFrom(s => s.StartYear))
+              .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => s.ExamPeriod));
+
         }
 
         private static T GetPathwayAssessmentPropertyValue<T>(AdminLearnerRecord learnerRecord, int assessmentId, Func<Assessment, T> getPropertyValue)
