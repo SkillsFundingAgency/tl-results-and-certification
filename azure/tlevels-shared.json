@@ -75,7 +75,7 @@
         },
         "isStorageSecondaryKeyInUse": {
             "type": "bool",
-            "allowedValues": [ "true", "false" ]
+            "allowedValues": [ true, false ]
         }
     },
     "variables": {
