@@ -205,5 +205,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _internalApiClient.ProcessAdminReviewChangesRommOutcomeSpecialismAsync(request);
         }
 
+        public Task<AdminAddCoreAppealOutcomeViewModel> GetAdminAddPathwayAppealOutcomeAsync(int registrationPathwayId, int pathwayAssessmentId)
+            => GetAndMapLearnerRecordAsync<AdminAddCoreAppealOutcomeViewModel>(registrationPathwayId, pathwayAssessmentId);
+
+        public Task<AdminAddSpecialismAppealOutcomeViewModel> GetAdminAddSpecialismAppealOutcomeAsync(int registrationPathwayId, int pathwayAssessmentId)
+            => GetAndMapLearnerRecordAsync<AdminAddSpecialismAppealOutcomeViewModel>(registrationPathwayId, pathwayAssessmentId);
+
     }
 }

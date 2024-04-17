@@ -1,0 +1,117 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults.AdminAddCoreAppealOutcomeViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminPostResults
+
+@{
+    ViewData["Title"] = AdminAddCoreAppealOutcome.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="RouteConstants.SubmitAddCoreAppealOutcome">
+
+            <input type="hidden" asp-for="RegistrationPathwayId" />
+            <input type="hidden" asp-for="PathwayAssessmentId" />
+            <input type="hidden" asp-for="PathwayResultId" />
+
+            <!-- Add a Core appeal page header -->
+            <div class="record-header">
+                <h1 class="govuk-heading-xl">
+                    @AdminAddCoreAppealOutcome.Heading_Add_A_Appeal_Outcome
+                </h1>
+            </div>
+
+            <partial name="_ValidationSummary" />
+
+            <!-- Personal details -->
+            <input type="hidden" asp-for="Learner" />
+            <input type="hidden" asp-for="Uln" />
+            <input type="hidden" asp-for="Provider" />
+            <input type="hidden" asp-for="Tlevel" />
+            <input type="hidden" asp-for="StartYear" />
+
+            <div class="govuk-!-margin-bottom-9">
+                <h2 class="govuk-heading-m">
+                    @AdminAddCoreAppealOutcome.Heading_Personal_Details
+                </h2>
+
+                <dl class="govuk-summary-list">
+                    <vc:summary-item model=Model.SummaryLearner></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryTlevel></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryStartYear></vc:summary-item>
+                </dl>
+            </div>
+
+            <!-- Core component -->
+            <input type="hidden" asp-for="PathwayName" />
+            <input type="hidden" asp-for="ExamPeriod" />
+            <input type="hidden" asp-for="Grade" />
+
+            <div class="govuk-!-margin-bottom-9">
+                <h2 class="govuk-heading-m">
+                    @string.Format(AdminAddCoreAppealOutcome.Core_Heading_Text, Model.PathwayName)
+                </h2>
+                <dl class="govuk-summary-list">
+                    <vc:summary-item model=Model.SummaryExamPeriod></vc:summary-item>
+                    <vc:summary-item model=Model.SummaryGrade></vc:summary-item>
+                </dl>
+            </div>
+
+
+            @if (Model.IsValid)
+            {
+                <!-- Do you want to open a appeal? -->
+                <div class="govuk-form-group govuk-!-margin-top-2">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h2 class="govuk-fieldset__heading">
+                                @AdminAddCoreAppealOutcome.Heading_What_Was_The_Appeal_Outcome
+                            </h2>
+                        </legend>
+
+                        <div class="govuk-radios" sfa-validation-for="WhatIsAppealOutcome" sfa-validation-class="govuk-form-group--error">
+                            <span sfa-validation-for="WhatIsAppealOutcome"></span>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="gradehaschanged" asp-for="WhatIsAppealOutcome" type="radio" value="true">
+                                <label class="govuk-label govuk-radios__label" for="gradehaschanged">
+                                    @AdminAddCoreAppealOutcome.Radio_Button_Grade_Changed
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="gradeisthesame" asp-for="WhatIsAppealOutcome" type="radio" value="false">
+                                <label class="govuk-label govuk-radios__label" for="gradeisthesame">
+                                    @AdminAddCoreAppealOutcome.Radion_Button_Same_Grade
+                                </label>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+
+                <!-- Continue / Cancel buttons -->
+                <div class="govuk-button-group">
+                    <button id="btnContinue" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminAddCoreAppealOutcome.Button_Continue</button>
+                    <a id="btnCancel" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminAddCoreAppealOutcome.Button_Cancel</a>
+                </div>
+            }
+            else
+            {
+                <!-- You cannot open a appeal for this learner -->
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">@AdminAddCoreAppealOutcome.Warning_Header_You_Cannot_Open_A_Appeal_For_This_Learner</h2>
+                    <p class="govuk-body">@Model.ErrorMessage</p>
+
+                    <div class="govuk-button-group">
+                        <a id="btnReturnToLearnerRecord" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminAddCoreAppealOutcome.Button_Return_To_Learner_Record</a>
+                    </div>
+                </div>
+            }
+        </form>
+    </div>
+</div>

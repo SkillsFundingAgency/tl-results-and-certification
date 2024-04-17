@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 
         Task<AdminAddRommOutcomeChangeGradeSpecialismViewModel> GetAdminAddRommOutcomeChangeGradeSpecialismAsync(int registrationPathwayId, int assessmentId);
         Task LoadAdminAddRommOutcomeChangeGradeSpecialismGrades(AdminAddRommOutcomeChangeGradeSpecialismViewModel model);
-             
+
         AdminReviewChangesRommOutcomeCoreViewModel GetAdminReviewChangesRommOutcomeCoreAsync<TAddRommOutcomeChangeGradeCoreViewModel>(TAddRommOutcomeChangeGradeCoreViewModel revieChangeRommOutcomeCoreViewModel);
         Task<bool> ProcessAdminReviewChangesRommOutcomeCoreAsync(AdminReviewChangesRommOutcomeCoreViewModel revieChangeRommOutcomeCoreViewModel);
 
@@ -45,6 +45,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<bool> ProcessAdminOpenCoreAppealAsync(AdminAppealCoreReviewChangesViewModel openppealCoreReviewChangesViewModel);
 
         Task<bool> ProcessAdminOpenSpecialismAppealAsync(AdminAppealSpecialismReviewChangesViewModel openppealSpecialismReviewChangesViewModel);
+
+        Task<AdminAddCoreAppealOutcomeViewModel> GetAdminAddPathwayAppealOutcomeAsync(int registrationPathwayId, int assessmentId);
+
+        Task<AdminAddSpecialismAppealOutcomeViewModel> GetAdminAddSpecialismAppealOutcomeAsync(int registrationPathwayId, int assessmentId);
 
     }
 }

@@ -51,6 +51,11 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminAddCoreAppealOutcome.Designer.cs">
+		  <DependentUpon>AdminAddCoreAppealOutcome.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminPostResults\AdminAddRommOutcomeChangeGradeSpecialism.Designer.cs">
 		  <DependentUpon>AdminAddRommOutcomeChangeGradeSpecialism.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -170,6 +175,11 @@
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 			<DependentUpon>AdminSearchLearners.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminAddSpecialismAppealOutcome.Designer.cs">
+		  <DependentUpon>AdminAddSpecialismAppealOutcome.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
 		</Compile>
 		<Compile Update="Content\AdminPostResults\AdminOpenPathwayAppeal.Designer.cs">
 		  <DependentUpon>AdminOpenPathwayAppeal.resx</DependentUpon>
@@ -1253,6 +1263,10 @@
 		  <LastGenOutput>AdminSearchChangeLog.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddCoreAppealOutcome.resx">
+		  <LastGenOutput>AdminAddCoreAppealOutcome.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminPostResults\AdminAddRommOutcomeChangeGradeSpecialism.resx">
 		  <LastGenOutput>AdminAddRommOutcomeChangeGradeSpecialism.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1353,6 +1367,10 @@
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\SearchLearners.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddSpecialismAppealOutcome.resx">
+		  <LastGenOutput>AdminAddSpecialismAppealOutcome.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenPathwayAppeal.resx">
 		  <LastGenOutput>AdminOpenPathwayAppeal.Designer.cs</LastGenOutput>
