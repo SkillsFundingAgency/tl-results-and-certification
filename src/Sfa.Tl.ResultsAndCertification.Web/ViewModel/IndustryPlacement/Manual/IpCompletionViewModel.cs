@@ -1,7 +1,9 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement;
@@ -20,9 +22,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         public IndustryPlacementStatus? IndustryPlacementStatus { get; set; }
 
         public bool IsChangeJourney { get; set; }
+
         public bool IsChangeMode { get; set; }
 
         public string PageTitle { get; set; }
+
+        public string ShowCompletedOptionWithWording =>
+            IsPeriodActive(DateTime.Today) ? IpCompletion.Yes_Completed_Option_With_Wording : IpCompletion.Yes_Completed_Option_Text;
+
+        public bool IsPeriodActive(DateTime date)
+        {
+            var startDate = new DateTime(date.Year, 06, 01);
+            var endDate = new DateTime(date.Year, 07, 31);
+
+            return (date >= startDate && date <= endDate);
+        }
 
         public bool IsValid
         {
