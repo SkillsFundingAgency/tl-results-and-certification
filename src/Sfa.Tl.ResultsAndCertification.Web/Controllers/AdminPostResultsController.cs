@@ -1,5 +1,4 @@
-﻿using AutoMapper.Configuration.Annotations;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
@@ -172,7 +171,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             bool hasGradeChanged = model.WhatIsRommOutcome.HasValue && model.WhatIsRommOutcome.Value == false;
             await _cacheService.SetAsync(CacheKey, model);
             return !hasGradeChanged ? RedirectToRoute(RouteConstants.AdminAddRommOutcomeChangeGradeCoreClear, new { registrationPathwayId = model.RegistrationPathwayId, assessmentId = model.PathwayAssessmentId }) :
-             RedirectToRoute(RouteConstants.AdminReviewChangesRommOutcomeCore,new {isSameGrade = true });
+             RedirectToRoute(RouteConstants.AdminReviewChangesRommOutcomeCore, new { isSameGrade = true });
         }
 
         #endregion
@@ -199,7 +198,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             bool hasGradeChanged = model.WhatIsRommOutcome.HasValue && model.WhatIsRommOutcome.Value == false;
-            
+
 
             await _cacheService.SetAsync(CacheKey, model);
             return !hasGradeChanged ? RedirectToRoute(RouteConstants.AdminAddRommOutcomeChangeGradeSpecialismClear, new { registrationPathwayId = model.RegistrationPathwayId, assessmentId = model.SpecialismAssessmentId }) :
@@ -248,7 +247,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
             {
                 return View(model);
-            }           
+            }
             await _cacheService.SetAsync(CacheKey, model);
             return RedirectToRoute(RouteConstants.AdminReviewChangesRommOutcomeCore);
         }
@@ -461,15 +460,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/add-romm-outcome-change-grade-review-changes-core", Name = RouteConstants.AdminReviewChangesRommOutcomeCore)]
         public async Task<IActionResult> AdminReviewChangesRommOutcomeCoreAsync(bool isSameGrade)
         {
-            var changeGradeCachedModel =  await _cacheService.GetAsync<AdminAddRommOutcomeChangeGradeCoreViewModel>(CacheKey);
-            var addRommcachedModel =  await _cacheService.GetAsync<AdminAddCoreRommOutcomeViewModel>(CacheKey);
+            var changeGradeCachedModel = await _cacheService.GetAsync<AdminAddRommOutcomeChangeGradeCoreViewModel>(CacheKey);
+            var addRommcachedModel = await _cacheService.GetAsync<AdminAddCoreRommOutcomeViewModel>(CacheKey);
             if (changeGradeCachedModel == null && addRommcachedModel == null)
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            AdminReviewChangesRommOutcomeCoreViewModel viewModel =  isSameGrade ? _loader.GetAdminReviewChangesRommOutcomeCoreAsync(addRommcachedModel) : _loader.GetAdminReviewChangesRommOutcomeCoreAsync(changeGradeCachedModel);
-           viewModel.IsSameGrade = isSameGrade;
+            AdminReviewChangesRommOutcomeCoreViewModel viewModel = isSameGrade ? _loader.GetAdminReviewChangesRommOutcomeCoreAsync(addRommcachedModel) : _loader.GetAdminReviewChangesRommOutcomeCoreAsync(changeGradeCachedModel);
+            viewModel.IsSameGrade = isSameGrade;
             return View(viewModel);
         }
 
@@ -498,7 +497,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("admin/add-romm-outcome-change-grade-review-changes-specialism", Name = RouteConstants.AdminReviewChangesRommOutcomeSpecialism)]
-        public async Task<IActionResult> AdminReviewChangesRommOutcomeSpecialismAsync(bool isSameGrade=false)
+        public async Task<IActionResult> AdminReviewChangesRommOutcomeSpecialismAsync(bool isSameGrade = false)
         {
             var changeGradeCachedModel = await _cacheService.GetAsync<AdminAddRommOutcomeChangeGradeSpecialismViewModel>(CacheKey);
             var addRommcachedModel = await _cacheService.GetAsync<AdminAddSpecialismRommOutcomeViewModel>(CacheKey);
@@ -536,6 +535,66 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
         }
 
+
+        #endregion
+
+        #region Add Appeal Outcome Pathway
+
+        [HttpGet]
+        [Route("admin/add-appeal-outcome-core-clear", Name = RouteConstants.AdminAddCoreAppealOutcomeClear)]
+        public Task<IActionResult> AdminAddCoreAppealOutcomeClearAsync(int registrationPathwayId, int assessmentId)
+            => GetAdminPostResultClearAsync<AdminAddCoreAppealOutcomeViewModel>(registrationPathwayId, assessmentId, RouteConstants.AdminAddCoreAppealOutcome);
+
+        [HttpGet]
+        [Route("admin/add-appeal-outcome-core", Name = RouteConstants.AdminAddCoreAppealOutcome)]
+        public Task<IActionResult> AdminAddCoreAppealOutcomeAsync(int registrationPathwayId, int assessmentId)
+            => GetAdminPostResultAsync(registrationPathwayId, assessmentId, () => _loader.GetAdminAddPathwayAppealOutcomeAsync(registrationPathwayId, assessmentId), nameof(AdminPostResultsController.AdminAddCoreRommOutcomeAsync));
+
+        [HttpPost]
+        [Route("admin/add-appeal-outcome-core", Name = RouteConstants.SubmitAddCoreAppealOutcome)]
+        public async Task<IActionResult> AdminAddCoreAppealOutcomeAsync(AdminAddCoreAppealOutcomeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            bool hasGradeChanged = model.WhatIsAppealOutcome.HasValue && model.WhatIsAppealOutcome.Value == false;
+            await _cacheService.SetAsync(CacheKey, model);
+            return !hasGradeChanged ? RedirectToRoute(RouteConstants.AdminAddAppealOutcomeChangeGradeCoreClear, new { registrationPathwayId = model.RegistrationPathwayId, assessmentId = model.PathwayAssessmentId }) :
+             RedirectToRoute(RouteConstants.AdminReviewChangesAppealOutcomeCore, new { isSameGrade = true });
+        }
+
+        #endregion
+
+        #region Add Appeal Outcome Specialism
+
+        [HttpGet]
+        [Route("admin/add-appeal-outcome-specialism-clear", Name = RouteConstants.AdminAddSpecialismAppealOutcomeClear)]
+        public Task<IActionResult> AdminAddSpecialismAppealOutcomeClearAsync(int registrationPathwayId, int assessmentId)
+            => GetAdminPostResultClearAsync<AdminAddSpecialismAppealOutcomeViewModel>(registrationPathwayId, assessmentId, RouteConstants.AdminAddSpecialismAppealOutcome);
+
+        [HttpGet]
+        [Route("admin/add-appeal-outcome-specialism", Name = RouteConstants.AdminAddSpecialismAppealOutcome)]
+        public Task<IActionResult> AdminAddSpecialismAppealOutcomeAsync(int registrationPathwayId, int assessmentId)
+            => GetAdminPostResultAsync(registrationPathwayId, assessmentId, () => _loader.GetAdminAddSpecialismAppealOutcomeAsync(registrationPathwayId, assessmentId), nameof(AdminPostResultsController.AdminAddSpecialismRommOutcomeAsync));
+
+        [HttpPost]
+        [Route("admin/add-appeal-outcome-specialism", Name = RouteConstants.SubmitAddSpecialismAppealOutcome)]
+        public async Task<IActionResult> AdminAddSpecialismAppealOutcomeAsync(AdminAddSpecialismAppealOutcomeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            bool hasGradeChanged = model.WhatIsAppealOutcome.HasValue && model.WhatIsAppealOutcome.Value == false;
+
+
+            await _cacheService.SetAsync(CacheKey, model);
+            return !hasGradeChanged ? RedirectToRoute(RouteConstants.AdminAddAppealOutcomeChangeGradeSpecialismClear, new { registrationPathwayId = model.RegistrationPathwayId, assessmentId = model.SpecialismAssessmentId }) :
+                RedirectToRoute(RouteConstants.AdminReviewChangesAppealOutcomeSpecialism, new { isSameGrade = true });
+        }
 
         #endregion
     }

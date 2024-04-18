@@ -63,7 +63,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver.AdminAssessmentResu
             [(ComponentType.Core, AdminAssessmentResultStatus.AddRommOutcomeAllowed)] = RouteConstants.AdminAddCoreRommOutcomeClear,
             [(ComponentType.Specialism, AdminAssessmentResultStatus.AddRommOutcomeAllowed)] = RouteConstants.AdminAddSpecialismRommOutcomeClear,
             [(ComponentType.Core, AdminAssessmentResultStatus.OpenAppealAllowed)] = RouteConstants.AdminOpenPathwayAppealClear,
-            [(ComponentType.Specialism, AdminAssessmentResultStatus.OpenAppealAllowed)] = RouteConstants.AdminOpenSpecialismAppealClear
+            [(ComponentType.Specialism, AdminAssessmentResultStatus.OpenAppealAllowed)] = RouteConstants.AdminOpenSpecialismAppealClear,
+            [(ComponentType.Core, AdminAssessmentResultStatus.AddAppealOutcomeAllowed)] = RouteConstants.AdminAddCoreAppealOutcomeClear,
+            [(ComponentType.Specialism, AdminAssessmentResultStatus.AddAppealOutcomeAllowed)] = RouteConstants.AdminAddSpecialismAppealOutcomeClear,
         };
     }
 }
