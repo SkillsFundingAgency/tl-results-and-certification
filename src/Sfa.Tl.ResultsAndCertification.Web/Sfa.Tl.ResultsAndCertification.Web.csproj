@@ -1446,6 +1446,40 @@
 		  <LastGenOutput>AdminOpenPathwayRomm.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminReviewChangesRommOutcomeSpecialism.resx">
+		  <SubType>Designer</SubType>
+		  <LastGenOutput>AdminReviewChangesRommOutcomeSpecialism.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminReviewChangesRommOutcomeCore.resx">
+		  <SubType>Designer</SubType>
+		  <LastGenOutput>AdminReviewChangesRommOutcomeCore.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddSpecialismRommOutcome.resx">
+		  <LastGenOutput>AdminAddSpecialismRommOutcome.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddCoreRommOutcome.resx">
+		  <LastGenOutput>AdminAddCoreRommOutcome.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenSpecialismRommReviewChanges.resx">
+		  <LastGenOutput>AdminOpenSpecialismRommReviewChanges.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenPathwayRommReviewChanges.resx">
+		  <LastGenOutput>AdminOpenPathwayRommReviewChanges.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenSpecialismRomm.resx">
+		  <LastGenOutput>AdminOpenSpecialismRomm.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenPathwayRomm.resx">
+		  <LastGenOutput>AdminOpenPathwayRomm.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\Assessment\AddCoreAssessmentEntry.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>AddCoreAssessmentEntry.Designer.cs</LastGenOutput>

@@ -185,6 +185,9 @@
                     },
                     "storageKind": {
                         "value": "StorageV2"
+                    },
+                    "minimumTlsVersion": {
+                        "value": "TLS1_2"
                     }
                 }
             }
@@ -288,7 +291,7 @@
                     }
                 }
             },
-             "dependsOn": [
+            "dependsOn": [
                 "[concat('key-vault','-', parameters('environmentNameAbbreviation'))]"
             ],
             "copy": {
@@ -319,7 +322,7 @@
                     }
                 }
             },
-             "dependsOn": [
+            "dependsOn": [
                 "[concat('key-vault','-', parameters('environmentNameAbbreviation'))]"
             ],
             "copy": {
@@ -370,6 +373,9 @@
                     },
                     "storageKind": {
                         "value": "StorageV2"
+                    },
+                    "minimumTlsVersion": {
+                        "value": "TLS1_2"
                     }
                 }
             }
