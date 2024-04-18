@@ -13,6 +13,10 @@
         ChangePathwayResult = 9,
         ChangeSpecialismResult = 10,
         OpenPathwayRomm = 11,
-        OpenSpecialismRomm = 12
+        OpenSpecialismRomm = 12,
+        PathwayRommOutcome = 13,
+        SpecialismRommOutcome = 14,
+        OpenPathwayAppeal = 15,
+        OpenSpecialismAppeal = 16
     }
 }

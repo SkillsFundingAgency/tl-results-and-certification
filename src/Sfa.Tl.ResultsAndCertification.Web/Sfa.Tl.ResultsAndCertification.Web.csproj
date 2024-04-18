@@ -171,6 +171,66 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>AdminSearchLearners.resx</DependentUpon>
 		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminOpenPathwayAppeal.Designer.cs">
+		  <DependentUpon>AdminOpenPathwayAppeal.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminOpenSpecialismAppeal.Designer.cs">
+		  <DependentUpon>AdminOpenSpecialismAppeal.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminAddSpecialismRommOutcome.Designer.cs">
+		  <DependentUpon>AdminAddSpecialismRommOutcome.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminAddCoreRommOutcome.Designer.cs">
+		  <DependentUpon>AdminAddCoreRommOutcome.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminReviewSpecialismAppealChanges.Designer.cs">
+		  <DependentUpon>AdminReviewSpecialismAppealChanges.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminReviewCoreAppealChanges.Designer.cs">
+		  <DependentUpon>AdminReviewCoreAppealChanges.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminOpenSpecialismRommReviewChanges.Designer.cs">
+		  <DependentUpon>AdminOpenSpecialismRommReviewChanges.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminOpenPathwayRommReviewChanges.Designer.cs">
+		  <DependentUpon>AdminOpenPathwayRommReviewChanges.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminOpenSpecialismRomm.Designer.cs">
+		  <DependentUpon>AdminOpenSpecialismRomm.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminOpenPathwayRomm.Designer.cs">
+		  <DependentUpon>AdminOpenPathwayRomm.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminReviewChangesRommOutcomeSpecialism.Designer.cs">
+		  <DependentUpon>AdminReviewChangesRommOutcomeSpecialism.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminReviewChangesRommOutcomeCore.Designer.cs">
+		  <DependentUpon>AdminReviewChangesRommOutcomeCore.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminPostResults\AdminAddSpecialismRommOutcome.Designer.cs">
 		  <DependentUpon>AdminAddSpecialismRommOutcome.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -315,6 +375,11 @@
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 			<DependentUpon>VirusUploaded.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Content\Help\ServiceUnavailableMaintenance.Designer.cs">
+		  <DependentUpon>ServiceUnavailableMaintenance.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
 		</Compile>
 		<Compile Update="Content\Help\ServiceUnavailable.Designer.cs">
 			<DependentUpon>ServiceUnavailable.resx</DependentUpon>
@@ -1289,6 +1354,64 @@
 		<EmbeddedResource Update="Content\AdminDashboard\SearchLearners.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenPathwayAppeal.resx">
+		  <LastGenOutput>AdminOpenPathwayAppeal.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenSpecialismAppeal.resx">
+		  <LastGenOutput>AdminOpenSpecialismAppeal.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddSpecialismRommOutcome.resx">
+		  <LastGenOutput>AdminAddSpecialismRommOutcome.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddCoreRommOutcome.resx">
+		  <LastGenOutput>AdminAddCoreRommOutcome.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminReviewSpecialismAppealChanges.resx">
+		  <LastGenOutput>AdminReviewSpecialismAppealChanges.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminReviewCoreAppealChanges.resx">
+		  <LastGenOutput>AdminReviewCoreAppealChanges.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenSpecialismRommReviewChanges.resx">
+		  <LastGenOutput>AdminOpenSpecialismRommReviewChanges.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenPathwayRommReviewChanges.resx">
+		  <LastGenOutput>AdminOpenPathwayRommReviewChanges.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenSpecialismRomm.resx">
+		  <LastGenOutput>AdminOpenSpecialismRomm.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenPathwayRomm.resx">
+		  <LastGenOutput>AdminOpenPathwayRomm.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminReviewChangesRommOutcomeSpecialism.resx">
+		  <SubType>Designer</SubType>
+		  <LastGenOutput>AdminReviewChangesRommOutcomeSpecialism.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminReviewChangesRommOutcomeCore.resx">
+		  <SubType>Designer</SubType>
+		  <LastGenOutput>AdminReviewChangesRommOutcomeCore.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddSpecialismRommOutcome.resx">
+		  <LastGenOutput>AdminAddSpecialismRommOutcome.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddCoreRommOutcome.resx">
+		  <LastGenOutput>AdminAddCoreRommOutcome.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenSpecialismRommReviewChanges.resx">
 		  <LastGenOutput>AdminOpenSpecialismRommReviewChanges.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1396,6 +1519,10 @@
 		<EmbeddedResource Update="Content\Error\VirusUploaded.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>VirusUploaded.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\Help\ServiceUnavailableMaintenance.resx">
+		  <LastGenOutput>ServiceUnavailableMaintenance.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\Help\ServiceUnavailable.resx">
 			<LastGenOutput>ServiceUnavailable.Designer.cs</LastGenOutput>

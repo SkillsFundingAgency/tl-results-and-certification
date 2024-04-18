@@ -227,6 +227,7 @@
         public const string TermsAndConditions = "TermsAndConditions";
         public const string UserGuide = "UserGuide";
         public const string ServiceUnavailable = "ServiceUnavailable";
+        public const string ServiceUnavailableMaintenance = "ServiceUnavailableMaintenance";
 
         // Document
         public const string RegistrationDataFormatAndRulesGuide = "RegistrationDataFormatAndRulesGuide";
@@ -501,6 +502,18 @@
         public const string AdminOpenSpecialismRommReviewChanges = "AdminOpenSpecialismRommReviewChanges";
         public const string SubmitAdminOpenSpecialismRommReviewChanges = "SubmitAdminOpenSpecialismRommReviewChanges";
 
+        public const string AdminOpenPathwayAppealClear = "AdminOpenPathwayAppealClear";
+        public const string AdminOpenPathwayAppeal = "AdminOpenPathwayAppeal";
+        public const string SubmitAdminOpenPathwayAppeal = "SubmitAdminOpenPathwayAppeal";
+        public const string AdminOpenPathwayAppealReviewChanges = "AdminOpenPathwayAppealReviewChanges";
+        public const string SubmitAdminOpenPathwayAppealReviewChanges = "SubmitAdminOpenPathwayAppealReviewChanges";
+
+        public const string AdminOpenSpecialismAppealClear = "AdminOpenSpecialismAppealClear";
+        public const string AdminOpenSpecialismAppeal = "AdminOpenSpecialismAppeal";
+        public const string SubmitAdminOpenSpecialismAppeal = "SubmitAdminOpenSpecialismAppeal";
+        public const string AdminOpenSpecialismAppealReviewChanges = "AdminOpenSpecialismAppealReviewChanges";
+        public const string SubmitAdminOpenSpecialismAppealReviewChanges = "SubmitAdminOpenSpecialismAppealReviewChanges";
+
         public const string AdminAddCoreRommOutcomeClear = "AdminAddCoreRommOutcomeClear";
         public const string AdminAddCoreRommOutcome = "AdminAddCoreRommOutcome";
         public const string SubmitAddCoreRommOutcome = "SubmitAddCoreRommOutcome";
@@ -516,6 +529,12 @@
         public const string AdminAddRommOutcomeChangeGradeSpecialismClear = "AdminAddRommOutcomeChangeGradeSpecialismClear";
         public const string AdminAddRommOutcomeChangeGradeSpecialism = "AdminAddRommOutcomeChangeGradeSpecialism";
         public const string SubmitAdminAddRommOutcomeChangeGradeSpecialism = "SubmitAdminAddRommOutcomeChangeGradeSpecialism";
+
+        public const string AdminReviewChangesRommOutcomeCore = "AdminReviewChangesRommOutcomeCore";
+        public const string SubmitAdminReviewChangesRommOutcomeCore = "SubmitAdminReviewChangesRommOutcomeCore";
+
+        public const string AdminReviewChangesRommOutcomeSpecialism = "AdminReviewChangesRommOutcomeSpecialism";
+        public const string SubmitAdminReviewChangesRommOutcomeSpecialism = "SubmitAdminReviewChangesRommOutcomeSpecialism";
 
         #endregion
     }
