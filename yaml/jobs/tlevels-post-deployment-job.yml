@@ -1,0 +1,19 @@
+parameters:
+  - name: dependencies
+    type: object
+jobs:
+  - job: PostDeployment
+    pool:
+        name: 'Azure Pipelines'
+        vmImage: 'windows-2019'
+    dependsOn:
+      - "${{ each dependency in parameters.dependencies }}":
+         - "${{dependency}}" 
+    steps:
+      - task: GitHubRelease@1
+        displayName: 'GitHub release (create)'
+        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master') , eq(variables['System.JobAttempt'], '1'))
+        inputs:
+          gitHubConnection: SkillsFundingAgency
+          tagSource: userSpecifiedTag
+          tag: '$(Build.BuildNumber)'
