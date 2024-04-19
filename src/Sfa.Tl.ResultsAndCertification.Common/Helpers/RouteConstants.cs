@@ -132,7 +132,7 @@
         public const string ReregistrationConfirmation = "ReregistrationConfirmation";
 
         // Search Registration
-        public const string SearchRegistration = "SearchRegistration";
+        //public const string SearchRegistration = "SearchRegistration";
         public const string SubmitSearchRegistration = "SubmitSearchRegistration";
         public const string SearchRegistrationNotFound = "SearchRegistrationNotFound";
         public const string RegistrationDetails = "RegistrationDetails";
@@ -550,6 +550,17 @@
         public const string AdminReviewChangesAppealOutcomeSpecialism = "AdminReviewChangesAppealOutcomeSpecialism";
         public const string AdminAddAppealOutcomeChangeGradeSpecialismClear = "AdminAddAppealOutcomeChangeGradeSpecialismClear";
 
+
+        #endregion
+
+        #region Search registration
+
+        public const string SearchRegistrationClear = "SearchRegistrationClear";
+        public const string SearchRegistration = "SearchRegistration";
+        public const string SubmitSearchRegistrationSearchKey = "SubmitSearchRegistrationSearchKey";
+        public const string SubmitSearchRegistrationClearKey = "SubmitSearchRegistrationClearKey";
+        public const string SubmitSearchRegistrationFilters = "SubmitSearchRegistrationFilters";
+        public const string SubmitSearchRegistrationClearFilters = "SubmitSearchRegistrationClearFilters";
 
         #endregion
     }

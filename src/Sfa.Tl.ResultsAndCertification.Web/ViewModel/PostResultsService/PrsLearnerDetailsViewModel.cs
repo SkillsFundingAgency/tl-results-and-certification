@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             TlevelTitleLabel = PrsLearnerDetailsContent.Title_TLevel_Text;
         }
 
-        public int ProfileId { get; set; }        
+        public int ProfileId { get; set; }
 
         // Core Component
         public string CoreComponentDisplayName { get; set; }
@@ -40,9 +40,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                 {
                     BreadcrumbItems = new List<BreadcrumbItem>
                     {
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.StartPostResultsService, RouteName = RouteConstants.StartReviewsAndAppeals },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Search_For_Learner, RouteName = RouteConstants.PrsSearchLearner }
+                        new() { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
+                        new() { DisplayName = BreadcrumbContent.StartPostResultsService, RouteName = RouteConstants.StartReviewsAndAppeals },
+                        new()
+                        {
+                            DisplayName = BreadcrumbContent.Search_For_Learner,
+                            RouteName = SearchRegistrationRouteName,
+                            RouteAttributes =  SearchRegistrationRouteAttributes
+                        }
                     }
                 };
             }

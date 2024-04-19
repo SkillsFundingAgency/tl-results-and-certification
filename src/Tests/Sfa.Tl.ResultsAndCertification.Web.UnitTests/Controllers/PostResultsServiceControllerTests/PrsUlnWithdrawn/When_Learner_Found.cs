@@ -3,22 +3,33 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration.Enum;
 using System;
 using Xunit;
 using PrsUlnWithdrawnContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsUlnWithdrawn;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsUlnWithdrawn
 {
-    public class When_Cache_Found : TestSetup
+    public class When_Learner_Found : TestSetup
     {
         private readonly long _uln = 1234567890;
         private PrsUlnWithdrawnViewModel _mockCache = null;
 
         public override void Given()
         {
+            var learnerRecord = new FindPrsLearnerRecord
+            {
+                ProfileId = 1,
+                Firstname = "John",
+                Lastname = "Smith"
+            };
+
             _mockCache = new PrsUlnWithdrawnViewModel { Uln = _uln, Firstname = "Test", Lastname = "User", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Provider", ProviderUkprn = 985647841, TlevelTitle = "Title" };
-            CacheService.GetAndRemoveAsync<PrsUlnWithdrawnViewModel>(CacheKey).Returns(_mockCache);
+
+            Loader.FindPrsLearnerRecordAsync(AoUkprn, null, ProfileId).Returns(learnerRecord);
+            Loader.TransformLearnerDetailsTo<PrsUlnWithdrawnViewModel>(learnerRecord).Returns(_mockCache);
         }
 
         [Fact]
@@ -58,16 +69,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.SummaryTlevelTitle.Value.Should().Be(_mockCache.TlevelTitle);
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.PrsSearchLearner);
+            model.BackLink.RouteName.Should().Be(RouteConstants.SearchRegistration);
             model.BackLink.RouteAttributes.Count.Should().Be(1);
-            model.BackLink.RouteAttributes.TryGetValue(Constants.PopulateUln, out string routeValue);
-            routeValue.Should().Be(true.ToString());
-        }
-
-        [Fact]
-        public void Then_Expected_Methods_AreCalled()
-        {
-            CacheService.Received(1).GetAndRemoveAsync<PrsUlnWithdrawnViewModel>(CacheKey);
+            model.BackLink.RouteAttributes.TryGetValue(Constants.Type, out string routeValue);
+            routeValue.Should().Be(SearchRegistrationType.PostResult.ToString());
         }
     }
 }

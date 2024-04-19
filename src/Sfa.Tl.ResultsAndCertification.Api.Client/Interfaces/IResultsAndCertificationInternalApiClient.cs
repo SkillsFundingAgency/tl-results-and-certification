@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.SearchRegistration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
@@ -169,6 +170,14 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<bool> ProcessAdminOpenCoreAppealAsync(OpenCoreAppealRequest request);
 
         Task<bool> ProcessAdminOpenSpecialismAppealAsync(OpenSpecialismAppealRequest request);
+
+        #endregion
+
+        #region Registration search
+
+        public Task<SearchRegistrationFilters> GetSearchRegistrationFiltersAsync();
+
+        public Task<PagedResponse<SearchRegistrationDetail>> SearchRegistrationDetailsAsync(SearchRegistrationRequest request);
 
         #endregion
     }

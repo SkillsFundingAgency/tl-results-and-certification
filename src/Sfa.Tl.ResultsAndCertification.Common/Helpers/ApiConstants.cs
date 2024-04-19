@@ -147,12 +147,15 @@
         // Admin post results
         public const string ProcessAdminOpenPathwayRomm = "/api/adminpostresults/ProcessAdminOpenPathwayRomm";
         public const string ProcessAdminOpenSpecialismRomm = "/api/adminpostresults/ProcessAdminOpenSpecialismRomm";
-        
+
         public const string ProcessAdminReviewChangesRommOutcomeCore = "/api/adminpostresults/ProcessAdminReviewChangesRommOutcomeCore";
         public const string ProcessAdminReviewChangesRommOutcomeSpecialism = "/api/adminpostresults/ProcessAdminReviewChangesRommOutcomeSpecialism";
 
         public const string ProcessAdminOpenCoreAppeal = "/api/adminpostresults/ProcessAdminOpenCoreAppeal";
         public const string ProcessAdminOpenSpecialismAppeal = "/api/adminpostresults/ProcessAdminOpenSpecialismAppeal";
 
+        // Search registration
+        public const string GetSearchRegistrationFiltersUri = "/api/searchregistration/GetSearchRegistrationFilters";
+        public const string SearchRegistrationDetailsUri = "/api/searchregistration/SearchRegistrationDetails";
     }
 }

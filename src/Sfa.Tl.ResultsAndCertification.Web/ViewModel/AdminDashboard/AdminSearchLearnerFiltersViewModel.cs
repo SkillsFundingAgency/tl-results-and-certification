@@ -17,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 
         public bool IsApplyFiltersSelected
             => !string.IsNullOrWhiteSpace(Search)
+            || (SelectedProviderId.HasValue && SelectedProviderId.Value > 0)
             || (!AwardingOrganisations.IsNullOrEmpty() && AwardingOrganisations.Any(p => p.IsSelected))
             || (!AcademicYears.IsNullOrEmpty() && AcademicYears.Any(p => p.IsSelected));
     }

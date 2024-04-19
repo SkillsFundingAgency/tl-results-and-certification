@@ -711,6 +711,11 @@
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="Content\SearchRegistration\SearchRegistration.Designer.cs">
+		  <DependentUpon>SearchRegistration.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\StatementOfAchievement\ChangeComponentAchievements.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
@@ -1831,6 +1836,10 @@
 		<EmbeddedResource Update="Content\Result\UploadUnsuccessful.resx">
 			<LastGenOutput>UploadUnsuccessful.Designer.cs</LastGenOutput>
 			<Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\SearchRegistration\SearchRegistration.resx">
+		  <LastGenOutput>SearchRegistration.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\StatementOfAchievement\ChangeComponentAchievements.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>

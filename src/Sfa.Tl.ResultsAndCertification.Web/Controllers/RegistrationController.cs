@@ -532,7 +532,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("search-for-registration", Name = RouteConstants.SearchRegistration)]
+        [Route("search-for-registration", Name = "aaaa")]
         public async Task<IActionResult> SearchRegistration()
         {
             var defaultValue = await _cacheService.GetAndRemoveAsync<string>(Constants.RegistrationSearchCriteria);

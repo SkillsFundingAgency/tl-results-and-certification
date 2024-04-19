@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryList;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +29,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public bool IsActiveWithOtherAo { get; set; }
         public bool HasActiveAssessmentEntriesForSpecialisms { get; set; }
 
-        public bool ShowAssessmentEntriesLink { get { return Status == RegistrationPathwayStatus.Active;  } }
-        
+        public bool ShowAssessmentEntriesLink { get { return Status == RegistrationPathwayStatus.Active; } }
+
         private string ChangeStatusRouteName => Status == RegistrationPathwayStatus.Active ? RouteConstants.AmendActiveRegistration : RouteConstants.AmendWithdrawRegistration;
         private string TagCssClassName => Status == RegistrationPathwayStatus.Active ? "govuk-tag--green" : "govuk-tag--blue";
         private string ActionText { get { return Status == RegistrationPathwayStatus.Active ? RegistrationDetailsContent.Change_Action_Link_Text : null; } }
@@ -47,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 
         public string GetSpecialismHiddenText => (SpecialismsDisplayName == null || !SpecialismsDisplayName.Any()) ? RegistrationDetailsContent.Specialism_None_Selected_Text : null;
 
-        public string GetSpecialismRouteName => SpecialismsDisplayName != null && SpecialismsDisplayName.Any() 
+        public string GetSpecialismRouteName => SpecialismsDisplayName != null && SpecialismsDisplayName.Any()
             ? (HasActiveAssessmentEntriesForSpecialisms ? RouteConstants.ChangeSpecialismRestriction : RouteConstants.ChangeRegistrationSpecialismQuestion)
             : RouteConstants.ChangeRegistrationSpecialisms;
 
@@ -59,13 +60,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
                 {
                     BreadcrumbItems = new List<BreadcrumbItem>
                     {
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Registration_Dashboard, RouteName = RouteConstants.RegistrationDashboard },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Search_For_Registration, RouteName = RouteConstants.SearchRegistration },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Registration_Details }
+                        new() { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
+                        new() { DisplayName = BreadcrumbContent.Registration_Dashboard, RouteName = RouteConstants.RegistrationDashboard },
+                        new()
+                        {
+                            DisplayName = BreadcrumbContent.Search_For_Registration,
+                            RouteName = SearchRegistrationRouteName,
+                            RouteAttributes =  SearchRegistrationRouteAttributes
+                        },
+                        new() { DisplayName = BreadcrumbContent.Registration_Details }
                     }
                 };
             }
         }
+
+        public string SearchRegistrationRouteName => RouteConstants.SearchRegistration;
+
+        public Dictionary<string, string> SearchRegistrationRouteAttributes => new()
+        {
+            [Constants.Type] = SearchRegistrationType.Registration.ToString()
+        };
     }
 }

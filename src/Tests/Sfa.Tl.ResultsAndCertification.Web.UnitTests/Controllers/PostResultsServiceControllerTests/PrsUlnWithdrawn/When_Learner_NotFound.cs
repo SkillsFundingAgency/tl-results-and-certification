@@ -2,17 +2,16 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsUlnWithdrawn
 {
-    public class When_NoCache_Found : TestSetup
+    public class When_Learner_NotFound : TestSetup
     {
-        private readonly PrsUlnWithdrawnViewModel _mockCache = null;
         public override void Given()
         {
-            CacheService.GetAndRemoveAsync<PrsUlnWithdrawnViewModel>(CacheKey).Returns(_mockCache);
+            Loader.FindPrsLearnerRecordAsync(AoUkprn, null, ProfileId).Returns(null as FindPrsLearnerRecord);
         }
 
         [Fact]
@@ -20,12 +19,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.PageNotFound);
-        }
-
-        [Fact]
-        public void Then_Expected_Method_IsCalled()
-        {
-            CacheService.Received(1).GetAndRemoveAsync<PrsUlnWithdrawnViewModel>(CacheKey);
         }
     }
 }

@@ -1,0 +1,43 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration.SearchRegistrationFiltersViewModel;
+@using Sfa.Tl.ResultsAndCertification.Web.Content.SearchRegistration;
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+<form asp-route="@RouteConstants.SubmitSearchRegistrationFilters">
+    <h2 class="govuk-heading-m govuk-!-padding-top-4">@SearchRegistration.Filters_Heading </h2>
+
+    <div class="govuk-form-group">
+        <label class="govuk-label govuk-label--s" for="search">
+            @SearchRegistration.Filters_Provider_Name
+        </label>
+        <p class="govuk-visually-hidden">@SearchRegistration.AutoComplete_Help_Text</p>
+        <input id="search" name="Search" class="govuk-input" asp-for="Search" />
+        <input id="previousSearch" type="hidden" asp-for="Search" />
+    </div>
+
+    <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-margin-bottom-0">
+                @SearchRegistration.Filters_Start_Year
+            </legend>
+            <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                @foreach (var academicYear in Model?.AcademicYears?.Select((value, i) => (value, i)))
+                {
+                    var elementId = (academicYear.i > 0) ? "selectedacademicyear-" + academicYear.i : "selectedacademicyear";
+                    <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.AcademicYears[academicYear.i].IsSelected">
+                        <label class="govuk-label govuk-checkboxes__label" for="@elementId">
+                            @academicYear.value.Name
+                        </label>
+                    </div>
+                    <input type="hidden" asp-for="@Model.AcademicYears[@academicYear.i].Id" />
+                    <input type="hidden" asp-for="@Model.AcademicYears[@academicYear.i].Name" />
+                }
+            </div>
+        </fieldset>
+    </div>
+
+    <div class="govuk-button-group">
+        <button id="applyFiltersButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@SearchRegistration.Button_Apply_Filters</button>
+        <button id="clearFiltersButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.SubmitSearchRegistrationClearFilters">@SearchRegistration.Button_Clear_Filters</button>
+    </div>
+</form>

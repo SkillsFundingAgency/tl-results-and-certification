@@ -96,31 +96,32 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("post-results-learner-withdrawn", Name = RouteConstants.PrsUlnWithdrawn)]
-        public async Task<IActionResult> PrsUlnWithdrawnAsync()
+        [Route("post-results-learner-withdrawn/{profileId}", Name = RouteConstants.PrsUlnWithdrawn)]
+        public async Task<IActionResult> PrsUlnWithdrawnAsync(int profileId)
         {
-            var cacheModel = await _cacheService.GetAndRemoveAsync<PrsUlnWithdrawnViewModel>(CacheKey);
-            if (cacheModel == null)
+            var prsLearnerRecord = await _postResultsServiceLoader.FindPrsLearnerRecordAsync(User.GetUkPrn(), null, profileId);
+            if (prsLearnerRecord == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PrsUlnWithdrawnViewModel from redis cache in post results service uln withdrawn page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No post-result learner details found. Method: PrsUlnWithdrawnAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            return View(cacheModel);
-        }        
+            var prsUlnWithdrawnViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsUlnWithdrawnViewModel>(prsLearnerRecord);
+            return View(prsUlnWithdrawnViewModel);
+        }
 
         [HttpGet]
-        [Route("post-results-no-results", Name = RouteConstants.PrsNoResults)]
-        public async Task<IActionResult> PrsNoResultsAsync()
+        [Route("post-results-no-results/{profileId}", Name = RouteConstants.PrsNoResults)]
+        public async Task<IActionResult> PrsNoResultsAsync(int profileId)
         {
-            var cacheModel = await _cacheService.GetAndRemoveAsync<PrsNoResultsViewModel>(CacheKey);
-            if (cacheModel == null)
+            var prsLearnerRecord = await _postResultsServiceLoader.FindPrsLearnerRecordAsync(User.GetUkPrn(), null, profileId);
+            if (prsLearnerRecord == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PrsNoResultsViewModel from redis cache in post results service no results page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No post-result learner details found. Method: PrsNoResultsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-
-            return View(cacheModel);
+            var prsNoResultsViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsNoResultsViewModel>(prsLearnerRecord);
+            return View(prsNoResultsViewModel);
         }
 
         [HttpGet]
@@ -367,7 +368,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
-            
+
             if (model.AreYouSureToCancel.Value)
             {
                 await _cacheService.RemoveAsync<PrsRommCheckAndSubmitViewModel>(CacheKey);
