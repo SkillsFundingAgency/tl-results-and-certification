@@ -201,8 +201,44 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public Task<AdminAddCoreAppealOutcomeViewModel> GetAdminAddPathwayAppealOutcomeAsync(int registrationPathwayId, int pathwayAssessmentId)
             => GetAndMapLearnerRecordAsync<AdminAddCoreAppealOutcomeViewModel>(registrationPathwayId, pathwayAssessmentId);
 
+        public async Task<AdminAddAppealOutcomeChangeGradeCoreViewModel> GetAdminAddAppealOutcomeChangeGradeCoreAsync(int registrationPathwayId, int assessmentId)
+        {
+            var viewmodel = await GetAdminAddResultAsync<AdminAddAppealOutcomeChangeGradeCoreViewModel>(registrationPathwayId, assessmentId, LookupCategory.PathwayComponentGrade, false);
+            viewmodel.Grades = GetAdminAddAppealOutcomeChangeGradeCoreGrades(viewmodel.Grades);
+            viewmodel.Grades.Remove(viewmodel.Grades.FirstOrDefault(t => t.Value == viewmodel.Grade));
+            return viewmodel;
+        }
+
+        public async Task LoadAdminAddAppealOutcomeChangeGradeCoreGrades(AdminAddAppealOutcomeChangeGradeCoreViewModel model)
+         => model.Grades = GetAdminAddAppealOutcomeChangeGradeCoreGrades(await GetAdminChangeResultGrades(LookupCategory.PathwayComponentGrade, model.Grade, true));
+
+        private List<LookupViewModel> GetAdminAddAppealOutcomeChangeGradeCoreGrades(List<LookupViewModel> Grades)
+        {
+            return Grades.Where(t => !t.Code.Equals(Constants.PathwayComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase)
+            && !t.Code.Equals(Constants.PathwayComponentGradeXNoResultCode, StringComparison.InvariantCultureIgnoreCase)
+            && !t.Code.Equals(Constants.NotReceived, StringComparison.InvariantCultureIgnoreCase)).ToList();
+        }
+
         public Task<AdminAddSpecialismAppealOutcomeViewModel> GetAdminAddSpecialismAppealOutcomeAsync(int registrationPathwayId, int pathwayAssessmentId)
             => GetAndMapLearnerRecordAsync<AdminAddSpecialismAppealOutcomeViewModel>(registrationPathwayId, pathwayAssessmentId);
+
+        public async Task<AdminAddAppealOutcomeChangeGradeSpecialismViewModel> GetAdminAddAppealOutcomeChangeGradeSpecialismAsync(int registrationPathwayId, int assessmentId)
+        {
+            var viewmodel = await GetAdminAddResultAsync<AdminAddAppealOutcomeChangeGradeSpecialismViewModel>(registrationPathwayId, assessmentId, LookupCategory.SpecialismComponentGrade, false);
+            viewmodel.Grades = GetAdminAddAppealOutcomeChangeGradeSpecialismGrades(viewmodel.Grades);
+            viewmodel.Grades.Remove(viewmodel.Grades.FirstOrDefault(t => t.Value == viewmodel.Grade));
+            return viewmodel;
+        }
+
+        public async Task LoadAdminAddAppealOutcomeChangeGradeSpecialismGrades(AdminAddAppealOutcomeChangeGradeSpecialismViewModel model)
+            => model.Grades = GetAdminAddAppealOutcomeChangeGradeSpecialismGrades(await GetAdminChangeResultGrades(LookupCategory.SpecialismComponentGrade, model.Grade, true));
+
+        private List<LookupViewModel> GetAdminAddAppealOutcomeChangeGradeSpecialismGrades(List<LookupViewModel> Grades)
+        {
+            return Grades.Where(t => !t.Code.Equals(Constants.SpecialismComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase)
+            && !t.Code.Equals(Constants.SpecialismComponentGradeXNoResultCode, StringComparison.InvariantCultureIgnoreCase)
+            && !t.Code.Equals(Constants.NotReceived, StringComparison.InvariantCultureIgnoreCase)).ToList();
+        }
 
     }
 }

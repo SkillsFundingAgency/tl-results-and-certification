@@ -56,6 +56,16 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminAddAppealOutcomeChangeGradeCore.Designer.cs">
+		  <DependentUpon>AdminAddAppealOutcomeChangeGradeCore.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminAddAppealOutcomeChangeGradeSpecialism.Designer.cs">
+		  <DependentUpon>AdminAddAppealOutcomeChangeGradeSpecialism.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminPostResults\AdminAddRommOutcomeChangeGradeSpecialism.Designer.cs">
 		  <DependentUpon>AdminAddRommOutcomeChangeGradeSpecialism.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -1265,6 +1275,14 @@
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminPostResults\AdminAddCoreAppealOutcome.resx">
 		  <LastGenOutput>AdminAddCoreAppealOutcome.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddAppealOutcomeChangeGradeCore.resx">
+		  <LastGenOutput>AdminAddAppealOutcomeChangeGradeCore.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddAppealOutcomeChangeGradeSpecialism.resx">
+		  <LastGenOutput>AdminAddAppealOutcomeChangeGradeSpecialism.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminPostResults\AdminAddRommOutcomeChangeGradeSpecialism.resx">
