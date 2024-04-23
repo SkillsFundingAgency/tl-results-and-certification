@@ -1,5 +1,4 @@
-﻿using AutoMapper.Configuration.Annotations;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
@@ -568,6 +567,53 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         #endregion
 
+        #region Change Appeal Grade Pathway
+
+        [HttpGet]
+        [Route("admin/add-appeal-outcome-change-grade-core-clear/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.AdminAddAppealOutcomeChangeGradeCoreClear)]
+        public async Task<IActionResult> AdminAddAppealOutcomeChangeGradeCoreClearAsync(int registrationPathwayId, int assessmentId)
+        {
+            await _cacheService.RemoveAsync<AdminAddAppealOutcomeChangeGradeCoreViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AdminAddAppealOutcomeChangeGradeCore, new { registrationPathwayId, assessmentId });
+        }
+
+
+        [HttpGet]
+        [Route("admin/add-appeal-outcome-change-grade-core/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.AdminAddAppealOutcomeChangeGradeCore)]
+        public async Task<IActionResult> AdminAddAppealOutcomeChangeGradeCoreAsync(int registrationPathwayId, int assessmentId)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminAddAppealOutcomeChangeGradeCoreViewModel>(CacheKey);
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
+            AdminAddAppealOutcomeChangeGradeCoreViewModel viewModel = await _loader.GetAdminAddAppealOutcomeChangeGradeCoreAsync(registrationPathwayId, assessmentId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No core result details found. Method: AddResultCoreAsync({registrationPathwayId}, {assessmentId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/add-appeal-outcome-change-grade-core", Name = RouteConstants.SubmitAdminAddAppealOutcomeChangeGradeCore)]
+        public async Task<IActionResult> AdminAddAppealOutcomeChangeGradeCoreAsync(AdminAddAppealOutcomeChangeGradeCoreViewModel model)
+        {
+            await _loader.LoadAdminAddAppealOutcomeChangeGradeCoreGrades(model);
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            await _cacheService.SetAsync(CacheKey, model);
+            return RedirectToRoute(RouteConstants.AdminReviewChangesAppealOutcomeCore);
+        }
+
+        #endregion
+
         #region Add Appeal Outcome Specialism
 
         [HttpGet]
@@ -598,5 +644,54 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         #endregion
+
+        #region Change Appeal Grade Specialism
+
+        [HttpGet]
+        [Route("admin/add-appeal-outcome-change-grade-specialism-clear/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.AdminAddAppealOutcomeChangeGradeSpecialismClear)]
+        public async Task<IActionResult> AdminAddAppealOutcomeChangeGradeSpecialismClearAsync(int registrationPathwayId, int assessmentId)
+        {
+            await _cacheService.RemoveAsync<AdminAddAppealOutcomeChangeGradeSpecialismViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AdminAddAppealOutcomeChangeGradeSpecialism, new { registrationPathwayId, assessmentId });
+        }
+
+
+        [HttpGet]
+        [Route("admin/add-appeal-outcome-change-grade-specialism/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.AdminAddAppealOutcomeChangeGradeSpecialism)]
+        public async Task<IActionResult> AdminAddAppealOutcomeChangeGradeSpecialismAsync(int registrationPathwayId, int assessmentId)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminAddAppealOutcomeChangeGradeSpecialismViewModel>(CacheKey);
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
+            AdminAddAppealOutcomeChangeGradeSpecialismViewModel viewModel = await _loader.GetAdminAddAppealOutcomeChangeGradeSpecialismAsync(registrationPathwayId, assessmentId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No core result details found. Method: AddResultCoreAsync({registrationPathwayId}, {assessmentId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/add-romm-outcome-change-grade-specialism", Name = RouteConstants.SubmitAdminAddRommOutcomeChangeGradeSpecialism)]
+        public async Task<IActionResult> AdminAddAppealOutcomeChangeGradeSpecialismAsync(AdminAddAppealOutcomeChangeGradeSpecialismViewModel model)
+        {
+            await _loader.LoadAdminAddAppealOutcomeChangeGradeSpecialismGrades(model);
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await _cacheService.SetAsync(CacheKey, model);
+            return RedirectToRoute(RouteConstants.AdminReviewChangesAppealOutcomeSpecialism);
+        }
+
+        #endregion
+
     }
 }
