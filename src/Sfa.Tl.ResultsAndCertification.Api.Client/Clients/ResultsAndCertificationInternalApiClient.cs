@@ -534,6 +534,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         public Task<bool> ProcessAdminOpenSpecialismAppealAsync(OpenSpecialismAppealRequest request)
              => PostAsync<OpenSpecialismAppealRequest, bool>(ApiConstants.ProcessAdminOpenSpecialismAppeal, request);
 
+        public Task<bool> ProcessAdminReviewChangesAppealOutcomeCoreAsync(ReviewChangesAppealOutcomeCoreRequest request)
+            => PostAsync<ReviewChangesAppealOutcomeCoreRequest, bool>(ApiConstants.ProcessAdminReviewChangesAppealOutcomeCore, request);
+
+        public Task<bool> ProcessAdminReviewChangesAppealOutcomeSpecialismAsync(ReviewChangesAppealOutcomeSpecialismRequest request)
+          => PostAsync<ReviewChangesAppealOutcomeSpecialismRequest, bool>(ApiConstants.ProcessAdminReviewChangesAppealOutcomeSpecialism, request);
+
         #endregion
 
         #region Private Methods

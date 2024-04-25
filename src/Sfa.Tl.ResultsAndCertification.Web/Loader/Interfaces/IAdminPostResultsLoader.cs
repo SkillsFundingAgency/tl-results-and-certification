@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 
         Task<AdminAddRommOutcomeChangeGradeSpecialismViewModel> GetAdminAddRommOutcomeChangeGradeSpecialismAsync(int registrationPathwayId, int assessmentId);
         Task LoadAdminAddRommOutcomeChangeGradeSpecialismGrades(AdminAddRommOutcomeChangeGradeSpecialismViewModel model);
-             
+
         AdminReviewChangesRommOutcomeCoreViewModel GetAdminReviewChangesRommOutcomeCoreAsync<TAddRommOutcomeChangeGradeCoreViewModel>(TAddRommOutcomeChangeGradeCoreViewModel revieChangeRommOutcomeCoreViewModel);
         Task<bool> ProcessAdminReviewChangesRommOutcomeCoreAsync(AdminReviewChangesRommOutcomeCoreViewModel revieChangeRommOutcomeCoreViewModel);
 
@@ -45,6 +45,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<bool> ProcessAdminOpenCoreAppealAsync(AdminAppealCoreReviewChangesViewModel openppealCoreReviewChangesViewModel);
 
         Task<bool> ProcessAdminOpenSpecialismAppealAsync(AdminAppealSpecialismReviewChangesViewModel openppealSpecialismReviewChangesViewModel);
+
+        Task<AdminAddCoreAppealOutcomeViewModel> GetAdminAddPathwayAppealOutcomeAsync(int registrationPathwayId, int assessmentId);
+
+        Task<AdminAddAppealOutcomeChangeGradeCoreViewModel> GetAdminAddAppealOutcomeChangeGradeCoreAsync(int registrationPathwayId, int assessmentId);
+        Task LoadAdminAddAppealOutcomeChangeGradeCoreGrades(AdminAddAppealOutcomeChangeGradeCoreViewModel model);
+
+        Task<AdminAddSpecialismAppealOutcomeViewModel> GetAdminAddSpecialismAppealOutcomeAsync(int registrationPathwayId, int assessmentId);
+
+        Task<AdminAddAppealOutcomeChangeGradeSpecialismViewModel> GetAdminAddAppealOutcomeChangeGradeSpecialismAsync(int registrationPathwayId, int assessmentId);
+        Task LoadAdminAddAppealOutcomeChangeGradeSpecialismGrades(AdminAddAppealOutcomeChangeGradeSpecialismViewModel model);
+
+        AdminReviewChangesAppealOutcomeCoreViewModel GetAdminReviewChangesAppealOutcomeCoreAsync<TAddAppealOutcomeChangeGradeCoreViewModel>(TAddAppealOutcomeChangeGradeCoreViewModel addAppealcachedModel);
+
+        Task<bool> ProcessAdminReviewChangesAppealOutcomeCoreAsync(AdminReviewChangesAppealOutcomeCoreViewModel model);
+
+        AdminReviewChangesAppealOutcomeSpecialismViewModel GetAdminReviewChangesAppealOutcomeSpecialismAsync<TAddSpecialismOutcomeChangeGradeSpecialismViewModel>(TAddSpecialismOutcomeChangeGradeSpecialismViewModel addAppealcachedModel);
+
+        Task<bool> ProcessAdminReviewChangesAppealOutcomeSpecialismAsync(AdminReviewChangesAppealOutcomeSpecialismViewModel model);
 
     }
 }

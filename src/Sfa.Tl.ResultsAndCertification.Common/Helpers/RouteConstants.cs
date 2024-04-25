@@ -536,6 +536,26 @@
         public const string AdminReviewChangesRommOutcomeSpecialism = "AdminReviewChangesRommOutcomeSpecialism";
         public const string SubmitAdminReviewChangesRommOutcomeSpecialism = "SubmitAdminReviewChangesRommOutcomeSpecialism";
 
+        public const string AdminAddCoreAppealOutcomeClear = "AdminAddCoreAppealOutcomeClear";
+        public const string AdminAddCoreAppealOutcome = "AdminAddCoreAppealOutcome";
+        public const string SubmitAddCoreAppealOutcome = "SubmitAddCoreAppealOutcome";
+
+        public const string AdminAddSpecialismAppealOutcomeClear = "AdminAddSpecialismAppealOutcomeClear";
+        public const string AdminAddSpecialismAppealOutcome = "AdminAddSpecialismAppealOutcome";
+        public const string SubmitAddSpecialismAppealOutcome = "SubmitAddSpecialismAppealOutcome";
+
+        public const string AdminAddAppealOutcomeChangeGradeCoreClear = "AdminAddAppealOutcomeChangeGradeCoreClear";
+        public const string AdminAddAppealOutcomeChangeGradeCore = "AdminAddAppealOutcomeChangeGradeCore";
+        public const string AdminReviewChangesAppealOutcomeCore = "AdminReviewChangesAppealOutcomeCore";
+        public const string SubmitAdminAddAppealOutcomeChangeGradeCore = "SubmitAdminAddAppealOutcomeChangeGradeCore";
+        public const string SubmitAdminReviewChangesAppealOutcomeCore = "SubmitAdminReviewChangesAppealOutcomeCore";
+
+        public const string AdminReviewChangesAppealOutcomeSpecialism = "AdminReviewChangesAppealOutcomeSpecialism";
+        public const string AdminAddAppealOutcomeChangeGradeSpecialismClear = "AdminAddAppealOutcomeChangeGradeSpecialismClear";
+        public const string AdminAddAppealOutcomeChangeGradeSpecialism = "AdminAddAppealOutcomeChangeGradeSpecialism";
+        public const string SubmitAdminAddAppealOutcomeChangeGradeSpecialism = "SubmitAdminAddAppealOutcomeChangeGradeSpecialism";
+        public const string SubmitAdminReviewChangesAppealOutcomeSpecialism = "SubmitAdminReviewChangesAppealOutcomeSpecialism";
+
         #endregion
     }
 }
