@@ -178,9 +178,6 @@
         public const string ResultsNoRecordsFound = "ResultsNoRecordsFound";
 
         // Search Assessment Entries
-        public const string SearchAssessments = "SearchAssessments";
-        public const string SubmitSearchAssessments = "SubmitSearchAssessments";
-        public const string SearchAssessmentsNotFound = "SearchAssessmentsNotFound";
         public const string AssessmentDetails = "AssessmentDetails";
         public const string AssessmentWithdrawnDetails = "AssessmentWithdrawnDetails";
 
