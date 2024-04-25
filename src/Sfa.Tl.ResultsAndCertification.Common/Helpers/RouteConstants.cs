@@ -548,12 +548,13 @@
         public const string AdminAddAppealOutcomeChangeGradeCore = "AdminAddAppealOutcomeChangeGradeCore";
         public const string AdminReviewChangesAppealOutcomeCore = "AdminReviewChangesAppealOutcomeCore";
         public const string SubmitAdminAddAppealOutcomeChangeGradeCore = "SubmitAdminAddAppealOutcomeChangeGradeCore";
+        public const string SubmitAdminReviewChangesAppealOutcomeCore = "SubmitAdminReviewChangesAppealOutcomeCore";
 
         public const string AdminReviewChangesAppealOutcomeSpecialism = "AdminReviewChangesAppealOutcomeSpecialism";
         public const string AdminAddAppealOutcomeChangeGradeSpecialismClear = "AdminAddAppealOutcomeChangeGradeSpecialismClear";
         public const string AdminAddAppealOutcomeChangeGradeSpecialism = "AdminAddAppealOutcomeChangeGradeSpecialism";
         public const string SubmitAdminAddAppealOutcomeChangeGradeSpecialism = "SubmitAdminAddAppealOutcomeChangeGradeSpecialism";
-
+        public const string SubmitAdminReviewChangesAppealOutcomeSpecialism = "SubmitAdminReviewChangesAppealOutcomeSpecialism";
 
         #endregion
     }

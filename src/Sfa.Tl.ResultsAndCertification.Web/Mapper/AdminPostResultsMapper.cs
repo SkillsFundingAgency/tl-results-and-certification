@@ -405,6 +405,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                     };
                 }));
 
+            CreateMap<AdminAddAppealOutcomeChangeGradeCoreViewModel, AdminReviewChangesAppealOutcomeCoreViewModel>()
+              .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+              .ForMember(d => d.PathwayAssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
+              .ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))
+              .ForMember(d => d.SelectedGradeId, opts => opts.MapFrom(s => s.SelectedGradeId))
+              .ForMember(d => d.SummaryGrade, opts => opts.MapFrom(s => s.SummaryGrade))
+              .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.Grade))
+              .ForMember(d => d.Learner, opts => opts.MapFrom(s => s.Learner))
+              .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+              .ForMember(d => d.Provider, opts => opts.MapFrom(s => s.Provider))
+              .ForMember(d => d.Tlevel, opts => opts.MapFrom(s => s.Tlevel))
+              .ForMember(d => d.StartYear, opts => opts.MapFrom(s => s.StartYear))
+              .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => s.ExamPeriod));
+
+            CreateMap<AdminAddCoreAppealOutcomeViewModel, AdminReviewChangesAppealOutcomeCoreViewModel>()
+             .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+             .ForMember(d => d.PathwayAssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
+             .ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))
+             .ForMember(d => d.SummaryGrade, opts => opts.MapFrom(s => s.SummaryGrade))
+             .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.Grade))
+             .ForMember(d => d.Learner, opts => opts.MapFrom(s => s.Learner))
+             .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+             .ForMember(d => d.Provider, opts => opts.MapFrom(s => s.Provider))
+             .ForMember(d => d.Tlevel, opts => opts.MapFrom(s => s.Tlevel))
+             .ForMember(d => d.StartYear, opts => opts.MapFrom(s => s.StartYear))
+             .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => s.ExamPeriod));
+
             CreateMap<AdminLearnerRecord, AdminAddSpecialismAppealOutcomeViewModel>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
@@ -435,6 +462,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                         _ => string.Empty
                     };
                 }));
+
+            CreateMap<AdminAddAppealOutcomeChangeGradeSpecialismViewModel, AdminReviewChangesAppealOutcomeSpecialismViewModel>()
+             .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+             .ForMember(d => d.SpecialismAssessmentId, opts => opts.MapFrom(s => s.SpecialismAssessmentId))
+             .ForMember(d => d.SpecialismResultId, opts => opts.MapFrom(s => s.SpecialismResultId))
+             .ForMember(d => d.SelectedGradeId, opts => opts.MapFrom(s => s.SelectedGradeId))
+             .ForMember(d => d.SummaryGrade, opts => opts.MapFrom(s => s.SummaryGrade))
+             .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.Grade))
+             .ForMember(d => d.Learner, opts => opts.MapFrom(s => s.Learner))
+             .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+             .ForMember(d => d.Provider, opts => opts.MapFrom(s => s.Provider))
+             .ForMember(d => d.Tlevel, opts => opts.MapFrom(s => s.Tlevel))
+             .ForMember(d => d.StartYear, opts => opts.MapFrom(s => s.StartYear))
+             .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => s.ExamPeriod));
+
+            CreateMap<AdminAddSpecialismAppealOutcomeViewModel, AdminReviewChangesAppealOutcomeSpecialismViewModel>()
+              .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+              .ForMember(d => d.SpecialismAssessmentId, opts => opts.MapFrom(s => s.SpecialismAssessmentId))
+              .ForMember(d => d.SpecialismResultId, opts => opts.MapFrom(s => s.SpecialismResultId))
+              .ForMember(d => d.SummaryGrade, opts => opts.MapFrom(s => s.SummaryGrade))
+              .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.Grade))
+              .ForMember(d => d.Learner, opts => opts.MapFrom(s => s.Learner))
+              .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+              .ForMember(d => d.Provider, opts => opts.MapFrom(s => s.Provider))
+              .ForMember(d => d.Tlevel, opts => opts.MapFrom(s => s.Tlevel))
+              .ForMember(d => d.StartYear, opts => opts.MapFrom(s => s.StartYear))
+              .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => s.ExamPeriod));
 
         }
 

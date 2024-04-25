@@ -677,7 +677,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("admin/add-romm-outcome-change-grade-specialism", Name = RouteConstants.SubmitAdminAddRommOutcomeChangeGradeSpecialism)]
+        [Route("admin/add-appeal-outcome-change-grade-specialism", Name = RouteConstants.SubmitAdminAddAppealOutcomeChangeGradeSpecialism)]
         public async Task<IActionResult> AdminAddAppealOutcomeChangeGradeSpecialismAsync(AdminAddAppealOutcomeChangeGradeSpecialismViewModel model)
         {
             await _loader.LoadAdminAddAppealOutcomeChangeGradeSpecialismGrades(model);
@@ -690,6 +690,91 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync(CacheKey, model);
             return RedirectToRoute(RouteConstants.AdminReviewChangesAppealOutcomeSpecialism);
         }
+
+        #endregion
+
+        #region Review Change appeal
+
+        [HttpGet]
+        [Route("admin/add-appeal-outcome-change-grade-review-changes-core", Name = RouteConstants.AdminReviewChangesAppealOutcomeCore)]
+        public async Task<IActionResult> AdminReviewChangesAppealOutcomeCoreAsync(bool isSameGrade)
+        {
+            var changeGradeCachedModel = await _cacheService.GetAsync<AdminAddAppealOutcomeChangeGradeCoreViewModel>(CacheKey);
+            var addAppealcachedModel = await _cacheService.GetAsync<AdminAddCoreAppealOutcomeViewModel>(CacheKey);
+            if (changeGradeCachedModel == null && addAppealcachedModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            AdminReviewChangesAppealOutcomeCoreViewModel viewModel = isSameGrade ? _loader.GetAdminReviewChangesAppealOutcomeCoreAsync(addAppealcachedModel) : _loader.GetAdminReviewChangesAppealOutcomeCoreAsync(changeGradeCachedModel);
+
+            viewModel.IsSameGrade = isSameGrade;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/add-appeal-outcome-change-grade-review-changes-core", Name = RouteConstants.SubmitAdminReviewChangesAppealOutcomeCore)]
+        public async Task<IActionResult> AdminReviewChangesAppealOutcomeCoreAsync(AdminReviewChangesAppealOutcomeCoreViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            bool success = await _loader.ProcessAdminReviewChangesAppealOutcomeCoreAsync(model);
+            if (!success)
+            {
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+            }
+
+            string adminDashboardCacheKey = CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey);
+
+            var notificationBanner = new AdminNotificationBannerModel(AdminReviewChangesAppealOutcomeCore.Notification_Message_Appeal_Outcome_Added);
+            await _cacheService.SetAsync<NotificationBannerModel>(adminDashboardCacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
+        }
+
+        [HttpGet]
+        [Route("admin/add-appeal-outcome-change-grade-review-changes-specialism", Name = RouteConstants.AdminReviewChangesAppealOutcomeSpecialism)]
+        public async Task<IActionResult> AdminReviewChangesAppealOutcomeSpecialismAsync(bool isSameGrade = false)
+        {
+            var changeGradeCachedModel = await _cacheService.GetAsync<AdminAddAppealOutcomeChangeGradeSpecialismViewModel>(CacheKey);
+            var addAppealcachedModel = await _cacheService.GetAsync<AdminAddSpecialismAppealOutcomeViewModel>(CacheKey);
+
+            if (changeGradeCachedModel == null && addAppealcachedModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            AdminReviewChangesAppealOutcomeSpecialismViewModel viewModel = isSameGrade ? _loader.GetAdminReviewChangesAppealOutcomeSpecialismAsync(addAppealcachedModel) : _loader.GetAdminReviewChangesAppealOutcomeSpecialismAsync(changeGradeCachedModel);
+            viewModel.IsSameGrade = isSameGrade;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/add-Appeal-outcome-change-grade-review-changes-specialism", Name = RouteConstants.SubmitAdminReviewChangesAppealOutcomeSpecialism)]
+        public async Task<IActionResult> AdminReviewChangesAppealOutcomeSpecialismAsync(AdminReviewChangesAppealOutcomeSpecialismViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            bool success = await _loader.ProcessAdminReviewChangesAppealOutcomeSpecialismAsync(model);
+            if (!success)
+            {
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+            }
+
+            string adminDashboardCacheKey = CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey);
+
+            var notificationBanner = new AdminNotificationBannerModel(AdminReviewChangesAppealOutcomeSpecialism.Notification_Message_Appeal_Outcome_Added);
+            await _cacheService.SetAsync<NotificationBannerModel>(adminDashboardCacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
+        }
+
 
         #endregion
 

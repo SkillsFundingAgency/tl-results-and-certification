@@ -211,6 +211,16 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminReviewChangesAppealOutcomeCore.Designer.cs">
+		  <DependentUpon>AdminReviewChangesAppealOutcomeCore.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminReviewChangesAppealOutcomeSpecialism.Designer.cs">
+		  <DependentUpon>AdminReviewChangesAppealOutcomeSpecialism.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminPostResults\AdminReviewSpecialismAppealChanges.Designer.cs">
 		  <DependentUpon>AdminReviewSpecialismAppealChanges.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -1404,6 +1414,16 @@
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminPostResults\AdminAddCoreRommOutcome.resx">
 		  <LastGenOutput>AdminAddCoreRommOutcome.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminReviewChangesAppealOutcomeCore.resx">
+		  <SubType>Designer</SubType>
+		  <LastGenOutput>AdminReviewChangesAppealOutcomeCore.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminReviewChangesAppealOutcomeSpecialism.resx">
+		  <SubType>Designer</SubType>
+		  <LastGenOutput>AdminReviewChangesAppealOutcomeSpecialism.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminPostResults\AdminReviewSpecialismAppealChanges.resx">
