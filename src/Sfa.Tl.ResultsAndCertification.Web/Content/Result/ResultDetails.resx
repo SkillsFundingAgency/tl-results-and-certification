@@ -142,7 +142,7 @@
     <value>the ROMM or appeal deadline has passed, or</value>
   </data>
   <data name="Details_Summary_Text_The_Highest_Grade_For_Each_Component" xml:space="preserve">
-    <value>The highest grade for each component will be used to calculate the overall T Level result for results day.</value>
+    <value>The highest grade for each component will be used to calculate the overall T Level result for results day, This also applies to resit results.</value>
   </data>
   <data name="Details_Summay_Text_If_Grade_Status_Is_Romm_Or_Appeal_Then_OVerall_Result" xml:space="preserve">
     <value>If a grade status is 'ROMM' or 'APPEAL' then the overall result will not be sent for certificate printing until an outcome has been added.</value>
