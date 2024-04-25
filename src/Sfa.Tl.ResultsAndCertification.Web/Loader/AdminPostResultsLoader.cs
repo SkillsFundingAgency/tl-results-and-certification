@@ -240,5 +240,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             && !t.Code.Equals(Constants.NotReceived, StringComparison.InvariantCultureIgnoreCase)).ToList();
         }
 
+        public AdminReviewChangesAppealOutcomeCoreViewModel GetAdminReviewChangesAppealOutcomeCoreAsync<TAddAppealOutcomeChangeGradeCoreViewModel>(TAddAppealOutcomeChangeGradeCoreViewModel addAppealOutcomeCoreViewModel)
+        => _mapper.Map<AdminReviewChangesAppealOutcomeCoreViewModel>(addAppealOutcomeCoreViewModel);
+
+        public Task<bool> ProcessAdminReviewChangesAppealOutcomeCoreAsync(AdminReviewChangesAppealOutcomeCoreViewModel revieChangeAppealOutcomeCoreViewModel)
+        {
+            var request = _mapper.Map<ReviewChangesAppealOutcomeCoreRequest>(revieChangeAppealOutcomeCoreViewModel);
+            return _internalApiClient.ProcessAdminReviewChangesAppealOutcomeCoreAsync(request);
+        }
+
+        public AdminReviewChangesAppealOutcomeSpecialismViewModel GetAdminReviewChangesAppealOutcomeSpecialismAsync<TAddSpecialismOutcomeChangeGradeSpecialismViewModel>(TAddSpecialismOutcomeChangeGradeSpecialismViewModel addAppealOutcomeSpecialismViewModel)
+          => _mapper.Map<AdminReviewChangesAppealOutcomeSpecialismViewModel>(addAppealOutcomeSpecialismViewModel);
+
+        public Task<bool> ProcessAdminReviewChangesAppealOutcomeSpecialismAsync(AdminReviewChangesAppealOutcomeSpecialismViewModel reviewChangeAppealOutcomeSpecialismViewModel)
+        {
+            var request = _mapper.Map<ReviewChangesAppealOutcomeSpecialismRequest>(reviewChangeAppealOutcomeSpecialismViewModel);
+            return _internalApiClient.ProcessAdminReviewChangesAppealOutcomeSpecialismAsync(request);
+        }
     }
 }
