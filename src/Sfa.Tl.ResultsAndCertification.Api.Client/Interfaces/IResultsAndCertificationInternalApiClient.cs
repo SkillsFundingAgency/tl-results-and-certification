@@ -171,6 +171,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         Task<bool> ProcessAdminOpenSpecialismAppealAsync(OpenSpecialismAppealRequest request);
 
+        Task<bool> ProcessAdminReviewChangesAppealOutcomeCoreAsync(ReviewChangesAppealOutcomeCoreRequest request);
+
+        Task<bool> ProcessAdminReviewChangesAppealOutcomeSpecialismAsync(ReviewChangesAppealOutcomeSpecialismRequest request);
+
         #endregion
 
         #region Registration search
