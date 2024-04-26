@@ -120,7 +120,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration
                SearchRegistrationType.Assessment => SearchRegistrationContent.Heading_Search_Assessment,
                SearchRegistrationType.Result => SearchRegistrationContent.Heading_Search_Result,
                SearchRegistrationType.PostResult => SearchRegistrationContent.Heading_Search_Romm_Appeal,
-               _ => SearchRegistrationContent.Page_Title_Search_Registration
+               _ => SearchRegistrationContent.Heading_Search_Registration
            };
 
         public BreadcrumbModel Breadcrumb => SearchType switch

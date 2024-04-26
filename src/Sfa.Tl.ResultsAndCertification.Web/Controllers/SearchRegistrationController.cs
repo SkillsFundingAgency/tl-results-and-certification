@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("search-learner-clear", Name = RouteConstants.SearchRegistrationClear)]
-        public async Task<IActionResult> SearchRegistrationAsync(SearchRegistrationType type)
+        public async Task<IActionResult> SearchRegistrationClearAsync(SearchRegistrationType type)
         {
             await _cacheService.RemoveAsync<SearchRegistrationViewModel>(CacheKey);
             return RedirectToRoute(RouteConstants.SearchRegistration, new { type });

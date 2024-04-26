@@ -7,6 +7,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration
 {
     public class SearchRegistrationFiltersViewModel
     {
+        /// <summary>
+        /// This property is automatically populated by the script displaying the providers selection list.
+        /// </summary>
         public string Search { get; set; } = string.Empty;
 
         public int? SelectedProviderId { get; set; }
