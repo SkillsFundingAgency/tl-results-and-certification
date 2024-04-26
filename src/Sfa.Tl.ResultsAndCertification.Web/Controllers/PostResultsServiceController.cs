@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration.Enum;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,67 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("post-results-reviews-appeals-and-grade-changes", Name = RouteConstants.StartReviewsAndAppeals)]
-        public async Task<IActionResult> StartReviewsAndAppealsAsync()
+        public IActionResult StartReviewsAndAppealsAsync()
         {
-            await _cacheService.RemoveAsync<PrsSearchLearnerViewModel>(CacheKey);
             return View(new StartReviewsAndAppealsViewModel());
-        }
-
-        [HttpGet]
-        [Route("post-results-search-uln/{populateUln:bool?}", Name = RouteConstants.PrsSearchLearner)]
-        public async Task<IActionResult> PrsSearchLearnerAsync(bool populateUln)
-        {
-            var cacheModel = await _cacheService.GetAsync<PrsSearchLearnerViewModel>(CacheKey);
-            var viewModel = cacheModel != null && populateUln ? cacheModel : new PrsSearchLearnerViewModel();
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("post-results-search-uln/{populateUln:bool?}", Name = RouteConstants.SubmitPrsSearchLearner)]
-        public async Task<IActionResult> PrsSearchLearnerAsync(PrsSearchLearnerViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            var prsLearnerRecord = await _postResultsServiceLoader.FindPrsLearnerRecordAsync(User.GetUkPrn(), model.SearchUln.ToLong());
-            await _cacheService.SetAsync(CacheKey, model);
-
-            if (prsLearnerRecord == null)
-            {
-                await _cacheService.SetAsync(CacheKey, new PrsUlnNotFoundViewModel { Uln = model.SearchUln }, CacheExpiryTime.XSmall);
-                return RedirectToRoute(RouteConstants.PrsUlnNotFound);
-            }
-            else if (prsLearnerRecord.IsWithdrawn)
-            {
-                var prsUlnWithdrawnViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsUlnWithdrawnViewModel>(prsLearnerRecord);
-                await _cacheService.SetAsync(CacheKey, prsUlnWithdrawnViewModel, CacheExpiryTime.XSmall);
-                return RedirectToRoute(RouteConstants.PrsUlnWithdrawn);
-            }
-            else if (!prsLearnerRecord.HasResults)
-            {
-                var prsNoResultsViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsNoResultsViewModel>(prsLearnerRecord);
-                await _cacheService.SetAsync(CacheKey, prsNoResultsViewModel, CacheExpiryTime.XSmall);
-                return RedirectToRoute(RouteConstants.PrsNoResults);
-            }
-            else
-            {
-                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId });
-            }
-        }
-
-        [HttpGet]
-        [Route("post-results-uln-not-found", Name = RouteConstants.PrsUlnNotFound)]
-        public async Task<IActionResult> PrsUlnNotFoundAsync()
-        {
-            var cacheModel = await _cacheService.GetAndRemoveAsync<PrsUlnNotFoundViewModel>(CacheKey);
-            if (cacheModel == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PrsUlnNotFoundViewModel from redis cache in request Prs Uln not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(cacheModel);
         }
 
         [HttpGet]
@@ -720,7 +663,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return viewModel.NavigationOption switch
             {
                 PrsGradeChangeConfirmationNavigationOptions.BackToLearnersPage => RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = viewModel.ProfileId }),
-                PrsGradeChangeConfirmationNavigationOptions.SearchForAnotherLearner => RedirectToRoute(RouteConstants.PrsSearchLearner),
+                PrsGradeChangeConfirmationNavigationOptions.SearchForAnotherLearner => RedirectToRoute(RouteConstants.SearchRegistration, new { type = SearchRegistrationType.PostResult.ToString() }),
                 PrsGradeChangeConfirmationNavigationOptions.BackToHome => RedirectToRoute(RouteConstants.Home),
                 _ => RedirectToRoute(RouteConstants.Home)
             };

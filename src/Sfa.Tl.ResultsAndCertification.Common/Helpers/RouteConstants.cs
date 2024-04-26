@@ -316,9 +316,6 @@
         #region Post Results Service
 
         public const string StartReviewsAndAppeals = "StartReviewsAndAppeals";
-        public const string PrsSearchLearner = "PrsSearchLearner";
-        public const string SubmitPrsSearchLearner = "SubmitPrsSearchLearner";
-        public const string PrsUlnNotFound = "PrsUlnNotFound";
         public const string PrsUlnWithdrawn = "PrsUlnWithdrawn";
         public const string PrsLearnerDetails = "PrsLearnerDetails";
         public const string PrsAddRomm = "PrsAddRomm";
