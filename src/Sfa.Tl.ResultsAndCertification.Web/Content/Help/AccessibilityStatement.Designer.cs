@@ -61,6 +61,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 29 April 2024.
+        /// </summary>
+        public static string Accessibility_Statement_Published_On {
+            get {
+                return ResourceManager.GetString("Accessibility_Statement_Published_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4 January 2024.
+        /// </summary>
+        public static string Accessibility_Statement_Reviewed_On {
+            get {
+                return ResourceManager.GetString("Accessibility_Statement_Reviewed_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 12 July 2022.
+        /// </summary>
+        public static string Accessibility_Statement_Tested_On {
+            get {
+                return ResourceManager.GetString("Accessibility_Statement_Tested_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accessibility statement.
         /// </summary>
         public static string Page_Title {
