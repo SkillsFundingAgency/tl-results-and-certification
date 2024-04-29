@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminPostResu
             TqSpecialismResult newSpecialismResultDb = await DbContext.TqSpecialismResult.SingleAsync(ip => ip.TqSpecialismAssessmentId == existingSpecialismResultDb.TqSpecialismAssessmentId && ip.IsOptedin);
             newSpecialismResultDb.TqSpecialismAssessmentId.Should().Be(_existingSpecialismResult.TqSpecialismAssessmentId);
             newSpecialismResultDb.TlLookupId.Should().Be(_newSpecialismResult.TlLookupId);
-            newSpecialismResultDb.PrsStatus.Should().Be(PrsStatus.Reviewed);
+            newSpecialismResultDb.PrsStatus.Should().Be(PrsStatus.Final);
             newSpecialismResultDb.IsOptedin.Should().BeTrue();
             newSpecialismResultDb.StartDate.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(15));
             newSpecialismResultDb.EndDate.Should().BeNull();
