@@ -1,6 +1,4 @@
-﻿using Azure.Core;
-using Microsoft.EntityFrameworkCore.Update.Internal;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
@@ -82,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
             }
 
-           var newSpecialismResult = CreateSpecialismRequest(existingSpecialismResult.TlLookupId, existingSpecialismResult.TqSpecialismAssessmentId, utcNow, PrsStatus.UnderReview, request.CreatedBy);
+            var newSpecialismResult = CreateSpecialismRequest(existingSpecialismResult.TlLookupId, existingSpecialismResult.TqSpecialismAssessmentId, utcNow, PrsStatus.UnderReview, request.CreatedBy);
 
             bool created = await specialismResultRepo.CreateAsync(newSpecialismResult) > 0;
 
@@ -114,7 +112,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
             }
 
-            var newPathwayResult = CreatePathwayRequest(request.SelectedGradeId ==0 ? existingPathwayResult.TlLookupId: request.SelectedGradeId, existingPathwayResult.TqPathwayAssessmentId, PrsStatus.Reviewed, request.CreatedBy);
+            var newPathwayResult = CreatePathwayRequest(request.SelectedGradeId == 0 ? existingPathwayResult.TlLookupId : request.SelectedGradeId, existingPathwayResult.TqPathwayAssessmentId, PrsStatus.Reviewed, request.CreatedBy);
 
             bool created = await pathwayResultRepo.CreateAsync(newPathwayResult) > 0;
             if (!created)
@@ -128,7 +126,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 PathwayResultId = newPathwayResult.Id,
                 From = request.ExistingGrade,
-                To =  request.SelectedGrade ?? request.ExistingGrade,
+                To = request.SelectedGrade ?? request.ExistingGrade,
                 PathwayAssessmentId = existingPathwayResult.TqPathwayAssessmentId,
                 RegistrationPathwayId = request.RegistrationPathwayId
             });
@@ -152,7 +150,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
         }
 
-        private async  Task<bool> UpdatePathwayResultAsync(IRepository<TqPathwayResult> pathwayResultRepo, TqPathwayResult existingPathwayResult, string createdBy)
+        private async Task<bool> UpdatePathwayResultAsync(IRepository<TqPathwayResult> pathwayResultRepo, TqPathwayResult existingPathwayResult, string createdBy)
         {
             DateTime utcNow = _systemProvider.UtcNow;
 
@@ -165,7 +163,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 p => p.IsOptedin,
                 p => p.EndDate,
                 p => p.ModifiedBy,
-                p => p.ModifiedOn) > 0;          
+                p => p.ModifiedOn) > 0;
         }
 
         public async Task<bool> ProcessAdminReviewChangesRommOutcomeSpecialismAsync(ReviewChangesRommOutcomeSpecialismRequest request)
@@ -202,7 +200,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 SpecialismResultId = newSpecialismResult.Id,
                 From = request.ExistingGrade,
-                To = request.SelectedGrade?? request.ExistingGrade,
+                To = request.SelectedGrade ?? request.ExistingGrade,
                 SpecialismAssessmentId = existingSpecialismResult.TqSpecialismAssessmentId,
                 RegistrationPathwayId = request.RegistrationPathwayId
             });
@@ -344,6 +342,85 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
 
             ChangeLog changeLog = CreateChangeLog(ChangeType.OpenSpecialismAppeal, request, new { SpecialismResultId = newSpecialismResult.Id });
+            return await changeLongRepository.CreateAsync(changeLog) > 0;
+        }
+
+        public async Task<bool> ProcessAdminReviewChangesAppealOutcomeCoreAsync(ReviewChangesAppealOutcomeCoreRequest request)
+        {
+            var pathwayResultRepo = _repositoryFactory.GetRepository<TqPathwayResult>();
+
+            TqPathwayResult existingPathwayResult = await pathwayResultRepo.GetFirstOrDefaultAsync(p => p.Id == request.PathwayResultId);
+            if (existingPathwayResult == null)
+            {
+                return false;
+            }
+
+            var updated = await UpdatePathwayResultAsync(pathwayResultRepo, existingPathwayResult, request.CreatedBy);
+
+            if (!updated)
+            {
+                return false;
+            }
+
+            var newPathwayResult = CreatePathwayRequest(request.SelectedGradeId == 0 ? existingPathwayResult.TlLookupId : request.SelectedGradeId, existingPathwayResult.TqPathwayAssessmentId, PrsStatus.Final, request.CreatedBy);
+
+            bool created = await pathwayResultRepo.CreateAsync(newPathwayResult) > 0;
+            if (!created)
+            {
+                return false;
+            }
+
+            var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
+
+            ChangeLog changeLog = CreateChangeLog(ChangeType.PathwayAppealOutcome, request, new
+            {
+                PathwayResultId = newPathwayResult.Id,
+                From = request.ExistingGrade,
+                To = request.SelectedGrade ?? request.ExistingGrade,
+                PathwayAssessmentId = existingPathwayResult.TqPathwayAssessmentId,
+                RegistrationPathwayId = request.RegistrationPathwayId
+            });
+            return await changeLongRepository.CreateAsync(changeLog) > 0;
+        }
+
+        public async Task<bool> ProcessAdminReviewChangesAppealOutcomeSpecialismAsync(ReviewChangesAppealOutcomeSpecialismRequest request)
+        {
+            var specialismResultRepo = _repositoryFactory.GetRepository<TqSpecialismResult>();
+
+            TqSpecialismResult existingSpecialismResult = await specialismResultRepo.GetFirstOrDefaultAsync(p => p.Id == request.SpecialismResultId);
+            if (existingSpecialismResult == null)
+            {
+                return false;
+            }
+
+            DateTime utcNow = _systemProvider.UtcNow;
+
+            var updated = await UpdateSpecialismResultAsync(specialismResultRepo, existingSpecialismResult, request.CreatedBy);
+
+            if (!updated)
+            {
+                return false;
+            }
+
+            var newSpecialismResult = CreateSpecialismRequest(request.SelectedGradeId == 0 ? existingSpecialismResult.TlLookupId : request.SelectedGradeId, existingSpecialismResult.TqSpecialismAssessmentId, utcNow, PrsStatus.Final, request.CreatedBy);
+
+            bool created = await specialismResultRepo.CreateAsync(newSpecialismResult) > 0;
+
+            if (!created)
+            {
+                return false;
+            }
+
+            var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
+
+            ChangeLog changeLog = CreateChangeLog(ChangeType.SpecialismAppealOutcome, request, new
+            {
+                SpecialismResultId = newSpecialismResult.Id,
+                From = request.ExistingGrade,
+                To = request.SelectedGrade ?? request.ExistingGrade,
+                SpecialismAssessmentId = existingSpecialismResult.TqSpecialismAssessmentId,
+                RegistrationPathwayId = request.RegistrationPathwayId
+            });
             return await changeLongRepository.CreateAsync(changeLog) > 0;
         }
 
