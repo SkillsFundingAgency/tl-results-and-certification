@@ -161,7 +161,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminPostResults {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Review changes to the grade after a appeal – Admin.
+        ///   Looks up a localized string similar to Review changes to the grade after an appeal – Admin.
         /// </summary>
         public static string Page_Title {
             get {
