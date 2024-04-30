@@ -143,59 +143,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
-                _logger.LogWarning(LogEvent.DownloadAssesssmentErrorsFailed, $"Not a valid guid to read file.Method: DownloadAssessmentErrors(Id = { id}), Ukprn: { User.GetUkPrn()}, User: { User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.DownloadAssesssmentErrorsFailed, $"Not a valid guid to read file.Method: DownloadAssessmentErrors(Id = {id}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
-        }
-
-        [HttpGet]
-        [Route("assessment-entries-learner-search/{populateUln:bool?}", Name = RouteConstants.SearchAssessments)]
-        public async Task<IActionResult> SearchAssessmentsAsync(bool populateUln)
-        {
-            var defaultValue = await _cacheService.GetAndRemoveAsync<string>(Constants.AssessmentsSearchCriteria);
-            var viewModel = new SearchAssessmentsViewModel { SearchUln = populateUln ? defaultValue : null };
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("assessment-entries-learner-search", Name = RouteConstants.SubmitSearchAssessments)]
-        public async Task<IActionResult> SearchAssessmentsAsync(SearchAssessmentsViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            var searchResult = await _assessmentLoader.FindUlnAssessmentsAsync(User.GetUkPrn(), model.SearchUln.ToLong());
-
-            if (searchResult?.IsAllowed == true)
-            {
-                if (searchResult.IsWithdrawn)
-                    await _cacheService.SetAsync(Constants.AssessmentsSearchCriteria, model.SearchUln);
-
-                return RedirectToRoute(searchResult.IsWithdrawn ? RouteConstants.AssessmentWithdrawnDetails : RouteConstants.AssessmentDetails, new { profileId = searchResult.RegistrationProfileId });
-            }
-            else
-            {
-                await _cacheService.SetAsync(Constants.AssessmentsSearchCriteria, model.SearchUln);
-
-                var ulnAssessmentsNotfoundModel = new UlnAssessmentsNotFoundViewModel { Uln = model.SearchUln.ToString() };
-                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.SearchAssessmentsUlnNotFound), ulnAssessmentsNotfoundModel, CacheExpiryTime.XSmall);
-
-                return RedirectToRoute(RouteConstants.SearchAssessmentsNotFound);
-            }
-        }
-
-        [HttpGet]
-        [Route("assessment-entries-uln-not-found", Name = RouteConstants.SearchAssessmentsNotFound)]
-        public async Task<IActionResult> SearchAssessmentsNotFoundAsync()
-        {
-            var viewModel = await _cacheService.GetAndRemoveAsync<UlnAssessmentsNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchAssessmentsUlnNotFound));
-
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchAssessmentsUlnNotFound from redis cache in search assessments not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-            return View(viewModel);
         }
 
         [HttpGet]
@@ -500,7 +450,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
-                _logger.LogWarning(LogEvent.DocumentDownloadFailed, $"Not a valid guid to read file.Method: AssessmentsDownloadDataLinkAsync(Id = { id}), Ukprn: { User.GetUkPrn()}, User: { User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.DocumentDownloadFailed, $"Not a valid guid to read file.Method: AssessmentsDownloadDataLinkAsync(Id = {id}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
         }

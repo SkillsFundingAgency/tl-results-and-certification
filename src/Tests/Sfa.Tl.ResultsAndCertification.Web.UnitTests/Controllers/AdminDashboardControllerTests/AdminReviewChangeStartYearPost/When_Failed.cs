@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Xunit;
 
@@ -10,11 +9,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 {
     public class When_Failed : TestSetup
     {
-        private ReviewChangeStartYearViewModel MockResult = null;
-        private NotificationBannerModel _expectedNotificationBannerModel;
         public override void Given()
         {
-            var isSuccess = false;
             ReviewChangeStartYearViewModel = new ReviewChangeStartYearViewModel()
             {
                 RegistrationPathwayId = 1,
@@ -34,16 +30,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 Year = "1970"
             };
 
-           
-            AdminDashboardLoader.ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel).Returns(isSuccess = false);
-
+            AdminDashboardLoader.ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel).Returns(false);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
             AdminDashboardLoader.Received(1).ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel);
-           
         }
 
         [Fact]
@@ -52,7 +45,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             var route = Result as RedirectToRouteResult;
             route.RouteName.Should().Be(RouteConstants.ProblemWithService);
             route.RouteValues.Should().BeNullOrEmpty();
-
         }
     }
 }

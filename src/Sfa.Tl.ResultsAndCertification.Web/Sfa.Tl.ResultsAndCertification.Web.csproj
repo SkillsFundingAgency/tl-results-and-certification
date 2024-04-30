@@ -346,16 +346,6 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>RemoveSpecialismAssessmentEntries.resx</DependentUpon>
 		</Compile>
-		<Compile Update="Content\Assessment\SearchAssessments.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>SearchAssessments.resx</DependentUpon>
-		</Compile>
-		<Compile Update="Content\Assessment\SearchAssessmentsNotFound.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>SearchAssessmentsNotFound.resx</DependentUpon>
-		</Compile>
 		<Compile Update="Content\Assessment\Upload.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
@@ -556,11 +546,6 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>PrsStatus.resx</DependentUpon>
 		</Compile>
-		<Compile Update="Content\PostResultsService\PrsUlnNotFound.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>PrsUlnNotFound.resx</DependentUpon>
-		</Compile>
 		<Compile Update="Content\PostResultsService\PrsUlnWithdrawn.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
@@ -570,11 +555,6 @@
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 			<DependentUpon>PrsLearnerDetails.resx</DependentUpon>
-		</Compile>
-		<Compile Update="Content\PostResultsService\PrsSearchLearner.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>PrsSearchLearner.resx</DependentUpon>
 		</Compile>
 		<Compile Update="Content\PostResultsService\StartReviewsAndAppeals.Designer.cs">
 			<DesignTime>True</DesignTime>
@@ -730,6 +710,11 @@
 			<DependentUpon>UploadUnsuccessful.resx</DependentUpon>
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\SearchRegistration\SearchRegistration.Designer.cs">
+		  <DependentUpon>SearchRegistration.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
 		</Compile>
 		<Compile Update="Content\StatementOfAchievement\ChangeComponentAchievements.Designer.cs">
 			<DesignTime>True</DesignTime>
@@ -980,16 +965,6 @@
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 			<DependentUpon>RejoinRegistration.resx</DependentUpon>
-		</Compile>
-		<Compile Update="Content\Registration\SearchRegistration.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>SearchRegistration.resx</DependentUpon>
-		</Compile>
-		<Compile Update="Content\Registration\SearchRegistrationNotFound.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>SearchRegistrationNotFound.resx</DependentUpon>
 		</Compile>
 		<Compile Update="Content\Registration\SelectAcademicYear.Designer.cs">
 			<DesignTime>True</DesignTime>
@@ -1562,14 +1537,6 @@
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>RemoveSpecialismAssessmentEntries.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Content\Assessment\SearchAssessments.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>SearchAssessments.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Content\Assessment\SearchAssessmentsNotFound.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>SearchAssessmentsNotFound.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
 		<EmbeddedResource Update="Content\Assessment\Upload.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>Upload.Designer.cs</LastGenOutput>
@@ -1730,10 +1697,6 @@
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>PrsStatus.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Content\PostResultsService\PrsUlnNotFound.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>PrsUlnNotFound.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
 		<EmbeddedResource Update="Content\PostResultsService\PrsUlnWithdrawn.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>PrsUlnWithdrawn.Designer.cs</LastGenOutput>
@@ -1741,10 +1704,6 @@
 		<EmbeddedResource Update="Content\PostResultsService\PrsLearnerDetails.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>PrsLearnerDetails.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Content\PostResultsService\PrsSearchLearner.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>PrsSearchLearner.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\PostResultsService\StartReviewsAndAppeals.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
@@ -1869,6 +1828,10 @@
 		<EmbeddedResource Update="Content\Result\UploadUnsuccessful.resx">
 			<LastGenOutput>UploadUnsuccessful.Designer.cs</LastGenOutput>
 			<Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\SearchRegistration\SearchRegistration.resx">
+		  <LastGenOutput>SearchRegistration.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\StatementOfAchievement\ChangeComponentAchievements.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
@@ -2065,14 +2028,6 @@
 		<EmbeddedResource Update="Content\Registration\RejoinRegistration.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>RejoinRegistration.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Content\Registration\SearchRegistration.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>SearchRegistration.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Content\Registration\SearchRegistrationNotFound.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>SearchRegistrationNotFound.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\Registration\SelectAcademicYear.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>

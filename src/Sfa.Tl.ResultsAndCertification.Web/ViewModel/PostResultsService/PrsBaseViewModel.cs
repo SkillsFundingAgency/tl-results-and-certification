@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration.Enum;
 using System;
 using System.Collections.Generic;
 
@@ -123,8 +124,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public virtual BackLinkModel BackLink => new()
         {
-            RouteName = RouteConstants.PrsSearchLearner,
-            RouteAttributes = new Dictionary<string, string> { { Constants.PopulateUln, true.ToString() } }
+            RouteName = SearchRegistrationRouteName,
+            RouteAttributes = SearchRegistrationRouteAttributes
+        };
+
+        public string SearchRegistrationRouteName => RouteConstants.SearchRegistration;
+
+        public Dictionary<string, string> SearchRegistrationRouteAttributes => new()
+        {
+            [Constants.Type] = SearchRegistrationType.PostResult.ToString()
         };
 
         public void SetComponentType(int? componentTypeId)
