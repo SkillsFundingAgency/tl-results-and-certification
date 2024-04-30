@@ -46,6 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.SearchRegistr
 
             _searchLearnerViewModel = new SearchRegistrationViewModel
             {
+                SearchType = _searchRegitrationType,
                 Criteria = _criteriaViewModel,
                 DetailsList = new SearchRegistrationDetailsListViewModel
                 {
@@ -93,6 +94,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.SearchRegistr
         {
             var model = _result.ShouldBeViewResult<SearchRegistrationViewModel>();
 
+            model.SearchType.Should().Be(SearchRegistrationType.Registration);
             model.State.Should().Be(SearchRegistrationState.ResultsNotFound);
             model.ContainsResults.Should().BeFalse();
             model.ContainsMultipleResultsPages.Should().BeFalse();

@@ -56,6 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(viewModel);
             }
 
+            viewModel.SearchType = type;
             var searchCriteria = viewModel.Criteria;
 
             if (!searchCriteria.IsSearchKeyApplied && !searchCriteria.AreFiltersApplied)

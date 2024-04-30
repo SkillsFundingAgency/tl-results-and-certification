@@ -22,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.SearchRegistr
         {
             _viewModel = new SearchRegistrationViewModel
             {
+                SearchType = _searchRegitrationType,
                 State = SearchRegistrationState.ResultsFound,
                 Criteria = new SearchRegistrationCriteriaViewModel
                 {
@@ -78,6 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.SearchRegistr
         {
             var model = _result.ShouldBeViewResult<SearchRegistrationViewModel>();
 
+            model.SearchType.Should().Be(SearchRegistrationType.Registration);
             model.State.Should().Be(SearchRegistrationState.NoSearch);
 
             model.DetailsList.Should().NotBeNull();
