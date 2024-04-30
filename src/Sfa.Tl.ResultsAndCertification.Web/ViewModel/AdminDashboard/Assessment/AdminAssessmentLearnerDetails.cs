@@ -2,6 +2,8 @@
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -27,7 +29,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
 
         [Required(ErrorMessageResourceType = typeof(AdminLearnerAssessmentEntry), ErrorMessageResourceName = "Validation_Message")]
         public string AssessmentYearTo { get; set; }
-
 
         public BackLinkModel BackLink => new()
         {
@@ -62,11 +63,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment
             Title = AdminLearnerAssessmentEntry.Title_TLevel_Text,
             Value = TlevelName
         };
+
         public SummaryItemModel SummaryAcademicYear => new()
         {
             Id = "startyear",
             Title = AdminLearnerAssessmentEntry.Title_StartYear_Text,
             Value = DisplayStartYear
         };
+
+        public AdminAssessmentDetailsViewModel AssessmentDetails { get; set; }
+
+        public IEnumerable<Models.Contracts.Learner.Assessment> ValidPathwayAssessmentSeries { get; set; }
+
+        public bool IsLearnerRegisteredFourYearsAgo => DateTime.Now.Year - StartYear > 4;
     }
 }
