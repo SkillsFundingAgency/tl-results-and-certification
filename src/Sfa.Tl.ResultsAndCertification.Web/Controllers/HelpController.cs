@@ -31,6 +31,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("accessibility-statement", Name = RouteConstants.AccessibilityStatement)]
+        public IActionResult AccessibilityStatement()
+        {
+            return View();
+        }
+
+
+        [HttpGet]
         [Route("contact-us", Name = RouteConstants.Contact)]
         public IActionResult Contact()
         {
