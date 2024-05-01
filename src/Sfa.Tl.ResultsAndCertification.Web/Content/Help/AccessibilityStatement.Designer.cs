@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 29 April 2024.
+        ///   Looks up a localized string similar to 1 May 2024.
         /// </summary>
         public static string Accessibility_Statement_Published_On {
             get {
