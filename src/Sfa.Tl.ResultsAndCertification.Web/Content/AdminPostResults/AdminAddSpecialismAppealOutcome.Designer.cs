@@ -89,11 +89,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminPostResults {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a appeal outcome.
+        ///   Looks up a localized string similar to Add an appeal outcome.
         /// </summary>
-        public static string Heading_Add_A_Appeal_Outcome {
+        public static string Heading_Add_An_Appeal_Outcome {
             get {
-                return ResourceManager.GetString("Heading_Add_A_Appeal_Outcome", resourceCulture);
+                return ResourceManager.GetString("Heading_Add_An_Appeal_Outcome", resourceCulture);
             }
         }
         

@@ -21,7 +21,7 @@
             <!-- Add a Core appeal page header -->
             <div class="record-header">
                 <h1 class="govuk-heading-xl">
-                    @AdminAddCoreAppealOutcome.Heading_Add_A_Appeal_Outcome
+                    @AdminAddCoreAppealOutcome.Heading_Add_An_Appeal_Outcome
                 </h1>
             </div>
 
@@ -66,7 +66,7 @@
 
             @if (Model.IsValid)
             {
-                <!-- Do you want to open a appeal? -->
+                <!-- Do you want to open an appeal? -->
                 <div class="govuk-form-group govuk-!-margin-top-2">
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
@@ -102,7 +102,7 @@
             }
             else
             {
-                <!-- You cannot open a appeal for this learner -->
+                <!-- You cannot open an appeal for this learner -->
                 <div class="govuk-form-group">
                     <h2 class="govuk-heading-m">@AdminAddCoreAppealOutcome.Warning_Header_You_Cannot_Open_A_Appeal_For_This_Learner</h2>
                     <p class="govuk-body">@Model.ErrorMessage</p>

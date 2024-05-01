@@ -129,7 +129,7 @@
   <data name="Core_Heading_Text" xml:space="preserve">
     <value>Core component: {0}</value>
   </data>
-  <data name="Heading_Add_A_Appeal_Outcome" xml:space="preserve">
+  <data name="Heading_Add_An_Appeal_Outcome" xml:space="preserve">
     <value>Add an appeal outcome</value>
   </data>
   <data name="Heading_Personal_Details" xml:space="preserve">
@@ -205,7 +205,7 @@
     <value>This is because the learner has been withdrawn.</value>
   </data>
   <data name="Warning_Header_A_appeal_outcome_Cannot_Be_Added" xml:space="preserve">
-    <value>A appeal outcome cannot be added</value>
+    <value>An appeal outcome cannot be added</value>
   </data>
   <data name="Warning_Header_You_Cannot_Open_A_Appeal_For_This_Learner" xml:space="preserve">
     <value>You cannot add an appeal outcome for this learner.</value>

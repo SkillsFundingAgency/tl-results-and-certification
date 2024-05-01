@@ -9,12 +9,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 {
     public class When_Called_With_Invalid_Data : TestSetup
     {
-        private readonly ChangeBackToActiveStatusViewModel _changeBackToActiveStatusViewModel;
-
         public override void Given()
         {
             ProfileId = 0;
-            TrainingProviderLoader.GetLearnerRecordDetailsAsync<ChangeBackToActiveStatusViewModel>(ProviderUkprn, ProfileId).Returns(_changeBackToActiveStatusViewModel);
+            TrainingProviderLoader.GetLearnerRecordDetailsAsync<ChangeBackToActiveStatusViewModel>(ProviderUkprn, ProfileId).Returns(null as ChangeBackToActiveStatusViewModel);
         }
 
         [Fact]

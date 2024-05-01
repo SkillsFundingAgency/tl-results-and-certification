@@ -126,8 +126,8 @@
   <data name="Button_Return_To_Learner_Record" xml:space="preserve">
     <value>Return to learner record</value>
   </data>
-  <data name="Heading_Add_A_Appeal_Outcome" xml:space="preserve">
-    <value>Add a appeal outcome</value>
+  <data name="Heading_Add_An_Appeal_Outcome" xml:space="preserve">
+    <value>Add an appeal outcome</value>
   </data>
   <data name="Heading_Personal_Details" xml:space="preserve">
     <value>Personal details</value>

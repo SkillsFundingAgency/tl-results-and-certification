@@ -10,21 +10,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
 {
     public class When_Cache_NotFound_ChangeMode_True : TestSetup
     {
-        private IpCompletionViewModel _ipCompletionViewModel;
         private IndustryPlacementViewModel _cacheResult;
 
         public override void Given()
         {
-            _ipCompletionViewModel = new IpCompletionViewModel
-            {
-                ProfileId = 1,
-                RegistrationPathwayId = 1,
-                PathwayId = 7,
-                AcademicYear = 2020,
-                LearnerName = "First Last",
-                IndustryPlacementStatus = null
-            };
-
             ViewModel = new IpCompletionViewModel
             {
                 ProfileId = ProfileId,
@@ -35,7 +24,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed,
                 IsChangeMode = true
             };
-            
 
             CacheService.GetAsync<IndustryPlacementViewModel>(CacheKey).Returns(_cacheResult);
         }
