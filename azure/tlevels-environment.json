@@ -297,6 +297,10 @@
                             {
                                 "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
                                 "value": "[reference(concat('app-insights','-',parameters('environmentNameAbbreviation'))).outputs.InstrumentationKey.value]"
+                            },
+                            {
+                                "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
+                                "value": "200"
                             }
                         ]
                     },
@@ -379,13 +383,21 @@
                                 "name": "Version",
                                 "value": "1.0"
                             },
-                            {
+                            {                       
                                 "name": "ServiceName",
                                 "value": "Sfa.Tl.ResultsAndCertification"
                             },
                             {
                                 "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
                                 "value": "[reference(concat('app-insights','-',parameters('environmentNameAbbreviation'))).outputs.InstrumentationKey.value]"
+                            },
+                            {
+                                "name": "WEBSITE_SWAP_WARMUP_PING_PATH",
+                                "value": "/api/tlevel/VerifyTLevel"
+                            },
+                            {
+                                "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
+                                "value": "405"
                             }
                         ]
                     },
