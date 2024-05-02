@@ -19,6 +19,8 @@ jobs:
     - "${{ each dependency in parameters.dependencies }}":
         - "${{dependency}}"  
   steps:
+  - checkout: self
+  - checkout: devopsTools
   - task: DownloadBuildArtifacts@0
     inputs:
       buildType: 'current'
@@ -48,13 +50,24 @@ jobs:
       ResourceGroupName: '$(ResourceGroupName)'
       Slot: 'staging'
 
+  - task: AzureCLI@2
+    displayName: 'Pre-Swap slot check'
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnection }}
+      scriptType: 'pscore'
+      scriptLocation: scriptPath
+      scriptPath: ./operations-devops-tools/Powershell/FunctionAppDeployment/preSwapSlotCheck.ps1
+      scriptArguments: '-FunctionAppName $(FunctionAppName) -ResourceGroupName $(ResourceGroupName) -SlotName "staging"'
+      failOnStandardError: true
+  
   - task: AzureAppServiceManage@0
     displayName: 'Swap Slots: $(FunctionAppName)'
     inputs:
       azureSubscription: ${{ parameters.serviceConnection }}
       WebAppName: '$(FunctionAppName)'
       ResourceGroupName: '$(ResourceGroupName)'
-      SourceSlot: 'staging'    
+      SourceSlot: 'staging'   
+    condition: and(succeeded(), eq(variables['CompleteSwap'], 'true')) 
 
   - task: AzureAppServiceManage@0
     displayName: 'Stop Staging Slot: $(FunctionAppName)'
