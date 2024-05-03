@@ -27,7 +27,7 @@ USING (VALUES
 (19, 10002638, N'Gateshead College', N'Gateshead College'),
 (20, 10007938, N'TEC Partnership', N'TEC Partnership'),
 (21, 10005979, N'Havant and South Downs College', N'Havant and South Downs College'),
-(22, 10007193, N'HCUC (Harrow College and Uxbridge College)', N'HCUC (Harrow College and Uxbridge College)'),
+(22, 10007193, N'HRUC (Harrow, Richmond & Uxbridge Colleges)', N'HRUC (Harrow, Richmond & Uxbridge Colleges)'),
 (23, 10003732, N'La Retraite RC Girls School', N'La Retraite RC Girls School'),
 (24, 10033245, N'Lordswood Girls'' School & Sixth Form Centre', N'Lordswood Girls'' School & Sixth Form Centre'),
 (25, 10004552, N'Nelson and Colne College', N'Nelson and Colne College'),
