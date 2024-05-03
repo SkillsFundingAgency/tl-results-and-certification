@@ -180,6 +180,7 @@
         public const string AnalystOverallResultExtract = "AnalystOverallResultExtract";
         public const string AnalystCoreResultExtract = "AnalystCoreResultExtract";
         public const string SpecialismRommExtract = "SpecialismRommExtract";
+        public const string CertificateTrackingExtract = "CertificateTrackingExtract";
         public const string AnalystOverallResultExtractsFolder = "extracts";
         public const string AnalystCoreResultExtractsFolder = "extracts";
         public const string SpecialismRommFolder = "extracts";
@@ -187,7 +188,7 @@
         public const string CoreRommExtract = "CoreRommExtract";
         public const string CoreRommFolder = "extracts";
         public const string ProviderAddressExtract = "ProviderAddressExtract";
-
+        public const string CertificateTrackingExtractsFolder = "extracts";
 
         // File Extensions
         public const string FileExtensionTxt = "txt";
