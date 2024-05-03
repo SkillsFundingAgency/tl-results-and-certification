@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication.Local;
@@ -17,9 +18,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 {
     public static class AuthenticationExtensions
     {
+        private static ILogger Logger = Startup.LogFactory.CreateLogger("AuthenticationExtensions");
+
+
         public static IServiceCollection AddWebAuthentication(this IServiceCollection services, ResultsAndCertificationConfiguration config, IWebHostEnvironment env)
         {
-            var cookieSecurePolicy = env.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
+            var cookieSecurePolicy = env.IsDevelopment() ? CookieSecurePolicy.Always : CookieSecurePolicy.Always;
 
             if (config.BypassDfeSignIn)
             {
@@ -119,6 +123,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 
                                 if (isSpuriousAuthCbRequest)
                                 {
+                                    Logger.LogTrace("Spurious Auth Cb Request");
                                     context.HandleResponse();
                                     context.Response.Redirect("/");
                                 }
@@ -131,6 +136,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         // This is derived from the recommended approach: https://github.com/aspnet/Security/issues/1165
                         OnRemoteFailure = ctx =>
                         {
+                            Logger.LogTrace(ctx.Failure.InnerException.ToString());
                             ctx.HandleResponse();
                             return Task.FromException(ctx.Failure);
                         },

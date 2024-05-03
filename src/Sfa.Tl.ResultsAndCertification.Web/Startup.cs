@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Build.Framework;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -37,6 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
     {
         private readonly IConfiguration _config;
         private readonly IWebHostEnvironment _env;
+        internal static ILoggerFactory LogFactory { get; set; }
 
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
@@ -152,11 +155,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app,ILoggerFactory loggerFactory)
         {
             var cultureInfo = new CultureInfo("en-GB");
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+            LogFactory = loggerFactory;
 
             if (_env.IsDevelopment())
             {
@@ -194,6 +198,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 endpoints.MapDefaultControllerRoute();
             });
             app.UseCookiePolicy();
+
         }
 
         private void RegisterDependencies(IServiceCollection services)
