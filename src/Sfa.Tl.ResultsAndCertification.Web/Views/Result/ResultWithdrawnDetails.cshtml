@@ -24,7 +24,7 @@
         </dl>
 
          <div class="govuk-button-group">
-            <a id="searchAgainButton" class="govuk-button" role="button" asp-route="@Model.SearchRegistrationRouteName" asp-all-route-data="@Model.SearchRegistrationRouteAttributes">@ResultWithdrawnDetails.Button_Search_Again</a>
+            <a id="searchAgainButton" class="govuk-button" role="button" asp-route="@RouteConstants.SearchResults">@ResultWithdrawnDetails.Button_Search_Again</a>
             <a id="backToHomeButton" class="govuk-button govuk-button--secondary" role="button" asp-route="@RouteConstants.Home">@ResultWithdrawnDetails.Button_Back_To_Home</a>
         </div>
     </div>

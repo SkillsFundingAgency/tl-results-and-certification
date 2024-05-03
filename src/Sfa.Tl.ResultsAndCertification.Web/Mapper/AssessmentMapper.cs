@@ -32,6 +32,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<BulkUploadStats, BulkUploadStatsViewModel>();
 
+            CreateMap<FindUlnResponse, UlnAssessmentsNotFoundViewModel>()
+                .ForMember(d => d.RegistrationProfileId, opts => opts.MapFrom(s => s.RegistrationProfileId))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.IsRegisteredWithOtherAo, opts => opts.MapFrom(s => s.IsRegisteredWithOtherAo))
+                .ForMember(d => d.IsAllowed, opts => opts.MapFrom(s => s.Status == RegistrationPathwayStatus.Active || s.Status == RegistrationPathwayStatus.Withdrawn))
+                .ForMember(d => d.IsWithdrawn, opts => opts.MapFrom(s => s.Status == RegistrationPathwayStatus.Withdrawn));
+
             CreateMap<LearnerRecord, AssessmentUlnWithdrawnViewModel>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
@@ -170,7 +177,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.LarId, opts => opts.MapFrom(s => s.LarId))
                .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name))
                .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => $"{s.Name} ({s.LarId})"))
-               .ForMember(d => d.CurrentSpecialismAssessmentSeriesId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items != null && context.Items["currentSpecialismAssessmentSeriesId"] != null ? (int?)context.Items["currentSpecialismAssessmentSeriesId"] : null))
+               .ForMember(d => d.CurrentSpecialismAssessmentSeriesId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items != null && context.Items["currentSpecialismAssessmentSeriesId"] != null ? (int?)context.Items["currentSpecialismAssessmentSeriesId"] : null))              
                .ForMember(d => d.TlSpecialismCombinations, opts => opts.MapFrom(s => s.TlSpecialismCombinations))
                .ForMember(d => d.Assessments, opts => opts.MapFrom(s => s.Assessments));
 

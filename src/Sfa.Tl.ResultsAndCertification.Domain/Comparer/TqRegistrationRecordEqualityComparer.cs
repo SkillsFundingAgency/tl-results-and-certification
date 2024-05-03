@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
                 var hashCode = reg.UniqueLearnerNumber.GetHashCode();
                 hashCode = (hashCode * 397) ^ (reg.Firstname != null ? reg.Firstname.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (reg.Lastname != null ? reg.Lastname.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ reg.DateofBirth.GetHashCode();
+                hashCode = (hashCode * 397) ^ (reg.DateofBirth != null ? reg.DateofBirth.GetHashCode() : 0);
 
                 foreach (var registrationPathway in reg.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active).OrderBy(p => p.TqProviderId))
                 {

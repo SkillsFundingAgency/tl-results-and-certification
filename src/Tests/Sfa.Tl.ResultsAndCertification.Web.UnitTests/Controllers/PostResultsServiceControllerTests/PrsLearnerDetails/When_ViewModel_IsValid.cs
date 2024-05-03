@@ -7,7 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -137,9 +136,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.StartPostResultsService);
             model.Breadcrumb.BreadcrumbItems[1].RouteName.Should().Be(RouteConstants.StartReviewsAndAppeals);
             model.Breadcrumb.BreadcrumbItems[2].DisplayName.Should().Be(BreadcrumbContent.Search_For_Learner);
-            model.Breadcrumb.BreadcrumbItems[2].RouteName.Should().Be(RouteConstants.SearchRegistration);
-            model.Breadcrumb.BreadcrumbItems[2].RouteAttributes.Should().HaveCount(1);
-            model.Breadcrumb.BreadcrumbItems[2].RouteAttributes.Should().ContainEquivalentOf(new KeyValuePair<string, string>(Constants.Type, SearchRegistrationType.PostResult.ToString()));
-        }
+            model.Breadcrumb.BreadcrumbItems[2].RouteName.Should().Be(RouteConstants.PrsSearchLearner);
+        }        
     }
 }

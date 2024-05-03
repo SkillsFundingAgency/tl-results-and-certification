@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var bulkResultResponse = await _internalApiClient.ProcessBulkResultsAsync(bulkResultRequest);
             return _mapper.Map<UploadResultsResponseViewModel>(bulkResultResponse);
         }
-
+        
         public async Task<Stream> GetResultValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference)
         {
             var documentInfo = await _internalApiClient.GetDocumentUploadHistoryDetailsAsync(aoUkprn, blobUniqueReference);
@@ -79,6 +79,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 _logger.LogWarning(LogEvent.NoDataFound, $"No DocumentUploadHistoryDetails found or the request is not valid. Method: GetDocumentUploadHistoryDetailsAsync(AoUkprn: {aoUkprn}, BlobUniqueReference = {blobUniqueReference})");
                 return null;
             }
+        }
+
+        public async Task<UlnResultsNotFoundViewModel> FindUlnResultsAsync(long aoUkprn, long Uln)
+        {
+            var response = await _internalApiClient.FindUlnAsync(aoUkprn, Uln);
+            return _mapper.Map<UlnResultsNotFoundViewModel>(response);
         }
 
         public async Task<ResultWithdrawnViewModel> GetResultWithdrawnViewModelAsync(long aoUkprn, int profileId)
@@ -126,18 +132,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (grades == null || !grades.Any())
                 return null;
 
-            if (isChangeMode)
+            if(isChangeMode)
                 grades.Insert(grades.Count, new LookupData { Code = Constants.NotReceived, Value = Content.Result.ManageCoreResult.Option_Remove_Result });
 
-            return _mapper.Map<ManageCoreResultViewModel>(response, opt =>
-            {
+            return _mapper.Map<ManageCoreResultViewModel>(response, opt => 
+            { 
                 opt.Items["grades"] = grades;
-                opt.Items["assessment"] = assessment;
+                opt.Items["assessment"] = assessment; 
             });
         }
 
         public async Task<bool?> IsCoreResultChangedAsync(long aoUkprn, ManageCoreResultViewModel viewModel)
-        {
+        {            
             var existingResult = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
 
             if (existingResult == null)

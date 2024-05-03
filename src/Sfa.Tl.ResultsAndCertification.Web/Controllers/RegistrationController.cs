@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
@@ -144,7 +145,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
-                _logger.LogWarning(LogEvent.DownloadRegistrationErrorsFailed, $"Not a valid guid to read file.Method: DownloadRegistrationErrors(Id = {id}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.DownloadRegistrationErrorsFailed, $"Not a valid guid to read file.Method: DownloadRegistrationErrors(Id = { id}), Ukprn: { User.GetUkPrn()}, User: { User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
         }
@@ -384,7 +385,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.SpecialismQuestion = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
-            if (model.IsChangeMode)
+            if(model.IsChangeMode)
             {
                 return model.HasLearnerDecidedSpecialism.Value ? RedirectToRoute(RouteConstants.AddRegistrationSpecialisms, new { isChangeMode = "true" }) : RedirectToRoute(RouteConstants.AddRegistrationCheckAndSubmit);
             }
@@ -440,7 +441,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
-            if (cacheModel?.SpecialismQuestion == null ||
+            if (cacheModel?.SpecialismQuestion == null || 
                 (cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == true && cacheModel?.SelectSpecialisms == null))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
@@ -531,6 +532,53 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("search-for-registration", Name = RouteConstants.SearchRegistration)]
+        public async Task<IActionResult> SearchRegistration()
+        {
+            var defaultValue = await _cacheService.GetAndRemoveAsync<string>(Constants.RegistrationSearchCriteria);
+            var viewModel = new SearchRegistrationViewModel { SearchUln = defaultValue };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("search-for-registration", Name = RouteConstants.SubmitSearchRegistration)]
+        public async Task<IActionResult> SearchRegistrationAsync(SearchRegistrationViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var searchResult = await _registrationLoader.FindUlnAsync(User.GetUkPrn(), model.SearchUln.ToLong());
+
+            if (searchResult?.IsAllowed == true)
+            {
+                return RedirectToRoute(RouteConstants.RegistrationDetails, new { profileId = searchResult.RegistrationProfileId });
+            }
+            else
+            {
+                await _cacheService.SetAsync(Constants.RegistrationSearchCriteria, model.SearchUln);
+
+                var ulnNotfoundModel = new UlnRegistrationNotFoundViewModel { Uln = model.SearchUln.ToString(), BackLinkRouteName = RouteConstants.SearchRegistration };
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.SearchRegistrationUlnNotFound), ulnNotfoundModel, CacheExpiryTime.XSmall);
+
+                return RedirectToRoute(RouteConstants.SearchRegistrationNotFound);
+            }
+        }
+
+        [HttpGet]
+        [Route("search-for-registration-ULN-not-found", Name = RouteConstants.SearchRegistrationNotFound)]
+        public async Task<IActionResult> SearchRegistrationNotFound()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<UlnRegistrationNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchRegistrationUlnNotFound));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchRegistrationUlnNotFound from temp data in search registration not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
+        }
+
+        [HttpGet]
         [Route("search-for-registration-registration-details/{profileId}", Name = RouteConstants.RegistrationDetails)]
         public async Task<IActionResult> RegistrationDetailsAsync(int profileId)
         {
@@ -599,7 +647,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("registrations-generating-download", Name = RouteConstants.RegistrationsGeneratingDownload)]
-        public IActionResult RegistrationsGeneratingDownload()
+        public IActionResult RegistrationsGeneratingDownload()  
         {
             return View();
         }
@@ -674,7 +722,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
-                _logger.LogWarning(LogEvent.DocumentDownloadFailed, $"Not a valid guid to read file.Method: RegistrationsDownloadDataLinkAsync(Id = {id}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.DocumentDownloadFailed, $"Not a valid guid to read file.Method: RegistrationsDownloadDataLinkAsync(Id = { id}), Ukprn: { User.GetUkPrn()}, User: { User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
         }

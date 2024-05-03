@@ -1,7 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.DashboardViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
-@using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration.Enum
 
 @{
     ViewData["Title"] = @Dashboard.Page_Title;
@@ -47,9 +46,8 @@
                 <li class="chevron-card">
                     <div class="chevron-card__wrapper">
                         <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
-                            <a class="govuk-link chevron-card__link" asp-route="@RouteConstants.SearchRegistrationClear" asp-route-type="@SearchRegistrationType.Registration">
-                                @Dashboard.Card_Heading_Link_Manage_Existing_Registration
-                            </a>
+                            <a class="govuk-link chevron-card__link" asp-route="@RouteConstants.SearchRegistration">
+                                @Dashboard.Card_Heading_Link_Manage_Existing_Registration</a>
                         </h3>
                         <p class="govuk-body chevron-card__description">@Dashboard.Card_Content_View_And_Change_Registration_Details</p>
                     </div>

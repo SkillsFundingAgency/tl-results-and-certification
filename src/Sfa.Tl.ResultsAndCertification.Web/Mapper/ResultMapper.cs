@@ -31,6 +31,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                    .ForMember(d => d.BlobUniqueReference, opts => opts.MapFrom(s => s.BlobUniqueReference))
                    .ForMember(d => d.Stats, opts => opts.MapFrom(s => s.Stats));
 
+            CreateMap<FindUlnResponse, UlnResultsNotFoundViewModel>()
+               .ForMember(d => d.RegistrationProfileId, opts => opts.MapFrom(s => s.RegistrationProfileId))
+               .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+               .ForMember(d => d.IsRegisteredWithOtherAo, opts => opts.MapFrom(s => s.IsRegisteredWithOtherAo))
+               .ForMember(d => d.IsAllowed, opts => opts.MapFrom(s => s.Status == RegistrationPathwayStatus.Active || s.Status == RegistrationPathwayStatus.Withdrawn))
+               .ForMember(d => d.IsWithdrawn, opts => opts.MapFrom(s => s.Status == RegistrationPathwayStatus.Withdrawn));
+
             CreateMap<ResultDetails, ResultWithdrawnViewModel>()
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
                 .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))

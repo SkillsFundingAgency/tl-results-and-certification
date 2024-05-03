@@ -4,7 +4,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
 {
     public abstract class TestSetup : IndustryPlacementLoaderTestBase
     {
-        public override Task When() 
-            => Task.CompletedTask;
+        public async override Task When() { }
     }
 }
