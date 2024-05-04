@@ -83,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             model.Breadcrumb.BreadcrumbItems[1].RouteName.Should().Be(RouteConstants.AssessmentDashboard);
             model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Assessment_Dashboard);
             model.Breadcrumb.BreadcrumbItems[2].RouteName.Should().Be(RouteConstants.SearchRegistration);
-            model.Breadcrumb.BreadcrumbItems[2].DisplayName.Should().Be(BreadcrumbContent.Search_For_Assessments);
+            model.Breadcrumb.BreadcrumbItems[2].DisplayName.Should().Be(BreadcrumbContent.Search_For_Assessment_Entry);
             model.Breadcrumb.BreadcrumbItems[2].RouteAttributes.Should().HaveCount(1);
             model.Breadcrumb.BreadcrumbItems[2].RouteAttributes.Should().ContainEquivalentOf(new KeyValuePair<string, string>(Constants.Type, SearchRegistrationType.Assessment.ToString()));
             model.Breadcrumb.BreadcrumbItems[3].RouteName.Should().BeNullOrEmpty();
