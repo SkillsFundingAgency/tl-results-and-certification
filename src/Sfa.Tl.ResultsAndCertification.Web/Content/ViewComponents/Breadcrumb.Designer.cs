@@ -261,27 +261,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         /// <summary>
         ///   Looks up a localized string similar to Search for a learner.
         /// </summary>
-        public static string Search_For_Assessments {
-            get {
-                return ResourceManager.GetString("Search_For_Assessments", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search for a learner.
-        /// </summary>
         public static string Search_For_Learner {
             get {
                 return ResourceManager.GetString("Search_For_Learner", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search for a registration.
-        /// </summary>
-        public static string Search_For_Registration {
-            get {
-                return ResourceManager.GetString("Search_For_Registration", resourceCulture);
             }
         }
         
@@ -300,15 +282,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static string Search_For_Result_Entry {
             get {
                 return ResourceManager.GetString("Search_For_Result_Entry", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search for a learner.
-        /// </summary>
-        public static string Search_For_Results {
-            get {
-                return ResourceManager.GetString("Search_For_Results", resourceCulture);
             }
         }
         

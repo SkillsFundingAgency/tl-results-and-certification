@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
                         new() { DisplayName = BreadcrumbContent.Result_Dashboard, RouteName = RouteConstants.ResultsDashboard },
                         new()
                         {
-                            DisplayName = BreadcrumbContent.Search_For_Results,
+                            DisplayName = BreadcrumbContent.Search_For_Result_Entry,
                             RouteName = SearchRegistrationRouteName,
                             RouteAttributes =  SearchRegistrationRouteAttributes
                         }
