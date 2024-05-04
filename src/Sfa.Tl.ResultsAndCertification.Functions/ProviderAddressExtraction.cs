@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
+    [Disable]
     public class ProviderAddressExtraction
     {
         private readonly IProviderAddressExtractionService _providerAddressExtractionService;

@@ -13,6 +13,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
+    [Disable]
     public class AnalystCoreResultExtraction
     {
         private readonly IAnalystCoreResultExtractionService _analystCoreResultExtractionService;

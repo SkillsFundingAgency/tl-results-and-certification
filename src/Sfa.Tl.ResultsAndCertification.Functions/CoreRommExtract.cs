@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
+    [Disable]
     public class CoreRommExtract
     {
         private readonly ICoreRommExtractService _coreRommExtractService;

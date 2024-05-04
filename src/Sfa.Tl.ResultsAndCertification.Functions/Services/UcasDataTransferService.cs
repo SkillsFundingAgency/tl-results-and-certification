@@ -64,18 +64,21 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             var filename = $"{Guid.NewGuid()}.{Constants.FileExtensionTxt}";
 
             // 3. Write response to blob
-            await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
-            {
-                ContainerName = DocumentType.Ucas.ToString().ToLower(),
-                SourceFilePath = ucasDataType.ToString().ToLower(),
-                BlobFileName = filename,
-                FileData = byteData,
-                UserName = Constants.FunctionPerformedBy
-            });
+            //await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
+            //{
+            //    ContainerName = DocumentType.Ucas.ToString().ToLower(),
+            //    SourceFilePath = ucasDataType.ToString().ToLower(),
+            //    BlobFileName = filename,
+            //    FileData = byteData,
+            //    UserName = Constants.FunctionPerformedBy
+            //});
+
+            string path = $"C:\\dev\\{filename}";
+            File.WriteAllBytes(path, byteData);
 
             // 4. Send data to Ucas using ApiClient
-            var fileHash = CommonHelper.ComputeSha256Hash(byteData);
-            await _ucasApiClient.SendDataAsync(new UcasDataRequest { FileName = filename, FileData = byteData, FileHash = fileHash });
+            //var fileHash = CommonHelper.ComputeSha256Hash(byteData);
+            //await _ucasApiClient.SendDataAsync(new UcasDataRequest { FileName = filename, FileData = byteData, FileHash = fileHash });
 
             // 5. Update response
             return new UcasDataTransferResponse { IsSuccess = true };

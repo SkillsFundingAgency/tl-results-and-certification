@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 var stopwatch = Stopwatch.StartNew();
 
-                await _commonService.CreateFunctionLog(functionLogDetails);
+                //await _commonService.CreateFunctionLog(functionLogDetails);
 
                 var response = await _ucasDataTransferService.ProcessUcasDataRecordsAsync(UcasDataType.Entries);
 
@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, response.IsSuccess ? FunctionStatus.Processed : FunctionStatus.Failed, message);
 
-                await _commonService.UpdateFunctionLog(functionLogDetails);
+                //await _commonService.UpdateFunctionLog(functionLogDetails);
 
                 stopwatch.Stop();
 
@@ -71,6 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             }
         }
 
+        [Disable]
         [FunctionName(Constants.UcasTransferResults)]
         public async Task UcasTransferResultsAsync([TimerTrigger("%UcasTransferResultsTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
@@ -112,6 +113,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             }
         }
 
+        [Disable]
         [FunctionName(Constants.UcasTransferAmendments)]
         public async Task UcasTransferAmendmentsAsync([TimerTrigger("%UcasTransferAmendmentsTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {

@@ -1,11 +1,8 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialism;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,19 +11,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     public class UcasRecordEntriesSegment : IUcasRecordSegment<UcasRecordEntriesSegment>
     {
         public UcasDataType UcasDataType => UcasDataType.Entries;
-        private readonly IUcasRepository _ucasRepository;
 
-        public UcasRecordEntriesSegment(IUcasRepository ucasRepository)
+        private readonly SpecialismCodeConverter _specialismCodeConverter;
+
+        public UcasRecordEntriesSegment(SpecialismCodeConverter specialismCodeConverter)
         {
-            _ucasRepository = ucasRepository;
+            _specialismCodeConverter = specialismCodeConverter;
         }
-            
 
         public void AddCoreSegment(IList<UcasDataComponent> ucasDataComponents, TqRegistrationPathway pathway)
         {
-            if (!pathway.TqPathwayAssessments.Any())
-                return;
-
             var ucasCoreComponent = new UcasDataComponent
             {
                 SubjectCode = pathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
@@ -39,36 +33,38 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public void AddSpecialismSegment(IList<UcasDataComponent> ucasDataComponents, TqRegistrationPathway pathway)
         {
-            string dualSpecialismCode = ReplaceDualSpecialismCodes(pathway);
+            string larId = _specialismCodeConverter.Convert(pathway.TqRegistrationSpecialisms);
+
+            if (string.IsNullOrEmpty(larId))
+            {
+                return;
+            }
 
             var ucasSpecialismComponent = new UcasDataComponent
             {
-                SubjectCode = !string.IsNullOrEmpty(dualSpecialismCode) ? dualSpecialismCode :
-                pathway.TqRegistrationSpecialisms.Any() ?
-                pathway.TqRegistrationSpecialisms.First().TlSpecialism.LarId : string.Empty,
+                SubjectCode = larId,
                 Grade = string.Empty,
                 PreviousGrade = string.Empty
             };
 
             ucasDataComponents.Add(ucasSpecialismComponent);
-
         }
 
-        public string ReplaceDualSpecialismCodes(TqRegistrationPathway tqRegistrationPathway)
-        {
-            var dualSpecialismCode = string.Empty;
+        //public string ReplaceDualSpecialismCodes(TqRegistrationPathway tqRegistrationPathway)
+        //{
+        //    var dualSpecialismCode = string.Empty;
 
-            if (tqRegistrationPathway.TqRegistrationSpecialisms.Count > 1)
-            {
-               var pathwayRegistrationSpecialism = tqRegistrationPathway.TqRegistrationSpecialisms.Select(t => t.TlSpecialism.LarId).ToList();
-                if (pathwayRegistrationSpecialism.Any())
-                {
-                   dualSpecialismCode = _ucasRepository.GetDualSpecialismLarId(pathwayRegistrationSpecialism);
-                }
-            }
+        //    if (tqRegistrationPathway.TqRegistrationSpecialisms.Count > 1)
+        //    {
+        //        var pathwayRegistrationSpecialism = tqRegistrationPathway.TqRegistrationSpecialisms.Select(t => t.TlSpecialism.LarId).ToList();
+        //        if (pathwayRegistrationSpecialism.Any())
+        //        {
+        //            dualSpecialismCode = _ucasRepository.GetDualSpecialismLarId(pathwayRegistrationSpecialism);
+        //        }
+        //    }
 
-            return dualSpecialismCode;
-        }
+        //    return dualSpecialismCode;
+        //}
 
         public void AddOverallResultSegment(IList<UcasDataComponent> ucasDataComponents, string overallSubjectCode, string resultAwarded = "")
         {
