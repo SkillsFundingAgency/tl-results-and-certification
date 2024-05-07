@@ -7,6 +7,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations
 {
     public class DateValidatorAttribute : ValidationAttribute
     {
+        private const int SqlServerMinDateTimeYear = 1753;
+
         public string Property { get; set; }
         public Type ErrorResourceType { get; set; }
 
@@ -65,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations
                 return false;
             }
 
-            bool validNumbers = IsBetween(parsedYear, 1000, 9999) && IsBetween(parsedMonth, 1, 12) && IsBetween(parsedDay, 1, 31);
+            bool validNumbers = IsBetween(parsedYear, SqlServerMinDateTimeYear, 9999) && IsBetween(parsedMonth, 1, 12) && IsBetween(parsedDay, 1, 31);
             if (!validNumbers)
             {
                 return false;

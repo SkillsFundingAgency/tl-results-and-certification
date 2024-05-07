@@ -31,6 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Utilities.CustomValidatio
         [InlineData("2023", "2", "29", false)]
         [InlineData("2024", "2", "30", false)]
         [InlineData("999", "2", "30", false)]
+        [InlineData("1752", "12", "31", false)]
 
         // Future
         [InlineData("2024", "3", "2", false)]
@@ -41,6 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Utilities.CustomValidatio
         [InlineData("2024", "03", "01", true)]
         [InlineData("2024", "02", "29", true)]
         [InlineData("1999", "12", "31", true)]
+        [InlineData("1753", "1", "1", true)]
         public void Then_Returns_ExpectedResults(string year, string month, string day, bool isValid)
         {
             // Arrange
