@@ -77,8 +77,11 @@ jobs:
           scriptLocation: 'inlineScript'
           inlineScript: |
             $functionAppObjectId = az functionapp identity show -n $(armOutputs.armOutput.functionAppName) -g $(ResourceGroupName) --query "principalId"
+            $functionAppSlotObjectId = az functionapp identity show -n $(armOutputs.armOutput.functionAppName) -g $(ResourceGroupName) -s 'staging' --query "principalId"
             Write-Host $functionAppObjectId
+            Write-Host $functionAppSlotObjectId
             az keyvault set-policy --name $(SharedKeyVaultName) --object-id $functionAppObjectId --secret-permissions "get" --key-permissions "get" --certificate-permissions "get"
+            az keyvault set-policy --name $(SharedKeyVaultName) --object-id $functionAppSlotObjectId --secret-permissions "get" --key-permissions "get" --certificate-permissions "get"
 
 
      
