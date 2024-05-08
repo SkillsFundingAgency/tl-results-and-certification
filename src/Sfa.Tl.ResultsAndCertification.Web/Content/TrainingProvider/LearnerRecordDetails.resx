@@ -234,6 +234,9 @@
   <data name="Title_Provider_Ukprn_Text" xml:space="preserve">
     <value>UKPRN</value>
   </data>
+  <data name="Title_Specialism_Text" xml:space="preserve">
+    <value>Specialism</value>
+  </data>
   <data name="Title_StartYear_Text" xml:space="preserve">
     <value>Start year</value>
   </data>

@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
+using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
@@ -31,6 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public string ProviderName { get; set; }
         public long ProviderUkprn { get; set; }
         public string TlevelTitle { get; set; }
+        public List<string> Specialisms { get; set; }
         public int AcademicYear { get; set; }
         public string AwardingOrganisationName { get; set; }
         public SubjectStatus MathsStatus { get; set; }
@@ -108,6 +110,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             Id = "tleveltitle",
             Title = LearnerRecordDetailsContent.Title_TLevel_Text,
             Value = TlevelTitle
+        };
+
+        public SummaryItemModel SummarySpecialisms => new SummaryItemModel
+        {
+            Id = "specialisms",
+            Title = LearnerRecordDetailsContent.Title_Specialism_Text,
+            //Value =  Specialisms.Count > 1 ? $@"{Specialisms[0]} <br/> {Specialisms[1]}" : $"{Specialisms[0]}",
+            Value = Specialisms.Count<=0 ? "": ConvertListToRawHtmlString(Specialisms),
+           IsRawHtml = true
         };
 
         public SummaryItemModel SummaryStartYear => new SummaryItemModel
@@ -273,6 +284,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 
                 return routeName;
             }
+        }
+
+        private static string ConvertListToRawHtmlString(IEnumerable<string> selectedList)
+        {
+            var htmlRawList = selectedList.Select(x => string.Format("{0}<br/>", x));
+            return string.Join(string.Empty, htmlRawList);
         }
     }
 }
