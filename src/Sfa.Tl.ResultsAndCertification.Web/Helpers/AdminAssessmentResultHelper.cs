@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
             }
 
             Result result = assessment.Result;
-            
+
             bool hasGrade = result != null && !string.IsNullOrWhiteSpace(result.Grade);
             if (!hasGrade)
             {
@@ -22,27 +22,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
             }
 
             PrsStatus? prsStatus = result.PrsStatus;
-            bool isValidGradeForPrsJourney = CommonHelper.IsValidGradeForPrsJourney(result.GradeCode, assessment.ComponentType);
 
-            bool isOpenRommAllowed = (!prsStatus.HasValue || prsStatus == PrsStatus.NotSpecified) && CommonHelper.IsAppealsAllowed(assessment.AppealEndDate, today) && isValidGradeForPrsJourney;
+            bool isOpenRommAllowed = (!prsStatus.HasValue || prsStatus == PrsStatus.NotSpecified) && CommonHelper.IsAppealsAllowed(assessment.AppealEndDate, today);
             if (isOpenRommAllowed)
             {
                 return AdminAssessmentResultStatus.OpenRommAllowed;
             }
 
-            bool isAddRommOutcomeAllowed = prsStatus == PrsStatus.UnderReview && isValidGradeForPrsJourney;
+            bool isAddRommOutcomeAllowed = prsStatus == PrsStatus.UnderReview;
             if (isAddRommOutcomeAllowed)
             {
                 return AdminAssessmentResultStatus.AddRommOutcomeAllowed;
             }
 
-            bool isOpenAppealAllowed = prsStatus == PrsStatus.Reviewed && CommonHelper.IsAppealsAllowed(assessment.AppealEndDate, today) && isValidGradeForPrsJourney;
+            bool isOpenAppealAllowed = prsStatus == PrsStatus.Reviewed && CommonHelper.IsAppealsAllowed(assessment.AppealEndDate, today);
             if (isOpenAppealAllowed)
             {
                 return AdminAssessmentResultStatus.OpenAppealAllowed;
             }
 
-            bool isAddAppealOutcomeAllowed = prsStatus == PrsStatus.BeingAppealed && isValidGradeForPrsJourney;
+            bool isAddAppealOutcomeAllowed = prsStatus == PrsStatus.BeingAppealed;
             if (isAddAppealOutcomeAllowed)
             {
                 return AdminAssessmentResultStatus.AddAppealOutcomeAllowed;
