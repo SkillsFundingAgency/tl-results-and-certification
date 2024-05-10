@@ -72,6 +72,10 @@
             "metadata": {
                 "description": "Enables the replica database to be deployed"
             }
+        },
+        "isStorageSecondaryKeyInUse": {
+            "type": "bool",
+            "allowedValues": [ true, false ]
         }
     },
     "variables": {
@@ -223,6 +227,9 @@
                     },
                     "sqlStorageAccountName": {
                         "value": "[variables('sharedStorageAccountName')]"
+                    },
+                    "isStorageSecondaryKeyInUse": {
+                        "value": "[parameters('isStorageSecondaryKeyInUse')]"
                     }
                 }
             },
@@ -262,6 +269,9 @@
                     },
                     "sqlStorageAccountName": {
                         "value": "[variables('sharedStorageAccountName')]"
+                    },
+                    "isStorageSecondaryKeyInUse": {
+                        "value": "[parameters('isStorageSecondaryKeyInUse')]"
                     }
                 }
             },

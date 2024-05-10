@@ -133,7 +133,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The highest grade for each component will be used to calculate the overall T Level result for results day..
+        ///   Looks up a localized string similar to The highest grade for each component will be used to calculate the overall T Level result for results day, This also applies to resit results..
         /// </summary>
         public static string Details_Summary_Text_The_Highest_Grade_For_Each_Component {
             get {
