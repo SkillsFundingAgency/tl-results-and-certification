@@ -13,6 +13,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.SearchRegistration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
@@ -21,6 +22,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 {
     public class ResultsAndCertificationInternalApiClient : IResultsAndCertificationInternalApiClient
@@ -539,6 +541,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public Task<bool> ProcessAdminReviewChangesAppealOutcomeSpecialismAsync(ReviewChangesAppealOutcomeSpecialismRequest request)
           => PostAsync<ReviewChangesAppealOutcomeSpecialismRequest, bool>(ApiConstants.ProcessAdminReviewChangesAppealOutcomeSpecialism, request);
+
+        #endregion
+
+        #region Registration search
+
+        public Task<SearchRegistrationFilters> GetSearchRegistrationFiltersAsync()
+            => GetAsync<SearchRegistrationFilters>(ApiConstants.GetSearchRegistrationFiltersUri);
+
+        public Task<PagedResponse<SearchRegistrationDetail>> SearchRegistrationDetailsAsync(SearchRegistrationRequest request)
+            => PostAsync<SearchRegistrationRequest, PagedResponse<SearchRegistrationDetail>>(ApiConstants.SearchRegistrationDetailsUri, request);
 
         #endregion
 
