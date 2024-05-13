@@ -117,70 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Button_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="Accessibility_Statement_Published_On" xml:space="preserve">
+    <value>1 May 2024</value>
   </data>
-  <data name="Button_Continue" xml:space="preserve">
-    <value>Continue</value>
+  <data name="Accessibility_Statement_Reviewed_On" xml:space="preserve">
+    <value>4 January 2024</value>
   </data>
-  <data name="Button_Return" xml:space="preserve">
-    <value>Return to learner record</value>
-  </data>
-  <data name="Error_Summary_Header" xml:space="preserve">
-    <value>There is a problem</value>
-  </data>
-  <data name="Error_Summary_Text" xml:space="preserve">
-    <value>Select the correct start year</value>
-  </data>
-  <data name="Heading_Change_Start_Year" xml:space="preserve">
-    <value>Change start year</value>
-  </data>
-  <data name="Heading_Personal_Details" xml:space="preserve">
-    <value>Personal details</value>
-  </data>
-  <data name="Heading_What_Should_The_Start_Year_Be" xml:space="preserve">
-    <value>What should the start year be?</value>
-  </data>
-  <data name="Message_Start_Year_Cannot_Be_Changed_Devlopment_Ticket" xml:space="preserve">
-    <value>You can request a development ticket for further help.</value>
-  </data>
-  <data name="Message_Start_Year_Cannot_Be_Changed_Learner_Has_Been_Withdrawn" xml:space="preserve">
-    <value>This is because the learner has been withdrawn.</value>
-  </data>
-  <data name="Message_Start_Year_Cannot_Be_Changed_Learner_Started_Course_More_Than_4_Years" xml:space="preserve">
-    <value>This is because the learner started their course more than 4 years ago.</value>
-  </data>
-  <data name="Message_Start_Year_Cannot_Be_Changed_Line1" xml:space="preserve">
-    <value>You cannot change the start year for this learner.</value>
-  </data>
-  <data name="Message_Start_Year_Cannot_Be_Changed_Overall_Result_Already_Calculated" xml:space="preserve">
-    <value>This is because the overall result has already been calculated.</value>
-  </data>
-  <data name="Message_Start_Year_Cannot_Be_Changed_Title" xml:space="preserve">
-    <value>Start year cannot be changed</value>
-  </data>
-  <data name="Message_Start_Year_Cannot_Be_Changed_Tlevel_Became_Available_This_Academic_Year" xml:space="preserve">
-    <value>This is because this T Level only became available in this academic year.</value>
+  <data name="Accessibility_Statement_Tested_On" xml:space="preserve">
+    <value>12 July 2022</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Change start year – Admin</value>
+    <value>Accessibility statement</value>
   </data>
-  <data name="Title_Learner_Text" xml:space="preserve">
-    <value>Learner</value>
-  </data>
-  <data name="Title_Provider_Text" xml:space="preserve">
-    <value>Provider (UKPRN)</value>
-  </data>
-  <data name="Title_StartYear_Text" xml:space="preserve">
-    <value>Start year</value>
-  </data>
-  <data name="Title_TLevel_Text" xml:space="preserve">
-    <value>T Level</value>
-  </data>
-  <data name="Title_ULN_Text" xml:space="preserve">
-    <value>ULN</value>
-  </data>
-  <data name="Validation_Message" xml:space="preserve">
-    <value>Select the correct start year</value>
+  <data name="Section_Heading" xml:space="preserve">
+    <value>Accessibility statement</value>
   </data>
 </root>

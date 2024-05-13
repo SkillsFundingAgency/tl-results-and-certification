@@ -169,7 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This is because the overall result has already been calculated. You can request a development ticket for further help..
+        ///   Looks up a localized string similar to This is because the overall result has already been calculated..
         /// </summary>
         public static string Message_Start_Year_Cannot_Be_Changed_Overall_Result_Already_Calculated {
             get {

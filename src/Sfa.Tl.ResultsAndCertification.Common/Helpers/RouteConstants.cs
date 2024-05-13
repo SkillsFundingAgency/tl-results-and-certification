@@ -1,4 +1,6 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
+﻿using System.ComponentModel.Design.Serialization;
+
+namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
 {
     public static class RouteConstants
     {
@@ -219,6 +221,7 @@
         public const string UserGuide = "UserGuide";
         public const string ServiceUnavailable = "ServiceUnavailable";
         public const string ServiceUnavailableMaintenance = "ServiceUnavailableMaintenance";
+        public const string AccessibilityStatement = "AccessibilityStatement";
 
         // Document
         public const string RegistrationDataFormatAndRulesGuide = "RegistrationDataFormatAndRulesGuide";
