@@ -5,7 +5,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.CertificateTrackingExtraction
 {
     public class CertificateTrackingExtractionData
     {
-        [DisplayName(CertificateTrackingExtractHeader.Uln)]
+        [DisplayName(CertificateTrackingExtractHeader.UniqueLearnerNumber)]
         public long Uln { get; set; }
 
         [DisplayName(CertificateTrackingExtractHeader.FirstName)]

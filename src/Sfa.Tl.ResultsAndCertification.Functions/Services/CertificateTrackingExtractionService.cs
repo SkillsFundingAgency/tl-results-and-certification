@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
             var byteData = await CsvExtensions.WriteFileAsync(data, classMapType: typeof(CertificateTrackingExtractionDataExportMap));
 
-            if (byteData.Length <= 0)
+            if (byteData.IsNullOrEmpty())
             {
                 var message = $"No byte data available to write. Method: {nameof(ProcessCertificateTrackingExtractAsync)}()";
                 throw new ApplicationException(message);
