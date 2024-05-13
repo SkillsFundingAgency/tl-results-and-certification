@@ -3,16 +3,24 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.WithdrawnLearnerAOMessageGet
 {
-    public class When_Called_With_Invalid_Data : TestSetup
+    public class When_Called_With_Invalid_Data: TestSetup
     {
+
+        WithdrawLearnerAOMessageViewModel model;
+
         public override void Given()
         {
             ProfileId = 0;
-            TrainingProviderLoader.GetLearnerRecordDetailsAsync<WithdrawLearnerAOMessageViewModel>(ProviderUkprn, ProfileId).Returns(null as WithdrawLearnerAOMessageViewModel);
+            TrainingProviderLoader.GetLearnerRecordDetailsAsync<WithdrawLearnerAOMessageViewModel>(ProviderUkprn, ProfileId).Returns(model);
         }
 
         [Fact]

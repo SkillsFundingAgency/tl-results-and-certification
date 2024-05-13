@@ -12,7 +12,7 @@ jobs:
     steps:
       - task: GitHubRelease@1
         displayName: 'GitHub release (create)'
-        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master') , eq(variables['System.JobAttempt'], '1'))
+        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master') , eq(variables['System.JobAttempt'], '1'), eq(variables['environmentName'], 'prd'))
         inputs:
           gitHubConnection: SkillsFundingAgency
           tagSource: userSpecifiedTag

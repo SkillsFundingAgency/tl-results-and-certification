@@ -6,7 +6,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration.Enum;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -16,7 +15,7 @@ using PrsLearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Post
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsLearnerDetails
 {
     public class When_PrsStatus_Is_BeingAppealed_For_Core : TestSetup
-    {
+    {        
         private PrsLearnerDetailsViewModel _mockResult;
         private NotificationBannerModel _notificationBanner;
 
@@ -38,8 +37,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 CoreComponentDisplayName = "Design, Surveying and Planning (123456)",
                 PrsCoreComponentExams = new List<PrsComponentExamViewModel>
                 {
-                    new PrsComponentExamViewModel
-                    {
+                    new PrsComponentExamViewModel 
+                    { 
                         AssessmentSeries = "Autumn 2021",
                         Grade = "B",
                         GradeCode = "PCG3",
@@ -50,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                         AppealEndDate = DateTime.Today.AddDays(10),
                         AssessmentId = 1
                     }
-                }
+                }                
             };
 
             _notificationBanner = new NotificationBannerModel { DisplayMessageBody = true, HeaderMessage = "Header", Message = "Updated Successfully." };
@@ -81,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.DateofBirth.Should().Be(_mockResult.DateofBirth);
             model.ProviderName.Should().Be(_mockResult.ProviderName);
             model.ProviderUkprn.Should().Be(_mockResult.ProviderUkprn);
-            model.TlevelTitle.Should().Be(_mockResult.TlevelTitle);
+            model.TlevelTitle.Should().Be(_mockResult.TlevelTitle);            
 
             // Uln
             model.SummaryUln.Title.Should().Be(PrsLearnerDetailsContent.Title_Uln_Text);
@@ -126,9 +125,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.StartPostResultsService);
             model.Breadcrumb.BreadcrumbItems[1].RouteName.Should().Be(RouteConstants.StartReviewsAndAppeals);
             model.Breadcrumb.BreadcrumbItems[2].DisplayName.Should().Be(BreadcrumbContent.Search_For_Learner);
-            model.Breadcrumb.BreadcrumbItems[2].RouteName.Should().Be(RouteConstants.SearchRegistration);
-            model.Breadcrumb.BreadcrumbItems[2].RouteAttributes.Should().HaveCount(1);
-            model.Breadcrumb.BreadcrumbItems[2].RouteAttributes.Should().ContainEquivalentOf(new KeyValuePair<string, string>(Constants.Type, SearchRegistrationType.PostResult.ToString()));
-        }
+            model.Breadcrumb.BreadcrumbItems[2].RouteName.Should().Be(RouteConstants.PrsSearchLearner);
+        }        
     }
 }

@@ -82,6 +82,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             }
         }
 
+        public async Task<UlnAssessmentsNotFoundViewModel> FindUlnAssessmentsAsync(long aoUkprn, long Uln)
+        {
+            var response = await _internalApiClient.FindUlnAsync(aoUkprn, Uln);
+            return _mapper.Map<UlnAssessmentsNotFoundViewModel>(response);
+        }
+
         public async Task<T> GetAssessmentDetailsAsync<T>(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
             var learnerDetails = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId, status);
@@ -173,9 +179,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (assessmentEntryDetails == null || requestedAssessmentIds.Count() != assessmentEntryDetails.Count() || assessmentEntryDetails.GroupBy(x => x.AssessmentSeriesName).Count() != 1)
                 return null;
 
-            var removeAsessmentEntryViewModel = _mapper.Map<RemoveSpecialismAssessmentEntryViewModel>(learnerDetails, opt => { opt.Items["currentSpecialismAssessmentSeriesId"] = assessmentEntryDetails.FirstOrDefault().AssessmentSeriesId; });
+            var removeAsessmentEntryViewModel = _mapper.Map<RemoveSpecialismAssessmentEntryViewModel>(learnerDetails, opt => { opt.Items["currentSpecialismAssessmentSeriesId"] = assessmentEntryDetails.FirstOrDefault().AssessmentSeriesId; }); 
             removeAsessmentEntryViewModel.AssessmentSeriesName = assessmentEntryDetails.FirstOrDefault().AssessmentSeriesName.ToLowerInvariant();
-            removeAsessmentEntryViewModel.SpecialismAssessmentIds = specialismAssessmentIds;
+            removeAsessmentEntryViewModel.SpecialismAssessmentIds = specialismAssessmentIds; 
             return removeAsessmentEntryViewModel;
         }
 
@@ -205,6 +211,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
             }
             return fileStream;
-        }
+        }        
     }
 }

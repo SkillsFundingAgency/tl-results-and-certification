@@ -148,6 +148,60 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("results-search-uln/{populateUln:bool?}", Name = RouteConstants.SearchResults)]
+        public async Task<IActionResult> SearchResultsAsync(bool populateUln)
+        {
+            var defaultValue = await _cacheService.GetAndRemoveAsync<string>(Constants.ResultsSearchCriteria);
+            var viewModel = new SearchResultsViewModel { SearchUln = !string.IsNullOrWhiteSpace(defaultValue) && populateUln ? defaultValue : null };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("results-search-uln", Name = RouteConstants.SubmitSearchResults)]
+        public async Task<IActionResult> SearchResultsAsync(SearchResultsViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var searchResult = await _resultLoader.FindUlnResultsAsync(User.GetUkPrn(), model.SearchUln.ToLong());
+
+            if (searchResult?.IsAllowed == true)
+            {
+                if (searchResult.IsWithdrawn)
+                {
+                    await _cacheService.SetAsync(Constants.ResultsSearchCriteria, model.SearchUln);
+                    return RedirectToRoute(RouteConstants.ResultWithdrawnDetails, new { profileId = searchResult.RegistrationProfileId });
+                }
+
+                return RedirectToRoute(RouteConstants.ResultDetails, new { profileId = searchResult.RegistrationProfileId });
+            }
+            else
+            {
+                await _cacheService.SetAsync(Constants.ResultsSearchCriteria, model.SearchUln);
+
+                var ulnResultsNotfoundModel = new UlnResultsNotFoundViewModel { Uln = model.SearchUln.ToString() };
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.SearchResultsUlnNotFound), ulnResultsNotfoundModel, CacheExpiryTime.XSmall);
+
+                return RedirectToRoute(RouteConstants.SearchResultsNotFound);
+            }
+        }
+
+        [HttpGet]
+        [Route("results-uln-not-found", Name = RouteConstants.SearchResultsNotFound)]
+        public async Task<IActionResult> SearchResultsNotFoundAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<UlnResultsNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchResultsUlnNotFound));
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchResultsUlnNotFound from redis cache in search results not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
         [Route("results-learner-withdrawn/{profileId}", Name = RouteConstants.ResultWithdrawnDetails)]
         public async Task<IActionResult> ResultWithdrawnDetailsAsync(int profileId)
         {

@@ -508,6 +508,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(adminCoreComponent);
             }
+            model.AssessmentDetails = adminCoreComponent.AssessmentDetails;
             model.ValidPathwayAssessmentSeries = adminCoreComponent.ValidPathwayAssessmentSeries;
             await _cacheService.SetAsync<AdminCoreComponentViewModel>(CacheKey, model);
             return RedirectToAction(nameof(RouteConstants.AdminReviewChangesCoreAssessmentEntry), new { registrationPathwayId = model.RegistrationPathwayId });
@@ -1101,7 +1102,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            AdminChangePathwayResultReviewChangesViewModel viewModel =  _loader.CreateAdminChangePathwayResultReviewChanges(cachedModel);
+            AdminChangePathwayResultReviewChangesViewModel viewModel = _loader.CreateAdminChangePathwayResultReviewChanges(cachedModel);
             return View(viewModel);
         }
 
@@ -1165,6 +1166,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync<NotificationBannerModel>(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
             return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
-        }            
+        }
     }
 }

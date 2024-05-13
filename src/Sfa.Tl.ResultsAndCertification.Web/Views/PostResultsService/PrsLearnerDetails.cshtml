@@ -7,7 +7,7 @@
 }
 
 @section NavigationBar {
-    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+<vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
 }
 
 <div class="govuk-grid-row">
@@ -91,6 +91,6 @@
             </div>
         </details>
 
-        <a id="buttonSearchAgain" class="govuk-button" role="button" data-prevent-double-click="true" asp-route="@Model.SearchRegistrationRouteName" asp-all-route-data="@Model.SearchRegistrationRouteAttributes">@PrsLearnerDetails.Button_Search_Again</a>
+        <a id="buttonSearchAgain" class="govuk-button" role="button" data-prevent-double-click="true" asp-route="@RouteConstants.PrsSearchLearner">@PrsLearnerDetails.Button_Search_Again</a>
     </div>
 </div>

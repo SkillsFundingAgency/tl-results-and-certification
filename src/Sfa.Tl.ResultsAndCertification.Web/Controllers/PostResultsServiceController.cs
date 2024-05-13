@@ -9,7 +9,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration.Enum;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,38 +32,95 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("post-results-reviews-appeals-and-grade-changes", Name = RouteConstants.StartReviewsAndAppeals)]
-        public IActionResult StartReviewsAndAppealsAsync()
+        public async Task<IActionResult> StartReviewsAndAppealsAsync()
         {
+            await _cacheService.RemoveAsync<PrsSearchLearnerViewModel>(CacheKey);
             return View(new StartReviewsAndAppealsViewModel());
         }
 
         [HttpGet]
-        [Route("post-results-learner-withdrawn/{profileId}", Name = RouteConstants.PrsUlnWithdrawn)]
-        public async Task<IActionResult> PrsUlnWithdrawnAsync(int profileId)
+        [Route("post-results-search-uln/{populateUln:bool?}", Name = RouteConstants.PrsSearchLearner)]
+        public async Task<IActionResult> PrsSearchLearnerAsync(bool populateUln)
         {
-            var prsLearnerRecord = await _postResultsServiceLoader.FindPrsLearnerRecordAsync(User.GetUkPrn(), null, profileId);
+            var cacheModel = await _cacheService.GetAsync<PrsSearchLearnerViewModel>(CacheKey);
+            var viewModel = cacheModel != null && populateUln ? cacheModel : new PrsSearchLearnerViewModel();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("post-results-search-uln/{populateUln:bool?}", Name = RouteConstants.SubmitPrsSearchLearner)]
+        public async Task<IActionResult> PrsSearchLearnerAsync(PrsSearchLearnerViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var prsLearnerRecord = await _postResultsServiceLoader.FindPrsLearnerRecordAsync(User.GetUkPrn(), model.SearchUln.ToLong());
+            await _cacheService.SetAsync(CacheKey, model);
+
             if (prsLearnerRecord == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No post-result learner details found. Method: PrsUlnWithdrawnAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
+                await _cacheService.SetAsync(CacheKey, new PrsUlnNotFoundViewModel { Uln = model.SearchUln }, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.PrsUlnNotFound);
             }
-
-            var prsUlnWithdrawnViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsUlnWithdrawnViewModel>(prsLearnerRecord);
-            return View(prsUlnWithdrawnViewModel);
+            else if (prsLearnerRecord.IsWithdrawn)
+            {
+                var prsUlnWithdrawnViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsUlnWithdrawnViewModel>(prsLearnerRecord);
+                await _cacheService.SetAsync(CacheKey, prsUlnWithdrawnViewModel, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.PrsUlnWithdrawn);
+            }
+            else if (!prsLearnerRecord.HasResults)
+            {
+                var prsNoResultsViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsNoResultsViewModel>(prsLearnerRecord);
+                await _cacheService.SetAsync(CacheKey, prsNoResultsViewModel, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.PrsNoResults);
+            }
+            else
+            {
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId });
+            }
         }
 
         [HttpGet]
-        [Route("post-results-no-results/{profileId}", Name = RouteConstants.PrsNoResults)]
-        public async Task<IActionResult> PrsNoResultsAsync(int profileId)
+        [Route("post-results-uln-not-found", Name = RouteConstants.PrsUlnNotFound)]
+        public async Task<IActionResult> PrsUlnNotFoundAsync()
         {
-            var prsLearnerRecord = await _postResultsServiceLoader.FindPrsLearnerRecordAsync(User.GetUkPrn(), null, profileId);
-            if (prsLearnerRecord == null)
+            var cacheModel = await _cacheService.GetAndRemoveAsync<PrsUlnNotFoundViewModel>(CacheKey);
+            if (cacheModel == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No post-result learner details found. Method: PrsNoResultsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PrsUlnNotFoundViewModel from redis cache in request Prs Uln not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-            var prsNoResultsViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsNoResultsViewModel>(prsLearnerRecord);
-            return View(prsNoResultsViewModel);
+
+            return View(cacheModel);
+        }
+
+        [HttpGet]
+        [Route("post-results-learner-withdrawn", Name = RouteConstants.PrsUlnWithdrawn)]
+        public async Task<IActionResult> PrsUlnWithdrawnAsync()
+        {
+            var cacheModel = await _cacheService.GetAndRemoveAsync<PrsUlnWithdrawnViewModel>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PrsUlnWithdrawnViewModel from redis cache in post results service uln withdrawn page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(cacheModel);
+        }        
+
+        [HttpGet]
+        [Route("post-results-no-results", Name = RouteConstants.PrsNoResults)]
+        public async Task<IActionResult> PrsNoResultsAsync()
+        {
+            var cacheModel = await _cacheService.GetAndRemoveAsync<PrsNoResultsViewModel>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PrsNoResultsViewModel from redis cache in post results service no results page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(cacheModel);
         }
 
         [HttpGet]
@@ -311,7 +367,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
-
+            
             if (model.AreYouSureToCancel.Value)
             {
                 await _cacheService.RemoveAsync<PrsRommCheckAndSubmitViewModel>(CacheKey);
@@ -663,7 +719,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return viewModel.NavigationOption switch
             {
                 PrsGradeChangeConfirmationNavigationOptions.BackToLearnersPage => RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = viewModel.ProfileId }),
-                PrsGradeChangeConfirmationNavigationOptions.SearchForAnotherLearner => RedirectToRoute(RouteConstants.SearchRegistration, new { type = SearchRegistrationType.PostResult.ToString() }),
+                PrsGradeChangeConfirmationNavigationOptions.SearchForAnotherLearner => RedirectToRoute(RouteConstants.PrsSearchLearner),
                 PrsGradeChangeConfirmationNavigationOptions.BackToHome => RedirectToRoute(RouteConstants.Home),
                 _ => RedirectToRoute(RouteConstants.Home)
             };

@@ -2,9 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration.Enum;
 using System;
-using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 {
@@ -71,15 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 
         public virtual BackLinkModel BackLink => new BackLinkModel
         {
-            RouteName = SearchRegistrationRouteName,
-            RouteAttributes = SearchRegistrationRouteAttributes
-        };
-
-        public string SearchRegistrationRouteName => RouteConstants.SearchRegistration;
-
-        public Dictionary<string, string> SearchRegistrationRouteAttributes => new()
-        {
-            [Constants.Type] = SearchRegistrationType.Result.ToString()
+            RouteName = RouteConstants.SearchResults            
         };
     }
 }

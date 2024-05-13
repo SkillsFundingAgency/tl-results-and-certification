@@ -61,7 +61,7 @@
                     @string.Format(AdminLearnerAssessmentEntry.Section_Heading_Core_Component, Model.PathwayDisplayName)
                 </h2>
 
-                @if (Model.HasCoreAssessmentEntries)
+                @if (Model.AssessmentDetails.PathwayAssessments.Any())
                 {
                     <table class="govuk-table responsive-table">
                        <partial name="Partials/_examTableResults.cshtml" model="Model.AssessmentDetails.PathwayAssessments" />

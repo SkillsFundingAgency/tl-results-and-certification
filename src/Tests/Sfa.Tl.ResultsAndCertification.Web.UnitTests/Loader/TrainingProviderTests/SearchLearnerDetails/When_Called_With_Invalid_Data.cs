@@ -8,9 +8,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
 {
     public class When_Called_With_Invalid_Data : TestSetup
     {
+        private readonly PagedResponse<SearchLearnerDetail> _expectedApiResult;
+
         public override void Given()
         {
-            InternalApiClient.SearchLearnerDetailsAsync(Arg.Any<SearchLearnerRequest>()).Returns(null as PagedResponse<SearchLearnerDetail>);
+            InternalApiClient.SearchLearnerDetailsAsync(Arg.Any<SearchLearnerRequest>()).Returns(_expectedApiResult);
         }
 
         [Fact]

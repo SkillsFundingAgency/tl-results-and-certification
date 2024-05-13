@@ -9,9 +9,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 {
     public class When_SarchLearnerFilters_IsNull : TestSetup
     {
+        private SearchLearnerFiltersViewModel _searchFilters;
+
         public override void Given()
         {
-            TrainingProviderLoader.GetSearchLearnerFiltersAsync(ProviderUkprn).Returns(null as SearchLearnerFiltersViewModel);
+            TrainingProviderLoader.GetSearchLearnerFiltersAsync(ProviderUkprn).Returns(_searchFilters);
         }
 
         [Fact]
