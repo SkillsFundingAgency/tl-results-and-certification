@@ -6,9 +6,9 @@
     @foreach (var tlevel in Model)
     {
         <div class="govuk-summary-list__row">
-            <dd class="govuk-summary-list__value">
+            <dt class="govuk-summary-list__value">
                 @tlevel.TlevelTitle
-            </dd>
+            </dt>
             <dd class="govuk-summary-list__actions">
                 <a class="govuk-link" asp-route="TlevelConfirmedDetails" asp-route-id="@tlevel.PathwayId">
                     @ViewAll.View_Link_Text<span class="govuk-visually-hidden"> @tlevel.TlevelTitle</span>

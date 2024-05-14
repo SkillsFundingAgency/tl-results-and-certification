@@ -1,131 +1,36 @@
-name: tl-results-and-certification
-trigger:
-  batch: true
-  branches:
-    include:
-      - master
-      - feature/*      
-    exclude:
-      - feature/lrs-integration      
+resources:
+  repositories:
+    - repository: self
+      persistCredentials: true
+      clean: true
 
+    - repository: devopsTemplates
+      type: github
+      endpoint: DfE-Digital
+      name: DFE-Digital/operations-devops-pipeline-templates
+
+trigger:
+  branches:
+    include: 
+    - master
+    - develop
+    - Release*
+    - feature/* 
+    - hotfix/*
+    - bugfix/*
+     
 pr: 
   - master
   - develop
-  - feature/*
-
-workspace:
-    clean: all
-
-variables:
-  buildConfiguration: 'release'
-  buildPlatform: 'anycpu'
+  - Release*
 
 pool:
   name: 'Azure Pipelines'
-  vmImage: 'windows-latest' #'vs2017-win2016'
-
-steps:
-- task: UseDotNet@2 
-  displayName: "Use .NET Core SDK 2.1.x"
-  inputs:
-      packageType: 'sdk'
-      version: '2.1.x'
-
-- task: gittools.gitversion.gitversion-task.GitVersion@5
-  displayName: GitVersion
-
-- task: NodeTool@0
-  inputs:
-    versionSpec: '14.x'  
-
-- task: Npm@1
-  displayName: 'npm install'
-  inputs: 
-    workingDir: src/Sfa.Tl.ResultsAndCertification.Web
-    verbose: false
-
-- task: Gulp@0
-  displayName: 'gulp'
-  inputs:
-    gulpFile: src/Sfa.Tl.ResultsAndCertification.Web/gulpfile.js
-
-- task: UseDotNet@2 
-  displayName: "Install .NET 6 SDK"
-  inputs:
-      packageType: 'sdk'
-      version: '6.x'
-      
-- task: DotNetCoreCLI@2
-  displayName: dot restore
-  inputs:
-    command: restore
-    projects: 'src/Sfa.Tl.ResultsAndCertification.sln'
-    noCache: true    
-
-- task: DotNetCoreCLI@2
-  displayName: dotnet build
-  inputs:
-    projects: 'src/**/*.csproj'
-    arguments: '--configuration $(buildConfiguration)  --no-restore'
-    
-- task: DotNetCoreCLI@2
-  displayName: Unit Tests
-  inputs:
-    command: test
-    projects: '**/*.UnitTests.csproj'
-    arguments: '--configuration $(buildConfiguration) --no-build'
-    
-- task: DotNetCoreCLI@2
-  displayName: Integration Tests
-  inputs:
-    command: publish
-    publishWebProjects: false
-    projects: '**/*.IntegrationTests.csproj'
-    arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
-
-- task: DotNetCoreCLI@2
-  displayName: 'Publish Internal API'
-  inputs:
-    command: publish
-    publishWebProjects: false
-    projects: 'src/Sfa.Tl.ResultsAndCertification.InternalApi/Sfa.Tl.ResultsAndCertification.InternalApi.csproj'
-    arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'
-
-- task: DotNetCoreCLI@2
-  displayName: 'Publish Web App'
-  inputs:
-    command: publish
-    publishWebProjects: false
-    projects: 'src/Sfa.Tl.ResultsAndCertification.Web/Sfa.Tl.ResultsAndCertification.Web.csproj'
-    arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'   
-
-- task: DotNetCoreCLI@2
-  displayName: 'Publish Function App'
-  inputs:
-    command: publish
-    publishWebProjects: false
-    projects: 'src/Sfa.Tl.ResultsAndCertification.Functions/Sfa.Tl.ResultsAndCertification.Functions.csproj'
-    arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
-
-- task: VSBuild@1
-  displayName: 'Build DACPAC'
-  inputs:
-    solution: 'src/Sfa.Tl.ResultsAndCertification.Database/Sfa.Tl.ResultsAndCertification.Database.sqlproj'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-    msbuildArgs: '/p:PackageLocation="$(build.artifactstagingdirectory)/publish"'
-
-- task: CopyFiles@2
-  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-  inputs:
-    Contents: |
-     azure\**
-     config\**
-     src\**\*.dacpac
-    TargetFolder: '$(build.artifactstagingdirectory)/'
-    OverWrite: true
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact'
-  inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)/'
+  vmImage: 'windows-latest'
+  
+variables:
+- template: ./Automation/variables/vars-global.yml@devopsTemplates
+- name: applicationName
+  value: resac
+stages:
+  - template: ./yaml/stages/tlevels-master-stage.yml

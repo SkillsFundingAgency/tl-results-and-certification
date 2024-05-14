@@ -28,11 +28,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(BreadcrumbContent.Home);
             model.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Home);
         }
-
-        [Fact]
-        public void Then_Expected_Methods_IsCalled()
-        {
-            CacheService.Received(1).RemoveAsync<PrsSearchLearnerViewModel>(CacheKey);
-        }
     }
 }

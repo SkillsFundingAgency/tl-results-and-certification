@@ -9,11 +9,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadOvera
 {
     public class When_Called_With_Invalid_Data : TestSetup
     {
-        private FileStream _stream;
-
         public override void Given()
         {
-            DownloadOverallResultsLoader.DownloadOverallResultsDataAsync(ProviderUkprn, Email).Returns(_stream);
+            DownloadOverallResultsLoader.DownloadOverallResultsDataAsync(ProviderUkprn, Email).Returns(null as FileStream);
         }
 
         [Fact]
