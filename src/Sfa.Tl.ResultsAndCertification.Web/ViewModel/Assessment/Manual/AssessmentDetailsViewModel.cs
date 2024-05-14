@@ -200,7 +200,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                         new() { DisplayName = BreadcrumbContent.Assessment_Dashboard, RouteName = RouteConstants.AssessmentDashboard },
                         new()
                         {
-                            DisplayName = BreadcrumbContent.Search_For_Assessments,
+                            DisplayName = BreadcrumbContent.Search_For_Assessment_Entry,
                             RouteName = SearchRegistrationRouteName,
                             RouteAttributes =  SearchRegistrationRouteAttributes
                         },

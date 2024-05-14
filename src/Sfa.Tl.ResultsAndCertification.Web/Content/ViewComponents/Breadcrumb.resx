@@ -180,23 +180,14 @@
   <data name="Reviews_And_Appeals" xml:space="preserve">
     <value>Post-results</value>
   </data>
-  <data name="Search_For_Assessments" xml:space="preserve">
-    <value>Search for a learner</value>
-  </data>
   <data name="Search_For_Assessment_Entry" xml:space="preserve">
     <value>Search for an assessment entry</value>
   </data>
   <data name="Search_For_Learner" xml:space="preserve">
     <value>Search for a learner</value>
   </data>
-  <data name="Search_For_Registration" xml:space="preserve">
-    <value>Search for a registration</value>
-  </data>
   <data name="Search_For_Registration_Entry" xml:space="preserve">
     <value>Search for a registration</value>
-  </data>
-  <data name="Search_For_Results" xml:space="preserve">
-    <value>Search for a learner</value>
   </data>
   <data name="Search_For_Result_Entry" xml:space="preserve">
     <value>Search for a result</value>
