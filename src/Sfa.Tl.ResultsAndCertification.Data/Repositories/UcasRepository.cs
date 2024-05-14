@@ -111,13 +111,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return _dbContext.TlDualSpecialismToSpecialism
                 .Include(x => x.Specialism)
                 .Include(x => x.DualSpecialism).ToList();
-
         }
 
-        public string GetDualSpecialismLarId(List<string> specialismlarId)
+        public string GetDualSpecialismLarId(List<string> specialismLarIds)
         {
             var dualSpecialisms = GetDualSpecialisms();
-            var dualSpecialismLarIdForSpecialism = dualSpecialisms.Where(t => specialismlarId.Contains(t.Specialism.LarId.ToString())).ToList();
+            var dualSpecialismLarIdForSpecialism = dualSpecialisms.Where(t => specialismLarIds.Contains(t.Specialism.LarId.ToString())).ToList();
             var filteredDualSpecialisms = dualSpecialismLarIdForSpecialism.GroupBy(x => x.TlDualSpecialismId).Where(g => g.Count() > 1).ToList();
             var dualSpecialismCodes = filteredDualSpecialisms.SelectMany(t => t).ToList();
 

@@ -30,9 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
             "\"PathwayResult\": \"A*\",    \"SpecialismDetails\": [{ \"SpecialismName\": \"Heating Engineering\",\"SpecialismLarId\": \"10202101\",\"SpecialismResult\": \"Distinction\"}, " +
             "{\"SpecialismName\": \"Ventilation\",\"SpecialismLarId\": \"10202105\",\"SpecialismResult\": \"Distinction\"}],\"IndustryPlacementStatus\": \"Completed\",\"OverallResult\": \"Distinction\"}";
 
-            return new TqRegistrationPathway()
+            return new TqRegistrationPathway
             {
-
                 OverallResults = new List<OverallResult>
                 {
                     new()

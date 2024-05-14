@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
             "\"PathwayResult\": \"A*\",    \"SpecialismDetails\": [{ \"SpecialismName\": \"Heating Engineering\",\"SpecialismLarId\": \"10202101\",\"SpecialismResult\": \"Pass\"}, " +
             "{\"SpecialismName\": \"Ventilation\",\"SpecialismLarId\": \"10202105\",\"SpecialismResult\": \" Q - Pending\"}],\"IndustryPlacementStatus\": \"Completed\",\"OverallResult\": \"Distinction\"}";
 
-            return new TqRegistrationPathway()
+            return new TqRegistrationPathway
             {
                 OverallResults = new List<OverallResult>
                 {
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
                         Details = overallDetails,
                         Id = 1,
                         IsOptedin = true,
-                        SpecialismResultAwarded ="Q - pending result"
+                        SpecialismResultAwarded = "Q - pending result"
                     }
                 }
             };
