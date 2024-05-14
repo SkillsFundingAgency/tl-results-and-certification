@@ -5,34 +5,26 @@
     <dt class="govuk-summary-list__key">
         @Html.Raw(@Model?.Title)
     </dt>
-    
-        
-        @{
-            if ((Model?.Value == null || Model?.Value?.Count() == 0) && !string.IsNullOrWhiteSpace(Model?.HiddenText))
-            {
-            
-            <dd class="govuk-summary-list__value govuk-visually-hidden">
-                    @Model.HiddenText
-                @*<span class="govuk-visually-hidden">@Model.HiddenText</span>*@
-            </dd>
-            }
-            else
-            {
-                
-                foreach (var val in Model?.Value)
-                {
-                <dd class="govuk-summary-list__value">
-                        @Html.Raw(@val)
-                </dd>
-                }
+
+    @{
+        if ((Model?.Value == null || Model?.Value?.Count() == 0) && !string.IsNullOrWhiteSpace(Model?.HiddenText))
+        {        
+            <dd class="govuk-body govuk-!-margin-left-0 govuk-visually-hidden">@Model.HiddenText </dd>
+        }
+        else
+        {
+            foreach (var val in Model?.Value)
+            {               
+                <dd class="govuk-body govuk-!-margin-left-0">@Html.Raw(@val) </dd>
             }
         }
-    
-   
+    }
+
     <dd class="govuk-summary-list__actions">
         @if (!string.IsNullOrWhiteSpace(Model?.ActionText))
         {
             <a class="govuk-link" id="@Model?.Id" asp-route="@Model?.RouteName" asp-all-route-data="@Model?.RouteAttributes">@Model?.ActionText<span class="govuk-visually-hidden">@Model?.Title</span></a>
         }
     </dd>
+
 </div>
