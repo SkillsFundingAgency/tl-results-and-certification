@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                         new() { DisplayName = BreadcrumbContent.StartPostResultsService, RouteName = RouteConstants.StartReviewsAndAppeals },
                         new()
                         {
-                            DisplayName = BreadcrumbContent.Search_For_Learner,
+                            DisplayName = BreadcrumbContent.Search_For_Romm_Or_An_Appeal_Entry,
                             RouteName = SearchRegistrationRouteName,
                             RouteAttributes =  SearchRegistrationRouteAttributes
                         }
