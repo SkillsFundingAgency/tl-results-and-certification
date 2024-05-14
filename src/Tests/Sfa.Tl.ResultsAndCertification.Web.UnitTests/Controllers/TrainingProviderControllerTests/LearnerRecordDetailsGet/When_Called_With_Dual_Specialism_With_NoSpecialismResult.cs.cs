@@ -81,7 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             var model = (Result as ViewResult).Model as LearnerRecordDetailsViewModel;
             model.OverallResultDetails.SpecialismDetails.ForEach(x => x.SpecialismResult.Should().BeNullOrEmpty());
             model.OverallResultDetails.SpecialismDetails.ForEach(x => x.SpecialismName.Should().NotBeNullOrEmpty());
-
+            model.Specialisms.Should().BeNullOrEmpty();
 
         }
     }

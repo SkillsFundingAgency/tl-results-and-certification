@@ -1,6 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using System;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
 {
@@ -15,6 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         public string ProviderName { get; set; }
         public long ProviderUkprn { get; set; }
         public string TlevelTitle { get; set; }
+        public ICollection<string> Specialisms { get; set; }
         public int AcademicYear { get; set; }
         public string AwardingOrganisationName { get; set; }
         public SubjectStatus? MathsStatus { get;set; }
