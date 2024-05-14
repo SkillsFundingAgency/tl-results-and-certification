@@ -5,21 +5,30 @@
     <dt class="govuk-summary-list__key">
         @Html.Raw(@Model?.Title)
     </dt>
-    <dd class="govuk-summary-list__value">
+    
+        
         @{
             if ((Model?.Value == null || Model?.Value?.Count() == 0) && !string.IsNullOrWhiteSpace(Model?.HiddenText))
             {
-                <span class="govuk-visually-hidden">@Model.HiddenText</span>
+            
+            <dd class="govuk-summary-list__value govuk-visually-hidden">
+                    @Model.HiddenText
+                @*<span class="govuk-visually-hidden">@Model.HiddenText</span>*@
+            </dd>
             }
             else
             {
+                
                 foreach (var val in Model?.Value)
                 {
-                    <p class="govuk-body">@Html.Raw(@val)</p>
+                <dd class="govuk-summary-list__value">
+                        @Html.Raw(@val)
+                </dd>
                 }
             }
         }
-    </dd>
+    
+   
     <dd class="govuk-summary-list__actions">
         @if (!string.IsNullOrWhiteSpace(Model?.ActionText))
         {
