@@ -4,7 +4,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
-using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
@@ -115,10 +114,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public SummaryItemModel SummarySpecialisms => new SummaryItemModel
         {
             Id = "specialisms",
-            Title = LearnerRecordDetailsContent.Title_Specialism_Text,
-            //Value =  Specialisms.Count > 1 ? $@"{Specialisms[0]} <br/> {Specialisms[1]}" : $"{Specialisms[0]}",
-            Value = Specialisms.Count<=0 ? "": ConvertListToRawHtmlString(Specialisms),
-           IsRawHtml = true
+            Title = LearnerRecordDetailsContent.Title_Specialism_Text,            
+            Value = Specialisms.Count==0 ? "": ConvertListToRawHtmlString(Specialisms),
+            IsRawHtml = true
         };
 
         public SummaryItemModel SummaryStartYear => new SummaryItemModel

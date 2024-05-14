@@ -68,7 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.OverallResultDetails, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.OverallResultDetails) ? JsonConvert.DeserializeObject<OverallResultDetail>(s.OverallResultDetails) : null))
                .ForMember(d => d.OverallResultPublishDate, opts => opts.MapFrom(s => s.OverallResultPublishDate))
                .ForMember(d => d.LastDocumentRequestedDate, opts => opts.MapFrom(s => s.LastDocumentRequestedDate))
-               .ForMember(d => d.Specialisms, opts => opts.MapFrom(s=>s.Specialism))
+               .ForMember(d => d.Specialisms, opts => opts.MapFrom(s=>s.Specialisms))
                .ForMember(d => d.IsReprint, opts => opts.MapFrom(s => s.IsReprint == true));
 
             CreateMap<Address, AddressViewModel>()
