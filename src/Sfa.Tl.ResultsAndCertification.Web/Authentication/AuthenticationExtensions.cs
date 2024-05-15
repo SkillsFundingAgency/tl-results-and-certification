@@ -80,6 +80,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                     options.ResponseType = OpenIdConnectResponseType.Code;
                     options.GetClaimsFromUserInfoEndpoint = true;
 
+                    options.NonceCookie.SameSite = SameSiteMode.None;
+                    options.CorrelationCookie.SameSite = SameSiteMode.None;
+
                     options.Scope.Clear();
                     options.Scope.Add("openid");
                     options.Scope.Add("email");
