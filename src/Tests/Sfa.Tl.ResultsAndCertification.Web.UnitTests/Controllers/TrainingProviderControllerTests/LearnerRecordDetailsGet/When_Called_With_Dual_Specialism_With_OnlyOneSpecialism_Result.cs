@@ -28,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 ProviderName = "Barsley College",
                 ProviderUkprn = 58794528,
                 TlevelTitle = "Tlevel in Test Pathway Name",
+                Specialisms = new List<string> { "Specialism 1" },
                 AcademicYear = 2020,
                 AwardingOrganisationName = "Pearson",
                 MathsStatus = SubjectStatus.NotSpecified,
@@ -78,6 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             var model = (Result as ViewResult).Model as LearnerRecordDetailsViewModel;
             model.OverallResultDetails.SpecialismDetails.Where(x => string.IsNullOrEmpty(x.SpecialismResult)).Should().HaveCount(1);
+            model.Specialisms.Should().HaveCount(1);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
                 return false;
             else
             {
-                var retVal = x.UniqueLearnerNumber == y.UniqueLearnerNumber 
+                var retVal = x.UniqueLearnerNumber == y.UniqueLearnerNumber
                     && string.Equals(x.Firstname, y.Firstname)
                     && Equals(x.Lastname, y.Lastname)
                     && Equals(x.DateofBirth, y.DateofBirth);
@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
                 var hashCode = reg.UniqueLearnerNumber.GetHashCode();
                 hashCode = (hashCode * 397) ^ (reg.Firstname != null ? reg.Firstname.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (reg.Lastname != null ? reg.Lastname.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (reg.DateofBirth != null ? reg.DateofBirth.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ reg.DateofBirth.GetHashCode();
                 return hashCode;
             }
         }

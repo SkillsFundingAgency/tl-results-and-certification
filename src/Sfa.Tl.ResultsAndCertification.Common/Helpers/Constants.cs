@@ -116,6 +116,7 @@
         public const string RegistrationPathwayId = "registrationPathwayId";
         public const string SpecialismsId = "specialismsId";
         public const string ChangeLogId = "changeLogId";
+        public const string Type = "type";
 
         // Assessments
         public const int AssessmentEndInYears = 4;

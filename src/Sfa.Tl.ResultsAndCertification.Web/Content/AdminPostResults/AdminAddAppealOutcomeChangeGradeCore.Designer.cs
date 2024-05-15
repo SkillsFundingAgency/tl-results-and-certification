@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminPostResults {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change the grade after a appeal.
+        ///   Looks up a localized string similar to Change the grade after an appeal.
         /// </summary>
         public static string Heading_Change_Result_After_Appeal {
             get {

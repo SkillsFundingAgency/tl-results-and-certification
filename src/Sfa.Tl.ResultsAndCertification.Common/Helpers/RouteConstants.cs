@@ -1,4 +1,6 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
+﻿using System.ComponentModel.Design.Serialization;
+
+namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
 {
     public static class RouteConstants
     {
@@ -132,9 +134,6 @@
         public const string ReregistrationConfirmation = "ReregistrationConfirmation";
 
         // Search Registration
-        public const string SearchRegistration = "SearchRegistration";
-        public const string SubmitSearchRegistration = "SubmitSearchRegistration";
-        public const string SearchRegistrationNotFound = "SearchRegistrationNotFound";
         public const string RegistrationDetails = "RegistrationDetails";
 
         // Cancel Registration
@@ -181,9 +180,6 @@
         public const string ResultsNoRecordsFound = "ResultsNoRecordsFound";
 
         // Search Assessment Entries
-        public const string SearchAssessments = "SearchAssessments";
-        public const string SubmitSearchAssessments = "SubmitSearchAssessments";
-        public const string SearchAssessmentsNotFound = "SearchAssessmentsNotFound";
         public const string AssessmentDetails = "AssessmentDetails";
         public const string AssessmentWithdrawnDetails = "AssessmentWithdrawnDetails";
 
@@ -205,9 +201,6 @@
         public const string SubmitChangeSpecialismResult = "SubmitChangeSpecialismResult";
 
         // Search Results
-        public const string SearchResults = "SearchResults";
-        public const string SubmitSearchResults = "SubmitSearchResults";
-        public const string SearchResultsNotFound = "SearchResultsNotFound";
         public const string ResultWithdrawnDetails = "ResultWithdrawnDetails";
         public const string ResultDetails = "ResultDetails";
 
@@ -228,6 +221,7 @@
         public const string UserGuide = "UserGuide";
         public const string ServiceUnavailable = "ServiceUnavailable";
         public const string ServiceUnavailableMaintenance = "ServiceUnavailableMaintenance";
+        public const string AccessibilityStatement = "AccessibilityStatement";
 
         // Document
         public const string RegistrationDataFormatAndRulesGuide = "RegistrationDataFormatAndRulesGuide";
@@ -325,9 +319,6 @@
         #region Post Results Service
 
         public const string StartReviewsAndAppeals = "StartReviewsAndAppeals";
-        public const string PrsSearchLearner = "PrsSearchLearner";
-        public const string SubmitPrsSearchLearner = "SubmitPrsSearchLearner";
-        public const string PrsUlnNotFound = "PrsUlnNotFound";
         public const string PrsUlnWithdrawn = "PrsUlnWithdrawn";
         public const string PrsLearnerDetails = "PrsLearnerDetails";
         public const string PrsAddRomm = "PrsAddRomm";
@@ -566,6 +557,17 @@
         public const string AdminAddAppealOutcomeChangeGradeSpecialism = "AdminAddAppealOutcomeChangeGradeSpecialism";
         public const string SubmitAdminAddAppealOutcomeChangeGradeSpecialism = "SubmitAdminAddAppealOutcomeChangeGradeSpecialism";
         public const string SubmitAdminReviewChangesAppealOutcomeSpecialism = "SubmitAdminReviewChangesAppealOutcomeSpecialism";
+
+        #endregion
+
+        #region Search registration
+
+        public const string SearchRegistrationClear = "SearchRegistrationClear";
+        public const string SearchRegistration = "SearchRegistration";
+        public const string SubmitSearchRegistrationSearchKey = "SubmitSearchRegistrationSearchKey";
+        public const string SubmitSearchRegistrationClearKey = "SubmitSearchRegistrationClearKey";
+        public const string SubmitSearchRegistrationFilters = "SubmitSearchRegistrationFilters";
+        public const string SubmitSearchRegistrationClearFilters = "SubmitSearchRegistrationClearFilters";
 
         #endregion
     }
