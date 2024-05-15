@@ -484,6 +484,17 @@
         public const string AdminViewChangeAddSpecialismResultRecord = "AdminViewChangeAddSpecialismResultRecord";
         public const string AdminViewChangeRemoveCoreAssessmentRecord = "AdminViewChangeRemoveCoreAssessmentRecord";
         public const string AdminViewChangeRemoveSpecialismAssessmentRecord = "AdminViewChangeRemoveSpecialismAssessmentRecord";
+        public const string AdminViewChangePathwayResultRecord = "AdminViewChangePathwayResultRecord";
+        public const string AdminViewChangeSpecialismResultRecord = "AdminViewChangeSpecialismResultRecord";
+        public const string AdminViewOpenPathwayRommRecord = "AdminViewOpenPathwayRommRecord";
+        public const string AdminViewOpenSpecialismRommRecord = "AdminViewOpenSpecialismRommRecord";
+        public const string AdminViewPathwayRommOutcomeRecord = "AdminViewPathwayRommOutcomeRecord";
+        public const string AdminViewSpecialismRommOutcomeRecord = "AdminViewSpecialismRommOutcomeRecord";
+        public const string AdminViewOpenPathwayAppealRecord = "AdminViewOpenPathwayAppealRecord";
+        public const string AdminViewOpenSpecialismAppealRecord = "AdminViewOpenSpecialismAppealRecord";
+        public const string AdminViewPathwayAppealOutcomeRecord = "AdminViewPathwayAppealOutcomeRecord";
+        public const string AdminViewSpecialismAppealOutcomeRecord = "AdminViewSpecialismAppealOutcomeRecord";
+
 
 
         #endregion

@@ -9,13 +9,11 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
-using ContractIP =Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
@@ -323,6 +321,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return await changeLongRepository.CreateAsync(CreateChangeLog(request, new
                 {
                     PathwayResultId = pathwayResult.Id,
+                    PathwayAssessmentId = request.PathwayAssessmentId,
                     GradeTo = request.GradeTo
                 })) > 0;
             }
@@ -372,7 +371,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
 
         public async Task<bool> ProcessAdminChangePathwayResultAsync(ChangePathwayResultRequest request)
-        {           
+        {
             var pathwayResultRepo = _repositoryFactory.GetRepository<TqPathwayResult>();
             TqPathwayResult pathwayResult = await pathwayResultRepo.GetSingleOrDefaultAsync(p => p.Id == request.ChangePathwayDetails.PathwayResultId);
 
@@ -388,7 +387,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             pathwayResult.IsOptedin = false;
 
 
-            var updated = await pathwayResultRepo.UpdateWithSpecifedColumnsOnlyAsync(pathwayResult, u => u.ModifiedBy, u => u.ModifiedOn, u=>u.EndDate, u=>u.IsOptedin) > 0;
+            var updated = await pathwayResultRepo.UpdateWithSpecifedColumnsOnlyAsync(pathwayResult, u => u.ModifiedBy, u => u.ModifiedOn, u => u.EndDate, u => u.IsOptedin) > 0;
 
             if (request.SelectedGradeId > 0)
             {
@@ -410,7 +409,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
 
             if (updated)
-            {                
+            {
                 var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
                 return await changeLongRepository.CreateAsync(CreateChangeLog(request, request.ChangePathwayDetails)) > 0;
             }
@@ -421,7 +420,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<bool> ProcessAdminChangeSpecialismResultAsync(ChangeSpecialismResultRequest request)
         {
             var specialismResultRepo = _repositoryFactory.GetRepository<TqSpecialismResult>();
-            
+
 
             TqSpecialismResult specialismResult = await specialismResultRepo.GetSingleOrDefaultAsync(p => p.Id == request.ChangeSpecialismDetails.SpecialismResultId);
             var hasEnddate = specialismResult.EndDate.HasValue;
