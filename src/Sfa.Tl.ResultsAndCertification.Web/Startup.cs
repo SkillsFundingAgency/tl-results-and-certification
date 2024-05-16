@@ -188,6 +188,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                                                         "https://tagmanager.google.com/")
                                          .UnsafeInline())
                                          .ObjectSources(s => s.None()));
+            app.UseCookiePolicy();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
@@ -197,8 +198,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
-            });
-            app.UseCookiePolicy();
+            });           
 
         }
 
