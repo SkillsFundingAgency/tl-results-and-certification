@@ -547,9 +547,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
         public const string SubmitAdminAddAppealOutcomeChangeGradeSpecialism = "SubmitAdminAddAppealOutcomeChangeGradeSpecialism";
         public const string SubmitAdminReviewChangesAppealOutcomeSpecialism = "SubmitAdminReviewChangesAppealOutcomeSpecialism";
 
-<<<<<<< HEAD
-=======
         #endregion
+
 
         #region Search registration
 
@@ -560,7 +559,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
         public const string SubmitSearchRegistrationFilters = "SubmitSearchRegistrationFilters";
         public const string SubmitSearchRegistrationClearFilters = "SubmitSearchRegistrationClearFilters";
 
->>>>>>> Release21.3
         #endregion
     }
 }

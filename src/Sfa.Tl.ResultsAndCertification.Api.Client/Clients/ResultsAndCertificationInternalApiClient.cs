@@ -542,8 +542,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         public Task<bool> ProcessAdminReviewChangesAppealOutcomeSpecialismAsync(ReviewChangesAppealOutcomeSpecialismRequest request)
           => PostAsync<ReviewChangesAppealOutcomeSpecialismRequest, bool>(ApiConstants.ProcessAdminReviewChangesAppealOutcomeSpecialism, request);
 
-<<<<<<< HEAD
-=======
+
         #endregion
 
         #region Registration search
@@ -554,7 +553,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         public Task<PagedResponse<SearchRegistrationDetail>> SearchRegistrationDetailsAsync(SearchRegistrationRequest request)
             => PostAsync<SearchRegistrationRequest, PagedResponse<SearchRegistrationDetail>>(ApiConstants.SearchRegistrationDetailsUri, request);
 
->>>>>>> Release21.3
+
         #endregion
 
         #region Private Methods
