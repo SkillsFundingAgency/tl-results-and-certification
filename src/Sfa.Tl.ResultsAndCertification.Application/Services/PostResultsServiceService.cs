@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -170,20 +172,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request)
         {
             var referenceNumber = Guid.NewGuid().ToString();
-            var technicalTeamTokens = new Dictionary<string, dynamic>
-                {
-                    { "reference_number", referenceNumber },
-                    { "sender_email_address", request.RequestedUserEmailAddress },
-                    { "learner_name", request.LearnerName },
-                    { "uln", request.Uln },
-                    { "provider_ukprn", request.ProviderUkprn },
-                    { "requested_message", request.RequestedMessage }
-                };
 
-            // send email to technical team
-            var hasEmailSent = await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.GradeChangeRequestTechnicalTeamNotificationVersion2.ToString(), _configuration.TechnicalSupportEmailAddress, technicalTeamTokens);
-
-            if (hasEmailSent)
+            var emailSent = await SendEmailToTechnicalSupport(referenceNumber, request);
+            if (emailSent)
             {
                 var userTokens = new Dictionary<string, dynamic>
                 {
@@ -194,6 +185,33 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.GradeChangeRequestUserNotification.ToString(), request.RequestedUserEmailAddress, userTokens);
             }
             return false;
+        }
+
+        private Task<bool> SendEmailToTechnicalSupport(string referenceNumber, PrsGradeChangeRequest request)
+        {
+            Dictionary<ComponentType, (string Template, string ComponentTypeToken)> componentTypeDict = new()
+            {
+                [ComponentType.Core] = (NotificationTemplateName.GradeChangeRequestTechnicalTeamNotificationCoreComponent.ToString(), "core_component"),
+                [ComponentType.Specialism] = (NotificationTemplateName.GradeChangeRequestTechnicalTeamNotificationSpecialism.ToString(), "specialism")
+            };
+
+            var (template, token) = componentTypeDict[request.ComponentType];
+
+            var technicalTeamTokens = new Dictionary<string, dynamic>
+            {
+                { "reference_number", referenceNumber },
+                { "sender_email_address", request.RequestedUserEmailAddress },
+                { "learner_name", request.LearnerName },
+                { "uln", request.Uln },
+                { "provider_ukprn", request.ProviderUkprn },
+                { token, request.ComponentName },
+                { "exam_period", request.ExamPeriod },
+                { "grade", request.Grade },
+                { "requested_message", request.RequestedMessage }
+            };
+
+            // send email to technical team
+            return _notificationService.SendEmailNotificationAsync(template, _configuration.TechnicalSupportEmailAddress, technicalTeamTokens);
         }
 
         private static bool IsResultStatusValid(PrsStatus requestPrsStatus, PrsStatus? currentPrsStatus)

@@ -11,7 +11,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Enum
         PrintingJobFailedNotification,
         GradeChangeRequestUserNotification,
         GradeChangeRequestTechnicalTeamNotification,
-        GradeChangeRequestTechnicalTeamNotificationVersion2,
+        GradeChangeRequestTechnicalTeamNotificationCoreComponent,
+        GradeChangeRequestTechnicalTeamNotificationSpecialism,
         AppealGradeAfterDeadlineRequestUserNotification,
         AppealGradeAfterDeadlineRequestTechnicalTeamNotification
     }

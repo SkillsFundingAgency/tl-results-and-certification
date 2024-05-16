@@ -12,7 +12,8 @@ USING (VALUES
 (N'83ea8be5-4de7-4dc2-b35d-5c9a6b7280cb', N'GradeChangeRequestTechnicalTeamNotification'),
 (N'e4087caf-b68c-4c37-840e-524666c7652a', N'AppealGradeAfterDeadlineRequestUserNotification'),
 (N'a889ff99-af5e-4c66-adff-fa07f7c228bf', N'AppealGradeAfterDeadlineRequestTechnicalTeamNotification'),
-(N'daa342c6-8f92-4695-80ee-f251a7844449', N'GradeChangeRequestTechnicalTeamNotificationVersion2')
+(N'daa342c6-8f92-4695-80ee-f251a7844449', N'GradeChangeRequestTechnicalTeamNotificationCoreComponent'),
+(N'559a3508-432d-4dd2-ac87-e7e15c81bcf3', N'GradeChangeRequestTechnicalTeamNotificationSpecialism')
 )
   AS Source ([TemplateId], [TemplateName]) 
 ON Target.[TemplateName] = Source.[TemplateName] 

@@ -112,7 +112,16 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             new NotificationTemplate
             {
                 TemplateId = new Guid("daa342c6-8f92-4695-80ee-f251a7844449"),
-                TemplateName = NotificationTemplateName.GradeChangeRequestTechnicalTeamNotificationVersion2.ToString(),
+                TemplateName = NotificationTemplateName.GradeChangeRequestTechnicalTeamNotificationCoreComponent.ToString(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new NotificationTemplate
+            {
+                TemplateId = new Guid("559a3508-432d-4dd2-ac87-e7e15c81bcf3"),
+                TemplateName = NotificationTemplateName.GradeChangeRequestTechnicalTeamNotificationSpecialism.ToString(),
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,

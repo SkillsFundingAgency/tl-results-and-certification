@@ -59,16 +59,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
 
         [Theory()]
         [MemberData(nameof(Data))]
-        public async Task Then_Expected_Results_Are_Returned(PrsGradeChangeRequest request, bool result)
+        public async Task Then_Expected_Results_Are_Returned(PrsGradeChangeRequest request, string technicalTeamEmailTemplateId)
         {
             await WhenAsync(request);
-            _actualResult.Should().Be(result);
 
-            if (result)
-            {
-                await NotificationsClient.Received(1).SendEmailAsync("technical@test.com", "daa342c6-8f92-4695-80ee-f251a7844449", Arg.Any<Dictionary<string, dynamic>>());
-                await NotificationsClient.Received(1).SendEmailAsync("test@test.com", "91b21a18-8555-45b8-9739-f18a90228211", Arg.Any<Dictionary<string, dynamic>>());
-            }
+            _actualResult.Should().BeTrue();
+
+            await NotificationsClient.Received(1).SendEmailAsync("technical@test.com", technicalTeamEmailTemplateId, Arg.Any<Dictionary<string, dynamic>>());
+            await NotificationsClient.Received(1).SendEmailAsync("test@test.com", "91b21a18-8555-45b8-9739-f18a90228211", Arg.Any<Dictionary<string, dynamic>>());
         }
 
         public static IEnumerable<object[]> Data
@@ -81,13 +79,33 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                     {
                         new PrsGradeChangeRequest
                         {
+                            ComponentType = ComponentType.Core,
                             LearnerName = "John Smith",
                             Uln = 1234567890,
                             ProviderUkprn = 10000536,
+                            ComponentName = "Science",
+                            ExamPeriod = "Summer 2024",
+                            Grade = "B",
                             RequestedMessage = "Test",
                             RequestedUserEmailAddress = "test@test.com"
                         },
-                        true 
+                        "daa342c6-8f92-4695-80ee-f251a7844449"
+                    },
+                    new object[]
+                    {
+                        new PrsGradeChangeRequest
+                        {
+                            ComponentType = ComponentType.Specialism,
+                            LearnerName = "John Smith",
+                            Uln = 1234567890,
+                            ProviderUkprn = 10000536,
+                            ComponentName = "Food Sciences",
+                            ExamPeriod = "Summer 2024",
+                            Grade = "A",
+                            RequestedMessage = "Test",
+                            RequestedUserEmailAddress = "test@test.com"
+                        },
+                        "559a3508-432d-4dd2-ac87-e7e15c81bcf3"
                     }
                 };
             }

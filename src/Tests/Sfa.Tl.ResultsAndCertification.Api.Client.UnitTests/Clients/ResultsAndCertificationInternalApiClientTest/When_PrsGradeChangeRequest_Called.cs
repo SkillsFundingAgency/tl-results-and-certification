@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
@@ -40,6 +41,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 LearnerName = "John Smith",
                 Uln = 1234567890,
                 ProviderUkprn = 10000536,
+                ComponentType = ComponentType.Core,
+                ComponentName = "Digital Production, Design and Development",
+                ExamPeriod = "Summer 2024",
+                Grade = "C",
                 RequestedMessage = "Test",
                 RequestedUserEmailAddress = "test@test.com"
             };
