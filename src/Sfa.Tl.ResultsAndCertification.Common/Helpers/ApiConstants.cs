@@ -157,8 +157,5 @@
         public const string ProcessAdminReviewChangesAppealOutcomeCore = "/api/adminpostresults/ProcessAdminReviewChangesAppealOutcomeCore";
         public const string ProcessAdminReviewChangesAppealOutcomeSpecialism = "/api/adminpostresults/ProcessAdminReviewChangesAppealOutcomeSpecialism";
 
-        // Search registration
-        public const string GetSearchRegistrationFiltersUri = "/api/searchregistration/GetSearchRegistrationFilters";
-        public const string SearchRegistrationDetailsUri = "/api/searchregistration/SearchRegistrationDetails";
     }
 }

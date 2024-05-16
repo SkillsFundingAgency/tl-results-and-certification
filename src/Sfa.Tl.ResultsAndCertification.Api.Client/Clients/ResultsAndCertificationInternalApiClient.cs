@@ -544,16 +544,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         #endregion
 
-        #region Registration search
-
-        public Task<SearchRegistrationFilters> GetSearchRegistrationFiltersAsync()
-            => GetAsync<SearchRegistrationFilters>(ApiConstants.GetSearchRegistrationFiltersUri);
-
-        public Task<PagedResponse<SearchRegistrationDetail>> SearchRegistrationDetailsAsync(SearchRegistrationRequest request)
-            => PostAsync<SearchRegistrationRequest, PagedResponse<SearchRegistrationDetail>>(ApiConstants.SearchRegistrationDetailsUri, request);
-
-        #endregion
-
         #region Private Methods
 
         /// <summary>

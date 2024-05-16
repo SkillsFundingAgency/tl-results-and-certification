@@ -548,16 +548,5 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
         public const string SubmitAdminReviewChangesAppealOutcomeSpecialism = "SubmitAdminReviewChangesAppealOutcomeSpecialism";
 
         #endregion
-
-        #region Search registration
-
-        public const string SearchRegistrationClear = "SearchRegistrationClear";
-        public const string SearchRegistration = "SearchRegistration";
-        public const string SubmitSearchRegistrationSearchKey = "SubmitSearchRegistrationSearchKey";
-        public const string SubmitSearchRegistrationClearKey = "SubmitSearchRegistrationClearKey";
-        public const string SubmitSearchRegistrationFilters = "SubmitSearchRegistrationFilters";
-        public const string SubmitSearchRegistrationClearFilters = "SubmitSearchRegistrationClearFilters";
-
-        #endregion
     }
 }
