@@ -175,6 +175,17 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         Task<bool> ProcessAdminReviewChangesAppealOutcomeSpecialismAsync(ReviewChangesAppealOutcomeSpecialismRequest request);
 
+<<<<<<< HEAD
+=======
+        #endregion
+
+        #region Registration search
+
+        public Task<SearchRegistrationFilters> GetSearchRegistrationFiltersAsync();
+
+        public Task<PagedResponse<SearchRegistrationDetail>> SearchRegistrationDetailsAsync(SearchRegistrationRequest request);
+
+>>>>>>> Release21.3
         #endregion
     }
 }

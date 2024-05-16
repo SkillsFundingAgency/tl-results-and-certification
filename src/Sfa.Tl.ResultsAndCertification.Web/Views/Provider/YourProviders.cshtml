@@ -20,9 +20,9 @@
             @foreach (var provider in Model.Providers)
             {
                 <div class="govuk-summary-list__row">
-                    <dd class="govuk-summary-list__value govuk-heading-m">
+                    <dt class="govuk-summary-list__value govuk-heading-m">
                         @provider.DisplayName <span class="govuk-hint"><abbr>@YourProviders.Ukprn_Text</abbr>: @provider.Ukprn</span>
-                    </dd>
+                    </dt>
                     <dd class="govuk-summary-list__actions">
                         <a class="govuk-link" asp-route="ProviderTlevels" asp-route-providerId="@provider.ProviderId">
                             @YourProviders.View_Link_Text <span class="govuk-visually-hidden">@provider.DisplayName</span>

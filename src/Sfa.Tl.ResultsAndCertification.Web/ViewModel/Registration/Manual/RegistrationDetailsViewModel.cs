@@ -64,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
                         new() { DisplayName = BreadcrumbContent.Registration_Dashboard, RouteName = RouteConstants.RegistrationDashboard },
                         new()
                         {
-                            DisplayName = BreadcrumbContent.Search_For_Registration,
+                            DisplayName = BreadcrumbContent.Search_For_Registration_Entry,
                             RouteName = SearchRegistrationRouteName,
                             RouteAttributes =  SearchRegistrationRouteAttributes
                         },

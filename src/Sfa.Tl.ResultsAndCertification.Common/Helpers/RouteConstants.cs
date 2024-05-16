@@ -547,6 +547,20 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
         public const string SubmitAdminAddAppealOutcomeChangeGradeSpecialism = "SubmitAdminAddAppealOutcomeChangeGradeSpecialism";
         public const string SubmitAdminReviewChangesAppealOutcomeSpecialism = "SubmitAdminReviewChangesAppealOutcomeSpecialism";
 
+<<<<<<< HEAD
+=======
+        #endregion
+
+        #region Search registration
+
+        public const string SearchRegistrationClear = "SearchRegistrationClear";
+        public const string SearchRegistration = "SearchRegistration";
+        public const string SubmitSearchRegistrationSearchKey = "SubmitSearchRegistrationSearchKey";
+        public const string SubmitSearchRegistrationClearKey = "SubmitSearchRegistrationClearKey";
+        public const string SubmitSearchRegistrationFilters = "SubmitSearchRegistrationFilters";
+        public const string SubmitSearchRegistrationClearFilters = "SubmitSearchRegistrationClearFilters";
+
+>>>>>>> Release21.3
         #endregion
     }
 }

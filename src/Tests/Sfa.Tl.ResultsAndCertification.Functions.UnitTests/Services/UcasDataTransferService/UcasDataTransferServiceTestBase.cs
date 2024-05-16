@@ -2,14 +2,13 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialism;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
-using System.Security.Cryptography.Xml;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTransferService
 {
@@ -39,9 +38,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
             UcasRepository = Substitute.For<IUcasRepository>();
             Logger = Substitute.For<ILogger<IUcasDataTransferService>>();
             
-
             Service = new Functions.Services.UcasDataTransferService(UcasDataService, BlobStorageService, UcasApiClient, Logger);
-            UcasRecordEntrySegment = new UcasRecordEntriesSegment(UcasRepository);
+            UcasRecordEntrySegment = new UcasRecordEntriesSegment(new SpecialismCodeConverter());
             UcasRecordResultSegment = new UcasRecordResultsSegment(UcasRepository);
         }
     }

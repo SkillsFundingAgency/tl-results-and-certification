@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.LearnerRecordDetailsGet
 {
@@ -31,6 +32,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 ProviderName = "Barsley College",
                 ProviderUkprn = 58794528,
                 TlevelTitle = "Tlevel in Test Pathway Name",
+                Specialisms = new List<string>
+                {
+                    "Specialism 1", "Specialism 2"
+                },
                 AcademicYear = 2020,
                 AwardingOrganisationName = "Pearson",
                 MathsStatus = SubjectStatus.NotSpecified,
@@ -85,6 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.OverallResultDetails.SpecialismDetails.Should().HaveCountGreaterThan(1);
             model.OverallResultDetails.SpecialismDetails.ForEach(x => x.SpecialismResult.Should().NotBeNull());
             model.OverallResultDetails.SpecialismDetails.ForEach(x => x.SpecialismName.Should().NotBeNull());
+            model.Specialisms.Should().HaveCountGreaterThan(1);
         }
     }
 }
