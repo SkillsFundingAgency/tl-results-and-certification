@@ -37,9 +37,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
             _model = new PrsGradeChangeRequest
             {
-                ProfileId = 1,
-                AssessmentId = 2,
-                ResultId = 3,
+                LearnerName = "John Smith",
+                Uln = 1234567890,
+                ProviderUkprn = 10000536,
                 RequestedMessage = "Test",
                 RequestedUserEmailAddress = "test@test.com"
             };

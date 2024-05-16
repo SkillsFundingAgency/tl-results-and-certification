@@ -2,9 +2,9 @@
 {
     public class PrsGradeChangeRequest
     {
-        public int ProfileId { get; set; }
-        public int AssessmentId { get; set; }
-        public int ResultId { get; set; }
+        public string LearnerName { get; set; }
+        public long Uln { get; set; }
+        public long ProviderUkprn { get; set; }
         public string RequestedMessage { get; set; }
         public string RequestedUserEmailAddress { get; set; }
     }

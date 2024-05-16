@@ -174,14 +174,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     { "reference_number", referenceNumber },
                     { "sender_email_address", request.RequestedUserEmailAddress },
-                    { "profile_id", request.ProfileId },
-                    { "assessment_id", request.AssessmentId },
-                    { "result_id", request.ResultId },
+                    { "learner_name", request.LearnerName },
+                    { "uln", request.Uln },
+                    { "provider_ukprn", request.ProviderUkprn },
                     { "requested_message", request.RequestedMessage }
                 };
 
             // send email to technical team
-            var hasEmailSent = await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.GradeChangeRequestTechnicalTeamNotification.ToString(), _configuration.TechnicalSupportEmailAddress, technicalTeamTokens);
+            var hasEmailSent = await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.GradeChangeRequestTechnicalTeamNotificationVersion2.ToString(), _configuration.TechnicalSupportEmailAddress, technicalTeamTokens);
 
             if (hasEmailSent)
             {

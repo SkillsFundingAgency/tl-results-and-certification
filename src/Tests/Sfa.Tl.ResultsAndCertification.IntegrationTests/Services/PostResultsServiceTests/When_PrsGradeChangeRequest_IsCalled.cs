@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Notify.Interfaces;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
@@ -63,9 +64,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
             await WhenAsync(request);
             _actualResult.Should().Be(result);
 
-            if(result)
+            if (result)
             {
-                await NotificationsClient.Received(2).SendEmailAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<Dictionary<string, dynamic>>());
+                await NotificationsClient.Received(1).SendEmailAsync("technical@test.com", "daa342c6-8f92-4695-80ee-f251a7844449", Arg.Any<Dictionary<string, dynamic>>());
+                await NotificationsClient.Received(1).SendEmailAsync("test@test.com", "91b21a18-8555-45b8-9739-f18a90228211", Arg.Any<Dictionary<string, dynamic>>());
             }
         }
 
@@ -75,7 +77,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
             {
                 return new[]
                 {
-                    new object[] { new PrsGradeChangeRequest { ProfileId = 1, AssessmentId = 2, ResultId = 3, RequestedMessage = "Test", RequestedUserEmailAddress = "test@test.com" }, true }                    
+                    new object[]
+                    {
+                        new PrsGradeChangeRequest
+                        {
+                            LearnerName = "John Smith",
+                            Uln = 1234567890,
+                            ProviderUkprn = 10000536,
+                            RequestedMessage = "Test",
+                            RequestedUserEmailAddress = "test@test.com"
+                        },
+                        true 
+                    }
                 };
             }
         }

@@ -108,6 +108,15 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
+            },
+            new NotificationTemplate
+            {
+                TemplateId = new Guid("daa342c6-8f92-4695-80ee-f251a7844449"),
+                TemplateName = NotificationTemplateName.GradeChangeRequestTechnicalTeamNotificationVersion2.ToString(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
             }
         };
     }

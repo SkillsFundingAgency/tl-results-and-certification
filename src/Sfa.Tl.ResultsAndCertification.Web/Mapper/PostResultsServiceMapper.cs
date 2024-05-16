@@ -105,9 +105,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PrsStatus, opts => opts.MapFrom((src, dest, destMember, context) => ((Assessment)context.Items["assessment"])?.Result?.PrsStatus));
 
             CreateMap<PrsGradeChangeRequestViewModel, PrsGradeChangeRequest>()
-                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-                .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.AssessmentId))
-                .ForMember(d => d.ResultId, opts => opts.MapFrom(s => s.ResultId))
+                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
                 .ForMember(d => d.RequestedMessage, opts => opts.MapFrom(s => s.ChangeRequestData))
                 .ForMember(d => d.RequestedUserEmailAddress, opts => opts.MapFrom<UserEmailResolver<PrsGradeChangeRequestViewModel, PrsGradeChangeRequest>>());
 
