@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using Azure.Core;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -173,7 +171,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var referenceNumber = Guid.NewGuid().ToString();
 
-            var emailSent = await SendEmailToTechnicalSupport(referenceNumber, request);
+            var emailSent = request.ComponentType == ComponentType.Core
+                ? await SendCoreComponentEmailToTechnicalSupport(referenceNumber, request)
+                : await SendSpecialismEmailToTechnicalSupport(referenceNumber, request);
+
             if (emailSent)
             {
                 var userTokens = new Dictionary<string, dynamic>
@@ -187,16 +188,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return false;
         }
 
-        private Task<bool> SendEmailToTechnicalSupport(string referenceNumber, PrsGradeChangeRequest request)
+        private Task<bool> SendCoreComponentEmailToTechnicalSupport(string referenceNumber, PrsGradeChangeRequest request)
+            => SendEmailToTechnicalSupport(referenceNumber, request, NotificationTemplateName.GradeChangeRequestTechnicalTeamNotificationCoreComponent, "core_component");
+
+        private Task<bool> SendSpecialismEmailToTechnicalSupport(string referenceNumber, PrsGradeChangeRequest request)
+            => SendEmailToTechnicalSupport(referenceNumber, request, NotificationTemplateName.GradeChangeRequestTechnicalTeamNotificationSpecialism, "specialism");
+
+        private Task<bool> SendEmailToTechnicalSupport(string referenceNumber, PrsGradeChangeRequest request, NotificationTemplateName template, string token)
         {
-            Dictionary<ComponentType, (string Template, string ComponentTypeToken)> componentTypeDict = new()
-            {
-                [ComponentType.Core] = (NotificationTemplateName.GradeChangeRequestTechnicalTeamNotificationCoreComponent.ToString(), "core_component"),
-                [ComponentType.Specialism] = (NotificationTemplateName.GradeChangeRequestTechnicalTeamNotificationSpecialism.ToString(), "specialism")
-            };
-
-            var (template, token) = componentTypeDict[request.ComponentType];
-
             var technicalTeamTokens = new Dictionary<string, dynamic>
             {
                 { "reference_number", referenceNumber },
@@ -211,7 +210,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
 
             // send email to technical team
-            return _notificationService.SendEmailNotificationAsync(template, _configuration.TechnicalSupportEmailAddress, technicalTeamTokens);
+            return _notificationService.SendEmailNotificationAsync(template.ToString(), _configuration.TechnicalSupportEmailAddress, technicalTeamTokens);
         }
 
         private static bool IsResultStatusValid(PrsStatus requestPrsStatus, PrsStatus? currentPrsStatus)
