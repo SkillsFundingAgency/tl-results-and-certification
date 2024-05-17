@@ -40,15 +40,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     ModifiedBy = Constants.ModifiedByUser,
                     ModifiedOn = Constants.ModifiedOn
                 },
-                NotificationTemplateName.GradeChangeRequestTechnicalTeamNotification => new NotificationTemplate
-                {
-                    TemplateId = new Guid("11b21a18-8555-45b8-9739-f18a90228521"),
-                    TemplateName = templateName.ToString(),
-                    CreatedBy = Constants.CreatedByUser,
-                    CreatedOn = Constants.CreatedOn,
-                    ModifiedBy = Constants.ModifiedByUser,
-                    ModifiedOn = Constants.ModifiedOn
-                },
                 _ => null,
             };
         }
@@ -77,15 +68,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 TemplateId = new Guid("91b21a18-8555-45b8-9739-f18a90228211"),
                 TemplateName = NotificationTemplateName.GradeChangeRequestUserNotification.ToString(),
-                CreatedBy = Constants.CreatedByUser,
-                CreatedOn = Constants.CreatedOn,
-                ModifiedBy = Constants.ModifiedByUser,
-                ModifiedOn = Constants.ModifiedOn
-            },
-            new NotificationTemplate
-            {
-                TemplateId = new Guid("11b21a18-8555-45b8-9739-f18a90228521"),
-                TemplateName = NotificationTemplateName.GradeChangeRequestTechnicalTeamNotification.ToString(),
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
