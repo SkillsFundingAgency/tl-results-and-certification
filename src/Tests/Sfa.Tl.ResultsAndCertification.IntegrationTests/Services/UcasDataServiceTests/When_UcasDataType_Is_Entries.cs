@@ -27,12 +27,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
                 { 1111111115, RegistrationPathwayStatus.Active },
                 { 1111111116, RegistrationPathwayStatus.Active },
             };
-
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
-
-            int currentAcademicYear = GetAcademicYear();
-
             _registrations = SeedRegistrationsDataByStatus(_ulns, null);
+            var currentAcademicYear = GetAcademicYear();
             _registrations.ForEach(x =>
             {
                 x.TqRegistrationPathways.ToList().ForEach(p => p.AcademicYear = currentAcademicYear - 1);
@@ -48,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
 
             SetAssessmentResult(1111111111, $"Summer {currentAcademicYear}", "B", "Merit");
             SetAssessmentResult(1111111112, $"Autumn {currentAcademicYear}", "B", "Pass");
-
+            
             CreateService();
         }
 
@@ -66,16 +63,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
 
             AssertHeaderRecord(UcasDataType.Entries);
 
-            ActualResult.UcasDataRecords.Should().HaveCount(6);
+            ActualResult.UcasDataRecords.Should().HaveCount(5);
 
             var expectedDataRecords = new List<ExepectedUcasDataRecord>
             {
-                new() { Uln = 1111111111, Name = "Last 1:First 1", Sex = "M", DateOfBirth = "10101980", ComponentRecord = "_|10123456|||_|10123456|||_|TLEVEL|||_|INDUSTRYP|||_|" },
-                new() { Uln = 1111111112, Name = "Last 2:First 2", Sex = "F", DateOfBirth = "07051981", ComponentRecord = "_|10123456|||_|10123456|||_|TLEVEL|||_|INDUSTRYP|||_|" },
-                new() { Uln = 1111111113, Name = "Last 3:First 3", Sex = "F", DateOfBirth = "03071982", ComponentRecord = "_|10123456|||_|10123456|||_|TLEVEL|||_|INDUSTRYP|||_|" },
-                new() { Uln = 1111111114, Name = "Last 4:First 4", Sex = "M", DateOfBirth = "03071982", ComponentRecord = "_|10123456|||_|10123456|||_|TLEVEL|||_|INDUSTRYP|||_|"},
-                new() { Uln = 1111111115, Name = "Last 5:First 5", Sex = "", DateOfBirth = "03071982", ComponentRecord = "_|10123456|||_|10123456|||_|TLEVEL|||_|INDUSTRYP|||_|" },
-                new() { Uln = 1111111116, Name = "Last 6:First 6", Sex = "", DateOfBirth = "03071982", ComponentRecord = "_|10123456|||_|TLEVEL|||_|INDUSTRYP|||_|" }
+                new ExepectedUcasDataRecord { Uln = 1111111111, Name = "Last 1:First 1", Sex = "M", DateOfBirth = "10101980", ComponentRecord = "_|10123456|||_|10123456|||_|TLEVEL|||_|INDUSTRYP|||_|" },
+                new ExepectedUcasDataRecord { Uln = 1111111112, Name = "Last 2:First 2", Sex = "F", DateOfBirth = "07051981", ComponentRecord = "_|10123456|||_|10123456|||_|TLEVEL|||_|INDUSTRYP|||_|" },
+                new ExepectedUcasDataRecord { Uln = 1111111113, Name = "Last 3:First 3", Sex = "F", DateOfBirth = "03071982", ComponentRecord = "_|10123456|||_|10123456|||_|TLEVEL|||_|INDUSTRYP|||_|" },
+                new ExepectedUcasDataRecord { Uln = 1111111114, Name = "Last 4:First 4", Sex = "M", DateOfBirth = "03071982", ComponentRecord = "_|10123456|||_|10123456|||_|TLEVEL|||_|INDUSTRYP|||_|"},
+                new ExepectedUcasDataRecord { Uln = 1111111115, Name = "Last 5:First 5", Sex = "", DateOfBirth = "03071982", ComponentRecord = "_|10123456|||_|10123456|||_|TLEVEL|||_|INDUSTRYP|||_|" }
             };
 
             foreach (var expectedRecord in expectedDataRecords)
@@ -113,8 +109,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
             x.TqSpecialismAssessment.AssessmentSeries.Name.Equals(seriesName, StringComparison.InvariantCultureIgnoreCase));
             var x = DbContext.TqSpecialismResult.Where(x => x.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln);
             var y = DbContext.TqSpecialismResult.FirstOrDefault(x => x.TqSpecialismAssessment.AssessmentSeries.Name.Equals(seriesName, StringComparison.InvariantCultureIgnoreCase));
-            currentSpecialismResult.TlLookup = SpecialismComponentGrades.FirstOrDefault(x => x.Value.Equals(specialismGrade, StringComparison.InvariantCultureIgnoreCase));
-
+            currentSpecialismResult.TlLookup = SpecialismComponentGrades.FirstOrDefault(x => x.Value.Equals(specialismGrade, StringComparison.InvariantCultureIgnoreCase)); 
+            
             DbContext.SaveChanges();
         }
     }

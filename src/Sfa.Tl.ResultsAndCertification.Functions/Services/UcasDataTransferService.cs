@@ -12,7 +12,9 @@ using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Ucas;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -53,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
             var byteData = await CsvExtensions.WriteFileAsync(ucasDataRecords, delimeter: Constants.PipeSeperator, writeHeader: false, typeof(CsvMapper));
 
-            if (byteData.IsNullOrEmpty())
+            if (byteData.Length <= 0)
             {
                 var message = $"No byte data available to send Ucas. Method: Csv WriteFileAsync()";
                 throw new ApplicationException(message);

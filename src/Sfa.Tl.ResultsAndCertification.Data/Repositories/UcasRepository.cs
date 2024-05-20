@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
@@ -24,8 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         public async Task<IList<TqRegistrationPathway>> GetUcasDataRecordsForEntriesAsync()
         {
             var currentAcademicYears = await _commonRepository.GetCurrentAcademicYearsAsync();
-
-            if (currentAcademicYears.IsNullOrEmpty())
+            if (currentAcademicYears == null || !currentAcademicYears.Any())
             {
                 throw new ApplicationException("Current Academic years are not found. Method: GetCurrentAcademicYearsAsync()");
             }
@@ -33,16 +34,15 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             var pathwayQueryable = _dbContext.TqRegistrationPathway
                         .Include(x => x.TqProvider)
                             .ThenInclude(x => x.TqAwardingOrganisation)
-                                .ThenInclude(x => x.TlPathway)
+                            .ThenInclude(x => x.TlPathway)
                         .Include(x => x.TqRegistrationProfile)
                         .Include(x => x.TqPathwayAssessments.Where(a => a.IsOptedin && a.EndDate == null))
                         .Include(x => x.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null))
                             .ThenInclude(x => x.TqSpecialismAssessments.Where(a => a.IsOptedin && a.EndDate == null))
-                        .Include(x => x.IndustryPlacements)
+                            .Include(x=>x.IndustryPlacements)                            
                         .Include(x => x.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null))
-                            .ThenInclude(x => x.TlSpecialism)
-                                .ThenInclude(x => x.TlDualSpecialismToSpecialisms)
-                                    .ThenInclude(x => x.DualSpecialism)
+                            .ThenInclude(x => x.TlSpecialism) 
+                            
                         .Where(x => x.Status == RegistrationPathwayStatus.Active && x.EndDate == null &&
                                     x.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1)
                         .AsQueryable();
@@ -60,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     throw new ApplicationException("Current Academic years are not found. Method: GetCurrentAcademicYearsAsync()");
 
                 return await _dbContext.OverallResult
-                       .Include(x => x.TqRegistrationPathway)
+                       .Include(x => x.TqRegistrationPathway)                       
                        .ThenInclude(x => x.TqRegistrationProfile)
                        .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
                                    x.TqRegistrationPathway.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1 &&
@@ -85,15 +85,15 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
             return await GetOverallResultsFrom(lastAmendmentsRun.CreatedOn);
         }
-
+       
         private async Task<IList<OverallResult>> GetOverallResultsFrom(DateTime lastJobRunDate)
         {
             return await _dbContext.OverallResult
-                .Include(x => x.TqRegistrationPathway)
+                .Include(x => x.TqRegistrationPathway)                
                 .ThenInclude(x => x.TqRegistrationProfile)
-
+                
                 .Where(x => x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
-                            x.IsOptedin && x.EndDate == null &&
+                            x.IsOptedin && x.EndDate == null && 
                             x.CreatedOn > lastJobRunDate)
                 .ToListAsync();
         }
@@ -111,12 +111,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return _dbContext.TlDualSpecialismToSpecialism
                 .Include(x => x.Specialism)
                 .Include(x => x.DualSpecialism).ToList();
+                 
         }
 
-        public string GetDualSpecialismLarId(List<string> specialismLarIds)
+        public string GetDualSpecialismLarId(List<string> specialismlarId)
         {
             var dualSpecialisms = GetDualSpecialisms();
-            var dualSpecialismLarIdForSpecialism = dualSpecialisms.Where(t => specialismLarIds.Contains(t.Specialism.LarId.ToString())).ToList();
+            var dualSpecialismLarIdForSpecialism = dualSpecialisms.Where(t => specialismlarId.Contains(t.Specialism.LarId.ToString())).ToList();
             var filteredDualSpecialisms = dualSpecialismLarIdForSpecialism.GroupBy(x => x.TlDualSpecialismId).Where(g => g.Count() > 1).ToList();
             var dualSpecialismCodes = filteredDualSpecialisms.SelectMany(t => t).ToList();
 

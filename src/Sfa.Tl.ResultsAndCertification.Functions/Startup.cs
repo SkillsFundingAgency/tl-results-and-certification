@@ -10,7 +10,6 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.PathwayResult;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialism;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Application.Strategies;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -112,8 +111,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             // ROMM Extract
             services.AddTransient<ICoreRommExtractService, CoreRommExtractService>();
             services.AddTransient<ISpecialismRommExtractionService, SpecialismRommExtractionService>();
-
-            services.AddTransient<SpecialismCodeConverter>();
         }
 
         private void RegisterApiClients(IServiceCollection services)

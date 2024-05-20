@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialism;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -61,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
 
             CommonRepository = new CommonRepository(DbContext);
             UcasRepository = new UcasRepository(DbContext, CommonRepository);
-            UcasRecordEntrySegment = new UcasRecordEntriesSegment(new SpecialismCodeConverter());
+            UcasRecordEntrySegment = new UcasRecordEntriesSegment(UcasRepository);
             UcasRecordResultsSegment = new UcasRecordResultsSegment(UcasRepository);
 
             UcasDataService = new UcasDataService(UcasRepository, UcasRecordEntrySegment, UcasRecordResultsSegment, ResultsAndCertificationConfiguration);
