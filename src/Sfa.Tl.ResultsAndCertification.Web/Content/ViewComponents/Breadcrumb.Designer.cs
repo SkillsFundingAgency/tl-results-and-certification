@@ -250,11 +250,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for a learner.
+        ///   Looks up a localized string similar to Search for an assessment entry.
         /// </summary>
-        public static string Search_For_Assessments {
+        public static string Search_For_Assessment_Entry {
             get {
-                return ResourceManager.GetString("Search_For_Assessments", resourceCulture);
+                return ResourceManager.GetString("Search_For_Assessment_Entry", resourceCulture);
             }
         }
         
@@ -270,18 +270,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         /// <summary>
         ///   Looks up a localized string similar to Search for a registration.
         /// </summary>
-        public static string Search_For_Registration {
+        public static string Search_For_Registration_Entry {
             get {
-                return ResourceManager.GetString("Search_For_Registration", resourceCulture);
+                return ResourceManager.GetString("Search_For_Registration_Entry", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for a learner.
+        ///   Looks up a localized string similar to Search for a result.
         /// </summary>
-        public static string Search_For_Results {
+        public static string Search_For_Result_Entry {
             get {
-                return ResourceManager.GetString("Search_For_Results", resourceCulture);
+                return ResourceManager.GetString("Search_For_Result_Entry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for a ROMM or an appeal.
+        /// </summary>
+        public static string Search_For_Romm_Or_An_Appeal_Entry {
+            get {
+                return ResourceManager.GetString("Search_For_Romm_Or_An_Appeal_Entry", resourceCulture);
             }
         }
         

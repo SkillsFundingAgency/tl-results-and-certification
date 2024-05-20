@@ -163,6 +163,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                                                           .OrderByDescending(c => c.CreatedOn).FirstOrDefault() // Fetching certificate for only active pathway
                                         let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()
                                         let overallResult = tqPathway.OverallResults.FirstOrDefault(o => o.IsOptedin && (tqPathway.Status == RegistrationPathwayStatus.Withdrawn) ? o.EndDate !=null : o.EndDate == null)
+                                        let specialisms = tqPathway.TqRegistrationSpecialisms.Where(t=>t.EndDate == null).Select(t=>t.TlSpecialism.Name).ToList()
                                         where tqProfile.Id == profileId && tlProvider.UkPrn == providerUkprn
                                         select new LearnerRecordDetails
                                         {
@@ -175,6 +176,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             ProviderName = tlProvider.Name,
                                             ProviderUkprn = tlProvider.UkPrn,
                                             TlevelTitle = tlPathway.TlevelTitle,
+                                            Specialisms = specialisms,
                                             AcademicYear = tqPathway.AcademicYear,
                                             AwardingOrganisationName = tqAo.TlAwardingOrganisaton.DisplayName,
                                             MathsStatus = tqProfile.MathsStatus,

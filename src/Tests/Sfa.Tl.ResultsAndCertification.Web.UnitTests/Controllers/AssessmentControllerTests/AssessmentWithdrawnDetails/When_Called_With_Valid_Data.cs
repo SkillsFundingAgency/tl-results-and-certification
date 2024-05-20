@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration.Enum;
 using Xunit;
 using AssessmentWithdrawnDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.AssessmentWithdrawnDetails;
 
@@ -20,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             {
                 ProfileId = 1,
                 Uln = 1234567890,
-                Firstname ="First",
+                Firstname = "First",
                 Lastname = "Last",
                 DateofBirth = System.DateTime.UtcNow.AddYears(-30),
                 TlevelTitle = "TLevel in Test",
@@ -28,8 +29,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 ProviderUkprn = 1234567
             };
 
-            AssessmentLoader.GetAssessmentDetailsAsync<AssessmentUlnWithdrawnViewModel>(AoUkprn, ProfileId, RegistrationPathwayStatus.Withdrawn).Returns(_mockresult);         
-        }        
+            AssessmentLoader.GetAssessmentDetailsAsync<AssessmentUlnWithdrawnViewModel>(AoUkprn, ProfileId, RegistrationPathwayStatus.Withdrawn).Returns(_mockresult);
+        }
 
         [Fact]
         public void Then_Returns_Expected_Results()
@@ -64,10 +65,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             model.SummaryTlevelTitle.Value.Should().Be(_mockresult.TlevelTitle);
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.SearchAssessments);
+            model.BackLink.RouteName.Should().Be(RouteConstants.SearchRegistration);
             model.BackLink.RouteAttributes.Count.Should().Be(1);
-            model.BackLink.RouteAttributes.TryGetValue(Constants.PopulateUln, out string routeValue);
-            routeValue.Should().Be(true.ToString());
+            model.BackLink.RouteAttributes.TryGetValue(Constants.Type, out string routeValue);
+            routeValue.Should().Be(SearchRegistrationType.Assessment.ToString());
         }
     }
 }
