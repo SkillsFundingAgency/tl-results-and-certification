@@ -20,8 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.CertificateTrackingExtraction
         [DisplayName(CertificateTrackingExtractHeader.PrintingCertificateType)]
         public string PrintCertificateType { get; set; }
 
-        [DisplayName(CertificateTrackingExtractHeader.LearnerDetails)]
-        public string LearnerDetails { get; set; }
+        [DisplayName(CertificateTrackingExtractHeader.TLevelTitle)]
+        public string TLevelTitle { get; set; }
 
         [DisplayName(CertificateTrackingExtractHeader.BatchId)]
         public int BatchId { get; set; }

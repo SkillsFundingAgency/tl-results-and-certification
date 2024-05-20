@@ -1,8 +1,10 @@
 ﻿using FluentAssertions;
+using Newtonsoft.Json;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Printing;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
 using System.Collections.Generic;
@@ -20,10 +22,15 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.Certificat
 
         public override void Given()
         {
+            var learningDetails = new LearningDetails
+            {
+                TLevelTitle = "T Level in Onsite Construction"
+            };
+
             var printCertificate = new PrintCertificate
             {
                 Type = PrintCertificateType.Certificate,
-                LearningDetails = "learning-details",
+                LearningDetails = JsonConvert.SerializeObject(learningDetails),
                 TqRegistrationPathway = new TqRegistrationPathway
                 {
                     TqRegistrationProfile = new TqRegistrationProfile

@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
@@ -14,9 +13,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.Certificat
 {
     public class When_ProcessCertificateTrackingExtract_No_Data_Found : TestSetup
     {
-        private const string Message = "No entries are found. Method: ProcessCertificateTrackingExtractAsync()";
-
         private readonly DateTime _fromDay = new(2024, 1, 1);
+        private readonly string _fileName = "file.txt";
+
         private FunctionResponse _result;
 
         public override void Given()
@@ -26,22 +25,26 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.Certificat
 
         public override async Task When()
         {
-            _result = await Service.ProcessCertificateTrackingExtractAsync(() => _fromDay, () => string.Empty);
+            _result = await Service.ProcessCertificateTrackingExtractAsync(() => _fromDay, () => _fileName);
         }
 
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
             Repository.Received(1).GetCertificateTrackingDataAsync(Arg.Any<Func<DateTime>>());
-            Logger.Received(1).LogWarning(LogEvent.NoDataFound, Message);
-            BlobStorageService.DidNotReceive().UploadFromByteArrayAsync(Arg.Any<BlobStorageData>());
+
+            BlobStorageService.Received(1).UploadFromByteArrayAsync(Arg.Is<BlobStorageData>(d =>
+                d.ContainerName == DocumentType.CertificateTracking.ToString()
+                && d.SourceFilePath == Common.Helpers.Constants.CertificateTrackingExtractsFolder
+                && d.BlobFileName == _fileName
+                && d.UserName == Common.Helpers.Constants.FunctionPerformedBy));
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
             _result.IsSuccess.Should().BeTrue();
-            _result.Message.Should().Be(Message);
+            _result.Message.Should().BeNull();
         }
     }
 }

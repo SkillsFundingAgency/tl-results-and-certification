@@ -2,9 +2,11 @@
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
 using System.Diagnostics;
@@ -16,13 +18,16 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
     {
         private readonly ICertificateTrackingExtractionService _service;
         private readonly ICommonService _commonService;
+        private readonly ResultsAndCertificationConfiguration _configuration;
 
         public CertificateTrackingExtraction(
             ICertificateTrackingExtractionService service,
-            ICommonService commonService)
+            ICommonService commonService,
+            ResultsAndCertificationConfiguration configuration)
         {
             _service = service;
             _commonService = commonService;
+            _configuration = configuration;
         }
 
         [FunctionName(Constants.CertificateTrackingExtract)]
@@ -39,7 +44,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 var stopwatch = Stopwatch.StartNew();
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                FunctionResponse response = await _service.ProcessCertificateTrackingExtractAsync(() => DateTime.Today.AddDays(-60), () => $"{Guid.NewGuid()}.{FileType.Csv}");
+                int numberOfDaysToProcess = _configuration.CertificateTrackingExtractSettings.NumberOfDays;
+                DateTime fromDay = DateTime.Today.SubtractDays(numberOfDaysToProcess);
+
+                FunctionResponse response = await _service.ProcessCertificateTrackingExtractAsync(() => fromDay, () => $"{Guid.NewGuid()}.{FileType.Csv}");
 
                 FunctionStatus status = response.IsSuccess ? FunctionStatus.Processed : FunctionStatus.Failed;
                 var message = $"Function {context.FunctionName} completed processing.{Environment.NewLine}Status: {status}";

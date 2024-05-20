@@ -38,14 +38,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
         public async Task<FunctionResponse> ProcessCertificateTrackingExtractAsync(Func<DateTime> getFromDay, Func<string> getExtractFileName)
         {
             IList<CertificateTrackingExtractionData> data = await GetCertificateTrackingExtractionData(getFromDay);
-
-            if (data.IsNullOrEmpty())
-            {
-                string message = $"No entries are found. Method: {nameof(ProcessCertificateTrackingExtractAsync)}()";
-                _logger.LogWarning(LogEvent.NoDataFound, message);
-                return new FunctionResponse { IsSuccess = true, Message = message };
-            }
-
             var byteData = await CsvExtensions.WriteFileAsync(data, classMapType: typeof(CertificateTrackingExtractionDataExportMap));
 
             if (byteData.IsNullOrEmpty())

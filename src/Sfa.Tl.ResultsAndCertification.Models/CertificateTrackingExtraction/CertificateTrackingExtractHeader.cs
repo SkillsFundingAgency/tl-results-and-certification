@@ -7,7 +7,7 @@
         public const string LastName = "Lastname";
         public const string TrackingId = "TrackingId";
         public const string PrintingCertificateType = "Printing Certificate Type";
-        public const string LearnerDetails = "LearnerDetails";
+        public const string TLevelTitle = "TLevel Title";
         public const string BatchId = "BatchId";
         public const string PrintBatchItemStatus = "Print Batch Item Status";
         public const string SignedForBy = "SignedForBy";
