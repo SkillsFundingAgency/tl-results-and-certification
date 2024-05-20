@@ -17,6 +17,8 @@
         PathwayRommOutcome = 13,
         SpecialismRommOutcome = 14,
         OpenPathwayAppeal = 15,
-        OpenSpecialismAppeal = 16
+        OpenSpecialismAppeal = 16,
+        PathwayAppealOutcome = 17,
+        SpecialismAppealOutcome = 18
     }
 }

@@ -51,6 +51,21 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminAddCoreAppealOutcome.Designer.cs">
+		  <DependentUpon>AdminAddCoreAppealOutcome.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminAddAppealOutcomeChangeGradeCore.Designer.cs">
+		  <DependentUpon>AdminAddAppealOutcomeChangeGradeCore.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminAddAppealOutcomeChangeGradeSpecialism.Designer.cs">
+		  <DependentUpon>AdminAddAppealOutcomeChangeGradeSpecialism.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminPostResults\AdminAddRommOutcomeChangeGradeSpecialism.Designer.cs">
 		  <DependentUpon>AdminAddRommOutcomeChangeGradeSpecialism.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -171,6 +186,11 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>AdminSearchLearners.resx</DependentUpon>
 		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminAddSpecialismAppealOutcome.Designer.cs">
+		  <DependentUpon>AdminAddSpecialismAppealOutcome.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminPostResults\AdminOpenPathwayAppeal.Designer.cs">
 		  <DependentUpon>AdminOpenPathwayAppeal.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -188,6 +208,16 @@
 		</Compile>
 		<Compile Update="Content\AdminPostResults\AdminAddCoreRommOutcome.Designer.cs">
 		  <DependentUpon>AdminAddCoreRommOutcome.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminReviewChangesAppealOutcomeCore.Designer.cs">
+		  <DependentUpon>AdminReviewChangesAppealOutcomeCore.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminPostResults\AdminReviewChangesAppealOutcomeSpecialism.Designer.cs">
+		  <DependentUpon>AdminReviewChangesAppealOutcomeSpecialism.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
@@ -375,6 +405,11 @@
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 			<DependentUpon>VirusUploaded.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Content\Help\AccessibilityStatement.Designer.cs">
+		  <DependentUpon>AccessibilityStatement.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
 		</Compile>
 		<Compile Update="Content\Help\ServiceUnavailableMaintenance.Designer.cs">
 		  <DependentUpon>ServiceUnavailableMaintenance.resx</DependentUpon>
@@ -1253,6 +1288,18 @@
 		  <LastGenOutput>AdminSearchChangeLog.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddCoreAppealOutcome.resx">
+		  <LastGenOutput>AdminAddCoreAppealOutcome.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddAppealOutcomeChangeGradeCore.resx">
+		  <LastGenOutput>AdminAddAppealOutcomeChangeGradeCore.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddAppealOutcomeChangeGradeSpecialism.resx">
+		  <LastGenOutput>AdminAddAppealOutcomeChangeGradeSpecialism.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminPostResults\AdminAddRommOutcomeChangeGradeSpecialism.resx">
 		  <LastGenOutput>AdminAddRommOutcomeChangeGradeSpecialism.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1354,6 +1401,10 @@
 		<EmbeddedResource Update="Content\AdminDashboard\SearchLearners.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddSpecialismAppealOutcome.resx">
+		  <LastGenOutput>AdminAddSpecialismAppealOutcome.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenPathwayAppeal.resx">
 		  <LastGenOutput>AdminOpenPathwayAppeal.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1370,12 +1421,56 @@
 		  <LastGenOutput>AdminAddCoreRommOutcome.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminReviewChangesAppealOutcomeCore.resx">
+		  <SubType>Designer</SubType>
+		  <LastGenOutput>AdminReviewChangesAppealOutcomeCore.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminReviewChangesAppealOutcomeSpecialism.resx">
+		  <SubType>Designer</SubType>
+		  <LastGenOutput>AdminReviewChangesAppealOutcomeSpecialism.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminPostResults\AdminReviewSpecialismAppealChanges.resx">
 		  <LastGenOutput>AdminReviewSpecialismAppealChanges.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminPostResults\AdminReviewCoreAppealChanges.resx">
 		  <LastGenOutput>AdminReviewCoreAppealChanges.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenSpecialismRommReviewChanges.resx">
+		  <LastGenOutput>AdminOpenSpecialismRommReviewChanges.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenPathwayRommReviewChanges.resx">
+		  <LastGenOutput>AdminOpenPathwayRommReviewChanges.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenSpecialismRomm.resx">
+		  <LastGenOutput>AdminOpenSpecialismRomm.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenPathwayRomm.resx">
+		  <LastGenOutput>AdminOpenPathwayRomm.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminReviewChangesRommOutcomeSpecialism.resx">
+		  <SubType>Designer</SubType>
+		  <LastGenOutput>AdminReviewChangesRommOutcomeSpecialism.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminReviewChangesRommOutcomeCore.resx">
+		  <SubType>Designer</SubType>
+		  <LastGenOutput>AdminReviewChangesRommOutcomeCore.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddSpecialismRommOutcome.resx">
+		  <LastGenOutput>AdminAddSpecialismRommOutcome.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminPostResults\AdminAddCoreRommOutcome.resx">
+		  <LastGenOutput>AdminAddCoreRommOutcome.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenSpecialismRommReviewChanges.resx">
@@ -1519,6 +1614,10 @@
 		<EmbeddedResource Update="Content\Error\VirusUploaded.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>VirusUploaded.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\Help\AccessibilityStatement.resx">
+		  <LastGenOutput>AccessibilityStatement.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\Help\ServiceUnavailableMaintenance.resx">
 		  <LastGenOutput>ServiceUnavailableMaintenance.Designer.cs</LastGenOutput>
