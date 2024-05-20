@@ -14,15 +14,10 @@
     <div class="govuk-grid-column-two-thirds">
 
         <form asp-route="@RouteConstants.SubmitPrsGradeChangeRequest">
-            <input type="hidden" asp-for="Firstname" />
-            <input type="hidden" asp-for="Lastname" />
-            <input type="hidden" asp-for="Uln" />
-            <input type="hidden" asp-for="ProviderUkprn" />
+            <input type="hidden" asp-for="ProfileId" />
+            <input type="hidden" asp-for="AssessmentId" />
+            <input type="hidden" asp-for="ResultId" />
             <input type="hidden" asp-for="ComponentType" />
-            <input type="hidden" asp-for="CoreName" />
-            <input type="hidden" asp-for="SpecialismName" />
-            <input type="hidden" asp-for="ExamPeriod" />
-            <input type="hidden" asp-for="Grade" />
 
             <partial name="_ValidationSummary" />
 

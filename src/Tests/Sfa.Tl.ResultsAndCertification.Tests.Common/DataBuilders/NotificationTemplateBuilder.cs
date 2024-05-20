@@ -40,6 +40,15 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     ModifiedBy = Constants.ModifiedByUser,
                     ModifiedOn = Constants.ModifiedOn
                 },
+                NotificationTemplateName.GradeChangeRequestTechnicalTeamNotification => new NotificationTemplate
+                {
+                    TemplateId = new Guid("11b21a18-8555-45b8-9739-f18a90228521"),
+                    TemplateName = templateName.ToString(),
+                    CreatedBy = Constants.CreatedByUser,
+                    CreatedOn = Constants.CreatedOn,
+                    ModifiedBy = Constants.ModifiedByUser,
+                    ModifiedOn = Constants.ModifiedOn
+                },
                 _ => null,
             };
         }
@@ -75,6 +84,15 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new NotificationTemplate
             {
+                TemplateId = new Guid("11b21a18-8555-45b8-9739-f18a90228521"),
+                TemplateName = NotificationTemplateName.GradeChangeRequestTechnicalTeamNotification.ToString(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new NotificationTemplate
+            {
                 TemplateId = new Guid("61a21a18-8555-45b8-9739-f18a90229911"),
                 TemplateName = NotificationTemplateName.AppealGradeAfterDeadlineRequestUserNotification.ToString(),
                 CreatedBy = Constants.CreatedByUser,
@@ -86,24 +104,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 TemplateId = new Guid("77b21a18-8555-45b8-9739-f18a90227721"),
                 TemplateName = NotificationTemplateName.AppealGradeAfterDeadlineRequestTechnicalTeamNotification.ToString(),
-                CreatedBy = Constants.CreatedByUser,
-                CreatedOn = Constants.CreatedOn,
-                ModifiedBy = Constants.ModifiedByUser,
-                ModifiedOn = Constants.ModifiedOn
-            },
-            new NotificationTemplate
-            {
-                TemplateId = new Guid("daa342c6-8f92-4695-80ee-f251a7844449"),
-                TemplateName = NotificationTemplateName.GradeChangeRequestTechnicalTeamNotificationCoreComponent.ToString(),
-                CreatedBy = Constants.CreatedByUser,
-                CreatedOn = Constants.CreatedOn,
-                ModifiedBy = Constants.ModifiedByUser,
-                ModifiedOn = Constants.ModifiedOn
-            },
-            new NotificationTemplate
-            {
-                TemplateId = new Guid("559a3508-432d-4dd2-ac87-e7e15c81bcf3"),
-                TemplateName = NotificationTemplateName.GradeChangeRequestTechnicalTeamNotificationSpecialism.ToString(),
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
