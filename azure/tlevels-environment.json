@@ -117,6 +117,13 @@
             "metadata": {
                 "description": "Enables the replica database to be deployed"
             }
+        },
+        "enableIntTestDb": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Enables the integration test database to be deployed"
+            }
         }
     },
     "variables": {
@@ -383,7 +390,7 @@
                                 "name": "Version",
                                 "value": "1.0"
                             },
-                            {                       
+                            {
                                 "name": "ServiceName",
                                 "value": "Sfa.Tl.ResultsAndCertification"
                             },
@@ -669,6 +676,7 @@
             ]
         },
         {
+            "condition": "[equals(parameters('enableIntTestDb'), true())]",
             "apiVersion": "2017-05-10",
             "name": "[concat('inttest-sql-database','-', parameters('environmentNameAbbreviation'))]",
             "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
