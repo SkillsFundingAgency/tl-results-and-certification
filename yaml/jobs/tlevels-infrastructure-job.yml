@@ -65,7 +65,8 @@ jobs:
             -coreRommExtractTrigger "$(coreRommExtractTrigger)"
             -specialismRommExtractTrigger "$(specialismRommExtractTrigger)"
             -providerAddressExtractTrigger "$(providerAddressExtractTrigger)"
-            -enableReplica $(enableReplica)'
+            -enableReplica $(enableReplica)
+            -containerLifecyclePolicyRules $(containerLifecyclePolicyRules)'
           tags: $(Tags) 
           processOutputs: true
 

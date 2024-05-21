@@ -8,6 +8,7 @@ resources:
       type: github
       endpoint: DfE-Digital
       name: DFE-Digital/operations-devops-pipeline-templates
+      ref: feature/TLD-463-add-container-lifecycle-policy
 
 trigger:
   branches:
