@@ -286,7 +286,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version 1.0.
+        ///   Looks up a localized string similar to Version 2.0.
         /// </summary>
         public static string Registrations_Template_Version {
             get {
