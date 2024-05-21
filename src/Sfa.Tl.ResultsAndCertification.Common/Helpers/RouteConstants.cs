@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.Design.Serialization;
-
-namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
+﻿namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
 {
     public static class RouteConstants
     {
@@ -226,6 +224,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
         // Document
         public const string RegistrationDataFormatAndRulesGuide = "RegistrationDataFormatAndRulesGuide";
         public const string DownloadRegistrationDataFormatAndRulesGuide = "DownloadRegistrationDataFormatAndRulesGuide";
+        public const string DownloadRegistrationDataTemplate = "DownloadRegistrationDataTemplate";
         public const string DownloadAssessmentEntriesDataFormatAndRulesGuide = "DownloadAssessmentEntriesDataFormatAndRulesGuide";
         public const string DownloadResultsDataFormatAndRulesGuide = "DownloadResultsDataFormatAndRulesGuide";
         public const string DownloadIndustryPlacementDataFormatAndRulesGuide = "DownloadIndustryPlacementDataFormatAndRulesGuide";

@@ -24,5 +24,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialis
 
             return specialismCode;
         }
+
+        public string Convert(IEnumerable<TqRegistrationSpecialism> sourceMember)
+            => Convert(sourceMember, null);
     }
 }
