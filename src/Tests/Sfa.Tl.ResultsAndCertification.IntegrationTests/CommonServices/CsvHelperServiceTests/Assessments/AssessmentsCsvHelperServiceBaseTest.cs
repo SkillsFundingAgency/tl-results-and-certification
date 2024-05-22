@@ -3,13 +3,12 @@ using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface;
+using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
-using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
-using NSubstitute;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelperServiceTests.Assessments
 {
