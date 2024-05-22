@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser;
 using System;
-using System.Text.RegularExpressions;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Extensions
 {
@@ -86,10 +86,14 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
             return ruleBuilder
                 .Must(r => EnumExtensions.IsValidDisplayName<Models.IndustryPlacement.BulkProcess.IndustryPlacementStatus>(r));
         }
+
         public static IRuleBuilderOptions<T, string> MustBeValidSpecialConditionReason<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder
-                .Must(r => r.Split(",").All(i =>  EnumExtensions.IsValidDisplayName<Models.IndustryPlacement.BulkProcess.IndustryPlacementSpecialConditionReason>(i)));
+                .Must(r => CsvStringToListParser.Parse(r).All(i => EnumExtensions.IsValidDisplayName<Models.IndustryPlacement.BulkProcess.IndustryPlacementSpecialConditionReason>(i)));
         }
+
+        public static IRuleBuilderOptions<T, string> NotDuplicatesInCommaSeparatedString<T>(this IRuleBuilder<T, string> ruleBuilder)
+            => ruleBuilder.Must(r => CsvStringToListParser.Parse(r).GroupBy(spl => spl).All(c => c.Count() == 1));
     }
 }

@@ -1,10 +1,9 @@
 ﻿using FluentValidation.Results;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces;
-using System.Collections.Generic;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Result.BulkProcess;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
 {
@@ -12,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
     {
         public ResultCsvRecordResponse ParseRow(FileBaseModel model, int rownum)
         {
-            if (!(model is ResultCsvRecordRequest result))
+            if (model is not ResultCsvRecordRequest result)
                 return null;
 
             return new ResultCsvRecordResponse
@@ -21,9 +20,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
                 CoreAssessmentSeries = result.CoreAssessmentSeries?.Trim(),
                 CoreCode = result.CoreCode?.Trim(),
                 CoreGrade = result.CoreGrade?.Trim(),
-                SpecialismCodes = result.SpecialismCodes.Trim().Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim()))?.Select(sp => sp.Trim()).ToList(),
+                SpecialismCodes = CsvStringToListParser.Parse(result.SpecialismCodes),
                 SpecialismAssessmentSeries = result.SpecialismSeries.Trim(),
-                SpecialismGrades = result.SpecialismGrades.Trim().Split(',')?.Select(sp => sp.Trim())?.ToList(),
+                SpecialismGrades = CsvStringToListParser.Parse(result.SpecialismGrades),
                 RowNum = rownum,
                 ValidationErrors = new List<BulkProcessValidationError>()
             };
