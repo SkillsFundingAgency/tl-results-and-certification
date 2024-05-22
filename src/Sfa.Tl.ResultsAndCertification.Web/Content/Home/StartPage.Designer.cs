@@ -448,7 +448,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to add or update core component results.
+        ///   Looks up a localized string similar to add or update core component and occupational specialism results.
         /// </summary>
         public static string Service_TellUs_Add_Update_Results {
             get {

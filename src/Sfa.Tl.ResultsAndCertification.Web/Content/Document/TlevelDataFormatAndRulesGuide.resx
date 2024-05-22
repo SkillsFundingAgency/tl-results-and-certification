@@ -216,6 +216,9 @@
   <data name="Tlevels_Registrations_Data_Format_And_Rules_File_Name" xml:space="preserve">
     <value>tlevels-registrations-data-format-and-rules.xlsx</value>
   </data>
+  <data name="Tlevels_Registration_Data_Template_File_Name" xml:space="preserve">
+    <value>tlevels-registration-data-template.csv</value>
+  </data>
   <data name="Tlevels_Results_Data_Format_And_Rules_File_Name" xml:space="preserve">
     <value>tlevels-results-data-format-and-rules.xlsx</value>
   </data>
