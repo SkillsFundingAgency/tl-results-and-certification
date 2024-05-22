@@ -5,10 +5,15 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminPostResults;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.ChangeRecordLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 {
@@ -80,7 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<AdminChangeLogRecord, AdminViewChangeRecordAddPathwayResultViewModel>()
                 .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
                 .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.CoreCode))
-                .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => s.CoreExamPeriod))
+                .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => GetAssessmentExamPeriod(s.Pathway.PathwayAssessments, GetDetails<AddPathwayResultRequest>, s.ChangeDetails, "PathwayAssessmentId")))
                 .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.CoreCode})"))
                 .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()))
                 .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
@@ -89,8 +94,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<AdminChangeLogRecord, AdminViewChangeRecordAddSpecialismResultViewModel>()
                 .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
                 .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.CoreCode))
-                .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => s.SpecialismExamPeriod))
-                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.CoreCode})"))
+                .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => GetSpecialismExamPeriod(s.Pathway.Specialisms, GetDetails<OpenSpecialismAppealRequest>, s.ChangeDetails, Constants.SpecialismResultId)))
+                .ForMember(d => d.SpecialismName, opts => opts.MapFrom(s => $"{s.SpecialismName} ({s.SpecialismCode})"))
                 .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
                 .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()))
                 .ForMember(d => d.SpecialismDetails, opts => opts.MapFrom(s => GetDetails<AddSpecialismResultRequest>(s.ChangeDetails)));
@@ -110,6 +115,96 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
                .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()))
                .ForMember(d => d.DetailsChangeAssessment, opts => opts.MapFrom(s => GetDetails<DetailsSpecialismAssessmentRemove>(s.ChangeDetails)));
+
+            CreateMap<AdminChangeLogRecord, AdminViewChangeRecordPathwayResultViewModel>()
+                .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+                .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.CoreCode))
+                .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => GetResultExamPeriod(s.Pathway.PathwayAssessments, GetDetails<ChangePathwayDetails>, s.ChangeDetails, Constants.PathwayResultId)))
+                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.CoreCode})"))
+                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
+                .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()))
+                .ForMember(d => d.PathwayResultDetails, opts => opts.MapFrom(s => GetDetails<ChangePathwayDetails>(s.ChangeDetails)));
+
+            CreateMap<AdminChangeLogRecord, AdminViewChangeRecordSpecialismResultViewModel>()
+                .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+                .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => s.SpecialismExamPeriod))
+                .ForMember(d => d.SpecialismName, opts => opts.MapFrom(s => $"{s.SpecialismName} ({s.SpecialismCode})"))
+                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
+                .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()))
+                .ForMember(d => d.SpecialismDetails, opts => opts.MapFrom(s => GetDetails<ChangeSpecialismDetails>(s.ChangeDetails)));
+
+            CreateMap<AdminChangeLogRecord, AdminViewChangeRecordOpenPathwayRommViewModel>()
+                .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+                .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.CoreCode))
+                .ForMember(d => d.Grade, opts => opts.MapFrom(s => GetResultGrade(s.Pathway.PathwayAssessments, GetDetails<OpenPathwayRommRequest>, s.ChangeDetails, Constants.PathwayResultId)))
+                .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => GetResultExamPeriod(s.Pathway.PathwayAssessments, GetDetails<OpenPathwayRommRequest>, s.ChangeDetails, Constants.PathwayResultId)))
+                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.CoreCode})"))
+                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
+                .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()));
+
+            CreateMap<AdminChangeLogRecord, AdminViewChangeRecordOpenSpecialismRommViewModel>()
+                .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+                .ForMember(d => d.Grade, opts => opts.MapFrom(s => GetSpecialismResultGrade(s.Pathway.Specialisms, GetDetails<OpenSpecialismRommRequest>, s.ChangeDetails, Constants.SpecialismResultId)))
+                .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => s.SpecialismExamPeriod))
+                .ForMember(d => d.SpecialismName, opts => opts.MapFrom(s => $"{s.SpecialismName} ({s.SpecialismCode})"))
+                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
+                .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()));
+
+            CreateMap<AdminChangeLogRecord, AdminViewChangeRecordPathwayRommOutcomeViewModel>()
+                .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+                .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.CoreCode))
+                .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => GetAssessmentExamPeriod(s.Pathway.PathwayAssessments, GetDetails<PathwayRommOutcomeDetails>, s.ChangeDetails, Constants.PathwayAssessmentId)))
+                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.CoreCode})"))
+                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
+                .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()))
+                .ForMember(d => d.RommOutcomeDetails, opts => opts.MapFrom(s => GetDetails<PathwayRommOutcomeDetails>(s.ChangeDetails)));
+
+            CreateMap<AdminChangeLogRecord, AdminViewChangeRecordSpecialismRommOutcomeViewModel>()
+                .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+                .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.CoreCode))
+                .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => s.SpecialismExamPeriod))
+                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.CoreCode})"))
+                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
+                .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()))
+                .ForMember(d => d.RommOutcomeDetails, opts => opts.MapFrom(s => GetDetails<SpecialismRommOutcomeDetails>(s.ChangeDetails)));
+
+            CreateMap<AdminChangeLogRecord, AdminViewChangeRecordOpenPathwayAppealViewModel>()
+                .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+                .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.CoreCode))
+                .ForMember(d => d.Grade, opts => opts.MapFrom(s => GetResultGrade(s.Pathway.PathwayAssessments, GetDetails<OpenCoreAppealRequest>, s.ChangeDetails, Constants.PathwayResultId)))
+                .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => GetResultExamPeriod(s.Pathway.PathwayAssessments, GetDetails<OpenCoreAppealRequest>, s.ChangeDetails, Constants.PathwayResultId)))
+                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.CoreCode})"))
+                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
+                .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()));
+
+            CreateMap<AdminChangeLogRecord, AdminViewChangeRecordOpenSpecialismAppealViewModel>()
+                .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+                .ForMember(d => d.SpecialismName, opts => opts.MapFrom(s => $"{s.SpecialismName} ({s.SpecialismCode})"))
+                .ForMember(d => d.Grade, opts => opts.MapFrom(s => GetSpecialismResultGrade(s.Pathway.Specialisms, GetDetails<OpenSpecialismAppealRequest>, s.ChangeDetails, Constants.SpecialismResultId)))
+                .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => GetSpecialismExamPeriod(s.Pathway.Specialisms, GetDetails<OpenSpecialismAppealRequest>, s.ChangeDetails, Constants.SpecialismResultId)))
+                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.CoreCode})"))
+                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
+                .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()));
+
+            CreateMap<AdminChangeLogRecord, AdminViewChangeRecordPathwayAppealOutcomeViewModel>()
+                .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+                .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.CoreCode))
+                .ForMember(d => d.Grade, opts => opts.MapFrom(s => s.CoreGrade))
+                .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => GetResultExamPeriod(s.Pathway.PathwayAssessments, GetDetails<PathwayAppealOutcomeDetails>, s.ChangeDetails, Constants.PathwayResultId)))
+                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.CoreCode})"))
+                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
+                .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()))
+                .ForMember(d => d.AppealOutcomeDetails, opts => opts.MapFrom(s => GetDetails<PathwayAppealOutcomeDetails>(s.ChangeDetails)));
+
+            CreateMap<AdminChangeLogRecord, AdminViewChangeRecordSpecialismAppealOutcomeViewModel>()
+                .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+                .ForMember(d => d.SpecialismCode, opts => opts.MapFrom(s => s.SpecialismCode))
+                .ForMember(d => d.Grade, opts => opts.MapFrom(s => GetSpecialismResultGrade(s.Pathway.Specialisms, GetDetails<SpecialismAppealOutcomeDetails>, s.ChangeDetails, Constants.SpecialismResultId)))
+                .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => GetSpecialismExamPeriod(s.Pathway.Specialisms, GetDetails<SpecialismAppealOutcomeDetails>, s.ChangeDetails, Constants.SpecialismResultId)))
+                .ForMember(d => d.SpecialismName, opts => opts.MapFrom(s => $"{s.SpecialismName} ({s.SpecialismCode})"))
+                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
+                .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()))
+                .ForMember(d => d.AppealOutcomeDetails, opts => opts.MapFrom(s => GetDetails<SpecialismAppealOutcomeDetails>(s.ChangeDetails)));
         }
 
         private T GetDetails<T>(string details)
@@ -120,6 +215,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
         private static string FormatDateTime2(DateTime dateTime)
             => $"{dateTime:d MMMM yyyy, h:mm}{dateTime.ToString("tt").ToLower()}";
+
+        private Assessment GetPathwayAssessment(IEnumerable<Assessment> source, Expression<Func<Assessment, bool>> expression)
+            => source.AsQueryable().Where(expression).First();
+
+        private Assessment GetSpecialismAssessment(IEnumerable<Specialism> source, Expression<Func<Assessment, bool>> expression)
+            => source.AsQueryable().SelectMany(e => e.Assessments).First(expression);
 
         private ChangeRecordModel GetViewChangeRecordLink(DateTime text, int changeLogId, ChangeType changeType) => new ChangeRecordModel()
         {
@@ -133,6 +234,48 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             }
         };
 
+        private string GetSpecialismResultGrade<TResultType>(IEnumerable<Specialism> specialisms, Func<string, TResultType> getResultObject, string jsonString, string specialismResultId)
+        {
+            var value = getPropValue(getResultObject, jsonString, specialismResultId);
+            return GetSpecialismAssessment(specialisms, e => e.Result != null && e.Result.Id == value).Result.Grade;
+        }
+
+        private string GetSpecialismExamPeriod<TResultType>(IEnumerable<Specialism> specialisms, Func<string, TResultType> getResultObject, string jsonString, string specialismResultId)
+        {
+            var value = getPropValue(getResultObject, jsonString, specialismResultId);
+            return GetSpecialismAssessment(specialisms, e => e.Result != null && e.Result.Id == value).SeriesName;
+        }
+
+        private string GetResultGrade<TResultType>(IEnumerable<Assessment> assessments, Func<string, TResultType> getResultObject, string jsonString, string resultId)
+        {
+            var value = getPropValue(getResultObject, jsonString, resultId);
+            return GetPathwayAssessment(assessments.Where(p => p.Result != null), p => p.Result.Id == value).Result.Grade;
+        }
+
+        private string GetResultExamPeriod<TResultType>(IEnumerable<Assessment> assessments, Func<string, TResultType> getResultObject, string jsonString, string resultId)
+        {
+            var value = getPropValue(getResultObject, jsonString, resultId);
+            return GetPathwayAssessment(assessments.Where(p => p.Result != null), p => p.Result.Id == value).SeriesName;
+        }
+
+        private string GetAssessmentExamPeriod<TResultType>(IEnumerable<Assessment> assessments, Func<string, TResultType> getResultObject, string jsonString, string assessmentId)
+        {
+            var value = getPropValue(getResultObject, jsonString, assessmentId);
+            return GetPathwayAssessment(assessments.Where(p => p.Result != null), e => e.Id == value).SeriesName;
+        }
+
+        private int getPropValue<T>(Func<string, T> getobject, string jsonstr, string prop)
+        {
+            var resobj = getobject(jsonstr);
+
+            if (resobj == null)
+                return default;
+
+            return Convert.ToInt32(getValue(resobj, resobj.GetType(), prop));
+        }
+
+        private object getValue(Object obj, Type type, string property) => type.GetProperty(property).GetValue(obj, null);
+
         private string GetRoute(ChangeType changeType) => changeType switch
         {
             ChangeType.StartYear => RouteConstants.AdminViewChangeStartYearRecord,
@@ -143,6 +286,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             ChangeType.RemoveSpecialismAssessment => RouteConstants.AdminViewChangeRemoveSpecialismAssessmentRecord,
             ChangeType.AddPathwayResult => RouteConstants.AdminViewChangeAddPathwayResultRecord,
             ChangeType.AddSpecialismResult => RouteConstants.AdminViewChangeAddSpecialismResultRecord,
+            ChangeType.ChangePathwayResult => RouteConstants.AdminViewChangePathwayResultRecord,
+            ChangeType.ChangeSpecialismResult => RouteConstants.AdminViewChangeSpecialismResultRecord,
+            ChangeType.OpenPathwayRomm => RouteConstants.AdminViewOpenPathwayRommRecord,
+            ChangeType.OpenSpecialismRomm => RouteConstants.AdminViewOpenSpecialismRommRecord,
+            ChangeType.PathwayRommOutcome => RouteConstants.AdminViewPathwayRommOutcomeRecord,
+            ChangeType.SpecialismRommOutcome => RouteConstants.AdminViewSpecialismRommOutcomeRecord,
+            ChangeType.OpenPathwayAppeal => RouteConstants.AdminViewOpenPathwayAppealRecord,
+            ChangeType.OpenSpecialismAppeal => RouteConstants.AdminViewOpenSpecialismAppealRecord,
+            ChangeType.PathwayAppealOutcome => RouteConstants.AdminViewPathwayAppealOutcomeRecord,
+            ChangeType.SpecialismAppealOutcome => RouteConstants.AdminViewSpecialismAppealOutcomeRecord,
             _ => string.Empty
         };
     }
