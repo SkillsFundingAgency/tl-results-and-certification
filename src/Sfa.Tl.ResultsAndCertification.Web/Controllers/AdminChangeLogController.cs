@@ -154,6 +154,88 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(result);
         }
 
+
+        [HttpGet]
+        [Route("admin/view-change-record/9/{changeLogId}", Name = RouteConstants.AdminViewChangePathwayResultRecord)]
+        public async Task<IActionResult> AdminViewChangeRecordChangePathwayResultAsync(int changeLogId)
+        {
+            var result = await _loader.GetAdminViewChangePathwayResultRecord(changeLogId);
+            return View(result);
+        }
+
+        [HttpGet]
+        [Route("admin/view-change-record/10/{changeLogId}", Name = RouteConstants.AdminViewChangeSpecialismResultRecord)]
+        public async Task<IActionResult> AdminViewChangeRecordChangeSpecialismResultAsync(int changeLogId)
+        {
+            var result = await _loader.GetAdminViewChangeSpecialismResultRecord(changeLogId);
+            return View(result);
+        }
+
+        [HttpGet]
+        [Route("admin/view-change-record/11/{changeLogId}", Name = RouteConstants.AdminViewOpenPathwayRommRecord)]
+        public async Task<IActionResult> AdminViewChangeRecordOpenPathwayRommAsync(int changeLogId)
+        {
+            var result = await _loader.GetAdminViewChangeOpenPathwayRommRecord(changeLogId);
+            return View(result);
+        }
+
+        [HttpGet]
+        [Route("admin/view-change-record/12/{changeLogId}", Name = RouteConstants.AdminViewOpenSpecialismRommRecord)]
+        public async Task<IActionResult> AdminViewChangeRecordOpenSpecialismRommAsync(int changeLogId)
+        {
+            var result = await _loader.GetAdminViewChangeOpenSpecialismRommRecord(changeLogId);
+            return View(result);
+        }
+
+        [HttpGet]
+        [Route("admin/view-change-record/13/{changeLogId}", Name = RouteConstants.AdminViewPathwayRommOutcomeRecord)]
+        public async Task<IActionResult> AdminViewChangeRecordPathwayRommOutcomeAsync(int changeLogId)
+        {
+            var result = await _loader.GetAdminViewChangePathwayRommOutcomeRecord(changeLogId);
+            return View(result);
+        }
+
+        [HttpGet]
+        [Route("admin/view-change-record/14/{changeLogId}", Name = RouteConstants.AdminViewSpecialismRommOutcomeRecord)]
+        public async Task<IActionResult> AdminViewChangeRecordSpecialismRommOutcomeAsync(int changeLogId)
+        {
+            var result = await _loader.GetAdminViewChangeSpecialismRommOutcomeRecord(changeLogId);
+            return View(result);
+        }
+
+        [HttpGet]
+        [Route("admin/view-change-record/15/{changeLogId}", Name = RouteConstants.AdminViewOpenPathwayAppealRecord)]
+        public async Task<IActionResult> AdminViewChangeRecordOpenPathwayAppealAsync(int changeLogId)
+        {
+            var result = await _loader.GetAdminViewChangeOpenPathwayAppealRecord(changeLogId);
+            return View(result);
+        }
+
+        [HttpGet]
+        [Route("admin/view-change-record/16/{changeLogId}", Name = RouteConstants.AdminViewOpenSpecialismAppealRecord)]
+        public async Task<IActionResult> AdminViewChangeRecordOpenSpecialismAppealAsync(int changeLogId)
+        {
+            var result = await _loader.GetAdminViewChangeOpenSpecialismAppealRecord(changeLogId);
+            return View(result);
+        }
+
+        [HttpGet]
+        [Route("admin/view-change-record/17/{changeLogId}", Name = RouteConstants.AdminViewPathwayAppealOutcomeRecord)]
+        public async Task<IActionResult> AdminViewChangeRecordPathwayAppealOutcomeAsync(int changeLogId)
+        {
+            var result = await _loader.GetAdminViewChangePathwayAppealOutcomeRecord(changeLogId);
+            return View(result);
+        }
+
+        [HttpGet]
+        [Route("admin/view-change-record/18/{changeLogId}", Name = RouteConstants.AdminViewSpecialismAppealOutcomeRecord)]
+        public async Task<IActionResult> AdminViewChangeRecordSpecialismAppealOutcomeAsync(int changeLogId)
+        {
+            var result = await _loader.GetAdminViewChangeSpecialismAppealOutcomeRecord(changeLogId);
+            return View(result);
+        }
+
+
         #endregion View change log
     }
 }
