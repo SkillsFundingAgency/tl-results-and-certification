@@ -116,6 +116,7 @@
         public const string RegistrationPathwayId = "registrationPathwayId";
         public const string SpecialismsId = "specialismsId";
         public const string ChangeLogId = "changeLogId";
+        public const string Type = "type";
 
         // Assessments
         public const int AssessmentEndInYears = 4;
@@ -125,6 +126,12 @@
         public const int AdminAssessmentEntryLimit = 2;
         public const string AdminValidAssessmentSeries = "ValidAssessmentSeries";
         public const string AdminSpecialismAssessmentId = "AdminSpecialismAssessmentId";
+
+        // ChangeLog
+        public const string PathwayResultId = "PathwayResultId";
+        public const string PathwayAssessmentId = "PathwayAssessmentId";
+        public const string SpecialismResultId = "SpecialismResultId";
+
 
         public const int MaxFileSizeInMb = 5;
 

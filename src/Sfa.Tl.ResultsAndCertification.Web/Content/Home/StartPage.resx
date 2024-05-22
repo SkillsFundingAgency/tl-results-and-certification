@@ -247,7 +247,7 @@
     <value>add or update learner registrations</value>
   </data>
   <data name="Service_TellUs_Add_Update_Results" xml:space="preserve">
-    <value>add or update core component results</value>
+    <value>add or update core component and occupational specialism results</value>
   </data>
   <data name="Service_TellUs_English_And_Maths_Qualification" xml:space="preserve">
     <value>tell us if a learner has met the minimum standard for English and maths</value>

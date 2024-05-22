@@ -1,10 +1,9 @@
 ﻿using FluentValidation.Results;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces;
-using System.Collections.Generic;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
-using System.Linq;
 using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement.BulkProcess;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
 {
@@ -12,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
     {
         public IndustryPlacementCsvRecordResponse ParseRow(FileBaseModel model, int rownum)
         {
-            if (!(model is IndustryPlacementCsvRecordRequest result))
+            if (model is not IndustryPlacementCsvRecordRequest result)
                 return null;
 
             return new IndustryPlacementCsvRecordResponse
@@ -21,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
                 CoreCode = result.CoreCode?.Trim(),
                 IndustryPlacementStatus = result.IndustryPlacementStatus?.Trim(),
                 IndustryPlacementHours = result.IndustryPlacementHours?.Trim(),
-                SpecialConsiderations = result.SpecialConsiderationReasons?.Trim()?.Split(',')?.Where(s => !string.IsNullOrWhiteSpace(s.Trim()))?.Select(sp => sp.Trim())?.ToList(),
+                SpecialConsiderations = CsvStringToListParser.Parse(result.SpecialConsiderationReasons),
                 RowNum = rownum,
                 ValidationErrors = new List<BulkProcessValidationError>()
             };

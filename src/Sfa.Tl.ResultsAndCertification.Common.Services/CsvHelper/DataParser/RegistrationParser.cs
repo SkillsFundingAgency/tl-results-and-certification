@@ -4,7 +4,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interf
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
 {
@@ -12,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
     {
         public RegistrationCsvRecordResponse ParseRow(FileBaseModel model, int rownum)
         {
-            if (!(model is RegistrationCsvRecordRequest reg))
+            if (model is not RegistrationCsvRecordRequest reg)
                 return null;
 
             return new RegistrationCsvRecordResponse
@@ -24,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
                 ProviderUkprn = reg.Ukprn.Trim().ToLong(),
                 AcademicYearName = reg.AcademicYear.Trim(),
                 CoreCode = reg.Core.Trim(),
-                SpecialismCodes = reg.Specialisms.Trim().Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim()))?.Select(sp => sp.Trim()),
+                SpecialismCodes = CsvStringToListParser.Parse(reg.Specialisms),
                 RowNum = rownum,
                 ValidationErrors = new List<BulkProcessValidationError>()
             };

@@ -14,7 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
     public class When_Called_With_IpStatus_Completed : TestSetup
     {
         private readonly bool _expectedApiResult = true;
-        private IndustryPlacementDetails _industryPlacementDetails = null;
 
         public override void Given()
         {

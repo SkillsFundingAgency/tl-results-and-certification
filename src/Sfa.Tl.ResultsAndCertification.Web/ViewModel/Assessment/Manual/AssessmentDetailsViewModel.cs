@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -195,10 +196,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                 {
                     BreadcrumbItems = new List<BreadcrumbItem>
                     {
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Assessment_Dashboard, RouteName = RouteConstants.AssessmentDashboard },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Search_For_Assessments, RouteName = RouteConstants.SearchAssessments },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Learners_Assessment_entries }
+                        new() { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
+                        new() { DisplayName = BreadcrumbContent.Assessment_Dashboard, RouteName = RouteConstants.AssessmentDashboard },
+                        new()
+                        {
+                            DisplayName = BreadcrumbContent.Search_For_Assessment_Entry,
+                            RouteName = SearchRegistrationRouteName,
+                            RouteAttributes =  SearchRegistrationRouteAttributes
+                        },
+                        new() { DisplayName = BreadcrumbContent.Learners_Assessment_entries }
                     }
                 };
             }

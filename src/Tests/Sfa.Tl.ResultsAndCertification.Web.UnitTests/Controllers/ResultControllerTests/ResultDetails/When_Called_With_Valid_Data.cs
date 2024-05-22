@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration.Enum;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -135,8 +136,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(BreadcrumbContent.Home);
             model.Breadcrumb.BreadcrumbItems[1].RouteName.Should().Be(RouteConstants.ResultsDashboard);
             model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Result_Dashboard);
-            model.Breadcrumb.BreadcrumbItems[2].RouteName.Should().Be(RouteConstants.SearchResults);
-            model.Breadcrumb.BreadcrumbItems[2].DisplayName.Should().Be(BreadcrumbContent.Search_For_Results);
+            model.Breadcrumb.BreadcrumbItems[2].RouteName.Should().Be(RouteConstants.SearchRegistration);
+            model.Breadcrumb.BreadcrumbItems[2].DisplayName.Should().Be(BreadcrumbContent.Search_For_Result_Entry);
+            model.Breadcrumb.BreadcrumbItems[2].RouteAttributes.Should().HaveCount(1);
+            model.Breadcrumb.BreadcrumbItems[2].RouteAttributes.Should().ContainEquivalentOf(new KeyValuePair<string, string>(Constants.Type, SearchRegistrationType.Result.ToString()));
         }
     }
 }

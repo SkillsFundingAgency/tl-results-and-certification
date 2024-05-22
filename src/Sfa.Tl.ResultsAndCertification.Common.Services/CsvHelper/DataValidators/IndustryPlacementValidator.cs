@@ -1,10 +1,13 @@
 ﻿using FluentValidation;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement.BulkProcess;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Const = Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidators
 {
@@ -17,14 +20,14 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
                 .Cascade(CascadeMode.Stop)
                 .Required()
                 .WithMessage(ValidationMessages.IpBulkUlnRequired)
-                .MustBeNumberWithLength(10);
+                .MustBeNumberWithLength(Const.UlnLength);
 
             // Core code
             RuleFor(r => r.CoreCode)
                 .Cascade(CascadeMode.Stop)
                 .Required()
                 .WithMessage(ValidationMessages.IpBulkCorecodeRequired)
-                .MustBeStringWithLength(8)
+                .MustBeStringWithLength(Const.CoreCodeLength)
                 .WithMessage(ValidationMessages.IpBulkCorecodeMustBe8Chars);
 
             // IndustryPlacementStatus
@@ -62,7 +65,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
                            !x.IndustryPlacementStatus.Equals(EnumExtensions.GetDisplayName(IndustryPlacementStatus.CompletedWithSpecialConsideration), StringComparison.InvariantCultureIgnoreCase));
 
             RuleFor(r => r.SpecialConsiderationReasons)
-                .Must(r => !string.IsNullOrWhiteSpace(r.Trim()) && r.Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())).All(a => a.Trim().Length > 0))
+                .Must(r =>
+                {
+                    IList<string> list = CsvStringToListParser.Parse(r);
+                    return list.Any() && list.All(a => a.Length > 0);
+                })
                 .WithMessage(ValidationMessages.IpBulkReasonRequired)
                 .When(x => x.IndustryPlacementStatus.Equals(EnumExtensions.GetDisplayName(IndustryPlacementStatus.CompletedWithSpecialConsideration), StringComparison.InvariantCultureIgnoreCase));
 
@@ -72,14 +79,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
                 .When(x => x.IndustryPlacementStatus.Equals(EnumExtensions.GetDisplayName(IndustryPlacementStatus.CompletedWithSpecialConsideration), StringComparison.InvariantCultureIgnoreCase));
 
             RuleFor(r => r.SpecialConsiderationReasons)
-                .Must(r => !IsDuplicate(r))
+                .NotDuplicatesInCommaSeparatedString()
                 .WithMessage(ValidationMessages.IpBulkReasonDuplicated)
-                .When(r => !string.IsNullOrWhiteSpace(r.SpecialConsiderationReasons) && r.SpecialConsiderationReasons.Split(',').Count() > 1);
-        }
-
-        private bool IsDuplicate(string commaSeparatedString)
-        {
-            return commaSeparatedString.Split(',').GroupBy(spl => spl.Trim()).Any(c => c.Count() > 1);
+                .When(r => !string.IsNullOrWhiteSpace(r.SpecialConsiderationReasons) && CsvStringToListParser.Parse(r.SpecialConsiderationReasons).Count > 1);
         }
     }
 }
