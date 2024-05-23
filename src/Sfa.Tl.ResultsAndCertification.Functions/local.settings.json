@@ -18,6 +18,7 @@
     "ProviderAddressExtractTrigger": "0 45 7 * * *",
     "CoreRommExtractTrigger": "0 0 8 * * *",
     "SpecialismRommExtractTrigger": "0 45 7 * * *",
+    "CertificateTrackingExtractTrigger": "0 15 8 * * *",
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "BlobStorageConnectionString": "UseDevelopmentStorage=true;",
     "ConfigurationStorageConnectionString": "UseDevelopmentStorage=true;",
