@@ -224,6 +224,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminPostResults {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to appeal.
+        /// </summary>
+        public static string Summary_Appeal_Id {
+            get {
+                return ResourceManager.GetString("Summary_Appeal_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to examperiod.
         /// </summary>
         public static string Summary_Exam_Period_Id {
@@ -292,15 +301,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminPostResults {
         public static string Summary_Provider_Text {
             get {
                 return ResourceManager.GetString("Summary_Provider_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to romm.
-        /// </summary>
-        public static string Summary_Romm_Id {
-            get {
-                return ResourceManager.GetString("Summary_Romm_Id", resourceCulture);
             }
         }
         

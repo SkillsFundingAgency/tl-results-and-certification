@@ -25,6 +25,7 @@ jobs:
           'Write-Host "SharedKeyVaultName variable: $(SharedKeyVaultName)"'
           'Write-Host "SharedSQLServerName variable: $(SharedSQLServerName)"'
           'Write-Host "ConfigurationStorageConnectionString variable: $(ConfigurationStorageConnectionString)"'
+          'Write-Host "containerLifecyclePolicyRules variable: $(containerLifecyclePolicyRules)"'
         displayName: "Show Variables"
 
       - template: ./Infrastructure/steps/deploy-template.yml@devopsTemplates
@@ -65,6 +66,7 @@ jobs:
             -coreRommExtractTrigger "$(coreRommExtractTrigger)"
             -specialismRommExtractTrigger "$(specialismRommExtractTrigger)"
             -providerAddressExtractTrigger "$(providerAddressExtractTrigger)"
+            -CertificateTrackingExtractTrigger "$(CertificateTrackingExtractTrigger)"
             -enableReplica $(enableReplica)
             -containerLifecyclePolicyRules $(containerLifecyclePolicyRules)'
           tags: $(Tags) 

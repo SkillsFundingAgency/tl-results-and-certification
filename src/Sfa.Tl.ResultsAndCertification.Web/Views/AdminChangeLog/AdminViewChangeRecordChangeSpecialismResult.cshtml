@@ -1,0 +1,41 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog.AdminViewChangeRecordSpecialismResultViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog
+
+@{
+    ViewData["Title"] = AdminViewChangeRecord.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+        <partial name="Partials/_viewRecordLogDetails.cshtml" />
+
+        <div class="govuk-!-margin-top-8">
+            <h2 class="govuk-heading-m">
+                @string.Format(AdminViewChangeRecord.Specialism_Heading_Text, Model.SpecialismName)
+            </h2>
+            <dl class="govuk-summary-list">
+                <vc:summary-item model=Model.SummaryExamPeriod></vc:summary-item>
+                <vc:summary-item model=Model.SummaryGrade></vc:summary-item>
+            </dl>
+        </div>
+
+        <h2 class="govuk-heading-m">@AdminViewChangeRecord.Title_Change_Summary</h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-6">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">@AdminViewChangeRecord.Title_Change</dt>
+                <dt class="govuk-summary-list__key">@AdminViewChangeRecord.Title_From</dt>
+                <dt class="govuk-summary-list__key">@AdminViewChangeRecord.Title_To</dt>
+                <dt class="govuk-summary-list__key"></dt>
+            </div>
+            <vc:summary-item model=Model.SummarySelectedGrade></vc:summary-item>
+        </dl>
+
+        <partial name="Partials/_viewRecordChangeRequestedDetails.cshtml" />
+    </div>
+</div>
