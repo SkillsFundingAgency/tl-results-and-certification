@@ -71,6 +71,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download T Levels pending withdrawals data.
+        /// </summary>
+        public static string Download_Link_Pending_Withdrawals_Data {
+            get {
+                return ResourceManager.GetString("Download_Link_Pending_Withdrawals_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download T Levels registrations data.
+        /// </summary>
+        public static string Download_Link_Registrations_Data {
+            get {
+                return ResourceManager.GetString("Download_Link_Registrations_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KB.
         /// </summary>
         public static string File_Size_Units {
@@ -116,20 +134,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to pending_withdrawals_data.csv.
+        /// </summary>
+        public static string Pending_Withdrawals_Data_Report_File_Name {
+            get {
+                return ResourceManager.GetString("Pending_Withdrawals_Data_Report_File_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to registrations_data.csv.
         /// </summary>
         public static string Registrations_Data_Report_File_Name_Text {
             get {
                 return ResourceManager.GetString("Registrations_Data_Report_File_Name_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download T Levels registrations data.
-        /// </summary>
-        public static string Registrations_Link_DisplayName {
-            get {
-                return ResourceManager.GetString("Registrations_Link_DisplayName", resourceCulture);
             }
         }
     }

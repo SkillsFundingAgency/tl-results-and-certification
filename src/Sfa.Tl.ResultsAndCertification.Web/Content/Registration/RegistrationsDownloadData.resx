@@ -120,6 +120,12 @@
   <data name="Button_Back_To_Home" xml:space="preserve">
     <value>Back to home</value>
   </data>
+  <data name="Download_Link_Pending_Withdrawals_Data" xml:space="preserve">
+    <value>Download T Levels pending withdrawals data</value>
+  </data>
+  <data name="Download_Link_Registrations_Data" xml:space="preserve">
+    <value>Download T Levels registrations data</value>
+  </data>
   <data name="File_Size_Units" xml:space="preserve">
     <value>KB</value>
   </data>
@@ -135,10 +141,10 @@
   <data name="Para_Registrations_Data_Includes_Active_Widthdrawn_Learners" xml:space="preserve">
     <value>Registrations data includes both active and withdrawn learners.</value>
   </data>
+  <data name="Pending_Withdrawals_Data_Report_File_Name" xml:space="preserve">
+    <value>pending_withdrawals_data.csv</value>
+  </data>
   <data name="Registrations_Data_Report_File_Name_Text" xml:space="preserve">
     <value>registrations_data.csv</value>
-  </data>
-  <data name="Registrations_Link_DisplayName" xml:space="preserve">
-    <value>Download T Levels registrations data</value>
   </data>
 </root>

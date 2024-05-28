@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 using Xunit;
@@ -17,9 +18,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         {
             _viewModel = new RegistrationsDownloadViewModel
             {
-                BlobUniqueReference = Guid.NewGuid(),
-                FileSize = 100,
-                FileType = FileType.Csv.ToString()
+                RegistrationsDownloadLinkViewModel = new DownloadLinkViewModel
+                {
+                    BlobUniqueReference = Guid.NewGuid(),
+                    FileSize = 100,
+                    FileType = FileType.Csv.ToString()
+                }
             };
 
             CacheService.GetAndRemoveAsync<RegistrationsDownloadViewModel>(CacheKey)
@@ -37,9 +41,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
             var actualResult = viewResult.Model as RegistrationsDownloadViewModel;
             actualResult.Should().NotBeNull();
-            actualResult.BlobUniqueReference.Should().Be(_viewModel.BlobUniqueReference);
-            actualResult.FileSize.Should().Be(_viewModel.FileSize);
-            actualResult.FileType.Should().Be(_viewModel.FileType);
+            actualResult.RegistrationsDownloadLinkViewModel.Should().NotBeNull();
+
+            actualResult.RegistrationsDownloadLinkViewModel.BlobUniqueReference.Should().Be(_viewModel.RegistrationsDownloadLinkViewModel.BlobUniqueReference);
+            actualResult.RegistrationsDownloadLinkViewModel.FileSize.Should().Be(_viewModel.RegistrationsDownloadLinkViewModel.FileSize);
+            actualResult.RegistrationsDownloadLinkViewModel.FileType.Should().Be(_viewModel.RegistrationsDownloadLinkViewModel.FileType);
 
             actualResult.Breadcrumb.Should().NotBeNull();
             actualResult.Breadcrumb.BreadcrumbItems.Should().NotBeNull();
