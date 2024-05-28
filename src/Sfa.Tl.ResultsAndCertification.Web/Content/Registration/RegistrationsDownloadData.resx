@@ -129,10 +129,16 @@
   <data name="Page_Title" xml:space="preserve">
     <value>Download data - Registrations</value>
   </data>
+  <data name="Para_Pending_Widthdrawals_Only_Includes_Learners_Who_Have_Been_Flagged" xml:space="preserve">
+    <value>Pending withdrawals data only includes those learners who have been flagged by their provider as being withdrawn. Providers are advised to contact the awarding organisation directly to confirm withdrawals. Learners will remain active until their registration is formally withdrawn by the awarding organisation.</value>
+  </data>
+  <data name="Para_Registrations_Data_Includes_Active_Widthdrawn_Learners" xml:space="preserve">
+    <value>Registrations data includes both active and withdrawn learners.</value>
+  </data>
   <data name="Registrations_Data_Report_File_Name_Text" xml:space="preserve">
     <value>registrations_data.csv</value>
   </data>
   <data name="Registrations_Link_DisplayName" xml:space="preserve">
-    <value>Registrations data</value>
+    <value>Download T Levels registrations data</value>
   </data>
 </root>
