@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download your data as a CSV file..
+        ///   Looks up a localized string similar to Download your data as a CSV file, for registrations and pending withdrawals..
         /// </summary>
         public static string Card_Content_Download_Registrations_Csv {
             get {
