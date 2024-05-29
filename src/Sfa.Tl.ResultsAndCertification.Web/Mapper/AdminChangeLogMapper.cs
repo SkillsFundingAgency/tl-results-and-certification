@@ -7,7 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminPostResults;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.ChangeRecordLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog;
 using System;
@@ -111,7 +110,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<AdminChangeLogRecord, AdminViewChangeRecordRemoveSpecialismAssessmentViewModel>()
                .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
                .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.CoreCode))
-               .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.CoreCode})"))
                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
                .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()))
                .ForMember(d => d.DetailsChangeAssessment, opts => opts.MapFrom(s => GetDetails<DetailsSpecialismAssessmentRemove>(s.ChangeDetails)));
@@ -163,7 +161,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
                 .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.CoreCode))
                 .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => s.SpecialismExamPeriod))
-                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.CoreCode})"))
+                .ForMember(d => d.SpecialismName, opts => opts.MapFrom(s => $"{s.SpecialismName} ({s.SpecialismCode})"))
                 .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
                 .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()))
                 .ForMember(d => d.RommOutcomeDetails, opts => opts.MapFrom(s => GetDetails<SpecialismRommOutcomeDetails>(s.ChangeDetails)));
@@ -182,7 +180,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.SpecialismName, opts => opts.MapFrom(s => $"{s.SpecialismName} ({s.SpecialismCode})"))
                 .ForMember(d => d.Grade, opts => opts.MapFrom(s => GetSpecialismResultGrade(s.Pathway.Specialisms, GetDetails<OpenSpecialismAppealRequest>, s.ChangeDetails, Constants.SpecialismResultId)))
                 .ForMember(d => d.ExamPeriod, opts => opts.MapFrom(s => GetSpecialismExamPeriod(s.Pathway.Specialisms, GetDetails<OpenSpecialismAppealRequest>, s.ChangeDetails, Constants.SpecialismResultId)))
-                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.CoreCode})"))
                 .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
                 .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()));
 
@@ -216,10 +213,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
         private static string FormatDateTime2(DateTime dateTime)
             => $"{dateTime:d MMMM yyyy, h:mm}{dateTime.ToString("tt").ToLower()}";
 
-        private Assessment GetPathwayAssessment(IEnumerable<Assessment> source, Expression<Func<Assessment, bool>> expression)
-            => source.AsQueryable().Where(expression).First();
+        private AdminChangeLogAssessment GetPathwayAssessment(IEnumerable<AdminChangeLogAssessment> source, Expression<Func<AdminChangeLogAssessment, bool>> expression)
+            => source.AsQueryable().Where(expression).SingleOrDefault();
 
-        private Assessment GetSpecialismAssessment(IEnumerable<Specialism> source, Expression<Func<Assessment, bool>> expression)
+        private AdminChangeLogAssessment GetSpecialismAssessment(IEnumerable<AdminChangeLogSpecialism> source, Expression<Func<AdminChangeLogAssessment, bool>> expression)
             => source.AsQueryable().SelectMany(e => e.Assessments).First(expression);
 
         private ChangeRecordModel GetViewChangeRecordLink(DateTime text, int changeLogId, ChangeType changeType) => new ChangeRecordModel()
@@ -234,34 +231,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             }
         };
 
-        private string GetSpecialismResultGrade<TResultType>(IEnumerable<Specialism> specialisms, Func<string, TResultType> getResultObject, string jsonString, string specialismResultId)
+        private string GetSpecialismResultGrade<TResultType>(IEnumerable<AdminChangeLogSpecialism> specialisms, Func<string, TResultType> getResultObject, string jsonString, string specialismResultId)
         {
             var value = getPropValue(getResultObject, jsonString, specialismResultId);
-            return GetSpecialismAssessment(specialisms, e => e.Result != null && e.Result.Id == value).Result.Grade;
+            return GetSpecialismAssessment(specialisms, e => e.Results.Count() > 0).Results.First(r => r.Id == value).Grade;
         }
 
-        private string GetSpecialismExamPeriod<TResultType>(IEnumerable<Specialism> specialisms, Func<string, TResultType> getResultObject, string jsonString, string specialismResultId)
+        private string GetSpecialismExamPeriod<TResultType>(IEnumerable<AdminChangeLogSpecialism> specialisms, Func<string, TResultType> getResultObject, string jsonString, string specialismResultId)
         {
             var value = getPropValue(getResultObject, jsonString, specialismResultId);
-            return GetSpecialismAssessment(specialisms, e => e.Result != null && e.Result.Id == value).SeriesName;
+            return GetSpecialismAssessment(specialisms, e => e.Results.Any(r => r.Id == value)).SeriesName;
         }
 
-        private string GetResultGrade<TResultType>(IEnumerable<Assessment> assessments, Func<string, TResultType> getResultObject, string jsonString, string resultId)
+        private string GetResultGrade<TResultType>(IEnumerable<AdminChangeLogAssessment> assessments, Func<string, TResultType> getResultObject, string jsonString, string resultId)
         {
             var value = getPropValue(getResultObject, jsonString, resultId);
-            return GetPathwayAssessment(assessments.Where(p => p.Result != null), p => p.Result.Id == value).Result.Grade;
+            return GetPathwayAssessment(assessments.Where(p => p.Results.Count() > 0), p => p.Results.Any(r => r.Id == value)).Results.First(r => r.Id == value).Grade;
         }
 
-        private string GetResultExamPeriod<TResultType>(IEnumerable<Assessment> assessments, Func<string, TResultType> getResultObject, string jsonString, string resultId)
+        private string GetResultExamPeriod<TResultType>(IEnumerable<AdminChangeLogAssessment> assessments, Func<string, TResultType> getResultObject, string jsonString, string resultId)
         {
             var value = getPropValue(getResultObject, jsonString, resultId);
-            return GetPathwayAssessment(assessments.Where(p => p.Result != null), p => p.Result.Id == value).SeriesName;
+            return GetPathwayAssessment(assessments.Where(p => p.Results.Count() > 0), p => p.Results.Any(r => r.Id == value)).SeriesName;
         }
 
-        private string GetAssessmentExamPeriod<TResultType>(IEnumerable<Assessment> assessments, Func<string, TResultType> getResultObject, string jsonString, string assessmentId)
+        private string GetAssessmentExamPeriod<TResultType>(IEnumerable<AdminChangeLogAssessment> assessments, Func<string, TResultType> getResultObject, string jsonString, string assessmentId)
         {
             var value = getPropValue(getResultObject, jsonString, assessmentId);
-            return GetPathwayAssessment(assessments.Where(p => p.Result != null), e => e.Id == value).SeriesName;
+            return GetPathwayAssessment(assessments.Where(p => p.Results.Count() > 0), e => e.Id == value).SeriesName;
         }
 
         private int getPropValue<T>(Func<string, T> getobject, string jsonstr, string prop)

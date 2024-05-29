@@ -1,5 +1,4 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog
@@ -48,6 +47,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog
 
         public DateTime DateAndTimeOfChange { get; set; }
 
-        public Pathway Pathway { get; set; }
+        public AdminChangeLogPathway Pathway { get; set; }
     }
 }
