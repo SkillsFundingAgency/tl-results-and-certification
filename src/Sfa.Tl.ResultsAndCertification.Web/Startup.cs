@@ -79,6 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 options.HeaderName = "X-XSRF-TOKEN";
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             });
+                     
 
             services.AddSingleton(ResultsAndCertificationConfiguration);
             services.AddTransient<ITokenServiceClient, TokenServiceClient>();
@@ -187,6 +188,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                     options.IncludeSubdomains();
                 });
             }
+
+            app.Use((context, next) =>
+            {
+                context.Request.Scheme = "https";
+                return next(context);
+            });
 
             app.UseXContentTypeOptions();
             app.UseReferrerPolicy(opts => opts.NoReferrer());

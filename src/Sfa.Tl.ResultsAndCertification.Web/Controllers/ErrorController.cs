@@ -76,6 +76,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                     return RedirectToRoute(RouteConstants.PageNotFound);
                 case 405:
                     return RedirectToRoute(RouteConstants.Home);
+                case 302:
+                    return RedirectToRoute(RouteConstants.SignIn);
                 case 500:
                 default:
                     return RedirectToRoute(RouteConstants.ProblemWithService);
