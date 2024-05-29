@@ -90,6 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IIndustryPlacementService, IndustryPlacementService>();
             services.AddTransient<IBlobStorageService, BlobStorageService>();
             services.AddTransient<IProviderAddressExtractionService, ProviderAddressExtractionService>();
+            services.AddTransient<ICertificateTrackingExtractionService, CertificateTrackingExtractionService>();
 
             // Overall result calculation
             services.AddTransient<IOverallResultCalculationFunctionService, OverallResultCalculationFunctionService>();

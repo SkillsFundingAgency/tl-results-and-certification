@@ -1,760 +1,767 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "environmentNameAbbreviation": {
-            "type": "string"
-        },
-        "resourceNamePrefix": {
-            "type": "string"
-        },
-        "sharedASPName": {
-            "type": "string"
-        },
-        "sharedEnvResourceGroup": {
-            "type": "string"
-        },
-        "sharedKeyVaultName": {
-            "type": "string"
-        },
-        "sharedSQLServerName": {
-            "type": "string"
-        },
-        "sharedSQLServerReplicaName": {
-            "type": "string"
-        },
-        "sqlDatabaseSkuName": {
-            "type": "string"
-        },
-        "sqlDatabaseTier": {
-            "type": "string"
-        },
-        "sqlserverlessAutoPauseDelay": {
-            "type": "string"
-        },
-        "configurationStorageConnectionString": {
-            "type": "securestring"
-        },
-        "uiCustomHostName": {
-            "type": "string"
-        },
-        "uiCertificateName": {
-            "type": "string"
-        },
-        "internalApiCustomHostname": {
-            "type": "string",
-            "defaultValue": ""
-        },
-        "internalApiCertificateName": {
-            "type": "string",
-            "defaultValue": ""
-        },
-        "functionCustomHostname": {
-            "type": "string",
-            "defaultValue": ""
-        },
-        "functionCertificateName": {
-            "type": "string",
-            "defaultValue": ""
-        },
-        "storageAccountContainerArray": {
-            "type": "array",
-            "metadata": {
-                "description": "An array of container names to create in the storage account."
-            }
-        },
-        "learnerVerificationAndLearningEventsTrigger": {
-            "type": "string"
-        },
-        "learnerGenderTrigger": {
-            "type": "string"
-        },
-        "certificatePrintingBatchesCreateTrigger": {
-            "type": "string"
-        },
-        "certificatePrintingRequestTrigger": {
-            "type": "string"
-        },
-        "certificatePrintingBatchSummaryTrigger": {
-            "type": "string"
-        },
-        "certificatePrintingTrackBatchTrigger": {
-            "type": "string"
-        },
-        "ucasTransferEntriesTrigger": {
-            "type": "string"
-        },
-        "ucasTransferResultsTrigger": {
-            "type": "string"
-        },
-        "ucasTransferAmendmentsTrigger": {
-            "type": "string"
-        },
-        "overallResultCalculationTrigger": {
-            "type": "string"
-        },
-        "industryPlacementExtractTrigger": {
-            "type": "string"
-        },
-        "analystOverallResultExtractTrigger": {
-            "type": "string"
-        },
-        "analystCoreResultExtractTrigger": {
-            "type": "string"
-        },
-        "coreRommExtractTrigger": {
-            "type": "string"
-        },
-        "specialismRommExtractTrigger": {
-            "type": "string"
-        },
-        "providerAddressExtractTrigger": {
-            "type": "string"
-        },
-        "enableReplica": {
-            "type": "bool",
-            "defaultValue": false,
-            "metadata": {
-                "description": "Enables the replica database to be deployed"
-            }
-        },
-        "enableIntTestDb": {
-            "type": "bool",
-            "defaultValue": false,
-            "metadata": {
-                "description": "Enables the integration test database to be deployed"
-            }
-        }
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environmentNameAbbreviation": {
+      "type": "string"
     },
-    "variables": {
-        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/master/ArmTemplates/",
-        "uiAppName": "[concat(parameters('resourceNamePrefix'), '-web')]",
-        "internalApiAppName": "[concat(parameters('resourceNamePrefix'), '-internal-api')]",
-        "appInsightName": "[concat(parameters('resourceNamePrefix'), '-ai')]",
-        "functionAppName": "[concat(parameters('resourceNamePrefix'), '-func')]",
-        "sqlDatabaseName": "[concat(parameters('resourceNamePrefix'), '-sqldb')]",
-        "IntTestSQLDatabaseName": "[concat(parameters('resourceNamePrefix'), '-inttest-sqldb')]",
-        "storageAccountName": "[replace(concat(parameters('resourceNamePrefix'), 'str'), '-', '')]",
-        "logAnalyticsName": "[concat(parameters('resourceNamePrefix'), '-la')]"
+    "resourceNamePrefix": {
+      "type": "string"
     },
-    "resources": [
-        {
-            "apiVersion": "2017-05-10",
-            "name": "[concat('storage-account','-', parameters('environmentNameAbbreviation'))]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'),'storage-account-arm.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "storageAccountName": {
-                        "value": "[variables('storageAccountName')]"
-                    },
-                    "storageKind": {
-                        "value": "StorageV2"
-                    },
-                    "minimumTlsVersion": {
-                        "value": "TLS1_2"
-                    }
-                }
-            }
-        },
-        {
-            "apiVersion": "2017-05-10",
-            "name": "[concat('storage-account-container', parameters('storageAccountContainerArray')[copyIndex()])]",
-            "type": "Microsoft.Resources/deployments",
-            "condition": "[greater(length(parameters('storageAccountContainerArray')), 0)]",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'), 'storage-container.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "storageAccountName": {
-                        "value": "[variables('storageAccountName')]"
-                    },
-                    "containerName": {
-                        "value": "[parameters('storageAccountContainerArray')[copyIndex()]]"
-                    },
-                    "publicAccess": {
-                        "value": "None"
-                    }
-                }
-            },
-            "copy": {
-                "name": "storageaccountcontainercopy",
-                "count": "[length(parameters('storageAccountContainerArray'))]"
-            },
-            "dependsOn": [
-                "[concat('storage-account','-', parameters('environmentNameAbbreviation'))]"
-            ]
-        },
-        {
-            "apiVersion": "2017-05-10",
-            "name": "[concat('app-insights','-', parameters('environmentNameAbbreviation'))]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'),'application-insights.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "appInsightsName": {
-                        "value": "[variables('appInsightName')]"
-                    },
-                    "attachedService": {
-                        "value": "[variables('uiAppName')]"
-                    },
-                    "logAnalyticsWorkspaceId": {
-                        "value": "[reference(concat('log-analytics-workspace','-',parameters('environmentNameAbbreviation'))).outputs.fullyQualifiedResourceId.value]"
-                    }
-                }
-            }
-        },
-        {
-            "apiVersion": "2017-05-10",
-            "name": "[concat('log-analytics-workspace','-', parameters('environmentNameAbbreviation'))]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'),'log-analytics-workspace.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "logAnalyticsWorkspaceName": {
-                        "value": "[variables('logAnalyticsName')]"
-                    },
-                    "logAnalyticsWorkspaceSku": {
-                        "value": "PerGB2018"
-                    }
-                }
-            }
-        },
-        {
-            "condition": "[greater(length(parameters('uiCustomHostName')), 0)]",
-            "apiVersion": "2017-05-10",
-            "name": "[concat('ui-app-service-certificate','-', parameters('environmentNameAbbreviation'))]",
-            "resourceGroup": "[resourceGroup().name]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'),'app-service-certificate.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "keyVaultCertificateName": {
-                        "value": "[parameters('uiCertificateName')]"
-                    },
-                    "keyVaultName": {
-                        "value": "[parameters('sharedKeyVaultName')]"
-                    },
-                    "keyVaultResourceGroup": {
-                        "value": "[parameters('sharedEnvResourceGroup')]"
-                    },
-                    "serverFarmId": {
-                        "value": "[resourceId(parameters('sharedEnvResourceGroup'),'Microsoft.Web/serverFarms',parameters('sharedASPName'))]"
-                    }
-                }
-            }
-        },
-        {
-            "apiVersion": "2017-05-10",
-            "name": "[concat('ui-app-service','-', parameters('environmentNameAbbreviation'))]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'),'app-service.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "appServiceName": {
-                        "value": "[variables('uiAppName')]"
-                    },
-                    "appServicePlanName": {
-                        "value": "[parameters('sharedASPName')]"
-                    },
-                    "appServicePlanResourceGroup": {
-                        "value": "[parameters('sharedEnvResourceGroup')]"
-                    },
-                    "appServiceAppSettings": {
-                        "value": [
-                            {
-                                "name": "EnvironmentName",
-                                "value": "[toUpper(parameters('environmentNameAbbreviation'))]"
-                            },
-                            {
-                                "name": "ConfigurationStorageConnectionString",
-                                "value": "[parameters('configurationStorageConnectionString')]"
-                            },
-                            {
-                                "name": "Version",
-                                "value": "1.0"
-                            },
-                            {
-                                "name": "ServiceName",
-                                "value": "Sfa.Tl.ResultsAndCertification"
-                            },
-                            {
-                                "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-                                "value": "[reference(concat('app-insights','-',parameters('environmentNameAbbreviation'))).outputs.InstrumentationKey.value]"
-                            },
-                            {
-                                "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
-                                "value": "200"
-                            }
-                        ]
-                    },
-                    "appServiceConnectionStrings": {
-                        "value": [
-                        ]
-                    },
-                    "customHostName": {
-                        "value": "[parameters('uiCustomHostName')]"
-                    },
-                    "certificateThumbprint": {
-                        "value": "[if(greater(length(parameters('uiCustomHostname')), 0), reference(concat('ui-app-service-certificate','-', parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
-                    }
-                }
-            },
-            "dependsOn": [
-                "[concat('ui-app-service-certificate','-', parameters('environmentNameAbbreviation'))]",
-                "[concat('app-insights','-', parameters('environmentNameAbbreviation'))]"
-            ]
-        },
-        {
-            "condition": "[greater(length(parameters('internalApiCustomHostName')), 0)]",
-            "apiVersion": "2017-05-10",
-            "name": "[concat('internal-api-app-service-certificate','-',parameters('environmentNameAbbreviation'))]",
-            "resourceGroup": "[resourceGroup().name]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'), 'app-service-certificate.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "keyVaultCertificateName": {
-                        "value": "[parameters('internalApiCertificateName')]"
-                    },
-                    "keyVaultName": {
-                        "value": "[parameters('sharedKeyVaultName')]"
-                    },
-                    "keyVaultResourceGroup": {
-                        "value": "[parameters('sharedEnvResourceGroup')]"
-                    },
-                    "serverFarmId": {
-                        "value": "[resourceId(parameters('sharedEnvResourceGroup'),'Microsoft.Web/serverFarms',parameters('sharedASPName'))]"
-                    }
-                }
-            }
-        },
-        {
-            "apiVersion": "2017-05-10",
-            "name": "[concat('internal-api-app-service','-',parameters('environmentNameAbbreviation'))]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'),'app-service.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "appServiceName": {
-                        "value": "[variables('internalApiAppName')]"
-                    },
-                    "appServicePlanName": {
-                        "value": "[parameters('sharedASPName')]"
-                    },
-                    "appServicePlanResourceGroup": {
-                        "value": "[parameters('sharedEnvResourceGroup')]"
-                    },
-                    "appServiceAppSettings": {
-                        "value": [
-                            {
-                                "name": "EnvironmentName",
-                                "value": "[toUpper(parameters('environmentNameAbbreviation'))]"
-                            },
-                            {
-                                "name": "ConfigurationStorageConnectionString",
-                                "value": "[parameters('configurationStorageConnectionString')]"
-                            },
-                            {
-                                "name": "Version",
-                                "value": "1.0"
-                            },
-                            {
-                                "name": "ServiceName",
-                                "value": "Sfa.Tl.ResultsAndCertification"
-                            },
-                            {
-                                "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-                                "value": "[reference(concat('app-insights','-',parameters('environmentNameAbbreviation'))).outputs.InstrumentationKey.value]"
-                            },
-                            {
-                                "name": "WEBSITE_SWAP_WARMUP_PING_PATH",
-                                "value": "/api/tlevel/VerifyTLevel"
-                            },
-                            {
-                                "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
-                                "value": "405"
-                            }
-                        ]
-                    },
-                    "appServiceConnectionStrings": {
-                        "value": [
-                        ]
-                    },
-                    "customHostName": {
-                        "value": "[parameters('internalApiCustomHostname')]"
-                    },
-                    "certificateThumbprint": {
-                        "value": "[if(greater(length(parameters('internalApiCustomHostname')), 0), reference(concat('internal-api-app-service-certificate','-',parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
-                    }
-                }
-            },
-            "dependsOn": [
-                "[concat('internal-api-app-service-certificate','-', parameters('environmentNameAbbreviation'))]",
-                "[concat('app-insights','-', parameters('environmentNameAbbreviation'))]"
-
-            ]
-        },
-        {
-            "condition": "[greater(length(parameters('functionCertificateName')), 0)]",
-            "apiVersion": "2017-05-10",
-            "name": "[concat('function-app-certificate','-',parameters('environmentNameAbbreviation'))]",
-            "resourceGroup": "[resourceGroup().name]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'), 'app-service-certificate.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "keyVaultCertificateName": {
-                        "value": "[parameters('functionCertificateName')]"
-                    },
-                    "keyVaultName": {
-                        "value": "[parameters('sharedKeyVaultName')]"
-                    },
-                    "keyVaultResourceGroup": {
-                        "value": "[parameters('sharedEnvResourceGroup')]"
-                    },
-                    "serverFarmId": {
-                        "value": "[resourceId(parameters('sharedEnvResourceGroup'),'Microsoft.Web/serverFarms',parameters('sharedASPName'))]"
-                    }
-                }
-            }
-        },
-        {
-            "apiVersion": "2017-05-10",
-            "name": "[concat('function-app','-', parameters('environmentNameAbbreviation'))]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'),'function-app.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "functionAppName": {
-                        "value": "[variables('functionAppName')]"
-                    },
-                    "appServicePlanName": {
-                        "value": "[parameters('sharedASPName')]"
-                    },
-                    "appServicePlanResourceGroup": {
-                        "value": "[parameters('sharedEnvResourceGroup')]"
-                    },
-                    "functionAppAppSettings": {
-                        "value": [
-                            {
-                                "name": "EnvironmentName",
-                                "value": "[toUpper(parameters('environmentNameAbbreviation'))]"
-                            },
-                            {
-                                "name": "ConfigurationStorageConnectionString",
-                                "value": "[parameters('configurationStorageConnectionString')]"
-                            },
-                            {
-                                "name": "Version",
-                                "value": "1.0"
-                            },
-                            {
-                                "name": "ServiceName",
-                                "value": "Sfa.Tl.ResultsAndCertification"
-                            },
-                            {
-                                "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-                                "value": "[reference(concat('app-insights','-',parameters('environmentNameAbbreviation'))).outputs.InstrumentationKey.value]"
-                            },
-                            {
-                                "name": "BlobStorageConnectionString",
-                                "value": "[reference(concat('storage-account','-',parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
-                            },
-                            {
-                                "name": "AzureWebJobsStorage",
-                                "value": "[reference(concat('storage-account','-',parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
-                            },
-                            {
-                                "name": "AzureWebJobsDashboard",
-                                "value": "[reference(concat('storage-account','-',parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
-                            },
-                            {
-                                "name": "WEBSITE_TIME_ZONE",
-                                "value": "GMT Standard Time"
-                            },
-                            {
-                                "name": "FUNCTIONS_EXTENSION_VERSION",
-                                "value": "~4"
-                            },
-                            {
-                                "name": "LearnerVerificationAndLearningEventsTrigger",
-                                "value": "[parameters('learnerVerificationAndLearningEventsTrigger')]"
-                            },
-                            {
-                                "name": "LearnerGenderTrigger",
-                                "value": "[parameters('learnerGenderTrigger')]"
-                            },
-                            {
-                                "name": "CertificatePrintingBatchesCreateTrigger",
-                                "value": "[parameters('certificatePrintingBatchesCreateTrigger')]"
-                            },
-                            {
-                                "name": "CertificatePrintingRequestTrigger",
-                                "value": "[parameters('certificatePrintingRequestTrigger')]"
-                            },
-                            {
-                                "name": "CertificatePrintingBatchSummaryTrigger",
-                                "value": "[parameters('certificatePrintingBatchSummaryTrigger')]"
-                            },
-                            {
-                                "name": "CertificatePrintingTrackBatchTrigger",
-                                "value": "[parameters('certificatePrintingTrackBatchTrigger')]"
-                            },
-                            {
-                                "name": "UcasTransferEntriesTrigger",
-                                "value": "[parameters('ucasTransferEntriesTrigger')]"
-                            },
-                            {
-                                "name": "UcasTransferResultsTrigger",
-                                "value": "[parameters('ucasTransferResultsTrigger')]"
-                            },
-                            {
-                                "name": "UcasTransferAmendmentsTrigger",
-                                "value": "[parameters('ucasTransferAmendmentsTrigger')]"
-                            },
-                            {
-                                "name": "OverallResultCalculationTrigger",
-                                "value": "[parameters('overallResultCalculationTrigger')]"
-                            },
-                            {
-                                "name": "IndustryPlacementExtractTrigger",
-                                "value": "[parameters('industryPlacementExtractTrigger')]"
-                            },
-                            {
-                                "name": "AnalystOverallResultExtractTrigger",
-                                "value": "[parameters('analystOverallResultExtractTrigger')]"
-                            },
-                            {
-                                "name": "AnalystCoreResultExtractTrigger",
-                                "value": "[parameters('analystCoreResultExtractTrigger')]"
-                            },
-                            {
-                                "name": "CoreRommExtractTrigger",
-                                "value": "[parameters('coreRommExtractTrigger')]"
-                            },
-                            {
-                                "name": "SpecialismRommExtractTrigger",
-                                "value": "[parameters('specialismRommExtractTrigger')]"
-                            },
-                            {
-                                "name": "ProviderAddressExtractTrigger",
-                                "value": "[parameters('ProviderAddressExtractTrigger')]"
-                            },
-                            {
-                                "name": "WEBSITE_LOAD_CERTIFICATES",
-                                "value": "1"
-                            }
-                        ]
-                    },
-                    "customHostName": {
-                        "value": "[parameters('functionCustomHostname')]"
-                    },
-                    "certificateThumbprint": {
-                        "value": "[if(greater(length(parameters('functionCertificateName')), 0), reference(concat('function-app-certificate','-',parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
-                    },
-                    "systemAssignedIdentity": {
-                        "value": "SystemAssigned"
-                    }
-                }
-            },
-            "dependsOn": [
-                "[concat('function-app-certificate','-', parameters('environmentNameAbbreviation'))]",
-                "[concat('app-insights','-', parameters('environmentNameAbbreviation'))]"
-            ]
-        },
-        {
-            "apiVersion": "2017-05-10",
-            "name": "[concat('sql-database','-', parameters('environmentNameAbbreviation'),'-','shared')]",
-            "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'),'sql-database.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "databaseName": {
-                        "value": "[variables('sqlDatabaseName')]"
-                    },
-                    "sqlServerName": {
-                        "value": "[parameters('sharedSQLServerName')]"
-                    },
-                    "databaseSkuName": {
-                        "value": "[parameters('sqlDatabaseSkuName')]"
-                    },
-                    "databaseTier": {
-                        "value": "[parameters('sqlDatabaseTier')]"
-                    },
-                    "serverlessAutoPauseDelay": {
-                        "value": "[parameters('sqlserverlessAutoPauseDelay')]"
-                    }
-                }
-            }
-        },
-        {
-            "condition": "[equals(parameters('enableReplica'), true())]",
-            "apiVersion": "2022-09-01",
-            "name": "[concat('sql-database','-', parameters('environmentNameAbbreviation'),'-','replica')]",
-            "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'),'sql-database.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "databaseName": {
-                        "value": "[variables('sqlDatabaseName')]"
-                    },
-                    "sqlServerName": {
-                        "value": "[parameters('sharedSQLServerReplicaName')]"
-                    },
-                    "databaseSkuName": {
-                        "value": "[parameters('sqlDatabaseSkuName')]"
-                    },
-                    "databaseTier": {
-                        "value": "[parameters('sqlDatabaseTier')]"
-                    },
-                    "serverlessAutoPauseDelay": {
-                        "value": "[parameters('sqlserverlessAutoPauseDelay')]"
-                    },
-                    "createMode": {
-                        "value": "Secondary"
-                    },
-                    "sourceDatabaseId": {
-                        "value": "[reference(concat('sql-database','-', parameters('environmentNameAbbreviation'),'-','shared')).outputs.sqlDatabaseResourceId.value]"
-                    },
-                    "requestedBackupStorageRedundancy": {
-                        "value": "Local"
-                    }
-                }
-            },
-            "dependsOn": [
-                "[concat('sql-database','-', parameters('environmentNameAbbreviation'),'-','shared')]"
-            ]
-        },
-        {
-            "condition": "[equals(parameters('enableIntTestDb'), true())]",
-            "apiVersion": "2017-05-10",
-            "name": "[concat('inttest-sql-database','-', parameters('environmentNameAbbreviation'))]",
-            "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'),'sql-database.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "databaseName": {
-                        "value": "[variables('IntTestSQLDatabaseName')]"
-                    },
-                    "sqlServerName": {
-                        "value": "[parameters('sharedSQLServerName')]"
-                    },
-                    "databaseSkuName": {
-                        "value": "[parameters('sqlDatabaseSkuName')]"
-                    },
-                    "databaseTier": {
-                        "value": "[parameters('sqlDatabaseTier')]"
-                    },
-                    "serverlessAutoPauseDelay": {
-                        "value": "[parameters('sqlserverlessAutoPauseDelay')]"
-                    }
-                }
-            }
-        },
-        {
-            "apiVersion": "2022-09-01",
-            "name": "[concat('sql-server-firewall-rules','-', parameters('environmentNameAbbreviation'))]",
-            "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'),'sql-server-firewall-rules.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "firewallRuleNamePrefix": {
-                        "value": "AZURE_IP-"
-                    },
-                    "ipAddresses": {
-                        "value": "[union(reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.possibleOutboundIpAddresses.value, reference(concat('function-app','-',parameters('environmentNameAbbreviation'))).outputs.possibleOutboundIpAddresses.value)]"
-                    },
-                    "serverName": {
-                        "value": "[parameters('sharedSQLServerName')]"
-                    }
-                }
-            }
-        }
-    ],
-    "outputs": {
-        "sqlDatabaseName": {
-            "type": "string",
-            "value": "[variables('sqlDatabaseName')]"
-        },
-        "IntTestSQLDatabaseName": {
-            "type": "string",
-            "value": "[variables('IntTestSQLDatabaseName')]"
-        },
-        "uiAppName": {
-            "type": "string",
-            "value": "[variables('uiAppName')]"
-        },
-        "internalApiAppName": {
-            "type": "string",
-            "value": "[variables('internalApiAppName')]"
-        },
-        "functionAppName": {
-            "type": "string",
-            "value": "[variables('functionAppName')]"
-        },
-        "BlobStorageConnectionString": {
-            "type": "string",
-            "value": "[reference(concat('storage-account','-', parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
-        }
+    "sharedASPName": {
+      "type": "string"
+    },
+    "sharedEnvResourceGroup": {
+      "type": "string"
+    },
+    "sharedKeyVaultName": {
+      "type": "string"
+    },
+    "sharedSQLServerName": {
+      "type": "string"
+    },
+    "sharedSQLServerReplicaName": {
+      "type": "string"
+    },
+    "sqlDatabaseSkuName": {
+      "type": "string"
+    },
+    "sqlDatabaseTier": {
+      "type": "string"
+    },
+    "sqlserverlessAutoPauseDelay": {
+      "type": "string"
+    },
+    "configurationStorageConnectionString": {
+      "type": "securestring"
+    },
+    "uiCustomHostName": {
+      "type": "string"
+    },
+    "uiCertificateName": {
+      "type": "string"
+    },
+    "internalApiCustomHostname": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "internalApiCertificateName": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "functionCustomHostname": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "functionCertificateName": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "storageAccountContainerArray": {
+      "type": "array",
+      "metadata": {
+        "description": "An array of container names to create in the storage account."
+      }
+    },
+    "learnerVerificationAndLearningEventsTrigger": {
+      "type": "string"
+    },
+    "learnerGenderTrigger": {
+      "type": "string"
+    },
+    "certificatePrintingBatchesCreateTrigger": {
+      "type": "string"
+    },
+    "certificatePrintingRequestTrigger": {
+      "type": "string"
+    },
+    "certificatePrintingBatchSummaryTrigger": {
+      "type": "string"
+    },
+    "certificatePrintingTrackBatchTrigger": {
+      "type": "string"
+    },
+    "ucasTransferEntriesTrigger": {
+      "type": "string"
+    },
+    "ucasTransferResultsTrigger": {
+      "type": "string"
+    },
+    "ucasTransferAmendmentsTrigger": {
+      "type": "string"
+    },
+    "overallResultCalculationTrigger": {
+      "type": "string"
+    },
+    "industryPlacementExtractTrigger": {
+      "type": "string"
+    },
+    "analystOverallResultExtractTrigger": {
+      "type": "string"
+    },
+    "analystCoreResultExtractTrigger": {
+      "type": "string"
+    },
+    "coreRommExtractTrigger": {
+      "type": "string"
+    },
+    "specialismRommExtractTrigger": {
+      "type": "string"
+    },
+    "providerAddressExtractTrigger": {
+      "type": "string"
+    },
+    "certificateTrackingExtractTrigger": {
+      "type": "string"
+    },
+    "enableReplica": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Enables the replica database to be deployed"
+      }
+    },
+    "enableIntTestDb": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Enables the integration test database to be deployed"
+      }
     }
+  },
+  "variables": {
+    "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/master/ArmTemplates/",
+    "uiAppName": "[concat(parameters('resourceNamePrefix'), '-web')]",
+    "internalApiAppName": "[concat(parameters('resourceNamePrefix'), '-internal-api')]",
+    "appInsightName": "[concat(parameters('resourceNamePrefix'), '-ai')]",
+    "functionAppName": "[concat(parameters('resourceNamePrefix'), '-func')]",
+    "sqlDatabaseName": "[concat(parameters('resourceNamePrefix'), '-sqldb')]",
+    "IntTestSQLDatabaseName": "[concat(parameters('resourceNamePrefix'), '-inttest-sqldb')]",
+    "storageAccountName": "[replace(concat(parameters('resourceNamePrefix'), 'str'), '-', '')]",
+    "logAnalyticsName": "[concat(parameters('resourceNamePrefix'), '-la')]"
+  },
+  "resources": [
+    {
+      "apiVersion": "2017-05-10",
+      "name": "[concat('storage-account','-', parameters('environmentNameAbbreviation'))]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'storage-account-arm.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "storageAccountName": {
+            "value": "[variables('storageAccountName')]"
+          },
+          "storageKind": {
+            "value": "StorageV2"
+          },
+          "minimumTlsVersion": {
+            "value": "TLS1_2"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "[concat('storage-account-container', parameters('storageAccountContainerArray')[copyIndex()])]",
+      "type": "Microsoft.Resources/deployments",
+      "condition": "[greater(length(parameters('storageAccountContainerArray')), 0)]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'), 'storage-container.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "storageAccountName": {
+            "value": "[variables('storageAccountName')]"
+          },
+          "containerName": {
+            "value": "[parameters('storageAccountContainerArray')[copyIndex()]]"
+          },
+          "publicAccess": {
+            "value": "None"
+          }
+        }
+      },
+      "copy": {
+        "name": "storageaccountcontainercopy",
+        "count": "[length(parameters('storageAccountContainerArray'))]"
+      },
+      "dependsOn": [
+        "[concat('storage-account','-', parameters('environmentNameAbbreviation'))]"
+      ]
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "[concat('app-insights','-', parameters('environmentNameAbbreviation'))]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'application-insights.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "appInsightsName": {
+            "value": "[variables('appInsightName')]"
+          },
+          "attachedService": {
+            "value": "[variables('uiAppName')]"
+          },
+          "logAnalyticsWorkspaceId": {
+            "value": "[reference(concat('log-analytics-workspace','-',parameters('environmentNameAbbreviation'))).outputs.fullyQualifiedResourceId.value]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "[concat('log-analytics-workspace','-', parameters('environmentNameAbbreviation'))]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'log-analytics-workspace.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "logAnalyticsWorkspaceName": {
+            "value": "[variables('logAnalyticsName')]"
+          },
+          "logAnalyticsWorkspaceSku": {
+            "value": "PerGB2018"
+          }
+        }
+      }
+    },
+    {
+      "condition": "[greater(length(parameters('uiCustomHostName')), 0)]",
+      "apiVersion": "2017-05-10",
+      "name": "[concat('ui-app-service-certificate','-', parameters('environmentNameAbbreviation'))]",
+      "resourceGroup": "[resourceGroup().name]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'app-service-certificate.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "keyVaultCertificateName": {
+            "value": "[parameters('uiCertificateName')]"
+          },
+          "keyVaultName": {
+            "value": "[parameters('sharedKeyVaultName')]"
+          },
+          "keyVaultResourceGroup": {
+            "value": "[parameters('sharedEnvResourceGroup')]"
+          },
+          "serverFarmId": {
+            "value": "[resourceId(parameters('sharedEnvResourceGroup'),'Microsoft.Web/serverFarms',parameters('sharedASPName'))]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "[concat('ui-app-service','-', parameters('environmentNameAbbreviation'))]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'app-service.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "appServiceName": {
+            "value": "[variables('uiAppName')]"
+          },
+          "appServicePlanName": {
+            "value": "[parameters('sharedASPName')]"
+          },
+          "appServicePlanResourceGroup": {
+            "value": "[parameters('sharedEnvResourceGroup')]"
+          },
+          "appServiceAppSettings": {
+            "value": [
+              {
+                "name": "EnvironmentName",
+                "value": "[toUpper(parameters('environmentNameAbbreviation'))]"
+              },
+              {
+                "name": "ConfigurationStorageConnectionString",
+                "value": "[parameters('configurationStorageConnectionString')]"
+              },
+              {
+                "name": "Version",
+                "value": "1.0"
+              },
+              {
+                "name": "ServiceName",
+                "value": "Sfa.Tl.ResultsAndCertification"
+              },
+              {
+                "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                "value": "[reference(concat('app-insights','-',parameters('environmentNameAbbreviation'))).outputs.InstrumentationKey.value]"
+              },
+              {
+                "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
+                "value": "200"
+              }
+            ]
+          },
+          "appServiceConnectionStrings": {
+            "value": [
+            ]
+          },
+          "customHostName": {
+            "value": "[parameters('uiCustomHostName')]"
+          },
+          "certificateThumbprint": {
+            "value": "[if(greater(length(parameters('uiCustomHostname')), 0), reference(concat('ui-app-service-certificate','-', parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
+          }
+        }
+      },
+      "dependsOn": [
+        "[concat('ui-app-service-certificate','-', parameters('environmentNameAbbreviation'))]",
+        "[concat('app-insights','-', parameters('environmentNameAbbreviation'))]"
+      ]
+    },
+    {
+      "condition": "[greater(length(parameters('internalApiCustomHostName')), 0)]",
+      "apiVersion": "2017-05-10",
+      "name": "[concat('internal-api-app-service-certificate','-',parameters('environmentNameAbbreviation'))]",
+      "resourceGroup": "[resourceGroup().name]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'), 'app-service-certificate.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "keyVaultCertificateName": {
+            "value": "[parameters('internalApiCertificateName')]"
+          },
+          "keyVaultName": {
+            "value": "[parameters('sharedKeyVaultName')]"
+          },
+          "keyVaultResourceGroup": {
+            "value": "[parameters('sharedEnvResourceGroup')]"
+          },
+          "serverFarmId": {
+            "value": "[resourceId(parameters('sharedEnvResourceGroup'),'Microsoft.Web/serverFarms',parameters('sharedASPName'))]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "[concat('internal-api-app-service','-',parameters('environmentNameAbbreviation'))]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'app-service.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "appServiceName": {
+            "value": "[variables('internalApiAppName')]"
+          },
+          "appServicePlanName": {
+            "value": "[parameters('sharedASPName')]"
+          },
+          "appServicePlanResourceGroup": {
+            "value": "[parameters('sharedEnvResourceGroup')]"
+          },
+          "appServiceAppSettings": {
+            "value": [
+              {
+                "name": "EnvironmentName",
+                "value": "[toUpper(parameters('environmentNameAbbreviation'))]"
+              },
+              {
+                "name": "ConfigurationStorageConnectionString",
+                "value": "[parameters('configurationStorageConnectionString')]"
+              },
+              {
+                "name": "Version",
+                "value": "1.0"
+              },
+              {
+                "name": "ServiceName",
+                "value": "Sfa.Tl.ResultsAndCertification"
+              },
+              {
+                "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                "value": "[reference(concat('app-insights','-',parameters('environmentNameAbbreviation'))).outputs.InstrumentationKey.value]"
+              },
+              {
+                "name": "WEBSITE_SWAP_WARMUP_PING_PATH",
+                "value": "/api/tlevel/VerifyTLevel"
+              },
+              {
+                "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
+                "value": "405"
+              }
+            ]
+          },
+          "appServiceConnectionStrings": {
+            "value": [
+            ]
+          },
+          "customHostName": {
+            "value": "[parameters('internalApiCustomHostname')]"
+          },
+          "certificateThumbprint": {
+            "value": "[if(greater(length(parameters('internalApiCustomHostname')), 0), reference(concat('internal-api-app-service-certificate','-',parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
+          }
+        }
+      },
+      "dependsOn": [
+        "[concat('internal-api-app-service-certificate','-', parameters('environmentNameAbbreviation'))]",
+        "[concat('app-insights','-', parameters('environmentNameAbbreviation'))]"
+
+      ]
+    },
+    {
+      "condition": "[greater(length(parameters('functionCertificateName')), 0)]",
+      "apiVersion": "2017-05-10",
+      "name": "[concat('function-app-certificate','-',parameters('environmentNameAbbreviation'))]",
+      "resourceGroup": "[resourceGroup().name]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'), 'app-service-certificate.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "keyVaultCertificateName": {
+            "value": "[parameters('functionCertificateName')]"
+          },
+          "keyVaultName": {
+            "value": "[parameters('sharedKeyVaultName')]"
+          },
+          "keyVaultResourceGroup": {
+            "value": "[parameters('sharedEnvResourceGroup')]"
+          },
+          "serverFarmId": {
+            "value": "[resourceId(parameters('sharedEnvResourceGroup'),'Microsoft.Web/serverFarms',parameters('sharedASPName'))]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "[concat('function-app','-', parameters('environmentNameAbbreviation'))]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'function-app.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "functionAppName": {
+            "value": "[variables('functionAppName')]"
+          },
+          "appServicePlanName": {
+            "value": "[parameters('sharedASPName')]"
+          },
+          "appServicePlanResourceGroup": {
+            "value": "[parameters('sharedEnvResourceGroup')]"
+          },
+          "functionAppAppSettings": {
+            "value": [
+              {
+                "name": "EnvironmentName",
+                "value": "[toUpper(parameters('environmentNameAbbreviation'))]"
+              },
+              {
+                "name": "ConfigurationStorageConnectionString",
+                "value": "[parameters('configurationStorageConnectionString')]"
+              },
+              {
+                "name": "Version",
+                "value": "1.0"
+              },
+              {
+                "name": "ServiceName",
+                "value": "Sfa.Tl.ResultsAndCertification"
+              },
+              {
+                "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                "value": "[reference(concat('app-insights','-',parameters('environmentNameAbbreviation'))).outputs.InstrumentationKey.value]"
+              },
+              {
+                "name": "BlobStorageConnectionString",
+                "value": "[reference(concat('storage-account','-',parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
+              },
+              {
+                "name": "AzureWebJobsStorage",
+                "value": "[reference(concat('storage-account','-',parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
+              },
+              {
+                "name": "AzureWebJobsDashboard",
+                "value": "[reference(concat('storage-account','-',parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
+              },
+              {
+                "name": "WEBSITE_TIME_ZONE",
+                "value": "GMT Standard Time"
+              },
+              {
+                "name": "FUNCTIONS_EXTENSION_VERSION",
+                "value": "~4"
+              },
+              {
+                "name": "LearnerVerificationAndLearningEventsTrigger",
+                "value": "[parameters('learnerVerificationAndLearningEventsTrigger')]"
+              },
+              {
+                "name": "LearnerGenderTrigger",
+                "value": "[parameters('learnerGenderTrigger')]"
+              },
+              {
+                "name": "CertificatePrintingBatchesCreateTrigger",
+                "value": "[parameters('certificatePrintingBatchesCreateTrigger')]"
+              },
+              {
+                "name": "CertificatePrintingRequestTrigger",
+                "value": "[parameters('certificatePrintingRequestTrigger')]"
+              },
+              {
+                "name": "CertificatePrintingBatchSummaryTrigger",
+                "value": "[parameters('certificatePrintingBatchSummaryTrigger')]"
+              },
+              {
+                "name": "CertificatePrintingTrackBatchTrigger",
+                "value": "[parameters('certificatePrintingTrackBatchTrigger')]"
+              },
+              {
+                "name": "UcasTransferEntriesTrigger",
+                "value": "[parameters('ucasTransferEntriesTrigger')]"
+              },
+              {
+                "name": "UcasTransferResultsTrigger",
+                "value": "[parameters('ucasTransferResultsTrigger')]"
+              },
+              {
+                "name": "UcasTransferAmendmentsTrigger",
+                "value": "[parameters('ucasTransferAmendmentsTrigger')]"
+              },
+              {
+                "name": "OverallResultCalculationTrigger",
+                "value": "[parameters('overallResultCalculationTrigger')]"
+              },
+              {
+                "name": "IndustryPlacementExtractTrigger",
+                "value": "[parameters('industryPlacementExtractTrigger')]"
+              },
+              {
+                "name": "AnalystOverallResultExtractTrigger",
+                "value": "[parameters('analystOverallResultExtractTrigger')]"
+              },
+              {
+                "name": "AnalystCoreResultExtractTrigger",
+                "value": "[parameters('analystCoreResultExtractTrigger')]"
+              },
+              {
+                "name": "CoreRommExtractTrigger",
+                "value": "[parameters('coreRommExtractTrigger')]"
+              },
+              {
+                "name": "SpecialismRommExtractTrigger",
+                "value": "[parameters('specialismRommExtractTrigger')]"
+              },
+              {
+                "name": "ProviderAddressExtractTrigger",
+                "value": "[parameters('ProviderAddressExtractTrigger')]"
+              },
+              {
+                "name": "CertificateTrackingExtractTrigger",
+                "value": "[parameters('certificateTrackingExtractTrigger')]"
+              },
+              {
+                "name": "WEBSITE_LOAD_CERTIFICATES",
+                "value": "1"
+              }
+            ]
+          },
+          "customHostName": {
+            "value": "[parameters('functionCustomHostname')]"
+          },
+          "certificateThumbprint": {
+            "value": "[if(greater(length(parameters('functionCertificateName')), 0), reference(concat('function-app-certificate','-',parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
+          },
+          "systemAssignedIdentity": {
+            "value": "SystemAssigned"
+          }
+        }
+      },
+      "dependsOn": [
+        "[concat('function-app-certificate','-', parameters('environmentNameAbbreviation'))]",
+        "[concat('app-insights','-', parameters('environmentNameAbbreviation'))]"
+      ]
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "[concat('sql-database','-', parameters('environmentNameAbbreviation'),'-','shared')]",
+      "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'sql-database.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "databaseName": {
+            "value": "[variables('sqlDatabaseName')]"
+          },
+          "sqlServerName": {
+            "value": "[parameters('sharedSQLServerName')]"
+          },
+          "databaseSkuName": {
+            "value": "[parameters('sqlDatabaseSkuName')]"
+          },
+          "databaseTier": {
+            "value": "[parameters('sqlDatabaseTier')]"
+          },
+          "serverlessAutoPauseDelay": {
+            "value": "[parameters('sqlserverlessAutoPauseDelay')]"
+          }
+        }
+      }
+    },
+    {
+      "condition": "[equals(parameters('enableReplica'), true())]",
+      "apiVersion": "2022-09-01",
+      "name": "[concat('sql-database','-', parameters('environmentNameAbbreviation'),'-','replica')]",
+      "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'sql-database.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "databaseName": {
+            "value": "[variables('sqlDatabaseName')]"
+          },
+          "sqlServerName": {
+            "value": "[parameters('sharedSQLServerReplicaName')]"
+          },
+          "databaseSkuName": {
+            "value": "[parameters('sqlDatabaseSkuName')]"
+          },
+          "databaseTier": {
+            "value": "[parameters('sqlDatabaseTier')]"
+          },
+          "serverlessAutoPauseDelay": {
+            "value": "[parameters('sqlserverlessAutoPauseDelay')]"
+          },
+          "createMode": {
+            "value": "Secondary"
+          },
+          "sourceDatabaseId": {
+            "value": "[reference(concat('sql-database','-', parameters('environmentNameAbbreviation'),'-','shared')).outputs.sqlDatabaseResourceId.value]"
+          },
+          "requestedBackupStorageRedundancy": {
+            "value": "Local"
+          }
+        }
+      },
+      "dependsOn": [
+        "[concat('sql-database','-', parameters('environmentNameAbbreviation'),'-','shared')]"
+      ]
+    },
+    {
+      "condition": "[equals(parameters('enableIntTestDb'), true())]",
+      "apiVersion": "2017-05-10",
+      "name": "[concat('inttest-sql-database','-', parameters('environmentNameAbbreviation'))]",
+      "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'sql-database.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "databaseName": {
+            "value": "[variables('IntTestSQLDatabaseName')]"
+          },
+          "sqlServerName": {
+            "value": "[parameters('sharedSQLServerName')]"
+          },
+          "databaseSkuName": {
+            "value": "[parameters('sqlDatabaseSkuName')]"
+          },
+          "databaseTier": {
+            "value": "[parameters('sqlDatabaseTier')]"
+          },
+          "serverlessAutoPauseDelay": {
+            "value": "[parameters('sqlserverlessAutoPauseDelay')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-09-01",
+      "name": "[concat('sql-server-firewall-rules','-', parameters('environmentNameAbbreviation'))]",
+      "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'sql-server-firewall-rules.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "firewallRuleNamePrefix": {
+            "value": "AZURE_IP-"
+          },
+          "ipAddresses": {
+            "value": "[union(reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.possibleOutboundIpAddresses.value, reference(concat('function-app','-',parameters('environmentNameAbbreviation'))).outputs.possibleOutboundIpAddresses.value)]"
+          },
+          "serverName": {
+            "value": "[parameters('sharedSQLServerName')]"
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "sqlDatabaseName": {
+      "type": "string",
+      "value": "[variables('sqlDatabaseName')]"
+    },
+    "IntTestSQLDatabaseName": {
+      "type": "string",
+      "value": "[variables('IntTestSQLDatabaseName')]"
+    },
+    "uiAppName": {
+      "type": "string",
+      "value": "[variables('uiAppName')]"
+    },
+    "internalApiAppName": {
+      "type": "string",
+      "value": "[variables('internalApiAppName')]"
+    },
+    "functionAppName": {
+      "type": "string",
+      "value": "[variables('functionAppName')]"
+    },
+    "BlobStorageConnectionString": {
+      "type": "string",
+      "value": "[reference(concat('storage-account','-', parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
+    }
+  }
 }

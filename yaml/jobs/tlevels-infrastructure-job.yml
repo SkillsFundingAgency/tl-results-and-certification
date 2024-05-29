@@ -65,6 +65,7 @@ jobs:
             -coreRommExtractTrigger "$(coreRommExtractTrigger)"
             -specialismRommExtractTrigger "$(specialismRommExtractTrigger)"
             -providerAddressExtractTrigger "$(providerAddressExtractTrigger)"
+            -CertificateTrackingExtractTrigger "$(CertificateTrackingExtractTrigger)"
             -enableReplica $(enableReplica)'
           tags: $(Tags) 
           processOutputs: true
