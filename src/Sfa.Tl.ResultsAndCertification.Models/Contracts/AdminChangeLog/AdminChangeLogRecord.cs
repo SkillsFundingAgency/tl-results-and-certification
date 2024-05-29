@@ -48,6 +48,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog
 
         public DateTime DateAndTimeOfChange { get; set; }
 
-        public Pathway Pathway { get; set; }
+        public AdminChangeLogPathway Pathway { get; set; }
     }
 }
