@@ -7,7 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminPostResults;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.ChangeRecordLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog;
 using System;
@@ -217,8 +216,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
         private AdminChangeLogAssessment GetPathwayAssessment(IEnumerable<AdminChangeLogAssessment> source, Expression<Func<AdminChangeLogAssessment, bool>> expression)
             => source.AsQueryable().Where(expression).SingleOrDefault();
 
-        private AdminChangeLogAssessment GetSpecialismAssessment(IEnumerable<AdminChangeLogSpecialism> source, Expression<Func<AdminChangeLogAssessment, bool>> expression)
-            => source.AsQueryable().SelectMany(e => e.Assessments).First(expression);
+        private AdminChangeLogAssessment GetSpecialismAssessment(IEnumerable<AdminChangeLogAssessment> source, Expression<Func<AdminChangeLogAssessment, bool>> expression)
+            => source.AsQueryable().Where(expression).SingleOrDefault();
 
         private ChangeRecordModel GetViewChangeRecordLink(DateTime text, int changeLogId, ChangeType changeType) => new ChangeRecordModel()
         {
@@ -235,13 +234,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
         private string GetSpecialismResultGrade<TResultType>(IEnumerable<AdminChangeLogSpecialism> specialisms, Func<string, TResultType> getResultObject, string jsonString, string specialismResultId)
         {
             var value = getPropValue(getResultObject, jsonString, specialismResultId);
-            return GetSpecialismAssessment(specialisms, e => e.Results.Count() > 0).Results.First(r => r.Id == value).Grade;
+            return GetSpecialismAssessment(specialisms.SelectMany(e => e.Assessments), e => e.Results.Any(e => e.Id == value)).Results.First(r => r.Id == value).Grade;
         }
 
         private string GetSpecialismExamPeriod<TResultType>(IEnumerable<AdminChangeLogSpecialism> specialisms, Func<string, TResultType> getResultObject, string jsonString, string specialismResultId)
         {
             var value = getPropValue(getResultObject, jsonString, specialismResultId);
-            return GetSpecialismAssessment(specialisms, e => e.Results.Any(r => r.Id == value)).SeriesName;
+            return GetSpecialismAssessment(specialisms.SelectMany(e => e.Assessments), e => e.Results.Any(r => r.Id == value)).SeriesName;
         }
 
         private string GetResultGrade<TResultType>(IEnumerable<AdminChangeLogAssessment> assessments, Func<string, TResultType> getResultObject, string jsonString, string resultId)
