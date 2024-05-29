@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return await _dbContext.ChangeLog
                 .Include(p => p.TqRegistrationPathway)
                     .ThenInclude(p => p.TqPathwayAssessments.Where(pa => pa.IsOptedin))
-                    .ThenInclude(p => p.TqPathwayResults.Where(pr => pr.IsOptedin))
+                    .ThenInclude(p => p.TqPathwayResults)
                     .ThenInclude(p => p.TlLookup)
                 .Include(p => p.TqRegistrationPathway.TqPathwayAssessments.Where(pa => pa.IsOptedin))
                 .ThenInclude(p => p.AssessmentSeries)
