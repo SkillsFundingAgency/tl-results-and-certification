@@ -141,7 +141,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         // This is derived from the recommended approach: https://github.com/aspnet/Security/issues/1165
                         OnRemoteFailure = ctx =>
                         {
-                            Logger.LogTrace(ctx.Failure.InnerException.ToString());
+                            Logger.LogTrace("Inside On Remote failure");
+                            Logger.LogTrace(ctx.Failure?.Message?.ToString());
                             ctx.HandleResponse();
                             return Task.FromException(ctx.Failure);
                         },
