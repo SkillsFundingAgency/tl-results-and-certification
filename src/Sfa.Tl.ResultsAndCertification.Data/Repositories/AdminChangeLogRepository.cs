@@ -77,7 +77,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .ThenInclude(p => p.AssessmentSeries)
                 .Include(p => p.TqRegistrationPathway.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin))
                     .ThenInclude(p => p.TqSpecialismAssessments.Where(sa => sa.IsOptedin))
-                    .ThenInclude(p => p.TqSpecialismResults.Where(sr => sr.IsOptedin))
+                    .ThenInclude(p => p.TqSpecialismResults)
                     .ThenInclude(p => p.TlLookup)
                 .Include(p => p.TqRegistrationPathway.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin))
                     .ThenInclude(p => p.TqSpecialismAssessments.Where(sa => sa.IsOptedin))
