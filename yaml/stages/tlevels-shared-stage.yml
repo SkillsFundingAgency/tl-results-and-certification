@@ -32,6 +32,8 @@ stages:
       value: '$(SharedBaseName)-shared-sql'
     - name: environmentTagName
       value: ${{parameters.environmentTagName}}  
+    - name: environmentPrefix
+      value:  "s126${{parameters.sharedEnvironmentId}}"
       
   displayName: '${{parameters.environmentName}} [${{parameters.sharedEnvironmentId}}] Shared' 
   jobs:
