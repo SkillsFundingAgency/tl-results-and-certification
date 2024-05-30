@@ -127,6 +127,9 @@
       "metadata": {
         "description": "Enables the integration test database to be deployed"
       }
+    },
+    "containerLifecyclePolicyRules": {
+      "type": "array"
     }
   },
   "variables": {
@@ -736,7 +739,28 @@
           }
         }
       }
+    },
+{
+  "apiVersion": "2022-09-01",
+  "name": "[concat('storage-account-lifecycle-policy','-', parameters('environmentNameAbbreviation'))]",
+  "resourceGroup": "[resourceGroup().name]",
+  "type": "Microsoft.Resources/deployments",
+  "properties": {
+    "mode": "Incremental",
+    "templateLink": {
+      "uri": "[concat(variables('deploymentUrlBase'),'storage-management-policy.json')]",
+      "contentVersion": "1.0.0.0"
+    },
+    "parameters": {
+      "storageAccountName": {
+        "value": "[variables('storageAccountName')]"
+      },
+      "policyRules": {
+        "value": "[parameters('containerLifecyclePolicyRules')]"
+      }
     }
+  }
+}
   ],
   "outputs": {
     "sqlDatabaseName": {
