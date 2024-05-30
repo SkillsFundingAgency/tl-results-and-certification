@@ -158,6 +158,35 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.SearchReg
                         new SearchRegistrationRequest
                         {
                             AoUkprn = 10011881,
+                            SearchKey = " 21   "
+                        },
+                        new PagedResponse<SearchRegistrationDetail>
+                        {
+                           TotalRecords = 3,
+                           Records = new List<SearchRegistrationDetail>
+                           {
+                               new()
+                               {
+                                   Uln = 21,
+                                   Firstname = "Peter",
+                                   Lastname = "Smith",
+                                   ProviderName = "pearson-provider-02",
+                                   ProviderUkprn = 2,
+                                   PathwayName = "Design, Surveying and Planning",
+                                   PathwayLarId = "10123456",
+                                   AcademicYear = 2022,
+                                   IsWithdrawn = false,
+                                   HasResults = true
+                               }
+                           },
+                           PagerInfo = new Pager(1, 1, 10)
+                        }
+                    },
+                    new object[]
+                    {
+                        new SearchRegistrationRequest
+                        {
+                            AoUkprn = 10011881,
                             SearchKey = "smith"
                         },
                         new PagedResponse<SearchRegistrationDetail>

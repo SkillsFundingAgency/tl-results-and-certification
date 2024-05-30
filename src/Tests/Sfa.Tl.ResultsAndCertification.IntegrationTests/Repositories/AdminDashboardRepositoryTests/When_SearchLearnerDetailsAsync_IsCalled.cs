@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
                            TotalRecords = 4,
                            Records = new List<AdminSearchLearnerDetail>
                            {
-                               new AdminSearchLearnerDetail
+                               new()
                                {
                                    Uln = 11,
                                    Firstname = "John",
@@ -100,7 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
                            TotalRecords = 4,
                            Records = new List<AdminSearchLearnerDetail>
                            {
-                               new AdminSearchLearnerDetail
+                               new()
                                {
                                    Uln = 12,
                                    Firstname = "Jessica",
@@ -125,7 +125,32 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
                            TotalRecords = 4,
                            Records = new List<AdminSearchLearnerDetail>
                            {
-                               new AdminSearchLearnerDetail
+                               new()
+                               {
+                                   Uln = 21,
+                                   Firstname = "Peter",
+                                   Lastname = "Smith",
+                                   Provider = "pearson-provider-02",
+                                   ProviderUkprn = 2,
+                                   AwardingOrganisation = EnumAwardingOrganisation.Pearson.ToString(),
+                                   AcademicYear = 2022
+                               }
+                           },
+                           PagerInfo = new Pager(1, 1, 10)
+                        }
+                    },
+                    new object[]
+                    {
+                        new AdminSearchLearnerRequest
+                        {
+                            SearchKey = " 21   "
+                        },
+                        new PagedResponse<AdminSearchLearnerDetail>
+                        {
+                           TotalRecords = 4,
+                           Records = new List<AdminSearchLearnerDetail>
+                           {
+                               new()
                                {
                                    Uln = 21,
                                    Firstname = "Peter",
@@ -150,7 +175,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
                            TotalRecords = 4,
                            Records = new List<AdminSearchLearnerDetail>
                            {
-                               new AdminSearchLearnerDetail
+                               new()
                                {
                                    Uln = 11,
                                    Firstname = "John",
@@ -160,7 +185,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
                                    AwardingOrganisation = EnumAwardingOrganisation.Pearson.ToString(),
                                    AcademicYear = 2020
                                },
-                               new AdminSearchLearnerDetail
+                               new()
                                {
                                    Uln = 21,
                                    Firstname = "Peter",
@@ -185,7 +210,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
                            TotalRecords = 4,
                            Records = new List<AdminSearchLearnerDetail>
                            {
-                               new AdminSearchLearnerDetail
+                               new()
                                {
                                    Uln = 11,
                                    Firstname = "John",
@@ -195,7 +220,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
                                    AwardingOrganisation = EnumAwardingOrganisation.Pearson.ToString(),
                                    AcademicYear = 2020
                                },
-                               new AdminSearchLearnerDetail
+                               new()
                                {
                                    Uln = 21,
                                    Firstname = "Peter",
@@ -221,7 +246,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
                            TotalRecords = 4,
                            Records = new List<AdminSearchLearnerDetail>
                            {
-                               new AdminSearchLearnerDetail
+                               new()
                                {
                                    Uln = 11,
                                    Firstname = "John",
@@ -231,7 +256,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
                                    AwardingOrganisation = EnumAwardingOrganisation.Pearson.ToString(),
                                    AcademicYear = 2020
                                },
-                               new AdminSearchLearnerDetail
+                               new()
                                {
                                    Uln = 12,
                                    Firstname = "Jessica",
@@ -241,7 +266,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
                                    AwardingOrganisation = EnumAwardingOrganisation.Pearson.ToString(),
                                    AcademicYear = 2021
                                },
-                               new AdminSearchLearnerDetail
+                               new()
                                {
                                    Uln = 21,
                                    Firstname = "Peter",
@@ -268,7 +293,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
                            TotalRecords = 4,
                            Records = new List<AdminSearchLearnerDetail>
                            {
-                               new AdminSearchLearnerDetail
+                               new()
                                {
                                    Uln = 11,
                                    Firstname = "John",
@@ -294,7 +319,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
                            TotalRecords = 4,
                            Records = new List<AdminSearchLearnerDetail>
                            {
-                                new AdminSearchLearnerDetail
+                                new()
                                 {
                                     Uln = 12,
                                     Firstname = "Jessica",
@@ -304,7 +329,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
                                     AwardingOrganisation = EnumAwardingOrganisation.Pearson.ToString(),
                                     AcademicYear = 2021
                                 },
-                                new AdminSearchLearnerDetail
+                                new()
                                 {
                                     Uln = 31,
                                     Firstname = "Eric",
@@ -331,7 +356,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
                            TotalRecords = 4,
                            Records = new List<AdminSearchLearnerDetail>
                            {
-                                new AdminSearchLearnerDetail
+                                new()
                                 {
                                     Uln = 12,
                                     Firstname = "Jessica",

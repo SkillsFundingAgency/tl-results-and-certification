@@ -34,11 +34,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
             var totalCount = pathwayQueryable.Count();
 
-            if(!string.IsNullOrWhiteSpace(request.SearchKey))
+            if (!string.IsNullOrWhiteSpace(request.SearchKey))
             {
-                pathwayQueryable = request.SearchKey.IsLong()
-                    ? pathwayQueryable.Where(p => p.TqRegistrationProfile.UniqueLearnerNumber == request.SearchKey.ToLong())
-                    : pathwayQueryable.Where(p => EF.Functions.Like(p.TqRegistrationProfile.Lastname.Trim(), $"{request.SearchKey.Trim()}"));
+                string searchKey = request.SearchKey.Trim();
+                bool isSearchKeyUln = searchKey.IsLong();
+
+                pathwayQueryable = isSearchKeyUln
+                    ? pathwayQueryable.Where(p => p.TqRegistrationProfile.UniqueLearnerNumber == searchKey.ToLong())
+                    : pathwayQueryable.Where(p => EF.Functions.Like(p.TqRegistrationProfile.Lastname.Trim(), searchKey));
             }
 
             if (request.AcademicYear != null && request.AcademicYear.Any())
@@ -158,12 +161,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         join tqAo in _dbContext.TqAwardingOrganisation on tqProvider.TqAwardingOrganisationId equals tqAo.Id
                                         join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
                                         orderby tqPathway.CreatedOn descending
-                                        let printCertificate = tqPathway.PrintCertificates.Where(p => p.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active 
+                                        let printCertificate = tqPathway.PrintCertificates.Where(p => p.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
                                                                                                 && (p.Type == PrintCertificateType.StatementOfAchievement || p.Type == PrintCertificateType.Certificate))
                                                                                           .OrderByDescending(c => c.CreatedOn).FirstOrDefault() // Fetching certificate for only active pathway
                                         let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()
-                                        let overallResult = tqPathway.OverallResults.FirstOrDefault(o => o.IsOptedin && (tqPathway.Status == RegistrationPathwayStatus.Withdrawn) ? o.EndDate !=null : o.EndDate == null)
-                                        let specialisms = tqPathway.TqRegistrationSpecialisms.Where(t=>t.EndDate == null).Select(t=>t.TlSpecialism.Name).ToList()
+                                        let overallResult = tqPathway.OverallResults.FirstOrDefault(o => o.IsOptedin && (tqPathway.Status == RegistrationPathwayStatus.Withdrawn) ? o.EndDate != null : o.EndDate == null)
+                                        let specialisms = tqPathway.TqRegistrationSpecialisms.Where(t => t.EndDate == null).Select(t => t.TlSpecialism.Name).ToList()
                                         where tqProfile.Id == profileId && tlProvider.UkPrn == providerUkprn
                                         select new LearnerRecordDetails
                                         {
