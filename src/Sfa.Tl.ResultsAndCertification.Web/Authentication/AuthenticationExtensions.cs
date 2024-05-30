@@ -143,8 +143,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         {
                             Logger.LogTrace("Inside On Remote failure");
                             Logger.LogTrace(ctx.Failure?.Message?.ToString());
+                            ctx.Response.Redirect("/");
                             ctx.HandleResponse();
-                            return Task.FromException(ctx.Failure);
+                            //return Task.FromException(ctx.Failure);
+                            return Task.CompletedTask;
                         },
 
                         // that event is called after the OIDC middleware received the authorisation code,

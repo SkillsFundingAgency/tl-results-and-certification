@@ -189,12 +189,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 });
             }
 
-            app.Use((context, next) =>
-            {
-                context.Request.Scheme = "https";
-                return next(context);
-            });
-
             app.UseXContentTypeOptions();
             app.UseReferrerPolicy(opts => opts.NoReferrer());
             app.UseXXssProtection(opts => opts.Disabled());
