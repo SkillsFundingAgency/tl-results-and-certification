@@ -178,6 +178,41 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
                     {
                         new AdminSearchLearnerRequest
                         {
+                            SearchKey = " smith   "
+                        },
+                        new PagedResponse<AdminSearchLearnerDetail>
+                        {
+                           TotalRecords = 4,
+                           Records = new List<AdminSearchLearnerDetail>
+                           {
+                               new AdminSearchLearnerDetail
+                               {
+                                   Uln = 11,
+                                   Firstname = "John",
+                                   Lastname = "Smith",
+                                   Provider = "pearson-provider-01",
+                                   ProviderUkprn = 1,
+                                   AwardingOrganisation = EnumAwardingOrganisation.Pearson.ToString(),
+                                   AcademicYear = 2020
+                               },
+                               new AdminSearchLearnerDetail
+                               {
+                                   Uln = 21,
+                                   Firstname = "Peter",
+                                   Lastname = "Smith",
+                                   Provider = "pearson-provider-02",
+                                   ProviderUkprn = 2,
+                                   AwardingOrganisation = EnumAwardingOrganisation.Pearson.ToString(),
+                                   AcademicYear = 2022
+                               }
+                           },
+                           PagerInfo = new Pager(2, 1, 10)
+                        }
+                    },
+                    new object[]
+                    {
+                        new AdminSearchLearnerRequest
+                        {
                             SearchKey = string.Empty,
                             SelectedAwardingOrganisations = new List<int> { 1 } // Pearson
                         },
