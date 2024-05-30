@@ -5,6 +5,7 @@ parameters:
     type: string
   - name: dependencies
     type: object
+    default: []
   - name: environmentName
     type: string
   - name: environmentId
