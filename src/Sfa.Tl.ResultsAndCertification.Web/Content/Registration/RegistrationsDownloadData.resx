@@ -141,6 +141,9 @@
   <data name="Para_Registrations_Data_Includes_Active_Widthdrawn_Learners" xml:space="preserve">
     <value>Registrations data includes both active and withdrawn learners.</value>
   </data>
+  <data name="Para_There_Are_No_Pending_Withdrawals" xml:space="preserve">
+    <value>There are currently no pending withdrawals.</value>
+  </data>
   <data name="Pending_Withdrawals_Data_Report_File_Name" xml:space="preserve">
     <value>pending_withdrawals_data.csv</value>
   </data>

@@ -134,6 +134,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are currently no pending withdrawals..
+        /// </summary>
+        public static string Para_There_Are_No_Pending_Withdrawals {
+            get {
+                return ResourceManager.GetString("Para_There_Are_No_Pending_Withdrawals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to pending_withdrawals_data.csv.
         /// </summary>
         public static string Pending_Withdrawals_Data_Report_File_Name {
