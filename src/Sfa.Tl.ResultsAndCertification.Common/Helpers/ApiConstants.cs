@@ -160,5 +160,10 @@
         // Search registration
         public const string GetSearchRegistrationFiltersUri = "/api/searchregistration/GetSearchRegistrationFilters";
         public const string SearchRegistrationDetailsUri = "/api/searchregistration/SearchRegistrationDetails";
+
+        // Download registrations
+        public const string GetAvailableStartYearsUri = "/api/providerregistrations/GetAvailableStartYears";
+        public const string GetRegistrationsUri = "/api/providerregistrations/GetRegistrations";
+
     }
 }

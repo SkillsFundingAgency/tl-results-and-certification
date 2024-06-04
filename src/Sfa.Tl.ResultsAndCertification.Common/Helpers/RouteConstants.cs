@@ -570,5 +570,13 @@
         public const string SubmitSearchRegistrationClearFilters = "SubmitSearchRegistrationClearFilters";
 
         #endregion
+
+        #region Provider registrations
+
+        public const string DownloadRegistrationsData = "DownloadRegistrationsData";
+        public const string DownloadRegistrationsDataFor = "DownloadRegistrationsDataFor";
+        public const string DownloadRegistrationsDataForLink = "DownloadRegistrationsDataForLink";
+
+        #endregion
     }
 }

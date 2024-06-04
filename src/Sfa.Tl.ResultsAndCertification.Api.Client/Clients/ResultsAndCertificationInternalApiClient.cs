@@ -13,6 +13,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderRegistrations;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.SearchRegistration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
@@ -551,6 +552,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public Task<PagedResponse<SearchRegistrationDetail>> SearchRegistrationDetailsAsync(SearchRegistrationRequest request)
             => PostAsync<SearchRegistrationRequest, PagedResponse<SearchRegistrationDetail>>(ApiConstants.SearchRegistrationDetailsUri, request);
+
+        #endregion
+
+        #region Provider registrations
+
+        public Task<IList<int>> GetProviderRegistrationsAvailableStartYearsAsync()
+            => GetAsync<IList<int>>(ApiConstants.GetAvailableStartYearsUri);
+
+        public Task<DataExportResponse> GetProviderRegistrationsAsync(GetProviderRegistrationsRequest request)
+            => PostAsync<GetProviderRegistrationsRequest, DataExportResponse>(ApiConstants.GetRegistrationsUri, request);
 
         #endregion
 
