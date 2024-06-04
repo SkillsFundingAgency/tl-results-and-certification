@@ -7,11 +7,11 @@
         <div class="govuk-form-group">
             <h1 class="govuk-label-wrapper">
                 <label class="govuk-label govuk-label--l govuk-!-margin-bottom-6">
-                    @UlnRegisteredByOtherAo.Page_Heading
+                   @string.Format(UlnRegisteredByOtherAo.Page_Heading, Model.Uln)
                 </label>
             </h1>
             <p class="govuk-body">
-                @string.Format(UlnRegisteredByOtherAo.Information_Text_Part1, Model.Uln)
+                @string.Format(UlnRegisteredByOtherAo.Information_Text_Part1, Model.RegisteredWithAoName)
                 <a class="govuk-link" href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()?subject=@UlnRegisteredByOtherAo.Email_Subject">@UlnRegisteredByOtherAo.Contact_Tlevel_Team_Link</a>
                 @UlnRegisteredByOtherAo.Information_Text_Part2
             </p>

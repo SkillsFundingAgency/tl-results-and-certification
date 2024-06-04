@@ -438,7 +438,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                                         .Status
                                                      : RegistrationPathwayStatus.NotSpecified,
                     IsRegisteredWithOtherAo = x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active
-                                                                           && pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != aoUkprn)
+                                                                           && pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != aoUkprn),
+
+                    RegisteredWithAoName = x.TqRegistrationPathways.FirstOrDefault(e => e.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != aoUkprn)
+                                                            .TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.DisplayName
                 })
                 .FirstOrDefaultAsync();
 
