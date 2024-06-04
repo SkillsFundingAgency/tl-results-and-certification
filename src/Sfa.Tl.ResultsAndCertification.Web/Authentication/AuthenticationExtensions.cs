@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication.Local;
@@ -17,9 +18,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 {
     public static class AuthenticationExtensions
     {
-        public static IServiceCollection AddWebAuthentication(this IServiceCollection services, ResultsAndCertificationConfiguration config, IWebHostEnvironment env)
+        private static ILogger Logger { get; set; }
+        public static IServiceCollection AddWebAuthentication(this IServiceCollection services, ResultsAndCertificationConfiguration config, IWebHostEnvironment env, ILogger logger)
         {
-            var cookieSecurePolicy = env.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
+            var cookieSecurePolicy = env.IsDevelopment() ? CookieSecurePolicy.Always : CookieSecurePolicy.Always;
+            Logger = logger;
+            Logger.LogTrace("Inside Authentication");
 
             if (config.BypassDfeSignIn)
             {
@@ -75,6 +79,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                     options.ClientSecret = config.DfeSignInSettings.ClientSecret;
                     options.ResponseType = OpenIdConnectResponseType.Code;
                     options.GetClaimsFromUserInfoEndpoint = true;
+                    options.NonceCookie.SameSite = SameSiteMode.None;
+                    options.CorrelationCookie.SameSite = SameSiteMode.None;
 
                     options.Scope.Clear();
                     options.Scope.Add("openid");
@@ -131,8 +137,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         // This is derived from the recommended approach: https://github.com/aspnet/Security/issues/1165
                         OnRemoteFailure = ctx =>
                         {
+                            Logger.LogTrace("Inside On Remote failure");
+                            Logger.LogTrace(ctx.Failure?.Message?.ToString());
+                            ctx.Response.Redirect("/");
                             ctx.HandleResponse();
-                            return Task.FromException(ctx.Failure);
+                            return Task.CompletedTask;
                         },
 
                         // that event is called after the OIDC middleware received the authorisation code,
