@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
         private static ILogger Logger { get; set; }
         public static IServiceCollection AddWebAuthentication(this IServiceCollection services, ResultsAndCertificationConfiguration config, IWebHostEnvironment env, ILogger logger)
         {
-            var cookieSecurePolicy = env.IsDevelopment() ? CookieSecurePolicy.Always : CookieSecurePolicy.Always;
+            var cookieSecurePolicy = env.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
             Logger = logger;
             Logger.LogTrace("Inside Authentication");
 
