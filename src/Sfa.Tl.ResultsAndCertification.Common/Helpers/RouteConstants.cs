@@ -169,6 +169,7 @@
         public const string AssessmentsNoRecordsFound = "AssessmentsNoRecordsFound";
         public const string RegistrationsDownloadData = "RegistrationsDownloadData";
         public const string RegistrationsDownloadDataLink = "RegistrationsDownloadDataLink";
+        public const string PendingWithdrawalsDownloadDataLink = "PendingWithdrawalsDownloadDataLink";
         public const string AssessmentsDownloadData = "AssessmentsDownloadData";
         public const string AssessmentsDownloadDataLink = "AssessmentsDownloadDataLink";
         public const string ResultsGeneratingDownload = "ResultsGeneratingDownload";

@@ -280,26 +280,50 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.GetAcademicYearsAsync();
         }
 
-        public async Task<IList<DataExportResponse>> GenerateRegistrationsExportAsync(long aoUkprn, string requestedBy)
+        public Task<IList<DataExportResponse>> GenerateRegistrationsExportAsync(long aoUkprn, string requestedBy)
         {
-            return await _internalApiClient.GenerateDataExportAsync(aoUkprn, DataExportType.Registrations, requestedBy);
+            return _internalApiClient.GenerateDataExportAsync(aoUkprn, DataExportType.Registrations, requestedBy);
         }
 
-        public async Task<Stream> GetRegistrationsDataFileAsync(long aoUkprn, Guid blobUniqueReference)
+        public Task<IList<DataExportResponse>> GeneratePendingWithdrawalsExportAsync(long aoUkprn, string requestedBy)
         {
-            var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
+            return _internalApiClient.GenerateDataExportAsync(aoUkprn, DataExportType.PendingWithdrawals, requestedBy);
+        }
+
+        public Task<Stream> GetRegistrationsDataFileAsync(long aoUkprn, Guid blobUniqueReference)
+        {
+            string fileStreamNotFoundMessage = $"No FileStream found to download registrations data. Method: {nameof(GetRegistrationsDataFileAsync)}";
+            return GetDataFileAsync(aoUkprn, blobUniqueReference, DataExportType.Registrations, fileStreamNotFoundMessage);
+        }
+
+        public Task<Stream> GetPendingWithdrawalsDataFileAsync(long aoUkprn, Guid blobUniqueReference)
+        {
+            string fileStreamNotFoundMessage = $"No FileStream found to download pending withdrawals data. Method: {nameof(GetPendingWithdrawalsDataFileAsync)}";
+            return GetDataFileAsync(aoUkprn, blobUniqueReference, DataExportType.PendingWithdrawals, fileStreamNotFoundMessage);
+        }
+
+        private async Task<Stream> GetDataFileAsync(long aoUkprn, Guid blobUniqueReference, DataExportType dataExportType, string fileStreamNotFoundMessage)
+        {
+            string sourceFilePath = $"{aoUkprn}/{dataExportType}";
+
+            Stream fileStream = await DownloadFileAsync(blobUniqueReference, sourceFilePath);
+            if (fileStream == null)
+            {
+                string blobReadError = $"{fileStreamNotFoundMessage}(ContainerName: {DocumentType.Registrations}, BlobFileName = {blobUniqueReference}, SourceFilePath = {sourceFilePath})";
+                _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
+            }
+
+            return fileStream;
+        }
+
+        private Task<Stream> DownloadFileAsync(Guid blobUniqueReference, string sourceFilePath)
+        {
+            return _blobStorageService.DownloadFileAsync(new BlobStorageData
             {
                 ContainerName = DocumentType.DataExports.ToString(),
                 BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
-                SourceFilePath = $"{aoUkprn}/{DataExportType.Registrations}"
+                SourceFilePath = sourceFilePath
             });
-
-            if (fileStream == null)
-            {
-                var blobReadError = $"No FileStream found to download registrations data. Method: GetRegistrationsDataFileAsync(ContainerName: {DocumentType.Registrations}, BlobFileName = {blobUniqueReference}, SourceFilePath = {aoUkprn}/{DataExportType.Registrations})";
-                _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
-            }
-            return fileStream;
         }
     }
 }

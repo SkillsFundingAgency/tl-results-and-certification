@@ -326,6 +326,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
     public enum AwardingOrganisation
     {
         Ncfe = 10009696,
-        Pearson = 10011881
+        Pearson = 10011881,
+        CityAndGuilds = 10009931
     }
 }
