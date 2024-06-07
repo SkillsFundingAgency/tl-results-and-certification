@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog
@@ -15,11 +16,15 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog
 
         public string CoreCode { get; set; }
 
+        public string CoreGrade { get; set; }
+
         public string SpecialismName { get; set; }
 
         public string SpecialismCode { get; set; }
 
         public string SpecialismExamPeriod { get; set; }
+
+        public string SpecialismGrade { get; set; }
 
         public string FirstName { get; set; }
 
@@ -42,5 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog
         public string ZendeskTicketID { get; set; }
 
         public DateTime DateAndTimeOfChange { get; set; }
+
+        public AdminChangeLogPathway Pathway { get; set; }
     }
 }

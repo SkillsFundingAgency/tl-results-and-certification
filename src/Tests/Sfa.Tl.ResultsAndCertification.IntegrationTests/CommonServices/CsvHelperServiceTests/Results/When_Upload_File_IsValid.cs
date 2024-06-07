@@ -30,10 +30,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
         public async Task Then_Returns_Expected_Results()
         {
             await WhenAsync();
+
+            var a = ReadAndParseFileResponse.Rows.Where(r => r.ValidationErrors.Count > 0);
+
             ReadAndParseFileResponse.Should().NotBeNull();
             ReadAndParseFileResponse.IsDirty.Should().BeFalse();
             ReadAndParseFileResponse.ErrorMessage.Should().BeNullOrWhiteSpace();
-            ReadAndParseFileResponse.Rows.Count.Should().Be(10);
+            ReadAndParseFileResponse.Rows.Count.Should().Be(11);
             ReadAndParseFileResponse.Rows.Any(r => r.ValidationErrors.Count > 0).Should().BeFalse();
         }
     }

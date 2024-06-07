@@ -350,6 +350,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to tlevels-registration-data-template.csv.
+        /// </summary>
+        public static string Tlevels_Registration_Data_Template_File_Name {
+            get {
+                return ResourceManager.GetString("Tlevels_Registration_Data_Template_File_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to tlevels-registrations-data-format-and-rules.xlsx.
         /// </summary>
         public static string Tlevels_Registrations_Data_Format_And_Rules_File_Name {

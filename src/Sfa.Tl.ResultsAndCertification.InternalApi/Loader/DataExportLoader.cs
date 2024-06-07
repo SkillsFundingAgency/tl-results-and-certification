@@ -3,9 +3,11 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Mapper;
+using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
+using Sfa.Tl.ResultsAndCertification.Models.DataExport;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,27 +17,26 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 {
     public class DataExportLoader : IDataExportLoader
     {
-        private readonly IDataExportService _dataExportService;
+        private readonly IDataExportRepository _dataExportRepository;
         private readonly IBlobStorageService _blobStorageService;
         private readonly IOverallResultCalculationService _overallResultCalculationService;
 
-        public DataExportLoader(IDataExportService dataExportService, IBlobStorageService blobStorageService, IOverallResultCalculationService overallResultCalculationService)
+        public DataExportLoader(IDataExportRepository dataExportRepository, IBlobStorageService blobStorageService, IOverallResultCalculationService overallResultCalculationService)
         {
-            _dataExportService = dataExportService;
+            _dataExportRepository = dataExportRepository;
             _blobStorageService = blobStorageService;
             _overallResultCalculationService = overallResultCalculationService;
         }
 
-        public async Task<IList<DataExportResponse>> ProcessDataExportAsync(long aoUkprn, DataExportType requestType, string requestedBy)
-        {
-            return requestType switch
+        public Task<IList<DataExportResponse>> ProcessDataExportAsync(long aoUkprn, DataExportType requestType, string requestedBy)
+            => requestType switch
             {
-                DataExportType.Registrations => await ProcessRegistrationsRequestAsync(aoUkprn, requestType, requestedBy),
-                DataExportType.Assessments => await ProcessAssessmentsRequestAsync(aoUkprn, requestType, requestedBy),
-                DataExportType.Results => await ProcessResultsRequestAsync(aoUkprn, requestType, requestedBy),
+                DataExportType.Registrations => ProcessRegistrationsRequestAsync(aoUkprn, requestedBy),
+                DataExportType.Assessments => ProcessAssessmentsRequestAsync(aoUkprn, requestedBy),
+                DataExportType.Results => ProcessResultsRequestAsync(aoUkprn, requestedBy),
+                DataExportType.PendingWithdrawals => ProcessPendingWithdrawalsRequestAsync(aoUkprn, requestedBy),
                 _ => null,
             };
-        }
 
         public async Task<DataExportResponse> DownloadOverallResultsDataAsync(long providerUkprn, string requestedBy)
         {
@@ -43,25 +44,25 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return await ProcessDataExportResponseAsync(overallResults, providerUkprn, DocumentType.OverallResults, DataExportType.NotSpecified, requestedBy, classMapType: typeof(DownloadOverallResultsExportMap), isEmptyFileAllowed: true);
         }
 
-        private async Task<IList<DataExportResponse>> ProcessRegistrationsRequestAsync(long aoUkprn, DataExportType requestType, string requestedBy)
+        private async Task<IList<DataExportResponse>> ProcessRegistrationsRequestAsync(long aoUkprn, string requestedBy)
         {
-            var registrations = await _dataExportService.GetDataExportRegistrationsAsync(aoUkprn);
-            var exportResponse = await ProcessDataExportResponseAsync(registrations, aoUkprn, DocumentType.DataExports, requestType, requestedBy, classMapType: typeof(RegistrationsExportMap));
+            var registrations = await _dataExportRepository.GetDataExportRegistrationsAsync(aoUkprn);
+            var exportResponse = await ProcessDataExportResponseAsync(registrations, aoUkprn, DocumentType.DataExports, DataExportType.Registrations, requestedBy, classMapType: typeof(RegistrationsExportMap));
             return new List<DataExportResponse>() { exportResponse };
         }
 
-        private async Task<IList<DataExportResponse>> ProcessAssessmentsRequestAsync(long aoUkprn, DataExportType requestType, string requestedBy)
+        private async Task<IList<DataExportResponse>> ProcessAssessmentsRequestAsync(long aoUkprn, string requestedBy)
         {
             // Core Assessments
-            var coreAssessments = await _dataExportService.GetDataExportCoreAssessmentsAsync(aoUkprn);
+            var coreAssessments = await _dataExportRepository.GetDataExportCoreAssessmentsAsync(aoUkprn);
 
             // Specialism Assessments
-            var specialismAssessments = await _dataExportService.GetDataExportSpecialismAssessmentsAsync(aoUkprn);
+            var specialismAssessments = await _dataExportRepository.GetDataExportSpecialismAssessmentsAsync(aoUkprn);
 
             var response = new List<DataExportResponse>();
 
-            var coreAssessmentsResponse = ProcessDataExportResponseAsync(coreAssessments, aoUkprn, DocumentType.DataExports, requestType, requestedBy, ComponentType.Core);
-            var specialismAssessmentsResponse = ProcessDataExportResponseAsync(specialismAssessments, aoUkprn, DocumentType.DataExports, requestType, requestedBy, ComponentType.Specialism);
+            var coreAssessmentsResponse = ProcessDataExportResponseAsync(coreAssessments, aoUkprn, DocumentType.DataExports, DataExportType.Assessments, requestedBy, ComponentType.Core);
+            var specialismAssessmentsResponse = ProcessDataExportResponseAsync(specialismAssessments, aoUkprn, DocumentType.DataExports, DataExportType.Assessments, requestedBy, ComponentType.Specialism);
 
             await Task.WhenAll(coreAssessmentsResponse, specialismAssessmentsResponse);
 
@@ -71,18 +72,18 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return response;
         }
 
-        private async Task<IList<DataExportResponse>> ProcessResultsRequestAsync(long aoUkprn, DataExportType requestType, string requestedBy)
+        private async Task<IList<DataExportResponse>> ProcessResultsRequestAsync(long aoUkprn, string requestedBy)
         {
             // Core Results
-            var coreResults = await _dataExportService.GetDataExportCoreResultsAsync(aoUkprn);
+            var coreResults = await _dataExportRepository.GetDataExportCoreResultsAsync(aoUkprn);
 
             // Specialism Results
-            var specialismResults = await _dataExportService.GetDataExportSpecialismResultsAsync(aoUkprn);
+            var specialismResults = await _dataExportRepository.GetDataExportSpecialismResultsAsync(aoUkprn);
 
             var response = new List<DataExportResponse>();
 
-            var coreResultsResponse = ProcessDataExportResponseAsync(coreResults, aoUkprn, DocumentType.DataExports, requestType, requestedBy, ComponentType.Core);
-            var specialismResultsResponse = ProcessDataExportResponseAsync(specialismResults, aoUkprn, DocumentType.DataExports, requestType, requestedBy, ComponentType.Specialism);
+            var coreResultsResponse = ProcessDataExportResponseAsync(coreResults, aoUkprn, DocumentType.DataExports, DataExportType.Results, requestedBy, ComponentType.Core);
+            var specialismResultsResponse = ProcessDataExportResponseAsync(specialismResults, aoUkprn, DocumentType.DataExports, DataExportType.Results, requestedBy, ComponentType.Specialism);
 
             await Task.WhenAll(coreResultsResponse, specialismResultsResponse);
 
@@ -90,6 +91,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             response.Add(specialismResultsResponse.Result);
 
             return response;
+        }
+
+        private async Task<IList<DataExportResponse>> ProcessPendingWithdrawalsRequestAsync(long aoUkprn, string requestedBy)
+        {
+            IList<PendingWithdrawalsExport> pendingWithdrawals = await _dataExportRepository.GetDataExportPendingWithdrawalsAsync(aoUkprn);
+
+            DataExportResponse exportResponse = await ProcessDataExportResponseAsync(pendingWithdrawals, aoUkprn, DocumentType.DataExports, DataExportType.PendingWithdrawals, requestedBy, classMapType: typeof(PendingWithdrawalsExportMap));
+            return new List<DataExportResponse>() { exportResponse };
         }
 
         private async Task<DataExportResponse> ProcessDataExportResponseAsync<T>(IList<T> data, long ukprn, DocumentType documentType, DataExportType requestType, string requestedBy, ComponentType componentType = ComponentType.NotSpecified, Type classMapType = null, bool isEmptyFileAllowed = false)

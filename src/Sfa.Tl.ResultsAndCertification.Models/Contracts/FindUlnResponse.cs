@@ -7,6 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public int RegistrationProfileId { get; set; }
         public long Uln { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
-        public bool IsRegisteredWithOtherAo { get; set; }        
+        public bool IsRegisteredWithOtherAo { get; set; }
+        public string RegisteredWithAoName { get; set; }
     }
 }

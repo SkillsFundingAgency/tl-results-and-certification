@@ -1,6 +1,7 @@
 ﻿using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
+using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
@@ -10,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
 {
     public abstract class TestSetup : BaseTest<DataExportLoader>
     {
-        protected IDataExportService DataExportService;
+        protected IDataExportRepository DataExportRepository;
         protected IBlobStorageService BlobService;
         protected IOverallResultCalculationService OverallResultCalculationService;
         private DataExportLoader _loader;
@@ -22,14 +23,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
 
         public override void Setup()
         {
-            DataExportService = Substitute.For<IDataExportService>();
+            DataExportRepository = Substitute.For<IDataExportRepository>();
             BlobService = Substitute.For<IBlobStorageService>();
             OverallResultCalculationService = Substitute.For<IOverallResultCalculationService>();
         }
 
         public async override Task When()
         {
-            _loader = new DataExportLoader(DataExportService, BlobService, OverallResultCalculationService);
+            _loader = new DataExportLoader(DataExportRepository, BlobService, OverallResultCalculationService);
             Response = await _loader.DownloadOverallResultsDataAsync(ProviderUkprn, RequestedBy);
         }
     }

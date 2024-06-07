@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
             DataExportType = Common.Enum.DataExportType.Registrations;
 
             _registrations = new List<RegistrationsExport>();
-            DataExportService.GetDataExportRegistrationsAsync(AoUkprn).Returns(_registrations);
+            DataExportRepository.GetDataExportRegistrationsAsync(AoUkprn).Returns(_registrations);
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            DataExportService.Received(1).GetDataExportRegistrationsAsync(AoUkprn);
+            DataExportRepository.Received(1).GetDataExportRegistrationsAsync(AoUkprn);
             BlobService.DidNotReceive().UploadFromByteArrayAsync(Arg.Any<BlobStorageData>());
         }
     }

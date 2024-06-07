@@ -105,11 +105,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
             if (!string.IsNullOrWhiteSpace(request.SearchKey))
             {
-                bool isSearchKeyUln = request.SearchKey.IsLong();
+                string searchKey = request.SearchKey.Trim();
+                bool isSearchKeyUln = searchKey.IsLong();
 
                 Expression<Func<TqRegistrationPathway, bool>> expression = isSearchKeyUln
-                    ? p => p.TqRegistrationProfile.UniqueLearnerNumber == request.SearchKey.ToLong()
-                    : p => EF.Functions.Like(p.TqRegistrationProfile.Lastname.Trim(), request.SearchKey);
+                    ? p => p.TqRegistrationProfile.UniqueLearnerNumber == searchKey.ToLong()
+                    : p => EF.Functions.Like(p.TqRegistrationProfile.Lastname.Trim(), searchKey);
 
                 registrationPathwayQueryable = registrationPathwayQueryable.Where(expression);
             }

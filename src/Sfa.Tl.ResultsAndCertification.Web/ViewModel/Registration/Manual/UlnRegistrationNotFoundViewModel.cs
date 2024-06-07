@@ -5,9 +5,11 @@ using System.Collections.Generic;
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 {
     public class UlnRegistrationNotFoundViewModel : UlnNotFoundViewModel
-    {        
+    {
         public bool IsChangeMode { get; set; }
         public string BackLinkRouteName { get; set; }
+
+        public string RegisteredWithAoName { get; set; }
 
         public bool IsUlnRegisteredAlready
         {

@@ -299,5 +299,13 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// The UCAS transfer amendments settings.
         /// </value>
         public UcasTransferAmendmentsSettings UcasTransferAmendmentsSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the certificate extract settings.
+        /// </summary>
+        /// <value>
+        /// The certificate extract settings.
+        /// </value>
+        public CertificateTrackingExtractSettings CertificateTrackingExtractSettings { get; set; }
     }
 }

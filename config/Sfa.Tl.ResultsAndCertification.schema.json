@@ -1,571 +1,583 @@
 {
-	"$schema": "http://json-schema.org/draft-04/schema#",
-	"definitions": {},
-	"id": "http://example.com/example.json",
-	"properties": {
-		"SqlConnectionString": {
-			"minLength": 1,
-			"type": "string",
-			"environmentVariable": "SqlConnectionString"
-		},
-		"IntTestSqlConnectionString": {
-			"minLength": 1,
-			"type": "string",
-			"environmentVariable": "IntTestSqlConnectionString"
-		},
-		"BlobStorageConnectionString": {
-			"type": "string",
-			"environmentVariable": "BlobStorageConnectionString"
-		},
-		"GovUkNotifyApiKey": {
-			"type": "string",
-			"environmentVariable": "GovUkNotifyApiKey"
-		},
-		"TlevelQueriedSupportEmailAddress": {
-			"type": "string",
-			"environmentVariable": "TlevelQueriedSupportEmailAddress"
-		},
-		"TechnicalSupportEmailAddress": {
-			"type": "string",
-			"environmentVariable": "TechnicalSupportEmailAddress"
-		},
-		"FeedbackEmailAddress": {
-			"type": "string",
-			"environmentVariable": "FeedbackEmailAddress"
-		},
-		"TechnicalInternalNotificationEmailAddress": {
-			"type": "string",
-			"environmentVariable": "TechnicalInternalNotificationEmailAddress"
-		},
-		"SoaAvailableDate": {
-			"type": "string",
-			"environmentVariable": "SoaAvailableDate"
-		},
-		"SoaRerequestInDays": {
-			"type": "integer",
-			"environmentVariable": "SoaRerequestInDays"
-		},
-		"DocumentRerequestInDays": {
-			"type": "integer",
-			"environmentVariable": "DocumentRerequestInDays"
-		},
-		"OverallResultsAvailableDate": {
-			"type": "string",
-			"environmentVariable": "OverallResultsAvailableDate"
-		},
-		"OverallResultsCalculationDate": {
-			"type": "string",
-			"environmentVariable": "OverallResultsCalculationDate"
-		},
-		"FreezePeriodStartDate": {
-			"type": "string",
-			"environmentVariable": "FreezePeriodStartDate"
-		},
-		"FreezePeriodEndDate": {
-			"type": "string",
-			"environmentVariable": "FreezePeriodEndDate"
-		},
-		"CertificatePrintingBatchesCreateStartDate": {
-			"type": "string",
-			"environmentVariable": "CertificatePrintingBatchesCreateStartDate"
-		},
-		"KeyVaultUri": {
-			"type": "string",
-			"environmentVariable": "KeyVaultUri"
-		},
-		"RedisSettings": {
-			"properties": {
-				"CacheConnection": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "RedisCacheConnection"
-				}
-			},
-			"additionalProperties": false,
-			"required": [
-				"CacheConnection"
-			],
-			"type": "object"
-		},
-		"BlobStorageSettings": {
-			"properties": {
-				"AccountName": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "BlobStorageAccountName"
-				},
-				"AccountKey": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "BlobStorageAccountKey"
-				}
-			},
-			"additionalProperties": false,
-			"required": [
-				"AccountName",
-				"AccountKey"
-			],
-			"type": "object"
-		},
-		"DataProtectionSettings": {
-			"properties": {
-				"ContainerName": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DataProtectionContainerName"
-				},
-				"BlobName": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DataProtectionBlobName"
-				},
-				"KeyVaultKeyId": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DataProtectionKeyVaultKeyId"
-				}
-			},
-			"additionalProperties": false,
-			"required": [
-				"ContainerName",
-				"BlobName",
-				"KeyVaultKeyId"
-			],
-			"type": "object"
-		},
-		"DfeSignInSettings": {
-			"properties": {
-				"MetadataAddress": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DfeSignInMetadataAddress"
-				},
-				"ClientId": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DfeSignInClientId"
-				},
-				"ClientSecret": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DfeSignInClientSecret"
-				},
-				"CallbackPath": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DfeSignInCallbackPath"
-				},
-				"SignedOutCallbackPath": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DfeSignInSignedOutCallbackPath"
-				},
-				"LogoutPath": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DfeSignInLogoutPath"
-				},
-				"ProfileUrl": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DfeProfileUrl"
-				},
-				"Timeout": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DfeSignInTimeout"
-				},
-				"Issuer": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DfeSignInIssuer"
-				},
-				"Audience": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DfeSignInAudience"
-				},
-				"ApiSecret": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DfeSignInApiSecret"
-				},
-				"ApiUri": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DfeSignInApiUri"
-				},
-				"TokenEndpoint": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DfeSignInTokenEndpoint"
-				},
-				"Authority": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DfeSignInAuthority"
-				},
-				"SignOutEnabled": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DfeSignOutEnabled"
-				},
-				"SignOutRedirectUriEnabled": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DfeSignOutRedirectUriEnabled"
-				},
-				"SignOutRedirectUri": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "DfeSignOutRedirectUri"
-				}
-			},
-			"additionalProperties": false,
-			"required": [
-				"MetadataAddress",
-				"ClientId",
-				"ClientSecret",
-				"CallbackPath",
-				"SignedOutCallbackPath",
-				"LogoutPath",
-				"ProfileUrl",
-				"Timeout",
-				"Issuer",
-				"Audience",
-				"ApiSecret",
-				"ApiUri",
-				"TokenEndpoint",
-				"Authority",
-				"SignOutEnabled",
-				"SignOutRedirectUriEnabled",
-				"SignOutRedirectUri"
-			],
-			"type": "object"
-		},
-		"ResultsAndCertificationInternalApiSettings": {
-			"properties": {
-				"Uri": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "ResultsAndCertificationInternalApiUri"
-				},
-				"IdentifierUri": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "ResultsAndCertificationInternalApiIdentifierUri"
-				},
-				"TenantId": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "ResultsAndCertificationInternalApiTenantId"
-				},
-				"ClientId": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "ResultsAndCertificationInternalApiClientId"
-				}
-			},
-			"additionalProperties": false,
-			"required": [
-				"Uri",
-				"IdentifierUri",
-				"TenantId",
-				"ClientId"
-			],
-			"type": "object"
-		},
-		"OrdnanceSurveyApiSettings": {
-			"properties": {
-				"PlacesUri": {
-					"type": "string",
-					"environmentVariable": "OrdnanceSurveyApiPlacesUri"
-				},
-				"PlacesKey": {
-					"type": "string",
-					"environmentVariable": "OrdnanceSurveyPlacesApiPlacesKey"
-				}
-			},
-			"additionalProperties": false,
-			"required": [],
-			"type": "object"
-		},
-		"PrintingApiSettings": {
-			"properties": {
-				"Uri": {
-					"type": "string",
-					"environmentVariable": "PrintingApiUri"
-				},
-				"Username": {
-					"type": "string",
-					"environmentVariable": "PrintingApiUsername"
-				},
-				"Password": {
-					"type": "string",
-					"environmentVariable": "PrintingApiPassword"
-				}
-			},
-			"additionalProperties": false,
-			"required": [],
-			"type": "object"
-		},
-		"UcasApiSettings": {
-			"properties": {
-				"Uri": {
-					"type": "string",
-					"environmentVariable": "UcasApiUri"
-				},
-				"Version": {
-					"type": "string",
-					"environmentVariable": "UcasApiVersion"
-				},
-				"FolderId": {
-					"type": "string",
-					"environmentVariable": "UcasApiFolderId"
-				},
-				"GrantType": {
-					"type": "string",
-					"environmentVariable": "UcasApiGrantType"
-				},
-				"Username": {
-					"type": "string",
-					"environmentVariable": "UcasApiUsername"
-				},
-				"Password": {
-					"type": "string",
-					"environmentVariable": "UcasApiPassword"
-				}
-			},
-			"additionalProperties": false,
-			"required": [],
-			"type": "object"
-		},
-		"LearningRecordServiceSettings": {
-			"properties": {
-				"BaseUri": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "LearningRecordServiceBaseUri"
-				},
-				"VendorId": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "LearningRecordServiceVendorId"
-				},
-				"Ukprn": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "LearningRecordServiceUkprn"
-				},
-				"Username": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "LearningRecordServiceUsername"
-				},
-				"Password": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "LearningRecordServicePassword"
-				},
-				"CertificateName": {
-					"minLength": 1,
-					"type": "string",
-					"environmentVariable": "LearningRecordServiceCertificateName"
-				}
-			},
-			"additionalProperties": false,
-			"required": [
-				"BaseUri",
-				"VendorId",
-				"Ukprn",
-				"Username",
-				"Password",
-				"CertificateName"
-			],
-			"type": "object"
-		},
-		"UcasDataSettings": {
-			"properties": {
-				"SendingOrganisation": {
-					"type": "string",
-					"environmentVariable": "UcasDataSendingOrganisation"
-				},
-				"ReceivingOrganisation": {
-					"type": "string",
-					"environmentVariable": "UcasDataReceivingOrganisation"
-				},
-				"ExamMonth": {
-					"type": "string",
-					"environmentVariable": "UcasDataExamMonth"
-				},
-				"CentreNumber": {
-					"type": "string",
-					"environmentVariable": "UcasCentreNumber"
-				},
-				"OverallSubjectCode": {
-					"type": "string",
-					"environmentVariable": "UcasOverallSubjectCode"
-				},
-				"IndustryPlacementCode": {
-					"type": "string",
-					"environmentVariable": "UcasIndustryPlacementCode"
-				}
-			},
-			"additionalProperties": false,
-			"required": [],
-			"type": "object"
-		},
-		"OverallResultBatchSettings": {
-			"properties": {
-				"BatchSize": {
-					"type": "integer",
-					"environmentVariable": "OverallResultBatchSize"
-				},
-				"NoOfAcademicYearsToProcess": {
-					"type": "integer",
-					"environmentVariable": "OverallResultNoOfAcademicYearsToProcess"
-				}
-			},
-			"additionalProperties": false,
-			"required": [
-				"BatchSize",
-				"NoOfAcademicYearsToProcess"
-			],
-			"type": "object"
-		},
-		"CertificatePrintingBatchSettings": {
-			"properties": {
-				"ProvidersBatchSize": {
-					"type": "integer",
-					"environmentVariable": "CertificatePrintingProvidersBatchSize"
-				}
-			},
-			"additionalProperties": false,
-			"required": [
-				"ProvidersBatchSize"
-			],
-			"type": "object"
-		},
-		"AnalystOverallResultExtractSettings": {
-			"properties": {
-				"AcademicYearsToProcess": {
-					"type": "array",
-					"environmentVariable": "AcademicYearsToProcess"
-				},
-				"ValidDateRanges": {
-					"type": "array",
-					"environmentVariable": "AnalystOverallValidDateRanges"
-				}
-			},
-			"additionalProperties": false,
-			"required": [],
-			"type": "object"
-		},
-		"AnalystCoreResultExtractSettings": {
-			"properties": {
-				"CoreAcademicYearsToProcess": {
-					"type": "array",
-					"environmentVariable": "CoreAcademicYearsToProcess"
-				},
-				"CoreValidDateRanges": {
-					"type": "array",
-					"environmentVariable": "AnalystCoreValidDateRanges"
-				}
-			},
-			"additionalProperties": false,
-			"required": [],
-			"type": "object"
-		},
-		"CoreRommExtractSettings": {
-			"properties": {
-				"AssessmentSeriesYearsToProcess": {
-					"type": "array",
-					"environmentVariable": "CoreAssessmentSeriesYearsToProcess"
-				},
-				"CoreRommValidDateRanges": {
-					"type": "array",
-					"environmentVariable": "CoreRommValidDateRanges"
-				}
-			},
-			"additionalProperties": false,
-			"required": [],
-			"type": "object"
-		},
-		"SpecialismRommExtractSettings": {
-			"properties": {
-				"SpecialismAssessmentSeriesYearsToProcess": {
-					"type": "array",
-					"environmentVariable": "SpecialismAssessmentSeriesYearsToProcess"
-				},
-				"SpecialismRommValidDateRanges": {
-					"type": "array",
-					"environmentVariable": "SpecialismRommValidDateRanges"
-				}
-			},
-			"additionalProperties": false,
-			"required": [],
-			"type": "object"
-		},
-		"ProviderAddressExtractSettings": {
-			"properties": {
-				"ProviderAddressAcademicYearsToProcess": {
-					"type": "array",
-					"environmentVariable": "ProviderAddressAcademicYearsToProcess"
-				},
-				"ProviderAddressValidDateRanges": {
-					"type": "array",
-					"environmentVariable": "ProviderAddressValidDateRanges"
-				}
-			},
-			"additionalProperties": false,
-			"required": [],
-			"type": "object"
-		},
-		"UcasTransferAmendmentsSettings": {
-			"properties": {	
-				"ValidDateRanges": {
-					"type": "array",
-					"environmentVariable": "UcasTransferAmendmentsValidDateRanges"
-				}
-			},
-			"additionalProperties": false,
-			"required": [],
-			"type": "object"
-		}
-	},
-	"additionalProperties": false,
-	"required": [
-		"SqlConnectionString",
-		"IntTestSqlConnectionString",
-		"BlobStorageConnectionString",
-		"GovUkNotifyApiKey",
-		"TlevelQueriedSupportEmailAddress",
-		"TechnicalSupportEmailAddress",
-		"FeedbackEmailAddress",
-		"TechnicalInternalNotificationEmailAddress",
-		"OverallResultsAvailableDate",
-		"OverallResultsCalculationDate",
-		"FreezePeriodStartDate",
-		"FreezePeriodEndDate",
-		"CertificatePrintingBatchesCreateStartDate",
-		"KeyVaultUri",
-		"RedisSettings",
-		"BlobStorageSettings",
-		"DataProtectionSettings",
-		"DfeSignInSettings",
-		"ResultsAndCertificationInternalApiSettings",
-		"PrintingApiSettings",
-		"UcasApiSettings",
-		"LearningRecordServiceSettings",
-		"UcasDataSettings",
-		"OverallResultBatchSettings",
-		"CertificatePrintingBatchSettings",
-		"AnalystCoreResultExtractSettings",
-		"AnalystOverallResultExtractSettings",
-		"CoreRommExtractSettings",
-		"SpecialismRommExtractSettings",
-		"ProviderAddressExtractSettings",
-		"UcasTransferAmendmentsSettings"
-	],
-	"type": "object"
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {},
+  "id": "http://example.com/example.json",
+  "properties": {
+    "SqlConnectionString": {
+      "minLength": 1,
+      "type": "string",
+      "environmentVariable": "SqlConnectionString"
+    },
+    "IntTestSqlConnectionString": {
+      "minLength": 1,
+      "type": "string",
+      "environmentVariable": "IntTestSqlConnectionString"
+    },
+    "BlobStorageConnectionString": {
+      "type": "string",
+      "environmentVariable": "BlobStorageConnectionString"
+    },
+    "GovUkNotifyApiKey": {
+      "type": "string",
+      "environmentVariable": "GovUkNotifyApiKey"
+    },
+    "TlevelQueriedSupportEmailAddress": {
+      "type": "string",
+      "environmentVariable": "TlevelQueriedSupportEmailAddress"
+    },
+    "TechnicalSupportEmailAddress": {
+      "type": "string",
+      "environmentVariable": "TechnicalSupportEmailAddress"
+    },
+    "FeedbackEmailAddress": {
+      "type": "string",
+      "environmentVariable": "FeedbackEmailAddress"
+    },
+    "TechnicalInternalNotificationEmailAddress": {
+      "type": "string",
+      "environmentVariable": "TechnicalInternalNotificationEmailAddress"
+    },
+    "SoaAvailableDate": {
+      "type": "string",
+      "environmentVariable": "SoaAvailableDate"
+    },
+    "SoaRerequestInDays": {
+      "type": "integer",
+      "environmentVariable": "SoaRerequestInDays"
+    },
+    "DocumentRerequestInDays": {
+      "type": "integer",
+      "environmentVariable": "DocumentRerequestInDays"
+    },
+    "OverallResultsAvailableDate": {
+      "type": "string",
+      "environmentVariable": "OverallResultsAvailableDate"
+    },
+    "OverallResultsCalculationDate": {
+      "type": "string",
+      "environmentVariable": "OverallResultsCalculationDate"
+    },
+    "FreezePeriodStartDate": {
+      "type": "string",
+      "environmentVariable": "FreezePeriodStartDate"
+    },
+    "FreezePeriodEndDate": {
+      "type": "string",
+      "environmentVariable": "FreezePeriodEndDate"
+    },
+    "CertificatePrintingBatchesCreateStartDate": {
+      "type": "string",
+      "environmentVariable": "CertificatePrintingBatchesCreateStartDate"
+    },
+    "KeyVaultUri": {
+      "type": "string",
+      "environmentVariable": "KeyVaultUri"
+    },
+    "RedisSettings": {
+      "properties": {
+        "CacheConnection": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "RedisCacheConnection"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "CacheConnection"
+      ],
+      "type": "object"
+    },
+    "BlobStorageSettings": {
+      "properties": {
+        "AccountName": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "BlobStorageAccountName"
+        },
+        "AccountKey": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "BlobStorageAccountKey"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "AccountName",
+        "AccountKey"
+      ],
+      "type": "object"
+    },
+    "DataProtectionSettings": {
+      "properties": {
+        "ContainerName": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DataProtectionContainerName"
+        },
+        "BlobName": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DataProtectionBlobName"
+        },
+        "KeyVaultKeyId": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DataProtectionKeyVaultKeyId"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "ContainerName",
+        "BlobName",
+        "KeyVaultKeyId"
+      ],
+      "type": "object"
+    },
+    "DfeSignInSettings": {
+      "properties": {
+        "MetadataAddress": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInMetadataAddress"
+        },
+        "ClientId": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInClientId"
+        },
+        "ClientSecret": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInClientSecret"
+        },
+        "CallbackPath": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInCallbackPath"
+        },
+        "SignedOutCallbackPath": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInSignedOutCallbackPath"
+        },
+        "LogoutPath": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInLogoutPath"
+        },
+        "ProfileUrl": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeProfileUrl"
+        },
+        "Timeout": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInTimeout"
+        },
+        "Issuer": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInIssuer"
+        },
+        "Audience": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInAudience"
+        },
+        "ApiSecret": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInApiSecret"
+        },
+        "ApiUri": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInApiUri"
+        },
+        "TokenEndpoint": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInTokenEndpoint"
+        },
+        "Authority": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInAuthority"
+        },
+        "SignOutEnabled": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignOutEnabled"
+        },
+        "SignOutRedirectUriEnabled": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignOutRedirectUriEnabled"
+        },
+        "SignOutRedirectUri": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignOutRedirectUri"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "MetadataAddress",
+        "ClientId",
+        "ClientSecret",
+        "CallbackPath",
+        "SignedOutCallbackPath",
+        "LogoutPath",
+        "ProfileUrl",
+        "Timeout",
+        "Issuer",
+        "Audience",
+        "ApiSecret",
+        "ApiUri",
+        "TokenEndpoint",
+        "Authority",
+        "SignOutEnabled",
+        "SignOutRedirectUriEnabled",
+        "SignOutRedirectUri"
+      ],
+      "type": "object"
+    },
+    "ResultsAndCertificationInternalApiSettings": {
+      "properties": {
+        "Uri": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "ResultsAndCertificationInternalApiUri"
+        },
+        "IdentifierUri": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "ResultsAndCertificationInternalApiIdentifierUri"
+        },
+        "TenantId": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "ResultsAndCertificationInternalApiTenantId"
+        },
+        "ClientId": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "ResultsAndCertificationInternalApiClientId"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "Uri",
+        "IdentifierUri",
+        "TenantId",
+        "ClientId"
+      ],
+      "type": "object"
+    },
+    "OrdnanceSurveyApiSettings": {
+      "properties": {
+        "PlacesUri": {
+          "type": "string",
+          "environmentVariable": "OrdnanceSurveyApiPlacesUri"
+        },
+        "PlacesKey": {
+          "type": "string",
+          "environmentVariable": "OrdnanceSurveyPlacesApiPlacesKey"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
+    "PrintingApiSettings": {
+      "properties": {
+        "Uri": {
+          "type": "string",
+          "environmentVariable": "PrintingApiUri"
+        },
+        "Username": {
+          "type": "string",
+          "environmentVariable": "PrintingApiUsername"
+        },
+        "Password": {
+          "type": "string",
+          "environmentVariable": "PrintingApiPassword"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
+    "UcasApiSettings": {
+      "properties": {
+        "Uri": {
+          "type": "string",
+          "environmentVariable": "UcasApiUri"
+        },
+        "Version": {
+          "type": "string",
+          "environmentVariable": "UcasApiVersion"
+        },
+        "FolderId": {
+          "type": "string",
+          "environmentVariable": "UcasApiFolderId"
+        },
+        "GrantType": {
+          "type": "string",
+          "environmentVariable": "UcasApiGrantType"
+        },
+        "Username": {
+          "type": "string",
+          "environmentVariable": "UcasApiUsername"
+        },
+        "Password": {
+          "type": "string",
+          "environmentVariable": "UcasApiPassword"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
+    "LearningRecordServiceSettings": {
+      "properties": {
+        "BaseUri": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "LearningRecordServiceBaseUri"
+        },
+        "VendorId": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "LearningRecordServiceVendorId"
+        },
+        "Ukprn": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "LearningRecordServiceUkprn"
+        },
+        "Username": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "LearningRecordServiceUsername"
+        },
+        "Password": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "LearningRecordServicePassword"
+        },
+        "CertificateName": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "LearningRecordServiceCertificateName"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "BaseUri",
+        "VendorId",
+        "Ukprn",
+        "Username",
+        "Password",
+        "CertificateName"
+      ],
+      "type": "object"
+    },
+    "UcasDataSettings": {
+      "properties": {
+        "SendingOrganisation": {
+          "type": "string",
+          "environmentVariable": "UcasDataSendingOrganisation"
+        },
+        "ReceivingOrganisation": {
+          "type": "string",
+          "environmentVariable": "UcasDataReceivingOrganisation"
+        },
+        "ExamMonth": {
+          "type": "string",
+          "environmentVariable": "UcasDataExamMonth"
+        },
+        "CentreNumber": {
+          "type": "string",
+          "environmentVariable": "UcasCentreNumber"
+        },
+        "OverallSubjectCode": {
+          "type": "string",
+          "environmentVariable": "UcasOverallSubjectCode"
+        },
+        "IndustryPlacementCode": {
+          "type": "string",
+          "environmentVariable": "UcasIndustryPlacementCode"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
+    "OverallResultBatchSettings": {
+      "properties": {
+        "BatchSize": {
+          "type": "integer",
+          "environmentVariable": "OverallResultBatchSize"
+        },
+        "NoOfAcademicYearsToProcess": {
+          "type": "integer",
+          "environmentVariable": "OverallResultNoOfAcademicYearsToProcess"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "BatchSize",
+        "NoOfAcademicYearsToProcess"
+      ],
+      "type": "object"
+    },
+    "CertificatePrintingBatchSettings": {
+      "properties": {
+        "ProvidersBatchSize": {
+          "type": "integer",
+          "environmentVariable": "CertificatePrintingProvidersBatchSize"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "ProvidersBatchSize"
+      ],
+      "type": "object"
+    },
+    "AnalystOverallResultExtractSettings": {
+      "properties": {
+        "AcademicYearsToProcess": {
+          "type": "array",
+          "environmentVariable": "AcademicYearsToProcess"
+        },
+        "ValidDateRanges": {
+          "type": "array",
+          "environmentVariable": "AnalystOverallValidDateRanges"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
+    "AnalystCoreResultExtractSettings": {
+      "properties": {
+        "CoreAcademicYearsToProcess": {
+          "type": "array",
+          "environmentVariable": "CoreAcademicYearsToProcess"
+        },
+        "CoreValidDateRanges": {
+          "type": "array",
+          "environmentVariable": "AnalystCoreValidDateRanges"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
+    "CoreRommExtractSettings": {
+      "properties": {
+        "AssessmentSeriesYearsToProcess": {
+          "type": "array",
+          "environmentVariable": "CoreAssessmentSeriesYearsToProcess"
+        },
+        "CoreRommValidDateRanges": {
+          "type": "array",
+          "environmentVariable": "CoreRommValidDateRanges"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
+    "SpecialismRommExtractSettings": {
+      "properties": {
+        "SpecialismAssessmentSeriesYearsToProcess": {
+          "type": "array",
+          "environmentVariable": "SpecialismAssessmentSeriesYearsToProcess"
+        },
+        "SpecialismRommValidDateRanges": {
+          "type": "array",
+          "environmentVariable": "SpecialismRommValidDateRanges"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
+    "ProviderAddressExtractSettings": {
+      "properties": {
+        "ProviderAddressAcademicYearsToProcess": {
+          "type": "array",
+          "environmentVariable": "ProviderAddressAcademicYearsToProcess"
+        },
+        "ProviderAddressValidDateRanges": {
+          "type": "array",
+          "environmentVariable": "ProviderAddressValidDateRanges"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
+    "UcasTransferAmendmentsSettings": {
+      "properties": {
+        "ValidDateRanges": {
+          "type": "array",
+          "environmentVariable": "UcasTransferAmendmentsValidDateRanges"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
+    "CertificateTrackingExtractSettings": {
+      "properties": {
+        "NumberOfDays": {
+          "type": "integer",
+          "environmentVariable": "CertificateTrackingExtractNumberOfDays"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "SqlConnectionString",
+    "IntTestSqlConnectionString",
+    "BlobStorageConnectionString",
+    "GovUkNotifyApiKey",
+    "TlevelQueriedSupportEmailAddress",
+    "TechnicalSupportEmailAddress",
+    "FeedbackEmailAddress",
+    "TechnicalInternalNotificationEmailAddress",
+    "OverallResultsAvailableDate",
+    "OverallResultsCalculationDate",
+    "FreezePeriodStartDate",
+    "FreezePeriodEndDate",
+    "CertificatePrintingBatchesCreateStartDate",
+    "KeyVaultUri",
+    "RedisSettings",
+    "BlobStorageSettings",
+    "DataProtectionSettings",
+    "DfeSignInSettings",
+    "ResultsAndCertificationInternalApiSettings",
+    "PrintingApiSettings",
+    "UcasApiSettings",
+    "LearningRecordServiceSettings",
+    "UcasDataSettings",
+    "OverallResultBatchSettings",
+    "CertificatePrintingBatchSettings",
+    "AnalystCoreResultExtractSettings",
+    "AnalystOverallResultExtractSettings",
+    "CoreRommExtractSettings",
+    "SpecialismRommExtractSettings",
+    "ProviderAddressExtractSettings",
+    "UcasTransferAmendmentsSettings",
+    "CertificateTrackingExtractSettings"
+  ],
+  "type": "object"
 }
