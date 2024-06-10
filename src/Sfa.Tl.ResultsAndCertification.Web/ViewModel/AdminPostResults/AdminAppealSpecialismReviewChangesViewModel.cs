@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults
         public AdminReviewSummaryItemModel SummaryRomm
             => new()
             {
-                Id = AdminReviewSpecialismAppealChanges.Summary_Romm_Id,
+                Id = AdminReviewSpecialismAppealChanges.Summary_Appeal_Id,
                 Title = AdminReviewSpecialismAppealChanges.Change_Summary_Change,
                 Value = AdminReviewSpecialismAppealChanges.Change_Summary_From,
                 Value2 = AdminReviewSpecialismAppealChanges.Change_Summary_To,

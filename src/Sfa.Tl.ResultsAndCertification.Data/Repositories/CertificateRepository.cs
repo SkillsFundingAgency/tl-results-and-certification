@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Certificates;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
@@ -50,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
                         // Update overallresult table for specified column (changed only columns)
                         var overallResultsCount = await UpdateWithSpecifedColumnsOnlyAsync(overallResults, x => x.CertificateStatus);
-                        
+
                         transaction.Commit();
 
                         // After successfull transacation populate stats
@@ -68,6 +69,18 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 });
             }
             return response;
+        }
+
+        public async Task<IList<PrintCertificate>> GetCertificateTrackingDataAsync(Func<DateTime> getFromDay)
+        {
+            IQueryable<PrintCertificate> certificateQuery = _dbContext.PrintCertificate
+                                                                .Include(p => p.TqRegistrationPathway)
+                                                                    .ThenInclude(p => p.TqRegistrationProfile)
+                                                                .Include(p => p.PrintBatchItem)
+                                                                    .ThenInclude(p => p.Batch)
+                                                                .Where(p => p.PrintBatchItem.Batch.CreatedOn.Date >= getFromDay());
+
+            return await certificateQuery.ToListAsync();
         }
     }
 }

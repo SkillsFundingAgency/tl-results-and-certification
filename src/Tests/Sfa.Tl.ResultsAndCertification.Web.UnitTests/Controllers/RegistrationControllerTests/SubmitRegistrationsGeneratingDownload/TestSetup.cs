@@ -10,49 +10,47 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.SubmitRegistrationsGeneratingDownload
 {
     public abstract class TestSetup : BaseTest<RegistrationController>
     {
-        protected int AoUkprn;
-        protected string SearchUln;
-        protected Guid UserId;
+        protected const int AoUkprn = 1234567890;
+        protected const string UserEmail = "user@email.com";
+
         protected string CacheKey;
         protected IRegistrationLoader RegistrationLoader;
         protected ICacheService CacheService;
-        protected ILogger<RegistrationController> Logger;
-        protected RegistrationController Controller;
-        protected RegistrationViewModel ViewModel;
-        protected IHttpContextAccessor HttpContextAccessor;
-        public IActionResult Result { get; private set; }
+        private RegistrationController _controller;
+
+        protected IActionResult Result { get; private set; }
 
         public override void Setup()
         {
-            HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             RegistrationLoader = Substitute.For<IRegistrationLoader>();
             CacheService = Substitute.For<ICacheService>();
-            Logger = Substitute.For<ILogger<RegistrationController>>();
-            Controller = new RegistrationController(RegistrationLoader, CacheService, Logger);
 
-            AoUkprn = 1234567890;
-            var httpContext = new ClaimsIdentityBuilder<RegistrationController>(Controller)
+            _controller = new RegistrationController(RegistrationLoader, CacheService, Substitute.For<ILogger<RegistrationController>>());
+
+            var httpContext = new ClaimsIdentityBuilder<RegistrationController>(_controller)
                .Add(CustomClaimTypes.Ukprn, AoUkprn.ToString())
                .Add(CustomClaimTypes.UserId, Guid.NewGuid().ToString())
+               .Add(ClaimTypes.Email, UserEmail)
                .Build()
                .HttpContext;
 
-            HttpContextAccessor.HttpContext.Returns(httpContext);
-            CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey);
+            IHttpContextAccessor httpContextAccessor = Substitute.For<IHttpContextAccessor>();
+            httpContextAccessor.HttpContext.Returns(httpContext);
 
+            CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey);
         }
 
         public async override Task When()
         {
-            Result = await Controller.SubmitRegistrationsGeneratingDownloadAsync();
+            Result = await _controller.SubmitRegistrationsGeneratingDownloadAsync();
         }
     }
 }

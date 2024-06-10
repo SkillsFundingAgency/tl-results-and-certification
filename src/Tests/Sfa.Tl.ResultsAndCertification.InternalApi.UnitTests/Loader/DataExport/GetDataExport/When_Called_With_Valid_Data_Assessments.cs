@@ -20,8 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
             _coreAssessments = new List<CoreAssessmentsExport> { new CoreAssessmentsExport { Uln = 1111112548, StartYear = "2021/22", CoreCode = "45678941", CoreAssessmentEntry = "Summer 2021" } };
             _specialismAssessments = new List<SpecialismAssessmentsExport> { new SpecialismAssessmentsExport { Uln = 1111112548, StartYear = "2021/22", SpecialismCode = "ZT78945612", SpecialismAssessmentEntry = "Summer 2022" } };
 
-            DataExportService.GetDataExportCoreAssessmentsAsync(AoUkprn).Returns(_coreAssessments);
-            DataExportService.GetDataExportSpecialismAssessmentsAsync(AoUkprn).Returns(_specialismAssessments);
+            DataExportRepository.GetDataExportCoreAssessmentsAsync(AoUkprn).Returns(_coreAssessments);
+            DataExportRepository.GetDataExportSpecialismAssessmentsAsync(AoUkprn).Returns(_specialismAssessments);
         }
 
         [Fact]
@@ -40,8 +40,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            DataExportService.Received(1).GetDataExportCoreAssessmentsAsync(AoUkprn);
-            DataExportService.Received(1).GetDataExportSpecialismAssessmentsAsync(AoUkprn);
+            DataExportRepository.Received(1).GetDataExportCoreAssessmentsAsync(AoUkprn);
+            DataExportRepository.Received(1).GetDataExportSpecialismAssessmentsAsync(AoUkprn);
             BlobService.Received(2).UploadFromByteArrayAsync(Arg.Any<BlobStorageData>());
         }
     }

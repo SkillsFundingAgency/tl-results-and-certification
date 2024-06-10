@@ -17,6 +17,7 @@
         AnalystOverallResultExtract = 12,
         AnalystCoreResultExtract = 13,
         CoreRommExtract = 14,
-        SpecialismRommExtract = 15
+        SpecialismRommExtract = 15,
+        CertificateTrackingExtract = 16
     }
 }

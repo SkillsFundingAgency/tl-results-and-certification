@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.Design.Serialization;
-
-namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
+﻿namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
 {
     public static class RouteConstants
     {
@@ -171,6 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
         public const string AssessmentsNoRecordsFound = "AssessmentsNoRecordsFound";
         public const string RegistrationsDownloadData = "RegistrationsDownloadData";
         public const string RegistrationsDownloadDataLink = "RegistrationsDownloadDataLink";
+        public const string PendingWithdrawalsDownloadDataLink = "PendingWithdrawalsDownloadDataLink";
         public const string AssessmentsDownloadData = "AssessmentsDownloadData";
         public const string AssessmentsDownloadDataLink = "AssessmentsDownloadDataLink";
         public const string ResultsGeneratingDownload = "ResultsGeneratingDownload";
@@ -226,6 +225,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
         // Document
         public const string RegistrationDataFormatAndRulesGuide = "RegistrationDataFormatAndRulesGuide";
         public const string DownloadRegistrationDataFormatAndRulesGuide = "DownloadRegistrationDataFormatAndRulesGuide";
+        public const string DownloadRegistrationDataTemplate = "DownloadRegistrationDataTemplate";
         public const string DownloadAssessmentEntriesDataFormatAndRulesGuide = "DownloadAssessmentEntriesDataFormatAndRulesGuide";
         public const string DownloadResultsDataFormatAndRulesGuide = "DownloadResultsDataFormatAndRulesGuide";
         public const string DownloadIndustryPlacementDataFormatAndRulesGuide = "DownloadIndustryPlacementDataFormatAndRulesGuide";
@@ -475,6 +475,17 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
         public const string AdminViewChangeAddSpecialismResultRecord = "AdminViewChangeAddSpecialismResultRecord";
         public const string AdminViewChangeRemoveCoreAssessmentRecord = "AdminViewChangeRemoveCoreAssessmentRecord";
         public const string AdminViewChangeRemoveSpecialismAssessmentRecord = "AdminViewChangeRemoveSpecialismAssessmentRecord";
+        public const string AdminViewChangePathwayResultRecord = "AdminViewChangePathwayResultRecord";
+        public const string AdminViewChangeSpecialismResultRecord = "AdminViewChangeSpecialismResultRecord";
+        public const string AdminViewOpenPathwayRommRecord = "AdminViewOpenPathwayRommRecord";
+        public const string AdminViewOpenSpecialismRommRecord = "AdminViewOpenSpecialismRommRecord";
+        public const string AdminViewPathwayRommOutcomeRecord = "AdminViewPathwayRommOutcomeRecord";
+        public const string AdminViewSpecialismRommOutcomeRecord = "AdminViewSpecialismRommOutcomeRecord";
+        public const string AdminViewOpenPathwayAppealRecord = "AdminViewOpenPathwayAppealRecord";
+        public const string AdminViewOpenSpecialismAppealRecord = "AdminViewOpenSpecialismAppealRecord";
+        public const string AdminViewPathwayAppealOutcomeRecord = "AdminViewPathwayAppealOutcomeRecord";
+        public const string AdminViewSpecialismAppealOutcomeRecord = "AdminViewSpecialismAppealOutcomeRecord";
+
 
 
         #endregion

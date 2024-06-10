@@ -41,5 +41,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
         {
             return GetNthWeekdayOfMonth(dt, dayOfWeek, month, nthWeek);
         }
+
+        public static DateTime SubtractDays(this DateTime dt, int numberOfDays)
+            => dt.AddDays(numberOfDays * -1);
     }
 }
